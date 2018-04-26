@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MerimeeSchema = new Schema({
-    _id: String,
     REF: String,
     TOUT: String,
     ACTU: String,

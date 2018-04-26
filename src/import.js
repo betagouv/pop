@@ -11,9 +11,7 @@ let count = 0;
 
 Mongo().then((db) => {
   parse('./data/merimee-MH-valid.csv', { batch: 1000 }, (arr, next) => {
-    if(!arr.length){
-      console.log('END')
-    }
+
     const objects = arr.map((e) => {
       const m = new Merimee(e);
       m._id = e.REF;
