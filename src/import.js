@@ -13,7 +13,14 @@ let count = 0;
 //   console.log('DONE')
 // })
 
-Parse('./data/memoire-SAP-valid.csv', Models.memoireSAP).then(() => {
+// Parse('./data/memoire-SAP-valid.csv', Models.memoireSAP).then(() => {
+//   console.log('DONE')
+// })
+
+
+Parse('./data/palissy-ETAT-valid.csv', Models.palissyETAT).then(() => {
   console.log('DONE')
 })
+
+
 

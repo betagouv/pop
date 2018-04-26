@@ -3,11 +3,11 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
-
+//, relax_column_count: true
 function parse(file, opt, cb) {
     let arr = [];
     let header = null;
-    var parser = csvparse({ delimiter: '|', from: 1, quote: ''})
+    var parser = csvparse({ delimiter: '|', from: 1, quote: '' })
     var input = fs.createReadStream(file);
     var transformer = transform((record, callback) => {
         if (!header) {
@@ -19,7 +19,6 @@ function parse(file, opt, cb) {
             }
             arr.push(obj)
         }
-
         if (arr.length >= opt.batch) {
             cb(arr, callback);
             arr = [];
@@ -27,32 +26,42 @@ function parse(file, opt, cb) {
             callback()
         }
     }, { parallel: 1 });
+    const stream = input.pipe(parser).pipe(transformer);
 
-    input.pipe(parser).pipe(transformer);
+    stream.on('finish', () => {
+        cb(arr, null);
+    });
+
 }
 
 
 function run(file, object) {
     let count = 0;
     return new Promise((resolve, reject) => {
-        parse(file, { batch: 1000 }, (arr, next) => {
-            const objects = arr.map((e) => {
-                console.log(e)
-                const m = new object(e);
-                m._id = e.REF;
-                return m;
-            })
-            object.collection.insert(objects, (err, docs) => {
-                if (err) {
-                } else {
-                    count += docs.insertedCount;
-                    console.log('Saved ' + count)
-                }
-                next();
-            });
-        })
-    })
+        setTimeout(() => {
+            console.log('RUN  ', file)
+            parse(file, { batch: 100 }, (arr, next) => {
+                const objects = arr.map((e) => {
+                    const m = new object(e);
+                    m._id = e.REF;
+                    return m;
+                })
+                object.collection.insert(objects, (err, docs) => {
+                    if (err) {
+                    } else {
+                        count += docs.insertedCount;
+                        console.log('Saved ' + count)
+                    }
 
+                    if (!next) {
+                        resolve();
+                    } else {
+                        next();
+                    }
+                });
+            })
+        }, 5000)
+    })
 }
 
 
