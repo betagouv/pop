@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const MerimeeSchema = new Schema({
+const Schema = new mongoose.Schema({
     REF: String,
     TOUT: String,
     ACTU: String,
@@ -107,8 +105,18 @@ const MerimeeSchema = new Schema({
     ACMH: String,
     ACURL: String,
     WADRS: String,
+    WCOM: String,
+    WRENV: String,
+    REFM: String,
+    CONTACT: String,
+    IDAGR: String,
+    LMDP: String,
+    PINT: String,
+    DLAB: String,
+    APPL: String,
+
 })
 
-const Merimee = mongoose.model("merimee", MerimeeSchema)
+const object = mongoose.model("merimee_etat", Schema)
 
-module.exports = Merimee;
+module.exports = object;
