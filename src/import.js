@@ -1,6 +1,6 @@
 const Mongo = require('./mongo');
 
-const Parse = require('./parse');
+const Parse = require('./import_parse');
 const Models = require('./models')
 
 let count = 0;
@@ -18,9 +18,11 @@ let count = 0;
 // })
 
 
-Parse('./data/palissy-ETAT-valid.csv', Models.palissyETAT).then(() => {
+// Parse('./data/palissy-ETAT-valid.csv', Models.palissyETAT).then(() => {
+//   console.log('DONE')
+// })
+
+Parse('./data/merimee-MH-valid.csv', Models.merimeeMH).then(() => {
   console.log('DONE')
 })
-
-
 

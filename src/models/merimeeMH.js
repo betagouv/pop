@@ -9,7 +9,7 @@ const Schema = new mongoose.Schema({
     APPL: String,
     APRO: String,
     ARCHEO: String,
-    AUTP: String,
+    AUTP: { type: String, text: true },
     AUTR: String,
     CADA: String,
     CANT: String,
