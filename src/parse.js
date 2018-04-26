@@ -5,11 +5,9 @@ var transform = require('stream-transform');
 var csvparse = require('csv-parse');
 
 function parse(file, opt, cb) {
-
     let arr = [];
     let header = null;
-
-    var parser = csvparse({ delimiter: '|', from: 1, quote: '' })
+    var parser = csvparse({ delimiter: '|', from: 1, quote: ''})
     var input = fs.createReadStream(file);
     var transformer = transform((record, callback) => {
         if (!header) {
@@ -33,4 +31,29 @@ function parse(file, opt, cb) {
     input.pipe(parser).pipe(transformer);
 }
 
-module.exports = parse;
+
+function run(file, object) {
+    let count = 0;
+    return new Promise((resolve, reject) => {
+        parse(file, { batch: 1000 }, (arr, next) => {
+            const objects = arr.map((e) => {
+                console.log(e)
+                const m = new object(e);
+                m._id = e.REF;
+                return m;
+            })
+            object.collection.insert(objects, (err, docs) => {
+                if (err) {
+                } else {
+                    count += docs.insertedCount;
+                    console.log('Saved ' + count)
+                }
+                next();
+            });
+        })
+    })
+
+}
+
+
+module.exports = run;
