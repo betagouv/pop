@@ -1,0 +1,27 @@
+{
+  "name": "pop_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "import": "node ./src/import.js",
+    "start": "node ./src/import.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goffle/pop_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goffle/pop_api/issues"
+  },
+  "homepage": "https://github.com/goffle/pop_api#readme",
+  "dependencies": {
+    "asyncawait": "^1.0.6",
+    "csv-parse": "^2.2.0",
+    "mongoose": "^5.0.16",
+    "stream-transform": "^1.0.2"
+  }
+}
