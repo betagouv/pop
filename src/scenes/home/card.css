@@ -1,0 +1,21 @@
+.card {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row!important;
+}
+
+.card span{
+  font-size: 10px;
+}
+
+.card img{
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+}
+
+.card .description {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
