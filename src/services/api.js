@@ -1,10 +1,17 @@
+const ROUTE = 'http://localhost:3000'
+
+
 class api {
     get() {
-        return this._get(`http://localhost:3000/api`)
+        return this._get(`${ROUTE}/api`)
     }
 
     search(value){
-        return this._get(`http://localhost:3000/api/search?query=${value}`)
+        return this._get(`${ROUTE}/api/search?query=${value}`)
+    }
+
+    getNotice(id){
+        return this._get(`${ROUTE}/api/notice?id=${id}`)
     }
 
     _get(url){

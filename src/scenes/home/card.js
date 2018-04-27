@@ -1,26 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './card.css';
 
 export default ({ data }) => {
     const arr = [];
     for (var key in data) {
        if(data[key]){
-            arr.push(<span id={key}>{`${key}:${data[key]}`}</span>)
+            arr.push(<span key={key}>{`${key}:${data[key]}`}</span>)
         }
     }
 
-    let image = '';
-    if(data.IMG){
-        image=data.IMG.replace('@{img1;//','http://').replace(';ico1}@','');
-    }
-
     return (
-        <div className='card'>
-            {image ? <img class="img-fluid" src={image} alt="Jean Marc Millot" /> : <div/>}
-            <div className='description'>
-            {arr}
-            </div>
-        </div>
+        <Link className='card' to={`/notice/${data.REF}`} params={{ notice: data }}>
+                {data.IMG ? <img className="img-fluid" src={data.IMG} alt="Jean Marc Millot" /> : <div/>}
+                <div className='description'>
+                    {arr}
+                </div>
+        </Link >
     );
 }
 

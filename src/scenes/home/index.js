@@ -32,8 +32,8 @@ export default class Home extends React.Component {
     }
 
     renderResults(){
-        return this.state.entities.map((data) => {
-            return <Card data={data}/>
+        return this.state.entities.map((data,i) => {
+            return <Card key={i} data={data}/>
         })
     }
 
