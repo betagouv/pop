@@ -9,24 +9,46 @@ function parse(file, opt, cb) {
     let header = null;
     var parser = csvparse({ delimiter: '|', from: 1, quote: '' })//, relax_column_count: true
     var input = fs.createReadStream(file);
-    var transformer = transform((record, callback) => {
+
+    var toObject = transform((record, next) => {
+        let obj = null;
         if (!header) {
             header = record;
         } else {
-            const obj = {};
+            obj = {};
             for (var i = 0; i < record.length; i++) {
                 obj[header[i]] = record[i];
             }
-            arr.push(obj)
+        }
+        next(null, obj);
+    }, { parallel: 1 });
+
+    var batcher = transform((record, next) => {
+        if (record) {
+            arr.push(record)
         }
         if (arr.length >= opt.batch) {
-            cb(arr, callback);
+            cb(arr, next);
             arr = [];
         } else {
-            callback()
+            next()
         }
     }, { parallel: 1 });
-    const stream = input.pipe(parser).pipe(transformer);
+
+
+    var transformer = transform((obj, callback) => {
+        if (obj.IMG) {
+            obj.IMG = obj.IMG.replace('@{img1;//', 'http://').replace(';ico1}@', '');
+        }
+        callback(null, obj);
+    }, { parallel: 1 });
+
+
+    const stream = input
+        .pipe(parser)
+        .pipe(toObject)
+        .pipe(transformer)
+        .pipe(batcher);
 
     stream.on('finish', () => {
         cb(arr, null);

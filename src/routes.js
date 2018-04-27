@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
         if (err) {
             console.log('ERR', err)
         } else {
-            res.send(JSON.stringify(entities));
+            res.send(entities);
         }
     });
 })
@@ -22,9 +22,21 @@ router.get('/search', (req, res) => {
                 console.log('ERR', err)
             } else {
                 console.log(entities.length + 'found for query ' + a)
-                res.send(JSON.stringify(entities));
+                res.send(entities);
             }
         });
+})
+
+
+router.get('/notice', (req, res) => {
+    var id = req.query.id;
+    Models.merimeeMH.findById(id, (err, notice) => {
+        if (err) {
+            console.log('ERR', err)
+        } else {
+            res.send(JSON.stringify(notice));
+        }
+    });
 })
 
 
