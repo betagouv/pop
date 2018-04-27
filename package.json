@@ -6,7 +6,7 @@
   "scripts": {
     "run:import": "node ./src/import.js",
     "start": "node ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./src/test.js"
   },
   "repository": {
     "type": "git",

@@ -16,8 +16,9 @@ router.get('/', (req, res) => {
 
 router.get('/search', (req, res) => {
     var a = req.query.query;
-    Models.merimeeMH.find({ $text: { $search: a } })
-        .limit(10).exec((err, entities) => {
+    Models.merimeeMH.find({ $text: { $search: a } }, { score: { $meta: "textScore" } })
+        .sort({ score: { $meta: "textScore" } })
+        .limit(50).exec((err, entities) => {
             if (err) {
                 console.log('ERR', err)
             } else {
