@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 import './card.css';
 
 export default ({ data }) => {
@@ -11,12 +12,19 @@ export default ({ data }) => {
     }
 
     return (
-        <Link className='card' to={`/notice/${data.REF}`} params={{ notice: data }}>
-                {data.IMG ? <img className="img-fluid" src={data.IMG} alt="Jean Marc Millot" /> : <div/>}
-                <div className='description'>
-                    {arr}
-                </div>
-        </Link >
+            <div className='card' >
+            {data.IMG ? <img className="img-fluid" src={data.IMG} alt="Jean Marc Millot" /> : <div/>}
+            <div className='description'>
+                {arr}
+            </div>
+            <div className='actions'>
+                    <Link to={`/notice/${data.REF}`} >
+                        <Button color="primary">
+                                Visit
+                        </Button>
+                    </Link>
+            </div>
+        </div>
     );
 }
 

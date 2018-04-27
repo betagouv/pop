@@ -18,7 +18,7 @@ export default class Notice extends React.Component {
     }
 
     componentWillMount(){
-        API.getNotice(this.props.match.params.step).then((notice) =>{
+        API.getNotice(this.props.match.params.id).then((notice) =>{
             this.setState({loading:false,notice})
         })
     }
@@ -27,11 +27,17 @@ export default class Notice extends React.Component {
         if(this.state.loading){
             return  <Loader />
         }
-        
+
+        const arr = [];
+        for (var key in this.state.notice) {
+           if(this.state.notice[key]){
+                arr.push(<span key={key}>{`${key}:${this.state.notice[key]}`}</span>)
+            }
+        }
+
         return (
                 <Container className='notice'>
-                        coucou
-                        {JSON.stringify(this.state.notice)}
+                        {arr}
                 </Container>
         );
     }

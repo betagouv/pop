@@ -10,8 +10,8 @@ class api {
         return this._get(`${ROUTE}/api/search?query=${value}`)
     }
 
-    getNotice(id){
-        return this._get(`${ROUTE}/api/notice?id=${id}`)
+    getNotice(ref){
+        return this._get(`${ROUTE}/api/notice?ref=${ref}`)
     }
 
     _get(url){
