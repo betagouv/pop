@@ -4,11 +4,11 @@ var await = require('asyncawait/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
 
-function parse(file, opt, cb) {
+function parse(file, cb) {
     let arr = [];
     let header = null;
     var parser = csvparse({ delimiter: '|', from: 1, quote: '' })//, relax_column_count: true
-    var input = fs.createReadStream(file);
+    var input = fs.createReadStream(file,'latin1');
 
     var toObject = transform((record, next) => {
         let obj = null;
@@ -27,7 +27,7 @@ function parse(file, opt, cb) {
         if (record) {
             arr.push(record)
         }
-        if (arr.length >= opt.batch) {
+        if (arr.length >= 1000) {
             cb(arr, next);
             arr = [];
         } else {
@@ -67,7 +67,7 @@ function run(file, object) {
 
 
             console.log('RUN  ', file)
-            parse(file, { batch: 1000 }, (arr, next) => {
+            parse(file, (arr, next) => {
                 const objects = arr.map((e) => {
                     const m = new object(e);
                     m._id = e.REF;
