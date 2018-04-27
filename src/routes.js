@@ -29,12 +29,14 @@ router.get('/search', (req, res) => {
 
 
 router.get('/notice', (req, res) => {
-    var id = req.query.id;
-    Models.merimeeMH.findById(id, (err, notice) => {
+    var ref = req.query.ref;
+
+    console.log('Look for ref ', ref)
+    Models.merimeeMH.findOne({ REF: ref }, (err, notice) => {
         if (err) {
             console.log('ERR', err)
         } else {
-            res.send(JSON.stringify(notice));
+            res.send(notice);
         }
     });
 })
