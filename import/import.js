@@ -1,4 +1,4 @@
-// const Mongo = require('../src/mongo');
+const Mongo = require('../src/mongo');
 
 const Parse = require('./import_parse');
 const Models = require('../src/models')
