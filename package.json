@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run:import": "node ./src/import.js",
+    "run:import": "node ./import/import.js",
     "start": "node ./src/index.js",
-    "test": "node ./src/test.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "csv-parse": "^2.2.0",
     "express": "^4.16.3",
     "helmet": "^3.12.0",
+    "mocha": "^5.1.1",
     "mongoose": "^5.0.16",
     "stream-transform": "^1.0.2"
   }

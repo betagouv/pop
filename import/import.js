@@ -1,9 +1,7 @@
-const Mongo = require('./mongo');
+// const Mongo = require('../src/mongo');
 
 const Parse = require('./import_parse');
-const Models = require('./models')
-
-let count = 0;
+const Models = require('../src/models')
 
 
 const arr = [];
@@ -28,30 +26,9 @@ async function run() {
   for (var i = 0; i < arr.length; i++) {
     await (Parse(arr[i].file, arr[i].model))
   }
-  console.log('DONE in ', (Date.now() - start) /1000 ,' seconds')
+  console.log('DONE in ', (Date.now() - start) / 1000, ' seconds')
 }
 
-// .then(() => {
-//   console.log('DONE')
-// })
-
-// Parse('./data/memoire-IVR-valid.csv', Models.memoireIVR).then(() => {
-//   console.log('DONE')
-// })
-
-// Parse('./data/memoire-SAP-valid.csv', Models.memoireSAP).then(() => {
-//   console.log('DONE')
-// })
-
-
-// Parse('./data/palissy-ETAT-valid.csv', Models.palissyETAT).then(() => {
-//   console.log('DONE')
-// })
-
-// Parse('./data/merimee-MH-valid.csv', Models.merimeeMH).then(() => {
-//   console.log('DONE')
-// })
-
-
-
-run();
+setTimeout(() => {
+  run();
+}, 5000)
