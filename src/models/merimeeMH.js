@@ -9,7 +9,7 @@ const Schema = new mongoose.Schema({
     APPL: String,
     APRO: String,
     ARCHEO: String,
-    AUTP: { type: String, text: true },
+    AUTP: String,
     AUTR: String,
     CADA: String,
     CANT: String,
@@ -116,6 +116,7 @@ const Schema = new mongoose.Schema({
     APPL: String,
 }, { _id: false })
 
+Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
 const object = mongoose.model("merimee_mh", Schema)
 
 module.exports = object;

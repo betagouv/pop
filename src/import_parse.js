@@ -7,8 +7,8 @@ var csvparse = require('csv-parse');
 function parse(file, cb) {
     let arr = [];
     let header = null;
-    var parser = csvparse({ delimiter: '|', from: 1, quote: '' })//, relax_column_count: true
-    var input = fs.createReadStream(file,'latin1');
+    var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
+    var input = fs.createReadStream(file, 'latin1');
 
     var toObject = transform((record, next) => {
         let obj = null;

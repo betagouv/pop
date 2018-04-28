@@ -15,6 +15,31 @@ router.get('/', (req, res) => {
 })
 
 router.get('/search', (req, res) => {
+    var query = req.query.query;
+    var collection = req.query.collection;
+    if (!query) {
+        Models.get(collection).find({}).limit(20).exec((err, entities) => {
+            if (err) {
+                console.log('ERR', err)
+            } else {
+                res.send(entities);
+            }
+        });
+    } else {
+        Models.get(collection).find({ $text: { $search: query } })
+            .limit(50).exec((err, entities) => {
+                if (err) {
+                    console.log('ERR', err)
+                } else {
+                    console.log(entities.length + 'found for query ' + a)
+                    res.send(entities);
+                }
+            });
+    }
+});
+
+
+/*router.get('/search', (req, res) => {
     var a = req.query.query;
     Models.merimeeMH.find({ $text: { $search: a } }, { score: { $meta: "textScore" } })
         .sort({ score: { $meta: "textScore" } })
@@ -26,7 +51,10 @@ router.get('/search', (req, res) => {
                 res.send(entities);
             }
         });
-})
+})*/
+
+
+// TICO_text_PPRO_text_AUTP_text
 
 
 router.get('/notice', (req, res) => {
