@@ -1,8 +1,11 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button } from 'reactstrap';
+import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+
+import FieldInput from './components/fieldInput.js'
+import FieldTags from './components/fieldTags.js'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
@@ -23,9 +26,26 @@ class Notice extends React.Component {
 
     componentWillMount() {
         API.getNotice(this.props.match.params.id).then((notice) => {
+            const initData = {
+                TECH: notice.TECH,
+                STAT: notice.STAT,
+                CONTACT: notice.CONTACT,
+                REF: notice.REF,
+                DMIS: notice.DMIS,
+                DMAJ: notice.DMAJ,
+                HIST: notice.HIST,
+                SCLE: notice.SCLE
+            }
+            this.props.initialize(initData);
             this.setState({ loading: false, notice })
         })
     }
+
+    onSubmit(values) {
+        console.log('ONSUBMIT', values);
+        this.setState({ saving: true })
+    }
+
 
     render() {
         if (this.state.loading) {
@@ -42,7 +62,10 @@ class Notice extends React.Component {
         return (
             <Container className='notice' fluid>
                 <h2 className='title'>Vous travaillez dans la base Mérimée</h2>
-                <main className="main-body">
+                <Form
+                    onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
+                    className='main-body'
+                >
                     <Row>
                         <Col xs={12} sm={12} md='4'>
                             <div className="thumbs-box">
@@ -58,7 +81,13 @@ class Notice extends React.Component {
                                 <p><strong>Localisation :</strong> {this.state.notice.COM}, {this.state.notice.REG}</p>
                                 <p><strong>Architecte :</strong></p>
                             </div>
-                            <p>{this.state.notice.HIST}</p>
+
+                            <FieldInput
+                                title='Histoire : '
+                                name='HIST'
+                                type='textarea'
+                                rows={10}
+                            />
                             {/* <Row>
                                 <Col sm="3">
                                     <h6>Titre</h6>
@@ -78,32 +107,64 @@ class Notice extends React.Component {
                                 </Col>
                             </Row> */}
 
-                            <FieldInput
-                                title='Technique'
-                                value={this.state.TECH}
-                                onChange={(e) => this.setState({ TECH: e.target.value })}
-                            />
-                            <p><strong>Technique :</strong> {this.state.notice.TECH}</p>
-                            <p><strong>Date MAJ :</strong> {this.state.notice.DMAJ}</p>
-                            <p><strong>Date MIS :</strong> {this.state.notice.DMIS}</p>
-                            <p><strong>Siecle :</strong> {this.state.notice.SCLE}</p>
-                            <p><strong>Siecle Detail :</strong> </p>
 
-                            <p><strong>Proprietry :</strong> {this.state.notice.STAT}</p>
-                            <p><strong>Notice :</strong> {this.state.notice.REF}</p>
-                            <p><strong>Contact :</strong> {this.state.notice.CONTACT}</p>
+                            <FieldInput
+                                title='Date MAJ : '
+                                name='DMAJ'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Date MIS : '
+                                name='DMIS'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Notice : '
+                                name='REF'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title='Siecle : '
+                                name='SCLE'
+                            />
+                            <FieldInput
+                                title='Techniques : '
+                                name='TECH'
+                            />
+                            <FieldInput
+                                title='Proprietaire : '
+                                name='STAT'
+                            />
+
+                            <FieldInput
+                                title='Contact : '
+                                name='CONTACT'
+                            />
+
+                            <FieldTags
+                                title='Test : '
+                                name='TITRE'
+                            />
+
                             <p style={{ textAlign: 'end' }}>{this.state.notice.COPY}</p>
                         </Col>
                     </Row>
-                </main>
-                <div className='buttons'>
-                    <Button color="danger">
-                        {/* <Link to="/"> */}
-                        Annuler
+                    <div className='buttons'>
+                        <Button color="danger">
+                            {/* <Link to="/"> */}
+                            Annuler
                         {/* </Link> */}
+                        </Button>
+                        <Button
+                            disabled={false}
+                            color="primary"
+                            type="submit"
+                        >
+                            Sauvegarder
                     </Button>
-                    <Button disabled color="primary">Sauvegarder</Button>
-                </div>
+                    </div>
+                </Form>
                 <div className='rawdata'>
                     {arr}
                 </div>
@@ -117,19 +178,6 @@ export default reduxForm({
     form: 'notice'
 })(Notice)
 
-
-const FieldInput = ({ value, title, onChange, ...rest }) => {
-    return (
-        <div className='field'>
-            <strong>{title}</strong>
-            <Input
-                value={value}
-                onChange={onChange}
-                {...rest}
-            />
-        </div>
-    )
-}
 
 const Images = ({ images }) => {
     if (images && images.length) {
@@ -147,7 +195,70 @@ const Images = ({ images }) => {
     }
 }
 
-// const Images = ({ images }) => {
+            /*
+  componentDidMount() {
+
+    const store = this.props.storeObj;
+    const initData = {
+                    "name": store.name,
+                "legal_company_name": store.legal_company_name || '',
+                "company_registration_number": store.company_registration_number || '',
+                "description": store.description || '',
+                "type": store.type || '',
+                "picture": store.picture || '',
+                "banner": store.banner || '',
+                "address": store.address || '',
+                "city": store.city || '',
+                "zip_code": store.zip_code || '',
+                "country": store.country || '',
+                "location": store.location || '',
+                "phone": store.phone || '',
+                "url": store.url || '',
+                "email": store.email || '',
+                "zoho_id": store.zoho_id || '',
+                "warehouse_contact": store.warehouse_contact || '',
+                "warehouse_phones": store.warehouse_phones || '',
+                "warehouse_emails": store.warehouse_emails || '',
+                "distribution_chanel_id": store.distribution_chanel_id || '',
+                "is_active": store.is_active || '',
+                "commission": store.commission || '',
+                "delivery_tax": store.delivery_tax || '',
+                "gst_percentage_for_import": store.gst_percentage_for_import || '',
+                "trade_price": store.trade_price || false,
+                "is_gst_included": store.is_gst_included || '',
+                "in_app_purchase": store.in_app_purchase || '',
+                "enable": store.enable || false,
+                "pickup_same_day": store.pickup_same_day || '',
+                "pickup_next_day": store.pickup_next_day || '',
+                "pickup_cut_of_time": store.pickup_cut_of_time || '',
+                "express_delivery": store.express_delivery || '',
+                "open_time": store.open_time || '',
+                "close_time": store.close_time || '',
+                "is_monday_closed": store.is_monday_closed || false,
+                "is_tuesday_closed": store.is_tuesday_closed || false,
+                "is_wednesday_closed": store.is_wednesday_closed || false,
+                "is_thursday_closed": store.is_thursday_closed || false,
+                "is_friday_closed": store.is_friday_closed || false,
+                "is_saturday_closed": store.is_saturday_closed || false,
+                "is_sunday_closed": store.is_sunday_closed || false,
+                "contact_name": store.contact_name || '',
+              };
+              this.props.initialize(initData);
+            }
+          
+  onSubmit(values) {
+                    this.setState({ saving: true })
+    if (this.props.storeId !== 'null') {
+      return Firebase.editStore(this.props.storeId, values).then(() => {
+                    this.setState({ saving: false })
+        notification.success({message: 'Store saved' });
+              })
+            }
+          }
+        
+          */
+
+// const Images = ({images}) => {
 //     return (
 //         <Col md="4">
 //             <div className="thumbs-box">
@@ -179,6 +290,29 @@ const Images = ({ images }) => {
 //     );
 // }
 
+
+/*
+  componentDidMount() {
+
+    const store = this.props.storeObj;
+    const initData = {
+      "name": store.name,
+      "legal_company_name": store.legal_company_name || '',
+      "company_registration_number": store.company_registration_number || '',
+    };
+    this.props.initialize(initData);
+  }
+
+  onSubmit(values) {
+    this.setState({ saving: true })
+    if (this.props.storeId !== 'null') {
+      return Firebase.editStore(this.props.storeId, values).then(() => {
+        this.setState({ saving: false })
+        notification.success({ message: 'Store saved' });
+      })
+    }
+  }
+  */
 /*
 renderImages() {
     if (this.props.label.pictures && this.props.label.pictures.length) {
