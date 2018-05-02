@@ -2,6 +2,7 @@ body {
   margin: 0px;
   overflow:hidden;
   overflow-y: auto;
+  font-family: 'LatoRoboto';
 }
 
 body, html, #root {
@@ -9,6 +10,3 @@ body, html, #root {
   height: 100%;
 }
 
-p,h1,h2,h3,h4,h5,h6 {
-  font-family: Lato;
-}

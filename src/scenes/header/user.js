@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Avatar from '../../components/avatar'
 
-import authAction from './../../redux/auth/actions'
-const { logout } = authAction
+// import authAction from './../../redux/auth/actions'
+// const { logout } = authAction
 
 
 import './user.css'
@@ -68,8 +68,8 @@ class User extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { account: Auth.account }
+  return { account: null /*Auth.account*/ }
 }
 
-export default connect(mapStateToProps, { logout })(User)
+export default connect(mapStateToProps, {  })(User)
 

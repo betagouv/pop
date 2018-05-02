@@ -6,3 +6,28 @@
   background-color: white;
   flex-direction: column;
 }
+
+
+.notice .title{
+  text-align: center;
+  padding: 50px;
+}
+
+.notice .rawdata{
+  padding-top: 500px;
+  font-size: 10px;
+  display: flex;
+  color: grey;
+  flex-direction: column;
+}
+
+.notice .buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.notice .buttons button{
+  margin: 10px;
+}

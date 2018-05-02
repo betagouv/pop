@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Autocomplete from 'react-autocomplete'
 
+import { history } from '../../redux/store';
 import API from '../../services/api'
 
 import Card from './card'
@@ -16,44 +17,81 @@ export default class Home extends React.Component {
         modal: false,
         entities: [],
         search: '',
-        collection: 'mnrDMF'
+        collection: 'merimeeMH'
     }
 
     componentWillMount() {
 
     }
 
-    search(e) {
-        API.search("merimeeMH", this.state.search).then((entities) => {
+    search(value) {
+        API.search("merimeeMH", value).then((entities) => {
             this.setState({ entities })
         })
     }
 
-    renderResults() {
-        return this.state.entities.map((data, i) => {
-            return <Card key={i} data={data} />
-        })
-    }
+    // renderResults() {
+    //     return this.state.entities.map((data, i) => {
+    //         return <Card key={i} data={data} />
+    //     })
+    // }
 
     render() {
         return (
-            <div className='home'>
+            <div className='search'>
                 <Container>
-                    <div>Vous recherchez dans la base Mérimée</div>
-                    <div className='search'>
-                        <Input
+                    <h2 className='title'>Vous recherchez dans la base Mérimée</h2>
+                    <div className='search-section'>
+                        <Autocomplete
+                            inputProps={{
+                                id: 'autocomplete',
+                                placeholder: 'Saississez un auteur, une référence, une localisation, un mot-clé...'
+                            }}
+                            className='autocomplete'
+                            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
                             value={this.state.search}
-                            onChange={(e) => this.setState({ search: e.target.value })}
-                            placeholder='Saississez un auteur, une référence, une localisation, un mot-clé'
+                            items={this.state.entities}
+                            getItemValue={(item) => {
+                                console.log('getItemValue', item)
+                                return item.TICO
+                            }}
+                            onSelect={(value, item) => {
+                                history.push(`/notice/${item.REF}`)
+                           
+                            }}
+                            onChange={(event, value) => {
+                                this.setState({ search: value })
+                                this.search(value)
+                            }}
+                            renderMenu={(children) => {
+                                return (
+                                    < div className="menu" >
+                                        {children}
+                                    </div>
+                                )
+                            }}
+                            renderItem={(item, isHighlighted) => {
+                                return (
+                                    <div
+                                        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+                                        key={item.abbr}
+                                    >
+                                        {`(${item.REF}) ${item.TICO}`}
+                                    </div>
+                                )
+                            }}
                         />
-                        <Button
-                            onClick={this.search.bind(this)}
-                        >
-                            Search
+                        <div>
+                            <Button
+                                onClick={this.search.bind(this)}
+                            >
+                                Search
                         </Button>
+                        </div>
                     </div>
+
                     <div className='results'>
-                        {this.renderResults()}
+                        {/* {this.renderResults()} */}
                     </div>
                 </Container>
             </div >
