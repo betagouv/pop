@@ -1,15 +1,55 @@
-.home {
-  display: flex;
-  justify-content:'center';
-  align-items: 'center'
+.home .hero-text{
+    text-align: center;
+    line-height: 1.3;
+    font-size: 18px;
+    margin-bottom: 80px;
 }
 
-.home .search{
-  display: flex;
-  width: 100%;
-  padding-top: 10%;
+.home .activities h4{
+    background: url('./../../assets/002-time.png') left center no-repeat;
+    -webkit-background-size: 18px; ;
+    padding-left: 25px;
+    background-size: 18px; ;
 }
 
-.home .select{
-  max-width: 140px;
+.home .list-box{
+    padding: 20px 30px;
+    border: 1px solid #444444;
+}
+
+.home .list-box li {
+    padding: 5px 0;
+}
+
+.home .tile:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.home .tile {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 10px;
+    cursor: pointer;
+    max-width: 250px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home .tile .title {
+    font-size: 20px;
+}
+
+.home .tile img{
+    object-fit: cover;
+    max-width: 200px;
+}
+
+.home .tile .thumb{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }

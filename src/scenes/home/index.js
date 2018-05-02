@@ -1,82 +1,64 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
-
-import API from '../../services/api'
-
-import Card from './card'
 
 import './index.css';
 
 export default class Home extends React.Component {
 
     state = {
-        modal: false,
-        entities: [],
-        search: '',
-        collection: 'mnrDMF'
+        tiles: [
+            { url: '/merimee', name: 'Joconde', image: require('../../assets/joconde.jpg') },
+            { url: '/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
+            { url: '/merimee', name: 'Palissy', image: require('../../assets/palissy.jpg') },
+            { url: '/merimee', name: 'Mémoires', image: require('../../assets/small.jpg') },
+            { url: '/merimee', name: 'MNR', image: require('../../assets/small.jpg') },
+        ]
     }
 
-    componentWillMount() {
-
-    }
-
-    search(e) {
-        API.search(this.state.collection, this.state.search).then((entities) => {
-            this.setState({ entities })
-        })
-    }
-
-    renderResults() {
-        return this.state.entities.map((data, i) => {
-            return <Card key={i} data={data} />
-        })
+    renderTiles() {
+        return this.state.tiles.map(({ url, name, image }, i) => {
+            return (
+                <Col className="box text-center mb-3">
+                    <Link to='/search'>
+                        <div className='tile'>
+                            <div className="thumb  mb-3">
+                                <img src={image} alt="dummy image" className="img-fluid" />
+                            </div>
+                            <div className="caption">
+                                <p className='title'>{name}</p>
+                            </div>
+                        </div>
+                    </Link>
+                </Col>
+            )
+        });
     }
 
     render() {
         return (
             <div className='home'>
-                <Container>
-                    <div className='search'>
-                        <Input
-                            className='select'
-                            type="select"
-                            name="select"
-                            value={this.state.collection}
-                            onChange={(e) => this.setState({ collection: e.target.value })}
-                        >
-                            <option>palissyMH</option>
-                            <option>palissyINV</option>
-                            <option>palissyETAT</option>
-                            <option>mnrDMF</option>
-                            <option>merimeeMH</option>
-                            <option>merimeeINV</option>
-                            <option>merimeeETAT</option>
-                            <option>memoireSDAP</option>
-                            <option>memoireSAP</option>
-                            <option>memoireIVR</option>
-                            <option>memoireCRMH</option>
-                            <option>memoireCAOA</option>
-                            <option>memoireARCHEO</option>
-                            <option>jocondeMUSEES</option>
-                        </Input>
-                        <Input
-                            value={this.state.search}
-                            onChange={(e) => this.setState({ search: e.target.value })}
-                        />
-                        <Button
-                            onClick={this.search.bind(this)}
-                        >
-                            Search
-                        </Button>
+                <Container fluid>
+                    <div className="hero-text">
+                        <p>Outil d'édition unitaire et import massif de données patrimoniales de la platforme POP</p>
                     </div>
-                    <div className='results'>
-                        {this.renderResults()}
+                    <Row>
+                        {this.renderTiles()}
+                    </Row>
+                    <div className="activities py-3">
+                        <h4>Historique d'activite</h4>
+                        <div className="list-box">
+                            <ul className="list-unstyled">
+                                <li>item 1</li>
+                                <li>item 2</li>
+                                <li>item 3</li>
+                                <li>item 4</li>
+                                <li>item 5</li>
+                            </ul>
+                        </div>
                     </div>
                 </Container>
             </div >
         );
     }
 }
-
