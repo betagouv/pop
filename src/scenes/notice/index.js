@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Input, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
@@ -12,7 +13,7 @@ import dummyImg_plus from './../../assets/small.jpg';
 
 import './index.css';
 
-export default class Notice extends React.Component {
+class Notice extends React.Component {
 
     state = {
         notice: null,
@@ -55,7 +56,7 @@ export default class Notice extends React.Component {
                             <span>{this.state.notice.DENO}</span>
                             <div className="personal-info mt-2">
                                 <p><strong>Localisation :</strong> {this.state.notice.COM}, {this.state.notice.REG}</p>
-                                <p><strong>Architecte :</strong>  Peosper Bolon</p>
+                                <p><strong>Architecte :</strong></p>
                             </div>
                             <p>{this.state.notice.HIST}</p>
                             {/* <Row>
@@ -76,24 +77,32 @@ export default class Notice extends React.Component {
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                                 </Col>
                             </Row> */}
+
+                            <FieldInput
+                                title='Technique'
+                                value={this.state.TECH}
+                                onChange={(e) => this.setState({ TECH: e.target.value })}
+                            />
                             <p><strong>Technique :</strong> {this.state.notice.TECH}</p>
                             <p><strong>Date MAJ :</strong> {this.state.notice.DMAJ}</p>
                             <p><strong>Date MIS :</strong> {this.state.notice.DMIS}</p>
                             <p><strong>Siecle :</strong> {this.state.notice.SCLE}</p>
                             <p><strong>Siecle Detail :</strong> </p>
+
                             <p><strong>Proprietry :</strong> {this.state.notice.STAT}</p>
                             <p><strong>Notice :</strong> {this.state.notice.REF}</p>
                             <p><strong>Contact :</strong> {this.state.notice.CONTACT}</p>
+                            <p style={{ textAlign: 'end' }}>{this.state.notice.COPY}</p>
                         </Col>
                     </Row>
                 </main>
-                <footer>
-                    <h5>Lorem ipsum dolor sit amet, consectetur</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cumque dolorum eveniet inventore quisquam. Ab accusamus at cupiditate eaque eveniet illum laboriosam magni odio quidem quo sapiente, sequi velit vitae?</p>
-                </footer>
                 <div className='buttons'>
-                    <Button color="danger">Cancel</Button>
-                    <Button color="primary">Save</Button>
+                    <Button color="danger">
+                        {/* <Link to="/"> */}
+                        Annuler
+                        {/* </Link> */}
+                    </Button>
+                    <Button disabled color="primary">Sauvegarder</Button>
                 </div>
                 <div className='rawdata'>
                     {arr}
@@ -101,6 +110,25 @@ export default class Notice extends React.Component {
             </Container>
         );
     }
+}
+
+
+export default reduxForm({
+    form: 'notice'
+})(Notice)
+
+
+const FieldInput = ({ value, title, onChange, ...rest }) => {
+    return (
+        <div className='field'>
+            <strong>{title}</strong>
+            <Input
+                value={value}
+                onChange={onChange}
+                {...rest}
+            />
+        </div>
+    )
 }
 
 const Images = ({ images }) => {

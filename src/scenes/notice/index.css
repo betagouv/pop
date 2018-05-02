@@ -31,3 +31,19 @@
 .notice .buttons button{
   margin: 10px;
 }
+
+
+
+.notice .field{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.notice .field input{
+  margin-left: 16px;
+  height: 30px;
+}
