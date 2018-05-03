@@ -8,28 +8,9 @@
   padding: 50px;
 }
 
-.search #autocomplete{
-  width: 500px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.search .search-section{
+.search .advancedfilters {
   display: flex;
+  padding-top: 20px;
+  justify-content: space-around;
 }
 
-.search .menu{
-  width: 500px;
-  border-color: grey;
-  border-style: solid;
-  border-width: 1px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 5px;
-}
-
-.search .menu .item-highlighted{
-  color: white;
-  background-color: #4095bf;
-}

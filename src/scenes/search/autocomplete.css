@@ -1,0 +1,31 @@
+.search #autocomplete{
+  width: 500px;
+  height: 40px;
+}
+
+.search .search-section{
+  display: flex;
+}
+
+.search button{
+  border-radius: 0px;
+  height: 40px;
+}
+
+.search .menu{
+  width: 500px;
+  border-color: grey;
+  border-style: solid;
+  border-width: 1px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  position: absolute;
+  background-color: white;
+  padding-left: 5px;
+}
+
+.search .menu .item-highlighted{
+  color: white;
+  background-color: #4095bf;
+}

@@ -2,7 +2,8 @@ import React from 'react';
 import { Row, Col, Input, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import Autocomplete from 'react-autocomplete'
+
+import Autocomplete from './autocomplete'
 
 import { history } from '../../redux/store';
 import API from '../../services/api'
@@ -11,7 +12,7 @@ import Card from './card'
 
 import './index.css';
 
-export default class Home extends React.Component {
+export default class Search extends React.Component {
 
     state = {
         modal: false,
@@ -30,66 +31,56 @@ export default class Home extends React.Component {
         })
     }
 
-    // renderResults() {
-    //     return this.state.entities.map((data, i) => {
-    //         return <Card key={i} data={data} />
-    //     })
-    // }
+    renderResults() {
+        return this.state.entities.map((data, i) => {
+            return <Card key={i} data={data} />
+        })
+    }
 
     render() {
         return (
             <div className='search'>
                 <Container>
                     <h2 className='title'>Vous recherchez dans la base Mérimée</h2>
-                    <div className='search-section'>
-                        <Autocomplete
-                            inputProps={{
-                                id: 'autocomplete',
-                                placeholder: 'Saississez un auteur, une référence, une localisation, un mot-clé...'
-                            }}
-                            className='autocomplete'
-                            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
-                            value={this.state.search}
-                            items={this.state.entities}
-                            getItemValue={(item) => {
-                                console.log('getItemValue', item)
-                                return item.TICO
-                            }}
-                            onSelect={(value, item) => {
-                                history.push(`/notice/${item.REF}`)
-                           
-                            }}
-                            onChange={(event, value) => {
-                                this.setState({ search: value })
-                                this.search(value)
-                            }}
-                            renderMenu={(children) => {
-                                return (
-                                    < div className="menu" >
-                                        {children}
-                                    </div>
-                                )
-                            }}
-                            renderItem={(item, isHighlighted) => {
-                                return (
-                                    <div
-                                        className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
-                                        key={item.abbr}
-                                    >
-                                        {`(${item.REF}) ${item.TICO}`}
-                                    </div>
-                                )
-                            }}
-                        />
+                    <Autocomplete
+                        onSelect={(item) => {
+                            history.push(`/notice/${item.REF}`)
+                        }}
+                        onSearch={(value) => {
+                            console.log('VALUE', value)
+                        }}
+                    />
+
+                    <div className='advancedfilters'>
                         <div>
-                            <Button
-                                onClick={this.search.bind(this)}
-                            >
-                                Search
-                        </Button>
+                            <p>Localisation</p>
+                            <Input type="select" >
+                                <option>?</option>
+                                <option>???</option>
+                                <option>???</option>
+                                <option>???</option>
+                            </Input>
+                        </div>
+
+                        <div>
+                            <p>Dernière mise à jour</p>
+                            <Input type="select" >
+                                <option>Aujourd'hui</option>
+                                <option>Cette semaine</option>
+                                <option>Ce mois</option>
+                                <option>Cette année</option>
+                            </Input>
+                        </div>
+
+                        <div>
+                            <p>Niveau de completion</p>
+                            <Input type="select" >
+                                <option>Sans photo</option>
+                                <option>Incomplet</option>
+                                <option>Complet</option>
+                            </Input>
                         </div>
                     </div>
-
                     <div className='results'>
                         {/* {this.renderResults()} */}
                     </div>

@@ -34,7 +34,9 @@ class Notice extends React.Component {
                 DMIS: notice.DMIS,
                 DMAJ: notice.DMAJ,
                 HIST: notice.HIST,
-                SCLE: notice.SCLE
+                SCLE: notice.SCLE,
+                AUTR: notice.AUTR,
+                DENO: notice.DENO
             }
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
@@ -76,7 +78,10 @@ class Notice extends React.Component {
                         </Col>
                         <Col md="8">
                             <h3>{this.state.notice.TICO}</h3>
-                            <span>{this.state.notice.DENO}</span>
+                            <FieldInput
+                                title='Denomination : '
+                                name='DENO'
+                            />
                             <div className="personal-info mt-2">
                                 <p><strong>Localisation :</strong> {this.state.notice.COM}, {this.state.notice.REG}</p>
                                 <p><strong>Architecte :</strong></p>
@@ -140,6 +145,13 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Contact : '
                                 name='CONTACT'
+                            />
+
+
+                            <FieldInput
+                                title='Auteur: '
+                                name='AUTR'
+                                disabled
                             />
 
                             <FieldTags
