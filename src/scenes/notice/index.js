@@ -31,12 +31,25 @@ class Notice extends React.Component {
                 STAT: notice.STAT,
                 CONTACT: notice.CONTACT,
                 REF: notice.REF,
+                MHPP: notice.MHPP,
+                PPRO: notice.PPRO,
                 DMIS: notice.DMIS,
                 DMAJ: notice.DMAJ,
                 HIST: notice.HIST,
+                OBS: notice.OBS,
                 SCLE: notice.SCLE,
+                SCLX: notice.SCLX,
                 AUTR: notice.AUTR,
-                DENO: notice.DENO
+                AUTP: notice.AUTP,
+                DENO: notice.DENO,
+                DOMN: notice.DOMN,
+                COM: notice.COM,
+                REG: notice.REG,
+                DPT: notice.DPT,
+                LOCA: notice.LOCA,
+
+
+
             }
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
@@ -79,17 +92,56 @@ class Notice extends React.Component {
                         <Col md="8">
                             <h3>{this.state.notice.TICO}</h3>
                             <FieldInput
-                                title='Denomination : '
+                                title='[DENO]Denomination : '
                                 name='DENO'
                             />
-                            <div className="personal-info mt-2">
-                                <p><strong>Localisation :</strong> {this.state.notice.COM}, {this.state.notice.REG}</p>
-                                <p><strong>Architecte :</strong></p>
-                            </div>
 
                             <FieldInput
-                                title='Histoire : '
+                                title='[DOMN]Domaines : '
+                                name='DOMN'
+                            />
+
+                            <hr />
+
+                            <FieldInput
+                                title='[COM]COMMUNE : '
+                                name='COM'
+                            />
+
+                            <FieldInput
+                                title='[REG]REGION : '
+                                name='REG'
+                            />
+
+                            <FieldInput
+                                title='[DPT]DEPARTEMENT : '
+                                name='DPT'
+                            />
+
+                            <FieldInput
+                                title='[LOCA]LOCALISATIONS : '
+                                name='LOCA'
+                            />
+                            <hr />
+                            <FieldInput
+                                title='[MHPP]MH éléments : '
+                                name='MHPP'
+                            />
+                            <FieldInput
+                                title='[HIST]Histoire : '
                                 name='HIST'
+                                type='textarea'
+                                rows={10}
+                            />
+                            <FieldInput
+                                title='[OBS]OBSERVATIONS : '
+                                name='OBS'
+                                type='textarea'
+                                rows={10}
+                            />
+                            <FieldInput
+                                title='[PPRO]préc. Protection : '
+                                name='PPRO'
                                 type='textarea'
                                 rows={10}
                             />
@@ -114,50 +166,59 @@ class Notice extends React.Component {
 
 
                             <FieldInput
-                                title='Date MAJ : '
+                                title='[DMAJ]Date MAJ : '
                                 name='DMAJ'
                                 disabled
                             />
                             <FieldInput
-                                title='Date MIS : '
+                                title='[DMIS]Date MIS : '
                                 name='DMIS'
                                 disabled
                             />
                             <FieldInput
-                                title='Notice : '
+                                title='[REF]Notice : '
                                 name='REF'
                                 disabled
                             />
 
                             <FieldInput
-                                title='Siecle : '
+                                title='[SCLE]Siecle : '
                                 name='SCLE'
                             />
                             <FieldInput
-                                title='Techniques : '
+                                title='[SCLX]Siecle X : '
+                                name='SCLX'
+                            />
+                            <FieldInput
+                                title='[TECH]Techniques : '
                                 name='TECH'
                             />
                             <FieldInput
-                                title='Proprietaire : '
+                                title='[STAT]Proprietaire : '
                                 name='STAT'
                             />
 
                             <FieldInput
-                                title='Contact : '
+                                title='[CONTACT]Contact : '
                                 name='CONTACT'
                             />
 
-
+                            <hr />
                             <FieldInput
-                                title='Auteur: '
+                                title='[AUTP] Auteur phototype: '
+                                name='AUTP'
+                                disabled
+                            />
+                            <FieldInput
+                                title='[AUTR]Auteur: '
                                 name='AUTR'
                                 disabled
                             />
-
-                            <FieldTags
-                                title='Test : '
+                            <hr />
+                            {/* <FieldTags
+                                title='[TITRE]Test : '
                                 name='TITRE'
-                            />
+                            /> */}
 
                             <p style={{ textAlign: 'end' }}>{this.state.notice.COPY}</p>
                         </Col>
@@ -206,6 +267,115 @@ const Images = ({ images }) => {
         return <div />
     }
 }
+
+
+/*
+                ACMH: notice.ACMH
+ACTU: notice.ACTU,
+ACURL: notice.ACURL,
+ADRS: notice.ADRS,
+AFFE: notice.AFFE,
+AIRE: notice.AIRE,
+APPL: notice.APPL,
+APRO: notice.APRO,
+ARCHEO: notice.ARCHEO,
+AUTP: notice.AUTP,
+CADA: notice.CADA,
+CADA: notice.CADA,
+CADA: notice.CADA,
+COOR: notice.COOR,
+COORM: notice.COORM,
+COUV: notice.COUV,
+DATE: notice.DATE,
+DBOR: notice.DBOR,
+DENQ: notice.DENQ,
+DEPL: notice.DEPL,
+DESC: notice.DESC,
+DIMS: notice.DIMS,
+DLAB: notice.DLAB,
+DMAJ: notice.DMAJ,
+DMIS: notice.DMIS,
+DOMN: notice.DOMN,
+DOSADRS: notice.DOSADRS,
+DOSS: notice.DOSS,
+DOSURL: notice.DOSURL,
+DOSURLP: notice.DOSURLP,
+DPRO: notice.DPRO,
+DPT: notice.DPT,
+EDIF: notice.EDIF,
+ELEV: notice.ELEV,
+ENER: notice.ENER,
+ESCA: notice.ESCA,
+ETAG: notice.ETAG,
+ETAT: notice.ETAT,
+ETUD: notice.ETUD,
+GENR: notice.GENR,
+HIST: notice.HIST,
+HYDR: notice.HYDR,
+IDAGR: notice.IDAGR,
+IMAGE: notice.IMAGE,
+IMG: notice.IMG,
+IMPL: notice.IMPL,
+INSEE: notice.INSEE,
+INTE: notice.INTE,
+JATT: notice.JATT,
+JDAT: notice.JDAT,
+LBASE2: notice.LBASE2,
+LIENS: notice.LIENS,
+LIEU: notice.LIEU,
+LMDP: notice.LMDP,
+LOCA: notice.LOCA,
+MFICH: notice.MFICH,
+MHPP: notice.MHPP,
+MICR: notice.MICR,
+MOSA: notice.MOSA,
+MURS: notice.MURS,
+NBOR: notice.NBOR,
+NOMS: notice.NOMS,
+OBS: notice.OBS,
+PAFF: notice.PAFF,
+PARN: notice.PARN,
+PART: notice.PART,
+PDEN: notice.PDEN,
+PERS: notice.PERS,
+PINT: notice.PINT,
+PLAN: notice.PLAN,
+PLOC: notice.PLOC,
+PPRO: notice.PPRO,
+PREP: notice.PREP,
+PROT: notice.PROT,
+PSTA: notice.PSTA,
+REFE: notice.REFE,
+REFIM: notice.REFIM,
+REFM: notice.REFM,
+REFO: notice.REFO,
+REFP: notice.REFP,
+REG: notice.REG,
+REMA: notice.REMA,
+REMP: notice.REMP,
+RENV: notice.RENV,
+REPR: notice.REPR,
+RFPA: notice.RFPA,
+SCLD: notice.SCLD,
+SITE: notice.SITE,
+STAT: notice.STAT,
+THEM: notice.THEM,
+TICO: notice.TICO,
+TOIT: notice.TOIT,
+TOUT: notice.TOUT,
+TYPO: notice.TYPO,
+VERT: notice.VERT,
+VIDEO: notice.VIDEO,
+VISI: notice.VISI,
+VOCA: notice.VOCA,
+VOUT: notice.VOUT,
+WADRS: notice.WADRS,
+WCOM: notice.WCOM,
+WEB: notice.WEB,
+WRENV: notice.WRENV,
+ZONE: notice.ZONE,
+*/
+
 
             /*
   componentDidMount() {
