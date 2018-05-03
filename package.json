@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run:import": "node ./import/import.js",
+    "try": "node ./src/test.js",
     "start": "node ./src/index.js",
     "test": "mocha"
   },

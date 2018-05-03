@@ -4,6 +4,46 @@ var await = require('asyncawait/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
 
+const utils = require('./utils')
+
+
+function run(file, object) {
+    return new Promise(async (resolve, reject) => {
+        console.log('RUN  ', file)
+
+        console.log('Collection star droping');
+        object.collection.drop();
+        console.log('Collection droppped');
+
+        console.log('Start file integrity check');
+        await (showInconsistentLines(file))
+        console.log('End file integrity check');
+
+        let count = 0;
+        parse(file, (arr, next) => {
+            const objects = arr.map((e) => {
+                const m = new object(e);
+                m._id = e.REF;
+                return m;
+            })
+            object.collection.insert(objects, (err, docs) => {
+                if (err) {
+                } else {
+                    count += docs.insertedCount;
+                    console.log('Saved ' + count)
+                }
+
+                if (!next) {
+                    resolve();
+                } else {
+                    next();
+                }
+            });
+        })
+    })
+}
+
+
 function parse(file, cb) {
     let arr = [];
     let header = null;
@@ -38,8 +78,13 @@ function parse(file, cb) {
 
     var transformer = transform((obj, callback) => {
         if (obj.IMG) {
-            obj.IMG = obj.IMG.replace('@{img1;//', 'http://').replace(';ico1}@', '');
+            obj.IMG = utils.extractIMG(obj.IMG);
         }
+
+        if (obj.CONTACT) {
+            obj.CONTACT = utils.extractEmail(obj.CONTACT);
+        }
+
         callback(null, obj);
     }, { parallel: 1 });
 
@@ -53,45 +98,17 @@ function parse(file, cb) {
     stream.on('finish', () => {
         cb(arr, null);
     });
-
 }
 
 
-function run(file, object) {
-    let count = 0;
-    return new Promise((resolve, reject) => {
-        console.log('Collection star droping');
-        object.collection.drop();
-        console.log('Collection droppped');
-
-        console.log('RUN  ', file)
-        parse(file, (arr, next) => {
-            const objects = arr.map((e) => {
-                const m = new object(e);
-                m._id = e.REF;
-                return m;
-            })
-            object.collection.insert(objects, (err, docs) => {
-                if (err) {
-                } else {
-                    count += docs.insertedCount;
-                    console.log('Saved ' + count)
-                }
-
-                if (!next) {
-                    resolve();
-                } else {
-                    next();
-                }
-            });
-        })
-    })
+function log(file, counter, message, content) {
+    const str = `${file},${counter},${message},"${content.replace(',', '\,').replace('"', '')}"\n`
+    fs.appendFile('errors.csv', str, (err) => {
+        console.log('Error saved')
+    });
 }
-
-
 
 function showInconsistentLines(file) {
-
     return new Promise((resolve, reject) => {
         let linesCount = null;
         let counter = 1;
@@ -106,7 +123,7 @@ function showInconsistentLines(file) {
                 linesCount = (line.match(/\|/g) || []).length
             }
             if ((line.match(/\|/g) || []).length !== linesCount) {
-                console.log(`Issue on line ${counter} `)
+                log(file, counter, `Line should have ${linesCount} collumn and has ${(line.match(/\|/g) || []).length}`, `${line}`);
             }
             counter++;
         });
@@ -115,11 +132,7 @@ function showInconsistentLines(file) {
             resolve();
         })
     })
-
 }
 
-
-
-// showInconsistentLines('./data/joconde-MUSEES-valid.csv')
 
 module.exports = run;

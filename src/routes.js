@@ -31,7 +31,6 @@ router.get('/search', (req, res) => {
                 if (err) {
                     console.log('ERR', err)
                 } else {
-                    console.log(entities.length + 'found for query ' + a)
                     res.send(entities);
                 }
             });
