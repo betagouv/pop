@@ -9,7 +9,10 @@ function extractIMG(str) {
 function extractEmail(str) {
     var regex = /mailto:([\w\d._@]*)/
     var result = str.match(regex);
-    return result[1] || str;
+    if (result && result.length == 2) {
+        return result[1];
+    }
+    return str;
 }
 
 module.exports = {

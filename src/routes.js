@@ -5,7 +5,7 @@ const Models = require('./models');
 
 // define the about route
 router.get('/', (req, res) => {
-    Models.merimeeMH.find({}).limit(20).exec((err, entities) => {
+    Models.merimee.find({}).limit(20).exec((err, entities) => {
         if (err) {
             console.log('ERR', err)
         } else {
@@ -15,27 +15,47 @@ router.get('/', (req, res) => {
 })
 
 router.get('/search', (req, res) => {
-    var query = req.query.query;
+    var value = req.query.value;
     var collection = req.query.collection;
-    if (!query) {
-        Models.get(collection).find({}).limit(20).exec((err, entities) => {
-            if (err) {
-                console.log('ERR', err)
-            } else {
-                res.send(entities);
-            }
-        });
-    } else {
-        Models.get(collection).find({ $text: { $search: query } })
-            .limit(50).exec((err, entities) => {
-                if (err) {
-                    console.log('ERR', err)
-                } else {
-                    res.send(entities);
-                }
-            });
-    }
+    var limit = parseInt(req.query.limit);
+    var offset = parseInt(req.query.offset);
+    const query = Models.get(collection).find({ $text: { $search: value } });
+    Models.get(collection).paginate(query, { offset: offset, limit: limit }).then((result) => {
+        res.send(result)
+    });
+
+
+    // Model.paginate({}, { offset: 20, limit: 10 }).then(function (result) {
+    //     // ...
+    // });
+
+    // if (!value) {
+    //     Models.get(collection).find({}).limit(20).exec((err, entities) => {
+    //         if (err) {
+    //             console.log('ERR', err)
+    //         } else {
+    //             res.send(entities);
+    //         }
+    //     });
+    // } else {
+    //     const query = Models.get(collection).find({ $text: { $search: value } });
+
+    //     const arr = [];
+    //     arr.push(query.count())
+    //     arr.push(query.limit(50))
+
+    //     Promise.all(arr).then((values) => {
+    //         console.log('values', values)
+    //         res.send({
+    //             count: values[0],
+    //             entities: values[1]
+    //         });
+    //     })
+    // }
 });
+
+
+
 
 
 /*router.get('/search', (req, res) => {
@@ -58,9 +78,8 @@ router.get('/search', (req, res) => {
 
 router.get('/notice', (req, res) => {
     var ref = req.query.ref;
-
     console.log('Look for ref ', ref)
-    Models.merimeeMH.findOne({ REF: ref }, (err, notice) => {
+    Models.merimee.findOne({ REF: ref }, (err, notice) => {
         if (err) {
             console.log('ERR', err)
         } else {
