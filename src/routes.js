@@ -4,26 +4,36 @@ const router = express.Router()
 const Models = require('./models');
 
 // define the about route
-router.get('/', (req, res) => {
-    Models.merimee.find({}).limit(20).exec((err, entities) => {
-        if (err) {
-            console.log('ERR', err)
-        } else {
-            res.send(entities);
-        }
+
+router.post('/update', (req, res) => {
+    var id = req.query.id;
+    var collection = req.query.collection;
+    Models.get(collection).update({ _id: id }, req.body, { upsert: true }).then((e) => {
+        console.log('DONE')
+        res.sendStatus(200)
     });
 })
 
 router.get('/search', (req, res) => {
     var value = req.query.value;
     var collection = req.query.collection;
-    var limit = parseInt(req.query.limit);
-    var offset = parseInt(req.query.offset);
-    const query = Models.get(collection).find({ $text: { $search: value } });
-    Models.get(collection).paginate(query, { offset: offset, limit: limit }).then((result) => {
+    var deno = req.query.deno;
+    var limit = parseInt(req.query.limit) || 30;
+    var offset = parseInt(req.query.offset) || 0;
+
+    let query = {};
+    if (value) {
+        query.$text = { $search: value };
+    }
+    if (deno) {
+        query.DENO = { "$in": [deno] };
+    }
+
+    console.log('QUZERY ', query)
+
+    Models.get(collection).paginate(Models.get(collection).find(query), { offset: offset, limit: limit }).then((result) => {
         res.send(result)
     });
-
 
     // Model.paginate({}, { offset: 20, limit: 10 }).then(function (result) {
     //     // ...
@@ -53,9 +63,6 @@ router.get('/search', (req, res) => {
     //     })
     // }
 });
-
-
-
 
 
 /*router.get('/search', (req, res) => {

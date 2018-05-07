@@ -11,9 +11,6 @@ function run(file, object) {
     return new Promise(async (resolve, reject) => {
         console.log('RUN  ', file)
 
-        console.log('Collection star droping');
-        object.collection.drop();
-        console.log('Collection droppped');
 
         console.log('Start file integrity check');
         await (showInconsistentLines(file))
@@ -85,6 +82,27 @@ function parse(file, cb) {
             obj.CONTACT = utils.extractEmail(obj.CONTACT);
         }
 
+        // obj.DENO = obj.DENO.split(';');
+        // obj.DENO = obj.DENO.map((e) => e.trim())
+
+        // obj.TECH = obj.TECH.split(';');
+        // obj.TECH = obj.TECH.map((e) => e.trim())
+
+        // obj.STAT = obj.STAT.split(';');
+        // obj.STAT = obj.STAT.map((e) => e.trim())
+
+        // obj.SCLE = obj.SCLE.split(';');
+        // obj.SCLE = obj.SCLE.map((e) => e.trim())
+
+        // obj.SCLX = obj.SCLX.split(';')
+        // obj.SCLX = obj.SCLX.map((e) => e.trim())
+
+        // obj.AUTR = obj.AUTR.split(';');
+        // obj.AUTR = obj.AUTR.map((e) => e.trim())
+
+        // obj.LOCA = obj.LOCA.split(';');
+        // obj.LOCA = obj.LOCA.map((e) => e.trim())
+        
         callback(null, obj);
     }, { parallel: 1 });
 
