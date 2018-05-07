@@ -47,9 +47,6 @@ class Notice extends React.Component {
                 REG: notice.REG,
                 DPT: notice.DPT,
                 LOCA: notice.LOCA,
-
-
-
             }
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
@@ -57,12 +54,15 @@ class Notice extends React.Component {
     }
 
     onSubmit(values) {
-        console.log('ONSUBMIT', values);
+        console.log('this.state.notice',this.state.notice)
+        API.update(this.state.notice._id, 'merimee', values)
+        console.log('VALUES', values)
         this.setState({ saving: true })
     }
 
 
     render() {
+
         if (this.state.loading) {
             return <Loader />
         }
@@ -163,7 +163,6 @@ class Notice extends React.Component {
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                                 </Col>
                             </Row> */}
-
 
                             <FieldInput
                                 title='[DMAJ]Date MAJ : '

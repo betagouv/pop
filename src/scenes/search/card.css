@@ -5,22 +5,21 @@
   text-decoration:none;
 }
 
-.card span{
-  font-size: 10px;
-  color: black;
-}
-
-.card img{
-  width: 200px;
-  height: auto;
-  object-fit: contain;
-}
-
-.card .description {
+.card .col {
   display: flex;
-  flex-direction: column;
-  padding-left: 10px;
+  justify-content: center;
+  align-items: center;
 }
+
+.card p {
+  text-align: center;
+  margin: 0px;
+}
+
+.card button {
+  margin: 5px;
+}
+
 
 .card .actions{
   display: flex;

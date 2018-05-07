@@ -1,29 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import './card.css';
 
 export default ({ data }) => {
-    const arr = [];
-    for (var key in data) {
-       if(data[key]){
-            arr.push(<span key={key}>{`${key}:${data[key]}`}</span>)
-        }
-    }
-
     return (
-            <div className='card' >
-            {data.IMG ? <img className="img-fluid" src={data.IMG} alt="Jean Marc Millot" /> : <div/>}
-            <div className='description'>
-                {arr}
-            </div>
-            <div className='actions'>
+        <div className='card' >
+            <Row>
+                <Col className="">
+                    <p>{data.REF}</p>
+                </Col>
+                <Col className="">
+                    <p>{data.DENO}</p>
+                </Col>
+                <Col className="">
+                    <p>{data.LOCA}</p>
+                </Col>
+                <Col className="">
+                    <p>{data.DOMN}</p>
+                </Col>
+                <Col className="">
+                    <p>{data.DMAJ}</p>
+                </Col>
+                <Col className="actions">
                     <Link to={`/notice/${data.REF}`} >
-                        <Button color="primary">
-                                Visit
-                        </Button>
+                        <Button color="primary">Voir</Button>
                     </Link>
-            </div>
+                    <Link to={`/notice/${data.REF}`} >
+                        <Button color="primary">Editer</Button>
+                    </Link>
+                    <Link to={`/notice/${data.REF}`} >
+                        <Button color="primary">Télécharger</Button>
+                    </Link>
+                </Col>
+            </Row>
         </div>
     );
 }

@@ -11,7 +11,7 @@ export default class AutoComplete extends React.Component {
     state = {
         entities: [],
         search: '',
-        collection: 'merimeeMH'
+        collection: 'merimee'
     }
 
     componentWillMount() {
@@ -23,10 +23,11 @@ export default class AutoComplete extends React.Component {
         this.setState({ entities: [] })
     }
 
+
     search(value) {
         if (value) {
-            API.search("merimeeMH", value).then((entities) => {
-                this.setState({ entities })
+            API.search("merimee", { value: value, limit: 20, offset: 0 }).then((res) => {
+                this.setState({ entities: res.docs })
             })
         } else {
             this.setState({ entities: [] })
@@ -80,7 +81,7 @@ export default class AutoComplete extends React.Component {
                                 className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
                                 key={item.REF}
                             >
-                                {`(${item.REF}) ${item.TICO}`}
+                                {`${item.REF} - ${item.TICO}`}
                             </div>
                         )
                     }}

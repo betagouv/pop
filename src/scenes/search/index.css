@@ -14,3 +14,26 @@
   justify-content: space-around;
 }
 
+.search .filter{
+  width: 100%;
+  padding: 10px;
+}
+
+.search .results .header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.search .results .pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+.search .results .pagination li{
+  padding: 5px;
+  cursor: pointer;
+}

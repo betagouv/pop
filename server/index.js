@@ -11,7 +11,6 @@ app.use(hsts({
   preload: true
 }));
 
-app.use(require('prerender-node').set('prerenderToken', 'ZTXa9Z4mkqpIJ3hOXpui'));
 
 app.use(express.static(path.join(__dirname, '../build')));
 

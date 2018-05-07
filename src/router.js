@@ -8,6 +8,7 @@ import Header from './scenes/header';
 import Home from './scenes/home';
 import Search from './scenes/search';
 import Notice from './scenes/notice';
+import Import from './scenes/import';
 
 export default class PublicRoutes extends React.Component {
   render() {
@@ -18,6 +19,7 @@ export default class PublicRoutes extends React.Component {
           <Switch>
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/search'} component={Search} />
+            <Route exact path={'/import'} component={Import} />
             <Route exact path={'/notice/:id'} component={Notice} />
           </Switch>
         </div>
