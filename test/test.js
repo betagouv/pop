@@ -5,7 +5,6 @@ var transform = require('stream-transform');
 
 const param = {}
 
-
 function parseFile(file, cb) {
 	return new Promise((resolve, reject) => {
 		let header = null;

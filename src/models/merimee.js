@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
+var mongoosastic = require('mongoosastic')
+
+var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
     REF: String,
@@ -120,6 +123,9 @@ const Schema = new mongoose.Schema({
 
 Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
 Schema.plugin(mongoosePaginate);
+Schema.plugin(mongoosastic, {
+    esClient: getElasticInstance()
+});
 
 const object = mongoose.model("merimee", Schema)
 
