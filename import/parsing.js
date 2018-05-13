@@ -95,38 +95,46 @@ function syncWithMongoDb(file, object) {
             callback(null, newObj);
         }, { parallel: 1 });
 
-
-
         var mongo = transform((arr, callback) => {
             const objects = arr.map((e) => {
                 const m = new object(e);
                 m._id = e.REF;
                 return m;
             })
-
             object.insertMany(objects, (err, docs) => {
                 if (err) {
                     console.log('Error indexing : ', err)
-                } else {
-                    count += docs.length;
-                    console.log('Saved ' + count)
                 }
                 callback(null, objects);
             });
 
         }, { parallel: 1 });
 
+
+        var cons = transform((records, callback) => {
+            count += records.length;
+            console.log(`Saved ${count}`)
+            callback(null, '');
+        }, { parallel: 1 });
+
+
+        input.on('end', () => {
+            console.log('Stream dend');
+            resolve();
+        });
+
+        input.on('error', (err) => {
+            console.log('Error', err)
+        });
+
         const stream = input
             .pipe(parser)
             .pipe(toObject)
             .pipe(transformer)
             .pipe(batch(1000))
-            .pipe(mongo);
-
-        stream.on('finish', () => {
-            console.log('Stream end');
-            resolve();
-        });
+            .pipe(mongo)
+            .pipe(cons)
+            .pipe(process.stdout);
     });
 }
 
