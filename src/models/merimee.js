@@ -124,7 +124,8 @@ const Schema = new mongoose.Schema({
 Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
-    esClient: getElasticInstance()
+    esClient: getElasticInstance(),
+    index: 'pop'
 });
 
 const object = mongoose.model("merimee", Schema)

@@ -3,6 +3,7 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
+var batch = require('through-batch');
 
 const utils = require('./utils')
 
@@ -15,107 +16,200 @@ function run(file, object) {
         await (showInconsistentLines(file))
         console.log('End file integrity check');
 
+
+        console.log('Start syncWithMongoDb');
+        await (syncWithMongoDb(file, object))
+        console.log('End syncWithMongoDb');
+
+        resolve()
+
+        // let count = 0;
+        // parse(file, (arr, next) => {
+        //     const objects = arr.map((e) => {
+        //         const m = new object(e);
+        //         m._id = e.REF;
+        //         return m;
+        //     })
+
+        // })
+    })
+}
+
+
+function MerimeeClean(obj) {
+    if (obj.IMG) {
+        obj.IMG = utils.extractIMG(obj.IMG);
+    }
+
+    if (obj.CONTACT) {
+        obj.CONTACT = utils.extractEmail(obj.CONTACT);
+    }
+    obj.DENO = obj.DENO.split(';');
+    obj.DENO = obj.DENO.map((e) => e.trim())
+
+    obj.TECH = obj.TECH.split(';');
+    obj.TECH = obj.TECH.map((e) => e.trim())
+
+    obj.STAT = obj.STAT.split(';');
+    obj.STAT = obj.STAT.map((e) => e.trim())
+
+    obj.SCLE = obj.SCLE.split(';');
+    obj.SCLE = obj.SCLE.map((e) => e.trim())
+
+    obj.SCLX = obj.SCLX.split(';')
+    obj.SCLX = obj.SCLX.map((e) => e.trim())
+
+    obj.AUTR = obj.AUTR.split(';');
+    obj.AUTR = obj.AUTR.map((e) => e.trim())
+
+    obj.LOCA = obj.LOCA.split(';');
+    obj.LOCA = obj.LOCA.map((e) => e.trim())
+    return obj;
+
+}
+
+function syncWithMongoDb(file, object) {
+    return new Promise((resolve, reject) => {
+        let arr = [];
+        let header = null;
         let count = 0;
-        parse(file, (arr, next) => {
+        var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
+        var input = fs.createReadStream(file, 'latin1');
+
+        var toObject = transform((record, next) => {
+            let obj = null;
+            if (!header) {
+                header = record;
+            } else {
+                obj = {};
+                for (var i = 0; i < record.length; i++) {
+                    obj[header[i]] = record[i];
+                }
+            }
+            next(null, obj);
+        }, { parallel: 1 });
+
+
+        var transformer = transform((obj, callback) => {
+            const newObj = MerimeeClean(obj)
+            callback(null, newObj);
+        }, { parallel: 1 });
+
+
+
+        var mongo = transform((arr, callback) => {
             const objects = arr.map((e) => {
                 const m = new object(e);
                 m._id = e.REF;
                 return m;
             })
-            object.collection.insert(objects, (err, docs) => {
+
+            object.insertMany(objects, (err, docs) => {
                 if (err) {
                     console.log('Error indexing : ', err)
                 } else {
-                    count += docs.insertedCount;
+                    count += docs.length;
                     console.log('Saved ' + count)
                 }
-                if (!next) {
-                    resolve();
-                } else {
-                    next();
-                }
+                callback(null, objects);
             });
-        })
-    })
-}
 
+        }, { parallel: 1 });
 
-function parse(file, cb) {
-    let arr = [];
-    let header = null;
-    var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
-    var input = fs.createReadStream(file, 'latin1');
+        const stream = input
+            .pipe(parser)
+            .pipe(toObject)
+            .pipe(transformer)
+            .pipe(batch(1000))
+            .pipe(mongo);
 
-    var toObject = transform((record, next) => {
-        let obj = null;
-        if (!header) {
-            header = record;
-        } else {
-            obj = {};
-            for (var i = 0; i < record.length; i++) {
-                obj[header[i]] = record[i];
-            }
-        }
-        next(null, obj);
-    }, { parallel: 1 });
-
-    var batcher = transform((record, next) => {
-        if (record) {
-            arr.push(record)
-        }
-        if (arr.length >= 1000) {
-            cb(arr, next);
-            arr = [];
-        } else {
-            next()
-        }
-    }, { parallel: 1 });
-
-
-    var transformer = transform((obj, callback) => {
-        if (obj.IMG) {
-            obj.IMG = utils.extractIMG(obj.IMG);
-        }
-
-        if (obj.CONTACT) {
-            obj.CONTACT = utils.extractEmail(obj.CONTACT);
-        }
-
-        obj.DENO = obj.DENO.split(';');
-        obj.DENO = obj.DENO.map((e) => e.trim())
-
-        obj.TECH = obj.TECH.split(';');
-        obj.TECH = obj.TECH.map((e) => e.trim())
-
-        obj.STAT = obj.STAT.split(';');
-        obj.STAT = obj.STAT.map((e) => e.trim())
-
-        obj.SCLE = obj.SCLE.split(';');
-        obj.SCLE = obj.SCLE.map((e) => e.trim())
-
-        obj.SCLX = obj.SCLX.split(';')
-        obj.SCLX = obj.SCLX.map((e) => e.trim())
-
-        obj.AUTR = obj.AUTR.split(';');
-        obj.AUTR = obj.AUTR.map((e) => e.trim())
-
-        obj.LOCA = obj.LOCA.split(';');
-        obj.LOCA = obj.LOCA.map((e) => e.trim())
-
-        callback(null, obj);
-    }, { parallel: 1 });
-
-
-    const stream = input
-        .pipe(parser)
-        .pipe(toObject)
-        .pipe(transformer)
-        .pipe(batcher);
-
-    stream.on('finish', () => {
-        cb(arr, null);
+        stream.on('finish', () => {
+            console.log('Stream end');
+            resolve();
+        });
     });
 }
+
+
+// function parse(file, cb) {
+//     let arr = [];
+//     let header = null;
+//     var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
+//     var input = fs.createReadStream(file, 'latin1');
+
+//     var toObject = transform((record, next) => {
+//         let obj = null;
+//         if (!header) {
+//             header = record;
+//         } else {
+//             obj = {};
+//             for (var i = 0; i < record.length; i++) {
+//                 obj[header[i]] = record[i];
+//             }
+//         }
+//         next(null, obj);
+//     }, { parallel: 1 });
+
+
+
+
+//     var batcher = transform((record, next) => {
+//         if (record) {
+//             arr.push(record)
+//         }
+//         if (arr.length >= 1000) {
+//             cb(arr, next);
+//             arr = [];
+//         } else {
+//             next()
+//         }
+//     }, { parallel: 1 });
+
+
+//     var transformer = transform((obj, callback) => {
+//         if (obj.IMG) {
+//             obj.IMG = utils.extractIMG(obj.IMG);
+//         }
+
+//         if (obj.CONTACT) {
+//             obj.CONTACT = utils.extractEmail(obj.CONTACT);
+//         }
+
+//         obj.DENO = obj.DENO.split(';');
+//         obj.DENO = obj.DENO.map((e) => e.trim())
+
+//         obj.TECH = obj.TECH.split(';');
+//         obj.TECH = obj.TECH.map((e) => e.trim())
+
+//         obj.STAT = obj.STAT.split(';');
+//         obj.STAT = obj.STAT.map((e) => e.trim())
+
+//         obj.SCLE = obj.SCLE.split(';');
+//         obj.SCLE = obj.SCLE.map((e) => e.trim())
+
+//         obj.SCLX = obj.SCLX.split(';')
+//         obj.SCLX = obj.SCLX.map((e) => e.trim())
+
+//         obj.AUTR = obj.AUTR.split(';');
+//         obj.AUTR = obj.AUTR.map((e) => e.trim())
+
+//         obj.LOCA = obj.LOCA.split(';');
+//         obj.LOCA = obj.LOCA.map((e) => e.trim())
+
+//         callback(null, obj);
+//     }, { parallel: 1 });
+
+
+//     const stream = input
+//         .pipe(parser)
+//         .pipe(toObject)
+//         .pipe(transformer)
+//         .pipe(batcher);
+
+//     stream.on('finish', () => {
+//         cb(arr, null);
+//     });
+// }
 
 
 function log(file, counter, message, content) {
