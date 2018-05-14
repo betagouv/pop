@@ -63,6 +63,7 @@ function MerimeeClean(obj) {
     if (obj.CONTACT) {
         obj.CONTACT = utils.extractEmail(obj.CONTACT);
     }
+
     obj.DENO = obj.DENO.split(';');
     obj.DENO = obj.DENO.map((e) => e.trim())
 
@@ -80,6 +81,21 @@ function MerimeeClean(obj) {
 
     obj.AUTR = obj.AUTR.split(';');
     obj.AUTR = obj.AUTR.map((e) => e.trim())
+
+    obj.PARN = obj.PARN.split(';');
+    obj.PARN = obj.PARN.map((e) => e.trim())
+
+    obj.REPR = obj.REPR.split(';');
+    obj.REPR = obj.REPR.map((e) => e.trim())
+
+    obj.COUV = obj.COUV.split(';');
+    obj.COUV = obj.COUV.map((e) => e.trim())
+
+    obj.MURS = obj.MURS.split(';');
+    obj.MURS = obj.MURS.map((e) => e.trim())
+
+    obj.TOIT = obj.TOIT.split(';');
+    obj.TOIT = obj.TOIT.map((e) => e.trim())
 
     obj.LOCA = obj.LOCA.split(';');
     obj.LOCA = obj.LOCA.map((e) => e.trim())
@@ -115,7 +131,6 @@ function syncWithMongoDb(file, object) {
         }, { parallel: 1 });
 
         var mongo = transform((arr, callback) => {
-            console.log('GOT mongo ', arr.length)
             const objects = arr.map((e) => {
                 const m = new object(e);
                 m._id = e.REF;
