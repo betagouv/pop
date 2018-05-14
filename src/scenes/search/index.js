@@ -2,10 +2,13 @@ import React from 'react';
 import { Row, Col, Input, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ReactPaginate from 'react-paginate';
 
-
-import Autocomplete from './autocomplete';
+import {
+    ReactiveBase,
+    DataSearch,
+    SingleRange,
+    ResultCard
+} from '@appbaseio/reactivesearch';
 
 import { history } from '../../redux/store';
 import API from '../../services/api';
@@ -13,64 +16,24 @@ import API from '../../services/api';
 import exportData from './export';
 import Card from './card';
 
-import DenoSelect from '../../components/deno'
-
-const ITEMSPERPAGES = 30;
-
 import './index.css';
 
 export default class Search extends React.Component {
 
     state = {
-        entities: [],
-        totalCount: 0,
-        offset: 0,
-        value: '',
-        selectedDeno: '',
         collection: 'merimee',
     }
 
     componentWillMount() {
-        this.search();
-    }
 
-    search() {
-        API.search("merimee", { value: this.state.value, limit: ITEMSPERPAGES, offset: this.state.offset, deno: this.state.selectedDeno }).then((res) => {
-            this.setState({
-                entities: res.docs,
-                totalCount: res.total
-            })
-        })
-    }
 
-    handlePageClick = (data) => {
-        let selected = data.selected;
-        let offset = Math.ceil(selected * ITEMSPERPAGES);
-        this.setState({ offset }, () => {
-            this.search();
-        });
-    };
+    }
 
     renderResults() {
-        const arr = this.state.entities.map((data, i) => {
-            return <Card key={i} data={data} />
-        })
 
         return (
             <div>
-                {arr}
-                <ReactPaginate previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={<a href="">...</a>}
-                    breakClassName={"break-me"}
-                    pageCount={Math.ceil(this.state.totalCount / ITEMSPERPAGES)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                />
+                hey
             </div>
         )
     }
@@ -86,61 +49,36 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <div className='search'>
-                <Container>
-                    <h2 className='title'>Vous recherchez dans la base Mérimée</h2>
-                    <Link to='/import'>Import</Link>
-                    <Autocomplete
-                        onSelect={(item) => {
-                            history.push(`/notice/${item.REF}`)
+            <Container className='search'>
+                <ReactiveBase
+                    url='http://127.0.0.1:9200'
+                    app="pop"
+                >
+                    <DataSearch
+                        componentId="mainSearch"
+                        dataField={["HIST"]}
+                        queryFormat="and"
+                        iconPosition="left"
+                    />
+
+                    <ResultCard
+                        componentId="results"
+                        dataField="original_title"
+                        react={{
+                            "and": ["mainSearch"]
                         }}
-                        onSearch={(value) => {
-                            this.setState({ value }, () => {
-                                this.search();
+                        onData={(res) => {
+                            console.log('RES', res)
+                            return ({
+                                "image": res.image,
+                                "title": res.original_title,
+                                "description": res.average_rating + " ★ "
                             })
                         }}
                     />
-                    <div className='advancedfilters'>
-                        <div className='filter'>
-                            <p>Localisation</p>
-                            <Input type="select" >
-                                <option>?</option>
-                                <option>???</option>
-                                <option>???</option>
-                                <option>???</option>
-                            </Input>
-                        </div>
-
-                        <div className='filter'>
-                            <p>Denomination</p>
-                            <DenoSelect
-                                value={{ label: this.state.selectedDeno, value: this.state.selectedDeno }}
-                                onChange={(e) => {
-                                    this.setState({ selectedDeno: e ? e.value : '' }, () => {
-                                        this.search()
-                                    })
-                                }}
-                            />
-                        </div>
-
-                        <div className='filter'>
-                            <p>Niveau de completion</p>
-                            <Input type="select" >
-                                <option>Sans photo</option>
-                                <option>Incomplet</option>
-                                <option>Complet</option>
-                            </Input>
-                        </div>
-                    </div>
-                    <div className='results'>
-                        <div className='header'>
-                            <p>{`${this.state.totalCount} resultats pour votre recherche`}</p>
-                            <Button onClick={this.export.bind(this)}>Export</Button>
-                        </div>
-                        {this.renderResults()}
-                    </div>
-                </Container>
-            </div >
+                    Hello from Reactive Search!
+                </ReactiveBase>
+            </Container >
         );
     }
 }
