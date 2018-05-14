@@ -7,14 +7,17 @@ import {
     ReactiveBase,
     DataSearch,
     SingleRange,
-    ResultCard
+    ReactiveList,
+    MultiList,
+    SingleList,
+    SelectedFilters
 } from '@appbaseio/reactivesearch';
 
 import { history } from '../../redux/store';
 import API from '../../services/api';
 
 import exportData from './export';
-import Card from './card';
+// import Card from './card';
 
 import './index.css';
 
@@ -51,34 +54,96 @@ export default class Search extends React.Component {
         return (
             <Container className='search'>
                 <ReactiveBase
-                    url='http://127.0.0.1:9200'
-                    app="pop"
+                    url='http://localhost:9200/pop'
+                    app="merimee"
                 >
                     <DataSearch
                         componentId="mainSearch"
                         dataField={["HIST"]}
                         queryFormat="and"
                         iconPosition="left"
+                        className="mainSearch"
                     />
+                    <Row>
+                        <Col xs="3">
 
-                    <ResultCard
-                        componentId="results"
-                        dataField="original_title"
-                        react={{
-                            "and": ["mainSearch"]
-                        }}
-                        onData={(res) => {
-                            console.log('RES', res)
-                            return ({
-                                "image": res.image,
-                                "title": res.original_title,
-                                "description": res.average_rating + " ★ "
-                            })
-                        }}
-                    />
-                    Hello from Reactive Search!
+                            <SingleList
+                                componentId="denomination"
+                                dataField="DENO.keyword"
+                                title="Dénominations"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "commune"]
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="region"
+                                dataField="REG.keyword"
+                                title="Region"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "departement", "commune", "denomination"]
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="departement"
+                                dataField="DPT.keyword"
+                                title="Departements"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "commune", "denomination"]
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="commune"
+                                dataField="COM.keyword"
+                                title="Communes"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "denomination"]
+                                }}
+                            />
+
+                        </Col>
+                        <Col xs="8">
+                            <SelectedFilters />
+                            <ReactiveList
+                                componentId="results"
+                                react={{
+                                    "and": ["mainSearch", "region", "departement", "commune", "denomination"]
+                                }}
+                                dataField=''
+                                size={20}
+                                onData={(data) => <Card data={data} />}
+                                pagination={true}
+                            />
+                        </Col>
+                    </Row>
                 </ReactiveBase>
             </Container >
         );
     }
+}
+
+
+const Card = ({ data }) => {
+    console.log('DATA', data)
+
+    const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
+    return (
+        <Link to={`/notice/${data.REF}`} className="card" key={data.REF}>
+            <img src={image} alt="Book Cover" />
+            <div className='content'>
+                <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
+                <p>{data.HIST}</p>
+            </div>
+        </Link>
+    );
 }
