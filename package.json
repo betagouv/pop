@@ -3,6 +3,7 @@
   "version": "0.0.01",
   "private": true,
   "dependencies": {
+    "@appbaseio/reactivesearch": "^2.6.2",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "dotenv": "^4.0.0",

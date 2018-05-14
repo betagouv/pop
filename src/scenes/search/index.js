@@ -23,8 +23,8 @@ export default class Search extends React.Component {
 
     state = {
         entities: [],
-        offset: 0,
         totalCount: 0,
+        offset: 0,
         value: '',
         selectedDeno: '',
         collection: 'merimee',
@@ -43,7 +43,6 @@ export default class Search extends React.Component {
         })
     }
 
-
     handlePageClick = (data) => {
         let selected = data.selected;
         let offset = Math.ceil(selected * ITEMSPERPAGES);
@@ -51,7 +50,6 @@ export default class Search extends React.Component {
             this.search();
         });
     };
-
 
     renderResults() {
         const arr = this.state.entities.map((data, i) => {
@@ -85,8 +83,6 @@ export default class Search extends React.Component {
         //mnr : 'REF','TOUT','AUTR','PAUT','ATTR','ECOL','TITR','ATIT','PTIT','DENO','DESC','DOMN','LOCA','INSC','MARQ','OBSE','ETAT','GENE','PROV','HIST','HIST2','HIST3','HIST4','HIST5','HIST6','SCLE','STYL','MILL','TECH','DIMS','VIDEO','INV','EXPO','BIBL','AATT','AUTI','CATE','NOTE','REDC','DREP','PREP','REPR','SREP','REFIM','DMAJ','NUMS','SUITE','COMM','NOTE2','RESUME','PHOT','ATTR','AUTI'
         exportData('Merimee.csv', columns, { collection: 'merimee', value: this.state.value });
     }
-
-
 
     render() {
         return (
@@ -148,10 +144,3 @@ export default class Search extends React.Component {
         );
     }
 }
-
-        /*
-<option>palissy</option>
-                <option>merimee</option>
-                <option>memoire</option>
-                <option>joconde</option>
-                */

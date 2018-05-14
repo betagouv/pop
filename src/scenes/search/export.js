@@ -14,7 +14,6 @@ export default async function exportData(fileName, columns, opt) {
     let offset = 0;
     let entities = [];
     let res = await (API.search(opt.collection, opt.value, 100, offset));
-    console.log(res)
     while (res.docs.length > 0) {
         entities = entities.concat(res.docs)
         offset += 100;

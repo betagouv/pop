@@ -54,12 +54,9 @@ class Notice extends React.Component {
     }
 
     onSubmit(values) {
-        console.log('this.state.notice',this.state.notice)
         API.update(this.state.notice._id, 'merimee', values)
-        console.log('VALUES', values)
         this.setState({ saving: true })
     }
-
 
     render() {
 
