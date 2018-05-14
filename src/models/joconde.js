@@ -80,10 +80,8 @@ const Schema = new mongoose.Schema({
     RETIF: String,
 }, { collection: 'joconde' })
 
-
 Schema.plugin(mongoosePaginate);
 
 const object = mongoose.model("joconde", Schema);
-
 
 module.exports = object;

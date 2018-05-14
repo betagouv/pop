@@ -39,9 +39,9 @@ function parseFile(file, cb) {
 async function run() {
 	await parseFile('./data/merimee-INV-valid.csv', agregate)
 	console.log('END 1')
-	await parseFile('./data/merimee-ETAT-valid.csv', agregate)
+//	await parseFile('./data/merimee-ETAT-valid.csv', agregate)
 	console.log('END 2')
-	await parseFile('./data/merimee-MH-valid.csv', agregate)
+//	await parseFile('./data/merimee-MH-valid.csv', agregate)
 	console.log('END 3')
 
 	const arr = [];

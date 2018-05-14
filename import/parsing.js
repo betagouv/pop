@@ -21,7 +21,26 @@ function run(file, object) {
         await (syncWithMongoDb(file, object))
         console.log('End syncWithMongoDb');
 
-        resolve()
+
+        resolve();
+
+        // const stream = object.synchronize()
+        // let count = 0;
+
+        // stream.on('data', function (err, doc) {
+        //     count++;
+        // });
+
+        // stream.on('close', () => {
+        //     console.log('indexed ' + count + ' documents!');
+        //     resolve()
+        // });
+        // stream.on('error', function (err) {
+        //     console.log(err);
+        // });
+
+
+
 
         // let count = 0;
         // parse(file, (arr, next) => {
@@ -96,6 +115,7 @@ function syncWithMongoDb(file, object) {
         }, { parallel: 1 });
 
         var mongo = transform((arr, callback) => {
+            console.log('GOT mongo ', arr.length)
             const objects = arr.map((e) => {
                 const m = new object(e);
                 m._id = e.REF;
@@ -105,27 +125,13 @@ function syncWithMongoDb(file, object) {
                 if (err) {
                     console.log('Error indexing : ', err)
                 }
-                callback(null, objects);
+                count += objects.length;
+                console.log(`Saved ${count}`)
+                callback();
             });
 
         }, { parallel: 1 });
 
-
-        var cons = transform((records, callback) => {
-            count += records.length;
-            console.log(`Saved ${count}`)
-            callback(null, '');
-        }, { parallel: 1 });
-
-
-        input.on('end', () => {
-            console.log('Stream dend');
-            resolve();
-        });
-
-        input.on('error', (err) => {
-            console.log('Error', err)
-        });
 
         const stream = input
             .pipe(parser)
@@ -133,8 +139,13 @@ function syncWithMongoDb(file, object) {
             .pipe(transformer)
             .pipe(batch(1000))
             .pipe(mongo)
-            .pipe(cons)
-            .pipe(process.stdout);
+            .on('finish', () => {
+                console.log('Stream finish');
+                resolve();
+            })
+            .on('error', (err) => {
+                console.log('Error', err)
+            });
     });
 }
 

@@ -20,14 +20,37 @@ arr.push({ file: './data/merimee-MH-valid.csv', model: Models.merimee });
 // arr.push({ file: './data/palissy-INV-valid.csv', model: Models.palissy });
 // arr.push({ file: './data/palissy-MH-valid.csv', model: Models.palissy });
 
-const start = Date.now()
-async function run() {
-  for (var i = 0; i < arr.length; i++) {
-    await (Parse(arr[i].file, arr[i].model))
-  }
-  console.log('DONE in ', (Date.now() - start) / 1000, ' seconds')
+
+
+function runMongo() {
+  return new Promise(async (resolve, reject) => {
+    for (var i = 0; i < arr.length; i++) {
+      await (Parse(arr[i].file, arr[i].model))
+    }
+    resolve();
+  })
 }
 
-setTimeout(() => {
-  run();
+
+function runElastic() {
+  return new Promise((resolve, reject) => {
+    var stream = Models.merimee.synchronize()
+    stream.on('data', function (err, doc) {
+      count++;
+    });
+    stream.on('close', function () {
+      console.log('indexed ' + count + ' documents!');
+      resolve();
+    });
+    stream.on('error', function (err) {
+      console.log(err);
+    });
+  })
+}
+
+
+setTimeout(async () => {
+  const start = Date.now()
+  await (runMongo());
+  console.log('Done in ', (Date.now() - start) / 1000, ' seconds')
 }, 5000)

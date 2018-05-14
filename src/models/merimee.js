@@ -32,8 +32,8 @@ const Schema = new mongoose.Schema({
     DEPL: String,
     DESC: String,
     DIMS: String,
-    DMAJ: String,
-    DMIS: String,
+    // DMAJ: String,
+    // DMIS: String,
     DOSS: String,
     DPRO: String,
     DPT: String,
@@ -125,7 +125,11 @@ Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
-    index: 'pop'
+    index: 'pop',
+    bulk: {
+        size: 1000, // preferred number of docs to bulk index
+        delay: 1000 //milliseconds to wait for enough docs to meet size constraint
+    }
 });
 
 const object = mongoose.model("merimee", Schema)
