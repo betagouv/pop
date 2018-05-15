@@ -23,7 +23,7 @@ const styles = {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'start',
         alignItems: 'center',
         paddingTop: '10px',
         paddingBottom: '10px',

@@ -7,9 +7,7 @@ const Tags = ReactTags.WithContext;
 class TagsInput extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            tags: [{ id: 'Thailand', text: 'Thailand' }, { id: 'India', text: 'India' }],
             suggestions: suggestions,
         };
         this.handleDelete = this.handleDelete.bind(this);
@@ -17,27 +15,27 @@ class TagsInput extends React.Component {
     }
 
     handleDelete(i) {
-        const { tags } = this.state;
-        this.setState({
-            tags: tags.filter((tag, index) => index !== i),
-        });
+        const arr = this.props.input.value;
+        const newArr = arr.filter((tag, index) => index !== i);
+        this.props.input.onChange(newArr);
     }
 
     handleAddition(tag) {
-        const { tags } = this.state;
-        this.setState({ tags: [...tags, ...[tag]] });
+        const arr = this.props.input.value;
+        const newArr = arr.concat(tag.text);
+        this.props.input.onChange(newArr);
     }
+
     handleTagClick(index) {
         console.log('The tag at index ' + index + ' was clicked');
     }
 
     render() {
-        const { tags, suggestions } = this.state;
         return (
             <div>
                 <Tags
-                    tags={tags}
-                    suggestions={suggestions}
+                    tags={this.props.input.value.map(e => { return { id: e, text: e } })}
+                    suggestions={this.state.suggestions}
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
                 />
@@ -46,9 +44,9 @@ class TagsInput extends React.Component {
     }
 }
 
-const makeField = ({ input, meta, children, hasFeedback, label, ...rest }) => {
+const makeField = ({ ...rest }) => {
     return (
-        <TagsInput  {...rest} value={() => {}} onChange={(e) => {}} />
+        <TagsInput  {...rest} />
     );
 }
 

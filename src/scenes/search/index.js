@@ -10,6 +10,7 @@ import {
     ReactiveList,
     MultiList,
     SingleList,
+    MultiDropdownList,
     SelectedFilters
 } from '@appbaseio/reactivesearch';
 
@@ -79,13 +80,23 @@ export default class Search extends React.Component {
                             />
 
                             <SingleList
+                                componentId="auteurs"
+                                dataField="AUTR.keyword"
+                                title="Auteurs"
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "commune","auteurs"]
+                                }}
+                            />
+                            <hr />
+                            <SingleList
                                 componentId="region"
                                 dataField="REG.keyword"
                                 title="Region"
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "departement", "commune", "denomination"]
+                                    and: ["mainSearch", "departement", "commune", "denomination","auteurs"]
                                 }}
                             />
 
@@ -96,7 +107,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "commune", "denomination"]
+                                    and: ["mainSearch", "region", "commune", "denomination","auteurs"]
                                 }}
                             />
 
@@ -107,7 +118,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "denomination"]
+                                    and: ["mainSearch", "region", "departement", "denomination","auteurs"]
                                 }}
                             />
 
@@ -117,7 +128,7 @@ export default class Search extends React.Component {
                             <ReactiveList
                                 componentId="results"
                                 react={{
-                                    "and": ["mainSearch", "region", "departement", "commune", "denomination"]
+                                    "and": ["mainSearch", "region", "departement", "commune", "denomination","auteurs"]
                                 }}
                                 dataField=''
                                 size={20}
@@ -134,8 +145,6 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    console.log('DATA', data)
-
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
         <Link to={`/notice/${data.REF}`} className="card" key={data.REF}>
