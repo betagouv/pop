@@ -31,10 +31,13 @@ class TagsInput extends React.Component {
     }
 
     render() {
+
+
+        console.log('DDDSQDS',this.props.input.value)
         return (
             <div>
                 <Tags
-                    tags={this.props.input.value.map(e => { return { id: e, text: e } })}
+                    tags={this.props.input.value ? this.props.input.value.map(e => { return { id: e, text: e } }) : []}
                     suggestions={this.state.suggestions}
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
