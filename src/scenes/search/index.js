@@ -60,7 +60,7 @@ export default class Search extends React.Component {
                 >
                     <DataSearch
                         componentId="mainSearch"
-                        dataField={["HIST"]}
+                        dataField={["TICO", "DENO", "REF", "LOCA"]}
                         queryFormat="and"
                         iconPosition="left"
                         className="mainSearch"
@@ -85,7 +85,7 @@ export default class Search extends React.Component {
                                 title="Auteurs"
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "commune","auteurs"]
+                                    and: ["mainSearch", "region", "departement", "commune", "auteurs"]
                                 }}
                             />
                             <hr />
@@ -96,7 +96,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "departement", "commune", "denomination","auteurs"]
+                                    and: ["mainSearch", "departement", "commune", "denomination", "auteurs"]
                                 }}
                             />
 
@@ -107,7 +107,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "commune", "denomination","auteurs"]
+                                    and: ["mainSearch", "region", "commune", "denomination", "auteurs"]
                                 }}
                             />
 
@@ -118,7 +118,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "denomination","auteurs"]
+                                    and: ["mainSearch", "region", "departement", "denomination", "auteurs"]
                                 }}
                             />
 
@@ -128,7 +128,7 @@ export default class Search extends React.Component {
                             <ReactiveList
                                 componentId="results"
                                 react={{
-                                    "and": ["mainSearch", "region", "departement", "commune", "denomination","auteurs"]
+                                    "and": ["mainSearch", "region", "departement", "commune", "denomination", "auteurs"]
                                 }}
                                 dataField=''
                                 size={20}
@@ -151,7 +151,11 @@ const Card = ({ data }) => {
             <img src={image} alt="Book Cover" />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
-                <p>{data.HIST}</p>
+                <div>
+                    <p>{data.DENO}</p>
+                    <p>{data.LOCA}</p>
+                    <p>{data.AUTR}</p>
+                </div>
             </div>
         </Link>
     );

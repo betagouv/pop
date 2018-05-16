@@ -11,7 +11,7 @@ export default class Home extends React.Component {
             { url: '/merimee', name: 'Joconde', image: require('../../assets/joconde.jpg') },
             { url: '/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
             { url: '/merimee', name: 'Palissy', image: require('../../assets/palissy.jpg') },
-            { url: '/merimee', name: 'Mémoires', image: require('../../assets/small.jpg') },
+            { url: '/merimee', name: 'Mémoire', image: require('../../assets/small.jpg') },
             { url: '/merimee', name: 'MNR', image: require('../../assets/small.jpg') },
         ]
     }
@@ -45,7 +45,7 @@ export default class Home extends React.Component {
                     <Row>
                         {this.renderTiles()}
                     </Row>
-                    <div className="activities py-3">
+                    {/* <div className="activities py-3">
                         <h4>Historique d'activite</h4>
                         <div className="list-box">
                             <ul className="list-unstyled">
@@ -56,7 +56,7 @@ export default class Home extends React.Component {
                                 <li>item 5</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> */}
                 </Container>
             </div >
         );

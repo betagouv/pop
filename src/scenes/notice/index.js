@@ -26,6 +26,8 @@ class Notice extends React.Component {
 
     componentWillMount() {
         API.getNotice(this.props.match.params.id).then((notice) => {
+
+            console.log('NOTICE',notice)
             const initData = {
                 TECH: notice.TECH,
                 STAT: notice.STAT,
