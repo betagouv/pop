@@ -15,11 +15,10 @@ const port = 8081;
 
 console.log('START', new Date())
 
-app.use(express.static(path.join(__dirname, './../../build')));
+// app.use(express.static(path.join(__dirname, './../../build')));
 
 app.route('*').all((req, res) => {
-  console.log('TRY TO ACCESS to  ' + __dirname)
-  res.sendFile(path.join(__dirname + './../../build/index.html'));
+  res.sendFile('/public/index.html');
 });
 
 
