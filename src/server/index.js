@@ -18,7 +18,7 @@ console.log('START', new Date())
 // app.use(express.static(path.join(__dirname, './../../build')));
 
 app.route('*').all((req, res) => {
-  res.sendFile('/build/index.html');
+  res.sendFile('/index.html');
 });
 
 
