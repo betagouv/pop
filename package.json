@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "node server/index.js ",
-    "build": "webpack --env.production",
+    "build": "webpack --env.production --env.NODE_ENV=production",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
     "deploy": "yarn build && eb deploy"
   },
