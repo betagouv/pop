@@ -61,3 +61,8 @@
   text-overflow: clip;
   overflow: hidden;
 }
+
+.search .label{
+  border-radius: 0px;
+  min-width: 16px;
+}
