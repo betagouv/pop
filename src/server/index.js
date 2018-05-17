@@ -17,15 +17,10 @@ console.log('START', new Date())
 
 app.use(express.static(path.join(__dirname, './../build')));
 
-
-app.get('/', (req, res) => res.send('Hello World!'))
-
-
-// app.route('*').all((req, res) => {
-//   res.send('COUCOU')
-//   // console.log('TRY TO ACCESS to  ' + __dirname)
-//   // res.sendFile(path.join(__dirname + './../build/index.html'));
-// });
+app.route('*').all((req, res) => {
+  console.log('TRY TO ACCESS to  ' + __dirname)
+  res.sendFile(path.join(__dirname + './../build/index.html'));
+});
 
 
 app.listen(port, () => {
