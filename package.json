@@ -32,10 +32,10 @@
     "webfontloader": "^1.6.28"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "build": "webpack",
+    "start": "node server/index.js ",
+    "build": "webpack --env.production",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
-    "deploy": "yarn build && gcloud app deploy -v v0d0d01"
+    "deploy": "yarn build && eb deploy"
   },
   "engines": {
     "node": "8.x",

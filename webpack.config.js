@@ -9,8 +9,6 @@ var BabelPlugin = require("babel-webpack-plugin");
 
 module.exports = env => {
   const production = env['production'];
-
-
   console.log('PRODUCTION ', production);
 
   const plugins = [
