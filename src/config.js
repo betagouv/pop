@@ -4,10 +4,11 @@ let forceProd = false;
 
 console.log('FORCE PRODUCTION : ' + forceProd)
 
-let mongo_url = 'mongodb://127.0.0.1/pop';
+let api_url = 'http://127.0.0.1:3000';
 if (forceProd || process.env.NODE_ENV === 'production') {
-  mongo_url = 'mongodb+srv://goffle:neovidi75@cluster0-fkthi.mongodb.net/pop';
+  api_url = 'http://api-staging.6qvh6fbw23.eu-west-3.elasticbeanstalk.com';
 }
+
 
 let es_url = 'http://127.0.0.1:9200/pop';
 if (forceProd || process.env.NODE_ENV === 'production') {
@@ -15,6 +16,6 @@ if (forceProd || process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  mongo_url,
+  api_url,
   es_url,
 }

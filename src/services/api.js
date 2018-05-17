@@ -1,4 +1,4 @@
-const { mongo_url } = require('../config.js');
+const { api_url } = require('../config.js');
 
 class api {
 
@@ -7,17 +7,17 @@ class api {
         for (var key in params) {
             arr.push(`${key}=${params[key]}`)
         }
-        return this._get(`${ROUTE}/api/search?collection=${collection}&${arr.join('&')}`)
+        return this._get(`${api_url}/api/search?collection=${collection}&${arr.join('&')}`)
     }
 
     update(id, collection, data) {
         console.log('UPDATE', id, data)
-        return this._post(`${ROUTE}/api/update?collection=${collection}&id=${id}`, data)
+        return this._post(`${api_url}/api/update?collection=${collection}&id=${id}`, data)
     }
 
 
     getNotice(ref) {
-        return this._get(`${ROUTE}/api/notice?ref=${ref}`)
+        return this._get(`${api_url}/api/notice?ref=${ref}`)
     }
 
 

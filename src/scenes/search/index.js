@@ -30,15 +30,6 @@ export default class Search extends React.Component {
 
     }
 
-    renderResults() {
-
-        return (
-            <div>
-                hey
-            </div>
-        )
-    }
-
     export() {
         const columns = ['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DMAJ', 'DMIS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL'];
         //memoire : ['REF','TOUT','ADRESSE','AUTOEU','AUTG','AUTP','AUTOR','AUTTI','COM','DOM','EDIF','EXPO','JDATPV','LIEUCOR','COTECOR','LIEUCTI','COTECTI','LIEUCP','COTECP','LEG','OBJT','OBS','OBSOR','OBSTI','PAYS','PUBLI','TIREDE','ROLE','PRECOR','SERIE','THEATRE','TITRE','DMAJ','DMIS','IDPROD','NUMCD','NUMF','INSEE','NVD','MARQ','ACC','ACQU','ADPHOT','AIRE','ANUMP','COPY','COULEUR','COSTUME','DATIMM','DATOEU','DATPV','DATOR','DATTI','DATG','DATD','DIFF','DPT','EDIARCH','ECH','FORMAT','FORMATOR','FORMATTI','LBASE','WEB','LIB','LOCA','LIEUORIG','MCGEO','MCL','MENTIONS','MENTOR','MENTTI','MCPER','VUECD','NUMAUTP','NUMCAF','ANUMOR','NUMOR','NUMP','ANUMTI','NUMTI','RENV','REG','SENS','SCLE','SUP','TECH','TECHOR','TECHTI','TOILE','TYP','TYPDOC','TYPEIMG','TYPSUPP','VIDEO','LBASE2','LEG2','REFIM','REFIMG','MOSA','SITE','NUMSITE','NUMOP','CHRONO','STRUCT','SUJET','TICO','NUMI','LIEU','ADRS','CONTACT','EMET','NUM','IMG','WCOM','LIENS','LAUTP']

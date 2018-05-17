@@ -5,7 +5,6 @@
 }
 
 .search .mainSearch{
-  text-align: center;
   padding: 50px;
 }
 
@@ -62,7 +61,17 @@
   overflow: hidden;
 }
 
-.search .label{
-  border-radius: 0px;
-  min-width: 16px;
+.search label::before{
+  border-radius: 0px!important;
+  min-width: 16px!important;
+}
+
+
+.search label::after{
+  left: 2px!important;
+  bottom: 7px!important;
+  top: 13px!important;
+  width: 16px!important;
+  height: 16px!important;
+  border-radius: 0px!important;
 }
