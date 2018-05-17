@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 
-
-
 const Models = require('./models');
 const Mongo = require('./mongo');
 
@@ -22,7 +20,6 @@ app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
-
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
