@@ -5,6 +5,9 @@ const hsts = require('hsts');
 const app = express();
 const port = 8081;
 
+
+console.log('process.env :', process.env)
+
 // app.use(hsts({
 //   maxAge: 31536000,
 //   includeSubDomains: true,
