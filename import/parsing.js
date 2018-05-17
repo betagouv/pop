@@ -35,7 +35,7 @@ function MerimeeClean(obj) {
     obj.STAT = utils.extractArray(obj.STAT, ';');
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
-    obj.AUTR = utils.extractArray(obj.AUTR, ',');
+    obj.AUTR = utils.extractArray(obj.AUTR, '/,|£/');
     obj.PARN = utils.extractArray(obj.PARN, ';');
     obj.REPR = utils.extractArray(obj.REPR, ';');
     obj.COUV = utils.extractArray(obj.COUV, ';');

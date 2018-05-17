@@ -21,7 +21,6 @@ function extractArray(val, delim) {
     if (!val) {
         return []
     }
-
     let newVal = val ? val.split(delim) : [];
     newVal = newVal.map((e) => e.trim())
     return newVal;
