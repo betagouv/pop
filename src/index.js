@@ -15,6 +15,8 @@ const routes = require('./routes')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const PORT = 8081;
+
 // secure apps by setting various HTTP headers
 app.use(helmet());
 
@@ -25,4 +27,4 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 app.use('/api', routes)
 
-app.listen(8081, () => console.log('Listening on port 8081!'))
+app.listen(PORT, () => console.log('Listening on port ' + PORT))
