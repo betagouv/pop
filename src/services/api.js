@@ -1,5 +1,4 @@
-const ROUTE = 'http://localhost:3000'
-
+const { mongo_url } = require('../config.js');
 
 class api {
 
