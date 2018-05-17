@@ -2,75 +2,42 @@ import React from 'react';
 import { Row, Col, Input, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ReactPaginate from 'react-paginate';
 
-
-import Autocomplete from './autocomplete';
+import {
+    ReactiveBase,
+    DataSearch,
+    SingleRange,
+    ReactiveList,
+    MultiList,
+    SingleList,
+    MultiDropdownList,
+    SelectedFilters
+} from '@appbaseio/reactivesearch';
 
 import { history } from '../../redux/store';
 import API from '../../services/api';
 
 import exportData from './export';
-import Card from './card';
-
-import DenoSelect from '../../components/deno'
-
-const ITEMSPERPAGES = 30;
+// import Card from './card';
 
 import './index.css';
 
 export default class Search extends React.Component {
 
     state = {
-        entities: [],
-        totalCount: 0,
-        offset: 0,
-        value: '',
-        selectedDeno: '',
         collection: 'merimee',
     }
 
     componentWillMount() {
-        this.search();
-    }
 
-    search() {
-        API.search("merimee", { value: this.state.value, limit: ITEMSPERPAGES, offset: this.state.offset, deno: this.state.selectedDeno }).then((res) => {
-            this.setState({
-                entities: res.docs,
-                totalCount: res.total
-            })
-        })
-    }
 
-    handlePageClick = (data) => {
-        let selected = data.selected;
-        let offset = Math.ceil(selected * ITEMSPERPAGES);
-        this.setState({ offset }, () => {
-            this.search();
-        });
-    };
+    }
 
     renderResults() {
-        const arr = this.state.entities.map((data, i) => {
-            return <Card key={i} data={data} />
-        })
 
         return (
             <div>
-                {arr}
-                <ReactPaginate previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={<a href="">...</a>}
-                    breakClassName={"break-me"}
-                    pageCount={Math.ceil(this.state.totalCount / ITEMSPERPAGES)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                />
+                hey
             </div>
         )
     }
@@ -86,61 +53,110 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <div className='search'>
-                <Container>
-                    <h2 className='title'>Vous recherchez dans la base Mérimée</h2>
-                    <Link to='/import'>Import</Link>
-                    <Autocomplete
-                        onSelect={(item) => {
-                            history.push(`/notice/${item.REF}`)
-                        }}
-                        onSearch={(value) => {
-                            this.setState({ value }, () => {
-                                this.search();
-                            })
-                        }}
+            <Container className='search'>
+                <ReactiveBase
+                    url='http://localhost:9200/pop'
+                    app="merimee"
+                >
+                    <DataSearch
+                        componentId="mainSearch"
+                        dataField={["TICO", "DENO", "REF", "LOCA"]}
+                        queryFormat="and"
+                        iconPosition="left"
+                        className="mainSearch"
                     />
-                    <div className='advancedfilters'>
-                        <div className='filter'>
-                            <p>Localisation</p>
-                            <Input type="select" >
-                                <option>?</option>
-                                <option>???</option>
-                                <option>???</option>
-                                <option>???</option>
-                            </Input>
-                        </div>
+                    <Row>
+                        <Col xs="3">
 
-                        <div className='filter'>
-                            <p>Denomination</p>
-                            <DenoSelect
-                                value={{ label: this.state.selectedDeno, value: this.state.selectedDeno }}
-                                onChange={(e) => {
-                                    this.setState({ selectedDeno: e ? e.value : '' }, () => {
-                                        this.search()
-                                    })
+                            <SingleList
+                                componentId="denomination"
+                                dataField="DENO.keyword"
+                                title="Dénominations"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "commune"]
                                 }}
                             />
-                        </div>
 
-                        <div className='filter'>
-                            <p>Niveau de completion</p>
-                            <Input type="select" >
-                                <option>Sans photo</option>
-                                <option>Incomplet</option>
-                                <option>Complet</option>
-                            </Input>
-                        </div>
-                    </div>
-                    <div className='results'>
-                        <div className='header'>
-                            <p>{`${this.state.totalCount} resultats pour votre recherche`}</p>
-                            <Button onClick={this.export.bind(this)}>Export</Button>
-                        </div>
-                        {this.renderResults()}
-                    </div>
-                </Container>
-            </div >
+                            <SingleList
+                                componentId="auteurs"
+                                dataField="AUTR.keyword"
+                                title="Auteurs"
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "commune", "auteurs"]
+                                }}
+                            />
+                            <hr />
+                            <SingleList
+                                componentId="region"
+                                dataField="REG.keyword"
+                                title="Region"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "departement", "commune", "denomination", "auteurs"]
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="departement"
+                                dataField="DPT.keyword"
+                                title="Departements"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "commune", "denomination", "auteurs"]
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="commune"
+                                dataField="COM.keyword"
+                                title="Communes"
+                                showCount={true}
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "denomination", "auteurs"]
+                                }}
+                            />
+
+                        </Col>
+                        <Col xs="8">
+                            <SelectedFilters />
+                            <ReactiveList
+                                componentId="results"
+                                react={{
+                                    "and": ["mainSearch", "region", "departement", "commune", "denomination", "auteurs"]
+                                }}
+                                dataField=''
+                                size={20}
+                                onData={(data) => <Card data={data} />}
+                                pagination={true}
+                            />
+                        </Col>
+                    </Row>
+                </ReactiveBase>
+            </Container >
         );
     }
+}
+
+
+const Card = ({ data }) => {
+    const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
+    return (
+        <Link to={`/notice/${data.REF}`} className="card" key={data.REF}>
+            <img src={image} alt="Book Cover" />
+            <div className='content'>
+                <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
+                <div>
+                    <p>{data.DENO}</p>
+                    <p>{data.LOCA}</p>
+                    <p>{data.AUTR}</p>
+                </div>
+            </div>
+        </Link>
+    );
 }

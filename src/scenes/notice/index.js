@@ -26,6 +26,8 @@ class Notice extends React.Component {
 
     componentWillMount() {
         API.getNotice(this.props.match.params.id).then((notice) => {
+
+            console.log('NOTICE',notice)
             const initData = {
                 TECH: notice.TECH,
                 STAT: notice.STAT,
@@ -79,7 +81,7 @@ class Notice extends React.Component {
                     className='main-body'
                 >
                     <Row>
-                        <Col xs={12} sm={12} md='4'>
+                        <Col className='image' xs={12} sm={12} md='4'>
                             <div className="thumbs-box">
                                 <div className="thumb-lg mb-3">
                                     <img src={this.state.notice.IMG} alt="" className="img-fluid w-100" />
@@ -92,14 +94,11 @@ class Notice extends React.Component {
                                 title='[DENO]Denomination : '
                                 name='DENO'
                             />
-
                             <FieldInput
                                 title='[DOMN]Domaines : '
                                 name='DOMN'
                             />
-
                             <hr />
-
                             <FieldInput
                                 title='[COM]COMMUNE : '
                                 name='COM'
@@ -119,11 +118,10 @@ class Notice extends React.Component {
                                 title='[LOCA]LOCALISATIONS : '
                                 name='LOCA'
                             />
-                            <hr />
-                            <FieldInput
-                                title='[MHPP]MH éléments : '
-                                name='MHPP'
-                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="12">
                             <FieldInput
                                 title='[HIST]Histoire : '
                                 name='HIST'
@@ -142,25 +140,14 @@ class Notice extends React.Component {
                                 type='textarea'
                                 rows={10}
                             />
-                            {/* <Row>
-                                <Col sm="3">
-                                    <h6>Titre</h6>
-                                    <span>added on 2002</span>
-                                </Col>
-                                <Col sm="9">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores corporis deleniti dignissimos dolores doloribus eaque fuga fugit id in iure magni numquam odit pariatur, quasi quisquam saepe soluta veniam</p>
-                                </Col>
-                            </Row>
-                            <Row className="mb-4">
-                                <Col sm="3">
-                                    <h6>Titre</h6>
-                                    <span>added on 2002</span>
-                                </Col>
-                                <Col sm="9">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                </Col>
-                            </Row> */}
-
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="6">
+                            <FieldInput
+                                title='[MHPP]MH éléments : '
+                                name='MHPP'
+                            />
                             <FieldInput
                                 title='[DMAJ]Date MAJ : '
                                 name='DMAJ'
@@ -177,7 +164,7 @@ class Notice extends React.Component {
                                 disabled
                             />
 
-                            <FieldInput
+                            <FieldTags
                                 title='[SCLE]Siecle : '
                                 name='SCLE'
                             />
@@ -237,7 +224,7 @@ class Notice extends React.Component {
                 <div className='rawdata'>
                     {arr}
                 </div>
-            </Container>
+            </Container >
         );
     }
 }

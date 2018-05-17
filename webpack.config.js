@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-var BabelPlugin = require("babel-webpack-plugin");
+const BabelPlugin = require("babel-webpack-plugin");
 
 
 module.exports = env => {
@@ -31,7 +31,7 @@ module.exports = env => {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(production ? 'production' : 'development')
+        'NODE_ENV': JSON.stringify('production')
       }
     }),
     new UglifyJsPlugin({
@@ -62,7 +62,7 @@ module.exports = env => {
 
   return {
     entry: ['babel-polyfill', './src/index.js'],
-    devtool: production ? false : 'source-map',
+    devtool: false,
     output: {
       path: path.resolve('build'),
       filename: '[hash].index.js',
