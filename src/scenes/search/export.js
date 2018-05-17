@@ -1,11 +1,3 @@
-import React from 'react';
-import { Row, Col, Input, Container, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
-
-import Autocomplete from './autocomplete'
-
-import { history } from '../../redux/store';
 import API from '../../services/api'
 
 export default async function exportData(fileName, columns, opt) {

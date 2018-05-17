@@ -14,12 +14,9 @@ import {
     SelectedFilters
 } from '@appbaseio/reactivesearch';
 
-import { history } from '../../redux/store';
-import API from '../../services/api';
+import { es_url } from '../../config.js';
 
 import exportData from './export';
-// import Card from './card';
-
 import './index.css';
 
 export default class Search extends React.Component {
@@ -55,7 +52,7 @@ export default class Search extends React.Component {
         return (
             <Container className='search'>
                 <ReactiveBase
-                    url='http://localhost:9200/pop'
+                    url={es_url}
                     app="merimee"
                 >
                     <DataSearch
@@ -132,7 +129,7 @@ export default class Search extends React.Component {
                                 }}
                                 dataField=''
                                 size={20}
-                                onData={(data) => <Card data={data} />}
+                                onData={(data) => <Card key={data.REF} data={data} />}
                                 pagination={true}
                             />
                         </Col>

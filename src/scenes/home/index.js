@@ -19,7 +19,7 @@ export default class Home extends React.Component {
     renderTiles() {
         return this.state.tiles.map(({ url, name, image }, i) => {
             return (
-                <Col className="box text-center mb-3">
+                <Col className="box text-center mb-3" key={i}>
                     <Link to='/search'>
                         <div className='tile'>
                             <div className="thumb  mb-3">
