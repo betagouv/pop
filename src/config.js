@@ -1,10 +1,10 @@
 //ES
 
-let forceProd = false;
+let forceProd = true;
 
 let mongo_url = 'mongodb://127.0.0.1/pop';
 if (forceProd || process.env.NODE_ENV === 'production') {
-    mongo_url = 'mongodb+srv://goffle:neovidi75@cluster0-fkthi.mongodb.net';
+    mongo_url = 'mongodb+srv://goffle:neovidi75@cluster0-fkthi.mongodb.net/test';
 }
 
 let es_url = '127.0.0.1:9200';

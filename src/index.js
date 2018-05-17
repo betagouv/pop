@@ -15,7 +15,7 @@ const routes = require('./routes')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = 8081;
+const PORT = 3000;
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
