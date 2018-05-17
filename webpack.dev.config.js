@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-var BabelPlugin = require("babel-webpack-plugin");
+const BabelPlugin = require("babel-webpack-plugin");
 
 
 module.exports = env => {
