@@ -23,84 +23,28 @@ function run(file, object) {
 
 
         resolve();
-
-        // const stream = object.synchronize()
-        // let count = 0;
-
-        // stream.on('data', function (err, doc) {
-        //     count++;
-        // });
-
-        // stream.on('close', () => {
-        //     console.log('indexed ' + count + ' documents!');
-        //     resolve()
-        // });
-        // stream.on('error', function (err) {
-        //     console.log(err);
-        // });
-
-
-
-
-        // let count = 0;
-        // parse(file, (arr, next) => {
-        //     const objects = arr.map((e) => {
-        //         const m = new object(e);
-        //         m._id = e.REF;
-        //         return m;
-        //     })
-
-        // })
     })
 }
 
 
 function MerimeeClean(obj) {
-    if (obj.IMG) {
-        obj.IMG = utils.extractIMG(obj.IMG);
-    }
-
-    if (obj.CONTACT) {
-        obj.CONTACT = utils.extractEmail(obj.CONTACT);
-    }
-
-    obj.DENO = obj.DENO.split(';');
-    obj.DENO = obj.DENO.map((e) => e.trim())
-
-    obj.TECH = obj.TECH.split(';');
-    obj.TECH = obj.TECH.map((e) => e.trim())
-
-    obj.STAT = obj.STAT.split(';');
-    obj.STAT = obj.STAT.map((e) => e.trim())
-
-    obj.SCLE = obj.SCLE.split(';');
-    obj.SCLE = obj.SCLE.map((e) => e.trim())
-
-    obj.SCLX = obj.SCLX.split(';')
-    obj.SCLX = obj.SCLX.map((e) => e.trim())
-
-    obj.AUTR = obj.AUTR.split(';');
-    obj.AUTR = obj.AUTR.map((e) => e.trim())
-
-    obj.PARN = obj.PARN.split(';');
-    obj.PARN = obj.PARN.map((e) => e.trim())
-
-    obj.REPR = obj.REPR.split(';');
-    obj.REPR = obj.REPR.map((e) => e.trim())
-
-    obj.COUV = obj.COUV.split(';');
-    obj.COUV = obj.COUV.map((e) => e.trim())
-
-    obj.MURS = obj.MURS.split(';');
-    obj.MURS = obj.MURS.map((e) => e.trim())
-
-    obj.TOIT = obj.TOIT.split(';');
-    obj.TOIT = obj.TOIT.map((e) => e.trim())
-
-    obj.LOCA = obj.LOCA.split(';');
-    obj.LOCA = obj.LOCA.map((e) => e.trim())
+    obj.IMG = utils.extractIMG(obj.IMG);
+    obj.CONTACT = utils.extractEmail(obj.CONTACT);
+    obj.DENO = utils.extractArray(obj.DENO, ';');
+    obj.TECH = utils.extractArray(obj.TECH, ';');
+    obj.STAT = utils.extractArray(obj.STAT, ';');
+    obj.SCLE = utils.extractArray(obj.SCLE, ';');
+    obj.SCLX = utils.extractArray(obj.SCLX, ';');
+    obj.AUTR = utils.extractArray(obj.AUTR, ',');
+    obj.PARN = utils.extractArray(obj.PARN, ';');
+    obj.REPR = utils.extractArray(obj.REPR, ';');
+    obj.COUV = utils.extractArray(obj.COUV, ';');
+    obj.MURS = utils.extractArray(obj.MURS, ';');
+    obj.ESCA = utils.extractArray(obj.ESCA, ';');
+    obj.PREP = utils.extractArray(obj.PREP, ';');
+    obj.TOIT = utils.extractArray(obj.TOIT, ';');
+    obj.LOCA = utils.extractArray(obj.LOCA, ';');
     return obj;
-
 }
 
 function syncWithMongoDb(file, object) {
