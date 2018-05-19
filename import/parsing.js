@@ -8,7 +8,7 @@ var batch = require('through-batch');
 const utils = require('./utils')
 
 
-function run(file, object) {
+function run(file, object, domaine) {
     return new Promise(async (resolve, reject) => {
         console.log('RUN  ', file)
 
@@ -18,9 +18,8 @@ function run(file, object) {
 
 
         console.log('Start syncWithMongoDb');
-        await (syncWithMongoDb(file, object))
+        await (syncWithMongoDb(file, object, domaine))
         console.log('End syncWithMongoDb');
-
 
         resolve();
     })
@@ -31,12 +30,20 @@ function MerimeeClean(obj) {
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT);
     obj.DENO = utils.extractArray(obj.DENO, ';');
+    obj.TYPO = utils.extractArray(obj.TYPO, ';');
     obj.TECH = utils.extractArray(obj.TECH, ';');
     obj.STAT = utils.extractArray(obj.STAT, ';');
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
-    obj.AUTR = utils.extractArray(obj.AUTR, '/,|£/');
+    obj.SCLD = utils.extractArray(obj.SCLD, ';');
+    obj.AUTR = utils.extractArray(obj.AUTR, /,|£|;/);
+    obj.AUTP = utils.extractArray(obj.AUTP, ';');
+    obj.NOMS = utils.extractArray(obj.NOMS, ';');
+
     obj.PARN = utils.extractArray(obj.PARN, ';');
+    obj.PART = utils.extractArray(obj.PART, ';');
+    obj.MHPP = utils.extractArray(obj.MHPP, ';');
+
     obj.REPR = utils.extractArray(obj.REPR, ';');
     obj.COUV = utils.extractArray(obj.COUV, ';');
     obj.MURS = utils.extractArray(obj.MURS, ';');
@@ -44,10 +51,18 @@ function MerimeeClean(obj) {
     obj.PREP = utils.extractArray(obj.PREP, ';');
     obj.TOIT = utils.extractArray(obj.TOIT, ';');
     obj.LOCA = utils.extractArray(obj.LOCA, ';');
+
+    switch (obj.REF.substring(0, 2)) {
+        case "IA": obj.POP_DOMAINE = 'Inventaire'; break;
+        case "PA": obj.POP_DOMAINE = 'Monument Historique'; break;
+        case "EA": obj.POP_DOMAINE = 'Architecture'; break;
+        default: obj.POP_DOMAINE = 'NULL'; break;
+    }
+
     return obj;
 }
 
-function syncWithMongoDb(file, object) {
+function syncWithMongoDb(file, object, domaine) {
     return new Promise((resolve, reject) => {
         let arr = [];
         let header = null;
@@ -96,7 +111,7 @@ function syncWithMongoDb(file, object) {
             .pipe(parser)
             .pipe(toObject)
             .pipe(transformer)
-            .pipe(batch(1000))
+            .pipe(batch(300))
             .pipe(mongo)
             .on('finish', () => {
                 console.log('Stream finish');
@@ -107,88 +122,6 @@ function syncWithMongoDb(file, object) {
             });
     });
 }
-
-
-// function parse(file, cb) {
-//     let arr = [];
-//     let header = null;
-//     var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
-//     var input = fs.createReadStream(file, 'latin1');
-
-//     var toObject = transform((record, next) => {
-//         let obj = null;
-//         if (!header) {
-//             header = record;
-//         } else {
-//             obj = {};
-//             for (var i = 0; i < record.length; i++) {
-//                 obj[header[i]] = record[i];
-//             }
-//         }
-//         next(null, obj);
-//     }, { parallel: 1 });
-
-
-
-
-//     var batcher = transform((record, next) => {
-//         if (record) {
-//             arr.push(record)
-//         }
-//         if (arr.length >= 1000) {
-//             cb(arr, next);
-//             arr = [];
-//         } else {
-//             next()
-//         }
-//     }, { parallel: 1 });
-
-
-//     var transformer = transform((obj, callback) => {
-//         if (obj.IMG) {
-//             obj.IMG = utils.extractIMG(obj.IMG);
-//         }
-
-//         if (obj.CONTACT) {
-//             obj.CONTACT = utils.extractEmail(obj.CONTACT);
-//         }
-
-//         obj.DENO = obj.DENO.split(';');
-//         obj.DENO = obj.DENO.map((e) => e.trim())
-
-//         obj.TECH = obj.TECH.split(';');
-//         obj.TECH = obj.TECH.map((e) => e.trim())
-
-//         obj.STAT = obj.STAT.split(';');
-//         obj.STAT = obj.STAT.map((e) => e.trim())
-
-//         obj.SCLE = obj.SCLE.split(';');
-//         obj.SCLE = obj.SCLE.map((e) => e.trim())
-
-//         obj.SCLX = obj.SCLX.split(';')
-//         obj.SCLX = obj.SCLX.map((e) => e.trim())
-
-//         obj.AUTR = obj.AUTR.split(';');
-//         obj.AUTR = obj.AUTR.map((e) => e.trim())
-
-//         obj.LOCA = obj.LOCA.split(';');
-//         obj.LOCA = obj.LOCA.map((e) => e.trim())
-
-//         callback(null, obj);
-//     }, { parallel: 1 });
-
-
-//     const stream = input
-//         .pipe(parser)
-//         .pipe(toObject)
-//         .pipe(transformer)
-//         .pipe(batcher);
-
-//     stream.on('finish', () => {
-//         cb(arr, null);
-//     });
-// }
-
 
 function log(file, counter, message, content) {
     const str = `${file},${counter},${message},"${content.replace(',', '\,').replace('"', '')}"\n`

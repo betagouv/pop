@@ -12,9 +12,9 @@ const arr = [];
 // arr.push({ file: './data/memoire-IVR-valid.csv', model: Models.memoire });
 // arr.push({ file: './data/memoire-SAP-valid.csv', model: Models.memoire });
 // arr.push({ file: './data/memoire-SDAP-valid.csv', model: Models.memoire });
-arr.push({ file: './data/merimee-ETAT-valid.csv', model: Models.merimee });
-arr.push({ file: './data/merimee-INV-valid.csv', model: Models.merimee });
-arr.push({ file: './data/merimee-MH-valid.csv', model: Models.merimee });
+arr.push({ file: './data/merimee-ETAT-valid.csv', model: Models.merimee, domaine: 'ETAT' });
+arr.push({ file: './data/merimee-INV-valid.csv', model: Models.merimee, domaine: 'INV' });
+arr.push({ file: './data/merimee-MH-valid.csv', model: Models.merimee, domaine: 'MH' });
 // arr.push({ file: './data/mnrbis-DMF-valid.csv', model: Models.mnr });
 // arr.push({ file: './data/palissy-ETAT-valid.csv', model: Models.palissy });
 // arr.push({ file: './data/palissy-INV-valid.csv', model: Models.palissy });
@@ -25,7 +25,7 @@ arr.push({ file: './data/merimee-MH-valid.csv', model: Models.merimee });
 function runMongo() {
   return new Promise(async (resolve, reject) => {
     for (var i = 0; i < arr.length; i++) {
-      await (Parse(arr[i].file, arr[i].model))
+      await (Parse(arr[i].file, arr[i].model, arr[i].domaine))
     }
     resolve();
   })
@@ -53,4 +53,4 @@ setTimeout(async () => {
   const start = Date.now()
   await (runMongo());
   console.log('Done in ', (Date.now() - start) / 1000, ' seconds')
-}, 5000)
+}, 10000)

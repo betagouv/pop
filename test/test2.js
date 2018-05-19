@@ -1,15 +1,18 @@
-const Mongo = require('../src/mongo');
-const Models = require('../src/models')
+// const Mongo = require('../src/mongo');
+// const Models = require('../src/models')
 
 
-const arr = [];
-for (var i = 0; i < 10; i++) {
-    arr.push(new Models.merimee({ REF: i }))
-}
+const utils = require('../import/utils')
 
-Models.merimee.insertMany(arr, (err, docs) => {
-    console.log('Saving bob')
-})
+
+// const arr = [];
+// for (var i = 0; i < 10; i++) {
+//     arr.push(new Models.merimee({ REF: i }))
+// }
+
+// Models.merimee.insertMany(arr, (err, docs) => {
+//     console.log('Saving bob')
+// })
 // bob.save((err) => {
 //     if (err) throw err;
 //     console.log('Document indexation on going')
@@ -19,3 +22,5 @@ Models.merimee.insertMany(arr, (err, docs) => {
 //     });
 // });
 
+
+// console.log(utils.extractWGPSfromLambert(0138800, 0371600));

@@ -7,6 +7,8 @@ const cors = require('cors');
 const Models = require('./models');
 const Mongo = require('./mongo');
 
+const { PORT } = require('./config.js');
+
 const app = express();
 const router = express.Router();
 
@@ -14,8 +16,6 @@ const routes = require('./routes')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-const PORT = 8081;
 
 // secure apps by setting various HTTP headers
 app.use(helmet());

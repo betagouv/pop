@@ -3,10 +3,10 @@ function extractIMG(str) {
     if (!str) {
         return '';
     }
-
-    let trimed = str.replace(' ', '');
-    return trimed.replace('@{img1;//', 'http://').replace(';ico1}@', '');
+    return str.replace(/\s/g, "").replace('@{img1;//', 'http://').replace(';ico1}@', '');
 }
+
+
 
 function extractEmail(str) {
     var regex = /mailto:([\w\d._@]*)/
@@ -21,12 +21,10 @@ function extractArray(val, delim) {
     if (!val) {
         return []
     }
-    let newVal = val ? val.split(delim) : [];
-    newVal = newVal.map((e) => e.trim())
-    return newVal;
+    return val.split(delim).map((e) => e.trim());
 }
 
-function lambert93toWGPS(lambertE, lambertN) {
+function extractWGPSfromLambert(lambertE, lambertN) {
 
     var constantes = {
         GRS80E: 0.081819191042816,
@@ -66,7 +64,7 @@ module.exports = {
     extractIMG,
     extractEmail,
     extractArray,
-    lambert93toWGPS
+    extractWGPSfromLambert
 };
 
 

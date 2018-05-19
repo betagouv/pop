@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
 const Schema = new mongoose.Schema({
+    POP_DOMAINE: String,
     REF: String,
     TOUT: String,
     ACQU: String,
