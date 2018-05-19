@@ -27,31 +27,125 @@ class Notice extends React.Component {
     componentWillMount() {
         API.getNotice(this.props.match.params.id).then((notice) => {
 
-            console.log('NOTICE',notice)
+            console.log('NOTICE', notice)
             const initData = {
-                TECH: notice.TECH,
-                STAT: notice.STAT,
-                CONTACT: notice.CONTACT,
                 REF: notice.REF,
-                MHPP: notice.MHPP,
-                PPRO: notice.PPRO,
-                DMIS: notice.DMIS,
-                DMAJ: notice.DMAJ,
+                ACTU: notice.ACTU,
+                ADRS: notice.ADRS,
+                AFFE: notice.AFFE,
+                AIRE: notice.AIRE,
+                APPL: notice.APPL,
+                APRO: notice.APRO,
+                ARCHEO: notice.ARCHEO,
+                AUTP: notice.AUTP,
+                AUTR: notice.AUTR,
+                CADA: notice.CADA,
+                CANT: notice.CANT,
+                COLL: notice.COLL,
+                COM: notice.COM,
+                COOR: notice.COOR,
+                COORM: notice.COORM,
+                COPY: notice.COPY,
+                COUV: notice.COUV,
+                DATE: notice.DATE,
+                DBOR: notice.DBOR,
+                DOMN: notice.DOMN,
+                DENO: notice.DENO,
+                DENQ: notice.DENQ,
+                DEPL: notice.DEPL,
+                DESC: notice.DESC,
+                DIMS: notice.DIMS,
+                DOSS: notice.DOSS,
+                DPRO: notice.DPRO,
+                DPT: notice.DPT,
+                EDIF: notice.EDIF,
+                ELEV: notice.ELEV,
+                ENER: notice.ENER,
+                ESCA: notice.ESCA,
+                ETAG: notice.ETAG,
+                ETAT: notice.ETAT,
+                ETUD: notice.ETUD,
+                GENR: notice.GENR,
                 HIST: notice.HIST,
+                HYDR: notice.HYDR,
+                IMPL: notice.IMPL,
+                INSEE: notice.INSEE,
+                INTE: notice.INTE,
+                JATT: notice.JATT,
+                JDAT: notice.JDAT,
+                LBASE2: notice.LBASE2,
+                LIEU: notice.LIEU,
+                LOCA: notice.LOCA,
+                MFICH: notice.MFICH,
+                MOSA: notice.MOSA,
+                MHPP: notice.MHPP,
+                MICR: notice.MICR,
+                MURS: notice.MURS,
+                NBOR: notice.NBOR,
+                NOMS: notice.NOMS,
                 OBS: notice.OBS,
+                PAFF: notice.PAFF,
+                PART: notice.PART,
+                PARN: notice.PARN,
+                PDEN: notice.PDEN,
+                PERS: notice.PERS,
+                PLAN: notice.PLAN,
+                PLOC: notice.PLOC,
+                PPRO: notice.PPRO,
+                PREP: notice.PREP,
+                PROT: notice.PROT,
+                PSTA: notice.PSTA,
+                REFE: notice.REFE,
+                REFO: notice.REFO,
+                REFP: notice.REFP,
+                REG: notice.REG,
+                REMA: notice.REMA,
+                REMP: notice.REMP,
+                RENV: notice.RENV,
+                REPR: notice.REPR,
+                RFPA: notice.RFPA,
+                SCLD: notice.SCLD,
                 SCLE: notice.SCLE,
                 SCLX: notice.SCLX,
-                AUTR: notice.AUTR,
-                AUTP: notice.AUTP,
-                DENO: notice.DENO,
-                DOMN: notice.DOMN,
-                COM: notice.COM,
-                REG: notice.REG,
-                DPT: notice.DPT,
-                LOCA: notice.LOCA,
+                SITE: notice.SITE,
+                STAT: notice.STAT,
+                TECH: notice.TECH,
+                TICO: notice.TICO,
+                TOIT: notice.TOIT,
+                TYPO: notice.TYPO,
+                VERT: notice.VERT,
+                REFIM: notice.REFIM,
+                IMG: notice.IMG,
+                VIDEO: notice.VIDEO,
+                DOSURL: notice.DOSURL,
+                DOSURLP: notice.DOSURLP,
+                DOSADRS: notice.DOSADRS,
+                LIENS: notice.LIENS,
+                IMAGE: notice.IMAGE,
+                VISI: notice.VISI,
+                VOCA: notice.VOCA,
+                VOUT: notice.VOUT,
+                WEB: notice.WEB,
+                ZONE: notice.ZONE,
+                THEM: notice.THEM,
+                ACMH: notice.ACMH,
+                ACURL: notice.ACURL,
+                WADRS: notice.WADRS,
+                WCOM: notice.WCOM,
+                WRENV: notice.WRENV,
+                REFM: notice.REFM,
+                CONTACT: notice.CONTACT,
+                IDAGR: notice.IDAGR,
+                LMDP: notice.LMDP,
+                PINT: notice.PINT,
+                DLAB: notice.DLAB,
+                APPL: notice.APPL,
+
             }
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
+
+
         })
     }
 
@@ -90,10 +184,15 @@ class Notice extends React.Component {
                         </Col>
                         <Col md="8">
                             <h3>{this.state.notice.TICO}</h3>
-                            <FieldInput
+                            <FieldTags
                                 title='[DENO]Denomination : '
                                 name='DENO'
                             />
+                            <FieldInput
+                                title='[PDEN]préc. DENO : '
+                                name='PDEN'
+                            />
+
                             <FieldInput
                                 title='[DOMN]Domaines : '
                                 name='DOMN'
@@ -168,10 +267,16 @@ class Notice extends React.Component {
                                 title='[SCLE]Siecle : '
                                 name='SCLE'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='[SCLX]Siecle X : '
                                 name='SCLX'
                             />
+                            <FieldTags
+                                title='[SCLD]Siecle DEtail : '
+                                name='SCLD'
+                            />
+
+
                             <FieldInput
                                 title='[TECH]Techniques : '
                                 name='TECH'
@@ -181,28 +286,83 @@ class Notice extends React.Component {
                                 name='STAT'
                             />
 
+
+
                             <FieldInput
                                 title='[CONTACT]Contact : '
                                 name='CONTACT'
                             />
 
-                            <hr />
                             <FieldInput
-                                title='[AUTP] Auteur phototype: '
-                                name='AUTP'
-                                disabled
+                                title='[VOCA]Vocable : '
+                                name='VOCA'
                             />
-                            <FieldInput
-                                title='[AUTR]Auteur: '
-                                name='AUTR'
-                                disabled
-                            />
-                            <hr />
-                            {/* <FieldTags
-                                title='[TITRE]Test : '
-                                name='TITRE'
-                            /> */}
 
+                            <hr />
+
+                            <FieldInput
+                                title='[VERT]Jardin : '
+                                name='VERT'
+                            />
+
+
+                            <FieldInput
+                                title='[REMA] Remarquable : '
+                                name='REMA'
+                            />
+
+                            <FieldInput
+                                title='[PSTA] préc. Propriétés : '
+                                name='PSTA'
+                            />
+
+
+
+                            <FieldInput
+                                title='[THEM] Thème : '
+                                name='THEM'
+                            />
+                            <FieldInput
+                                title='[TYPO]Typologie : '
+                                name='TYPO'
+                            />
+                            <FieldInput
+                                title='[TICO] Titre courant : '
+                                name='TICO'
+                            />
+                            <FieldTags
+                                title='[AUTP] Auteurs phototype: '
+                                name='AUTP'
+                            />
+                            <FieldTags
+                                title='[AUTR]Auteurs: '
+                                name='AUTR'
+                            />
+
+                            <FieldTags
+                                title='[NOMS] Nom rédacteur(s): '
+                                name='NOMS'
+                            />
+
+                            <FieldTags
+                                title='[PART]Parties: '
+                                name='PART'
+                            />
+
+                            <FieldTags
+                                title='[PARN] Parties non étud: '
+                                name='PARN'
+                            />
+
+                            <FieldTags
+                                title='[MHPP] MH éléments: '
+                                name='MHPP'
+                            />
+
+                            
+
+
+                            <hr />
                             <p style={{ textAlign: 'end' }}>{this.state.notice.COPY}</p>
                         </Col>
                     </Row>
@@ -250,114 +410,6 @@ const Images = ({ images }) => {
         return <div />
     }
 }
-
-
-/*
-                ACMH: notice.ACMH
-ACTU: notice.ACTU,
-ACURL: notice.ACURL,
-ADRS: notice.ADRS,
-AFFE: notice.AFFE,
-AIRE: notice.AIRE,
-APPL: notice.APPL,
-APRO: notice.APRO,
-ARCHEO: notice.ARCHEO,
-AUTP: notice.AUTP,
-CADA: notice.CADA,
-CADA: notice.CADA,
-CADA: notice.CADA,
-COOR: notice.COOR,
-COORM: notice.COORM,
-COUV: notice.COUV,
-DATE: notice.DATE,
-DBOR: notice.DBOR,
-DENQ: notice.DENQ,
-DEPL: notice.DEPL,
-DESC: notice.DESC,
-DIMS: notice.DIMS,
-DLAB: notice.DLAB,
-DMAJ: notice.DMAJ,
-DMIS: notice.DMIS,
-DOMN: notice.DOMN,
-DOSADRS: notice.DOSADRS,
-DOSS: notice.DOSS,
-DOSURL: notice.DOSURL,
-DOSURLP: notice.DOSURLP,
-DPRO: notice.DPRO,
-DPT: notice.DPT,
-EDIF: notice.EDIF,
-ELEV: notice.ELEV,
-ENER: notice.ENER,
-ESCA: notice.ESCA,
-ETAG: notice.ETAG,
-ETAT: notice.ETAT,
-ETUD: notice.ETUD,
-GENR: notice.GENR,
-HIST: notice.HIST,
-HYDR: notice.HYDR,
-IDAGR: notice.IDAGR,
-IMAGE: notice.IMAGE,
-IMG: notice.IMG,
-IMPL: notice.IMPL,
-INSEE: notice.INSEE,
-INTE: notice.INTE,
-JATT: notice.JATT,
-JDAT: notice.JDAT,
-LBASE2: notice.LBASE2,
-LIENS: notice.LIENS,
-LIEU: notice.LIEU,
-LMDP: notice.LMDP,
-LOCA: notice.LOCA,
-MFICH: notice.MFICH,
-MHPP: notice.MHPP,
-MICR: notice.MICR,
-MOSA: notice.MOSA,
-MURS: notice.MURS,
-NBOR: notice.NBOR,
-NOMS: notice.NOMS,
-OBS: notice.OBS,
-PAFF: notice.PAFF,
-PARN: notice.PARN,
-PART: notice.PART,
-PDEN: notice.PDEN,
-PERS: notice.PERS,
-PINT: notice.PINT,
-PLAN: notice.PLAN,
-PLOC: notice.PLOC,
-PPRO: notice.PPRO,
-PREP: notice.PREP,
-PROT: notice.PROT,
-PSTA: notice.PSTA,
-REFE: notice.REFE,
-REFIM: notice.REFIM,
-REFM: notice.REFM,
-REFO: notice.REFO,
-REFP: notice.REFP,
-REG: notice.REG,
-REMA: notice.REMA,
-REMP: notice.REMP,
-RENV: notice.RENV,
-REPR: notice.REPR,
-RFPA: notice.RFPA,
-SCLD: notice.SCLD,
-SITE: notice.SITE,
-STAT: notice.STAT,
-THEM: notice.THEM,
-TICO: notice.TICO,
-TOIT: notice.TOIT,
-TOUT: notice.TOUT,
-TYPO: notice.TYPO,
-VERT: notice.VERT,
-VIDEO: notice.VIDEO,
-VISI: notice.VISI,
-VOCA: notice.VOCA,
-VOUT: notice.VOUT,
-WADRS: notice.WADRS,
-WCOM: notice.WCOM,
-WEB: notice.WEB,
-WRENV: notice.WRENV,
-ZONE: notice.ZONE,
-*/
 
 
             /*

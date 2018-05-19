@@ -56,24 +56,37 @@ export default class Search extends React.Component {
                     <Row>
                         <Col xs="3">
 
-                            <SingleList
-                                componentId="denomination"
-                                dataField="DENO.keyword"
-                                title="Dénominations"
-                                showCount={true}
+                            <MultiList
+                                componentId="domaine"
+                                dataField="POP_DOMAINE.keyword"
+                                title="Domaines"
+                                defaultSelected={["Architecture", "Inventaire", "Monument Historique"]}
                                 className="filters"
+                                showSearch={false}
                                 react={{
                                     and: ["mainSearch", "region", "departement", "commune"]
                                 }}
                             />
 
                             <SingleList
+                                componentId="denomination"
+                                dataField="DENO.keyword"
+                                title="Dénominations"
+                                className="filters"
+                                react={{
+                                    and: ["mainSearch", "region", "departement", "commune", "domaine"]
+                                }}
+                            />
+
+                            <SingleList
                                 componentId="auteurs"
                                 dataField="AUTR.keyword"
+                                showMissing={true}
+                                size={1000}
                                 title="Auteurs"
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "commune", "auteurs"]
+                                    and: ["mainSearch", "region", "departement", "domaine", "commune", "auteurs"]
                                 }}
                             />
                             <hr />
@@ -84,10 +97,9 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "departement", "commune", "denomination", "auteurs"]
+                                    and: ["mainSearch", "departement", "commune", "domaine", "denomination", "auteurs"]
                                 }}
                             />
-
                             <SingleList
                                 componentId="departement"
                                 dataField="DPT.keyword"
@@ -95,7 +107,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "commune", "denomination", "auteurs"]
+                                    and: ["mainSearch", "region", "commune", "domaine", "denomination", "auteurs"]
                                 }}
                             />
 
@@ -106,7 +118,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "denomination", "auteurs"]
+                                    and: ["mainSearch", "region", "domaine", "departement", "denomination", "auteurs"]
                                 }}
                             />
 
@@ -116,7 +128,7 @@ export default class Search extends React.Component {
                             <ReactiveList
                                 componentId="results"
                                 react={{
-                                    "and": ["mainSearch", "region", "departement", "commune", "denomination", "auteurs"]
+                                    "and": ["mainSearch", "region", "departement", "domaine", "commune", "denomination", "auteurs"]
                                 }}
                                 dataField=''
                                 size={20}

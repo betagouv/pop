@@ -31,9 +31,10 @@ class TagsInput extends React.Component {
     }
 
     render() {
+        if (!Array.isArray(this.props.input.value)) {
+            return (<div>{`${this.props.input.name} should be an array but got : ${JSON.stringify(this.props.input.value)}`} </div>)
 
-
-        console.log('DDDSQDS',this.props.input.value)
+        }
         return (
             <div>
                 <Tags

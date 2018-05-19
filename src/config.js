@@ -2,8 +2,6 @@
 
 let forceProd = false;
 
-console.log('FORCE PRODUCTION : ' + forceProd)
-
 let api_url = 'http://127.0.0.1:3000';
 if (forceProd || process.env.NODE_ENV === 'production') {
   api_url = 'http://api-staging.6qvh6fbw23.eu-west-3.elasticbeanstalk.com';

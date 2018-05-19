@@ -1,8 +1,13 @@
+
+.home{
+    /* background-image: url("./../../assets/background.jpg"); */
+}
+
 .home .hero-text{
     text-align: center;
-    line-height: 1.3;
-    font-size: 18px;
     margin-bottom: 80px;
+    font-size: 2rem;
+    padding-top: 20px
 }
 
 .home .activities h4{
@@ -12,13 +17,11 @@
     background-size: 18px; ;
 }
 
-.home .list-box{
+.home .box{
     padding: 20px 30px;
-    border: 1px solid #444444;
-}
-
-.home .list-box li {
-    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .home .tile:hover {
@@ -29,12 +32,25 @@
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    padding: 10px;
+    /* padding: 10px; */
     cursor: pointer;
     max-width: 250px;
     height: 350px;
+    position: relative;
     display: flex;
     flex-direction: column;
+}
+
+.home .tile .caption{
+    height: 60px;
+    position: absolute;
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    bottom: 0px;
 }
 
 .home .tile .title {
@@ -42,8 +58,10 @@
 }
 
 .home .tile img{
-    object-fit: cover;
-    max-width: 200px;
+    object-fit: fill;
+    width: 100%;
+    min-width: 200px;
+    height: 100%;
 }
 
 .home .tile .thumb{
