@@ -122,7 +122,7 @@ const Schema = new mongoose.Schema({
     APPL: String,
 }, { collection: 'merimee' })
 
-Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
+// Schema.index({ TICO: 'text', PPRO: 'text', AUTP: 'text' })
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
