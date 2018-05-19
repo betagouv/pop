@@ -1,6 +1,8 @@
 //ES
 
-let forceProd = false;
+let forceProd = true;
+
+console.log('HEY', process.env)
 
 let mongo_url = 'mongodb://127.0.0.1/pop';
 if (forceProd || process.env.NODE_ENV === 'production') {

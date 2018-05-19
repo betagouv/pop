@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "import:dev": "node ./import/import.js --env.NODE_ENV=developpement",
+    "import:prod": "node ./import/import.js --env.NODE_ENV=production",
     "try": "node ./src/test.js",
     "start": "node ./src/index.js --env.NODE_ENV=production",
     "dev": "node ./src/index.js --env.NODE_ENV=developpement",
