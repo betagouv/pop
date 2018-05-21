@@ -635,9 +635,9 @@ class Notice extends React.Component {
                     </Button>
                     </div>
                 </Form>
-                <div className='rawdata'>
+                {/* <div className='rawdata'>
                     {arr}
-                </div>
+                </div> */}
             </Container >
         );
     }
