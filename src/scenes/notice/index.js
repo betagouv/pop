@@ -7,6 +7,8 @@ import { Field, reduxForm } from 'redux-form'
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
 
+import Section from './components/section.js'
+
 import Loader from '../../components/loader'
 import API from '../../services/api'
 
@@ -241,6 +243,7 @@ class Notice extends React.Component {
                             </Col>
                         </Row>
                     </div>
+                    <Section />
                     <Row>
                         <Col className='image' xs={12} sm={12} md='4'>
                             <div className="thumbs-box">

@@ -2,7 +2,11 @@ import React from 'react';
 import { Field } from 'redux-form'
 import ReactTags from 'react-tag-input'
 
+
+import './fieldTags.css';
+
 const Tags = ReactTags.WithContext;
+
 
 class TagsInput extends React.Component {
     constructor(props) {

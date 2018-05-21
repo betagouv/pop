@@ -2,6 +2,8 @@ import React from 'react';
 import { Field } from 'redux-form'
 import { Input } from 'reactstrap';
 
+import './fieldInput.css';
+
 const makeField = ({ input, meta, children, hasFeedback, label, ...rest }) => {
     return (
         <Input  {...rest} value={input.value} onChange={(e) => input.onChange(e.target.value)} />
