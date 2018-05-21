@@ -3,13 +3,13 @@ import { Row, Col, Button } from 'reactstrap';
 import './section.css';
 
 
-export default ({ title, icon, description, children }) => {
+export default ({ title, icon, description, color, children }) => {
     return (
         <div className='section'>
             <Row>
                 <Col md="8">
                     <div className='sectionheader'>
-                        <img src={icon} alt={title} />
+                        <img src={icon} alt={title} style={{ backgroundColor: color }} />
                         <div className='title'>{title}</div>
                     </div>
                     <hr />
@@ -20,8 +20,7 @@ export default ({ title, icon, description, children }) => {
                     {children}
                 </Col>
                 <Col md="4">
-                    <span className='verticalLine' />
-                    <div className='subtitle'>Comment remplir cette section</div>
+                    <div className='subtitle' style={{ borderColor: color }}>Comment remplir cette section</div>
                     <div>{description}</div>
                     <Button >En savoir plus</Button>
                 </Col>

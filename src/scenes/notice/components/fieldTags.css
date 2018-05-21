@@ -17,6 +17,7 @@ div.ReactTags__tags {
     font-size: 16px;
     color: #495057;
     width: 100%; 
+    padding-left: 5px;
     border-radius: .25rem;
     border: 1px solid #ced4da;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;

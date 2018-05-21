@@ -28,7 +28,6 @@ class Notice extends React.Component {
 
     componentWillMount() {
         API.getNotice(this.props.match.params.id).then((notice) => {
-
             console.log('NOTICE', notice)
             const initData = {
                 REF: notice.REF,
@@ -180,6 +179,7 @@ class Notice extends React.Component {
                         title='INFORMATIONS GENERALES'
                         icon={require('../../assets/info.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FF7676'
                     >
                         <FieldInput
                             title='Titre courant (TICO) : '
@@ -190,19 +190,26 @@ class Notice extends React.Component {
                             name='DENO'
                         />
                         <FieldInput
-                            title='préc. DENO (PDEN) :'
+                            title='Préc. DENO (PDEN) :'
                             name='PDEN'
                         />
                         <FieldInput
                             title='Domaines (DOMN) : '
                             name='DOMN'
                         />
+
+                        <FieldInput
+                            title='Notice (REF) :'
+                            name='REF'
+                            disabled
+                        />
                     </Section>
 
                     <Section
                         title='DONNEES GEOGRAPHIQUES'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/map.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FFC070'
                     >
                         <FieldInput
                             title='Region (REG) : '
@@ -251,8 +258,9 @@ class Notice extends React.Component {
 
                     <Section
                         title='TECHNIQUES'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/tool.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FBE367'
                     >
                         <FieldTags
                             title='couverture (COUV) :'
@@ -296,12 +304,17 @@ class Notice extends React.Component {
                             title='Etages (ETAG) :'
                             name='ETAG'
                         />
+                        <FieldInput
+                            title='Jardin (VERT) :'
+                            name='VERT'
+                        />
                     </Section>
 
                     <Section
                         title='DATES'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/time.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#00BEB2'
                     >
 
                         <FieldTags
@@ -326,8 +339,9 @@ class Notice extends React.Component {
 
                     <Section
                         title='DONNEES HISTORIQUES'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/date.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#668796'
                     >
                         <FieldInput
                             title='Histoire (HIST) :'
@@ -351,8 +365,9 @@ class Notice extends React.Component {
 
                     <Section
                         title='CONTRIBUTEURS'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/people.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#009DE4'
                     >
 
                         <FieldTags
@@ -368,15 +383,24 @@ class Notice extends React.Component {
                             title='Nom rédacteur(s) (NOMS) : '
                             name='NOMS'
                         />
+                        <FieldInput
+                            title='Destinataire (GENR) : '
+                            name='GENR'
+                        />
+                        <FieldInput
+                            title='Contact (CONTACT) :'
+                            name='CONTACT'
+                        />
                     </Section>
                     <Section
                         title='ASPECTS LEGALS'
-                        icon={require('../../assets/info.png')}
+                        icon={require('../../assets/law.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FE997B'
                     >
 
                         <FieldInput
-                            title='préc. Protection (PPRO) :'
+                            title='Préc. Protection (PPRO) :'
                             name='PPRO'
                             type='textarea'
                             rows={10}
@@ -394,13 +418,16 @@ class Notice extends React.Component {
                             title='Statut propriété (STAT) :'
                             name='STAT'
                         />
-
+                        <FieldInput
+                            title='Etat (ETAT) : '
+                            name='ETAT'
+                        />
                         <FieldInput
                             title='Site protégé (SITE) :'
                             name='SITE'
                         />
                         <FieldInput
-                            title='préc. Propriétés (PSTA): '
+                            title='Préc. Propriétés (PSTA): '
                             name='PSTA'
                         />
 
@@ -409,11 +436,11 @@ class Notice extends React.Component {
                             name='JDAT'
                         />
                         <FieldTags
-                            title='justif. attrib. (JATT) :'
+                            title='Justif. attrib. (JATT) :'
                             name='JATT'
                         />
 
-                        <FieldTags
+                        <FieldInput
                             title='Date protection (DPRO) :'
                             name='DPRO'
                         />
@@ -436,8 +463,6 @@ class Notice extends React.Component {
                                 title='Collectifs (COLL) :'
                                 name='COLL'
                             />
-
-
                             <FieldTags
                                 title='Visite (VISI) :'
                                 name='VISI'
@@ -451,10 +476,6 @@ class Notice extends React.Component {
                                 title='Intérêt (INTE) :'
                                 name='INTE'
                             />
-
-
-
-
 
                         </Col>
                     </Row>
@@ -475,33 +496,14 @@ class Notice extends React.Component {
                                 disabled
                             />
 
-
-
-                            <FieldInput
-                                title='Notice (REF) :'
-                                name='REF'
-                                disabled
-                            />
-
                             <FieldInput
                                 title='Dossier (DOSS) : '
                                 name='DOSS'
                             />
 
-
-                            <FieldInput
-                                title='Etat (ETAT) : '
-                                name='ETAT'
-                            />
-
                             <FieldInput
                                 title='Deplacement (DEPL) : '
                                 name='DEPL'
-                            />
-
-                            <FieldInput
-                                title='Destinataire (GENR) : '
-                                name='GENR'
                             />
 
                             <FieldInput
@@ -525,11 +527,6 @@ class Notice extends React.Component {
                                 name='DOSADRS'
                                 type='textarea'
                                 rows={4}
-                            />
-
-                            <FieldInput
-                                title='Contact (CONTACT) :'
-                                name='CONTACT'
                             />
 
                             <FieldInput
@@ -559,17 +556,9 @@ class Notice extends React.Component {
                             <hr />
 
                             <FieldInput
-                                title='Jardin (VERT) :'
-                                name='VERT'
-                            />
-
-
-                            <FieldInput
                                 title='Remarquable (REMA) :'
                                 name='REMA'
                             />
-
-
                             <FieldInput
                                 title='Thème (THEM) : '
                                 name='THEM'
@@ -579,8 +568,6 @@ class Notice extends React.Component {
                                 title='Edif. contenant (EDIF) : '
                                 name='EDIF'
                             />
-
-
 
                             <FieldTags
                                 title='Parties (PART) : '
