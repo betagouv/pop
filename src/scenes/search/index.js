@@ -68,7 +68,7 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="denomination"
                                 dataField="DENO.keyword"
                                 title="Dénominations"
@@ -78,7 +78,7 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="auteurs"
                                 dataField="AUTR.keyword"
                                 showMissing={true}
@@ -90,7 +90,7 @@ export default class Search extends React.Component {
                                 }}
                             />
                             <hr />
-                            <SingleList
+                            <MultiList
                                 componentId="region"
                                 dataField="REG.keyword"
                                 title="Region"
@@ -100,7 +100,7 @@ export default class Search extends React.Component {
                                     and: ["mainSearch", "departement", "commune", "domaine", "denomination", "auteurs"]
                                 }}
                             />
-                            <SingleList
+                            <MultiList
                                 componentId="departement"
                                 dataField="DPT.keyword"
                                 title="Departements"
@@ -111,7 +111,7 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="commune"
                                 dataField="COM.keyword"
                                 title="Communes"

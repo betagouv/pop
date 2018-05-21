@@ -57,7 +57,7 @@ const makeField = ({ ...rest }) => {
 export default ({ title, ...rest }) => {
     return (
         <div style={styles.container}>
-            {title && <strong style={styles.title} >{title}</strong>}
+            {title && <div style={styles.title} >{title}</div>}
             <Field component={makeField} {...rest} />
         </div>
     )
@@ -68,16 +68,18 @@ const styles = {
     container: {
         width: '100%',
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'start',
+        alignItems: 'start',
         paddingTop: '10px',
         paddingBottom: '10px',
     },
     title: {
         paddingRight: '15px',
         whiteSpace: 'nowrap',
-        minWidth: '100px'
+        minWidth: '100px',
+        color: '#5a5a5a',
+        fontStyle: 'italic'
     }
 }
 

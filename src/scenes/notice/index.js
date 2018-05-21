@@ -169,11 +169,78 @@ class Notice extends React.Component {
 
         return (
             <Container className='notice' fluid>
-                <h2 className='title'>Vous travaillez dans la base Mérimée</h2>
+                <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
                 <Form
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
+                    <div className='section'>
+                        <Row>
+                            <Col md="8">
+                                <div className='sectionheader'>
+                                    <img src={require('../../assets/info.png')} alt="GENERALES INFORMATIONS" />
+                                    <div className='title'>GENERALES INFORMATIONS</div>
+                                </div>
+                                <hr />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="8">
+                                <FieldInput
+                                    title='Titre courant (TICO) : '
+                                    name='TICO'
+                                />
+                                <FieldTags
+                                    title='Denomination (DENO) : '
+                                    name='DENO'
+                                />
+                                <FieldInput
+                                    title='préc. DENO (PDEN) :'
+                                    name='PDEN'
+                                />
+                                <FieldInput
+                                    title='Domaines (DOMN) : '
+                                    name='DOMN'
+                                />
+                                <FieldInput
+                                    title='Region (REG) : '
+                                    name='REG'
+                                />
+                                <FieldInput
+                                    title='Département (DPT) : '
+                                    name='DPT'
+                                />
+                                <FieldInput
+                                    title='Canton (CANT) : '
+                                    name='CANT'
+                                />
+                                <FieldInput
+                                    title='Commune (COM) : '
+                                    name='COM'
+                                />
+                                <FieldInput
+                                    title='Lieu-dit (LIEU) : '
+                                    name='LIEU'
+                                />
+                                <FieldInput
+                                    title='Localisation (LOCA) : '
+                                    name='LOCA'
+                                />
+                                <FieldTags
+                                    title='Implantation (IMPL) : '
+                                    name='IMPL'
+                                />
+                            </Col>
+                            <Col md="4">
+                                <span className='verticalLine' />
+                                <div className='subtitle'>Comment remplir cette section</div>
+                                <div>
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia
+                                </div>
+                                <Button >En savoir plus</Button>
+                            </Col>
+                        </Row>
+                    </div>
                     <Row>
                         <Col className='image' xs={12} sm={12} md='4'>
                             <div className="thumbs-box">
@@ -182,188 +249,351 @@ class Notice extends React.Component {
                                 </div>
                             </div>
                         </Col>
-                        <Col md="8">
-                            <h3>{this.state.notice.TICO}</h3>
-                            <FieldTags
-                                title='[DENO]Denomination : '
-                                name='DENO'
-                            />
-                            <FieldInput
-                                title='[PDEN]préc. DENO : '
-                                name='PDEN'
-                            />
-
-                            <FieldInput
-                                title='[DOMN]Domaines : '
-                                name='DOMN'
-                            />
-                            <hr />
-                            <FieldInput
-                                title='[COM]COMMUNE : '
-                                name='COM'
-                            />
-
-                            <FieldInput
-                                title='[REG]REGION : '
-                                name='REG'
-                            />
-
-                            <FieldInput
-                                title='[DPT]DEPARTEMENT : '
-                                name='DPT'
-                            />
-
-                            <FieldInput
-                                title='[LOCA]LOCALISATIONS : '
-                                name='LOCA'
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
                         <Col md="12">
                             <FieldInput
-                                title='[HIST]Histoire : '
+                                title='Histoire (HIST) :'
                                 name='HIST'
                                 type='textarea'
                                 rows={10}
                             />
                             <FieldInput
-                                title='[OBS]OBSERVATIONS : '
+                                title='Observations (OBS) :'
                                 name='OBS'
                                 type='textarea'
                                 rows={10}
                             />
                             <FieldInput
-                                title='[PPRO]préc. Protection : '
+                                title='Description (DESC) :'
+                                name='DESC'
+                                type='textarea'
+                                rows={4}
+                            />
+                            <FieldInput
+                                title='préc. Protection (PPRO) :'
                                 name='PPRO'
                                 type='textarea'
                                 rows={10}
                             />
+
+                            <FieldTags
+                                title='Collectifs (COLL) :'
+                                name='COLL'
+                            />
+                            <FieldTags
+                                title='Cadastre (CADA) :'
+                                name='CADA'
+                            />
+                            <FieldTags
+                                title='Acte protection (APRO) :'
+                                name='APRO'
+                            />
+                            <FieldTags
+                                title='Coûte couvrement (VOUT) :'
+                                name='VOUT'
+                            />
+                            <FieldTags
+                                title='Visite (VISI) :'
+                                name='VISI'
+                            />
+                            <FieldTags
+                                title='couverture (COUV) :'
+                                name='COUV'
+                            />
+                            <FieldTags
+                                title='Personnalitées (PERS) :'
+                                name='PERS'
+                            />
+                            <FieldTags
+                                title='Intérêt (INTE) :'
+                                name='INTE'
+                            />
+
+                            <FieldTags
+                                title='Energie (ENER) :'
+                                name='ENER'
+                            />
+                            <FieldTags
+                                title='Elevation (ELEV) :'
+                                name='ELEV'
+                            />
+                            <FieldTags
+                                title='Etages (ETAG) :'
+                                name='ETAG'
+                            />
+                            <FieldTags
+                                title='Protection (PROT) :'
+                                name='PROT'
+                            />
+
+
+
+
+
                         </Col>
                     </Row>
                     <Row>
                         <Col md="6">
                             <FieldInput
-                                title='[MHPP]MH éléments : '
+                                title='MH éléments (MHPP) : '
                                 name='MHPP'
                             />
                             <FieldInput
-                                title='[DMAJ]Date MAJ : '
+                                title='Date MAJ (DMAJ) :'
                                 name='DMAJ'
                                 disabled
                             />
                             <FieldInput
-                                title='[DMIS]Date MIS : '
+                                title='Date MIS (DMIS) :'
                                 name='DMIS'
                                 disabled
                             />
+
+
+
                             <FieldInput
-                                title='[REF]Notice : '
+                                title='Notice (REF) :'
                                 name='REF'
                                 disabled
                             />
 
+                            <FieldInput
+                                title='Dossier (DOSS) : '
+                                name='DOSS'
+                            />
+
+
                             <FieldTags
-                                title='[SCLE]Siecle : '
+                                title='Siecle (SCLE) :'
                                 name='SCLE'
                             />
                             <FieldTags
-                                title='[SCLX]Siecle X : '
+                                title='Siecle X (SCLX) :'
                                 name='SCLX'
                             />
                             <FieldTags
-                                title='[SCLD]Siecle DEtail : '
+                                title='Siecle Detail (SCLD) :'
                                 name='SCLD'
                             />
 
+                            <FieldInput
+                                title="Date (DATE) :"
+                                name='DATE'
+                            />
 
                             <FieldInput
-                                title='[TECH]Techniques : '
+                                title='Etat (ETAT) : '
+                                name='ETAT'
+                            />
+                            <FieldInput
+                                title='Murs (MURS) : '
+                                name='MURS'
+                            />
+                            <FieldInput
+                                title='Dimensions (DIMS) : '
+                                name='DIMS'
+                            />
+
+
+
+                            <FieldInput
+                                title='Toiture matériau (TOIT) : '
+                                name='TOIT'
+                            />
+
+                            <FieldInput
+                                title='Technique décor (TECH) : '
                                 name='TECH'
                             />
                             <FieldInput
-                                title='[STAT]Proprietaire : '
-                                name='STAT'
+                                title='Deplacement (DEPL) : '
+                                name='DEPL'
                             />
 
-
+                            <FieldInput
+                                title='Destinataire (GENR) : '
+                                name='GENR'
+                            />
+                            <FieldInput
+                                title='Escaliers (ESCA) : '
+                                name='ESCA'
+                            />
 
                             <FieldInput
-                                title='[CONTACT]Contact : '
+                                title='Remploi (REMP) : '
+                                name='REMP'
+                            />
+                            <FieldInput
+                                title='Représentation (REPR) : '
+                                name='REPR'
+                            />
+                            <FieldInput
+                                title='Proprietaire (STAT) : '
+                                name='STAT'
+                            />
+                            <FieldInput
+                                title="Aire d'étude (AIRE) : "
+                                name='AIRE'
+                            />
+                            <FieldInput
+                                title='Dossier adresse (DOSADRS) :'
+                                name='DOSADRS'
+                                type='textarea'
+                                rows={4}
+                            />
+
+                            <FieldInput
+                                title='Contact (CONTACT) :'
                                 name='CONTACT'
                             />
 
                             <FieldInput
-                                title='[VOCA]Vocable : '
+                                title='Vocable (VOCA) :'
                                 name='VOCA'
                             />
-
+                            <FieldInput
+                                title='Appellation (APPL) :'
+                                name='APPL'
+                            />
+                            <FieldInput
+                                title='Destination (ACTU) :'
+                                name='ACTU'
+                            />
+                            <FieldInput
+                                title='Affectataire (AFFE) :'
+                                name='AFFE'
+                            />
+                            <FieldInput
+                                title='Plan (PLAN) :'
+                                name='PLAN'
+                            />
+                            <FieldInput
+                                title='Etude (ETUD) :'
+                                name='ETUD'
+                            />
                             <hr />
 
                             <FieldInput
-                                title='[VERT]Jardin : '
+                                title='Jardin (VERT) :'
                                 name='VERT'
                             />
 
 
                             <FieldInput
-                                title='[REMA] Remarquable : '
+                                title='Remarquable (REMA) :'
                                 name='REMA'
+                            />
+                            <FieldInput
+                                title='Statut propriété (STAT) :'
+                                name='STAT'
                             />
 
                             <FieldInput
-                                title='[PSTA] préc. Propriétés : '
+                                title='Site protégé (SITE) :'
+                                name='SITE'
+                            />
+                            <FieldInput
+                                title='préc. Propriétés (PSTA): '
                                 name='PSTA'
                             />
 
-
-
-                            <FieldInput
-                                title='[THEM] Thème : '
-                                name='THEM'
-                            />
-                            <FieldInput
-                                title='[TYPO]Typologie : '
-                                name='TYPO'
-                            />
-                            <FieldInput
-                                title='[TICO] Titre courant : '
-                                name='TICO'
+                            <FieldTags
+                                title='Justif. datation (JDAT) :'
+                                name='JDAT'
                             />
                             <FieldTags
-                                title='[AUTP] Auteurs phototype: '
+                                title='justif. attrib. (JATT) :'
+                                name='JATT'
+                            />
+
+                            <FieldTags
+                                title='Date protection (DPRO) :'
+                                name='DPRO'
+                            />
+
+                            <FieldInput
+                                title='Thème (THEM) : '
+                                name='THEM'
+                            />
+
+                            <FieldInput
+                                title='Edif. contenant (EDIF) : '
+                                name='EDIF'
+                            />
+
+                            <FieldInput
+                                title='Hydrographie (HYDR) : '
+                                name='HYDR'
+                            />
+
+                            <FieldInput
+                                title='Typologie (TYPO) : '
+                                name='TYPO'
+                            />
+
+                            <FieldTags
+                                title='Auteurs phototype (AUTP) : '
                                 name='AUTP'
                             />
                             <FieldTags
-                                title='[AUTR]Auteurs: '
+                                title='Auteurs (AUTR) : '
                                 name='AUTR'
                             />
 
                             <FieldTags
-                                title='[NOMS] Nom rédacteur(s): '
+                                title='Nom rédacteur(s) (NOMS) : '
                                 name='NOMS'
                             />
 
                             <FieldTags
-                                title='[PART]Parties: '
+                                title='Parties (PART) : '
                                 name='PART'
                             />
 
                             <FieldTags
-                                title='[PARN] Parties non étud: '
+                                title='Parties non étud (PARN) : '
                                 name='PARN'
                             />
 
                             <FieldTags
-                                title='[MHPP] MH éléments: '
+                                title='MH éléments (MHPP) : '
                                 name='MHPP'
                             />
 
-                            
+                            <FieldInput
+                                title='INSEE (INSEE) :'
+                                name='INSEE'
+                            />
+                            <FieldInput
+                                title='Date du label (DLAB) :'
+                                name='DLAB'
+                            />
+                            <FieldInput
+                                title='Date bordereau (DBOR) :'
+                                name='DBOR'
+                            />
+                            <FieldInput
+                                title="date d'enquête (DENQ) :"
+                                name='DENQ'
+                            />
+
+
+
+                            <FieldTags
+                                title='Domaines (DOMN) : '
+                                name='DOMN'
+                            />
+                            <FieldTags
+                                title='Liens Divers (LIENS) : '
+                                name='LIENS'
+                            />
 
 
                             <hr />
-                            <p style={{ textAlign: 'end' }}>{this.state.notice.COPY}</p>
+
+                            <FieldInput
+                                title="CopyRight (COPY) :"
+                                name='COPY'
+                            />
                         </Col>
                     </Row>
                     <div className='buttons'>
@@ -411,190 +641,3 @@ const Images = ({ images }) => {
     }
 }
 
-
-            /*
-  componentDidMount() {
-
-    const store = this.props.storeObj;
-    const initData = {
-                    "name": store.name,
-                "legal_company_name": store.legal_company_name || '',
-                "company_registration_number": store.company_registration_number || '',
-                "description": store.description || '',
-                "type": store.type || '',
-                "picture": store.picture || '',
-                "banner": store.banner || '',
-                "address": store.address || '',
-                "city": store.city || '',
-                "zip_code": store.zip_code || '',
-                "country": store.country || '',
-                "location": store.location || '',
-                "phone": store.phone || '',
-                "url": store.url || '',
-                "email": store.email || '',
-                "zoho_id": store.zoho_id || '',
-                "warehouse_contact": store.warehouse_contact || '',
-                "warehouse_phones": store.warehouse_phones || '',
-                "warehouse_emails": store.warehouse_emails || '',
-                "distribution_chanel_id": store.distribution_chanel_id || '',
-                "is_active": store.is_active || '',
-                "commission": store.commission || '',
-                "delivery_tax": store.delivery_tax || '',
-                "gst_percentage_for_import": store.gst_percentage_for_import || '',
-                "trade_price": store.trade_price || false,
-                "is_gst_included": store.is_gst_included || '',
-                "in_app_purchase": store.in_app_purchase || '',
-                "enable": store.enable || false,
-                "pickup_same_day": store.pickup_same_day || '',
-                "pickup_next_day": store.pickup_next_day || '',
-                "pickup_cut_of_time": store.pickup_cut_of_time || '',
-                "express_delivery": store.express_delivery || '',
-                "open_time": store.open_time || '',
-                "close_time": store.close_time || '',
-                "is_monday_closed": store.is_monday_closed || false,
-                "is_tuesday_closed": store.is_tuesday_closed || false,
-                "is_wednesday_closed": store.is_wednesday_closed || false,
-                "is_thursday_closed": store.is_thursday_closed || false,
-                "is_friday_closed": store.is_friday_closed || false,
-                "is_saturday_closed": store.is_saturday_closed || false,
-                "is_sunday_closed": store.is_sunday_closed || false,
-                "contact_name": store.contact_name || '',
-              };
-              this.props.initialize(initData);
-            }
-          
-  onSubmit(values) {
-                    this.setState({ saving: true })
-    if (this.props.storeId !== 'null') {
-      return Firebase.editStore(this.props.storeId, values).then(() => {
-                    this.setState({ saving: false })
-        notification.success({message: 'Store saved' });
-              })
-            }
-          }
-        
-          */
-
-// const Images = ({images}) => {
-//     return (
-//         <Col md="4">
-//             <div className="thumbs-box">
-//                 <div className="thumb-lg mb-3">
-//                     <img src={dummyImg_l} alt="" className="img-fluid w-100" />
-//                 </div>
-//             </div>
-//             <Row>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_s} alt="" className="img-fluid" />
-//                 </Col>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_s} alt="" className="img-fluid" />
-//                 </Col>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_s} alt="" className="img-fluid" />
-//                 </Col>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_s} alt="" className="img-fluid" />
-//                 </Col>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_s} alt="" className="img-fluid" />
-//                 </Col>
-//                 <Col sm="4" className="my-3">
-//                     <img src={dummyImg_plus} alt="" className="img-fluid" />
-//                 </Col>
-//             </Row>
-//         </Col>
-//     );
-// }
-
-
-/*
-  componentDidMount() {
-
-    const store = this.props.storeObj;
-    const initData = {
-      "name": store.name,
-      "legal_company_name": store.legal_company_name || '',
-      "company_registration_number": store.company_registration_number || '',
-    };
-    this.props.initialize(initData);
-  }
-
-  onSubmit(values) {
-    this.setState({ saving: true })
-    if (this.props.storeId !== 'null') {
-      return Firebase.editStore(this.props.storeId, values).then(() => {
-        this.setState({ saving: false })
-        notification.success({ message: 'Store saved' });
-      })
-    }
-  }
-  */
-/*
-renderImages() {
-    if (this.props.label.pictures && this.props.label.pictures.length) {
-        const name = (this.props.label.name + ' ' + this.props.label.brand).trim();
-        return (
-            <Col xs={12} sm={12} md={6}>
-                <Row className='label-main-img'>
-                    <img src={this.props.label.pictures[this.state.imgNumber]} alt={name} />
-                </Row>
-                <Row className='label-thumbnail'>
-                    {this.props.label.pictures.slice(0, 5).map((img, i) => {
-                        return (
-                            <Col xs={2} sm={2} md={2} key={i} className='thumbnail-col'>
-                                <img className={this.state.imgNumber === i ? `active` : ``}
-                                    src={img}
-                                    alt={name}
-                                    onClick={() => { this.setState({ imgNumber: i }) }} />
-                            </Col>
-                        )
-                    })}
-                </Row>
-            </Col>
-        )
-    } else {
-        return <div />
-    }
-}
-
-
-
-.label .label-main-img {
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    justify-content: center;
-}
-
-.label .label-main-img row{
-    justify-content: center;
-}
-
-.label .label-main-img img {
-    max-width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    padding: 10px;
-}
-
-.label .thumbnail-col {
-    justify-content: center;
-    display: flex;
-}
-
-.label .label-thumbnail img {
-    width: 80px;
-    height: 80px;
-    filter: brightness(70%) opacity(0.75);
-    object-fit: contain;
-}
-
-.label .label-thumbnail .active {
-    border-radius: 3px;
-    filter: none;
-    background-color: #f8f8f8;
-    border: solid 4px #b89e34;
-}
-
-
-*/
