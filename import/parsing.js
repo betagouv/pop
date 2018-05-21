@@ -27,6 +27,7 @@ function run(file, object, domaine) {
 
 
 function MerimeeClean(obj) {
+
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT);
     obj.DENO = utils.extractArray(obj.DENO, ';');
@@ -51,6 +52,25 @@ function MerimeeClean(obj) {
     obj.PREP = utils.extractArray(obj.PREP, ';');
     obj.TOIT = utils.extractArray(obj.TOIT, ';');
     obj.LOCA = utils.extractArray(obj.LOCA, ';');
+    obj.JDAT = utils.extractArray(obj.JDAT, ';');
+    obj.JATT = utils.extractArray(obj.JATT, ';');
+    obj.DOMN = utils.extractArray(obj.DOMN, ';');
+    obj.DATE = utils.extractArray(obj.DATE, ';');
+
+    obj.COLL = utils.extractArray(obj.COLL, ';');
+    obj.CADA = utils.extractArray(obj.CADA, ';');
+    obj.APRO = utils.extractArray(obj.APRO, ';');
+    obj.VOUT = utils.extractArray(obj.VOUT, ';');
+    obj.VISI = utils.extractArray(obj.VISI, ';');
+    obj.PERS = utils.extractArray(obj.PERS, ';');
+    obj.INTE = utils.extractArray(obj.INTE, ';');
+    obj.ENER = utils.extractArray(obj.ENER, ';');
+    obj.ELEV = utils.extractArray(obj.ELEV, ';');
+    obj.ETAG = utils.extractArray(obj.ETAG, ';');
+    obj.IMPL = utils.extractArray(obj.IMPL, ';');
+    obj.PROT = utils.extractArray(obj.PROT, ';');
+
+    obj.LIENS = utils.extractUrls(obj.LIENS);
 
     switch (obj.REF.substring(0, 2)) {
         case "IA": obj.POP_DOMAINE = 'Inventaire'; break;

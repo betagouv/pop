@@ -24,6 +24,20 @@ function extractArray(val, delim) {
     return val.split(delim).map((e) => e.trim());
 }
 
+function extractUrls(str) {
+    if (!str) {
+        return [];
+    }
+    var regex = new RegExp(/\('([-a-zA-Z0-9@:%._\/]*)'\)/g);
+    const urls = [];
+    var myArray;
+    while ((myArray = regex.exec(str)) != null) {
+        urls.push(myArray[1]);
+    }
+
+    return urls;
+}
+
 function extractWGPSfromLambert(lambertE, lambertN) {
 
     var constantes = {
@@ -64,6 +78,7 @@ module.exports = {
     extractIMG,
     extractEmail,
     extractArray,
+    extractUrls,
     extractWGPSfromLambert
 };
 
