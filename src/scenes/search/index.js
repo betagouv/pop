@@ -21,6 +21,8 @@ import { es_url } from '../../config.js';
 import exportData from './export';
 import './index.css';
 
+const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location"]
+
 export default class Search extends React.Component {
 
     state = {
@@ -69,6 +71,26 @@ export default class Search extends React.Component {
                     <Row>
                         <Col xs="3">
                             <MultiList
+                                componentId="image"
+                                dataField="POP_HAS_IMAGE"
+                                title="Contient une image"
+                                className="filters"
+                                showSearch={false}
+                                react={{
+                                    and: FILTER.filter((e) => e !== "image")
+                                }}
+                            />
+                            <MultiList
+                                componentId="location"
+                                dataField="POP_HAS_LOCATION"
+                                title="Contient une location"
+                                className="filters"
+                                showSearch={false}
+                                react={{
+                                    and: FILTER.filter((e) => e !== "location")
+                                }}
+                            />
+                            <MultiList
                                 componentId="domaine"
                                 dataField="POP_DOMAINE.keyword"
                                 title="Domaines"
@@ -76,7 +98,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 showSearch={false}
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "commune"]
+                                    and: FILTER.filter((e) => e !== "domaine")
                                 }}
                             />
                             <MultiList
@@ -86,7 +108,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 placeholder="Rechercher une dénomination"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "commune", "domaine"]
+                                    and: FILTER.filter((e) => e !== "denomination")
                                 }}
                             />
                             <MultiList
@@ -98,7 +120,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 placeholder="Rechercher un auteur"
                                 react={{
-                                    and: ["mainSearch", "region", "departement", "domaine", "commune", "auteurs"]
+                                    and: FILTER.filter((e) => e !== "auteurs")
                                 }}
                             />
                             <hr />
@@ -110,7 +132,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 placeholder="Rechercher une région"
                                 react={{
-                                    and: ["mainSearch", "departement", "commune", "domaine", "denomination", "auteurs"]
+                                    and: FILTER.filter((e) => e !== "region")
                                 }}
                             />
                             <MultiList
@@ -121,7 +143,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 placeholder="Rechercher un département"
                                 react={{
-                                    and: ["mainSearch", "region", "commune", "domaine", "denomination", "auteurs"]
+                                    and: FILTER.filter((e) => e !== "departement")
                                 }}
                             />
 
@@ -133,7 +155,7 @@ export default class Search extends React.Component {
                                 className="filters"
                                 placeholder="Rechercher une commune"
                                 react={{
-                                    and: ["mainSearch", "region", "domaine", "departement", "denomination", "auteurs"]
+                                    and: FILTER.filter((e) => e !== "commune")
                                 }}
                             />
 
@@ -143,7 +165,7 @@ export default class Search extends React.Component {
                             <ReactiveList
                                 componentId="results"
                                 react={{
-                                    "and": ["mainSearch", "region", "departement", "domaine", "commune", "denomination", "auteurs"]
+                                    "and": FILTER.filter((e) => e !== "auteurs")
                                 }}
                                 dataField=''
                                 size={20}

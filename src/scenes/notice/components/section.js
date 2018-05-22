@@ -9,7 +9,7 @@ export default ({ title, icon, description, color, children }) => {
             <Row>
                 <Col md="8">
                     <div className='sectionheader'>
-                        <img src={icon} alt={title} style={{ backgroundColor: color }} />
+                        <img className='icon' src={icon} alt={title} style={{ backgroundColor: color }} />
                         <div className='title'>{title}</div>
                     </div>
                     <hr />

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
-
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
@@ -13,10 +13,6 @@ import Section from './components/section.js'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
-
-import dummyImg_s from './../../assets/small.jpg';
-import dummyImg_l from './../../assets/small.jpg';
-import dummyImg_plus from './../../assets/small.jpg';
 
 import './index.css';
 
@@ -145,6 +141,7 @@ class Notice extends React.Component {
                 APPL: notice.APPL,
 
             }
+            console.log(initData)
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
 
@@ -154,7 +151,7 @@ class Notice extends React.Component {
 
     onSubmit(values) {
         this.setState({ saving: true })
-        API.update(this.state.notice._id, 'merimee', values).then((e) =>{
+        API.update(this.state.notice._id, 'merimee', values).then((e) => {
             console.log('TOAST')
             toastr.success('Notice updated');
             this.setState({ saving: false })
@@ -177,6 +174,21 @@ class Notice extends React.Component {
         return (
             <Container className='notice' fluid>
                 <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
+                <div className='leaflet-container'>
+                    <Map center={[this.state.notice.POP_COORDINATES[1], this.state.notice.POP_COORDINATES[0]]} zoom={13}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                        />
+                        <Marker position={this.state.notice.POP_COORDINATES}>
+                            <Popup>
+                                <span>A pretty CSS3 popup.<br />Easily customizable.</span>
+                            </Popup>
+                        </Marker>
+                    </Map>
+                </div>
+
+
                 <Form
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
@@ -343,11 +355,11 @@ class Notice extends React.Component {
                         />
                         <FieldInput
                             title="TODO-Coordonnées Lambert (ou autres) d'un points (COOR ) :"
-                            name='COOR '
+                            name='COOR'
                         />
                         <FieldInput
                             title="TODO-Coordonnées Lambert (ou autres) multiples (COORM ) :"
-                            name='COORM '
+                            name='COORM'
                         />
                         <FieldTags
                             title="Milieu d'implantation (IMPL) : "
@@ -357,6 +369,7 @@ class Notice extends React.Component {
                             title="Cours d'eau (HYDR) : "
                             name='HYDR'
                         />
+
                     </Section>
                     <Section
                         title='HISTORIQUE'
@@ -583,7 +596,7 @@ class Notice extends React.Component {
                         />
                         <FieldInput
                             title="TODO-Accès microfiche (MFICH ) :"
-                            name='MFICH '
+                            name='MFICH'
                         />
                     </Section>
                     <Section

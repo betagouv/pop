@@ -33,3 +33,8 @@
 .notice button{
   margin-top: 20px;
 }
+
+.leaflet-container {
+  height: 400px;
+  width: 1200px;
+}
