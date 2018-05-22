@@ -27,8 +27,6 @@ const styles = {
         flexDirection: 'column',
         justifyContent: 'start',
         alignItems: 'start',
-        paddingTop: '10px',
-        paddingBottom: '10px',
     },
     title: {
         paddingRight: '15px',

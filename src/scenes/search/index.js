@@ -1,7 +1,9 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button } from 'reactstrap';
+import { Row, Col, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import Button from './button'
 
 import {
     ReactiveBase,
@@ -24,12 +26,10 @@ export default class Search extends React.Component {
     state = {
         collection: 'merimee',
     }
-
     componentWillMount() {
 
 
     }
-
     export() {
         const columns = ['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DMAJ', 'DMIS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL'];
         //memoire : ['REF','TOUT','ADRESSE','AUTOEU','AUTG','AUTP','AUTOR','AUTTI','COM','DOM','EDIF','EXPO','JDATPV','LIEUCOR','COTECOR','LIEUCTI','COTECTI','LIEUCP','COTECP','LEG','OBJT','OBS','OBSOR','OBSTI','PAYS','PUBLI','TIREDE','ROLE','PRECOR','SERIE','THEATRE','TITRE','DMAJ','DMIS','IDPROD','NUMCD','NUMF','INSEE','NVD','MARQ','ACC','ACQU','ADPHOT','AIRE','ANUMP','COPY','COULEUR','COSTUME','DATIMM','DATOEU','DATPV','DATOR','DATTI','DATG','DATD','DIFF','DPT','EDIARCH','ECH','FORMAT','FORMATOR','FORMATTI','LBASE','WEB','LIB','LOCA','LIEUORIG','MCGEO','MCL','MENTIONS','MENTOR','MENTTI','MCPER','VUECD','NUMAUTP','NUMCAF','ANUMOR','NUMOR','NUMP','ANUMTI','NUMTI','RENV','REG','SENS','SCLE','SUP','TECH','TECHOR','TECHTI','TOILE','TYP','TYPDOC','TYPEIMG','TYPSUPP','VIDEO','LBASE2','LEG2','REFIM','REFIMG','MOSA','SITE','NUMSITE','NUMOP','CHRONO','STRUCT','SUJET','TICO','NUMI','LIEU','ADRS','CONTACT','EMET','NUM','IMG','WCOM','LIENS','LAUTP']
@@ -42,20 +42,32 @@ export default class Search extends React.Component {
     render() {
         return (
             <Container className='search'>
+                <div className='header'>
+                    <div className='title-zone'>
+                        <img className='logo' src={require('../../assets/merimee.jpg')} />
+                        <div className='title'>Vous travaillez dans la base mérimée</div>
+                        <Link to='/'>Changer de base</Link>
+                    </div>
+                    <div className='buttons'>
+                        <Button icon={require('../../assets/import.png')} to='/import' text='Importer des notices' />
+                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
+                    </div>
+                </div>
                 <ReactiveBase
                     url={es_url}
                     app="merimee"
                 >
+                    <div className='title'>Rechercher une Notice</div>
                     <DataSearch
                         componentId="mainSearch"
                         dataField={["TICO", "DENO", "REF", "LOCA"]}
                         queryFormat="and"
                         iconPosition="left"
                         className="mainSearch"
+                        placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                     />
                     <Row>
                         <Col xs="3">
-
                             <MultiList
                                 componentId="domaine"
                                 dataField="POP_DOMAINE.keyword"
@@ -67,17 +79,16 @@ export default class Search extends React.Component {
                                     and: ["mainSearch", "region", "departement", "commune"]
                                 }}
                             />
-
                             <MultiList
                                 componentId="denomination"
                                 dataField="DENO.keyword"
                                 title="Dénominations"
                                 className="filters"
+                                placeholder="Rechercher une dénomination"
                                 react={{
                                     and: ["mainSearch", "region", "departement", "commune", "domaine"]
                                 }}
                             />
-
                             <MultiList
                                 componentId="auteurs"
                                 dataField="AUTR.keyword"
@@ -85,6 +96,7 @@ export default class Search extends React.Component {
                                 size={1000}
                                 title="Auteurs"
                                 className="filters"
+                                placeholder="Rechercher un auteur"
                                 react={{
                                     and: ["mainSearch", "region", "departement", "domaine", "commune", "auteurs"]
                                 }}
@@ -96,6 +108,7 @@ export default class Search extends React.Component {
                                 title="Region"
                                 showCount={true}
                                 className="filters"
+                                placeholder="Rechercher une région"
                                 react={{
                                     and: ["mainSearch", "departement", "commune", "domaine", "denomination", "auteurs"]
                                 }}
@@ -106,6 +119,7 @@ export default class Search extends React.Component {
                                 title="Departements"
                                 showCount={true}
                                 className="filters"
+                                placeholder="Rechercher un département"
                                 react={{
                                     and: ["mainSearch", "region", "commune", "domaine", "denomination", "auteurs"]
                                 }}
@@ -117,6 +131,7 @@ export default class Search extends React.Component {
                                 title="Communes"
                                 showCount={true}
                                 className="filters"
+                                placeholder="Rechercher une commune"
                                 react={{
                                     and: ["mainSearch", "region", "domaine", "departement", "denomination", "auteurs"]
                                 }}
@@ -147,14 +162,14 @@ export default class Search extends React.Component {
 const Card = ({ data }) => {
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
-        <Link to={`/notice/${data.REF}`} className="card" key={data.REF}>
+        <Link style={{ textDecoration: 'none' }} to={`/notice/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Book Cover" />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>
-                    <p>{data.DENO}</p>
+                    <p>{data.DENO.join(', ')}</p>
                     <p>{data.LOCA}</p>
-                    <p>{data.AUTR}</p>
+                    <p>{data.AUTR.join(', ')}</p>
                 </div>
             </div>
         </Link>

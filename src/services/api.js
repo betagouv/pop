@@ -11,7 +11,6 @@ class api {
     }
 
     update(id, collection, data) {
-        console.log('UPDATE', id, data)
         return this._post(`${api_url}/api/update?collection=${collection}&id=${id}`, data)
     }
 
@@ -39,9 +38,10 @@ class api {
                 if (response.status !== 200) {
                     reject('Looks like there was a problem. Status Code: ' + response.status)
                 }
-                response.json().then((data) => {    // Examine the text in the response
-                    resolve(data);
-                });
+                resolve()
+                // response.json().then((data) => {    // Examine the text in the response
+                //     (data);
+                // });
             }).catch((err) => {
                 reject('Fetch Error :-S', err)
             });

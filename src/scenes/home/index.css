@@ -3,11 +3,16 @@
     /* background-image: url("./../../assets/background.jpg"); */
 }
 
-.home .hero-text{
+.home .title{
     text-align: center;
     margin-bottom: 80px;
-    font-size: 2rem;
+    font-size: 30px;
     padding-top: 20px
+}
+
+.home .subtitle{
+    text-align: center;
+    font-size: 27px;
 }
 
 .home .activities h4{
@@ -53,7 +58,7 @@
     bottom: 0px;
 }
 
-.home .tile .title {
+.home .tile .name {
     font-size: 20px;
 }
 

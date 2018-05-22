@@ -46,6 +46,7 @@ class TagsInput extends React.Component {
                     suggestions={this.state.suggestions}
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
+                    autofocus={false}
                 />
             </div>
         );

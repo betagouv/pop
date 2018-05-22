@@ -1,11 +1,44 @@
 .search {
   display: flex;
   justify-content:'center';
-  align-items: 'center'
+  align-items: 'center';
+  flex-direction: column;
+}
+
+.search .header{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.search .header .title-zone{
+  display: flex;
+  padding-top: 24px;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.search .header .buttons{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.search .header .logo{
+  width: 90px;
 }
 
 .search .mainSearch{
   padding: 50px;
+}
+
+.search .title{
+  text-align: center;
+  font-size: 30px;
 }
 
 .search .filters{
@@ -25,7 +58,7 @@
   margin-bottom: 10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  height: 120px;
+  height: 130px;
 }
 
 .search .card:hover {
@@ -34,6 +67,8 @@
 
 .search .card .content{
   padding: 5px;
+  overflow: hidden;
+  text-transform: capitalize;
 }
 
 .search .card img{
@@ -57,8 +92,9 @@
   color: black;
   margin: 0px;
   height: 70%;
-  text-overflow: clip;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .search label::before{

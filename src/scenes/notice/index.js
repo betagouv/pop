@@ -3,6 +3,8 @@ import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import { toastr } from 'react-redux-toastr'
+
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
@@ -151,8 +153,12 @@ class Notice extends React.Component {
     }
 
     onSubmit(values) {
-        API.update(this.state.notice._id, 'merimee', values)
         this.setState({ saving: true })
+        API.update(this.state.notice._id, 'merimee', values).then((e) =>{
+            console.log('TOAST')
+            toastr.success('Notice updated');
+            this.setState({ saving: false })
+        })
     }
 
     render() {
@@ -175,38 +181,110 @@ class Notice extends React.Component {
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
+                    <Row>
+                        <Col className='image' xs={12} sm={12} md='4'>
+                            <div className="thumbs-box">
+                                <div className="thumb-lg mb-3">
+                                    <img src={this.state.notice.IMG} alt="" className="img-fluid w-100" />
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
                     <Section
-                        title='INFORMATIONS GENERALES'
+                        title='REFERENCES DOCUMENTAIRES'
                         icon={require('../../assets/info.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FF7676'
                     >
                         <FieldInput
-                            title='Titre courant (TICO) : '
-                            name='TICO'
+                            title='Notice (REF) :'
+                            name='REF'
+                            disabled
                         />
+                        <FieldInput
+                            title='TODO-N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) : '
+                            name='RENV'
+                        />
+                        <FieldInput
+                            title='TODO-Référence dans la base Patriarche (ARCHEO) : '
+                            name='ARCHEO'
+                        />
+                        <FieldInput
+                            title="Date d'enquête (DENQ) :"
+                            name='DENQ'
+                        />
+                        <FieldInput
+                            title="CopyRight (COPY) :"
+                            name='COPY'
+                        />
+                        <FieldInput
+                            title='Date de rédaction de la notice (DBOR) :'
+                            name='DBOR'
+                        />
+                        <FieldTags
+                            title='Noms des rédacteurs de la notice et du dossier (NOMS) : '
+                            name='NOMS'
+                        />
+                        <FieldInput
+                            title="Cadre de l'étude (ETUD) :"
+                            name='ETUD'
+                        />
+                        <FieldInput
+                            title='Dossier (DOSS) : '
+                            name='DOSS'
+                        />
+                    </Section>
+                    <Section
+                        title='DESIGNATION'
+                        icon={require('../../assets/law.png')}
+                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FE997B'
+                    >
                         <FieldTags
                             title='Denomination (DENO) : '
                             name='DENO'
                         />
                         <FieldInput
-                            title='Préc. DENO (PDEN) :'
+                            title='Destinataire (GENR) : '
+                            name='GENR'
+                        />
+                        <FieldInput
+                            title='Précision sur la dénomination (PDEN) :'
                             name='PDEN'
                         />
                         <FieldInput
-                            title='Domaines (DOMN) : '
-                            name='DOMN'
+                            title='Vocable (VOCA) :'
+                            name='VOCA'
+                        />
+                        <FieldInput
+                            title='Appellation et titre (APPL) :'
+                            name='APPL'
+                        />
+                        <FieldInput
+                            title='Destinations successives et actuelle (ACTU) :'
+                            name='ACTU'
                         />
 
                         <FieldInput
-                            title='Notice (REF) :'
-                            name='REF'
-                            disabled
+                            title='Titre courant (TICO) : '
+                            name='TICO'
+                        />
+                        <FieldTags
+                            title='Parties constituantes (PART) : '
+                            name='PART'
+                        />
+                        <FieldInput
+                            title='TODO-Références des parties constituantes étudiées (REFP) : '
+                            name='REFP'
+                        />
+                        <FieldTags
+                            title='Décompte des oeuvres recensées (COLL) :'
+                            name='COLL'
                         />
                     </Section>
 
                     <Section
-                        title='DONNEES GEOGRAPHIQUES'
+                        title='LOCALISATION'
                         icon={require('../../assets/map.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FFC070'
@@ -220,134 +298,232 @@ class Notice extends React.Component {
                             name='DPT'
                         />
                         <FieldInput
-                            title='Canton (CANT) : '
-                            name='CANT'
-                        />
-                        <FieldInput
                             title='Commune (COM) : '
                             name='COM'
+                        />
+                        <FieldInput
+                            title='Numéro INSEE de la commune (INSEE) :'
+                            name='INSEE'
+                        />
+                        <FieldInput
+                            title='Précision sur la localisation (PLOC) :'
+                            name='PLOC'
+                        />
+                        <FieldInput
+                            title="Aire d'étude (AIRE) : "
+                            name='AIRE'
+                        />
+                        <FieldInput
+                            title='Canton (CANT) : '
+                            name='CANT'
                         />
                         <FieldInput
                             title='Lieu-dit (LIEU) : '
                             name='LIEU'
                         />
                         <FieldInput
-                            title='Localisation (LOCA) : '
-                            name='LOCA'
+                            title='Adresse (ADRS) : '
+                            name='ADRS'
+                        />
+                        <FieldInput
+                            title='Edifice de conservation (EDIF) : '
+                            name='EDIF'
+                        />
+                        <FieldInput
+                            title="TODO-Référence de l'édifice de conservation (REFE) : "
+                            name='REFE'
                         />
                         <FieldTags
-                            title='Implantation (IMPL) : '
-                            name='IMPL'
-                        />
-                        <FieldTags
-                            title='Cadastre (CADA) :'
+                            title='Référence cadastrale (CADA) :'
                             name='CADA'
                         />
-
                         <FieldInput
-                            title='Hydrographie (HYDR) : '
+                            title='TODO-Zone Lambert ou autres (ZONE) :'
+                            name='ZONE'
+                        />
+                        <FieldInput
+                            title="TODO-Coordonnées Lambert (ou autres) d'un points (COOR ) :"
+                            name='COOR '
+                        />
+                        <FieldInput
+                            title="TODO-Coordonnées Lambert (ou autres) multiples (COORM ) :"
+                            name='COORM '
+                        />
+                        <FieldTags
+                            title="Milieu d'implantation (IMPL) : "
+                            name='IMPL'
+                        />
+                        <FieldInput
+                            title="Cours d'eau (HYDR) : "
                             name='HYDR'
                         />
-
+                    </Section>
+                    <Section
+                        title='HISTORIQUE'
+                        icon={require('../../assets/date.png')}
+                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#668796'
+                    >
+                        <FieldTags
+                            title='Datation des campagnes principales de construction (SCLE) :'
+                            name='SCLE'
+                        />
+                        <FieldTags
+                            title='Datation des campagnes secondaires de construction (SCLD) :'
+                            name='SCLD'
+                        />
                         <FieldInput
-                            title='Typologie (TYPO) : '
-                            name='TYPO'
+                            title="Datation en années (DATE) :"
+                            name='DATE'
+                        />
+                        <FieldTags
+                            title='Justification de la datation (JDAT) :'
+                            name='JDAT'
+                        />
+                        <FieldTags
+                            title="Auteurs de l'oeuvre(AUTR) : "
+                            name='AUTR'
+                        />
+                        <FieldTags
+                            title="Justification de l'attribution (JATT) :"
+                            name='JATT'
+                        />
+                        <FieldTags
+                            title='Personnalitées (PERS) :'
+                            name='PERS'
                         />
 
+                        <FieldInput
+                            title='Remploi (REMP) : '
+                            name='REMP'
+                        />
+                        <FieldInput
+                            title='Partie déplacée (DEPL) : '
+                            name='DEPL'
+                        />
+                        <FieldInput
+                            title='Commentaire historique (HIST) :'
+                            name='HIST'
+                            type='textarea'
+                            rows={10}
+                        />
                     </Section>
-
                     <Section
-                        title='TECHNIQUES'
+                        title='DESCRIPTION'
                         icon={require('../../assets/tool.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FBE367'
                     >
-                        <FieldTags
-                            title='couverture (COUV) :'
-                            name='COUV'
-                        />
-                        <FieldTags
-                            title='Voûte couvrement (VOUT) :'
-                            name='VOUT'
+                        <FieldInput
+                            title='Matériau du gros-oeuvre et mise en oeuvre (MURS) : '
+                            name='MURS'
                         />
                         <FieldInput
-                            title='Murs (MURS) : '
-                            name='MURS'
+                            title='Matériau de la couverture (TOIT) : '
+                            name='TOIT'
+                        />
+                        <FieldInput
+                            title='Parti de plan (PLAN) :'
+                            name='PLAN'
+                        />
+                        <FieldTags
+                            title='Vaisseau et étage (ETAG) :'
+                            name='ETAG'
+                        />
+                        <FieldTags
+                            title='Type et nature du couvrement (VOUT) :'
+                            name='VOUT'
+                        />
+                        <FieldTags
+                            title='Parti d’élévation extérieure (ELEV) :'
+                            name='ELEV'
+                        />
+                        <FieldTags
+                            title='Type de la couverture (COUV) :'
+                            name='COUV'
+                        />
+                        <FieldInput
+                            title='Emplacement, forme et structure de l’escalier (ESCA) : '
+                            name='ESCA'
+                        />
+                        <FieldTags
+                            title="Source de l'énergie (ENER) :"
+                            name='ENER'
+                        />
+                        <FieldInput
+                            title='Couvert et découvert de jardin (VERT) :'
+                            name='VERT'
+                        />
+                        <FieldInput
+                            title='Commentaire description (DESC) :'
+                            name='DESC'
+                            type='textarea'
+                            rows={4}
+                        />
+                        <FieldInput
+                            title='Technique du décor des immeubles par nature (TECH) : '
+                            name='TECH'
+                        />
+                        <FieldInput
+                            title='Représentation (REPR) : '
+                            name='REPR'
+                        />
+                        <FieldInput
+                            title='TODO-Précision sur la représentation (PREP) : '
+                            name='PREP'
                         />
                         <FieldInput
                             title='Dimensions (DIMS) : '
                             name='DIMS'
                         />
-
                         <FieldInput
-                            title='Toiture matériau (TOIT) : '
-                            name='TOIT'
-                        />
-
-                        <FieldInput
-                            title='Technique décor (TECH) : '
-                            name='TECH'
+                            title='Typologie (TYPO) : '
+                            name='TYPO'
                         />
                         <FieldInput
-                            title='Escaliers (ESCA) : '
-                            name='ESCA'
-                        />
-                        <FieldTags
-                            title='Energie (ENER) :'
-                            name='ENER'
-                        />
-                        <FieldTags
-                            title='Elevation (ELEV) :'
-                            name='ELEV'
-                        />
-                        <FieldTags
-                            title='Etages (ETAG) :'
-                            name='ETAG'
-                        />
-                        <FieldInput
-                            title='Jardin (VERT) :'
-                            name='VERT'
+                            title='Etat de conservation (ETAT) : '
+                            name='ETAT'
                         />
                     </Section>
-
                     <Section
-                        title='DATES'
-                        icon={require('../../assets/time.png')}
+                        title='INTERET ET PROTECTION'
+                        icon={require('../../assets/law.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
-                        color='#00BEB2'
+                        color='#FE997B'
                     >
-
                         <FieldTags
-                            title='Siecle (SCLE) :'
-                            name='SCLE'
+                            title='Nature de la protection MH (PROT) :'
+                            name='PROT'
                         />
-                        <FieldTags
-                            title='Siecle X (SCLX) :'
-                            name='SCLX'
-                        />
-                        <FieldTags
-                            title='Siecle Detail (SCLD) :'
-                            name='SCLD'
-                        />
-
                         <FieldInput
-                            title="Date (DATE) :"
-                            name='DATE'
+                            title='Date protection (DPRO) :'
+                            name='DPRO'
                         />
-
-                    </Section>
-
-                    <Section
-                        title='DONNEES HISTORIQUES'
-                        icon={require('../../assets/date.png')}
-                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
-                        color='#668796'
-                    >
                         <FieldInput
-                            title='Histoire (HIST) :'
-                            name='HIST'
+                            title='Précisions sur la protection MH (PPRO) :'
+                            name='PPRO'
                             type='textarea'
                             rows={10}
+                        />
+                        <FieldTags
+                            title="Nature de l'acte de protection MH (APRO) :"
+                            name='APRO'
+                        />
+                        <FieldInput
+                            title='Eléments protégés MH (MHPP) : '
+                            name='MHPP'
+                        />
+                        <FieldInput
+                            title='Site, secteur ou zone de protection (SITE) :'
+                            name='SITE'
+                        />
+                        <FieldTags
+                            title="Intérêt de l'oeuvre (INTE) :"
+                            name='INTE'
+                        />
+                        <FieldInput
+                            title='Eléments remarquables (REMA) :'
+                            name='REMA'
                         />
                         <FieldInput
                             title='Observations (OBS) :'
@@ -355,258 +531,116 @@ class Notice extends React.Component {
                             type='textarea'
                             rows={10}
                         />
+                    </Section>
+                    <Section
+                        title='STATUT JURIDIQUE'
+                        icon={require('../../assets/time.png')}
+                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#00BEB2'
+                    >
                         <FieldInput
-                            title='Description (DESC) :'
-                            name='DESC'
-                            type='textarea'
-                            rows={4}
+                            title='Statut de la propriété (STAT) :'
+                            name='STAT'
+                        />
+                        <FieldInput
+                            title='Précisions sur le statut de la propriété (PSTA): '
+                            name='PSTA'
+                        />
+                        <FieldInput
+                            title='Affectataire (AFFE) :'
+                            name='AFFE'
+                        />
+                        <FieldInput
+                            title="TODO-Précisions sur l'affectataire (PAFF) :"
+                            name='PAFF'
+                        />
+                        <FieldTags
+                            title='Ouverture au public (VISI) :'
+                            name='VISI'
                         />
                     </Section>
-
                     <Section
-                        title='CONTRIBUTEURS'
+                        title='GESTION DOCUMENTAIRE'
                         icon={require('../../assets/people.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#009DE4'
                     >
-
+                        <FieldInput
+                            title="TODO-Identifiant Patrimoine (RFPA) :"
+                            name='RFPA'
+                        />
+                        <FieldInput
+                            title="TODO-Date de mise à jour (DMAJ) :"
+                            name='DMAJ'
+                        />
+                        <FieldInput
+                            title="TODO-Date de chargement dans la base MERIMEE (DMIS) :"
+                            name='DMIS'
+                        />
+                        <FieldInput
+                            title="TODO-Numéro de microfiche (MICR) :"
+                            name='MICR'
+                        />
+                        <FieldInput
+                            title="TODO-Accès microfiche (MFICH ) :"
+                            name='MFICH '
+                        />
+                    </Section>
+                    <Section
+                        title='AUTRES'
+                        icon={require('../../assets/law.png')}
+                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
+                        color='#FE997B'
+                    >
                         <FieldTags
                             title='Auteurs phototype (AUTP) : '
                             name='AUTP'
                         />
                         <FieldTags
-                            title='Auteurs (AUTR) : '
-                            name='AUTR'
-                        />
-
-                        <FieldTags
-                            title='Nom rédacteur(s) (NOMS) : '
-                            name='NOMS'
-                        />
-                        <FieldInput
-                            title='Destinataire (GENR) : '
-                            name='GENR'
+                            title='Siecle X (SCLX) :'
+                            name='SCLX'
                         />
                         <FieldInput
                             title='Contact (CONTACT) :'
                             name='CONTACT'
                         />
-                    </Section>
-                    <Section
-                        title='ASPECTS LEGALS'
-                        icon={require('../../assets/law.png')}
-                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
-                        color='#FE997B'
-                    >
-
                         <FieldInput
-                            title='Préc. Protection (PPRO) :'
-                            name='PPRO'
-                            type='textarea'
-                            rows={10}
-                        />
-                        <FieldTags
-                            title='Acte protection (APRO) :'
-                            name='APRO'
-                        />
-
-                        <FieldTags
-                            title='Protection (PROT) :'
-                            name='PROT'
+                            title='Localisation (LOCA) : '
+                            name='LOCA'
                         />
                         <FieldInput
-                            title='Statut propriété (STAT) :'
+                            title='Domaines (DOMN) : '
+                            name='DOMN'
+                        />
+                        <FieldInput
+                            title='Proprietaire (STAT) : '
                             name='STAT'
                         />
-                        <FieldInput
-                            title='Etat (ETAT) : '
-                            name='ETAT'
-                        />
-                        <FieldInput
-                            title='Site protégé (SITE) :'
-                            name='SITE'
-                        />
-                        <FieldInput
-                            title='Préc. Propriétés (PSTA): '
-                            name='PSTA'
-                        />
-
-                        <FieldTags
-                            title='Justif. datation (JDAT) :'
-                            name='JDAT'
-                        />
-                        <FieldTags
-                            title='Justif. attrib. (JATT) :'
-                            name='JATT'
-                        />
 
                         <FieldInput
-                            title='Date protection (DPRO) :'
-                            name='DPRO'
+                            title='Dossier adresse (DOSADRS) :'
+                            name='DOSADRS'
+                            type='textarea'
+                            rows={4}
                         />
                         <FieldInput
-                            title="CopyRight (COPY) :"
-                            name='COPY'
+                            title='Thème (THEM) : '
+                            name='THEM'
+                        />
+                        <FieldTags
+                            title='Parties non étud (PARN) : '
+                            name='PARN'
+                        />
+                        <FieldInput
+                            title='Date du label (DLAB) :'
+                            name='DLAB'
+                        />
+                        <FieldTags
+                            title='Liens Divers (LIENS) : '
+                            name='LIENS'
                         />
                     </Section>
-                    <Row>
-                        <Col className='image' xs={12} sm={12} md='4'>
-                            <div className="thumbs-box">
-                                <div className="thumb-lg mb-3">
-                                    <img src={this.state.notice.IMG} alt="" className="img-fluid w-100" />
-                                </div>
-                            </div>
-                        </Col>
-                        <Col md="12">
 
-                            <FieldTags
-                                title='Collectifs (COLL) :'
-                                name='COLL'
-                            />
-                            <FieldTags
-                                title='Visite (VISI) :'
-                                name='VISI'
-                            />
-
-                            <FieldTags
-                                title='Personnalitées (PERS) :'
-                                name='PERS'
-                            />
-                            <FieldTags
-                                title='Intérêt (INTE) :'
-                                name='INTE'
-                            />
-
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="6">
-                            <FieldInput
-                                title='MH éléments (MHPP) : '
-                                name='MHPP'
-                            />
-                            <FieldInput
-                                title='Date MAJ (DMAJ) :'
-                                name='DMAJ'
-                                disabled
-                            />
-                            <FieldInput
-                                title='Date MIS (DMIS) :'
-                                name='DMIS'
-                                disabled
-                            />
-
-                            <FieldInput
-                                title='Dossier (DOSS) : '
-                                name='DOSS'
-                            />
-
-                            <FieldInput
-                                title='Deplacement (DEPL) : '
-                                name='DEPL'
-                            />
-
-                            <FieldInput
-                                title='Remploi (REMP) : '
-                                name='REMP'
-                            />
-                            <FieldInput
-                                title='Représentation (REPR) : '
-                                name='REPR'
-                            />
-                            <FieldInput
-                                title='Proprietaire (STAT) : '
-                                name='STAT'
-                            />
-                            <FieldInput
-                                title="Aire d'étude (AIRE) : "
-                                name='AIRE'
-                            />
-                            <FieldInput
-                                title='Dossier adresse (DOSADRS) :'
-                                name='DOSADRS'
-                                type='textarea'
-                                rows={4}
-                            />
-
-                            <FieldInput
-                                title='Vocable (VOCA) :'
-                                name='VOCA'
-                            />
-                            <FieldInput
-                                title='Appellation (APPL) :'
-                                name='APPL'
-                            />
-                            <FieldInput
-                                title='Destination (ACTU) :'
-                                name='ACTU'
-                            />
-                            <FieldInput
-                                title='Affectataire (AFFE) :'
-                                name='AFFE'
-                            />
-                            <FieldInput
-                                title='Plan (PLAN) :'
-                                name='PLAN'
-                            />
-                            <FieldInput
-                                title='Etude (ETUD) :'
-                                name='ETUD'
-                            />
-                            <hr />
-
-                            <FieldInput
-                                title='Remarquable (REMA) :'
-                                name='REMA'
-                            />
-                            <FieldInput
-                                title='Thème (THEM) : '
-                                name='THEM'
-                            />
-
-                            <FieldInput
-                                title='Edif. contenant (EDIF) : '
-                                name='EDIF'
-                            />
-
-                            <FieldTags
-                                title='Parties (PART) : '
-                                name='PART'
-                            />
-
-                            <FieldTags
-                                title='Parties non étud (PARN) : '
-                                name='PARN'
-                            />
-
-                            <FieldTags
-                                title='MH éléments (MHPP) : '
-                                name='MHPP'
-                            />
-
-                            <FieldInput
-                                title='INSEE (INSEE) :'
-                                name='INSEE'
-                            />
-                            <FieldInput
-                                title='Date du label (DLAB) :'
-                                name='DLAB'
-                            />
-                            <FieldInput
-                                title='Date bordereau (DBOR) :'
-                                name='DBOR'
-                            />
-                            <FieldInput
-                                title="Date d'enquête (DENQ) :"
-                                name='DENQ'
-                            />
-                            <FieldTags
-                                title='Liens Divers (LIENS) : '
-                                name='LIENS'
-                            />
-                            <hr />
-                        </Col>
-                    </Row>
                     <div className='buttons'>
                         <Button color="danger">
                             {/* <Link to="/"> */}

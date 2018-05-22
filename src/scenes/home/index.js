@@ -20,12 +20,12 @@ export default class Home extends React.Component {
         return this.state.tiles.map(({ url, name, image }, i) => {
             return (
                 <Col className="box text-center mb-3" key={i}>
-                    <Link to='/search'>
+                    <Link style={{ textDecoration: 'none' }} to='/search'>
                         <div className='tile'>
-                           <img src={image} alt="dummy image" className="img-fluid" />
-                            <div className="caption"> 
-                                <div className='title'>{name}</div> 
-                            </div> 
+                            <img src={image} alt="dummy image" className="img-fluid" />
+                            <div className="caption">
+                                <div className='name'>{name}</div>
+                            </div>
                         </div>
                     </Link>
                 </Col>
@@ -35,9 +35,12 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <Container className='home'>
-                <div className="hero-text">
-                 Outil d'édition unitaire et import massif de données patrimoniales de la platforme POP
+            <div className='home'>
+                <div className="title">
+                    Outil d'édition unitaire et import massif de données patrimoniales de la plateforme POP
+                </div>
+                <div className="subtitle">
+                    Je souhaite modifier la base
                 </div>
                 <Row>
                     {this.renderTiles()}
@@ -54,7 +57,7 @@ export default class Home extends React.Component {
                         </ul>
                     </div>
                 </div> */}
-            </Container>
+            </div>
         );
     }
 }

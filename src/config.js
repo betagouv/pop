@@ -1,6 +1,6 @@
 //ES
 
-let forceProd = true;
+let forceProd = false;
 
 let api_url = 'http://127.0.0.1:3000';
 if (forceProd || process.env.NODE_ENV === 'production') {
