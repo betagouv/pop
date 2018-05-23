@@ -116,15 +116,21 @@ function syncWithMongoDb(file, object, domaine) {
         var mongo = transform((arr, callback) => {
             const objects = arr.map((e) => {
                 const m = new object(e);
-                m._id = e.REF;
+                // m._id = e.REF;
                 return m;
             })
+
+            console.log('PAUSE')
+
+            input.pause();
             object.insertMany(objects, (err, docs) => {
                 if (err) {
                     console.log('Error indexing : ', err)
                 }
                 count += objects.length;
                 console.log(`Saved ${count}`)
+                console.log('RESUME')
+                input.resume();
                 callback();
             });
 
@@ -135,7 +141,7 @@ function syncWithMongoDb(file, object, domaine) {
             .pipe(parser)
             .pipe(toObject)
             .pipe(transformer)
-            .pipe(batch(300))
+            .pipe(batch(1000))
             .pipe(mongo)
             .on('finish', () => {
                 console.log('Stream finish');

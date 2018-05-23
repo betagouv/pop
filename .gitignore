@@ -6,3 +6,5 @@ data
 !.elasticbeanstalk/*.global.yml
 
 errors\.csv
+
+yarn\.lock
