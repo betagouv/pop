@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import L from 'leaflet';
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
@@ -153,7 +154,7 @@ class Notice extends React.Component {
         this.setState({ saving: true })
         API.update(this.state.notice._id, 'merimee', values).then((e) => {
             console.log('TOAST')
-            toastr.success('Notice updated');
+            toastr.success('Modification enregistrée');
             this.setState({ saving: false })
         })
     }
@@ -174,19 +175,8 @@ class Notice extends React.Component {
         return (
             <Container className='notice' fluid>
                 <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
-                <div className='leaflet-container'>
-                    <Map center={[this.state.notice.POP_COORDINATES[1], this.state.notice.POP_COORDINATES[0]]} zoom={13}>
-                        <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                        />
-                        <Marker position={this.state.notice.POP_COORDINATES}>
-                            <Popup>
-                                <span>A pretty CSS3 popup.<br />Easily customizable.</span>
-                            </Popup>
-                        </Marker>
-                    </Map>
-                </div>
+
+
 
 
                 <Form
@@ -369,10 +359,33 @@ class Notice extends React.Component {
                             title="Cours d'eau (HYDR) : "
                             name='HYDR'
                         />
+                        {this.state.notice.POP_COORDINATES ? <div className='leaflet-container'>
+                            <Map center={this.state.notice.POP_COORDINATES} zoom={15}>
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                                />
+                                <Marker position={this.state.notice.POP_COORDINATES} icon={L.icon({
+                                    iconUrl: require('../../assets/marker-icon.png'),
+                                    iconSize: [38, 55],
+                                    iconAnchor: [22, 54],
+                                    popupAnchor: [-3, -76],
+                                    shadowUrl: require('../../assets/marker-shadow.png'),
+                                    shadowSize: [68, 55],
+                                    shadowAnchor: [22, 54]
+                                })}>
+                                    <Popup>
+                                        <span>{this.state.notice.TICO}<br />{this.state.notice.DENO}</span>
+                                    </Popup>
+                                </Marker>
+                            </Map>
+                        </div> : <div />}
 
                     </Section>
+
+
                     <Section
-                        title='HISTORIQUE'
+                        title='Historique'
                         icon={require('../../assets/date.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#668796'

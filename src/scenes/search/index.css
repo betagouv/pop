@@ -69,6 +69,7 @@
   padding: 5px;
   overflow: hidden;
   text-transform: capitalize;
+  width: 100%;
 }
 
 .search .card img{
@@ -84,7 +85,8 @@
 .search .card span{
   font-size: 12px;
   color: grey;
-  margin-left: 10px;
+  margin-right: 0px;
+  margin-left: auto;
 }
 
 

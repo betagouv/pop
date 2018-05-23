@@ -67,25 +67,28 @@ export default class Search extends React.Component {
                         iconPosition="left"
                         className="mainSearch"
                         placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+                        URLParams={true}
                     />
                     <Row>
                         <Col xs="3">
-                            <MultiList
+                            <SingleList
                                 componentId="image"
-                                dataField="POP_HAS_IMAGE"
+                                dataField="POP_HAS_IMAGE.keyword"
                                 title="Contient une image"
                                 className="filters"
                                 showSearch={false}
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "image")
                                 }}
                             />
-                            <MultiList
+                            <SingleList
                                 componentId="location"
-                                dataField="POP_HAS_LOCATION"
+                                dataField="POP_HAS_LOCATION.keyword"
                                 title="Contient une location"
                                 className="filters"
                                 showSearch={false}
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "location")
                                 }}
@@ -97,6 +100,7 @@ export default class Search extends React.Component {
                                 defaultSelected={["Architecture", "Inventaire", "Monument Historique"]}
                                 className="filters"
                                 showSearch={false}
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "domaine")
                                 }}
@@ -107,6 +111,7 @@ export default class Search extends React.Component {
                                 title="Dénominations"
                                 className="filters"
                                 placeholder="Rechercher une dénomination"
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "denomination")
                                 }}
@@ -119,6 +124,7 @@ export default class Search extends React.Component {
                                 title="Auteurs"
                                 className="filters"
                                 placeholder="Rechercher un auteur"
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "auteurs")
                                 }}
@@ -131,6 +137,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 placeholder="Rechercher une région"
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "region")
                                 }}
@@ -142,6 +149,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 placeholder="Rechercher un département"
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "departement")
                                 }}
@@ -154,6 +162,7 @@ export default class Search extends React.Component {
                                 showCount={true}
                                 className="filters"
                                 placeholder="Rechercher une commune"
+                                URLParams={true}
                                 react={{
                                     and: FILTER.filter((e) => e !== "commune")
                                 }}
@@ -167,7 +176,11 @@ export default class Search extends React.Component {
                                 react={{
                                     "and": FILTER.filter((e) => e !== "auteurs")
                                 }}
+                                onResultStats={(total, took) => {
+                                    return `${total} resultats trouvés en ${took} ms.`
+                                }}
                                 dataField=''
+                                URLParams={true}
                                 size={20}
                                 onData={(data) => <Card key={data.REF} data={data} />}
                                 pagination={true}

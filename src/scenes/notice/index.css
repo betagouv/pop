@@ -35,6 +35,7 @@
 }
 
 .leaflet-container {
-  height: 400px;
-  width: 1200px;
+  height: 600px;
+  padding-top: 10px;
+  width: 100%;
 }
