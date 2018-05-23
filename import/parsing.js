@@ -70,6 +70,10 @@ function MerimeeClean(obj) {
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
+    obj.POP_COORDINATES = utils.extractCoordinates(obj.COOR, obj.ZONE, obj.REF);
+    obj.POP_HAS_LOCATION = obj.POP_COORDINATES ? "oui" : "non"
+    obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
+
     obj.LIENS = utils.extractUrls(obj.LIENS);
 
     switch (obj.REF.substring(0, 2)) {

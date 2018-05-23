@@ -6,6 +6,9 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
     POP_DOMAINE: String,
+    POP_COORDINATES: { type: [Number], index: '2d' },
+    POP_HAS_IMAGE: String,
+    POP_HAS_LOCATION: String,
     REF: String,
     TOUT: String,
     ACTU: String,
