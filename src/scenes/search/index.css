@@ -34,6 +34,17 @@
 
 .search .mainSearch{
   padding: 50px;
+  width: 100%;
+}
+
+
+.search .search-and-export-zone{
+  display: flex;
+  align-items: center;
+}
+
+.search .search-and-export-zone .button{
+  width: 235px;
 }
 
 .search .title{
