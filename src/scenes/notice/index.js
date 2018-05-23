@@ -140,13 +140,9 @@ class Notice extends React.Component {
                 PINT: notice.PINT,
                 DLAB: notice.DLAB,
                 APPL: notice.APPL,
-
             }
-            console.log(initData)
             this.props.initialize(initData);
             this.setState({ loading: false, notice })
-
-
         })
     }
 
@@ -184,12 +180,35 @@ class Notice extends React.Component {
                     className='main-body'
                 >
                     <Row>
-                        <Col className='image' xs={12} sm={12} md='4'>
+                        <Col className='image' sm={6}>
                             <div className="thumbs-box">
                                 <div className="thumb-lg mb-3">
                                     <img src={this.state.notice.IMG} alt="" className="img-fluid w-100" />
                                 </div>
                             </div>
+                        </Col>
+                        <Col className='image' sm={6}>
+                            {this.state.notice.POP_COORDINATES ? <div className='leaflet-container'>
+                                <Map center={this.state.notice.POP_COORDINATES} zoom={15}>
+                                    <TileLayer
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                                    />
+                                    <Marker position={this.state.notice.POP_COORDINATES} icon={L.icon({
+                                        iconUrl: require('../../assets/marker-icon.png'),
+                                        iconSize: [38, 55],
+                                        iconAnchor: [22, 54],
+                                        popupAnchor: [-3, -76],
+                                        shadowUrl: require('../../assets/marker-shadow.png'),
+                                        shadowSize: [68, 55],
+                                        shadowAnchor: [22, 54]
+                                    })}>
+                                        <Popup>
+                                            <span>{this.state.notice.TICO}<br />{this.state.notice.DENO}</span>
+                                        </Popup>
+                                    </Marker>
+                                </Map>
+                            </div> : <div />}
                         </Col>
                     </Row>
                     <Section
@@ -359,27 +378,7 @@ class Notice extends React.Component {
                             title="Cours d'eau (HYDR) : "
                             name='HYDR'
                         />
-                        {this.state.notice.POP_COORDINATES ? <div className='leaflet-container'>
-                            <Map center={this.state.notice.POP_COORDINATES} zoom={15}>
-                                <TileLayer
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                                />
-                                <Marker position={this.state.notice.POP_COORDINATES} icon={L.icon({
-                                    iconUrl: require('../../assets/marker-icon.png'),
-                                    iconSize: [38, 55],
-                                    iconAnchor: [22, 54],
-                                    popupAnchor: [-3, -76],
-                                    shadowUrl: require('../../assets/marker-shadow.png'),
-                                    shadowSize: [68, 55],
-                                    shadowAnchor: [22, 54]
-                                })}>
-                                    <Popup>
-                                        <span>{this.state.notice.TICO}<br />{this.state.notice.DENO}</span>
-                                    </Popup>
-                                </Marker>
-                            </Map>
-                        </div> : <div />}
+
 
                     </Section>
 

@@ -13,7 +13,8 @@ import {
     MultiList,
     SingleList,
     MultiDropdownList,
-    SelectedFilters
+    SelectedFilters,
+    ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
 import { es_url } from '../../config.js';
@@ -69,6 +70,19 @@ export default class Search extends React.Component {
                         placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                         URLParams={true}
                     />
+
+                    <ReactiveComponent
+                        componentId='export'
+                        react={{
+                            and: FILTER
+                        }}
+                        defaultQuery={() => ({
+                            size: 100,
+                            aggs: {},
+                        })}
+                    >
+                        <ExportComponent />
+                    </ReactiveComponent>
                     <Row>
                         <Col xs="3">
                             <SingleList
@@ -97,7 +111,6 @@ export default class Search extends React.Component {
                                 componentId="domaine"
                                 dataField="POP_DOMAINE.keyword"
                                 title="Domaines"
-                                defaultSelected={["Architecture", "Inventaire", "Monument Historique"]}
                                 className="filters"
                                 showSearch={false}
                                 URLParams={true}
@@ -174,7 +187,7 @@ export default class Search extends React.Component {
                             <ReactiveList
                                 componentId="results"
                                 react={{
-                                    "and": FILTER.filter((e) => e !== "auteurs")
+                                    "and": FILTER
                                 }}
                                 onResultStats={(total, took) => {
                                     return `${total} resultats trouvés en ${took} ms.`
@@ -187,7 +200,7 @@ export default class Search extends React.Component {
                             />
                         </Col>
                     </Row>
-                </ReactiveBase>
+                </ReactiveBase >
             </Container >
         );
     }
@@ -210,3 +223,43 @@ const Card = ({ data }) => {
         </Link>
     );
 }
+
+
+class ExportComponent extends React.Component {
+    componentWillMount() {
+        // this.props.setStreaming('export',true)
+        this.props.setQueryListener('export', (e) => {
+            console.log('e', e)
+        })
+    }
+    renderIt() {
+        // console.log('this.props.stream', this.props.stream)
+        // console.log('this.props.hits', this.props.hits)
+        console.log('this.props', this.props)
+
+    }
+    render() {
+        return (
+            <div onClick={this.exportData()}>
+                Export
+            </div>
+        );
+    }
+}
+
+// const mapStateToProps = (state, props) => ({
+// 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+// 	isLoading: state.isLoading[props.componentId] || false,
+// 	streamHits: state.streamHits[props.componentId] || [],
+// 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+// 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+// 	url: state.config.url,
+// });
+
+
+// const mapDispatchtoProps = dispatch => ({
+// 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
+// 	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
+// });
+
+// ExportComponent = connect(mapStateToProps, mapDispatchtoProps)(ExportComponent);
