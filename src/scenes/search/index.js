@@ -101,7 +101,7 @@ export default class Search extends React.Component {
                             <SingleList
                                 componentId="location"
                                 dataField="POP_HAS_LOCATION.keyword"
-                                title="Contient une location"
+                                title="Contient une localisation"
                                 className="filters"
                                 showSearch={false}
                                 URLParams={true}

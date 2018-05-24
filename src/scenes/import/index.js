@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 // import { Button, Row, Col, Progress, notification } from 'antd';
 // import { Table } from 'antd';
-import ImportDropComponent from './dropZone'
+import DropZone from './dropZone'
 import Loader from '../../components/loader';
 
 import './index.css';
@@ -24,24 +24,20 @@ export default class ImportComponent extends Component {
 
   onImportFinish(importedProducts) {
 
-    // let dataclean = true;
-    // importedProducts.map((product, index) => {
-    //   if (!product.sku) {
-    //     //   if (importedProducts.indexOf(product) != index || !product.sku) {
-    //     notification.error({ message: `SKU already exist or no sku on line ${index}` })
-    //     dataclean = false;
-    //   }
-    // })
-
-    // if (!dataclean) { return; }
-
-    // this.setState({ dropVisible: false, calculating: true })
-    /*
-    firebase.getProductsFromStore(this.props.storeId).then((products) => {
-      this.diff(importedProducts, products)
+    let dataclean = true;
+    importedProducts.map((product, index) => {
+      console.log('PRODUCT', product);
+      // if (!product.sku) {
+      //   //   if (importedProducts.indexOf(product) != index || !product.sku) {
+      //   notification.error({ message: `SKU already exist or no sku on line ${index}` })
+      //   dataclean = false;
     })
-    */
   }
+
+  // if (!dataclean) { return; }
+
+  // this.setState({ dropVisible: false, calculating: true })
+  // }
 
   // async onSave() {
 
@@ -299,11 +295,12 @@ export default class ImportComponent extends Component {
     return (
       <div>
         <Row className='rowResult' type="flex" gutter={16} justify="center">
-          <ImportDropComponent
+          <DropZone
             onFinish={this.onImportFinish.bind(this)}
             storeId={this.props.storeId}
             visible={this.state.dropVisible}
           />
+          Hey
         </Row>
         {/* {this.renderUploading()}
         {this.renderSummary()} */}

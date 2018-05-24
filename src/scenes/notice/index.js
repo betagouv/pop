@@ -439,11 +439,11 @@ class Notice extends React.Component {
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FBE367'
                     >
-                        <FieldInput
+                        <FieldTags
                             title='Matériau du gros-oeuvre et mise en oeuvre (MURS) : '
                             name='MURS'
                         />
-                        <FieldInput
+                        <FieldTags
                             title='Matériau de la couverture (TOIT) : '
                             name='TOIT'
                         />
@@ -485,7 +485,7 @@ class Notice extends React.Component {
                             type='textarea'
                             rows={4}
                         />
-                        <FieldInput
+                        <FieldTags
                             title='Technique du décor des immeubles par nature (TECH) : '
                             name='TECH'
                         />
