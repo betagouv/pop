@@ -1,7 +1,11 @@
-.rowResult {
+.import .rowResult {
   padding-top: 20px;
   display: flex;
   flex-direction: column!important;
   padding-right: 50px;
   padding-left: 50px;
+}
+
+.import .rowResult img{
+  width: 50px;
 }

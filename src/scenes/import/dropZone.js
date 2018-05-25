@@ -15,7 +15,11 @@ export default class ImportDropComponent extends Component {
       const extension = file.name.split('.').pop();
       const reader = new FileReader();
       if (extension === 'csv') {
-        reader.onload = () => { this.parseCSVFile(reader.result) };
+        reader.onload = () => { 
+          console.log('res',reader.result)
+          this.parseCSVFile(reader.result) 
+        
+        };
         // } else if (extension === 'xlsx') {
         //   reader.onload = () => { this.parseXLSXFile(reader.result) };
       } else {
@@ -24,7 +28,7 @@ export default class ImportDropComponent extends Component {
       }
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
-      reader.readAsBinaryString(file);
+      reader.readAsText(file);
     });
   }
 
@@ -47,7 +51,7 @@ export default class ImportDropComponent extends Component {
   }
 
   parseCSVFile(fileAsBinaryString) {
-    const parser = Parse({ delimiter: ';', from: 1, quote: '' });
+    const parser = Parse({ delimiter: ',', from: 1 });
     const output = [];
 
     let record = null;
@@ -56,7 +60,6 @@ export default class ImportDropComponent extends Component {
     parser.on('readable', () => {
       let count = 0;
       while ((record = parser.read())) {
-
         if (!header) {
           header = [].concat(record);
           continue;
@@ -65,7 +68,8 @@ export default class ImportDropComponent extends Component {
         record.map((e, i) => {
           obj[header[i]] = e;
         })
-        obj.key = ++count;
+
+        console.log('DSDDS', obj.ADRS)
         output.push(obj);
       }
     });

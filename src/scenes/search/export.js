@@ -2,7 +2,7 @@ import API from '../../services/api'
 
 export default async function exportData(fileName, columns, entities) {
 
-    let csv = columns.join(';') + '\n';
+    let csv = columns.join(',') + '\n';
     // let offset = 0;
     // let entities = [];
     // let res = await (API.search(opt.collection, opt.value, 100, offset));
@@ -14,10 +14,11 @@ export default async function exportData(fileName, columns, entities) {
     for (var j = 0; j < entities.length; j++) {
         const arr = []
         for (var i = 0; i < columns.length; i++) {
-            arr.push(entities[j]._source[columns[i]]);
+            arr.push('"' + ('' + entities[j]._source[columns[i]]).replace(/"/g, '""') + '"');
         }
-        csv += arr.join(';') + '\n'
+        csv += arr.join(',') + '\n'
     }
+
 
 
     initiateFileDownload(stringToArray(csv), fileName);

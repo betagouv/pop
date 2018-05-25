@@ -20,6 +20,18 @@ class api {
     }
 
 
+    getNoticesByRef(refs) {
+        const arr = [];
+        return new Promise(async (resolve, reject) => {
+            for (var i = 0; i < refs.length; i++) {
+                const notice = await (this.getNotice(refs[i]));
+                arr.push(notice);
+            }
+            resolve(arr);
+        })
+    }
+
+
     _post(url, data) {
         return new Promise((resolve, reject) => {
             fetch(url, {

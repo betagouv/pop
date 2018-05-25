@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
-// import { Button, Row, Col, Progress, notification } from 'antd';
-// import { Table } from 'antd';
+import { Row, Col, Table, Button } from 'reactstrap';
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
+import api from '../../services/api'
 
 import './index.css';
 
+const COLUMNSTODISPLAY = ['REF', 'TICO', 'DENO'];
 
 export default class ImportComponent extends Component {
   state = {
@@ -22,17 +22,62 @@ export default class ImportComponent extends Component {
     removed: [],
   }
 
-  onImportFinish(importedProducts) {
+  onImportFinish(importedNotices) {
 
     let dataclean = true;
-    importedProducts.map((product, index) => {
-      console.log('PRODUCT', product);
-      // if (!product.sku) {
-      //   //   if (importedProducts.indexOf(product) != index || !product.sku) {
-      //   notification.error({ message: `SKU already exist or no sku on line ${index}` })
-      //   dataclean = false;
-    })
+    const refs = importedNotices.map(e => e.REF);
+    api.getNoticesByRef(refs).then((currentNotices) => {
+      var currentNoticesUpdated = currentNotices.map((e) => {
+        delete e.__v;
+        delete e._id;
+        return e;
+      })
+
+      this.diff(importedNotices, currentNoticesUpdated)
+    });
   }
+
+  diff(importedNotices, existingNotices) {
+    const unChanged = [];
+    const updated = [];
+    const created = [];
+
+
+    for (var i = 0; i < importedNotices.length; i++) {
+      let importedNotice = importedNotices[i];
+      let found = false;
+      for (var j = 0; j < existingNotices.length; j++) {
+        const existingNotice = existingNotices[j];
+        if (importedNotice.REF === existingNotice.REF) {
+          console.log('Compare ', importedNotice, existingNotice)
+          if (!compareObjects(importedNotice, existingNotice)) {
+            updated.push(existingNotice)
+          } else {
+            unChanged.push(existingNotice)
+          }
+          found = true;
+        }
+      }
+
+      if (!found) {
+        created.push(importedNotice);
+      }
+    }
+
+
+    console.log('unChanged', unChanged,
+      'created', created,
+      'updated', updated)
+
+    this.setState({
+      displaySummary: true,
+      calculating: false,
+      unChanged,
+      created,
+      updated
+    });
+  }
+
 
   // if (!dataclean) { return; }
 
@@ -104,187 +149,79 @@ export default class ImportComponent extends Component {
 
 
 
-  // diff(importedProducts, existingProducts) {
-  //   const unChanged = [];
-  //   const updated = [];
-  //   const created = [];
-
-  //   let removed = {};
-  //   for (var i = 0; i < existingProducts.length; i++) {
-  //     removed[existingProducts[i].sku] = existingProducts[i];
-  //   }
-
-  //   for (var i = 0; i < importedProducts.length; i++) {
-
-  //     let importedProduct = importedProducts[i];
-
-  //     //Price stuffs
-  //     const { retail_price, trading_price, wholesale_price } = this.getPrices(importedProduct);
-  //     importedProduct.retail_price = retail_price;
-  //     importedProduct.trading_price = trading_price;
-  //     importedProduct.wholesale_price = wholesale_price;
 
 
-  //     importedProduct.stock = parseInt(importedProduct.stock);
-  //     let found = false;
-  //     for (var j = 0; j < existingProducts.length; j++) {
-  //       const existingProduct = existingProducts[j];
-  //       if (importedProduct.sku === existingProduct.sku) {
-  //         if (importedProduct.retail_price !== existingProduct.retail_price || importedProduct.trading_price !== existingProduct.trading_price || importedProduct.stock !== existingProduct.stock) {
-  //           existingProduct.new_retail_price = importedProduct.retail_price;
-  //           existingProduct.new_trading_price = importedProduct.trading_price;
-  //           existingProduct.new_stock = importedProduct.stock;
-  //           updated.push(existingProduct)
-  //         } else {
-  //           unChanged.push(existingProduct)
-  //         }
-  //         found = true;
-  //       }
-  //     }
+  renderCreated() {
+    return (
+      <Row className='rowResult' type="flex" gutter={16} justify="center">
+        <h3 style={{ marginBottom: 16 }}>Créés ({this.state.created.length})</h3>
+        <TableComponent
+          columns={COLUMNSTODISPLAY}
+          dataSource={this.state.created.map((e, i) => { return { ...e, ...{ key: i } } })}
+        />
+      </Row>)
+  }
 
-  //     if (!found) {
-  //       created.push(importedProduct);
-  //     } else {
-  //       delete removed[importedProduct.sku];
-  //     }
-  //   }
-
-  //   const removeArr = [];
-  //   for (const key in removed) {
-  //     removeArr.push(removed[key])
-  //   }
-
-  //   this.setState({
-  //     displaySummary: true,
-  //     calculating: false,
-  //     unChanged,
-  //     created,
-  //     updated,
-  //     removed: removeArr
-  //   });
-  // }
-
-  // renderCreated() {
-  //   const columns = [
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Created ({this.state.created.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.created.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderUnChanged() {
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Unchanged ({this.state.unChanged.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.unChanged.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderRemoved() {
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Removed ({this.state.removed.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.removed.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderUpdated() {
-
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Previous Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'New Stock', dataIndex: 'new_stock', key: 'new_stock' },
-  //     { title: 'Previous Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'New retail Price', dataIndex: 'new_retail_price', key: 'new_retail_price' },
-  //     { title: 'Previous Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'New trading price', dataIndex: 'new_trading_price', key: 'new_trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Updated ({this.state.updated.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.updated.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-
-  // }
+  renderUnChanged() {
+    return (
+      <Row className='rowResult' type="flex" gutter={16} justify="center">
+        <h3 style={{ marginBottom: 16 }}>Inchangés ({this.state.unChanged.length})</h3>
+        <TableComponent
+          columns={COLUMNSTODISPLAY}
+          dataSource={this.state.unChanged.map((e, i) => { return { ...e, ...{ key: i } } })}
+        />
+      </Row>)
+  }
 
 
-  // renderUploading() {
+  renderUpdated() {
+    return (
+      <Row className='rowResult' type="flex" gutter={16} justify="center">
+        <h3 style={{ marginBottom: 16 }}>Mis à jour ({this.state.updated.length})</h3>
+        <TableComponent
+          columns={COLUMNSTODISPLAY}
+          dataSource={this.state.updated.map((e, i) => { return { ...e, ...{ key: i } } })}
+        />
+      </Row>)
 
-  //   if (!this.state.uploading) {
-  //     return <div />
-  //   }
+  }
 
-  //   return (<Row className='rowResult' type="flex" gutter={16} justify="center">
-  //     <Col md={4} sm={4} xs={24} >
-  //       <Progress percent={this.state.uploadingProgress} />
-  //     </Col>
-  //     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>{this.state.uploadingMessage}</div>
-  //   </Row>)
-  // }
 
-  // renderSummary() {
-  //   if (!this.state.displaySummary) {
-  //     return <div />
-  //   }
-  //   return (
-  //     <div>
-  //       {this.renderUpdated()}
-  //       {this.renderCreated()}
-  //       {this.renderRemoved()}
-  //       {this.renderUnChanged()}
-  //       <Row type="flex" gutter={16} justify="center">
-  //         <Button
-  //           type="primary"
-  //           onClick={() => this.onSave()}
-  //           disabled={!(this.state.updated.length || this.state.removed.length || this.state.created.length)}
-  //         >
-  //           Proceed
-  //           </Button>
-  //       </Row>
-  //     </div>
-  //   )
-  // }
+  renderUploading() {
+
+    // if (!this.state.uploading) {
+    return <div />
+    // }
+
+    // return (<Row className='rowResult' type="flex" gutter={16} justify="center">
+    //   <Col md={4} sm={4} xs={24} >
+    //     <Progress percent={this.state.uploadingProgress} />
+    //   </Col>
+    //   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>{this.state.uploadingMessage}</div>
+    // </Row>)
+  }
+
+  renderSummary() {
+    if (!this.state.displaySummary) {
+      return <div />
+    }
+    return (
+      <div className='import'>
+        {this.renderUpdated()}
+        {this.renderCreated()}
+        {this.renderUnChanged()}
+        <Row type="flex" gutter={16} justify="center">
+          <Button
+            type="primary"
+            onClick={() => this.onSave()}
+            disabled={!(this.state.updated.length || this.state.removed.length || this.state.created.length)}
+          >
+            Proceed
+            </Button>
+        </Row>
+      </div>
+    )
+  }
 
   render() {
 
@@ -298,14 +235,85 @@ export default class ImportComponent extends Component {
           <DropZone
             onFinish={this.onImportFinish.bind(this)}
             storeId={this.props.storeId}
-            visible={this.state.dropVisible}
+            visible={!this.state.displaySummary}
           />
-          Hey
         </Row>
-        {/* {this.renderUploading()}
-        {this.renderSummary()} */}
+        {this.renderUploading()}
+        {this.renderSummary()}
       </div >
     );
   }
 }
 
+
+const TableComponent = ({ dataSource, columns }) => {
+  const columnsJSX = columns.map((e, i) => <th key={i}>{e}</th>)
+
+  const data = dataSource.map((c, i) => {
+    const r = columns.map((d, j) => {
+      return <td key={j}>{c[d]}</td>
+    })
+
+    r.push(<td key='visu' ><img src={require('../../assets/view.png')} /></td>)
+    return (<tr key={i}>{r}</tr>)
+  })
+
+
+  return (
+    <Table bordered>
+      <thead><tr>{columnsJSX}</tr></thead>
+      <tbody>{data}</tbody>
+    </Table>
+  )
+}
+
+
+function compareObjects(x, y) {
+  if (x === y) return true;
+  // if both x and y are null or undefined and exactly the same
+
+  if (!(x instanceof Object) || !(y instanceof Object)) {
+    // console.log('false1', y, p)
+    return false;
+  }
+  // if they are not strictly equal, they both need to be Objects
+
+  if (x.constructor !== y.constructor) {
+    // console.log('false2', y, p)
+    return false;
+  }
+  // they must have the exact same prototype chain, the closest we can do is
+  // test there constructor.
+
+  for (var p in x) {
+
+    if (!x.hasOwnProperty(p)) continue;
+    // other properties were tested using x.constructor === y.constructor
+
+    if (!y.hasOwnProperty(p)) {
+      // console.log('false3', y, p)
+      return false;
+    }
+    // allows to compare x[ p ] and y[ p ] when set to undefined
+
+    if (x[p] === y[p]) continue;
+    // if they have the same strict value or identity then they are equal
+
+    if (!x[p] && (!y[p] || (Array.isArray(y[p]) && !y[p].length))) continue;
+
+
+    console.log('!x[p]', !x[p])
+    console.log('!y[p]', !y[p])
+
+    console.log('COMPARE ', x[p], 'with', y[p])
+    return false;
+
+    //if (typeof (x[p]) !== "object") return false;
+    // Numbers, Strings, Functions, Booleans must be strictly equal
+
+    // if (!compareObjects(x[p], y[p])) return false;
+    // Objects and Arrays must be tested recursively
+  }
+
+  return true;
+}
