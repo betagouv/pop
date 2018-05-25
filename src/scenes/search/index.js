@@ -14,6 +14,7 @@ import {
     SingleList,
     MultiDropdownList,
     SelectedFilters,
+    DynamicRangeSlider,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
@@ -22,7 +23,7 @@ import { es_url } from '../../config.js';
 import exportData from './export';
 import './index.css';
 
-const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location"]
+const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date"]
 
 export default class Search extends React.Component {
 
@@ -86,7 +87,7 @@ export default class Search extends React.Component {
                                 showSearch={false}
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "image")
+                                    and: FILTER
                                 }}
                             />
                             <SingleList
@@ -97,7 +98,7 @@ export default class Search extends React.Component {
                                 showSearch={false}
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "location")
+                                    and: FILTER
                                 }}
                             />
                             <MultiList
@@ -108,7 +109,24 @@ export default class Search extends React.Component {
                                 showSearch={false}
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "domaine")
+                                    and: FILTER
+                                }}
+                            />
+                            <DynamicRangeSlider
+                                componentId="date"
+                                dataField="POP_DATE"
+                                title="Dates"
+                                showHistogram={false}
+                                stepValue={1}
+                                interval={1}
+                                rangeLabels={(min, max) => (
+                                    {
+                                        "start": min + " siècle",
+                                        "end": max + " siècles"
+                                    }
+                                )}
+                                react={{
+                                    and: FILTER
                                 }}
                             />
                             <MultiList
@@ -119,20 +137,20 @@ export default class Search extends React.Component {
                                 placeholder="Rechercher une dénomination"
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "denomination")
+                                    and: FILTER
                                 }}
                             />
                             <MultiList
                                 componentId="auteurs"
                                 dataField="AUTR.keyword"
                                 showMissing={true}
-                                size={1000}
+                                size={100}
                                 title="Auteurs"
                                 className="filters"
                                 placeholder="Rechercher un auteur"
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "auteurs")
+                                    and: FILTER
                                 }}
                             />
                             <hr />
@@ -145,7 +163,7 @@ export default class Search extends React.Component {
                                 placeholder="Rechercher une région"
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "region")
+                                    and: FILTER
                                 }}
                             />
                             <MultiList
@@ -157,7 +175,7 @@ export default class Search extends React.Component {
                                 placeholder="Rechercher un département"
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "departement")
+                                    and: FILTER
                                 }}
                             />
 
@@ -170,7 +188,7 @@ export default class Search extends React.Component {
                                 placeholder="Rechercher une commune"
                                 URLParams={true}
                                 react={{
-                                    and: FILTER.filter((e) => e !== "commune")
+                                    and: FILTER
                                 }}
                             />
 
@@ -230,7 +248,7 @@ class ExportComponent extends React.Component {
 
     render() {
         return (
-            <Button icon={require('../../assets/export.png')}  text='Exporter les résultats' to='' onClick={this.exportData.bind(this)} />
+            <Button icon={require('../../assets/export.png')} text='Exporter les résultats' to='' onClick={this.exportData.bind(this)} />
         );
     }
 }

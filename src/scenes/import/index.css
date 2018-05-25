@@ -1,4 +1,4 @@
-.import .rowResult {
+.import {
   padding-top: 20px;
   display: flex;
   flex-direction: column!important;
@@ -6,6 +6,30 @@
   padding-left: 50px;
 }
 
-.import .rowResult img{
+.import td img{
   width: 50px;
+  cursor: pointer;
+}
+
+.import .dropzone{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding-top: 200px;
+  justify-content: center;
+}
+
+.import .dropzone .container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 200px;
+  border-style: dashed;
+  width: 200Px;
+}
+
+.import .buttons{
+  display: flex;
+  justify-content: center;
 }

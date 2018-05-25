@@ -15,10 +15,10 @@ export default class ImportDropComponent extends Component {
       const extension = file.name.split('.').pop();
       const reader = new FileReader();
       if (extension === 'csv') {
-        reader.onload = () => { 
-          console.log('res',reader.result)
-          this.parseCSVFile(reader.result) 
-        
+        reader.onload = () => {
+          console.log('res', reader.result)
+          this.parseCSVFile(reader.result)
+
         };
         // } else if (extension === 'xlsx') {
         //   reader.onload = () => { this.parseXLSXFile(reader.result) };
@@ -103,9 +103,9 @@ export default class ImportDropComponent extends Component {
       paddingLeft: '50px'
     }
     return (
-      <div>
-        <Dropzone onDrop={this.onDrop.bind(this)}>
-          <p>Try dropping some files here, or click to select files to upload.</p>
+      <div className='dropzone'>
+        <Dropzone className='container' onDrop={this.onDrop.bind(this)}>
+          <p>Déposez des fichiers d'import ici</p>
         </Dropzone>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">
           <Col md={4} sm={4} xs={24} >

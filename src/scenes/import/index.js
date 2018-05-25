@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Button } from 'reactstrap';
+import { Row, Col, Table, Button, Container } from 'reactstrap';
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
 import api from '../../services/api'
@@ -152,9 +152,12 @@ export default class ImportComponent extends Component {
 
 
   renderCreated() {
+    if (!this.state.created.length) {
+      return <div />
+    }
     return (
       <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Créés ({this.state.created.length})</h3>
+        <h3 style={{ marginBottom: 16 }}>Seront créées ({this.state.created.length})</h3>
         <TableComponent
           columns={COLUMNSTODISPLAY}
           dataSource={this.state.created.map((e, i) => { return { ...e, ...{ key: i } } })}
@@ -163,9 +166,13 @@ export default class ImportComponent extends Component {
   }
 
   renderUnChanged() {
+    if (!this.state.unChanged.length) {
+      return <div />
+    }
+
     return (
       <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Inchangés ({this.state.unChanged.length})</h3>
+        <h3 style={{ marginBottom: 16 }}>Resteront inchangées ({this.state.unChanged.length})</h3>
         <TableComponent
           columns={COLUMNSTODISPLAY}
           dataSource={this.state.unChanged.map((e, i) => { return { ...e, ...{ key: i } } })}
@@ -175,15 +182,18 @@ export default class ImportComponent extends Component {
 
 
   renderUpdated() {
+    if (!this.state.updated.length) {
+      return <div />
+    }
+
     return (
       <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Mis à jour ({this.state.updated.length})</h3>
+        <h3 style={{ marginBottom: 16 }}>Seront mises à jour ({this.state.updated.length})</h3>
         <TableComponent
           columns={COLUMNSTODISPLAY}
           dataSource={this.state.updated.map((e, i) => { return { ...e, ...{ key: i } } })}
         />
       </Row>)
-
   }
 
 
@@ -210,15 +220,15 @@ export default class ImportComponent extends Component {
         {this.renderUpdated()}
         {this.renderCreated()}
         {this.renderUnChanged()}
-        <Row type="flex" gutter={16} justify="center">
+        <div className='buttons'>
           <Button
-            type="primary"
+            color="primary"
             onClick={() => this.onSave()}
             disabled={!(this.state.updated.length || this.state.removed.length || this.state.created.length)}
           >
-            Proceed
+            Importer
             </Button>
-        </Row>
+        </div>
       </div>
     )
   }
@@ -230,8 +240,8 @@ export default class ImportComponent extends Component {
     }
 
     return (
-      <div>
-        <Row className='rowResult' type="flex" gutter={16} justify="center">
+      <Container>
+        <Row className='import' type="flex" gutter={16} justify="center">
           <DropZone
             onFinish={this.onImportFinish.bind(this)}
             storeId={this.props.storeId}
@@ -240,7 +250,7 @@ export default class ImportComponent extends Component {
         </Row>
         {this.renderUploading()}
         {this.renderSummary()}
-      </div >
+      </Container >
     );
   }
 }

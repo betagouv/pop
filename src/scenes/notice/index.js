@@ -227,7 +227,7 @@ class Notice extends React.Component {
                             name='RENV'
                         />
                         <FieldInput
-                            title='TODO-Référence dans la base Patriarche (ARCHEO) : '
+                            title='Référence dans la base Patriarche (ARCHEO) : '
                             name='ARCHEO'
                         />
                         <FieldInput
@@ -606,10 +606,6 @@ class Notice extends React.Component {
                             title="TODO-Numéro de microfiche (MICR) :"
                             name='MICR'
                         />
-                        <FieldInput
-                            title="TODO-Accès microfiche (MFICH ) :"
-                            name='MFICH'
-                        />
                     </Section>
                     <Section
                         title='AUTRES'
@@ -629,6 +625,11 @@ class Notice extends React.Component {
                             title='Contact (CONTACT) :'
                             name='CONTACT'
                         />
+                        <FieldInput
+                            title='Mosaïques (MOSA) :'
+                            name='MOSA'
+                        />
+                        
                         <FieldInput
                             title='Localisation (LOCA) : '
                             name='LOCA'
@@ -652,6 +653,11 @@ class Notice extends React.Component {
                             title='Thème (THEM) : '
                             name='THEM'
                         />
+                        <FieldInput
+                            title='Visite guidé (WEB) : '
+                            name='WEB'
+                        />
+
                         <FieldTags
                             title='Parties non étud (PARN) : '
                             name='PARN'
@@ -660,10 +666,21 @@ class Notice extends React.Component {
                             title='Date du label (DLAB) :'
                             name='DLAB'
                         />
+                        <FieldInput
+                            title='intérêt oeuvre (PINT) :'
+                            name='PINT'
+                        />
                         <FieldTags
                             title='Liens Divers (LIENS) : '
                             name='LIENS'
                         />
+                        <FieldTags
+                            title='no Bordereaus (NBOR) : '
+                            name='NBOR'
+                        />
+
+
+                        
                     </Section>
 
                     <div className='buttons'>

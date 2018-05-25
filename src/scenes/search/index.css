@@ -116,11 +116,15 @@
 }
 
 
-.search label::after{
+.search .active label::after{
   left: 2px!important;
   bottom: 7px!important;
   top: 13px!important;
   width: 16px!important;
   height: 16px!important;
   border-radius: 0px!important;
+  -webkit-transform: scale(1)!important;
+  background-color: #0B6AFF!important;;
+  border-style: none!important;;
+  margin-top: -6px!important;;
 }
