@@ -112,7 +112,7 @@ export default class Search extends React.Component {
                                     and: FILTER
                                 }}
                             />
-                            <DynamicRangeSlider
+                            {/* <DynamicRangeSlider
                                 componentId="date"
                                 dataField="POP_DATE"
                                 title="Dates"
@@ -128,7 +128,7 @@ export default class Search extends React.Component {
                                 react={{
                                     and: FILTER
                                 }}
-                            />
+                            /> */}
                             <MultiList
                                 componentId="denomination"
                                 dataField="DENO.keyword"
