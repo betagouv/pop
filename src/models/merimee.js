@@ -9,6 +9,7 @@ const Schema = new mongoose.Schema({
     POP_COORDINATES: { type: [Number], index: '2d' },
     POP_HAS_IMAGE: String,
     POP_HAS_LOCATION: String,
+    POP_DATE: Number,
     REF: String,
     TOUT: String,
     ACTU: String,

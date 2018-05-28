@@ -42,8 +42,6 @@ router.get('/search', (req, res) => {
         query.DENO = { "$in": [deno] };
     }
 
-    console.log('QUZERY ', query)
-
     Models.get(collection).paginate(Models.get(collection).find(query), { offset: offset, limit: limit }).then((result) => {
         res.send(result)
     });

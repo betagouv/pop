@@ -27,17 +27,16 @@ function run(file, object, domaine) {
 
 
 function MerimeeClean(obj) {
-
     obj.IMG = utils.extractIMG(obj.IMG);
-    obj.CONTACT = utils.extractEmail(obj.CONTACT);
+    obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
     obj.TYPO = utils.extractArray(obj.TYPO, ';');
-    obj.TECH = utils.extractArray(obj.TECH, ';');
+    obj.TECH = utils.extractArray(obj.TECH, /[,;]/);
     obj.STAT = utils.extractArray(obj.STAT, ';');
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
     obj.SCLD = utils.extractArray(obj.SCLD, ';');
-    obj.AUTR = utils.extractArray(obj.AUTR, /,|£|;/);
+    obj.AUTR = utils.extractArrayFromRegex(obj.AUTR, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g);
     obj.AUTP = utils.extractArray(obj.AUTP, ';');
     obj.NOMS = utils.extractArray(obj.NOMS, ';');
 
@@ -47,10 +46,10 @@ function MerimeeClean(obj) {
 
     obj.REPR = utils.extractArray(obj.REPR, ';');
     obj.COUV = utils.extractArray(obj.COUV, ';');
-    obj.MURS = utils.extractArray(obj.MURS, ';');
+    obj.MURS = utils.extractArray(obj.MURS, /[,;]/);
     obj.ESCA = utils.extractArray(obj.ESCA, ';');
     obj.PREP = utils.extractArray(obj.PREP, ';');
-    obj.TOIT = utils.extractArray(obj.TOIT, ';');
+    obj.TOIT = utils.extractArray(obj.TOIT, /[,;]/);
     obj.LOCA = utils.extractArray(obj.LOCA, ';');
     obj.JDAT = utils.extractArray(obj.JDAT, ';');
     obj.JATT = utils.extractArray(obj.JATT, ';');
@@ -70,6 +69,16 @@ function MerimeeClean(obj) {
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
+    //
+    obj.REFE = obj.REFE ? obj.REFE : '';
+    obj.REFO = obj.REFO ? obj.REFO : '';
+    obj.REFP = obj.REFP ? obj.REFP : '';
+    obj.RENV = obj.RENV ? obj.RENV : '';
+    obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
+
+
+    //POP DATA
+    obj.POP_DATE = utils.extractPOPDate(obj.SCLE, obj.REF);
     obj.POP_COORDINATES = utils.extractCoordinates(obj.COOR, obj.ZONE, obj.REF);
     obj.POP_HAS_LOCATION = obj.POP_COORDINATES ? "oui" : "non"
     obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
@@ -142,7 +151,7 @@ function syncWithMongoDb(file, object, domaine) {
             .pipe(toObject)
             .pipe(transformer)
             .pipe(batch(1000))
-            .pipe(mongo)
+            //.pipe(mongo)
             .on('finish', () => {
                 console.log('Stream finish');
                 resolve();

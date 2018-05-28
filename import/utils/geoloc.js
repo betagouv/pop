@@ -34,11 +34,10 @@ module.exports = function getWGS84(xy, zone, REF) {
   }
   const coords = xy.split(';').map((e) => parseFloat(e.trim()));
 
-  if (coords.length !== 2) {
+  if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
     console.log(`${REF} is not properly formated (${xy})`);
     return null
   }
-
 
   switch (zone.toLowerCase()) {
     case 'lambert0': {
