@@ -25,8 +25,20 @@ class Notice extends React.Component {
         loading: true
     }
 
+
     componentWillMount() {
-        API.getNotice(this.props.match.params.id).then((notice) => {
+        this.load(this.props.match.params.id)
+    }
+
+    componentWillReceiveProps(newProps, props) {
+        if (props.match && props.match.params.id !== newProps.match.params.id) {
+            load(newProps.match.params.id);
+        }
+    }
+
+    load(id) {
+        this.setState({ loading: true })
+        API.getNotice(id).then((notice) => {
             console.log('NOTICE', notice)
             const initData = {
                 REF: notice.REF,
@@ -149,7 +161,6 @@ class Notice extends React.Component {
     onSubmit(values) {
         this.setState({ saving: true })
         API.update(this.state.notice._id, 'merimee', values).then((e) => {
-            console.log('TOAST')
             toastr.success('Modification enregistrée');
             this.setState({ saving: false })
         })
@@ -171,10 +182,6 @@ class Notice extends React.Component {
         return (
             <Container className='notice' fluid>
                 <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
-
-
-
-
                 <Form
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
@@ -222,10 +229,16 @@ class Notice extends React.Component {
                             name='REF'
                             disabled
                         />
-                        <FieldInput
+
+                        <div>
+                            <div>N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :</div>
+                            {this.state.notice.RENV ? <NoticeLink url={this.state.notice.RENV.replace('merimee/', '')} /> : <div />}
+                        </div>
+
+                        {/* <FieldInput
                             title='TODO-N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) : '
                             name='RENV'
-                        />
+                        /> */}
                         <FieldInput
                             title='Référence dans la base Patriarche (ARCHEO) : '
                             name='ARCHEO'
@@ -629,7 +642,7 @@ class Notice extends React.Component {
                             title='Mosaïques (MOSA) :'
                             name='MOSA'
                         />
-                        
+
                         <FieldInput
                             title='Localisation (LOCA) : '
                             name='LOCA'
@@ -680,7 +693,7 @@ class Notice extends React.Component {
                         />
 
 
-                        
+
                     </Section>
 
                     <div className='buttons'>
@@ -711,6 +724,14 @@ export default reduxForm({
     form: 'notice'
 })(Notice)
 
+
+const NoticeLink = ({ url }) => {
+    return (
+        <Link to={url} >
+            <img className='notice-link' src={require('../../assets/notice.png')} />
+        </Link >
+    )
+}
 
 const Images = ({ images }) => {
     if (images && images.length) {
