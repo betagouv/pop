@@ -12,24 +12,25 @@ const COLUMNSTODISPLAY = ['REF', 'TICO', 'DENO'];
 
 export default class ImportComponent extends Component {
   state = {
-    calculating: false,
     displaySummary: false,
     unChanged: [],
     created: [],
     updated: [],
-    preview: false
+    preview: false,
+    message: ''
   }
 
   onImportFinish(importedNotices) {
     let dataclean = true;
     const refs = importedNotices.map(e => e.REF);
+    this.setState({ message: 'Recuperation des notices existantes...' })
     api.getNoticesByRef(refs).then((currentNotices) => {
       var currentNoticesUpdated = currentNotices.map((e) => {
         delete e.__v;
         delete e._id;
         return e;
       })
-
+      this.setState({ message: 'Calcule des differences....' })
       this.diff(importedNotices, currentNoticesUpdated)
     });
   }
@@ -57,51 +58,7 @@ export default class ImportComponent extends Component {
         created.push(importedNotice);
       }
     }
-    console.log('unChanged', unChanged, 'created', created, 'updated', updated)
-    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated });
-  }
-
-  renderCreated() {
-    if (!this.state.created.length) {
-      return <div />
-    }
-    return (
-      <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Seront créées ({this.state.created.length})</h3>
-        <TableComponent
-          columns={COLUMNSTODISPLAY}
-          dataSource={this.state.created.map((e, i) => { return { ...e, ...{ key: i } } })}
-        />
-      </Row>)
-  }
-
-  renderUnChanged() {
-    if (!this.state.unChanged.length) {
-      return <div />
-    }
-    return (
-      <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Resteront inchangées ({this.state.unChanged.length})</h3>
-        <TableComponent
-          columns={COLUMNSTODISPLAY}
-          dataSource={this.state.unChanged.map((e, i) => { return { ...e, ...{ key: i } } })}
-        />
-      </Row>)
-  }
-
-
-  renderUpdated() {
-    if (!this.state.updated.length) {
-      return <div />
-    }
-    return (
-      <Row className='rowResult' type="flex" gutter={16} justify="center">
-        <h3 style={{ marginBottom: 16 }}>Seront mises à jour ({this.state.updated.length})</h3>
-        <TableComponent
-          columns={COLUMNSTODISPLAY}
-          dataSource={this.state.updated.map((e, i) => { return { ...e, ...{ key: i } } })}
-        />
-      </Row>)
+    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, message: '' });
   }
 
 
@@ -112,9 +69,9 @@ export default class ImportComponent extends Component {
 
     return (
       <div className='import'>
-        {this.renderUpdated()}
-        {this.renderCreated()}
-        {this.renderUnChanged()}
+        <TableComponent dataSource={this.state.updated} title='Seront mises à jour' />
+        <TableComponent dataSource={this.state.created} title='Seront créées ' />
+        <TableComponent dataSource={this.state.unChanged} title='Resteront inchangées' />
         <div className='buttons'>
           <Button
             color="primary"
@@ -128,19 +85,25 @@ export default class ImportComponent extends Component {
     )
   }
 
-  rendrModal() {
+  renderModal() {
     return (
       <Modal >
         <div>hey</div>
       </Modal>
     )
-
   }
 
   render() {
-    if (this.state.calculating) {
-      return <LoadingWidget />
+    if (this.state.message) {
+      return (
+        <div className='import-loader'>
+          <Loader />
+          <div>{this.state.message}</div>
+        </div>
+      );
     }
+
+
     return (
       <Container>
         <Row className='import' type="flex" gutter={16} justify="center">
@@ -150,7 +113,7 @@ export default class ImportComponent extends Component {
             visible={!this.state.displaySummary}
           />
         </Row>
-        {this.rendrModal()}
+        {this.renderModal()}
         {this.renderSummary()}
       </Container >
     );
@@ -158,18 +121,30 @@ export default class ImportComponent extends Component {
 }
 
 
-const TableComponent = ({ dataSource, columns }) => {
-  const columnsJSX = columns.map((e, i) => <th key={i}>{e}</th>)
+const TableComponent = ({ dataSource, title }) => {
+  if (!dataSource.length) {
+    return <div />
+  }
+  const columnsJSX = COLUMNSTODISPLAY.map((e, i) => <th key={i}>{e}</th>)
   const data = dataSource.map((c, i) => {
-    const r = columns.map((d, j) => { return <td key={j}>{c[d]}</td> })
-    r.push(<td key='visu' ><img onClick={() => {console.log('HEY') }} src={require('../../assets/view.png')} /></td>)
+    const r = COLUMNSTODISPLAY.map((d, j) => { return <td key={j}>{c[d]}</td> })
+    r.push(<td key='visu' ><img
+      onClick={() => {
+        console.log('HEY')
+      }}
+      src={require('../../assets/view.png')}
+    />
+    </td>)
     return (<tr key={i}>{r}</tr>)
   })
   return (
-    <Table bordered>
-      <thead><tr>{columnsJSX}</tr></thead>
-      <tbody>{data}</tbody>
-    </Table>
+    <Row className='rowResult' type="flex" gutter={16} justify="center">
+      <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
+      <Table bordered>
+        <thead><tr>{columnsJSX}</tr></thead>
+        <tbody>{data}</tbody>
+      </Table>
+    </Row>
   )
 }
 

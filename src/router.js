@@ -15,14 +15,14 @@ export default class PublicRoutes extends React.Component {
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
-        <div>
+        <div className='main'>
           <ReduxToastr
             timeOut={2000}
             newestOnTop={false}
             preventDuplicates
             position="top-right"
             transitionIn="fadeIn"
-            transitionOut="fadeOut" 
+            transitionOut="fadeOut"
           />
           <Header />
           <Switch>

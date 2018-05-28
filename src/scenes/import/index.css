@@ -33,3 +33,12 @@
   display: flex;
   justify-content: center;
 }
+
+
+.import-loader{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 200px;
+}
