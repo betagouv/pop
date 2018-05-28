@@ -69,7 +69,6 @@ export default class ImportDropComponent extends Component {
           obj[header[i]] = e;
         })
 
-        console.log('DSDDS', obj.ADRS)
         output.push(obj);
       }
     });
