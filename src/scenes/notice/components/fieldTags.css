@@ -51,7 +51,8 @@ div.ReactTags__tags {
     list-style-type: none; 
     box-shadow: .05em .01em .5em rgba(0,0,0,.2); 
     background: white; 
-    width: 200px; 
+    width: 400px; 
+    z-index: 1000;
   } 
   div.ReactTags__suggestions li { 
     border-bottom: 1px solid #ddd; 

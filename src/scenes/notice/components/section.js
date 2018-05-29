@@ -16,14 +16,7 @@ export default ({ title, icon, description, color, children }) => {
                 </Col>
             </Row>
             <Row>
-                <Col md="8">
-                    {children}
-                </Col>
-                <Col md="4">
-                    <div className='subtitle' style={{ borderColor: color }}>Comment remplir cette section</div>
-                    <div>{description}</div>
-                    <Button >En savoir plus</Button>
-                </Col>
+                {children}
             </Row>
         </div>
     )
