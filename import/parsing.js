@@ -27,6 +27,8 @@ function run(file, object, domaine) {
 
 
 function MerimeeClean(obj) {
+
+    // console.log('REF', obj.REF)
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
@@ -36,7 +38,9 @@ function MerimeeClean(obj) {
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
     obj.SCLD = utils.extractArray(obj.SCLD, ';');
+    // console.log('BEFORE', obj.AUTR)
     obj.AUTR = utils.extractArrayFromRegex(obj.AUTR, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g);
+    // console.log('AFTER', obj.AUTR)
     obj.AUTP = utils.extractArray(obj.AUTP, ';');
     obj.NOMS = utils.extractArray(obj.NOMS, ';');
 
@@ -69,7 +73,7 @@ function MerimeeClean(obj) {
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
-    //
+    //liens
     obj.REFE = obj.REFE ? obj.REFE : '';
     obj.REFO = obj.REFO ? obj.REFO : '';
     obj.REFP = obj.REFP ? obj.REFP : '';
@@ -151,7 +155,7 @@ function syncWithMongoDb(file, object, domaine) {
             .pipe(toObject)
             .pipe(transformer)
             .pipe(batch(1000))
-            //.pipe(mongo)
+            .pipe(mongo)
             .on('finish', () => {
                 console.log('Stream finish');
                 resolve();

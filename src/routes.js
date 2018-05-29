@@ -3,6 +3,8 @@ const router = express.Router()
 
 const Models = require('./models');
 
+const Thesaurus = require('./thesaurus')
+
 // define the about route
 
 router.post('/update', (req, res) => {
@@ -27,24 +29,12 @@ router.get('/notice', (req, res) => {
 })
 
 
-router.get('/search', (req, res) => {
-    var value = req.query.value;
-    var collection = req.query.collection;
-    var deno = req.query.deno;
-    var limit = parseInt(req.query.limit) || 30;
-    var offset = parseInt(req.query.offset) || 0;
-
-    let query = {};
-    if (value) {
-        query.$text = { $search: value };
-    }
-    if (deno) {
-        query.DENO = { "$in": [deno] };
-    }
-
-    Models.get(collection).paginate(Models.get(collection).find(query), { offset: offset, limit: limit }).then((result) => {
-        res.send(result)
-    });
+router.get('/thesaurus', (req, res) => {
+    var thesaurusId = req.query.thesaurusId;
+    var query = req.query.query;
+    Thesaurus.getTermsBeginWithSomeStringByThesaurus(query, thesaurusId).then((e) => {
+        res.send(e);
+    })
 });
 
 
