@@ -1,11 +1,6 @@
 const express = require('express');
 const router = express.Router()
-
 const Models = require('./models');
-
-const Thesaurus = require('./thesaurus')
-
-// define the about route
 
 router.post('/update', (req, res) => {
     var id = req.query.id;
@@ -27,17 +22,6 @@ router.get('/notice', (req, res) => {
         }
     });
 })
-
-
-router.get('/thesaurus', (req, res) => {
-    var thesaurusId = req.query.thesaurusId;
-    var query = req.query.query;
-    Thesaurus.getTermsBeginWithSomeStringByThesaurus(query, thesaurusId).then((e) => {
-        res.send(e);
-    })
-});
-
-
 
 module.exports = router
 
