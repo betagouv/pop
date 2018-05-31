@@ -1,5 +1,5 @@
 
-const extractCoordinates = require('./geoloc');
+const { extractPoint, extractPolygon } = require('./geoloc');
 
 function extractIMG(str) {
     if (!str) {
@@ -26,22 +26,9 @@ function extractArray(val, delim) {
     return val.split(delim).map((e) => e.trim());
 }
 
-
-function extractAutr(str) {
-    if (!str) { return []; }
-    var regex = new RegExp();
-    const urls = [];
-    var myArray;
-    while ((myArray = regex.exec(str)) != null) {
-        console.log('AA', myArray)
-        urls.push(myArray[1]);
-    }
-
-    return urls;
-}
-
-function extractArrayFromRegex(str, regex) {
+function extractAuteurs(str, regex, ref) {
     let m;
+    const interdits = ['dit', 'ou', 'et']
     if (!str) { return []; }
     const arr = [];
     while ((m = regex.exec(str)) !== null) {
@@ -49,8 +36,11 @@ function extractArrayFromRegex(str, regex) {
         if (m.index === regex.lastIndex) {
             regex.lastIndex++;
         }
-        if(m[1] && m[1].trim()){
-            arr.push(m[1]);
+        const val = m[1].trim();
+        if (val) {
+            if (interdits.indexOf(val) === -1) {
+                arr.push(val);
+            }
         }
     }
     return arr.map(e => e.trim());
@@ -58,7 +48,6 @@ function extractArrayFromRegex(str, regex) {
 
 function extractLink(str, REF) {
     if (!str) { return '' }
-
     var regex = /\(['"]([a-z]*)['"][\t\n ]*,[\t\n ]*['"]([A-Za-z0-9]*)['"]\)/
     var result = str.match(regex);
     if (result && result.length == 3) {
@@ -70,17 +59,32 @@ function extractLink(str, REF) {
 
 function extractPOPDate(str, REF) {
     if (!str.length) { return -1 }
-    var regex = /([0-9]*)e\ssiècle/
 
+    const v = ('' + str).trim().toLowerCase();
+
+    if (v === 'antiquité') {
+        return 0;
+    } else if (v === 'haut moyen âge') {
+        return 0;
+    } else if (v === 'préhistoire') {
+        return 0;
+    }
+
+
+    var regex = /([0-9]*)e\ssiècle/
     // const v = []
     for (var i = 0; i < str.length; i++) {
         var result = str[i].match(regex);
         if (result && result.length == 2) {
             return parseInt(result[1])
         } else {
-            console.log(`${REF} Error to extract DATE ${str[i]}`)
+            console.log('v', v)
+            console.log(`${REF} Error to extract DATE ${str[i]} (${v})`)
         }
     }
+
+
+
     return -1;
 }
 
@@ -92,6 +96,7 @@ function extractUrls(str) {
     const urls = [];
     var myArray;
     while ((myArray = regex.exec(str)) != null) {
+        console.log('yo', str)
         urls.push(myArray[1]);
     }
 
@@ -105,7 +110,8 @@ module.exports = {
     extractUrls,
     extractPOPDate,
     extractLink,
-    extractArrayFromRegex,
-    extractCoordinates
+    extractAuteurs,
+    extractPoint,
+    extractPolygon
 };
 

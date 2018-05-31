@@ -27,8 +27,6 @@ function run(file, object, domaine) {
 
 
 function MerimeeClean(obj) {
-
-    // console.log('REF', obj.REF)
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
@@ -38,9 +36,7 @@ function MerimeeClean(obj) {
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
     obj.SCLD = utils.extractArray(obj.SCLD, ';');
-    // console.log('BEFORE', obj.AUTR)
-    obj.AUTR = utils.extractArrayFromRegex(obj.AUTR, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g);
-    // console.log('AFTER', obj.AUTR)
+    obj.AUTR = utils.extractAuteurs(obj.AUTR, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g, obj.REF);
     obj.AUTP = utils.extractArray(obj.AUTP, ';');
     obj.NOMS = utils.extractArray(obj.NOMS, ';');
 
@@ -74,20 +70,28 @@ function MerimeeClean(obj) {
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
     //liens
-    obj.REFE = obj.REFE ? obj.REFE : '';
-    obj.REFO = obj.REFO ? obj.REFO : '';
-    obj.REFP = obj.REFP ? obj.REFP : '';
-    obj.RENV = obj.RENV ? obj.RENV : '';
-    obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
+    obj.REFE = obj.REFE ? [obj.REFE] : [];
+    obj.REFO = obj.REFO ? [obj.REFO] : [];
+    obj.REFP = obj.REFP ? [obj.REFP] : [];
+    obj.RENV = obj.RENV ? [obj.RENV] : [];
 
+    // obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
 
     //POP DATA
     obj.POP_DATE = utils.extractPOPDate(obj.SCLE, obj.REF);
-    obj.POP_COORDINATES = utils.extractCoordinates(obj.COOR, obj.ZONE, obj.REF);
-    obj.POP_HAS_LOCATION = obj.POP_COORDINATES ? "oui" : "non"
+    
+    {
+        const points = utils.extractPoint(obj.COOR, obj.ZONE, obj.REF);
+        if (points) { obj.POP_COORDINATES_POINT = { 'type': 'Point', coordinates: points }; }
+    }
+    {
+        const points = utils.extractPolygon(obj.COORM, obj.ZONE, obj.REF);
+        if (points) { obj.POP_COORDINATES_POLYGON = { 'type': 'Polygon', coordinates: points }; }
+    }
+    obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
     obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
 
-    obj.LIENS = utils.extractUrls(obj.LIENS);
+    // obj.LIENS = utils.extractUrls(obj.LIENS);
 
     switch (obj.REF.substring(0, 2)) {
         case "IA": obj.POP_DOMAINE = 'Inventaire'; break;
@@ -107,7 +111,7 @@ function syncWithMongoDb(file, object, domaine) {
         var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
         var input = fs.createReadStream(file, 'latin1');
 
-        var toObject = transform((record, next) => {
+        var toObject = transform((record, done) => {
             let obj = null;
             if (!header) {
                 header = record;
@@ -117,23 +121,21 @@ function syncWithMongoDb(file, object, domaine) {
                     obj[header[i]] = record[i];
                 }
             }
-            next(null, obj);
+            done(null, obj);
         }, { parallel: 1 });
 
 
-        var transformer = transform((obj, callback) => {
+        var toClean = transform((obj, done) => {
             const newObj = MerimeeClean(obj)
-            callback(null, newObj);
+            done(null, newObj);
         }, { parallel: 1 });
 
-        var mongo = transform((arr, callback) => {
+        var mongo = transform((arr, done) => {
             const objects = arr.map((e) => {
                 const m = new object(e);
                 // m._id = e.REF;
                 return m;
             })
-
-            console.log('PAUSE')
 
             input.pause();
             object.insertMany(objects, (err, docs) => {
@@ -144,7 +146,7 @@ function syncWithMongoDb(file, object, domaine) {
                 console.log(`Saved ${count}`)
                 console.log('RESUME')
                 input.resume();
-                callback();
+                done();
             });
 
         }, { parallel: 1 });
@@ -153,7 +155,7 @@ function syncWithMongoDb(file, object, domaine) {
         const stream = input
             .pipe(parser)
             .pipe(toObject)
-            .pipe(transformer)
+            .pipe(toClean)
             .pipe(batch(1000))
             .pipe(mongo)
             .on('finish', () => {

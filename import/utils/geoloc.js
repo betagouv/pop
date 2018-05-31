@@ -1,9 +1,8 @@
 
 const proj4 = require('proj4')
 
-
-//https://epsg.io/3107
-proj4.defs("lambert0", "+proj=lcc +lat_1=-28 +lat_2=-36 +lat_0=-32 +lon_0=135 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+//https://epsg.io/27572
+proj4.defs("lambert0", "+proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs");
 //https://epsg.io/27571
 proj4.defs("lambert1", "+proj=lcc +lat_1=49.50000000000001 +lat_0=49.50000000000001 +lon_0=0 +k_0=0.999877341 +x_0=600000 +y_0=1200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs");
 //https://epsg.io/27572#
@@ -20,14 +19,10 @@ proj4.defs("gauss laborde", "+proj=tmerc +lat_0=-21.11666666666667 +lon_0=55.533
 proj4.defs("mtu", "+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs");
 
 
-module.exports = function getWGS84(xy, zone, REF) {
-
-  //  console.log('GOT1', xy, zone)
-
+function extractPoint(xy, zone, REF) {
   if (!xy) {
     return null
   }
-
   if (!zone) {
     console.log(`${REF} has no zone (${xy})`);
     return null
@@ -35,7 +30,7 @@ module.exports = function getWGS84(xy, zone, REF) {
   const coords = xy.split(';').map((e) => parseFloat(e.trim()));
 
   if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
-    console.log(`${REF} is not properly formated (${xy})`);
+    console.log(`${REF} GEOLOC is not properly formated (${xy})`);
     return null
   }
 
@@ -89,4 +84,49 @@ module.exports = function getWGS84(xy, zone, REF) {
   }
 }
 
+
+function extractPolygon(xy, zone, REF) {
+  if (!xy) {
+    return null
+  }
+
+  if (!zone) {
+    console.log(`${REF} has no zone (${xy})`);
+    return null
+  }
+
+  if (xy.indexOf('/') !== -1) {
+    const coords = xy.split('/');
+    const points = coords.map((e) => {
+      return extractPoint(e, zone, REF);
+    })
+    return points;
+  } else {
+    const coords = xy.split(';');
+    if (coords.length === 4) {
+      const points = [];
+      points.push(extractPoint(`${coords[0]};${coords[2]}`, zone, REF));
+      points.push(extractPoint(`${coords[0]};${coords[3]}`, zone, REF));
+      points.push(extractPoint(`${coords[1]};${coords[3]}`, zone, REF));
+      points.push(extractPoint(`${coords[1]};${coords[2]}`, zone, REF));
+      return points;
+    } else {
+      console.log(`${REF} cant understand the polygon ${coords}`);
+      return null;
+    }
+  }
+  console.log(`${REF} Cant manage the polygon ${zone} with (${xy})`);
+  return null;
+
+}
+
+
+// (1714481 ; 9275307 / 1714418 ; 9275407 / 1714577 ; 9275593 / 1714650 ; 9275488 / 1714481 ; 9275307)
+// Lambert1 with (0771000 ; 0779150 ; 1240490 ; 1237440)
+
+
+module.exports = {
+  extractPoint,
+  extractPolygon
+};
 

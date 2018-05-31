@@ -32,23 +32,6 @@ function runMongo() {
 }
 
 
-function runElastic() {
-  return new Promise((resolve, reject) => {
-    var stream = Models.merimee.synchronize()
-    stream.on('data', function (err, doc) {
-      count++;
-    });
-    stream.on('close', function () {
-      console.log('indexed ' + count + ' documents!');
-      resolve();
-    });
-    stream.on('error', function (err) {
-      console.log(err);
-    });
-  })
-}
-
-
 setTimeout(async () => {
   const start = Date.now()
   await (runMongo());
