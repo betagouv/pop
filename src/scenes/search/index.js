@@ -23,7 +23,7 @@ import { es_url } from '../../config.js';
 import exportData from './export';
 import './index.css';
 
-const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date"]
+const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"]
 
 export default class Search extends React.Component {
 
@@ -91,6 +91,17 @@ export default class Search extends React.Component {
                                 }}
                             />
                             <SingleList
+                                componentId="zone"
+                                dataField="ZONE.keyword"
+                                title="Contient une localisation"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <SingleList
                                 componentId="location"
                                 dataField="POP_HAS_LOCATION.keyword"
                                 title="Contient une localisation"
@@ -112,11 +123,11 @@ export default class Search extends React.Component {
                                     and: FILTER
                                 }}
                             />
-                            {/* <DynamicRangeSlider
+                            <DynamicRangeSlider
                                 componentId="date"
                                 dataField="POP_DATE"
                                 title="Dates"
-                                showHistogram={false}
+                                showHistogram={true}
                                 stepValue={1}
                                 interval={1}
                                 rangeLabels={(min, max) => (
@@ -128,7 +139,7 @@ export default class Search extends React.Component {
                                 react={{
                                     and: FILTER
                                 }}
-                            /> */}
+                            />
                             <MultiList
                                 componentId="denomination"
                                 dataField="DENO.keyword"

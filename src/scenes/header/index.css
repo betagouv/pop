@@ -7,6 +7,8 @@
   max-width: 100%!important;
   border-bottom: 1px solid #f0efef;
   padding: 8px;
+  height: 150px;
+  background-image: url('../../assets/background.jpg');
 }
 
 

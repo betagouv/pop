@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
-import L from 'leaflet';
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
-
+import FieldLink from './components/fieldLink.js'
 import Section from './components/section.js'
+import Map from './components/map.js'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
@@ -30,9 +29,9 @@ class Notice extends React.Component {
         this.load(this.props.match.params.id)
     }
 
-    componentWillReceiveProps(newProps, props) {
-        if (props.match && props.match.params.id !== newProps.match.params.id) {
-            load(newProps.match.params.id);
+    componentWillReceiveProps(newProps) {
+        if (this.props.match && this.props.match.params.id !== newProps.match.params.id) {
+            this.load(newProps.match.params.id);
         }
     }
 
@@ -195,27 +194,9 @@ class Notice extends React.Component {
                             </div>
                         </Col>
                         <Col className='image' sm={6}>
-                            {this.state.notice.POP_COORDINATES ? <div className='leaflet-container'>
-                                <Map center={this.state.notice.POP_COORDINATES} zoom={15}>
-                                    <TileLayer
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                        attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                                    />
-                                    <Marker position={this.state.notice.POP_COORDINATES} icon={L.icon({
-                                        iconUrl: require('../../assets/marker-icon.png'),
-                                        iconSize: [38, 55],
-                                        iconAnchor: [22, 54],
-                                        popupAnchor: [-3, -76],
-                                        shadowUrl: require('../../assets/marker-shadow.png'),
-                                        shadowSize: [68, 55],
-                                        shadowAnchor: [22, 54]
-                                    })}>
-                                        <Popup>
-                                            <span>{this.state.notice.TICO}<br />{this.state.notice.DENO}</span>
-                                        </Popup>
-                                    </Marker>
-                                </Map>
-                            </div> : <div />}
+                            <Map
+                                notice={this.state.notice}
+                            />
                         </Col>
                     </Row>
                     <Section
@@ -230,12 +211,14 @@ class Notice extends React.Component {
                                 name='REF'
                                 disabled
                             />
-
-                            <div>
+                            <FieldLink
+                                title='N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :'
+                                name='RENV'
+                            />
+                            {/* <div>
                                 <div>N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :</div>
                                 {this.state.notice.RENV ? <NoticeLink url={this.state.notice.RENV.replace('merimee/', '')} /> : <div />}
-                            </div>
-
+                            </div> */}
                             {/* <FieldInput
                             title='TODO-N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) : '
                             name='RENV'
@@ -741,17 +724,12 @@ class Notice extends React.Component {
 
 
 export default reduxForm({
-    form: 'notice'
+    form: 'notice',
+    enableReinitialize: true
 })(Notice)
 
 
-const NoticeLink = ({ url }) => {
-    return (
-        <Link to={url} >
-            <img className='notice-link' src={require('../../assets/notice.png')} />
-        </Link >
-    )
-}
+
 
 const Images = ({ images }) => {
     if (images && images.length) {
