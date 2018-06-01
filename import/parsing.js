@@ -36,7 +36,7 @@ function MerimeeClean(obj) {
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');
     obj.SCLD = utils.extractArray(obj.SCLD, ';');
-    obj.AUTR = utils.extractAuteurs(obj.AUTR, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g, obj.REF);
+    obj.AUTR = utils.extractAuteurs(obj.AUTR, obj.REF);
     obj.AUTP = utils.extractArray(obj.AUTP, ';');
     obj.NOMS = utils.extractArray(obj.NOMS, ';');
 
@@ -70,10 +70,10 @@ function MerimeeClean(obj) {
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
     //liens
-    obj.REFE = obj.REFE ? [obj.REFE] : [];
-    obj.REFO = obj.REFO ? [obj.REFO] : [];
-    obj.REFP = obj.REFP ? [obj.REFP] : [];
-    obj.RENV = obj.RENV ? [obj.RENV] : [];
+    obj.REFE = utils.extractArray(obj.REFE, ';');
+    obj.REFO = utils.extractArray(obj.REFO, ';');
+    obj.REFP = utils.extractArray(obj.REFP, ';');
+    obj.RENV = utils.extractArray(obj.RENV, ';');
 
     // obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
 

@@ -26,7 +26,8 @@ function extractArray(val, delim) {
     return val.split(delim).map((e) => e.trim());
 }
 
-function extractAuteurs(str, regex, ref) {
+function extractAuteurs(str,  ref) {
+    const regex = /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g;
     let m;
     const interdits = ['dit', 'ou', 'et']
     if (!str) { return []; }

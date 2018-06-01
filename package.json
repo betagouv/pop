@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "import:dev": "node ./import/import.js --env.NODE_ENV=developpement",
-    "import:prod": "node ./import/import.js --env.NODE_ENV=production",
-    "try": "node ./src/test.js",
-    "start": "node ./src/index.js --env.NODE_ENV=production",
-    "dev": "node ./src/index.js --env.NODE_ENV=developpement",
+    "import:dev": "cross-env NODE_ENV=development node ./import/import.js",
+    "import:prod": "cross-env NODE_ENV=production node ./import/import.js",
+    "dev": "cross-env NODE_ENV=development node ./src/index.js",
+    "start": "cross-env NODE_ENV=production  node ./src/index.js",
     "deploy": "eb deploy"
   },
   "repository": {
@@ -39,5 +38,8 @@
     "stream-transform": "^1.0.2",
     "through-batch": "^1.0.0",
     "x2js": "^3.2.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.6"
   }
 }
