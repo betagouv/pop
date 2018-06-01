@@ -1,54 +1,69 @@
 import React from 'react';
 import { Field } from 'redux-form'
-import { Input, Modal, Button } from 'reactstrap';
+import { Input, Modal, Button, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import './fieldLink.css';
 
-export default class NoticeField extends React.Component {
+class NoticeField extends React.Component {
 
     state = {
-        modal: false
+        modal: false,
+        input: 'hey'
     }
-    addNotice() {
-        this.setState({ modal: true })
+
+    addLink() {
+        const arr = [this.state.input].concat(this.props.input.value)
+        this.props.input.onChange(arr)
+        this.setState({ modal: false })
     }
-    render() {
-        console.log('this.props.name', this.props.name)
+
+    renderModal() {
         return (
-            <div className='fieldLink' style={styles.container}>
-                <NoticeModal isOpen={this.state.modal} toggle={() => { this.setState({ modal: !this.state.modal }) }} />
-                {this.props.title && <div style={styles.title} >{this.props.title}</div>}
-                <Field addNotice={this.addNotice.bind(this)} component={Notices} name={this.props.name} />
-            </div >
+            <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })} className='notice-field-modal'>
+                <div>Ajouter une notice par sa reference</div>
+                <Input value={this.state.input} onChange={(e) => this.setState({ input: e.target.value })} />
+                <Button color='primary' onClick={this.addLink.bind(this)}>Ajouter</Button>
+            </Modal>
+        )
+    }
+
+    renderNotices() {
+        if (Array.isArray(this.props.input.value)) {
+            const notices = this.props.input.value.map((url, i) => {
+                return (
+                    <Col m={3} key={i} >
+                        <Link to={url} >
+                            <img className='notice' src={require('../../../assets/notice.png')} />
+                        </Link >
+                    </Col>
+                );
+            })
+            notices.push(<Col m={3} key='new' ><div className='notice-new' key='notice' onClick={() => { this.setState({ modal: true }) }}>Ajouter une notice</div> </Col>)
+            return notices;
+        } else {
+            return <div>This field should be an array</div>
+        }
+    }
+
+    render() {
+        return (
+            <Row className='field-link'>
+                {this.renderModal()}
+                {this.renderNotices()}
+            </Row >
         );
     }
 }
-const Notices = ({ input, addNotice }) => {
-    if (Array.isArray(input.value)) {
-        const notices = input.value.map((url, i) => {
-            return (
-                <Link key={i} to={url} >
-                    <img className='notice-link' src={require('../../../assets/notice.png')} />
-                </Link >
-            );
-        })
-        notices.push(<div key='notice' onClick={addNotice}>Ajouter une notice</div>)
-        return notices;
-    } else {
-        return <div>This field should be an array</div>
-    }
-}
 
-const NoticeModal = ({ isOpen, toggle }) => {
+export default ({ title, ...rest }) => {
     return (
-        <Modal isOpen={isOpen} toggle={toggle} className='notice-field-modal'>
-            <div>Ajouter une notice par sa reference</div>
-            <Input />
-            <Button color='primary'>Ajouter</Button>
-        </Modal>
+        <div style={styles.container}>
+            {title && <div style={styles.title} >{title}</div>}
+            <Field component={NoticeField} {...rest} />
+        </div>
     )
-}
+};
 
 
 const styles = {

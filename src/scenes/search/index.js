@@ -91,17 +91,6 @@ export default class Search extends React.Component {
                                 }}
                             />
                             <SingleList
-                                componentId="zone"
-                                dataField="ZONE.keyword"
-                                title="Contient une localisation"
-                                className="filters"
-                                showSearch={false}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                            <SingleList
                                 componentId="location"
                                 dataField="POP_HAS_LOCATION.keyword"
                                 title="Contient une localisation"
@@ -119,23 +108,6 @@ export default class Search extends React.Component {
                                 className="filters"
                                 showSearch={false}
                                 URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                            <DynamicRangeSlider
-                                componentId="date"
-                                dataField="POP_DATE"
-                                title="Dates"
-                                showHistogram={true}
-                                stepValue={1}
-                                interval={1}
-                                rangeLabels={(min, max) => (
-                                    {
-                                        "start": min + " siècle",
-                                        "end": max + " siècles"
-                                    }
-                                )}
                                 react={{
                                     and: FILTER
                                 }}

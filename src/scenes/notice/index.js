@@ -336,7 +336,7 @@ class Notice extends React.Component {
                                 title='Parties constituantes (PART) : '
                                 name='PART'
                             />
-                            <FieldInput
+                            <FieldLink
                                 title='TODO-Références des parties constituantes étudiées (REFP) : '
                                 name='REFP'
                             />
@@ -397,7 +397,7 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
 
-                            <FieldInput
+                            <FieldLink
                                 title="TODO-Référence de l'édifice de conservation (REFE) : "
                                 name='REFE'
                             />
@@ -679,6 +679,10 @@ class Notice extends React.Component {
                                 title='Thème (THEM) : '
                                 name='THEM'
                             />
+                            <FieldLink
+                                title='REFO (REFO) : '
+                                name='REFO'
+                            />
                             <FieldInput
                                 title='Visite guidé (WEB) : '
                                 name='WEB'
@@ -701,9 +705,9 @@ class Notice extends React.Component {
                     </Section>
                     <div className='buttons'>
                         <Button color="danger">
-                            {/* <Link to="/"> */}
-                            Annuler
-                        {/* </Link> */}
+                            <Link to="/">
+                                Annuler
+                         </Link>
                         </Button>
                         <Button
                             disabled={false}
@@ -721,6 +725,7 @@ class Notice extends React.Component {
         );
     }
 }
+
 
 
 export default reduxForm({
