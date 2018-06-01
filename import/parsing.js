@@ -27,15 +27,16 @@ function run(file, object, domaine) {
 
 
 function MerimeeClean(obj) {
+
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
     obj.TYPO = utils.extractArray(obj.TYPO, ';');
     obj.TECH = utils.extractArray(obj.TECH, /[,;]/);
     obj.STAT = utils.extractArray(obj.STAT, ';');
-    obj.SCLE = utils.extractArray(obj.SCLE, ';');
-    obj.SCLX = utils.extractArray(obj.SCLX, ';');
-    obj.SCLD = utils.extractArray(obj.SCLD, ';');
+    obj.SCLE = utils.extractArray(obj.SCLE, /[,;]/);
+    obj.SCLX = utils.extractArray(obj.SCLX, /[,;]/);
+    obj.SCLD = utils.extractArray(obj.SCLD, /[,;]/);
     obj.AUTR = utils.extractAuteurs(obj.AUTR, obj.REF);
     obj.AUTP = utils.extractArray(obj.AUTP, ';');
     obj.NOMS = utils.extractArray(obj.NOMS, ';');
@@ -70,16 +71,16 @@ function MerimeeClean(obj) {
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
     //liens
-    obj.REFE = utils.extractArray(obj.REFE, ';');
-    obj.REFO = utils.extractArray(obj.REFO, ';');
-    obj.REFP = utils.extractArray(obj.REFP, ';');
-    obj.RENV = utils.extractArray(obj.RENV, ';');
+    obj.REFE = utils.extractLink(obj.REFE, obj.REF);
+    obj.REFO = utils.extractLink(obj.REFO, obj.REF);
+    obj.REFP = utils.extractLink(obj.REFP, obj.REF);
+    obj.RENV = utils.extractLink(obj.RENV, obj.REF);
 
-    // obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
+    obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
 
     //POP DATA
     obj.POP_DATE = utils.extractPOPDate(obj.SCLE, obj.REF);
-    
+
     {
         const points = utils.extractPoint(obj.COOR, obj.ZONE, obj.REF);
         if (points) { obj.POP_COORDINATES_POINT = { 'type': 'Point', coordinates: points }; }
@@ -91,7 +92,7 @@ function MerimeeClean(obj) {
     obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
     obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
 
-    // obj.LIENS = utils.extractUrls(obj.LIENS);
+    obj.LIENS = utils.extractUrls(obj.LIENS, obj.REF);
 
     switch (obj.REF.substring(0, 2)) {
         case "IA": obj.POP_DOMAINE = 'Inventaire'; break;

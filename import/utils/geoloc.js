@@ -1,5 +1,5 @@
-
 const proj4 = require('proj4')
+const { log } = require('./log');
 
 //https://epsg.io/27572
 proj4.defs("lambert0", "+proj=lcc +lat_1=46.8 +lat_0=46.8 +lon_0=0 +k_0=0.99987742 +x_0=600000 +y_0=200000 +a=6378249.2 +b=6356515 +towgs84=-168,-60,320,0,0,0,0 +pm=paris +units=m +no_defs");
@@ -24,13 +24,13 @@ function extractPoint(xy, zone, REF) {
     return null
   }
   if (!zone) {
-    console.log(`${REF} has no zone (${xy})`);
+    log('GEOLOC', REF, 'has no zone', xy)
     return null
   }
   const coords = xy.split(';').map((e) => parseFloat(e.trim()));
 
   if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
-    console.log(`${REF} GEOLOC is not properly formated (${xy})`);
+    log('GEOLOC', REF, 'GEOLOC is not properly formated', xy)
     return null
   }
 
@@ -38,48 +38,33 @@ function extractPoint(xy, zone, REF) {
     case 'lambert0': {
       const c = proj4('lambert0', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'lambert1': {
       const c = proj4('lambert1', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'lambert2': {
       const c = proj4('lambert2', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'lambert3': {
       const c = proj4('lambert3', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'lambert4': {
       const c = proj4('lambert4', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
-    }
-    case 'mtu':
-    case 'utm': {
-      console.log(`${REF} Cant read zone utm of (${xy})`);
-      return null
-      // const c = proj4('mtu', 'WGS84', [coords[0], coords[1]]);
-      // return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'gauss laborde': {
       const c = proj4('gauss laborde', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     case 'lambert93': {
       const c = proj4('lambert93', 'WGS84', [coords[0], coords[1]]);
       return [c[1], c[0]];
-      // return { lat: c[0], lon: c[1] }
     }
     default:
-      console.log(`${REF} Cant find zone ${zone} of (${xy}) `);
+      log('GEOLOC', REF, `Cant find zone ${zone} `, xy)
       return null
   }
 }
@@ -91,7 +76,7 @@ function extractPolygon(xy, zone, REF) {
   }
 
   if (!zone) {
-    console.log(`${REF} has no zone (${xy})`);
+    log('GEOLOC', REF, ` has no zone `, xy)
     return null
   }
 
@@ -111,11 +96,11 @@ function extractPolygon(xy, zone, REF) {
       points.push(extractPoint(`${coords[1]};${coords[2]}`, zone, REF));
       return points;
     } else {
-      console.log(`${REF} cant understand the polygon ${coords}`);
+      log('GEOLOC', REF, ` cant understand the polygon `, coords)
       return null;
     }
   }
-  console.log(`${REF} Cant manage the polygon ${zone} with (${xy})`);
+  log('GEOLOC', REF, ` Cant manage the polygon in zone ${zone} `, xy)
   return null;
 
 }

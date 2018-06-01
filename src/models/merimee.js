@@ -24,7 +24,7 @@ const Schema = new mongoose.Schema({
     },
     POP_HAS_IMAGE: String,
     POP_HAS_LOCATION: String,
-    POP_DATE: Number,
+    POP_DATE: [Number],
     REF: String,
     TOUT: String,
     ACTU: String,
