@@ -39,7 +39,7 @@ function extractAuteurs(str, REF) {
 
 function extractLink(str, REF) {
     if (!str) { return [] }
-    const arr = _regex(str, /([A-Z][A-Z][A-Z0-9]+)/g);
+    const arr = _regex(str, /([A-Z][A-Z][A-Z0-9]{6,})/g);
     if (!arr.length) {
         log('LINK', REF, 'Can\'t extract LINK', str)
     }

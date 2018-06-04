@@ -5,7 +5,7 @@ const Models = require('./models');
 router.post('/update', (req, res) => {
     var id = req.query.id;
     var collection = req.query.collection;
-    Models.get(collection).findOneAndUpdate({ _id: id }, req.body, { upsert: true }).then((e) => {
+    Models.merimee.findOneAndUpdate({ _id: id }, req.body, { upsert: true }).then((e) => {
         console.log(`${id} updated`)
         res.sendStatus(200)
     });
