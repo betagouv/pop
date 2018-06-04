@@ -47,7 +47,7 @@ export default class ImportComponent extends Component {
       }
       await api.update(id, collection, data);
     }
-    this.setState({ loading: false, done: true, message: `Import effectuée avec succès` });
+    this.setState({ loading: false, done: true, message: `Import effectué avec succès` });
   }
 
   renderSummary() {
