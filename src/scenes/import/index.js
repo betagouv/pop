@@ -126,28 +126,28 @@ class UpdatedTableComponent extends React.Component {
 
     const data = [];
 
-    dataSource.forEach((e, i) => {
-
-      //Affichage notices modifiées
+    for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) {
+      //Affichage notices modifiées.
       const r = [];
-      r.push(<Col className='col' md='2' key='1'>{e.existingNotice.REF}</Col>)
-      r.push(<Col className='col' md='7' key='2'>{e.existingNotice.TICO}</Col>)
-      r.push(<Col className='col' md='2' key='3'>{e.existingNotice.DENO}</Col>)
+      r.push(<Col className='col' md='2' key='1'>{dataSource[i].existingNotice.REF}</Col>)
+      r.push(<Col className='col' md='7' key='2'>{dataSource[i].existingNotice.TICO}</Col>)
+      r.push(<Col className='col' md='2' key='3'>{dataSource[i].existingNotice.DENO}</Col>)
 
-      r.push(<Col md='1' className='visu col' key='visu' ><Badge color="danger" id={e.existingNotice.REF} >{e.differences.length}</Badge></Col>)
+      r.push(<Col md='1' className='visu col' key='visu' ><Badge color="danger" id={dataSource[i].existingNotice.REF} >{dataSource[i].differences.length}</Badge></Col>)
 
-      data.push(<Row key={i} onClick={() => { this.setState({ expandedRef: e.existingNotice.REF }) }} >{r}</Row>)
+      data.push(<Row key={i} onClick={() => { this.setState({ expandedRef: dataSource[i].existingNotice.REF }) }} >{r}</Row>)
 
       //Affichage des modifications des champs des notices modifiées
-      const modifs = e.differences.map(key => <div key={key} >Le champs <b>{key}</b> à évolué de "<b>{e.existingNotice[key]}</b>" à "<b>{e.importedNotice[key]}</b>"</div>)
+      const modifs = dataSource[i].differences.map(key => <div key={key} >Le champs <b>{key}</b> à évolué de "<b>{dataSource[i].existingNotice[key]}</b>" à "<b>{dataSource[i].importedNotice[key]}</b>"</div>)
       data.push(
-        <Collapse key={e.existingNotice.REF} isOpen={this.state.expandedRef === e.existingNotice.REF}>
+        <Collapse key={dataSource[i].existingNotice.REF} isOpen={this.state.expandedRef === dataSource[i].existingNotice.REF}>
           <div className='col content' >
             {modifs}
           </div>
         </Collapse>
       )
-    });
+    }
+    // });
 
     return (
       <div className='section'>
@@ -161,7 +161,7 @@ class UpdatedTableComponent extends React.Component {
           itemsCountPerPage={10}
           totalItemsCount={dataSource.length}
           pageRangeDisplayed={5}
-          onChange={(p) => { console.log('page', p) }}
+          onChange={(p) => { this.setState({ activePage: p }) }}
         />
       </div >
     )
