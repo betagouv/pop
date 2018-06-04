@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Button, Container, Modal } from 'reactstrap';
+import { Row, Col, Table, Button, Container, Collapse, Badge } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
 import api from '../../services/api'
 
-import Compare from './compare.js'
+import { diff } from './utils.js'
 
 import './index.css';
 
@@ -16,51 +18,37 @@ export default class ImportComponent extends Component {
     unChanged: [],
     created: [],
     updated: [],
-    preview: false,
-    message: ''
+    message: '',
+    done: false,
+    loading: false
   }
 
-  onImportFinish(importedNotices) {
-    let dataclean = true;
-    const refs = importedNotices.map(e => e.REF);
-    this.setState({ message: 'Recuperation des notices existantes...' })
-    api.getNoticesByRef(refs).then((currentNotices) => {
-      var currentNoticesUpdated = currentNotices.map((e) => {
-        delete e.__v;
-        delete e._id;
-        return e;
-      })
-      this.setState({ message: 'Calcule des differences....' })
-      this.diff(importedNotices, currentNoticesUpdated)
-    });
-  }
-
-  diff(importedNotices, existingNotices) {
-    const unChanged = [];
-    const updated = [];
-    const created = [];
-
+  async onImportFinish(importedNotices) {
+    const existingNotices = []
     for (var i = 0; i < importedNotices.length; i++) {
-      let importedNotice = importedNotices[i];
-      let found = false;
-      for (var j = 0; j < existingNotices.length; j++) {
-        const existingNotice = existingNotices[j];
-        if (importedNotice.REF === existingNotice.REF) {
-          if (!Compare(importedNotice, existingNotice)) {
-            updated.push(existingNotice)
-          } else {
-            unChanged.push(existingNotice)
-          }
-          found = true;
-        }
-      }
-      if (!found) {
-        created.push(importedNotice);
-      }
+      this.setState({ loading: true, message: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
+      const notice = await (api.getNotice(importedNotices[i].REF));
+      existingNotices.push(notice);
     }
-    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, message: '' });
+    this.setState({ message: 'Calcule des differences....' })
+    const { unChanged, created, updated } = diff(importedNotices, existingNotices);
+    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, message: '' });
   }
 
+  async onSave() {
+    for (var i = 0; i < this.state.updated.length; i++) {
+      this.setState({ loading: true, message: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
+      const id = this.state.updated[i].existingNotice._id;
+      const collection = 'merimee';
+      const data = {};
+      for (var j = 0; j < this.state.updated[i].differences.length; j++) {
+        const key = this.state.updated[i].differences[j];
+        data[key] = this.state.updated[i].importedNotice[key];
+      }
+      await api.update(id, collection, data);
+    }
+    this.setState({ loading: false, done: true, message: `Import effectuée avec succès` });
+  }
 
   renderSummary() {
     if (!this.state.displaySummary) {
@@ -69,9 +57,9 @@ export default class ImportComponent extends Component {
 
     return (
       <div className='import'>
-        <TableComponent dataSource={this.state.updated} title='Seront mises à jour' />
-        <TableComponent dataSource={this.state.created} title='Seront créées ' />
-        <TableComponent dataSource={this.state.unChanged} title='Resteront inchangées' />
+        <UpdatedTableComponent dataSource={this.state.updated} title='Ces notices seront mises à jour' />
+        <TableComponent dataSource={this.state.created} title='Ces notices seront créées ' />
+        <TableComponent dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
         <div className='buttons'>
           <Button
             color="primary"
@@ -85,24 +73,24 @@ export default class ImportComponent extends Component {
     )
   }
 
-  renderModal() {
-    return (
-      <Modal >
-        <div>hey</div>
-      </Modal>
-    )
-  }
-
   render() {
-    if (this.state.message) {
+    if (this.state.loading) {
       return (
-        <div className='import-loader'>
+        <div className='import-messages'>
           <Loader />
           <div>{this.state.message}</div>
         </div>
       );
     }
 
+    if (this.state.done) {
+      return (
+        <div className='import-messages'>
+          <div>{this.state.message}</div>
+          <Link to='/'>Revenir a la page d'accueil</Link>
+        </div>
+      );
+    }
 
     return (
       <Container>
@@ -113,7 +101,6 @@ export default class ImportComponent extends Component {
             visible={!this.state.displaySummary}
           />
         </Row>
-        {this.renderModal()}
         {this.renderSummary()}
       </Container >
     );
@@ -121,31 +108,112 @@ export default class ImportComponent extends Component {
 }
 
 
-const TableComponent = ({ dataSource, title }) => {
-  if (!dataSource.length) {
-    return <div />
+class UpdatedTableComponent extends React.Component {
+
+  state = {
+    expandedRef: null,
+    activePage: 1,
   }
-  const columnsJSX = COLUMNSTODISPLAY.map((e, i) => <th key={i}>{e}</th>)
-  const data = dataSource.map((c, i) => {
-    const r = COLUMNSTODISPLAY.map((d, j) => { return <td key={j}>{c[d]}</td> })
-    r.push(<td key='visu' ><img
-      onClick={() => {
-        console.log('HEY')
-      }}
-      src={require('../../assets/view.png')}
-    />
-    </td>)
-    return (<tr key={i}>{r}</tr>)
-  })
-  return (
-    <Row className='rowResult' type="flex" gutter={16} justify="center">
-      <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
-      <Table bordered>
-        <thead><tr>{columnsJSX}</tr></thead>
-        <tbody>{data}</tbody>
-      </Table>
-    </Row>
-  )
+
+  render() {
+    const { dataSource, title } = this.props;
+    if (!dataSource.length) { return <div /> }
+
+    const columnsJSX = [];
+    columnsJSX.push(<Col className='col' md='2' key='1'>REF</Col>)
+    columnsJSX.push(<Col className='col' md='6' key='2'>TICO</Col>)
+    columnsJSX.push(<Col className='col' md='2' key='3'>DENO</Col>)
+
+    const data = [];
+
+    dataSource.forEach((e, i) => {
+
+      //Affichage notices modifiées
+      const r = [];
+      r.push(<Col className='col' md='2' key='1'>{e.existingNotice.REF}</Col>)
+      r.push(<Col className='col' md='6' key='2'>{e.existingNotice.TICO}</Col>)
+      r.push(<Col className='col' md='2' key='3'>{e.existingNotice.DENO}</Col>)
+
+      r.push(<Col md='2' className='visu col' key='visu' ><Badge color="danger" id={e.existingNotice.REF} >{e.differences.length}</Badge></Col>)
+
+      data.push(<Row key={i} onClick={() => { this.setState({ expandedRef: e.existingNotice.REF }) }} >{r}</Row>)
+
+      //Affichage des modifications des champs des notices modifiées
+      const modifs = e.differences.map(key => <div key={key} >Le champs <b>{key}</b> à évolué de "<b>{e.existingNotice[key]}</b>" à "<b>{e.importedNotice[key]}</b>"</div>)
+      data.push(
+        <Collapse key={e.existingNotice.REF} isOpen={this.state.expandedRef === e.existingNotice.REF}>
+          <div className='col content' >
+            {modifs}
+          </div>
+        </Collapse>
+      )
+    });
+
+    return (
+      <div className='section'>
+        <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
+        <div className='table'>
+          <Row>{columnsJSX}</Row>
+          {data}
+        </div>
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={dataSource.length}
+          pageRangeDisplayed={5}
+          onChange={(p) => { console.log('page', p) }}
+        />
+      </div >
+    )
+  }
+}
+
+
+class TableComponent extends React.Component {
+
+  state = {
+    expandedRef: null,
+    activePage: 1,
+  }
+
+  render() {
+    const { dataSource, title } = this.props;
+    if (!dataSource.length) { return <div /> }
+
+    const columnsJSX = [];
+    columnsJSX.push(<Col className='col' md='2' key='1'>REF</Col>)
+    columnsJSX.push(<Col className='col' md='8' key='2'>TICO</Col>)
+    columnsJSX.push(<Col className='col' md='2' key='3'>DENO</Col>)
+
+    const data = [];
+
+    for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) {
+
+      const r = [];
+      r.push(<Col className='col' md='2' key='1'>{dataSource[i].REF}</Col>)
+      r.push(<Col className='col' md='8' key='2'>{dataSource[i].TICO}</Col>)
+      r.push(<Col className='col' md='2' key='3'>{dataSource[i].DENO}</Col>)
+
+      data.push(<Row key={dataSource[i].REF}>{r}</Row>)
+    }
+
+    return (
+      <div className='section'>
+        <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
+        <div className='table'>
+          <Row>{columnsJSX}</Row>
+          {data}
+        </div>
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={dataSource.length}
+          pageRangeDisplayed={5}
+          onChange={(p) => { this.setState({ activePage: p }) }}
+        />
+      </div >
+    )
+  }
 }
 
 

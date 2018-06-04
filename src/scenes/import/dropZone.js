@@ -16,7 +16,7 @@ export default class ImportDropComponent extends Component {
       const reader = new FileReader();
       if (extension === 'csv') {
         reader.onload = () => {
-          console.log('res', reader.result)
+          // console.log('res', reader.result)
           this.parseCSVFile(reader.result)
 
         };

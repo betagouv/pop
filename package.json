@@ -20,6 +20,7 @@
     "react-flex": "^2.2.8",
     "react-instantsearch": "^4.3.0",
     "react-intl": "^2.4.0",
+    "react-js-pagination": "^3.0.2",
     "react-leaflet": "^1.9.1",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.2.6",

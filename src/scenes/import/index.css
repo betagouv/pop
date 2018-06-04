@@ -6,9 +6,41 @@
   padding-left: 50px;
 }
 
-.import td img{
-  width: 50px;
-  cursor: pointer;
+.import .visu{
+  text-align: center;
+  font-size: 20px;
+}
+.import .col{
+  border-style: solid;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  border-color: #dee2e6;
+  padding : 0px 5px 0px 5px;
+}
+.import .table{
+  border-style: solid;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-left-width: 1px;
+  border-bottom-width: 1px;
+  border-color: #dee2e6;
+}
+.import .row{
+  margin: 0px;
+  height: 50px;
+}
+
+.import .collapse{
+  width:100%
+}
+.import .content{
+
+}
+
+.import .section{
+  padding-bottom: 40px;
 }
 
 .import .dropzone{
@@ -17,6 +49,7 @@
   align-items: center;
   padding-top: 200px;
   justify-content: center;
+  flex-direction: column;
 }
 
 .import .dropzone .container{
@@ -35,10 +68,33 @@
 }
 
 
-.import-loader{
+.import-messages{
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   padding-top: 200px;
 }
+
+.import .pagination>li>a,.import .pagination>li>span{
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: #337ab7;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-left: -1px;
+}
+
+.import .pagination>.active>a,.import .pagination>.active>a:focus,.import .pagination>.active>a:hover,.import .pagination>.active>span, .import .pagination>.active>span:focus,.import .pagination>.active>span:hover{
+  z-index: 3;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+  cursor: default;
+}
+
+
+
