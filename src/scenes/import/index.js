@@ -120,9 +120,9 @@ class UpdatedTableComponent extends React.Component {
     if (!dataSource.length) { return <div /> }
 
     const columnsJSX = [];
-    columnsJSX.push(<Col className='col' md='2' key='1'>REF</Col>)
-    columnsJSX.push(<Col className='col' md='6' key='2'>TICO</Col>)
-    columnsJSX.push(<Col className='col' md='2' key='3'>DENO</Col>)
+    columnsJSX.push(<Col className='col' md='2' key='1'><b>REF</b></Col>)
+    columnsJSX.push(<Col className='col' md='7' key='2'><b>TICO</b></Col>)
+    columnsJSX.push(<Col className='col' md='2' key='3'><b>DENO</b></Col>)
 
     const data = [];
 
@@ -131,10 +131,10 @@ class UpdatedTableComponent extends React.Component {
       //Affichage notices modifiées
       const r = [];
       r.push(<Col className='col' md='2' key='1'>{e.existingNotice.REF}</Col>)
-      r.push(<Col className='col' md='6' key='2'>{e.existingNotice.TICO}</Col>)
+      r.push(<Col className='col' md='7' key='2'>{e.existingNotice.TICO}</Col>)
       r.push(<Col className='col' md='2' key='3'>{e.existingNotice.DENO}</Col>)
 
-      r.push(<Col md='2' className='visu col' key='visu' ><Badge color="danger" id={e.existingNotice.REF} >{e.differences.length}</Badge></Col>)
+      r.push(<Col md='1' className='visu col' key='visu' ><Badge color="danger" id={e.existingNotice.REF} >{e.differences.length}</Badge></Col>)
 
       data.push(<Row key={i} onClick={() => { this.setState({ expandedRef: e.existingNotice.REF }) }} >{r}</Row>)
 
@@ -181,9 +181,9 @@ class TableComponent extends React.Component {
     if (!dataSource.length) { return <div /> }
 
     const columnsJSX = [];
-    columnsJSX.push(<Col className='col' md='2' key='1'>REF</Col>)
-    columnsJSX.push(<Col className='col' md='8' key='2'>TICO</Col>)
-    columnsJSX.push(<Col className='col' md='2' key='3'>DENO</Col>)
+    columnsJSX.push(<Col className='col' md='2' key='1'><b>REF</b></Col>)
+    columnsJSX.push(<Col className='col' md='8' key='2'><b>TICO</b></Col>)
+    columnsJSX.push(<Col className='col' md='2' key='3'><b>DENO</b></Col>)
 
     const data = [];
 

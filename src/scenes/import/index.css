@@ -18,6 +18,9 @@
   border-bottom-width: 0px;
   border-color: #dee2e6;
   padding : 0px 5px 0px 5px;
+  display: flex;
+  justify-content: flex-start;;
+  align-items: center;
 }
 .import .table{
   border-style: solid;
