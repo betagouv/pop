@@ -159,6 +159,8 @@ class Notice extends React.Component {
 
     onSubmit(values) {
         this.setState({ saving: true })
+
+        console.log('VALUES', values)
         API.update(this.state.notice._id, 'merimee', values).then((e) => {
             toastr.success('Modification enregistrée');
             this.setState({ saving: false })
@@ -420,6 +422,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title="Milieu d'implantation (IMPL) : "
                                 name='IMPL'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T12'
                             />
                             <FieldInput
                                 title="Cours d'eau (HYDR) : "
@@ -441,6 +444,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Datation des campagnes principales de construction (SCLE) :'
                                 name='SCLE'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T17'
                             />
                             <FieldTags
                                 title='Datation des campagnes secondaires de construction (SCLD) :'
@@ -474,6 +478,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Personnalitées (PERS) :'
                                 name='PERS'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T6'
                             />
 
                             <FieldInput
@@ -502,6 +507,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Matériau du gros-oeuvre et mise en oeuvre (MURS) : '
                                 name='MURS'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T57'
                             />
                             <FieldTags
                                 title='Matériau de la couverture (TOIT) : '
@@ -514,6 +520,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Vaisseau et étage (ETAG) :'
                                 name='ETAG'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T23'
                             />
                             <FieldTags
                                 title='Type et nature du couvrement (VOUT) :'
@@ -522,10 +529,12 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Parti d’élévation extérieure (ELEV) :'
                                 name='ELEV'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T25'
                             />
                             <FieldTags
                                 title='Type de la couverture (COUV) :'
                                 name='COUV'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T26'
                             />
                             <FieldInput
                                 title='Emplacement, forme et structure de l’escalier (ESCA) : '
@@ -534,6 +543,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title="Source de l'énergie (ENER) :"
                                 name='ENER'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T27'
                             />
                             <FieldInput
                                 title='Couvert et découvert de jardin (VERT) :'
@@ -587,6 +597,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Nature de la protection MH (PROT) :'
                                 name='PROT'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T10'
                             />
                             <FieldInput
                                 title='Date protection (DPRO) :'
@@ -601,6 +612,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title="Nature de l'acte de protection MH (APRO) :"
                                 name='APRO'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T98'
                             />
                         </Col>
                         <Col sm={6}>
@@ -615,6 +627,7 @@ class Notice extends React.Component {
                             <FieldTags
                                 title="Intérêt de l'oeuvre (INTE) :"
                                 name='INTE'
+                                thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T33'
                             />
                             <FieldInput
                                 title='Eléments remarquables (REMA) :'

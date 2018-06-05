@@ -1,9 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form'
-import ReactTags from 'react-tag-input'
-
-import Thesaurus from '../../../services/thesaurus'
-
+import ReactTags from 'react-tag-input';
+import api from '../../../services/api'
 import './fieldTags.css';
 
 const Tags = ReactTags.WithContext;
@@ -15,8 +13,6 @@ class TagsInput extends React.Component {
         this.state = {
             suggestions: [],
         };
-
-
     }
 
     handleDelete(i) {
@@ -33,12 +29,13 @@ class TagsInput extends React.Component {
 
     handleInputChange(str) {
         if (str) {
-            Thesaurus.getTermsBeginWithSomeStringByThesaurus(str, this.props.thesaurus).then((values) => {
+            api.getThesaurus(this.props.thesaurus, str).then((values) => {
                 if (values) {
-                    const suggestions = values.map(e => { return ({ id: e.lexicalValue, text: e.lexicalValue }) });
+                    const suggestions = values.map(e => ({ id: e.value, text: e.value }));
+                    console.log(suggestions)
                     this.setState({ suggestions });
                 }
-            });
+            })
         }
     }
 
@@ -54,6 +51,7 @@ class TagsInput extends React.Component {
                     handleDelete={this.handleDelete.bind(this)}
                     handleAddition={this.handleAddition.bind(this)}
                     handleInputChange={this.handleInputChange.bind(this)}
+                    autocomplete={0}
                     autofocus={false}
                 />
             </div>

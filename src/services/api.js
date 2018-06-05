@@ -2,35 +2,17 @@ const { api_url } = require('../config.js');
 
 class api {
 
-    search(collection, params) {
-        const arr = [];
-        for (var key in params) {
-            arr.push(`${key}=${params[key]}`)
-        }
-        return this._get(`${api_url}/api/search?collection=${collection}&${arr.join('&')}`)
-    }
-
     update(id, collection, data) {
-        return this._post(`${api_url}/api/update?collection=${collection}&id=${id}`, data)
+        return this._post(`${api_url}/notice?collection=${collection}&id=${id}`, data)
     }
-
 
     getNotice(ref) {
-        return this._get(`${api_url}/api/notice?ref=${ref}`)
+        return this._get(`${api_url}/notice?ref=${ref}`)
     }
 
-
-    getNoticesByRef(refs) {
-        const arr = [];
-        return new Promise(async (resolve, reject) => {
-            for (var i = 0; i < refs.length; i++) {
-                const notice = await (this.getNotice(refs[i]));
-                arr.push(notice);
-            }
-            resolve(arr);
-        })
+    getThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus?id=${thesaurusId}&search=${str}`)
     }
-
 
     _post(url, data) {
         return new Promise((resolve, reject) => {
