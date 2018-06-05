@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "import:dev": "cross-env NODE_ENV=development node ./import/import.js",
-    "import:prod": "cross-env NODE_ENV=production node ./import/import.js",
+    "import:prod": "node ./import/import.js",
     "dev": "cross-env NODE_ENV=development node ./src/index.js",
-    "start": "cross-env NODE_ENV=production  node ./src/index.js",
+    "start": "node ./src/index.js",
     "deploy": "eb deploy"
   },
   "repository": {
