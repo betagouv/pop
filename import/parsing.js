@@ -156,7 +156,7 @@ function syncWithMongoDb(file, object, domaine) {
         const stream = input
             .pipe(parser)
             .pipe(toObject)
-            .pipe(toClean)
+            //.pipe(toClean)
             .pipe(batch(1000))
             .pipe(mongo)
             .on('finish', () => {
