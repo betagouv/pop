@@ -67,8 +67,13 @@ export default class ImportDropComponent extends Component {
         const obj = {};
         record.map((e, i) => {
           obj[header[i]] = e;
-        })
 
+
+          //update data
+          if (header[i] === 'REF') { obj[header[i]] = ('' + obj[header[i]]).toUpperCase(); }
+
+          
+        })
         output.push(obj);
       }
     });
