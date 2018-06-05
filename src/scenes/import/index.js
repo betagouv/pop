@@ -31,6 +31,7 @@ export default class ImportComponent extends Component {
       existingNotices.push(notice);
     }
     this.setState({ message: 'Calcule des differences....' })
+    console.log(importedNotices, existingNotices)
     const { unChanged, created, updated } = diff(importedNotices, existingNotices);
     this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, message: '' });
   }
@@ -126,7 +127,7 @@ class UpdatedTableComponent extends React.Component {
 
     const data = [];
 
-    for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) {
+    for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) ((i) => {
       //Affichage notices modifiées.
       const r = [];
       r.push(<Col className='col' md='2' key='1'>{dataSource[i].existingNotice.REF}</Col>)
@@ -135,10 +136,15 @@ class UpdatedTableComponent extends React.Component {
 
       r.push(<Col md='1' className='visu col' key='visu' ><Badge color="danger" id={dataSource[i].existingNotice.REF} >{dataSource[i].differences.length}</Badge></Col>)
 
-      data.push(<Row key={i} onClick={() => { this.setState({ expandedRef: dataSource[i].existingNotice.REF }) }} >{r}</Row>)
+      data.push(
+        <Row key={i} onClick={() => { this.setState({ expandedRef: dataSource[i].existingNotice.REF }) }} >
+          {r}
+        </Row>
+      )
 
       //Affichage des modifications des champs des notices modifiées
       const modifs = dataSource[i].differences.map(key => <div key={key} >Le champs <b>{key}</b> à évolué de "<b>{dataSource[i].existingNotice[key]}</b>" à "<b>{dataSource[i].importedNotice[key]}</b>"</div>)
+
       data.push(
         <Collapse key={dataSource[i].existingNotice.REF} isOpen={this.state.expandedRef === dataSource[i].existingNotice.REF}>
           <div className='col content' >
@@ -146,7 +152,7 @@ class UpdatedTableComponent extends React.Component {
           </div>
         </Collapse>
       )
-    }
+    })(i);
     // });
 
     return (
