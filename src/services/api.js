@@ -2,12 +2,23 @@ const { api_url } = require('../config.js');
 
 class api {
 
-    update(id, collection, data) {
-        return this._post(`${api_url}/notice?collection=${collection}&id=${id}`, data)
+    updateNotice(ref, collection, data) {
+        return this._post(`${api_url}/${collection}/update?ref=${ref}`, data)
     }
 
-    getNotice(ref) {
-        return this._get(`${api_url}/notice?ref=${ref}`)
+    createNotice(collection, data) {
+        //clean object
+        for (var propName in data) {
+            if (!data[propName]) {
+                delete data[propName];
+            }
+        }
+
+        return this._post(`${api_url}/${collection}/create`, data)
+    }
+
+    getNotice(collection, ref) {
+        return this._get(`${api_url}/${collection}?ref=${ref}`)
     }
 
     getThesaurus(thesaurusId, str) {
@@ -48,9 +59,13 @@ class api {
                 if (response.status !== 200) {
                     reject('Looks like there was a problem. Status Code: ' + response.status)
                 }
-                response.json().then((data) => {    // Examine the text in the response
-                    resolve(data);
-                });
+                response.json()
+                    .then((data) => {    // Examine the text in the response
+                        resolve(data);
+                    })
+                    .catch((e) => {
+                        resolve(null);
+                    })
             }).catch((err) => {
                 reject('Fetch Error :-S', err)
             });

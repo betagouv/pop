@@ -26,18 +26,18 @@ class Notice extends React.Component {
 
 
     componentWillMount() {
-        this.load(this.props.match.params.id)
+        this.load(this.props.match.params.ref)
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.props.match && this.props.match.params.id !== newProps.match.params.id) {
-            this.load(newProps.match.params.id);
+        if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
+            this.load(newProps.match.params.ref);
         }
     }
 
-    load(id) {
+    load(ref) {
         this.setState({ loading: true })
-        API.getNotice(id).then((notice) => {
+        API.getNotice('merimee', ref).then((notice) => {
             console.log('NOTICE', notice)
             const initData = {
                 REF: notice.REF,
@@ -161,7 +161,7 @@ class Notice extends React.Component {
         this.setState({ saving: true })
 
         console.log('VALUES', values)
-        API.update(this.state.notice._id, 'merimee', values).then((e) => {
+        API.updateNotice(this.state.notice.REF, 'merimee', values).then((e) => {
             toastr.success('Modification enregistrée');
             this.setState({ saving: false })
         })

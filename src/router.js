@@ -29,7 +29,7 @@ export default class PublicRoutes extends React.Component {
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/search'} component={Search} />
             <Route exact path={'/import'} component={Import} />
-            <Route exact path={'/notice/:id'} component={Notice} />
+            <Route exact path={'/notice/:ref'} component={Notice} />
           </Switch>
         </div>
       </ConnectedRouter>

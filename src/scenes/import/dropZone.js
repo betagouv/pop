@@ -67,12 +67,8 @@ export default class ImportDropComponent extends Component {
         const obj = {};
         record.map((e, i) => {
           obj[header[i]] = e;
-
-
           //update data
           if (header[i] === 'REF') { obj[header[i]] = ('' + obj[header[i]]).toUpperCase(); }
-
-          
         })
         output.push(obj);
       }
@@ -112,9 +108,7 @@ export default class ImportDropComponent extends Component {
           <p>Déposez des fichiers d'import ici</p>
         </Dropzone>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">
-          <Col md={4} sm={4} xs={24} >
-            {this.state.error ? <div>{this.state.error}</div> : <div />}
-          </Col>
+          {this.state.error ? <div>{this.state.error}</div> : <div />}
         </Row>
       </div>
     );

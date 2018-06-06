@@ -1,3 +1,5 @@
+import React from 'react';
+
 function compare(imported, existed) {
 
     const differences = []
@@ -25,7 +27,12 @@ function compare(imported, existed) {
         //other properties were tested using imported.constructor === existed.constructor
 
         if (!existed.hasOwnProperty(p)) {
+            console.log('diff', imported[p], existed[p])
             differences.push(p)
+            continue;
+        }
+
+        if (Array.isArray(existed[p]) && !existed[p].length && imported[p]) {
             continue;
         }
 
@@ -42,6 +49,7 @@ function compare(imported, existed) {
             if (imported[p].length == existed[p].length && imported[p].every((v, i) => v === existed[p][i])) continue;
         }
 
+        console.log('diff', imported[p], existed[p])
         // if they have the same strict value or identity then they are equal
         //if (!imported[p] && (!existed[p] || (Array.isArray(existed[p]) && !existed[p].length))) continue;
         differences.push(p)
@@ -66,6 +74,8 @@ function diff(importedNotices, existingNotices) {
     const unChanged = [];
     const updated = [];
     const created = [];
+    const invalid = [];
+
 
     for (var i = 0; i < importedNotices.length; i++) {
         let importedNotice = importedNotices[i];
@@ -74,23 +84,25 @@ function diff(importedNotices, existingNotices) {
             const existingNotice = existingNotices[j];
             if (importedNotice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
+                const messages = differences.map((e, i) => { return (<div key={i}>Le champs <b>{e}</b> à évolué de "<b>{existingNotice[e]}</b>" à "<b>{importedNotice[e]}</b>"</div>) })
                 if (differences.length) {
-                    updated.push({ importedNotice, existingNotice, differences })
+                    updated.push({ notice: importedNotice, messages })
                 } else {
-                    unChanged.push(existingNotice)
+                    unChanged.push({ notice: existingNotice })
                 }
                 found = true;
             }
         }
         if (!found) {
-            created.push(importedNotice);
+            created.push({ notice: importedNotice });
         }
     }
 
     return {
         unChanged,
         created,
-        updated
+        updated,
+        invalid
     }
 }
 
