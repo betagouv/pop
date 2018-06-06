@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
-
+var mongoosastic = require('mongoosastic')
+var getElasticInstance = require("../elasticsearch");
 const Schema = new mongoose.Schema({
     POP_DOMAINE: String,
     REF: String,
@@ -123,7 +124,11 @@ const Schema = new mongoose.Schema({
 }, { collection: 'memoire' })
 
 Schema.plugin(mongoosePaginate);
-
+Schema.plugin(mongoosastic, {
+    esClient: getElasticInstance(),
+    index: 'pop',
+    bulk: { size: 1000, delay: 1000 }
+});
 const object = mongoose.model("memoire", Schema)
 
 module.exports = object;

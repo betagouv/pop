@@ -28,6 +28,7 @@ function run(file, object, domaine) {
 
 function MerimeeClean(obj) {
 
+    console.log('OBJ', obj)
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
@@ -101,6 +102,8 @@ function MerimeeClean(obj) {
         default: obj.POP_DOMAINE = 'NULL'; break;
     }
 
+    console.log(obj)
+
     return obj;
 }
 
@@ -143,9 +146,9 @@ function syncWithMongoDb(file, object, domaine) {
                 if (err) {
                     console.log('Error indexing : ', err)
                 }
+                
                 count += objects.length;
                 console.log(`Saved ${count}`)
-                console.log('RESUME')
                 input.resume();
                 done();
             });
@@ -156,7 +159,7 @@ function syncWithMongoDb(file, object, domaine) {
         const stream = input
             .pipe(parser)
             .pipe(toObject)
-            //.pipe(toClean)
+            // .pipe(toClean)
             .pipe(batch(1000))
             .pipe(mongo)
             .on('finish', () => {

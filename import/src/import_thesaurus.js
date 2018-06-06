@@ -3,12 +3,11 @@ const xml2js = require('xml2js');
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
 const datafolder = './data/thesaurus/';
-const Mongo = require('../src/mongo');
-
+const Mongo = require('../../src/mongo');
 
 const parser = new xml2js.Parser();
 
-const Thesaurus = require('../src/models/thesaurus')
+const Thesaurus = require('../../src/models/thesaurus')
 
 function load() {
     return new Promise(async (resolve, reject) => {

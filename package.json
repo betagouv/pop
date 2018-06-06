@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "import:dev": "cross-env NODE_ENV=development node ./import/import.js",
-    "import:prod": "node ./import/import.js",
+    "import:dev": "cross-env NODE_ENV=development node ./import/src/index.js",
+    "import:prod": "node ./import/src/index.js",
     "dev": "cross-env NODE_ENV=development node ./src/index.js",
     "start": "node ./src/index.js",
     "deploy": "eb deploy"
