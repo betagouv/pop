@@ -16,34 +16,31 @@ const COLUMNSTODISPLAY = ['REF', 'TICO', 'DENO'];
 
 export default class ImportComponent extends Component {
   state = {
-    displaySummary: false,
     unChanged: [],
     created: [],
     updated: [],
-    loadingMessage: '',
+    errors: [],
+    displaySummary: false,
     done: false,
-    loading: false
+    loading: false,
+    loadingMessage: '',
   }
 
   async onImportFinish(importedNotices) {
 
     //check if there are not more fields
-    const err = [];
+    const errors = [];
     if (importedNotices.length) {
       for (let key in importedNotices[0]) {
         if (!MappingMerimee[key]) {
-          err.push()
-          console.log(key + 'not exist')
+          errors.push(`La colonne ${key} est inconnue`)
         }
       }
     }
-
-
-
-
-
-
-
+    this.setState({ errors })
+    if (errors.length) {
+      return;
+    }
 
     const existingNotices = []
     for (var i = 0; i < importedNotices.length; i++) {
@@ -65,15 +62,15 @@ export default class ImportComponent extends Component {
       this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
       const ref = this.state.updated[i].notice.REF;
       const collection = 'merimee';
-      await api.updateNotice(id, collection, this.state.updated[i].notice);
+      await api.updateNotice(ref, collection, this.state.updated[i].notice);
     }
 
     //Create notice
     for (var i = 0; i < this.state.created.length; i++) {
       this.setState({ loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
       const collection = 'merimee';
-      console.log('Create', this.state.created[i])
-      await api.createNotice(collection, this.state.created[i]);
+      console.log('Create', this.state.created[i].notice)
+      await api.createNotice(collection, this.state.updated[i].notice);
     }
 
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
@@ -83,8 +80,6 @@ export default class ImportComponent extends Component {
     if (!this.state.displaySummary) {
       return <div />
     }
-
-    console.log('DDDD', this.state.updated)
     return (
       <div className='import'>
         <TableComponent dataSource={this.state.updated} title='Ces notices seront mises à jour' />
@@ -106,7 +101,7 @@ export default class ImportComponent extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className='import-loadingMessages'>
+        <div className='import-container'>
           <Loader />
           <div>{this.state.loadingMessage}</div>
         </div>
@@ -115,12 +110,23 @@ export default class ImportComponent extends Component {
 
     if (this.state.done) {
       return (
-        <div className='import-loadingMessages'>
+        <div className='import-container'>
           <div>{this.state.loadingMessage}</div>
           <Link to='/'>Revenir a la page d'accueil</Link>
         </div>
       );
     }
+
+    if (this.state.errors.length) {
+      const errors = this.state.errors.map((e, i) => <div key={i}>{e}</div>)
+      return (
+        <div className='import-container'>
+          <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>
+          <div>{errors}</div>
+        </div>
+      );
+    }
+
 
     return (
       <Container>
