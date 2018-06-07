@@ -2,15 +2,23 @@ const Mongo = require('../../src/mongo');
 
 const importMerimee = require('./import_merimee');
 const importJoconde = require('./import_joconde');
+const importMNR = require('./import_mnr');
+const importPalissy = require('./import_palissy');
 
 
-importMerimee().then(() => {
+importPalissy().then(() => {
   console.log('END')
 })
+
+// importMNR().then(() => {
+//   console.log('END')
+// })
 
 // importJoconde().then(() => {
 //   console.log('END')
 // })
+
+
 
 // const Parse = require('./parsing');
 // const Models = require('../src/models')
@@ -34,18 +42,3 @@ importMerimee().then(() => {
 // // arr.push({ file: './data/palissy-INV-valid.csv', model: Models.palissy });
 // // arr.push({ file: './data/palissy-MH-valid.csv', model: Models.palissy });
 
-// function runMongo() {
-//   return new Promise(async (resolve, reject) => {
-//     for (var i = 0; i < arr.length; i++) {
-//       await (Parse(arr[i].file, arr[i].model, arr[i].domaine))
-//     }
-//     resolve();
-//   })
-// }
-
-
-// setTimeout(async () => {
-//   const start = Date.now()
-//   await (runMongo());
-//   console.log('Done in ', (Date.now() - start) / 1000, ' seconds')
-// }, 10000)
