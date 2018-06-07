@@ -62,7 +62,7 @@ export default class Search extends React.Component {
                             })}
                         >
                             <ExportComponent
-                                column={['REF','TOUT','LABO','ADPT','APTN','APPL','ATTR','AUTR','BIBL','COMM','CONTACT','COOR','COPY','DATA','DACQ','DDPT','DMAJ','DMIS','DREP','DESY','DECV','DENO','DESC','REPR','DIMS','DOMN','ECOL','EPOQ','ETAT','EXPO','GENE','HIST','IMAGE','IMG','LABEL','INSC','DEPO','LIEUX','GEOHI','LOCA','LOCA2','LOCA3','MILL','MILU','MUSEO','INV','NSDA','ONOM','PERI','PERU','PHOT','MSGCOM','PAUT','PDAT','PDEC','PINS','PLIEUX','PREP','PUTI','REDA','REFIM','PEOC','SREP','STAT','TECH','TITR','TICO','UTIL','VIDEO','WWW','MOSA','DATION','DIFFU','LARC','RANG','RETIF']}
+                                column={['REF', 'TOUT', 'LABO', 'ADPT', 'APTN', 'APPL', 'ATTR', 'AUTR', 'BIBL', 'COMM', 'CONTACT', 'COOR', 'COPY', 'DATA', 'DACQ', 'DDPT', 'DMAJ', 'DMIS', 'DREP', 'DESY', 'DECV', 'DENO', 'DESC', 'REPR', 'DIMS', 'DOMN', 'ECOL', 'EPOQ', 'ETAT', 'EXPO', 'GENE', 'HIST', 'IMAGE', 'IMG', 'LABEL', 'INSC', 'DEPO', 'LIEUX', 'GEOHI', 'LOCA', 'LOCA2', 'LOCA3', 'MILL', 'MILU', 'MUSEO', 'INV', 'NSDA', 'ONOM', 'PERI', 'PERU', 'PHOT', 'MSGCOM', 'PAUT', 'PDAT', 'PDEC', 'PINS', 'PLIEUX', 'PREP', 'PUTI', 'REDA', 'REFIM', 'PEOC', 'SREP', 'STAT', 'TECH', 'TITR', 'TICO', 'UTIL', 'VIDEO', 'WWW', 'MOSA', 'DATION', 'DIFFU', 'LARC', 'RANG', 'RETIF']}
                             />
                         </ReactiveComponent>
                     </div>
@@ -96,7 +96,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
+    const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/joconde/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Book Cover" />
