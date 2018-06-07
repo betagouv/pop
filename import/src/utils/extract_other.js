@@ -127,6 +127,7 @@ module.exports = {
     extractUrls,
     extractPOPDate,
     extractLink,
-    extractAuteurs
+    extractAuteurs,
+    _regex
 };
 

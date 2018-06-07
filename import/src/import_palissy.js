@@ -29,7 +29,7 @@ function run() {
 }
 
 function clean(obj) {
-    // obj.IMG = utils.extractIMG(obj.IMG);
+    obj.VIDEO = extractIMG(obj.VIDEO);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     // obj.DENO = utils.extractArray(obj.DENO, ';');
     // obj.TYPO = utils.extractArray(obj.TYPO, ';');
@@ -104,6 +104,13 @@ function clean(obj) {
     //     default: obj.POP_DOMAINE = 'NULL'; break;
     // }
     return obj;
+}
+
+
+function extractIMG(str) {
+    // if (!str) return []
+    // const arr = utils.extractArray(str, ';');
+    // return arr.map(e => `http://www2.culture.gouv.fr/Wave/image/joconde${e}`)
 }
 
 module.exports = run;

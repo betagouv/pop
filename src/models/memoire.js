@@ -4,7 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require("../elasticsearch");
 const Schema = new mongoose.Schema({
     POP_DOMAINE: String,
-    REF: String,
+    REF: { type: String, index: true },
     TOUT: String,
     ADRESSE: String,
     AUTOEU: String,

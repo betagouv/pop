@@ -5,7 +5,7 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
     POP_DOMAINE: String,
-    REF: String,
+    REF: { type: String, index: true },
     TOUT: String,
     LABO: String,
     ADPT: String,
@@ -38,7 +38,7 @@ const Schema = new mongoose.Schema({
     GENE: String,
     HIST: String,
     IMAGE: String,
-    IMG: String,
+    IMG: [String],
     LABEL: String,
     INSC: String,
     DEPO: String,

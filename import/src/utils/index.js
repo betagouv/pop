@@ -1,6 +1,6 @@
 
 const { extractPoint, extractPolygon } = require('./extract_geoloc');
-const { extractIMG, extractEmail, extractArray, extractUrls, extractPOPDate, extractLink, extractAuteurs, } = require('./extract_other');
+const { extractIMG, extractEmail, _regex, extractArray, extractUrls, extractPOPDate, extractLink, extractAuteurs, } = require('./extract_other');
 
 module.exports = {
     extractIMG,
@@ -11,6 +11,7 @@ module.exports = {
     extractLink,
     extractAuteurs,
     extractPoint,
-    extractPolygon
+    extractPolygon,
+    _regex
 };
 

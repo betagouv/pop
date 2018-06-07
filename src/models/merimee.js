@@ -4,6 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
+    REF: { type: String, index: true },
     POP_DOMAINE: { type: String, default: '' },
     POP_COORDINATES_POINT: {
         'type': {
@@ -24,7 +25,6 @@ const Schema = new mongoose.Schema({
     POP_HAS_IMAGE: { type: [String], default: '' },
     POP_HAS_LOCATION: { type: [String], default: '' },
     POP_DATE: { type: [Number], default: [] },
-    REF: { type: String, default: '' },
     TOUT: { type: String, default: '' },
     ACTU: { type: String, default: '' },
     ADRS: { type: String, default: '' },
