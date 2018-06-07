@@ -6,10 +6,13 @@ var csvparse = require('csv-parse');
 var batch = require('through-batch');
 
 const showInconsistentLines = require('./utils/check_file_integrity')
+const sync = require('./sync');
+const utils = require('./utils')
+
 
 function run() {
     return new Promise(async (resolve, reject) => {
-        const files = ['../data/import/merimee-ETAT-valid.csv', '../data/import/merimee-INV-valid.csv', '../data/import/merimee-MH-valid.csv']
+        const files = ['./import/data/merimee-ETAT-valid.csv', './import/data/merimee-INV-valid.csv', './import/data/merimee-MH-valid.csv']
         for (var i = 0; i < files.length; i++) {
             console.log('RUN  ', files[i])
 
@@ -18,17 +21,14 @@ function run() {
             console.log('End file integrity check', errs.length);
 
             console.log('Start syncWithMongoDb');
-            // await (syncWithMongoDb(file, object, domaine))
+            await (sync(files[i], require('../../src/models/merimee'), clean))
             console.log('End syncWithMongoDb');
         }
         resolve();
     })
 }
 
-
-function MerimeeClean(obj) {
-
-    console.log('OBJ', obj)
+function clean(obj) {
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');
@@ -86,10 +86,12 @@ function MerimeeClean(obj) {
         const points = utils.extractPoint(obj.COOR, obj.ZONE, obj.REF);
         if (points) { obj.POP_COORDINATES_POINT = { 'type': 'Point', coordinates: points }; }
     }
+
     {
         const points = utils.extractPolygon(obj.COORM, obj.ZONE, obj.REF);
         if (points) { obj.POP_COORDINATES_POLYGON = { 'type': 'Polygon', coordinates: points }; }
     }
+
     obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
     obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
 
@@ -101,75 +103,7 @@ function MerimeeClean(obj) {
         case "EA": obj.POP_DOMAINE = 'Architecture'; break;
         default: obj.POP_DOMAINE = 'NULL'; break;
     }
-
-    console.log(obj)
-
     return obj;
-}
-
-function syncWithMongoDb(file, object, domaine) {
-    return new Promise((resolve, reject) => {
-        let arr = [];
-        let header = null;
-        let count = 0;
-        var parser = csvparse({ delimiter: '|', from: 1, quote: '', relax_column_count: true })//, 
-        var input = fs.createReadStream(file, 'latin1');
-
-        var toObject = transform((record, done) => {
-            let obj = null;
-            if (!header) {
-                header = record;
-            } else {
-                obj = {};
-                for (var i = 0; i < record.length; i++) {
-                    obj[header[i]] = record[i];
-                }
-            }
-            done(null, obj);
-        }, { parallel: 1 });
-
-
-        var toClean = transform((obj, done) => {
-            const newObj = MerimeeClean(obj)
-            done(null, newObj);
-        }, { parallel: 1 });
-
-        var mongo = transform((arr, done) => {
-            const objects = arr.map((e) => {
-                const m = new object(e);
-                // m._id = e.REF;
-                return m;
-            })
-
-            input.pause();
-            object.insertMany(objects, (err, docs) => {
-                if (err) {
-                    console.log('Error indexing : ', err)
-                }
-
-                count += objects.length;
-                console.log(`Saved ${count}`)
-                input.resume();
-                done();
-            });
-
-        }, { parallel: 1 });
-
-
-        const stream = input
-            .pipe(parser)
-            .pipe(toObject)
-            // .pipe(toClean)
-            .pipe(batch(1000))
-            .pipe(mongo)
-            .on('finish', () => {
-                console.log('Stream finish');
-                resolve();
-            })
-            .on('error', (err) => {
-                console.log('Error', err)
-            });
-    });
 }
 
 module.exports = run;

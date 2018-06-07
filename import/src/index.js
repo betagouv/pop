@@ -1,18 +1,19 @@
 const Mongo = require('../../src/mongo');
 
 const importMerimee = require('./import_merimee');
+const importJoconde = require('./import_joconde');
+
 
 importMerimee().then(() => {
   console.log('END')
 })
 
+// importJoconde().then(() => {
+//   console.log('END')
+// })
+
 // const Parse = require('./parsing');
 // const Models = require('../src/models')
-
-
-
-
-
 
 
 

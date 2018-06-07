@@ -142,10 +142,11 @@ const Schema = new mongoose.Schema({
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
-    index: 'pop',
+    index: 'merimee',
     bulk: { size: 1000, delay: 1000 }
 });
 
 const object = mongoose.model("merimee", Schema)
 
 module.exports = object;
+

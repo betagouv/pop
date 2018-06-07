@@ -126,7 +126,7 @@ const Schema = new mongoose.Schema({
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
-    index: 'pop',
+    index: 'memoire',
     bulk: { size: 1000, delay: 1000 }
 });
 const object = mongoose.model("memoire", Schema)
