@@ -1,0 +1,209 @@
+import React from 'react';
+import { Row, Col, Input, Container } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {
+    ReactiveBase,
+    DataSearch,
+    ReactiveList,
+    MultiList,
+    SingleList,
+    SelectedFilters,
+    ReactiveComponent
+} from '@appbaseio/reactivesearch';
+
+
+import Button from './components/button';
+import ExportComponent from './components/export';
+
+import { es_url } from '../../config.js';
+
+const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"]
+
+export default class Search extends React.Component {
+    render() {
+        return (
+            <Container className='search'>
+                <div className='header'>
+                    <div className='title-zone'>
+                        <img className='logo' src={require('../../assets/merimee.jpg')} />
+                        <div className='title'>Vous travaillez dans la base mérimée</div>
+                        <Link to='/'>Changer de base</Link>
+                    </div>
+                    <div className='buttons'>
+                        <Button icon={require('../../assets/import.png')} to='/import' text='Importer des notices' />
+                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
+                    </div>
+                </div>
+                <ReactiveBase
+                    url={`${es_url}/merimee`}
+                    app="merimee"
+                >
+                    <div className='title'>Rechercher une Notice</div>
+                    <div className='search-and-export-zone'>
+                        <DataSearch
+                            componentId="mainSearch"
+                            dataField={["TICO", "DENO", "REF", "LOCA"]}
+                            queryFormat="and"
+                            iconPosition="left"
+                            className="mainSearch"
+                            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+                            URLParams={true}
+                        />
+
+                        <ReactiveComponent
+                            componentId='export'
+                            react={{
+                                and: FILTER
+                            }}
+                            defaultQuery={() => ({
+                                size: 100,
+                                aggs: {},
+                            })}
+                        >
+                            <ExportComponent
+                                column={['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL']}
+                            />
+                        </ReactiveComponent>
+                    </div>
+                    <Row>
+                        <Col xs="3">
+                            <SingleList
+                                componentId="image"
+                                dataField="POP_HAS_IMAGE.keyword"
+                                title="Contient une image"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <SingleList
+                                componentId="location"
+                                dataField="POP_HAS_LOCATION.keyword"
+                                title="Contient une localisation"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="domaine"
+                                dataField="POP_DOMAINE.keyword"
+                                title="Domaines"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="denomination"
+                                dataField="DENO.keyword"
+                                title="Dénominations"
+                                className="filters"
+                                placeholder="Rechercher une dénomination"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="auteurs"
+                                dataField="AUTR.keyword"
+                                showMissing={true}
+                                size={100}
+                                title="Auteurs"
+                                className="filters"
+                                placeholder="Rechercher un auteur"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <hr />
+                            <MultiList
+                                componentId="region"
+                                dataField="REG.keyword"
+                                title="Region"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher une région"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="departement"
+                                dataField="DPT.keyword"
+                                title="Departements"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher un département"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <MultiList
+                                componentId="commune"
+                                dataField="COM.keyword"
+                                title="Communes"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher une commune"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                        </Col>
+                        <Col xs="9">
+                            <SelectedFilters />
+                            <ReactiveList
+                                componentId="results"
+                                react={{
+                                    "and": FILTER
+                                }}
+                                onResultStats={(total, took) => {
+                                    return `${total} résultats trouvés en ${took} ms.`
+                                }}
+                                dataField=''
+                                URLParams={true}
+                                size={20}
+                                onData={(data) => <Card key={data.REF} data={data} />}
+                                pagination={true}
+                            />
+                        </Col>
+                    </Row>
+                </ReactiveBase >
+            </Container >
+        );
+    }
+}
+
+
+const Card = ({ data }) => {
+    const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
+    return (
+        <Link style={{ textDecoration: 'none' }} to={`/notice/merimee/${data.REF}`} className="card" key={data.REF}>
+            <img src={image} alt="Book Cover" />
+            <div className='content'>
+                <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
+                <div>
+                    <p>{data.DOMN}</p>
+                    <p>{data.DENO.join(', ')}</p>
+                    <p>{data.LOCA}</p>
+                    <p>{data.AUTR.join(', ')}</p>
+                </div>
+            </div>
+        </Link>
+    );
+}

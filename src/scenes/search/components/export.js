@@ -1,6 +1,19 @@
-import API from '../../services/api'
+import React from 'react';
+import Button from './button';
 
-export default async function exportData(fileName, columns, entities) {
+export default class ExportComponent extends React.Component {
+    exportData() {
+          exportData('Merimee.csv', this.props.columns, this.props.hits);
+    }
+
+    render() {
+        return (
+            <Button icon={require('../../../assets/export.png')} text='Exporter les résultats' to='' onClick={this.exportData.bind(this)} />
+        );
+    }
+}
+
+async function exportData(fileName, columns, entities) {
     let csv = columns.join(',') + '\n';
     for (var j = 0; j < entities.length; j++) {
         const arr = []

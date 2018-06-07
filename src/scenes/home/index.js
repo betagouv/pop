@@ -8,11 +8,11 @@ export default class Home extends React.Component {
 
     state = {
         tiles: [
-            { url: '/merimee', name: 'Joconde', image: require('../../assets/joconde.jpg') },
-            { url: '/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
-            { url: '/merimee', name: 'Palissy', image: require('../../assets/palissy.jpg') },
-            { url: '/merimee', name: 'Mémoire', image: require('../../assets/memoire.jpg') },
-            { url: '/merimee', name: 'MNR', image: require('../../assets/MNR.jpg') },
+            { url: '/search/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
+            { url: '/search/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
+            { url: '/search/palissy', name: 'Palissy', image: require('../../assets/palissy.jpg') },
+            { url: '/search/memoire', name: 'Mémoire', image: require('../../assets/memoire.jpg') },
+            { url: '/search/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
         ]
     }
 
@@ -20,7 +20,7 @@ export default class Home extends React.Component {
         return this.state.tiles.map(({ url, name, image }, i) => {
             return (
                 <Col className="box text-center mb-3" key={i}>
-                    <Link style={{ textDecoration: 'none' }} to='/search'>
+                    <Link style={{ textDecoration: 'none' }} to={url}>
                         <div className='tile'>
                             <img src={image} alt="dummy image" className="img-fluid" />
                             <div className="caption">
