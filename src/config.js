@@ -1,6 +1,6 @@
 //ES
 
-let forceProd = false;
+let forceProd = true;
 
 let api_url = 'http://127.0.0.1:3000';
 if (forceProd || process.env.NODE_ENV === 'production') {
@@ -8,9 +8,9 @@ if (forceProd || process.env.NODE_ENV === 'production') {
 }
 
 
-let es_url = 'http://127.0.0.1:9200/pop';
+let es_url = 'http://127.0.0.1:9200';
 if (forceProd || process.env.NODE_ENV === 'production') {
-  es_url = 'https://search-pop-j3zoezftjmyiagfgm76ckgu2xy.eu-west-3.es.amazonaws.com/pop';
+  es_url = 'https://search-pop-j3zoezftjmyiagfgm76ckgu2xy.eu-west-3.es.amazonaws.com';
 }
 
 module.exports = {

@@ -14,11 +14,21 @@ export default class ImportDropComponent extends Component {
     files.forEach(file => {
       const extension = file.name.split('.').pop();
       const reader = new FileReader();
+      let encoding = '';
       if (extension === 'csv') {
         reader.onload = () => {
           // console.log('res', reader.result)
           this.parseCSVFile(reader.result)
-
+        };
+      } else if (extension === 'txt') {
+        encoding = 'ISO-8859-1'
+        reader.onload = () => {
+          this.parseJocondeTxt(reader.result)
+        };
+      } else if (extension === 'xml') {
+        encoding = ''
+        reader.onload = () => {
+          this.parseGertrude(reader.result)
         };
         // } else if (extension === 'xlsx') {
         //   reader.onload = () => { this.parseXLSXFile(reader.result) };
@@ -28,8 +38,30 @@ export default class ImportDropComponent extends Component {
       }
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
-      reader.readAsText(file);
+      reader.readAsText(file, encoding);
     });
+  }
+  parseGertrude(fileAsBinaryString) {
+    var xmlDoc = new DOMParser().parseFromString(fileAsBinaryString, 'text/xml');
+    console.log(xmlDoc);
+
+  }
+
+  parseJocondeTxt(fileAsBinaryString) {
+    let str = fileAsBinaryString.replace(/\-\r\n/g, '');
+    var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
+    const arr = [];
+    let obj = {};
+    for (var i = 0; i < lines.length; i++) {
+      if (lines[i] === '//') {
+        arr.push(obj);
+        obj = {};
+      } else {
+        obj[lines[i]] = lines[++i]
+      }
+    }
+
+    this.props.onFinish(arr);
   }
 
   parseXLSXFile(fileAsBinaryString) {

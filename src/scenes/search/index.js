@@ -49,7 +49,7 @@ export default class Search extends React.Component {
                     </div>
                 </div>
                 <ReactiveBase
-                    url={es_url}
+                    url={`${es_url}/merimee`}
                     app="merimee"
                 >
                     <div className='title'>Rechercher une Notice</div>
