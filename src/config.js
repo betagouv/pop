@@ -2,7 +2,7 @@
 
 let forceProd = true;
 
-console.log('ENV ', process.env);
+console.log('SEB ', process.env.PORT);
 console.log('ENV ', process);
 
 let mongo_url = 'mongodb://127.0.0.1/pop';

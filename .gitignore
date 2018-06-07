@@ -8,3 +8,5 @@ data
 errors\.csv
 
 yarn\.lock
+
+\.env
