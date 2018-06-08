@@ -66,6 +66,10 @@
   width: 200Px;
 }
 
+.import .dropzone select{
+  margin-top: 10px;
+}
+
 .import .buttons{
   display: flex;
   justify-content: center;

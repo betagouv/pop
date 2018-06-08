@@ -67,10 +67,10 @@ export default class ImportComponent extends Component {
 
     //Create notice
     for (var i = 0; i < this.state.created.length; i++) {
-      this.setState({ loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
+      this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
       const collection = 'merimee';
       console.log('Create', this.state.created[i].notice)
-      await api.createNotice(collection, this.state.updated[i].notice);
+      await api.createNotice(collection, this.state.created[i].notice);
     }
 
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });

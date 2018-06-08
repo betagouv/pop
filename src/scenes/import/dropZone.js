@@ -8,25 +8,23 @@ export default class ImportDropComponent extends Component {
   state = {
     progress: 0,
     error: '',
+    encoding: 'UTF-8'
   }
 
   onDrop(files) {
     files.forEach(file => {
       const extension = file.name.split('.').pop();
       const reader = new FileReader();
-      let encoding = '';
       if (extension === 'csv') {
         reader.onload = () => {
           // console.log('res', reader.result)
           this.parseCSVFile(reader.result)
         };
       } else if (extension === 'txt') {
-        encoding = 'ISO-8859-1'
         reader.onload = () => {
           this.parseJocondeTxt(reader.result)
         };
       } else if (extension === 'xml') {
-        encoding = ''
         reader.onload = () => {
           this.parseGertrude(reader.result)
         };
@@ -38,7 +36,7 @@ export default class ImportDropComponent extends Component {
       }
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
-      reader.readAsText(file, encoding);
+      reader.readAsText(file, this.state.encoding);
     });
   }
   parseGertrude(fileAsBinaryString) {
@@ -123,6 +121,8 @@ export default class ImportDropComponent extends Component {
 
 
   render() {
+
+    console.log(this.state.encoding)
     if (!this.props.visible) {
       return <div />
     }
@@ -139,6 +139,10 @@ export default class ImportDropComponent extends Component {
         <Dropzone className='container' onDrop={this.onDrop.bind(this)}>
           <p>Déposez des fichiers d'import ici</p>
         </Dropzone>
+        <select value={this.state.encoding} onChange={(e) => this.setState({ encoding: e.target.value })}>
+          <option value="UTF-8">UTF-8</option>
+          <option value="ISO-8859-1">ISO-8859-1</option>
+        </select>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">
           {this.state.error ? <div>{this.state.error}</div> : <div />}
         </Row>
