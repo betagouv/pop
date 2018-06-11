@@ -59,6 +59,5 @@ function initiateFileDownload(str, fileName) {
         return true;
     }
     return false;
-
 }
 

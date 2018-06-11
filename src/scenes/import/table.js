@@ -37,7 +37,11 @@ export default class Table extends React.Component {
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
             if (dataSource[i].messages && dataSource[i].messages.length) {
-                r.push(<Col md='1' className='visu col' key='visu' ><Badge color="danger" id={dataSource[i].notice.REF} >{dataSource[i].messages.length}</Badge></Col>)
+                r.push(<Col md='1' className='visu col' key='visu' >
+                    <Badge color="success" id={dataSource[i].notice.REF} >
+                        {dataSource[i].messages.length}
+                    </Badge>
+                </Col>)
             }
 
             data.push(
@@ -47,11 +51,12 @@ export default class Table extends React.Component {
             )
 
             if (dataSource[i].messages && dataSource[i].messages.length) {
+                const displayMessages = dataSource[i].messages.map(e => <div key={e.key}>Le champs <b>{e.key}</b> à évolué de "<b>{e.from}</b>" à "<b>{e.to}</b>"</div>)
                 //Affichage des modifications des champs des notices modifiées
                 data.push(
                     <Collapse key={dataSource[i].notice.REF} isOpen={this.state.expandedRef === dataSource[i].notice.REF}>
                         <div className='col content' >
-                            {dataSource[i].messages}
+                            {displayMessages}
                         </div>
                     </Collapse>
                 )

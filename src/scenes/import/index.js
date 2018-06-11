@@ -5,7 +5,7 @@ import DropZone from './dropZone'
 import Loader from '../../components/loader';
 import api from '../../services/api'
 
-import { diff } from './utils.js'
+import { diff, exportData } from './utils.js'
 import TableComponent from './table';
 
 import MappingMerimee from './mapping/merimee.json'
@@ -76,6 +76,21 @@ export default class ImportComponent extends Component {
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
   }
 
+
+  onExport() {
+    const arr = [];
+    for (var i = 0; i < this.state.updated.length; i++) {
+      arr.push({ ...this.state.updated[i], type: 'MISE A JOUR' })
+    }
+    for (var i = 0; i < this.state.created.length; i++) {
+      arr.push({ ...this.state.created[i], type: 'CREES' })
+    }
+    for (var i = 0; i < this.state.unChanged.length; i++) {
+      arr.push({ ...this.state.unChanged[i], type: 'INCHANGEE' })
+    }
+    exportData(arr, 'export.csv')
+  }
+
   renderSummary() {
     if (!this.state.displaySummary) {
       return <div />
@@ -83,9 +98,16 @@ export default class ImportComponent extends Component {
     return (
       <div className='import'>
         <TableComponent dataSource={this.state.updated} title='Ces notices seront mises à jour' />
-        <TableComponent dataSource={this.state.created} title='Ces notices seront créées ' />
+        <TableComponent dataSource={this.state.created} title='Ces notices seront créées' />
         <TableComponent dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
         <div className='buttons'>
+          <Button
+            color="secondary"
+            onClick={() => this.onExport()}
+            disabled={!(this.state.updated.length || this.state.created.length)}
+          >
+            Exporter
+          </Button>
           <Button
             color="primary"
             onClick={() => this.onSave()}
