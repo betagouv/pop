@@ -13,6 +13,7 @@ const utils = require('./utils')
 function run() {
     return new Promise(async (resolve, reject) => {
         const files = ['./import/data/merimee-ETAT-valid.csv', './import/data/merimee-INV-valid.csv', './import/data/merimee-MH-valid.csv']
+        //  const files = ['./import/data/merimee-INV-valid.csv', './import/data/merimee-MH-valid.csv']
         for (var i = 0; i < files.length; i++) {
             console.log('RUN  ', files[i])
 
@@ -70,6 +71,9 @@ function clean(obj) {
     obj.ETAG = utils.extractArray(obj.ETAG, ';');
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
+
+    obj.DMIS = obj.DMIS.replace('/', '-');
+    obj.DMAJ = obj.DMAJ.replace('/', '-');
 
     //liens
     obj.REFE = utils.extractLink(obj.REFE, obj.REF);

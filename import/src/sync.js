@@ -50,12 +50,29 @@ module.exports = function syncWithMongoDb(file, object, clean) {
             });
         }, { parallel: 1 });
 
+        var mongoUnit = transform((obj, done) => {
+            const doc = new object(obj);
+            input.pause();
+            doc.save(function (err) {
+                if (err) throw err;
+                /* Document indexation on going */
+                doc.on('es-indexed', function (err, res) {
+                    if (err) throw err;
+                    /* Document is indexed */
+                    input.resume();
+                    done();
+                });
+            });
+        }, { parallel: 1 });
+
+
         const stream = input
             .pipe(parser)
             .pipe(toObject)
             .pipe(toClean)
             .pipe(batch(1000))
             .pipe(mongo)
+            // .pipe(mongoUnit)
             .on('finish', () => {
                 console.log('Stream finish');
                 resolve();

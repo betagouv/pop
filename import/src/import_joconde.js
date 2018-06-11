@@ -8,7 +8,7 @@ var batch = require('through-batch');
 const showInconsistentLines = require('./utils/check_file_integrity')
 const sync = require('./sync');
 const utils = require('./utils')
-
+const log = require('./utils/log.js')
 
 function run() {
     return new Promise(async (resolve, reject) => {
@@ -29,93 +29,97 @@ function run() {
 }
 
 function clean(obj) {
-    obj.IMG = extractIMG(obj.IMG);
+    obj.REF = obj.REF.trim();
+    obj.ADPT = utils.extractArray(obj.ADPT, ';');
+    obj.APPL = utils.extractArray(obj.APPL, ';');
+    obj.APTN = obj.APTN
+    obj.ATTR = obj.ATTR
+    obj.AUTR = obj.AUTR
+    obj.BIBL = obj.BIBL
+    obj.COMM = obj.COMM
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
-    // obj.DENO = utils.extractArray(obj.DENO, ';');
-    // obj.TYPO = utils.extractArray(obj.TYPO, ';');
-    // obj.TECH = utils.extractArray(obj.TECH, /[,;]/);
-    // obj.STAT = utils.extractArray(obj.STAT, ';');
-    // obj.SCLE = utils.extractArray(obj.SCLE, /[,;]/);
-    // obj.SCLX = utils.extractArray(obj.SCLX, /[,;]/);
-    // obj.SCLD = utils.extractArray(obj.SCLD, /[,;]/);
-    // obj.AUTR = utils.extractAuteurs(obj.AUTR, obj.REF);
-    // obj.AUTP = utils.extractArray(obj.AUTP, ';');
-    // obj.NOMS = utils.extractArray(obj.NOMS, ';');
+    obj.COOR = obj.COOR
+    obj.COPY = obj.COPY
+    obj.DACQ = obj.DACQ
+    obj.DATA = obj.DATA
+    obj.DATION = obj.DATION
+    obj.DDPT = obj.DDPT
+    obj.DECV = obj.DECV
+    obj.DENO = utils.extractArray(obj.DENO, ';');
+    obj.DEPO = obj.DEPO
+    obj.DESC = obj.DESC
+    obj.DESY = obj.DESY
+    obj.DIFFU = obj.DIFFU ? "oui" : "non"
+    obj.DIMS = obj.DIMS
+    obj.DMAJ = obj.DMA
+    obj.DMIS = obj.DMIS
+    obj.DOMN = utils.extractArray(obj.DOMN, ';');
+    obj.DREP = obj.DREP;
+    obj.ECOL = utils.extractArray(obj.ECOL, ';');
+    obj.EPOQ = utils.extractArray(obj.EPOQ, ';');
+    obj.ETAT = utils.extractArray(obj.ETAT, ';');
+    obj.EXPO = obj.EXPO
+    obj.GENE = utils.extractArray(obj.GENE, ';');
+    obj.GEOHI = utils.extractArray(obj.GEOHI, ';');
+    obj.HIST = obj.HIST
+    obj.IMAGE = obj.IMAGE
+    obj.IMG = extractIMG(obj.IMG, obj.REF);
+    obj.INSC = utils.extractArray(obj.INSC, ';');
+    obj.INV = obj.INV
+    obj.LABEL = obj.LABEL
+    obj.LABO = obj.LABO
+    obj.LARC = obj.LARC
+    obj.LIEUX = obj.LIEUX
+    obj.LOCA = obj.LOCA
+    obj.LOCA2 = obj.LOCA2
+    obj.LOCA3 = obj.LOCA3
+    obj.MILL = utils.extractArray(obj.MILL, ';');
+    obj.MILU = obj.MILU
+    obj.MOSA = obj.MOSA
+    obj.MSGCOM = obj.MSGCOM
+    obj.MUSEO = obj.MUSEO
+    obj.NSDA = obj.NSDA
+    obj.ONOM = utils.extractArray(obj.ONOM, ';');
+    obj.PAUT = obj.PAUT
+    obj.PDAT = obj.PDAT
+    obj.PDEC = obj.PDEC
+    obj.PEOC = utils.extractArray(obj.PEOC, ';');
+    obj.PERI = utils.extractArray(obj.PERI, ';');
+    obj.PERU = utils.extractArray(obj.PERU, ';');
+    obj.PHOT = obj.PHOT
+    obj.PINS = obj.PINS
+    obj.PLIEUX = obj.PLIEUX
+    obj.PREP = utils.extractArray(obj.PREP, ';');
+    obj.PUTI = obj.PUTI
+    obj.RANG = obj.RANG
+    obj.REDA = utils.extractArray(obj.REDA, ';');
+    obj.REFIM = obj.REFIM
+    obj.REPR = obj.REPR
+    obj.RETIF = obj.RETIF
+    obj.SREP = utils.extractArray(obj.SREP, ';');
+    obj.STAT = utils.extractArray(obj.STAT, ';');
+    obj.TECH = utils.extractArray(obj.TECH, ';');
+    obj.TICO = obj.TICO
+    obj.TITR = obj.TITR
+    obj.TOUT = obj.TOUT
+    obj.UTIL = utils.extractArray(obj.UTIL, ';');
+    obj.VIDEO = obj.VIDEO
+    obj.WWW = utils.extractUrls(obj.WWW, obj.REF)
+    obj.LVID = obj.LVID;
 
-    // obj.PARN = utils.extractArray(obj.PARN, ';');
-    // obj.PART = utils.extractArray(obj.PART, ';');
-    // obj.MHPP = utils.extractArray(obj.MHPP, ';');
-
-    // obj.REPR = utils.extractArray(obj.REPR, ';');
-    // obj.COUV = utils.extractArray(obj.COUV, ';');
-    // obj.MURS = utils.extractArray(obj.MURS, /[,;]/);
-    // obj.ESCA = utils.extractArray(obj.ESCA, ';');
-    // obj.PREP = utils.extractArray(obj.PREP, ';');
-    // obj.TOIT = utils.extractArray(obj.TOIT, /[,;]/);
-    // obj.LOCA = utils.extractArray(obj.LOCA, ';');
-    // obj.JDAT = utils.extractArray(obj.JDAT, ';');
-    // obj.JATT = utils.extractArray(obj.JATT, ';');
-    // obj.DOMN = utils.extractArray(obj.DOMN, ';');
-    // obj.DATE = utils.extractArray(obj.DATE, ';');
-
-    // obj.COLL = utils.extractArray(obj.COLL, ';');
-    // obj.CADA = utils.extractArray(obj.CADA, ';');
-    // obj.APRO = utils.extractArray(obj.APRO, ';');
-    // obj.VOUT = utils.extractArray(obj.VOUT, ';');
-    // obj.VISI = utils.extractArray(obj.VISI, ';');
-    // obj.PERS = utils.extractArray(obj.PERS, ';');
-    // obj.INTE = utils.extractArray(obj.INTE, ';');
-    // obj.ENER = utils.extractArray(obj.ENER, ';');
-    // obj.ELEV = utils.extractArray(obj.ELEV, ';');
-    // obj.ETAG = utils.extractArray(obj.ETAG, ';');
-    // obj.IMPL = utils.extractArray(obj.IMPL, ';');
-    // obj.PROT = utils.extractArray(obj.PROT, ';');
-
-    // //liens
-    // obj.REFE = utils.extractLink(obj.REFE, obj.REF);
-    // obj.REFO = utils.extractLink(obj.REFO, obj.REF);
-    // obj.REFP = utils.extractLink(obj.REFP, obj.REF);
-    // obj.RENV = utils.extractLink(obj.RENV, obj.REF);
-
-    // obj.WRENV = utils.extractLink(obj.WRENV, obj.REF);
-
-    // //POP DATA
-    // obj.POP_DATE = utils.extractPOPDate(obj.SCLE, obj.REF);
-
-    // {
-    //     const points = utils.extractPoint(obj.COOR, obj.ZONE, obj.REF);
-    //     if (points) { obj.POP_COORDINATES_POINT = { 'type': 'Point', coordinates: points }; }
-    // }
-
-    // {
-    //     const points = utils.extractPolygon(obj.COORM, obj.ZONE, obj.REF);
-    //     if (points) { obj.POP_COORDINATES_POLYGON = { 'type': 'Polygon', coordinates: points }; }
-    // }
-
-    // obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
-    // obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
-
-    // obj.LIENS = utils.extractUrls(obj.LIENS, obj.REF);
-
-    // switch (obj.REF.substring(0, 2)) {
-    //     case "IA": obj.POP_DOMAINE = 'Inventaire'; break;
-    //     case "PA": obj.POP_DOMAINE = 'Monument Historique'; break;
-    //     case "EA": obj.POP_DOMAINE = 'Architecture'; break;
-    //     default: obj.POP_DOMAINE = 'NULL'; break;
-    // }
+    obj.POP_HAS_IMAGE = obj.IMG.length ? "oui" : "non"
     return obj;
 }
 
+//function log(type, ref, message, content) {
 
-function extractIMG(str) {
+function extractIMG(str, ref) {
     if (!str) return []
     const arr = utils._regex(str, /([a-z0-9_\/]+.jpg)/g);
 
     if (!arr.length) {
-        console.log('ERROR ', str)
-    }   
-    console.log(arr)
+        log('ExtractJocondeImage', ref, `Error when extracting image (IMG)`, str);
+    }
     return arr.map(e => `http://www2.culture.gouv.fr/Wave/image/joconde${e}`)
 }
-
 module.exports = run;

@@ -1,5 +1,5 @@
 
-const { log } = require('./log');
+const log = require('./log');
 
 function extractIMG(str) {
     if (!str) {

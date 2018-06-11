@@ -9,14 +9,17 @@ const importPalissy = require('./import_palissy');
 //   console.log('END')
 // })
 
-importMNR().then(() => {
+// importMNR().then(() => {
+//   console.log('END')
+// })
+
+importMerimee().then(() => {
   console.log('END')
 })
 
-importJoconde().then(() => {
-  console.log('END')
-})
-
+// importJoconde().then(() => {
+//   console.log('END')
+// })
 
 
 // const Parse = require('./parsing');

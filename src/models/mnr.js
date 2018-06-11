@@ -5,7 +5,8 @@ var getElasticInstance = require("../elasticsearch");
 
 
 const Schema = new mongoose.Schema({
-    POP_DOMAINE: String,
+
+    POP_HAS_IMAGE: { type: String, default: '' },
     REF: { type: String, index: true },
     TOUT: String,
     AUTR: String,
@@ -36,7 +37,7 @@ const Schema = new mongoose.Schema({
     MILL: String,
     TECH: String,
     DIMS: String,
-    VIDEO: [String],
+    VIDEO: String,
     INV: String,
     EXPO: String,
     BIBL: String,
@@ -57,8 +58,6 @@ const Schema = new mongoose.Schema({
     NOTE2: String,
     RESUME: String,
     PHOT: String,
-    ATTR: String,
-    AUTI: String,
 }, { collection: 'mnr' })
 
 Schema.plugin(mongoosePaginate);

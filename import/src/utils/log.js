@@ -1,13 +1,13 @@
 var fs = require('fs');
-function log(type, ref, message, content) {
+
+module.exports = function log(type, ref, message, content) {
     const normalizedContent = ('' + content).replace(',', '\,').replace('"', '');
-    const str = `${type},${ref},${message},"${normalizedContent}"\n`
     console.log(`${type},${ref},${message},"${normalizedContent}"`)
-    fs.appendFileSync('parsingerrors.csv', str, (err) => {
+
+    const str = `${type},${ref},${message},"${normalizedContent}"\n`
+
+    fs.appendFileSync(`./${type}.log`, str, (err) => {
         console.log('Error saved')
     });
 }
 
-module.exports = {
-    log
-}
