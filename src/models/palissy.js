@@ -6,7 +6,7 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
     VIDEO: String,
-    CONTACT = utils.extractEmail(CONTACT, REF);
+    CONTACT: String,
     ACQU: String,
     ADRS: String,
     ADRS2: String,

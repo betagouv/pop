@@ -9,7 +9,6 @@ const Schema = new mongoose.Schema({
     IMG: [String],
     ADPT: [String],
     APPL: [String],
-
     APTN: String,
     ATTR: String,
     AUTR: String,
@@ -47,7 +46,7 @@ const Schema = new mongoose.Schema({
     LABEL: String,
     LABO: String,
     LARC: String,
-    LIEUX:: String,
+    LIEUX: String,
     LOCA: String,
     LOCA2: String,
     LOCA3: String,

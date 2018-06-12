@@ -71,6 +71,9 @@ function clean(obj) {
     obj.ETAG = utils.extractArray(obj.ETAG, ';');
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
+    
+    obj.ETUD = utils.extractArray(obj.ETUD, ';');
+    obj.COPY = utils.extractArray(obj.COPY, ';');
 
     obj.DMIS = obj.DMIS.replace('/', '-');
     obj.DMAJ = obj.DMAJ.replace('/', '-');

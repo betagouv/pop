@@ -1,24 +1,24 @@
 const express = require('express');
 const router = express.Router()
-const Merimee = require('../models/merimee');
+const Joconde = require('../models/joconde');
 
 
 router.post('/update', (req, res) => {
     var ref = req.query.ref;
-    Merimee.findOneAndUpdate({ REF: ref }, req.body, { upsert: true }).then((e) => {
+    Joconde.findOneAndUpdate({ REF: ref }, req.body, { upsert: true }).then((e) => {
         res.sendStatus(200)
     });
 })
 
 router.post('/create', (req, res) => {
-    Merimee.create(req.body).then((e) => {
+    Joconde.create(req.body).then((e) => {
         res.sendStatus(200)
     });
 })
 
 router.get('/', (req, res) => {
     var ref = req.query.ref;
-    Merimee.findOne({ REF: ref }, (err, notice) => {
+    Joconde.findOne({ REF: ref }, (err, notice) => {
         if (err) {
             console.log('ERR', err)
         } else {
