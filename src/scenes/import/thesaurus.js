@@ -7,7 +7,7 @@ export default function checkThesaurus(obj, collection) {
     return new Promise(async (resolve, reject) => {
         const arr = [];
         for (var key in obj) {
-            if (Thesaurus[collection][key]) {
+            if (Thesaurus[collection] && Thesaurus[collection][key]) {
                 if (Array.isArray(obj[key])) {
                     for (var i = 0; i < obj[key].length; i++) {
                         if (obj[key]) {
@@ -50,7 +50,16 @@ const Thesaurus = {
         "GENR": "http://data.culture.fr/thesaurus/resource/ark:/67717/T197",
         "IMPL": "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
         "INTE": "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
-    }
+    },
+    joconde: {
+
+    },
+    mnr: {
+
+    },
+    palissy: {
+
+    },
 }
 
 

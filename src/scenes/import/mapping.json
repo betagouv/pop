@@ -121,6 +121,7 @@
     "joconde": {
         "POP_HAS_IMAGE": "String",
         "REF": "String",
+        "REFMIS": "String",
         "ADPT": "Array",
         "APPL": "Array",
         "APTN": "String",

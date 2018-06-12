@@ -20,7 +20,7 @@ export default class Table extends React.Component {
     }
 
     render() {
-        const { dataSource, title } = this.props;
+        const { dataSource, title, collection } = this.props;
         if (!dataSource.length) { return <div /> }
 
         const columnsJSX = [];
@@ -34,7 +34,7 @@ export default class Table extends React.Component {
             //Affichage notices modifiées.
             const r = [];
 
-            r.push(<Col className='col' md='2' key='1'><Link to={`/notice/merimee/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col>)
+            r.push(<Col className='col' md='2' key='1'><Link to={`/notice/${collection}/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col>)
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TICO}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 

@@ -106,9 +106,9 @@ export default class ImportComponent extends Component {
     }
     return (
       <div className='import'>
-        <TableComponent dataSource={this.state.updated} title='Ces notices seront mises à jour' />
-        <TableComponent dataSource={this.state.created} title='Ces notices seront créées' />
-        <TableComponent dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
+        <TableComponent collection={this.state.collection} dataSource={this.state.updated} title='Ces notices seront mises à jour' />
+        <TableComponent collection={this.state.collection} dataSource={this.state.created} title='Ces notices seront créées' />
+        <TableComponent collection={this.state.collection} dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
         <div className='buttons'>
           <Button
             color="secondary"
