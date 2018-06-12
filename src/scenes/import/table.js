@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Container, Collapse, Badge } from 'reactstrap';
 import Pagination from "react-js-pagination";
+import { Link } from 'react-router-dom';
 
 
 export default class Table extends React.Component {
@@ -32,15 +33,21 @@ export default class Table extends React.Component {
         for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) ((i) => {
             //Affichage notices modifiées.
             const r = [];
-            r.push(<Col className='col' md='2' key='1'>{dataSource[i].notice.REF}</Col>)
+
+            r.push(<Col className='col' md='2' key='1'><Link to={`/notice/merimee/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col>)
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TICO}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
             if (dataSource[i].messages && dataSource[i].messages.length) {
-                r.push(<Col md='1' className='visu col' key='visu' >
-                    <Badge color="success" id={dataSource[i].notice.REF} >
+                r.push(<Col md='1' className='visu' key='visu' >
+                    <Badge color="success">
                         {dataSource[i].messages.length}
                     </Badge>
+                    {
+                        dataSource[i].warnings.length ? <Badge color="warning">
+                            {dataSource[i].warnings.length}
+                        </Badge> : <div />
+                    }
                 </Col>)
             }
 
@@ -50,18 +57,26 @@ export default class Table extends React.Component {
                 </Row>
             )
 
+            const messages = [];
+            //Affichage des messages
             if (dataSource[i].messages && dataSource[i].messages.length) {
-                const displayMessages = dataSource[i].messages.map(e => <div key={e.key}>Le champs <b>{e.key}</b> à évolué de "<b>{e.from}</b>" à "<b>{e.to}</b>"</div>)
-                //Affichage des modifications des champs des notices modifiées
+                for (var j = 0; j < dataSource[i].messages.length; j++) {
+                    messages.push(dataSource[i].messages[j])
+                }
+                for (var j = 0; j < dataSource[i].warnings.length; j++) {
+                    messages.push(dataSource[i].warnings[j])
+                }
+            }
+
+            if (messages.length) {
                 data.push(
                     <Collapse key={dataSource[i].notice.REF} isOpen={this.state.expandedRef === dataSource[i].notice.REF}>
                         <div className='col content' >
-                            {displayMessages}
+                            {messages}
                         </div>
                     </Collapse>
                 )
             }
-
         })(i);
 
         return (

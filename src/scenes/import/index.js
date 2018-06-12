@@ -1,57 +1,68 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Container, Collapse, Badge } from 'reactstrap';
+import { Row, Button, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
 import api from '../../services/api'
 
-import { diff, exportData } from './utils.js'
+import { diff, exportData } from './utils'
+import checkThesaurus from './thesaurus'
 import TableComponent from './table';
 
-import MappingMerimee from './mapping/merimee.json'
+import Mapping from './mapping.json';
 
 import './index.css';
 
-const COLUMNSTODISPLAY = ['REF', 'TICO', 'DENO'];
-
 export default class ImportComponent extends Component {
-  state = {
-    unChanged: [],
-    created: [],
-    updated: [],
-    errors: [],
-    displaySummary: false,
-    done: false,
-    loading: false,
-    loadingMessage: '',
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      unChanged: [],
+      created: [],
+      updated: [],
+      errors: [],
+      displaySummary: false,
+      done: false,
+      loading: false,
+      loadingMessage: '',
+      collection: this.props.match.params.collection
+    }
   }
 
-  async onImportFinish(importedNotices) {
+  async onImportFinish(importedNotices) {    //check if there are not more fields
 
-    //check if there are not more fields
     const errors = [];
     if (importedNotices.length) {
       for (let key in importedNotices[0]) {
-        if (!MappingMerimee[key]) {
-          errors.push(`La colonne ${key} est inconnue`)
+        if (!Mapping[this.state.collection][key]) {
+          errors.push(`La colonne ${key} est inconnue`);
         }
       }
     }
-    this.setState({ errors })
+
     if (errors.length) {
+      this.setState({ errors })
       return;
     }
 
     const existingNotices = []
     for (var i = 0; i < importedNotices.length; i++) {
       this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
-      const notice = await (api.getNotice('merimee', importedNotices[i].REF));
+      const notice = await (api.getNotice(this.state.collection, importedNotices[i].REF));
       if (notice) {
         existingNotices.push(notice);
       }
     }
+
     this.setState({ loadingMessage: 'Calcul des differences....' })
     const { unChanged, created, updated } = diff(importedNotices, existingNotices);
+
+    for (var i = 0; i < updated.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${updated.length}` });
+      const warnings = await (checkThesaurus(updated[i].notice, this.state.collection));
+      updated[i].warnings = warnings;
+    }
     this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
   }
 
@@ -61,16 +72,14 @@ export default class ImportComponent extends Component {
     for (var i = 0; i < this.state.updated.length; i++) {
       this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
       const ref = this.state.updated[i].notice.REF;
-      const collection = 'merimee';
-      await api.updateNotice(ref, collection, this.state.updated[i].notice);
+      await api.updateNotice(ref, this.state.collection, this.state.updated[i].notice);
     }
 
     //Create notice
     for (var i = 0; i < this.state.created.length; i++) {
       this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
-      const collection = 'merimee';
       console.log('Create', this.state.created[i].notice)
-      await api.createNotice(collection, this.state.created[i].notice);
+      await api.createNotice(this.state.collection, this.state.created[i].notice);
     }
 
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
@@ -164,56 +173,3 @@ export default class ImportComponent extends Component {
     );
   }
 }
-
-
-
-/*
-class TableComponent extends React.Component {
-
-  state = {
-    expandedRef: null,
-    activePage: 1,
-  }
-
-  render() {
-    const { dataSource, title } = this.props;
-    if (!dataSource.length) { return <div /> }
-
-    const columnsJSX = [];
-    columnsJSX.push(<Col className='col' md='2' key='1'><b>REF</b></Col>)
-    columnsJSX.push(<Col className='col' md='8' key='2'><b>TICO</b></Col>)
-    columnsJSX.push(<Col className='col' md='2' key='3'><b>DENO</b></Col>)
-
-    const data = [];
-
-    for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) {
-
-      const r = [];
-      r.push(<Col className='col' md='2' key='1'>{dataSource[i].REF}</Col>)
-      r.push(<Col className='col' md='8' key='2'>{dataSource[i].TICO}</Col>)
-      r.push(<Col className='col' md='2' key='3'>{dataSource[i].DENO}</Col>)
-
-      data.push(<Row key={dataSource[i].REF}>{r}</Row>)
-    }
-
-    return (
-      <div className='section'>
-        <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
-        <div className='table'>
-          <Row>{columnsJSX}</Row>
-          {data}
-        </div>
-        <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={dataSource.length}
-          pageRangeDisplayed={5}
-          onChange={(p) => { this.setState({ activePage: p }) }}
-        />
-      </div >
-    )
-  }
-}
-
-
-*/

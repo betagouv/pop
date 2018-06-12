@@ -7,8 +7,19 @@
 }
 
 .import .visu{
+  border-style: solid;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  border-color: #dee2e6;
+  padding : 0px 5px 0px 5px;
   text-align: center;
   font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 .import .col{
   border-style: solid;

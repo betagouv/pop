@@ -22,7 +22,11 @@ class api {
     }
 
     getThesaurus(thesaurusId, str) {
-        return this._get(`${api_url}/thesaurus?id=${thesaurusId}&search=${str}`)
+        return this._get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`)
+    }
+
+    validateWithThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`)
     }
 
     _post(url, data) {

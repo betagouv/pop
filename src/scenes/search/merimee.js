@@ -31,7 +31,7 @@ export default class Search extends React.Component {
                         <Link to='/'>Changer de base</Link>
                     </div>
                     <div className='buttons'>
-                        <Button icon={require('../../assets/import.png')} to='/import' text='Importer des notices' />
+                        <Button icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
                         <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
                     </div>
                 </div>

@@ -1,3 +1,7 @@
+import React from 'react';
+import { Badge } from 'reactstrap';
+
+
 function compare(imported, existed) {
 
     const differences = []
@@ -82,7 +86,7 @@ function diff(importedNotices, existingNotices) {
             const existingNotice = existingNotices[j];
             if (importedNotice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
-                const messages = differences.map((e, i) => { return { key: e, from: existingNotice[e], to: importedNotice[e] } })
+                const messages = differences.map(e => <div key={e}><Badge color="success">Message</Badge> Le champs <b>{e}</b> à évolué de "<b>{existingNotice[e]}</b>" à "<b>{importedNotice[e]}</b>"</div>)
                 if (differences.length) {
                     updated.push({ notice: importedNotice, messages })
                 } else {
@@ -113,7 +117,7 @@ function exportData(arr, fileName) {
         for (let key in arr[0].notice) {
             columns.push(key);
         }
-        columns.push('ERREURS')
+        // columns.push('ERREURS');
         csv += columns.join(',') + '\n'
     }
 
@@ -129,7 +133,7 @@ function exportData(arr, fileName) {
             line.push('"' + value + '"');
         }
 
-        const tt = ([].concat(arr[j].messages)).map(e => JSON.stringify(e));
+        // const tt = ([].concat(arr[j].messages)).map(e => JSON.stringify(e));
         csv += line.join(',') + '\n'
     }
 
