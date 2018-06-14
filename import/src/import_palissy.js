@@ -1,10 +1,3 @@
-var fs = require('fs');
-var async = require('asyncawait/async');
-var await = require('asyncawait/await');
-var transform = require('stream-transform');
-var csvparse = require('csv-parse');
-var batch = require('through-batch');
-
 const showInconsistentLines = require('./utils/check_file_integrity')
 const sync = require('./sync');
 const utils = require('./utils')
@@ -29,6 +22,7 @@ function run() {
 }
 
 function clean(obj) {
+    obj.REF = obj.REF.trim();
     obj.VIDEO = extractIMG(obj.VIDEO);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.ACQU = obj.ACQU;

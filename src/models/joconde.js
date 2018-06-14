@@ -16,7 +16,7 @@ const Schema = new mongoose.Schema({
     AUTR: { type: String, default: '' },
     BIBL: { type: String, default: '' },
     COMM: { type: String, default: '' },
-    CONTACT: { type: [String], default: [] },
+    CONTACT: { type: String, default: '' },
     COOR: { type: String, default: '' },
     COPY: { type: String, default: '' },
     DACQ: { type: String, default: '' },
@@ -83,7 +83,7 @@ const Schema = new mongoose.Schema({
     TOUT: { type: String, default: '' },
     UTIL: { type: [String], default: [] },
     VIDEO: { type: String, default: '' },
-    WWW: { type: [String], default: [] },
+    WWW: { type: String, default: '' },
     LVID: { type: String, default: '' },
 
 }, { collection: 'joconde' })

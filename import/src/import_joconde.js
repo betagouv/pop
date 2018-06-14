@@ -51,8 +51,8 @@ function clean(obj) {
     obj.DESY = obj.DESY
     obj.DIFFU = obj.DIFFU ? "oui" : "non"
     obj.DIMS = obj.DIMS
-    obj.DMAJ = obj.DMA
-    obj.DMIS = obj.DMIS
+    obj.DMAJ = obj.DMAJ.replace('/', '-');;
+    obj.DMIS = obj.DMIS.replace('/', '-');
     obj.DOMN = utils.extractArray(obj.DOMN, ';');
     obj.DREP = obj.DREP;
     obj.ECOL = utils.extractArray(obj.ECOL, ';');
@@ -104,7 +104,7 @@ function clean(obj) {
     obj.TOUT = obj.TOUT
     obj.UTIL = utils.extractArray(obj.UTIL, ';');
     obj.VIDEO = obj.VIDEO
-    obj.WWW = utils.extractUrls(obj.WWW, obj.REF)
+    obj.WWW = utils.extractUrls(obj.WWW, obj.REF).length ? utils.extractUrls(obj.WWW, obj.REF)[0] : '';
     obj.LVID = obj.LVID;
 
     obj.POP_HAS_IMAGE = obj.IMG.length ? "oui" : "non"

@@ -30,6 +30,7 @@ function run() {
 }
 
 function clean(obj) {
+    obj.REF = obj.REF.trim();
     obj.IMG = utils.extractIMG(obj.IMG);
     obj.CONTACT = utils.extractEmail(obj.CONTACT, obj.REF);
     obj.DENO = utils.extractArray(obj.DENO, ';');

@@ -1,13 +1,30 @@
 const Mongo = require('../../src/mongo');
 
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+
 const importMerimee = require('./import_merimee');
 const importJoconde = require('./import_joconde');
 const importMNR = require('./import_mnr');
 const importPalissy = require('./import_palissy');
 
-importPalissy().then(() => {
+async function run() {
+  await importPalissy();
   console.log('END')
-})
+  await importMNR();
+  console.log('END')
+  await importMerimee();
+  console.log('END')
+  await importJoconde();
+  console.log('END')
+}
+
+run();
+// importPalissy().then(() => {
+//   console.log('END')
+
+
+// })
 
 // importMNR().then(() => {
 //   console.log('END')

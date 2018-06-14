@@ -4,7 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
-    
+
     PRODUCTEUR: { type: String, default: '' },
     CONTIENT_IMAGE: { type: String, default: '' },
 
@@ -36,8 +36,8 @@ const Schema = new mongoose.Schema({
     DEPL: { type: String, default: '' },
     DESC: { type: String, default: '' },
     DIMS: { type: String, default: '' },
-    DMAJ: { type: [String], default: [] },
-    DMIS: { type: [String], default: [] },
+    DMAJ: { type: String, default: '' },
+    DMIS: { type: String, default: '' },
     DOMN: { type: String, default: '' },
     DOSADRS: { type: String, default: '' },
     DOSS: { type: [String], default: [] },
@@ -59,7 +59,7 @@ const Schema = new mongoose.Schema({
     IMG: { type: String, default: '' },
     IMPL: { type: String, default: '' },
     INSC: { type: [String], default: [] },
-    INSEE: { type: [String], default: [] },
+    INSEE: { type: String, default: [] },
     INSEE2: { type: String, default: '' },
     INTE: { type: String, default: '' },
     JDAT: { type: [String], default: [] },
@@ -121,24 +121,32 @@ const Schema = new mongoose.Schema({
     ZONE: { type: String, default: '' },
 }, { collection: 'palissy' })
 
+Schema.pre("findOneAndUpdate", function (next) {
+    const REF = this.getUpdate().REF;
+    const IMG = this.getUpdate().IMG;
+
+    let PRODUCTEUR;
+    switch (REF.substring(0, 2)) {
+        case "IM": PRODUCTEUR = 'Inventaire'; break;
+        case "PM": PRODUCTEUR = 'Monument Historique'; break;
+        case "EM": PRODUCTEUR = 'Etat'; break;
+        default: PRODUCTEUR = 'Null'; break;
+    }
+
+    let CONTIENT_IMAGE = IMG ? "oui" : "non";
+
+    this.update({}, {
+        PRODUCTEUR,
+        CONTIENT_IMAGE
+    })
+    next();
+});
+
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
     index: 'palissy',
     bulk: { size: 1000, delay: 1000 }
-});
-
-Schema.pre("save", function (next, done) {
-    var self = this;
-    switch (this.REF.substring(0, 2)) {
-        case "IM": this.PRODUCTEUR = 'Inventaire'; break;
-        case "PM": this.PRODUCTEUR = 'Monument Historique'; break;
-        case "EM": this.PRODUCTEUR = 'Etat'; break;
-        default: this.PRODUCTEUR = 'Null'; break;
-    }
-
-    this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
-    next();
 });
 
 
