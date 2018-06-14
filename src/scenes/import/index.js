@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Button, Container } from 'reactstrap';
+import { Row, Button, Container, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
@@ -9,7 +9,7 @@ import { diff, exportData } from './utils'
 import checkThesaurus from './thesaurus'
 import TableComponent from './table';
 
-import Mapping from './mapping.json';
+import { clean, getMapping } from './import';
 
 import './index.css';
 
@@ -30,12 +30,13 @@ export default class ImportComponent extends Component {
     }
   }
 
-  async onImportFinish(importedNotices) {    //check if there are not more fields
+  async onImportFinish(res) {    //check if there are not more fields
+    let importedNotices = res;
 
     const errors = [];
     if (importedNotices.length) {
       for (let key in importedNotices[0]) {
-        if (!Mapping[this.state.collection][key]) {
+        if (!getMapping(this.state.collection).includes(key)) {
           errors.push(`La colonne ${key} est inconnue`);
         }
       }
@@ -46,23 +47,34 @@ export default class ImportComponent extends Component {
       return;
     }
 
+    //change type
+    for (var i = 0; i < importedNotices.length; i++) {
+      importedNotices[i] = clean(this.state.collection, importedNotices[i]);
+      importedNotices[i].errors = importedNotices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>)
+    }
+
     const existingNotices = []
     for (var i = 0; i < importedNotices.length; i++) {
       this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
-      const notice = await (api.getNotice(this.state.collection, importedNotices[i].REF));
+      const notice = await (api.getNotice(this.state.collection, importedNotices[i].notice.REF));
       if (notice) {
         existingNotices.push(notice);
       }
     }
 
-    this.setState({ loadingMessage: 'Calcul des differences....' })
-    const { unChanged, created, updated } = diff(importedNotices, existingNotices);
+    this.setState({ loadingMessage: 'Calcul des differences....' });
+    importedNotices = diff(importedNotices, existingNotices);
 
-    for (var i = 0; i < updated.length; i++) {
-      this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${updated.length}` });
-      const warnings = await (checkThesaurus(updated[i].notice, this.state.collection));
-      updated[i].warnings = warnings;
+    for (var i = 0; i < importedNotices.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
+      const warnings = await (checkThesaurus(importedNotices[i].notice, this.state.collection));
+      importedNotices[i].warnings = warnings;
     }
+
+    const unChanged = importedNotices.filter(e => e.status === 'unchanged');
+    const created = importedNotices.filter(e => e.status === 'created');
+    const updated = importedNotices.filter(e => e.status === 'updated');
+
     this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
   }
 

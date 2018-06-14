@@ -40,12 +40,17 @@ export default class Table extends React.Component {
 
             if (dataSource[i].messages && dataSource[i].messages.length) {
                 r.push(<Col md='1' className='visu' key='visu' >
-                    <Badge color="success">
+                    <Badge key="success" color="success">
                         {dataSource[i].messages.length}
                     </Badge>
                     {
-                        dataSource[i].warnings.length ? <Badge color="warning">
+                        dataSource[i].warnings.length ? <Badge key="warning" color="warning">
                             {dataSource[i].warnings.length}
+                        </Badge> : <div />
+                    }
+                    {
+                        dataSource[i].errors.length ? <Badge key="danger" color="danger">
+                            {dataSource[i].errors.length}
                         </Badge> : <div />
                     }
                 </Col>)
@@ -65,6 +70,9 @@ export default class Table extends React.Component {
                 }
                 for (var j = 0; j < dataSource[i].warnings.length; j++) {
                     messages.push(dataSource[i].warnings[j])
+                }
+                for (var j = 0; j < dataSource[i].errors.length; j++) {
+                    messages.push(dataSource[i].errors[j])
                 }
             }
 

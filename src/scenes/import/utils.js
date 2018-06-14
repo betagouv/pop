@@ -10,48 +10,56 @@ function compare(imported, existed) {
     // if both imported and existed are null or undefined and exactly the same
 
     if (!(imported instanceof Object) || !(existed instanceof Object)) {
-        console.error('Error when comparing imported and existed objects')
+        //     console.error('Error when comparing imported and existed objects')
         return differences;
     }
     // if they are not strictly equal, they both need to be Objects
 
     if (imported.constructor !== existed.constructor) {
-        console.error('Error when comparing imported and existed objects constructors')
+        //     console.error('Error when comparing imported and existed objects constructors')
         return differences;
     }
     // they must have the exact same prototype chain, the closest we can do is
     // test there constructor.
 
     for (var p in imported) {
-        imported[p] = imported[p].trim();
-
         if (!imported.hasOwnProperty(p)) continue;
         //other properties were tested using imported.constructor === existed.constructor
 
         if (!existed.hasOwnProperty(p)) {
-            console.log('diff', imported[p], existed[p])
+            //     console.log('diff1 : ', p, imported[p], existed[p])
             differences.push(p)
             continue;
         }
 
+        if (imported[p] == existed[p]) continue;
+
         if (Array.isArray(existed[p]) && !existed[p].length && imported[p]) {
             continue;
         }
+
+        // imported[p] = imported[p].trim();
 
         if (isInt(existed[p])) {
             imported[p] = addZero(imported[p], existed[p].toString().length)
         }
 
         //allows to compare imported[ p ] and existed[ p ] when set to undefined
-        if (imported[p] === existed[p]) continue;
+        if (imported[p] == existed[p] || imported[p] === undefined && existed[p] === '' || imported[p] === undefined && Array.isArray(existed[p]) && !existed[p].length) continue;
 
-        //transform to array
-        if (Array.isArray(existed[p])) {
-            imported[p] = imported[p] ? imported[p].split(';') : [];
+
+        if (Array.isArray(imported[p]) !== Array.isArray(existed[p])) {
+            //     console.log('diff2 :', p, imported[p], existed[p])
+            differences.push(p)
+            continue;
+        }
+
+        if (Array.isArray(imported[p]) && Array.isArray(existed[p])) {
             if (imported[p].length == existed[p].length && imported[p].every((v, i) => v === existed[p][i])) continue;
         }
 
-        console.log('diff', imported[p], existed[p])
+
+        //    console.log('diff3 :', p, '#', imported[p], '#', existed[p], '#', imported[p] == existed[p])
         // if they have the same strict value or identity then they are equal
         //if (!imported[p] && (!existed[p] || (Array.isArray(existed[p]) && !existed[p].length))) continue;
         differences.push(p)
@@ -73,39 +81,31 @@ function isInt(value) {
 }
 
 function diff(importedNotices, existingNotices) {
-    const unChanged = [];
-    const updated = [];
-    const created = [];
-    const invalid = [];
-
 
     for (var i = 0; i < importedNotices.length; i++) {
-        let importedNotice = importedNotices[i];
+        let importedNotice = importedNotices[i].notice;
         let found = false;
         for (var j = 0; j < existingNotices.length; j++) {
             const existingNotice = existingNotices[j];
-            if (importedNotice.REF === existingNotice.REF) {
+            if (importedNotices[i].notice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
-                const messages = differences.map(e => <div key={e}><Badge color="success">Message</Badge> Le champs <b>{e}</b> à évolué de "<b>{existingNotice[e]}</b>" à "<b>{importedNotice[e]}</b>"</div>)
+                const messages = differences.map(e => <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>)
+                importedNotices[i].messages = messages;
+
                 if (differences.length) {
-                    updated.push({ notice: importedNotice, messages })
+                    importedNotices[i].status = 'updated';
                 } else {
-                    unChanged.push({ notice: existingNotice })
+                    importedNotices[i].status = 'unchanged';
                 }
                 found = true;
             }
         }
         if (!found) {
-            created.push({ notice: importedNotice });
+            importedNotices[i].status = 'created';
         }
     }
 
-    return {
-        unChanged,
-        created,
-        updated,
-        invalid
-    }
+    return importedNotices;
 }
 
 
@@ -117,7 +117,7 @@ function exportData(arr, fileName) {
         for (let key in arr[0].notice) {
             columns.push(key);
         }
-        // columns.push('ERREURS');
+        columns.push('ERREURS');
         csv += columns.join(',') + '\n'
     }
 
