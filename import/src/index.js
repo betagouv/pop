@@ -5,17 +5,17 @@ const importJoconde = require('./import_joconde');
 const importMNR = require('./import_mnr');
 const importPalissy = require('./import_palissy');
 
-// importPalissy().then(() => {
-//   console.log('END')
-// })
+importPalissy().then(() => {
+  console.log('END')
+})
 
 // importMNR().then(() => {
 //   console.log('END')
 // })
 
-importMerimee().then(() => {
-  console.log('END')
-})
+// importMerimee().then(() => {
+//   console.log('END')
+// })
 
 // importJoconde().then(() => {
 //   console.log('END')

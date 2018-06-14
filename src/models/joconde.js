@@ -4,7 +4,9 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
-    POP_HAS_IMAGE: { type: String, default: '' },
+    PRODUCTEUR: { type: String, default: '' },
+    CONTIENT_IMAGE: { type: String, default: '' },
+    
     REF: { type: String, index: true },
     IMG: { type: [String], default: [] },
     ADPT: { type: [String], default: [] },

@@ -5,9 +5,9 @@ var getElasticInstance = require("../elasticsearch");
 
 
 const Schema = new mongoose.Schema({
+    PRODUCTEUR: { type: String, default: 'MNR' },
+    CONTIENT_IMAGE: { type: String, default: 'non' },
 
-    POP_HAS_IMAGE: { type: String, default: '' },
-    REF: { type: String, index: true },
     TOUT: { type: String, default: '' },
     AUTR: { type: String, default: '' },
     PAUT: { type: String, default: '' },
@@ -16,7 +16,7 @@ const Schema = new mongoose.Schema({
     TITR: { type: String, default: '' },
     ATIT: { type: String, default: '' },
     PTIT: { type: String, default: '' },
-    DENO: { type: String, default: '' },
+    DENO: { type: [String], default: [] },
     DESC: { type: String, default: '' },
     DOMN: { type: String, default: '' },
     LOCA: { type: String, default: '' },
@@ -32,12 +32,12 @@ const Schema = new mongoose.Schema({
     HIST4: { type: String, default: '' },
     HIST5: { type: String, default: '' },
     HIST6: { type: String, default: '' },
-    SCLE: { type: String, default: '' },
+    SCLE: { type: [String], default: [] },
     STYL: { type: String, default: '' },
     MILL: { type: String, default: '' },
-    TECH: { type: String, default: '' },
+    TECH: { type: [String], default: [] },
     DIMS: { type: String, default: '' },
-    VIDEO: { type: String, default: '' },
+    VIDEO: { type: [String], default: [] },
     INV: { type: String, default: '' },
     EXPO: { type: String, default: '' },
     BIBL: { type: String, default: '' },

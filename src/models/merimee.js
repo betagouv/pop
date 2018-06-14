@@ -5,7 +5,11 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema({
     REF: { type: String, index: true },
-    POP_DOMAINE: { type: String, default: '' },
+
+    PRODUCTEUR: { type: String, default: '' },
+    CONTIENT_IMAGE: { type: String, default: '' },
+
+    
     POP_COORDINATES_POINT: {
         'type': {
             type: String,
@@ -22,7 +26,6 @@ const Schema = new mongoose.Schema({
         },
         coordinates: [[{ type: [Number] }]]
     },
-    POP_HAS_IMAGE: { type: String, default: '' },
     POP_HAS_LOCATION: { type: [String], default: '' },
     POP_DATE: { type: [Number], default: [] },
     TOUT: { type: String, default: '' },
@@ -144,6 +147,21 @@ Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
     index: 'merimee',
     bulk: { size: 1000, delay: 1000 }
+});
+
+
+
+Schema.pre("save", function (next, done) {
+    var self = this;
+    switch (this.REF.substring(0, 2)) {
+        case "IA": this.PRODUCTEUR = 'Inventaire'; break;
+        case "PA": this.PRODUCTEUR = 'Monument Historique'; break;
+        case "EA": this.PRODUCTEUR = 'Architecture'; break;
+        default: this.PRODUCTEUR = 'Null'; break;
+    }
+
+    this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
+    next();
 });
 
 const object = mongoose.model("merimee", Schema)

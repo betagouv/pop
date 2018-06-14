@@ -69,7 +69,7 @@ function clean(obj) {
     obj.EDIF2 = obj.EDIF2;
     obj.EMPL = obj.EMPL;
     obj.EMPL2 = obj.EMPL2;
-    obj.ETAT = utils.extractArray(obj.DOSS, ';');
+    obj.ETAT = utils.extractArray(obj.ETAT, ';');
     obj.ETUD = obj.ETUD;
     obj.EXEC = obj.EXEC;
     obj.EXPO = obj.EXPO;

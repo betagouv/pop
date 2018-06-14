@@ -3,8 +3,12 @@ var mongoosePaginate = require('mongoose-paginate');
 var mongoosastic = require('mongoosastic')
 var getElasticInstance = require("../elasticsearch");
 const Schema = new mongoose.Schema({
-    POP_DOMAINE: { type: String, default: '' },
+
+    PRODUCTEUR: { type: String, default: '' },
+    CONTIENT_IMAGE: { type: String, default: '' },
+
     REF: { type: String, index: true },
+
     TOUT: { type: String, default: '' },
     ADRESSE: { type: String, default: '' },
     AUTOEU: { type: String, default: '' },
