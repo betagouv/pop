@@ -38,7 +38,7 @@ function clean(obj) {
     obj.TITR = obj.TITR;
     obj.ATIT = obj.ATIT;
     obj.PTIT = obj.PTIT;
-    DENO = utils.extractArray(obj.DENO, ';');
+    obj.DENO = utils.extractArray(obj.DENO, ';');
     obj.DESC = obj.DESC;
     obj.DOMN = obj.DOMN;
     obj.LOCA = obj.LOCA;
@@ -54,12 +54,12 @@ function clean(obj) {
     obj.HIST4 = obj.HIST4;
     obj.HIST5 = obj.HIST5;
     obj.HIST6 = obj.HIST6;
-    SCLE = utils.extractArray(obj.SCLE, ';');
+    obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.STYL = obj.STYL;
     obj.MILL = obj.MILL;
-    TECH = utils.extractArray(obj.TECH, ';');
+    obj.TECH = utils.extractArray(obj.TECH, ';');
     obj.DIMS = obj.DIMS;
-    VIDEO = extractIMG(obj.VIDEO);
+    obj.VIDEO = extractIMG(obj.VIDEO);
     obj.INV = obj.INV;
     obj.EXPO = obj.EXPO;
     obj.BIBL = obj.BIBL;

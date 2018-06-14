@@ -10,7 +10,7 @@ function extractIMG(str) {
 
 function extractEmail(str, REF) {
     if (!str) { return '' }
-    var regex = /mailto:([\w\d._@]*)/
+    var regex = /mailto:([\w\d-._@]*)/
     var result = str.match(regex);
     if (result && result.length == 2) {
         return result[1];
@@ -28,8 +28,7 @@ function extractArray(val, delim) {
 
 function extractAuteurs(str, REF) {
     if (!str) { return []; }
-    const interdits = ['dit', 'ou', 'et']
-    const arr = _regex(str, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g).filter((e) => interdits.indexOf(e) === -1);
+    const arr = _regex(str, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g);
 
     if (!arr.length) {
         log('AUTEURS', REF, 'Can\'t extract auteur', str)
