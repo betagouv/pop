@@ -18,7 +18,7 @@ import ExportComponent from './components/export';
 
 import { es_url } from '../../config.js';
 
-const FILTER = ["mainSearch"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech"]
 
 export default class Search extends React.Component {
     render() {
@@ -68,7 +68,64 @@ export default class Search extends React.Component {
                     </div>
                     <Row>
                         <Col xs="3">
+                            <SingleList
+                                componentId="domn"
+                                dataField="DOMN.keyword"
+                                title="Domaine"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
 
+                            <SingleList
+                                componentId="deno"
+                                dataField="DENO.keyword"
+                                title="Denomination"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="periode"
+                                dataField="PERI.keyword"
+                                title="Periode"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <SingleList
+                                componentId="image"
+                                dataField="CONTIENT_IMAGE.keyword"
+                                title="Contient une image"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <SingleList
+                                componentId="tech"
+                                dataField="TECH.keyword"
+                                title="techniques"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
                         </Col>
                         <Col xs="9">
                             <SelectedFilters />

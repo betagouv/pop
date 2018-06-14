@@ -79,7 +79,7 @@
 .search .card .content{
   padding: 5px;
   overflow: hidden;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   width: 100%;
 }
 
