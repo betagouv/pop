@@ -87,7 +87,6 @@ const styles = {
     },
     title: {
         paddingRight: '15px',
-        whiteSpace: 'nowrap',
         minWidth: '100px',
         color: '#5a5a5a',
         fontStyle: 'italic'

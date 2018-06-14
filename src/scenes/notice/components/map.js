@@ -44,6 +44,10 @@ export default class MapComponent extends React.Component {
     render() {
         let center = null;
 
+        if (!this.props.notice.POP_COORDINATES_POINT && !this.props.notice.POP_COORDINATES_POLYGON) {
+            return <div />
+        }
+
         if (this.props.notice.POP_COORDINATES_POINT.coordinates.length) {
             center = this.props.notice.POP_COORDINATES_POINT.coordinates;
         }

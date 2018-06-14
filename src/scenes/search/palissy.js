@@ -18,7 +18,7 @@ import ExportComponent from './components/export';
 
 import { es_url } from '../../config.js';
 
-const FILTER = ["mainSearch"]
+const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"];
 
 export default class Search extends React.Component {
     render() {
@@ -68,6 +68,101 @@ export default class Search extends React.Component {
                     </div>
                     <Row>
                         <Col xs="3">
+                            <SingleList
+                                componentId="image"
+                                dataField="CONTIENT_IMAGE.keyword"
+                                title="Contient une image"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            {/* <SingleList
+                                componentId="location"
+                                dataField="POP_HAS_LOCATION.keyword"
+                                title="Contient une localisation"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            /> */}
+                            <MultiList
+                                componentId="producteur"
+                                dataField="PRODUCTEUR.keyword"
+                                title="Producteur"
+                                className="filters"
+                                showSearch={false}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="denomination"
+                                dataField="DENO.keyword"
+                                title="Dénominations"
+                                className="filters"
+                                placeholder="Rechercher une dénomination"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="auteurs"
+                                dataField="AUTR.keyword"
+                                showMissing={true}
+                                size={100}
+                                title="Auteurs"
+                                className="filters"
+                                placeholder="Rechercher un auteur"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <hr />
+                            <MultiList
+                                componentId="region"
+                                dataField="REG.keyword"
+                                title="Region"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher une région"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="departement"
+                                dataField="DPT.keyword"
+                                title="Departements"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher un département"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <MultiList
+                                componentId="commune"
+                                dataField="COM.keyword"
+                                title="Communes"
+                                showCount={true}
+                                className="filters"
+                                placeholder="Rechercher une commune"
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
 
                         </Col>
                         <Col xs="9">

@@ -70,7 +70,7 @@ export default class Search extends React.Component {
                         <Col xs="3">
                             <SingleList
                                 componentId="image"
-                                dataField="POP_HAS_IMAGE.keyword"
+                                dataField="CONTIENT_IMAGE.keyword"
                                 title="Contient une image"
                                 className="filters"
                                 showSearch={false}
@@ -91,9 +91,9 @@ export default class Search extends React.Component {
                                 }}
                             />
                             <MultiList
-                                componentId="domaine"
-                                dataField="POP_DOMAINE.keyword"
-                                title="Domaines"
+                                componentId="producteur"
+                                dataField="PRODUCTEUR.keyword"
+                                title="Producteur"
                                 className="filters"
                                 showSearch={false}
                                 URLParams={true}
