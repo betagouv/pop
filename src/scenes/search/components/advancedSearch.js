@@ -10,8 +10,6 @@ import {
 
 
 export default class Search extends React.Component {
-
-
     render() {
         return (
             <ReactiveComponent
@@ -19,7 +17,7 @@ export default class Search extends React.Component {
                 className="mainSearch"
                 style={{ width: "100%" }}
             >
-                <CustomComponent className="mainSearch" />
+                <CustomComponent style={{ width: "100%" }} />
             </ReactiveComponent>
         );
     }
@@ -36,34 +34,32 @@ class CustomComponent extends React.Component {
         try {
             let query = JSON.parse(this.state.value);
             this.props.setQuery(query);
-
-            console.log('QUERY SETTED ', query)
         } catch (er) {
             console.log('ERR', err)
         };
     }
 
     render() {
-        return (<div >
-            <AceEditor
-                mode="json"
-                theme="monokai"
-                name="blah2"
-                showGutter={true}
-                value={this.state.value}
-                onChange={(e) => this.setState({ value: e })}
-                width="100%"
-                name="queryeditor"
-                editorProps={{ $blockScrolling: true }}
-                setOptions={{
-                    enableBasicAutocompletion: false,
-                    enableLiveAutocompletion: false,
-                    enableSnippets: false,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                }}
-            />
-            <Button color="primary" onClick={this.setValue.bind(this)}>Executer</Button>
-        </div>);
+        return (
+            <div className='yo' style={{ width: '100%' }}>
+                <AceEditor
+                    mode="json"
+                    theme="monokai"
+                    name="blah2"
+                    showGutter={true}
+                    value={this.state.value}
+                    onChange={(e) => this.setState({ value: e })}
+                    name="queryeditor"
+                    editorProps={{ $blockScrolling: true }}
+                    setOptions={{
+                        enableBasicAutocompletion: false,
+                        enableLiveAutocompletion: false,
+                        enableSnippets: false,
+                        showLineNumbers: true,
+                        tabSize: 2,
+                    }}
+                />
+                <Button color="primary" onClick={this.setValue.bind(this)}>Executer</Button>
+            </div>);
     }
 }
