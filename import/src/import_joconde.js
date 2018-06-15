@@ -107,7 +107,9 @@ function clean(obj) {
     obj.WWW = utils.extractUrls(obj.WWW, obj.REF).length ? utils.extractUrls(obj.WWW, obj.REF)[0] : '';
     obj.LVID = obj.LVID;
 
-    obj.POP_HAS_IMAGE = obj.IMG.length ? "oui" : "non"
+    //GENERATED 
+    obj.CONTIENT_IMAGE = obj.IMG.length ? "oui" : "non"
+
     return obj;
 }
 

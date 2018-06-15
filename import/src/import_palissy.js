@@ -133,12 +133,42 @@ function clean(obj) {
     obj.WEB = obj.WEB;
     obj.WRENV = obj.WRENV;
     obj.ZONE = obj.ZONE;
+
+
+    //GENERATED FIELDS
+
+    let PRODUCTEUR;
+    switch (obj.REF.substring(0, 2)) {
+        case "IM": PRODUCTEUR = 'Inventaire'; break;
+        case "PM": PRODUCTEUR = 'Monument Historique'; break;
+        case "EM": PRODUCTEUR = 'Etat'; break;
+        default: PRODUCTEUR = 'Null'; break;
+    }
+    obj.PRODUCTEUR = PRODUCTEUR;
+
+    obj.CONTIENT_IMAGE = obj.IMG ? "oui" : "non";
+
     return obj;
 }
 
 
-function extractIMG(str) {
-    // if (!str) return []
+function extractIMG(str, REF) {
+    if (!str) return '';
+
+    const arr1 = utils._regex(str, /(www.[\w\d.\/]*)/g);
+    if (arr1.length === 1) {
+        return arr1[0];
+    }
+
+    const arr2 = utils._regex(str, /(\/[\w\d.\/]*)/g);
+    if (arr2.length === 1) {
+        return 'www.culture.gouv.fr/Wave/image/memoire' + arr2[0];
+    }
+
+    console.log('IMAGE', REF, 'Cant extract image', str)
+
+    return str;
+
     // const arr = utils.extractArray(str, ';');
     // return arr.map(e => `http://www2.culture.gouv.fr/Wave/image/joconde${e}`)
 }

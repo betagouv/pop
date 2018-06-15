@@ -17,7 +17,7 @@ function run() {
             console.log('End file integrity check', errs.length);
 
             console.log('Start syncWithMongoDb');
-            await (sync(files[i], require('../../src/models/merimee'), clean))
+            await (sync(files[i], require('../../src/models/memoire'), clean))
             console.log('End syncWithMongoDb');
         }
         resolve();

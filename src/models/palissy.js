@@ -121,7 +121,9 @@ const Schema = new mongoose.Schema({
     ZONE: { type: String, default: '' },
 }, { collection: 'palissy' })
 
-Schema.pre("findOneAndUpdate", function (next) {
+Schema.pre("update", function (next) {
+
+    // console.log('UPDATE', this)
     const REF = this.getUpdate().REF;
     const IMG = this.getUpdate().IMG;
 

@@ -72,7 +72,7 @@ function clean(obj) {
     obj.ETAG = utils.extractArray(obj.ETAG, ';');
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
-    
+
     obj.ETUD = utils.extractArray(obj.ETUD, ';');
     obj.COPY = utils.extractArray(obj.COPY, ';');
 
@@ -101,16 +101,23 @@ function clean(obj) {
     }
 
     obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
-    obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
 
     obj.LIENS = utils.extractUrls(obj.LIENS, obj.REF);
 
+
+
+
+    let PRODUCTEUR = '';
     switch (obj.REF.substring(0, 2)) {
-        case "IA": obj.POP_DOMAINE = 'Inventaire'; break;
-        case "PA": obj.POP_DOMAINE = 'Monument Historique'; break;
-        case "EA": obj.POP_DOMAINE = 'Architecture'; break;
-        default: obj.POP_DOMAINE = 'NULL'; break;
+        case "IA": PRODUCTEUR = 'Inventaire'; break;
+        case "PA": PRODUCTEUR = 'Monument Historique'; break;
+        case "EA": PRODUCTEUR = 'Architecture'; break;
+        default: PRODUCTEUR = 'Null'; break;
     }
+    obj.PRODUCTEUR = PRODUCTEUR;
+
+    obj.CONTIENT_IMAGE = obj.IMG ? "oui" : "non";
+
     return obj;
 }
 

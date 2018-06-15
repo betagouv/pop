@@ -7,15 +7,18 @@ const importMerimee = require('./import_merimee');
 const importJoconde = require('./import_joconde');
 const importMNR = require('./import_mnr');
 const importPalissy = require('./import_palissy');
+const importMemoire = require('./import_memoire');
 
 async function run() {
-  await importPalissy();
+  // await importPalissy();
   console.log('END')
-  await importMNR();
+  // await importMNR();
   console.log('END')
-  await importMerimee();
+  // await importMerimee();
   console.log('END')
-  await importJoconde();
+  // await importJoconde();
+  console.log('END')
+  await importMemoire();
   console.log('END')
 }
 

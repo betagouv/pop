@@ -6,9 +6,7 @@ const Schema = new mongoose.Schema({
 
     PRODUCTEUR: { type: String, default: '' },
     CONTIENT_IMAGE: { type: String, default: '' },
-
     REF: { type: String, index: true },
-
     TOUT: { type: String, default: '' },
     ADRESSE: { type: String, default: '' },
     AUTOEU: { type: String, default: '' },

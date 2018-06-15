@@ -63,9 +63,9 @@ module.exports = function syncWithMongoDb(file, object, clean) {
             .pipe(parser)
             .pipe(toObject)
             .pipe(toClean)
-            // .pipe(batch(1000))
-            //.pipe(mongo)
-            .pipe(mongoUnit)
+            .pipe(batch(1000))
+            .pipe(mongo)
+            // .pipe(mongoUnit)
             .on('finish', () => {
                 console.log('Stream finish');
                 resolve();

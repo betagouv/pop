@@ -81,7 +81,7 @@ function clean(obj) {
     obj.NOTE2 = obj.NOTE2;
     obj.RESUME = obj.RESUME;
     obj.PHOT = obj.PHOT;
-    obj.POP_HAS_IMAGE = obj.VIDEO.length ? "oui" : "non"
+    obj.CONTIENT_IMAGE = obj.VIDEO.length ? "oui" : "non"
     return obj;
 }
 

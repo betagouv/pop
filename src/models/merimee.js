@@ -151,8 +151,7 @@ Schema.plugin(mongoosastic, {
 
 
 
-Schema.pre("validate", function (next, done) {
-    var self = this;
+Schema.pre("update", function (next, done) {
     switch (this.REF.substring(0, 2)) {
         case "IA": this.PRODUCTEUR = 'Inventaire'; break;
         case "PA": this.PRODUCTEUR = 'Monument Historique'; break;
