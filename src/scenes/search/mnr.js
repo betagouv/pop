@@ -25,11 +25,6 @@ export default class Search extends React.Component {
         return (
             <Container className='search'>
                 <div className='header'>
-                    <div className='title-zone'>
-                        <img className='logo' src={require('../../assets/mnr.jpg')} />
-                        <div className='title'>Vous travaillez dans la base MNR</div>
-                        <Link to='/'>Changer de base</Link>
-                    </div>
                     <div className='buttons'>
                         <Button icon={require('../../assets/import.png')} to='/import/mnr' text='Importer des notices' />
                         <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />

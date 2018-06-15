@@ -16,21 +16,27 @@ import {
 import Button from './components/button';
 import ExportComponent from './components/export';
 
+import AdvancedSearch from './components/advancedSearch';
+
 import { es_url } from '../../config.js';
 
 const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"]
 
 export default class Search extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            normalMode: true
+        }
+    }
+
     render() {
         return (
             <Container className='search'>
                 <div className='header'>
-                    <div className='title-zone'>
-                        <img className='logo' src={require('../../assets/merimee.jpg')} />
-                        <div className='title'>Vous travaillez dans la base mérimée</div>
-                        <Link to='/'>Changer de base</Link>
-                    </div>
                     <div className='buttons'>
+                        <Button onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
                         <Button icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
                         <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
                     </div>
@@ -41,7 +47,7 @@ export default class Search extends React.Component {
                 >
                     <div className='title'>Rechercher une Notice</div>
                     <div className='search-and-export-zone'>
-                        <DataSearch
+                        {this.state.normalMode ? <DataSearch
                             componentId="mainSearch"
                             dataField={["TICO", "DENO", "REF", "LOCA"]}
                             queryFormat="and"
@@ -50,21 +56,13 @@ export default class Search extends React.Component {
                             placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                             URLParams={true}
                         />
-
-                        <ReactiveComponent
-                            componentId='export'
-                            react={{
-                                and: FILTER
-                            }}
-                            defaultQuery={() => ({
-                                size: 100,
-                                aggs: {},
-                            })}
-                        >
-                            <ExportComponent
-                                column={['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL']}
-                            />
-                        </ReactiveComponent>
+                            :
+                            <AdvancedSearch />
+                        }
+                        <ExportComponent
+                            FILTER={FILTER}
+                            column={['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL']}
+                        />
                     </div>
                     <Row>
                         <Col xs="3">

@@ -1,12 +1,10 @@
 import React from 'react';
 import { Row, Col, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import {
     ReactiveBase,
     DataSearch,
     ReactiveList,
-    MultiList,
     SingleList,
     SelectedFilters,
     ReactiveComponent
@@ -24,21 +22,17 @@ export default class Search extends React.Component {
     render() {
         return (
             <Container className='search'>
-                <div className='header'>
-                    <div className='title-zone'>
-                        <img className='logo' src={require('../../assets/joconde.jpg')} />
-                        <div className='title'>Vous travaillez dans la base joconde</div>
-                        <Link to='/'>Changer de base</Link>
-                    </div>
-                    <div className='buttons'>
-                        <Button icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
-                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
-                    </div>
-                </div>
                 <ReactiveBase
                     url={`${es_url}/joconde`}
                     app="joconde"
                 >
+                    <div className='header'>
+                        <div className='buttons'>
+                            <Button icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
+                            <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
+                            <Button icon={require('../../assets/edit.png')} to='/new' text='Recherche avancée' />
+                        </div>
+                    </div>
                     <div className='title'>Rechercher une Notice</div>
                     <div className='search-and-export-zone'>
                         <DataSearch

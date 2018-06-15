@@ -5,38 +5,16 @@
   flex-direction: column;
 }
 
-.search .header{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: 20px;
-}
-
-.search .header .title-zone{
-  display: flex;
-  padding-top: 24px;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.search .header .buttons{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
-.search .header .logo{
-  width: 90px;
-}
-
 .search .mainSearch{
   padding: 50px;
   width: 100%;
 }
 
+.search .buttons{
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
 
 .search .search-and-export-zone{
   display: flex;

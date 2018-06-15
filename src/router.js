@@ -27,9 +27,9 @@ export default class PublicRoutes extends React.Component {
           <Header />
           <Switch>
             <Route exact path={'/'} component={Home} />
-            <Route path={'/search'} component={Search} />
+            <Route path={'/search/:collection'} component={Search} />
             <Route path={'/import/:collection'} component={Import} />
-            <Route path={'/notice/:ref'} component={Notice} />
+            <Route path={'/notice/:collection/:ref'} component={Notice} />
           </Switch>
         </div>
       </ConnectedRouter>
