@@ -16,11 +16,9 @@ export default class Search extends React.Component {
     render() {
         return (
             <ReactiveComponent
-                componentId="mainSearch"   // a unique id we will refer to later
-                className="mainSearch"
-                style={{ width: "100%" }}
+                componentId="advancedSearch"   // a unique id we will refer to later
             >
-                <CustomComponent style={{ width: "100%" }} />
+                <CustomComponent />
             </ReactiveComponent>
         );
     }
@@ -30,13 +28,18 @@ export default class Search extends React.Component {
 class CustomComponent extends React.Component {
 
     state = {
-        value: '{}',
+        value: `{    
+            "query_string": {
+                "query": "DENO:(calice OR tableau) AND CONTIENT_IMAGE:oui"
+            }
+        }`,
         modal: false,
     }
 
     exec() {
         try {
             let query = JSON.parse(this.state.value);
+            console.log('Set query', query)
             this.props.setQuery(query);
         } catch (er) {
             console.log('ERR', err)
@@ -58,9 +61,6 @@ class CustomComponent extends React.Component {
                     name="queryeditor"
                     editorProps={{ $blockScrolling: true }}
                     setOptions={{
-                        enableBasicAutocompletion: false,
-                        enableLiveAutocompletion: false,
-                        enableSnippets: false,
                         showLineNumbers: true,
                         tabSize: 2,
                     }}

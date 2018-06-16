@@ -39,7 +39,7 @@ export default class Search extends React.Component {
                 <ReactiveList
                     componentId="results"
                     react={{
-                        "and": FILTER
+                        "and": ['advancedSearch']
                     }}
                     onResultStats={(total, took) => {
                         return `${total} résultats trouvés en ${took} ms.`
