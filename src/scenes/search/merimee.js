@@ -35,29 +35,22 @@ export default class Search extends React.Component {
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <Row>
-                    <Col xs="6">
-                        <AdvancedSearch className='yi' style={{ width: "100%" }} />
-                    </Col>
-                    <Col xs="6">
-                        <SelectedFilters />
-                        <ReactiveList
-                            componentId="results"
-                            react={{
-                                "and": FILTER
-                            }}
-                            onResultStats={(total, took) => {
-                                return `${total} résultats trouvés en ${took} ms.`
-                            }}
-                            dataField=''
-                            URLParams={true}
-                            size={20}
-                            onData={(data) => <Card key={data.REF} data={data} />}
-                            pagination={true}
-                        />
-                    </Col>
-                </Row>
-            </div>
+                <AdvancedSearch className='yi' style={{ width: "100%" }} />
+                <ReactiveList
+                    componentId="results"
+                    react={{
+                        "and": FILTER
+                    }}
+                    onResultStats={(total, took) => {
+                        return `${total} résultats trouvés en ${took} ms.`
+                    }}
+                    dataField=''
+                    URLParams={true}
+                    size={20}
+                    onData={(data) => <Card key={data.REF} data={data} />}
+                    pagination={true}
+                />
+            </div >
         )
     }
 

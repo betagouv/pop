@@ -34,6 +34,9 @@
   padding: 5px;
   margin-top: 10px;
 }
+.search .row{
+  padding-top: 20px;
+}
 
 .search .filters span{
   text-overflow: ellipsis;
