@@ -1,19 +1,9 @@
 import React from 'react';
-import { Row, Col, Input, Container } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import {
-    ReactiveBase,
-    DataSearch,
-    ReactiveList,
-    MultiList,
-    SingleList,
-    SelectedFilters,
-    ReactiveComponent
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch, ReactiveList, MultiList, SingleList, SelectedFilters } from '@appbaseio/reactivesearch';
 
-
-import Button from './components/button';
+import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
 import AdvancedSearch from './components/advancedSearch';
@@ -38,14 +28,10 @@ export default class Search extends React.Component {
                 <AdvancedSearch className='yi' style={{ width: "100%" }} />
                 <ReactiveList
                     componentId="results"
-                    react={{
-                        "and": ['advancedSearch']
-                    }}
-                    onResultStats={(total, took) => {
-                        return `${total} résultats trouvés en ${took} ms.`
-                    }}
-                    dataField=''
+                    react={{ "and": ['advancedSearch'] }}
+                    onResultStats={(total, took) => { return `${total} résultats trouvés en ${took} ms.` }}
                     URLParams={true}
+                    dataField=''
                     size={20}
                     onData={(data) => <Card key={data.REF} data={data} />}
                     pagination={true}
@@ -82,9 +68,7 @@ export default class Search extends React.Component {
                             className="filters"
                             showSearch={false}
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <SingleList
                             componentId="location"
@@ -93,9 +77,7 @@ export default class Search extends React.Component {
                             className="filters"
                             showSearch={false}
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <MultiList
                             componentId="producteur"
@@ -104,9 +86,7 @@ export default class Search extends React.Component {
                             className="filters"
                             showSearch={false}
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <MultiList
                             componentId="denomination"
@@ -115,9 +95,7 @@ export default class Search extends React.Component {
                             className="filters"
                             placeholder="Rechercher une dénomination"
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <MultiList
                             componentId="auteurs"
@@ -128,9 +106,7 @@ export default class Search extends React.Component {
                             className="filters"
                             placeholder="Rechercher un auteur"
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <hr />
                         <MultiList
@@ -141,9 +117,7 @@ export default class Search extends React.Component {
                             className="filters"
                             placeholder="Rechercher une région"
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
                         <MultiList
                             componentId="departement"
@@ -153,9 +127,7 @@ export default class Search extends React.Component {
                             className="filters"
                             placeholder="Rechercher un département"
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
 
                         <MultiList
@@ -166,9 +138,7 @@ export default class Search extends React.Component {
                             className="filters"
                             placeholder="Rechercher une commune"
                             URLParams={true}
-                            react={{
-                                and: FILTER
-                            }}
+                            react={{ and: FILTER }}
                         />
 
                     </Col>
@@ -176,12 +146,8 @@ export default class Search extends React.Component {
                         <SelectedFilters />
                         <ReactiveList
                             componentId="results"
-                            react={{
-                                "and": FILTER
-                            }}
-                            onResultStats={(total, took) => {
-                                return `${total} résultats trouvés en ${took} ms.`
-                            }}
+                            react={{ "and": FILTER }}
+                            onResultStats={(total, took) => { return `${total} résultats trouvés en ${took} ms.` }}
                             dataField=''
                             URLParams={true}
                             size={20}
@@ -200,16 +166,17 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        <Button onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
-                        <Button icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
-                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
+                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
+                        <CustomButton icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
+                        <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
                     </div>
                 </div>
                 <ReactiveBase
                     url={`${es_url}/merimee`}
                     app="merimee"
                 >
-                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
+                    {/* {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()} */}
+                    {this.renderAdvanced()}
                 </ReactiveBase >
             </Container >
         );
