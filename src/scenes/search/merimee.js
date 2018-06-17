@@ -175,8 +175,7 @@ export default class Search extends React.Component {
                     url={`${es_url}/merimee`}
                     app="merimee"
                 >
-                    {/* {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()} */}
-                    {this.renderAdvanced()}
+                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
             </Container >
         );
