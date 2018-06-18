@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
-import { connect } from 'react-redux';
 import ReduxToastr from 'react-redux-toastr'
 import Header from './scenes/header';
 
@@ -12,6 +11,11 @@ import Notice from './scenes/notice';
 import Import from './scenes/import';
 
 export default class PublicRoutes extends React.Component {
+
+  componentWillReceiveProps(newProps){
+    console.log(newProps);
+  }
+
   render() {
     return (
       <ConnectedRouter history={this.props.history}>

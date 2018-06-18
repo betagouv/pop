@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Button, Container, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
+import HeaderBase from '../headerBase'
+
 import DropZone from './dropZone'
 import Loader from '../../components/loader';
 import api from '../../services/api'
@@ -173,6 +176,7 @@ export default class ImportComponent extends Component {
 
     return (
       <Container>
+        <HeaderBase collection={this.props.match.params.collection} />
         <Row className='import' type="flex" gutter={16} justify="center">
           <DropZone
             onFinish={this.onImportFinish.bind(this)}

@@ -340,10 +340,6 @@ class Notice extends React.Component {
                                 name='REFIM'
                             />
                             <FieldInput
-                                title='Présence ou non d’image(s) (IMAGE) :'
-                                name='IMAGE'
-                            />
-                            <FieldInput
                                 title='Appellation musée de France : logo (LABEL) :'
                                 name='LABEL'
                             />

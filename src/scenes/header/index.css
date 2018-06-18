@@ -49,31 +49,3 @@
   width: 100%;
   border-top: 2px solid #890f3c;
 }
-
-
-.header .subHeader{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: 20px;
-}
-
-.header .subHeader .title-zone{
-  display: flex;
-  padding-top: 24px;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-}
-
-.header .subHeader .buttons{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
-.header .subHeader .logo{
-  width: 90px;
-}

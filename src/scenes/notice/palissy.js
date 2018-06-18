@@ -173,8 +173,8 @@ class Notice extends React.Component {
                                 title='Dossier (DOSS) : '
                                 name='DOSS'
                             />
-                            <FieldTags
-                                title="TODO-Date de chargement dans la base MERIMEE (DMIS) :"
+                            <FieldInput
+                                title="Date de chargement dans la base MERIMEE (DMIS) :"
                                 name='DMIS'
                             />
                             <FieldInput
@@ -334,16 +334,6 @@ class Notice extends React.Component {
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T17'
                             />
                             <FieldTags
-                                title='Datation des campagnes secondaires de construction (SCLD) :'
-                                name='SCLD'
-                            />
-
-                            <FieldTags
-                                title='Siecle X (SCLX) :'
-                                name='SCLX'
-                            />
-
-                            <FieldTags
                                 title="Datation en années (DATE) :"
                                 name='DATE'
                             />
@@ -383,7 +373,6 @@ class Notice extends React.Component {
                     <Section
                         title='DESCRIPTION'
                         icon={require('../../assets/tool.png')}
-                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FBE367'
                     >
                         <Col sm={6}>
@@ -399,13 +388,15 @@ class Notice extends React.Component {
                                 title='Couvert et découvert de jardin (VERT) :'
                                 name='VERT'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Représentation (REPR) : '
                                 name='REPR'
                             />
                             <FieldInput
-                                title='TODO-Précision sur la représentation (PREP) : '
+                                title='Précision sur la représentation (PREP) : '
                                 name='PREP'
+                                type='textarea'
+                                rows={4}
                             />
                         </Col>
                         <Col sm={6}>

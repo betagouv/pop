@@ -114,9 +114,7 @@ class Notice extends React.Component {
                 RENV: notice.RENV,
                 REPR: notice.REPR,
                 RFPA: notice.RFPA,
-                SCLD: notice.SCLD,
                 SCLE: notice.SCLE,
-                SCLX: notice.SCLX,
                 SITE: notice.SITE,
                 STAT: notice.STAT,
                 TECH: notice.TECH,
@@ -232,7 +230,7 @@ class Notice extends React.Component {
                                 title="Date d'enquête (DENQ) :"
                                 name='DENQ'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title="CopyRight (COPY) :"
                                 name='COPY'
                             />
@@ -286,7 +284,7 @@ class Notice extends React.Component {
                                 name='DOSS'
                             />
                             <FieldInput
-                                title="TODO-Date de chargement dans la base MERIMEE (DMIS) :"
+                                title="Date de chargement dans la base MERIMEE (DMIS) :"
                                 name='DMIS'
                             />
                             <FieldInput
@@ -434,7 +432,7 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <Section
-                        title='Historique'
+                        title='HISTORIQUE'
                         icon={require('../../assets/date.png')}
                         description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#668796'
@@ -445,17 +443,8 @@ class Notice extends React.Component {
                                 name='SCLE'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T17'
                             />
-                            <FieldTags
-                                title='Datation des campagnes secondaires de construction (SCLD) :'
-                                name='SCLD'
-                            />
 
                             <FieldTags
-                                title='Siecle X (SCLX) :'
-                                name='SCLX'
-                            />
-
-                            <FieldInput
                                 title="Datation en années (DATE) :"
                                 name='DATE'
                             />
@@ -535,7 +524,7 @@ class Notice extends React.Component {
                                 name='COUV'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T26'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Emplacement, forme et structure de l’escalier (ESCA) : '
                                 name='ESCA'
                             />
@@ -703,7 +692,7 @@ class Notice extends React.Component {
                                 title='intérêt oeuvre (PINT) :'
                                 name='PINT'
                             />
-                            <FieldTags
+                            <FieldInput
                                 title='no Bordereaus (NBOR) : '
                                 name='NBOR'
                             />

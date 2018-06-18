@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import HeaderBase from '../headerBase'
+
 import Merimee from './merimee';
 import Palissy from './palissy';
 import Joconde from './joconde';
@@ -9,14 +11,17 @@ import Joconde from './joconde';
 
 import './index.css';
 
-export default () => {
+export default (props) => {
     return (
-        <Switch>
-            <Route path={`/notice/merimee/:ref`} component={Merimee} />
-            <Route path={`/notice/palissy/:ref`} component={Palissy} />
-            {/* <Route path={`/notice/mnr/:ref`} component={Mnr} /> */}
-            <Route path={`/notice/joconde/:ref`} component={Joconde} />
-        </Switch>
+        <div>
+            <HeaderBase collection={props.match.params.collection} />
+            <Switch>
+                <Route path={`/notice/merimee/:ref`} component={Merimee} />
+                <Route path={`/notice/palissy/:ref`} component={Palissy} />
+                {/* <Route path={`/notice/mnr/:ref`} component={Mnr} /> */}
+                <Route path={`/notice/joconde/:ref`} component={Joconde} />
+            </Switch>
+        </div>
     );
 }
 
