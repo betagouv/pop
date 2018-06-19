@@ -17,7 +17,7 @@ export default ({ to, text, icon, onClick }) => {
         return (
             <div className='button' onClick={onClick}>
                 {icon ? <img src={icon} /> : <div />}
-                <div> {text}</div>
+                <div>{text}</div>
             </div>
         )
     }

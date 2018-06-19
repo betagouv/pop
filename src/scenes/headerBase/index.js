@@ -8,7 +8,7 @@ export default class HeaderBase extends React.Component {
         switch (this.props.collection) {
             case 'joconde': return require('../../assets/joconde.jpg'); break;
             case 'merimee': return require('../../assets/merimee.jpg'); break;
-            case 'mnr': return require('../../assets/mnr.jpg'); break;
+            case 'mnr': return require('../../assets/MNR.jpg'); break;
             case 'palissy': return require('../../assets/palissy.jpg'); break;
             case 'memoire': return require('../../assets/memoire.jpg'); break;
             default: return '';

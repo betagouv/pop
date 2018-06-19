@@ -32,7 +32,6 @@ class TagsInput extends React.Component {
             api.getThesaurus(this.props.thesaurus, str).then((values) => {
                 if (values) {
                     const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-                    console.log(suggestions)
                     this.setState({ suggestions });
                 }
             })

@@ -89,8 +89,10 @@ function diff(importedNotices, existingNotices) {
             const existingNotice = existingNotices[j];
             if (importedNotices[i].notice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
-                const messages = differences.map(e => <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>)
-                importedNotices[i].messages = messages;
+
+                const jsx = differences.map(e => <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>)
+                const text = differences.map(e => `Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`)
+                importedNotices[i].messages = { jsx, text };
 
                 if (differences.length) {
                     importedNotices[i].status = 'updated';
@@ -118,6 +120,7 @@ function exportData(arr, fileName) {
             columns.push(key);
         }
         columns.push('ERREURS');
+        columns.push('WARNING');
         csv += columns.join(',') + '\n'
     }
 
@@ -129,11 +132,17 @@ function exportData(arr, fileName) {
             if (Array.isArray(value)) {
                 value = value.join(';')
             }
-            value = value.replace(/"/g, '""')
+            if (value) {
+                value = value.replace(/"/g, '""')
+            } else {
+                value = '';
+            }
             line.push('"' + value + '"');
         }
 
-        // const tt = ([].concat(arr[j].messages)).map(e => JSON.stringify(e));
+        line.push(`"${JSON.stringify(arr[j].warnings.text)}"`);
+        line.push(`"${JSON.stringify(arr[j].errors.text)}"`);
+
         csv += line.join(',') + '\n'
     }
 

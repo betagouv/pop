@@ -56,7 +56,9 @@ export default class Search extends React.Component {
                             })}
                         >
                             <ExportComponent
-                                column={['REF', 'TOUT', 'LABO', 'ADPT', 'APTN', 'APPL', 'ATTR', 'AUTR', 'BIBL', 'COMM', 'CONTACT', 'COOR', 'COPY', 'DATA', 'DACQ', 'DDPT', 'DMAJ', 'DMIS', 'DREP', 'DESY', 'DECV', 'DENO', 'DESC', 'REPR', 'DIMS', 'DOMN', 'ECOL', 'EPOQ', 'ETAT', 'EXPO', 'GENE', 'HIST', 'IMAGE', 'IMG', 'LABEL', 'INSC', 'DEPO', 'LIEUX', 'GEOHI', 'LOCA', 'LOCA2', 'LOCA3', 'MILL', 'MILU', 'MUSEO', 'INV', 'NSDA', 'ONOM', 'PERI', 'PERU', 'PHOT', 'MSGCOM', 'PAUT', 'PDAT', 'PDEC', 'PINS', 'PLIEUX', 'PREP', 'PUTI', 'REDA', 'REFIM', 'PEOC', 'SREP', 'STAT', 'TECH', 'TITR', 'TICO', 'UTIL', 'VIDEO', 'WWW', 'MOSA', 'DATION', 'DIFFU', 'LARC', 'RANG', 'RETIF']}
+                                FILTER={FILTER}
+                                filename='joconde.csv'
+                                columns={['REF']}
                             />
                         </ReactiveComponent>
                     </div>

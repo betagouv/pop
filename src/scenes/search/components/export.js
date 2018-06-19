@@ -1,50 +1,80 @@
 import React from 'react';
-import {
-    ReactiveComponent,
-} from '@appbaseio/reactivesearch';
+import { ReactiveComponent } from '@appbaseio/reactivesearch';
 import Button from './button';
 
 export default class ExportComponent extends React.Component {
-    render() {
+
+    state = {
+        page: 0,
+        run: false,
+        res: []
+    }
+
+    renderButton() {
+        if (this.state.run) {
+            return <div />
+        }
+        return (<Button icon={require('../../../assets/export.png')} text='Exporter les résultats' to='' onClick={() => { this.setState({ run: true }) }} />)
+    }
+
+    exec(res) {
+        exportData(this.props.filename, this.props.columns, res)
+        this.setState({ res: [], run: false })
+    }
+
+    renderExporting() {
+        if (!this.state.run) {
+            return <div />
+        }
         return (
             <ReactiveComponent
                 componentId='export'
-                react={{
-                    and: this.props.FILTER
+                react={{ and: this.props.FILTER }}
+                onAllData={(results, streamResults, loadMoreData) => {
+                    const res = this.state.res.concat(results);
+                    if (!results.length || res.length === 10000) {
+                        this.exec(res);
+                    } else {
+                        this.setState({ page: this.state.page += 1, res })
+                    }
                 }}
                 defaultQuery={() => ({
-                    size: 100,
+                    size: 20,
+                    from: this.state.page * 20,
                     aggs: {},
                 })}
             >
                 <Exp
-                    column={['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL']}
+                    len={this.state.res.length}
                 />
             </ReactiveComponent>
-
-        );
-    }
-}
-
-class Exp extends React.Component {
-    exportData() {
-        exportData('Merimee.csv', this.props.columns, this.props.hits);
+        )
     }
 
     render() {
         return (
-            <Button icon={require('../../../assets/export.png')} text='Exporter les résultats' to='' onClick={this.exportData.bind(this)} />
+            <div>
+                {this.renderButton()}
+                {this.renderExporting()}
+            </div>
         );
     }
 }
 
+const Exp = ({ len }) => {
+    return (
+        <div>
+            <div>Recuperation des notices... {len}</div>
+        </div>
+    );
+}
 
 async function exportData(fileName, columns, entities) {
     let csv = columns.join(',') + '\n';
     for (var j = 0; j < entities.length; j++) {
         const arr = []
         for (var i = 0; i < columns.length; i++) {
-            let value = entities[j]._source[columns[i]]
+            let value = entities[j][columns[i]]
             if (Array.isArray(value)) {
                 value = value.join(';')
             }

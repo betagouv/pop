@@ -38,19 +38,19 @@ export default class Table extends React.Component {
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TICO}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
-            if (dataSource[i].messages && dataSource[i].messages.length) {
+            if (dataSource[i].messages && dataSource[i].messages.jsx.length) {
                 r.push(<Col md='1' className='visu' key='visu' >
                     <Badge key="success" color="success">
-                        {dataSource[i].messages.length}
+                        {dataSource[i].messages.jsx.length}
                     </Badge>
                     {
-                        dataSource[i].warnings.length ? <Badge key="warning" color="warning">
-                            {dataSource[i].warnings.length}
+                        dataSource[i].warnings.jsx.length ? <Badge key="warning" color="warning">
+                            {dataSource[i].warnings.jsx.length}
                         </Badge> : <div />
                     }
                     {
-                        dataSource[i].errors.length ? <Badge key="danger" color="danger">
-                            {dataSource[i].errors.length}
+                        dataSource[i].errors.jsx.length ? <Badge key="danger" color="danger">
+                            {dataSource[i].errors.jsx.length}
                         </Badge> : <div />
                     }
                 </Col>)
@@ -64,15 +64,15 @@ export default class Table extends React.Component {
 
             const messages = [];
             //Affichage des messages
-            if (dataSource[i].messages && dataSource[i].messages.length) {
-                for (var j = 0; j < dataSource[i].messages.length; j++) {
-                    messages.push(dataSource[i].messages[j])
+            if (dataSource[i].messages && dataSource[i].messages.jsx.length) {
+                for (var j = 0; j < dataSource[i].messages.jsx.length; j++) {
+                    messages.push(dataSource[i].messages.jsx[j])
                 }
-                for (var j = 0; j < dataSource[i].warnings.length; j++) {
-                    messages.push(dataSource[i].warnings[j])
+                for (var j = 0; j < dataSource[i].warnings.jsx.length; j++) {
+                    messages.push(dataSource[i].warnings.jsx[j])
                 }
-                for (var j = 0; j < dataSource[i].errors.length; j++) {
-                    messages.push(dataSource[i].errors[j])
+                for (var j = 0; j < dataSource[i].errors.jsx.length; j++) {
+                    messages.push(dataSource[i].errors.jsx[j])
                 }
             }
 

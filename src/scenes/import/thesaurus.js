@@ -5,7 +5,8 @@ import api from '../../services/api'
 
 export default function checkThesaurus(obj, collection) {
     return new Promise(async (resolve, reject) => {
-        const arr = [];
+        const jsxArr = [];
+        const plainTextArr = [];
         for (var key in obj) {
             if (Thesaurus[collection] && Thesaurus[collection][key]) {
                 if (Array.isArray(obj[key])) {
@@ -13,7 +14,8 @@ export default function checkThesaurus(obj, collection) {
                         if (obj[key]) {
                             const val = await (api.validateWithThesaurus(Thesaurus[collection][key], obj[key][i]));
                             if (!val.exist) {
-                                arr.push(<div><Badge color="warning">Attention</Badge> Le champs <b>{key}</b> avec la valeur <b>{obj[key][i]}</b> n'est pas conforme avec le thesaurus <b>{Thesaurus[collection][key]}</b></div>)
+                                plainTextArr.push(`Le champs ${key} avec la valeur ${obj[key][i]} n'est pas conforme avec le thesaurus ${Thesaurus[collection][key]}`)
+                                jsxArr.push(<div><Badge color="warning">Attention</Badge> Le champs <b>{key}</b> avec la valeur <b>{obj[key][i]}</b> n'est pas conforme avec le thesaurus <b>{Thesaurus[collection][key]}</b></div>)
                             }
                         }
                     }
@@ -21,13 +23,14 @@ export default function checkThesaurus(obj, collection) {
                     if (obj[key]) {
                         const val = await (api.validateWithThesaurus(Thesaurus[collection][key], obj[key]));
                         if (!val.exist) {
-                            arr.push(<div><Badge color="warning">Attention</Badge> Le champs <b>{key}</b> avec la valeur <b>{obj[key]}</b> n'est pas conforme avec le thesaurus <b>{Thesaurus[collection][key]}</b></div>)
+                            plainTextArr.push(`Le champs ${key} avec la valeur ${obj[key]} n'est pas conforme avec le thesaurus ${Thesaurus[collection][key]}`)
+                            jsxArr.push(<div><Badge color="warning">Attention</Badge> Le champs <b>{key}</b> avec la valeur <b>{obj[key]}</b> n'est pas conforme avec le thesaurus <b>{Thesaurus[collection][key]}</b></div>)
                         }
                     }
                 }
             }
         }
-        resolve(arr);
+        resolve({ jsx: jsxArr, text: plainTextArr });
     })
 }
 

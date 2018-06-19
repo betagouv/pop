@@ -36,6 +36,8 @@ export default class ImportComponent extends Component {
   async onImportFinish(res) {    //check if there are not more fields
     let importedNotices = res;
 
+
+    ///CONTROLE DE LA CONSISTENTE DES DONNEE 
     const errors = [];
     if (importedNotices.length) {
       for (let key in importedNotices[0]) {
@@ -50,12 +52,19 @@ export default class ImportComponent extends Component {
       return;
     }
 
-    //change type
+
+
+    //CONTROLE DE LA VALIDITE DES CHAMPS
     for (var i = 0; i < importedNotices.length; i++) {
       importedNotices[i] = clean(this.state.collection, importedNotices[i]);
-      importedNotices[i].errors = importedNotices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>)
+      importedNotices[i].errors = {
+        jsx: importedNotices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
+        text: importedNotices[i].errors
+      }
     }
 
+
+    //RECUPERATION DES NOTICES EXISTANTES
     const existingNotices = []
     for (var i = 0; i < importedNotices.length; i++) {
       this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
@@ -64,6 +73,9 @@ export default class ImportComponent extends Component {
         existingNotices.push(notice);
       }
     }
+
+
+    //CALCULE DE LA DIFF
 
     this.setState({ loadingMessage: 'Calcul des differences....' });
     importedNotices = diff(importedNotices, existingNotices);
