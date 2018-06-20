@@ -6,7 +6,7 @@ import { ReactiveBase, DataSearch, ReactiveList, MultiList, SingleList, Selected
 import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
-import AdvancedSearch from './components/advancedSearch';
+import QueryBuilder from './components/queryBuilder';
 
 import { es_url } from '../../config.js';
 
@@ -22,10 +22,24 @@ export default class Search extends React.Component {
     }
 
     renderAdvanced() {
+        const fields = [
+            {name: 'firstName', label: 'First Name'},
+            {name: 'lastName', label: 'Last Name'},
+            {name: 'age', label: 'Age'},
+            {name: 'address', label: 'Address'},
+            {name: 'phone', label: 'Phone'},
+            {name: 'email', label: 'Email'},
+            {name: 'twitter', label: 'Twitter'},
+            {name: 'isDev', label: 'Is a Developer?', value: false},
+        ];
+
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <AdvancedSearch className='yi' style={{ width: "100%" }} />
+                <QueryBuilder 
+                    fields={fields}
+                    onQueryChange={(q) => console.log(q)}
+                />
                 <ReactiveList
                     componentId="results"
                     react={{ "and": ['advancedSearch'] }}
