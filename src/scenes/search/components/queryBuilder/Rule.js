@@ -16,10 +16,16 @@ export default class RuleComponent extends React.Component {
         if (valueSelected) {
             const query = `{"aggs": {"${valueSelected}.keyword": {"terms": {"field": "${valueSelected}.keyword","include" : ".*${resultSelected}.*","order": {"_count": "desc"},"size": 10}}}}`
             this.setState({ query: JSON.parse(query) });
+            this.props.updateQueryRule({
+                id: this.props.id,
+                valueSelected,
+                actionSelected,
+                resultSelected
+            })
         } else {
             this.setState({ query: {} });
         }
-        console.log('ONUPDATE', valueSelected, actionSelected, resultSelected)
+
     }
 
     render() {
@@ -121,30 +127,38 @@ class ValueEditor extends React.Component {
     }
 
     render() {
+        let suggestions = [];
+        if (this.props.aggregations && Object.keys(this.props.aggregations).length) {
+            const key = Object.keys(this.props.aggregations)[0];
+            suggestions = this.props.aggregations[key].buckets;
+        }
+
+
         return (
             <div>
                 <Autocomplete
-                    getItemValue={(item) => item.label}
-                    items={[
-                        { label: 'apple' },
-                        { label: 'banana' },
-                        { label: 'pear' }
-                    ]}
+                    getItemValue={(item) => item.key}
+                    items={suggestions}
                     renderItem={(item, isHighlighted) =>
                         <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                        {item.label}
+                            {item.key}
                         </div>
                     }
-                    value='value'
-                    onChange={(e) => value = e.target.value}
-                    onSelect={(val) => value = val}
-                    />
-                <input
-                    onFocus={this.onFocus.bind(this)}
-                    onBlur={this.onBlur.bind(this)}
-                    className="valueEditor"
                     value={this.props.value}
                     onChange={this.props.onChange}
+                    onSelect={(value) => this.props.onChange({ target: { value } })}
+                    menuStyle={{
+                        zIndex: 99,
+                        padding: '5px',
+                        borderRadius: '3px',
+                        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        padding: '2px 0',
+                        fontSize: '90%',
+                        position: 'fixed',
+                        overflow: 'auto',
+                        maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+                    }}
                 />
                 {this.renderSuggestion()}
             </div>
