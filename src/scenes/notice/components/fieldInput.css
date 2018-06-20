@@ -1,0 +1,22 @@
+.input{
+    width: 100%;
+    
+}
+
+.input ul{
+    background-color: white;
+    position: absolute;
+    z-index: 99;
+    padding: 20px;
+    min-width: 253px;
+    border: 1px solid #ced4da;
+    list-style-type: none;
+}
+
+.input li {
+    cursor: pointer;
+}
+
+.input li:hover {
+    background-color: bisque;
+}

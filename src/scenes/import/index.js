@@ -1,314 +1,203 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
-// import { Button, Row, Col, Progress, notification } from 'antd';
-// import { Table } from 'antd';
-import ImportDropComponent from './dropZone'
+import { Row, Button, Container, Badge } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+import HeaderBase from '../headerBase'
+
+import DropZone from './dropZone'
 import Loader from '../../components/loader';
+import api from '../../services/api'
+
+import { diff, exportData } from './utils'
+import checkThesaurus from './thesaurus'
+import TableComponent from './table';
+
+import { clean, getMapping } from './import';
 
 import './index.css';
 
-
 export default class ImportComponent extends Component {
-  state = {
-    dropVisible: true,
-    calculating: false,
-    displaySummary: false,
-    uploading: false,
-    uploadingProgress: 0,
-    uploadingMessage: '',
-    unChanged: [],
-    created: [],
-    updated: [],
-    removed: [],
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      unChanged: [],
+      created: [],
+      updated: [],
+      errors: [],
+      displaySummary: false,
+      done: false,
+      loading: false,
+      loadingMessage: '',
+      collection: this.props.match.params.collection
+    }
   }
 
-  onImportFinish(importedProducts) {
-
-    // let dataclean = true;
-    // importedProducts.map((product, index) => {
-    //   if (!product.sku) {
-    //     //   if (importedProducts.indexOf(product) != index || !product.sku) {
-    //     notification.error({ message: `SKU already exist or no sku on line ${index}` })
-    //     dataclean = false;
-    //   }
-    // })
-
-    // if (!dataclean) { return; }
-
-    // this.setState({ dropVisible: false, calculating: true })
-    /*
-    firebase.getProductsFromStore(this.props.storeId).then((products) => {
-      this.diff(importedProducts, products)
-    })
-    */
-  }
-
-  // async onSave() {
-
-  //   this.setState({ uploading: true, displaySummary: false })
-
-  //   const total = this.state.created.length + this.state.updated.length + this.state.removed.length;
-  //   let current = 0;
-  //   const storeObj = this.props.storeObj;
-
-  //   // Create
-  //   for (var i = 0; i < this.state.created.length; i++) {
-  //     const e = this.state.created[i];
-
-  //     //picture: e.image || e.picture || '',
-
-  //     const obj = {
-  //       country: storeObj.country,
-  //       store_id: this.props.storeId,
-  //       store_name: storeObj.name,
-  //       currency: getCurrency(storeObj.country),
-  //       created_at: Date.now(),
-  //       updated_at: Date.now(),
-  //       retail_price: e.retail_price,
-  //       trading_price: e.trading_price,
-  //       wholesale_price: e.wholesale_price,
-  //       stock: e.stock || 0,
-  //       sku: e.sku,
-  //       reviewed: false,
-  //       available: false,
-  //       enable: storeObj.enable || false,
-  //       volume: e.volume || '',
-  //       year: e.year || '',
-  //       metaData: e
-  //     }
-  //     //await firebase.createProduct(obj);
-  //     this.setState({ uploadingProgress: parseInt((100 * current++) / total) });
-  //   }
-  //   // Update
-  //   for (var i = 0; i < this.state.updated.length; i++) {
-  //     const e = this.state.updated[i];
-  //     const obj = { reviewed: true };
-  //     this.setState({ uploadingProgress: parseInt((100 * current++) / total) });
-  //   }
+  async onImportFinish(res) {    //check if there are not more fields
+    let importedNotices = res;
 
 
-  //   // Remove
-  //   for (var i = 0; i < this.state.removed.length; i++) {
-  //     const e = this.state.removed[i];
-  //     //await firebase.deleteProduct(e.id);
-  //     this.setState({ uploadingProgress: parseInt((100 * current++) / total) });
-  //   }
-
-  //   let uploadingMessage = [<span key={1}>Note you have to wait few seconds to severals minutes to see your product updated in the real time database</span>];
-  //   if (this.state.created.length) {
-  //     uploadingMessage.push(<span key={2}>There are some products to review , please go review them through the tab above</span>);
-  //   }
-
-  //   this.setState({
-  //     uploadingProgress: 100,
-  //     uploadingMessage
-  //   });
-
-  // }
-
-
-
-  // diff(importedProducts, existingProducts) {
-  //   const unChanged = [];
-  //   const updated = [];
-  //   const created = [];
-
-  //   let removed = {};
-  //   for (var i = 0; i < existingProducts.length; i++) {
-  //     removed[existingProducts[i].sku] = existingProducts[i];
-  //   }
-
-  //   for (var i = 0; i < importedProducts.length; i++) {
-
-  //     let importedProduct = importedProducts[i];
-
-  //     //Price stuffs
-  //     const { retail_price, trading_price, wholesale_price } = this.getPrices(importedProduct);
-  //     importedProduct.retail_price = retail_price;
-  //     importedProduct.trading_price = trading_price;
-  //     importedProduct.wholesale_price = wholesale_price;
-
-
-  //     importedProduct.stock = parseInt(importedProduct.stock);
-  //     let found = false;
-  //     for (var j = 0; j < existingProducts.length; j++) {
-  //       const existingProduct = existingProducts[j];
-  //       if (importedProduct.sku === existingProduct.sku) {
-  //         if (importedProduct.retail_price !== existingProduct.retail_price || importedProduct.trading_price !== existingProduct.trading_price || importedProduct.stock !== existingProduct.stock) {
-  //           existingProduct.new_retail_price = importedProduct.retail_price;
-  //           existingProduct.new_trading_price = importedProduct.trading_price;
-  //           existingProduct.new_stock = importedProduct.stock;
-  //           updated.push(existingProduct)
-  //         } else {
-  //           unChanged.push(existingProduct)
-  //         }
-  //         found = true;
-  //       }
-  //     }
-
-  //     if (!found) {
-  //       created.push(importedProduct);
-  //     } else {
-  //       delete removed[importedProduct.sku];
-  //     }
-  //   }
-
-  //   const removeArr = [];
-  //   for (const key in removed) {
-  //     removeArr.push(removed[key])
-  //   }
-
-  //   this.setState({
-  //     displaySummary: true,
-  //     calculating: false,
-  //     unChanged,
-  //     created,
-  //     updated,
-  //     removed: removeArr
-  //   });
-  // }
-
-  // renderCreated() {
-  //   const columns = [
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Created ({this.state.created.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.created.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderUnChanged() {
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Unchanged ({this.state.unChanged.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.unChanged.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderRemoved() {
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Removed ({this.state.removed.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.removed.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-  // }
-
-  // renderUpdated() {
-
-  //   const columns = [
-  //     { title: 'Id', dataIndex: 'id', key: 'id' },
-  //     { title: 'Previous Stock', dataIndex: 'stock', key: 'stock' },
-  //     { title: 'New Stock', dataIndex: 'new_stock', key: 'new_stock' },
-  //     { title: 'Previous Retail Price', dataIndex: 'retail_price', key: 'retail_price' },
-  //     { title: 'New retail Price', dataIndex: 'new_retail_price', key: 'new_retail_price' },
-  //     { title: 'Previous Trading price', dataIndex: 'trading_price', key: 'trading_price' },
-  //     { title: 'New trading price', dataIndex: 'new_trading_price', key: 'new_trading_price' },
-  //     { title: 'Sku', dataIndex: 'sku', key: 'sku' },
-  //     { title: 'Volume', dataIndex: 'volume', key: 'volume' },
-  //     { title: 'Year', dataIndex: 'year', key: 'year' }];
-
-  //   return (
-  //     <Row className='rowResult' type="flex" gutter={16} justify="center">
-  //       <h3 style={{ marginBottom: 16 }}>Updated ({this.state.updated.length})</h3>
-  //       <Table
-  //         columns={columns}
-  //         dataSource={this.state.updated.map((e, i) => { return { ...e, ...{ key: i } } })}
-  //       />
-  //     </Row>)
-
-  // }
-
-
-  // renderUploading() {
-
-  //   if (!this.state.uploading) {
-  //     return <div />
-  //   }
-
-  //   return (<Row className='rowResult' type="flex" gutter={16} justify="center">
-  //     <Col md={4} sm={4} xs={24} >
-  //       <Progress percent={this.state.uploadingProgress} />
-  //     </Col>
-  //     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px' }}>{this.state.uploadingMessage}</div>
-  //   </Row>)
-  // }
-
-  // renderSummary() {
-  //   if (!this.state.displaySummary) {
-  //     return <div />
-  //   }
-  //   return (
-  //     <div>
-  //       {this.renderUpdated()}
-  //       {this.renderCreated()}
-  //       {this.renderRemoved()}
-  //       {this.renderUnChanged()}
-  //       <Row type="flex" gutter={16} justify="center">
-  //         <Button
-  //           type="primary"
-  //           onClick={() => this.onSave()}
-  //           disabled={!(this.state.updated.length || this.state.removed.length || this.state.created.length)}
-  //         >
-  //           Proceed
-  //           </Button>
-  //       </Row>
-  //     </div>
-  //   )
-  // }
-
-  render() {
-
-    if (this.state.calculating) {
-      return <LoadingWidget />
+    ///CONTROLE DE LA CONSISTENTE DES DONNEE 
+    const errors = [];
+    if (importedNotices.length) {
+      for (let key in importedNotices[0]) {
+        if (!getMapping(this.state.collection).includes(key)) {
+          errors.push(`La colonne ${key} est inconnue`);
+        }
+      }
     }
 
+    if (errors.length) {
+      this.setState({ errors })
+      return;
+    }
+
+
+
+    //CONTROLE DE LA VALIDITE DES CHAMPS
+    for (var i = 0; i < importedNotices.length; i++) {
+      importedNotices[i] = clean(this.state.collection, importedNotices[i]);
+      importedNotices[i].errors = {
+        jsx: importedNotices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
+        text: importedNotices[i].errors
+      }
+    }
+
+
+    //RECUPERATION DES NOTICES EXISTANTES
+    const existingNotices = []
+    for (var i = 0; i < importedNotices.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
+      const notice = await (api.getNotice(this.state.collection, importedNotices[i].notice.REF));
+      if (notice) {
+        existingNotices.push(notice);
+      }
+    }
+
+
+    //CALCULE DE LA DIFF
+
+    this.setState({ loadingMessage: 'Calcul des differences....' });
+    importedNotices = diff(importedNotices, existingNotices);
+
+    for (var i = 0; i < importedNotices.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
+      const warnings = await (checkThesaurus(importedNotices[i].notice, this.state.collection));
+      importedNotices[i].warnings = warnings;
+    }
+
+    const unChanged = importedNotices.filter(e => e.status === 'unchanged');
+    const created = importedNotices.filter(e => e.status === 'created');
+    const updated = importedNotices.filter(e => e.status === 'updated');
+
+    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
+  }
+
+  async onSave() {
+
+    //Update notice
+    for (var i = 0; i < this.state.updated.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
+      const ref = this.state.updated[i].notice.REF;
+      await api.updateNotice(ref, this.state.collection, this.state.updated[i].notice);
+    }
+
+    //Create notice
+    for (var i = 0; i < this.state.created.length; i++) {
+      this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
+      console.log('Create', this.state.created[i].notice)
+      await api.createNotice(this.state.collection, this.state.created[i].notice);
+    }
+
+    this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
+  }
+
+
+  onExport() {
+    const arr = [];
+    for (var i = 0; i < this.state.updated.length; i++) {
+      arr.push({ ...this.state.updated[i], type: 'MISE A JOUR' })
+    }
+    for (var i = 0; i < this.state.created.length; i++) {
+      arr.push({ ...this.state.created[i], type: 'CREES' })
+    }
+    for (var i = 0; i < this.state.unChanged.length; i++) {
+      arr.push({ ...this.state.unChanged[i], type: 'INCHANGEE' })
+    }
+    exportData(arr, 'export.csv')
+  }
+
+  renderSummary() {
+    if (!this.state.displaySummary) {
+      return <div />
+    }
     return (
-      <div>
-        <Row className='rowResult' type="flex" gutter={16} justify="center">
-          <ImportDropComponent
+      <div className='import'>
+        <TableComponent collection={this.state.collection} dataSource={this.state.updated} title='Ces notices seront mises à jour' />
+        <TableComponent collection={this.state.collection} dataSource={this.state.created} title='Ces notices seront créées' />
+        <TableComponent collection={this.state.collection} dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
+        <div className='buttons'>
+          <Button
+            color="secondary"
+            onClick={() => this.onExport()}
+            disabled={!(this.state.updated.length || this.state.created.length)}
+          >
+            Exporter
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => this.onSave()}
+            disabled={!(this.state.updated.length || this.state.created.length)}
+          >
+            Importer
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
+    if (this.state.loading) {
+      return (
+        <div className='import-container'>
+          <Loader />
+          <div>{this.state.loadingMessage}</div>
+        </div>
+      );
+    }
+
+    if (this.state.done) {
+      return (
+        <div className='import-container'>
+          <div>{this.state.loadingMessage}</div>
+          <Link to='/'>Revenir a la page d'accueil</Link>
+        </div>
+      );
+    }
+
+    if (this.state.errors.length) {
+      const errors = this.state.errors.map((e, i) => <div key={i}>{e}</div>)
+      return (
+        <div className='import-container'>
+          <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>
+          <div>{errors}</div>
+        </div>
+      );
+    }
+
+
+    return (
+      <Container>
+        <HeaderBase collection={this.props.match.params.collection} />
+        <Row className='import' type="flex" gutter={16} justify="center">
+          <DropZone
             onFinish={this.onImportFinish.bind(this)}
             storeId={this.props.storeId}
-            visible={this.state.dropVisible}
+            visible={!this.state.displaySummary}
           />
         </Row>
-        {/* {this.renderUploading()}
-        {this.renderSummary()} */}
-      </div >
+        {this.renderSummary()}
+      </Container >
     );
   }
 }
-

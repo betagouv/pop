@@ -1,26 +1,33 @@
-const ROUTE = 'http://localhost:3000'
-
+const { api_url } = require('../config.js');
 
 class api {
 
-    search(collection, params) {
-        const arr = [];
-        for (var key in params) {
-            arr.push(`${key}=${params[key]}`)
+    updateNotice(ref, collection, data) {
+        return this._post(`${api_url}/${collection}/update?ref=${ref}`, data)
+    }
+
+    createNotice(collection, data) {
+        //clean object
+        for (var propName in data) {
+            if (!data[propName]) {
+                delete data[propName];
+            }
         }
-        return this._get(`${ROUTE}/api/search?collection=${collection}&${arr.join('&')}`)
+
+        return this._post(`${api_url}/${collection}/create`, data)
     }
 
-    update(id, collection, data) {
-        console.log('UPDATE', id, data)
-        return this._post(`${ROUTE}/api/update?collection=${collection}&id=${id}`, data)
+    getNotice(collection, ref) {
+        return this._get(`${api_url}/${collection}?ref=${ref}`)
     }
 
-
-    getNotice(ref) {
-        return this._get(`${ROUTE}/api/notice?ref=${ref}`)
+    getThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`)
     }
 
+    validateWithThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`)
+    }
 
     _post(url, data) {
         return new Promise((resolve, reject) => {
@@ -40,9 +47,10 @@ class api {
                 if (response.status !== 200) {
                     reject('Looks like there was a problem. Status Code: ' + response.status)
                 }
-                response.json().then((data) => {    // Examine the text in the response
-                    resolve(data);
-                });
+                resolve()
+                // response.json().then((data) => {    // Examine the text in the response
+                //     (data);
+                // });
             }).catch((err) => {
                 reject('Fetch Error :-S', err)
             });
@@ -55,9 +63,13 @@ class api {
                 if (response.status !== 200) {
                     reject('Looks like there was a problem. Status Code: ' + response.status)
                 }
-                response.json().then((data) => {    // Examine the text in the response
-                    resolve(data);
-                });
+                response.json()
+                    .then((data) => {    // Examine the text in the response
+                        resolve(data);
+                    })
+                    .catch((e) => {
+                        resolve(null);
+                    })
             }).catch((err) => {
                 reject('Fetch Error :-S', err)
             });

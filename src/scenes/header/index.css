@@ -1,4 +1,4 @@
-.NavContainer {
+.header .NavContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,10 +7,11 @@
   max-width: 100%!important;
   border-bottom: 1px solid #f0efef;
   padding: 8px;
+  height: 150px;
+  background-image: url('../../assets/background.jpg');
 }
 
-
-.NavComponent .navbar-toggler {
+.header .NavComponent .navbar-toggler {
   margin-top: 15px;
   margin-right: 10px;
   margin-bottom: auto;
@@ -19,8 +20,7 @@
   padding: 0px;
 }
 
-
-.NavContainer .navbar-toggler .navbar-toggler-icon{
+.header .NavContainer .navbar-toggler .navbar-toggler-icon{
   background-image: none;
   position: absolute;
   left: 15px;
@@ -31,7 +31,8 @@
   border-bottom: 2px solid #890f3c;
   outline: 0;
 }
-.NavContainer .navbar-toggler .navbar-toggler-icon:after{
+
+.header .NavContainer .navbar-toggler .navbar-toggler-icon:after{
   content: '';
   display: block;
   position: absolute;
@@ -40,7 +41,7 @@
   border-top: 2px solid #890f3c;
 }
 
-.NavContainer .navbar-toggler .navbar-toggler-icon:after{
+.header .NavContainer .navbar-toggler .navbar-toggler-icon:after{
   content: '';
   display: block;
   position: absolute;

@@ -1,6 +1,7 @@
-import { reducer as formReducer } from 'redux-form'
+import { reducer as form } from 'redux-form'
+import { reducer as toastr } from 'react-redux-toastr'
 
 export default {
-    form: formReducer,
-  
+    form,
+    toastr
 };

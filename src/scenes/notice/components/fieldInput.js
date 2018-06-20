@@ -2,17 +2,71 @@ import React from 'react';
 import { Field } from 'redux-form'
 import { Input } from 'reactstrap';
 
-const makeField = ({ input, meta, children, hasFeedback, label, ...rest }) => {
-    return (
-        <Input  {...rest} value={input.value} onChange={(e) => input.onChange(e.target.value)} />
-    );
+import api from '../../../services/api'
+import './fieldInput.css';
+
+class CustomInput extends React.Component {
+
+    state = {
+        suggestions: []
+    }
+
+    onSelect(e) {
+        this.props.input.value = e;
+        this.setState({ suggestions: [] })
+    }
+
+    renderSuggestion() {
+        if (!this.state.suggestions.length) {
+            return <div />
+        }
+
+        const options = this.state.suggestions.map(r => (
+            <li key={r.id} onClick={this.onSelect.bind(this, r.text)} >
+                {r.text}
+            </li>
+        ))
+        return <ul>{options}</ul>
+    }
+
+    handleInputChange(str) {
+        if (str) {
+            api.getThesaurus(this.props.thesaurus, str).then((values) => {
+                if (values) {
+                    const suggestions = values.map(e => ({ id: e.value, text: e.value }));
+                    this.setState({ suggestions });
+                }
+            })
+        } else {
+            this.setState({ suggestions: [] });
+        }
+    }
+
+    render() {
+        if (Array.isArray(this.props.input.value)) {
+            return <div>The data is an array and should be a string</div>
+        }
+        return (
+            <div className='input'>
+                <Input
+                    {...this.props}
+                    value={this.props.input.value}
+                    onChange={(e) => {
+                        this.handleInputChange(e.target.value);
+                        this.props.input.onChange(e.target.value)
+                    }}
+                />
+                {this.renderSuggestion()}
+            </div>
+        );
+    }
 }
 
 export default ({ title, ...rest }) => {
     return (
         <div style={styles.container}>
-            {title && <strong style={styles.title} >{title}</strong>}
-            <Field component={makeField} {...rest} />
+            {title && <div style={styles.title} >{title}</div>}
+            <Field component={CustomInput} {...rest} />
         </div>
     )
 };
@@ -22,15 +76,14 @@ const styles = {
     container: {
         width: '100%',
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'start',
-        alignItems: 'center',
-        paddingTop: '10px',
-        paddingBottom: '10px',
+        alignItems: 'start',
     },
     title: {
         paddingRight: '15px',
-        whiteSpace: 'nowrap',
-        minWidth: '100px'
+        minWidth: '100px',
+        color: '#5a5a5a',
+        fontStyle: 'italic'
     }
 }

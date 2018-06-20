@@ -8,25 +8,23 @@ export default class Home extends React.Component {
 
     state = {
         tiles: [
-            { url: '/merimee', name: 'Joconde', image: require('../../assets/joconde.jpg') },
-            { url: '/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
-            { url: '/merimee', name: 'Palissy', image: require('../../assets/palissy.jpg') },
-            { url: '/merimee', name: 'Mémoire', image: require('../../assets/small.jpg') },
-            { url: '/merimee', name: 'MNR', image: require('../../assets/small.jpg') },
+            { url: '/search/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
+            { url: '/search/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
+            { url: '/search/palissy', name: 'Palissy', image: require('../../assets/palissy.jpg') },
+            { url: '/search/memoire', name: 'Mémoire', image: require('../../assets/memoire.jpg') },
+            { url: '/search/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
         ]
     }
 
     renderTiles() {
         return this.state.tiles.map(({ url, name, image }, i) => {
             return (
-                <Col className="box text-center mb-3">
-                    <Link to='/search'>
+                <Col className="box text-center mb-3" key={i}>
+                    <Link style={{ textDecoration: 'none' }} to={url}>
                         <div className='tile'>
-                            <div className="thumb  mb-3">
-                                <img src={image} alt="dummy image" className="img-fluid" />
-                            </div>
+                            <img src={image} alt="dummy image" className="img-fluid" />
                             <div className="caption">
-                                <p className='title'>{name}</p>
+                                <div className='name'>{name}</div>
                             </div>
                         </div>
                     </Link>
@@ -38,27 +36,28 @@ export default class Home extends React.Component {
     render() {
         return (
             <div className='home'>
-                <Container fluid>
-                    <div className="hero-text">
-                        <p>Outil d'édition unitaire et import massif de données patrimoniales de la platforme POP</p>
+                <div className="title">
+                    Outil d'édition unitaire et import massif de données patrimoniales de la plateforme POP
+                </div>
+                <div className="subtitle">
+                    Je souhaite modifier la base
+                </div>
+                <Row>
+                    {this.renderTiles()}
+                </Row>
+                {/* <div className="activities py-3">
+                    <h4>Historique d'activite</h4>
+                    <div className="list-box">
+                        <ul className="list-unstyled">
+                            <li>item 1</li>
+                            <li>item 2</li>
+                            <li>item 3</li>
+                            <li>item 4</li>
+                            <li>item 5</li>
+                        </ul>
                     </div>
-                    <Row>
-                        {this.renderTiles()}
-                    </Row>
-                    {/* <div className="activities py-3">
-                        <h4>Historique d'activite</h4>
-                        <div className="list-box">
-                            <ul className="list-unstyled">
-                                <li>item 1</li>
-                                <li>item 2</li>
-                                <li>item 3</li>
-                                <li>item 4</li>
-                                <li>item 5</li>
-                            </ul>
-                        </div>
-                    </div> */}
-                </Container>
-            </div >
+                </div> */}
+            </div>
         );
     }
 }
