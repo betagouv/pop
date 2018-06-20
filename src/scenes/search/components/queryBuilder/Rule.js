@@ -1,63 +1,114 @@
 import React from 'react';
 
-export default class Rule extends React.Component {
+import { 
+    ReactiveComponent ,
+    ReactiveList,
+} from '@appbaseio/reactivesearch';
+
+
+export default class RuleComponent extends React.Component {
+
+    state ={
+        query : {}
+    }
+
+    onUpdate(valueSelected,actionSelected,resultSelected  ){
+        const query = `{"aggs": {"DENO.keyword": {"terms": {"field": "DENO.keyword","order": {"_count": "desc"},"size": 10}}}}`
+        this.setState({query : JSON.parse(query)});
+    }
+
     render() {
+
+        console.log('QUERY ', this.state.query)
         return (
-            <div>Rule {this.props.id}
-                <ValueSelector />
-                <ActionElement/>
-                <ValueEditor />
-                <button onClick={() => this.props.onRemove(this.props.id)}>X</button>
-            </div>
+             <ReactiveComponent
+                componentId="CarSensor"
+                defaultQuery={() => ( this.state.query)}
+                >   
+                    <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)}/>
+                </ReactiveComponent>
             )
-    // }
-
-    // onFieldChanged = (value) => {
-    //     this.onElementChanged('field', value);
-    // }
-
-    // onOperatorChanged = (value) => {
-    //     this.onElementChanged('operator', value);
-    // }
-
-    // onValueChanged = (value) => {
-    //     this.onElementChanged('value', value);
-    // }
-
-    // onElementChanged = (property, value) => {
-    //     const {id, schema: {onPropChange}} = this.props;
-
-    //     onPropChange(property, value, id);
-    // }
-
-    // removeRule = (event) => {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-
-    //     this.props.schema.onRuleRemove(this.props.id, this.props.parentId);
-    // }
-
-
     }
 }
 
-const ValueEditor = (props) =>{
-    return ( <input className="valueEditor" onChange={() => console.log('CHANGE')}/> )
+
+
+ class Rule extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            valueSelected : '',
+            actionSelected : '',
+            resultSelected : '',
+        }
+    }
+
+    update(){
+
+        const { valueSelected , actionSelected, resultSelected} = this.state;
+        console.log('UPDTAED', valueSelected , actionSelected, resultSelected);
+    }
+
+    render() {
+
+        console.log('this.props.aggregations',this.props.aggregations)
+        return (
+            <div>Rule {this.props.id}
+                <ValueSelector value={this.state.valueSelected} onChange={(e) => { 
+                        this.setState({valueSelected:e.target.value}); 
+                        this.update()
+                    } 
+                }/>
+                <ActionElement value={this.state.actionSelected} onChange={(e) => { 
+                        this.setState({actionSelected:e.target.value}); 
+                        this.update()
+                    } 
+                }/>
+                <ValueEditor value={this.state.resultSelected} onChange={(e) => { 
+                        this.setState({resultSelected:e.target.value}); 
+                        this.update()
+                    } 
+                }/>
+                <button onClick={() => this.props.onRemove(this.props.id)}>X</button>
+            </div>
+            )
+     
+    }
 }
 
-const ActionElement = (props) =>{
+
+
+
+
+
+
+
+
+const ValueEditor =  ({onChange,value, currentValueSelector}) =>{
+    return ( 
+        <div>
+            <input 
+                className="valueEditor" 
+                value={value} 
+                onChange={onChange}
+            />
+     </div>
+ )
+}
+
+const ActionElement =  ({onChange,value}) =>{
     const choices = ['!==','=='].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select className="actionelement" onChange={() => console.log('CHANGE')}>
+        <select className="actionelement" value={value} onChange={onChange}>
             {choices}
         </select>
     )
 }
 
-const ValueSelector = (props) =>{
-    const choices = ['firstname','lastnam'].map(option => <option key={option} value={option}>{option}</option>)
+const ValueSelector = ({onChange,value}) =>{
+    const choices = ['Producteur','DENO'].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select className="valueselector" onChange={() => console.log('CHANGE')}>
+        <select className="valueselector" value={value} onChange={onChange}>
             {choices}
         </select>
     )

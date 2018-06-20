@@ -45,6 +45,7 @@ export default class RuleGroup extends React.Component {
     }
 
     render() {
+        console.log('this.props.aggregations',this.props.aggregations)
         return (
             <div>
                 <Combinator />
