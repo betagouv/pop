@@ -1,98 +1,64 @@
 import React from 'react';
 
 export default class Rule extends React.Component {
-    static get defaultProps() {
-        return {
-            id: null,
-            parentId: null,
-            field: null,
-            operator: null,
-            value: null,
-            schema: null
-        };
-    }
-
     render() {
-        const {field, operator, value, translations, schema: {fields, controls, getOperators, getLevel, classNames}} = this.props;
-        var level = getLevel(this.props.id);
         return (
-            <div className={`rule ${classNames.rule}`}>
-                {
-                    React.createElement(controls.fieldSelector,
-                        {
-                            options: fields,
-                            title: translations.fields.title,
-                            value: field,
-                            className: `rule-fields ${classNames.fields}`,
-                            handleOnChange: this.onFieldChanged,
-                            level: level
-                        }
-                    )
-                }
-                {
-                    React.createElement(controls.operatorSelector,
-                        {
-                            field: field,
-                            title: translations.operators.title,
-                            options: getOperators(field),
-                            value: operator,
-                            className: `rule-operators ${classNames.operators}`,
-                            handleOnChange: this.onOperatorChanged,
-                            level: level
-                        }
-                    )
-                }
-                {
-                    React.createElement(controls.valueEditor,
-                        {
-                            field: field,
-                            title: translations.value.title,
-                            operator: operator,
-                            value: value,
-                            className: `rule-value ${classNames.value}`,
-                            handleOnChange: this.onValueChanged,
-                            level: level
-                        }
-                    )
-                }
-                {
-                    React.createElement(controls.removeRuleAction,
-                    {
-                        label: translations.removeRule.label,
-                        title: translations.removeRule.title,
-                        className: `rule-remove ${classNames.removeRule}`,
-                        handleOnClick: this.removeRule,
-                        level: level
-                    })
-                }
+            <div>Rule {this.props.id}
+                <ValueSelector />
+                <ActionElement/>
+                <ValueEditor />
+                <button onClick={() => this.props.onRemove(this.props.id)}>X</button>
             </div>
-        );
+            )
+    // }
+
+    // onFieldChanged = (value) => {
+    //     this.onElementChanged('field', value);
+    // }
+
+    // onOperatorChanged = (value) => {
+    //     this.onElementChanged('operator', value);
+    // }
+
+    // onValueChanged = (value) => {
+    //     this.onElementChanged('value', value);
+    // }
+
+    // onElementChanged = (property, value) => {
+    //     const {id, schema: {onPropChange}} = this.props;
+
+    //     onPropChange(property, value, id);
+    // }
+
+    // removeRule = (event) => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+
+    //     this.props.schema.onRuleRemove(this.props.id, this.props.parentId);
+    // }
+
+
     }
+}
 
-    onFieldChanged = (value) => {
-        this.onElementChanged('field', value);
-    }
+const ValueEditor = (props) =>{
+    return ( <input className="valueEditor" onChange={() => console.log('CHANGE')}/> )
+}
 
-    onOperatorChanged = (value) => {
-        this.onElementChanged('operator', value);
-    }
+const ActionElement = (props) =>{
+    const choices = ['!==','=='].map(option => <option key={option} value={option}>{option}</option>)
+    return (
+        <select className="actionelement" onChange={() => console.log('CHANGE')}>
+            {choices}
+        </select>
+    )
+}
 
-    onValueChanged = (value) => {
-        this.onElementChanged('value', value);
-    }
-
-    onElementChanged = (property, value) => {
-        const {id, schema: {onPropChange}} = this.props;
-
-        onPropChange(property, value, id);
-    }
-
-    removeRule = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.props.schema.onRuleRemove(this.props.id, this.props.parentId);
-    }
-
-
+const ValueSelector = (props) =>{
+    const choices = ['firstname','lastnam'].map(option => <option key={option} value={option}>{option}</option>)
+    return (
+        <select className="valueselector" onChange={() => console.log('CHANGE')}>
+            {choices}
+        </select>
+    )
 }

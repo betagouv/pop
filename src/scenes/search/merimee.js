@@ -17,29 +17,15 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            normalMode: true
+            normalMode: false
         }
     }
 
     renderAdvanced() {
-        const fields = [
-            {name: 'firstName', label: 'First Name'},
-            {name: 'lastName', label: 'Last Name'},
-            {name: 'age', label: 'Age'},
-            {name: 'address', label: 'Address'},
-            {name: 'phone', label: 'Phone'},
-            {name: 'email', label: 'Email'},
-            {name: 'twitter', label: 'Twitter'},
-            {name: 'isDev', label: 'Is a Developer?', value: false},
-        ];
-
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <QueryBuilder 
-                    fields={fields}
-                    onQueryChange={(q) => console.log(q)}
-                />
+                <QueryBuilder/>
                 <ReactiveList
                     componentId="results"
                     react={{ "and": ['advancedSearch'] }}
