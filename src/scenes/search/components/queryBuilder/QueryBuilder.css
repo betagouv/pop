@@ -1,0 +1,31 @@
+.queryBuilder{
+    
+}
+
+.queryBuilder .rule{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.queryBuilder .rule .valueEditor{
+    width: 350px;
+}
+
+.queryBuilder .rule ul{
+    background-color: white;
+    position: absolute;
+    z-index: 99;
+    padding: 20px;
+    min-width: 253px;
+    border: 1px solid #ced4da;
+    list-style-type: none;
+}
+
+.queryBuilder .rule li {
+    cursor: pointer;
+}
+
+.queryBuilder .rule li:hover {
+    background-color: bisque;
+}

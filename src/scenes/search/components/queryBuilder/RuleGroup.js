@@ -34,7 +34,6 @@ export default class RuleGroup extends React.Component {
     }
 
     renderChildren(){
-        console.log(this.state.schema)
         return this.state.schema.map(({type,id}) => {
             if(type === 'rule'){
                 return <Rule id={id} onRemove={this.onRemove.bind(this) }/>
@@ -45,12 +44,11 @@ export default class RuleGroup extends React.Component {
     }
 
     render() {
-        console.log('this.props.aggregations',this.props.aggregations)
         return (
             <div>
                 <Combinator />
                 <button onClick={this.onRuleAdd.bind(this)}>Add Rule</button>
-                <button onClick={this.onGroupAdd.bind(this)}>Add Group</button>
+                {/* <button onClick={this.onGroupAdd.bind(this)}>Add Group</button> */}
                 <button>X</button>
                 {this.renderChildren()}
             </div>
