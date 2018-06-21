@@ -2,6 +2,31 @@
     
 }
 
+.queryBuilder button{
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.queryBuilder .closeButton{
+    color: #fff;
+    background-color: red;
+    border-color: red;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.queryBuilder select{
+    height: 29px;
+    margin: 5px;
+}
+
 .queryBuilder .rule{
     width: 100%;
     display: flex;
@@ -28,4 +53,14 @@
 
 .queryBuilder .rule li:hover {
     background-color: bisque;
+}
+
+.queryBuilder .ruleGroup{
+    margin-left: 40px;
+    padding: 10px;
+    border-color: grey;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    margin-top: 10px;
 }

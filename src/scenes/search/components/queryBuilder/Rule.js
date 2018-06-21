@@ -16,14 +16,12 @@ export default class RuleComponent extends React.Component {
         if (valueSelected) {
             const query = `{"aggs": {"${valueSelected}.keyword": {"terms": {"field": "${valueSelected}.keyword","include" : ".*${resultSelected}.*","order": {"_count": "desc"},"size": 10}}}}`
             this.setState({ query: JSON.parse(query) });
-            this.props.updateQueryRule({
-                id: this.props.id,
-                valueSelected,
-                actionSelected,
-                resultSelected
-            })
         } else {
             this.setState({ query: {} });
+        }
+
+        if (valueSelected && actionSelected && resultSelected) {
+            this.props.updateQuery({ id: this.props.id, valueSelected, actionSelected, resultSelected })
         }
 
     }
@@ -55,7 +53,6 @@ class Rule extends React.Component {
         this.props.onUpdate(valueSelected, actionSelected, resultSelected)
     }
 
-
     render() {
         return (
             <div className='rule'>Rule {this.props.id}
@@ -76,15 +73,12 @@ class Rule extends React.Component {
                         this.setState({ resultSelected: e.target.value }, () => { this.update() })
                     }}
                 />
-                <button onClick={() => this.props.onRemove(this.props.id)}>X</button>
+                <button className='closeButton' onClick={() => this.props.onRemove(this.props.id)}>X</button>
             </div>
         )
 
     }
 }
-
-
-
 
 class ValueEditor extends React.Component {
 
@@ -97,9 +91,7 @@ class ValueEditor extends React.Component {
         if (this.state.focused && this.props.aggregations && Object.keys(this.props.aggregations).length) {
             const key = Object.keys(this.props.aggregations)[0];
             const options = this.props.aggregations[key].buckets.map(e => (
-                <li
-                    key={e.key}
-                >
+                <li key={e.key} >
                     {e.key}
                 </li>
             ));
@@ -140,7 +132,7 @@ class ValueEditor extends React.Component {
                     getItemValue={(item) => item.key}
                     items={suggestions}
                     renderItem={(item, isHighlighted) =>
-                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        <div key={item.key} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
                             {item.key}
                         </div>
                     }
@@ -168,9 +160,9 @@ class ValueEditor extends React.Component {
 
 
 const ActionElement = ({ onChange, value }) => {
-    const choices = ['!==', '=='].map(option => <option key={option} value={option}>{option}</option>)
+    const choices = ['', '!==', '=='].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select className="actionelement" value={value} onChange={onChange}>
+        <select selected={choices[0]} className="actionelement" value={value} onChange={onChange}>
             {choices}
         </select>
     )
@@ -178,6 +170,7 @@ const ActionElement = ({ onChange, value }) => {
 
 const ValueSelector = ({ onChange, value }) => {
     const choices = [
+        '',
         'Producteur',
         'DENO',
         'DENQ',
@@ -201,7 +194,7 @@ const ValueSelector = ({ onChange, value }) => {
         'EDIF',
         'TOIT'].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select className="valueselector" value={value} onChange={onChange}>
+        <select selected={choices[0]} className="valueselector" value={value} onChange={onChange}>
             {choices}
         </select>
     )
