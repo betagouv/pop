@@ -138,6 +138,13 @@ export default class ImportComponent extends Component {
         <TableComponent collection={this.state.collection} dataSource={this.state.unChanged} title='Ces notices resteront inchangées' />
         <div className='buttons'>
           <Button
+            color="danger"
+            onClick={() => this.setState({ displaySummary: false })}
+          >
+            Retour
+          </Button>
+
+          <Button
             color="secondary"
             onClick={() => this.onExport()}
             disabled={!(this.state.updated.length || this.state.created.length)}
