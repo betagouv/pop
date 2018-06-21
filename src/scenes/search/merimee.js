@@ -6,7 +6,7 @@ import { ReactiveBase, DataSearch, ReactiveList, MultiList, SingleList, Selected
 import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
-import AdvancedSearch from './components/advancedSearch';
+import QueryBuilder from './components/queryBuilder';
 
 import { es_url } from '../../config.js';
 
@@ -17,7 +17,7 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            normalMode: true
+            normalMode: false
         }
     }
 
@@ -25,7 +25,7 @@ export default class Search extends React.Component {
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <AdvancedSearch className='yi' style={{ width: "100%" }} />
+                <QueryBuilder/>
                 <ReactiveList
                     componentId="results"
                     react={{ "and": ['advancedSearch'] }}

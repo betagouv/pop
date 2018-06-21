@@ -20,9 +20,9 @@ class CustomInput extends React.Component {
         if (!this.state.suggestions.length) {
             return <div />
         }
-
         const options = this.state.suggestions.map(r => (
-            <li key={r.id} onClick={this.onSelect.bind(this, r.text)} >
+            <li key={r.id}
+                onClick={this.onSelect.bind(this, r.text)} >
                 {r.text}
             </li>
         ))
