@@ -110,7 +110,7 @@ class Notice extends React.Component {
                                 name='DENO'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T96'
                             />
-                            <FieldInput
+                            <FieldTags 
                                 title='Appellation (APPL) :'
                                 name='APPL'
                             />
@@ -302,11 +302,15 @@ class Notice extends React.Component {
                             />
                             <FieldInput
                                 title='Exposition (EXPO) :'
-                                name='EXPO'
+                                name='EXPO'      
+                                type='textarea'
+                                rows={10}
                             />
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
-                                name='BIBL'
+                                name='BIBL'      
+                                type='textarea'
+                                rows={10}
                             />
                         </Col>
                         <Col sm={6}>
