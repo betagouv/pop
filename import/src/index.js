@@ -8,18 +8,21 @@ const importJoconde = require('./import_joconde');
 const importMNR = require('./import_mnr');
 const importPalissy = require('./import_palissy');
 const importMemoire = require('./import_memoire');
+const importThesaurus = require('./import_thesaurus');
 
 async function run() {
-  // await importPalissy();
+  // await importMerimee();
   console.log('END')
   // await importMNR();
   console.log('END')
-  // await importMerimee();
-  console.log('END')
   // await importJoconde();
   console.log('END')
-  await importMemoire();
+  // await importMemoire();
   console.log('END')
+  // await importPalissy();
+  console.log('END')
+
+  await importThesaurus();
 }
 
 run();

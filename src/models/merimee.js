@@ -9,7 +9,7 @@ const Schema = new mongoose.Schema({
     PRODUCTEUR: { type: String, default: '' },
     CONTIENT_IMAGE: { type: String, default: '' },
 
-    
+
     POP_COORDINATES_POINT: {
         'type': {
             type: String,
@@ -65,7 +65,7 @@ const Schema = new mongoose.Schema({
     ESCA: { type: [String], default: [] },
     ETAG: { type: [String], default: [] },
     ETAT: { type: String, default: '' },
-    ETUD: { type: [String], default: [] },
+    ETUD: { type: String, default: '' },
     GENR: { type: String, default: '' },
     HIST: { type: String, default: '' },
     HYDR: { type: String, default: '' },
@@ -103,17 +103,17 @@ const Schema = new mongoose.Schema({
     REMA: { type: String, default: '' },
     REMP: { type: String, default: '' },
     RENV: { type: [String], default: [] },
-    REPR: { type: [String], default: [] },
+    REPR: { type: String, default: '' },
     RFPA: { type: String, default: '' },
     SCLD: { type: [String], default: [] },
     SCLE: { type: [String], default: [] },
     SCLX: { type: [String], default: [] },
     SITE: { type: String, default: '' },
-    STAT: { type: [String], default: [] },
+    STAT: { type: String, default: '' },
     TECH: { type: [String], default: [] },
     TICO: { type: String, default: '' },
     TOIT: { type: [String], default: [] },
-    TYPO: { type: [String], default: [] },
+    TYPO: { type: String, default: '' },
     VERT: { type: String, default: '' },
     REFIM: { type: String, default: '' },
     IMG: { type: String, default: '' },

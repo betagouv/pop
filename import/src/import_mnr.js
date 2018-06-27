@@ -74,7 +74,7 @@ function clean(obj) {
     obj.SREP = obj.SREP;
     obj.REFIM = obj.REFIM;
     obj.DMAJ = obj.DMAJ.replace('/', '-');;
-    // obj.DMIS = obj.DMIS.replace('/', '-');
+    obj.DMIS = obj.DMIS.replace('/', '-');
     obj.NUMS = obj.NUMS;
     obj.SUITE = obj.SUITE;
     obj.COMM = obj.COMM;

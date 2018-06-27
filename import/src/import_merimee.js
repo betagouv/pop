@@ -48,7 +48,7 @@ function clean(obj) {
     obj.PART = utils.extractArray(obj.PART, ';');
     obj.MHPP = utils.extractArray(obj.MHPP, ';');
 
-    obj.REPR = utils.extractArray(obj.REPR, ';');
+    //obj.REPR = utils.extractArray(obj.REPR, ';');
     obj.COUV = utils.extractArray(obj.COUV, ';');
     obj.MURS = utils.extractArray(obj.MURS, /[,;]/);
     obj.ESCA = utils.extractArray(obj.ESCA, ';');
@@ -73,7 +73,7 @@ function clean(obj) {
     obj.IMPL = utils.extractArray(obj.IMPL, ';');
     obj.PROT = utils.extractArray(obj.PROT, ';');
 
-    obj.ETUD = utils.extractArray(obj.ETUD, ';');
+   // obj.ETUD = utils.extractArray(obj.ETUD, ';');
     obj.COPY = utils.extractArray(obj.COPY, ';');
 
     obj.DMIS = obj.DMIS.replace('/', '-');

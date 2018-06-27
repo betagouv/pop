@@ -114,7 +114,7 @@ function clean(obj) {
     obj.REG = obj.REG;
     obj.RENP = utils.extractArray(obj.RENP, ';');
     obj.RENV = utils.extractArray(obj.RENV, ';');
-    obj.REPR = obj.REPR;
+    obj.REPR = utils.extractArray(obj.REPR, ';');
     obj.SCLD = utils.extractArray(obj.SCLD, ';');
     obj.SCLE = utils.extractArray(obj.SCLE, ';');
     obj.SCLX = utils.extractArray(obj.SCLX, ';');

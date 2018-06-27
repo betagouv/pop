@@ -100,7 +100,7 @@ const Schema = new mongoose.Schema({
     REG: { type: String, default: '' },
     RENP: { type: [String], default: [] },
     RENV: { type: [String], default: [] },
-    REPR: { type: String, default: '' },
+    REPR: { type: [String], default: [] },
     SCLD: { type: [String], default: [] },
     SCLE: { type: [String], default: [] },
     SCLX: { type: [String], default: [] },

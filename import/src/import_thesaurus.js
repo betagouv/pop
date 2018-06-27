@@ -2,7 +2,7 @@ const fs = require('fs');
 const xml2js = require('xml2js');
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
-const datafolder = './data/thesaurus/';
+const datafolder = './import/data/thesaurus/';
 const Mongo = require('../../src/mongo');
 
 const parser = new xml2js.Parser();
@@ -19,9 +19,7 @@ function load() {
             } catch (e) {
                 console.log('ERR', e)
             }
-            console.log('END')
         }
-        console.log('END')
         resolve()
     })
 }
@@ -42,7 +40,14 @@ function exec(data) {
     });
 }
 
-setTimeout(() => {
-    load().then((e) => { console.log('DONE') }).catch((e) => { console.log(e) });
-}, 5000)
 
+function run() {
+    return new Promise(async (resolve, reject) => {
+        const data = await (load());
+        await (exec(data));
+        resolve();
+        console.log('END')
+    })
+}
+
+module.exports = run;
