@@ -69,7 +69,6 @@ class Notice extends React.Component {
 
         return (
             <Container className='notice' fluid>
-                <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
                 <Form
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'

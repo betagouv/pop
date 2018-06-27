@@ -45,11 +45,7 @@ class Notice extends React.Component {
     }
 
     onSubmit(values) {
-
-        console.log('VALUES', values)
         this.setState({ saving: true })
-
-        console.log('VALUES', values)
         API.updateNotice(this.state.notice.REF, 'joconde', values).then((e) => {
             toastr.success('Modification enregistrée');
             this.setState({ saving: false })
@@ -71,7 +67,6 @@ class Notice extends React.Component {
 
         return (
             <Container className='notice' fluid>
-                <h2 className='main-title'>Vous travaillez dans la base Mérimée</h2>
                 <Form
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
