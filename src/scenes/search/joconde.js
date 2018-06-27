@@ -5,7 +5,7 @@ import {
     ReactiveBase,
     DataSearch,
     ReactiveList,
-    SingleList,
+    MultiList,
     SelectedFilters,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
@@ -16,7 +16,7 @@ import ExportComponent from './components/export';
 
 import { es_url } from '../../config.js';
 
-const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech","inv","domn"]
 
 export default class Search extends React.Component {
     render() {
@@ -58,13 +58,69 @@ export default class Search extends React.Component {
                             <ExportComponent
                                 FILTER={FILTER}
                                 filename='joconde.csv'
-                                columns={['REF']}
+                                columns={['REF',
+                                    'DOMN',
+                                    'DENO',
+                                    'APPL',
+                                    'TITR',
+                                    'AUTR',
+                                    'PAUT',
+                                    'ECOL',
+                                    'ATTR',
+                                    'PERI',
+                                    'MILL',
+                                    'EPOQ',
+                                    'PEOC',
+                                    'TECH',
+                                    'DIMS',
+                                    'INSC',
+                                    'PINS',
+                                    'ONOM',
+                                    'DESC',
+                                    'ETAT',
+                                    'REPR',
+                                    'PREP',
+                                    'DREP',
+                                    'SREP',
+                                    'GENE',
+                                    'HIST',
+                                    'LIEUX',
+                                    'PLIEUX',
+                                    'GEOHI',
+                                    'UTIL',
+                                    'PERU',
+                                    'MILU',
+                                    'DECV',
+                                    'PDEC',
+                                    'NSDA',
+                                    'STAT',
+                                    'DACQ',
+                                    'APTN',
+                                    'DEPO',
+                                    'DDPT',
+                                    'ADPT',
+                                    'COMM',
+                                    'EXPO',
+                                    'BIBL',
+                                    'REDA',
+                                    'PHOT',
+                                    'REF',
+                                    'REFMIS',
+                                    'REFIM',
+                                    'LABEL',
+                                    'COPY',
+                                    'MGSCOM',
+                                    'CONTACT',
+                                    'WWW',
+                                    'LVID',
+                                    'MUSEO',
+                                    'COOR']}
                             />
                         </ReactiveComponent>
                     </div>
                     <Row>
                         <Col xs="3">
-                            <SingleList
+                            <MultiList
                                 componentId="domn"
                                 dataField="DOMN.keyword"
                                 title="Domaine"
@@ -76,7 +132,7 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="deno"
                                 dataField="DENO.keyword"
                                 title="Denomination"
@@ -88,7 +144,7 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="periode"
                                 dataField="PERI.keyword"
                                 title="Periode"
@@ -99,7 +155,7 @@ export default class Search extends React.Component {
                                     and: FILTER
                                 }}
                             />
-                            <SingleList
+                            <MultiList
                                 componentId="image"
                                 dataField="CONTIENT_IMAGE.keyword"
                                 title="Contient une image"
@@ -111,10 +167,34 @@ export default class Search extends React.Component {
                                 }}
                             />
 
-                            <SingleList
+                            <MultiList
                                 componentId="tech"
                                 dataField="TECH.keyword"
-                                title="techniques"
+                                title="Techniques"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <MultiList
+                                componentId="inv"
+                                dataField="INV.keyword"
+                                title="Iventaire"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+
+                            <MultiList
+                                componentId="domn"
+                                dataField="DOMN.keyword"
+                                title="Domaines"
                                 className="filters"
                                 showSearch={true}
                                 URLParams={true}
@@ -156,10 +236,13 @@ const Card = ({ data }) => {
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>
-                    <p>{data.DOMN}</p>
-                    <p>{data.DENO}</p>
-                    <p>{data.DOMN}</p>
+                    <p>{data.DOMN.join(', ')}</p>
+                    <p>{data.DENO.join(', ')}</p>
                     <p>{data.AUTR}</p>
+                    <p>{data.TITR}</p>
+                    <p>{data.PERI.join(', ')}</p>
+                    <p>{data.LOCA}</p>
+                    <p>{data.INV}</p>
                 </div>
             </div>
         </Link>

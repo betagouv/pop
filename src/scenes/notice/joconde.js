@@ -88,7 +88,6 @@ class Notice extends React.Component {
                     <Section
                         title='IDENTIFICATION DU BIEN MUSEAL'
                         icon={require('../../assets/info.png')}
-                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
                         color='#FF7676'
                     >
                         <Col sm={6}>
@@ -121,7 +120,7 @@ class Notice extends React.Component {
                                 title='Précisions /auteur / exécutant / collecteur (PAUT) :'
                                 name='PAUT'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Ecole (ECOL) :'
                                 name='ECOL'
                             />
@@ -181,10 +180,14 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Sujet représenté (REPR) :'
                                 name='REPR'
+                                type='textarea'
+                                rows={4}
                             />
                             <FieldTags
                                 title='Précisions sur le sujet représenté (PREP) :'
                                 name='PREP'
+                                type='textarea'
+                                rows={4}
                             />
                             <FieldInput
                                 title='Date de la représentation (DREP) :'
@@ -243,6 +246,8 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions sur la découverte / collecte / récolte (PDEC) :'
                                 name='PDEC'
+                                type='textarea'
+                                rows={4}
                             />
                             <FieldInput
                                 title='Numéro de site (NSDA) :'
@@ -347,8 +352,8 @@ class Notice extends React.Component {
                                 name='COPY'
                             />
                             <FieldInput
-                                title='Lien commande de reproduction et/ou de conditions d’utilisation (AAA) :'
-                                name='AAA'
+                                title='Lien commande de reproduction et/ou de conditions d’utilisation (MGSCOM) :'
+                                name='MGSCOM'
                             />
                         </Col>
                         <Col sm={6}>

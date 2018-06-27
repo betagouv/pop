@@ -77,8 +77,9 @@ async function exportData(fileName, columns, entities) {
             let value = entities[j][columns[i]]
             if (Array.isArray(value)) {
                 value = value.join(';')
+            } else if (value) {
+                value = value.replace(/"/g, '""')
             }
-            value = value.replace(/"/g, '""')
             arr.push('"' + value + '"');
         }
         csv += arr.join(',') + '\n'
