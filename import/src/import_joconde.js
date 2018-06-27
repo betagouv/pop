@@ -1,6 +1,6 @@
 var fs = require('fs');
 var async = require('asyncawait/async');
-var await = require('asyncawait/await');
+var await = require('async/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
 var batch = require('through-batch');

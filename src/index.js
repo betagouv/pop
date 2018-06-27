@@ -26,10 +26,4 @@ app.use('/mnr', require('./controllers/mnr'))
 app.use('/palissy', require('./controllers/palissy'))
 app.use('/thesaurus', require('./controllers/thesaurus'))
 
-//Thesaurus Proxy 
-app.use('/proxythesaurus/', (req, res) => {
-    console.log('got', req.url)
-    req.pipe(request("https://ginco.culture.fr/ginco-webservices/services" + req.url)).pipe(res);
-});
-
 app.listen(PORT, () => console.log('Listening on port ' + PORT))
