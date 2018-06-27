@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
-
+const request = require('request');
 const Mongo = require('./mongo');
 
 const { PORT } = require('./config.js');
@@ -25,5 +25,11 @@ app.use('/joconde', require('./controllers/joconde'))
 app.use('/mnr', require('./controllers/mnr'))
 app.use('/palissy', require('./controllers/palissy'))
 app.use('/thesaurus', require('./controllers/thesaurus'))
+
+//Thesaurus Proxy 
+app.use('/proxythesaurus/', (req, res) => {
+    console.log('got', req.url)
+    req.pipe(request("https://ginco.culture.fr/ginco-webservices/services" + req.url)).pipe(res);
+});
 
 app.listen(PORT, () => console.log('Listening on port ' + PORT))
