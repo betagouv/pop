@@ -3,8 +3,7 @@ import { Input, Container, Button, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import Loader from '../../components/loader';
-// import api from '../../services/api'
-import api from './api'
+import api from '../../services/api';
 
 
 import './index.css';
@@ -14,17 +13,22 @@ export default class ImportComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arc: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T96',
+      arc: '',
       done: false,
       loading: false,
-      loadingMessage: '',
+      error: '',
     }
   }
 
   onUpdate() {
-    api.getTopConceptsByThesaurusId(this.state.value).then((e) => {
-      console.log('done', e)
-    })
+    this.setState({ loading: true })
+    api.updateThesaurus(this.state.arc)
+      .then((e) => {
+        this.setState({ loading: false, done: true })
+      })
+      .catch(e => {
+        this.setState({ loading: false, done: false, error: 'error' })
+      })
   }
 
   render() {
@@ -32,7 +36,6 @@ export default class ImportComponent extends Component {
       return (
         <div className='import-container'>
           <Loader />
-          <div>{this.state.loadingMessage}</div>
         </div>
       );
     }
@@ -46,7 +49,6 @@ export default class ImportComponent extends Component {
       );
     }
 
-
     return (
       <Container className='thesaurus'>
         <div className='inputzone'>
@@ -57,6 +59,7 @@ export default class ImportComponent extends Component {
           />
           <Button color='primary' onClick={this.onUpdate.bind(this)}>Update</Button>
         </div>
+        <div>{this.state.error}</div>
       </Container >
     );
   }

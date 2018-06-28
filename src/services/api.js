@@ -21,6 +21,11 @@ class api {
         return this._get(`${api_url}/${collection}?ref=${ref}`)
     }
 
+    updateThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus/update?id=${thesaurusId}`)
+    }
+
+
     getThesaurus(thesaurusId, str) {
         return this._get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`)
     }

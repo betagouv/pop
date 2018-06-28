@@ -386,7 +386,7 @@ class Notice extends React.Component {
                          </Link>
                         </Button>
                         <Button
-                            disabled={false}
+                            disabled={true}
                             color="primary"
                             type="submit"
                         >
