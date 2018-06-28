@@ -15,24 +15,24 @@ export default class ImportDropComponent extends Component {
     files.forEach(file => {
       const extension = file.name.split('.').pop();
       const reader = new FileReader();
-      if (extension === 'csv') {
-        reader.onload = () => {
-          this.parseCSVFile(reader.result)
-        };
-      } else if (extension === 'txt') {
-        reader.onload = () => {
-          this.parseJocondeTxt(reader.result)
-        };
-      } else if (extension === 'xml') {
-        reader.onload = () => {
-          this.parseGertrude(reader.result)
-        };
-        // } else if (extension === 'xlsx') {
-        //   reader.onload = () => { this.parseXLSXFile(reader.result) };
-      } else {
-        this.setState({ error: `Extension ${extension} is not supported` })
-        return;
-      }
+      // if (extension === 'csv') {
+      //   reader.onload = () => {
+      //     this.parseCSVFile(reader.result)
+      //   };
+      // } else if (extension === 'txt') {
+      //   reader.onload = () => {
+      //     this.parseJocondeTxt(reader.result)
+      //   };
+      // } else if (extension === 'xml') {
+      //   reader.onload = () => {
+      //     this.parseGertrude(reader.result)
+      //   };
+      //   // } else if (extension === 'xlsx') {
+      //   //   reader.onload = () => { this.parseXLSXFile(reader.result) };
+      // } else {
+      //   this.setState({ error: `Extension ${extension} is not supported` })
+      //   return;
+      // }
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
       reader.readAsText(file, this.state.encoding);

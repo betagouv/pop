@@ -44,6 +44,10 @@
   overflow: hidden;
 }
 
+.search .filters span:first-letter {
+  text-transform: uppercase;
+}
+
 .search .card{
   display: flex;
   flex-direction: row;

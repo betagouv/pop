@@ -36,12 +36,17 @@ class Notice extends React.Component {
 
     load(ref) {
         this.setState({ loading: true })
-        API.getNotice('joconde', ref).then((notice) => {
-            console.log('NOTICE', notice)
-            const initData = notice;
-            this.props.initialize(initData);
-            this.setState({ loading: false, notice })
-        })
+        API.getNotice('joconde', ref)
+            .then((notice) => {
+                if (!notice) {
+                    this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
+                    console.error(`Impossible de charger la notice ${ref}`)
+                }
+                console.log('NOTICE', notice)
+                const initData = notice;
+                this.props.initialize(initData);
+                this.setState({ loading: false, notice })
+            })
     }
 
     onSubmit(values) {
@@ -57,6 +62,11 @@ class Notice extends React.Component {
         if (this.state.loading) {
             return <Loader />
         }
+
+        if (this.state.error) {
+            return <div className='error'>{this.state.error}</div>
+        }
+
 
         const arr = [];
         for (var key in this.state.notice) {
@@ -104,7 +114,7 @@ class Notice extends React.Component {
                                 name='DENO'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T96'
                             />
-                            <FieldTags 
+                            <FieldTags
                                 title='Appellation (APPL) :'
                                 name='APPL'
                             />
@@ -302,13 +312,13 @@ class Notice extends React.Component {
                             />
                             <FieldInput
                                 title='Exposition (EXPO) :'
-                                name='EXPO'      
+                                name='EXPO'
                                 type='textarea'
                                 rows={10}
                             />
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
-                                name='BIBL'      
+                                name='BIBL'
                                 type='textarea'
                                 rows={10}
                             />

@@ -15,9 +15,11 @@ export default class PublicRoutes extends React.Component {
 
   componentWillReceiveProps(newProps) {
     console.log(newProps);
+    amplitude.getInstance().logEvent('EVENT_NAME_HERE');
   }
 
   render() {
+    amplitude.getInstance().logEvent('EVENT_NAME_HERE');
     return (
       <ConnectedRouter history={this.props.history}>
         <div className='main'>

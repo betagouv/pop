@@ -10,13 +10,12 @@ import {
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
-
 import Button from './components/button';
 import ExportComponent from './components/export';
 
 import { es_url } from '../../config.js';
 
-const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech","inv","domn"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "domn"]
 
 export default class Search extends React.Component {
     render() {
@@ -182,7 +181,7 @@ export default class Search extends React.Component {
                             <MultiList
                                 componentId="inv"
                                 dataField="INV.keyword"
-                                title="Iventaire"
+                                title="Inventaire"
                                 className="filters"
                                 showSearch={true}
                                 URLParams={true}
@@ -213,6 +212,7 @@ export default class Search extends React.Component {
                                 onResultStats={(total, took) => {
                                     return `${total} résultats trouvés en ${took} ms.`
                                 }}
+                                loader="Chargement ..."
                                 dataField=''
                                 URLParams={true}
                                 size={20}
