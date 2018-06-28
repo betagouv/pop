@@ -1,6 +1,6 @@
 var fs = require('fs');
 var async = require('asyncawait/async');
-var await = require('async/await');
+var await = require('asyncawait/await');
 var transform = require('stream-transform');
 var csvparse = require('csv-parse');
 var batch = require('through-batch');
@@ -99,7 +99,7 @@ function clean(obj) {
     obj.SREP = utils.extractArray(obj.SREP, ';');
     obj.STAT = utils.extractArray(obj.STAT, ';');
     obj.TECH = utils.extractArray(obj.TECH, ';');
-    obj.TICO = obj.TICO
+    obj.TICO = obj.TICO.replace(/(<([^>]+)>)/ig, '')
     obj.TITR = obj.TITR
     obj.TOUT = obj.TOUT
     obj.UTIL = utils.extractArray(obj.UTIL, ';');
@@ -117,7 +117,7 @@ function clean(obj) {
 
 function extractIMG(str, ref) {
     if (!str) return []
-    const arr = utils._regex(str, /([a-z0-9_\/]+.jpg)/g);
+    const arr = utils._regex(str, /([a-zA-Z0-9_\/-]+.(gif|jpg|jpeg|tiff|png))/g);
 
     if (!arr.length) {
         log('ExtractJocondeImage', ref, `Error when extracting image (IMG)`, str);

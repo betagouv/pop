@@ -54,6 +54,7 @@ module.exports = function syncWithMongoDb(file, object, clean) {
             input.pause();
             object.findOneAndUpdate({ REF: obj.REF }, obj, { upsert: true, new: true }, (err, doc) => {
                 if (err) console.log(err);
+                console.log('NEXT', count++)
                 input.resume();
                 done();
             })

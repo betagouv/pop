@@ -15,14 +15,14 @@ async function run() {
   console.log('END')
   // await importMNR();
   console.log('END')
-  // await importJoconde();
+  await importJoconde();
   console.log('END')
   // await importMemoire();
   console.log('END')
   // await importPalissy();
   console.log('END')
 
-  await importThesaurus();
+  // await importThesaurus();
 }
 
 run();
