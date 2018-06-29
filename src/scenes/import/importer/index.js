@@ -69,7 +69,7 @@ export default class Importer extends Component {
     //CALCUL DU THESAURUS
     for (var i = 0; i < importedNotices.length; i++) {
       this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
-      const warnings = await (checkThesaurus(importedNotices[i].notice, this.state.collection));
+      const warnings = await (checkThesaurus(importedNotices[i].notice, this.props.collection));
       importedNotices[i].warnings = warnings;
     }
 
@@ -86,14 +86,14 @@ export default class Importer extends Component {
     for (var i = 0; i < this.state.updated.length; i++) {
       this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
       const ref = this.state.updated[i].notice.REF;
-      await api.updateNotice(ref, this.state.collection, this.state.updated[i].notice);
+      await api.updateNotice(ref, this.props.collection, this.state.updated[i].notice);
     }
 
     //Create notice
     for (var i = 0; i < this.state.created.length; i++) {
       this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
       console.log('Create', this.state.created[i].notice)
-      await api.createNotice(this.state.collection, this.state.created[i].notice);
+      await api.createNotice(this.props.collection, this.state.created[i].notice);
     }
 
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
@@ -121,18 +121,18 @@ export default class Importer extends Component {
     return (
       <div className='import'>
         <TableComponent
-          collection={this.state.collection}
+          collection={this.props.collection}
           dataSource={this.state.updated}
           title='Ces notices seront mises à jour'
         />
 
         <TableComponent
-          collection={this.state.collection}
+          collection={this.props.collection}
           dataSource={this.state.created}
           title='Ces notices seront créées'
         />
         <TableComponent
-          collection={this.state.collection}
+          collection={this.props.collection}
           dataSource={this.state.unChanged}
           title='Ces notices resteront inchangées'
         />
