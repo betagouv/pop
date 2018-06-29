@@ -232,14 +232,13 @@ const Card = ({ data }) => {
     const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/joconde/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Book Cover" />
+            <img src={image} alt={data.TITR} />
             <div className='content'>
-                <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
+                <div style={{ display: 'flex' }}><h2>{data.TITR}</h2><span>{data.REF}</span></div>
                 <div>
                     <p>{data.DOMN.join(', ')}</p>
                     <p>{data.DENO.join(', ')}</p>
                     <p>{data.AUTR}</p>
-                    <p>{data.TITR}</p>
                     <p>{data.PERI.join(', ')}</p>
                     <p>{data.LOCA}</p>
                     <p>{data.INV}</p>

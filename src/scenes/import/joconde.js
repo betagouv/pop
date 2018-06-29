@@ -69,13 +69,18 @@ function parseFiles(files) {
                 }
 
                 //ADD IMAGES
+
                 for (var i = 0; i < notices.length; i++) {
-                    for (var j = 0; j < notices[i].notice.REFIM.length; j++) {
-                        const img = filesMap[notices[i].notice.REFIM[j]];
+                    let tempImages = notices[i].notice.REFIM.split(';');
+                    tempImages = tempImages.map(e => e.split(',')[3])
+
+                    notices[i].files = [];
+                    for (var j = 0; j < tempImages.length; j++) {
+                        const img = filesMap[tempImages[j]];
                         if (!img) {
-                            errors.push(`Image ${notices[i].notice.REFIM[j]} introuvable`)
+                            errors.push(`Image ${tempImages[j]} introuvable`)
                         }
-                        notices[i].notice.REFIM[j] = img;
+                        notices[i].files.push(img)
                     }
                 }
 
@@ -84,7 +89,6 @@ function parseFiles(files) {
                     return;
                 }
 
-                console.log(notices)
                 resolve(notices);
             };
             reader.onabort = () => console.log('file reading was aborted');
@@ -97,8 +101,11 @@ function parseFiles(files) {
 }
 
 function transform(obj) {
-
     const errors = [];
+
+
+
+
 
     obj.REF = obj.REF.trim();
     obj.ADPT = utils.extractArray(obj.ADPT, ';', errors);
@@ -134,7 +141,7 @@ function transform(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST
     obj.IMAGE = obj.IMAGE
-    obj.IMG = obj.IMG || []//extractIMG(obj.IMG, obj.REF, errors);
+    obj.IMG = extractIMG(obj.REFIM, obj.REF, errors);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV
     obj.LABEL = obj.LABEL
@@ -165,11 +172,7 @@ function transform(obj) {
     obj.RANG = obj.RANG
     obj.REDA = utils.extractArray(obj.REDA, ';', errors);
 
-
-    let tempImages = obj.REFIM.split(';');
-    tempImages = tempImages.map(e => e.split(',')[3])
-
-    obj.REFIM = tempImages//obj.REFIM
+    obj.REFIM = obj.REFIM;
 
     obj.REPR = obj.REPR
     obj.RETIF = obj.RETIF
@@ -183,12 +186,17 @@ function transform(obj) {
     obj.VIDEO = obj.VIDEO
     obj.WWW = utils.extractUrls(obj.WWW, obj.REF, errors);
     obj.LVID = obj.LVID;
+
+    obj.CONTIENT_IMAGE = obj.IMG.length > 0 ? 'oui' : 'non';
+
     return { notice: obj, errors };
 }
 
 
-function extractImage() {
-
+function extractIMG(REFIM, REF) {
+    let tempImages = REFIM.split(';');
+    tempImages = tempImages.map(e => e.split(',')[3])
+    return tempImages.map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${REF}/${e}`)
 }
 
 function mapping() {

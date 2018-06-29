@@ -7,7 +7,7 @@ class api {
         return this._post(`${api_url}/${collection}/update?ref=${ref}`, JSON.stringify(data), 'application/json')
     }
 
-    createNotice(collection, data) {
+    createNotice(collection, data, files) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
@@ -18,8 +18,8 @@ class api {
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
 
-        for (var i = 0; i < data.REFIM.length; i++) {
-            formData.append('file', data.REFIM[i]);
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
         }
         return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
     }
@@ -59,7 +59,6 @@ class api {
                     reject('Looks like there was a problem. Status Code: ' + response.status);
                     return;
                 };
-                console.log('DONE')
                 resolve()
                 // response.json().then((data) => {    // Examine the text in the response
                 //     (data);

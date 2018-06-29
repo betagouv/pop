@@ -42,14 +42,6 @@ export default class Importer extends Component {
       }
     }
 
-    // //CONTROLE DE LA VALIDITE DES CHAMPS
-    // for (var i = 0; i < importedNotices.length; i++) {
-    //   importedNotices[i] = this.props.transform(importedNotices[i]);
-    //   importedNotices[i].errors = {
-    //     jsx: importedNotices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-    //     text: importedNotices[i].errors
-    //   }
-    // }
 
     //RECUPERATION DES NOTICES EXISTANTES
     const existingNotices = []
@@ -93,7 +85,7 @@ export default class Importer extends Component {
     for (var i = 0; i < this.state.created.length; i++) {
       this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
       console.log('Create', this.state.created[i].notice)
-      await api.createNotice(this.props.collection, this.state.created[i].notice);
+      await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].files);
     }
 
     this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });

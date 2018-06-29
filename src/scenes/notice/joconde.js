@@ -129,6 +129,8 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions /auteur / exécutant / collecteur (PAUT) :'
                                 name='PAUT'
+                                type='textarea'
+                                rows={4}
                             />
                             <FieldTags
                                 title='Ecole (ECOL) :'
