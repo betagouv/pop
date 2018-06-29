@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from 'reactstrap';
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 export default function checkThesaurus(obj, collection) {
     return new Promise(async (resolve, reject) => {

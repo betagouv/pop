@@ -23,18 +23,14 @@ export default class Table extends React.Component {
         const { dataSource, title, collection } = this.props;
         if (!dataSource.length) { return <div /> }
 
-        const columnsJSX = [];
-        columnsJSX.push(<Col className='col' md='2' key='1'><b>REF</b></Col>)
-        columnsJSX.push(<Col className='col' md='7' key='2'><b>TICO</b></Col>)
-        columnsJSX.push(<Col className='col' md='2' key='3'><b>DENO</b></Col>)
-
         const data = [];
 
         for (var i = (this.state.activePage - 1) * 10; i < (this.state.activePage * 10) && i < dataSource.length; i++) ((i) => {
             //Affichage notices modifiées.
             const r = [];
 
-            r.push(<Col className='col' md='2' key='1'><Link to={`/notice/${collection}/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col>)
+            // r.push(< Col className='col' md='2' key='1' > <Link to={`/notice/${collection}/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col >)
+            r.push(<Col className='col' md='2' key='1'>{dataSource[i].notice.REF}</Col >)
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TICO}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
@@ -91,7 +87,6 @@ export default class Table extends React.Component {
             <div className='section'>
                 <h3 style={{ marginBottom: 16 }}>{title} ({dataSource.length})</h3>
                 <div className='table'>
-                    <Row>{columnsJSX}</Row>
                     {data}
                 </div>
                 <Pagination
