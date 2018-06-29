@@ -13,7 +13,7 @@ router.post('/update', (req, res) => {
 })
 
 router.post('/create', upload.array(), (req, res) => {
-    console.log(req.body)
+    console.log(req)
     // res.sendStatus(200)
     // Joconde.create(req.body).then((e) => {
     //     res.sendStatus(200)
