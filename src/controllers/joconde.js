@@ -1,5 +1,7 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const Joconde = require('../models/joconde');
 
 
@@ -10,10 +12,12 @@ router.post('/update', (req, res) => {
     });
 })
 
-router.post('/create', (req, res) => {
-    Joconde.create(req.body).then((e) => {
-        res.sendStatus(200)
-    });
+router.post('/create', upload.array(), (req, res) => {
+    console.log(req.body)
+    // res.sendStatus(200)
+    // Joconde.create(req.body).then((e) => {
+    //     res.sendStatus(200)
+    // });
 })
 
 router.get('/', (req, res) => {

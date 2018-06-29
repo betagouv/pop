@@ -30,7 +30,6 @@ function exec(data) {
             const id = result.gincoExportedThesaurus.thesaurus[0].identifier[0];
             const filtered = result.gincoExportedThesaurus.terms.filter(e => (e.status[0] === '1' && e.language[0].id[0] === 'fr-FR'))
             const arr = filtered.map(e => new Thesaurus({ arc: id, value: e.lexicalValue[0] }));
-            console.log('LA')
             Thesaurus.insertMany(arr, function (err, docs) {
                 console.log(err)
                 console.log('SAVED ', docs.length)

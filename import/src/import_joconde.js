@@ -117,7 +117,7 @@ function clean(obj) {
 
 function extractIMG(str, ref) {
     if (!str) return []
-    const arr = utils._regex(str, /([a-zA-Z0-9_\/-]+.(gif|jpg|jpeg|tiff|png))/g);
+    const arr = utils._regex(str, /([a-zA-Z0-9_\/-]+.(gif|jpg|jpeg|tiff|png|avi))/g);
 
     if (!arr.length) {
         log('ExtractJocondeImage', ref, `Error when extracting image (IMG)`, str);

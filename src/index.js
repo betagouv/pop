@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 const request = require('request');
@@ -8,9 +7,6 @@ const Mongo = require('./mongo');
 const { PORT } = require('./config.js');
 
 const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
