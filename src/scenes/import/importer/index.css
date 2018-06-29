@@ -72,7 +72,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 200px;
+  min-height: 200px;
   border-style: dashed;
   width: 200Px;
 }

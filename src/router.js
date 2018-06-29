@@ -9,14 +9,17 @@ import Home from './scenes/home';
 import Search from './scenes/search';
 import Notice from './scenes/notice';
 import Import from './scenes/import';
+import Thesaurus from './scenes/thesaurus';
 
 export default class PublicRoutes extends React.Component {
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     console.log(newProps);
+    amplitude.getInstance().logEvent('EVENT_NAME_HERE');
   }
 
   render() {
+    amplitude.getInstance().logEvent('EVENT_NAME_HERE');
     return (
       <ConnectedRouter history={this.props.history}>
         <div className='main'>
@@ -31,6 +34,7 @@ export default class PublicRoutes extends React.Component {
           <Header />
           <Switch>
             <Route exact path={'/'} component={Home} />
+            <Route exact path={'/thesaurus'} component={Thesaurus} />
             <Route path={'/search/:collection'} component={Search} />
             <Route path={'/import/:collection'} component={Import} />
             <Route path={'/notice/:collection/:ref'} component={Notice} />

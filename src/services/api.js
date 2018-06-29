@@ -1,12 +1,13 @@
+import AWS from 'aws-sdk';
 const { api_url } = require('../config.js');
 
 class api {
 
     updateNotice(ref, collection, data) {
-        return this._post(`${api_url}/${collection}/update?ref=${ref}`, data)
+        return this._post(`${api_url}/${collection}/update?ref=${ref}`, JSON.stringify(data), 'application/json')
     }
 
-    createNotice(collection, data) {
+    createNotice(collection, data, files) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
@@ -14,12 +15,23 @@ class api {
             }
         }
 
-        return this._post(`${api_url}/${collection}/create`, data)
+        var formData = new FormData();
+        formData.append('notice', JSON.stringify(data));
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
+        return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
     }
 
     getNotice(collection, ref) {
         return this._get(`${api_url}/${collection}?ref=${ref}`)
     }
+
+    updateThesaurus(thesaurusId, str) {
+        return this._get(`${api_url}/thesaurus/update?id=${thesaurusId}`)
+    }
+
 
     getThesaurus(thesaurusId, str) {
         return this._get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`)
@@ -29,15 +41,14 @@ class api {
         return this._get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`)
     }
 
-    _post(url, data) {
+    _post(url, data, contentType) {
         return new Promise((resolve, reject) => {
             fetch(url, {
-                body: JSON.stringify(data), // must match 'Content-Type' header
+                body: data, // must match 'Content-Type' header
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, same-origin, *omit
                 headers: {
-                    'user-agent': 'Mozilla/4.0 MDN Example',
-                    'content-type': 'application/json'
+                    'user-agent': 'POP application',
                 },
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
@@ -45,8 +56,9 @@ class api {
                 referrer: 'no-referrer', // *client, no-referrer
             }).then((response) => {
                 if (response.status !== 200) {
-                    reject('Looks like there was a problem. Status Code: ' + response.status)
-                }
+                    reject('Looks like there was a problem. Status Code: ' + response.status);
+                    return;
+                };
                 resolve()
                 // response.json().then((data) => {    // Examine the text in the response
                 //     (data);

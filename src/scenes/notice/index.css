@@ -39,3 +39,13 @@
   padding-top: 10px;
   width: 100%;
 }
+
+
+.error{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  font-weight: bold;
+}

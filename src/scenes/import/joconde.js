@@ -1,7 +1,112 @@
+import React from 'react';
+import { Container } from 'reactstrap';
+import Importer from './importer';
+
 const utils = require('./utils')
 
-function cleanJoconde(obj) {
+export default class Import extends React.Component {
+    render() {
+        return (
+            <Container className='import'>
+                <Importer
+                    collection="joconde"
+                    parseFiles={parseFiles}
+                    transform={transform}
+                />
+            </Container >
+        );
+    }
+}
+
+
+function parseFiles(files) {
+    return new Promise((resolve, reject) => {
+
+        const filesMap = {};
+        for (var i = 0; i < files.length; i++) {
+            filesMap[files[i].name] = files[i];
+        }
+
+        var file = files.find(file => file.name.split('.').pop() === 'TXT');
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                let str = reader.result.replace(/\-\r\n/g, '');
+                var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
+                const notices = [];
+                let obj = {};
+                for (var i = 0; i < lines.length; i++) {
+                    if (lines[i] === '//') {
+                        notices.push(obj);
+                        obj = {};
+                    } else {
+                        obj[lines[i]] = lines[++i]
+                    }
+                }
+
+                ///CONTROLE DE LA CONSISTENTE DES DONNEE 
+                const errors = [];
+                if (notices.length) {
+                    for (let key in notices[0]) {
+                        if (!mapping().includes(key)) {
+                            errors.push(`La colonne ${key} est inconnue`);
+                        }
+                    }
+                }
+
+                if (errors.length) {
+                    reject(errors.join('\n'));
+                    return;
+                }
+
+                //CONTROLE DE LA VALIDITE DES CHAMPS
+                for (var i = 0; i < notices.length; i++) {
+                    notices[i] = transform(notices[i]);
+                    notices[i].errors = {
+                        jsx: notices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
+                        text: notices[i].errors
+                    }
+                }
+
+                //ADD IMAGES
+
+                for (var i = 0; i < notices.length; i++) {
+                    let tempImages = notices[i].notice.REFIM.split(';');
+                    tempImages = tempImages.map(e => e.split(',')[3])
+
+                    notices[i].files = [];
+                    for (var j = 0; j < tempImages.length; j++) {
+                        const img = filesMap[tempImages[j]];
+                        if (!img) {
+                            errors.push(`Image ${tempImages[j]} introuvable`)
+                        }
+                        notices[i].files.push(img)
+                    }
+                }
+
+                if (errors.length) {
+                    reject(errors.join('\n'));
+                    return;
+                }
+
+                resolve(notices);
+            };
+            reader.onabort = () => console.log('file reading was aborted');
+            reader.onerror = () => console.log('file reading has failed');
+            reader.readAsText(file);
+        } else {
+            reject('Fichier .TXT absent');
+        }
+    })
+}
+
+function transform(obj) {
     const errors = [];
+
+
+
+
+
     obj.REF = obj.REF.trim();
     obj.ADPT = utils.extractArray(obj.ADPT, ';', errors);
     obj.APPL = utils.extractArray(obj.APPL, ';', errors);
@@ -36,7 +141,7 @@ function cleanJoconde(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST
     obj.IMAGE = obj.IMAGE
-    obj.IMG = obj.IMG//extractIMG(obj.IMG, obj.REF, errors);
+    obj.IMG = extractIMG(obj.REFIM, obj.REF, errors);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV
     obj.LABEL = obj.LABEL
@@ -66,7 +171,9 @@ function cleanJoconde(obj) {
     obj.PUTI = obj.PUTI
     obj.RANG = obj.RANG
     obj.REDA = utils.extractArray(obj.REDA, ';', errors);
-    obj.REFIM = obj.REFIM
+
+    obj.REFIM = obj.REFIM;
+
     obj.REPR = obj.REPR
     obj.RETIF = obj.RETIF
     obj.SREP = utils.extractArray(obj.SREP, ';', errors);
@@ -79,11 +186,22 @@ function cleanJoconde(obj) {
     obj.VIDEO = obj.VIDEO
     obj.WWW = utils.extractUrls(obj.WWW, obj.REF, errors);
     obj.LVID = obj.LVID;
+
+    obj.CONTIENT_IMAGE = obj.IMG.length > 0 ? 'oui' : 'non';
+
     return { notice: obj, errors };
 }
 
-function getMappingJoconde() {
-    return ["REF",
+
+function extractIMG(REFIM, REF) {
+    let tempImages = REFIM.split(';');
+    tempImages = tempImages.map(e => e.split(',')[3])
+    return tempImages.map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${REF}/${e}`)
+}
+
+function mapping() {
+    return [
+        "REF",
         "REFMIS",
         "ADPT",
         "APPL",
@@ -161,10 +279,4 @@ function getMappingJoconde() {
         "VIDEO",
         "WWW",
         "LVID"]
-}
-
-
-module.exports = {
-    cleanJoconde,
-    getMappingJoconde
 }
