@@ -17,6 +17,10 @@ class api {
 
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
+
+        for (var i = 0; i < data.REFIM.length; i++) {
+            formData.append('file', data.REFIM[i]);
+        }
         return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
     }
 
