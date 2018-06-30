@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@appbaseio/reactivesearch": "^2.6.2",
-    "aws-sdk": "^2.266.1",
     "bootstrap": "^4.0.0",
     "brace": "^0.11.1",
     "classnames": "^2.2.5",
@@ -45,8 +44,8 @@
     "start": "node src/server/index.js",
     "build": "webpack --env.production --env.NODE_ENV=production",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
-    "deploy:prod": "yarn build && eb deploy pop-production -l 0.0.01",
-    "deploy:staging": "yarn build && eb deploy pop-production-staging -l 0.0.01"
+    "deploy:prod": "yarn build && eb deploy pop-production",
+    "deploy:staging": "yarn build && eb deploy pop-production-staging"
   },
   "engines": {
     "node": "8.x",

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 

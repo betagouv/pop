@@ -10,219 +10,210 @@ import {
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
-import Button from './components/button';
+import CustomButton from './components/button';
 import ExportComponent from './components/export';
+import QueryBuilder from './components/queryBuilder';
 
 import { es_url } from '../../config.js';
+
+import jocondeMapping from '../../mapping/joconde';
+
 
 const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "domn"]
 
 export default class Search extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        let exportfield = jocondeMapping.filter((e) => e.export);
+        exportfield = exportfield.map(e => e.value);
+
+        this.state = {
+            normalMode: true,
+            exportfield
+        }
+    }
+
+    renderAdvanced() {
+        return (
+            <div>
+                <div className='title'>Rechercher une Notice</div>
+                <QueryBuilder
+                    fields={jocondeMapping}
+                />
+                <ReactiveList
+                    componentId="results"
+                    react={{ "and": ['advancedSearch'] }}
+                    onResultStats={(total, took) => { return `${total} résultats trouvés en ${took} ms.` }}
+                    URLParams={true}
+                    dataField=''
+                    size={20}
+                    onData={(data) => <Card key={data.REF} data={data} />}
+                    pagination={true}
+                />
+            </div >
+        )
+    }
+
+
     render() {
         return (
             <Container className='search'>
+                <div className='header'>
+                    <div className='buttons'>
+                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
+                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
+                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
+                    </div>
+                </div>
                 <ReactiveBase
                     url={`${es_url}/joconde`}
                     app="joconde"
                 >
-                    <div className='header'>
-                        <div className='buttons'>
-                            <Button icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
-                            <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
-                            <Button icon={require('../../assets/edit.png')} to='/new' text='Recherche avancée' />
-                        </div>
-                    </div>
-                    <div className='title'>Rechercher une Notice</div>
-                    <div className='search-and-export-zone'>
-                        <DataSearch
-                            componentId="mainSearch"
-                            dataField={["TICO", "INV", "DENO", "REF", "LOCA"]}
-                            queryFormat="and"
-                            iconPosition="left"
-                            className="mainSearch"
-                            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
-                            URLParams={true}
-                        />
+                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
+                </ReactiveBase >
+            </Container >
+        );
+    }
 
-                        <ReactiveComponent
-                            componentId='export'
+    renderNormal() {
+        return (
+            <div>
+                <div className='title'>Rechercher une Notice</div>
+                <div className='search-and-export-zone'>
+                    <DataSearch
+                        componentId="mainSearch"
+                        dataField={["TICO", "INV", "DENO", "REF", "LOCA"]}
+                        queryFormat="and"
+                        iconPosition="left"
+                        className="mainSearch"
+                        placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+                        URLParams={true}
+                    />
+
+                    <ReactiveComponent
+                        componentId='export'
+                        react={{
+                            and: FILTER
+                        }}
+                        defaultQuery={() => ({
+                            size: 100,
+                            aggs: {},
+                        })}
+                    >
+                        <ExportComponent
+                            FILTER={FILTER}
+                            filename='joconde.csv'
+                            columns={['REF', 'DOMN', 'DENO', 'APPL', 'TITR', 'AUTR', 'PAUT', 'ECOL', 'ATTR', 'PERI', 'MILL', 'EPOQ', 'PEOC', 'TECH', 'DIMS', 'INSC', 'PINS', 'ONOM', 'DESC', 'ETAT', 'REPR', 'PREP', 'DREP', 'SREP', 'GENE', 'HIST', 'LIEUX', 'PLIEUX', 'GEOHI', 'UTIL', 'PERU', 'MILU', 'DECV', 'PDEC', 'NSDA', 'STAT', 'DACQ', 'APTN', 'DEPO', 'DDPT', 'ADPT', 'COMM', 'EXPO', 'BIBL', 'REDA', 'PHOT', 'REF', 'REFMIS', 'REFIM', 'LABEL', 'COPY', 'MGSCOM', 'CONTACT', 'WWW', 'LVID', 'MUSEO', 'COOR']}
+                        />
+                    </ReactiveComponent>
+                </div>
+                <Row>
+                    <Col xs="3">
+                        <MultiList
+                            componentId="domn"
+                            dataField="DOMN.keyword"
+                            title="Domaine"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
                             react={{
                                 and: FILTER
                             }}
-                            defaultQuery={() => ({
-                                size: 100,
-                                aggs: {},
-                            })}
-                        >
-                            <ExportComponent
-                                FILTER={FILTER}
-                                filename='joconde.csv'
-                                columns={['REF',
-                                    'DOMN',
-                                    'DENO',
-                                    'APPL',
-                                    'TITR',
-                                    'AUTR',
-                                    'PAUT',
-                                    'ECOL',
-                                    'ATTR',
-                                    'PERI',
-                                    'MILL',
-                                    'EPOQ',
-                                    'PEOC',
-                                    'TECH',
-                                    'DIMS',
-                                    'INSC',
-                                    'PINS',
-                                    'ONOM',
-                                    'DESC',
-                                    'ETAT',
-                                    'REPR',
-                                    'PREP',
-                                    'DREP',
-                                    'SREP',
-                                    'GENE',
-                                    'HIST',
-                                    'LIEUX',
-                                    'PLIEUX',
-                                    'GEOHI',
-                                    'UTIL',
-                                    'PERU',
-                                    'MILU',
-                                    'DECV',
-                                    'PDEC',
-                                    'NSDA',
-                                    'STAT',
-                                    'DACQ',
-                                    'APTN',
-                                    'DEPO',
-                                    'DDPT',
-                                    'ADPT',
-                                    'COMM',
-                                    'EXPO',
-                                    'BIBL',
-                                    'REDA',
-                                    'PHOT',
-                                    'REF',
-                                    'REFMIS',
-                                    'REFIM',
-                                    'LABEL',
-                                    'COPY',
-                                    'MGSCOM',
-                                    'CONTACT',
-                                    'WWW',
-                                    'LVID',
-                                    'MUSEO',
-                                    'COOR']}
-                            />
-                        </ReactiveComponent>
-                    </div>
-                    <Row>
-                        <Col xs="3">
-                            <MultiList
-                                componentId="domn"
-                                dataField="DOMN.keyword"
-                                title="Domaine"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
+                        />
 
-                            <MultiList
-                                componentId="deno"
-                                dataField="DENO.keyword"
-                                title="Denomination"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
+                        <MultiList
+                            componentId="deno"
+                            dataField="DENO.keyword"
+                            title="Denomination"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
 
-                            <MultiList
-                                componentId="periode"
-                                dataField="PERI.keyword"
-                                title="Periode"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                            <MultiList
-                                componentId="image"
-                                dataField="CONTIENT_IMAGE.keyword"
-                                title="Contient une image"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
+                        <MultiList
+                            componentId="periode"
+                            dataField="PERI.keyword"
+                            title="Periode"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
+                        <MultiList
+                            componentId="image"
+                            dataField="CONTIENT_IMAGE.keyword"
+                            title="Contient une image"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
 
-                            <MultiList
-                                componentId="tech"
-                                dataField="TECH.keyword"
-                                title="Techniques"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
+                        <MultiList
+                            componentId="tech"
+                            dataField="TECH.keyword"
+                            title="Techniques"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
 
-                            <MultiList
-                                componentId="inv"
-                                dataField="INV.keyword"
-                                title="Inventaire"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
+                        <MultiList
+                            componentId="inv"
+                            dataField="INV.keyword"
+                            title="Inventaire"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
 
-                            <MultiList
-                                componentId="domn"
-                                dataField="DOMN.keyword"
-                                title="Domaines"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                        </Col>
-                        <Col xs="9">
-                            <SelectedFilters />
-                            <ReactiveList
-                                componentId="results"
-                                react={{
-                                    "and": FILTER
-                                }}
-                                onResultStats={(total, took) => {
-                                    return `${total} résultats trouvés en ${took} ms.`
-                                }}
-                                loader="Chargement ..."
-                                dataField=''
-                                URLParams={true}
-                                size={20}
-                                onData={(data) => <Card key={data.REF} data={data} />}
-                                pagination={true}
-                            />
-                        </Col>
-                    </Row>
-                </ReactiveBase >
-            </Container >
+                        <MultiList
+                            componentId="domn"
+                            dataField="DOMN.keyword"
+                            title="Domaines"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
+                    </Col>
+                    <Col xs="9">
+                        <SelectedFilters />
+                        <ReactiveList
+                            componentId="results"
+                            react={{
+                                "and": FILTER
+                            }}
+                            onResultStats={(total, took) => {
+                                return `${total} résultats trouvés en ${took} ms.`
+                            }}
+                            loader="Chargement ..."
+                            dataField=''
+                            URLParams={true}
+                            size={20}
+                            onData={(data) => <Card key={data.REF} data={data} />}
+                            pagination={true}
+                        />
+                    </Col>
+                </Row>
+            </div >
         );
     }
 }

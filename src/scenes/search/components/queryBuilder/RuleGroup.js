@@ -41,9 +41,9 @@ export default class RuleGroup extends React.Component {
     renderChildren() {
         return this.state.schema.map(({ type, id }) => {
             if (type === 'rule') {
-                return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} />
+                return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} fields={this.props.fields} />
             } else {
-                return <RuleGroup key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} />
+                return <RuleGroup key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} fields={this.props.fields} />
             }
         });
     }
@@ -52,8 +52,8 @@ export default class RuleGroup extends React.Component {
         return (
             <div className='ruleGroup'>
                 <Combinator value={this.state.type} onChange={(e) => this.setState({ type: e.target.value })} />
-                <button onClick={this.onRuleAdd.bind(this)}>Add Rule</button>
-                <button onClick={this.onGroupAdd.bind(this)}>Add Group</button>
+                <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
+                <button onClick={this.onGroupAdd.bind(this)}>Ajouter un groupe</button>
                 <button className='closeButton' >X</button>
                 {this.renderChildren()}
             </div>
