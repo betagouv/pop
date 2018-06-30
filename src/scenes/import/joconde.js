@@ -104,9 +104,6 @@ function transform(obj) {
     const errors = [];
 
 
-
-
-
     obj.REF = obj.REF.trim();
     obj.ADPT = utils.extractArray(obj.ADPT, ';', errors);
     obj.APPL = utils.extractArray(obj.APPL, ';', errors);

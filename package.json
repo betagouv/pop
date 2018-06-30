@@ -45,7 +45,8 @@
     "start": "node src/server/index.js",
     "build": "webpack --env.production --env.NODE_ENV=production",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
-    "deploy": "yarn build && eb deploy"
+    "deploy:prod": "yarn build && eb deploy pop-production -l 0.0.01",
+    "deploy:staging": "yarn build && eb deploy pop-production-staging -l 0.0.01"
   },
   "engines": {
     "node": "8.x",
