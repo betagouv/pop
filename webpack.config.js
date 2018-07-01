@@ -8,9 +8,8 @@ const BabelPlugin = require("babel-webpack-plugin");
 
 
 module.exports = env => {
-  const production = env['production'];
-  console.log('PRODUCTION ', production);
-
+  const mode = env['production'] ? 'production' : 'staging';
+  console.log('MODE :', mode)
   const plugins = [
     new ManifestPlugin({
       seed: require('./public/manifest.json')
@@ -31,7 +30,7 @@ module.exports = env => {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify(mode)
       }
     }),
     new BabelPlugin({

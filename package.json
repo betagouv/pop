@@ -42,10 +42,11 @@
   },
   "scripts": {
     "start": "node src/server/index.js",
-    "build": "webpack --env.production --env.NODE_ENV=production",
+    "build:prod": "webpack --env.production --env.NODE_ENV=production",
+    "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
-    "deploy:prod": "yarn build && eb deploy pop-production",
-    "deploy:staging": "yarn build && eb deploy pop-production-staging"
+    "deploy:prod": "yarn build:prod && eb deploy pop-production",
+    "deploy:staging": "yarn build:staging && eb deploy pop-production-staging"
   },
   "engines": {
     "node": "8.x",
