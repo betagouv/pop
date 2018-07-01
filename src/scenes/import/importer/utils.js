@@ -96,6 +96,7 @@ function diff(importedNotices, existingNotices) {
 
                 if (differences.length) {
                     importedNotices[i].status = 'updated';
+                    console.log('DIFFF', importedNotices[i].notice, existingNotice)
                 } else {
                     importedNotices[i].status = 'unchanged';
                 }

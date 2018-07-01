@@ -35,60 +35,67 @@ export default class Importer extends Component {
     try {
       //PARSE FILES
       importedNotices = await (this.props.parseFiles(files));
+
+
+
+      //RECUPERATION DES NOTICES EXISTANTES
+      const existingNotices = []
+      for (var i = 0; i < importedNotices.length; i++) {
+        this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
+        const notice = await (api.getNotice(this.props.collection, importedNotices[i].notice.REF));
+        if (notice) {
+          existingNotices.push(notice);
+        }
+      }
+
+      //CALCUL DE LA DIFF
+      this.setState({ loadingMessage: 'Calcul des differences....' });
+      importedNotices = diff(importedNotices, existingNotices);
+
+      //CHECK DU THESAURUS
+      for (var i = 0; i < importedNotices.length; i++) {
+        this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
+        const warnings = await (checkThesaurus(importedNotices[i].notice, this.props.collection));
+        importedNotices[i].warnings = warnings;
+      }
+
+      const unChanged = importedNotices.filter(e => e.status === 'unchanged');
+      const created = importedNotices.filter(e => e.status === 'created');
+      const updated = importedNotices.filter(e => e.status === 'updated');
+
+
+      this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
+
     } catch (e) {
       if (e) {
-        this.setState({ errors: e })
+        this.setState({ errors: e, loading: false })
         return;
       }
     }
-
-
-    //RECUPERATION DES NOTICES EXISTANTES
-    const existingNotices = []
-    for (var i = 0; i < importedNotices.length; i++) {
-      this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
-      const notice = await (api.getNotice(this.props.collection, importedNotices[i].notice.REF));
-      if (notice) {
-        existingNotices.push(notice);
-      }
-    }
-
-
-    //CALCUL DE LA DIFF
-    this.setState({ loadingMessage: 'Calcul des differences....' });
-    importedNotices = diff(importedNotices, existingNotices);
-
-    //CALCUL DU THESAURUS
-    for (var i = 0; i < importedNotices.length; i++) {
-      this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
-      const warnings = await (checkThesaurus(importedNotices[i].notice, this.props.collection));
-      importedNotices[i].warnings = warnings;
-    }
-
-    const unChanged = importedNotices.filter(e => e.status === 'unchanged');
-    const created = importedNotices.filter(e => e.status === 'created');
-    const updated = importedNotices.filter(e => e.status === 'updated');
-
-    this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
   }
 
   async onSave() {
+    try {
+      //Update notice
+      for (var i = 0; i < this.state.updated.length; i++) {
+        this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
+        const ref = this.state.updated[i].notice.REF;
+        await api.updateNotice(ref, this.props.collection, this.state.updated[i].notice);
+      }
 
-    //Update notice
-    for (var i = 0; i < this.state.updated.length; i++) {
-      this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
-      const ref = this.state.updated[i].notice.REF;
-      await api.updateNotice(ref, this.props.collection, this.state.updated[i].notice);
+      //Create notice
+      for (var i = 0; i < this.state.created.length; i++) {
+        this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
+        console.log('Create', this.state.created[i].notice)
+        await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].images);
+      }
+      this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
+    } catch (e) {
+      if (e) {
+        this.setState({ errors: e, loading: false })
+        return;
+      }
     }
-
-    //Create notice
-    for (var i = 0; i < this.state.created.length; i++) {
-      this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
-      console.log('Create', this.state.created[i].notice)
-      await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].files);
-    }
-
-    this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
   }
 
 

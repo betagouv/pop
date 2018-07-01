@@ -55,7 +55,7 @@ class Rule extends React.Component {
 
     render() {
         return (
-            <div className='rule'>Rule {this.props.id}
+            <div className='rule'>
                 <ValueSelector
                     fields={this.props.fields}
                     value={this.state.valueSelected}
