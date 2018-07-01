@@ -71,14 +71,13 @@ function parseFiles(files) {
                 //ADD IMAGES
 
                 for (var i = 0; i < notices.length; i++) {
-                    let tempImages = notices[i].notice.REFIM.split(';');
-                    tempImages = tempImages.map(e => e.split(',')[3])
 
+                    const names = extractIMGNames(notices[i].notice.REFIM)
                     notices[i].files = [];
-                    for (var j = 0; j < tempImages.length; j++) {
-                        const img = filesMap[tempImages[j]];
+                    for (var j = 0; j < names.length; j++) {
+                        const img = filesMap[names[j]];
                         if (!img) {
-                            errors.push(`Image ${tempImages[j]} introuvable`)
+                            errors.push(`Image ${names[j]} introuvable`)
                         }
                         notices[i].files.push(img)
                     }
@@ -138,7 +137,7 @@ function transform(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST
     obj.IMAGE = obj.IMAGE
-    obj.IMG = extractIMG(obj.REFIM, obj.REF, errors);
+    obj.IMG = extractIMGNames(obj.REFIM).map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${obj.REF}/${e}`);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV
     obj.LABEL = obj.LABEL
@@ -190,10 +189,18 @@ function transform(obj) {
 }
 
 
-function extractIMG(REFIM, REF) {
-    let tempImages = REFIM.split(';');
-    tempImages = tempImages.map(e => e.split(',')[3])
-    return tempImages.map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${REF}/${e}`)
+function extractIMGNames(REFIM) {
+
+    let tempImages = (REFIM || '').split(';');
+    return tempImages.map(e => {
+        let name = e.split(',')[0];
+        console.log(name)
+        name = name.replace(/_[a-zA-Z0-9]\./g, '.');
+        console.log(name)
+        name = name.replace(/[a-zA-Z0-9]*_/g, '');
+        console.log(name)
+        return name;
+    })
 }
 
 function mapping() {
