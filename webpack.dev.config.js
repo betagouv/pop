@@ -19,6 +19,11 @@ module.exports = env => {
       inject: 'body',
       favicon: path.join('public/favicon.ico'),
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('dev')
+      }
+    }),
   ];
 
 

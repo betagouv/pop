@@ -1,0 +1,19 @@
+.fieldImages {
+    width: 100%;
+}
+
+.fieldImages .item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fieldImages .item p{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+

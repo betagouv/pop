@@ -70,8 +70,8 @@
 
 .search .card img{
   width: 180px;
-  margin-right: 10px;
   object-fit: contain;
+  padding: 10px;
 }
 
 .search .card h2{

@@ -34,12 +34,6 @@ module.exports = env => {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new UglifyJsPlugin({
-      test: /\.js($|\?)/i,
-      exclude: /node_modules/,
-      cache: false,
-      parallel: 4
-    }),
     new BabelPlugin({
       test: /\.js$/,
       presets: [
@@ -55,8 +49,13 @@ module.exports = env => {
       ],
       sourceMaps: false,
       compact: false
+    }),
+    new UglifyJsPlugin({
+      test: /\.js($|\?)/i,
+      exclude: /node_modules/,
+      cache: false,
+      parallel: 4
     })
-
   ];
 
 
@@ -67,12 +66,6 @@ module.exports = env => {
       path: path.resolve('build'),
       filename: '[hash].index.js',
       publicPath: '/'
-    },
-    devServer: {
-      contentBase: 'build',
-      historyApiFallback: true,
-      inline: true,
-      stats: 'errors-only'
     },
     node: {
       fs: 'empty'

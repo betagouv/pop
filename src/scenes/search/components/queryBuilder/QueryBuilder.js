@@ -13,7 +13,9 @@ export default class QueryBuilder extends React.Component {
             <div className="queryBuilder">
                 <RuleGroup
                     id='0'
-                    updateQuery={this.buildQuery.bind(this)} />
+                    updateQuery={this.buildQuery.bind(this)}
+                    fields={this.props.fields}
+                />
             </div>
         );
     }

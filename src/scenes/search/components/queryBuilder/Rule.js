@@ -32,7 +32,7 @@ export default class RuleComponent extends React.Component {
                 componentId={`Rule${this.props.id}`}
                 defaultQuery={() => (this.state.query)}
             >
-                <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)} />
+                <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields}/>
             </ReactiveComponent>
         )
     }
@@ -57,6 +57,7 @@ class Rule extends React.Component {
         return (
             <div className='rule'>Rule {this.props.id}
                 <ValueSelector
+                    fields={this.props.fields}
                     value={this.state.valueSelected}
                     onChange={(e) => {
                         this.setState({ valueSelected: e.target.value }, () => { this.update() })
@@ -168,31 +169,10 @@ const ActionElement = ({ onChange, value }) => {
     )
 }
 
-const ValueSelector = ({ onChange, value }) => {
-    const choices = [
-        '',
-        'Producteur',
-        'DENO',
-        'DENQ',
-        'COPY',
-        'ETUD',
-        'AUTP',
-        'TICO',
-        'GENR',
-        'PDEN',
-        'VOCA',
-        'APPL',
-        'ACTU',
-        'PART',
-        'COLL',
-        'REG',
-        'DPT',
-        'COM',
-        'CANT',
-        'LIEU',
-        'ADRS',
-        'EDIF',
-        'TOIT'].map(option => <option key={option} value={option}>{option}</option>)
+const ValueSelector = ({ fields, onChange, value }) => {
+
+    const choices = fields.map(e => <option key={e.value} value={e.value}>{e.value}</option> )
+
     return (
         <select selected={choices[0]} className="valueselector" value={value} onChange={onChange}>
             {choices}
