@@ -4,8 +4,6 @@ const { es_url } = require('./config.js');
 
 let elasticClient;
 
-console.log('ES',es_url)
-
 module.exports = getElasticInstance = () => {
     if (elasticClient)
         return elasticClient;

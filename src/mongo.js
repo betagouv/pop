@@ -1,9 +1,6 @@
 var mongoose = require('mongoose');
 const { mongo_url } = require('./config.js');
 
-console.log('Connect to MONGO ', mongo_url)
-//Set up default mongoose connection
-
 mongoose.connect(mongo_url);// Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;//Get the default connection
 let db = mongoose.connection;

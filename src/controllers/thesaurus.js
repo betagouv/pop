@@ -29,74 +29,75 @@ router.get('/validate', (req, res) => {
     });
 })
 
-// router.get('/update', (req, res) => {
-//     var thesaurusId = req.query.id;
-//     return new Promise(async (resolve, reject) => {
-//         try {
-//             const allTerms = []
-//             // je récupère les top concepts des thesaurus
-//             console.log('START GET TOP CONCEPT FOR THESAURUS ', thesaurusId)
-//             const topconcepts = await (getTopConceptsByThesaurusId(thesaurusId));
-//             const arr = [];
+router.get('/update', (req, res) => {
+    var thesaurusId = req.query.id;
+    return new Promise(async (resolve, reject) => {
+        try {
+            const allTerms = []
+            // je récupère les top concepts des thesaurus
+            console.log('START GET TOP CONCEPT FOR THESAURUS ', thesaurusId)
+            const topconcepts = await (getTopConceptsByThesaurusId(thesaurusId));
+            const arr = [];
 
-//             console.log('END TOP CONCEPT ', topconcepts.length)
-//             // je vais chercher tous les enfants recursivement
-//             console.log('START GET ALL CONCEPTS FOR THESAURUS ', thesaurusId)
-//             for (var i = 0; i < topconcepts.length; i++) {
-//                 await (getAllChildrenConcept(topconcepts[i], arr))
-//             }
+            console.log('END TOP CONCEPT ', topconcepts.length)
+            // je vais chercher tous les enfants recursivement
+            console.log('START GET ALL CONCEPTS FOR THESAURUS ', thesaurusId)
+            for (var i = 0; i < topconcepts.length; i++) {
+                await (getAllChildrenConcept(topconcepts[i], arr))
+            }
 
-//             console.log('GOT CHILDREN CONCEPT ', arr.length)
-//             console.log('START GET ALL PREFERED TERMS FOR THESAURUS ', thesaurusId)
-//             //je prend tous les term préféré de tous les concepts
-//             for (var i = 0; i < arr.length; i++) {
-//                 const r = await (getPreferredTermByConceptId(arr[i]))
-//                 for (var j = 0; j < r.length; j++) {
-//                     if (r[j].languageId === 'fr-FR') {
-//                         allTerms.push(r[j].lexicalValue)
-//                     }
-//                 }
-//             }
-//             console.log('GOT TERMS ', allTerms.length)
-//             // je supprime les terms qui existent 
-//             Thesaurus.remove({ arc: thesaurusId }, function () {
+            console.log('GOT CHILDREN CONCEPT ', arr.length)
+            console.log('START GET ALL PREFERED TERMS FOR THESAURUS ', thesaurusId)
+            //je prend tous les term préféré de tous les concepts
+            for (var i = 0; i < arr.length; i++) {
+                const r = await (getPreferredTermByConceptId(arr[i]))
+                for (var j = 0; j < r.length; j++) {
+                    if (r[j].languageId === 'fr-FR') {
+                        allTerms.push(r[j].lexicalValue)
+                    }
+                }
+            }
+            console.log('GOT TERMS ', allTerms.length)
+            // je supprime les terms qui existent 
+            Thesaurus.remove({ arc: thesaurusId }, function () {
 
-//                 // je créé tous les terms qui existent 
-//                 const arr = allTerms.map(e => new Thesaurus({ arc: thesaurusId, value: e }));
-//                 Thesaurus.insertMany(arr, function (err, docs) {
-//                     console.log(err)
-//                     console.log('SAVED ', docs.length)
-//                     resolve();
-//                 });
-//                 console.log(allTerms)
-//             });
-//             res.status(200).send('OK');
-//             console.log('DONE UPDATE ', thesaurusId)
-//         }
-//         catch (e) {
-//             res.status(500).send('error');
-//             console.log('FAIL UPDATE ', thesaurusId)
-//         }
-//     })
-// })
+                // je créé tous les terms qui existent 
+                const arr = allTerms.map(e => new Thesaurus({ arc: thesaurusId, value: e }));
+                Thesaurus.insertMany(arr, function (err, docs) {
+                    console.log(err)
+                    console.log('SAVED ', docs.length)
+                    resolve();
+                });
+                console.log(allTerms)
+            });
+            res.status(200).send('OK');
+            console.log('DONE UPDATE ', thesaurusId)
+        }
+        catch (e) {
+            res.status(500).send('error');
+            console.log('FAIL UPDATE ', thesaurusId)
+        }
+    })
+})
 
 
-module.exports = router
+module.exports = router;
 
-// function getAllChildrenConcept(conceptId, arr) {
-//     return new Promise(async (resolve, reject) => {
-//         arr.push(conceptId)
-//         const childs = await (getChildrenByConceptId(conceptId));
-//         const ArrP = [];
-//         if (childs) {
-//             for (var i = 0; i < childs.length; i++) {
-//                 ArrP.push(getAllChildrenConcept(childs[i], arr));
-//             }
-//         }
-//         await (Promise.all(ArrP))
-//         resolve();
-//     })
-// }
+
+function getAllChildrenConcept(conceptId, arr) {
+    return new Promise(async (resolve, reject) => {
+        arr.push(conceptId)
+        const childs = await (getChildrenByConceptId(conceptId));
+        const ArrP = [];
+        if (childs) {
+            for (var i = 0; i < childs.length; i++) {
+                ArrP.push(getAllChildrenConcept(childs[i], arr));
+            }
+        }
+        await (Promise.all(ArrP))
+        resolve();
+    })
+}
 
 
 function getChildrenByConceptId(conceptId) {

@@ -30,6 +30,7 @@
     "dotenv": "^6.0.0",
     "elasticsearch": "^14.2.2",
     "express": "^4.16.3",
+    "fs": "^0.0.1-security",
     "helmet": "^3.12.0",
     "mocha": "^5.1.1",
     "mongoosastic": "^4.4.1",
