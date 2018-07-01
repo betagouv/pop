@@ -6,7 +6,7 @@ data
 !.elasticbeanstalk/*.global.yml
 
 errors\.csv
-
+joconde
 yarn\.lock
 
 \.env

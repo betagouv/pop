@@ -28,8 +28,9 @@ module.exports = function syncWithMongoDb(file, object, clean) {
 
 
         var toClean = transform((obj, done) => {
-            const newObj = clean(obj)
-            done(null, newObj);
+            clean(obj).then((newObj) => {
+                done(null, newObj);
+            })
         }, { parallel: 1 });
 
 

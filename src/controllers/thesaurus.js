@@ -83,20 +83,20 @@ router.get('/validate', (req, res) => {
 
 module.exports = router
 
-function getAllChildrenConcept(conceptId, arr) {
-    return new Promise(async (resolve, reject) => {
-        arr.push(conceptId)
-        const childs = await (getChildrenByConceptId(conceptId));
-        const ArrP = [];
-        if (childs) {
-            for (var i = 0; i < childs.length; i++) {
-                ArrP.push(getAllChildrenConcept(childs[i], arr));
-            }
-        }
-        await (Promise.all(ArrP))
-        resolve();
-    })
-}
+// function getAllChildrenConcept(conceptId, arr) {
+//     return new Promise(async (resolve, reject) => {
+//         arr.push(conceptId)
+//         const childs = await (getChildrenByConceptId(conceptId));
+//         const ArrP = [];
+//         if (childs) {
+//             for (var i = 0; i < childs.length; i++) {
+//                 ArrP.push(getAllChildrenConcept(childs[i], arr));
+//             }
+//         }
+//         await (Promise.all(ArrP))
+//         resolve();
+//     })
+// }
 
 
 function getChildrenByConceptId(conceptId) {
