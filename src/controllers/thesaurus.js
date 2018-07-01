@@ -2,7 +2,7 @@ const express = require('express');
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
 const request = require('request');
-const X2JS = require('X2JS');
+const X2JS = require('x2js');
 
 const Thesaurus = require('./../models/thesaurus');
 

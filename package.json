@@ -8,7 +8,8 @@
     "import:prod": "node -r dotenv/config  ./import/src/index.js",
     "dev": "cross-env NODE_ENV=development node ./src/index.js",
     "start": "node ./src/index.js",
-    "deploy": "eb deploy"
+    "deploy:prod": " eb deploy pop-api",
+    "deploy:staging": "eb deploy pop-api-staging"
   },
   "repository": {
     "type": "git",
