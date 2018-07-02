@@ -2,6 +2,8 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
 
+import { bucket_url } from '../../config';
+
 const utils = require('./utils')
 
 export default class Import extends React.Component {
@@ -25,7 +27,7 @@ function parseFiles(files, encoding) {
         const filesMap = {};
         for (var i = 0; i < files.length; i++) {
 
-            //Sometimes, name is the long name with museum code, someties its not... The easiest way I found was to transform long name to short name each time I get a file name
+            //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
             let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
             newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
             filesMap[newName] = files[i];
@@ -105,7 +107,7 @@ function parseFiles(files, encoding) {
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
 
-            console.log('encoding',encoding)
+            console.log('encoding', encoding)
             reader.readAsText(file, encoding);
         } else {
             reject('Fichier .TXT absent');
@@ -151,7 +153,7 @@ function transform(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST || '';
     obj.IMAGE = obj.IMAGE || '';
-    obj.IMG = extractIMGNames(obj.REFIM).map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${obj.REF}/${e}`);
+    obj.IMG = extractIMGNames(obj.REFIM).map(e => `${bucket_url}/joconde/${obj.REF}/${e}`);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV || '';
     obj.LABEL = obj.LABEL || '';
