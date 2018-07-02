@@ -1,13 +1,14 @@
-import AWS from 'aws-sdk';
 const { api_url } = require('../config.js');
 
 class api {
 
     updateNotice(ref, collection, data) {
-        return this._post(`${api_url}/${collection}/update?ref=${ref}`, JSON.stringify(data), 'application/json')
+        var formData = new FormData();
+        formData.append('notice', JSON.stringify(data));
+        return this._post(`${api_url}/${collection}/update?ref=${ref}`,formData, 'multipart/form-data')
     }
 
-    createNotice(collection, data, files) {
+    createNotice(collection, data, images) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
@@ -18,8 +19,8 @@ class api {
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
 
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+        for (var i = 0; i < images.length; i++) {
+            formData.append('file', images[i]);
         }
         return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
     }
@@ -56,7 +57,7 @@ class api {
                 referrer: 'no-referrer', // *client, no-referrer
             }).then((response) => {
                 if (response.status !== 200) {
-                    reject('Looks like there was a problem. Status Code: ' + response.status);
+                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                     return;
                 };
                 resolve()
@@ -64,7 +65,7 @@ class api {
                 //     (data);
                 // });
             }).catch((err) => {
-                reject('Fetch Error :-S', err)
+                reject('L\'api est inaccessible', err)
             });
         })
     }
@@ -73,7 +74,7 @@ class api {
         return new Promise((resolve, reject) => {
             fetch(url).then((response) => {
                 if (response.status !== 200) {
-                    reject('Looks like there was a problem. Status Code: ' + response.status)
+                    reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                 }
                 response.json()
                     .then((data) => {    // Examine the text in the response
@@ -83,7 +84,7 @@ class api {
                         resolve(null);
                     })
             }).catch((err) => {
-                reject('Fetch Error :-S', err)
+                reject('L\'api est inaccessible', err)
             });
         })
     }

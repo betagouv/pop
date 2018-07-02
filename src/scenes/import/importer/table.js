@@ -27,7 +27,7 @@ export default class Table extends React.Component {
 
         const columnsJSX = [];
         columnsJSX.push(<Col className='col' md='2' key='1'><b>REF</b></Col>)
-        columnsJSX.push(<Col className='col' md='7' key='2'><b>TICO</b></Col>)
+        columnsJSX.push(<Col className='col' md='7' key='2'><b>TITR</b></Col>)
         columnsJSX.push(<Col className='col' md='2' key='3'><b>DENO</b></Col>)
 
 
@@ -36,7 +36,7 @@ export default class Table extends React.Component {
             const r = [];
 
             r.push(< Col className='col' md='2' key='1' > <Link to={`/notice/${collection}/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col >)
-            r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TICO}</Col>)
+            r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TITR}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
             if (dataSource[i].messages && dataSource[i].messages.jsx.length) {

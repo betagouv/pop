@@ -12,7 +12,7 @@ export default class ImportDropComponent extends Component {
   }
 
   onDrop(files) {
-    this.props.onFinish(files);   
+    this.props.onFinish(files, this.state.encoding);
   }
 
   render() {
