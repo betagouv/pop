@@ -19,12 +19,17 @@ export default class Import extends React.Component {
 }
 
 
-function parseFiles(files) {
+function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
 
         const filesMap = {};
         for (var i = 0; i < files.length; i++) {
-            filesMap[files[i].name] = files[i];
+
+            //Sometimes, name is the long name with museum code, someties its not... The easiest way I found was to transform long name to short name each time I get a file name
+            let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
+            newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
+            filesMap[newName] = files[i];
+
         }
 
         var file = files.find(file => file.name.split('.').pop() === 'TXT');
@@ -38,8 +43,10 @@ function parseFiles(files) {
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
                         notices.push(obj);
+                        console.log(obj)
                         obj = {};
                     } else {
+                        console.log(lines[i])
                         obj[lines[i]] = lines[++i]
                     }
                 }
@@ -47,9 +54,12 @@ function parseFiles(files) {
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 const errors = [];
                 if (notices.length) {
-                    for (let key in notices[0]) {
-                        if (!mapping().includes(key)) {
-                            errors.push(`La colonne ${key} est inconnue`);
+                    for (var i = 0; i < notices.length; i++) {
+                        for (let key in notices[i]) {
+                            if (!mapping().includes(key)) {
+                                console.log(notices[i])
+                                errors.push(`La colonne ${key} est inconnue`);
+                            }
                         }
                     }
                 }
@@ -74,7 +84,10 @@ function parseFiles(files) {
                     const names = extractIMGNames(notices[i].notice.REFIM)
                     notices[i].images = [];
                     for (var j = 0; j < names.length; j++) {
-                        const img = filesMap[names[j]];
+                        let img = filesMap[names[j]];
+                        if (!img) {
+                            console.log('Cant find ', names[j], 'in', filesMap)
+                        }
                         if (!img) {
                             errors.push(`Image ${names[j]} introuvable`)
                         }
@@ -91,7 +104,9 @@ function parseFiles(files) {
             };
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
-            reader.readAsText(file);
+
+            console.log('encoding',encoding)
+            reader.readAsText(file, encoding);
         } else {
             reject('Fichier .TXT absent');
         }
@@ -189,15 +204,15 @@ function transform(obj) {
 
 
 function extractIMGNames(REFIM) {
+    if (!REFIM) {
+        return [];
+    }
 
-    let tempImages = (REFIM || '').split(';');
+    let tempImages = REFIM.split(';');
     return tempImages.map(e => {
         let name = e.split(',')[0];
-        console.log(name)
         name = name.replace(/_[a-zA-Z0-9]\./g, '.');
-        console.log(name)
         name = name.replace(/[a-zA-Z0-9]*_/g, '');
-        console.log(name)
         return name;
     })
 }

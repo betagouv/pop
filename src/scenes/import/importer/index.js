@@ -20,7 +20,7 @@ export default class Importer extends Component {
       unChanged: [],
       created: [],
       updated: [],
-      errors: null,
+      errors: '',
       displaySummary: false,
       done: false,
       loading: false,
@@ -28,15 +28,13 @@ export default class Importer extends Component {
     }
   }
 
-  async onFilesDropped(files) {    //check if there are not more fields*
+  async onFilesDropped(files, encoding) {    //check if there are not more fields*
 
     let importedNotices;
 
     try {
       //PARSE FILES
-      importedNotices = await (this.props.parseFiles(files));
-
-
+      importedNotices = await (this.props.parseFiles(files, encoding));
 
       //RECUPERATION DES NOTICES EXISTANTES
       const existingNotices = []
@@ -86,13 +84,12 @@ export default class Importer extends Component {
       //Create notice
       for (var i = 0; i < this.state.created.length; i++) {
         this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
-        console.log('Create', this.state.created[i].notice)
         await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].images);
       }
       this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
     } catch (e) {
       if (e) {
-        this.setState({ errors: e, loading: false })
+        this.setState({ errors: e.message, loading: false })
         return;
       }
     }
@@ -182,6 +179,7 @@ export default class Importer extends Component {
     }
 
     if (this.state.errors) {
+      console.log('YOOOO', this.state.errors)
       return (
         <div className='import-container'>
           <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>

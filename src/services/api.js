@@ -1,4 +1,3 @@
-import AWS from 'aws-sdk';
 const { api_url } = require('../config.js');
 
 class api {
@@ -9,7 +8,7 @@ class api {
         return this._post(`${api_url}/${collection}/update?ref=${ref}`,formData, 'multipart/form-data')
     }
 
-    createNotice(collection, data, files) {
+    createNotice(collection, data, images) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
@@ -20,8 +19,8 @@ class api {
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
 
-        for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+        for (var i = 0; i < images.length; i++) {
+            formData.append('file', images[i]);
         }
         return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
     }
