@@ -21,23 +21,22 @@ class FieldImages extends React.Component {
     }
 
     renderImages() {
-        const arr = [];
+        const arr = this.props.input.value.map(e => (
+            <Col md="6">
+                <img onClick={() => this.setState({ selected: e })} src={e} alt="" className="img-fluid w-100" />
+            </Col>
+        ));
 
-        if (this.props.input.value) {
+        if (!this.props.disabled) {
             arr.push(
-                <Col md="6">
-                    <img onClick={() => this.setState({ selected: this.props.input.value })} src={this.props.input.value} alt="" className="img-fluid w-100" />
+                <Col className='item' md="6">
+                    <Dropzone onDrop={this.onDrop.bind(this)}>
+                        <p>Ajouter une nouvelle image</p>
+                    </Dropzone>
                 </Col>
-            )
+            );
         }
 
-        arr.push(
-            <Col className='item' md="6">
-                <Dropzone onDrop={this.onDrop.bind(this)}>
-                    <p>Ajouter une nouvelle image</p>
-                </Dropzone>
-            </Col>
-        );
         return arr;
     }
 

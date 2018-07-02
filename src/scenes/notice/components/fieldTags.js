@@ -52,6 +52,7 @@ class TagsInput extends React.Component {
                     handleInputChange={this.handleInputChange.bind(this)}
                     autocomplete={0}
                     autofocus={false}
+                    readOnly={this.props.disabled}
                 />
             </div>
         );
