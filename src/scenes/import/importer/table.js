@@ -45,12 +45,12 @@ export default class Table extends React.Component {
                         {dataSource[i].messages.jsx.length}
                     </Badge>
                     {
-                        dataSource[i].warnings.jsx.length ? <Badge key="warning" color="warning">
+                        dataSource[i].warnings.jsx && dataSource[i].warnings.jsx.length ? <Badge key="warning" color="warning">
                             {dataSource[i].warnings.jsx.length}
                         </Badge> : <div />
                     }
                     {
-                        dataSource[i].errors.jsx.length ? <Badge key="danger" color="danger">
+                        dataSource[i].errors.jsx && dataSource[i].errors.jsx.length ? <Badge key="danger" color="danger">
                             {dataSource[i].errors.jsx.length}
                         </Badge> : <div />
                     }
@@ -65,13 +65,18 @@ export default class Table extends React.Component {
 
             const messages = [];
             //Affichage des messages
-            if (dataSource[i].messages && dataSource[i].messages.jsx.length) {
+            if (dataSource[i].messages && dataSource[i].messages.jsx && dataSource[i].messages.jsx.length) {
                 for (var j = 0; j < dataSource[i].messages.jsx.length; j++) {
                     messages.push(dataSource[i].messages.jsx[j])
                 }
+            }
+            if (dataSource[i].warnings && dataSource[i].warnings.jsx && dataSource[i].warnings.jsx.length) {
                 for (var j = 0; j < dataSource[i].warnings.jsx.length; j++) {
                     messages.push(dataSource[i].warnings.jsx[j])
                 }
+            }
+
+            if (dataSource[i].errors && dataSource[i].errors.jsx && dataSource[i].errors.jsx.length) {
                 for (var j = 0; j < dataSource[i].errors.jsx.length; j++) {
                     messages.push(dataSource[i].errors.jsx[j])
                 }

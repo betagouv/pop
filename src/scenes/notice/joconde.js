@@ -67,14 +67,6 @@ class Notice extends React.Component {
             return <div className='error'>{this.state.error}</div>
         }
 
-
-        const arr = [];
-        for (var key in this.state.notice) {
-            if (this.state.notice[key]) {
-                arr.push(<span key={key}>{`${key}:${this.state.notice[key]}`}</span>)
-            }
-        }
-
         return (
             <Container className='notice' fluid>
                 <Form
@@ -461,9 +453,6 @@ class Notice extends React.Component {
                     </Button>
                     </div>
                 </Form >
-                {/* <div className='rawdata'>
-                    {arr}
-                </div> */}
             </Container >
         );
     }
@@ -472,8 +461,7 @@ class Notice extends React.Component {
 
 
 export default reduxForm({
-    form: 'notice',
-    // enableReinitialize: true
+    form: 'notice'
 })(Notice)
 
 

@@ -3,6 +3,7 @@ import { Container } from 'reactstrap';
 import Importer from './importer';
 
 import { bucket_url } from '../../config';
+import JocondeMapping from '../../mapping/joconde'
 
 const utils = require('./utils')
 
@@ -14,6 +15,7 @@ export default class Import extends React.Component {
                     collection="joconde"
                     parseFiles={parseFiles}
                     transform={transform}
+                    allfieldswiththesaurus={JocondeMapping.filter(e => e.thesaurus)}
                 />
             </Container >
         );
@@ -44,7 +46,7 @@ function parseFiles(files, encoding) {
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push(obj);
+                        notices.push({ notice: obj });
                         console.log(obj)
                         obj = {};
                     } else {
@@ -56,32 +58,18 @@ function parseFiles(files, encoding) {
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 const errors = [];
                 if (notices.length) {
+                    const JocondeFields = JocondeMapping.map(e => e.value);
                     for (var i = 0; i < notices.length; i++) {
-                        for (let key in notices[i]) {
-                            if (!mapping().includes(key)) {
-                                console.log(notices[i])
+                        for (let key in notices[i].notice) {
+                            if (!JocondeFields.includes(key)) {
+                                console.log(notices[i].notice)
                                 errors.push(`La colonne ${key} est inconnue`);
                             }
                         }
                     }
                 }
 
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
-
-                //CONTROLE DE LA VALIDITE DES CHAMPS
-                for (var i = 0; i < notices.length; i++) {
-                    notices[i] = transform(notices[i]);
-                    notices[i].errors = {
-                        jsx: notices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-                        text: notices[i].errors
-                    }
-                }
-
                 //ADD IMAGES
-
                 for (var i = 0; i < notices.length; i++) {
                     const names = extractIMGNames(notices[i].notice.REFIM)
                     notices[i].images = [];
@@ -100,6 +88,16 @@ function parseFiles(files, encoding) {
                 if (errors.length) {
                     reject(errors.join('\n'));
                     return;
+                }
+
+                //CONTROLE DE LA VALIDITE DES CHAMPS
+                for (var i = 0; i < notices.length; i++) {
+                    const { notice, errors } = transform(notices[i].notice);
+                    notices[i].notice = notice;
+                    notices[i].errors = {
+                        jsx: errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
+                        text: errors
+                    }
                 }
 
                 resolve(notices);
@@ -217,86 +215,4 @@ function extractIMGNames(REFIM) {
         name = name.replace(/[a-zA-Z0-9]*_/g, '');
         return name;
     })
-}
-
-function mapping() {
-    return [
-        "REF",
-        "REFMIS",
-        "ADPT",
-        "APPL",
-        "APTN",
-        "ATTR",
-        "AUTR",
-        "BIBL",
-        "COMM",
-        "CONTACT",
-        "COOR",
-        "COPY",
-        "DACQ",
-        "DATA",
-        "DATION",
-        "DDPT",
-        "DECV",
-        "DENO",
-        "DEPO",
-        "DESC",
-        "DESY",
-        "DIFFU",
-        "DIMS",
-        "DMAJ",
-        "DMIS",
-        "DOMN",
-        "DREP",
-        "ECOL",
-        "EPOQ",
-        "ETAT",
-        "EXPO",
-        "GENE",
-        "GEOHI",
-        "HIST",
-        "IMAGE",
-        "IMG",
-        "INSC",
-        "INV",
-        "LABEL",
-        "LABO",
-        "LARC",
-        "LIEUX",
-        "LOCA",
-        "LOCA2",
-        "LOCA3",
-        "MILL",
-        "MILU",
-        "MOSA",
-        "MSGCOM",
-        "MUSEO",
-        "NSDA",
-        "ONOM",
-        "PAUT",
-        "PDAT",
-        "PDEC",
-        "PEOC",
-        "PERI",
-        "PERU",
-        "PHOT",
-        "PINS",
-        "PLIEUX",
-        "PREP",
-        "PUTI",
-        "RANG",
-        "REDA",
-        "REFIM",
-        "REPR",
-        "RETIF",
-        "SREP",
-        "STAT",
-        "TECH",
-        "TICO",
-        "TITR",
-        "TOUT",
-        "UTIL",
-        "VIDEO",
-        "WWW",
-        "LVID"]
 }

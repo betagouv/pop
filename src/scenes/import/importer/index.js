@@ -50,17 +50,22 @@ export default class Importer extends Component {
       this.setState({ loadingMessage: 'Calcul des differences....' });
       importedNotices = diff(importedNotices, existingNotices);
 
+
       //CHECK DU THESAURUS
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
-        const warnings = await (checkThesaurus(importedNotices[i].notice, this.props.collection));
-        importedNotices[i].warnings = warnings;
+        importedNotices[i].warnings = [];
+        const allfieldswiththesaurus = this.props.allfieldswiththesaurus;
+        for (var j = 0; j < allfieldswiththesaurus.length; j++) {
+          const field = allfieldswiththesaurus[j].value;
+          const warnings = await (checkThesaurus(field, importedNotices[i].notice[field], allfieldswiththesaurus[j].thesaurus))
+          importedNotices[i].warnings.concat(warnings);
+        }
       }
 
       const unChanged = importedNotices.filter(e => e.status === 'unchanged');
       const created = importedNotices.filter(e => e.status === 'created');
       const updated = importedNotices.filter(e => e.status === 'updated');
-
 
       this.setState({ displaySummary: true, calculating: false, unChanged, created, updated, loading: false, loadingMessage: '' });
 

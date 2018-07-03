@@ -93,6 +93,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
+    console.log('DATA',data)
     const image = data.VIDEO.length ? data.VIDEO[0] : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/mnr/${data.REF}`} className="card" key={data.REF}>

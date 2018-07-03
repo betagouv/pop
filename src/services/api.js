@@ -8,7 +8,7 @@ class api {
         return this._post(`${api_url}/${collection}/update?ref=${ref}`,formData, 'multipart/form-data')
     }
 
-    createNotice(collection, data, images) {
+    createNotice(collection, data, images= []) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
