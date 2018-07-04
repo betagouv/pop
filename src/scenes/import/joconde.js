@@ -161,7 +161,7 @@ function transform(obj) {
     obj.LOCA = obj.LOCA || '';
     obj.LOCA2 = obj.LOCA2 || '';
     obj.LOCA3 = obj.LOCA3 || '';
-    obj.MILL = utils.extractArray(obj.MILL, ';', errors);
+    obj.MILL =  obj.MILL || '';
     obj.MILU = obj.MILU || '';
     obj.MOSA = obj.MOSA || '';
     obj.MSGCOM = obj.MSGCOM || '';
