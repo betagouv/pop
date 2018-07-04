@@ -6,7 +6,7 @@ console.log('ENV DETECTED : ', process.env.NODE_ENV)
 
 let api_url = 'http://127.0.0.1:3000';
 let es_url = 'http://127.0.0.1:9200';
-let bucket_url = '';
+let bucket_url = 'https://s3.eu-west-3.amazonaws.com/pop-phototeque-dev';
 
 switch (process.env.NODE_ENV) {
   case 'production':

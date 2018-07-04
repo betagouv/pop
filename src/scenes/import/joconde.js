@@ -151,7 +151,7 @@ function transform(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST || '';
     obj.IMAGE = obj.IMAGE || '';
-    obj.IMG = extractIMGNames(obj.REFIM).map(e => `${bucket_url}/joconde/${obj.REF}/${e}`);
+    obj.IMG = extractIMGNames(obj.REFIM).map(e => `joconde/${obj.REF}/${e}`);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV || '';
     obj.LABEL = obj.LABEL || '';
@@ -161,7 +161,7 @@ function transform(obj) {
     obj.LOCA = obj.LOCA || '';
     obj.LOCA2 = obj.LOCA2 || '';
     obj.LOCA3 = obj.LOCA3 || '';
-    obj.MILL =  obj.MILL || '';
+    obj.MILL = obj.MILL || '';
     obj.MILU = obj.MILU || '';
     obj.MOSA = obj.MOSA || '';
     obj.MSGCOM = obj.MSGCOM || '';

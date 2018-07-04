@@ -24,14 +24,14 @@ class FieldImages extends React.Component {
 
     renderImages() {
         const arr = this.props.input.value.map(e => (
-            <Col md="6">
-                <img onClick={() => this.setState({ selected: `${bucket_url}/${e}` })} src={`${bucket_url}/${e}`} alt="" className="img-fluid w-100" />
+            <Col md="6" key={e}>
+                <img onClick={() => this.setState({ selected: e })} src={`${bucket_url}/${e}`} alt={e} className="img-fluid w-100" />
             </Col>
         ));
 
         if (!this.props.disabled) {
             arr.push(
-                <Col className='item' md="6">
+                <Col className='item' md="6" >
                     <Dropzone onDrop={this.onDrop.bind(this)}>
                         <p>Ajouter une nouvelle image</p>
                     </Dropzone>

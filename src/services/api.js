@@ -15,7 +15,6 @@ class api {
                 delete data[propName];
             }
         }
-
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
 
