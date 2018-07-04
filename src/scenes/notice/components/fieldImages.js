@@ -25,7 +25,7 @@ class FieldImages extends React.Component {
     renderImages() {
         const arr = this.props.input.value.map(e => (
             <Col md="6">
-                <img onClick={() => this.setState({ selected: e })} src={`${bucket_url}/${e}`} alt="" className="img-fluid w-100" />
+                <img onClick={() => this.setState({ selected: `${bucket_url}/${e}` })} src={`${bucket_url}/${e}`} alt="" className="img-fluid w-100" />
             </Col>
         ));
 
