@@ -47,7 +47,7 @@ class FieldImages extends React.Component {
             <div className='fieldImages'>
                 <Modal centered={true} isOpen={this.state.selected !== null} toggle={this.toggleModal.bind(this)} >
                     <div>
-                        <img src={this.state.selected} alt="" className="img-fluid w-100" />
+                        <img src={`${bucket_url}/${this.state.selected}`} alt={this.state.selected} className="img-fluid w-100" />
                     </div>
                 </Modal>
                 <Row >
