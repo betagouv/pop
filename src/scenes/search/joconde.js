@@ -14,7 +14,7 @@ import CustomButton from './components/button';
 import ExportComponent from './components/export';
 import QueryBuilder from './components/queryBuilder';
 
-import { es_url } from '../../config.js';
+import { es_url, bucket_url } from '../../config.js';
 
 import jocondeMapping from '../../mapping/joconde';
 
@@ -220,7 +220,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
+    const image = data.IMG.length ? `${bucket_url}/${data.IMG[0]}` : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/joconde/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt={data.TITR} />

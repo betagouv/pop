@@ -3,6 +3,8 @@ import { Field } from 'redux-form'
 import Dropzone from 'react-dropzone';
 import { Row, Col, Modal } from 'reactstrap';
 
+import { bucket_url } from '../../../config';
+
 import './fieldImages.css';
 
 class FieldImages extends React.Component {
@@ -23,7 +25,7 @@ class FieldImages extends React.Component {
     renderImages() {
         const arr = this.props.input.value.map(e => (
             <Col md="6">
-                <img onClick={() => this.setState({ selected: e })} src={e} alt="" className="img-fluid w-100" />
+                <img onClick={() => this.setState({ selected: e })} src={`${bucket_url}/${e}`} alt="" className="img-fluid w-100" />
             </Col>
         ));
 
