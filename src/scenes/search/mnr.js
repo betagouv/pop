@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import mnrMapping from '../../mapping/mnr';
 
 import {
     ReactiveBase,
@@ -11,7 +12,6 @@ import {
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
-
 import Button from './components/button';
 import ExportComponent from './components/export';
 
@@ -20,6 +20,17 @@ import { es_url, bucket_url } from '../../config.js';
 const FILTER = ["mainSearch", "prov", "cate", "tech"]
 
 export default class Search extends React.Component {
+    constructor(props) {
+        super(props);
+
+        let exportfield = mnrMapping.filter((e) => e.export);
+        exportfield = exportfield.map(e => e.value);
+
+        this.state = {
+            exportfield
+        }
+    }
+
     render() {
         return (
             <Container className='search'>
@@ -58,7 +69,7 @@ export default class Search extends React.Component {
                             <ExportComponent
                                 FILTER={FILTER}
                                 filename='mnr.csv'
-                                columns={['REF']}
+                                columns={this.state.exportfield}
                             />
                         </ReactiveComponent>
                     </div>

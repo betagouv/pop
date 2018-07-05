@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
+import Parse from 'csv-parse';
 import Importer from './importer';
 
 import { bucket_url } from '../../config';
@@ -38,79 +39,91 @@ function parseFiles(files, encoding) {
 
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'csv');
         if (file) {
+
             const reader = new FileReader();
             reader.onload = () => {
-                let str = reader.result.replace(/\-\r\n/g, '');
-                var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
-                const notices = [];
-                let obj = {};
-                for (var i = 0; i < lines.length; i++) {
-                    if (lines[i] === '//') {
-                        notices.push({ notice: obj });
-                        console.log(obj)
-                        obj = {};
-                    } else {
-                        console.log(lines[i])
-                        obj[lines[i]] = lines[++i]
-                    }
-                }
 
-                ///CONTROLE DE LA CONSISTENTE DES DONNEE 
-                const errors = [];
-                if (notices.length) {
-                    const MnrFields = MnrMapping.map(e => e.value);
-                    for (var i = 0; i < notices.length; i++) {
-                        for (let key in notices[i].notice) {
-                            if (!MnrFields.includes(key)) {
-                                console.log(notices[i].notice)
-                                errors.push(`La colonne ${key} est inconnue`);
+                const parser = Parse({ delimiter: ',', from: 1 });
+
+                let record = null;
+                let header = null;
+                const notices = [];
+                parser.on('readable', () => {
+                    while ((record = parser.read())) {
+                        if (!header) {
+                            header = [].concat(record);
+                            continue;
+                        }
+                        const obj = {};
+                        record.map((e, i) => {  //update data 
+                            obj[header[i]] = e;
+                            if (header[i] === 'REF') { obj[header[i]] = ('' + obj[header[i]]).toUpperCase(); }
+                        })
+
+                        notices.push({ notice: obj });
+                    }
+                });
+
+                // Catch any error 
+                parser.on('error', (err) => { reject(err.message); return; });
+                // When we are done, test that the parsed output matched what expected 
+                parser.on('finish', () => {
+
+                    console.log('notices', notices)
+                    // CONTROLE DE LA CONSISTENTE DES DONNEE
+                    const errors = [];
+                    if (notices.length) {
+                        const MnrFields = MnrMapping.map(e => e.value);
+                        for (var i = 0; i < notices.length; i++) {
+                            for (let key in notices[i].notice) {
+                                if (!MnrFields.includes(key)) {
+                                    console.log(notices[i].notice)
+                                    errors.push(`La colonne ${key} est inconnue`);
+                                }
                             }
                         }
                     }
-                }
 
-                // //ADD IMAGES
-                // for (var i = 0; i < notices.length; i++) {
-                //     const names = extractIMGNames(notices[i].notice.REFIM)
-                //     notices[i].images = [];
-                //     for (var j = 0; j < names.length; j++) {
-                //         let img = filesMap[names[j]];
-                //         if (!img) {
-                //             console.log('Cant find ', names[j], 'in', filesMap)
-                //         }
-                //         if (!img) {
-                //             errors.push(`Image ${names[j]} introuvable`)
-                //         }
-                //         notices[i].images.push(img)
-                //     }
-                // }
+                    // //ADD IMAGES
+                    // for (var i = 0; i < notices.length; i++) {
+                    //     const names = extractIMGNames(notices[i].notice.REFIM)
+                    //     notices[i].images = [];
+                    //     for (var j = 0; j < names.length; j++) {
+                    //         let img = filesMap[names[j]];
+                    //         if (!img) {
+                    //             console.log('Cant find ', names[j], 'in', filesMap)
+                    //         }
+                    //         if (!img) {
+                    //             errors.push(`Image ${names[j]} introuvable`)
+                    //         }
+                    //         notices[i].images.push(img)
+                    //     }
+                    // }
 
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
 
-                //CONTROLE DE LA VALIDITE DES CHAMPS
-                for (var i = 0; i < notices.length; i++) {
-                    const { notice, errors } = transform(notices[i].notice);
-                    notices[i].notice = notice;
-                    notices[i].errors = {
-                        jsx: errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-                        text: errors
+                    //   CONTROLE DE LA VALIDITE DES CHAMPS
+                    for (var i = 0; i < notices.length; i++) {
+                        const { notice, errors } = transform(notices[i].notice);
+                        notices[i].notice = notice;
+                        notices[i].errors = {
+                            jsx: errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
+                            text: errors
+                        }
                     }
-                }
 
-                console.log('NOTICES',notices)
+                    console.log('NOTICES', notices)
+                    resolve(notices);
+                });
 
-                resolve(notices);
+                parser.write(reader.result);
+                parser.end();
             };
+
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
-
-            console.log('encoding', encoding)
-            reader.readAsText(file, encoding);
+            reader.readAsText(file);
         } else {
-            reject('Fichier .TXT absent');
+            reject('Fichier .csv absent');
         }
     })
 }
