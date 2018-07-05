@@ -4,8 +4,6 @@ import { Badge } from 'reactstrap';
 import api from '../../../services/api'
 
 export default function checkThesaurus(field, value, thesaurusId) {
-
-    console.log('CHECK ', field, value, thesaurusId)
     return new Promise(async (resolve, reject) => {
         const jsxArr = [];
         const plainTextArr = [];

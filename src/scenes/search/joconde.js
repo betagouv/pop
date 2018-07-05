@@ -19,7 +19,7 @@ import { es_url, bucket_url } from '../../config.js';
 import jocondeMapping from '../../mapping/joconde';
 
 
-const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "domn"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "autr"]
 
 export default class Search extends React.Component {
 
@@ -105,7 +105,7 @@ export default class Search extends React.Component {
                         <ExportComponent
                             FILTER={FILTER}
                             filename='joconde.csv'
-                            columns={['REF', 'DOMN', 'DENO', 'APPL', 'TITR', 'AUTR', 'PAUT', 'ECOL', 'ATTR', 'PERI', 'MILL', 'EPOQ', 'PEOC', 'TECH', 'DIMS', 'INSC', 'PINS', 'ONOM', 'DESC', 'ETAT', 'REPR', 'PREP', 'DREP', 'SREP', 'GENE', 'HIST', 'LIEUX', 'PLIEUX', 'GEOHI', 'UTIL', 'PERU', 'MILU', 'DECV', 'PDEC', 'NSDA', 'STAT', 'DACQ', 'APTN', 'DEPO', 'DDPT', 'ADPT', 'COMM', 'EXPO', 'BIBL', 'REDA', 'PHOT', 'REF', 'REFMIS', 'REFIM', 'LABEL', 'COPY', 'MGSCOM', 'CONTACT', 'WWW', 'LVID', 'MUSEO', 'COOR']}
+                            columns={this.state.exportfield}
                         />
                     </ReactiveComponent>
                 </div>
@@ -183,9 +183,9 @@ export default class Search extends React.Component {
                         />
 
                         <MultiList
-                            componentId="domn"
-                            dataField="DOMN.keyword"
-                            title="Domaines"
+                            componentId="autr"
+                            dataField="AUTR.keyword"
+                            title="Auteurs"
                             className="filters"
                             showSearch={true}
                             URLParams={true}

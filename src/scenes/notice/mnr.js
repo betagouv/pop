@@ -175,7 +175,7 @@ class Notice extends React.Component {
                                 title='Description (DESC) :'
                                 name='DESC'
                                 type='textarea'
-                                rows={4}
+                                rows={8}
                             />
                             <FieldInput
                                 title='Inscriptions (INSC) :'
@@ -193,20 +193,20 @@ class Notice extends React.Component {
                                 title='Exposition (EXPO) :'
                                 name='EXPO'
                                 type='textarea'
-                                rows={4}
+                                rows={8}
                             />
+                        </Col>
+                        <Col sm={6}>
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
                                 name='BIBL'
                                 type='textarea'
-                                rows={4}
+                                rows={8}
                             />
                             <FieldInput
                                 title='Observations (OBSE) :'
                                 name='OBSE'
                             />
-                        </Col>
-                        <Col sm={6}>
                             <FieldInput
                                 title='Adresses images jointes générique (actuellement non utilisé) (REFIM) :'
                                 name='REFIM'

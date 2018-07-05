@@ -36,7 +36,7 @@ function parseFiles(files, encoding) {
 
         }
 
-        var file = files.find(file => file.name.split('.').pop() === 'TXT');
+        var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'txt');
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
