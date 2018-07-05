@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {
     ReactiveBase,
     DataSearch,
+    MultiList,
     ReactiveList,
     SelectedFilters,
     ReactiveComponent
@@ -16,7 +17,7 @@ import ExportComponent from './components/export';
 
 import { es_url, bucket_url } from '../../config.js';
 
-const FILTER = ["mainSearch"]
+const FILTER = ["mainSearch", "prov", "cate", "tech"]
 
 export default class Search extends React.Component {
     render() {
@@ -36,7 +37,7 @@ export default class Search extends React.Component {
                     <div className='search-and-export-zone'>
                         <DataSearch
                             componentId="mainSearch"
-                            dataField={["TICO", "DENO", "REF", "LOCA"]}
+                            dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
                             queryFormat="and"
                             iconPosition="left"
                             className="mainSearch"
@@ -63,7 +64,39 @@ export default class Search extends React.Component {
                     </div>
                     <Row>
                         <Col xs="3">
-
+                            <MultiList
+                                componentId="cate"
+                                dataField="CATE.keyword"
+                                title="Categorie"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="tech"
+                                dataField="TECH.keyword"
+                                title="Technique"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="prov"
+                                dataField="PROV.keyword"
+                                title="Provenance"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
                         </Col>
                         <Col xs="9">
                             <SelectedFilters />
