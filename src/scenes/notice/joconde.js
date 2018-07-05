@@ -405,8 +405,8 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title='Lien commande de reproduction et/ou de conditions d’utilisation (MGSCOM) :'
-                                name='MGSCOM'
+                                title='Lien commande de reproduction et/ou de conditions d’utilisation (MSGCOM) :'
+                                name='MSGCOM'
                                 disabled
                             />
                         </Col>
