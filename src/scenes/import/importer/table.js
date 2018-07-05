@@ -35,7 +35,7 @@ export default class Table extends React.Component {
             //Affichage notices modifiées.
             const r = [];
 
-            r.push(< Col className='col' md='2' key='1' > <Link to={`/notice/${collection}/${dataSource[i].notice.REF}`}>{dataSource[i].notice.REF}</Link></Col >)
+            r.push(< Col className='col' md='2' key='1' >{dataSource[i].notice.REF}</Col >)
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TITR}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
