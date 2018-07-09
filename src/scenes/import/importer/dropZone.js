@@ -11,7 +11,7 @@ export default class ImportDropComponent extends Component {
   }
 
   onDrop(files) {
-    this.props.onFinish(filesS);
+    this.props.onFinish(files);
   }
 
   render() {
