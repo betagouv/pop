@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-
 import { bucket_url } from '../../config';
 import JocondeMapping from '../../mapping/joconde'
 
@@ -25,18 +24,20 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
-
         const filesMap = {};
+
+        const JocondeFields = JocondeMapping.map(e => e.value);
+
         for (var i = 0; i < files.length; i++) {
 
             //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
             let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
             newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
             filesMap[newName] = files[i];
-
         }
 
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'txt');
+
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
@@ -47,22 +48,29 @@ function parseFiles(files, encoding) {
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
                         notices.push({ notice: obj });
-                        console.log(obj)
                         obj = {};
                     } else {
-                        console.log(lines[i])
-                        obj[lines[i]] = lines[++i]
+                        const key = lines[i];
+                        let value = '';
+                        let tag = true;
+                        while (tag) {
+                            value += lines[++i];
+                            if (lines[i + 1] && lines[i + 1] !== '//' && !JocondeFields.includes(lines[i + 1])) {
+                            } else {
+                                tag = false;
+                            }
+                        }
+                        obj[key] = value;
                     }
                 }
+
 
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 const errors = [];
                 if (notices.length) {
-                    const JocondeFields = JocondeMapping.map(e => e.value);
                     for (var i = 0; i < notices.length; i++) {
                         for (let key in notices[i].notice) {
                             if (!JocondeFields.includes(key)) {
-                                console.log(notices[i].notice)
                                 errors.push(`La colonne ${key} est inconnue`);
                             }
                         }
@@ -104,9 +112,7 @@ function parseFiles(files, encoding) {
             };
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
-
-            console.log('encoding', encoding)
-            reader.readAsText(file, encoding);
+            reader.readAsText(file,'ISO-8859-1');
         } else {
             reject('Fichier .TXT absent');
         }
