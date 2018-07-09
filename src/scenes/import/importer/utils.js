@@ -90,9 +90,10 @@ function diff(importedNotices, existingNotices) {
             if (importedNotices[i].notice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
 
-                const jsx = differences.map(e => <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>)
-                const text = differences.map(e => `Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`)
-                importedNotices[i].messages = { jsx, text };
+                importedNotices[i].messages = differences.map(e => ({
+                    jsx: <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>,
+                    text: `Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`,
+                }));
 
                 if (differences.length) {
                     importedNotices[i].status = 'updated';
@@ -141,8 +142,8 @@ function exportData(arr, fileName) {
             line.push('"' + value + '"');
         }
 
-        line.push(`"${JSON.stringify(arr[j].warnings.text)}"`);
-        line.push(`"${JSON.stringify(arr[j].errors.text)}"`);
+        line.push(`"${JSON.stringify(arr[j].warnings.map(e => e.text))}"`);
+        line.push(`"${JSON.stringify(arr[j].errors.map(e => e.text))}"`);
 
         csv += line.join(',') + '\n'
     }

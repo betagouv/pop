@@ -39,23 +39,26 @@ export default class Table extends React.Component {
             r.push(<Col className='col' md='7' key='2'>{dataSource[i].notice.TITR}</Col>)
             r.push(<Col className='col' md='2' key='3'>{dataSource[i].notice.DENO}</Col>)
 
-            if (dataSource[i].messages && dataSource[i].messages.jsx.length) {
-                r.push(<Col md='1' className='visu' key='visu' >
-                    <Badge key="success" color="success">
-                        {dataSource[i].messages.jsx.length}
-                    </Badge>
+            r.push(
+                <Col md='1' className='visu' key='visu' >
                     {
-                        dataSource[i].warnings.jsx && dataSource[i].warnings.jsx.length ? <Badge key="warning" color="warning">
-                            {dataSource[i].warnings.jsx.length}
+                        dataSource[i].messages && dataSource[i].messages.length ? <Badge key="success" color="success">
+                            {dataSource[i].messages.length}
                         </Badge> : <div />
                     }
                     {
-                        dataSource[i].errors.jsx && dataSource[i].errors.jsx.length ? <Badge key="danger" color="danger">
-                            {dataSource[i].errors.jsx.length}
+                        dataSource[i].warnings && dataSource[i].warnings.length ? <Badge key="warning" color="warning">
+                            {dataSource[i].warnings.length}
                         </Badge> : <div />
                     }
-                </Col>)
-            }
+
+                    {
+                        dataSource[i].errors && dataSource[i].errors.length ? <Badge key="danger" color="danger">
+                            {dataSource[i].errors.length}
+                        </Badge> : <div />
+                    }
+                </Col>
+            )
 
             data.push(
                 <Row key={i} onClick={() => { this.expandRef(dataSource[i].notice.REF) }} >
@@ -65,20 +68,20 @@ export default class Table extends React.Component {
 
             const messages = [];
             //Affichage des messages
-            if (dataSource[i].messages && dataSource[i].messages.jsx && dataSource[i].messages.jsx.length) {
-                for (var j = 0; j < dataSource[i].messages.jsx.length; j++) {
-                    messages.push(dataSource[i].messages.jsx[j])
+            if (dataSource[i].messages && dataSource[i].messages.length) {
+                for (var j = 0; j < dataSource[i].messages.length; j++) {
+                    messages.push(dataSource[i].messages[j].jsx)
                 }
             }
-            if (dataSource[i].warnings && dataSource[i].warnings.jsx && dataSource[i].warnings.jsx.length) {
-                for (var j = 0; j < dataSource[i].warnings.jsx.length; j++) {
-                    messages.push(dataSource[i].warnings.jsx[j])
+            if (dataSource[i].warnings && dataSource[i].warnings.length) {
+                for (var j = 0; j < dataSource[i].warnings.length; j++) {
+                    messages.push(dataSource[i].warnings[j].jsx)
                 }
             }
 
-            if (dataSource[i].errors && dataSource[i].errors.jsx && dataSource[i].errors.jsx.length) {
-                for (var j = 0; j < dataSource[i].errors.jsx.length; j++) {
-                    messages.push(dataSource[i].errors.jsx[j])
+            if (dataSource[i].errors && dataSource[i].errors.length) {
+                for (var j = 0; j < dataSource[i].errors.length; j++) {
+                    messages.push(dataSource[i].errors[j].jsx)
                 }
             }
 

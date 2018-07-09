@@ -102,17 +102,17 @@ function parseFiles(files, encoding) {
                 for (var i = 0; i < notices.length; i++) {
                     const { notice, errors } = transform(notices[i].notice);
                     notices[i].notice = notice;
-                    notices[i].errors = {
-                        jsx: errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-                        text: errors
-                    }
+                    notices[i].errors = errors.map(e => ({
+                        jsx: <div><Badge color="danger">Erreur</Badge> {e}</div>,
+                        text: e
+                    }))
                 }
 
                 resolve(notices);
             };
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
-            reader.readAsText(file,'ISO-8859-1');
+            reader.readAsText(file, 'ISO-8859-1');
         } else {
             reject('Fichier .TXT absent');
         }

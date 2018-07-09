@@ -53,15 +53,17 @@ export default class Importer extends Component {
 
       //CHECK DU THESAURUS
       for (var i = 0; i < importedNotices.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Verification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
+        this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
         importedNotices[i].warnings = [];
         const allfieldswiththesaurus = this.props.allfieldswiththesaurus;
         for (var j = 0; j < allfieldswiththesaurus.length; j++) {
           const field = allfieldswiththesaurus[j].value;
-          const warnings = await (checkThesaurus(field, importedNotices[i].notice[field], allfieldswiththesaurus[j].thesaurus))
-          importedNotices[i].warnings.concat(warnings);
+          const warnings = await (checkThesaurus(field, importedNotices[i].notice[field], allfieldswiththesaurus[j].thesaurus));
+          importedNotices[i].warnings = importedNotices[i].warnings.concat(warnings);
         }
       }
+
+      console.log(importedNotices)
 
       const unChanged = importedNotices.filter(e => e.status === 'unchanged');
       const created = importedNotices.filter(e => e.status === 'created');
@@ -88,7 +90,7 @@ export default class Importer extends Component {
 
       //Create notice
       for (var i = 0; i < this.state.created.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Creation des notices ... ${i}/${this.state.created.length}` });
+        this.setState({ loading: true, loadingMessage: `Création des notices ... ${i}/${this.state.created.length}` });
         await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].images);
       }
       this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });

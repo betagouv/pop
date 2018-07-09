@@ -13,7 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 dotenv.load();
 
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
   console.log("RUN RAVEN")
   Raven.config('https://35972ad83fff46c69b160ad6bde8e96d@sentry.io/1235014').install()
 }
