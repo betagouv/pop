@@ -21,22 +21,3 @@ export default function checkThesaurus(field, value, thesaurusId) {
     })
 }
 
-/*
-        "AFFE": "http://data.culture.fr/thesaurus/resource/ark:/67717/T97",
-        "APRO": "http://data.culture.fr/thesaurus/resource/ark:/67717/T98",
-        "COPY": "http://data.culture.fr/thesaurus/resource/ark:/67717/T21",
-        "COUV": "http://data.culture.fr/thesaurus/resource/ark:/67717/T26",
-        "DENO": "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
-        "DEPL": "http://data.culture.fr/thesaurus/resource/ark:/67717/T14",
-        "DIMS": "http://data.culture.fr/thesaurus/resource/ark:/67717/T11",
-        "DOSS": "http://data.culture.fr/thesaurus/resource/ark:/67717/T13",
-        "ELEV": "http://data.culture.fr/thesaurus/resource/ark:/67717/T25",
-        "ENER": "http://data.culture.fr/thesaurus/resource/ark:/67717/T27",
-        "ESCA": "http://data.culture.fr/thesaurus/resource/ark:/67717/T29",
-        "ETAG": "http://data.culture.fr/thesaurus/resource/ark:/67717/T23",
-        "ETAT": "http://data.culture.fr/thesaurus/resource/ark:/67717/T30",
-        "ETUD": "http://data.culture.fr/thesaurus/resource/ark:/67717/T68",
-        "GENR": "http://data.culture.fr/thesaurus/resource/ark:/67717/T197",
-        "IMPL": "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
-        "INTE": "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
-*/

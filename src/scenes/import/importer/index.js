@@ -150,14 +150,14 @@ export default class Importer extends Component {
             onClick={() => this.onExport()}
             disabled={!(this.state.updated.length || this.state.created.length)}
           >
-            Exporter
+            Exporter le rapport d'import
           </Button>
           <Button
             color="primary"
             onClick={() => this.onSave()}
             disabled={!(this.state.updated.length || this.state.created.length)}
           >
-            Importer
+            Valider l'import
           </Button>
         </div>
       </div>

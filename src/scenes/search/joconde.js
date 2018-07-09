@@ -35,6 +35,27 @@ export default class Search extends React.Component {
         }
     }
 
+
+    render() {
+        return (
+            <Container className='search'>
+                <div className='header'>
+                    <div className='buttons'>
+                        {/* <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} /> */}
+                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
+                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
+                    </div>
+                </div>
+                <ReactiveBase
+                    url={`${es_url}/joconde`}
+                    app="joconde"
+                >
+                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
+                </ReactiveBase >
+            </Container >
+        );
+    }
+
     renderAdvanced() {
         return (
             <div>
@@ -57,25 +78,6 @@ export default class Search extends React.Component {
     }
 
 
-    render() {
-        return (
-            <Container className='search'>
-                <div className='header'>
-                    <div className='buttons'>
-                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
-                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
-                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
-                    </div>
-                </div>
-                <ReactiveBase
-                    url={`${es_url}/joconde`}
-                    app="joconde"
-                >
-                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
-                </ReactiveBase >
-            </Container >
-        );
-    }
 
     renderNormal() {
         return (
