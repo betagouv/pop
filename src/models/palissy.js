@@ -148,7 +148,7 @@ Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
     index: 'palissy',
-    bulk: { size: 1000, delay: 1000 }
+    bulk: { size: 500, delay: 2000 }
 });
 
 

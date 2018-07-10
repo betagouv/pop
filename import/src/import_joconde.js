@@ -158,7 +158,7 @@ function extractIMG(REFIM, IMG, REF) {
             name = name.replace(/_[a-zA-Z0-9]\./g, '.');
             name = name.replace(/[a-zA-Z0-9]*_/g, '');
 
-            files.push(`https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${REF}/${name}`)
+            files.push(`https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/joconde/${REF}/${name}`)
 
             // await (download(`http://www2.culture.gouv.fr/Wave/image/joconde${arr[i]}`, `./joconde/${REF}/${name}`));
             // console.log('DOWNLOADED ', `http://www2.culture.gouv.fr/Wave/image/joconde${arr[i]}`)

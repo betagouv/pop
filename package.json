@@ -6,6 +6,9 @@
   "scripts": {
     "import:dev": "node ./import/src/index.js",
     "import:prod": "node -r dotenv/config  ./import/src/index.js",
+    "sync:dev": "node ./work/syncES.js",
+    "sync:prod": "node -r dotenv/config  ./work/syncES.js",
+    "update:prod": "node -r dotenv/config  ./work/update.js",
     "dev": "cross-env NODE_ENV=development node ./src/index.js",
     "start": "node ./src/index.js",
     "deploy:prod": " eb deploy pop-api",

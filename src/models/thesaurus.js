@@ -7,7 +7,6 @@ const Schema = new mongoose.Schema({
 }, { collection: 'thesaurus' })
 
 Schema.plugin(mongoosePaginate);
-
 const object = mongoose.model("thesaurus", Schema)
 
 module.exports = object;

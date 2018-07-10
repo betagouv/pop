@@ -13,9 +13,9 @@ const importThesaurus = require('./import_thesaurus');
 async function run() {
   // await importMerimee();
   console.log('END')
-  // await importMNR();
+  await importMNR();
   console.log('END')
-  await importJoconde();
+  //await importJoconde();
   console.log('END')
   // await importMemoire();
   console.log('END')

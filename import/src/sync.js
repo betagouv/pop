@@ -39,16 +39,18 @@ module.exports = function syncWithMongoDb(file, object, clean) {
                 const m = new object(e);
                 return m;
             })
-            input.pause();
-            object.insertMany(objects, (err, docs) => {
-                if (err) {
-                    console.log('Error indexing : ', err)
-                }
-                count += objects.length;
-                console.log(`Saved ${count}`)
-                input.resume();
-                done();
-            });
+            // input.pause();
+            // object.insertMany(objects, (err, docs) => {
+            //     if (err) {
+            //         console.log('Error indexing : ', err)
+            //     }
+            //     count += objects.length;
+            //     console.log(`Saved ${count}`)
+            //     input.resume();
+            //     done();
+            // });
+
+            done();
         }, { parallel: 1 });
 
         var mongoUnit = transform((obj, done) => {
