@@ -88,6 +88,18 @@ const Schema = new mongoose.Schema({
 
 }, { collection: 'joconde' })
 
+
+// // Sets the createdAt parameter equal to the current time
+// BookSchema.pre('save', next => {
+//     now = new Date();
+//     if(!this.createdAt) {
+//       this.createdAt = now;
+//     }
+//     next();
+//   });
+
+
+
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
     esClient: getElasticInstance(),
