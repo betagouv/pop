@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Button, Container, Badge } from 'reactstrap';
+import { Row, Button, Progress, Container, Badge } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import DropZone from './dropZone'
@@ -24,7 +24,8 @@ export default class Importer extends Component {
       displaySummary: false,
       done: false,
       loading: false,
-      loadingMessage: ''
+      loadingMessage: '',
+      progress: 0
     }
   }
 
@@ -39,7 +40,7 @@ export default class Importer extends Component {
       //RECUPERATION DES NOTICES EXISTANTES
       const existingNotices = []
       for (var i = 0; i < importedNotices.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... ${i}/${importedNotices.length}` });
+        this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
         const notice = await (api.getNotice(this.props.collection, importedNotices[i].notice.REF));
         if (notice) {
           existingNotices.push(notice);
@@ -53,7 +54,7 @@ export default class Importer extends Component {
 
       //CHECK DU THESAURUS
       for (var i = 0; i < importedNotices.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ... ${i}/${importedNotices.length}` });
+        this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ...`, progress: Math.floor(((i + importedNotices.length) * 100) / (importedNotices.length * 2)) });
         importedNotices[i].warnings = [];
         const allfieldswiththesaurus = this.props.allfieldswiththesaurus;
         for (var j = 0; j < allfieldswiththesaurus.length; j++) {
@@ -62,8 +63,6 @@ export default class Importer extends Component {
           importedNotices[i].warnings = importedNotices[i].warnings.concat(warnings);
         }
       }
-
-      console.log(importedNotices)
 
       const unChanged = importedNotices.filter(e => e.status === 'unchanged');
       const created = importedNotices.filter(e => e.status === 'created');
@@ -80,17 +79,20 @@ export default class Importer extends Component {
   }
 
   async onSave() {
+
+    const total = this.state.updated.length + this.state.created.length;
+    let count = 0;
     try {
       //Update notice
-      for (var i = 0; i < this.state.updated.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... ${i}/${this.state.updated.length}` });
+      for (var i = 0; i < this.state.updated.length; i++ , count++) {
+        this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
         const ref = this.state.updated[i].notice.REF;
         await api.updateNotice(ref, this.props.collection, this.state.updated[i].notice);
       }
 
       //Create notice
-      for (var i = 0; i < this.state.created.length; i++) {
-        this.setState({ loading: true, loadingMessage: `Création des notices ... ${i}/${this.state.created.length}` });
+      for (var i = 0; i < this.state.created.length; i++ , count++) {
+        this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
         await api.createNotice(this.props.collection, this.state.created[i].notice, this.state.created[i].images);
       }
       this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
@@ -114,7 +116,7 @@ export default class Importer extends Component {
     for (var i = 0; i < this.state.unChanged.length; i++) {
       arr.push({ ...this.state.unChanged[i], type: 'INCHANGEE' })
     }
-    exportData(arr, 'export.csv')
+    exportData(arr, this.props.collection)
   }
 
   renderSummary() {
@@ -123,43 +125,31 @@ export default class Importer extends Component {
     }
     return (
       <div className='import'>
-        <TableComponent
-          collection={this.props.collection}
-          dataSource={this.state.updated}
-          title='Ces notices seront mises à jour'
-        />
-
-        <TableComponent
-          collection={this.props.collection}
-          dataSource={this.state.created}
-          title='Ces notices seront créées'
-        />
-        <TableComponent
-          collection={this.props.collection}
-          dataSource={this.state.unChanged}
-          title='Ces notices resteront inchangées'
-        />
+        <div className='summary'>
+          <h2>Chargement terminé</h2>
+          <div>Créations : {this.state.created.length} notice{this.state.created.length > 1 ? 's' : ''}</div>
+          <div>Modification : {this.state.updated.length} notice{this.state.updated.length > 1 ? 's' : ''}</div>
+          <div>Rejets : 0 notice{0 > 1 ? 's' : ''}</div>
+        </div>
         <div className='buttons'>
+          <Button
+            color="secondary"
+            onClick={() => this.onExport()}
+          >
+            Télécharger le rapport de chargement
+          </Button>
           <Button
             color="danger"
             onClick={() => this.setState({ displaySummary: false })}
           >
-            Retour
-          </Button>
-
-          <Button
-            color="secondary"
-            onClick={() => this.onExport()}
-            disabled={!(this.state.updated.length || this.state.created.length)}
-          >
-            Exporter le rapport d'import
+            Annuler l'import
           </Button>
           <Button
             color="primary"
             onClick={() => this.onSave()}
             disabled={!(this.state.updated.length || this.state.created.length)}
           >
-            Valider l'import
+            Confirmer l'import
           </Button>
         </div>
       </div>
@@ -170,7 +160,7 @@ export default class Importer extends Component {
     if (this.state.loading) {
       return (
         <div className='import-container'>
-          <Loader />
+          <Progress value={this.state.progress.toString()} />
           <div>{this.state.loadingMessage}</div>
         </div>
       );
@@ -186,7 +176,6 @@ export default class Importer extends Component {
     }
 
     if (this.state.errors) {
-      console.log('YOOOO', this.state.errors)
       return (
         <div className='import-container'>
           <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>

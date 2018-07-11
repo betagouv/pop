@@ -113,7 +113,21 @@ function diff(importedNotices, existingNotices) {
 }
 
 
-function exportData(arr, fileName) {
+function exportData(arr, base) {
+
+    const d = new Date();
+
+    const date = ('0' + d.getDate()).slice(-2);
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const year = d.getFullYear();
+
+    const minutes = ('0' + d.getMinutes()).slice(-2);
+    const hours = ('0' + d.getHours()).slice(-2);
+    const secondes = ('0' + d.getSeconds()).slice(-2);
+
+
+    const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`
+
     let csv = '';
     const columns = [];
     if (arr.length) {
