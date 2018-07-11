@@ -2,13 +2,19 @@ const { api_url } = require('../config.js');
 
 class api {
 
+    sendReport(subject, to, body) {
+        const obj = { subject, to, body };
+        console.log(JSON.stringify(obj))
+        return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')
+    }
+
     updateNotice(ref, collection, data) {
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
-        return this._post(`${api_url}/${collection}/update?ref=${ref}`,formData, 'multipart/form-data')
+        return this._post(`${api_url}/${collection}/update?ref=${ref}`, formData)
     }
 
-    createNotice(collection, data, images= []) {
+    createNotice(collection, data, images = []) {
         //clean object
         for (var propName in data) {
             if (!data[propName]) {
@@ -21,7 +27,7 @@ class api {
         for (var i = 0; i < images.length; i++) {
             formData.append('file', images[i]);
         }
-        return this._post(`${api_url}/${collection}/create`, formData, 'multipart/form-data')
+        return this._post(`${api_url}/${collection}/create`, formData)
     }
 
     getNotice(collection, ref) {
@@ -43,13 +49,18 @@ class api {
 
     _post(url, data, contentType) {
         return new Promise((resolve, reject) => {
+
+            const headers = {}
+            headers['user-agent'] = 'POP application';
+            if (contentType) {
+                headers['Content-Type'] = contentType
+            }
+
             fetch(url, {
                 body: data, // must match 'Content-Type' header
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, same-origin, *omit
-                headers: {
-                    'user-agent': 'POP application',
-                },
+                headers,
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
                 redirect: 'follow', // manual, *follow, error

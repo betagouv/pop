@@ -142,7 +142,7 @@ function exportData(arr, base) {
 
     for (var j = 0; j < arr.length; j++) {
         const line = []
-        line.push(arr[j].type)
+        line.push(arr[j].status)
         for (var i = 1; i < columns.length - 1; i++) {
             let value = arr[j].notice[columns[i]]
             if (Array.isArray(value)) {
