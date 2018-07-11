@@ -8,6 +8,7 @@ var s3 = new AWS.S3();
 function uploadFile(path, file) {
     return new Promise((resolve, reject) => {
         const data = fs.readFileSync(file.path);
+        console.log('uploadFile', path, file)
         const params = {
             Bucket: s3_bucket,
             Key: path,
