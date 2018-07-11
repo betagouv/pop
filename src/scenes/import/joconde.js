@@ -64,6 +64,10 @@ function parseFiles(files, encoding) {
                     }
                 }
 
+                if (Object.keys(obj).length) {
+                    notices.push({ notice: obj });
+                }
+
 
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 const errors = [];
@@ -89,7 +93,8 @@ function parseFiles(files, encoding) {
                         if (!img) {
                             errors.push(`Image ${names[j]} introuvable`)
                         }
-                        notices[i].images.push(img)
+                        const newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                        notices[i].images.push(newImage)
                     }
                 }
 
@@ -213,12 +218,15 @@ function extractIMGNames(REFIM) {
     if (!REFIM) {
         return [];
     }
-
     let tempImages = REFIM.split(';');
     return tempImages.map(e => {
         let name = e.split(',')[0];
-        name = name.replace(/_[a-zA-Z0-9]\./g, '.');
-        name = name.replace(/[a-zA-Z0-9]*_/g, '');
-        return name;
+        return convertLongNameToShort(name);
     })
+}
+
+function convertLongNameToShort(str) {
+    let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
+    name = name.replace(/[a-zA-Z0-9]*_/g, '');
+    return name;
 }
