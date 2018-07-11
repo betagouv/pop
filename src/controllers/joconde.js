@@ -6,9 +6,6 @@ const Joconde = require('../models/joconde');
 
 const { uploadFile } = require('./utils');
 
-
-
-
 router.post('/update', upload.any(), (req, res) => {
     var ref = req.query.ref;
     const notice = JSON.parse(req.body.notice);
