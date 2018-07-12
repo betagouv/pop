@@ -60,7 +60,10 @@ function parseFiles(files, encoding) {
                                 tag = false;
                             }
                         }
-                        obj[key] = value;
+                        if (key) {
+                            obj[key] = value;
+                            debugger;
+                        }
                     }
                 }
 
