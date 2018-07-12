@@ -62,7 +62,6 @@ function parseFiles(files, encoding) {
                         }
                         if (key) {
                             obj[key] = value;
-                            debugger;
                         }
                     }
                 }
@@ -96,8 +95,10 @@ function parseFiles(files, encoding) {
                         if (!img) {
                             errors.push(`Image ${names[j]} introuvable`)
                         }
-                        const newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
-                        notices[i].images.push(newImage)
+                        if (img) {
+                            const newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                            notices[i].images.push(newImage)
+                        }
                     }
                 }
 
@@ -231,5 +232,6 @@ function extractIMGNames(REFIM) {
 function convertLongNameToShort(str) {
     let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
     name = name.replace(/[a-zA-Z0-9]*_/g, '');
+    name = name.toLowerCase();
     return name;
 }
