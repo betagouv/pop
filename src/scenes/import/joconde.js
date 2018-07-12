@@ -29,11 +29,8 @@ function parseFiles(files, encoding) {
         const JocondeFields = JocondeMapping.map(e => e.value);
 
         for (var i = 0; i < files.length; i++) {
-
             //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-            let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
-            newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
-            filesMap[newName] = files[i];
+            filesMap[convertLongNameToShort(files[i].name)] = files[i];
         }
 
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'txt');
