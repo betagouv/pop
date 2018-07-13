@@ -114,13 +114,13 @@ function parseFiles(files, encoding) {
                     }))
                 }
 
-                resolve(notices);
+                resolve({ importedNotices: notices, fileName: file.name });
             };
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
             reader.readAsText(file, 'ISO-8859-1');
         } else {
-            reject('Fichier .TXT absent');
+            reject('Fichier .txt absent');
         }
     })
 }

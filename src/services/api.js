@@ -50,6 +50,8 @@ class api {
     _post(url, data, contentType) {
         return new Promise((resolve, reject) => {
 
+            console.log('POST ', data)
+
             const headers = {}
             headers['user-agent'] = 'POP application';
             if (contentType) {
@@ -82,6 +84,8 @@ class api {
 
     _get(url) {
         return new Promise((resolve, reject) => {
+
+            console.log('GET', url)
             fetch(url).then((response) => {
                 if (response.status !== 200) {
                     reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);

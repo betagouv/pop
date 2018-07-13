@@ -11,7 +11,6 @@ import Palissy from './palissy';
 export default (props) => {
     return (
         <div>
-            <HeaderBase collection={props.match.params.collection} />
             <Switch>
                 {/* <Route path={`/import/merimee`} component={Merimee} />
                 <Route path={`/import/palissy`} component={Palissy} />*/}

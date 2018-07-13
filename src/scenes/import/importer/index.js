@@ -24,7 +24,8 @@ export default class Importer extends Component {
             done: false,
             loading: false,
             loadingMessage: '',
-            progress: 0
+            progress: 0,
+            fileName: '',
         }
     }
 
@@ -34,7 +35,7 @@ export default class Importer extends Component {
 
         try {
             //PARSE FILES
-            importedNotices = await (this.props.parseFiles(files, encoding));
+            let { importedNotices, fileName } = await (this.props.parseFiles(files, encoding));
 
             //RECUPERATION DES NOTICES EXISTANTES
             const existingNotices = []
@@ -63,7 +64,7 @@ export default class Importer extends Component {
                 }
             }
 
-            this.setState({ displaySummary: true, calculating: false, importedNotices, loading: false, loadingMessage: '' });
+            this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
 
         } catch (e) {
             if (e) {
@@ -108,13 +109,6 @@ export default class Importer extends Component {
         }
     }
 
-    sendReport() {
-
-        //'se.legoff@gmail.com, se.legoff@gmail.com'
-
-
-    }
-
     onExport() {
         exportData(this.state.importedNotices, this.props.collection)
     }
@@ -127,35 +121,33 @@ export default class Importer extends Component {
         const noticesChargees = this.state.importedNotices.length;
         const noticesCrees = this.state.importedNotices.filter(e => e.status === 'created').length;
         const noticesModifiees = this.state.importedNotices.filter(e => e.status === 'updated').length;
+        const pbNoticesCrees = this.state.importedNotices.filter(e => e.status === 'created').filter(e => e.warnings.length).length;
 
         return (
             <div className='import'>
-                <div className='summary'>
-                    <h2>Chargement terminé</h2>
-                    <div>Notice chargées : {noticesChargees} notice{noticesChargees > 1 ? 's' : ''}</div>
-                    <div>Créations : {noticesCrees} notice{noticesCrees > 1 ? 's' : ''}</div>
-                    <div>Modifications : {noticesModifiees} notice{noticesModifiees > 1 ? 's' : ''}</div>
-                    <div>Rejets : 0 notice{0 > 1 ? 's' : ''}</div>
+                <div className="summary-container">
+                    <div className='summary'>
+                        <h2>Vous vous apprêtez à importer le fichier {this.state.fileName} qui recense {noticesChargees} notices dont : </h2>
+                        <div>{noticesCrees} sont des nouvelles notices</div>
+                        <div>{noticesModifiees} sont des notices modifiées</div>
+                        <div>Et {0} ont été rejetées ( consulter le rapport à télécharger pour plus de detail) </div>
+
+                        Sur les {noticesCrees} notices prêtent à être importées, {pbNoticesCrees} font l'objet d'un avertissement
                 </div>
-                <div className='buttons'>
                     <Button
                         color="secondary"
                         onClick={() => this.onExport()}
-                    >
-                        Télécharger le rapport de chargement
-          </Button>
+                    >Télécharger le rapport de chargement </Button>
+                </div>
+                <div className='buttons'>
                     <Button
                         color="danger"
                         onClick={() => this.setState({ displaySummary: false })}
-                    >
-                        Annuler l'import
-          </Button>
+                    >Annuler l'import</Button>
                     <Button
                         color="primary"
                         onClick={() => this.onSave()}
-                    >
-                        Confirmer l'import
-          </Button>
+                    >Confirmer l'import</Button>
                 </div>
             </div>
         )
@@ -181,9 +173,12 @@ export default class Importer extends Component {
         }
 
         if (this.state.errors) {
+
+            console.log(this.state.errors)
             return (
                 <div className='import-container'>
                     <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>
+
                     <div>{this.state.errors.split('\n').map((e, i) => <div key={i}>{e}</div>)}</div>
                 </div>
             );
