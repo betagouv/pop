@@ -28,6 +28,7 @@ export default class ImportDropComponent extends Component {
     return (
       <div className='dropzone'>
         <Dropzone className='container' onDrop={this.onDrop.bind(this)}>
+          <img src={require('../../../assets/upload.png')} />
           <p>Déposez des fichiers d'import ici</p>
         </Dropzone>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">

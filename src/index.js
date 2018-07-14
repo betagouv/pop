@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import dotenv from 'dotenv';
+import WebFont from 'webfontloader';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -10,6 +11,12 @@ import PublicRoutes from './router';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+WebFont.load({
+  google: {
+    families: ['Open Sans', 'Work Sans:400,500,700', 'Quicksand', 'sans-serif']
+  }
+});
 
 dotenv.load();
 

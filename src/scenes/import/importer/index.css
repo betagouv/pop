@@ -1,9 +1,6 @@
 .import {
-  padding-top: 20px;
   display: flex;
   flex-direction: column!important;
-  padding-right: 50px;
-  padding-left: 50px;
 }
 
 .import .visu{
@@ -70,15 +67,20 @@
   flex-direction: column;
 }
 
-.import .summary-container{
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-bottom: 40px;
+.import .summary{
+  background-color: white;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  margin: 20px;
+  padding: 20px;
 }
 
-.import .summary{
-  padding: 40px;
+.import .summary button{
+  margin-top: 20px;
+}
+
+.import .summary h2{
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .import .progress{
@@ -93,11 +95,13 @@
 .import .dropzone .container{
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   min-height: 200px;
   border-style: dashed;
-  width: 200Px;
+  border-width: 1px;
+  background-color: white;
 }
 
 .import .dropzone select{
@@ -112,7 +116,6 @@
   align-items: center;
 }
 
-
 .import-container{
   display: flex;
   align-items: center;
@@ -120,26 +123,5 @@
   justify-content: center;
   padding-top: 200px;
 }
-
-.import .pagination>li>a,.import .pagination>li>span{
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  line-height: 1.42857143;
-  text-decoration: none;
-  color: #337ab7;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-left: -1px;
-}
-
-.import .pagination>.active>a,.import .pagination>.active>a:focus,.import .pagination>.active>a:hover,.import .pagination>.active>span, .import .pagination>.active>span:focus,.import .pagination>.active>span:hover{
-  z-index: 3;
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
-  cursor: default;
-}
-
 
 
