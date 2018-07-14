@@ -111,6 +111,7 @@
 
 .import .buttons{
   padding-bottom: 20px;
+  padding-top: 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
