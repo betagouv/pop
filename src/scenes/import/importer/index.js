@@ -6,8 +6,9 @@ import DropZone from './dropZone'
 import Loader from '../../../components/loader';
 import api from '../../../services/api'
 import Report from './report';
+import ExportData from './export';
 
-import { diff, exportData } from './utils'
+import { diff } from './utils'
 import checkThesaurus from './thesaurus'
 import TableComponent from './table';
 
@@ -49,11 +50,12 @@ export default class Importer extends Component {
 
             //CALCUL DE LA DIFF
             this.setState({ loadingMessage: 'Calcul des differences....' });
-            importedNotices = diff(importedNotices, existingNotices);
+
+            importedNotices = diff(importedNotices, existingNotices, this.props.mapping.filter(e => e.generated).map(e => e.value));
 
             //CHECK DU THESAURUS
             const optimMap = {};
-            const { allfieldswiththesaurus } = this.props;
+            const allfieldswiththesaurus = this.props.mapping.filter(e => e.thesaurus);
 
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ...`, progress: Math.floor(((i + importedNotices.length) * 100) / (importedNotices.length * 2)) });
@@ -73,7 +75,7 @@ export default class Importer extends Component {
                             }
                             if (!val) {
                                 if (allfieldswiththesaurus[j].thesaurus_strict === true) {
-                                    importedNotices[i].erreurs.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
+                                    importedNotices[i].errors.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
                                 } else {
                                     importedNotices[i].warnings.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
                                 }
@@ -86,13 +88,11 @@ export default class Importer extends Component {
                 }
             }
 
-
             for (var i = 0; i < importedNotices.length; i++) {
-                if (importedNotices[i].erreurs.length) {
+                if (importedNotices[i].errors.length) {
                     importedNotices[i].status = 'rejected';
                 }
             }
-
 
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
 
@@ -140,7 +140,7 @@ export default class Importer extends Component {
     }
 
     onExport() {
-        exportData(this.state.importedNotices, this.props.collection)
+        ExportData.generate(this.state.importedNotices, 'joconde')
     }
 
     renderSummary() {
@@ -153,7 +153,7 @@ export default class Importer extends Component {
         const noticesModifiees = this.state.importedNotices.filter(e => e.status === 'updated').length;
         const noticesRejetees = this.state.importedNotices.filter(e => e.status === 'rejected').length;
 
-        const pbNoticesCrees = this.state.importedNotices.filter(e => e.status === 'created').filter(e => e.warnings.length).length;
+        const pbNoticesUpdated = this.state.importedNotices.filter(e => (e.status === 'created' || e.status === 'updated')).filter(e => e.warnings.length).length;
 
         return (
             <div className='import'>
@@ -162,8 +162,8 @@ export default class Importer extends Component {
                         <h2>Vous vous apprêtez à importer le fichier {this.state.fileName} qui recense {noticesChargees} notices dont : </h2>
                         <div>{noticesCrees} sont des nouvelles notices</div>
                         <div>{noticesModifiees} sont des notices modifiées</div>
-                        <div>Et {noticesRejetees} ont été rejetées ( consulter le rapport à télécharger pour plus de detail) </div>
-                        Sur les {noticesCrees + noticesModifiees} notices prêtent à être importées, {pbNoticesCrees} font l'objet d'un avertissement
+                        <div>Et {noticesRejetees} ont été rejetées ( consulter le rapport à télécharger pour plus de détail) </div>
+                        Sur les {noticesCrees + noticesModifiees} notices prêtent à être importées, {pbNoticesUpdated} font l'objet d'un avertissement
                 </div>
                     <Button
                         color="secondary"
@@ -209,7 +209,6 @@ export default class Importer extends Component {
             return (
                 <div className='import-container'>
                     <h2>Impossible d'importer le fichier car des erreurs ont été detectées :</h2>
-
                     <div>{this.state.errors.split('\n').map((e, i) => <div key={i}>{e}</div>)}</div>
                 </div>
             );

@@ -14,7 +14,7 @@ export default class Import extends React.Component {
                     collection="joconde"
                     parseFiles={parseFiles}
                     transform={transform}
-                    allfieldswiththesaurus={JocondeMapping.filter(e => e.thesaurus)}
+                    mapping={JocondeMapping}
                 />
             </Container >
         );
@@ -46,7 +46,7 @@ function parseFiles(files, encoding) {
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push({ notice: obj, warnings: [], erreurs: [] });
+                        notices.push({ notice: obj, warnings: [], errors: [] });
                         obj = {};
                     } else {
                         const key = lines[i];
@@ -66,7 +66,7 @@ function parseFiles(files, encoding) {
                 }
 
                 if (Object.keys(obj).length) {
-                    notices.push({ notice: obj, warnings: [], erreurs: [] });
+                    notices.push({ notice: obj, warnings: [], errors: [] });
                 }
 
 

@@ -80,7 +80,9 @@ function isInt(value) {
     return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))
 }
 
-function diff(importedNotices, existingNotices) {
+function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
+
+    console.log('fieldToNotCheck', fieldToNotCheck)
 
     for (var i = 0; i < importedNotices.length; i++) {
         let importedNotice = importedNotices[i].notice;
@@ -88,7 +90,10 @@ function diff(importedNotices, existingNotices) {
         for (var j = 0; j < existingNotices.length; j++) {
             const existingNotice = existingNotices[j];
             if (importedNotices[i].notice.REF === existingNotice.REF) {
-                const differences = compare(importedNotice, existingNotice);
+                let differences = compare(importedNotice, existingNotice);
+
+                //remove differences based on generated fields
+                differences = differences.filter(key => !fieldToNotCheck.includes(key));
 
                 importedNotices[i].messages = differences.map(e => (`Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`));
 
@@ -109,86 +114,7 @@ function diff(importedNotices, existingNotices) {
 }
 
 
-function exportData(arr, base) {
-
-    const d = new Date();
-
-    const date = ('0' + d.getDate()).slice(-2);
-    const month = ('0' + (d.getMonth() + 1)).slice(-2);
-    const year = d.getFullYear();
-
-    const minutes = ('0' + d.getMinutes()).slice(-2);
-    const hours = ('0' + d.getHours()).slice(-2);
-    const secondes = ('0' + d.getSeconds()).slice(-2);
-
-
-    const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`
-
-    let csv = '';
-    const columns = [];
-    if (arr.length) {
-        columns.push('TYPE')
-        for (let key in arr[0].notice) {
-            columns.push(key);
-        }
-        columns.push('ERREURS');
-        columns.push('WARNING');
-        csv += columns.join(',') + '\n'
-    }
-
-    for (var j = 0; j < arr.length; j++) {
-        const line = []
-        line.push(arr[j].status)
-        for (var i = 1; i < columns.length - 1; i++) {
-            let value = arr[j].notice[columns[i]]
-            if (Array.isArray(value)) {
-                value = value.join(';')
-            }
-            if (value) {
-                value = value.replace(/"/g, '""')
-            } else {
-                value = '';
-            }
-            line.push('"' + value + '"');
-        }
-
-        line.push(`"${JSON.stringify(arr[j].warnings.map(e => e.text))}"`);
-        line.push(`"${JSON.stringify(arr[j].errors.map(e => e.text))}"`);
-
-        csv += line.join(',') + '\n'
-    }
-
-    let fileBytes = new TextEncoder("utf-8").encode(csv);
-    var octetStreamMimeType = "application/octet-stream";
-
-    var blob;    //trySaveAsDownload
-    if (window.saveAs) {
-        blob = new Blob([fileBytes], { type: octetStreamMimeType });
-        saveAs(blob, fileName);
-        return true;
-    }
-
-    var chArray = Array.prototype.map.call(fileBytes, function (byte) { return String.fromCharCode(byte); });
-    let base64 = window.btoa(chArray.join(""));
-
-    var aElement = document.createElement("a");    //tryAnchorDownload
-    var event;
-    if ("download" in aElement) {
-        aElement.setAttribute("download", fileName);
-        aElement.href = "data:" + octetStreamMimeType + ";base64," + base64;
-        document.body.appendChild(aElement);
-        event = document.createEvent("MouseEvents");
-        event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        aElement.dispatchEvent(event);
-        document.body.removeChild(aElement);
-        return true;
-    }
-    return false;
-}
-
-
 
 export {
-    diff,
-    exportData
+    diff
 }

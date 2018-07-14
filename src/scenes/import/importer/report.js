@@ -3,8 +3,6 @@ import React from 'react';
 class Report {
     generate(notices) {
 
-        console.log('notices', notices)
-
         const arr = [];
 
         const d = new Date();
@@ -17,76 +15,82 @@ class Report {
 
         const created = notices.filter(e => e.status === 'created');
         const updated = notices.filter(e => e.status === 'updated');
+        const rejected = notices.filter(e => e.status === 'rejected');
 
         arr.push(`<h1>Rapport de chargement Joconde du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
         arr.push(`<h2>Établissement: TODO </h2>`)
         arr.push(`<h2>Contact: TODO</h2>`)
         arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`)
         arr.push(`<ul>`)
-        arr.push(`<li>${notices.length} notices valides</li>`)
+        arr.push(`<li>${created.length + updated.length} notices valides</li>`)
         arr.push(`<li>${created.length} notices crées</li>`)
         arr.push(`<li>${updated.length} notices mises à jour</li>`)
-        arr.push(`<li>${0} notices rejetées</li>`)
+        arr.push(`<li>${rejected.length} notices rejetées</li>`)
         arr.push(`</ul>`)
         arr.push(`<p>Nombre d'images chargées: TODO</p>`)
 
-
         arr.push(`<h1>Notices créees</h1>`)
-
-        const createdNoticeFormated = created.map(({ notice }) => [notice.REF, notice.INV])
-        // arr.push(...getTable(createdNoticeFormated, ""))
-        arr.push(`<h1>Notices modifiées</h1>`)
-        arr.push(`<h1>Notices rejetées</h1>`)
-
-        const status = {
-            'updated': 'Modification',
-            'created': 'Création',
-        }
-
-        for (var i = 0; i < notices.length; i++) {
-
-            if (notices[i].status !== 'unchanged') {
-                arr.push(this.getNewLine(notices[i].notice.REF, notices[i].notice.INV, status[notices[i].status], 'green', 'A definir', 'A definir'));
+        {
+            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const lines = []
+            for (var i = 0; i < created.length; i++) {
+                lines.push([created[i].notice.REF, created[i].notice.INV, 'Création', ''])
+                for (var j = 0; j < created[i].warnings.length; j++) {
+                    lines.push([created[i].notice.REF, created[i].notice.INV, 'Avertissement', created[i].warnings[j]])
+                }
             }
-            // for (var j = 0; j < notices[i].errors.length; j++) {
-
-            // }
-            for (var j = 0; j < notices[i].warnings.length; j++) {
-                arr.push(this.getNewLine(notices[i].notice.REF, notices[i].notice.INV, 'Avertissement', 'orange', 'A definir', notices[i].warnings[j].text));
-            }
+            const table = createHTMLTable(columns, lines);
+            arr.push(...table);
         }
-
+        {
+            arr.push(`<h1>Notices modifiées</h1>`)
+            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const lines = []
+            for (var i = 0; i < updated.length; i++) {
+                lines.push([updated[i].notice.REF, updated[i].notice.INV, 'Modification', ''])
+                for (var j = 0; j < updated[i].warnings.length; j++) {
+                    lines.push([updated[i].notice.REF, updated[i].notice.INV, 'Avertissement', updated[i].warnings[j]])
+                }
+            }
+            const table = createHTMLTable(columns, lines);
+            arr.push(...table);
+        }
+        {
+            arr.push(`<h1>Notices rejetées</h1>`)
+            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const lines = []
+            for (var i = 0; i < rejected.length; i++) {
+                lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Rejet', '']);
+                for (var j = 0; j < rejected[i].warnings.length; j++) {
+                    lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Avertissement', rejected[i].warnings[j]])
+                }
+                for (var j = 0; j < rejected[i].errors.length; j++) {
+                    lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Erreur', rejected[i].errors[j]])
+                }
+            }
+            const table = createHTMLTable(columns, lines);
+            arr.push(...table);
+        }
         return arr.join('');
     }
 
-    getNewLine(ref, inv, status, color, champ, details) {
-        const arr = [];
-        arr.push(`<tr>`)
-        arr.push(`<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black;">${ref}</td>`)
-        arr.push(`<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black;">${inv}</td>`)
-        arr.push(`<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black; background-color:${color}">${status}</td>`)
-        arr.push(`<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black;">${champ}</td>`)
-        arr.push(`<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black;">${details}</td>`)
-        arr.push(`</tr > `)
-        return arr.join('');
-    }
 }
 
-function getTable(objs) {
-    if (!objs.length) { return <div /> }
+function createHTMLTable(columns, objs) {
+    if (!objs.length) { return '<div >Aucune</div>' }
     const arr = [];
     arr.push(`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`)
     arr.push(`<tr>`)
-    arr.push(...Object.keys(obj))
+    arr.push(...columns.map(e => `<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">${e}</th>`));
     arr.push(`</tr>`)
-
-    // arr.push(`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">Identifiant Joconde</th>`)
-    // arr.push(`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">N° inventaire</th>`)
-    // arr.push(`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">État</th>`)
-    // arr.push(`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">Champ</th>`)
-    // arr.push(`<th style="font-family:Arial, Helvetica, sans-serif; font-size:14px;border:1px solid black;">Détails</th>`)
-
-    arr.push(`</table >`);
+    arr.push(...objs.map(line => {
+        const arr2 = [];
+        arr2.push('<tr>')
+        arr2.push(line.map(d => `<td style="font-family:Arial, Helvetica, sans-serif; padding: 10px; font-size:14px;border:1px solid black;">${d}</td>`).join(''))
+        arr2.push('</tr>')
+        return arr2.join('')
+    }));
+    arr.push(`</table > `);
     return arr;
 }
 
