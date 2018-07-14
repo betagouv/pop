@@ -105,10 +105,7 @@ function parseFiles(files, encoding) {
                     for (var i = 0; i < notices.length; i++) {
                         const { notice, errors } = transform(notices[i].notice);
                         notices[i].notice = notice;
-                        notices[i].errors = {
-                            jsx: errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-                            text: errors
-                        }
+                        notices[i].errors = errors;
                     }
 
                     console.log('NOTICES', notices)

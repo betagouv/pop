@@ -75,15 +75,10 @@ class Notice extends React.Component {
                 >
                     <Row>
                         <Col className='image' sm={6}>
-                            <FieldImages
-                                name='IMG'
-                                disabled
-                            />
+                            <FieldImages name='IMG' disabled />
                         </Col>
                         <Col className='image' sm={6}>
-                            <Map
-                                notice={this.state.notice}
-                            />
+                            <Map notice={this.state.notice} />
                         </Col>
                     </Row>
                     <Section
@@ -434,6 +429,16 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Coordinateur (COOR) :'
                                 name='COOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Date de mise a jour (DMAJ) :'
+                                name='DMAJ'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Date de creation (DMIS) :'
+                                name='DMIS'
                                 disabled
                             />
                         </Col>

@@ -38,13 +38,15 @@ function parseFiles(files, encoding) {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
+
+                //Parsing du fichie en ajout piloté
                 let str = reader.result.replace(/\-\r\n/g, '');
                 var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
                 const notices = [];
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push({ notice: obj });
+                        notices.push({ notice: obj, warnings: [], erreurs: [] });
                         obj = {};
                     } else {
                         const key = lines[i];
@@ -64,7 +66,7 @@ function parseFiles(files, encoding) {
                 }
 
                 if (Object.keys(obj).length) {
-                    notices.push({ notice: obj });
+                    notices.push({ notice: obj, warnings: [], erreurs: [] });
                 }
 
 
@@ -108,10 +110,7 @@ function parseFiles(files, encoding) {
                 for (var i = 0; i < notices.length; i++) {
                     const { notice, errors } = transform(notices[i].notice);
                     notices[i].notice = notice;
-                    notices[i].errors = errors.map(e => ({
-                        jsx: <div><Badge color="danger">Erreur</Badge> {e}</div>,
-                        text: e
-                    }))
+                    notices[i].errors = errors;
                 }
 
                 resolve({ importedNotices: notices, fileName: file.name });
@@ -210,6 +209,12 @@ function transform(obj) {
     obj.LVID = obj.LVID || '';
 
     obj.CONTIENT_IMAGE = obj.IMG.length > 0 ? 'oui' : 'non';
+
+
+    if (!obj.INV) { errors.push(`Le champs INV ne doit pas être vide`) }
+    if (!obj.DOMN) { errors.push(`Le champs DOMN ne doit pas être vide`) }
+    if (!obj.STAT) { errors.push(`Le champs STAT ne doit pas être vide`) }
+    if (!obj.REF) { errors.push(`Le champs REF ne doit pas être vide`) }
 
     return { notice: obj, errors };
 }

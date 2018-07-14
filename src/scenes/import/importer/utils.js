@@ -90,14 +90,10 @@ function diff(importedNotices, existingNotices) {
             if (importedNotices[i].notice.REF === existingNotice.REF) {
                 const differences = compare(importedNotice, existingNotice);
 
-                importedNotices[i].messages = differences.map(e => ({
-                    jsx: <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>,
-                    text: `Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`,
-                }));
+                importedNotices[i].messages = differences.map(e => (`Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`));
 
                 if (differences.length) {
                     importedNotices[i].status = 'updated';
-                    console.log('DIFFF', importedNotices[i].notice, existingNotice)
                 } else {
                     importedNotices[i].status = 'unchanged';
                 }

@@ -51,18 +51,48 @@ export default class Importer extends Component {
             this.setState({ loadingMessage: 'Calcul des differences....' });
             importedNotices = diff(importedNotices, existingNotices);
 
-
             //CHECK DU THESAURUS
+            const optimMap = {};
+            const { allfieldswiththesaurus } = this.props;
+
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ...`, progress: Math.floor(((i + importedNotices.length) * 100) / (importedNotices.length * 2)) });
-                importedNotices[i].warnings = [];
-                const allfieldswiththesaurus = this.props.allfieldswiththesaurus;
                 for (var j = 0; j < allfieldswiththesaurus.length; j++) {
                     const field = allfieldswiththesaurus[j].value;
-                    const warnings = await (checkThesaurus(field, importedNotices[i].notice[field], allfieldswiththesaurus[j].thesaurus));
-                    importedNotices[i].warnings = importedNotices[i].warnings.concat(warnings);
+                    const thesaurus = allfieldswiththesaurus[j].thesaurus;
+                    const values = [].concat(importedNotices[i].notice[field]);
+
+                    for (var k = 0; k < values.length; k++) {
+                        const value = values[k];
+                        if (value) {
+                            let val = null;
+                            if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
+                                val = optimMap[thesaurus][value];
+                            } else {
+                                val = await (api.validateWithThesaurus(thesaurus, value));
+                            }
+                            if (!val) {
+                                if (allfieldswiththesaurus[j].thesaurus_strict === true) {
+                                    importedNotices[i].erreurs.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
+                                } else {
+                                    importedNotices[i].warnings.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
+                                }
+                            }
+
+                            if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
+                            optimMap[thesaurus][value] = val;
+                        }
+                    }
                 }
             }
+
+
+            for (var i = 0; i < importedNotices.length; i++) {
+                if (importedNotices[i].erreurs.length) {
+                    importedNotices[i].status = 'rejected';
+                }
+            }
+
 
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
 
@@ -121,6 +151,8 @@ export default class Importer extends Component {
         const noticesChargees = this.state.importedNotices.length;
         const noticesCrees = this.state.importedNotices.filter(e => e.status === 'created').length;
         const noticesModifiees = this.state.importedNotices.filter(e => e.status === 'updated').length;
+        const noticesRejetees = this.state.importedNotices.filter(e => e.status === 'rejected').length;
+
         const pbNoticesCrees = this.state.importedNotices.filter(e => e.status === 'created').filter(e => e.warnings.length).length;
 
         return (
@@ -130,9 +162,8 @@ export default class Importer extends Component {
                         <h2>Vous vous apprêtez à importer le fichier {this.state.fileName} qui recense {noticesChargees} notices dont : </h2>
                         <div>{noticesCrees} sont des nouvelles notices</div>
                         <div>{noticesModifiees} sont des notices modifiées</div>
-                        <div>Et {0} ont été rejetées ( consulter le rapport à télécharger pour plus de detail) </div>
-
-                        Sur les {noticesCrees} notices prêtent à être importées, {pbNoticesCrees} font l'objet d'un avertissement
+                        <div>Et {noticesRejetees} ont été rejetées ( consulter le rapport à télécharger pour plus de detail) </div>
+                        Sur les {noticesCrees + noticesModifiees} notices prêtent à être importées, {pbNoticesCrees} font l'objet d'un avertissement
                 </div>
                     <Button
                         color="secondary"
