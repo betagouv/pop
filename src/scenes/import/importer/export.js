@@ -1,8 +1,6 @@
 class Export {
     generate(notices, base) {
 
-        console.log('D', notices)
-
         const d = new Date();
         const date = ('0' + d.getDate()).slice(-2);
         const month = ('0' + (d.getMonth() + 1)).slice(-2);
@@ -26,7 +24,6 @@ class Export {
         for (var i = 0; i < created.length; i++) {
             lines.push([`"${created[i].notice.REF}"`, `"${created[i].notice.INV}"`, 'Création', ''].join(','))
 
-
             for (var j = 0; j < created[i].warnings.length; j++) {
                 lines.push([`"${created[i].notice.REF}"`, `"${created[i].notice.INV}"`, 'Avertissement', `"${created[i].warnings[j]}"`].join(','))
             }
@@ -34,6 +31,10 @@ class Export {
 
         for (var i = 0; i < updated.length; i++) {
             lines.push([`"${updated[i].notice.REF}"`, `"${updated[i].notice.INV}"`, 'Modification', ''].join(','))
+
+            for (var j = 0; j < updated[i].messages.length; j++) {
+                lines.push([`"${updated[i].notice.REF}"`, `"${updated[i].notice.INV}"`, 'Changement', `"${updated[i].messages[j]}"`].join(','))
+            }
             for (var j = 0; j < updated[i].warnings.length; j++) {
                 lines.push([`"${updated[i].notice.REF}"`, `"${updated[i].notice.INV}"`, 'Avertissement', `"${updated[i].warnings[j]}"`].join(','))
             }
