@@ -4,7 +4,6 @@ class api {
 
     sendReport(subject, to, body) {
         const obj = { subject, to, body };
-        console.log(JSON.stringify(obj))
         return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')
     }
 
@@ -69,14 +68,13 @@ class api {
                 referrer: 'no-referrer', // *client, no-referrer
             }).then((response) => {
                 if (response.status !== 200) {
+                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
                     reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                     return;
                 };
                 resolve()
-                // response.json().then((data) => {    // Examine the text in the response
-                //     (data);
-                // });
             }).catch((err) => {
+                Raven.captureException(err)
                 reject('L\'api est inaccessible', err)
             });
         })
@@ -84,20 +82,28 @@ class api {
 
     _get(url) {
         return new Promise((resolve, reject) => {
-
-            console.log('GET', url)
             fetch(url).then((response) => {
-                if (response.status !== 200) {
-                    reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                if (response.status === 404) {
+                    resolve(null);
+                    return;
                 }
-                response.json()
-                    .then((data) => {    // Examine the text in the response
+
+                if (response.status === 200) {
+                    response.json().then((data) => {    // Examine the text in the response
                         resolve(data);
+                    }).catch((e) => {
+                        Raven.captureException(e)
+                        reject('Probleme lors de la récupération de la donnée', e);
                     })
-                    .catch((e) => {
-                        resolve(null);
-                    })
+                    return;
+                }
+
+                Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
+                reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                return;
+
             }).catch((err) => {
+                Raven.captureException(err)
                 reject('L\'api est inaccessible', err)
             });
         })

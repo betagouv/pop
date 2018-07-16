@@ -132,10 +132,9 @@ export default class Importer extends Component {
 
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
         } catch (e) {
-            if (e) {
-                this.setState({ errors: e.message, loading: false })
-                return;
-            }
+            let errors = e.message ? e.message : e;
+            this.setState({ errors, loading: false })
+            return;
         }
     }
 
