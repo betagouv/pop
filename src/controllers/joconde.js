@@ -56,9 +56,13 @@ router.get('/', (req, res) => {
     var ref = req.query.ref;
     Joconde.findOne({ REF: ref }, (err, notice) => {
         if (err) {
-            console.log('ERR', err)
-        } else {
-            res.send(notice);
+            res.status(500).send(err);
+            return;
+        }
+        if(notice){
+            res.status(200).send(notice);
+        }else{
+            res.sendStatus(404);
         }
     });
 })
