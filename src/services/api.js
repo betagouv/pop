@@ -7,9 +7,12 @@ class api {
         return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')
     }
 
-    updateNotice(ref, collection, data) {
+    updateNotice(ref, collection, data, images = []) {
         var formData = new FormData();
         formData.append('notice', JSON.stringify(data));
+        for (var i = 0; i < images.length; i++) {
+            formData.append('file', images[i]);
+        }
         return this._post(`${api_url}/${collection}/update?ref=${ref}`, formData)
     }
 

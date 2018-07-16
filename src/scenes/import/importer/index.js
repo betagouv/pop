@@ -94,6 +94,10 @@ export default class Importer extends Component {
                 }
             }
 
+
+            const updated = importedNotices.filter(e => e.status === 'updated');
+            console.log('UPDATED', updated);
+
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
 
         } catch (e) {
@@ -116,7 +120,7 @@ export default class Importer extends Component {
             for (var i = 0; i < updated.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const ref = updated[i].notice.REF;
-                await api.updateNotice(ref, this.props.collection, updated[i].notice);
+                await api.updateNotice(ref, this.props.collection, updated[i].notice, updated[i].images);
             }
 
             //Create notice
