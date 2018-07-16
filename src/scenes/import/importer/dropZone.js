@@ -7,12 +7,11 @@ export default class ImportDropComponent extends Component {
 
   state = {
     progress: 0,
-    error: '',
-    encoding: 'UTF-8'
+    error: ''
   }
 
   onDrop(files) {
-    this.props.onFinish(files, this.state.encoding);
+    this.props.onFinish(files);
   }
 
   render() {
@@ -29,12 +28,9 @@ export default class ImportDropComponent extends Component {
     return (
       <div className='dropzone'>
         <Dropzone className='container' onDrop={this.onDrop.bind(this)}>
+          <img src={require('../../../assets/upload.png')} />
           <p>Déposez des fichiers d'import ici</p>
         </Dropzone>
-        <select value={this.state.encoding} onChange={(e) => this.setState({ encoding: e.target.value })}>
-          <option value="UTF-8">UTF-8</option>
-          <option value="ISO-8859-1">ISO-8859-1</option>
-        </select>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">
           {this.state.error ? <div>{this.state.error}</div> : <div />}
         </Row>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
+import { bucket_url } from '../../config';
+import JocondeMapping from '../../mapping/joconde'
 
 const utils = require('./utils')
 
@@ -12,6 +14,7 @@ export default class Import extends React.Component {
                     collection="joconde"
                     parseFiles={parseFiles}
                     transform={transform}
+                    mapping={JocondeMapping}
                 />
             </Container >
         );
@@ -21,65 +24,65 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
-
         const filesMap = {};
+
+        const JocondeFields = JocondeMapping.map(e => e.value);
+
         for (var i = 0; i < files.length; i++) {
-
-            //Sometimes, name is the long name with museum code, someties its not... The easiest way I found was to transform long name to short name each time I get a file name
-            let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
-            newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
-            filesMap[newName] = files[i];
-
+            //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+            filesMap[convertLongNameToShort(files[i].name)] = files[i];
         }
 
-        var file = files.find(file => file.name.split('.').pop() === 'TXT');
+        var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'txt');
+
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
+
+                //Parsing du fichie en ajout piloté
                 let str = reader.result.replace(/\-\r\n/g, '');
                 var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
                 const notices = [];
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push(obj);
-                        console.log(obj)
+                        notices.push({ notice: obj, warnings: [], errors: [] });
                         obj = {};
                     } else {
-                        console.log(lines[i])
-                        obj[lines[i]] = lines[++i]
+                        const key = lines[i];
+                        let value = '';
+                        let tag = true;
+                        while (tag) {
+                            value += lines[++i];
+                            if (lines[i + 1] && lines[i + 1] !== '//' && !JocondeFields.includes(lines[i + 1])) {
+                            } else {
+                                tag = false;
+                            }
+                        }
+                        if (key) {
+                            obj[key] = value;
+                        }
                     }
                 }
+
+                if (Object.keys(obj).length) {
+                    notices.push({ notice: obj, warnings: [], errors: [] });
+                }
+
 
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 const errors = [];
                 if (notices.length) {
                     for (var i = 0; i < notices.length; i++) {
-                        for (let key in notices[i]) {
-                            if (!mapping().includes(key)) {
-                                console.log(notices[i])
+                        for (let key in notices[i].notice) {
+                            if (!JocondeFields.includes(key)) {
                                 errors.push(`La colonne ${key} est inconnue`);
                             }
                         }
                     }
                 }
 
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
-
-                //CONTROLE DE LA VALIDITE DES CHAMPS
-                for (var i = 0; i < notices.length; i++) {
-                    notices[i] = transform(notices[i]);
-                    notices[i].errors = {
-                        jsx: notices[i].errors.map(e => <div><Badge color="danger">Erreur</Badge> {e}</div>),
-                        text: notices[i].errors
-                    }
-                }
-
                 //ADD IMAGES
-
                 for (var i = 0; i < notices.length; i++) {
                     const names = extractIMGNames(notices[i].notice.REFIM)
                     notices[i].images = [];
@@ -91,7 +94,10 @@ function parseFiles(files, encoding) {
                         if (!img) {
                             errors.push(`Image ${names[j]} introuvable`)
                         }
-                        notices[i].images.push(img)
+                        if (img) {
+                            const newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                            notices[i].images.push(newImage)
+                        }
                     }
                 }
 
@@ -100,15 +106,20 @@ function parseFiles(files, encoding) {
                     return;
                 }
 
-                resolve(notices);
+                //CONTROLE DE LA VALIDITE DES CHAMPS
+                for (var i = 0; i < notices.length; i++) {
+                    const { notice, errors } = transform(notices[i].notice);
+                    notices[i].notice = notice;
+                    notices[i].errors = errors;
+                }
+
+                resolve({ importedNotices: notices, fileName: file.name });
             };
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
-
-            console.log('encoding',encoding)
-            reader.readAsText(file, encoding);
+            reader.readAsText(file, 'ISO-8859-1');
         } else {
-            reject('Fichier .TXT absent');
+            reject('Fichier .txt absent');
         }
     })
 }
@@ -151,7 +162,7 @@ function transform(obj) {
     obj.GEOHI = utils.extractArray(obj.GEOHI, ';', errors);
     obj.HIST = obj.HIST || '';
     obj.IMAGE = obj.IMAGE || '';
-    obj.IMG = extractIMGNames(obj.REFIM).map(e => `https://s3.eu-west-3.amazonaws.com/pop-phototeque/joconde/${obj.REF}/${e}`);
+    obj.IMG = extractIMGNames(obj.REFIM).map(e => `joconde/${obj.REF}/${e}`);
     obj.INSC = utils.extractArray(obj.INSC, ';', errors);
     obj.INV = obj.INV || '';
     obj.LABEL = obj.LABEL || '';
@@ -161,7 +172,7 @@ function transform(obj) {
     obj.LOCA = obj.LOCA || '';
     obj.LOCA2 = obj.LOCA2 || '';
     obj.LOCA3 = obj.LOCA3 || '';
-    obj.MILL = utils.extractArray(obj.MILL, ';', errors);
+    obj.MILL = obj.MILL || '';
     obj.MILU = obj.MILU || '';
     obj.MOSA = obj.MOSA || '';
     obj.MSGCOM = obj.MSGCOM || '';
@@ -199,6 +210,12 @@ function transform(obj) {
 
     obj.CONTIENT_IMAGE = obj.IMG.length > 0 ? 'oui' : 'non';
 
+
+    if (!obj.INV) { errors.push(`Le champs INV ne doit pas être vide`) }
+    if (!obj.DOMN) { errors.push(`Le champs DOMN ne doit pas être vide`) }
+    if (!obj.STAT) { errors.push(`Le champs STAT ne doit pas être vide`) }
+    if (!obj.REF) { errors.push(`Le champs REF ne doit pas être vide`) }
+
     return { notice: obj, errors };
 }
 
@@ -207,94 +224,16 @@ function extractIMGNames(REFIM) {
     if (!REFIM) {
         return [];
     }
-
     let tempImages = REFIM.split(';');
     return tempImages.map(e => {
         let name = e.split(',')[0];
-        name = name.replace(/_[a-zA-Z0-9]\./g, '.');
-        name = name.replace(/[a-zA-Z0-9]*_/g, '');
-        return name;
+        return convertLongNameToShort(name);
     })
 }
 
-function mapping() {
-    return [
-        "REF",
-        "REFMIS",
-        "ADPT",
-        "APPL",
-        "APTN",
-        "ATTR",
-        "AUTR",
-        "BIBL",
-        "COMM",
-        "CONTACT",
-        "COOR",
-        "COPY",
-        "DACQ",
-        "DATA",
-        "DATION",
-        "DDPT",
-        "DECV",
-        "DENO",
-        "DEPO",
-        "DESC",
-        "DESY",
-        "DIFFU",
-        "DIMS",
-        "DMAJ",
-        "DMIS",
-        "DOMN",
-        "DREP",
-        "ECOL",
-        "EPOQ",
-        "ETAT",
-        "EXPO",
-        "GENE",
-        "GEOHI",
-        "HIST",
-        "IMAGE",
-        "IMG",
-        "INSC",
-        "INV",
-        "LABEL",
-        "LABO",
-        "LARC",
-        "LIEUX",
-        "LOCA",
-        "LOCA2",
-        "LOCA3",
-        "MILL",
-        "MILU",
-        "MOSA",
-        "MSGCOM",
-        "MUSEO",
-        "NSDA",
-        "ONOM",
-        "PAUT",
-        "PDAT",
-        "PDEC",
-        "PEOC",
-        "PERI",
-        "PERU",
-        "PHOT",
-        "PINS",
-        "PLIEUX",
-        "PREP",
-        "PUTI",
-        "RANG",
-        "REDA",
-        "REFIM",
-        "REPR",
-        "RETIF",
-        "SREP",
-        "STAT",
-        "TECH",
-        "TICO",
-        "TITR",
-        "TOUT",
-        "UTIL",
-        "VIDEO",
-        "WWW",
-        "LVID"]
+function convertLongNameToShort(str) {
+    let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
+    name = name.replace(/[a-zA-Z0-9]*_/g, '');
+    name = name.toLowerCase();
+    return name;
 }

@@ -1,26 +1,36 @@
 import React from 'react';
 import { Row, Col, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import mnrMapping from '../../mapping/mnr';
+
 import {
     ReactiveBase,
     DataSearch,
-    ReactiveList,
     MultiList,
-    SingleList,
+    ReactiveList,
     SelectedFilters,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
-
 import Button from './components/button';
 import ExportComponent from './components/export';
 
-import { es_url } from '../../config.js';
+import { es_url, bucket_url } from '../../config.js';
 
-const FILTER = ["mainSearch"]
+const FILTER = ["mainSearch", "prov", "cate", "tech"]
 
 export default class Search extends React.Component {
+    constructor(props) {
+        super(props);
+
+        let exportfield = mnrMapping.filter((e) => e.export);
+        exportfield = exportfield.map(e => e.value);
+
+        this.state = {
+            exportfield
+        }
+    }
+
     render() {
         return (
             <Container className='search'>
@@ -38,7 +48,7 @@ export default class Search extends React.Component {
                     <div className='search-and-export-zone'>
                         <DataSearch
                             componentId="mainSearch"
-                            dataField={["TICO", "DENO", "REF", "LOCA"]}
+                            dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
                             queryFormat="and"
                             iconPosition="left"
                             className="mainSearch"
@@ -59,13 +69,45 @@ export default class Search extends React.Component {
                             <ExportComponent
                                 FILTER={FILTER}
                                 filename='mnr.csv'
-                                columns={['REF']}
+                                columns={this.state.exportfield}
                             />
                         </ReactiveComponent>
                     </div>
                     <Row>
                         <Col xs="3">
-
+                            <MultiList
+                                componentId="cate"
+                                dataField="CATE.keyword"
+                                title="Categorie"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="tech"
+                                dataField="TECH.keyword"
+                                title="Technique"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
+                            <MultiList
+                                componentId="prov"
+                                dataField="PROV.keyword"
+                                title="Provenance"
+                                className="filters"
+                                showSearch={true}
+                                URLParams={true}
+                                react={{
+                                    and: FILTER
+                                }}
+                            />
                         </Col>
                         <Col xs="9">
                             <SelectedFilters />
@@ -93,7 +135,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.VIDEO.length ? data.VIDEO[0] : require('../../assets/noimage.jpg');
+    const image = data.VIDEO.length ? `${bucket_url}/${data.VIDEO[0]}` : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/mnr/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Book Cover" />

@@ -11,7 +11,6 @@ function cleanMerimee(obj) {
     obj.TECH = utils.extractArray(obj.TECH, /[,;]/, errors);
     obj.STAT = utils.extractArray(obj.STAT, /[,;]/, errors);
     obj.SCLE = utils.extractArray(obj.SCLE, /[,;]/, errors);
-    // obj.SCLX = utils.extractArray(obj.SCLX, /[,;]/, errors);
     obj.SCLD = utils.extractArray(obj.SCLD, /[,;]/, errors);
     obj.AUTR = utils.extractAuteurs(obj.AUTR, errors);
     obj.AUTP = utils.extractArray(obj.AUTP, /[,;]/, errors);
@@ -27,10 +26,8 @@ function cleanMerimee(obj) {
     obj.ESCA = utils.extractArray(obj.ESCA, /[,;]/, errors);
     obj.PREP = utils.extractArray(obj.PREP, /[,;]/, errors);
     obj.TOIT = utils.extractArray(obj.TOIT, /[,;]/, errors);
-    // obj.LOCA = utils.extractArray(obj.LOCA, /[,;]/, errors);
     obj.JDAT = utils.extractArray(obj.JDAT, /[,;]/, errors);
     obj.JATT = utils.extractArray(obj.JATT, /[,;]/, errors);
-    // obj.DOMN = utils.extractArray(obj.DOMN, /[,;]/, errors);
     obj.DATE = utils.extractArray(obj.DATE, /[,;]/, errors);
 
     obj.COLL = utils.extractArray(obj.COLL, /[,;]/, errors);
@@ -49,9 +46,6 @@ function cleanMerimee(obj) {
     obj.ETUD = utils.extractArray(obj.ETUD, /[,;]/, errors);
     obj.COPY = utils.extractArray(obj.COPY, /[,;]/, errors);
 
-    // obj.DMIS = ('' + obj.DMIS).replace('/', '-', errors);
-    // obj.DMAJ = ('' + obj.DMAJ).replace('/', '-', errors);
-
     //liens
     obj.REFE = utils.extractLink(obj.REFE, errors);
     obj.REFO = utils.extractLink(obj.REFO, errors);
@@ -59,17 +53,9 @@ function cleanMerimee(obj) {
     obj.RENV = utils.extractLink(obj.RENV, errors);
     obj.WRENV = utils.extractLink(obj.WRENV, errors);
 
-    // obj.POP_HAS_LOCATION = obj.POP_COORDINATES_POINT || obj.POP_COORDINATES_POLYGON ? "oui" : "non"
-    // obj.POP_HAS_IMAGE = obj.IMG ? "oui" : "non"
-
     obj.LIENS = utils.extractUrls(obj.LIENS, errors);
 
-    // switch (obj.REF.substring(0, 2)) {
-    //     case "IA": obj.POP_DOMAINE = 'Inventaire'; break;
-    //     case "PA": obj.POP_DOMAINE = 'Monument Historique'; break;
-    //     case "EA": obj.POP_DOMAINE = 'Architecture'; break;
-    //     default: obj.POP_DOMAINE = 'NULL'; break;
-    // }
+
     return { notice: obj, errors };
 }
 

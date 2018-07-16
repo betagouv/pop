@@ -17,3 +17,10 @@
     text-align: center;
 }
 
+.fieldImages img{
+    height: 240px;
+    object-fit: contain;
+    background-color: #fff1f1;
+    padding: 10px;
+    margin-bottom: 5px;
+}

@@ -80,7 +80,9 @@ function isInt(value) {
     return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))
 }
 
-function diff(importedNotices, existingNotices) {
+function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
+
+    console.log('fieldToNotCheck', fieldToNotCheck)
 
     for (var i = 0; i < importedNotices.length; i++) {
         let importedNotice = importedNotices[i].notice;
@@ -88,15 +90,15 @@ function diff(importedNotices, existingNotices) {
         for (var j = 0; j < existingNotices.length; j++) {
             const existingNotice = existingNotices[j];
             if (importedNotices[i].notice.REF === existingNotice.REF) {
-                const differences = compare(importedNotice, existingNotice);
+                let differences = compare(importedNotice, existingNotice);
 
-                const jsx = differences.map(e => <div key={e}><Badge color="success">Info</Badge> Le champs <b>{e}</b> à évolué de "<b>{Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]}</b>" à "<b>{Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}</b>"</div>)
-                const text = differences.map(e => `Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`)
-                importedNotices[i].messages = { jsx, text };
+                //remove differences based on generated fields
+                differences = differences.filter(key => !fieldToNotCheck.includes(key));
+
+                importedNotices[i].messages = differences.map(e => (`Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`));
 
                 if (differences.length) {
                     importedNotices[i].status = 'updated';
-                    console.log('DIFFF', importedNotices[i].notice, existingNotice)
                 } else {
                     importedNotices[i].status = 'unchanged';
                 }
@@ -112,72 +114,7 @@ function diff(importedNotices, existingNotices) {
 }
 
 
-function exportData(arr, fileName) {
-    let csv = '';
-    const columns = [];
-    if (arr.length) {
-        columns.push('TYPE')
-        for (let key in arr[0].notice) {
-            columns.push(key);
-        }
-        columns.push('ERREURS');
-        columns.push('WARNING');
-        csv += columns.join(',') + '\n'
-    }
-
-    for (var j = 0; j < arr.length; j++) {
-        const line = []
-        line.push(arr[j].type)
-        for (var i = 1; i < columns.length - 1; i++) {
-            let value = arr[j].notice[columns[i]]
-            if (Array.isArray(value)) {
-                value = value.join(';')
-            }
-            if (value) {
-                value = value.replace(/"/g, '""')
-            } else {
-                value = '';
-            }
-            line.push('"' + value + '"');
-        }
-
-        line.push(`"${JSON.stringify(arr[j].warnings.text)}"`);
-        line.push(`"${JSON.stringify(arr[j].errors.text)}"`);
-
-        csv += line.join(',') + '\n'
-    }
-
-    let fileBytes = new TextEncoder("utf-8").encode(csv);
-    var octetStreamMimeType = "application/octet-stream";
-
-    var blob;    //trySaveAsDownload
-    if (window.saveAs) {
-        blob = new Blob([fileBytes], { type: octetStreamMimeType });
-        saveAs(blob, fileName);
-        return true;
-    }
-
-    var chArray = Array.prototype.map.call(fileBytes, function (byte) { return String.fromCharCode(byte); });
-    let base64 = window.btoa(chArray.join(""));
-
-    var aElement = document.createElement("a");    //tryAnchorDownload
-    var event;
-    if ("download" in aElement) {
-        aElement.setAttribute("download", fileName);
-        aElement.href = "data:" + octetStreamMimeType + ";base64," + base64;
-        document.body.appendChild(aElement);
-        event = document.createEvent("MouseEvents");
-        event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        aElement.dispatchEvent(event);
-        document.body.removeChild(aElement);
-        return true;
-    }
-    return false;
-}
-
-
 
 export {
-    diff,
-    exportData
+    diff
 }

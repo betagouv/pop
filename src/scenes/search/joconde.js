@@ -14,12 +14,12 @@ import CustomButton from './components/button';
 import ExportComponent from './components/export';
 import QueryBuilder from './components/queryBuilder';
 
-import { es_url } from '../../config.js';
+import { es_url, bucket_url } from '../../config.js';
 
 import jocondeMapping from '../../mapping/joconde';
 
 
-const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "domn"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "autr"]
 
 export default class Search extends React.Component {
 
@@ -33,6 +33,27 @@ export default class Search extends React.Component {
             normalMode: true,
             exportfield
         }
+    }
+
+
+    render() {
+        return (
+            <Container className='search'>
+                <div className='header'>
+                    <div className='buttons'>
+                        {/* <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} /> */}
+                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
+                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
+                    </div>
+                </div>
+                <ReactiveBase
+                    url={`${es_url}/joconde`}
+                    app="joconde"
+                >
+                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
+                </ReactiveBase >
+            </Container >
+        );
     }
 
     renderAdvanced() {
@@ -57,25 +78,6 @@ export default class Search extends React.Component {
     }
 
 
-    render() {
-        return (
-            <Container className='search'>
-                <div className='header'>
-                    <div className='buttons'>
-                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
-                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
-                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
-                    </div>
-                </div>
-                <ReactiveBase
-                    url={`${es_url}/joconde`}
-                    app="joconde"
-                >
-                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
-                </ReactiveBase >
-            </Container >
-        );
-    }
 
     renderNormal() {
         return (
@@ -105,7 +107,7 @@ export default class Search extends React.Component {
                         <ExportComponent
                             FILTER={FILTER}
                             filename='joconde.csv'
-                            columns={['REF', 'DOMN', 'DENO', 'APPL', 'TITR', 'AUTR', 'PAUT', 'ECOL', 'ATTR', 'PERI', 'MILL', 'EPOQ', 'PEOC', 'TECH', 'DIMS', 'INSC', 'PINS', 'ONOM', 'DESC', 'ETAT', 'REPR', 'PREP', 'DREP', 'SREP', 'GENE', 'HIST', 'LIEUX', 'PLIEUX', 'GEOHI', 'UTIL', 'PERU', 'MILU', 'DECV', 'PDEC', 'NSDA', 'STAT', 'DACQ', 'APTN', 'DEPO', 'DDPT', 'ADPT', 'COMM', 'EXPO', 'BIBL', 'REDA', 'PHOT', 'REF', 'REFMIS', 'REFIM', 'LABEL', 'COPY', 'MGSCOM', 'CONTACT', 'WWW', 'LVID', 'MUSEO', 'COOR']}
+                            columns={this.state.exportfield}
                         />
                     </ReactiveComponent>
                 </div>
@@ -183,9 +185,9 @@ export default class Search extends React.Component {
                         />
 
                         <MultiList
-                            componentId="domn"
-                            dataField="DOMN.keyword"
-                            title="Domaines"
+                            componentId="autr"
+                            dataField="AUTR.keyword"
+                            title="Auteurs"
                             className="filters"
                             showSearch={true}
                             URLParams={true}
@@ -220,7 +222,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
+    const image = data.IMG.length ? `${bucket_url}/${data.IMG[0]}` : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/joconde/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt={data.TITR} />

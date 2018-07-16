@@ -11,11 +11,10 @@ import Palissy from './palissy';
 export default (props) => {
     return (
         <div>
-            <HeaderBase collection={props.match.params.collection} />
             <Switch>
-                {/* <Route path={`/search/merimee`} component={Merimee} />
-                <Route path={`/search/palissy`} component={Palissy} />
-                <Route path={`/search/mnr`} component={Mnr} /> */}
+                {/* <Route path={`/import/merimee`} component={Merimee} />
+                <Route path={`/import/palissy`} component={Palissy} />*/}
+                <Route path={`/import/mnr`} component={Mnr} />
                 <Route path={`/import/joconde`} component={Joconde} />
             </Switch>
         </div>
