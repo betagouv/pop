@@ -9,7 +9,13 @@ const { uploadFile } = require('./utils');
 router.post('/update', upload.any(), (req, res) => {
     var ref = req.query.ref;
     const notice = JSON.parse(req.body.notice);
-    Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true })
+
+    //UPDATE MAJ DATE ( couldnt use hook ...)
+    const now = new Date();
+    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + now.getMonth()).slice(-2) + '-' + now.getFullYear();
+    notice.DMAJ = formattedNow;
+
+    Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
         .then((e) => {
             res.sendStatus(200)
         }).catch((e) => {
@@ -22,6 +28,12 @@ router.post('/create', upload.any(), (req, res) => {
 
     const files = req.files || [];
     const notice = JSON.parse(req.body.notice);
+
+    //UPDATE MAJ and MIS DATE ( couldnt use hook ...)
+    const now = new Date();
+    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + now.getMonth()).slice(-2) + '-' + now.getFullYear();
+    notice.DMIS = formattedNow;
+    notice.DMAJ = formattedNow;
 
     const arr = [];
     for (var i = 0; i < req.files.length; i++) {

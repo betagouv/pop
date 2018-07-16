@@ -25,7 +25,7 @@ router.get('/validate', (req, res) => {
     var q = Thesaurus.find({ 'arc': id, 'value': value }).limit(1);
     q.exec((err, values) => {
         const exist = values.length ? true : false;
-        res.send({ exist });
+        res.send(exist);
     });
 })
 
