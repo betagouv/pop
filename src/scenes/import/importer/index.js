@@ -158,12 +158,12 @@ export default class Importer extends Component {
         return (
             <div className='import'>
                 <div className='summary'>
-                    <h2>Vous vous apprêtez à importer le fichier {this.state.fileName} qui recense {noticesChargees} notices dont : </h2>
-                    <div>{noticesCrees} sont des nouvelles notices</div>
-                    <div>{noticesModifiees} sont des notices modifiées</div>
-                    <div>Et {noticesRejetees} ont été rejetées ( consultez le rapport à télécharger pour plus de détail) </div>
-                    <div> Sur les {noticesCrees + noticesModifiees} notices prêtent à être importées, {pbNoticesUpdated} font l'objet d'un avertissement </div>
-                        <Button
+                    <h2>Vous vous apprêtez à importer le fichier {this.state.fileName} qui recense {noticesChargees} notice{noticesChargees > 1 ? 's' : ''} dont : </h2>
+                    <div>{noticesCrees > 1 ? `${noticesCrees} sont des nouvelles notices` : `${noticesCrees} nouvelle notice`}</div>
+                    <div>{noticesModifiees > 1 ? `${noticesModifiees} sont des notices modifiées` : `${noticesModifiees} notice modifiée`}</div>
+                    <div>{noticesRejetees > 1 ? `${noticesRejetees}  ont été rejetées ( consultez le rapport à télécharger pour plus de détails)` : `${noticesRejetees} a été rejetée ( consultez le rapport à télécharger pour plus de détails)`}</div>
+                    <div>Sur les {noticesCrees + noticesModifiees} notices prêtent à être importées, {pbNoticesUpdated} font l'objet d'un avertissement </div>
+                    <Button
                         color="success"
                         onClick={() => this.onExport()}
                     >Télécharger le rapport de chargement </Button>
