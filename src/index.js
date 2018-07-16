@@ -11,7 +11,7 @@ const { PORT } = require('./config.js');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
