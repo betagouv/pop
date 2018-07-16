@@ -15,13 +15,19 @@ router.post('/update', upload.any(), (req, res) => {
     const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + now.getMonth()).slice(-2) + '-' + now.getFullYear();
     notice.DMAJ = formattedNow;
 
-    Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
-        .then((e) => {
-            res.sendStatus(200)
-        }).catch((e) => {
-            console.log(e)
-            res.sendStatus(500);
-        })
+    const arr = [];
+    for (var i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
+    }
+    arr.push(Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
+
+    Promise.all(arr).then(() => {
+        res.sendStatus(200)
+    }).catch((e) => {
+        console.log(e)
+        res.sendStatus(500)
+    })
+
 })
 
 router.post('/create', upload.any(), (req, res) => {
@@ -39,17 +45,14 @@ router.post('/create', upload.any(), (req, res) => {
     for (var i = 0; i < req.files.length; i++) {
         arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
     }
-    // console.log('NOTICE', notice);
     arr.push(Joconde.create(notice))
 
-    Promise.all(arr)
-        .then(() => {
-            res.sendStatus(200)
-        })
-        .catch((e) => {
-            console.log(e)
-            res.sendStatus(500)
-        })
+    Promise.all(arr).then(() => {
+        res.sendStatus(200)
+    }).catch((e) => {
+        console.log(e)
+        res.sendStatus(500)
+    })
 })
 
 router.get('/', (req, res) => {
@@ -59,9 +62,9 @@ router.get('/', (req, res) => {
             res.status(500).send(err);
             return;
         }
-        if(notice){
+        if (notice) {
             res.status(200).send(notice);
-        }else{
+        } else {
             res.sendStatus(404);
         }
     });
