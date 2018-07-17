@@ -90,12 +90,14 @@ function parseFiles(files, encoding) {
                         let img = filesMap[names[j]];
                         if (!img) {
                             console.log('Cant find ', names[j], 'in', filesMap)
-                        }
-                        if (!img) {
                             errors.push(`Image ${names[j]} introuvable`)
-                        }
-                        if (img) {
-                            const newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                        } else {
+                            let newImage = null;
+                            try {
+                                newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                            } catch (err) {
+                                newImage = new Blob([img], { type: 'image/jpeg' });
+                            }
                             notices[i].images.push(newImage)
                         }
                     }
