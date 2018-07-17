@@ -17,9 +17,16 @@ class Report {
         const updated = notices.filter(e => e.status === 'updated');
         const rejected = notices.filter(e => e.status === 'rejected');
 
+        const imagesNumber = notices.reduce((acc, val) => {
+            if (val.status === 'created' || val.status === 'updated') {
+                return acc + val.images.length;
+            }
+            return acc;
+        }, 0);
+
         arr.push(`<h1>Rapport de chargement Joconde du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
-        arr.push(`<h2>Établissement: TODO </h2>`)
-        arr.push(`<h2>Contact: TODO</h2>`)
+        arr.push(`<h2>Établissement: X</h2>`)
+        arr.push(`<h2>Contact: X</h2>`)
         arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`)
         arr.push(`<ul>`)
         arr.push(`<li>${created.length + updated.length} notices valides</li>`)
@@ -27,7 +34,7 @@ class Report {
         arr.push(`<li>${updated.length} notices mises à jour</li>`)
         arr.push(`<li>${rejected.length} notices rejetées</li>`)
         arr.push(`</ul>`)
-        arr.push(`<p>Nombre d'images chargées: TODO</p>`)
+        arr.push(`<p>Nombre d'images chargées: ${imagesNumber}</p>`)
 
         arr.push(`<h1>Notices créees</h1>`)
         {

@@ -25,9 +25,12 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
   Raven.config('https://35972ad83fff46c69b160ad6bde8e96d@sentry.io/1235014').install()
 }
 
-// Raven.context(function () { initMyApp(); });
+if (process.env.NODE_ENV === 'production') {
+  amplitude.getInstance().init("91193206fbbafb6ab42aebba6c765819");
+}else{
+  amplitude.getInstance().init("e67834238a49cf416bacf47c3d8055c4");
+}
 
-console.log('develop 1')
 ReactDOM.render(
   <Provider store={store}>
     <PublicRoutes history={history} />
