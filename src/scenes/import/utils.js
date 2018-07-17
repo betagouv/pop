@@ -18,7 +18,7 @@ function extractEmail(str, erreurs) {
 
 function extractArray(str, delim, erreurs) {
     if (!str) {
-        return ''
+        return []
     }
     return str.split(delim).map((e) => e.trim())
 }
