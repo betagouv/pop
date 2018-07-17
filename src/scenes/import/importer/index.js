@@ -99,12 +99,13 @@ export default class Importer extends Component {
             console.log('UPDATED', updated);
 
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
+            amplitude.getInstance().logEvent('Import - User drop files', { "Files droped": files.length, "Success": true });
 
         } catch (e) {
-            if (e) {
-                this.setState({ errors: e, loading: false })
-                return;
-            }
+            const errors = e || "Erreur detectée";
+            amplitude.getInstance().logEvent('Import - User drop files', { "Files droped": files.length, "Success": false, "Message ": errors });
+            this.setState({ errors, loading: false })
+            return;
         }
     }
 
@@ -113,6 +114,7 @@ export default class Importer extends Component {
         const total = this.state.importedNotices.length;
         const created = this.state.importedNotices.filter(e => e.status === 'created');
         const updated = this.state.importedNotices.filter(e => e.status === 'updated');
+        const rejected = this.state.importedNotices.filter(e => e.status === 'rejected');
 
         let count = 0;
         try {
@@ -135,6 +137,7 @@ export default class Importer extends Component {
             await api.sendReport('Rapport import joconde', 'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr', body);
 
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
+            amplitude.getInstance().logEvent('Import - Done', { "Notices total": total, "Notices created": created.length, "Notices updated": updated.length, "Notices rejected": rejected.length });
         } catch (e) {
             let errors = e.message ? e.message : e;
             this.setState({ errors, loading: false })
@@ -143,6 +146,7 @@ export default class Importer extends Component {
     }
 
     onExport() {
+        amplitude.getInstance().logEvent('Import - Download report');
         ExportData.generate(this.state.importedNotices, 'joconde')
     }
 
@@ -150,7 +154,6 @@ export default class Importer extends Component {
         if (!this.state.displaySummary) {
             return <div />
         }
-
         const noticesChargees = this.state.importedNotices.length;
         const noticesCrees = this.state.importedNotices.filter(e => e.status === 'created').length;
         const noticesModifiees = this.state.importedNotices.filter(e => e.status === 'updated').length;
@@ -172,14 +175,11 @@ export default class Importer extends Component {
                     >Télécharger le rapport de chargement </Button>
                 </div>
                 <div className='buttons'>
-                    <Button
-                        color="danger"
-                        onClick={() => this.setState({ displaySummary: false })}
-                    >Annuler l'import</Button>
-                    <Button
-                        color="primary"
-                        onClick={() => this.onSave()}
-                    >Confirmer l'import</Button>
+                    <Button color="danger" onClick={() => {
+                        this.setState({ displaySummary: false })
+                        amplitude.getInstance().logEvent('Import - Cancel');
+                    }} >Annuler l'import</Button>
+                    <Button color="primary" onClick={() => this.onSave()} >Confirmer l'import</Button>
                 </div>
             </div>
         )

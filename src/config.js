@@ -1,6 +1,6 @@
 //ES
 
-let env = null ||  process.env.NODE_ENV;
+let env = null || process.env.NODE_ENV;
 
 console.log('ENV DETECTED : ', env)
 
