@@ -28,7 +28,7 @@ export default [
     { value: "DIMS", export: true },
     { value: "DMAJ", export: true, generated: true },
     { value: "DMIS", export: true, generated: true },
-    { value: "DOMN", export: true, thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T51', thesaurus_strict: false },
+    { value: "DOMN", export: true, thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T51', thesaurus_strict: true },
     { value: "DREP", export: true },
     { value: "ECOL", export: true, thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T517' },
     { value: "EPOQ", export: true, thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T93' },

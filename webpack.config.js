@@ -37,7 +37,6 @@ module.exports = env => {
       test: /\.js$/,
       presets: [
         ['env', {
-          exclude: ['transform-regenerator'],
           loose: true,
           modules: false,
           targets: {
