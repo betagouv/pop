@@ -84,7 +84,7 @@ class Report {
 }
 
 function createHTMLTable(columns, objs) {
-    if (!objs.length) { return '<div >Aucune</div>' }
+    if (!objs.length) { return ['<div >Aucune</div>'] }
     const arr = [];
     arr.push(`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`)
     arr.push(`<tr>`)
