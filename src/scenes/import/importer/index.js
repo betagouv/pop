@@ -51,7 +51,17 @@ export default class Importer extends Component {
             //CALCUL DE LA DIFF
             this.setState({ loadingMessage: 'Calcul des differences....' });
 
-            importedNotices = diff(importedNotices, existingNotices, this.props.mapping.filter(e => e.generated).map(e => e.value));
+            var generatedFields = this.props.mapping.filter(e => e.generated).map(e => e.value);
+
+            importedNotices = diff(importedNotices, existingNotices, generatedFields);
+
+            //DELETE GENERATED FIELDS 
+            for (var i = 0; i < importedNotices.length; i++) {
+                for (var j = 0; j < generatedFields.length; j++) {
+                    delete importedNotices[i].notice[generatedFields[j]];
+                }
+            }
+
 
             //CHECK DU THESAURUS
             const optimMap = {};
