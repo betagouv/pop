@@ -12,8 +12,9 @@ router.post('/update', upload.any(), (req, res) => {
 
     //UPDATE MAJ DATE ( couldnt use hook ...)
     const now = new Date();
-    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + now.getMonth()).slice(-2) + '-' + now.getFullYear();
+    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear();
     notice.DMAJ = formattedNow;
+
 
     const arr = [];
     for (var i = 0; i < req.files.length; i++) {
@@ -37,7 +38,7 @@ router.post('/create', upload.any(), (req, res) => {
 
     //UPDATE MAJ and MIS DATE ( couldnt use hook ...)
     const now = new Date();
-    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + now.getMonth()).slice(-2) + '-' + now.getFullYear();
+    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear();
     notice.DMIS = formattedNow;
     notice.DMAJ = formattedNow;
 
