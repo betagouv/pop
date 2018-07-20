@@ -27,97 +27,52 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
-        const filesMap = {};
 
         const MnrFields = MnrMapping.map(e => e.value);
-
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'csv');
-
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
+                parseCSVFile(reader.result)
+                .then((notices)=>{
+                    const errors = [];
 
-                // //Parsing du fichie en ajout piloté
-                // let str = reader.result.replace(/\-\r\n/g, '');
-                // var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
-                // const notices = [];
-                // let obj = {};
-                // for (var i = 0; i < lines.length; i++) {
-                //     if (lines[i] === '//') {
-                //         notices.push({ notice: obj, warnings: [], errors: [] });
-                //         obj = {};
-                //     } else {
-                //         const key = lines[i];
-                //         let value = '';
-                //         let tag = true;
-                //         while (tag) {
-                //             value += lines[++i];
-                //             if (lines[i + 1] && lines[i + 1] !== '//' && !JocondeFields.includes(lines[i + 1])) {
-                //             } else {
-                //                 tag = false;
-                //             }
-                //         }
-                //         if (key) {
-                //             obj[key] = value;
-                //         }
-                //     }
-                // }
+                    console.log('GOT NOTICES',notices)
 
-                // if (Object.keys(obj).length) {
-                //     notices.push({ notice: obj, warnings: [], errors: [] });
-                // }
-
-
-                ///CONTROLE DE LA CONSISTENTE DES DONNEE 
-                const errors = [];
-                if (notices.length) {
-                    for (var i = 0; i < notices.length; i++) {
-                        for (let key in notices[i].notice) {
-                            if (!MnrFields.includes(key)) {
-                                errors.push(`La colonne ${key} est inconnue`);
+                    ///CONTROLE DE LA CONSISTENTE DES DONNEE 
+                    if (notices.length) {
+                        for (var i = 0; i < notices.length; i++) {
+                            for (let key in notices[i].notice) {
+                                if (!MnrFields.includes(key)) {
+                                    errors.push(`La colonne ${key} est inconnue`);
+                                }
                             }
                         }
                     }
-                }
 
-                //ADD IMAGES
-                // for (var i = 0; i < notices.length; i++) {
-                //     const names = extractIMGNames(notices[i].notice.REFIM)
-                //     notices[i].images = [];
-                //     for (var j = 0; j < names.length; j++) {
-                //         let img = filesMap[names[j]];
-                //         if (!img) {
-                //             console.log('Cant find ', names[j], 'in', filesMap)
-                //             errors.push(`Image ${names[j]} introuvable`)
-                //         } else {
-                //             let newImage = null;
-                //             try {
-                //                 newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
-                //             } catch (err) {
-                //                 newImage = new Blob([img], { type: 'image/jpeg' });
-                //             }
-                //             notices[i].images.push(newImage)
-                //         }
-                //     }
-                // }
+                    if (errors.length) {
+                        reject(errors.join('\n'));
+                        return;
+                    }
 
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
+                    //CONTROLE DE LA VALIDITE DES CHAMPS
+                    for (var i = 0; i < notices.length; i++) {
+                        const { notice, errors } = transform(notices[i].notice);
+                        notices[i].notice = notice;
+                        notices[i].errors = errors;
+                    }
 
-                //CONTROLE DE LA VALIDITE DES CHAMPS
-                for (var i = 0; i < notices.length; i++) {
-                    const { notice, errors } = transform(notices[i].notice);
-                    notices[i].notice = notice;
-                    notices[i].errors = errors;
-                }
+                    resolve({ importedNotices: notices, fileName: file.name });
 
-                resolve({ importedNotices: notices, fileName: file.name });
-            };
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
-            reader.readAsText(file, 'ISO-8859-1');
+                })
+                .catch((err) =>{
+                    reject(err);
+                })
+              };
+
+              reader.onabort = () => console.log('file reading was aborted');
+              reader.onerror = () => console.log('file reading has failed');
+              reader.readAsText(file);
         } else {
             reject('Fichier .csv absent');
         }
@@ -125,7 +80,43 @@ function parseFiles(files, encoding) {
 }
 
 
+function parseCSVFile(fileAsBinaryString) {
+    return new Promise((resolve,reject)=>{
+            const parser = Parse({ delimiter: ',', from: 1 });
+            const output = [];
 
+            let record = null;
+            let header = null;
+
+            parser.on('readable', () => {
+            let count = 0;
+            while ((record = parser.read())) {
+                if (!header) {
+                header = [].concat(record);
+                    continue;
+                }
+                const obj = {};
+                record.map((e, i) => {
+                    obj[header[i]] = e;
+                })
+                output.push({ notice: obj, warnings: [], errors: [], message:[] });
+            }
+            });
+
+            // Catch any error
+            parser.on('error', (err) => {
+                reject(err.message)
+            });
+
+            // When we are done, test that the parsed output matched what expected
+            parser.on('finish', () => {
+                resolve(output);
+            });
+
+            parser.write(fileAsBinaryString);
+            parser.end();
+        })
+  }
 
 
 
@@ -135,7 +126,7 @@ function transform(obj) {
 
     obj.REF = obj.REF.trim();
     obj.TOUT = obj.TOUT || '';
-    obj.AUTR = obj.AUTR || '';
+    obj.AUTR = utils.extractArray(obj.AUTR, ';');
     obj.PAUT = obj.PAUT || '';
     obj.ATTR = obj.ATTR || '';
     obj.ECOL = obj.ECOL || '';

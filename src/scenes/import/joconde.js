@@ -46,7 +46,7 @@ function parseFiles(files, encoding) {
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push({ notice: obj, warnings: [], errors: [] });
+                        notices.push({ notice: obj, warnings: [], errors: [], message:[] });
                         obj = {};
                     } else {
                         const key = lines[i];
