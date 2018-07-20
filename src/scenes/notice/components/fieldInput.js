@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form'
 import { Input } from 'reactstrap';
+import autosize from 'autosize';
 
 import api from '../../../services/api'
 import './fieldInput.css';
@@ -16,6 +17,23 @@ class CustomInput extends React.Component {
         this.setState({ suggestions: [] })
     }
 
+    componentDidMount() {
+        autosize(this.textarea);
+    }
+
+    handleInputChange(str) {
+        if (str && this.props.thesaurus) {
+            api.getThesaurus(this.props.thesaurus, str).then((values) => {
+                if (values) {
+                    const suggestions = values.map(e => ({ id: e.value, text: e.value }));
+                    this.setState({ suggestions });
+                }
+            })
+        } else {
+            this.setState({ suggestions: [] });
+        }
+    }
+
     renderSuggestion() {
         if (!this.state.suggestions.length) {
             return <div />
@@ -29,26 +47,14 @@ class CustomInput extends React.Component {
         return <ul>{options}</ul>
     }
 
-    handleInputChange(str) {
-        if (str) {
-            api.getThesaurus(this.props.thesaurus, str).then((values) => {
-                if (values) {
-                    const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-                    this.setState({ suggestions });
-                }
-            })
-        } else {
-            this.setState({ suggestions: [] });
-        }
-    }
-
     render() {
         if (Array.isArray(this.props.input.value)) {
             return <div>The data is an array and should be a string</div>
         }
         return (
             <div className='input'>
-                <Input
+                <textarea
+                    ref={c => this.textarea = c}
                     {...this.props}
                     value={this.props.input.value}
                     onChange={(e) => {

@@ -13,7 +13,7 @@ class api {
         for (var i = 0; i < images.length; i++) {
             formData.append('file', images[i]);
         }
-        return this._post(`${api_url}/${collection}/update?ref=${ref}`, formData)
+        return this._post(`${api_url}/${collection}/${ref}`, formData)
     }
 
     createNotice(collection, data, images = []) {
