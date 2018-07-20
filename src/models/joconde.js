@@ -6,7 +6,7 @@ var getElasticInstance = require("../elasticsearch");
 const Schema = new mongoose.Schema({
     PRODUCTEUR: { type: String, default: 'MUSEE' },
     CONTIENT_IMAGE: { type: String, default: '', es_indexed: true },
-    REF: { type: String, index: true, trim: true, es_indexed: true },
+    REF: { type: String, unique: true, index: true, trim: true, es_indexed: true },
     REFMIS: { type: String, default: '' },
     IMG: { type: [String], default: [] },
     ADPT: { type: [String], default: [] },
