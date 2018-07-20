@@ -37,7 +37,7 @@ export default class Search extends React.Component {
                 <div className='header'>
                     <div className='buttons'>
                         <Button icon={require('../../assets/import.png')} to='/import/mnr' text='Importer des notices' />
-                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
+                        {/* <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
                     </div>
                 </div>
                 <ReactiveBase

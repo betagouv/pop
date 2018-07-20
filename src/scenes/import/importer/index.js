@@ -144,7 +144,9 @@ export default class Importer extends Component {
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
             const body = Report.generate(this.state.importedNotices);
-            await api.sendReport('Rapport import joconde', 'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr', body);
+            await api.sendReport('Rapport import joconde',
+                'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr, carine.prunet@culture.gouv.fr, jeannette.ivain@culture.gouv.fr',
+                body);
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
             amplitude.getInstance().logEvent('Import - Done', { "Notices total": total, "Notices created": created.length, "Notices updated": updated.length, "Notices rejected": rejected.length });
         } catch (e) {
