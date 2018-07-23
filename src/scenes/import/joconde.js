@@ -235,6 +235,7 @@ function extractIMGNames(REFIM) {
 
 function convertLongNameToShort(str) {
     let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
+    name = name.replace(/^.*[\\\/]/g, '');
     name = name.replace(/[a-zA-Z0-9]*_/g, '');
     name = name.toLowerCase();
     return name;
