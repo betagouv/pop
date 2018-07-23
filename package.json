@@ -48,7 +48,8 @@
     "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
     "deploy:prod": "yarn build:prod && eb deploy pop-production",
-    "deploy:staging": "yarn build:staging && eb deploy pop-production-staging"
+    "deploy:staging": "yarn build:staging && eb deploy pop-production-staging",
+    "test": "yarn build:staging && pop-production-staging"
   },
   "engines": {
     "node": "8.x",
