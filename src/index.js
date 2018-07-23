@@ -6,12 +6,11 @@ const bodyParser = require('body-parser')
 const Mongo = require('./mongo');
 const Mailer = require('./mailer');
 
-
 const { PORT } = require('./config.js');
 
 const app = express();
 
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // secure apps by setting various HTTP headers
 app.use(helmet());
@@ -33,9 +32,7 @@ app.post('/mail', (req, res) => {
         res.status(500).send('Information incomplete');
         return;
     }
-    Mailer.send(subject, to, body).then((e) => {
-        res.sendStatus(200)
-    });
+    Mailer.send(subject, to, body).then((e) => { res.sendStatus(200); });
 })
 
 app.listen(PORT, () => console.log('Listening on port ' + PORT))

@@ -3,7 +3,7 @@ const router = express.Router()
 const Merimee = require('../models/merimee');
 
 
-router.post('/update', (req, res) => {
+router.post('/:ref', (req, res) => {
     var ref = req.query.ref;
     Merimee.findOneAndUpdate({ REF: ref }, req.body, { upsert: true }).then((e) => {
         res.sendStatus(200)

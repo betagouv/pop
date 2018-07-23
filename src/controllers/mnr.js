@@ -7,7 +7,7 @@ const { uploadFile } = require('./utils');
 
 const router = express.Router();
 
-router.post('/:ref', upload.any(), (req, res) => {
+router.put('/:ref', upload.any(), (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     //UPDATE MAJ DATE ( couldnt use hook ...)
@@ -29,7 +29,7 @@ router.post('/:ref', upload.any(), (req, res) => {
     })
 })
 
-router.post('/create', (req, res) => {
+router.post('/', (req, res) => {
     Mnr.create(req.body).then((e) => {
         res.sendStatus(200)
     });
@@ -47,6 +47,3 @@ router.get('/', (req, res) => {
 })
 
 module.exports = router
-
-
-
