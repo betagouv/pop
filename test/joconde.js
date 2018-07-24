@@ -1,36 +1,38 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
+/* global describe, beforeEach, it */
 
-//Require the dev-dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
+// During the test the env variable is set to test
+process.env.NODE_ENV = 'test'
 
-const server = require('../src/');
-const Joconde = require('../src/models/joconde');
+// Require the dev-dependencies
+let chai = require('chai')
+let chaiHttp = require('chai-http')
 
-let should = chai.should();
+const server = require('../src/')
+const Joconde = require('../src/models/joconde')
 
-chai.use(chaiHttp);
+chai.should()
 
-//Our parent block
+chai.use(chaiHttp)
+
+// Our parent block
 describe('Joconde', () => {
-    beforeEach((done) => { //Before each test we empty the database
-        Joconde.remove({}, (err) => {
-            done();
-        });
-    });
+  beforeEach((done) => { // Before each test we empty the database
+    Joconde.remove({}, (e) => {
+      done()
+    })
+  })
 
-    /** Test the /GET route **/
-    describe('/GET joconde', () => {
-        it('it should GET all the joconde', (done) => {
-            chai.request(server)
-                .get('/joconde')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(0);
-                    done();
-                });
-        });
-    });
-});
+  /** Test the /GET route **/
+  describe('/GET joconde', () => {
+    it('it should GET all the joconde', (done) => {
+      chai.request(server)
+        .get('/joconde')
+        .end((e, res) => {
+          res.should.have.status(200)
+          res.body.should.be.a('array')
+          res.body.length.should.be.eql(0)
+          done()
+        })
+    })
+  })
+})

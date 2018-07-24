@@ -9,7 +9,8 @@
     "start": "node ./src/index.js",
     "deploy:prod": " eb deploy pop-api",
     "deploy:staging": "eb deploy pop-api-staging",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000",
+    "lint": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "chai-http": "^4.0.0",
     "cross-env": "^5.1.6",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "standard": "^11.0.1"
   }
 }
