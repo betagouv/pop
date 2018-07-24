@@ -4,6 +4,7 @@ let PORT = process.env.PORT || 3000;
 let mongo_url = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
 let es_url = process.env.ES_ENDPOINT || '127.0.0.1:9200';
 let s3_bucket = process.env.BUCKET || 'pop-phototeque-dev';
+const secret = process.env.SECRET || 'not-so-secret'
 
 if (process.env.NODE_ENV === 'test') {
     PORT = 3000;
@@ -22,4 +23,5 @@ module.exports = {
     es_url,
     s3_bucket,
     PORT,
+    secret,
 }

@@ -5,6 +5,7 @@ const request = require('request');
 const bodyParser = require('body-parser')
 const Mongo = require('./mongo');
 const Mailer = require('./mailer');
+const passport = require('passport')
 
 const { PORT } = require('./config.js');
 
@@ -18,7 +19,11 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
+app.use(passport.initialize())
+
 app.get('/', (req, res) => res.send('Hello World!'))
+
+app.use('/auth', require('./controllers/auth'))
 
 app.use('/merimee', require('./controllers/merimee'))
 app.use('/joconde', require('./controllers/joconde'))
