@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
     "dev:env": "node -r dotenv/config ./src/index.js",
     "start": "node ./src/index.js",
     "deploy:prod": " eb deploy pop-api",
@@ -44,6 +44,7 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "cross-env": "^5.1.6",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3"
   }
 }

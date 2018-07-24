@@ -6,15 +6,15 @@ const Joconde = require('../models/joconde');
 
 const { uploadFile } = require('./utils');
 
-router.post('/update', upload.any(), (req, res) => {
-    var ref = req.query.ref;
-    const notice = JSON.parse(req.body.notice);
+
+router.put('/:ref', upload.any(), (req, res) => {
+    const ref = req.params.ref;
+    const notice = JSON.parse(req.body.notice); 
 
     //UPDATE MAJ DATE ( couldnt use hook ...)
     const now = new Date();
     const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear();
     notice.DMAJ = formattedNow;
-
 
     const arr = [];
     for (var i = 0; i < req.files.length; i++) {
@@ -28,11 +28,10 @@ router.post('/update', upload.any(), (req, res) => {
         console.log(e)
         res.sendStatus(500)
     })
-
 })
 
-router.post('/create', upload.any(), (req, res) => {
 
+router.post('/', upload.any(), (req, res) => {
     const files = req.files || [];
     const notice = JSON.parse(req.body.notice);
 
@@ -47,17 +46,15 @@ router.post('/create', upload.any(), (req, res) => {
         arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
     }
     arr.push(Joconde.create(notice))
-
     Promise.all(arr).then(() => {
         res.sendStatus(200)
     }).catch((e) => {
-        console.log(e)
         res.sendStatus(500)
     })
 })
 
-router.get('/', (req, res) => {
-    var ref = req.query.ref;
+router.get('/:ref', (req, res) => {
+    const ref = req.params.ref;
     Joconde.findOne({ REF: ref }, (err, notice) => {
         if (err) {
             res.status(500).send(err);
