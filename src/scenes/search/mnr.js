@@ -78,7 +78,7 @@ export default class Search extends React.Component {
                             <MultiList
                                 componentId="cate"
                                 dataField="CATE.keyword"
-                                title="Categorie"
+                                title="Catégorie"
                                 className="filters"
                                 showSearch={true}
                                 URLParams={true}
