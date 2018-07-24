@@ -49,7 +49,6 @@ router.post('/', upload.any(), (req, res) => {
     Promise.all(arr).then(() => {
         res.sendStatus(200)
     }).catch((e) => {
-        console.log(e)
         res.sendStatus(500)
     })
 })
