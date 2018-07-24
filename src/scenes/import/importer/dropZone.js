@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Parse from 'csv-parse';
 import { Row, Col } from 'reactstrap';
 import Dropzone from 'react-dropzone';
+import JSZip from 'jszip';
+import { resolve } from '../../../../node_modules/uri-js';
 
 export default class ImportDropComponent extends Component {
 
@@ -11,7 +13,20 @@ export default class ImportDropComponent extends Component {
   }
 
   onDrop(files) {
-    this.props.onFinish(files);
+    if (files.length === 1 && getExtension(files[0].name) === 'zip') {
+      const new_zip = new JSZip();
+      new_zip.loadAsync(files[0]).then((zip) => {
+        const arr = [];
+        zip.forEach((path, obj) => {
+          arr.push(convertToFile(obj));
+        })
+        Promise.all(arr).then((unzipFiles) => {
+          this.props.onFinish(unzipFiles);
+        })
+      })
+    } else {
+      this.props.onFinish(files);
+    }
   }
 
   render() {
@@ -38,3 +53,24 @@ export default class ImportDropComponent extends Component {
     );
   }
 }
+
+function getExtension(name) {
+  return ('' + name.split('.').pop()).toLowerCase();
+}
+
+function convertToFile(obj) {
+  return new Promise((resolve, reject) => {
+    const ext = getExtension(obj.name);
+    if (ext === 'txt' || ext === 'csv') {
+      obj.async("string").then((str) => {
+        resolve(new File([str], obj.name))
+      })
+    } else {
+      obj.async("blob").then((data) => {
+        resolve(new File([data], obj.name, { type: 'image/jpeg' }));
+      })
+    }
+  })
+}
+
+

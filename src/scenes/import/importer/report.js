@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Report {
-    generate(notices) {
+    generate(notices, collection) {
 
         const arr = [];
 
@@ -24,7 +24,7 @@ class Report {
             return acc;
         }, 0);
 
-        arr.push(`<h1>Rapport de chargement Joconde du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
+        arr.push(`<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
         arr.push(`<h2>Établissement: X</h2>`)
         arr.push(`<h2>Contact: X</h2>`)
         arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`)
@@ -84,7 +84,7 @@ class Report {
 }
 
 function createHTMLTable(columns, objs) {
-    if (!objs.length) { return '<div >Aucune</div>' }
+    if (!objs.length) { return ['<div >Aucune</div>'] }
     const arr = [];
     arr.push(`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`)
     arr.push(`<tr>`)

@@ -3,10 +3,11 @@ import { Container } from 'reactstrap';
 import Parse from 'csv-parse';
 import Importer from './importer';
 
-import { bucket_url } from '../../config';
 import MnrMapping from '../../mapping/mnr'
 
 const utils = require('./utils')
+
+
 
 export default class Import extends React.Component {
     render() {
@@ -16,7 +17,7 @@ export default class Import extends React.Component {
                     collection="mnr"
                     parseFiles={parseFiles}
                     transform={transform}
-                    allfieldswiththesaurus={MnrMapping.filter(e => e.thesaurus)}
+                    mapping={MnrMapping}
                 />
             </Container >
         );
@@ -27,110 +28,105 @@ export default class Import extends React.Component {
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
 
-        const filesMap = {};
-        for (var i = 0; i < files.length; i++) {
-
-            //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-            let newName = files[i].name.replace(/_[a-zA-Z0-9]\./g, '.');
-            newName = newName.replace(/[a-zA-Z0-9]*_/g, '');
-            filesMap[newName] = files[i];
-
-        }
-
+        const MnrFields = MnrMapping.map(e => e.value);
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'csv');
         if (file) {
-
             const reader = new FileReader();
             reader.onload = () => {
-
-                const parser = Parse({ delimiter: ',', from: 1 });
-
-                let record = null;
-                let header = null;
-                const notices = [];
-                parser.on('readable', () => {
-                    while ((record = parser.read())) {
-                        if (!header) {
-                            header = [].concat(record);
-                            continue;
-                        }
-                        const obj = {};
-                        record.map((e, i) => {  //update data 
-                            obj[header[i]] = e;
-                            if (header[i] === 'REF') { obj[header[i]] = ('' + obj[header[i]]).toUpperCase(); }
-                        })
-
-                        notices.push({ notice: obj });
-                    }
-                });
-
-                // Catch any error 
-                parser.on('error', (err) => { reject(err.message); return; });
-                // When we are done, test that the parsed output matched what expected 
-                parser.on('finish', () => {
-
-                    console.log('notices', notices)
-                    // CONTROLE DE LA CONSISTENTE DES DONNEE
+                parseCSVFile(reader.result)
+                .then((notices)=>{
                     const errors = [];
+
+                    console.log('GOT NOTICES',notices)
+
+                    ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                     if (notices.length) {
-                        const MnrFields = MnrMapping.map(e => e.value);
                         for (var i = 0; i < notices.length; i++) {
                             for (let key in notices[i].notice) {
                                 if (!MnrFields.includes(key)) {
-                                    console.log(notices[i].notice)
                                     errors.push(`La colonne ${key} est inconnue`);
                                 }
                             }
                         }
                     }
 
-                    // //ADD IMAGES
-                    // for (var i = 0; i < notices.length; i++) {
-                    //     const names = extractIMGNames(notices[i].notice.REFIM)
-                    //     notices[i].images = [];
-                    //     for (var j = 0; j < names.length; j++) {
-                    //         let img = filesMap[names[j]];
-                    //         if (!img) {
-                    //             console.log('Cant find ', names[j], 'in', filesMap)
-                    //         }
-                    //         if (!img) {
-                    //             errors.push(`Image ${names[j]} introuvable`)
-                    //         }
-                    //         notices[i].images.push(img)
-                    //     }
-                    // }
+                    if (errors.length) {
+                        reject(errors.join('\n'));
+                        return;
+                    }
 
-
-                    //   CONTROLE DE LA VALIDITE DES CHAMPS
+                    //CONTROLE DE LA VALIDITE DES CHAMPS
                     for (var i = 0; i < notices.length; i++) {
                         const { notice, errors } = transform(notices[i].notice);
                         notices[i].notice = notice;
                         notices[i].errors = errors;
                     }
 
-                    console.log('NOTICES', notices)
-                    resolve(notices);
-                });
+                    resolve({ importedNotices: notices, fileName: file.name });
 
-                parser.write(reader.result);
-                parser.end();
-            };
+                })
+                .catch((err) =>{
+                    reject(err);
+                })
+              };
 
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
-            reader.readAsText(file);
+              reader.onabort = () => console.log('file reading was aborted');
+              reader.onerror = () => console.log('file reading has failed');
+              reader.readAsText(file);
         } else {
             reject('Fichier .csv absent');
         }
     })
 }
 
+
+function parseCSVFile(fileAsBinaryString) {
+    return new Promise((resolve,reject)=>{
+            const parser = Parse({ delimiter: ',', from: 1 });
+            const output = [];
+
+            let record = null;
+            let header = null;
+
+            parser.on('readable', () => {
+            let count = 0;
+            while ((record = parser.read())) {
+                if (!header) {
+                header = [].concat(record);
+                    continue;
+                }
+                const obj = {};
+                record.map((e, i) => {
+                    obj[header[i]] = e;
+                })
+                output.push({ notice: obj, warnings: [], errors: [], message:[] });
+            }
+            });
+
+            // Catch any error
+            parser.on('error', (err) => {
+                reject(err.message)
+            });
+
+            // When we are done, test that the parsed output matched what expected
+            parser.on('finish', () => {
+                resolve(output);
+            });
+
+            parser.write(fileAsBinaryString);
+            parser.end();
+        })
+  }
+
+
+
+
 function transform(obj) {
     const errors = [];
 
     obj.REF = obj.REF.trim();
     obj.TOUT = obj.TOUT || '';
-    obj.AUTR = obj.AUTR || '';
+    obj.AUTR = utils.extractArray(obj.AUTR, ';');
     obj.PAUT = obj.PAUT || '';
     obj.ATTR = obj.ATTR || '';
     obj.ECOL = obj.ECOL || '';
@@ -139,7 +135,7 @@ function transform(obj) {
     obj.PTIT = obj.PTIT || '';
     obj.DENO = utils.extractArray(obj.DENO, ';');
     obj.DESC = obj.DESC || '';
-    obj.DOMN = obj.DOMN || '';
+    obj.DOMN = utils.extractArray(obj.DOMN, ';');
     obj.LOCA = obj.LOCA || '';
     obj.INSC = obj.INSC || '';
     obj.MARQ = obj.MARQ || '';
@@ -157,8 +153,8 @@ function transform(obj) {
     obj.STYL = obj.STYL || '';
     obj.MILL = obj.MILL || '';
     obj.TECH = utils.extractArray(obj.TECH, ';');
-    obj.DIMS = obj.DIMS || '';
-
+    obj.DIMS = utils.extractArray(obj.DIMS, ';');
+    obj.VIDEO = utils.extractArray(obj.VIDEO, ';');
     obj.INV = obj.INV || '';
     obj.EXPO = obj.EXPO || '';
     obj.BIBL = obj.BIBL || '';
@@ -166,7 +162,7 @@ function transform(obj) {
     obj.AUTI = obj.AUTI || '';
     obj.CATE = obj.CATE || '';
     obj.NOTE = obj.NOTE || '';
-    obj.REDC = obj.REDC || '';
+    obj.REDC = utils.extractArray(obj.REDC, ';');
     obj.DREP = obj.DREP || '';
     obj.PREP = obj.PREP || '';
     obj.REPR = obj.REPR || '';
@@ -179,7 +175,6 @@ function transform(obj) {
     obj.NOTE2 = obj.NOTE2 || '';
     obj.RESUME = obj.RESUME || '';
     obj.PHOT = obj.PHOT || '';
-    obj.VIDEO = obj.VIDEO = [];
     obj.CONTIENT_IMAGE = obj.VIDEO.length ? "oui" : "non";
 
     return { notice: obj, errors };

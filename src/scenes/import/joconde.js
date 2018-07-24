@@ -46,7 +46,7 @@ function parseFiles(files, encoding) {
                 let obj = {};
                 for (var i = 0; i < lines.length; i++) {
                     if (lines[i] === '//') {
-                        notices.push({ notice: obj, warnings: [], errors: [] });
+                        notices.push({ notice: obj, warnings: [], errors: [], message:[] });
                         obj = {};
                     } else {
                         const key = lines[i];
@@ -235,6 +235,7 @@ function extractIMGNames(REFIM) {
 
 function convertLongNameToShort(str) {
     let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
+    name = name.replace(/^.*[\\\/]/g, '');
     name = name.replace(/[a-zA-Z0-9]*_/g, '');
     name = name.toLowerCase();
     return name;

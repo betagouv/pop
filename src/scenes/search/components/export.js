@@ -77,9 +77,8 @@ async function exportData(fileName, columns, entities) {
             let value = entities[j][columns[i]]
             if (Array.isArray(value)) {
                 value = value.join(';')
-            } else if (value) {
-                value = value.replace(/"/g, '""')
-            }
+            } 
+            value = value.replace(/"/g, '\"\"');
             arr.push('"' + value + '"');
         }
         csv += arr.join(',') + '\n'
@@ -88,33 +87,17 @@ async function exportData(fileName, columns, entities) {
     initiateFileDownload(csv, fileName);
 }
 
-function initiateFileDownload(str, fileName) {
+function initiateFileDownload(csv, fileName) {
 
-    let fileBytes = new TextEncoder("utf-8").encode(str);
-    var octetStreamMimeType = "application/octet-stream";
-
-    var blob;    //trySaveAsDownload
-    if (window.saveAs) {
-        blob = new Blob([fileBytes], { type: octetStreamMimeType });
-        saveAs(blob, fileName);
-        return true;
+    var blob = new Blob([csv]);
+    if (window.navigator.msSaveOrOpenBlob)  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+        window.navigator.msSaveBlob(blob, fileName);
+    else {
+        var a = window.document.createElement("a");
+        a.href = window.URL.createObjectURL(blob, { type: "text/plain;charset=UTF-8" });
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();  // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+        document.body.removeChild(a);
     }
-
-    var chArray = Array.prototype.map.call(fileBytes, function (byte) { return String.fromCharCode(byte); });
-    let base64 = window.btoa(chArray.join(""));
-
-    var aElement = document.createElement("a");    //tryAnchorDownload
-    var event;
-    if ("download" in aElement) {
-        aElement.setAttribute("download", fileName);
-        aElement.href = "data:" + octetStreamMimeType + ";base64," + base64;
-        document.body.appendChild(aElement);
-        event = document.createEvent("MouseEvents");
-        event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        aElement.dispatchEvent(event);
-        document.body.removeChild(aElement);
-        return true;
-    }
-    return false;
 }
-

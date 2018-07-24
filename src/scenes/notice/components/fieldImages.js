@@ -14,8 +14,9 @@ class FieldImages extends React.Component {
         selected: null,
     }
 
-    onDrop() {
-        console.log('DROPED');
+    onDrop(files) {
+        console.log('DROPED', files);
+        this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
     toggleModal() {
@@ -23,15 +24,23 @@ class FieldImages extends React.Component {
     }
 
     renderImages() {
-        const arr = this.props.input.value.map(e => (
-            <Col md="6" key={e}>
-                <img onClick={() => this.setState({ selected: e })} src={`${bucket_url}/${e}`} alt={e} className="img-fluid w-100" />
-            </Col>
-        ));
+        const arr = this.props.input.value.map(e => {
+            let source = `${bucket_url}/${e}`;
+            let key = e;
+            if (e instanceof File) {
+                source = e.preview;
+                key = e.name;
+            }
+            return (
+                <Col md="6" key={key}>
+                    <img onClick={() => this.setState({ selected: source })} src={source} alt={e} className="img-fluid w-100" />
+                </Col>
+            )
+        });
 
         if (!this.props.disabled) {
             arr.push(
-                <Col className='item' md="6" >
+                <Col className='item' md="6" key='dropzone'>
                     <Dropzone onDrop={this.onDrop.bind(this)}>
                         <p>Ajouter une nouvelle image</p>
                     </Dropzone>
@@ -47,7 +56,7 @@ class FieldImages extends React.Component {
             <div className='fieldImages'>
                 <Modal centered={true} isOpen={this.state.selected !== null} toggle={this.toggleModal.bind(this)} >
                     <div>
-                        <img src={`${bucket_url}/${this.state.selected}`} alt={this.state.selected} className="img-fluid w-100" />
+                        <img src={`${this.state.selected}`} alt={this.state.selected} className="img-fluid w-100" />
                     </div>
                 </Modal>
                 <Row >

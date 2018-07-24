@@ -55,10 +55,26 @@ class Notice extends React.Component {
 
     onSubmit(values) {
         this.setState({ saving: true })
-        API.updateNotice(this.state.notice.REF, 'mnr', values).then((e) => {
-            toastr.success('Modification enregistrée');
-            this.setState({ saving: false })
-        })
+
+
+        const files = [];
+        for (var i = 0; i < values.VIDEO.length; i++) {
+            if (values.VIDEO[i] instanceof File) {
+                files.push(values.VIDEO[i]);
+                values.VIDEO[i] = `mnr/${values.REF}/${values.VIDEO[i].name}`
+            }
+        }
+
+        console.log('values.VIDEO',values.VIDEO)
+        API.updateNotice(this.state.notice.REF, 'mnr', values, files)
+            .then((e) => {
+                toastr.success('Modification enregistrée');
+                this.setState({ saving: false })
+            })
+            .catch((e) => {
+                toastr.error('Impossible d\'enregistrer la modification');
+                this.setState({ saving: false })
+            })
     }
 
     render() {
@@ -110,7 +126,7 @@ class Notice extends React.Component {
                                 title='N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt (INV) :'
                                 name='INV'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Domaine (catégorie du bien) (DOMN) :'
                                 name='DOMN'
                             />
@@ -119,13 +135,13 @@ class Notice extends React.Component {
                                 name='DENO'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T96'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Auteur /exécutant / collecteur (AUTR) :'
                                 name='AUTR'
                             />
                             <FieldInput
-                                title='Auteur /exécutant / collecteur (AUTR) :'
-                                name='AUTR'
+                                title='Precisions auteur (PAUT) :'
+                                name='PAUT'
                             />
                             <FieldInput
                                 title='Anciennes attributions (ATTR) :'
@@ -167,7 +183,7 @@ class Notice extends React.Component {
                                 title='Technique (TECH) :'
                                 name='TECH'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Dimensions (DIMS) :'
                                 name='DIMS'
                             />
@@ -287,18 +303,8 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <div className='buttons'>
-                        <Button color="danger">
-                            <Link to="/">
-                                Annuler
-                         </Link>
-                        </Button>
-                        <Button
-                            disabled={true}
-                            color="primary"
-                            type="submit"
-                        >
-                            Sauvegarder
-                    </Button>
+                        <Button color="danger"><Link style={{ textDecoration: 'none', color: 'white' }} to="/">Annuler</Link></Button>
+                        <Button color="primary" type="submit" >Sauvegarder</Button>
                     </div>
                 </Form >
             </Container >

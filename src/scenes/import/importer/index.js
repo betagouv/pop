@@ -51,7 +51,17 @@ export default class Importer extends Component {
             //CALCUL DE LA DIFF
             this.setState({ loadingMessage: 'Calcul des differences....' });
 
-            importedNotices = diff(importedNotices, existingNotices, this.props.mapping.filter(e => e.generated).map(e => e.value));
+            var generatedFields = this.props.mapping.filter(e => e.generated).map(e => e.value);
+
+            importedNotices = diff(importedNotices, existingNotices, generatedFields);
+
+            //DELETE GENERATED FIELDS 
+            for (var i = 0; i < importedNotices.length; i++) {
+                for (var j = 0; j < generatedFields.length; j++) {
+                    delete importedNotices[i].notice[generatedFields[j]];
+                }
+            }
+
 
             //CHECK DU THESAURUS
             const optimMap = {};
@@ -96,14 +106,14 @@ export default class Importer extends Component {
 
 
             const updated = importedNotices.filter(e => e.status === 'updated');
-            console.log('UPDATED', updated);
 
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
-            amplitude.getInstance().logEvent('Import - User drop files', { "Files droped": files.length, "Success": true });
+            amplitude.getInstance().logEvent('Import - Drop files', { "Files droped": files.length, "Success": true });
 
         } catch (e) {
             const errors = e || "Erreur detectée";
-            amplitude.getInstance().logEvent('Import - User drop files', { "Files droped": files.length, "Success": false, "Message ": errors });
+            Raven.captureException(errors)
+            amplitude.getInstance().logEvent('Import - Drop files', { "Files droped": files.length, "Success": false, "Message ": errors });
             this.setState({ errors, loading: false })
             return;
         }
@@ -134,12 +144,14 @@ export default class Importer extends Component {
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
             const body = Report.generate(this.state.importedNotices);
-            await api.sendReport('Rapport import joconde', 'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr', body);
-
+            await api.sendReport(`Rapport import ${this.props.collection}`,
+                'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr, carine.prunet@culture.gouv.fr, jeannette.ivain@culture.gouv.fr',
+                body);
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
             amplitude.getInstance().logEvent('Import - Done', { "Notices total": total, "Notices created": created.length, "Notices updated": updated.length, "Notices rejected": rejected.length });
         } catch (e) {
             let errors = e.message ? e.message : e;
+            Raven.captureException(errors)
             this.setState({ errors, loading: false })
             return;
         }

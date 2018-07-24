@@ -82,8 +82,6 @@ function isInt(value) {
 
 function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
 
-    console.log('fieldToNotCheck', fieldToNotCheck)
-
     for (var i = 0; i < importedNotices.length; i++) {
         let importedNotice = importedNotices[i].notice;
         let found = false;

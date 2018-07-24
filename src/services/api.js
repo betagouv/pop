@@ -13,12 +13,11 @@ class api {
         for (var i = 0; i < images.length; i++) {
             formData.append('file', images[i]);
         }
-        return this._post(`${api_url}/${collection}/update?ref=${ref}`, formData)
+        return this._put(`${api_url}/${collection}/${ref}`, formData)
     }
 
     createNotice(collection, data, images = []) {
-        //clean object
-        for (var propName in data) {
+        for (var propName in data) {        //clean object
             if (!data[propName]) {
                 delete data[propName];
             }
@@ -29,17 +28,16 @@ class api {
         for (var i = 0; i < images.length; i++) {
             formData.append('file', images[i]);
         }
-        return this._post(`${api_url}/${collection}/create`, formData)
+        return this._post(`${api_url}/${collection}`, formData)
     }
 
     getNotice(collection, ref) {
-        return this._get(`${api_url}/${collection}?ref=${ref}`)
+        return this._get(`${api_url}/${collection}/${ref}`)
     }
 
     updateThesaurus(thesaurusId, str) {
         return this._get(`${api_url}/thesaurus/update?id=${thesaurusId}`)
     }
-
 
     getThesaurus(thesaurusId, str) {
         return this._get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`)
@@ -49,11 +47,40 @@ class api {
         return this._get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`)
     }
 
+    _put(url, data, contentType) {
+        return new Promise((resolve, reject) => {
+            const headers = {}
+            headers['user-agent'] = 'POP application';
+            if (contentType) {
+                headers['Content-Type'] = contentType
+            }
+
+            fetch(url, {
+                body: data, // must match 'Content-Type' header
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, same-origin, *omit
+                headers,
+                method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // *client, no-referrer
+            }).then((response) => {
+                if (response.status !== 200) {
+                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
+                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                    return;
+                };
+                resolve()
+            }).catch((err) => {
+                Raven.captureException(err)
+                reject('L\'api est inaccessible', err)
+            });
+        })
+    }
+
+
     _post(url, data, contentType) {
         return new Promise((resolve, reject) => {
-
-            console.log('POST ', data)
-
             const headers = {}
             headers['user-agent'] = 'POP application';
             if (contentType) {
