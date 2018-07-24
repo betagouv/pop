@@ -143,7 +143,7 @@ export default class Importer extends Component {
 
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
-            const body = Report.generate(this.state.importedNotices);
+            const body = Report.generate(this.state.importedNotices, this.props.collection);
             await api.sendReport(`Rapport import ${this.props.collection}`,
                 'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr, carine.prunet@culture.gouv.fr, jeannette.ivain@culture.gouv.fr',
                 body);

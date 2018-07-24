@@ -62,8 +62,9 @@ function convertToFile(obj) {
   return new Promise((resolve, reject) => {
     const ext = getExtension(obj.name);
     if (ext === 'txt' || ext === 'csv') {
+
       obj.async("string").then((str) => {
-        resolve(new File([str], obj.name))
+        resolve(new File(["\ufeff" + str], obj.name, { encoding: "UTF-8", type: "text/plain;charset=UTF-8" }));
       })
     } else {
       obj.async("blob").then((data) => {

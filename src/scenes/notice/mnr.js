@@ -65,7 +65,7 @@ class Notice extends React.Component {
             }
         }
 
-        console.log('values.VIDEO',values.VIDEO)
+        console.log('values.VIDEO', values.VIDEO)
         API.updateNotice(this.state.notice.REF, 'mnr', values, files)
             .then((e) => {
                 toastr.success('Modification enregistrée');
@@ -208,8 +208,10 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Exposition (EXPO) :'
                                 name='EXPO'
-                                type='textarea'
-                                rows={8}
+                            />
+                            <FieldInput
+                                title='Localisation (LOCA) :'
+                                name='LOCA'
                             />
                         </Col>
                         <Col sm={6}>

@@ -164,6 +164,11 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
                             <FieldInput
+                                title='Localisation (LOCA) :'
+                                name='LOCA'
+                                disabled
+                            />
+                            <FieldInput
                                 title='Mesures (DIMS) :'
                                 name='DIMS'
                                 disabled

@@ -13,6 +13,8 @@
 .home .subtitle{
     text-align: center;
     font-size: 27px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .home .activities h4{
