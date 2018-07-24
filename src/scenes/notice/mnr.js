@@ -263,7 +263,7 @@ class Notice extends React.Component {
                                 title='Représentation (REPR) :'
                                 name='REPR'
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Rédacteurs (REDC) :'
                                 name='REDC'
                             />
