@@ -1,23 +1,22 @@
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
-const request = require('request');
+const express = require('express')
+const helmet = require('helmet')
+const cors = require('cors')
 const bodyParser = require('body-parser')
-const Mongo = require('./mongo');
-const Mailer = require('./mailer');
+const Mailer = require('./mailer')
 const passport = require('passport')
+require('./mongo')
 
-const { PORT } = require('./config.js');
+const { PORT } = require('./config.js')
 
-const app = express();
+const app = express()
 
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }))
 
 // secure apps by setting various HTTP headers
-app.use(helmet());
+app.use(helmet())
 
 // enable CORS - Cross Origin Resource Sharing
-app.use(cors());
+app.use(cors())
 
 app.use(passport.initialize())
 
@@ -32,12 +31,12 @@ app.use('/palissy', require('./controllers/palissy'))
 app.use('/thesaurus', require('./controllers/thesaurus'))
 
 app.post('/mail', (req, res) => {
-    const { subject, to, body } = req.body;
-    if (!subject || !to || !body) {
-        res.status(500).send('Information incomplete');
-        return;
-    }
-    Mailer.send(subject, to, body).then((e) => { res.sendStatus(200); });
+  const { subject, to, body } = req.body
+  if (!subject || !to || !body) {
+    res.status(500).send('Information incomplete')
+    return
+  }
+  Mailer.send(subject, to, body).then((e) => { res.sendStatus(200) })
 })
 
 app.listen(PORT, () => console.log('Listening on port ' + PORT))
