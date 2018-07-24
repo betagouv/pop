@@ -35,8 +35,8 @@ router.post('/', (req, res) => {
     });
 })
 
-router.get('/', (req, res) => {
-    var ref = req.query.ref;
+router.get('/:ref', (req, res) => {
+    const ref = req.params.ref;
     Mnr.findOne({ REF: ref }, (err, notice) => {
         if (err) {
             console.log('ERR', err)
