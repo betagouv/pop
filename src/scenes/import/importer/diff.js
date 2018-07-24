@@ -80,7 +80,7 @@ function isInt(value) {
     return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))
 }
 
-function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
+export function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
 
     for (var i = 0; i < importedNotices.length; i++) {
         let importedNotice = importedNotices[i].notice;
@@ -109,10 +109,4 @@ function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
     }
 
     return importedNotices;
-}
-
-
-
-export {
-    diff
 }

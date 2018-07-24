@@ -1,12 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HeaderBase from './../headerBase';
-
-import Merimee from './merimee';
 import Joconde from './joconde';
 import Mnr from './mnr';
-import Palissy from './palissy';
+import Inventaire from './inventaire';
 
 export default (props) => {
     return (
@@ -16,6 +13,7 @@ export default (props) => {
                 <Route path={`/import/palissy`} component={Palissy} />*/}
                 <Route path={`/import/mnr`} component={Mnr} />
                 <Route path={`/import/joconde`} component={Joconde} />
+                <Route path={`/import/inventaire`} component={Inventaire} />
             </Switch>
         </div>
     );

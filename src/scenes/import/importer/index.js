@@ -8,9 +8,7 @@ import api from '../../../services/api'
 import Report from './report';
 import ExportData from './export';
 
-import { diff } from './utils'
-import checkThesaurus from './thesaurus'
-import TableComponent from './table';
+import diff from './diff';
 
 import './index.css';
 
@@ -31,8 +29,6 @@ export default class Importer extends Component {
     }
 
     async onFilesDropped(files, encoding) {    //check if there are not more fields*
-
-        let importedNotices;
 
         try {
             //PARSE FILES
@@ -104,9 +100,6 @@ export default class Importer extends Component {
                 }
             }
 
-
-            const updated = importedNotices.filter(e => e.status === 'updated');
-
             this.setState({ displaySummary: true, calculating: false, importedNotices, fileName, loading: false, loadingMessage: '' });
             amplitude.getInstance().logEvent('Import - Drop files', { "Files droped": files.length, "Success": true });
 
@@ -144,9 +137,16 @@ export default class Importer extends Component {
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
             const body = Report.generate(this.state.importedNotices, this.props.collection);
-            await api.sendReport(`Rapport import ${this.props.collection}`,
-                'sandrine.della-bartolomea@culture.gouv.fr, sebastien.legoff@beta.gouv.fr, carine.prunet@culture.gouv.fr, jeannette.ivain@culture.gouv.fr',
-                body);
+
+            const dest = [
+                'sandrine.della-bartolomea@culture.gouv.fr',
+                'sebastien.legoff@beta.gouv.fr',
+                'carine.prunet@culture.gouv.fr',
+                'jeannette.ivain@culture.gouv.fr',
+            ]
+
+            await api.sendReport(`Rapport import ${this.props.collection}`, dest.join(','), body);
+            
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
             amplitude.getInstance().logEvent('Import - Done', { "Notices total": total, "Notices created": created.length, "Notices updated": updated.length, "Notices rejected": rejected.length });
         } catch (e) {

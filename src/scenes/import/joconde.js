@@ -35,101 +35,67 @@ function parseFiles(files, encoding) {
 
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'txt');
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-
-                //Parsing du fichie en ajout piloté
-                let str = reader.result.replace(/\-\r\n/g, '');
-                var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
-                const notices = [];
-                let obj = {};
-                for (var i = 0; i < lines.length; i++) {
-                    if (lines[i] === '//') {
-                        notices.push({ notice: obj, warnings: [], errors: [], message:[] });
-                        obj = {};
-                    } else {
-                        const key = lines[i];
-                        let value = '';
-                        let tag = true;
-                        while (tag) {
-                            value += lines[++i];
-                            if (lines[i + 1] && lines[i + 1] !== '//' && !JocondeFields.includes(lines[i + 1])) {
-                            } else {
-                                tag = false;
-                            }
-                        }
-                        if (key) {
-                            obj[key] = value;
-                        }
-                    }
-                }
-
-                if (Object.keys(obj).length) {
-                    notices.push({ notice: obj, warnings: [], errors: [] });
-                }
-
-
-                ///CONTROLE DE LA CONSISTENTE DES DONNEE 
-                const errors = [];
-                if (notices.length) {
-                    for (var i = 0; i < notices.length; i++) {
-                        for (let key in notices[i].notice) {
-                            if (!JocondeFields.includes(key)) {
-                                errors.push(`La colonne ${key} est inconnue`);
-                            }
-                        }
-                    }
-                }
-
-                //ADD IMAGES
-                for (var i = 0; i < notices.length; i++) {
-                    const names = extractIMGNames(notices[i].notice.REFIM)
-                    notices[i].images = [];
-                    for (var j = 0; j < names.length; j++) {
-                        let img = filesMap[names[j]];
-                        if (!img) {
-                            console.log('Cant find ', names[j], 'in', filesMap)
-                            errors.push(`Image ${names[j]} introuvable`)
-                        } else {
-                            let newImage = null;
-                            try {
-                                newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
-                            } catch (err) {
-                                newImage = new Blob([img], { type: 'image/jpeg' });
-                            }
-                            notices[i].images.push(newImage)
-                        }
-                    }
-                }
-
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
-
-                //CONTROLE DE LA VALIDITE DES CHAMPS
-                for (var i = 0; i < notices.length; i++) {
-                    const { notice, errors } = transform(notices[i].notice);
-                    notices[i].notice = notice;
-                    notices[i].errors = errors;
-                }
-
-                resolve({ importedNotices: notices, fileName: file.name });
-            };
-            reader.onabort = () => console.log('file reading was aborted');
-            reader.onerror = () => console.log('file reading has failed');
-            reader.readAsText(file, 'ISO-8859-1');
-        } else {
+        if (!file) {
             reject('Fichier .txt absent');
+            return;
         }
-    })
+
+        utils.readFile(file, res => {
+
+            const notices = utils.parseAjoutPilote(res, JocondeFields);
+            ///CONTROLE DE LA CONSISTENTE DES DONNEE 
+            const errors = [];
+            if (notices.length) {
+                for (var i = 0; i < notices.length; i++) {
+                    for (let key in notices[i].notice) {
+                        if (!JocondeFields.includes(key)) {
+                            errors.push(`La colonne ${key} est inconnue`);
+                        }
+                    }
+                }
+            }
+
+            //ADD IMAGES
+            for (var i = 0; i < notices.length; i++) {
+                const names = extractIMGNames(notices[i].notice.REFIM)
+                notices[i].images = [];
+                for (var j = 0; j < names.length; j++) {
+                    let img = filesMap[names[j]];
+                    if (!img) {
+                        console.log('Cant find ', names[j], 'in', filesMap)
+                        errors.push(`Image ${names[j]} introuvable`)
+                    } else {
+                        let newImage = null;
+                        try {
+                            newImage = new File([img], convertLongNameToShort(img.name), { type: img.type });
+                        } catch (err) {
+                            newImage = new Blob([img], { type: 'image/jpeg' });
+                        }
+                        notices[i].images.push(newImage)
+                    }
+                }
+            }
+
+            if (errors.length) {
+                reject(errors.join('\n'));
+                return;
+            }
+
+            //CONTROLE DE LA VALIDITE DES CHAMPS
+            for (var i = 0; i < notices.length; i++) {
+                const { notice, errors } = transform(notices[i].notice);
+                notices[i].notice = notice;
+                notices[i].errors = errors;
+            }
+
+            resolve({ importedNotices: notices, fileName: file.name });
+
+        })
+    });
 }
 
 function transform(obj) {
     const errors = [];
-
-
     obj.REF = obj.REF.trim();
     obj.ADPT = utils.extractArray(obj.ADPT, ';', errors);
     obj.APPL = utils.extractArray(obj.APPL, ';', errors);
@@ -194,9 +160,7 @@ function transform(obj) {
     obj.PUTI = obj.PUTI || '';
     obj.RANG = obj.RANG || '';
     obj.REDA = utils.extractArray(obj.REDA, ';', errors);
-
     obj.REFIM = obj.REFIM || '';
-
     obj.REPR = obj.REPR || '';
     obj.RETIF = obj.RETIF || '';
     obj.SREP = utils.extractArray(obj.SREP, ';', errors);
@@ -209,15 +173,11 @@ function transform(obj) {
     obj.VIDEO = obj.VIDEO || '';
     obj.WWW = utils.extractUrls(obj.WWW, obj.REF, errors);
     obj.LVID = obj.LVID || '';
-
     obj.CONTIENT_IMAGE = obj.IMG.length > 0 ? 'oui' : 'non';
-
-
     if (!obj.INV) { errors.push(`Le champs INV ne doit pas être vide`) }
     if (!obj.DOMN) { errors.push(`Le champs DOMN ne doit pas être vide`) }
     if (!obj.STAT) { errors.push(`Le champs STAT ne doit pas être vide`) }
     if (!obj.REF) { errors.push(`Le champs REF ne doit pas être vide`) }
-
     return { notice: obj, errors };
 }
 

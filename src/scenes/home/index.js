@@ -42,7 +42,7 @@ export default class Home extends React.Component {
                     {this.renderTiles([
                         { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
                         { url: '/import/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
-                        { url: '/import/', name: 'Inventaire', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/inventaire', name: 'Inventaire', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Merimee MH', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Palissy MH', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Mémoire MH', image: require('../../assets/noimage.jpg') },

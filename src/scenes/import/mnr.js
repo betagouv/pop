@@ -30,93 +30,84 @@ function parseFiles(files, encoding) {
 
         const MnrFields = MnrMapping.map(e => e.value);
         var file = files.find(file => ('' + file.name.split('.').pop()).toLowerCase() === 'csv');
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                parseCSVFile(reader.result)
-                .then((notices)=>{
-                    const errors = [];
+        if (!file) {
+            reject('Fichier .csv absent');
+            return;
+        }
 
-                    console.log('GOT NOTICES',notices)
+        utils.readFile(file, res => {
+            parseCSVFile(reader.result).then(notices => {
+                const errors = [];
+                console.log('GOT NOTICES', notices)
 
-                    ///CONTROLE DE LA CONSISTENTE DES DONNEE 
-                    if (notices.length) {
-                        for (var i = 0; i < notices.length; i++) {
-                            for (let key in notices[i].notice) {
-                                if (!MnrFields.includes(key)) {
-                                    errors.push(`La colonne ${key} est inconnue`);
-                                }
+                ///CONTROLE DE LA CONSISTENTE DES DONNEE 
+                if (notices.length) {
+                    for (var i = 0; i < notices.length; i++) {
+                        for (let key in notices[i].notice) {
+                            if (!MnrFields.includes(key)) {
+                                errors.push(`La colonne ${key} est inconnue`);
                             }
                         }
                     }
+                }
 
-                    if (errors.length) {
-                        reject(errors.join('\n'));
-                        return;
-                    }
+                if (errors.length) {
+                    reject(errors.join('\n'));
+                    return;
+                }
 
-                    //CONTROLE DE LA VALIDITE DES CHAMPS
-                    for (var i = 0; i < notices.length; i++) {
-                        const { notice, errors } = transform(notices[i].notice);
-                        notices[i].notice = notice;
-                        notices[i].errors = errors;
-                    }
+                //CONTROLE DE LA VALIDITE DES CHAMPS
+                for (var i = 0; i < notices.length; i++) {
+                    const { notice, errors } = transform(notices[i].notice);
+                    notices[i].notice = notice;
+                    notices[i].errors = errors;
+                }
 
-                    resolve({ importedNotices: notices, fileName: file.name });
+                resolve({ importedNotices: notices, fileName: file.name });
 
-                })
-                .catch((err) =>{
-                    reject(err);
-                })
-              };
-
-              reader.onabort = () => console.log('file reading was aborted');
-              reader.onerror = () => console.log('file reading has failed');
-              reader.readAsText(file);
-        } else {
-            reject('Fichier .csv absent');
-        }
-    })
+            })
+        });
+    });
 }
 
 
 function parseCSVFile(fileAsBinaryString) {
-    return new Promise((resolve,reject)=>{
-            const parser = Parse({ delimiter: ',', from: 1 });
-            const output = [];
+    return new Promise((resolve, reject) => {
+        const parser = Parse({ delimiter: ',', from: 1 });
+        const output = [];
 
-            let record = null;
-            let header = null;
+        let record = null;
+        let header = null;
 
-            parser.on('readable', () => {
+        parser.on('readable', () => {
             let count = 0;
             while ((record = parser.read())) {
                 if (!header) {
-                header = [].concat(record);
+                    header = [].concat(record);
                     continue;
                 }
                 const obj = {};
                 record.map((e, i) => {
                     obj[header[i]] = e;
                 })
-                output.push({ notice: obj, warnings: [], errors: [], message:[] });
+                output.push({ notice: obj, warnings: [], errors: [], message: [] });
             }
-            });
+        });
 
-            // Catch any error
-            parser.on('error', (err) => {
-                reject(err.message)
-            });
+        // Catch any error
+        parser.on('error', (err) => {
+            reject(err.message)
+        });
 
-            // When we are done, test that the parsed output matched what expected
-            parser.on('finish', () => {
-                resolve(output);
-            });
+        // When we are done, test that the parsed output matched what expected
+        parser.on('finish', () => {
+            resolve(output);
+        });
 
-            parser.write(fileAsBinaryString);
-            parser.end();
-        })
-  }
+        parser.write(fileAsBinaryString);
+        parser.end();
+    })
+}
 
 
 

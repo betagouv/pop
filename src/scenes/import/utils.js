@@ -1,10 +1,3 @@
-function extractIMG(str) {
-    if (!str) {
-        return '';
-    }
-    return str.replace(/\s/g, "").replace('@{img1;//', 'http://').replace(';ico1}@', '')
-}
-
 function extractEmail(str, erreurs) {
     if (!str) { return '' }
     var regex = /([\w\d-._@]*)/
@@ -17,14 +10,16 @@ function extractEmail(str, erreurs) {
 }
 
 function extractArray(str, delim, erreurs) {
-    if (!str) {
-        return []
-    }
+    if (!str) { return [] }
+    if (Array.isArray(str)) { return str; }
+
     return str.split(delim).map((e) => e.trim())
 }
 
 function extractAuteurs(str, erreurs) {
-    if (!str) { return []; }
+    if (!str) { return [] }
+    if (Array.isArray(str)) { return str; }
+
     const arr = _regex(str, /([A-Za-zàâçéèêëîïôûùüÿñæœ .-]*\([a-zàâçéèêëîïôûùüÿñæœ .\-',]*\)|[A-Za-zàâçéèêëîïôûùüÿñæœ .'-]*)/g);
     if (arr.length) {
         return arr;
@@ -41,6 +36,16 @@ function extractLink(str, erreurs) {
     }
     erreurs.push(`Impossible d'extraire le lien ${str}`)
     return str;
+}
+
+function readFile(file, cb) {
+    const reader = new FileReader();
+    reader.onload = () => {
+        cb(reader.result)
+    };
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.readAsText(file, 'ISO-8859-1');
 }
 
 function extractPOPDate(str, erreurs) {
@@ -100,6 +105,37 @@ function extractUrls(str, erreurs) {
 
 }
 
+function parseAjoutPilote(res, fields) {
+    //Parsing du fichier en ajout piloté
+    let str = res.replace(/\-\r\n/g, '');
+    var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
+    const notices = [];
+    let obj = {};
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i] === '//') {
+            notices.push({ notice: obj, warnings: [], errors: [], message: [] });
+            obj = {};
+        } else {
+            const key = lines[i];
+            let value = '';
+            let tag = true;
+            while (tag) {
+                value += lines[++i];
+                if (!(lines[i + 1] && lines[i + 1] !== '//' && (fields && !fields.includes(lines[i + 1])))) {
+                    tag = false;
+                }
+            }
+            if (key) {
+                obj[key] = value;
+            }
+        }
+    }
+    if (Object.keys(obj).length) {
+        notices.push({ notice: obj, warnings: [], errors: [], message: [] });
+    }
+    return notices;
+}
+
 function _regex(str, reg) {
     if (!str) {
         return [];
@@ -121,13 +157,14 @@ function _regex(str, reg) {
 
 
 module.exports = {
-    extractIMG,
     extractEmail,
     extractArray,
     extractUrls,
     extractPOPDate,
     extractLink,
     extractAuteurs,
+    readFile,
+    parseAjoutPilote,
     _regex
 };
 
