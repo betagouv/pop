@@ -1,10 +1,11 @@
 const MongoClient = require('mongodb').MongoClient
 const json2csv = require('json2csv').parse
 const fs = require('fs')
-const sendToS3 = require('./s3')
-
+const toS3 = require('./s3')
+const collections = require('./collections')
 const mongoUrl = process.env.DB_ENDPOINT || 'mongodb://127.0.0.1:27017/pop'
 
+// Convert collection to CSV and send it to s3.
 async function collectionToCsv (db, name) {
   const col = db.collection(name)
   const filename = `storage/${name}.csv`
@@ -19,9 +20,10 @@ async function collectionToCsv (db, name) {
       fs.appendFileSync(filename, json2csv(items, {header: false}))
     }
   }
-  sendToS3(`${name}.csv`, fs.createReadStream(filename))
+  toS3(`${name}.csv`, fs.createReadStream(filename))
 }
 
+// Create storage dir (temporary).
 function mkStorage () {
   try {
     fs.mkdirSync('storage')
@@ -32,13 +34,14 @@ function mkStorage () {
   }
 }
 
+// Export all collections.
 async function main () {
   const client = await MongoClient.connect(mongoUrl, {
     useNewUrlParser: true
   })
   const db = await client.db()
   mkStorage()
-  await collectionToCsv(db, 'joconde')
+  await Promise.all(collections.map(c => collectionToCsv(db, c)))
   await client.close()
 }
 

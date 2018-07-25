@@ -17,6 +17,14 @@ Script de mise en ligne des données publiques de [POP](https://beta.gouv.fr/sta
 
 ## À propos
 
-Il s'agit pour l'instant d'un script unique (`src/app.js`) qui parcourt toutes les collections relatives aux données du patrimoine,
-les exporte en CSV et les envoie sur un AWS S3 en France. Il est possible qu'à terme, ce soit stocké ailleurs, le script
-étant facilement(?) adaptable.
+Il s'agit pour l'instant d'un script unique (`src/app.js`) qui parcourt toutes 
+les collections de la base MongoDB de POP relatives aux données du patrimoine, 
+les exporte en CSV et les envoie sur un AWS S3 en France. Il est possible qu'à 
+terme, ce soit stocké ailleurs, le script étant facilement(?) adaptable.
+
+Les fichiers générés font plusieurs centaines de milliers de lignes, les temps
+de traitement sont assez long et l'espace disque consommé >1GB.
+
+Pour l'instant, aucun traitement n'est fait sur les données, il faudra bien entendu
+ne pas tout uploader aveuglément (nettoyage et filtrage des données). Par ailleurs,
+il faudra aussi envoyer les images, ou au moins des liens vers ces images.

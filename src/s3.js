@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk')
 
-async function sendToS3 (path, file) {
+async function toS3 (path, file) {
   const s3 = new AWS.S3()
   const params = {
     Bucket: process.env.AWS_BUCKET,
@@ -17,4 +17,4 @@ async function sendToS3 (path, file) {
     })
 }
 
-module.exports = sendToS3
+module.exports = toS3
