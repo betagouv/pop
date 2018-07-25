@@ -48,6 +48,19 @@ function readFile(file, cb) {
     reader.readAsText(file, 'ISO-8859-1');
 }
 
+function readXML(file, cb) {
+    const reader = new FileReader();
+    reader.onload = () => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(reader.result, "text/xml");
+        cb(xmlDoc);
+    };
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.readAsBinaryString(file);
+}
+
+
 function extractPOPDate(str, erreurs) {
     let dates = [];
 
@@ -164,6 +177,7 @@ module.exports = {
     extractLink,
     extractAuteurs,
     readFile,
+    readXML,
     parseAjoutPilote,
     _regex
 };

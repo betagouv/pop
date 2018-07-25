@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Button, Progress, Container, Badge } from 'reactstrap';
+import { Row, Button, Progress, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import DropZone from './dropZone'
@@ -146,7 +146,7 @@ export default class Importer extends Component {
             ]
 
             await api.sendReport(`Rapport import ${this.props.collection}`, dest.join(','), body);
-            
+
             this.setState({ loading: false, done: true, loadingMessage: `Import effectué avec succès` });
             amplitude.getInstance().logEvent('Import - Done', { "Notices total": total, "Notices created": created.length, "Notices updated": updated.length, "Notices rejected": rejected.length });
         } catch (e) {

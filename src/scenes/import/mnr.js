@@ -3,11 +3,9 @@ import { Container } from 'reactstrap';
 import Parse from 'csv-parse';
 import Importer from './importer';
 
-import MnrMapping from '../../mapping/mnr'
+import MnrMapping from '../../mapping/mnr';
 
-const utils = require('./utils')
-
-
+const utils = require('./utils');
 
 export default class Import extends React.Component {
     render() {
@@ -39,7 +37,6 @@ function parseFiles(files, encoding) {
             parseCSVFile(reader.result).then(notices => {
                 const errors = [];
                 console.log('GOT NOTICES', notices)
-
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 if (notices.length) {
                     for (var i = 0; i < notices.length; i++) {

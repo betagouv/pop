@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 
+
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
 import FieldLink from './components/fieldLink.js'
@@ -64,8 +65,6 @@ class Notice extends React.Component {
                 values.VIDEO[i] = `mnr/${values.REF}/${values.VIDEO[i].name}`
             }
         }
-
-        console.log('values.VIDEO', values.VIDEO)
         API.updateNotice(this.state.notice.REF, 'mnr', values, files)
             .then((e) => {
                 toastr.success('Modification enregistrée');
@@ -95,14 +94,9 @@ class Notice extends React.Component {
                     className='main-body'
                 >
                     <Row>
-                        <Col className='image' sm={6}>
+                        <Col className='image' sm={12}>
                             <FieldImages
                                 name='VIDEO'
-                            />
-                        </Col>
-                        <Col className='image' sm={6}>
-                            <Map
-                                notice={this.state.notice}
                             />
                         </Col>
                     </Row>

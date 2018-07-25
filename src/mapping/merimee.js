@@ -48,7 +48,7 @@ export default [
     { value: "REPR", export: true },
     { value: "SREP", export: true },
     { value: "REFIM", export: true },
-    { value: "DMAJ", export: true },
+    { value: "DMAJ", export: true, generated: true, thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T51' },
     { value: "NUMS", export: true },
     { value: "SUITE", export: true },
     { value: "COMM", export: true },
@@ -56,6 +56,8 @@ export default [
     { value: "RESUME", export: true },
     { value: "PHOT", export: true },
 ];
+
+
 
 
 /*

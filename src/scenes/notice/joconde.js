@@ -395,6 +395,16 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
+                                title='Videos (VIDEO) :'
+                                name='VIDEO'
+                                disabled
+                            />
+                            <FieldTags
+                                title='Images (IMG) :'
+                                name='IMG'
+                                disabled
+                            />
+                            <FieldInput
                                 title='Appellation musée de France : logo (LABEL) :'
                                 name='LABEL'
                                 disabled

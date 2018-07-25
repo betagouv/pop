@@ -33,6 +33,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.5",
     "react-tag-input": "^5.0.1",
+    "react-viewer": "^2.5.1",
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",

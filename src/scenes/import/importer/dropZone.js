@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Parse from 'csv-parse';
 import { Row, Col } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import JSZip from 'jszip';

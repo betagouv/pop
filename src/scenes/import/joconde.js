@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import { bucket_url } from '../../config';
 import JocondeMapping from '../../mapping/joconde'
 
 const utils = require('./utils')

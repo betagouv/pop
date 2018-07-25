@@ -22,7 +22,10 @@ class CustomInput extends React.Component {
     }
 
     handleInputChange(str) {
-        if (str && this.props.thesaurus) {
+        if(!this.props.thesaurus){
+            return;
+        }
+        if (str) {
             api.getThesaurus(this.props.thesaurus, str).then((values) => {
                 if (values) {
                     const suggestions = values.map(e => ({ id: e.value, text: e.value }));
@@ -58,7 +61,7 @@ class CustomInput extends React.Component {
                     {...this.props}
                     value={this.props.input.value}
                     onChange={(e) => {
-                        this.handleInputChange(e.target.value);
+                        this.handleInputChange();
                         this.props.input.onChange(e.target.value)
                     }}
                 />
