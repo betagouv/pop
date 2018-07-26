@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "dev:env": "node -r dotenv/config ./src/index.js",
+    "dev:env": "nodemon -r dotenv/config ./src/index.js",
     "start": "node ./src/index.js",
     "deploy:prod": " eb deploy pop-api",
     "deploy:staging": "eb deploy pop-api-staging",
