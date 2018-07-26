@@ -69,8 +69,7 @@ class Notice extends React.Component {
 
         return (
             <Container className='notice' fluid>
-                <Form
-                    onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
+                <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
                     <Row>
@@ -459,9 +458,7 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <div className='buttons'>
-                        <Button color="danger">
-                            <Link style={{ textDecoration: 'none', color: 'white' }} to="/">Annuler </Link>
-                        </Button>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler </Button></Link>
                         <Button disabled color="primary" type="submit" >Sauvegarder </Button>
                     </div>
                 </Form >

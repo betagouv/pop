@@ -20,7 +20,6 @@ export default class Import extends React.Component {
     }
 }
 
-
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
         const JocondeFields = JocondeMapping.map(e => e.value);

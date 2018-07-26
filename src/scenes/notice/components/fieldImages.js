@@ -17,20 +17,19 @@ class FieldImages extends React.Component {
     }
 
     onDrop(files) {
-        console.log('DROPED', files);
         this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
     renderImages() {
         const arr = this.props.input.value.map((e, i) => {
-            let source = `${bucket_url}/${e}`;
+            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
             let key = e;
             if (e instanceof File) {
                 source = e.preview;
                 key = e.name;
             }
             return (
-                <Col  key={key}>
+                <Col key={key}>
                     <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" />
                 </Col>
             )
@@ -56,7 +55,7 @@ class FieldImages extends React.Component {
             if (e instanceof File) {
                 return { src: e.preview, alt: e.name }
             } else {
-                return { src: `${bucket_url}/${e}`, alt: e }
+                return { src: this.props.external ? `${e}` : `${bucket_url}${e}`, alt: e }
             }
         });
 

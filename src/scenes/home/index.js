@@ -42,9 +42,10 @@ export default class Home extends React.Component {
                     {this.renderTiles([
                         { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
                         { url: '/import/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
-                        { url: '/import/inventaire', name: 'Inventaire', image: require('../../assets/noimage.jpg') },
-                        { url: '/import/', name: 'Merimee MH', image: require('../../assets/noimage.jpg') },
-                        { url: '/import/', name: 'Palissy MH', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/inventairegertrude', name: 'Inventaire Gertrude', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/inventairerenable', name: 'Inventaire Renable', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/merimeeMH', name: 'Merimee MH', image: require('../../assets/merimee.jpg') },
+                        { url: '/import/palissyMH', name: 'Palissy MH', image: require('../../assets/palissy.jpg') },
                         { url: '/import/', name: 'Mémoire MH', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Mérimée ETA', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Palissy ETA', image: require('../../assets/noimage.jpg') },

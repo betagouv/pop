@@ -1,8 +1,8 @@
-import React from 'react';
-import { Badge } from 'reactstrap';
+function compare(importedObject, existed) {
 
 
-function compare(imported, existed) {
+    //make the imported object flat
+    let imported = importedObject.makeItFlat();
 
     const differences = []
 
@@ -80,31 +80,31 @@ function isInt(value) {
     return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))
 }
 
-export default function diff(importedNotices, existingNotices, fieldToNotCheck = []) {
+export default function diff(importedNotices, existingNotices) {
 
     for (var i = 0; i < importedNotices.length; i++) {
-        let importedNotice = importedNotices[i].notice;
+
+
         let found = false;
         for (var j = 0; j < existingNotices.length; j++) {
             const existingNotice = existingNotices[j];
-            if (importedNotices[i].notice.REF === existingNotice.REF) {
-                let differences = compare(importedNotice, existingNotice);
+            if (importedNotices[i].REF.value === existingNotice.REF) {
+                let differences = compare(importedNotices[i], existingNotice);
 
                 //remove differences based on generated fields
-                differences = differences.filter(key => !fieldToNotCheck.includes(key));
+                // differences = differences.filter(key => !fieldToNotCheck.includes(key));
 
-                importedNotices[i].messages = differences.map(e => (`Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotice[e]) ? importedNotice[e].join(', ') : importedNotice[e]}`));
-
+                importedNotices[i]._messages = differences.map(e => (`Le champs ${e} à évolué de ${Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e]} à ${Array.isArray(importedNotices[i][e].value) ? importedNotices[i][e].value.join(', ') : importedNotices[i][e].value}`));
                 if (differences.length) {
-                    importedNotices[i].status = 'updated';
+                    importedNotices[i]._status = 'updated';
                 } else {
-                    importedNotices[i].status = 'unchanged';
+                    importedNotices[i]._status = 'unchanged';
                 }
                 found = true;
             }
         }
         if (!found) {
-            importedNotices[i].status = 'created';
+            importedNotices[i]._status = 'created';
         }
     }
 

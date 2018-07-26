@@ -3,9 +3,9 @@ import { Row, Button, Progress, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import DropZone from './dropZone'
-import Loader from '../../../components/loader';
 import api from '../../../services/api'
 import Report from './report';
+import controleThesaurus from './thesaurus';
 import ExportData from './export';
 
 import diff from './diff';
@@ -24,11 +24,10 @@ export default class Importer extends Component {
             loading: false,
             loadingMessage: '',
             progress: 0,
-            fileName: '',
         }
     }
 
-    async onFilesDropped(files, encoding) {    //check if there are not more fields*
+    async onFilesDropped(files, encoding) {
 
         try {
             //PARSE FILES
@@ -38,7 +37,7 @@ export default class Importer extends Component {
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
-                const notice = await (api.getNotice(this.props.collection, importedNotices[i].notice.REF));
+                const notice = await (api.getNotice(this.props.collection, importedNotices[i].REF.value));
                 if (notice) {
                     existingNotices.push(notice);
                 }
@@ -46,57 +45,20 @@ export default class Importer extends Component {
 
             //CALCUL DE LA DIFF
             this.setState({ loadingMessage: 'Calcul des differences....' });
+            importedNotices = diff(importedNotices, existingNotices);
 
-            var generatedFields = this.props.mapping.filter(e => e.generated).map(e => e.value);
+            // //DELETE GENERATED FIELDS 
+            // for (var i = 0; i < importedNotices.length; i++) {
+            //     for (var j = 0; j < generatedFields.length; j++) {
+            //         delete importedNotices[i][generatedFields[j]];
+            //     }
+            // }
 
-            importedNotices = diff(importedNotices, existingNotices, generatedFields);
-
-            //DELETE GENERATED FIELDS 
-            for (var i = 0; i < importedNotices.length; i++) {
-                for (var j = 0; j < generatedFields.length; j++) {
-                    delete importedNotices[i].notice[generatedFields[j]];
-                }
-            }
-
-
-            //CHECK DU THESAURUS
-            const optimMap = {};
-            const allfieldswiththesaurus = this.props.mapping.filter(e => e.thesaurus);
+            controleThesaurus(importedNotices, this.props.mapping);
 
             for (var i = 0; i < importedNotices.length; i++) {
-                this.setState({ loading: true, loadingMessage: `Vérification de la conformité thesaurus ...`, progress: Math.floor(((i + importedNotices.length) * 100) / (importedNotices.length * 2)) });
-                for (var j = 0; j < allfieldswiththesaurus.length; j++) {
-                    const field = allfieldswiththesaurus[j].value;
-                    const thesaurus = allfieldswiththesaurus[j].thesaurus;
-                    const values = [].concat(importedNotices[i].notice[field]);
-
-                    for (var k = 0; k < values.length; k++) {
-                        const value = values[k];
-                        if (value) {
-                            let val = null;
-                            if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
-                                val = optimMap[thesaurus][value];
-                            } else {
-                                val = await (api.validateWithThesaurus(thesaurus, value));
-                            }
-                            if (!val) {
-                                if (allfieldswiththesaurus[j].thesaurus_strict === true) {
-                                    importedNotices[i].errors.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
-                                } else {
-                                    importedNotices[i].warnings.push(`Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`)
-                                }
-                            }
-
-                            if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
-                            optimMap[thesaurus][value] = val;
-                        }
-                    }
-                }
-            }
-
-            for (var i = 0; i < importedNotices.length; i++) {
-                if (importedNotices[i].errors.length) {
-                    importedNotices[i].status = 'rejected';
+                if (importedNotices[i]._errors.length) {
+                    importedNotices[i]._status = 'rejected';
                 }
             }
 
@@ -115,29 +77,34 @@ export default class Importer extends Component {
     async onSave() {
 
         const total = this.state.importedNotices.length;
-        const created = this.state.importedNotices.filter(e => e.status === 'created');
-        const updated = this.state.importedNotices.filter(e => e.status === 'updated');
-        const rejected = this.state.importedNotices.filter(e => e.status === 'rejected');
+        const created = this.state.importedNotices.filter(e => e._status === 'created');
+        const updated = this.state.importedNotices.filter(e => e._status === 'updated');
+        const rejected = this.state.importedNotices.filter(e => e._status === 'rejected');
 
         let count = 0;
         try {
             //Update notice
             for (var i = 0; i < updated.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
-                const ref = updated[i].notice.REF;
-                await api.updateNotice(ref, this.props.collection, updated[i].notice, updated[i].images);
+                const notice = updated[i].makeItFlat();
+                await api.updateNotice(notice.REF, this.props.collection, notice, updated[i].images);
             }
 
             //Create notice
             for (var i = 0; i < created.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
-                await api.createNotice(this.props.collection, created[i].notice, created[i].images);
+                const notice = created[i].makeItFlat();
+                await api.createNotice(this.props.collection, notice, created[i].images);
             }
-
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
-            const body = Report.generate(this.state.importedNotices, this.props.collection);
-
+            let body = '';
+            if (this.props.onReport) {
+                body = this.props.onReport(this.state.importedNotices);
+            } else {
+                body = Report.generate(this.state.importedNotices, this.props.collection)
+            }
+""
             const dest = [
                 'sandrine.della-bartolomea@culture.gouv.fr',
                 'sebastien.legoff@beta.gouv.fr',
@@ -159,7 +126,11 @@ export default class Importer extends Component {
 
     onExport() {
         amplitude.getInstance().logEvent('Import - Download report');
-        ExportData.generate(this.state.importedNotices, 'joconde')
+        if (this.props.onExport) {
+            this.props.onExport(this.state.importedNotices);
+        } else {
+            ExportData.generate(this.state.importedNotices, this.props.collection);
+        }
     }
 
     renderSummary() {
@@ -167,11 +138,10 @@ export default class Importer extends Component {
             return <div />
         }
         const noticesChargees = this.state.importedNotices.length;
-        const noticesCrees = this.state.importedNotices.filter(e => e.status === 'created').length;
-        const noticesModifiees = this.state.importedNotices.filter(e => e.status === 'updated').length;
-        const noticesRejetees = this.state.importedNotices.filter(e => e.status === 'rejected').length;
-
-        const pbNoticesUpdated = this.state.importedNotices.filter(e => (e.status === 'created' || e.status === 'updated')).filter(e => e.warnings.length).length;
+        const noticesCrees = this.state.importedNotices.filter(e => e._status === 'created').length;
+        const noticesModifiees = this.state.importedNotices.filter(e => e._status === 'updated').length;
+        const noticesRejetees = this.state.importedNotices.filter(e => e._status === 'rejected').length;
+        const pbNoticesUpdated = this.state.importedNotices.filter(e => (e._status === 'created' || e._status === 'updated')).filter(e => e._warnings.length).length;
 
         return (
             <div className='import'>

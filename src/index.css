@@ -1,7 +1,6 @@
 body {
   margin: 0px;
   overflow:hidden;
-  overflow-y: auto;
   font-family: 'Work Sans';
   background-color: #F5F5F5;
 }
@@ -11,4 +10,7 @@ body, html, #root, .main {
   font-family: 'Work Sans';
   height: 100%;
   background-color: #F5F5F5;
+}
+#root{
+  overflow-y: auto;
 }

@@ -1,5 +1,5 @@
 class Report {
-    generate(notices, collection) {
+    generate(notices, collection, fieldToExport = [{ name: 'Identifiant', key: 'REF' }]) {
 
         const arr = [];
 
@@ -11,9 +11,9 @@ class Report {
         const minutes = ('0' + d.getMinutes()).slice(-2);
         const hours = ('0' + d.getHours()).slice(-2);
 
-        const created = notices.filter(e => e.status === 'created');
-        const updated = notices.filter(e => e.status === 'updated');
-        const rejected = notices.filter(e => e.status === 'rejected');
+        const created = notices.filter(e => e._status === 'created');
+        const updated = notices.filter(e => e._status === 'updated');
+        const rejected = notices.filter(e => e._status === 'rejected');
 
         const imagesNumber = notices.reduce((acc, val) => {
             if (val.status === 'created' || val.status === 'updated') {
@@ -36,12 +36,13 @@ class Report {
 
         arr.push(`<h1>Notices créees</h1>`)
         {
-            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
             const lines = []
             for (var i = 0; i < created.length; i++) {
-                lines.push([created[i].notice.REF, created[i].notice.INV, 'Création', ''])
-                for (var j = 0; j < created[i].warnings.length; j++) {
-                    lines.push([created[i].notice.REF, created[i].notice.INV, 'Avertissement', created[i].warnings[j]])
+                const fields = fieldToExport.map(e => `"${created[i][e.key].value}"`)
+                lines.push([...fields, 'Création', ''])
+                for (var j = 0; j < created[i]._warnings.length; j++) {
+                    lines.push([...fields, 'Avertissement', created[i]._warnings[j]])
                 }
             }
             const table = createHTMLTable(columns, lines);
@@ -49,12 +50,13 @@ class Report {
         }
         {
             arr.push(`<h1>Notices modifiées</h1>`)
-            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
             const lines = []
             for (var i = 0; i < updated.length; i++) {
-                lines.push([updated[i].notice.REF, updated[i].notice.INV, 'Modification', ''])
-                for (var j = 0; j < updated[i].warnings.length; j++) {
-                    lines.push([updated[i].notice.REF, updated[i].notice.INV, 'Avertissement', updated[i].warnings[j]])
+                const fields = fieldToExport.map(e => `"${updated[i][e.key].value}"`)
+                lines.push([...fields, 'Modification', ''])
+                for (var j = 0; j < updated[i]._warnings.length; j++) {
+                    lines.push([...fields, 'Avertissement', updated[i]._warnings[j]])
                 }
             }
             const table = createHTMLTable(columns, lines);
@@ -62,15 +64,17 @@ class Report {
         }
         {
             arr.push(`<h1>Notices rejetées</h1>`)
-            const columns = ["Identifiant Joconde", "N° inventaire", "Etat", "Details"];
+            const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
             const lines = []
             for (var i = 0; i < rejected.length; i++) {
-                lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Rejet', '']);
-                for (var j = 0; j < rejected[i].warnings.length; j++) {
-                    lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Avertissement', rejected[i].warnings[j]])
+                const fields = fieldToExport.map(e => `"${rejected[i][e.key].value}"`)
+
+                lines.push([...fields, 'Rejet', '']);
+                for (var j = 0; j < rejected[i]._warnings.length; j++) {
+                    lines.push([...fields, 'Avertissement', rejected[i]._warnings[j]])
                 }
-                for (var j = 0; j < rejected[i].errors.length; j++) {
-                    lines.push([rejected[i].notice.REF, rejected[i].notice.INV, 'Erreur', rejected[i].errors[j]])
+                for (var j = 0; j < rejected[i]._errors.length; j++) {
+                    lines.push([...fields, 'Erreur', rejected[i]._errors[j]])
                 }
             }
             const table = createHTMLTable(columns, lines);

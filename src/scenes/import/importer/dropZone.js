@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import JSZip from 'jszip';
-import { resolve } from '../../../../node_modules/uri-js';
 
 export default class ImportDropComponent extends Component {
 
