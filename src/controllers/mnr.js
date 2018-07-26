@@ -36,14 +36,18 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:ref', (req, res) => {
-  const ref = req.params.ref
-  Mnr.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      console.log('ERR', err)
-    } else {
-      res.send(notice)
-    }
-  })
+    const ref = req.params.ref;
+    Mnr.findOne({ REF: ref }, (err, notice) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        if (notice) {
+            res.status(200).send(notice);
+        } else {
+            res.sendStatus(404);
+        }
+    });
 })
 
 module.exports = router
