@@ -29,6 +29,24 @@ function uploadFile (path, file) {
   })
 }
 
+function deleteFile (path) {
+  return new Promise((resolve, reject) => {
+    console.log('deleteFile', path)
+    s3.deleteObject({
+      Bucket: s3Bucket,
+      Key: path
+    }, (err) => {
+      if (err) {
+        console.log(err)
+        reject(new Error())
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
 module.exports = {
-  uploadFile
+  uploadFile,
+  deleteFile
 }

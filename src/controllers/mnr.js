@@ -3,11 +3,11 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Mnr = require('../models/mnr')
 
-const { uploadFile } = require('./utils')
+const { uploadFile, deleteFile } = require('./utils')
 
 const router = express.Router()
 
-router.put('/:ref', upload.any(), (req, res) => {
+router.put('/:ref', upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
   // UPDATE MAJ DATE ( couldnt use hook ...)
@@ -15,18 +15,18 @@ router.put('/:ref', upload.any(), (req, res) => {
   const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
   notice.DMAJ = formattedNow
 
-  const arr = []
-  for (var i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-  }
-  arr.push(Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-  Promise.all(arr).then(() => {
+  try {
+    const prevNotice = await Mnr.findOne({ REF: ref })
+    await Promise.all([
+      ...(prevNotice.VIDEO || []).filter(x => !(notice.VIDEO || []).includes(x)).map(f => deleteFile(f)),
+      ...req.files.map(f => uploadFile(`mnr/${notice.REF}/${f.originalname}`, f)),
+      Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
+    ])
     res.sendStatus(200)
-  }).catch((e) => {
+  } catch (e) {
     console.log(e)
     res.sendStatus(500)
-  })
+  }
 })
 
 router.post('/', (req, res) => {
