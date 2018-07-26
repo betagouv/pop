@@ -126,7 +126,7 @@ function parseAjoutPilote(res, fields) {
     let obj = {};
     for (var i = 0; i < lines.length; i++) {
         if (lines[i] === '//') {
-            notices.push({ notice: obj, warnings: [], errors: [], message: [] });
+            notices.push({ notice: obj, warnings: [], errors: [], messages: [] });
             obj = {};
         } else {
             const key = lines[i];
@@ -144,7 +144,7 @@ function parseAjoutPilote(res, fields) {
         }
     }
     if (Object.keys(obj).length) {
-        notices.push({ notice: obj, warnings: [], errors: [], message: [] });
+        notices.push({ notice: obj, warnings: [], errors: [], messages: [] });
     }
     return notices;
 }

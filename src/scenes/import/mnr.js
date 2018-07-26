@@ -87,7 +87,7 @@ function parseCSVFile(fileAsBinaryString) {
                 record.map((e, i) => {
                     obj[header[i]] = e;
                 })
-                output.push({ notice: obj, warnings: [], errors: [], message: [] });
+                output.push({ notice: obj, warnings: [], errors: [], messages: [] });
             }
         });
 
