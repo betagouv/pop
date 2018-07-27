@@ -14,8 +14,8 @@ export default class Import extends React.Component {
                 <Importer
                     collection="joconde"
                     parseFiles={parseFiles}
-                    onExport={(notices) => ExportData.generate(notice, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
-                    onReport={(notices) => ReportData.generate(notice, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
+                    onExport={(notices) => ExportData.generate(notices, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
+                    onReport={(notices) => ReportData.generate(notices, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
                 />
             </Container >
         );
