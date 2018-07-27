@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import JocondeMapping from '../../mapping/joconde'
 
 const utils = require('./utils')
 
@@ -12,8 +11,6 @@ export default class Import extends React.Component {
                 <Importer
                     collection="joconde"
                     parseFiles={parseFiles}
-                    transform={() => { }}
-                    mapping={JocondeMapping}
                 />
             </Container >
         );
@@ -22,7 +19,6 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
-        const JocondeFields = JocondeMapping.map(e => e.value);
         var objectFile = files.find(file => file.name.includes('AllEntities.xml'));
         if (!objectFile) {
             reject('Fichier AllEntities.xml absent');
