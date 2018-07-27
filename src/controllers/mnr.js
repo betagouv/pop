@@ -3,17 +3,15 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Mnr = require('../models/mnr')
 
-const { uploadFile, deleteFile } = require('./utils')
+const { uploadFile, deleteFile, formattedNow } = require('./utils')
+
 
 const router = express.Router()
 
 router.put('/:ref', upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
-  // UPDATE MAJ DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMAJ = formattedNow
+  notice.DMAJ = formattedNow()
 
   try {
     const prevNotice = await Mnr.findOne({ REF: ref })
@@ -36,14 +34,18 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:ref', (req, res) => {
-  const ref = req.params.ref
-  Mnr.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      console.log('ERR', err)
-    } else {
-      res.send(notice)
-    }
-  })
+    const ref = req.params.ref;
+    Mnr.findOne({ REF: ref }, (err, notice) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        if (notice) {
+            res.status(200).send(notice);
+        } else {
+            res.sendStatus(404);
+        }
+    });
 })
 
 module.exports = router

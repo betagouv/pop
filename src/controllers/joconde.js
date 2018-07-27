@@ -4,16 +4,13 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Joconde = require('../models/joconde')
 
-const { uploadFile, deleteFile } = require('./utils')
+const { uploadFile, deleteFile, formattedNow } = require('./utils')
 
 router.put('/:ref', upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
 
-  // UPDATE MAJ DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMAJ = formattedNow
+  notice.DMAJ = formattedNow()
 
   try {
     const prevNotice = await Joconde.findOne({ REF: ref })
@@ -32,11 +29,7 @@ router.put('/:ref', upload.any(), async (req, res) => {
 router.post('/', upload.any(), (req, res) => {
   const notice = JSON.parse(req.body.notice)
 
-  // UPDATE MAJ and MIS DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMIS = formattedNow
-  notice.DMAJ = formattedNow
+  notice.DMIS = notice.DMAJ = formattedNow()
 
   const arr = []
   for (var i = 0; i < req.files.length; i++) {
