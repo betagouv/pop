@@ -3,20 +3,16 @@ const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Joconde = require('../models/joconde')
-
-const { uploadFile } = require('./utils')
+const { uploadFile, formattedNow } = require('./utils')
 
 router.put('/:ref', upload.any(), (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
 
-  // UPDATE MAJ DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMAJ = formattedNow
+  notice.DMAJ = formattedNow()
 
   const arr = []
-  for (var i = 0; i < req.files.length; i++) {
+  for (let i = 0; i < req.files.length; i++) {
     arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
   arr.push(Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
@@ -32,11 +28,7 @@ router.put('/:ref', upload.any(), (req, res) => {
 router.post('/', upload.any(), (req, res) => {
   const notice = JSON.parse(req.body.notice)
 
-  // UPDATE MAJ and MIS DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMIS = formattedNow
-  notice.DMAJ = formattedNow
+  notice.DMIS = notice.DMAJ = formattedNow()
 
   const arr = []
   for (var i = 0; i < req.files.length; i++) {

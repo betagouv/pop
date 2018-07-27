@@ -2,18 +2,14 @@ const express = require('express')
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Mnr = require('../models/mnr')
-
-const { uploadFile } = require('./utils')
+const { uploadFile, formattedNow } = require('./utils')
 
 const router = express.Router()
 
 router.put('/:ref', upload.any(), (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
-  // UPDATE MAJ DATE ( couldnt use hook ...)
-  const now = new Date()
-  const formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
-  notice.DMAJ = formattedNow
+  notice.DMAJ = formattedNow()
 
   const arr = []
   for (var i = 0; i < req.files.length; i++) {

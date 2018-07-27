@@ -1,11 +1,10 @@
-var fs = require('fs')
+const fs = require('fs')
 const AWS = require('aws-sdk')
 const { s3Bucket } = require('./../config.js')
 
-var s3 = new AWS.S3()
-
 // Surement pas besoin de l'écrire sur le disque ...
 function uploadFile (path, file) {
+  const s3 = new AWS.S3()
   return new Promise((resolve, reject) => {
     const data = fs.readFileSync(file.path)
     console.log('uploadFile', path, file)
@@ -29,6 +28,12 @@ function uploadFile (path, file) {
   })
 }
 
+function formattedNow() {
+  const now = new Date()
+  return formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
+}
+
 module.exports = {
-  uploadFile
+  uploadFile,
+  formattedNow
 }
