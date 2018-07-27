@@ -29,8 +29,9 @@ router.put('/:ref', upload.any(), (req, res) => {
     })
 })
 
-router.post('/', (req, res) => {
-    Mnr.create(req.body).then((e) => {
+router.post('/', upload.any(), (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+    Mnr.create(notice).then((e) => {
         res.sendStatus(200)
     });
 })
@@ -38,9 +39,10 @@ router.post('/', (req, res) => {
 router.get('/:ref', (req, res) => {
     const ref = req.params.ref;
     Mnr.findOne({ REF: ref }, (err, notice) => {
-        if (err) {
-            console.log('ERR', err)
+        if (err || !notice) {
+            res.sendStatus(404)
         } else {
+            console.log('FOUND', notice)
             res.send(notice);
         }
     });
