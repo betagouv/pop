@@ -168,7 +168,7 @@ function transform(obj) {
     obj.REPR = obj.REPR || '';
     obj.SREP = obj.SREP || '';
     obj.REFIM = obj.REFIM || '';
-    obj.DMAJ = obj.DMAJ.replace('/', '-');
+    obj.DMAJ = obj.DMAJ;
     obj.NUMS = obj.NUMS || '';
     obj.SUITE = obj.SUITE || '';
     obj.COMM = obj.COMM || '';
