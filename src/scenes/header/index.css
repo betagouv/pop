@@ -7,8 +7,8 @@
   max-width: 100%!important;
   border-bottom: 1px solid #f0efef;
   padding: 8px;
-  height: 150px;
-  background-image: url('../../assets/background.jpg');
+  box-shadow: 0 2px 6px 0 #E4E4E4;
+  height: 100px;
 }
 
 .header .NavComponent .navbar-toggler {

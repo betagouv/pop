@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 WebFont.load({
   google: {
-    families: ['Open Sans', 'Work Sans:400,500,700', 'Quicksand', 'sans-serif']
+    families: ['Open Sans', 'Work Sans:400,500,700', 'Quicksand', 'sans-serif', 'Comfortaa', 'Nunito']
   }
 });
 
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging')
 
 if (process.env.NODE_ENV === 'production') {
   amplitude.getInstance().init("91193206fbbafb6ab42aebba6c765819");
-}else{
+} else {
   amplitude.getInstance().init("e67834238a49cf416bacf47c3d8055c4");
 }
 

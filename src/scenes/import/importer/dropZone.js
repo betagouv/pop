@@ -3,6 +3,8 @@ import { Row, Col } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import JSZip from 'jszip';
 
+import './dropZone.css';
+
 export default class ImportDropComponent extends Component {
 
   state = {
@@ -40,9 +42,9 @@ export default class ImportDropComponent extends Component {
     }
     return (
       <div className='dropzone'>
-        <Dropzone className='container' onDrop={this.onDrop.bind(this)}>
+        <Dropzone className='dropArea' onDrop={this.onDrop.bind(this)}>
           <img src={require('../../../assets/upload.png')} />
-          <p>Déposez des fichiers d'import ici</p>
+          <p>Glissez & déposez vos fichiers ou cliquez ici pour importer</p>
         </Dropzone>
         <Row style={{ ...rowstyle, justifyContent: 'center', alignItems: 'center' }} type="flex" gutter={16} justify="center">
           {this.state.error ? <div>{this.state.error}</div> : <div />}
