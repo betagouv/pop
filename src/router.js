@@ -11,6 +11,8 @@ import Notice from './scenes/notice';
 import Import from './scenes/import';
 import Thesaurus from './scenes/thesaurus';
 
+import StepForm from './scenes/stepForm';
+
 export default class PublicRoutes extends React.Component {
 
   componentWillReceiveProps(newProps) {
@@ -33,6 +35,7 @@ export default class PublicRoutes extends React.Component {
           <Switch>
             <Route exact path={'/'} component={Home} />
             <Route exact path={'/thesaurus'} component={Thesaurus} />
+            <Route exact path={'/test'} component={StepForm} />
             <Route path={'/search/:collection'} component={Search} />
             <Route path={'/import/:collection'} component={Import} />
             <Route path={'/notice/:collection/:ref'} component={Notice} />

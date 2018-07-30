@@ -1,0 +1,28 @@
+.step-one > h4 {
+    font-family: 'Comfortaa';
+    font-weight: 400;
+    color: #19414C;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+.step-one .step-box {
+    background-color: #F3F7FC;
+    border-radius: 4px;
+    box-shadow: 0 0 5px 0 #eee;
+    max-width: 500px;
+    min-height: 300px;
+    padding: 30px;
+    margin: 0 auto;
+}
+.step-one .step-box .file-upload {
+    color: #19414C;
+    font-weight: 400;
+    font-size: 18px;
+}
+.step-one .step-box .file-upload input {
+    display: none;
+}
+.step-one .step-box .file-upload label {
+    color: #1CEEC1;
+    cursor: pointer;
+}
