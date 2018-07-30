@@ -1,12 +1,12 @@
 
-function readFile(file, cb) {
+function readFile(file, encoding, cb) {
     const reader = new FileReader();
     reader.onload = () => {
         cb(reader.result)
     };
     reader.onabort = () => console.log('file reading was aborted');
     reader.onerror = () => console.log('file reading has failed');
-    reader.readAsText(file, 'ISO-8859-1');
+    reader.readAsText(file, encoding || 'ISO-8859-1');
 }
 
 function readXML(file, cb) {
@@ -59,4 +59,3 @@ module.exports = {
     readXML,
     parseAjoutPilote,
 };
-

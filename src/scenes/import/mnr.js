@@ -29,7 +29,7 @@ function parseFiles(files, encoding) {
             return;
         }
 
-        utils.readFile(file, res => {
+        utils.readFile(file, encoding, res => {
             parseCSVFile(res).then(notices => {
                 // const errors = [];
                 console.log('GOT NOTICES', notices)
@@ -90,6 +90,3 @@ function parseCSVFile(fileAsBinaryString) {
         parser.end();
     })
 }
-
-
-

@@ -19,7 +19,7 @@ export default class Import extends React.Component {
     }
 }
 
-function parseFiles(files) {
+function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
 
         var objectFile = files.find(file => file.name.includes('.csv'));
@@ -28,7 +28,7 @@ function parseFiles(files) {
             return;
         }
 
-        utils.readFile(objectFile, (file) => {
+        utils.readFile(objectFile, encoding, (file) => {
             ParseCSV(file).then(notices => {
                 resolve({ importedNotices: notices, fileName: objectFile.name });
             });
@@ -73,4 +73,3 @@ function ParseCSV(file) {
         parser.end();
     })
 }
-

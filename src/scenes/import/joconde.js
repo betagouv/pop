@@ -23,7 +23,7 @@ export default class Import extends React.Component {
 }
 
 
-function parseFiles(files) {
+function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
 
         const errors = [];
@@ -34,7 +34,7 @@ function parseFiles(files) {
             return;
         }
 
-        utils.readFile(file, res => {
+        utils.readFile(file, encoding, res => {
             const importedNotices = utils.parseAjoutPilote(res, Joconde).map(value => new Joconde(value));
 
             const filesMap = {};
@@ -73,19 +73,3 @@ function parseFiles(files) {
         })
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
