@@ -128,7 +128,7 @@ export default class Search extends React.Component {
                         <MultiList
                             componentId="deno"
                             dataField="DENO.keyword"
-                            title="Denomination"
+                            title="Dénomination"
                             className="filters"
                             showSearch={true}
                             URLParams={true}
@@ -140,7 +140,7 @@ export default class Search extends React.Component {
                         <MultiList
                             componentId="periode"
                             dataField="PERI.keyword"
-                            title="Periode"
+                            title="Période"
                             className="filters"
                             showSearch={true}
                             URLParams={true}

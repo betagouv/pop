@@ -6,7 +6,7 @@ import PalissyMH from './palissyMH';
 import Joconde from './joconde';
 import Mnr from './mnr';
 import InventaireGertrude from './inventaireGertrude';
-import InventaireRenable from './inventaireRenable';
+// import InventaireRenable from './inventaireRenabl';
 
 export default () => {
     return (
@@ -19,7 +19,7 @@ export default () => {
                 <Route path={`/import/merimeeMH`} component={MerimeeMH} />
                 <Route path={`/import/palissyMH`} component={PalissyMH} />
                 <Route path={`/import/inventaire_gertrude`} component={InventaireGertrude} />
-                <Route path={`/import/inventaire_renable`} component={InventaireRenable} />
+                {/* <Route path={`/import/inventaire_renabl`} component={InventaireRenabl} /> */}
             </Switch>
         </div>
     );

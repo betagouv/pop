@@ -20,8 +20,8 @@ export default class HeaderBase extends React.Component {
             <div className='HeaderBase'>
                 <div className='title-zone'>
                     <img className='logo' src={this.getIcon()} />
-                    <div className='title'>Vous travaillez dans la base {this.props.collection}</div>
-                    <Link to='/'>Changer de base</Link>
+                    <div className='title'>Vous consultez la base {this.props.collection}</div>
+                    <Link to='/'>Retour à l'accueil</Link>
                 </div>
             </div>
         )
