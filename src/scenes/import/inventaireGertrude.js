@@ -25,7 +25,7 @@ function parseFiles(files, encoding) {
             return;
         }
 
-        utils.readXML(objectFile, xmlDoc => {
+        utils.readXML(objectFile, encoding, xmlDoc => {
             var tags = xmlDoc.childNodes[0].childNodes
             for (var i = 0; i < tags.length; i++) {
                 console.log(tags[i].nodeName);

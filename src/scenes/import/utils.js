@@ -9,16 +9,17 @@ function readFile(file, encoding, cb) {
     reader.readAsText(file, encoding || 'ISO-8859-1');
 }
 
-function readXML(file, cb) {
+function readXML(file, encoding, cb) {
     const reader = new FileReader();
     reader.onload = () => {
         const parser = new DOMParser();
+        console.log('reader.result', reader.result)
         const xmlDoc = parser.parseFromString(reader.result, "text/xml");
         cb(xmlDoc);
     };
     reader.onabort = () => console.log('file reading was aborted');
     reader.onerror = () => console.log('file reading has failed');
-    reader.readAsBinaryString(file);
+    reader.readAsBinaryString(file, encoding || 'ISO-8859-1');
 }
 
 

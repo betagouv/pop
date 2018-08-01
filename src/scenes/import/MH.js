@@ -2,7 +2,9 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
 import Parse from 'csv-parse';
+import Merimee from '../../entities/merimee';
 import Palissy from '../../entities/palissy';
+
 
 const utils = require('./utils')
 
@@ -11,7 +13,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="palissy"
+                    collection="merimee"
                     parseFiles={parseFiles}
                 />
             </Container >
@@ -55,7 +57,12 @@ function ParseCSV(file) {
                 record.map((e, i) => {
                     obj[header[i]] = e;
                 })
-                output.push(new Palissy(obj));
+
+                if(obj.REF.index('PM') !== -1){
+                    output.push(new Palissy(obj));
+                }else if(obj.REF.index('PA') !== -1){
+                    output.push(new Merimee(obj));
+                }
             }
         });
 

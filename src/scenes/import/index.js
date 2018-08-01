@@ -1,12 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import MerimeeMH from './merimeeMH';
-import PalissyMH from './palissyMH';
+import MH from './MH';
 import Joconde from './joconde';
 import Mnr from './mnr';
 import InventaireGertrude from './inventaireGertrude';
-// import InventaireRenable from './inventaireRenabl';
+import InventaireRenabl from './inventaireRenabl';
 
 export default () => {
     return (
@@ -16,10 +15,9 @@ export default () => {
                 <Route path={`/import/palissy`} component={Palissy} />*/}
                 <Route path={`/import/mnr`} component={Mnr} />
                 <Route path={`/import/joconde`} component={Joconde} />
-                <Route path={`/import/merimeeMH`} component={MerimeeMH} />
-                <Route path={`/import/palissyMH`} component={PalissyMH} />
-                <Route path={`/import/inventaire_gertrude`} component={InventaireGertrude} />
-                {/* <Route path={`/import/inventaire_renabl`} component={InventaireRenabl} /> */}
+                <Route path={`/import/mh`} component={MH} />
+                <Route path={`/import/inventairegertrude`} component={InventaireGertrude} />
+                <Route path={`/import/inventairerenabl`} component={InventaireRenabl} />
             </Switch>
         </div>
     );

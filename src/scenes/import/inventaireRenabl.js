@@ -9,7 +9,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="joconde"
+                    collection="inventaire"
                     parseFiles={parseFiles}
                 />
             </Container >
@@ -18,28 +18,34 @@ export default class Import extends React.Component {
 }
 
 function parseFiles(files, encoding) {
-    return new Promise((resolve, reject) => {
-        var objectFile = files.find(file => file.name.includes('AllEntities.xml'));
-        if (!objectFile) {
-            reject('Fichier AllEntities.xml absent');
+    return new Promise(async (resolve, reject) => {
+        var xmlFiles = files.filter(file => file.name.includes('.xml'));
+        if (!xmlFiles.length) {
+            reject('Aucun fichier xml detecté');
             return;
         }
 
-        utils.readXML(objectFile, xmlDoc => {
+        const notices = [];
+        for (var i = 0; i < xmlFiles.length; i++) {
+            const obj = await (parseFile(xmlFiles[i]));
+            notices.push(obj);
+        }
+
+        resolve({ importedNotices: notices, fileName: "todo" });
+    })
+}
+
+function parseFile(objectFile, encoding) {
+    console.log('EXML FILE ', objectFile);
+    return new Promise((resolve, reject) => {
+        utils.readXML(objectFile, encoding, xmlDoc => {
+            console.log("xmlDoc", xmlDoc)
             var tags = xmlDoc.childNodes[0].childNodes
             for (var i = 0; i < tags.length; i++) {
                 console.log(tags[i].nodeName);
-                switch (tags[i].nodeName) {
-                    case 'com.atolcd.gertrude.model.illustration.Illustration':
-                        console.log('GOT IMAGE');
-                        break;
-                    case 'com.atolcd.gertrude.model.dossier.oeuvre.objet.DossierOeuvreObjet':
-                        console.log('GOT Palissy stuffs');
-                        console.log(XmlToPalissy(tags[i]));
-                        break;
-                }
             }
-        })
+            resolve({})
+        });
     })
 }
 
