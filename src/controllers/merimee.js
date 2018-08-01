@@ -1,17 +1,37 @@
-const express = require('express')
+const express = require('express');
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
-const Merimee = require('../models/merimee')
+const Merimee = require('../models/merimee');
+const { uploadFile } = require('./utils');
 
 
-router.put('/:ref', (req, res) => {
+router.put('/:ref', upload.any(), (req, res) => {
     const ref = req.params.ref;
-    Merimee.findOneAndUpdate({ REF: ref }, req.body, { upsert: true }).then((e) => {
+    const notice = JSON.parse(req.body.notice);
+
+    //UPDATE MAJ DATE ( couldnt use hook ...)
+
+    const now = new Date();
+    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear();
+    notice.DMAJ = formattedNow;
+
+    const arr = [];
+    // for (var i = 0; i < req.files.length; i++) {
+    //     arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
+    // }
+    arr.push(Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
+
+    Promise.all(arr).then(() => {
         res.sendStatus(200)
-    });
+    }).catch((e) => {
+        res.sendStatus(500)
+    })
 })
 
-router.post('/', (req, res) => {
-    Merimee.create(req.body).then((e) => {
+router.post('/', upload.any(), (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+    Merimee.create(notice).then((e) => {
         res.sendStatus(200)
     });
 })
