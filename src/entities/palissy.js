@@ -105,7 +105,7 @@ export default class Palissy extends Notice {
         this.STAT = { type: 'Array', value: this.extractArray(body.STAT) };
         this.STRU = { type: 'Array', value: this.extractArray(body.STRU) };
         this.THEM = { type: 'String', value: body.THEM || '' };
-        this.TICO = { type: 'String', value: body.TICO || '' };
+        this.TICO = { type: 'String', value: this.stripHTML(body.TICO) };
         this.TITR = { type: 'String', value: body.TITR || '' };
         this.TOUT = { type: 'String', value: body.TOUT || '' };
         this.VIDEO = { type: 'Array', value: this.extractArray(body.VIDEO) };

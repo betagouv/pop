@@ -26,6 +26,8 @@ export default class ImportDropComponent extends Component {
         })
       })
     } else {
+
+      console.log('DROPED', files)
       this.props.onFinish(files, this.state.encoding);
     }
   }

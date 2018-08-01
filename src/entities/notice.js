@@ -42,6 +42,13 @@ export default class Notice {
         // erreurs.push(`Impossible d'extraire l'url dans ${str}`);
         return str;
     }
+
+    stripHTML(html) {
+        var tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        console.log('html', html)
+        return tmp.textContent || tmp.innerText || "";
+    }
 }
 
 

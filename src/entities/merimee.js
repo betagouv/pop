@@ -92,7 +92,7 @@ export default class Merimee extends Notice {
         this.SITE = { type: 'String', value: body.SITE || '' };
         this.STAT = { type: 'String', value: body.STAT || '' };
         this.TECH = { type: 'Array', value: this.extractArray(body.TECH) };
-        this.TICO = { type: 'String', value: body.TICO || '' };
+        this.TICO = { type: 'String', value: this.stripHTML(body.TICO) };
         this.TOIT = { type: 'Array', value: this.extractArray(body.TOIT) };
         this.TYPO = { type: 'String', value: body.TYPO || '' };
         this.VERT = { type: 'String', value: body.VERT || '' };

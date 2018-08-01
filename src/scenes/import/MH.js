@@ -58,7 +58,6 @@ function ParseCSV(file) {
                     obj[header[i]] = e;
                 })
 
-                console.log(obj)
                 if(obj.REF.indexOf('PM') !== -1){
                     output.push(new Palissy(obj));
                 }else if(obj.REF.indexOf('PA') !== -1){

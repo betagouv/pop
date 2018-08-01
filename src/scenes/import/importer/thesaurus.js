@@ -4,7 +4,7 @@ export default async function checkThesaurus(importedNotices) {
     const optimMap = {};
 
     if (!importedNotices.length) {
-        resolve();
+        return;
     }
 
     const allfieldswiththesaurus = Object.keys(importedNotices[0]).filter(e => (typeof (importedNotices[0][e]) === 'object' && importedNotices[0][e].thesaurus));
