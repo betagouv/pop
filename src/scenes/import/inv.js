@@ -2,6 +2,9 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
 
+import Merimee from '../../entities/merimee';
+import Palissy from '../../entities/palissy';
+
 const utils = require('./utils')
 
 export default class Import extends React.Component {
@@ -19,34 +22,61 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
+
         var xmlFiles = files.filter(file => file.name.includes('.xml'));
         if (!xmlFiles.length) {
             reject('Aucun fichier xml detecté');
             return;
         }
-
-        const notices = [];
-        for (var i = 0; i < xmlFiles.length; i++) {
-            const obj = await (parseFile(xmlFiles[i]));
-            notices.push(obj);
+        var objectFile = files.find(file => file.name.includes('AllEntities.xml'));
+        if (objectFile) {
+            const importedNotices = await (ParseGertrude(objectFile));
+            resolve({ importedNotices, fileName: objectFile.name })
+        } else {
+            const importedNotices = await (ParseRenabl(xmlFiles));
+            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') })
         }
-
-        resolve({ importedNotices: notices, fileName: "todo" });
     })
 }
 
-function parseFile(objectFile, encoding) {
-    console.log('EXML FILE ', objectFile);
-    return new Promise((resolve, reject) => {
-        utils.readXML(objectFile, encoding, xmlDoc => {
-            console.log("xmlDoc", xmlDoc)
-            var tags = xmlDoc.childNodes[0].childNodes
-            for (var i = 0; i < tags.length; i++) {
-                console.log(tags[i].nodeName);
-            }
-            resolve({})
-        });
+
+function ParseGertrude() {
+    return new Promise(async (resolve, reject) => {
+        const notices = [];
+
+        resolve(notices)
     })
+}
+
+function ParseRenabl(xmlFiles) {
+    return new Promise(async (resolve, reject) => {
+        const notices = [];
+        for (var j = 0; j < xmlFiles.length; j++) {
+            const xmlDoc = await (utils.readXML(xmlFiles[j]));
+            var tags = xmlDoc.childNodes[0].childNodes;
+            for (var i = 0; i < tags.length; i++) {
+                if (tags[i].nodeName === 'MERIMEE') {
+                    const obj = RenablXMLToMerimee(tags[i]);
+                    notices.push(obj);
+                } else {
+                    console.log(tags[i].nodeName);
+                }
+            }
+        }
+        resolve(notices)
+    })
+}
+
+
+function RenablXMLToMerimee(node) {
+    const obj = {};
+    obj.REF = node.getAttribute('REF')
+    for (var i = 0; i < node.childNodes.length; i++) {
+        if (node.childNodes[i].nodeName !== '#text') {
+            obj[node.childNodes[i].nodeName] = node.childNodes[i].innerHTML;
+        }
+    }
+    return new Merimee(obj);
 }
 
 

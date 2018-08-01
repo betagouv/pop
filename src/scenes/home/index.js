@@ -43,7 +43,7 @@ export default class Home extends React.Component {
                         { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
                         { url: '/import/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
                         { url: '/import/inventairegertrude', name: 'Inventaire Gertrude', image: require('../../assets/noimage.jpg') },
-                        { url: '/import/inventairerenabl', name: 'Inventaire Renabl', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/INV', name: 'INV', image: require('../../assets/joconde.jpg') },
                         { url: '/import/MH', name: 'MH', image: require('../../assets/merimee.jpg') },
                         { url: '/import/', name: 'Mémoire MH', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Mérimée ETAT', image: require('../../assets/noimage.jpg') },

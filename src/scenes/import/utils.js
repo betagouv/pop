@@ -9,19 +9,20 @@ function readFile(file, encoding, cb) {
     reader.readAsText(file, encoding || 'ISO-8859-1');
 }
 
-function readXML(file, encoding, cb) {
-    const reader = new FileReader();
-    reader.onload = () => {
-        const parser = new DOMParser();
-        console.log('reader.result', reader.result)
-        const xmlDoc = parser.parseFromString(reader.result, "text/xml");
-        cb(xmlDoc);
-    };
-    reader.onabort = () => console.log('file reading was aborted');
-    reader.onerror = () => console.log('file reading has failed');
-    reader.readAsBinaryString(file, encoding || 'ISO-8859-1');
-}
+function readXML(file, encoding) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(reader.result, "text/xml");
+            resolve(xmlDoc);
+        };
+        reader.onabort = () => console.log('file reading was aborted');
+        reader.onerror = () => console.log('file reading has failed');
+        reader.readAsText(file, encoding || 'utf-8');
+    })
 
+}
 
 function parseAjoutPilote(res, object) {
     let str = res.replace(/\-\r\n/g, ''); // Parsing du fichier en ajout piloté

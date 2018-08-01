@@ -93,14 +93,16 @@ export default class Importer extends Component {
             for (var i = 0; i < updated.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = updated[i].makeItFlat();
-                await api.updateNotice(notice.REF, this.props.collection, notice, updated[i].images);
+                const collection = ('' + updated[i].constructor.name).toLowerCase();
+                await api.updateNotice(notice.REF, collection, notice, updated[i].images);
             }
 
             //Create notice
             for (var i = 0; i < created.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = created[i].makeItFlat();
-                await api.createNotice(this.props.collection, notice, created[i].images);
+                const collection = ('' + created[i].constructor.name).toLowerCase();
+                await api.createNotice(collection, notice, created[i].images);
             }
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
@@ -200,9 +202,9 @@ export default class Importer extends Component {
                     <div className='feedback'>Vous avez importé avec succès {noticesupdated} notices.</div>
                     <div className='feedback'>Merci pour votre contribution !</div>
                     <div>Vous pouvez récupérer le rapport d'import en nous laissant vos coordonnées mail</div>
-                        {
+                    {
                         this.state.emailSent ? <div>{`Rapport envoyé à ${this.state.email}`}</div> : <div>
-                             <input value={this.state.email} onChange={(e) => { this.setState({ email: e.target.value }) }} placeholder="Saisissez votre mail" />
+                            <input value={this.state.email} onChange={(e) => { this.setState({ email: e.target.value }) }} placeholder="Saisissez votre mail" />
                             <Button className="button" color="primary" onClick={() => {
                                 const body = Report.generate(this.state.importedNotices, this.props.collection)
                                 api.sendReport(`Rapport import ${this.props.collection}`, this.state.email, body).then(() => {
