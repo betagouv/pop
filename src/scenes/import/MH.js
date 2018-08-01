@@ -13,7 +13,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="merimee"
+                    collection="MH"
                     parseFiles={parseFiles}
                 />
             </Container >
@@ -58,10 +58,13 @@ function ParseCSV(file) {
                     obj[header[i]] = e;
                 })
 
-                if(obj.REF.index('PM') !== -1){
+                console.log(obj)
+                if(obj.REF.indexOf('PM') !== -1){
                     output.push(new Palissy(obj));
-                }else if(obj.REF.index('PA') !== -1){
+                }else if(obj.REF.indexOf('PA') !== -1){
                     output.push(new Merimee(obj));
+                }else{
+
                 }
             }
         });

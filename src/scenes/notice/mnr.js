@@ -7,10 +7,8 @@ import { toastr } from 'react-redux-toastr'
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
-import FieldLink from './components/fieldLink.js'
 import FieldImages from './components/fieldImages';
 import Section from './components/section.js'
-import Map from './components/map.js'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'

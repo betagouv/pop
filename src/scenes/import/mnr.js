@@ -30,8 +30,8 @@ function parseFiles(files, encoding) {
         }
 
         utils.readFile(file, encoding, res => {
-            parseCSVFile(res).then(notices => {
-                // const errors = [];
+            parseCSVFile(res)
+            .then(notices => {
                 console.log('GOT NOTICES', notices)
                 ///CONTROLE DE LA CONSISTENTE DES DONNEE 
                 // if (notices.length) {
@@ -49,6 +49,7 @@ function parseFiles(files, encoding) {
                 // }
                 resolve({ importedNotices: notices, fileName: file.name });
             })
+            .catch((e)=> reject(e))
         });
     });
 }
@@ -56,7 +57,7 @@ function parseFiles(files, encoding) {
 
 function parseCSVFile(fileAsBinaryString) {
     return new Promise((resolve, reject) => {
-        const parser = Parse({ delimiter: ',', from: 1 });
+        const parser = Parse({ delimiter: ',', from: 1,relax_column_count :true });
         const output = [];
 
         let record = null;

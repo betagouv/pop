@@ -43,7 +43,8 @@ export default class Importer extends Component {
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
-                const notice = await (api.getNotice(this.props.collection, importedNotices[i].REF.value));
+                const collection = ('' + importedNotices[i].constructor.name).toLowerCase();
+                const notice = await (api.getNotice(collection, importedNotices[i].REF.value));
                 if (notice) {
                     existingNotices.push(notice);
                 }
@@ -87,12 +88,15 @@ export default class Importer extends Component {
         const updated = this.state.importedNotices.filter(e => e._status === 'updated');
         const rejected = this.state.importedNotices.filter(e => e._status === 'rejected');
 
+        
+
         let count = 0;
         try {
             //Update notice
             for (var i = 0; i < updated.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = updated[i].makeItFlat();
+                console.log('updatd notice ', notice)
                 const collection = ('' + updated[i].constructor.name).toLowerCase();
                 await api.updateNotice(notice.REF, collection, notice, updated[i].images);
             }
@@ -234,6 +238,7 @@ export default class Importer extends Component {
                 </div>
             );
         } else if (this.state.errors) {
+            console.log(this.state.errors)
             currentStep = (
                 <div className='working-area'>
                     <h2>Impossible d'importer le fichier car des erreurs ont été détectées :</h2>
