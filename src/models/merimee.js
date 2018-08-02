@@ -4,7 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
-  REF: { type: String, index: true },
+  REF: { type: String, unique: true, index: true, trim: true },
 
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
@@ -95,13 +95,13 @@ const Schema = new mongoose.Schema({
   PREP: { type: [String], default: [] },
   PROT: { type: [String], default: [] },
   PSTA: { type: String, default: '' },
-  REFE: { type: [String], default: [] },
+  REFE: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+  REFP: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
   REFO: { type: [String], default: [] },
-  REFP: { type: [String], default: [] },
   REG: { type: String, default: '' },
   REMA: { type: String, default: '' },
   REMP: { type: String, default: '' },
-  RENV: { type: [String], default: [] },
+  RENV: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
   REPR: { type: String, default: '' },
   RFPA: { type: String, default: '' },
   SCLD: { type: [String], default: [] },
@@ -115,7 +115,7 @@ const Schema = new mongoose.Schema({
   TYPO: { type: String, default: '' },
   VERT: { type: String, default: '' },
   REFIM: { type: String, default: '' },
-  IMG: { type: String, default: '' },
+  IMG: { type: [{ type: mongoose.Schema.ObjectId, ref: 'memoire' }], default: [] }, //ID merimee
   VIDEO: { type: String, default: '' },
   DOSURL: { type: String, default: '' },
   DOSURLP: { type: String, default: '' },

@@ -8,7 +8,7 @@ const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
 
-  REF: { type: String, index: true },
+  REF: { type: String, unique: true, index: true, trim: true },
   ACQU: { type: String, default: '' },
   ADRS: { type: String, default: '' },
   ADRS2: { type: String, default: '' },
