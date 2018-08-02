@@ -95,13 +95,14 @@ const Schema = new mongoose.Schema({
   PREP: { type: [String], default: [] },
   PROT: { type: [String], default: [] },
   PSTA: { type: String, default: '' },
-  REFE: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
-  REFP: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+  REFE: { type: [String], default: [] },
+  REFP: { type: [String], default: [] },
+  REFO: { type: [String], default: [] },
   REFO: { type: [String], default: [] },
   REG: { type: String, default: '' },
   REMA: { type: String, default: '' },
   REMP: { type: String, default: '' },
-  RENV: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+  RENV: { type: [String], default: [] },
   REPR: { type: String, default: '' },
   RFPA: { type: String, default: '' },
   SCLD: { type: [String], default: [] },
@@ -115,7 +116,7 @@ const Schema = new mongoose.Schema({
   TYPO: { type: String, default: '' },
   VERT: { type: String, default: '' },
   REFIM: { type: String, default: '' },
-  IMG: { type: [{ type: mongoose.Schema.ObjectId, ref: 'memoire' }], default: [] }, //ID merimee
+  IMG: { type: [String], default: [] },
   VIDEO: { type: String, default: '' },
   DOSURL: { type: String, default: '' },
   DOSURLP: { type: String, default: '' },

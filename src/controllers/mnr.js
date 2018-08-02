@@ -27,6 +27,7 @@ router.put('/:ref', upload.any(), (req, res) => {
 
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
+    notice.DMIS = notice.DMAJ = formattedNow()
     Mnr.create(notice).then((e) => {
         res.sendStatus(200)
     });

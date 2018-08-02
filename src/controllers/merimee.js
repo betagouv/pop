@@ -3,7 +3,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
 const Merimee = require('../models/merimee');
-const { uploadFile } = require('./utils');
+const { uploadFile, formattedNow } = require('./utils')
 
 
 router.put('/:ref', upload.any(), (req, res) => {
@@ -13,8 +13,7 @@ router.put('/:ref', upload.any(), (req, res) => {
     //UPDATE MAJ DATE ( couldnt use hook ...)
 
     const now = new Date();
-    const formattedNow = ("0" + now.getDate()).slice(-2) + '-' + ("0" + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear();
-    notice.DMAJ = formattedNow;
+    notice.DMAJ = formattedNow();
 
     const arr = [];
     // for (var i = 0; i < req.files.length; i++) {
@@ -31,6 +30,9 @@ router.put('/:ref', upload.any(), (req, res) => {
 
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
+
+    notice.DMIS = notice.DMAJ = formattedNow()
+    
     Merimee.create(notice).then((e) => {
         res.sendStatus(200)
     });
@@ -44,11 +46,26 @@ router.get('/:ref', (req, res) => {
             return;
         }
         if (notice) {
+
+            //ICI
+            /*
+                REFE: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+                REFP: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+                REFO: { type: [{ type: mongoose.Schema.ObjectId, ref: 'palissy' }], default: [] }, //ID palissy
+                RENV: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
+            */
             res.status(200).send(notice);
+
+
         } else {
             res.sendStatus(404);
         }
     });
+
+
+
 })
 
 module.exports = router
+
+
