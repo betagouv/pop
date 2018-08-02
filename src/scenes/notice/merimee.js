@@ -670,10 +670,6 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
-                    <div className='buttons'>
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
-                        <Button disabled color="primary" type="submit" > Sauvegarder </Button>
-                    </div>
                 </Form >
             </Container >
         );

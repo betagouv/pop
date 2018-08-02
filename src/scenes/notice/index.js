@@ -14,7 +14,6 @@ import './index.css';
 export default (props) => {
     return (
         <div>
-            {/* <HeaderBase collection={props.match.params.collection} /> */}
             <Switch>
                 <Route path={`/notice/merimee/:ref`} component={Merimee} />
                 <Route path={`/notice/palissy/:ref`} component={Palissy} />
