@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
-const Joconde = require('../models/joconde')
+const Memoire = require('../models/memoire')
 const { uploadFile, formattedNow } = require('./utils')
 
 router.put('/:ref', upload.any(), (req, res) => {
@@ -13,9 +13,9 @@ router.put('/:ref', upload.any(), (req, res) => {
 
   const arr = []
   for (let i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
+    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-  arr.push(Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
+  arr.push(Memoire.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
 
   Promise.all(arr).then(() => {
     res.sendStatus(200)
@@ -32,9 +32,9 @@ router.post('/', upload.any(), (req, res) => {
 
   const arr = []
   for (var i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
+    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-  arr.push(Joconde.create(notice))
+  arr.push(Memoire.create(notice))
   Promise.all(arr).then(() => {
     res.sendStatus(200)
   }).catch((e) => {
@@ -44,7 +44,7 @@ router.post('/', upload.any(), (req, res) => {
 
 router.get('/:ref', (req, res) => {
   const ref = req.params.ref
-  Joconde.findOne({ REF: ref }, (err, notice) => {
+  Memoire.findOne({ REF: ref }, (err, notice) => {
     if (err) {
       res.status(500).send(err)
       return

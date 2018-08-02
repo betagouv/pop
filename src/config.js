@@ -1,25 +1,27 @@
 
-//ES
-let PORT = process.env.PORT || 3000;
-let mongo_url = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
-let es_url = process.env.ES_ENDPOINT || '127.0.0.1:9200';
-let s3_bucket = process.env.BUCKET || 'pop-phototeque-dev';
+// ES
+let PORT = process.env.PORT || 3000
+let mongoUrl = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`
+let esUrl = process.env.ES_ENDPOINT || '127.0.0.1:9200'
+let s3Bucket = process.env.BUCKET || 'pop-phototeque-dev'
+const secret = process.env.SECRET || 'not-so-secret'
 
 if (process.env.NODE_ENV === 'test') {
-    PORT = 3000;
-    mongo_url = `mongodb://127.0.0.1/poptest`;
-    es_url = '127.0.0.1:9200';
-    s3_bucket = process.env.BUCKET || 'pop-phototeque-dev';
+  PORT = 3000
+  mongoUrl = `mongodb://127.0.0.1/poptest`
+  esUrl = '127.0.0.1:9200'
+  s3Bucket = process.env.BUCKET || 'pop-phototeque-dev'
 }
 
 console.log(`PORT : ${PORT}`)
-console.log(`MONGO : ${mongo_url}`)
-console.log(`ES : ${es_url}`)
-console.log(`S3 : ${s3_bucket}`)
+console.log(`MONGO : ${mongoUrl}`)
+console.log(`ES : ${esUrl}`)
+console.log(`S3 : ${s3Bucket}`)
 
 module.exports = {
-    mongo_url,
-    es_url,
-    s3_bucket,
-    PORT,
+  mongoUrl,
+  esUrl,
+  s3Bucket,
+  PORT,
+  secret
 }

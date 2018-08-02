@@ -1,14 +1,15 @@
-var elasticsearch = require('elasticsearch');
+var elasticsearch = require('elasticsearch')
 
-const { es_url } = require('./config.js');
+const { esUrl } = require('./config.js')
 
-let elasticClient;
+let elasticClient
 
-module.exports = getElasticInstance = () => {
-    if (elasticClient)
-        return elasticClient;
+const getElasticInstance = () => {
+  if (elasticClient) { return elasticClient }
 
-    elasticClient = new elasticsearch.Client({ host: es_url });
+  elasticClient = new elasticsearch.Client({ host: esUrl })
 
-    return elasticClient;
-};
+  return elasticClient
+}
+
+module.exports = getElasticInstance
