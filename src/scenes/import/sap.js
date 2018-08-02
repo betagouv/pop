@@ -37,6 +37,7 @@ function parseFiles(files, encoding) {
                 for (var i = 0; i < files.length; i++) {
                     filesMap[files[i]] = files[i];
                 }
+                
                 //ADD IMAGES
                 for (var i = 0; i < notices.length; i++) {
                     const name = notices[i].IMG.value;
@@ -45,16 +46,15 @@ function parseFiles(files, encoding) {
                     if (!img) {
                         errors.push(`Image ${name} introuvable`)
                     } else {
-                        console.log('FOUND')
                         const newImage = new Blob([img], { type: 'image/jpeg' });
                         notices[i]._images.push(newImage)
                     }
                 }
 
-                // if (errors.length) {
-                //     reject(errors.join('\n'));
-                //     return;
-                // }
+                if (errors.length) {
+                    reject(errors.join('\n'));
+                    return;
+                }
 
                 resolve({ importedNotices: notices, fileName: objectFile.name });
             });

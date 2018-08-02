@@ -98,6 +98,7 @@ class Notice extends React.Component {
                             <FieldLink
                                 title='N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :'
                                 name='RENV'
+                                url="/notice/merimee/"
                                 disabled
                             />
                             {/* <div>
@@ -124,16 +125,16 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title="TODO-Identifiant Patrimoine (RFPA) :"
+                                title="Identifiant Patrimoine (RFPA) :"
                                 name='RFPA'
                                 disabled
                             />
                             <FieldInput
-                                title="TODO-Date de mise à jour (DMAJ) :"
+                                title="Date de mise à jour (DMAJ) :"
                                 name='DMAJ'
                                 disabled
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='Domaines (DOMN) : '
                                 name='DOMN'
                                 disabled
@@ -243,8 +244,9 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldLink
-                                title='TODO-Références des parties constituantes étudiées (REFP) : '
+                                title='Références des parties constituantes étudiées (REFP) : '
                                 name='REFP'
+                                url="/notice/merimee/"
                                 disabled
                             />
                             <FieldTags
@@ -315,8 +317,9 @@ class Notice extends React.Component {
                         <Col sm={6}>
 
                             <FieldLink
-                                title="TODO-Référence de l'édifice de conservation (REFE) : "
+                                title="Référence de l'édifice de conservation (REFE) : "
                                 name='REFE'
+                                url="/notice/merimee/"
                                 disabled
                             />
                             <FieldTags
@@ -490,7 +493,7 @@ class Notice extends React.Component {
                                 name='REPR'
                                 disabled
                             />
-                            <FieldInput
+                            <FieldTags
                                 title='TODO-Précision sur la représentation (PREP) : '
                                 name='PREP'
                                 disabled
@@ -640,6 +643,7 @@ class Notice extends React.Component {
                             <FieldLink
                                 title='REFO (REFO) : '
                                 name='REFO'
+                                url="/notice/palissy/"
                                 disabled
                             />
                             <FieldInput
