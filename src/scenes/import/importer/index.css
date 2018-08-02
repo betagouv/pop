@@ -1,128 +1,211 @@
-.import {
+.importer-container {
   display: flex;
-  flex-direction: column!important;
+  flex-direction: column!important;    
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 #E4E4E4;
+  width: 100%;
+  margin: 20px;
 }
 
-.import .visu{
-  border-style: solid;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-left-width: 0px;
-  border-bottom-width: 0px;
-  border-color: #dee2e6;
-  padding : 0px 5px 0px 5px;
-  text-align: center;
-  font-size: 20px;
+.importer-container .row{
+  height: 100%;
+}
+
+.importer-container .left-col{
+  background-color: #F4E2CC;
+  min-height: 700px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.importer-container .left-col img{
+  width:100%;
+}
+.importer-container .left-col h5{
+  font-weight: 600;
+}
+
+.importer-container .right-col{
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.importer-container .right-col .title{
+  color: #007772;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #CCCCCC;
+  text-align: center;
+  font-size: 15px;
+}
+
+.importer-container .right-col .rc-steps{
+  width: 75%;
+}
+
+
+.importer-container .button{
+  background-color: #70B7B3;
+  border-radius: 3px;
+  width: 209px;
+  height: 45px;
+  margin: 10px;
+  border: 0;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.importer-container .buttonReverse {
+  background-color: white;
+  border-radius: 3px;
+  width: 209px;
+  height: 45px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #70B7B3;
+  border-color:#70B7B3 
+}
+
+.importer-container input {
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  width: 329px;
+  height: 45px;
+  border: 0;
+  padding: 10px;
+}
+
+.importer-container .rc-steps-item-process .rc-steps-item-icon{
+  border-color: #70B7B3;
+  background: #70B7B3;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-wait .rc-steps-item-icon{
+  border-color: #8999AE;
+  background: #8999AE;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-finish .rc-steps-item-icon{
+  border-color: #70B7B3;
+  background: #70B7B3;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-tail {
+  top: 16px;
+  padding: 0px 10px 0px 23px;
+}
+.importer-container .rc-steps-item-tail:after {
+  height: 2px;
+}
+.importer-container .rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: #70B7B3;
+  height: 2px;
+}
+
+
+
+
+
+
+.importer-container  .rc-steps-icon{
+  color:white!important;
+  font-size: 20px;
+  line-height: 38px;
+}
+
+.importer-container .working-area{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.importer-container .summary{
+  background-color: #F3F7FC;
+  border: 1px solid #E3E3E3;
+  border-radius: 10px;
+  min-height: 367px;
+  padding: 20px;
+  font-size: 15px;
+}
+
+.importer-container .summary .round{
+  background-color: #FF0000;
+  border-radius: 50%;
+  height: 15px;
+  margin-right: 5px;
+  width: 15px;
+}
+
+.importer-container .summary .details{
+  float: right;
+  margin-top: 50px;
+}
+.importer-container .summary .lines{
+  padding-top: 10px;
+}
+.importer-container .summary .line{
+  display: flex;
+  align-items: center;
+}
+
+.importer-container .subtitle{
+  font-family: 'Comfortaa';
+  padding-top: 25px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.importer-container .filename{
+  color: #007772;
+  font-family: 'Nunito';
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: center;
+  margin: 13px;
+}
+
+
+.importer-container .feedbacks{
+  background-color: #F3F7FC;
+  border: 1px solid #E3E3E3;
+  border-radius: 10px;
+  height: 367px;
+  padding: 20px;
+  font-size: 15px;
+  display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.import .col{
-  border-style: solid;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-left-width: 0px;
-  border-bottom-width: 0px;
-  border-color: #dee2e6;
-  padding : 0px 5px 0px 5px;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
-}
-
-.import .table{
-  border-style: solid;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-left-width: 1px;
-  border-bottom-width: 1px;
-  border-color: #dee2e6;
-}
-
-.import .row{
-  margin: 0px;
-  height: 50px;
-}
-
-.import .collapse{
-  width:100%
-}
-.import .content{
-
-}
-
-.import .section{
-  padding-bottom: 40px;
-}
-
-.import .dropzone{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  padding-top: 200px;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.import .summary{
-  background-color: white;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
-  margin: 20px;
-  padding: 20px;
-}
-
-.import .summary button{
   margin-top: 20px;
 }
 
-.import .summary h2{
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.import .progress{
-  width: 400px;
-  margin-bottom: 30px;
-}
-
-.import .progress-bar{
-  height: 50px;
-}
-
-.import .dropzone .container{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+.importer-container .feedbacks .feedback{
+  color: #007772;
   text-align: center;
-  min-height: 200px;
-  border-style: dashed;
-  border-width: 1px;
-  background-color: white;
+  font-weight: bold;
 }
-
-.import .dropzone select{
-  margin-top: 30px;
-  min-height: 40px;
-}
-
-.import .buttons{
-  padding-bottom: 20px;
-  padding-top: 20px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.import-container{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 200px;
-}
-
-

@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 
+
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
-import FieldLink from './components/fieldLink.js'
 import FieldImages from './components/fieldImages';
 import Section from './components/section.js'
-import Map from './components/map.js'
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
@@ -35,6 +34,7 @@ class Notice extends React.Component {
     }
 
     load(ref) {
+        console.log('Load')
         this.setState({ loading: true })
         API.getNotice('mnr', ref)
             .then((notice) => {
@@ -55,18 +55,18 @@ class Notice extends React.Component {
 
     onSubmit(values) {
         this.setState({ saving: true })
-
-
         const files = [];
-        for (var i = 0; i < values.VIDEO.length; i++) {
-            if (values.VIDEO[i] instanceof File) {
-                files.push(values.VIDEO[i]);
-                values.VIDEO[i] = `mnr/${values.REF}/${values.VIDEO[i].name}`
+
+        //copy the object so the image is not changing while its uploading
+        const VIDEO = [...values.VIDEO];
+        for (var i = 0; i < VIDEO.length; i++) {
+            if (VIDEO[i] instanceof File) {
+                files.push(VIDEO[i]);
+                VIDEO[i] = `mnr/${values.REF}/${VIDEO[i].name}`
             }
         }
 
-        console.log('values.VIDEO',values.VIDEO)
-        API.updateNotice(this.state.notice.REF, 'mnr', values, files)
+        API.updateNotice(this.state.notice.REF, 'mnr', { ...values, ...{ VIDEO } }, files)
             .then((e) => {
                 toastr.success('Modification enregistrée');
                 this.setState({ saving: false })
@@ -95,14 +95,9 @@ class Notice extends React.Component {
                     className='main-body'
                 >
                     <Row>
-                        <Col className='image' sm={6}>
+                        <Col className='image' sm={12}>
                             <FieldImages
                                 name='VIDEO'
-                            />
-                        </Col>
-                        <Col className='image' sm={6}>
-                            <Map
-                                notice={this.state.notice}
                             />
                         </Col>
                     </Row>
@@ -190,8 +185,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Description (DESC) :'
                                 name='DESC'
-                                type='textarea'
-                                rows={8}
                             />
                             <FieldInput
                                 title='Inscriptions (INSC) :'
@@ -208,16 +201,16 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Exposition (EXPO) :'
                                 name='EXPO'
-                                type='textarea'
-                                rows={8}
+                            />
+                            <FieldInput
+                                title='Localisation (LOCA) :'
+                                name='LOCA'
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
                                 name='BIBL'
-                                type='textarea'
-                                rows={8}
                             />
                             <FieldInput
                                 title='Observations (OBSE) :'
@@ -242,6 +235,10 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Etat de conservation (ETAT) :'
                                 name='ETAT'
+                            />
+                            <FieldInput
+                                title='Résumé (RESUME) :'
+                                name='RESUME'
                             />
                             <FieldInput
                                 title='Notes (NOTE) :'
@@ -303,7 +300,7 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <div className='buttons'>
-                        <Button color="danger"><Link style={{ textDecoration: 'none', color: 'white' }} to="/">Annuler</Link></Button>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
                         <Button color="primary" type="submit" >Sauvegarder</Button>
                     </div>
                 </Form >

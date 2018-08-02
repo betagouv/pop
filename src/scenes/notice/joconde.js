@@ -69,8 +69,7 @@ class Notice extends React.Component {
 
         return (
             <Container className='notice' fluid>
-                <Form
-                    onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
+                <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
                     <Row>
@@ -164,6 +163,11 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
                             <FieldInput
+                                title='Localisation (LOCA) :'
+                                name='LOCA'
+                                disabled
+                            />
+                            <FieldInput
                                 title='Mesures (DIMS) :'
                                 name='DIMS'
                                 disabled
@@ -238,12 +242,12 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title='Lieu de création / d’exécution / d’utilisation, destination (LIEUX) :'
+                                title='Lieu de création / d’exécution / d’utilisation(LIEUX) :'
                                 name='LIEUX'
                                 disabled
                             />
                             <FieldInput
-                                title='Précisions sur le lieu de création/ d’exécution / d’utilisation, destination (PLIEUX) :'
+                                title='Précisions sur le lieu de création/ d’exécution / d’utilisation(PLIEUX) :'
                                 name='PLIEUX'
                                 disabled
                             />
@@ -260,12 +264,17 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
                             <FieldTags
-                                title='Précisions sur l’utilisation / destination (PERU) :'
+                                title='Période d’utilisation (PERU) :'
                                 name='PERU'
                                 disabled
                             />
                             <FieldInput
-                                title='Millésime d’utilisation / destination (MILU) :'
+                                title='Précisions sur l’utilisation (PUTI) :'
+                                name='PUTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Millésime d’utilisation (MILU) :'
                                 name='MILU'
                                 disabled
                             />
@@ -390,6 +399,16 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
+                                title='Videos (VIDEO) :'
+                                name='VIDEO'
+                                disabled
+                            />
+                            <FieldTags
+                                title='Images (IMG) :'
+                                name='IMG'
+                                disabled
+                            />
+                            <FieldInput
                                 title='Appellation musée de France : logo (LABEL) :'
                                 name='LABEL'
                                 disabled
@@ -444,9 +463,7 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <div className='buttons'>
-                        <Button color="danger">
-                            <Link style={{ textDecoration: 'none', color: 'white' }} to="/">Annuler </Link>
-                        </Button>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler </Button></Link>
                         <Button disabled color="primary" type="submit" >Sauvegarder </Button>
                     </div>
                 </Form >

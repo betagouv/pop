@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 
 import FieldInput from './components/fieldInput.js'
@@ -38,8 +37,7 @@ class Notice extends React.Component {
         this.setState({ loading: true })
         API.getNotice('palissy', ref).then((notice) => {
             console.log('NOTICE', notice)
-            const initData = notice;
-            this.props.initialize(initData);
+            this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
             this.setState({ loading: false, notice })
         })
     }
@@ -102,6 +100,7 @@ class Notice extends React.Component {
                             <FieldLink
                                 title='N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :'
                                 name='RENV'
+                                url="/notice/palissy/"
                             />
                             {/* <div>
                                 <div>N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :</div>
@@ -124,16 +123,21 @@ class Notice extends React.Component {
                                 name='COPY'
                             />
                             <FieldInput
-                                title="TODO-Identifiant Patrimoine (RFPA) :"
+                                title="Identifiant Patrimoine (RFPA) :"
                                 name='RFPA'
                             />
                             <FieldInput
-                                title="TODO-Date de mise à jour (DMAJ) :"
+                                title="Date de mise à jour (DMAJ) :"
                                 name='DMAJ'
                             />
                             <FieldInput
                                 title='Domaines (DOMN) : '
                                 name='DOMN'
+                            />
+                            <FieldLink
+                                title='REFA (REFA) : '
+                                name='REFA'
+                                url="/notice/merimee/"
                             />
                             <FieldInput
                                 title='Auteurs phototype (AUTP) : '
@@ -142,8 +146,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Dossier adresse (DOSADRS) :'
                                 name='DOSADRS'
-                                type='textarea'
-                                rows={4}
                             />
                             <FieldInput
                                 title='Contact (CONTACT) :'
@@ -177,7 +179,7 @@ class Notice extends React.Component {
                                 name='DMIS'
                             />
                             <FieldInput
-                                title="TODO-Numéro de microfiche (MICR) :"
+                                title="Numéro de microfiche (MICR) :"
                                 name='MICR'
                             />
                         </Col>
@@ -225,8 +227,9 @@ class Notice extends React.Component {
                                 name='PART'
                             />
                             <FieldLink
-                                title='TODO-Références des parties constituantes étudiées (REFP) : '
+                                title='Références des parties constituantes étudiées (REFP) : '
                                 name='REFP'
+                                url="/notice/palissy/"
                             />
                             <FieldInput
                                 title='Décompte des oeuvres recensées (COLL) :'
@@ -286,8 +289,9 @@ class Notice extends React.Component {
                         <Col sm={6}>
 
                             <FieldLink
-                                title="TODO-Référence de l'édifice de conservation (REFE) : "
+                                title="Référence de l'édifice de conservation (REFE) : "
                                 name='REFE'
+                                url="/notice/palissy/"
                             />
                             <FieldInput
                                 title='Référence cadastrale (CADA) :'
@@ -364,8 +368,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Commentaire historique (HIST) :'
                                 name='HIST'
-                                type='textarea'
-                                rows={10}
                             />
                         </Col>
                     </Section>
@@ -394,8 +396,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précision sur la représentation (PREP) : '
                                 name='PREP'
-                                type='textarea'
-                                rows={4}
                             />
                         </Col>
                         <Col sm={6}>
@@ -414,8 +414,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Commentaire description (DESC) :'
                                 name='DESC'
-                                type='textarea'
-                                rows={4}
                             />
                             <FieldTags
                                 title='Parties non étud (PARN) : '
@@ -442,8 +440,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions sur la protection MH (PPRO) :'
                                 name='PPRO'
-                                type='textarea'
-                                rows={10}
                             />
                         </Col>
                         <Col sm={6}>
@@ -467,8 +463,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Observations (OBS) :'
                                 name='OBS'
-                                type='textarea'
-                                rows={10}
                             />
                         </Col>
                     </Section>
@@ -479,7 +473,7 @@ class Notice extends React.Component {
                         color='#00BEB2'
                     >
                         <Col sm={6}>
-                            <FieldInput
+                            <FieldTags
                                 title='Statut de la propriété (STAT) :'
                                 name='STAT'
                             />
@@ -532,11 +526,7 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     <div className='buttons'>
-                        <Button color="danger">
-                            <Link to="/">
-                                Annuler
-                         </Link>
-                        </Button>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
                         <Button
                             disabled={false}
                             color="primary"

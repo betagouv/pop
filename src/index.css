@@ -1,14 +1,16 @@
 body {
   margin: 0px;
   overflow:hidden;
-  overflow-y: auto;
-  font-family: 'Work Sans';
-  background-color: #F5F5F5;
+  background-color: #F3F7FC;
 }
 
 body, html, #root, .main {
   width: 100%;
-  font-family: 'Work Sans';
+  font-family: 'Comfortaa';
+  font-size: medium;
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: #F3F7FC;
+}
+#root{
+  overflow-y: auto;
 }

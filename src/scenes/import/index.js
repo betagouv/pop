@@ -1,21 +1,21 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HeaderBase from './../headerBase';
-
-import Merimee from './merimee';
+import Mh from './mh';
 import Joconde from './joconde';
 import Mnr from './mnr';
-import Palissy from './palissy';
-
-export default (props) => {
+import Inv from './inv';
+import Sap from './sap';
+    
+export default () => {
     return (
         <div>
             <Switch>
-                {/* <Route path={`/import/merimee`} component={Merimee} />
-                <Route path={`/import/palissy`} component={Palissy} />*/}
+                <Route path={`/import/sap`} component={Sap} />
                 <Route path={`/import/mnr`} component={Mnr} />
                 <Route path={`/import/joconde`} component={Joconde} />
+                <Route path={`/import/mh`} component={Mh} />
+                <Route path={`/import/inv`} component={Inv} />
             </Switch>
         </div>
     );

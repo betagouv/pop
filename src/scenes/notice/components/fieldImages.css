@@ -19,6 +19,7 @@
 
 .fieldImages img{
     height: 240px;
+    min-width: 300px;
     object-fit: contain;
     background-color: #fff1f1;
     padding: 10px;

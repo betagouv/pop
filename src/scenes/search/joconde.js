@@ -128,7 +128,7 @@ export default class Search extends React.Component {
                         <MultiList
                             componentId="deno"
                             dataField="DENO.keyword"
-                            title="Denomination"
+                            title="Dénomination"
                             className="filters"
                             showSearch={true}
                             URLParams={true}
@@ -140,7 +140,7 @@ export default class Search extends React.Component {
                         <MultiList
                             componentId="periode"
                             dataField="PERI.keyword"
-                            title="Periode"
+                            title="Période"
                             className="filters"
                             showSearch={true}
                             URLParams={true}
@@ -222,7 +222,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.IMG.length ? `${bucket_url}/${data.IMG[0]}` : require('../../assets/noimage.jpg');
+    const image = data.IMG.length ? `${bucket_url}${data.IMG[0]}` : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/joconde/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt={data.TITR} />

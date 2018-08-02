@@ -2,6 +2,8 @@ import React from 'react';
 import { Field } from 'redux-form'
 import Dropzone from 'react-dropzone';
 import { Row, Col, Modal } from 'reactstrap';
+import Viewer from 'react-viewer';
+import 'react-viewer/dist/index.css';
 
 import { bucket_url } from '../../../config';
 
@@ -11,29 +13,24 @@ class FieldImages extends React.Component {
 
     state = {
         images: [],
-        selected: null,
+        selected: -1,
     }
 
     onDrop(files) {
-        console.log('DROPED', files);
         this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
-    toggleModal() {
-        this.setState({ selected: null })
-    }
-
     renderImages() {
-        const arr = this.props.input.value.map(e => {
-            let source = `${bucket_url}/${e}`;
+        const arr = this.props.input.value.map((e, i) => {
+            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
             let key = e;
             if (e instanceof File) {
                 source = e.preview;
                 key = e.name;
             }
             return (
-                <Col md="6" key={key}>
-                    <img onClick={() => this.setState({ selected: source })} src={source} alt={e} className="img-fluid w-100" />
+                <Col key={key}>
+                    <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" />
                 </Col>
             )
         });
@@ -50,15 +47,34 @@ class FieldImages extends React.Component {
 
         return arr;
     }
+    renderModal() {
+        if (this.state.selected === -1) {
+            return <div />
+        }
+        const images = this.props.input.value.map((e, i) => {
+            if (e instanceof File) {
+                return { src: e.preview, alt: e.name }
+            } else {
+                return { src: this.props.external ? `${e}` : `${bucket_url}${e}`, alt: e }
+            }
+        });
+
+        return (
+            <Viewer
+                visible
+                onClose={() => { this.setState({ selected: -1 }); }}
+                images={images}
+                activeIndex={this.state.selected}
+            />
+        )
+    }
 
     render() {
+
+
         return (
             <div className='fieldImages'>
-                <Modal centered={true} isOpen={this.state.selected !== null} toggle={this.toggleModal.bind(this)} >
-                    <div>
-                        <img src={`${this.state.selected}`} alt={this.state.selected} className="img-fluid w-100" />
-                    </div>
-                </Modal>
+                {this.renderModal()}
                 <Row >
                     {this.renderImages()}
                 </Row>
