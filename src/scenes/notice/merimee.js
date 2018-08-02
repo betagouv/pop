@@ -45,8 +45,6 @@ class Notice extends React.Component {
 
     onSubmit(values) {
         this.setState({ saving: true })
-
-        console.log('VALUES', values)
         API.updateNotice(this.state.notice.REF, 'merimee', values).then((e) => {
             toastr.success('Modification enregistrée');
             this.setState({ saving: false })

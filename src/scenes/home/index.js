@@ -41,14 +41,12 @@ export default class Home extends React.Component {
                 <Row>
                     {this.renderTiles([
                         { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
-                        { url: '/import/inventairegertrude', name: 'Inventaire Gertrude', image: require('../../assets/noimage.jpg') },
-                        { url: '/import/INV', name: 'INV', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/MH', name: 'MH', image: require('../../assets/merimee.jpg') },
-                        { url: '/import/', name: 'Mémoire MH', image: require('../../assets/noimage.jpg') },
+                        { url: '/import/mnr', name: 'MNR', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/inv', name: 'INV', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/mh', name: 'MH', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/sap', name: 'SAP', image: require('../../assets/joconde.jpg') },
                         { url: '/import/', name: 'Mérimée ETAT', image: require('../../assets/noimage.jpg') },
                         { url: '/import/', name: 'Palissy ETAT', image: require('../../assets/noimage.jpg') },
-                        { url: '/import/', name: 'Mémoire Archive Photo', image: require('../../assets/noimage.jpg') },
                     ])}
                 </Row>
             </div>

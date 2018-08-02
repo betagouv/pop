@@ -237,6 +237,10 @@ class Notice extends React.Component {
                                 name='ETAT'
                             />
                             <FieldInput
+                                title='Résumé (RESUME) :'
+                                name='RESUME'
+                            />
+                            <FieldInput
                                 title='Notes (NOTE) :'
                                 name='NOTE'
                             />

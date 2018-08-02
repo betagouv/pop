@@ -242,12 +242,12 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title='Lieu de création / d’exécution / d’utilisation, destination (LIEUX) :'
+                                title='Lieu de création / d’exécution / d’utilisation(LIEUX) :'
                                 name='LIEUX'
                                 disabled
                             />
                             <FieldInput
-                                title='Précisions sur le lieu de création/ d’exécution / d’utilisation, destination (PLIEUX) :'
+                                title='Précisions sur le lieu de création/ d’exécution / d’utilisation(PLIEUX) :'
                                 name='PLIEUX'
                                 disabled
                             />
@@ -264,12 +264,17 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
                             <FieldTags
-                                title='Précisions sur l’utilisation / destination (PERU) :'
+                                title='Période d’utilisation (PERU) :'
                                 name='PERU'
                                 disabled
                             />
                             <FieldInput
-                                title='Millésime d’utilisation / destination (MILU) :'
+                                title='Précisions sur l’utilisation (PUTI) :'
+                                name='PUTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Millésime d’utilisation (MILU) :'
                                 name='MILU'
                                 disabled
                             />
