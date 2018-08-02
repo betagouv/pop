@@ -22,6 +22,7 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
+        const errors = [];
 
         var objectFile = files.find(file => file.name.includes('.txt'));
         if (!objectFile) {
@@ -31,6 +32,30 @@ function parseFiles(files, encoding) {
 
         utils.readFile(objectFile, encoding, (file) => {
             ParseCSV(file).then(notices => {
+
+                const filesMap = {};
+                for (var i = 0; i < files.length; i++) {
+                    filesMap[files[i]] = files[i];
+                }
+                //ADD IMAGES
+                for (var i = 0; i < notices.length; i++) {
+                    const name = notices[i].IMG.value;
+                    if (!name) break;
+                    let img = filesMap[name];
+                    if (!img) {
+                        errors.push(`Image ${name} introuvable`)
+                    } else {
+                        console.log('FOUND')
+                        const newImage = new Blob([img], { type: 'image/jpeg' });
+                        notices[i]._images.push(newImage)
+                    }
+                }
+
+                // if (errors.length) {
+                //     reject(errors.join('\n'));
+                //     return;
+                // }
+
                 resolve({ importedNotices: notices, fileName: objectFile.name });
             });
         })

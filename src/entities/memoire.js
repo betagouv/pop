@@ -47,7 +47,7 @@ export default class Memoire extends Notice {
         this.FORMATOR = { type: 'String', value: body.FORMATOR || '' };
         this.FORMATTI = { type: 'String', value: body.FORMATTI || '' };
         this.IDPROD = { type: 'String', value: body.IDPROD || '' };
-        this.IMG = { type: 'String', value: body.IMG || '' };
+        this.IMG = { type: 'String', value: body.IMG || body.NOMSN  || '' };
         this.INSEE = { type: 'String', value: body.INSEE || '' };
         this.JDATPV = { type: 'String', value: body.JDATPV || '' };
         this.LAUTP = { type: 'String', value: body.LAUTP || '' };
