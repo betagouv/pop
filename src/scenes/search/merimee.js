@@ -167,7 +167,6 @@ export default class Search extends React.Component {
                 <div className='header'>
                     <div className='buttons'>
                         <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
-                        <CustomButton icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
                     </div>
                 </div>
                 <ReactiveBase

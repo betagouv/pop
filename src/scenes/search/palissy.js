@@ -17,7 +17,7 @@ import ExportComponent from './components/export';
 
 import { es_url, bucket_url } from '../../config.js';
 
-const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"];
+const FILTER = ["mainSearch", "producteur", "image", "denomination", "auteurs", "region", "departement", "commune"];
 
 export default class Search extends React.Component {
     render() {
@@ -25,8 +25,6 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        <Button icon={require('../../assets/import.png')} to='/import/palissy' text='Importer des notices' />
-                        <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
                     </div>
                 </div>
                 <ReactiveBase
