@@ -7,7 +7,6 @@ import {
     DataSearch,
     ReactiveList,
     MultiList,
-    SingleList,
     SelectedFilters,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
@@ -16,7 +15,7 @@ import {
 import Button from './components/button';
 import ExportComponent from './components/export';
 
-import { es_url } from '../../config.js';
+import { es_url, bucket_url } from '../../config.js';
 
 const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"];
 
@@ -65,7 +64,7 @@ export default class Search extends React.Component {
                     </div>
                     <Row>
                         <Col xs="3">
-                            <SingleList
+                            <MultiList
                                 componentId="image"
                                 dataField="CONTIENT_IMAGE.keyword"
                                 title="Contient une image"
@@ -76,7 +75,7 @@ export default class Search extends React.Component {
                                     and: FILTER
                                 }}
                             />
-                            {/* <SingleList
+                            {/* <MultiList
                                 componentId="location"
                                 dataField="POP_HAS_LOCATION.keyword"
                                 title="Contient une localisation"
@@ -191,7 +190,7 @@ const Card = ({ data }) => {
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/palissy/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Book Cover" />
+            <img src={image} alt="Lien cassé" />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>

@@ -23,6 +23,12 @@
   margin: 10px;
 }
 
+.notice .back{
+  padding: 20px;
+  cursor: pointer;
+  color: #007bff;
+}
+
 .notice .image{
   display: flex;
   justify-content: center;

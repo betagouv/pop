@@ -70,6 +70,10 @@ class Notice extends React.Component {
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
+
+                    <Row>
+                        <div className="back" onClick={() => this.props.history.goBack()}>Retour</div>
+                    </Row>
                     <Row>
                         <FieldImages
                             name='IMG'

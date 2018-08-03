@@ -3,6 +3,7 @@ import Notice from './notice'
 export default class MNR extends Notice {
     constructor(body) {
         super();
+        this._type = 'mnr';
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         this.TOUT = { type: 'String', value: body.TOUT || '' };
         this.AUTR = { type: 'Array', value: this.extractArray(body.AUTR) };

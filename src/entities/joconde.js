@@ -3,6 +3,8 @@ import Notice from './notice'
 export default class Joconde extends Notice {
     constructor(body) {
         super();
+        this._type = 'joconde';
+        
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         this.ADPT = { type: 'Array', value: this.extractArray(body.ADPT) };
         this.APTN = { type: 'String', value: body.APTN || '' };

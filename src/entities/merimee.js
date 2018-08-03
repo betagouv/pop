@@ -3,6 +3,8 @@ import Notice from './notice'
 export default class Merimee extends Notice {
     constructor(body) {
         super();
+        this._type = 'merimee';
+
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         this.PRODUCTEUR = { type: 'String', value: body.PRODUCTEUR || '' };
         // this.POP_COORDINATES_POINT = { type: 'String', value: body.NOTE || '' };

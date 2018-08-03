@@ -4,6 +4,7 @@ export default class Notice {
         this._messages = [];
         this._warnings = [];
         this._images = [];
+        this._type = '';
     }
 
     makeItFlat = function () {

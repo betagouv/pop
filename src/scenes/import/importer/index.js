@@ -88,7 +88,7 @@ export default class Importer extends Component {
         const updated = this.state.importedNotices.filter(e => e._status === 'updated');
         const rejected = this.state.importedNotices.filter(e => e._status === 'rejected');
 
-        
+
 
         let count = 0;
         try {
@@ -96,8 +96,8 @@ export default class Importer extends Component {
             for (var i = 0; i < updated.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = updated[i].makeItFlat();
-                console.log('updatd notice ', notice)
-                const collection = ('' + updated[i].constructor.name).toLowerCase();
+                console.log('update notice ', notice);
+                const collection = created[i]._type;
                 await api.updateNotice(notice.REF, collection, notice, updated[i].images);
             }
 
@@ -105,7 +105,7 @@ export default class Importer extends Component {
             for (var i = 0; i < created.length; i++ , count++) {
                 this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = created[i].makeItFlat();
-                const collection = ('' + created[i].constructor.name).toLowerCase();
+                const collection = created[i]._type;
                 await api.createNotice(collection, notice, created[i].images);
             }
             //Sending rapport
@@ -121,6 +121,7 @@ export default class Importer extends Component {
                 'sebastien.legoff@beta.gouv.fr',
                 'carine.prunet@culture.gouv.fr',
                 'jeannette.ivain@culture.gouv.fr',
+                'sophie.daenens@culture.gouv.fr'
             ]
 
             await api.sendReport(`Rapport import ${this.props.collection}`, dest.join(','), body);

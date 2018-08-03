@@ -3,6 +3,8 @@ import Notice from './notice'
 export default class Palissy extends Notice {
     constructor(body) {
         super();
+        this._type = 'palissy';
+
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         // PRODUCTEUR= { type: String, value: body.DBOR || '' };
         // CONTIENT_IMAGE= { type: String, value: body.DBOR || '' };

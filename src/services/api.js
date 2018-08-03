@@ -28,6 +28,7 @@ class api {
         for (var i = 0; i < images.length; i++) {
             formData.append('file', images[i]);
         }
+        console.log('POST COLLECTION ', collection)
         return this._post(`${api_url}/${collection}`, formData)
     }
 
