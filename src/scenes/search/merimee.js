@@ -8,8 +8,7 @@ import ExportComponent from './components/export';
 
 import QueryBuilder from './components/queryBuilder';
 
-import { es_url } from '../../config.js';
-
+import { es_url, bucket_url } from '../../config.js';
 const FILTER = ["mainSearch", "region", "auteurs", "denomination", "producteur", "departement", "commune", "image", "location", "date", "zone"]
 
 export default class Search extends React.Component {

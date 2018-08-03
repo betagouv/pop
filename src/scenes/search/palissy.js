@@ -15,7 +15,7 @@ import {
 import Button from './components/button';
 import ExportComponent from './components/export';
 
-import { es_url } from '../../config.js';
+import { es_url, bucket_url } from '../../config.js';
 
 const FILTER = ["mainSearch", "region", "auteurs", "denomination", "domaine", "departement", "commune", "image", "location", "date", "zone"];
 
