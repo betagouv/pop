@@ -43,7 +43,7 @@ export default class Importer extends Component {
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
-                const collection = ('' + importedNotices[i].constructor.name).toLowerCase();
+                const collection = created[i]._type;
                 const notice = await (api.getNotice(collection, importedNotices[i].REF.value));
                 if (notice) {
                     existingNotices.push(notice);
