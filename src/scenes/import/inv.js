@@ -56,7 +56,7 @@ function ParseGertrude(objectFile, encoding) {
                 case 'com.atolcd.gertrude.model.dossier.oeuvre.objet.DossierOeuvreObjet':
                     notices.push(XmlToPalissy(tags[i]));
                     break;
-                case 'com.atolcd.gertrude.model.dossier.oeuvre.objet.DossierOeuvreObjet':
+                case 'com.atolcd.gertrude.model.dossier.oeuvre.objet.DossierOeuvreArchitecture':
                     notices.push(XmlToMerimee(tags[i]));
                     break;
             }
