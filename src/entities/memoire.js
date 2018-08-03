@@ -3,6 +3,7 @@ import Notice from './notice'
 export default class Memoire extends Notice {
     constructor(body) {
         super();
+        this._type = 'memoire';
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         this.ACC = { type: 'String', value: body.ACC || '' };
         this.ACQU = { type: 'String', value: body.ACQU || '' };
