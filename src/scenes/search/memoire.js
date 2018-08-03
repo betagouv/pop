@@ -106,7 +106,7 @@ const Card = ({ data }) => {
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/memoire/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Book Cover" />
+            <img src={image} alt="Lien cassé"  />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>

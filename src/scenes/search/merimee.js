@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { ReactiveBase, DataSearch, ReactiveList, MultiList, SingleList, SelectedFilters } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import CustomButton from './components/button';
 import ExportComponent from './components/export';
@@ -25,7 +25,7 @@ export default class Search extends React.Component {
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <QueryBuilder/>
+                <QueryBuilder />
                 <ReactiveList
                     componentId="results"
                     react={{ "and": ['advancedSearch'] }}
@@ -62,7 +62,7 @@ export default class Search extends React.Component {
                 </div>
                 <Row>
                     <Col xs="3">
-                        <SingleList
+                        <MultiList
                             componentId="image"
                             dataField="CONTIENT_IMAGE.keyword"
                             title="Contient une image"
@@ -71,7 +71,7 @@ export default class Search extends React.Component {
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
-                        <SingleList
+                        <MultiList
                             componentId="location"
                             dataField="POP_HAS_LOCATION.keyword"
                             title="Contient une localisation"
@@ -169,7 +169,6 @@ export default class Search extends React.Component {
                     <div className='buttons'>
                         <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
                         <CustomButton icon={require('../../assets/import.png')} to='/import/merimee' text='Importer des notices' />
-                        <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' />
                     </div>
                 </div>
                 <ReactiveBase
@@ -188,7 +187,7 @@ const Card = ({ data }) => {
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/merimee/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Book Cover" />
+            <img src={image} alt="Lien cassé"  />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>

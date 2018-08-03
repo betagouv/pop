@@ -72,6 +72,9 @@ class Notice extends React.Component {
                     className='main-body'
                 >
                     <Row>
+                        <div className="back" onClick={() => this.props.history.goBack()}>Retour</div>
+                    </Row>
+                    <Row>
                         <Col className='image' sm={6}>
                             <div className="thumbs-box">
                                 <div className="thumb-lg mb-3">
