@@ -19,7 +19,7 @@ import { es_url, bucket_url } from '../../config.js';
 import jocondeMapping from '../../mapping/joconde';
 
 
-const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "inv", "autr"]
+const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "loca", "autr"]
 
 export default class Search extends React.Component {
 
@@ -173,9 +173,9 @@ export default class Search extends React.Component {
                         />
 
                         <MultiList
-                            componentId="inv"
-                            dataField="INV.keyword"
-                            title="Inventaire"
+                            componentId="loca"
+                            dataField="LOCA.keyword"
+                            title="Localisation"
                             className="filters"
                             showSearch={true}
                             URLParams={true}

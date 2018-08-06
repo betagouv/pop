@@ -6,6 +6,8 @@ import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } fr
 import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
+import Merimee from '../../entities/merimee';
+
 import QueryBuilder from './components/queryBuilder';
 
 import { es_url, bucket_url } from '../../config.js';
@@ -16,7 +18,7 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            normalMode: true
+            normalMode: false
         }
     }
 
@@ -24,10 +26,13 @@ export default class Search extends React.Component {
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <QueryBuilder />
+                <QueryBuilder
+                    entity={Merimee}
+                    componentId="advancedSearch"
+                />
                 <ReactiveList
                     componentId="results"
-                    react={{ "and": ['advancedSearch'] }}
+                    react={{ and: "advancedSearch" }}
                     onResultStats={(total, took) => { return `${total} résultats trouvés en ${took} ms.` }}
                     URLParams={true}
                     dataField=''
@@ -185,7 +190,7 @@ const Card = ({ data }) => {
     const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/merimee/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Lien cassé"  />
+            <img src={image} alt="Lien cassé" />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
                 <div>
