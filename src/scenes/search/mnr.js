@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Input, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import mnrMapping from '../../mapping/mnr';
 
 import {
     ReactiveBase,
@@ -12,8 +11,12 @@ import {
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
-import Button from './components/button';
+import QueryBuilder from './components/queryBuilder';
+
+import CustomButton from './components/button';
 import ExportComponent from './components/export';
+
+import Mnr from '../../entities/mnr';
 
 import { es_url, bucket_url } from '../../config.js';
 
@@ -23,12 +26,130 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
 
-        let exportfield = mnrMapping.filter((e) => e.export);
-        exportfield = exportfield.map(e => e.value);
+        const fieldsToExport = [];
+        const obj = new Mnr({});
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property) && property.indexOf('_') !== 0 && typeof (obj[property]) === 'object') {
+                fieldsToExport.push(property)
+            }
+        }
 
         this.state = {
-            exportfield
+            normalMode: true,
+            fieldsToExport
         }
+    }
+
+    renderAdvanced() {
+        return (
+            <div>
+                <div className='title'>Rechercher une Notice</div>
+                <QueryBuilder
+                    entity={Mnr}
+                    componentId="advancedSearch"
+                />
+                <ReactiveList
+                    componentId="results"
+                    react={{ and: "advancedSearch" }}
+                    onResultStats={(total, took) => { return `${total} résultats trouvés en ${took} ms.` }}
+                    URLParams={true}
+                    dataField=''
+                    size={20}
+                    onData={(data) => <Card key={data.REF} data={data} />}
+                    pagination={true}
+                />
+            </div >
+        )
+    }
+
+    renderNormal() {
+        return (
+            <div>
+                <div className='title'>Rechercher une Notice</div>
+                <div className='search-and-export-zone'>
+                    <DataSearch
+                        componentId="mainSearch"
+                        dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
+                        queryFormat="and"
+                        iconPosition="left"
+                        className="mainSearch"
+                        placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+                        URLParams={true}
+                    />
+
+                    <ReactiveComponent
+                        componentId='export'
+                        react={{
+                            and: FILTER
+                        }}
+                        defaultQuery={() => ({
+                            size: 100,
+                            aggs: {},
+                        })}
+                    >
+                        <ExportComponent
+                            FILTER={FILTER}
+                            filename='mnr.csv'
+                            columns={this.state.fieldsToExport}
+                        />
+                    </ReactiveComponent>
+                </div>
+                <Row>
+                    <Col xs="3">
+                        <MultiList
+                            componentId="cate"
+                            dataField="CATE.keyword"
+                            title="Catégorie"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
+                        <MultiList
+                            componentId="tech"
+                            dataField="TECH.keyword"
+                            title="Technique"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
+                        <MultiList
+                            componentId="prov"
+                            dataField="PROV.keyword"
+                            title="Provenance"
+                            className="filters"
+                            showSearch={true}
+                            URLParams={true}
+                            react={{
+                                and: FILTER
+                            }}
+                        />
+                    </Col>
+                    <Col xs="9">
+                        <SelectedFilters />
+                        <ReactiveList
+                            componentId="results"
+                            react={{
+                                "and": FILTER
+                            }}
+                            onResultStats={(total, took) => {
+                                return `${total} résultats trouvés en ${took} ms.`
+                            }}
+                            dataField=''
+                            URLParams={true}
+                            size={20}
+                            onData={(data) => <Card key={data.REF} data={data} />}
+                            pagination={true}
+                        />
+                    </Col>
+                </Row>
+            </div>
+        );
     }
 
     render() {
@@ -36,109 +157,25 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        <Button icon={require('../../assets/import.png')} to='/import/mnr' text='Importer des notices' />
-                        {/* <Button icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
+                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
                     </div>
                 </div>
                 <ReactiveBase
-                    url={`${es_url}/mnr`}
-                    app="mnr"
+                    url={`${es_url}/memoire`}
+                    app="memoire"
                 >
-                    <div className='title'>Rechercher une Notice</div>
-                    <div className='search-and-export-zone'>
-                        <DataSearch
-                            componentId="mainSearch"
-                            dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
-                            queryFormat="and"
-                            iconPosition="left"
-                            className="mainSearch"
-                            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
-                            URLParams={true}
-                        />
-
-                        <ReactiveComponent
-                            componentId='export'
-                            react={{
-                                and: FILTER
-                            }}
-                            defaultQuery={() => ({
-                                size: 100,
-                                aggs: {},
-                            })}
-                        >
-                            <ExportComponent
-                                FILTER={FILTER}
-                                filename='mnr.csv'
-                                columns={this.state.exportfield}
-                            />
-                        </ReactiveComponent>
-                    </div>
-                    <Row>
-                        <Col xs="3">
-                            <MultiList
-                                componentId="cate"
-                                dataField="CATE.keyword"
-                                title="Catégorie"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                            <MultiList
-                                componentId="tech"
-                                dataField="TECH.keyword"
-                                title="Technique"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                            <MultiList
-                                componentId="prov"
-                                dataField="PROV.keyword"
-                                title="Provenance"
-                                className="filters"
-                                showSearch={true}
-                                URLParams={true}
-                                react={{
-                                    and: FILTER
-                                }}
-                            />
-                        </Col>
-                        <Col xs="9">
-                            <SelectedFilters />
-                            <ReactiveList
-                                componentId="results"
-                                react={{
-                                    "and": FILTER
-                                }}
-                                onResultStats={(total, took) => {
-                                    return `${total} résultats trouvés en ${took} ms.`
-                                }}
-                                dataField=''
-                                URLParams={true}
-                                size={20}
-                                onData={(data) => <Card key={data.REF} data={data} />}
-                                pagination={true}
-                            />
-                        </Col>
-                    </Row>
+                    {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
             </Container >
         );
     }
 }
 
-
 const Card = ({ data }) => {
     const image = data.VIDEO.length ? `${bucket_url}${data.VIDEO[0]}` : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/mnr/${data.REF}`} className="card" key={data.REF}>
-            <img src={image} alt="Lien cassé"  />
+            <img src={image} alt="Lien cassé" />
             <div className='content'>
                 <div style={{ display: 'flex' }}><h2>{data.TITR}</h2><span>{data.REF}</span></div>
                 <div>

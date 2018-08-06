@@ -10,14 +10,14 @@ import {
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
+
 import CustomButton from './components/button';
 import ExportComponent from './components/export';
 import QueryBuilder from './components/queryBuilder';
 
 import { es_url, bucket_url } from '../../config.js';
 
-import jocondeMapping from '../../mapping/joconde';
-
+import Joconde from '../../entities/joconde';
 
 const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "loca", "autr"]
 
@@ -26,12 +26,17 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
 
-        let exportfield = jocondeMapping.filter((e) => e.export);
-        exportfield = exportfield.map(e => e.value);
+        const fieldsToExport = [];
+        const obj = new Joconde({});
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property) && property.indexOf('_') !== 0 && typeof (obj[property]) === 'object') {
+                fieldsToExport.push(property)
+            }
+        }
 
         this.state = {
             normalMode: true,
-            exportfield
+            fieldsToExport
         }
     }
 
@@ -41,8 +46,8 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        {/* <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} /> */}
-                        <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' />
+                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
+                        {/* <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' /> */}
                         {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
                     </div>
                 </div>
@@ -61,7 +66,8 @@ export default class Search extends React.Component {
             <div>
                 <div className='title'>Rechercher une Notice</div>
                 <QueryBuilder
-                    fields={jocondeMapping}
+                    entity={Joconde}
+                    componentId="advancedSearch"
                 />
                 <ReactiveList
                     componentId="results"
@@ -107,7 +113,7 @@ export default class Search extends React.Component {
                         <ExportComponent
                             FILTER={FILTER}
                             filename='joconde.csv'
-                            columns={this.state.exportfield}
+                            columns={this.state.fieldsToExport}
                         />
                     </ReactiveComponent>
                 </div>

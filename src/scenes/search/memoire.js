@@ -8,6 +8,7 @@ import ExportComponent from './components/export';
 
 import QueryBuilder from './components/queryBuilder';
 
+import Memoire from '../../entities/memoire';
 import { es_url, bucket_url } from '../../config.js';
 
 const FILTER = ["mainSearch"]
@@ -16,8 +17,18 @@ export default class Search extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const fieldsToExport = [];
+        const obj = new Memoire({});
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property) && property.indexOf('_') !== 0 && typeof (obj[property]) === 'object') {
+                fieldsToExport.push(property)
+            }
+        }
+
         this.state = {
-            normalMode: true
+            normalMode: true,
+            fieldsToExport
         }
     }
 
@@ -25,7 +36,10 @@ export default class Search extends React.Component {
         return (
             <div>
                 <div className='title'>Rechercher une Notice</div>
-                <QueryBuilder />
+                <QueryBuilder
+                    entity={Memoire}
+                    componentId="advancedSearch"
+                />
                 <ReactiveList
                     componentId="results"
                     react={{ "and": ['advancedSearch'] }}
@@ -57,7 +71,7 @@ export default class Search extends React.Component {
                     <ExportComponent
                         FILTER={FILTER}
                         filename='merimee.csv'
-                        columns={['REF', 'TOUT', 'ACTU', 'ADRS', 'AFFE', 'AIRE', 'APPL', 'APRO', 'ARCHEO', 'AUTP', 'AUTR', 'CADA', 'CANT', 'COLL', 'COM', 'COOR', 'COORM', 'COPY', 'COUV', 'DATE', 'DBOR', 'DOMN', 'DENO', 'DENQ', 'DEPL', 'DESC', 'DIMS', 'DOSS', 'DPRO', 'DPT', 'EDIF', 'ELEV', 'ENER', 'ESCA', 'ETAG', 'ETAT', 'ETUD', 'GENR', 'HIST', 'HYDR', 'IMPL', 'INSEE', 'INTE', 'JATT', 'JDAT', 'LBASE2', 'LIEU', 'LOCA', 'MFICH', 'MOSA', 'MHPP', 'MICR', 'MURS', 'NBOR', 'NOMS', 'OBS', 'PAFF', 'PART', 'PARN', 'PDEN', 'PERS', 'PLAN', 'PLOC', 'PPRO', 'PREP', 'PROT', 'PSTA', 'REFE', 'REFO', 'REFP', 'REG', 'REMA', 'REMP', 'RENV', 'REPR', 'RFPA', 'SCLD', 'SCLE', 'SCLX', 'SITE', 'STAT', 'TECH', 'TICO', 'TOIT', 'TYPO', 'VERT', 'REFIM', 'IMG', 'VIDEO', 'DOSURL', 'DOSURLP', 'DOSADRS', 'LIENS', 'IMAGE', 'VISI', 'VOCA', 'VOUT', 'WEB', 'ZONE', 'THEM', 'ACMH', 'ACURL', 'WADRS', 'WCOM', 'WRENV', 'REFM', 'CONTACT', 'IDAGR', 'LMDP', 'PINT', 'DLAB', 'APPL']}
+                        columns={this.state.fieldsToExport}
                     />
                 </div>
                 <Row>

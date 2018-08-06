@@ -49,6 +49,17 @@ class Notice extends React.Component {
             })
     }
 
+    delete() {
+        const ref = this.props.match.params.ref;
+        API.deleteNotice('joconde', ref).then(() => {
+            toastr.success('Notice supprimée');
+            setTimeout(() => {
+
+            }, 1000)
+        })
+
+    }
+
     onSubmit(values) {
         this.setState({ saving: true })
         API.updateNotice(this.state.notice.REF, 'joconde', values).then((e) => {
@@ -123,8 +134,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions /auteur / exécutant / collecteur (PAUT) :'
                                 name='PAUT'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
@@ -193,8 +202,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Description (DESC) :'
                                 name='DESC'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
@@ -205,15 +212,11 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Sujet représenté (REPR) :'
                                 name='REPR'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
                                 title='Précisions sur le sujet représenté (PREP) :'
                                 name='PREP'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldInput
@@ -289,8 +292,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions sur la découverte / collecte / récolte (PDEC) :'
                                 name='PDEC'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldInput
@@ -355,15 +356,11 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Exposition (EXPO) :'
                                 name='EXPO'
-                                type='textarea'
-                                rows={10}
                                 disabled
                             />
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
                                 name='BIBL'
-                                type='textarea'
-                                rows={10}
                                 disabled
                             />
                         </Col>
@@ -465,6 +462,9 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
+                    <div className='buttons'>
+                        <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
+                    </div>
                 </Form >
             </Container >
         );

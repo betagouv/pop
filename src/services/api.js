@@ -36,6 +36,10 @@ class api {
         return this._get(`${api_url}/${collection}/${ref}`)
     }
 
+    deleteNotice(collection, ref) {
+        return this._delete(`${api_url}/${collection}/${ref}`)
+    }
+
     updateThesaurus(thesaurusId, str) {
         return this._get(`${api_url}/thesaurus/update?id=${thesaurusId}`)
     }
@@ -94,6 +98,35 @@ class api {
                 credentials: 'same-origin', // include, same-origin, *omit
                 headers,
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // *client, no-referrer
+            }).then((response) => {
+                if (response.status !== 200) {
+                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
+                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                    return;
+                };
+                resolve()
+            }).catch((err) => {
+                Raven.captureException(err)
+                reject('L\'api est inaccessible', err)
+            });
+        })
+    }
+    _delete(url) {
+        return new Promise((resolve, reject) => {
+            const headers = {}
+            headers['user-agent'] = 'POP application';
+            if (contentType) {
+                headers['Content-Type'] = contentType
+            }
+            fetch(url, {
+                body: data, // must match 'Content-Type' header
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, same-origin, *omit
+                headers,
+                method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, cors, *same-origin
                 redirect: 'follow', // manual, *follow, error
                 referrer: 'no-referrer', // *client, no-referrer

@@ -9,7 +9,7 @@ export default class RuleGroup extends React.Component {
             schema: [],
             query: {},
             count: 0,
-            type: 'AND'
+            type: 'ET'
         }
     }
 
@@ -65,9 +65,9 @@ export default class RuleGroup extends React.Component {
 
 
 const Combinator = (props) => {
-    const choices = ['AND', 'OR'].map(option => <option key={option} value={option}>{option}</option>)
+    const choices = ['ET', 'OU'].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select selected="AND" value={props.value} className="combinator" onChange={props.onChange.bind(this)}>
+        <select selected="ET" value={props.value} className="combinator" onChange={props.onChange.bind(this)}>
             {choices}
         </select>
     )

@@ -29,24 +29,40 @@ export default class QueryBuilder extends React.Component {
                     case "<=":
                     case ">":
                     case ">=":
-                        must.push({ range: getRange(arr[i], arr[i].actionSelected) });
+                        if (q.type === "ET") {
+                            must.push({ range: getRange(arr[i], arr[i].actionSelected) });
+                        } else {
+                            should.push({ range: getRange(arr[i], arr[i].actionSelected) });
+                        }
                         break;
                     case "==":
-                        must.push({ term: getMatch(arr[i]) });
+                        if (q.type === "ET") {
+                            must.push({ term: getMatch(arr[i]) });
+                        } else {
+                            should.push({ term: getMatch(arr[i]) });
+                        }
                         break;
                     case "!=":
-                        must_not.push({ term: getMatch(arr[i]) });
+                        if (q.type === "ET") {
+                            must_not.push({ term: getMatch(arr[i]) });
+                        } else {
+                            should_not.push({ term: getMatch(arr[i]) });
+                        }
                         break;
                 }
             }
+
+
 
             const query = {
                 bool: {
                     must,
-                    must_not
+                    must_not,
+                    should_not,
+                    should
                 }
             }
-
+            console.log(query)
             this.props.setQuery({ query, value: "hey" });
         }
 

@@ -41,8 +41,8 @@ class Rule extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            valueSelected: '',
-            actionSelected: '',
+            valueSelected: this.props.fields[0],
+            actionSelected: '==',
             resultSelected: '',
         }
     }
