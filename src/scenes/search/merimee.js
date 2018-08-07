@@ -198,7 +198,7 @@ export default class Search extends React.Component {
 
 
 const Card = ({ data }) => {
-    const image = data.IMG ? data.IMG : require('../../assets/noimage.jpg');
+    const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/merimee/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Lien cassé" />

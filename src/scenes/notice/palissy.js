@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 
 import FieldInput from './components/fieldInput.js'
+import FieldImages from './components/fieldImages';
 import FieldTags from './components/fieldTags.js'
 import FieldLink from './components/fieldLink.js'
 import Section from './components/section.js'
@@ -76,11 +77,11 @@ class Notice extends React.Component {
                     </Row>
                     <Row>
                         <Col className='image' sm={6}>
-                            <div className="thumbs-box">
-                                <div className="thumb-lg mb-3">
-                                    <img src={this.state.notice.IMG} alt="" className="img-fluid w-100" />
-                                </div>
-                            </div>
+                            <FieldImages
+                                name='IMG'
+                                disabled
+                                external={true}
+                            />
                         </Col>
                         <Col className='image' sm={6}>
                             <Map
