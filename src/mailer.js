@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer')
 
 class Mailer {
   send (subject, to, html) {
+
+    console.log (subject, to, html)
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     // create reusable transporter object using the default SMTP transport
