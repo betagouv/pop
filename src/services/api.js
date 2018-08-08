@@ -7,6 +7,15 @@ class api {
         return this._post(`${api_url}/auth/signup`, JSON.stringify(obj), 'application/json')
     }
 
+    signin(email, password) {
+        const obj = { email, password };
+        return this._post(`${api_url}/auth/signin`, JSON.stringify(obj), 'application/json')
+    }
+
+    getUsers() {
+        return this._get(`${api_url}/auth/`)
+    }
+
     sendReport(subject, to, body) {
         const obj = { subject, to, body };
         return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')

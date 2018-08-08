@@ -7,12 +7,12 @@ import Joconde from './joconde';
 import Mnr from './mnr';
 import Inv from './inv';
 import Sap from './sap';
-
+    
 export default () => {
     return (
         <div>
             <Switch>
-                <Route path={`/import`} exact component={Home} />
+                <Route path={`/import/`} exact component={Home} />
                 <Route path={`/import/sap`} component={Sap} />
                 <Route path={`/import/mnr`} component={Mnr} />
                 <Route path={`/import/joconde`} component={Joconde} />

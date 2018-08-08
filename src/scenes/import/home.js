@@ -24,14 +24,13 @@ export default class Import extends React.Component {
     }
 
     render() {
-        debugger;
         return (
             <div className='home'>
                 <div className="subtitle">Je souhaite importer</div>
                 <Row>
                     {this.renderTiles([
-                        { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/mnr', name: 'Mnr', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/joconde', name: 'joconde', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/mnr', name: 'mnr', image: require('../../assets/joconde.jpg') },
                         { url: '/import/inv', name: 'inv', image: require('../../assets/joconde.jpg') },
                         { url: '/import/mh', name: 'mh', image: require('../../assets/joconde.jpg') },
                         { url: '/import/sap', name: 'sap', image: require('../../assets/joconde.jpg') },

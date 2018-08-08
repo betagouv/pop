@@ -38,7 +38,7 @@ export default class PublicRoutes extends React.Component {
             <Route exact path={'/thesaurus'} component={Thesaurus} />
             <Route path={'/recherche/'} component={Search} />
             <Route path={'/admin/'} component={Admin} />
-            <Route path={'/import/:collection'} component={Import} />
+            <Route path={'/import/'} component={Import} />
             <Route path={'/notice/:collection/:ref'} component={Notice} />
           </Switch>
         </div>

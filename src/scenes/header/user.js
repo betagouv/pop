@@ -26,7 +26,7 @@ class User extends Component {
       return <div />
     }
     return (
-      <Link className='label connect' to='/auth/signin'>Register</Link>
+      <Link to='/auth/signin'>Se connecter</Link>
     )
   }
 
@@ -71,5 +71,5 @@ const mapStateToProps = ({ Auth }) => {
   return { account: null /*Auth.account*/ }
 }
 
-export default connect(mapStateToProps, {  })(User)
+export default connect(mapStateToProps, {})(User)
 
