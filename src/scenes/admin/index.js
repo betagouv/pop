@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button, Modal, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import CreateUser from './createUser';
 
 import './index.css';
 
@@ -23,14 +24,19 @@ export default class Home extends React.Component {
         });
     }
 
+    renderModal() {
+        return (
+            <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })} className=''>
+                <div>Ajouter une notice par sa reference</div>
+                <Input value={this.state.input} onChange={(e) => this.setState({ input: e.target.value })} />
+                <Button color='primary' onClick={this.addLink.bind(this)}>Ajouter</Button>
+            </Modal>
+        )
+    }
     render() {
         return (
-            <div className='home'>
-                <div className="title">Bienvenue dans l'outil d'administration des bases du Ministère de la Culture !</div>
-                <div className="subtitle">Depuis cet espace, et en fonction des droits qui vous auront été attribués, vous pouvez:
-                - consulter l'ensemble des données publiques et confidentielles déjà importées dans les bases,
-                - importer des données pour alimenter les bases en nouvelles création ou pour remplacer intégralement des notices existantes,
-                </div>
+            <div className='admin'>
+                <CreateUser />
             </div>
         );
     }

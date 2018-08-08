@@ -2,6 +2,11 @@ const { api_url } = require('../config.js');
 
 class api {
 
+    createUser(email, group, role, institution) {
+        const obj = { email, group, role, institution };
+        return this._post(`${api_url}/auth/signup`, JSON.stringify(obj), 'application/json')
+    }
+
     sendReport(subject, to, body) {
         const obj = { subject, to, body };
         return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')

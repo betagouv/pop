@@ -15,7 +15,11 @@ export default class NavComponent extends React.Component {
             <div className='header'>
                 <Container className='NavContainer'>
                     <Logo />
-                    {/* <User /> */}
+                    <Link to="/">Accueil</Link>
+                    <Link to="/recherche">Recherche</Link>
+                    <Link to="/import">Import</Link>
+                    <Link to="/admin">Administration</Link>
+                    <User />
                 </Container>
             </div>
         )
