@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 
 import './home.css';
 
-export default class Search extends React.Component {
+export default class Import extends React.Component {
 
     renderTiles(tiles) {
         return tiles.map(({ url, name, image }, i) => {
@@ -24,17 +24,17 @@ export default class Search extends React.Component {
     }
 
     render() {
+        debugger;
         return (
             <div className='home'>
-                <div className="title">Outil d'édition unitaire et import massif de données patrimoniales de la plateforme POP</div>
-                <div className="subtitle">Je souhaite consulter la base</div>
+                <div className="subtitle">Je souhaite importer</div>
                 <Row>
                     {this.renderTiles([
-                        { url: '/recherche/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
-                        { url: '/recherche/merimee', name: 'Mérimée', image: require('../../assets/merimee.jpg') },
-                        { url: '/recherche/palissy', name: 'Palissy', image: require('../../assets/palissy.jpg') },
-                        { url: '/recherche/memoire', name: 'Mémoire', image: require('../../assets/memoire.jpg') },
-                        { url: '/recherche/mnr', name: 'MNR', image: require('../../assets/MNR.jpg') },
+                        { url: '/import/joconde', name: 'Joconde', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/mnr', name: 'Mnr', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/inv', name: 'inv', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/mh', name: 'mh', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/sap', name: 'sap', image: require('../../assets/joconde.jpg') },
                     ])}
                 </Row>
             </div>
