@@ -54,7 +54,7 @@ const Schema = new mongoose.Schema({
   HIST: { type: String, default: '' },
   IDAGR: { type: [String], default: [] },
   IMAGE: { type: String, default: '' },
-  IMG: { type: String, default: '' },
+  IMG: { type: [String], default: [] },
   IMPL: { type: String, default: '' },
   INSC: { type: [String], default: [] },
   INSEE: { type: String, default: [] },
