@@ -25,7 +25,7 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <div className='home'>
+            <div className='home-search'>
                 <div className="title">Outil d'édition unitaire et import massif de données patrimoniales de la plateforme POP</div>
                 <div className="subtitle">Je souhaite consulter la base</div>
                 <Row>

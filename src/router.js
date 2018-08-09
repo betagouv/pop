@@ -34,7 +34,7 @@ export default class PublicRoutes extends React.Component {
           <Header />
           <Switch>
             <Route exact path={'/'} component={Home} />
-            <Route exact path={'/auth/:step'} component={Auth} />
+            <Route path={'/auth/'} component={Auth} />
             <Route exact path={'/thesaurus'} component={Thesaurus} />
             <Route path={'/recherche/'} component={Search} />
             <Route path={'/admin/'} component={Admin} />

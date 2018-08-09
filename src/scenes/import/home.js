@@ -25,7 +25,7 @@ export default class Import extends React.Component {
 
     render() {
         return (
-            <div className='home'>
+            <div className='home-import'>
                 <div className="subtitle">Je souhaite importer</div>
                 <Row>
                     {this.renderTiles([

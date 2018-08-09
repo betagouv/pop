@@ -116,12 +116,20 @@ class api {
                 redirect: 'follow', // manual, *follow, error
                 referrer: 'no-referrer', // *client, no-referrer
             }).then((response) => {
+
                 if (response.status !== 200) {
                     Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
                     reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                     return;
                 };
-                resolve()
+
+                response.json().then((data) => {    // Examine the text in the response
+                    resolve(data);
+                }).catch((e) => {
+                    Raven.captureException(e)
+                    reject('Probleme lors de la récupération de la donnée', e);
+                })
+                
             }).catch((err) => {
                 Raven.captureException(err)
                 reject('L\'api est inaccessible', err)
@@ -166,18 +174,18 @@ class api {
                     return;
                 }
 
-                if (response.status === 200) {
-                    response.json().then((data) => {    // Examine the text in the response
-                        resolve(data);
-                    }).catch((e) => {
-                        Raven.captureException(e)
-                        reject('Probleme lors de la récupération de la donnée', e);
-                    })
+                if (response.status !== 200) {
+                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
+                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                     return;
-                }
+                };
 
-                Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
-                reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                response.json().then((data) => {    // Examine the text in the response
+                    resolve(data);
+                }).catch((e) => {
+                    Raven.captureException(e)
+                    reject('Probleme lors de la récupération de la donnée', e);
+                })
                 return;
 
             }).catch((err) => {

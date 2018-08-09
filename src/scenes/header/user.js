@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Avatar from '../../components/avatar'
 
-// import authAction from './../../redux/auth/actions'
-// const { logout } = authAction
+import authAction from './../../redux/auth/actions'
+const { logout } = authAction
 
 
 import './user.css'
@@ -43,7 +43,6 @@ class User extends Component {
         <DropdownToggle className="UserImageContainer">
           <Avatar
             email={this.props.account.email}
-            photoURL={this.props.account.photoURL}
             toggle={() => this.setState({ dropdownOpen: !this.state.dropdownOpen })}
             isOpen={this.state.dropdownOpen}
           />
@@ -68,8 +67,8 @@ class User extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { account: null /*Auth.account*/ }
+  return { account: Auth.user }
 }
 
-export default connect(mapStateToProps, {})(User)
+export default connect(mapStateToProps, { logout })(User)
 
