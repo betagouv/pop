@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { Button, Container } from 'reactstrap';
 
@@ -8,8 +9,7 @@ import Logo from './logo.js'
 
 import './index.css';
 
-export default class NavComponent extends React.Component {
-
+class NavComponent extends React.Component {
     render() {
         return (
             <div className='header'>
@@ -17,12 +17,18 @@ export default class NavComponent extends React.Component {
                     <Logo />
                     <Link to="/">Accueil</Link>
                     <Link to="/recherche">Recherche</Link>
-                    <Link to="/import">Import</Link>
-                    <Link to="/admin">Administration</Link>
+                    {(this.props.role === "administrateur" || this.props.role === "producteur") ? <Link to="/import">Import</Link> : <div />}
+                    {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
                     <User />
                 </Container>
             </div>
         )
-
     }
 }
+
+
+const mapStateToProps = ({ Auth }) => {
+    return { role: Auth.user ? Auth.user.role : "" }
+}
+
+export default connect(mapStateToProps, {})(NavComponent);

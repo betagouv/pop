@@ -9,7 +9,7 @@ import Actions from '../../redux/auth/actions';
 const { signin } = Actions;
 
 class Signin extends Component {
-    state = { email: "se.legoff@gmail.com", password: "N0xEduy2aA", error: "" }
+    state = { email: "", password: "", error: "" }
 
     loginWithEmail() {
         this.props.signin(this.state.email, this.state.password);
@@ -45,6 +45,5 @@ class Signin extends Component {
 const mapStateToProps = ({ Auth }) => {
     return { error: Auth.error }
 }
-
 
 export default connect(mapStateToProps, { signin })(Signin);

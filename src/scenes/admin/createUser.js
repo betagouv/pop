@@ -1,11 +1,12 @@
 import React from 'react';
 import { Container, Row, Col, Button, Modal, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import api from '../../services/api';
 import Loader from '../../components/loader';
 import './createUser.css';
 
-export default class CreateUser extends React.Component {
+class CreateUser extends React.Component {
 
     state = {
         modal: false,
@@ -13,8 +14,8 @@ export default class CreateUser extends React.Component {
         prenom: "",
         nom: "",
         institution: "",
-        group: "MNR",
-        role: "Utilisateur",
+        group: "admin",
+        role: "utilisateur",
         loading: false,
         error: ""
     }
@@ -33,9 +34,15 @@ export default class CreateUser extends React.Component {
 
     renderModal() {
 
-        const arr = ["admin", "mnr", "joconde", "mh", "inv", "sap"].map(e => <option key={e}>{e}</option>)
+        let groupes = [];
 
+        if (this.props.user.group === "admin") {
+            groupes = groupes.concat(["admin", "mnr", "joconde", "mh", "inv", "sap"]);
+        } else {
+            groupes.push(this.props.user.group)
+        }
 
+        groupes = groupes.map(e => <option key={e}>{e}</option>)
         return (
             <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })} >
                 <h3>Ajouter un nouvel utilisateur</h3>
@@ -59,23 +66,21 @@ export default class CreateUser extends React.Component {
                     <Input value={this.state.institution} onChange={(e) => this.setState({ institution: e.target.value })} />
                 </div >
                 <div className="input-container">
-                    <div>Institution</div>
-                    <Input value={this.state.institution} onChange={(e) => this.setState({ institution: e.target.value })} />
-                </div >
-                <div className="input-container">
                     <div>Groupe</div>
                     <Input type="select" value={this.state.group} onChange={(e) => this.setState({ group: e.target.value })} >
-                        {arr}
+                        {groupes}
                     </Input>
                 </div >
-                <div className="input-container">
-                    <div>Rôle</div>
-                    <Input type="select" value={this.state.role} onChange={(e) => this.setState({ role: e.target.value })} >
-                        <option>administrateur</option>
-                        <option>producteur</option>
-                        <option>utilisateur</option>
-                    </Input>
-                </div >
+                {this.state.group === "admin" ? <div /> :
+                    <div className="input-container">
+                        <div>Rôle</div>
+                        <Input type="select" value={this.state.role} onChange={(e) => this.setState({ role: e.target.value })} >
+                            <option>administrateur</option>
+                            <option>producteur</option>
+                            <option>utilisateur</option>
+                        </Input>
+                    </div >
+                }
                 <div className="button-container">
                     <Button color="primary" onClick={this.createUser.bind(this)}>Créer</Button>
                 </div>
@@ -91,3 +96,9 @@ export default class CreateUser extends React.Component {
         );
     }
 }
+
+const mapStateToProps = ({ Auth }) => {
+    return { user: Auth.user }
+}
+
+export default connect(mapStateToProps, {})(CreateUser);
