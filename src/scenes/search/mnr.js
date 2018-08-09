@@ -161,8 +161,8 @@ export default class Search extends React.Component {
                     </div>
                 </div>
                 <ReactiveBase
-                    url={`${es_url}/memoire`}
-                    app="memoire"
+                    url={`${es_url}/mnr`}
+                    app="mnr"
                 >
                     {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
