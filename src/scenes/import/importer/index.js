@@ -187,7 +187,6 @@ export default class Importer extends Component {
     }
 
     renderDropZone() {
-        console.log("this.props.dropzoneText",this.props.dropzoneText)
         return (
             <div>
                 {/* <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4> */}
