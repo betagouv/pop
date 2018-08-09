@@ -14,6 +14,7 @@ export default class Import extends React.Component {
                 <Importer
                     collection="SAP"
                     parseFiles={parseFiles}
+                    dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .txt et séparateur | ) et les images associées (au format .jpg) dans cette zone"
                 />
             </Container >
         );
@@ -37,14 +38,14 @@ function parseFiles(files, encoding) {
                 for (var i = 0; i < files.length; i++) {
                     filesMap[files[i]] = files[i];
                 }
-                
+
                 //ADD IMAGES
                 for (var i = 0; i < notices.length; i++) {
                     const name = notices[i].IMG.value;
                     if (!name) break;
                     let img = filesMap[name];
                     if (!img) {
-                        errors.push(`Image ${name} introuvable`)
+                        // errors.push(`Image ${name} introuvable`)
                     } else {
                         const newImage = new Blob([img], { type: 'image/jpeg' });
                         notices[i]._images.push(newImage)

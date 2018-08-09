@@ -152,6 +152,7 @@ export default class Importer extends Component {
         const noticesWithImages = this.state.importedNotices.filter(e => e._images.length).length;
         const noticesModifiees = this.state.importedNotices.filter(e => e._status === 'updated').length;
         const noticesRejetees = this.state.importedNotices.filter(e => e._status === 'rejected').length;
+        const noticesWarning = this.state.importedNotices.filter(e => ((e._status === 'created' || e._status === 'updated') && e._warnings.length)).length;
 
         return (
             <div className='working-area'>
@@ -165,7 +166,7 @@ export default class Importer extends Component {
                         <div className='line'><div className="round" style={{ backgroundColor: '#58FB02' }} />{`${noticesCrees} sont des nouvelles notices (non créees précedemment)`}</div>
                         <div className='line'><div className="round" style={{ backgroundColor: '#F9B234' }} />{`${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${this.props.collection})`}</div>
                         <div className='line'><div className="round" style={{ backgroundColor: '#E32634' }} />{`${noticesRejetees} notices ne peuvent etre importees car non conformes`}</div>
-                        <div className='line'><div className="round" style={{ backgroundColor: '#FEEA10' }} />{`${noticesRejetees} notices presentent un avertissement non bloquant pour l'import`}</div>
+                        <div className='line'><div className="round" style={{ backgroundColor: '#FEEA10' }} />{`${noticesWarning} notices presentent un avertissement non bloquant pour l'import`}</div>
                     </div>
                     <Button className="buttonReverse details" onClick={() => {
                         this.onExport()
@@ -186,12 +187,14 @@ export default class Importer extends Component {
     }
 
     renderDropZone() {
+        console.log("this.props.dropzoneText",this.props.dropzoneText)
         return (
             <div>
-                <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4>
+                {/* <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4> */}
                 <DropZone
                     onFinish={this.onFilesDropped.bind(this)}
                     visible={true}
+                    text={this.props.dropzoneText}
                 />
             </div>
         )
@@ -274,9 +277,9 @@ export default class Importer extends Component {
                     <Col md={8} className="right-col">
                         <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${this.props.collection}, selon les trois étapes suivantes`}</p>
                         <Steps labelPlacement="vertical" current={this.state.step} size='big'>
-                            <Step title="Etape 1" />
-                            <Step title="Etape 2" />
-                            <Step title="Etape 3" />
+                            <Step title="Sélection et dépot des contenus à importer" />
+                            <Step title="Contrôle et validation de l'import" />
+                            <Step title="Confirmation de l'import" />
                         </Steps>
                         {currentStep}
                     </Col>
