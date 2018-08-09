@@ -17,8 +17,8 @@ class NavComponent extends React.Component {
                     <Logo />
                     <Link to="/">Accueil</Link>
                     <Link to="/recherche">Recherche</Link>
-                    {(this.props.role === "administrateur" || this.props.role === "producteur") ? <Link to="/import">Import</Link> : <div />}
-                    {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
+                    {(this.props.role === "administrateur" || this.props.role === "producteur" || this.props.group === "admin") ? <Link to="/import">Import</Link> : <div />}
+                    {(this.props.role === "administrateur" || this.props.group === "admin") ? <Link to="/admin">Administration</Link> : <div />}
                     <User />
                 </Container>
             </div>

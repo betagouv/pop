@@ -54,12 +54,12 @@ class CreateUser extends React.Component {
                     </div>
                 </div>
                 <div className="input-container">
-                    <div>Nom</div>
-                    <Input value={this.state.nom} onChange={(e) => this.setState({ nom: e.target.value })} />
-                </div >
-                <div className="input-container">
                     <div>Prénom</div>
                     <Input value={this.state.prenom} onChange={(e) => this.setState({ prenom: e.target.value })} />
+                </div >
+                <div className="input-container">
+                    <div>Nom</div>
+                    <Input value={this.state.nom} onChange={(e) => this.setState({ nom: e.target.value })} />
                 </div >
                 <div className="input-container">
                     <div>Institution</div>
