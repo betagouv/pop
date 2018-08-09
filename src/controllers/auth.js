@@ -75,7 +75,6 @@ router.post('/updatePassword', (req, res) => {
     })
   }
 
-  console.log(ppwd, pwd1, pwd2)
   if (pwd1 !== pwd2) {
     return res.status(401).send({
       success: false,
