@@ -36,10 +36,10 @@ class CreateUser extends React.Component {
 
         let groupes = [];
 
-        if (this.props.user.group === "admin") {
+        if (this.props.group === "admin") {
             groupes = groupes.concat(["admin", "mnr", "joconde", "mh", "inv", "sap"]);
         } else {
-            groupes.push(this.props.user.group)
+            groupes.push(this.props.group)
         }
 
         groupes = groupes.map(e => <option key={e}>{e}</option>)
@@ -98,7 +98,7 @@ class CreateUser extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-    return { user: Auth.user }
+    return { group: Auth.user ? Auth.user.group : "admin" }
 }
 
 export default connect(mapStateToProps, {})(CreateUser);
