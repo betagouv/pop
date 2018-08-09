@@ -9,11 +9,13 @@ class api {
 
     signin(email, password) {
         const obj = { email, password };
+        console.log(obj)
         return this._post(`${api_url}/auth/signin`, JSON.stringify(obj), 'application/json')
     }
 
-    updatePassword(ppwd, pwd1, pwd2) {
-        const obj = { ppwd, pwd1, pwd2 };
+    updatePassword(email, ppwd, pwd1, pwd2) {
+        const obj = { email, ppwd, pwd1, pwd2 };
+        console.log(obj)
         return this._post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), 'application/json')
     }
 

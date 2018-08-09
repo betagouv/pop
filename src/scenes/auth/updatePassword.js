@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import api from '../../services/api';
 import Loader from '../../components/loader';
 
-export default class updatePassword extends Component {
+import authAction from './../../redux/auth/actions'
+const { logout } = authAction
+
+class updatePassword extends Component {
   state = {
     ppwd: "",
     ppwd1: "",
@@ -18,9 +22,12 @@ export default class updatePassword extends Component {
   updatePassword() {
     const { ppwd, ppwd1, ppwd2 } = this.state;
     this.setState({ loading: true })
-    api.updatePassword(ppwd, ppwd1, ppwd2)
+    api.updatePassword(this.props.email, ppwd, ppwd1, ppwd2)
       .then(() => {
-        this.setState({ loading: false, done: false })
+        this.setState({ loading: false, done: true });
+        setTimeout(() => {
+          this.props.logout();
+        }, 5000)
       })
       .catch((e) => {
         this.setState({ error: e, loading: false, done: false })
@@ -34,17 +41,18 @@ export default class updatePassword extends Component {
     }
 
     if (this.state.done) {
-      <Container className="signin">
-        <div className="block">
-          Votre Mot de passe à été changé. Vous allez être deconnecté
-        </div>
-      </Container>
+      return (
+        <Container className="signin">
+          <div>Votre mot de passe à été changé. <br />Vous allez être deconnecté dans 5 secondes ...  </div>
+        </Container>
+      );
     }
 
     return (
       <Container className="signin">
         <div className="block">
           <h1>Changer mon mot de passe</h1>
+          <div>{this.state.error}</div>
           <input
             className="input-field"
             placeholder="Ancien Mot de passe"
@@ -72,3 +80,9 @@ export default class updatePassword extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ Auth }) => {
+  return { email: Auth.user ? Auth.user.email : "" }
+}
+
+export default connect(mapStateToProps, { logout })(updatePassword);
