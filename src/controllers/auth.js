@@ -82,9 +82,10 @@ router.post('/signin', (req, res) => {
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
           const token = jwt.sign({ _id: user._id }, config.secret)
-          res.json({
+          res.status(200).send({
             success: true,
-            token: 'JWT ' + token
+            token: 'JWT ' + token,
+            user
           })
         } else {
           res.status(401).send({
