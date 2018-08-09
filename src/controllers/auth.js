@@ -37,6 +37,7 @@ router.post('/signup', (req, res) => {
 
   newUser.save(function (err) {
     if (err) {
+      console.log("signup", err)
       return res.status(400).json({
         success: false,
         msg: `L'utilisateur ${req.body.email} existe déja`
