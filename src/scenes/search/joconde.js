@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input, Container } from 'reactstrap';
+import { Row, Col, Button, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {
     ReactiveBase,
@@ -11,7 +11,6 @@ import {
 } from '@appbaseio/reactivesearch';
 
 
-import CustomButton from './components/button';
 import ExportComponent from './components/export';
 import QueryBuilder from './components/queryBuilder';
 
@@ -46,7 +45,7 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
+                        <Button color="secondary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} >{this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'}</Button>
                         {/* <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' /> */}
                         {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
                     </div>

@@ -13,7 +13,6 @@ import Sap from './sap';
 class Import extends React.Component {
 
     render() {
-        console.log(this.props.location);
         if (this.props.group && this.props.group !== "admin" && this.props.location.pathname !== `/import/${this.props.group}`) {
             return (<Redirect to={`/import/${this.props.group}`} />);
         }

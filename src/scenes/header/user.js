@@ -48,8 +48,8 @@ class User extends Component {
           />
         </DropdownToggle>
         <DropdownMenu className="DropDown">
-          <DropdownItem className="dropdown-header" header>Settings</DropdownItem>
-          <DropdownItem className="dropdown-item"> <Link to='/settings'>My Account</Link></DropdownItem>
+          <DropdownItem className="dropdown-header" header>Configuration</DropdownItem>
+          <DropdownItem className="dropdown-item"> <Link to='/auth/updatePassword'>Changer mon mot de passe</Link></DropdownItem>
           <DropdownItem className="dropdown-item" onClick={this.logout.bind(this)}>Logout</DropdownItem>
         </DropdownMenu>
       </Dropdown>

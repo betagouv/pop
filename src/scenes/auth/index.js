@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 
 import Signin from './signin';
 import Forget from './forget';
+import UpdatePassword from './updatePassword';
 
 import './index.css';
 
 export default (props) => {
 
   const { url } = props.match;
-
-  console.log(props, `${url}/signin`)
   return (
     <div className="auth" >
       <Switch >
         <Route exact path={`${url}/signin`} render={() => <Signin />} />
         <Route exact path={`${url}/forget`} render={() => <Forget />} />
+        <Route exact path={`${url}/updatePassword`} render={() => <UpdatePassword />} />
       </Switch>
     </div>
   );

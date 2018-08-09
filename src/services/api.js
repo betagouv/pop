@@ -12,6 +12,11 @@ class api {
         return this._post(`${api_url}/auth/signin`, JSON.stringify(obj), 'application/json')
     }
 
+    updatePassword(ppwd, pwd1, pwd2) {
+        const obj = { ppwd, pwd1, pwd2 };
+        return this._post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), 'application/json')
+    }
+
     getUsers() {
         return this._get(`${api_url}/auth/`)
     }

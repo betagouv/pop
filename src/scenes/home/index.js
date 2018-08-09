@@ -27,10 +27,9 @@ export default class Home extends React.Component {
         return (
             <div className='home'>
                 <div className="title">Bienvenue dans l'outil d'administration des bases du Ministère de la Culture !</div>
-                <div className="subtitle">Depuis cet espace, et en fonction des droits qui vous auront été attribués, vous pouvez:
-                - consulter l'ensemble des données publiques et confidentielles déjà importées dans les bases,
-                - importer des données pour alimenter les bases en nouvelles création ou pour remplacer intégralement des notices existantes,
-                </div>
+                <div className="subtitle">Depuis cet espace, et en fonction des droits qui vous auront été attribués, vous pouvez:       </div>
+                <div className="subtitle">- consulter l'ensemble des données publiques et confidentielles déjà importées dans les bases,       </div>
+                <div className="subtitle">- importer des données pour alimenter les bases en nouvelles création ou pour remplacer intégralement des notices existantes,       </div>
             </div>
         );
     }

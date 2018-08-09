@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch';
 
@@ -185,7 +185,7 @@ export default class Search extends React.Component {
             <Container className='search'>
                 <div className='header'>
                     <div className='buttons'>
-                        <CustomButton onClick={() => this.setState({ normalMode: !this.state.normalMode })} icon={require('../../assets/advanced.png')} text={this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'} />
+                        <Button color="secondary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} >{this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'}</Button>
                     </div>
                 </div>
                 <ReactiveBase
