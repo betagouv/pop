@@ -28,7 +28,10 @@ class NavComponent extends React.Component {
 
 
 const mapStateToProps = ({ Auth }) => {
-    return { role: Auth.user ? Auth.user.role : "" }
+    return {
+        role: Auth.user ? Auth.user.role : "",
+        group: Auth.user ? Auth.user.group : ""
+    }
 }
 
 export default connect(mapStateToProps, {})(NavComponent);
