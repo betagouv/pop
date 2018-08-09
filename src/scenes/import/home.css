@@ -24,6 +24,11 @@
     background-size: 18px; ;
 }
 
+.home-import .row{
+display: flex;
+justify-content: center;
+}
+
 .home-import .box{
     padding: 20px 30px;
     display: flex;

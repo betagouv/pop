@@ -24,10 +24,10 @@ export default class Admin extends React.Component {
 
     renderUsers() {
         const arr = [];
-        arr.push(<Row key="header"><Col>Email</Col><Col>Groupe</Col><Col>Institution</Col><Col>Role</Col></Row >)
+        arr.push(<Row key="header"><Col>Email</Col><Col>Nom</Col><Col>Prénom</Col><Col>Groupe</Col><Col>Institution</Col><Col>Role</Col></Row >)
 
-        this.state.users.reduce((arr, { email, role, institution, group }) => (
-            arr.push(<Row key={email}><Col>{email}</Col><Col>{group}</Col><Col>{institution}</Col><Col>{role}</Col></Row >)
+        this.state.users.reduce((arr, { email, prenom, nom, role, institution, group }) => (
+            arr.push(<Row key={email}><Col>{email}</Col><Col>{nom}</Col><Col>{prenom}</Col><Col>{group}</Col><Col>{institution}</Col><Col>{role}</Col></Row >)
         ), arr)
 
         return arr;
