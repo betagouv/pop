@@ -50,10 +50,13 @@ router.post('/signup', (req, res) => {
 
     mailer.send("Compte POP créé avec succès",
       req.body.email,
-      ` Votre compte a été créé avec succès. 
-      Votre mot de passe temporaire est ${password}. 
-      Changez le dès que possible
-      Merci !
+      `Félicitations!
+          Votre compte ${req.body.role} POP a été créé avec succès.
+          Votre identifiant de connexion est ${req.body.email}
+          Votre mot de passe provisoire est ${password}
+          Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion
+          L'équipe POP
+          Et en cas de problème, vous pouvez toujours nous contacter à sebastien.legoff@beta.gouv.fr
       `)
   })
 })
