@@ -60,6 +60,13 @@ router.post('/signup', (req, res) => {
   })
 })
 
+router.get('/', (req, res) => {
+  User.find({}, (error, users) => {
+    if (error) { return res.status(500).send({ error }); }
+    res.status(200).send(users);
+  });
+})
+
 router.post('/signin', (req, res) => {
   User.findOne({
     username: req.body.username
