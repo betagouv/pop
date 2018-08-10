@@ -69,6 +69,45 @@ router.get('/', (req, res) => {
   });
 })
 
+
+router.post('/forgetPassword', (req, res) => {
+
+  const { email } = req.body;
+
+  User.findOne({ email }, function (err, user) {
+    if (err) throw err
+
+    if (!user) {
+      res.status(401).send({
+        success: false,
+        msg: `Utilisateur ${email} introuvable`
+      })
+    } else {
+
+      var password = generator.generate({ length: 10, numbers: true });
+      user.set({ password });
+
+      user.save(function (err) {
+        if (err) throw err
+        res.status(200).json({
+          success: true,
+          msg: 'Successful created new user.'
+        })
+
+        mailer.send("Réinitialisation du mot de passe",
+          req.body.email,
+          `Bonjour!<br /><br />
+              Votre nouveau mot de passe provisoire est ${password}<br />
+              Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
+              L'équipe POP<br />
+              Et en cas de problème, vous pouvez toujours nous contacter à sebastien.legoff@beta.gouv.fr<br />
+          `);
+
+      });
+    }
+  });
+});
+
 router.post('/updatePassword', (req, res) => {
   const { email, ppwd, pwd1, pwd2 } = req.body;
 
