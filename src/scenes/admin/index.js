@@ -1,13 +1,12 @@
 import React from 'react';
-import { Container, Row, Col, Button, Modal, Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Row, Col } from 'reactstrap';
 import CreateUser from './createUser';
-import Loader from '../../components/loader';
+import { connect } from 'react-redux';
 import api from '../../services/api';
 
 import './index.css';
 
-export default class Admin extends React.Component {
+class Admin extends React.Component {
 
     state = {
         users: [],
@@ -17,14 +16,14 @@ export default class Admin extends React.Component {
 
     componentWillMount() {
         this.setState({ loading: true })
-        api.getUsers().then(users => {
+        api.getUsers(this.props.group).then(users => {
             this.setState({ users, loading: false })
         });
     }
 
     renderUsers() {
         const arr = [];
-        arr.push(<Row key="header"><Col>Email</Col><Col>Nom</Col><Col>Prénom</Col><Col>Groupe</Col><Col>Institution</Col><Col>Role</Col></Row >)
+        arr.push(<Row className="header" key="header"><Col>Email</Col><Col>Nom</Col><Col>Prénom</Col><Col>Groupe</Col><Col>Institution</Col><Col>Role</Col></Row >)
 
         for (var i = 0; i < this.state.users.length; i++) {
             const { email, prenom, nom, role, institution, group } = this.state.users[i];
@@ -45,3 +44,12 @@ export default class Admin extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = ({ Auth }) => {
+    return {
+        group: Auth.user ? Auth.user.group : ""
+    }
+}
+
+export default connect(mapStateToProps, {})(Admin);

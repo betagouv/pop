@@ -6,3 +6,7 @@
 .admin .usersList{
     padding: 20px
 }
+
+.admin .header{
+    font-weight: bold;
+}

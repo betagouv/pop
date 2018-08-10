@@ -25,8 +25,8 @@ class api {
         return this._post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), 'application/json')
     }
 
-    getUsers() {
-        return this._get(`${api_url}/auth/`)
+    getUsers(group) {
+        return this._get(`${api_url}/auth?group=${group}`)
     }
 
     sendReport(subject, to, body) {
