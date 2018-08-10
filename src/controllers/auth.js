@@ -63,7 +63,12 @@ router.post('/signup', (req, res) => {
 })
 
 router.get('/', (req, res) => {
-  User.find({}, (error, users) => {
+  const query = {}
+  if (req.query.group && req.query.group !== "admin") {
+    query.group = req.query.group;
+  }
+
+  User.find(query, (error, users) => {
     if (error) { return res.status(500).send({ error }); }
     res.status(200).send(users);
   });
