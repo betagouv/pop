@@ -19,6 +19,12 @@ class api {
         return this._post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), 'application/json')
     }
 
+    forgetPassword(email) {
+        const obj = { email };
+        console.log(obj)
+        return this._post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), 'application/json')
+    }
+
     getUsers() {
         return this._get(`${api_url}/auth/`)
     }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import api from '../../services/api';
 
@@ -9,7 +7,15 @@ export default class ForgotPassword extends Component {
   state = { mail: '', error: '', done: false }
 
   forgetPassword() {
-
+    const { mail } = this.state;
+    this.setState({ loading: true })
+    api.forgetPassword(mail)
+      .then(() => {
+        this.setState({ loading: false, done: true });
+      })
+      .catch((e) => {
+        this.setState({ error: e, loading: false, done: false })
+      })
   }
 
   render() {
@@ -17,7 +23,7 @@ export default class ForgotPassword extends Component {
       return (
         <Container className="forgot">
           <div className="block">
-            <p className="message">Click on the URL provided in the email and enter a new password</p>
+            <p className="message">{`Un email vous à été envoyé sur ${this.state.mail}`}</p>
           </div>
         </Container>
       );
