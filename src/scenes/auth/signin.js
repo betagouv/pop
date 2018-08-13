@@ -18,9 +18,17 @@ class Signin extends Component {
     render() {
         return (
             <Container className="signin">
+                <h1>Se connecter à POP</h1>
+                <div>
+                    <br />
+                    Pour obtenir des identifiants, veuillez adresser un <a href="mailto:sandrine.della-bartolomea@culture.gouv.fr,sebastien.legoff@beta.gouv.fr">email</a> à sandrine.della-bartolomea@culture.gouv.fr et sebastien.legoff@beta.gouv.fr avec les informations suivantes : <br /><br />
+                    - Instition  <br />
+                    - Votre groupe (MNR, Inv, MH, Joconde, ou Base archive photo) <br />
+                    - Nom <br />
+                    - Prénom <br /><br />
+                </div>
+                <span className="error">{this.props.error}</span>
                 <div className="block">
-                    <h1>Se connecter à POP</h1>
-                    <span>{this.props.error}</span>
                     <input
                         className="input-field"
                         placeholder="Email"
