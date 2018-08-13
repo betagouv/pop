@@ -57,4 +57,13 @@ router.get('/:ref', (req, res) => {
   })
 })
 
+
+router.delete('/:ref', (req, res) => {
+  const ref = req.params.ref;
+  Joconde.findOneAndRemove({ REF: ref }, (error) => {
+    if (error) return res.status(500).send({ error });
+    return res.status(200).send({});
+  });
+})
+
 module.exports = router

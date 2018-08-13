@@ -7,22 +7,22 @@ const { uploadFile, formattedNow } = require('./utils')
 const router = express.Router()
 
 router.put('/:ref', upload.any(), (req, res) => {
-  const ref = req.params.ref
-  const notice = JSON.parse(req.body.notice)
-  notice.DMAJ = formattedNow()
+    const ref = req.params.ref
+    const notice = JSON.parse(req.body.notice)
+    notice.DMAJ = formattedNow()
 
-  const arr = []
-  for (var i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-  }
-  arr.push(Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
+    const arr = []
+    for (var i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
+    }
+    arr.push(Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
 
-  Promise.all(arr).then(() => {
-    res.sendStatus(200)
-  }).catch((e) => {
-    console.log(e)
-    res.sendStatus(500)
-  })
+    Promise.all(arr).then(() => {
+        res.sendStatus(200)
+    }).catch((e) => {
+        console.log(e)
+        res.sendStatus(500)
+    })
 })
 
 router.post('/', upload.any(), (req, res) => {
@@ -42,6 +42,14 @@ router.get('/:ref', (req, res) => {
             console.log('FOUND', notice)
             res.send(notice);
         }
+    });
+})
+
+router.delete('/:ref', (req, res) => {
+    const ref = req.params.ref;
+    Mnr.findOneAndRemove({ REF: ref }, (error) => {
+        if (error) return res.status(500).send({ error });
+        return res.status(200).send({});
     });
 })
 
