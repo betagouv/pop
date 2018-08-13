@@ -33,7 +33,7 @@ router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow()
     Palissy.create(notice).then((e) => {
-        res.sendStatus(200)
+        res.send({ success: true, msg: "OK" })
     });
 })
 

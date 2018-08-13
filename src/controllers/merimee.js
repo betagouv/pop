@@ -34,7 +34,7 @@ router.post('/', upload.any(), (req, res) => {
     notice.DMIS = notice.DMAJ = formattedNow()
 
     Merimee.create(notice).then((e) => {
-        res.sendStatus(200)
+        res.send({ success: true, msg: "OK" })
     });
 })
 

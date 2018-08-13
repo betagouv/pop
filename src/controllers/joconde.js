@@ -36,7 +36,7 @@ router.post('/', upload.any(), (req, res) => {
   }
   arr.push(Joconde.create(notice))
   Promise.all(arr).then(() => {
-    res.sendStatus(200)
+    res.send({ success: true, msg: "OK" })
   }).catch((e) => {
     res.sendStatus(500)
   })
