@@ -91,20 +91,6 @@ export default class Joconde extends Notice {
                 }
             }
         }
-
-        /*
-                    // ///CONTROLE DE LA CONSISTENTE DES DONNEE 
-            // const errors = [];
-            // if (notices.length) {
-            //     for (var i = 0; i < notices.length; i++) {
-            //         for (let key in notices[i].value) {
-            //             if (!JocondeFields.includes(key)) {
-            //                 errors.push(`La colonne ${key} est inconnue`);
-            //             }
-            //         }
-            //     }
-            // }
-            */
     }
 
     extractIMGNames = function (str) {

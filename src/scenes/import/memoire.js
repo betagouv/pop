@@ -36,7 +36,7 @@ function parseFiles(files, encoding) {
             }
             const filesMap = {};
             for (var i = 0; i < files.length; i++) {
-                filesMap[files[i]] = files[i];
+                filesMap[files[i].name] = files[i];
             }
             //ADD IMAGES
             for (var i = 0; i < notices.length; i++) {
@@ -50,45 +50,10 @@ function parseFiles(files, encoding) {
                     notices[i]._images.push(newImage)
                 }
             }
+            console.log(errors, notices)
             resolve({ importedNotices: notices, fileName: objectFile.name });
         });
 
     })
 }
 
-function ParseCSV(file) {
-    return new Promise((resolve, reject) => {
-        const parser = Parse({ delimiter: '|', from: 1, quote: '', relax_column_count: true });
-        const output = [];
-
-        let record = null;
-        let header = null;
-
-        parser.on('readable', () => {
-            while ((record = parser.read())) {
-                if (!header) {
-                    header = [].concat(record);
-                    continue;
-                }
-                const obj = {};
-                record.map((e, i) => {
-                    obj[header[i]] = e;
-                })
-                output.push(new Memoire(obj));
-            }
-        });
-
-        // Catch any error
-        parser.on('error', (err) => {
-            reject(err.message)
-        });
-
-        // When we are done, test that the parsed output matched what expected
-        parser.on('finish', () => {
-            resolve(output);
-        });
-
-        parser.write(file);
-        parser.end();
-    })
-}

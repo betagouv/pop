@@ -43,6 +43,7 @@ export default class Importer extends Component {
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
+                console.log(importedNotices[i])
                 const collection = importedNotices[i]._type;
                 const notice = await (api.getNotice(collection, importedNotices[i].REF.value));
                 if (notice) {
@@ -97,7 +98,7 @@ export default class Importer extends Component {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = updated[i].makeItFlat();
                 console.log('update notice ', notice);
-                const collection = created[i]._type;
+                const collection = updated[i]._type;
                 await api.updateNotice(notice.REF, collection, notice, updated[i].images);
             }
 
@@ -111,6 +112,7 @@ export default class Importer extends Component {
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
             let body = '';
+
             if (this.props.onReport) {
                 body = this.props.onReport(this.state.importedNotices);
             } else {
@@ -160,7 +162,7 @@ export default class Importer extends Component {
                 <div className='summary'>
                     <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
                     <div className='filename'>{this.state.fileName}</div>
-                    <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} dont illustrées.</div>
+                    <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont illustrées.</div>
                     <div>Parmi ces {noticesChargees} notices:</div>
                     <div className="lines">
                         <div className='line'><div className="round" style={{ backgroundColor: '#58FB02' }} />{`${noticesCrees} sont des nouvelles notices (non créees précedemment)`}</div>
