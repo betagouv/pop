@@ -188,7 +188,7 @@ router.post('/signin', (req, res) => {
         } else {
           res.status(401).send({
             success: false,
-            msg: 'Authentication failed. Wrong password.'
+            msg: 'Impossible de se connecter. Le mot de passe ne correspond pas'
           })
         }
       })
