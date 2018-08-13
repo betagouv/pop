@@ -6,7 +6,7 @@ import Merimee from '../../entities/merimee';
 import Palissy from '../../entities/palissy';
 
 
-const utils = require('./utils')
+import utils from './utils';
 
 export default class Import extends React.Component {
     render() {

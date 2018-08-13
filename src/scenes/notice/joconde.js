@@ -3,6 +3,7 @@ import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
+import { connect } from 'react-redux';
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
@@ -41,6 +42,7 @@ class Notice extends React.Component {
                 if (!notice) {
                     this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
                     console.error(`Impossible de charger la notice ${ref}`)
+                    return;
                 }
                 console.log('NOTICE', notice)
                 const initData = notice;
@@ -53,11 +55,7 @@ class Notice extends React.Component {
         const ref = this.props.match.params.ref;
         API.deleteNotice('joconde', ref).then(() => {
             toastr.success('Notice supprimée');
-            setTimeout(() => {
-
-            }, 1000)
         })
-
     }
 
     onSubmit(values) {
@@ -462,9 +460,14 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
-                    <div className='buttons'>
-                        <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
-                    </div>
+                    {
+                        this.props.canUpdate ? (
+                            <div className='buttons'>
+                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                                <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
+                                {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
+                            </div>) : <div />
+                    }
                 </Form >
             </Container >
         );
@@ -473,8 +476,12 @@ class Notice extends React.Component {
 
 
 
-export default reduxForm({
-    form: 'notice'
-})(Notice)
+const mapStateToProps = ({ Auth }) => {
+    const { role, group } = Auth.user;
+    return {
+        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "joconde" || group === "admin") : false
+    }
+}
 
+export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
 

@@ -8,7 +8,7 @@ import Mh from './mh';
 import Joconde from './joconde';
 import Mnr from './mnr';
 import Inv from './inv';
-import Sap from './sap';
+import Memoire from './memoire';
 
 class Import extends React.Component {
 
@@ -20,7 +20,7 @@ class Import extends React.Component {
             <div>
                 <Switch>
                     <Route path={`/import/`} exact component={Home} />
-                    <Route path={`/import/sap`} component={Sap} />
+                    <Route path={`/import/memoire`} component={Memoire} />
                     <Route path={`/import/mnr`} component={Mnr} />
                     <Route path={`/import/joconde`} component={Joconde} />
                     <Route path={`/import/mh`} component={Mh} />

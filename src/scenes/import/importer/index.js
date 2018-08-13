@@ -170,7 +170,7 @@ export default class Importer extends Component {
                     </div>
                     <Button className="buttonReverse details" onClick={() => {
                         this.onExport()
-                        // amplitude.getInstance().logEvent('Import - Cancel');
+                        amplitude.getInstance().logEvent('Import - Download report');
                     }} >
                         + de details</Button>
                 </div>

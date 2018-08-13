@@ -3,6 +3,7 @@ import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
+import { connect } from 'react-redux';
 
 import FieldInput from './components/fieldInput.js'
 import FieldImages from './components/fieldImages';
@@ -37,7 +38,11 @@ class Notice extends React.Component {
     load(ref) {
         this.setState({ loading: true })
         API.getNotice('palissy', ref).then((notice) => {
-            console.log('NOTICE', notice)
+            if (!notice) {
+                this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
+                console.error(`Impossible de charger la notice ${ref}`)
+                return;
+            }
             this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
             this.setState({ loading: false, notice })
         })
@@ -53,11 +58,23 @@ class Notice extends React.Component {
         })
     }
 
+    delete() {
+        const ref = this.props.match.params.ref;
+        API.deleteNotice('palissy', ref).then(() => {
+            toastr.success('Notice supprimée');
+        })
+    }
+
     render() {
 
         if (this.state.loading) {
             return <Loader />
         }
+
+        if (this.state.error) {
+            return <div className='error'>{this.state.error}</div>
+        }
+
 
         const arr = [];
         for (var key in this.state.notice) {
@@ -601,6 +618,14 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
+                    {
+                        this.props.canUpdate ? (
+                            <div className='buttons'>
+                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                                <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
+                                {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
+                            </div>) : <div />
+                    }
                 </Form >
             </Container >
         );
@@ -609,27 +634,13 @@ class Notice extends React.Component {
 
 
 
-export default reduxForm({
-    form: 'notice',
-    // enableReinitialize: true
-})(Notice)
-
-
-
-
-const Images = ({ images }) => {
-    if (images && images.length) {
-        return (
-            <Col xs={12} sm={12} md={6}>
-                <div className="thumbs-box">
-                    <div className="thumb-lg mb-3">
-                        <img src={images[0]} alt="" className="img-fluid w-100" />
-                    </div>
-                </div>
-            </Col>
-        )
-    } else {
-        return <div />
+const mapStateToProps = ({ Auth }) => {
+    const { role, group } = Auth.user;
+    console.log(Auth.user);
+    return {
+        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "palissy" || group === "admin") : false
     }
 }
+
+export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
 

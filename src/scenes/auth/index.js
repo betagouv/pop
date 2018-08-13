@@ -17,7 +17,7 @@ export default (props) => {
       <Switch >
         <Route exact path={`${url}/signin`} render={() => <Signin />} />
         <Route exact path={`${url}/forget`} render={() => <Forget />} />
-        <Route exact path={`${url}/updatePassword`} render={() => <UpdatePassword />} />
+        <Route exact path={`${url}/updatepassword`} render={() => <UpdatePassword />} />
       </Switch>
     </div>
   );

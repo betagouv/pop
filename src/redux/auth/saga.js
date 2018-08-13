@@ -14,6 +14,9 @@ export function* signin({ email, password }) {
     }
 
     yield put({ type: actions.SIGNIN_SUCCESS, user, token });
+
+    amplitude.getInstance().setUserId(email);
+
     yield put(push('/'));
   } catch (e) {
     yield put({ type: actions.SIGNIN_ERROR, error: e });

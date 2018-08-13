@@ -157,11 +157,7 @@ class api {
         return new Promise((resolve, reject) => {
             const headers = {}
             headers['user-agent'] = 'POP application';
-            if (contentType) {
-                headers['Content-Type'] = contentType
-            }
             fetch(url, {
-                body: data, // must match 'Content-Type' header
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 credentials: 'same-origin', // include, same-origin, *omit
                 headers,

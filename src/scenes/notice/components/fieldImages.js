@@ -21,6 +21,10 @@ class FieldImages extends React.Component {
     }
 
     renderImages() {
+        if (!this.props.input.value) {
+            return <div />
+        }
+
         const arr = this.props.input.value.map((e, i) => {
             let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
             let key = e;

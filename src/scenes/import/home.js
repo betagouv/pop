@@ -33,7 +33,7 @@ export default class Import extends React.Component {
                         { url: '/import/mnr', name: 'mnr', image: require('../../assets/joconde.jpg') },
                         { url: '/import/inv', name: 'inv', image: require('../../assets/joconde.jpg') },
                         { url: '/import/mh', name: 'mh', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/sap', name: 'sap', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/memoire', name: 'mémoire', image: require('../../assets/joconde.jpg') },
                     ])}
                 </Row>
             </div>

@@ -5,7 +5,7 @@ import ExportData from './importer/export'; // fichier a télécharger
 import ReportData from './importer/report'; //Mail reporting a la fin de l'import
 import Joconde from '../../entities/joconde';
 
-const utils = require('./utils')
+import utils from './utils';
 
 export default class Import extends React.Component {
     render() {

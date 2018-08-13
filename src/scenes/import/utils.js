@@ -1,6 +1,5 @@
 import XLSX from 'xlsx';
 
-
 function readFile(file, encoding, cb) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -15,13 +14,19 @@ function readODS(file, encoding) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(reader.result, "text/xml");
-            resolve(xmlDoc);
+            var workbook = XLSX.read(reader.result, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function (sheetName) {
+                // Here is your object
+                var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                // var json_object = JSON.stringify(XL_row_object);
+                resolve(XL_row_object);
+            })
         };
         reader.onabort = () => console.log('file reading was aborted');
         reader.onerror = () => console.log('file reading has failed');
-        reader.readAsText(file, encoding || 'utf-8');
+        reader.readAsBinaryString(file);
     })
 }
 
@@ -71,8 +76,9 @@ function parseAjoutPilote(res, object) {
 
 
 
-module.exports = {
+export default {
     readFile,
     readXML,
+    readODS,
     parseAjoutPilote,
 };

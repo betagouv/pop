@@ -8,6 +8,7 @@ import Avatar from '../../components/avatar'
 import authAction from './../../redux/auth/actions'
 const { logout } = authAction
 
+import { history } from '../../redux/store';
 
 import './user.css'
 
@@ -49,10 +50,10 @@ class User extends Component {
         </DropdownToggle>
         <DropdownMenu className="DropDown">
           <DropdownItem className="dropdown-header" header>Configuration</DropdownItem>
-          <DropdownItem className="dropdown-item"> <Link to='/auth/updatePassword'>Changer mon mot de passe</Link></DropdownItem>
+          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')} >Changer mon mot de passe</DropdownItem>
           <DropdownItem className="dropdown-item" onClick={this.logout.bind(this)}>Logout</DropdownItem>
         </DropdownMenu>
-      </Dropdown>
+      </Dropdown >
     )
   }
 

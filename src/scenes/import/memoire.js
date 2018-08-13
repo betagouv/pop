@@ -4,17 +4,16 @@ import Importer from './importer';
 import Parse from 'csv-parse';
 import Memoire from '../../entities/memoire';
 
-
-const utils = require('./utils')
+import utils from './utils';
 
 export default class Import extends React.Component {
     render() {
         return (
             <Container className='import'>
                 <Importer
-                    collection="SAP"
+                    collection="Memoire"
                     parseFiles={parseFiles}
-                    dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .txt et séparateur | ) et les images associées (au format .jpg) dans cette zone"
+                    dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .ods  ) et les images associées (au format .jpg) dans cette zone"
                 />
             </Container >
         );
@@ -25,41 +24,34 @@ function parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
         const errors = [];
 
-        var objectFile = files.find(file => file.name.includes('.txt'));
+        var objectFile = files.find(file => file.name.includes('.ods'));
         if (!objectFile) {
-            reject('Pas de fichiers .txt detecté');
+            reject('Pas de fichiers .ods detecté');
             return;
         }
-
-        utils.readFile(objectFile, encoding, (file) => {
-            ParseCSV(file).then(notices => {
-
-                const filesMap = {};
-                for (var i = 0; i < files.length; i++) {
-                    filesMap[files[i]] = files[i];
+        utils.readODS(objectFile).then((data) => {
+            const notices = [];
+            for (let i = 0; i < data.length; i++) {
+                notices.push(new Memoire(data[i]))
+            }
+            const filesMap = {};
+            for (var i = 0; i < files.length; i++) {
+                filesMap[files[i]] = files[i];
+            }
+            //ADD IMAGES
+            for (var i = 0; i < notices.length; i++) {
+                const name = notices[i].IMG.value;
+                if (!name) break;
+                let img = filesMap[name];
+                if (!img) {
+                    errors.push(`Image ${name} introuvable`)
+                } else {
+                    const newImage = new Blob([img], { type: 'image/jpeg' });
+                    notices[i]._images.push(newImage)
                 }
-
-                //ADD IMAGES
-                for (var i = 0; i < notices.length; i++) {
-                    const name = notices[i].IMG.value;
-                    if (!name) break;
-                    let img = filesMap[name];
-                    if (!img) {
-                        // errors.push(`Image ${name} introuvable`)
-                    } else {
-                        const newImage = new Blob([img], { type: 'image/jpeg' });
-                        notices[i]._images.push(newImage)
-                    }
-                }
-
-                if (errors.length) {
-                    reject(errors.join('\n'));
-                    return;
-                }
-
-                resolve({ importedNotices: notices, fileName: objectFile.name });
-            });
-        })
+            }
+            resolve({ importedNotices: notices, fileName: objectFile.name });
+        });
 
     })
 }

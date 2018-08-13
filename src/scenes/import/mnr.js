@@ -4,7 +4,7 @@ import Parse from 'csv-parse';
 import Importer from './importer';
 import Mnr from '../../entities/mnr';
 
-const utils = require('./utils');
+import utils from './utils';
 
 export default class Import extends React.Component {
     render() {

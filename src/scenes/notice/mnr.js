@@ -42,10 +42,9 @@ class Notice extends React.Component {
                 if (!notice) {
                     this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
                     console.error(`Impossible de charger la notice ${ref}`)
+                    return;
                 }
-                console.log('NOTICE', notice)
-                const initData = notice;
-                this.props.initialize(initData);
+                this.props.initialize(notice);
                 this.setState({ loading: false, notice })
             })
             .catch((e) => {
@@ -76,6 +75,14 @@ class Notice extends React.Component {
                 toastr.error('Impossible d\'enregistrer la modification');
                 this.setState({ saving: false })
             })
+    }
+
+
+    delete() {
+        const ref = this.props.match.params.ref;
+        API.deleteNotice('mnr', ref).then(() => {
+            toastr.success('Notice supprimée');
+        })
     }
 
     render() {
@@ -304,10 +311,12 @@ class Notice extends React.Component {
                         </Col>
                     </Section>
                     {
-                        this.props.canUpdate ? (<div className='buttons'>
-                            <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
-                            <Button color="primary" type="submit" >Sauvegarder</Button>
-                        </div>) : <div />
+                        this.props.canUpdate ? (
+                            <div className='buttons'>
+                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                                <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
+                                <Button color="primary" type="submit" >Sauvegarder</Button>
+                            </div>) : <div />
                     }
                 </Form >
             </Container >
