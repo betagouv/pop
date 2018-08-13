@@ -22,8 +22,8 @@ class CreateUser extends React.Component {
 
     createUser() {
         this.setState({ loading: true })
-        const { group, email, role, institution } = this.state;
-        api.createUser(email, group, role, institution)
+        const { group, email, role, institution, prenom, nom } = this.state;
+        api.createUser(email, group, role, institution, prenom, nom)
             .then(() => {
                 this.setState({ modal: false })
             })

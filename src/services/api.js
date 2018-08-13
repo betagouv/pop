@@ -2,8 +2,8 @@ const { api_url } = require('../config.js');
 
 class api {
 
-    createUser(email, group, role, institution) {
-        const obj = { email, group, role, institution };
+    createUser(email, group, role, institution, prenom, nom) {
+        const obj = { email, group, role, institution, prenom, nom };
         return this._post(`${api_url}/auth/signup`, JSON.stringify(obj), 'application/json')
     }
 

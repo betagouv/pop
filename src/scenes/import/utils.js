@@ -1,3 +1,5 @@
+import XLSX from 'xlsx';
+
 
 function readFile(file, encoding, cb) {
     const reader = new FileReader();
@@ -7,6 +9,20 @@ function readFile(file, encoding, cb) {
     reader.onabort = () => console.log('file reading was aborted');
     reader.onerror = () => console.log('file reading has failed');
     reader.readAsText(file, encoding || 'ISO-8859-1');
+}
+
+function readODS(file, encoding) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(reader.result, "text/xml");
+            resolve(xmlDoc);
+        };
+        reader.onabort = () => console.log('file reading was aborted');
+        reader.onerror = () => console.log('file reading has failed');
+        reader.readAsText(file, encoding || 'utf-8');
+    })
 }
 
 function readXML(file, encoding) {
@@ -21,7 +37,6 @@ function readXML(file, encoding) {
         reader.onerror = () => console.log('file reading has failed');
         reader.readAsText(file, encoding || 'utf-8');
     })
-
 }
 
 function parseAjoutPilote(res, object) {
