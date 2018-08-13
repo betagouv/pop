@@ -25,6 +25,8 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
+
+        //GERTRUDE
         var objectFile = files.find(file => file.name.includes('GERTRUDE_xmlToPALISSY_lexicovide.txt'));
         if (objectFile) {
             const PalissyFile = files.find(file => file.name.includes('GERTRUDE_xmlToPALISSY_lexicovide.txt'));
@@ -45,12 +47,21 @@ function parseFiles(files, encoding) {
             }
 
             resolve({ importedNotices, fileName: PalissyFile.name + "," + MemoireFile.name + "," + MerimeeFile.name })
-        } else if (files.find(file => file.name.includes('.xml'))) {
-            const importedNotices = await (ParseRenabl(xmlFiles, encoding));
-            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') })
-        } else {
-            console.log('ERR')
+            return;
         }
+
+        //RENABLE
+        const xmlFiles = files.find(file => file.name.includes('.xml'));
+        if (xmlFiles.length) {
+            const importedNotices = await (ParseRenabl(xmlFiles, encoding));
+            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') });
+            return;
+        }
+
+
+        // ERROR
+        reject("Impossible d'importer le(s) fichier(s)")
+
     })
 }
 
