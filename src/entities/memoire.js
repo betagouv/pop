@@ -132,7 +132,10 @@ export default class Memoire extends Notice {
     }
 
     extractImage(body) {
-        const e = body.IMG || body.NOMSN || ''
+        const e = body.IMG || body.NOMSN || '';
+        if(!e){
+            return '';
+        }
         return `memoire/${this.REF.value}/${e}`
     }
 

@@ -21,9 +21,9 @@ class Signin extends Component {
                 <h1>Se connecter à POP</h1>
                 <div>
                     <br />
-                    Pour obtenir des identifiants, veuillez adresser un <a href="mailto:sandrine.della-bartolomea@culture.gouv.fr,sebastien.legoff@beta.gouv.fr">email</a> à sandrine.della-bartolomea@culture.gouv.fr et sebastien.legoff@beta.gouv.fr avec les informations suivantes : <br /><br />
-                    - Instition  <br />
-                    - Votre groupe (MNR, Inv, MH, Joconde, ou Base archive photo) <br />
+                    Pour obtenir des identifiants, veuillez adresser un <a href="mailto:sandrine.della-bartolomea@culture.gouv.fr,sebastien.legoff@beta.gouv.fr">email</a> avec les informations suivantes : <br /><br />
+                    - Institution  <br />
+                    - Domaine (MNR, Inventaire, Monuments Historiques, Joconde ou Base archives photo)<br />
                     - Nom <br />
                     - Prénom <br /><br />
                 </div>

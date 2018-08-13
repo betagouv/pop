@@ -8,12 +8,16 @@ import './dropZone.css';
 
 export default class ImportDropComponent extends Component {
 
-  state = {
-    progress: -1,
-    error: '',
-    encoding: 'ISO-8859-1',
-    message: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      progress: -1,
+      error: '',
+      encoding: props.defaultEncoding || 'ISO-8859-1',
+      message: "",
+    }
   }
+
 
   onDrop(files) {
 

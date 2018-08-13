@@ -99,7 +99,7 @@ export default class Importer extends Component {
                 const notice = updated[i].makeItFlat();
                 console.log('update notice ', notice);
                 const collection = updated[i]._type;
-                await api.updateNotice(notice.REF, collection, notice, updated[i].images);
+                await api.updateNotice(notice.REF, collection, notice, updated[i]._images);
             }
 
             //Create notice
@@ -107,7 +107,7 @@ export default class Importer extends Component {
                 this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = created[i].makeItFlat();
                 const collection = created[i]._type;
-                await api.createNotice(collection, notice, created[i].images);
+                await api.createNotice(collection, notice, created[i]._images);
             }
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
@@ -196,6 +196,7 @@ export default class Importer extends Component {
                     onFinish={this.onFilesDropped.bind(this)}
                     visible={true}
                     text={this.props.dropzoneText}
+                    defaultEncoding={this.props.defaultEncoding}
                 />
             </div>
         )

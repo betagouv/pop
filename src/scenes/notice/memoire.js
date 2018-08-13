@@ -94,7 +94,7 @@ class Notice extends React.Component {
                         <FieldImages
                             name='IMG'
                             disabled
-                            external={true}
+                            external={false}
                         />
                     </Row>
                     <Section
@@ -103,6 +103,11 @@ class Notice extends React.Component {
                         color='#FF7676'
                     >
                         <Col sm={6}>
+                            <FieldInput
+                                title='Reference (REF) :'
+                                name='REF'
+                                disabled
+                            />
                             <FieldInput
                                 title='Accessoire pose (ACC) :'
                                 name='ACC'

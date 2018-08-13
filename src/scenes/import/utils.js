@@ -1,4 +1,6 @@
 import XLSX from 'xlsx';
+import Parse from 'csv-parse';
+
 
 function readFile(file, encoding, cb) {
     const reader = new FileReader();
@@ -44,6 +46,42 @@ function readXML(file, encoding) {
     })
 }
 
+function readCSV(file, delimiter, encoding) {
+    return new Promise((resolve, reject) => {
+        readFile(file, encoding, res => {
+            const parser = Parse({ delimiter: '|', from: 1, quote: '', relax_column_count: true });
+            const output = [];
+
+            let record = null;
+            let header = null;
+
+            parser.on('readable', () => {
+                while ((record = parser.read())) {
+                    if (!header) {
+                        header = [].concat(record);
+                        continue;
+                    }
+                    const obj = {};
+                    record.map((e, i) => {
+                        obj[header[i]] = e;
+                    })
+                    output.push(obj);
+                }
+            });
+
+            // Catch any error
+            parser.on('error', (err) => { reject(err.message) });
+
+            // When we are done, test that the parsed output matched what expected
+            parser.on('finish', () => { resolve(output); });
+
+            parser.write(res);
+            parser.end();
+        })
+    });
+}
+
+
 function parseAjoutPilote(res, object) {
     let str = res.replace(/\-\r\n/g, ''); // Parsing du fichier en ajout piloté
     var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
@@ -79,6 +117,7 @@ function parseAjoutPilote(res, object) {
 export default {
     readFile,
     readXML,
+    readCSV,
     readODS,
     parseAjoutPilote,
 };
