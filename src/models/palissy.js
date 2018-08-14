@@ -152,7 +152,7 @@ const object = mongoose.model('palissy', Schema)
 
 object.createMapping({
   "mappings": {
-    "merimee": {
+    "palissy": {
       "properties": {
         "REF": {
           "type": "text",
