@@ -12,6 +12,12 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  nom: {
+    type: String,
+  },
+  prenom: {
+    type: String,
+  },
   group: {
     type: String,
     required: true

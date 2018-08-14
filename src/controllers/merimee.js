@@ -32,9 +32,15 @@ router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
 
     notice.DMIS = notice.DMAJ = formattedNow()
-    
-    Merimee.create(notice).then((e) => {
-        res.sendStatus(200)
+
+    const obj = new Merimee(notice);
+    obj.save((error) => {
+        if (error) return res.status(500).send({ error });
+        obj.on('es-indexed', (err, result) => {
+            if (err) return res.status(500).send({ error: err });
+            console.log("result", result)
+            res.status(200).send({ success: true, msg: "DOC is indexed" })
+        });
     });
 })
 
@@ -61,10 +67,17 @@ router.get('/:ref', (req, res) => {
             res.sendStatus(404);
         }
     });
-
-
-
 })
+
+
+router.delete('/:ref', (req, res) => {
+    const ref = req.params.ref;
+    Merimee.findOneAndRemove({ REF: ref }, (error) => {
+        if (error) return res.status(500).send({ error });
+        return res.status(200).send({});
+    });
+})
+
 
 module.exports = router
 

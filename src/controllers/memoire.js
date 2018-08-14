@@ -29,14 +29,16 @@ router.post('/', upload.any(), (req, res) => {
   const notice = JSON.parse(req.body.notice)
 
   notice.DMIS = notice.DMAJ = formattedNow()
-
+  console.log('uploadFILE', req.files)
   const arr = []
   for (var i = 0; i < req.files.length; i++) {
+
     arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-  arr.push(Memoire.create(notice))
+  const obj = new Memoire(notice);
+  arr.push(obj.save())
   Promise.all(arr).then(() => {
-    res.sendStatus(200)
+    res.send({ success: true, msg: "OK" })
   }).catch((e) => {
     res.sendStatus(500)
   })
@@ -55,6 +57,14 @@ router.get('/:ref', (req, res) => {
       res.sendStatus(404)
     }
   })
+})
+
+router.delete('/:ref', (req, res) => {
+  const ref = req.params.ref;
+  Memoire.findOneAndRemove({ REF: ref }, (error) => {
+    if (error) return res.status(500).send({ error });
+    return res.status(200).send({});
+  });
 })
 
 module.exports = router
