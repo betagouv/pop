@@ -101,7 +101,7 @@ const object = mongoose.model('joconde', Schema)
 
 object.createMapping({
   "mappings": {
-    "merimee": {
+    "joconde": {
       "properties": {
         "REF": {
           "type": "text",

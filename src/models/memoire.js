@@ -134,7 +134,7 @@ const object = mongoose.model('memoire', Schema)
 
 object.createMapping({
   "mappings": {
-    "merimee": {
+    "memoire": {
       "properties": {
         "REF": {
           "type": "text",

@@ -72,7 +72,7 @@ const object = mongoose.model('mnr', Schema)
 
 object.createMapping({
   "mappings": {
-    "merimee": {
+    "mnr": {
       "properties": {
         "REF": {
           "type": "text",
