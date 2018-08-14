@@ -35,7 +35,8 @@ router.post('/', upload.any(), (req, res) => {
 
     arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-  arr.push(Memoire.create(notice))
+  const obj = new Memoire(notice);
+  arr.push(obj.save())
   Promise.all(arr).then(() => {
     res.send({ success: true, msg: "OK" })
   }).catch((e) => {

@@ -34,7 +34,9 @@ router.post('/', upload.any(), (req, res) => {
   for (var i = 0; i < req.files.length; i++) {
     arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-  arr.push(Joconde.create(notice))
+
+  const obj = new Joconde(notice);
+  arr.push(obj.save())
   Promise.all(arr).then(() => {
     res.send({ success: true, msg: "OK" })
   }).catch((e) => {

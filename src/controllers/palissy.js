@@ -32,7 +32,8 @@ router.put('/:ref', upload.any(), (req, res) => {
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow()
-    Palissy.create(notice).then((e) => {
+    const obj = new Palissy(notice);
+    obj.save().then((e) => {
         res.send({ success: true, msg: "OK" })
     });
 })
