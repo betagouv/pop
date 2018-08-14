@@ -26,6 +26,8 @@ export default class Import extends React.Component {
 function parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
 
+        console.log(files)
+
         //GERTRUDE
         var objectFile = files.find(file => file.name.includes('GERTRUDE_xmlToPALISSY_lexicovide.txt'));
         if (objectFile) {
@@ -51,16 +53,16 @@ function parseFiles(files, encoding) {
         }
 
         //RENABLE
-        const xmlFiles = files.find(file => file.name.includes('.xml'));
-        if (xmlFiles.length) {
-            const importedNotices = await (ParseRenabl(xmlFiles, encoding));
-            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') });
+        const xmlFile = files.find(file => file.name.indexOf('.xml') !== -1);
+        if (xmlFile) {
+            const importedNotices = await (ParseRenabl(xmlFile, encoding));
+            resolve({ importedNotices, fileName: xmlFile.map(e => e.name).join('\n') });
             return;
         }
 
 
         // ERROR
-        reject("Impossible d'importer le(s) fichier(s)")
+        reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renable ou Gertrude détecté")
 
     })
 }
