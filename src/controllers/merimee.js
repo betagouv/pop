@@ -34,8 +34,13 @@ router.post('/', upload.any(), (req, res) => {
     notice.DMIS = notice.DMAJ = formattedNow()
 
     const obj = new Merimee(notice);
-    obj.save().then((e) => {
-        res.send({ success: true, msg: "OK" })
+    obj.save(function (error) {
+        if (error) return res.status(500).send({ error });
+        obj.on('es-indexed', function (err, res) {
+            if (err) return res.status(500).send({ error: err });
+            console.log('DOC is indexed')
+            res.send({ success: true, msg: "OK" })
+        });
     });
 })
 
