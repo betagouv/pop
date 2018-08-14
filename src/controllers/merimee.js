@@ -38,7 +38,7 @@ router.post('/', upload.any(), (req, res) => {
         if (error) return res.status(500).send({ error });
         obj.on('es-indexed', function (err, res) {
             if (err) return res.status(500).send({ error: err });
-            res.send({ success: true, msg: "DOC is indexed" })
+            res.status(200).send({ success: true, msg: "DOC is indexed" })
         });
     });
 })
