@@ -4,6 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
+  
   REF: { type: String, unique: true, index: true, trim: true },
 
   PRODUCTEUR: { type: String, default: '' },
@@ -52,8 +53,8 @@ const Schema = new mongoose.Schema({
   DENQ: { type: String, default: '' },
   DEPL: { type: String, default: '' },
   DESC: { type: String, default: '' },
-  DIMS: { type: String, default: '', es_type: 'string' },
-  DMAJ: { type: String, default: '', es_type: 'string' },
+  DIMS: { type: String, default: '' },
+  DMAJ: { type: String, default: '' },
   DMIS: { type: String, default: '' },
   DOSS: { type: String, default: '' },
   DPRO: { type: String, default: '' },
@@ -163,4 +164,98 @@ Schema.pre('update', function (next, done) {
 
 const object = mongoose.model('merimee', Schema)
 
+
+object.createMapping({
+  "mappings": {
+    "merimee": {
+      "properties": {
+        "REF": {
+          "type": "text",
+        },
+        "DMIS": {
+          "type": "text",
+        },
+        "DMAJ": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    console.log('error creating mapping (you can safely ignore this)');
+    console.log(err);
+  } else {
+    console.log('mapping created!');
+    console.log(mapping);
+  }
+});
+
 module.exports = object
+
+
+
+// object.createMapping({
+//   "settings": {
+//     "number_of_shards": 1,
+//     "number_of_replicas": 0,
+//     "analysis": {
+//       "filter": {
+//         "nGram_filter": {
+//           "type": "nGram",
+//           "min_gram": 2,
+//           "max_gram": 20,
+//           "token_chars": [
+//             "letter",
+//             "digit",
+//             "punctuation",
+//             "symbol"
+//           ]
+//         }
+//       },
+//       "analyzer": {
+//         "nGram_analyzer": {
+//           "type": "custom",
+//           "tokenizer": "whitespace",
+//           "filter": [
+//             "lowercase",
+//             "asciifolding",
+//             "nGram_filter"
+//           ]
+//         },
+//         "whitespace_analyzer": {
+//           "type": "custom",
+//           "tokenizer": "whitespace",
+//           "filter": [
+//             "lowercase",
+//             "asciifolding"
+//           ]
+//         }
+//       }
+//     }
+//   },
+//   "mappings": {
+//     "merimee": {
+//       "_all": {
+//         "analyzer": "nGram_analyzer",
+//         "search_analyzer": "whitespace_analyzer"
+//       },
+//       "properties": {
+//         "DMIS": {
+//           "type": "text",
+//         },
+//         "DMAJ": {
+//           "type": "text"
+//         }
+//       }
+//     }
+//   }
+// }, function (err, mapping) {
+//   if (err) {
+//     console.log('error creating mapping (you can safely ignore this)');
+//     console.log(err);
+//   } else {
+//     console.log('mapping created!');
+//     console.log(mapping);
+//   }
+// });
