@@ -5,6 +5,9 @@ import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
 import { connect } from 'react-redux';
 
+
+import { bucket_url } from '../../config';
+
 import FieldInput from './components/fieldInput.js';
 import FieldTags from './components/fieldTags.js';
 import FieldLink from './components/fieldLink.js';
@@ -43,7 +46,16 @@ class Notice extends React.Component {
                 console.error(`Impossible de charger la notice ${ref}`)
                 return;
             }
-            this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
+
+            let image = null;
+            if(notice.IMG.indexOf("memoire") === 0){
+                image = `${bucket_url}${notice.IMG}`
+            }else{
+                image = `${notice.IMG}` 
+            }
+
+            console.log(notice.IMG,image)
+            this.props.initialize({ ...notice, IMG: [image]  });
             this.setState({ loading: false, notice })
         })
     }
@@ -94,7 +106,7 @@ class Notice extends React.Component {
                         <FieldImages
                             name='IMG'
                             disabled
-                            external={false}
+                            external={true}
                         />
                     </Row>
 

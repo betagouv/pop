@@ -137,7 +137,7 @@ const Card = ({ data }) => {
     // const image = data.IMG ? `${data.IMG}` : require('../../assets/noimage.jpg');
 
     let image = "";
-    if (data.IMG.indexOf("memoire" === 0)) {
+    if (data.IMG.indexOf("memoire") === 0) {
         image = `${bucket_url}${data.IMG}`;
     } else if (data.IMG) {
         image = `${data.IMG}`;

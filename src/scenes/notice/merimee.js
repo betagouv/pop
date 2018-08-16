@@ -92,7 +92,7 @@ class Notice extends React.Component {
                     <Row>
                         <Col className='image' sm={6}>
                             <FieldImages
-                                name='IMG'
+                                name='MEMOIRE'
                                 disabled
                                 external={true}
                             />

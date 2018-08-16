@@ -27,11 +27,18 @@ class FieldImages extends React.Component {
 
         const arr = this.props.input.value.map((e, i) => {
             let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
+
+
             let key = e;
+            
             if (e instanceof File) {
                 source = e.preview;
                 key = e.name;
+            }else if(e instanceof Object){
+                source = e.url;
+                key = e.ref;
             }
+
             return (
                 <Col key={key}>
                     <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" />
