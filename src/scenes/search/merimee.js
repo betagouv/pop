@@ -68,6 +68,7 @@ export default class Search extends React.Component {
                         className="mainSearch"
                         placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                         URLParams={true}
+                        debounce={0}
                     />
                     <ExportComponent
                         FILTER={FILTER}
@@ -105,13 +106,23 @@ export default class Search extends React.Component {
                             react={{ and: FILTER }}
                         />
                         <MultiList
-                            componentId="denomination"
+                            componentId=""
                             dataField="DENO.keyword"
                             title="Dénominations"
                             className="filters"
                             placeholder="Rechercher une dénomination"
                             URLParams={true}
                             react={{ and: FILTER }}
+                            customQuery={
+                                function (value, props) {
+                                    console.log(value, props)
+                                    return {
+                                        match: {
+                                            data_field: "this is a test"
+                                        }
+                                    }
+                                }
+                            }
                         />
                         <MultiList
                             componentId="auteurs"

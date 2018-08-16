@@ -20,6 +20,7 @@ export default class ImportDropComponent extends Component {
 
 
   onDrop(files) {
+    console.log("files", files)
 
     if (files.length === 1 && getExtension(files[0].name) === 'zip') {
       const new_zip = new JSZip();
@@ -76,7 +77,11 @@ export default class ImportDropComponent extends Component {
     return (
       <div className='dropzone'>
 
-        <Dropzone className='dropArea' onDrop={this.onDrop.bind(this)}>
+        <Dropzone
+          className='dropArea'
+          onDrop={this.onDrop.bind(this)}
+          onDropRejected={(e) => console.log(e)}
+        >
           <img src={require('../../../assets/upload.png')} />
           <p>{text}</p>
         </Dropzone>

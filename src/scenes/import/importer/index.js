@@ -55,13 +55,6 @@ export default class Importer extends Component {
             this.setState({ loadingMessage: 'Calcul des differences....' });
             importedNotices = diff(importedNotices, existingNotices);
 
-            // //DELETE GENERATED FIELDS 
-            // for (var i = 0; i < importedNotices.length; i++) {
-            //     for (var j = 0; j < generatedFields.length; j++) {
-            //         delete importedNotices[i][generatedFields[j]];
-            //     }
-            // }
-
             controleThesaurus(importedNotices, this.props.mapping);
 
             for (var i = 0; i < importedNotices.length; i++) {

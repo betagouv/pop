@@ -41,8 +41,15 @@ class CreateUser extends React.Component {
         } else {
             groupes.push(this.props.group)
         }
-
         groupes = groupes.map(e => <option key={e}>{e}</option>)
+
+        let roles = [];
+        if (this.props.role === "administrateur" || this.props.group === "admin") {
+            roles = roles.concat(["administrateur", "producteur", "utilisateur"]);
+        }
+        
+        roles = roles.map(e => <option key={e}>{e}</option>)
+
         return (
             <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })} >
                 <h3>Ajouter un nouvel utilisateur</h3>
@@ -71,16 +78,12 @@ class CreateUser extends React.Component {
                         {groupes}
                     </Input>
                 </div >
-                {this.state.group === "admin" ? <div /> :
-                    <div className="input-container">
-                        <div>Rôle</div>
-                        <Input type="select" value={this.state.role} onChange={(e) => this.setState({ role: e.target.value })} >
-                            <option>administrateur</option>
-                            <option>producteur</option>
-                            <option>utilisateur</option>
-                        </Input>
-                    </div >
-                }
+                <div className="input-container">
+                    <div>Rôle</div>
+                    <Input type="select" value={this.state.role} onChange={(e) => this.setState({ role: e.target.value })} >
+                        {roles}
+                    </Input>
+                </div >
                 <div className="button-container">
                     <Button color="primary" onClick={this.createUser.bind(this)}>Créer</Button>
                 </div>
@@ -98,7 +101,10 @@ class CreateUser extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-    return { group: Auth.user ? Auth.user.group : "admin" }
+    return {
+        group: Auth.user ? Auth.user.group : "",
+        role: Auth.user ? Auth.user.role : "utilisateur",
+    }
 }
 
 export default connect(mapStateToProps, {})(CreateUser);

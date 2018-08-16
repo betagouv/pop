@@ -61,6 +61,7 @@ export default class Search extends React.Component {
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"
+                        fuzziness={2}
                         dataField={["TICO", "DENO", "REF", "LOCA"]}
                         queryFormat="and"
                         iconPosition="left"
@@ -198,8 +199,35 @@ export default class Search extends React.Component {
         );
     }
 }
+
+
 const Card = ({ data }) => {
     const image = data.IMG.length ? data.IMG[0] : require('../../assets/noimage.jpg');
+
+
+    if (data.REF.startsWith("PA") || data.REF.startsWith("PM")) {
+        return (
+            <Link style={{ textDecoration: 'none' }} to={`/notice/palissy/${data.REF}`} className="card" key={data.REF}>
+                <img src={image} alt="Lien cassé" />
+                <div className='content'>
+                    <div style={{ display: 'flex' }}><h2>{data.TICO}</h2><span>{data.REF}</span></div>
+                    <div>
+                        <p>{data.LOCA}</p>
+                        <p>{data.EDIF}</p>
+                        <p>{data.AUTR}</p>
+                        <p>{data.CATE}</p>
+                        <p>{data.MATR}</p>
+                        <p>{data.SCLE}</p>
+                        <p>{data.DEPL}</p>
+                        <p>{data.STAT}</p>
+                        <p>{data.DPRO}</p>
+                        <p>{data.DOMN}</p>
+                    </div>
+                </div>
+            </Link>
+        );
+    }
+
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/palissy/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Lien cassé" />
@@ -214,4 +242,7 @@ const Card = ({ data }) => {
             </div>
         </Link>
     );
+
+
+
 }

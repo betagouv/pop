@@ -131,7 +131,7 @@
   margin-bottom: 10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  height: 180px;
+  min-height: 180px;
 }
 
 .search .card:hover {
@@ -142,11 +142,13 @@
   padding: 5px;
   overflow: hidden;
   /* text-transform: capitalize; */
+     padding: 15px;
   width: 100%;
 }
 
 .search .card img{
   width: 180px;
+  height: 180px;
   object-fit: contain;
   padding: 10px;
 }

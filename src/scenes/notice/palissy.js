@@ -175,7 +175,11 @@ class Notice extends React.Component {
                                 name='CONTACT'
                                 disabled
                             />
-
+                            <FieldInput
+                                title='Préc. appart. (PAPP) : '
+                                name='PAPP'
+                                disabled
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldTags

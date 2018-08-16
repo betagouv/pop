@@ -15,6 +15,7 @@ export default class Import extends React.Component {
                 <Importer
                     collection="MH"
                     parseFiles={parseFiles}
+                    dropzoneText="Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et les images associées (au format .jpg) dans cette zone"
                 />
             </Container >
         );
@@ -30,16 +31,23 @@ function parseFiles(files, encoding) {
             return;
         }
         utils.readCSV(objectFile, '|', encoding).then(objs => {
-            const importedNotices = objs.map(obj => {
-                if (obj.REF.indexOf('PM') !== -1) {
-                    return new Palissy(obj);
-                } else if (obj.REF.indexOf('PA') !== -1) {
-                    return new Merimee(obj);
-                } else {
-                    console.log('ISSUE');
-                    return;
+            const importedNotices = [];
+            for (var i = 0; i < objs.length; i++) {
+                const obj = objs[i];
+                if (!obj.REF) {
+                    reject('Impossible de détecter les notices. Vérifiez que le séparateur est bien | et que chaque notice possède une référence')
+                    return
                 }
-            })
+                if (obj.REF.indexOf('PM') !== -1) {
+                    importedNotices.push(new Palissy(obj));
+                } else if (obj.REF.indexOf('PA') !== -1) {
+                    importedNotices.push(new Merimee(obj));
+                } else {
+                    reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`)
+                    return
+                }
+            }
+
             resolve({ importedNotices, fileName: objectFile.name });
         })
 

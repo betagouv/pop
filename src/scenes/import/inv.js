@@ -48,15 +48,15 @@ function parseFiles(files, encoding) {
                 }
             }
 
-            resolve({ importedNotices, fileName: PalissyFile.name + "," + MemoireFile.name + "," + MerimeeFile.name })
+            resolve({ importedNotices, fileName: PalissyFile.name + "\n" + MemoireFile.name + "\n" + MerimeeFile.name })
             return;
         }
 
         //RENABLE
-        const xmlFile = files.find(file => file.name.indexOf('.xml') !== -1);
-        if (xmlFile) {
-            const importedNotices = await (ParseRenabl(xmlFile, encoding));
-            resolve({ importedNotices, fileName: xmlFile.map(e => e.name).join('\n') });
+        const xmlFiles = files.filter(file => file.name.indexOf('.xml') !== -1);
+        if (xmlFiles.length) {
+            const importedNotices = await (ParseRenabl(files, xmlFiles, encoding));
+            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') });
             return;
         }
 
@@ -80,26 +80,54 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, encoding) {
         Promise.all(arr).then((values) => {
             notices.push(...values[0].map(e => new Palissy(e)));
             notices.push(...values[1].map(e => new Merimee(e)));
-            notices.push(...values[2].map(e => new Memoire({ ...e, IMG: e.NOMI })));
+            notices.push(...values[2].map(e => {
+
+                //changement du modèle de donnée gertrude -> pop
+                e.IMG = e.NOMI;
+                e.NUMP = e.NUMP;
+                e.AUTP = e.AUT;
+                e.IDPROD = e.EMET;
+                e.AUTOEU = e.AUTR;
+                e.PRECOR = e.DOC;
+                e.ADRESSE = e.LIEU + ";" + e.ADRS;
+                return new Memoire(e);
+            }));
             resolve(notices)
         })
 
     })
 }
 
-function ParseRenabl(xmlFiles, encoding) {
+function ParseRenabl(files, xmlFiles, encoding) {
     return new Promise(async (resolve, reject) => {
         const notices = [];
         for (var j = 0; j < xmlFiles.length; j++) {
             const xmlDoc = await (utils.readXML(xmlFiles[j], encoding));
             var tags = xmlDoc.childNodes[0].childNodes;
             for (var i = 0; i < tags.length; i++) {
+                console.log(tags)
                 if (tags[i].nodeName === 'MERIMEE') {
                     const obj = RenablXMLToObj(tags[i]);
                     notices.push(new Merimee(obj));
                 } else if (tags[i].nodeName === 'PALISSY') {
                     const obj = RenablXMLToObj(tags[i]);
                     notices.push(new Palissy(obj));
+                } else if (tags[i].nodeName === 'ILLUSTRATION') {
+                    const obj = RenablXMLToObj(tags[i]);
+
+                    const memoireObj = new Memoire(obj)
+
+                    //ADD IMAGES
+                    const ref = memoireObj.REF.value;
+                    for (var j = 0; j < files.length; j++) {
+                        if (files[j].name.toUpperCase().indexOf(ref) !== -1) {
+                            memoireObj._images.push(files[j])
+                            memoireObj.IMG.value = `memoire/${ref}/${files[j].name}`
+                            break;
+                        }
+                    }
+                    console.log(memoireObj)
+                    notices.push(memoireObj);
                 } else {
                     console.log(tags[i].nodeName);
                 }

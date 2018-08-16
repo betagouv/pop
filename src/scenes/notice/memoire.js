@@ -97,8 +97,243 @@ class Notice extends React.Component {
                             external={false}
                         />
                     </Row>
+
                     <Section
-                        title='REFERENCES ET GESTION DOCUMENTAIRES'
+                        title='Localisation'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Localisation (LOCA) :"
+                                name='LOCA'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Pays (PAYS) :"
+                                name='PAYS'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Région (REG) :"
+                                name='REG'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Département (DPT) :"
+                                name='DPT'
+                                disabled
+                            />
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Commune (COM) :"
+                                name='COM'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Code INSEE (INSEE) :"
+                                name='INSEE'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title='Adresse (ADRESSE) :'
+                                name='ADRESSE'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="Nom géographique (MCGEO) :"
+                                name='MCGEO'
+                                disabled
+                            />
+                        </Col>
+                    </Section >
+
+                    <Section
+                        title='Identification MH'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Nom édifice (EDIF) :"
+                                name='EDIF'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Nom objet (OBJT) :"
+                                name='OBJT'
+                                disabled
+                            />
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Liens bases (LBASE) :"
+                                name='LBASE'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Liens base (LBASE2) :"
+                                name='LBASE2'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Ordre images (MARQ) :"
+                                name='MARQ'
+                                disabled
+                            />
+                        </Col>
+                    </Section>
+                    <Section
+                        title='Identification conservation'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Type document (TYPDOC) :"
+                                name='TYPDOC'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Date immatricul (DATIMM) :"
+                                name='DATIMM'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title='Acquisition (ACQU) :'
+                                name='ACQU'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Crédit photo (COPY) :"
+                                name='COPY'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="No phototype (NUMP) :"
+                                name='NUMP'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Ancien numéro (ancienne cote du phototype) (ANUMP) :"
+                                name='ANUMP'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Cote photographe (NUMAUTP) :"
+                                name='NUMAUTP'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="No tirage (NUMTI) :"
+                                name='NUMTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="REPRO (REPRO) :"
+                                name='REPRO'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Ancien numéro du  tirage (ANUMTI) :"
+                                name='ANUMTI'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="Lieu cons tir. (LIEUCTI) :"
+                                name='LIEUCTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Cote conservation du tirage (COTECTI) :"
+                                name='COTECTI'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="Mentions tirage (MENTTI) :"
+                                name='MENTTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Obs tirage (OBSTI) :"
+                                name='OBSTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Renvoi (RENV) :"
+                                name='RENV'
+                                disabled
+                            />
+                            <FieldInput
+                                title="NUMG (NUMG) :"
+                                name='NUMG'
+                                disabled
+                            />
+
+
+
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="No original (NUMOR) :"
+                                name='NUMOR'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="No original(anc) (ANUMOR) :"
+                                name='ANUMOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Lieu cons orig. (LIEUCOR) :"
+                                name='LIEUCOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Cote cons orig. (COTECOR) :"
+                                name='COTECOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Préc original (PRECOR) :"
+                                name='PRECOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Lieu de dépôt (LIEUORIG) :"
+                                name='LIEUORIG'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Mentions orig (MENTOR) :"
+                                name='MENTOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Obs original (OBSOR) :"
+                                name='OBSOR'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="No carte fenêtre (NUMCAF) :"
+                                name='NUMCAF'
+                                disabled
+                            />
+                        </Col>
+                    </Section>
+
+                    <Section
+                        title='Gestion base de donnée'
                         icon={require('../../assets/info.png')}
                         color='#FF7676'
                     >
@@ -109,70 +344,52 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title='Accessoire pose (ACC) :'
-                                name='ACC'
+                                title="Emetteur (code) (EMET) :"
+                                name='EMET'
                                 disabled
                             />
                             <FieldInput
-                                title='Acquisition (ACQU) :'
-                                name='ACQU'
+                                title="Emetteur (nom) (IDPROD) :"
+                                name='IDPROD'
                                 disabled
                             />
                             <FieldInput
-                                title='Adresse personne (ADPHOT) :'
-                                name='ADPHOT'
+                                title="vidéodisque (NVD	REF ) :"
+                                name='NVD	REF '
+                                disabled
+                            />
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Nom Image (REFIMG) :"
+                                name='REFIMG'
                                 disabled
                             />
                             <FieldInput
-                                title='Adresse (ADRESSE) :'
-                                name='ADRESSE'
+                                title="Ref Image (REFIM) :"
+                                name='REFIM'
                                 disabled
                             />
                             <FieldInput
-                                title='Adresse saisie (ADRS) :'
-                                name='ADRS'
+                                title="Vidéo (VIDEO) :"
+                                name='VIDEO'
                                 disabled
                             />
                             <FieldInput
-                                title="Aire d'étude (AIRE) :"
-                                name='AIRE'
+                                title="Type image num (TYPEIMG) :"
+                                name='TYPEIMG'
                                 disabled
                             />
-                            <FieldInput
-                                title="No original(anc) (ANUMOR) :"
-                                name='ANUMOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Ancien numéro (ancienne cote du phototype) (ANUMP) :"
-                                name='ANUMP'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Ancien numéro du  tirage (ANUMTI) :"
-                                name='ANUMTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Ancien numéro du  tirage (ANUMTI) :"
-                                name='ANUMTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Auteur gravure (AUTG) :"
-                                name='AUTG'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Auteur oeuvre représentée (AUTOEU) :"
-                                name='AUTOEU'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Auteur original (AUTOR) :"
-                                name='AUTOR'
-                                disabled
-                            />
+
+                        </Col>
+                    </ Section >
+
+                    <Section
+                        title='Auteur'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
                             <FieldInput
                                 title="Auteur photo (AUTP) :"
                                 name='AUTP'
@@ -183,24 +400,165 @@ class Notice extends React.Component {
                                 name='AUTTI'
                                 disabled
                             />
+                        </Col>
+                        <Col sm={6}>
                             <FieldInput
-                                title="Chronologie (CHRONO) :"
-                                name='CHRONO'
+                                title="Auteur original (AUTOR) :"
+                                name='AUTOR'
+                                disabled
+                            />
+                        </Col>
+                    </Section >
+
+
+
+                    <Section
+                        title='Description image'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Domaine (DOM) :"
+                                name='DOM'
                                 disabled
                             />
                             <FieldInput
-                                title="Commune (COM) :"
-                                name='COM'
+                                title="Titre série (SERIE) :"
+                                name='SERIE'
                                 disabled
                             />
                             <FieldInput
-                                title="Contact (CONTACT) :"
-                                name='CONTACT'
+                                title="Légende (LEG) :"
+                                name='LEG'
                                 disabled
                             />
                             <FieldInput
-                                title="Crédit photo (COPY) :"
-                                name='COPY'
+                                title="Mots clés (MCL) :"
+                                name='MCL'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Nom personne (MCPER) :"
+                                name='MCPER'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Adresse personne (ADPHOT) :'
+                                name='ADPHOT'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Mots candidats (LIB) :"
+                                name='LIB'
+                                disabled
+                            />
+
+
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Publication (PUBLI) :"
+                                name='PUBLI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Pub. photograph. (TIREDE) :"
+                                name='TIREDE'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Obs phototype (OBS) :"
+                                name='OBS'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Mentions photo (MENTIONS) :"
+                                name='MENTIONS'
+                                disabled
+                            />
+                        </Col>
+                    </Section >
+
+                    <Section
+                        title='Date'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Date prise vue (DATPV) :"
+                                name='DATPV'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Justif date pv (JDATPV) :"
+                                name='JDATPV'
+                                disabled
+                            />
+
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Date original (DATOR) :"
+                                name='DATOR'
+                                disabled
+                            />
+                        </Col>
+                    </Section >
+
+                    <Section
+                        title='Oeuvre représentée'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Auteur oeuvre représentée (AUTOEU) :"
+                                name='AUTOEU'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Auteur gravure (AUTG) :"
+                                name='AUTG'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Date oeuv année (DATOEU) :"
+                                name='DATOEU'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Date oeuv siècle (SCLE) :"
+                                name='SCLE'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Titre (TITRE) :"
+                                name='TITRE'
+                                disabled
+                            />
+
+                        </Col>
+                        <Col sm={6}>
+                            <FieldInput
+                                title="Nom de théâtre (THEATRE) :"
+                                name='THEATRE'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Rôle joué (ROLE) :"
+                                name='ROLE'
+                                disabled
+                            />
+                            <FieldInput
+                                title='Accessoire pose (ACC) :'
+                                name='ACC'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Toile de fond (TOILE) :"
+                                name='TOILE'
                                 disabled
                             />
                             <FieldInput
@@ -208,19 +566,29 @@ class Notice extends React.Component {
                                 name='COSTUME'
                                 disabled
                             />
-                            <FieldInput
-                                title="Cote cons orig. (COTECOR) :"
-                                name='COTECOR'
+                        </Col>
+                    </Section >
+
+                    <Section
+                        title='Technique support original
+                        '
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+                        <FieldInput
+                                title="Technique photo (TECH) :"
+                                name='TECH'
                                 disabled
                             />
                             <FieldInput
-                                title="Cote conservation du phototype (COTECP) :"
-                                name='COTECP'
+                                title="Format phototype (FORMAT) :"
+                                name='FORMAT'
                                 disabled
                             />
                             <FieldInput
-                                title="Cote conservation du tirage (COTECTI) :"
-                                name='COTECTI'
+                                title="Sens (SENS) :"
+                                name='SENS'
                                 disabled
                             />
                             <FieldInput
@@ -228,6 +596,74 @@ class Notice extends React.Component {
                                 name='COULEUR'
                                 disabled
                             />
+                            <FieldInput
+                                title="Technique tirage (TECHTI) :"
+                                name='TECHTI'
+                                disabled
+                            />
+                        </Col>
+                        <Col sm={6}>
+                        <FieldInput
+                                title="Format tirage (FORMATTI) :"
+                                name='FORMATTI'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Format original (FORMATOR) :"
+                                name='FORMATOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Technique orig (TECHOR) :"
+                                name='TECHOR'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Echelle (ECH) :"
+                                name='ECH'
+                                disabled
+                            />
+                        </Col>
+                    </Section >
+
+
+                    <Section
+                        title='AUTRES'
+                        icon={require('../../assets/info.png')}
+                        color='#FF7676'
+                    >
+                        <Col sm={6}>
+
+                            <FieldInput
+                                title='Adresse saisie (ADRS) :'
+                                name='ADRS'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Aire d'étude (AIRE) :"
+                                name='AIRE'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="Chronologie (CHRONO) :"
+                                name='CHRONO'
+                                disabled
+                            />
+
+                            <FieldInput
+                                title="Contact (CONTACT) :"
+                                name='CONTACT'
+                                disabled
+                            />
+
+
+                            <FieldInput
+                                title="Cote conservation du phototype (COTECP) :"
+                                name='COTECP'
+                                disabled
+                            />
+
                             <FieldInput
                                 title="Date dessin (DATD) :"
                                 name='DATD'
@@ -238,31 +674,10 @@ class Notice extends React.Component {
                                 name='DATG'
                                 disabled
                             />
-                            <FieldInput
-                                title="Date immatricul (DATIMM) :"
-                                name='DATIMM'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Date oeuv année (DATOEU) :"
-                                name='DATOEU'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Date oeuv année (DATOEU) :"
-                                name='DATOEU'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Date original (DATOR) :"
-                                name='DATOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Date prise vue (DATPV) :"
-                                name='DATPV'
-                                disabled
-                            />
+
+
+
+
                             <FieldInput
                                 title="Date tirage (DATTI) :"
                                 name='DATTI'
@@ -283,51 +698,16 @@ class Notice extends React.Component {
                                 name='DMIS'
                                 disabled
                             />
-                            <FieldInput
-                                title="Domaine (DOM) :"
-                                name='DOM'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Département (DPT) :"
-                                name='DPT'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Echelle (ECH) :"
-                                name='ECH'
-                                disabled
-                            />
+
+
                             <FieldInput
                                 title="Interprétation (EDIARCH) :"
                                 name='EDIARCH'
                                 disabled
                             />
-                            <FieldInput
-                                title="Nom édifice (EDIF) :"
-                                name='EDIF'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Emetteur (code) (EMET) :"
-                                name='EMET'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Format phototype (FORMAT) :"
-                                name='FORMAT'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Format original (FORMATOR) :"
-                                name='FORMATOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Format tirage (FORMATTI) :"
-                                name='FORMATTI'
-                                disabled
-                            />
+
+
+
                             <FieldInput
                                 title="Emetteur (nom) (IDPROD) :"
                                 name='IDPROD'
@@ -343,41 +723,21 @@ class Notice extends React.Component {
                                 name='INSEE'
                                 disabled
                             />
-                            <FieldInput
-                                title="Justif date pv (JDATPV) :"
-                                name='JDATPV'
-                                disabled
-                            />
+
                             <FieldInput
                                 title="Notice biblio (LAUTP) :"
                                 name='LAUTP'
                                 disabled
                             />
-                            <FieldInput
-                                title="Liens bases (LBASE) :"
-                                name='LBASE'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Liens base (LBASE2) :"
-                                name='LBASE2'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Légende (LEG) :"
-                                name='LEG'
-                                disabled
-                            />
+
+
+
                             <FieldInput
                                 title="Légende thes. (LEG2) :"
                                 name='LEG2'
                                 disabled
                             />
-                            <FieldInput
-                                title="Mots candidats (LIB) :"
-                                name='LIB'
-                                disabled
-                            />
+
                             <FieldInput
                                 title="Liens divers (LIENS) :"
                                 name='LIENS'
@@ -389,64 +749,10 @@ class Notice extends React.Component {
                                 name='LIEU'
                                 disabled
                             />
-                            <FieldInput
-                                title="Lieu cons orig. (LIEUCOR) :"
-                                name='LIEUCOR'
-                                disabled
-                            />
+
                             <FieldInput
                                 title="Lieu cons pho. (LIEUCP) :"
                                 name='LIEUCP'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Lieu cons tir. (LIEUCTI) :"
-                                name='LIEUCTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Lieu de dépôt (LIEUORIG) :"
-                                name='LIEUORIG'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Localisation (LOCA) :"
-                                name='LOCA'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Ordre images (MARQ) :"
-                                name='MARQ'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Nom géographique (MCGEO) :"
-                                name='MCGEO'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Mots clés (MCL) :"
-                                name='MCL'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Nom personne (MCPER) :"
-                                name='MCPER'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Mentions photo (MENTIONS) :"
-                                name='MENTIONS'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Mentions orig (MENTOR) :"
-                                name='MENTOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Mentions tirage (MENTTI) :"
-                                name='MENTTI'
                                 disabled
                             />
                             <FieldInput
@@ -459,16 +765,7 @@ class Notice extends React.Component {
                                 name='NUM'
                                 disabled
                             />
-                            <FieldInput
-                                title="Cote photographe (NUMAUTP) :"
-                                name='NUMAUTP'
-                                disabled
-                            />
-                            <FieldInput
-                                title="No carte fenêtre (NUMCAF) :"
-                                name='NUMCAF'
-                                disabled
-                            />
+
                             <FieldInput
                                 title="No CD (NUMCD) :"
                                 name='NUMCD'
@@ -492,107 +789,12 @@ class Notice extends React.Component {
                                 name='NUMOP'
                                 disabled
                             />
-
-                            <FieldInput
-                                title="No original (NUMOR) :"
-                                name='NUMOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="No phototype (NUMP) :"
-                                name='NUMP'
-                                disabled
-                            />
                             <FieldInput
                                 title="N° du site (NUMSITE) :"
                                 name='NUMSITE'
                                 disabled
                             />
-                            <FieldInput
-                                title="No tirage (NUMTI) :"
-                                name='NUMTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="vidéodisque (NVD	REF ) :"
-                                name='NVD	REF '
-                                disabled
-                            />
-                            <FieldInput
-                                title="Nom objet (OBJT) :"
-                                name='OBJT'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Obs phototype (OBS) :"
-                                name='OBS'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Obs original (OBSOR) :"
-                                name='OBSOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Obs tirage (OBSTI) :"
-                                name='OBSTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Pays (PAYS) :"
-                                name='PAYS'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Préc original (PRECOR) :"
-                                name='PRECOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Publication (PUBLI) :"
-                                name='PUBLI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Ref Image (REFIM) :"
-                                name='REFIM'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Nom Image (REFIMG) :"
-                                name='REFIMG'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Région (REG) :"
-                                name='REG'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Renvoi (RENV) :"
-                                name='RENV'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Rôle joué (ROLE) :"
-                                name='ROLE'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Date oeuv siècle (SCLE) :"
-                                name='SCLE'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Sens (SENS) :"
-                                name='SENS'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Titre série (SERIE) :"
-                                name='SERIE'
-                                disabled
-                            />
+
                             <FieldInput
                                 title="Site (SITE) :"
                                 name='SITE'
@@ -614,44 +816,8 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title="Technique photo (TECH) :"
-                                name='TECH'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Technique orig (TECHOR) :"
-                                name='TECHOR'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Technique tirage (TECHTI) :"
-                                name='TECHTI'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Nom de théâtre (THEATRE) :"
-                                name='THEATRE'
-                                disabled
-                            />
-                            <FieldInput
                                 title="Titre du dossier (TICO) :"
                                 name='TICO'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Pub. photograph. (TIREDE) :"
-                                name='TIREDE'
-                                disabled
-                            />
-
-                            <FieldInput
-                                title="Titre (TITRE) :"
-                                name='TITRE'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Toile de fond (TOILE) :"
-                                name='TOILE'
                                 disabled
                             />
                             <FieldInput
@@ -665,23 +831,8 @@ class Notice extends React.Component {
                                 disabled
                             />
                             <FieldInput
-                                title="Type document (TYPDOC) :"
-                                name='TYPDOC'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Type image num (TYPEIMG) :"
-                                name='TYPEIMG'
-                                disabled
-                            />
-                            <FieldInput
                                 title="Type support num (TYPSUPP) :"
                                 name='TYPSUPP'
-                                disabled
-                            />
-                            <FieldInput
-                                title="Vidéo (VIDEO) :"
-                                name='VIDEO'
                                 disabled
                             />
                             <FieldInput
@@ -725,21 +876,3 @@ const mapStateToProps = ({ Auth }) => {
 }
 
 export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
-
-
-const Images = ({ images }) => {
-    if (images && images.length) {
-        return (
-            <Col xs={12} sm={12} md={6}>
-                <div className="thumbs-box">
-                    <div className="thumb-lg mb-3">
-                        <img src={images[0]} alt="" className="img-fluid w-100" />
-                    </div>
-                </div>
-            </Col>
-        )
-    } else {
-        return <div />
-    }
-}
-
