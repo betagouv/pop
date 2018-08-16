@@ -4,10 +4,9 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
-
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
-
+  MEMOIRE: [{ ref: String, url: String }],
   REF: { type: String, unique: true, index: true, trim: true },
   ACQU: { type: String, default: '' },
   ADRS: { type: String, default: '' },
@@ -151,6 +150,16 @@ Schema.plugin(mongoosastic, {
 const object = mongoose.model('palissy', Schema)
 
 object.createMapping({
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "folding": {
+          "tokenizer": "standard",
+          "filter": ["lowercase", "asciifolding"]
+        }
+      }
+    }
+  },
   "mappings": {
     "palissy": {
       "properties": {
@@ -168,11 +177,11 @@ object.createMapping({
   }
 }, function (err, mapping) {
   if (err) {
-    console.log('error creating mapping (you can safely ignore this)');
-    console.log(err);
+    // console.log('error creating mapping (you can safely ignore this)');
+    // console.log(err);
   } else {
     console.log('mapping created!');
-    console.log(mapping);
+    // console.log(mapping);
   }
 });
 

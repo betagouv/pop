@@ -5,6 +5,7 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
+  MEMOIRE: [{ url: String, id: String }],
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
   ADRESSE: { type: String, default: '' },
@@ -150,11 +151,11 @@ object.createMapping({
   }
 }, function (err, mapping) {
   if (err) {
-    console.log('error creating mapping (you can safely ignore this)');
-    console.log(err);
+    // console.log('error creating mapping (you can safely ignore this)');
+    // console.log(err);
   } else {
     console.log('mapping created!');
-    console.log(mapping);
+    // console.log(mapping);
   }
 });
 
