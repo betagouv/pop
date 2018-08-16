@@ -64,7 +64,6 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) =>
   />);
 
 const mapstatetoprops = ({ Auth }) => {
-  console.log(Auth);
   return ({
     isLoggedIn: !!Auth.user
   })

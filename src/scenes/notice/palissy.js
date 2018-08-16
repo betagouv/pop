@@ -640,7 +640,6 @@ class Notice extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
     const { role, group } = Auth.user;
-    console.log(Auth.user);
     return {
         canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "palissy" || group === "admin") : false
     }
