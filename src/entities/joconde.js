@@ -4,7 +4,7 @@ export default class Joconde extends Notice {
     constructor(body) {
         super();
         this._type = 'joconde';
-        
+
         this.REF = { type: 'String', value: (body.REF || '').trim(), required: true };
         this.ADPT = { type: 'Array', value: this.extractArray(body.ADPT) };
         this.APTN = { type: 'String', value: body.APTN || '' };
@@ -105,7 +105,8 @@ export default class Joconde extends Notice {
 }
 
 Joconde.convertLongNameToShort = function (str) {
-    let name = str.replace(/_[a-zA-Z0-9]\./g, '.');
+    let name = str.substring(str.lastIndexOf('/') + 1);
+    name = name.replace(/_[a-zA-Z0-9]\./g, '.');
     name = name.replace(/^.*[\\\/]/g, '');
     name = name.replace(/[a-zA-Z0-9]*_/g, '');
     name = name.toLowerCase();

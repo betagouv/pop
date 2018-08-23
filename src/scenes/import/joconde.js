@@ -46,9 +46,9 @@ function parseFiles(files, encoding) {
 
             //ADD IMAGES
             for (var i = 0; i < importedNotices.length; i++) {
-                const names = importedNotices[i].IMG;
+                const names = importedNotices[i].IMG.value;
                 for (var j = 0; j < names.length; j++) {
-                    let img = filesMap[names[j]];
+                    let img = filesMap[Joconde.convertLongNameToShort(names[j])];
                     if (!img) {
                         errors.push(`Image ${names[j]} introuvable`)
                     } else {
