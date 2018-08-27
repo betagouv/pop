@@ -1,10 +1,8 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const BabelPlugin = require("babel-webpack-plugin");
 
 
 module.exports = env => {
@@ -28,6 +26,7 @@ module.exports = env => {
 
 
   return {
+    mode: 'development',
     entry: ['./src/index.js'],
     devtool: 'source-map',
     output: {
@@ -45,7 +44,7 @@ module.exports = env => {
       fs: 'empty'
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
           loader: "style-loader!css-loader"
