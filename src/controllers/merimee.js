@@ -11,14 +11,12 @@ router.put('/:ref', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
 
     //UPDATE MAJ DATE ( couldnt use hook ...)
-
-    const now = new Date();
     notice.DMAJ = formattedNow();
-
     const arr = [];
     // for (var i = 0; i < req.files.length; i++) {
     //     arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
     // }
+
     arr.push(Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
 
     Promise.all(arr).then(() => {
@@ -26,15 +24,35 @@ router.put('/:ref', upload.any(), (req, res) => {
     }).catch((e) => {
         res.sendStatus(500)
     })
+});
+
+router.post('/:ref/memoire', (req, res) => {
+    const ref = req.params.ref;
+    const link = { ...req.body };
+    
+    //Upsert looks to find a Message with that id and if it doesn't exist creates the Message 
+    Merimee.findOneAndUpdate({ REF: ref },
+        { $push: { MEMOIRE: link } },
+        { upsert: true }, function (err, data) {
+            if (error) return res.status(500).send({ error });
+            return res.status(200).send({});
+        });
 })
+
 
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
 
-    notice.DMIS = notice.DMAJ = formattedNow()
-    
-    Merimee.create(notice).then((e) => {
-        res.sendStatus(200)
+    notice.DMIS = notice.DMAJ = formattedNow();
+    const obj = new Merimee(notice);
+
+    obj.save((error) => {
+        if (error) return res.status(500).send({ error });
+        obj.on('es-indexed', (err, result) => {
+            if (err) return res.status(500).send({ error: err });
+            console.log("result", result)
+            res.status(200).send({ success: true, msg: "DOC is indexed" })
+        });
     });
 })
 
@@ -61,10 +79,17 @@ router.get('/:ref', (req, res) => {
             res.sendStatus(404);
         }
     });
-
-
-
 })
+
+
+router.delete('/:ref', (req, res) => {
+    const ref = req.params.ref;
+    Merimee.findOneAndRemove({ REF: ref }, (error) => {
+        if (error) return res.status(500).send({ error });
+        return res.status(200).send({});
+    });
+})
+
 
 module.exports = router
 

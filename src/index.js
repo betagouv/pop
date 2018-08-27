@@ -37,7 +37,10 @@ app.post('/mail', (req, res) => {
     res.status(500).send('Information incomplete')
     return
   }
-  Mailer.send(subject, to, body).then((e) => { res.sendStatus(200) })
+  Mailer.send(subject, to, body)
+    .then((e) => {
+      return res.status(200).send({ success: true, msg: "OK" })
+    })
 })
 
 app.listen(PORT, () => console.log('Listening on port ' + PORT))

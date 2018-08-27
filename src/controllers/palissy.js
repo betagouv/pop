@@ -32,8 +32,9 @@ router.put('/:ref', upload.any(), (req, res) => {
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow()
-    Palissy.create(notice).then((e) => {
-        res.sendStatus(200)
+    const obj = new Palissy(notice);
+    obj.save().then((e) => {
+        res.send({ success: true, msg: "OK" })
     });
 })
 
@@ -51,6 +52,15 @@ router.get('/:ref', (req, res) => {
         }
     });
 })
+
+router.delete('/:ref', (req, res) => {
+    const ref = req.params.ref;
+    Palissy.findOneAndRemove({ REF: ref }, (error) => {
+        if (error) return res.status(500).send({ error });
+        return res.status(200).send({});
+    });
+})
+
 
 module.exports = router
 
