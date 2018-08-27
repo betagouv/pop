@@ -36,6 +36,9 @@ router.get('/update', (req, res) => {
       const topconcepts = await getTopConceptsByThesaurusId(thesaurusId)
       const arr = []
 
+      //send a confirmation here, so the timeout error is not call
+      res.status(200).send({ success: true, msg: 'OK' })
+
       console.log('END TOP CONCEPT ', topconcepts.length)
       // je vais chercher tous les enfants recursivement
       console.log('START GET ALL CONCEPTS FOR THESAURUS ', thesaurusId)
@@ -66,10 +69,10 @@ router.get('/update', (req, res) => {
         })
         console.log(allTerms)
       })
-      res.status(200).send('OK')
+
       console.log('DONE UPDATE ', thesaurusId)
     } catch (e) {
-      res.status(500).send('error')
+      res.status(500).send({ success: false, msg: 'FAIL UPDATE' })
       console.log('FAIL UPDATE ', thesaurusId)
     }
   })
@@ -77,7 +80,7 @@ router.get('/update', (req, res) => {
 
 module.exports = router
 
-function getAllChildrenConcept (conceptId, arr) {
+function getAllChildrenConcept(conceptId, arr) {
   return new Promise(async (resolve, reject) => {
     arr.push(conceptId)
     const childs = await getChildrenByConceptId(conceptId)
@@ -92,28 +95,28 @@ function getAllChildrenConcept (conceptId, arr) {
   })
 }
 
-function getChildrenByConceptId (conceptId) {
+function getChildrenByConceptId(conceptId) {
   const body = `<soap:getChildrenByConceptId> 
           <conceptId>${conceptId}</conceptId> 
          </soap:getChildrenByConceptId>`
   return post(body, 'thesaurusConcept')
 }
 
-function getPreferredTermByConceptId (conceptId) {
+function getPreferredTermByConceptId(conceptId) {
   const body = `<soap:getPreferredTermByConceptId> 
             <conceptId>${conceptId}</conceptId> 
         </soap:getPreferredTermByConceptId>`
   return post(body, 'thesaurusConcept')
 }
 
-function getTopConceptsByThesaurusId (thesaurusId) {
+function getTopConceptsByThesaurusId(thesaurusId) {
   const body = `<soap:getTopConceptsByThesaurusId> 
             <thesaurusId>${thesaurusId}</thesaurusId> 
         </soap:getTopConceptsByThesaurusId>`
   return post(body, 'thesaurusConcept')
 }
 
-function post (req, service) {
+function post(req, service) {
   let envelopedBody = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ginco.mcc.fr/"> 
     <soapenv:Header/> 
     <soapenv:Body>${req}</soapenv:Body> 
