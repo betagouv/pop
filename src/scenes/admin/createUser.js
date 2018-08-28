@@ -14,8 +14,8 @@ class CreateUser extends React.Component {
         prenom: "",
         nom: "",
         institution: "",
-        group: "admin",
-        role: "utilisateur",
+        group: this.props.group,
+        role: this.props.role,
         loading: false,
         error: ""
     }
