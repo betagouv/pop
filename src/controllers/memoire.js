@@ -47,12 +47,17 @@ function updateMerimeeOrPalissyNotice(memoire) {
     }
 
     let isInArray = notice.MEMOIRE.some(function (doc) {
-      return doc.equals(about.id);
+      return doc.equals(memoire.REF, doc.ref);
     });
 
-    console.log("notice.MEMOIRE", notice.MEMOIRE)
-    resolve();
-
+    if (!isInArray) {
+      notice.MEMOIRE.push({ ref: memoire.REF, url: memoire.IMG });
+      notice.save().then(() => {
+        resolve({ success: true, msg: `` });
+      });
+    } else {
+      resolve({ success: true, msg: `` });
+    }
   })
 }
 
@@ -69,10 +74,7 @@ router.put('/:ref', upload.any(), (req, res) => {
   }
   arr.push(Memoire.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }));
 
-
   arr.push(updateMerimeeOrPalissyNotice(notice));
-
-
 
   Promise.all(arr).then(() => {
     res.sendStatus(200)
@@ -89,10 +91,8 @@ router.post('/', upload.any(), (req, res) => {
   console.log('uploadFILE', req.files)
   const arr = []
   for (var i = 0; i < req.files.length; i++) {
-
     arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
   }
-
 
   arr.push(updateMerimeeOrPalissyNotice(notice));
 
