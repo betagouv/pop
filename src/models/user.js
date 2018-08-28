@@ -43,6 +43,13 @@ UserSchema.pre('save', function (next) {
   }
 })
 
+UserSchema.method('toJSON', function() {
+  var user = this.toObject()
+  delete user.password
+  delete user.__v
+  return user
+})
+
 UserSchema.methods.comparePassword = function (passw, cb) {
   bcrypt.compare(passw, this.password, function (err, res) {
     if (err) {
