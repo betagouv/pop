@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
+import { Table } from 'reactstrap';
 import CreateUser from './createUser';
 import { connect } from 'react-redux';
 import api from '../../services/api';
@@ -22,15 +22,13 @@ class Admin extends React.Component {
     }
 
     renderUsers() {
-        const arr = [];
-        arr.push(<Row className="header" key="header"><Col>Email</Col><Col>Nom</Col><Col>Prénom</Col><Col>Groupe</Col><Col>Institution</Col><Col>Role</Col></Row >)
-
-        for (var i = 0; i < this.state.users.length; i++) {
-            const { email, prenom, nom, role, institution, group } = this.state.users[i];
-            arr.push(<Row key={email}><Col>{email}</Col><Col>{nom}</Col><Col>{prenom}</Col><Col>{group}</Col><Col>{institution}</Col><Col>{role}</Col></Row >)
-        }
-
-        return arr;
+        return [
+            <thead><tr><th>Email</th><th>Nom</th><th>Prénom</th><th>Groupe</th><th>Institution</th><th>Role</th></tr></thead>, 
+            <tbody>{this.state.users.map(user => {
+                const { email, prenom, nom, role, institution, group } = user;
+                return <tr key={email}><td>{email}</td><td>{nom}</td><td>{prenom}</td><td>{group}</td><td>{institution}</td><td>{role}</td></tr> 
+            })}</tbody>
+        ]
     }
 
     render() {
@@ -38,7 +36,7 @@ class Admin extends React.Component {
             <div className='admin'>
                 <CreateUser />
                 <div className="usersList">
-                    {this.renderUsers()}
+                    <Table>{this.renderUsers()}</Table>
                 </div>
             </div>
         );
