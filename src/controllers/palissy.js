@@ -5,36 +5,38 @@ const upload = multer({ dest: 'uploads/' })
 const Palissy = require('../models/palissy');
 const { uploadFile, formattedNow } = require('./utils');
 
-
+function checkIfMemoireImageExist(notice) {
+    return new Promise(async (resolve, reject) => {
+        const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
+        const arr = NoticesMemoire.map(e => { return { ref: e.REF, url: e.IMG } });
+        resolve(arr);
+    })
+}
 
 router.put('/:ref', upload.any(), (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
 
-    //UPDATE MAJ DATE ( couldnt use hook ...)
-
-    const now = new Date();
-    notice.DMAJ = formattedNow();
-
-    const arr = [];
-    // for (var i = 0; i < req.files.length; i++) {
-    //     arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-    // }
-    arr.push(Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-    Promise.all(arr).then(() => {
-        res.sendStatus(200)
-    }).catch((e) => {
-        res.sendStatus(500)
-    })
+    checkIfMemoireImageExist(notice).then(arr => {
+        notice.MEMOIRE = arr;
+        notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
+        Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }).then(() => {
+            res.sendStatus(200)
+        }).catch((e) => {
+            res.sendStatus(500)
+        })
+    });
 })
 
 router.post('/', upload.any(), (req, res) => {
     const notice = JSON.parse(req.body.notice);
-    notice.DMIS = notice.DMAJ = formattedNow()
-    const obj = new Palissy(notice);
-    obj.save().then((e) => {
-        res.send({ success: true, msg: "OK" })
+    checkIfMemoireImageExist(notice).then(arr => {
+        notice.MEMOIRE = arr;
+        notice.DMIS = notice.DMAJ = formattedNow()
+        const obj = new Palissy(notice);
+        obj.save().then((e) => {
+            res.send({ success: true, msg: "OK" })
+        });
     });
 })
 
