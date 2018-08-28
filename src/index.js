@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import dotenv from 'dotenv';
 import WebFont from 'webfontloader';
+import App from './app'
 
 import registerServiceWorker from './registerServiceWorker';
 
-import { store, history } from './redux/store';
-import PublicRoutes from './router';
+import { store } from './redux/store';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 ReactDOM.render(
   <Provider store={store}>
-    <PublicRoutes history={history} />
+    <App />
   </Provider>
   , document.getElementById('root')
 );
