@@ -9,7 +9,7 @@ export default class RuleGroup extends React.Component {
             schema: [],
             query: {},
             count: 0,
-            type: 'ET'
+            type: 'AND'
         }
     }
 
@@ -26,26 +26,24 @@ export default class RuleGroup extends React.Component {
     }
 
     onRemove(id) {
+        console.log('REMOVE', id, this.state.schema)
         const schema = this.state.schema.filter(e => e.id !== id)
-        const query = this.state.query;
-        delete query[id];
-
-        this.setState({ schema, query }, () => this.props.onUpdate(query));
+        this.setState({ schema })
     }
 
-    onUpdate({ id, valueSelected, actionSelected, resultSelected }) {
+    updateQuery({ id, valueSelected, actionSelected, resultSelected }) {
         const query = this.state.query;
         query[id] = { valueSelected, actionSelected, resultSelected }
         query.type = this.state.type;
-        this.setState({ query }, () => this.props.onUpdate(query));
+        this.setState({ query }, () => this.props.updateQuery(query));
     }
 
     renderChildren() {
         return this.state.schema.map(({ type, id }) => {
             if (type === 'rule') {
-                return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
+                return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} fields={this.props.fields} />
             } else {
-                return <RuleGroup key={id} id={id} onRemove={this.onRemove.bind(this)} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
+                return <RuleGroup key={id} id={id} onRemove={this.onRemove.bind(this)} updateQuery={this.updateQuery.bind(this)} fields={this.props.fields} />
             }
         });
     }
@@ -55,7 +53,7 @@ export default class RuleGroup extends React.Component {
             <div className='ruleGroup'>
                 <Combinator value={this.state.type} onChange={(e) => this.setState({ type: e.target.value })} />
                 <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
-                {/* <button onClick={this.onGroupAdd.bind(this)}>Ajouter un groupe</button> */}
+                <button onClick={this.onGroupAdd.bind(this)}>Ajouter un groupe</button>
                 <button className='closeButton' >X</button>
                 {this.renderChildren()}
             </div>
@@ -65,9 +63,9 @@ export default class RuleGroup extends React.Component {
 
 
 const Combinator = (props) => {
-    const choices = ['ET', 'OU'].map(option => <option key={option} value={option}>{option}</option>)
+    const choices = ['AND', 'OR'].map(option => <option key={option} value={option}>{option}</option>)
     return (
-        <select selected="ET" value={props.value} className="combinator" onChange={props.onChange.bind(this)}>
+        <select selected="AND" value={props.value} className="combinator" onChange={props.onChange.bind(this)}>
             {choices}
         </select>
     )

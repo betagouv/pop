@@ -40,14 +40,14 @@
   margin-top: 20px;
 }
 
-.notice .leaflet-container {
+.leaflet-container {
   height: 600px;
   padding-top: 10px;
   width: 100%;
 }
 
 
-.notice .error{
+.error{
   height: 200px;
   display: flex;
   justify-content: center;

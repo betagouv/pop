@@ -3,7 +3,6 @@ import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
-import { connect } from 'react-redux';
 
 
 import FieldInput from './components/fieldInput.js'
@@ -42,9 +41,10 @@ class Notice extends React.Component {
                 if (!notice) {
                     this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
                     console.error(`Impossible de charger la notice ${ref}`)
-                    return;
                 }
-                this.props.initialize(notice);
+                console.log('NOTICE', notice)
+                const initData = notice;
+                this.props.initialize(initData);
                 this.setState({ loading: false, notice })
             })
             .catch((e) => {
@@ -75,14 +75,6 @@ class Notice extends React.Component {
                 toastr.error('Impossible d\'enregistrer la modification');
                 this.setState({ saving: false })
             })
-    }
-
-
-    delete() {
-        const ref = this.props.match.params.ref;
-        API.deleteNotice('mnr', ref).then(() => {
-            toastr.success('Notice supprimée');
-        })
     }
 
     render() {
@@ -310,14 +302,10 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
-                    {
-                        this.props.canUpdate ? (
-                            <div className='buttons'>
-                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
-                                <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
-                                <Button color="primary" type="submit" >Sauvegarder</Button>
-                            </div>) : <div />
-                    }
+                    <div className='buttons'>
+                        <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                        <Button color="primary" type="submit" >Sauvegarder</Button>
+                    </div>
                 </Form >
             </Container >
         );
@@ -325,10 +313,10 @@ class Notice extends React.Component {
 }
 
 
-const mapStateToProps = ({ Auth }) => {
-    return {
-        canUpdate: Auth.user ? (Auth.user.role === "producteur" || Auth.user.role === "administrateur") && (Auth.user.group === "mnr" || Auth.user.group === "admin") : false
-    }
-}
 
-export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
+export default reduxForm({
+    form: 'notice',
+    // enableReinitialize: true
+})(Notice)
+
+

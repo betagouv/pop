@@ -22,12 +22,8 @@ export default class Notice {
     extractArray = function (str, delim = ";") {
         if (!str) { return [] }
         if (Array.isArray(str)) { return str; }
-        const arr = str.split(delim).map((e) => e.trim());
-        
-        //remove duplicates
-        return [...new Set(arr)];
+        return str.split(delim).map((e) => e.trim())
     }
-
     extractEmail = function (str) {
         if (!str) { return '' }
         var regex = /([\w\d-._@]*)/

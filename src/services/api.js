@@ -2,33 +2,6 @@ const { api_url } = require('../config.js');
 
 class api {
 
-    createUser(email, group, role, institution, prenom, nom) {
-        const obj = { email, group, role, institution, prenom, nom };
-        return this._post(`${api_url}/auth/signup`, JSON.stringify(obj), 'application/json')
-    }
-
-    signin(email, password) {
-        const obj = { email, password };
-        console.log(obj)
-        return this._post(`${api_url}/auth/signin`, JSON.stringify(obj), 'application/json')
-    }
-
-    updatePassword(email, ppwd, pwd1, pwd2) {
-        const obj = { email, ppwd, pwd1, pwd2 };
-        console.log(obj)
-        return this._post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), 'application/json')
-    }
-
-    forgetPassword(email) {
-        const obj = { email };
-        console.log(obj)
-        return this._post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), 'application/json')
-    }
-
-    getUsers(group) {
-        return this._get(`${api_url}/auth?group=${group}`)
-    }
-
     sendReport(subject, to, body) {
         const obj = { subject, to, body };
         return this._post(`${api_url}/mail`, JSON.stringify(obj), 'application/json')
@@ -61,10 +34,6 @@ class api {
 
     getNotice(collection, ref) {
         return this._get(`${api_url}/${collection}/${ref}`)
-    }
-
-    deleteNotice(collection, ref) {
-        return this._delete(`${api_url}/${collection}/${ref}`)
     }
 
     updateThesaurus(thesaurusId, str) {
@@ -129,43 +98,6 @@ class api {
                 redirect: 'follow', // manual, *follow, error
                 referrer: 'no-referrer', // *client, no-referrer
             }).then((response) => {
-                if (response.status === 500) {
-                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
-                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
-                    return;
-                };
-
-                response.json().then((data) => {    // Examine the text in the response
-                    console.log(data)
-                    if (data.success) {
-                        resolve(data);
-                    } else {
-                        reject(data.msg)
-                    }
-                }).catch((e) => {
-                    Raven.captureException(e)
-                    reject('Probleme lors de la récupération de la donnée', e);
-                })
-
-            }).catch((err) => {
-                Raven.captureException(err)
-                reject('L\'api est inaccessible', err)
-            });
-        })
-    }
-    _delete(url) {
-        return new Promise((resolve, reject) => {
-            const headers = {}
-            headers['user-agent'] = 'POP application';
-            fetch(url, {
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, same-origin, *omit
-                headers,
-                method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, cors, *same-origin
-                redirect: 'follow', // manual, *follow, error
-                referrer: 'no-referrer', // *client, no-referrer
-            }).then((response) => {
                 if (response.status !== 200) {
                     Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
                     reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
@@ -187,18 +119,18 @@ class api {
                     return;
                 }
 
-                if (response.status !== 200) {
-                    Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
-                    reject(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
+                if (response.status === 200) {
+                    response.json().then((data) => {    // Examine the text in the response
+                        resolve(data);
+                    }).catch((e) => {
+                        Raven.captureException(e)
+                        reject('Probleme lors de la récupération de la donnée', e);
+                    })
                     return;
-                };
+                }
 
-                response.json().then((data) => {    // Examine the text in the response
-                    resolve(data);
-                }).catch((e) => {
-                    Raven.captureException(e)
-                    reject('Probleme lors de la récupération de la donnée', e);
-                })
+                Raven.captureException(`Un probleme a été detecté lors de l'enregistrement via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`)
+                reject(`Un probleme a été detecté lors de la récupération de donnée via l'API. Les équipes techniques ont été notifiées. Status Code: ${response.status}`);
                 return;
 
             }).catch((err) => {

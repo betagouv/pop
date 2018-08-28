@@ -141,7 +141,6 @@
     align-items: center;
     flex-direction: column;
     height: 100%;
-    width: 100%;
 }
 
 .importer-container .summary{
@@ -151,7 +150,6 @@
   min-height: 367px;
   padding: 20px;
   font-size: 15px;
-  width: 100%;
 }
 
 .importer-container .summary .round{
@@ -189,7 +187,6 @@
   line-height: 28px;
   text-align: center;
   margin: 13px;
-  word-wrap: break-word;
 }
 
 

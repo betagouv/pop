@@ -1,6 +1,5 @@
 class Export {
     generate(notices, base, fieldToExport = [{ name: 'Identifiant', key: 'REF' }]) {
-
         const d = new Date();
         const date = ('0' + d.getDate()).slice(-2);
         const month = ('0' + (d.getMonth() + 1)).slice(-2);

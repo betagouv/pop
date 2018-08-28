@@ -19,8 +19,9 @@ export default class RuleComponent extends React.Component {
         } else {
             this.setState({ query: {} });
         }
+
         if (valueSelected && actionSelected && resultSelected) {
-            this.props.onUpdate({ id: this.props.id, valueSelected, actionSelected, resultSelected })
+            this.props.updateQuery({ id: this.props.id, valueSelected, actionSelected, resultSelected })
         }
 
     }
@@ -31,7 +32,7 @@ export default class RuleComponent extends React.Component {
                 componentId={`Rule${this.props.id}`}
                 defaultQuery={() => (this.state.query)}
             >
-                <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
+                <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields}/>
             </ReactiveComponent>
         )
     }
@@ -41,8 +42,8 @@ class Rule extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            valueSelected: this.props.fields[0],
-            actionSelected: '==',
+            valueSelected: '',
+            actionSelected: '',
             resultSelected: '',
         }
     }
@@ -160,7 +161,7 @@ class ValueEditor extends React.Component {
 
 
 const ActionElement = ({ onChange, value }) => {
-    const choices = ['==', '!==', "<=", ">=", "<", ">"].map(option => <option key={option} value={option}>{option}</option>)
+    const choices = ['', '!==', '=='].map(option => <option key={option} value={option}>{option}</option>)
     return (
         <select selected={choices[0]} className="actionelement" value={value} onChange={onChange}>
             {choices}
@@ -169,9 +170,11 @@ const ActionElement = ({ onChange, value }) => {
 }
 
 const ValueSelector = ({ fields, onChange, value }) => {
-    const choices = fields.map(e => <option key={e} value={e}>{e}</option>)
+
+    const choices = fields.map(e => <option key={e.value} value={e.value}>{e.value}</option> )
+
     return (
-        <select className="valueselector" value={value} onChange={onChange}>
+        <select selected={choices[0]} className="valueselector" value={value} onChange={onChange}>
             {choices}
         </select>
     )

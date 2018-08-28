@@ -1,0 +1,17 @@
+.button{
+    border-style: solid;
+    padding: 14px;
+    margin: 5px;
+    border-color: black;
+    color: black;
+    border-width: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button img{
+    width: 40px;
+}
