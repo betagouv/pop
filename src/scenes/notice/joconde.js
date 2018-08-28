@@ -3,6 +3,7 @@ import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
+import { connect } from 'react-redux';
 
 import FieldInput from './components/fieldInput.js'
 import FieldTags from './components/fieldTags.js'
@@ -41,12 +42,20 @@ class Notice extends React.Component {
                 if (!notice) {
                     this.setState({ loading: false, error: `Impossible de charger la notice ${ref}` });
                     console.error(`Impossible de charger la notice ${ref}`)
+                    return;
                 }
                 console.log('NOTICE', notice)
                 const initData = notice;
                 this.props.initialize(initData);
                 this.setState({ loading: false, notice })
             })
+    }
+
+    delete() {
+        const ref = this.props.match.params.ref;
+        API.deleteNotice('joconde', ref).then(() => {
+            toastr.success('Notice supprimée');
+        })
     }
 
     onSubmit(values) {
@@ -123,8 +132,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions /auteur / exécutant / collecteur (PAUT) :'
                                 name='PAUT'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
@@ -193,8 +200,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Description (DESC) :'
                                 name='DESC'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
@@ -205,15 +210,11 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Sujet représenté (REPR) :'
                                 name='REPR'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldTags
                                 title='Précisions sur le sujet représenté (PREP) :'
                                 name='PREP'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldInput
@@ -289,8 +290,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Précisions sur la découverte / collecte / récolte (PDEC) :'
                                 name='PDEC'
-                                type='textarea'
-                                rows={4}
                                 disabled
                             />
                             <FieldInput
@@ -355,15 +354,11 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Exposition (EXPO) :'
                                 name='EXPO'
-                                type='textarea'
-                                rows={10}
                                 disabled
                             />
                             <FieldInput
                                 title='Bibliographie (BIBL) :'
                                 name='BIBL'
-                                type='textarea'
-                                rows={10}
                                 disabled
                             />
                         </Col>
@@ -465,6 +460,14 @@ class Notice extends React.Component {
                             />
                         </Col>
                     </Section>
+                    {
+                        this.props.canUpdate ? (
+                            <div className='buttons'>
+                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                                <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
+                                {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
+                            </div>) : <div />
+                    }
                 </Form >
             </Container >
         );
@@ -473,8 +476,12 @@ class Notice extends React.Component {
 
 
 
-export default reduxForm({
-    form: 'notice'
-})(Notice)
+const mapStateToProps = ({ Auth }) => {
+    const { role, group } = Auth.user;
+    return {
+        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "joconde" || group === "admin") : false
+    }
+}
 
+export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
 

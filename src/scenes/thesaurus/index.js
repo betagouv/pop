@@ -27,6 +27,7 @@ export default class ImportComponent extends Component {
         this.setState({ loading: false, done: true })
       })
       .catch(e => {
+        console.log("CATCH", e)
         this.setState({ loading: false, done: false, error: 'error' })
       })
   }

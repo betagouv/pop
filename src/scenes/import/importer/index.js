@@ -43,6 +43,7 @@ export default class Importer extends Component {
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
+                console.log(importedNotices[i])
                 const collection = importedNotices[i]._type;
                 const notice = await (api.getNotice(collection, importedNotices[i].REF.value));
                 if (notice) {
@@ -53,13 +54,6 @@ export default class Importer extends Component {
             //CALCUL DE LA DIFF
             this.setState({ loadingMessage: 'Calcul des differences....' });
             importedNotices = diff(importedNotices, existingNotices);
-
-            // //DELETE GENERATED FIELDS 
-            // for (var i = 0; i < importedNotices.length; i++) {
-            //     for (var j = 0; j < generatedFields.length; j++) {
-            //         delete importedNotices[i][generatedFields[j]];
-            //     }
-            // }
 
             controleThesaurus(importedNotices, this.props.mapping);
 
@@ -97,8 +91,8 @@ export default class Importer extends Component {
                 this.setState({ loading: true, loadingMessage: `Mise à jour des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = updated[i].makeItFlat();
                 console.log('update notice ', notice);
-                const collection = created[i]._type;
-                await api.updateNotice(notice.REF, collection, notice, updated[i].images);
+                const collection = updated[i]._type;
+                await api.updateNotice(notice.REF, collection, notice, updated[i]._images);
             }
 
             //Create notice
@@ -106,11 +100,12 @@ export default class Importer extends Component {
                 this.setState({ loading: true, loadingMessage: `Création des notices ... `, progress: Math.floor((count * 100) / total) });
                 const notice = created[i].makeItFlat();
                 const collection = created[i]._type;
-                await api.createNotice(collection, notice, created[i].images);
+                await api.createNotice(collection, notice, created[i]._images);
             }
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
             let body = '';
+
             if (this.props.onReport) {
                 body = this.props.onReport(this.state.importedNotices);
             } else {
@@ -152,6 +147,7 @@ export default class Importer extends Component {
         const noticesWithImages = this.state.importedNotices.filter(e => e._images.length).length;
         const noticesModifiees = this.state.importedNotices.filter(e => e._status === 'updated').length;
         const noticesRejetees = this.state.importedNotices.filter(e => e._status === 'rejected').length;
+        const noticesWarning = this.state.importedNotices.filter(e => ((e._status === 'created' || e._status === 'updated') && e._warnings.length)).length;
 
         return (
             <div className='working-area'>
@@ -159,17 +155,17 @@ export default class Importer extends Component {
                 <div className='summary'>
                     <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
                     <div className='filename'>{this.state.fileName}</div>
-                    <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} dont illustrées.</div>
+                    <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont illustrées.</div>
                     <div>Parmi ces {noticesChargees} notices:</div>
                     <div className="lines">
                         <div className='line'><div className="round" style={{ backgroundColor: '#58FB02' }} />{`${noticesCrees} sont des nouvelles notices (non créees précedemment)`}</div>
                         <div className='line'><div className="round" style={{ backgroundColor: '#F9B234' }} />{`${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${this.props.collection})`}</div>
                         <div className='line'><div className="round" style={{ backgroundColor: '#E32634' }} />{`${noticesRejetees} notices ne peuvent etre importees car non conformes`}</div>
-                        <div className='line'><div className="round" style={{ backgroundColor: '#FEEA10' }} />{`${noticesRejetees} notices presentent un avertissement non bloquant pour l'import`}</div>
+                        <div className='line'><div className="round" style={{ backgroundColor: '#FEEA10' }} />{`${noticesWarning} notices presentent un avertissement non bloquant pour l'import`}</div>
                     </div>
                     <Button className="buttonReverse details" onClick={() => {
                         this.onExport()
-                        // amplitude.getInstance().logEvent('Import - Cancel');
+                        amplitude.getInstance().logEvent('Import - Download report');
                     }} >
                         + de details</Button>
                 </div>
@@ -188,10 +184,12 @@ export default class Importer extends Component {
     renderDropZone() {
         return (
             <div>
-                <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4>
+                {/* <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4> */}
                 <DropZone
                     onFinish={this.onFilesDropped.bind(this)}
                     visible={true}
+                    text={this.props.dropzoneText}
+                    defaultEncoding={this.props.defaultEncoding}
                 />
             </div>
         )
@@ -274,9 +272,9 @@ export default class Importer extends Component {
                     <Col md={8} className="right-col">
                         <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${this.props.collection}, selon les trois étapes suivantes`}</p>
                         <Steps labelPlacement="vertical" current={this.state.step} size='big'>
-                            <Step title="Etape 1" />
-                            <Step title="Etape 2" />
-                            <Step title="Etape 3" />
+                            <Step title="Sélection et dépot des contenus à importer" />
+                            <Step title="Contrôle et validation de l'import" />
+                            <Step title="Confirmation de l'import" />
                         </Steps>
                         {currentStep}
                     </Col>

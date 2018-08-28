@@ -58,6 +58,7 @@ module.exports = env => {
 
 
   return {
+    mode: 'production',
     entry: ['babel-polyfill', './src/index.js'],
     devtool: false,
     output: {
@@ -69,7 +70,7 @@ module.exports = env => {
       fs: 'empty'
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
           loader: "style-loader!css-loader"

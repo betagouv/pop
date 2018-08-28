@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactiveComponent } from '@appbaseio/reactivesearch';
-import Button from './button';
+import { Button } from 'reactstrap';
 
 export default class ExportComponent extends React.Component {
 
@@ -14,7 +14,7 @@ export default class ExportComponent extends React.Component {
         if (this.state.run) {
             return <div />
         }
-        return (<Button icon={require('../../../assets/export.png')} text='Exporter les résultats' to='' onClick={() => { this.setState({ run: true }) }} />)
+        return (<Button color="primary" onClick={() => { this.setState({ run: true }) }} >Exporter les résultats</Button >)
     }
 
     exec(res) {
