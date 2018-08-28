@@ -29,11 +29,11 @@ export default class Import extends React.Component {
                 <div className="subtitle">Je souhaite importer</div>
                 <Row>
                     {this.renderTiles([
-                        { url: '/import/joconde', name: 'joconde', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/mnr', name: 'mnr', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/inv', name: 'inv', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/mh', name: 'mh', image: require('../../assets/joconde.jpg') },
-                        { url: '/import/memoire', name: 'mémoire', image: require('../../assets/joconde.jpg') },
+                        { url: '/import/joconde', name: 'Joconde', image: require('../../assets/outbox.png') },
+                        { url: '/import/mnr', name: 'MNR', image: require('../../assets/outbox.png') },
+                        { url: '/import/inv', name: 'Inventaire', image: require('../../assets/outbox.png') },
+                        { url: '/import/mh', name: 'Monuments historiques', image: require('../../assets/outbox.png') },
+                        { url: '/import/memoire', name: 'Mémoire', image: require('../../assets/outbox.png') },
                     ])}
                 </Row>
             </div>

@@ -36,7 +36,7 @@ class PublicRoutes extends React.Component {
           <Switch>
             <RestrictedRoute exact path={'/'} component={Home} isLoggedIn={this.props.isLoggedIn} />
             <Route path={'/auth/'} component={Auth} />
-            <RestrictedRoute exact path={'/thesaurus'} component={Thesaurus} isLoggedIn={this.props.isLoggedIn} />
+            <Route exact path={'/thesaurus'} component={Thesaurus} isLoggedIn={this.props.isLoggedIn} />
             <RestrictedRoute path={'/recherche/'} component={Search} isLoggedIn={this.props.isLoggedIn} />
             <RestrictedRoute path={'/admin/'} component={Admin} isLoggedIn={this.props.isLoggedIn} />
             <RestrictedRoute path={'/import/'} component={Import} isLoggedIn={this.props.isLoggedIn} />

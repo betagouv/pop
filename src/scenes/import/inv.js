@@ -52,10 +52,26 @@ function parseFiles(files, encoding) {
             return;
         }
 
+
+
         //RENABLE
         const xmlFiles = files.filter(file => file.name.indexOf('.xml') !== -1);
         if (xmlFiles.length) {
             const importedNotices = await (ParseRenabl(files, xmlFiles, encoding));
+
+
+            //ADD IMAGES
+            // for (var i = 0; i < importedNotices.length; i++) {
+            //     const ref = importedNotices[i].REF.value;
+            //     for (var j = 0; j < files.length; j++) {
+            //         if (files[j].name.toUpperCase().indexOf(ref) !== -1) {
+            //             importedNotices[i]._images.push(files[j])
+            //             importedNotices[i].IMG.value = `memoire/${ref}/${files[j].name}`
+            //             break;
+            //         }
+            //     }
+            // }
+
             resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') });
             return;
         }
@@ -114,8 +130,11 @@ function ParseRenabl(files, xmlFiles, encoding) {
                     notices.push(new Palissy(obj));
                 } else if (tags[i].nodeName === 'ILLUSTRATION') {
                     const obj = RenablXMLToObj(tags[i]);
+                    const EMET = tags[i].getAttribute('EMET');
+                    const NUMI = tags[i].getAttribute('NUMI');
+                    obj.REF = EMET + "_" + NUMI;
 
-                    const memoireObj = new Memoire(obj)
+                    const memoireObj = new Memoire(obj);
 
                     //ADD IMAGES
                     const ref = memoireObj.REF.value;

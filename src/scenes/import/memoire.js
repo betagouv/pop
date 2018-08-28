@@ -36,13 +36,13 @@ function parseFiles(files, encoding) {
             }
             const filesMap = {};
             for (var i = 0; i < files.length; i++) {
-                filesMap[files[i].name] = files[i];
+                filesMap[convertLongNameToShort(files[i].name)] = files[i];
             }
             //ADD IMAGES
             for (var i = 0; i < notices.length; i++) {
                 const name = notices[i].IMG.value;
                 if (!name) break;
-                let img = filesMap[name];
+                let img = filesMap[convertLongNameToShort(name)];
                 if (!img) {
                     errors.push(`Image ${name} introuvable`)
                 } else {
@@ -57,3 +57,7 @@ function parseFiles(files, encoding) {
     })
 }
 
+function convertLongNameToShort(str) {
+    let name = str.substring(str.lastIndexOf('/') + 1);
+    return name;
+}
