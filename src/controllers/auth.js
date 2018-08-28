@@ -203,4 +203,11 @@ router.post('/test', passport.authenticate('jwt', { session: false }), (req, res
   })
 })
 
+router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  res.send({
+    success: true,
+    user: req.user,
+  })
+})
+
 module.exports = router
