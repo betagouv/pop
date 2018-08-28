@@ -19,7 +19,6 @@ class App extends React.Component {
       this.setState({
         user
       })
-      console.log(this.state)
     }
     this.setState({
       loading: false
@@ -30,7 +29,7 @@ class App extends React.Component {
     if (this.state.loading) {
       return <Loader />
     }
-    return <PublicRoutes history={history} isAuth={ !!this.state.user } />
+    return <PublicRoutes history={history} />
   }
 }
 
