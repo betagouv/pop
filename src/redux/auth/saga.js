@@ -14,6 +14,7 @@ export function* signin({ email, password }) {
     }
 
     yield put({ type: actions.SIGNIN_SUCCESS, user, token });
+    localStorage.setItem('token', token)
 
     amplitude.getInstance().setUserId(email);
 
@@ -33,4 +34,3 @@ export default function* rootSaga() {
     takeEvery(actions.LOGOUT, logOut),
   ]);
 }
-

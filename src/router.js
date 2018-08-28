@@ -13,6 +13,7 @@ import Admin from './scenes/admin';
 import Import from './scenes/import';
 import Thesaurus from './scenes/thesaurus';
 import Auth from './scenes/auth';
+import api from './services/api';
 
 class PublicRoutes extends React.Component {
 
@@ -52,7 +53,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) =>
   (<Route
     {...rest}
     render={(props) => {
-      if (isLoggedIn) {
+      if (isLoggedIn()) {
         return (
           <div>
             <Component {...props} />
@@ -65,7 +66,18 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) =>
 
 const mapstatetoprops = ({ Auth }) => {
   return ({
-    isLoggedIn: !!Auth.user
+    isLoggedIn: async () => {
+      if (!!Auth.user) {
+        return true
+      }
+      const token = localStorage.getItem('token')
+      if (token) {
+        const user = await(api.getUser(token))
+        Auth.user = user
+        return true;
+      }
+      return false
+    }
   })
 }
 export default connect(mapstatetoprops, {})(PublicRoutes);
