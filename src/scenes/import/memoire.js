@@ -43,6 +43,7 @@ function parseFiles(files, encoding) {
                 const name = notices[i].IMG.value;
                 if (!name) break;
                 let img = filesMap[convertLongNameToShort(name)];
+
                 if (!img) {
                     errors.push(`Image ${name} introuvable`)
                 } else {

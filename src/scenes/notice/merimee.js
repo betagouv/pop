@@ -42,6 +42,7 @@ class Notice extends React.Component {
                 this.setState({ loading: false, error: "Cette notice n'existe pas" })
                 return;
             }
+            console.log(notice)
             this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
             this.setState({ loading: false, notice })
         })

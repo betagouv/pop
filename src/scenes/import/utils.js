@@ -49,7 +49,7 @@ function readXML(file, encoding) {
 function readCSV(file, delimiter, encoding) {
     return new Promise((resolve, reject) => {
         readFile(file, encoding, res => {
-            const parser = Parse({ delimiter: '|', from: 1, quote: '', relax_column_count: true });
+            const parser = Parse({ delimiter: delimiter, from: 1, quote: '', relax_column_count: true });
             const output = [];
 
             let record = null;
