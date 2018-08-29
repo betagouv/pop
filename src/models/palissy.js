@@ -4,11 +4,10 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
-
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
-
-  REF: { type: String, index: true },
+  MEMOIRE: [{ ref: String, url: String }],
+  REF: { type: String, unique: true, index: true, trim: true },
   ACQU: { type: String, default: '' },
   ADRS: { type: String, default: '' },
   ADRS2: { type: String, default: '' },
@@ -54,7 +53,7 @@ const Schema = new mongoose.Schema({
   HIST: { type: String, default: '' },
   IDAGR: { type: [String], default: [] },
   IMAGE: { type: String, default: '' },
-  IMG: { type: String, default: '' },
+  IMG: { type: [String], default: [] },
   IMPL: { type: String, default: '' },
   INSC: { type: [String], default: [] },
   INSEE: { type: String, default: [] },
@@ -149,5 +148,41 @@ Schema.plugin(mongoosastic, {
 })
 
 const object = mongoose.model('palissy', Schema)
+
+object.createMapping({
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "folding": {
+          "tokenizer": "standard",
+          "filter": ["lowercase", "asciifolding"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "palissy": {
+      "properties": {
+        "REF": {
+          "type": "text",
+        },
+        "DMIS": {
+          "type": "text",
+        },
+        "DMAJ": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    // console.log('error creating mapping (you can safely ignore this)');
+    // console.log(err);
+  } else {
+    console.log('mapping created!');
+    // console.log(mapping);
+  }
+});
 
 module.exports = object

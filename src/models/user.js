@@ -3,9 +3,27 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 
 const UserSchema = new Schema({
-  username: {
+  email: {
     type: String,
     unique: true,
+    required: true
+  },
+  institution: {
+    type: String,
+    required: true
+  },
+  nom: {
+    type: String,
+  },
+  prenom: {
+    type: String,
+  },
+  group: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
     required: true
   },
   password: {
@@ -23,6 +41,13 @@ UserSchema.pre('save', function (next) {
   } else {
     return next()
   }
+})
+
+UserSchema.method('toJSON', function() {
+  var user = this.toObject()
+  delete user.password
+  delete user.__v
+  return user
 })
 
 UserSchema.methods.comparePassword = function (passw, cb) {

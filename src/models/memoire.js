@@ -3,10 +3,9 @@ var mongoosePaginate = require('mongoose-paginate')
 var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
-
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
-  REF: { type: String, index: true },
+  REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
   ADRESSE: { type: String, default: '' },
   AUTOEU: { type: String, default: '' },
@@ -132,5 +131,31 @@ Schema.plugin(mongoosastic, {
   bulk: { size: 500, delay: 2000 }
 })
 const object = mongoose.model('memoire', Schema)
+
+object.createMapping({
+  "mappings": {
+    "memoire": {
+      "properties": {
+        "REF": {
+          "type": "text",
+        },
+        "DMIS": {
+          "type": "text",
+        },
+        "DMAJ": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    // console.log('error creating mapping (you can safely ignore this)');
+    // console.log(err);
+  } else {
+    console.log('mapping created!');
+    // console.log(mapping);
+  }
+});
 
 module.exports = object
