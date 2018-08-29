@@ -119,7 +119,7 @@ router.post('/updatePassword', (req, res) => {
   if (!pwd1) {
     return res.status(401).send({
       success: false,
-      msg: `Le nouveau mot de passe ,ne peut être vide`
+      msg: `Le nouveau mot de passe ne peut être vide`
     })
   }
 
@@ -129,7 +129,6 @@ router.post('/updatePassword', (req, res) => {
       msg: `Les mots de passe ne sont pas identiques`
     })
   }
-
 
   User.findOne({ email }, function (err, user) {
     if (err) throw err
@@ -203,11 +202,27 @@ router.post('/test', passport.authenticate('jwt', { session: false }), (req, res
   })
 })
 
-router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.send({
     success: true,
     user: req.user
   })
+})
+
+router.put('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const { fname, lname } = req.body;
+  if (!fname || !lname) {
+    return res.status(400).send({
+      success: false,
+      msg: 'Le nom et le prénom ne doivent pas être vide.'
+    })
+  }
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id }, 
+    { $set: { nom: fname, prenom: lname } }, 
+    { new: true }
+  )
+  res.send({ success: true, user })
 })
 
 module.exports = router
