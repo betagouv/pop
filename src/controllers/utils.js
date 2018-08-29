@@ -28,6 +28,23 @@ function uploadFile (path, file) {
   })
 }
 
+function deleteFile (path) {
+  return new Promise((resolve, reject) => {
+    console.log('deleteFile', path)
+    s3.deleteObject({
+      Bucket: s3Bucket,
+      Key: path
+    }, (err) => {
+      if (err) {
+        console.log(err)
+        reject(new Error())
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
 function formattedNow() {
   const now = new Date()
   return formattedNow = ('0' + now.getDate()).slice(-2) + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + now.getFullYear()
@@ -35,5 +52,6 @@ function formattedNow() {
 
 module.exports = {
   uploadFile,
+  deleteFile,
   formattedNow
 }

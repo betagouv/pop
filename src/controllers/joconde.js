@@ -3,26 +3,27 @@ const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Joconde = require('../models/joconde')
-const { uploadFile, formattedNow } = require('./utils')
 
-router.put('/:ref', upload.any(), (req, res) => {
+const { uploadFile, deleteFile, formattedNow } = require('./utils')
+
+router.put('/:ref', upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
 
   notice.DMAJ = formattedNow()
 
-  const arr = []
-  for (let i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-  }
-  arr.push(Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-  Promise.all(arr).then(() => {
+  try {
+    const prevNotice = await Joconde.findOne({ REF: ref })
+    await Promise.all([
+      ...(prevNotice.IMG || []).filter(x => !(notice.IMG || []).includes(x)).map(f => deleteFile(f)),
+      ...req.files.map(f => uploadFile(`joconde/${notice.REF}/${f.originalname}`, f)),
+      Joconde.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
+    ])
     res.sendStatus(200)
-  }).catch((e) => {
+  } catch (e) {
     console.log(e)
     res.sendStatus(500)
-  })
+  }
 })
 
 router.post('/', upload.any(), (req, res) => {

@@ -2,27 +2,29 @@ const express = require('express')
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Mnr = require('../models/mnr')
-const { uploadFile, formattedNow } = require('./utils')
+
+const { uploadFile, deleteFile, formattedNow } = require('./utils')
+
 
 const router = express.Router()
 
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref
-    const notice = JSON.parse(req.body.notice)
-    notice.DMAJ = formattedNow()
+router.put('/:ref', upload.any(), async (req, res) => {
+  const ref = req.params.ref
+  const notice = JSON.parse(req.body.notice)
+  notice.DMAJ = formattedNow()
 
-    const arr = []
-    for (var i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-    }
-    arr.push(Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-    Promise.all(arr).then(() => {
-        res.sendStatus(200)
-    }).catch((e) => {
-        console.log(e)
-        res.sendStatus(500)
-    })
+  try {
+    const prevNotice = await Mnr.findOne({ REF: ref })
+    await Promise.all([
+      ...(prevNotice.VIDEO || []).filter(x => !(notice.VIDEO || []).includes(x)).map(f => deleteFile(f)),
+      ...req.files.map(f => uploadFile(`mnr/${notice.REF}/${f.originalname}`, f)),
+      Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
+    ])
+    res.sendStatus(200)
+  } catch (e) {
+    console.log(e)
+    res.sendStatus(500)
+  }
 })
 
 router.post('/', upload.any(), (req, res) => {
