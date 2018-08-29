@@ -5,7 +5,6 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
-  MEMOIRE: [{ url: String, id: String }],
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
   ADRESSE: { type: String, default: '' },
