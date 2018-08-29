@@ -1,36 +1,26 @@
 import React from 'react';
 import Loader from './components/loader'
 
-import { store, history } from './redux/store'
+import { history } from './redux/store'
 import PublicRoutes from './router'
-import api from './services/api'
+import Actions from './redux/auth/actions'
+const { signinByToken } = Actions
+import { connect } from 'react-redux'
 
 class App extends React.Component {
 
-  state = {
-    loading: true,
-    user: null
-  }
-
-  async componentWillMount() {
-    const token = localStorage.getItem('token')
-    if (token) {
-      const user = await api.getUser(token) 
-      this.setState({
-        user
-      })
-    }
-    this.setState({
-      loading: false
-    })
+  componentWillMount() {
+    this.props.signinByToken()
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.props.user === undefined) {
       return <Loader />
     }
     return <PublicRoutes history={history} />
   }
 }
 
-export default App
+const mapstatetoprops = ({ Auth }) => ({ user: Auth.user })
+
+export default connect(mapstatetoprops, { signinByToken })(App);
