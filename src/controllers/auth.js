@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
-const passport = require('passport');
-const generator = require('generate-password');
-const mailer = require('../mailer');
+const passport = require('passport')
+const generator = require('generate-password')
+const mailer = require('../mailer')
 
 require('../passport')(passport)
 
@@ -206,7 +206,7 @@ router.post('/test', passport.authenticate('jwt', { session: false }), (req, res
 router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
   res.send({
     success: true,
-    user: req.user,
+    user: req.user
   })
 })
 
