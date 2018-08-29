@@ -8,7 +8,6 @@ const { uploadFile, deleteFile, formattedNow } = require('./utils')
 
 const router = express.Router()
 
-<<<<<<< HEAD
 router.put('/:ref', upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
@@ -26,25 +25,6 @@ router.put('/:ref', upload.any(), async (req, res) => {
     console.log(e)
     res.sendStatus(500)
   }
-=======
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref
-    const notice = JSON.parse(req.body.notice)
-    notice.DMAJ = formattedNow()
-
-    const arr = []
-    for (var i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-    }
-    arr.push(Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-    Promise.all(arr).then(() => {
-        res.sendStatus(200)
-    }).catch((e) => {
-        console.log(e)
-        res.sendStatus(500)
-    })
->>>>>>> develop
 })
 
 router.post('/', upload.any(), (req, res) => {
