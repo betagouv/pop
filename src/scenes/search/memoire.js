@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { ReactiveBase, DataSearch, ReactiveList, MultiList, SingleList, SelectedFilters } from '@appbaseio/reactivesearch/lib';
+import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch/lib';
 
 import ExportComponent from './components/export';
 

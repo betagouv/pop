@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form'
-import { Input, Modal, Button, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import './fieldLink.css';

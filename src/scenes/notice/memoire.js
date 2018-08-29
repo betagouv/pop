@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
+import { Row, Col, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
@@ -9,11 +9,8 @@ import { connect } from 'react-redux';
 import { bucket_url } from '../../config';
 
 import FieldInput from './components/fieldInput.js';
-import FieldTags from './components/fieldTags.js';
-import FieldLink from './components/fieldLink.js';
 import FieldImages from './components/fieldImages';
 import Section from './components/section.js';
-import Map from './components/map.js';
 
 import Loader from '../../components/loader'
 import API from '../../services/api'

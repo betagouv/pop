@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import Parse from 'csv-parse';
 import Memoire from '../../entities/memoire';
 
 import utils from './utils';

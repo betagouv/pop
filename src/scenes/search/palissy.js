@@ -3,7 +3,6 @@ import { Row, Col, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch';
 
-import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
 import Palissy from '../../entities/palissy';

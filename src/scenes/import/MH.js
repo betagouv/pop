@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import Parse from 'csv-parse';
 import Merimee from '../../entities/merimee';
 import Palissy from '../../entities/palissy';
 
@@ -53,4 +52,3 @@ function parseFiles(files, encoding) {
 
     })
 }
-

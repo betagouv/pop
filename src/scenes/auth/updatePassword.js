@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import api from '../../services/api';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
+import { Row, Col, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
@@ -646,4 +646,3 @@ const mapStateToProps = ({ Auth }) => {
 }
 
 export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
-

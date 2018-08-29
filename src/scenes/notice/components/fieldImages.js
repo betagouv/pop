@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form'
 import Dropzone from 'react-dropzone';
-import { Row, Col, Modal } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import Viewer from 'react-viewer';
 import { Link } from 'react-router-dom';
 import 'react-viewer/dist/index.css';

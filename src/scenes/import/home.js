@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Row, Col } from 'reactstrap';
 
 import './home.css';
 

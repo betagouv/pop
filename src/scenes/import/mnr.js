@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import Parse from 'csv-parse';
 import Importer from './importer';
 import Mnr from '../../entities/mnr';
 

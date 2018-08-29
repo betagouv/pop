@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import './index.css';
@@ -25,12 +25,16 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <div className='home'>
+            <Container className="home">
                 <div className="title">Bienvenue dans l'outil d'administration des bases du Ministère de la Culture !</div>
-                <div className="subtitle">Depuis cet espace, et en fonction des droits qui vous auront été attribués, vous pouvez:       </div>
-                <div className="subtitle">- consulter l'ensemble des données publiques et confidentielles déjà importées dans les bases,       </div>
-                <div className="subtitle">- importer des données pour alimenter les bases en nouvelles création ou pour remplacer intégralement des notices existantes,       </div>
-            </div>
+                <div className="subtitle">
+                    <p>Depuis cet espace, et en fonction des droits qui vous auront été attribués, vous pouvez&nbsp;:</p>
+                    <ul>
+                        <li>consulter l'ensemble des données publiques et confidentielles déjà importées dans les bases,</li>
+                        <li>importer des données pour alimenter les bases en nouvelles création ou pour remplacer intégralement des notices existantes.</li>
+                    </ul>
+                </div>
+            </Container>
         );
     }
 }
