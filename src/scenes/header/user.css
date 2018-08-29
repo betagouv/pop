@@ -14,6 +14,7 @@
     letter-spacing: normal;
     border-left: solid transparent 2px;
     text-align: left;
+    cursor: pointer;
     color: #868e93;
 }
 
