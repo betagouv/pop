@@ -94,11 +94,13 @@ export default function diff(importedNotices, existingNotices) {
                 //remove differences based on generated fields
                 // differences = differences.filter(key => !fieldToNotCheck.includes(key));
 
-                const from = Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e];
-                const to = Array.isArray(importedNotices[i][e].value) ? importedNotices[i][e].value.join(', ') : importedNotices[i][e].value;
-                console.log(from,to);
+                importedNotices[i]._messages = differences.map(e => {
+                    const from = Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e];
+                    const to = Array.isArray(importedNotices[i][e].value) ? importedNotices[i][e].value.join(', ') : importedNotices[i][e].value;
+                    console.log(from,to);
+                    return `Le champs ${e} à évolué de ${from} à ${to}`;
+                });
                 
-                importedNotices[i]._messages = differences.map(e => (`Le champs ${e} à évolué de ${from} à ${to}`));
                 if (differences.length) {
                     importedNotices[i]._status = 'updated';
                 } else {
