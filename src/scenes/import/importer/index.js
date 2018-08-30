@@ -55,7 +55,7 @@ export default class Importer extends Component {
             this.setState({ loadingMessage: 'Calcul des differences....' });
             importedNotices = diff(importedNotices, existingNotices);
 
-            controleThesaurus(importedNotices, this.props.mapping);
+            controleThesaurus(importedNotices);
 
             for (var i = 0; i < importedNotices.length; i++) {
                 if (importedNotices[i]._errors.length) {
