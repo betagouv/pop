@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { Container, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { history } from '../../redux/store';
-
-import Actions from '../../redux/auth/actions';
+import React, { Component } from 'react'
+import { Container, Button } from 'reactstrap'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import Actions from '../../redux/auth/actions'
 const { signin } = Actions;
 
 class Signin extends Component {
