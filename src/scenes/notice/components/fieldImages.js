@@ -21,6 +21,25 @@ class FieldImages extends React.Component {
         this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
+    /*
+        componentWillMount() {
+        const images = this.props.input.value.map((e, i) => {
+            //If its a MEMOIRE STYLE 
+            if (e instanceof Object) {
+                return { source: e.url, key: e.ref }
+            }
+
+            if (e instanceof File) {
+                return { source: e.preview, key: e.name }
+            }
+            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
+            let key = e;
+            return { source, key }
+        });
+        this.setState({ images })
+    }
+    */
+
     renderImages() {
         if (!this.props.input.value) {
             return <div />
