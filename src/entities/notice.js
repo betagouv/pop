@@ -25,7 +25,8 @@ export default class Notice {
         const arr = str.split(delim).map((e) => e.trim());
         
         //remove duplicates
-        return [...new Set(arr)];
+        return arr.filter((obj, key, array) => array.map((obj2) => obj !== obj2));
+        //return [...new Set(arr)]; // DOESNT WORK IN PRODUCTION
     }
 
     extractEmail = function (str) {
