@@ -25,7 +25,7 @@ export default class Notice {
         const arr = str.split(delim).map((e) => e.trim());
         
         //remove duplicates
-        return arr.filter((s1, pos, arr) => arr.findIndex((s2)=>s2 === s1) === pos});
+        return arr.filter((obj, key, array) => array.map((obj2) => obj !== obj2));
         //return [...new Set(arr)]; // DOESNT WORK IN PRODUCTION
     }
 
