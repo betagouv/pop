@@ -14,35 +14,32 @@ function checkIfMemoireImageExist(notice) {
     })
 }
 
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
-    notice.DMAJ = formattedNow();
-    checkIfMemoireImageExist(notice).then(arr => {
+router.put('/:ref', upload.any(), async (req, res) => {
+    try {
+        const ref = req.params.ref;
+        const notice = JSON.parse(req.body.notice);
+        notice.DMAJ = formattedNow();
+        const arr = await checkIfMemoireImageExist(notice);
         notice.MEMOIRE = arr;
-        Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }).then(() => {
-            res.sendStatus(200)
-        }).catch((e) => {
-            res.sendStatus(500)
-        })
-    })
+        await Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true });
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 });
 
-
-router.post('/', upload.any(), (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-    notice.DMIS = notice.DMAJ = formattedNow();
-    checkIfMemoireImageExist(notice).then(arr => {
+router.post('/', upload.any(), async (req, res) => {
+    try {
+        const notice = JSON.parse(req.body.notice);
+        notice.DMIS = notice.DMAJ = formattedNow();
+        const arr = await checkIfMemoireImageExist(notice)
         notice.MEMOIRE = arr;
         const obj = new Merimee(notice);
-        obj.save((error) => {
-            if (error) return res.status(500).send({ error });
-            obj.on('es-indexed', (err, result) => {
-                if (err) return res.status(500).send({ error: err });
-                res.status(200).send({ success: true, msg: "DOC is indexed" })
-            });
-        });
-    });
+        await obj.save();
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
 
 router.get('/:ref', (req, res) => {

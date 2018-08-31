@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
+const Memoire = require('../models/memoire');
+const Merimee = require('../models/merimee');
 const Palissy = require('../models/palissy');
 const { uploadFile, formattedNow } = require('./utils');
 
@@ -13,32 +15,48 @@ function checkIfMemoireImageExist(notice) {
     })
 }
 
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
+function addMerimeeREFO(notice) {
+    return new Promise(async (resolve, reject) => {
+        const Merimee = await Merimee.findOne({ REF: notice.REFA });
+        if (Merimee) {
+            Merimee.update({ $push: { REFO: notice.REF } });
+        }
+        resolve();
+    })
+}
 
-    checkIfMemoireImageExist(notice).then(arr => {
+router.put('/:ref', upload.any(), async (req, res) => {
+    try {
+        const ref = req.params.ref;
+        const notice = JSON.parse(req.body.notice);
+        const arr = await checkIfMemoireImageExist(notice)
+
         notice.MEMOIRE = arr;
         notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
-        Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }).then(() => {
-            res.sendStatus(200)
-        }).catch((e) => {
-            res.sendStatus(500)
-        })
-    });
+        
+        await Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
+        // await addMerimeeREFO(notice);
+
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
 
-router.post('/', upload.any(), (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-    checkIfMemoireImageExist(notice).then(arr => {
+router.post('/', upload.any(), async (req, res) => {
+    try {
+        const notice = JSON.parse(req.body.notice);
+        const arr = await checkIfMemoireImageExist(notice);
         notice.MEMOIRE = arr;
         notice.DMIS = notice.DMAJ = formattedNow()
         const obj = new Palissy(notice);
-        obj.save().then((e) => {
-            res.send({ success: true, msg: "OK" })
-        });
-    });
+        await obj.save();
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
+
 
 router.get('/:ref', (req, res) => {
     const ref = req.params.ref;
