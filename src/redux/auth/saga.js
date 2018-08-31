@@ -27,7 +27,10 @@ export function* signin({ email, password }) {
 export function* signinByToken() {
   const token = localStorage.getItem('token')
   if (token) {
-    const response = yield api.getUser(token);
+    let response = null
+    try {
+      response = yield api.getUser(token);
+    } catch (e) {}
     if (response && response.user) {
       yield put({ type: actions.SIGNIN_SUCCESS, user: response.user, token });
       return;
