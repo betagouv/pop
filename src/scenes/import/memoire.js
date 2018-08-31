@@ -51,7 +51,7 @@ function parseFiles(files, encoding) {
                 }
             }
             console.log(errors, notices)
-            resolve({ importedNotices: notices, fileName: objectFile.name });
+            resolve({ importedNotices: notices, fileNames: [objectFile.name] });
         });
 
     })

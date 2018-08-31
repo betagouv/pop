@@ -69,7 +69,7 @@ function parseFiles(files, encoding) {
             }
             console.log('importedNotices', importedNotices)
 
-            resolve({ importedNotices, fileName: file.name });
+            resolve({ importedNotices, fileNames: [file.name] });
 
         })
     });

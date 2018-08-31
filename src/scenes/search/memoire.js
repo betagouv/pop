@@ -10,7 +10,7 @@ import QueryBuilder from './components/queryBuilder';
 import Memoire from '../../entities/memoire';
 import { es_url, bucket_url } from '../../config.js';
 
-const FILTER = ["mainSearch", "dom", "autp"]
+const FILTER = ["mainSearch", "dom", "autp", "producteur"]
 
 export default class Search extends React.Component {
 
@@ -79,6 +79,15 @@ export default class Search extends React.Component {
                             componentId="dom"
                             dataField="DOM.keyword"
                             title="Domaine"
+                            className="filters"
+                            showSearch={false}
+                            URLParams={true}
+                            react={{ and: FILTER }}
+                        />
+                        <MultiList
+                            componentId="producteur"
+                            dataField="PRODUCTEUR.keyword"
+                            title="Producteur"
                             className="filters"
                             showSearch={false}
                             URLParams={true}

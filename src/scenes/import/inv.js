@@ -72,7 +72,7 @@ function parseFiles(files, encoding) {
             const otherFiles = files.filter(file => file.name.indexOf('.xml') === -1);
             const importedNotices = await (ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, otherFiles, encoding));
             console.log("importedNotices", importedNotices)
-            resolve({ importedNotices, fileName: PalissyFile.name + "\n" + MemoireFile.name + "\n" + MerimeeFile.name })
+            resolve({ importedNotices, fileNames: [PalissyFile.name, MemoireFile.name, MerimeeFile.name] })
             return;
         }
 
@@ -82,7 +82,12 @@ function parseFiles(files, encoding) {
         if (xmlFiles.length) {
             const importedNotices = await (ParseRenabl(otherFiles, xmlFiles, encoding));
 
-            resolve({ importedNotices, fileName: xmlFiles.map(e => e.name).join('\n') });
+            let fileNames = xmlFiles.map(e => e.name);
+            if (fileNames.length > 10) {
+                fileNames = fileNames.slice(1, 10);
+                fileNames.push(` ${xmlFiles.length - 10} supplémentaires`)
+            }
+            resolve({ importedNotices, fileNames });
             return;
         }
 

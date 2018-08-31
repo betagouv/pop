@@ -47,7 +47,7 @@ function parseFiles(files, encoding) {
                 }
             }
 
-            resolve({ importedNotices, fileName: objectFile.name });
+            resolve({ importedNotices, fileNames: [objectFile.name] });
         })
 
     })

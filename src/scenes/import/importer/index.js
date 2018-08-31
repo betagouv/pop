@@ -37,7 +37,7 @@ export default class Importer extends Component {
 
         try {
             //PARSE FILES
-            let { importedNotices, fileName } = await (this.props.parseFiles(files, encoding));
+            let { importedNotices, fileNames } = await (this.props.parseFiles(files, encoding));
 
             //RECUPERATION DES NOTICES EXISTANTES
             const existingNotices = []
@@ -63,7 +63,7 @@ export default class Importer extends Component {
                 }
             }
 
-            this.setState({ step: 1, importedNotices, fileName, loading: false, loadingMessage: '' });
+            this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: '' });
             amplitude.getInstance().logEvent('Import - Drop files', { "Files droped": files.length, "Success": true });
 
         } catch (e) {
@@ -149,12 +149,13 @@ export default class Importer extends Component {
         const noticesRejetees = this.state.importedNotices.filter(e => e._status === 'rejected').length;
         const noticesWarning = this.state.importedNotices.filter(e => ((e._status === 'created' || e._status === 'updated') && e._warnings.length)).length;
 
+        const filesnames = this.state.fileNames.map(e => <div>{e}</div>);
         return (
             <div className='working-area'>
                 <h4 className='subtitle'>Contrôle et validation de l'import</h4>
                 <div className='summary'>
                     <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
-                    <div className='filename'>{this.state.fileName}</div>
+                    <div className='filename'>{filesnames}</div>
                     <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont illustrées.</div>
                     <div>Parmi ces {noticesChargees} notices:</div>
                     <div className="lines">
