@@ -1,5 +1,5 @@
 class Report {
-    generate(notices, collection, fieldToExport = [{ name: 'Identifiant', key: 'REF' }]) {
+    generate(notices, collection, email, institution, fieldToExport = [{ name: 'Identifiant', key: 'REF' }]) {
 
         const arr = [];
 
@@ -23,8 +23,8 @@ class Report {
         }, 0);
 
         arr.push(`<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
-        arr.push(`<h2>Établissement: X</h2>`)
-        arr.push(`<h2>Contact: X</h2>`)
+        arr.push(`<h2>Établissement: ${institution}</h2>`)
+        arr.push(`<h2>Contact: ${email}</h2>`)
         arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`)
         arr.push(`<ul>`)
         arr.push(`<li>${created.length + updated.length} notices valides</li>`)

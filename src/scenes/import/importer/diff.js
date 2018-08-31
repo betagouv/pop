@@ -97,7 +97,6 @@ export default function diff(importedNotices, existingNotices) {
                 importedNotices[i]._messages = differences.map(e => {
                     const from = Array.isArray(existingNotice[e]) ? existingNotice[e].join(', ') : existingNotice[e];
                     const to = Array.isArray(importedNotices[i][e].value) ? importedNotices[i][e].value.join(', ') : importedNotices[i][e].value;
-                    console.log(from,to);
                     return `Le champs ${e} à évolué de ${from} à ${to}`;
                 });
                 
