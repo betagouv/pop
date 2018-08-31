@@ -83,6 +83,13 @@ export default class Joconde extends Notice {
         this.LVID = { type: 'String', value: body.LVID || '' };
         this.CONTIENT_IMAGE = { type: 'String', value: this.IMG.value.length > 0 ? 'oui' : 'non' };
 
+
+        // This field is in the old format but its not imported in the one. But you need to track it in order to import joconde properly
+        //  For Ajout piloté,  sometime the file is broken and a new line doesn mean a new filed. To check all fileld and line, I'm checkiong if I know the field. If I dont know it,n its not a field.
+        // So I need to declare it if I want it te be considered as a field
+        this.REFMIS = { type: 'String', value: '' };
+
+
         //Check required fields
         for (var property in this) {
             if (this.hasOwnProperty(property) && property.indexOf('_') !== 0 && typeof (this[property]) === 'object') {
