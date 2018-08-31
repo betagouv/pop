@@ -30,7 +30,7 @@ function uploadFile (path, file) {
 
 function deleteFile (path) {
   return new Promise((resolve, reject) => {
-    console.log('deleteFile', path)
+    const s3 = new AWS.S3()
     s3.deleteObject({
       Bucket: s3Bucket,
       Key: path

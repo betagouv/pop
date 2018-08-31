@@ -124,12 +124,27 @@ const Schema = new mongoose.Schema({
   LAUTP: { type: String, default: '' }
 }, { collection: 'memoire' })
 
+
+
 Schema.plugin(mongoosePaginate)
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
   index: 'memoire',
   bulk: { size: 500, delay: 2000 }
 })
+
+Schema.pre('update', function (next, done) {
+  switch (this.REF.substring(0, 2)) {
+    case 'IV': this.PRODUCTEUR = 'INV'; break
+    case 'OA': this.PRODUCTEUR = 'CAOA'; break
+    case 'MH': this.PRODUCTEUR = 'CRMH'; break
+    case 'AR': this.PRODUCTEUR = 'ARCH'; break
+    case 'AP': this.PRODUCTEUR = 'SDAP'; break
+    default: this.PRODUCTEUR = 'SAP'; break
+  }
+  next()
+})
+
 const object = mongoose.model('memoire', Schema)
 
 object.createMapping({
