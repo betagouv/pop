@@ -9,17 +9,21 @@ const { uploadFile, formattedNow } = require('./utils');
 
 function checkIfMemoireImageExist(notice) {
     return new Promise(async (resolve, reject) => {
-        const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
-        const arr = NoticesMemoire.map(e => { return { ref: e.REF, url: e.IMG } });
-        resolve(arr);
+        const obj = await Memoire.find({ LBASE: notice.REF });
+        if (obj) {
+            const arr = obj.map(e => { return { ref: e.REF, url: e.IMG } });
+            resolve(arr);
+            return;
+        }
+        resolve([]);
     })
 }
 
-function addMerimeeREFO(notice) {
+function populateMerimeeREFO(notice) {
     return new Promise(async (resolve, reject) => {
-        const Merimee = await Merimee.findOne({ REF: notice.REFA });
-        if (Merimee) {
-            Merimee.update({ $push: { REFO: notice.REF } });
+        const obj = await Merimee.findOne({ REF: notice.REFA });
+        if (obj) {
+            await obj.update({ $push: { REFO: notice.REF } });
         }
         resolve();
     })
@@ -33,9 +37,9 @@ router.put('/:ref', upload.any(), async (req, res) => {
 
         notice.MEMOIRE = arr;
         notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
-        
+
         await Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
-        // await addMerimeeREFO(notice);
+        await populateMerimeeREFO(notice);
 
         res.status(200).send({ success: true, msg: "OK" })
     } catch (e) {
@@ -47,6 +51,7 @@ router.post('/', upload.any(), async (req, res) => {
     try {
         const notice = JSON.parse(req.body.notice);
         const arr = await checkIfMemoireImageExist(notice);
+        await populateMerimeeREFO(notice);
         notice.MEMOIRE = arr;
         notice.DMIS = notice.DMAJ = formattedNow()
         const obj = new Palissy(notice);

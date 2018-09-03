@@ -90,7 +90,7 @@ const Schema = new mongoose.Schema({
   PPRO: { type: String, default: '' },
   PREP: { type: String, default: '' },
   PROT: { type: String, default: '' },
-  REFA: { type: [String], default: [] },
+  REFA: { type: [String], index: true, default: [] },
   REFE: { type: [String], default: [] },
   REFM: { type: String, default: '' },
   REFP: { type: [String], default: [] },

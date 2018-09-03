@@ -3,6 +3,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
 const Merimee = require('../models/merimee');
+const Palissy = require('../models/palissy');
 const Memoire = require('../models/memoire');
 const { uploadFile, formattedNow } = require('./utils')
 
@@ -14,12 +15,32 @@ function checkIfMemoireImageExist(notice) {
     })
 }
 
+function populateREFO(notice) {
+    return new Promise(async (resolve, reject) => {
+        const obj = await Palissy.findOne({ REFA: notice.REF });
+        if (!obj) {
+            resolve(notice.REFO);
+            return;
+        }
+        if (!Array.isArray(notice.REFO)) {
+            resolve([obj.REF]);
+            return;
+        }
+        if (notice.REFO.includes(obj.REF)) {
+            resolve(notice.REFO);
+            return;
+        }
+        resolve([...notice.REFO, obj.REF])
+    })
+}
+
 router.put('/:ref', upload.any(), async (req, res) => {
     try {
         const ref = req.params.ref;
         const notice = JSON.parse(req.body.notice);
         notice.DMAJ = formattedNow();
         const arr = await checkIfMemoireImageExist(notice);
+        notice.REFO = await (populateREFO(notice));
         notice.MEMOIRE = arr;
         await Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true });
         res.status(200).send({ success: true, msg: "OK" })
@@ -32,7 +53,8 @@ router.post('/', upload.any(), async (req, res) => {
     try {
         const notice = JSON.parse(req.body.notice);
         notice.DMIS = notice.DMAJ = formattedNow();
-        const arr = await checkIfMemoireImageExist(notice)
+        const arr = await checkIfMemoireImageExist(notice);
+        notice.REFO = await (populateREFO(notice));
         notice.MEMOIRE = arr;
         const obj = new Merimee(notice);
         await obj.save();

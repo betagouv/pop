@@ -67,7 +67,7 @@ const Schema = new mongoose.Schema({
   FORMAT: { type: String, default: '' },
   FORMATOR: { type: String, default: '' },
   FORMATTI: { type: String, default: '' },
-  LBASE: { type: String, default: '' },
+  LBASE: { type: String, index: true, default: '' },
   WEB: { type: String, default: '' },
   LIB: { type: String, default: '' },
   LOCA: { type: String, default: '' },
