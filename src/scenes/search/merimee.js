@@ -211,7 +211,7 @@ function getMemoireImage(memoire) {
     if (!memoire.length) {
         return require('../../assets/noimage.jpg')
     }
-    let image = data.MEMOIRE[0].url;
+    let image = memoire[0].url;
     image = image.indexOf("www") === -1 ? `${bucket_url}${image}` : image;
     return image;
 }
