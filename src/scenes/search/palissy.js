@@ -199,10 +199,19 @@ export default class Search extends React.Component {
     }
 }
 
+function getMemoireImage(memoire) {
+    if (!memoire.length) {
+        return require('../../assets/noimage.jpg')
+    }
+    let image = data.MEMOIRE[0].url;
+    image = image.indexOf("www") === -1 ? `${bucket_url}${image}` : image;
+    return image;
+}
+
+
 
 const Card = ({ data }) => {
-    const image = data.MEMOIRE.length ? data.MEMOIRE[0].url : require('../../assets/noimage.jpg');
-
+    const image = getMemoireImage(data.MEMOIRE);
 
     if (data.REF.startsWith("PA") || data.REF.startsWith("PM")) {
         return (

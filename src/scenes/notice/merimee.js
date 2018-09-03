@@ -714,21 +714,3 @@ const mapStateToProps = ({ Auth }) => {
 }
 
 export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
-
-
-const Images = ({ images }) => {
-    if (images && images.length) {
-        return (
-            <Col xs={12} sm={12} md={6}>
-                <div className="thumbs-box">
-                    <div className="thumb-lg mb-3">
-                        <img src={images[0]} alt="" className="img-fluid w-100" />
-                    </div>
-                </div>
-            </Col>
-        )
-    } else {
-        return <div />
-    }
-}
-
