@@ -33,9 +33,15 @@ class FieldImages extends React.Component {
             let link = "";
 
             if (e instanceof Object) {            //If its a MEMOIRE STYLE 
-                source = e.url.indexOf("www") === -1 ? `${bucket_url}${e.url}` : e.url;
-                key = e.ref
-                link = `/notice/memoire/${e.ref}`
+                if (e.url) {
+                    source = e.url.indexOf("www") === -1 ? `${bucket_url}${e.url}` : e.url;
+                    key = e.ref
+                    link = `/notice/memoire/${e.ref}`
+                } else {
+                    source = "";
+                    key = e.ref
+                    link = `/notice/memoire/${e.ref}`
+                }
             } else if (e instanceof File) {
                 source = e.preview
                 key = e.name
@@ -61,7 +67,7 @@ class FieldImages extends React.Component {
         const arr = this.state.images.map(({ source, key, link }, i) => {
             return (
                 <Col className="image" key={key}>
-                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid w-100" /> : <div className="no-image">No Image</div>}
+                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid w-100" /> : <div className="no-image">Image absente</div>}
                     {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
                 </Col>
             )

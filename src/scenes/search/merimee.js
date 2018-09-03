@@ -208,10 +208,11 @@ export default class Search extends React.Component {
 
 
 function getMemoireImage(memoire) {
-    if (!memoire.length) {
+    if (!memoire.length || !memoire[0].url) {
         return require('../../assets/noimage.jpg')
     }
     let image = memoire[0].url;
+
     image = image.indexOf("www") === -1 ? `${bucket_url}${image}` : image;
     return image;
 }
