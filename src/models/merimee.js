@@ -45,8 +45,8 @@ const Schema = new mongoose.Schema({
     DEPL: { type: String, default: '' },
     DESC: { type: String, default: '' },
     DIMS: { type: String, default: '' },
-    DMAJ: { type: String, default: '' },
-    DMIS: { type: String, default: '' },
+    DMAJ: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
+    DMIS: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
     DOSS: { type: String, default: '' },
     DPRO: { type: String, default: '' },
     DPT: { type: String, default: '' },
@@ -141,7 +141,7 @@ Schema.plugin(mongoosastic, {
     bulk: { size: 500, delay: 2000 }
 })
 
-Schema.pre('update', function(next, done) {
+Schema.pre('update', function (next, done) {
     switch (this.REF.substring(0, 2)) {
         case 'IA': this.PRODUCTEUR = 'Inventaire'; break
         case 'PA': this.PRODUCTEUR = 'Monument Historique'; break

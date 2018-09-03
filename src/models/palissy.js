@@ -33,8 +33,8 @@ const Schema = new mongoose.Schema({
   DEPL: { type: String, default: '' },
   DESC: { type: String, default: '' },
   DIMS: { type: String, default: '' },
-  DMAJ: { type: String, default: '' },
-  DMIS: { type: String, default: '' },
+  DMAJ: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
+  DMIS: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
   DOMN: { type: String, default: '' },
   DOSADRS: { type: String, default: '' },
   DOSS: { type: [String], default: [] },
