@@ -33,24 +33,21 @@ class FieldImages extends React.Component {
             let link = "";
 
             if (e instanceof Object) {            //If its a MEMOIRE STYLE 
-                source = e.url
+                source = e.url.indexOf("www") === -1 ? `${bucket_url}${e.url}` : e.url;
                 key = e.ref
             } else if (e instanceof File) {
                 source = e.preview
                 key = e.name
             } else {
-                if (e.indexOf("www") === -1) {
-                    source = `${bucket_url}${e}`
-                    key = e;
-                } else {
-                    source = e;
-                    key = e;
-                }
+                source = e.indexOf("www") === -1 ? `${bucket_url}${e}` : e;
+                key = e;
             }
+
 
             if (source.indexOf("memoire") !== -1) {
 
             }
+
             return { source, key, link }
         });
         this.setState({ images })
