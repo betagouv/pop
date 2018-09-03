@@ -147,30 +147,4 @@ Schema.pre('update', function (next, done) {
 
 const object = mongoose.model('memoire', Schema)
 
-object.createMapping({
-  "mappings": {
-    "memoire": {
-      "properties": {
-        "REF": {
-          "type": "text",
-        },
-        "DMIS": {
-          "type": "text",
-        },
-        "DMAJ": {
-          "type": "text"
-        }
-      }
-    }
-  }
-}, function (err, mapping) {
-  if (err) {
-    // console.log('error creating mapping (you can safely ignore this)');
-    // console.log(err);
-  } else {
-    console.log('mapping created!');
-    // console.log(mapping);
-  }
-});
-
 module.exports = object

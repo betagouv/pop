@@ -70,30 +70,4 @@ Schema.plugin(mongoosastic, {
 
 const object = mongoose.model('mnr', Schema)
 
-object.createMapping({
-  "mappings": {
-    "mnr": {
-      "properties": {
-        "REF": {
-          "type": "text",
-        },
-        "DMIS": {
-          "type": "text",
-        },
-        "DMAJ": {
-          "type": "text"
-        }
-      }
-    }
-  }
-}, function (err, mapping) {
-  if (err) {
-    console.log('error creating mapping (you can safely ignore this)');
-    console.log(err);
-  } else {
-    console.log('mapping created!');
-    console.log(mapping);
-  }
-});
-
 module.exports = object

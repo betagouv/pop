@@ -6,7 +6,8 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    trim: true
   },
   institution: {
     type: String,
@@ -43,7 +44,7 @@ UserSchema.pre('save', function (next) {
   }
 })
 
-UserSchema.method('toJSON', function() {
+UserSchema.method('toJSON', function () {
   var user = this.toObject()
   delete user.password
   delete user.__v
