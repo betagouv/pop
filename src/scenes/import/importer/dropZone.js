@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Progress } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import JSZip from 'jszip';
+import Loader from '../../../components/loader';
 
 import './dropZone.css';
 
@@ -14,17 +15,17 @@ export default class ImportDropComponent extends Component {
       error: '',
       encoding: props.defaultEncoding || 'ISO-8859-1',
       message: "",
+      loading: false,
     }
   }
 
 
   onDrop(files) {
     console.log("files", files)
-
+    this.setState({ loading: true })
     if (files.length === 1 && getExtension(files[0].name) === 'zip') {
       const new_zip = new JSZip();
-      this.setState({ progress: 0 });
-
+      this.setState({ progress: 0, loading: false });
       new_zip.loadAsync(files[0])
         .then((zip) => {
           const total = Object.keys(zip.files).length;
@@ -81,6 +82,7 @@ export default class ImportDropComponent extends Component {
           onDrop={this.onDrop.bind(this)}
           onDropRejected={(e) => console.log(e)}
         >
+          {this.state.loading ? <Loader /> : <div />}
           <img src={require('../../../assets/upload.png')} />
           <p>{text}</p>
         </Dropzone>

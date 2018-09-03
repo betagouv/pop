@@ -12,7 +12,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="MH"
+                    collection="monuments-historiques"
                     parseFiles={parseFiles}
                     dropzoneText="Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et les images associées (au format .jpg) dans cette zone"
                 />

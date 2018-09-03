@@ -10,7 +10,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="Memoire"
+                    collection="memoire"
                     parseFiles={parseFiles}
                     dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .ods  ) et les images associées (au format .jpg) dans cette zone"
                 />

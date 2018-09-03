@@ -22,9 +22,20 @@ class Report {
             return acc;
         }, 0);
 
+        let contact = "";
+        switch (collection) {
+            case "monuments-historiques": contact = "gaelle.pichon-meunier@culture.gouv.fr"; break;
+            case "mnr": contact = "francoise.gaborit@culture.gouv.fr"; break;
+            case "memoire": contact = "anne.cook@culture.gouv.fr"; break;
+            case "inventaire": contact = "geraud.buffa@culture.gouv.fr et jean.davoigneau@culture.gouv.fr"; break;
+            case "joconde": contact = "jeannette.ivaine@culture.gouv.fr et sophie.daenens@culture.gouv.fr"; break;
+            default: break;
+        }
+
         arr.push(`<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`)
         arr.push(`<h2>Établissement: ${institution}</h2>`)
-        arr.push(`<h2>Contact: ${email}</h2>`)
+        arr.push(`<h2>Producteur: ${email}</h2>`)
+        arr.push(`<h2>Contact: ${contact}</h2>`)
         arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`)
         arr.push(`<ul>`)
         arr.push(`<li>${created.length + updated.length} notices valides</li>`)

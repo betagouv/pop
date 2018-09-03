@@ -14,6 +14,7 @@ export default class QueryBuilder extends React.Component {
         }
         if (arr.length === 1) {
             const query = { match: getMatch(arr[0]) };
+            console.log("Set query", query)
             this.props.setQuery({ query, value: "hey" });
         } else if (arr.length > 1) {
             //https://www.elastic.co/guide/en/elasticsearch/reference/6.3/query-dsl-bool-query.html
@@ -54,6 +55,7 @@ export default class QueryBuilder extends React.Component {
 
 
 
+
             const query = {
                 bool: {
                     must,
@@ -62,7 +64,7 @@ export default class QueryBuilder extends React.Component {
                     should
                 }
             }
-            console.log(query)
+            console.log("Set query", query)
             this.props.setQuery({ query, value: "hey" });
         }
 

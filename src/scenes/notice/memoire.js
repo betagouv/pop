@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { bucket_url } from '../../config';
 
 import FieldInput from './components/fieldInput.js';
+import FieldTags from './components/fieldTags';
 import FieldImages from './components/fieldImages';
 import Section from './components/section.js';
 
@@ -665,8 +666,6 @@ class Notice extends React.Component {
                                 name='CONTACT'
                                 disabled
                             />
-
-
                             <FieldInput
                                 title="Cote conservation du phototype (COTECP) :"
                                 name='COTECP'
@@ -683,10 +682,6 @@ class Notice extends React.Component {
                                 name='DATG'
                                 disabled
                             />
-
-
-
-
                             <FieldInput
                                 title="Date tirage (DATTI) :"
                                 name='DATTI'
@@ -707,23 +702,18 @@ class Notice extends React.Component {
                                 name='DMIS'
                                 disabled
                             />
-
-
                             <FieldInput
                                 title="Interprétation (EDIARCH) :"
                                 name='EDIARCH'
                                 disabled
                             />
-
-
-
                             <FieldInput
                                 title="Emetteur (nom) (IDPROD) :"
                                 name='IDPROD'
                                 disabled
                             />
-                            <FieldInput
-                                title="Images qy (IMG) :"
+                            <FieldTags
+                                title="Images (IMG) :"
                                 name='IMG'
                                 disabled
                             />
@@ -732,21 +722,16 @@ class Notice extends React.Component {
                                 name='INSEE'
                                 disabled
                             />
-
                             <FieldInput
                                 title="Notice biblio (LAUTP) :"
                                 name='LAUTP'
                                 disabled
                             />
-
-
-
                             <FieldInput
                                 title="Légende thes. (LEG2) :"
                                 name='LEG2'
                                 disabled
                             />
-
                             <FieldInput
                                 title="Liens divers (LIENS) :"
                                 name='LIENS'

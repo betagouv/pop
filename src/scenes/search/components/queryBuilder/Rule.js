@@ -15,6 +15,7 @@ export default class RuleComponent extends React.Component {
     onUpdate(valueSelected, actionSelected, resultSelected) {
         if (valueSelected) {
             const query = `{"aggs": {"${valueSelected}.keyword": {"terms": {"field": "${valueSelected}.keyword","include" : ".*${resultSelected}.*","order": {"_count": "desc"},"size": 10}}}}`
+            console.log("QUERY", query)
             this.setState({ query: JSON.parse(query) });
         } else {
             this.setState({ query: {} });
@@ -31,7 +32,12 @@ export default class RuleComponent extends React.Component {
                 componentId={`Rule${this.props.id}`}
                 defaultQuery={() => (this.state.query)}
             >
-                <Rule id={this.props.id} onRemove={this.props.onRemove} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
+                <Rule
+                    id={this.props.id}
+                    onRemove={this.props.onRemove}
+                    onUpdate={this.onUpdate.bind(this)}
+                    fields={this.props.fields}
+                />
             </ReactiveComponent>
         )
     }
@@ -46,6 +52,9 @@ class Rule extends React.Component {
             resultSelected: '',
         }
     }
+    componentDidMount() {
+        this.update();
+    }
 
     update() {
         const { valueSelected, actionSelected, resultSelected } = this.state;
@@ -59,7 +68,11 @@ class Rule extends React.Component {
                     fields={this.props.fields}
                     value={this.state.valueSelected}
                     onChange={(e) => {
-                        this.setState({ valueSelected: e.target.value }, () => { this.update() })
+                        this.setState({
+                            valueSelected: e.target.value,
+                            resultSelected: '',
+                            actionSelected: '=='
+                        }, () => { this.update() })
                     }} />
                 <ActionElement
                     value={this.state.actionSelected}
@@ -88,6 +101,8 @@ class ValueEditor extends React.Component {
     }
 
     renderSuggestion() {
+
+        console.log("renderSuggestion", this.state.focused, this.props.aggregations)
         if (this.state.focused && this.props.aggregations && Object.keys(this.props.aggregations).length) {
             const key = Object.keys(this.props.aggregations)[0];
             const options = this.props.aggregations[key].buckets.map(e => (
@@ -125,7 +140,6 @@ class ValueEditor extends React.Component {
             suggestions = this.props.aggregations[key].buckets;
         }
 
-
         return (
             <div>
                 <Autocomplete
@@ -160,13 +174,21 @@ class ValueEditor extends React.Component {
 
 
 const ActionElement = ({ onChange, value }) => {
-    const choices = ['==', '!==', "<=", ">=", "<", ">"].map(option => <option key={option} value={option}>{option}</option>)
+    const choices = [
+        { value: "==", text: "égal à" },
+        { value: "!=", text: "différent de" },
+        { value: "<=", text: "supérieur ou égal à" },
+        { value: ">=", text: "inférieur ou égal à" },
+        { value: "<", text: "strictement supérieur à" },
+        { value: ">", text: "strictement inférieur à" }
+    ].map(({ value, text }) => <option key={value} value={value}>{text}</option>)
     return (
         <select selected={choices[0]} className="actionelement" value={value} onChange={onChange}>
             {choices}
         </select>
     )
 }
+
 
 const ValueSelector = ({ fields, onChange, value }) => {
     const choices = fields.map(e => <option key={e} value={e}>{e}</option>)

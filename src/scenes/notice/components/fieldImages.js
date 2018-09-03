@@ -16,59 +16,56 @@ class FieldImages extends React.Component {
         images: [],
         selected: -1,
     }
+    componentWillMount() {
+        this.loadImages();
 
+    }
     onDrop(files) {
         this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
-    /*
-        componentWillMount() {
+
+    loadImages() {
         const images = this.props.input.value.map((e, i) => {
-            //If its a MEMOIRE STYLE 
-            if (e instanceof Object) {
-                return { source: e.url, key: e.ref }
+
+            let source = "";
+            let key = "";
+            let link = "";
+
+            if (e instanceof Object) {            //If its a MEMOIRE STYLE 
+                source = e.url
+                key = e.ref
+            } else if (e instanceof File) {
+                source = e.preview
+                key = e.name
+            } else {
+                if (e.indexOf("www") === -1) {
+                    source = `${bucket_url}${e}`
+                    key = e;
+                } else {
+                    source = e;
+                    key = e;
+                }
             }
 
-            if (e instanceof File) {
-                return { source: e.preview, key: e.name }
+            if (source.indexOf("memoire") !== -1) {
+
             }
-            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
-            let key = e;
-            return { source, key }
+            return { source, key, link }
         });
         this.setState({ images })
     }
-    */
 
     renderImages() {
         if (!this.props.input.value) {
             return <div />
         }
 
-        const arr = this.props.input.value.map((e, i) => {
-            //If its a MEMOIRE STYLE 
-            if (e instanceof Object) {
-                const source = e.url;
-                const key = e.ref;
-                console.log('SOURCE', source)
-                return (
-                    <Col className="image" key={key}>
-                        {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" /> : <div className="no-image">No Image</div>}
-                        <Link to={`/notice/memoire/${key}`}>{key}</Link>
-                    </Col>
-                )
-            }
-
-            //IF ITS JUST A LINK
-            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
-            let key = e;
-            if (e instanceof File) {
-                source = e.preview;
-                key = e.name;
-            }
+        const arr = this.state.images.map(({ source, key, link }, i) => {
             return (
-                <Col key={key}>
-                    <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" />
+                <Col className="image" key={key}>
+                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid w-100" /> : <div className="no-image">No Image</div>}
+                    {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
                 </Col>
             )
         });
@@ -89,16 +86,7 @@ class FieldImages extends React.Component {
         if (this.state.selected === -1) {
             return <div />
         }
-        const images = this.props.input.value.map((e, i) => {
-            if (e instanceof File) {
-                return { src: e.preview, alt: e.name }
-            } else if (e instanceof Object) {
-                return { src: e.url, alt: e.ref }
-            } else {
-                return { src: this.props.external ? `${e}` : `${bucket_url}${e}`, alt: e }
-            }
-        });
-
+        const images = this.state.images.map(e => ({ src: e.source, alt: e.key }));
         return (
             <Viewer
                 visible
@@ -110,8 +98,6 @@ class FieldImages extends React.Component {
     }
 
     render() {
-
-
         return (
             <div className='fieldImages'>
                 {this.renderModal()}
