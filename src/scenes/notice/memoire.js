@@ -44,6 +44,7 @@ class Notice extends React.Component {
                 console.error(`Impossible de charger la notice ${ref}`)
                 return;
             }
+            console.log('NOTICE', notice)
 
             let image = null;
             if(notice.IMG.indexOf("memoire") === 0){

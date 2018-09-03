@@ -43,6 +43,7 @@ class Notice extends React.Component {
                 console.error(`Impossible de charger la notice ${ref}`)
                 return;
             }
+            console.log('NOTICE', notice)
             this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
             this.setState({ loading: false, notice })
         })
