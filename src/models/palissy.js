@@ -118,25 +118,15 @@ const Schema = new mongoose.Schema({
   ZONE: { type: String, default: '' }
 }, { collection: 'palissy' })
 
-Schema.pre('update', function (next) {
-  // console.log('UPDATE', this)
-  const REF = this.getUpdate().REF
-  const IMG = this.getUpdate().IMG
-
-  let PRODUCTEUR
-  switch (REF.substring(0, 2)) {
-    case 'IM': PRODUCTEUR = 'Inventaire'; break
-    case 'PM': PRODUCTEUR = 'Monument Historique'; break
-    case 'EM': PRODUCTEUR = 'Etat'; break
-    default: PRODUCTEUR = 'Null'; break
+Schema.pre('update', function (next, done) {
+  switch (this.REF.substring(0, 2)) {
+      case 'IM': this.PRODUCTEUR = 'Inventaire'; break
+      case 'PM': this.PRODUCTEUR = 'Monument Historique'; break
+      case 'EM': this.PRODUCTEUR = 'Etat'; break
+      default: this.PRODUCTEUR = 'Null'; break
   }
 
-  let CONTIENT_IMAGE = IMG ? 'oui' : 'non'
-
-  this.update({}, {
-    PRODUCTEUR,
-    CONTIENT_IMAGE
-  })
+  this.CONTIENT_IMAGE = this.IMG ? 'oui' : 'non'
   next()
 })
 
