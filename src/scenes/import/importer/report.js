@@ -28,7 +28,7 @@ class Report {
             case "mnr": contact = "francoise.gaborit@culture.gouv.fr"; break;
             case "memoire": contact = "anne.cook@culture.gouv.fr"; break;
             case "inventaire": contact = "geraud.buffa@culture.gouv.fr et jean.davoigneau@culture.gouv.fr"; break;
-            case "joconde": contact = "jeannette.ivaine@culture.gouv.fr et sophie.daenens@culture.gouv.fr"; break;
+            case "joconde": contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr"; break;
             default: break;
         }
 
