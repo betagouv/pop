@@ -34,7 +34,7 @@ class FieldImages extends React.Component {
 
             if (e instanceof Object) {            //If its a MEMOIRE STYLE 
                 if (e.url) {
-                    source = e.url.indexOf("www") === -1 ? `${bucket_url}${e.url}` : e.url;
+                    source = e.url.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e.url}` : e.url;
                     key = e.ref
                     link = `/notice/memoire/${e.ref}`
                 } else {
@@ -46,7 +46,7 @@ class FieldImages extends React.Component {
                 source = e.preview
                 key = e.name
             } else {
-                source = e.indexOf("www") === -1 ? `${bucket_url}${e}` : e;
+                source = e.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
                 key = e;
             }
 

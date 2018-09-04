@@ -68,7 +68,7 @@ export default class Search extends React.Component {
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"
-                        dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
+                        dataField={["REF", "INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
                         queryFormat="and"
                         iconPosition="left"
                         className="mainSearch"
