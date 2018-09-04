@@ -46,7 +46,7 @@ class FieldImages extends React.Component {
                 source = e.preview
                 key = e.name
             } else {
-                source = e.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
+                source = e.indexOf("www") === -1 && e.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
                 key = e;
             }
 
