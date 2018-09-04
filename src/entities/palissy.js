@@ -29,7 +29,7 @@ export default class Palissy extends Notice {
         this.COPY = { type: 'String', value: body.COPY || '' };
         this.DATE = { type: 'Array', value: this.extractArray(body.DATE) };
         this.DBOR = { type: 'Array', value: this.extractArray(body.DBOR) };
-        this.DENO = { type: 'Array', value: this.extractArray(body.DENO), thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T96' };
+        this.DENO = { type: 'Array', value: this.extractArray(body.DENO), thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T69' };
         this.DENQ = { type: 'Array', value: this.extractArray(body.DENQ) };
         this.DEPL = { type: 'String', value: body.DEPL || '' };
         this.DESC = { type: 'String', value: body.DESC || '' };
