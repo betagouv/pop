@@ -67,14 +67,14 @@ router.get('/:ref', (req, res) => {
     const ref = req.params.ref;
     Palissy.findOne({ REF: ref }, (err, notice) => {
         if (err) {
-            res.status(500).send(err);
-            return;
+            return res.status(500).send(err);
         }
-        if (notice) {
-            res.status(200).send(notice);
-        } else {
-            res.sendStatus(404);
+
+        if (!notice) {
+            return res.sendStatus(404);
         }
+        
+        res.status(200).send(notice);
     });
 })
 
