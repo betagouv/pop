@@ -11,7 +11,19 @@ function getQuery(q) {
         should_not: []
     };
     for (let i = 0; i < q.length; i++) {
-        const combinator = (i + 1 > q.length - 1) ? "ET" : q[i + 1].combinator
+
+        //ALGO UN PEU CON ....
+        let combinator = "ET";
+        if (i === 0) {
+            if (q.length === 1) {
+                combinator = "ET";
+            } else {
+                combinator = q[1].combinator
+            }
+        } else {
+            combinator = q[i].combinator;
+        }
+
         if (combinator === "ET") {
             obj.must.push(q[i].query);
         } else {
@@ -21,6 +33,26 @@ function getQuery(q) {
 
     return obj;
 }
+
+/*
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "term": {"shape": "round"},
+                    "bool": {
+                        "should": [
+                            {"term": {"color": "red"}},
+                            {"term": {"color": "blue"}}
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
+*/
 
 export default class RuleGroup extends React.Component {
 
@@ -36,12 +68,14 @@ export default class RuleGroup extends React.Component {
     }
 
     onRemove(id) {
-        const queries = this.state.queries.filter(e => e.id !== id)
+        let queries = this.state.queries.filter(e => e.id !== id);
+        queries = queries.map((q, i) => ({ ...q, id: i }));
         this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
     }
 
     onUpdate(obj) {
-        const queries = [...this.state.queries.slice(0, obj.id), obj, ...this.state.queries.slice(obj.id + 1),];
+        const queries = [...this.state.queries.slice(0, obj.id), obj, ...this.state.queries.slice(obj.id + 1)];
+        console.log("onUpdate ", queries)
         this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
     }
 
@@ -55,7 +89,6 @@ export default class RuleGroup extends React.Component {
         return (
             <div className='ruleGroup'>
                 <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
-                <button className='closeButton' >X</button>
                 {this.renderChildren()}
             </div>
         )
