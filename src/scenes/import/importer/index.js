@@ -34,7 +34,11 @@ class Importer extends Component {
         }
     }
 
-    async onFilesDropped(files, encoding) {
+    async onFilesDropped(errors, files, encoding) {
+        if (errors) {
+            this.setState({ errors, loading: false });
+            return;
+        }
 
         try {
             //PARSE FILES

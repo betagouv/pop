@@ -218,6 +218,16 @@ class Notice extends React.Component {
                                 name='MICR'
                                 disabled
                             />
+                            <FieldInput
+                                title="Catégorie tech. (CATE) :"
+                                name='CATE'
+                                disabled
+                            />
+                            <FieldInput
+                                title="Matériaux (MATR) :"
+                                name='MATR'
+                                disabled
+                            />
                         </Col>
                     </Section>
                     <Section

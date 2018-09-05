@@ -61,3 +61,22 @@ Notice.has = function (key) {
     const obj = new this({});
     return obj.hasOwnProperty(key)
 }
+
+
+function _regex(str, reg) {
+    if (!str) {
+        return [];
+    }
+    var regex = new RegExp(reg);
+    const arr = [];
+    let m;
+    while ((m = regex.exec(str)) !== null) {
+        if (m.index === regex.lastIndex) {        // This is necessary to avoid infinite loops with zero-width matches 
+            regex.lastIndex++;
+        }
+        if (m[1]) {
+            arr.push(m[1].trim());
+        }
+    }
+    return arr;
+}

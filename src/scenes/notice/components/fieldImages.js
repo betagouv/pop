@@ -24,7 +24,6 @@ class FieldImages extends React.Component {
         this.props.input.onChange(this.props.input.value.concat(...files))
     }
 
-
     loadImages() {
         const images = this.props.input.value.map((e, i) => {
 
@@ -35,13 +34,9 @@ class FieldImages extends React.Component {
             if (e instanceof Object) {            //If its a MEMOIRE STYLE 
                 if (e.url) {
                     source = e.url.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e.url}` : e.url;
-                    key = e.ref
-                    link = `/notice/memoire/${e.ref}`
-                } else {
-                    source = "";
-                    key = e.ref
-                    link = `/notice/memoire/${e.ref}`
                 }
+                key = e.ref
+                link = `/notice/memoire/${e.ref}`
             } else if (e instanceof File) {
                 source = e.preview
                 key = e.name
@@ -49,11 +44,6 @@ class FieldImages extends React.Component {
                 source = e.indexOf("www") === -1 && e.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
                 key = e;
             }
-
-            // if (source.indexOf("memoire") !== -1) {
-
-            // }
-
             return { source, key, link }
         });
         this.setState({ images })
