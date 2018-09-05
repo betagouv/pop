@@ -145,6 +145,26 @@ Schema.pre('update', function (next, done) {
   next()
 })
 
-const object = mongoose.model('memoire', Schema)
+const object = mongoose.model('memoire', Schema);
+
+
+object.createMapping({
+  "mappings": {
+    "memoire": {
+      "properties": {
+        "DMIS": {
+          "type": "text",
+        },
+        "DMAJ": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    console.log('error mapping created', err); return;
+  }
+});
 
 module.exports = object

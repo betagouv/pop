@@ -155,4 +155,23 @@ Schema.pre('update', function (next, done) {
 
 const object = mongoose.model('merimee', Schema)
 
+object.createMapping({
+    "mappings": {
+      "merimee": {
+        "properties": {
+          "DMIS": {
+            "type": "text",
+          },
+          "DMAJ": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  }, function (err, mapping) {
+    if (err) {
+      console.log('error mapping created', err); return;
+    }
+  });
+
 module.exports = object

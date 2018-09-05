@@ -139,4 +139,23 @@ Schema.plugin(mongoosastic, {
 
 const object = mongoose.model('palissy', Schema)
 
+object.createMapping({
+  "mappings": {
+    "palissy": {
+      "properties": {
+        "DMIS": {
+          "type": "text",
+        },
+        "DMAJ": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    console.log('error mapping created', err); return;
+  }
+});
+
 module.exports = object
