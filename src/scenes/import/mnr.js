@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import Parse from 'csv-parse';
 import Importer from './importer';
 import Mnr from '../../entities/mnr';
 
@@ -30,7 +29,7 @@ function parseFiles(files, encoding) {
 
         utils.readCSV(file, ',', encoding).then(notices => {
             const importedNotices = notices.map(e => new Mnr(e));
-            resolve({ importedNotices, fileName: file.name });
+            resolve({ importedNotices, fileNames: [file.name] });
         })
     });
 }

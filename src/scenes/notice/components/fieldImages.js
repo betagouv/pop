@@ -1,8 +1,9 @@
 import React from 'react';
 import { Field } from 'redux-form'
 import Dropzone from 'react-dropzone';
-import { Row, Col, Modal } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import Viewer from 'react-viewer';
+import { Link } from 'react-router-dom';
 import 'react-viewer/dist/index.css';
 
 import { bucket_url } from '../../../config';
@@ -15,9 +16,37 @@ class FieldImages extends React.Component {
         images: [],
         selected: -1,
     }
+    componentWillMount() {
+        this.loadImages();
 
+    }
     onDrop(files) {
         this.props.input.onChange(this.props.input.value.concat(...files))
+    }
+
+    loadImages() {
+        const images = this.props.input.value.map((e, i) => {
+
+            let source = "";
+            let key = "";
+            let link = "";
+
+            if (e instanceof Object) {            //If its a MEMOIRE STYLE 
+                if (e.url) {
+                    source = e.url.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e.url}` : e.url;
+                }
+                key = e.ref
+                link = `/notice/memoire/${e.ref}`
+            } else if (e instanceof File) {
+                source = e.preview
+                key = e.name
+            } else {
+                source = e.indexOf("www") === -1 && e.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
+                key = e;
+            }
+            return { source, key, link }
+        });
+        this.setState({ images })
     }
 
     renderImages() {
@@ -25,23 +54,11 @@ class FieldImages extends React.Component {
             return <div />
         }
 
-        const arr = this.props.input.value.map((e, i) => {
-            let source = this.props.external ? `${e}` : `${bucket_url}${e}`;
-
-
-            let key = e;
-            
-            if (e instanceof File) {
-                source = e.preview;
-                key = e.name;
-            }else if(e instanceof Object){
-                source = e.url;
-                key = e.ref;
-            }
-
+        const arr = this.state.images.map(({ source, key, link }, i) => {
             return (
-                <Col key={key}>
-                    <img onClick={() => this.setState({ selected: i })} src={source} alt={e} className="img-fluid w-100" />
+                <Col className="image" key={key}>
+                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid w-100" /> : <div className="no-image">Image absente</div>}
+                    {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
                 </Col>
             )
         });
@@ -62,14 +79,7 @@ class FieldImages extends React.Component {
         if (this.state.selected === -1) {
             return <div />
         }
-        const images = this.props.input.value.map((e, i) => {
-            if (e instanceof File) {
-                return { src: e.preview, alt: e.name }
-            } else {
-                return { src: this.props.external ? `${e}` : `${bucket_url}${e}`, alt: e }
-            }
-        });
-
+        const images = this.state.images.map(e => ({ src: e.source, alt: e.key }));
         return (
             <Viewer
                 visible
@@ -81,8 +91,6 @@ class FieldImages extends React.Component {
     }
 
     render() {
-
-
         return (
             <div className='fieldImages'>
                 {this.renderModal()}

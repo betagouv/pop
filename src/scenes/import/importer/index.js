@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Progress, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Steps, { Step } from 'rc-steps';
+import { connect } from 'react-redux'
 
 import DropZone from './dropZone'
 import api from '../../../services/api'
@@ -16,7 +17,7 @@ import 'rc-steps/assets/index.css';
 import 'rc-steps/assets/iconfont.css';
 import './index.css';
 
-export default class Importer extends Component {
+class Importer extends Component {
 
     constructor(props) {
         super(props);
@@ -28,22 +29,25 @@ export default class Importer extends Component {
             loadingMessage: '',
             progress: 0,
             step: 0,
-            email: '',
+            email: props.email,
             emailSent: false
         }
     }
 
-    async onFilesDropped(files, encoding) {
+    async onFilesDropped(errors, files, encoding) {
+        if (errors) {
+            this.setState({ errors, loading: false });
+            return;
+        }
 
         try {
             //PARSE FILES
-            let { importedNotices, fileName } = await (this.props.parseFiles(files, encoding));
+            let { importedNotices, fileNames } = await (this.props.parseFiles(files, encoding));
 
             //RECUPERATION DES NOTICES EXISTANTES
             const existingNotices = []
             for (var i = 0; i < importedNotices.length; i++) {
                 this.setState({ loading: true, loadingMessage: `Récuperation des notices existantes ... `, progress: Math.floor((i * 100) / (importedNotices.length * 2)) });
-                console.log(importedNotices[i])
                 const collection = importedNotices[i]._type;
                 const notice = await (api.getNotice(collection, importedNotices[i].REF.value));
                 if (notice) {
@@ -63,7 +67,7 @@ export default class Importer extends Component {
                 }
             }
 
-            this.setState({ step: 1, importedNotices, fileName, loading: false, loadingMessage: '' });
+            this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: '' });
             amplitude.getInstance().logEvent('Import - Drop files', { "Files droped": files.length, "Success": true });
 
         } catch (e) {
@@ -81,8 +85,6 @@ export default class Importer extends Component {
         const created = this.state.importedNotices.filter(e => e._status === 'created');
         const updated = this.state.importedNotices.filter(e => e._status === 'updated');
         const rejected = this.state.importedNotices.filter(e => e._status === 'rejected');
-
-
 
         let count = 0;
         try {
@@ -104,13 +106,7 @@ export default class Importer extends Component {
             }
             //Sending rapport
             this.setState({ loading: true, loadingMessage: `Envoi du  rapport ... `, progress: Math.floor((count * 100) / total) });
-            let body = '';
-
-            if (this.props.onReport) {
-                body = this.props.onReport(this.state.importedNotices);
-            } else {
-                body = Report.generate(this.state.importedNotices, this.props.collection)
-            }
+            let body = Report.generate(this.state.importedNotices, this.props.collection, this.props.email, this.props.institution, this.props.fieldsToExport)
             const dest = [
                 'sandrine.della-bartolomea@culture.gouv.fr',
                 'sebastien.legoff@beta.gouv.fr',
@@ -133,11 +129,7 @@ export default class Importer extends Component {
 
     onExport() {
         amplitude.getInstance().logEvent('Import - Download report');
-        if (this.props.onExport) {
-            this.props.onExport(this.state.importedNotices);
-        } else {
-            ExportData.generate(this.state.importedNotices, this.props.collection);
-        }
+        ExportData.generate(this.state.importedNotices, this.props.collection, this.props.fieldsToExport);
     }
 
     renderSummary() {
@@ -149,12 +141,13 @@ export default class Importer extends Component {
         const noticesRejetees = this.state.importedNotices.filter(e => e._status === 'rejected').length;
         const noticesWarning = this.state.importedNotices.filter(e => ((e._status === 'created' || e._status === 'updated') && e._warnings.length)).length;
 
+        const filesnames = this.state.fileNames.map(e => <div>{e}</div>);
         return (
             <div className='working-area'>
                 <h4 className='subtitle'>Contrôle et validation de l'import</h4>
                 <div className='summary'>
                     <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
-                    <div className='filename'>{this.state.fileName}</div>
+                    <div className='filename'>{filesnames}</div>
                     <div>Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont illustrées.</div>
                     <div>Parmi ces {noticesChargees} notices:</div>
                     <div className="lines">
@@ -209,7 +202,7 @@ export default class Importer extends Component {
                         this.state.emailSent ? <div>{`Rapport envoyé à ${this.state.email}`}</div> : <div>
                             <input value={this.state.email} onChange={(e) => { this.setState({ email: e.target.value }) }} placeholder="Saisissez votre mail" />
                             <Button className="button" color="primary" onClick={() => {
-                                const body = Report.generate(this.state.importedNotices, this.props.collection)
+                                const body = Report.generate(this.state.importedNotices, this.props.collection, this.props.email, this.props.institution)
                                 api.sendReport(`Rapport import ${this.props.collection}`, this.state.email, body).then(() => {
                                     this.setState({ emailSent: true })
                                 })
@@ -218,8 +211,8 @@ export default class Importer extends Component {
                             </Button>
                         </div>
                     }
-                    <div>Vous pouvez consulter les notices importées au lien suivant:</div>
-                    <Link to={"/"}>Lien vers la consultation avec critères de recherche pre-remplis(établissement + date)</Link>
+                    {/* <div>Vous pouvez consulter les notices importées au lien suivant:</div>
+                    <Link to={"/"}>Lien vers la consultation avec critères de recherche pre-remplis(établissement + date)</Link> */}
                 </div>
             </div>
         )
@@ -281,18 +274,15 @@ export default class Importer extends Component {
                 </Row>
             </Container>
         )
-
-        // return (
-        //     <Container>
-        //         <Row className='import' type="flex" gutter={16} justify="center">
-        //             <DropZone
-        //                 onFinish={this.onFilesDropped.bind(this)}
-        //                 storeId={this.props.storeId}
-        //                 visible={!this.state.displaySummary}
-        //             />
-        //         </Row>
-        //         {this.renderSummary()}
-        //     </Container >
-        // );
     }
 }
+
+const mapstatetoprops = ({ Auth }) => {
+    const { email, institution } = Auth.user;
+    return ({
+        email,
+        institution
+    })
+}
+
+export default connect(mapstatetoprops, {})(Importer);

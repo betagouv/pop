@@ -14,8 +14,7 @@ export default class Import extends React.Component {
                 <Importer
                     collection="joconde"
                     parseFiles={parseFiles}
-                    onExport={(notices) => ExportData.generate(notices, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
-                    onReport={(notices) => ReportData.generate(notices, 'joconde', [{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }])}
+                    fieldsToExport={[{ name: 'Identifiant', key: 'REF' }, { name: 'N° inventaire', key: 'INV' }]}
                     dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt) et les images associées (au format .jpg) dans cette zone"
                 />
             </Container >
@@ -69,7 +68,7 @@ function parseFiles(files, encoding) {
             }
             console.log('importedNotices', importedNotices)
 
-            resolve({ importedNotices, fileName: file.name });
+            resolve({ importedNotices, fileNames: [file.name] });
 
         })
     });

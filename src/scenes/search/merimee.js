@@ -3,7 +3,6 @@ import { Row, Col, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch';
 
-import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
 import Merimee from '../../entities/merimee';
@@ -208,8 +207,19 @@ export default class Search extends React.Component {
 }
 
 
+function getMemoireImage(memoire) {
+    if (!memoire.length || !memoire[0].url) {
+        return require('../../assets/noimage.jpg')
+    }
+    let image = memoire[0].url;
+
+    image = image.indexOf("www") === -1 ? `${bucket_url}${image}` : image;
+    return image;
+}
+
+
 const Card = ({ data }) => {
-    const image = data.MEMOIRE.length ? data.MEMOIRE[0].url : require('../../assets/noimage.jpg');
+    let image = getMemoireImage(data.MEMOIRE);
     return (
         <Link style={{ textDecoration: 'none' }} to={`/notice/merimee/${data.REF}`} className="card" key={data.REF}>
             <img src={image} alt="Lien cassé" />

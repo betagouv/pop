@@ -25,3 +25,16 @@
     padding: 10px;
     margin-bottom: 5px;
 }
+
+ .fieldImages .image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+ }
+
+ .fieldImages .no-image{
+    display: flex;
+    align-items: center;
+    height: 240px;
+}

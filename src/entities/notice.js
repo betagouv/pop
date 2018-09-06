@@ -25,7 +25,8 @@ export default class Notice {
         const arr = str.split(delim).map((e) => e.trim());
         
         //remove duplicates
-        return [...new Set(arr)];
+        return arr.filter((obj, key, array) => array.map((obj2) => obj !== obj2));
+        //return [...new Set(arr)]; // DOESNT WORK IN PRODUCTION
     }
 
     extractEmail = function (str) {
@@ -51,7 +52,6 @@ export default class Notice {
     stripHTML(html) {
         var tmp = document.createElement("DIV");
         tmp.innerHTML = html;
-        console.log('html', html)
         return tmp.textContent || tmp.innerText || "";
     }
 }
@@ -60,4 +60,23 @@ export default class Notice {
 Notice.has = function (key) {
     const obj = new this({});
     return obj.hasOwnProperty(key)
+}
+
+
+function _regex(str, reg) {
+    if (!str) {
+        return [];
+    }
+    var regex = new RegExp(reg);
+    const arr = [];
+    let m;
+    while ((m = regex.exec(str)) !== null) {
+        if (m.index === regex.lastIndex) {        // This is necessary to avoid infinite loops with zero-width matches 
+            regex.lastIndex++;
+        }
+        if (m[1]) {
+            arr.push(m[1].trim());
+        }
+    }
+    return arr;
 }

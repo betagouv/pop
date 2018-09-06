@@ -1,74 +1,97 @@
 import React from 'react';
 import Rule from './Rule';
 
+
+//Fonction pour merger des requetes unitaires
+function getQuery(q) {
+    let obj = {
+        must: [],
+        must_not: [],
+        should: [],
+        should_not: []
+    };
+    for (let i = 0; i < q.length; i++) {
+
+        //ALGO UN PEU CON ....
+        let combinator = "ET";
+        if (i === 0) {
+            if (q.length === 1) {
+                combinator = "ET";
+            } else {
+                combinator = q[1].combinator
+            }
+        } else {
+            combinator = q[i].combinator;
+        }
+
+        if (combinator === "ET") {
+            obj.must.push(q[i].query);
+        } else {
+            obj.should.push(q[i].query);
+        }
+    }
+
+    return obj;
+}
+
+/*
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "term": {"shape": "round"},
+                    "bool": {
+                        "should": [
+                            {"term": {"color": "red"}},
+                            {"term": {"color": "blue"}}
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
+*/
+
 export default class RuleGroup extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            schema: [],
-            query: {},
-            count: 0,
-            type: 'ET'
+            queries: []
         }
     }
 
     onRuleAdd() {
-        const count = ++this.state.count;
-        const newRule = { type: 'rule', id: this.props.id + count };
-        this.setState({ count, schema: this.state.schema.concat(newRule) })
-    }
-
-    onGroupAdd() {
-        const count = ++this.state.count;
-        const newGroup = { type: 'group', id: this.props.id + count, schema: [] };
-        this.setState({ count, schema: this.state.schema.concat(newGroup) })
+        this.setState({ queries: this.state.queries.concat({ id: this.state.queries.length }) })
     }
 
     onRemove(id) {
-        const schema = this.state.schema.filter(e => e.id !== id)
-        const query = this.state.query;
-        delete query[id];
-
-        this.setState({ schema, query }, () => this.props.onUpdate(query));
+        let queries = this.state.queries.filter(e => e.id !== id);
+        queries = queries.map((q, i) => ({ ...q, id: i }));
+        this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
     }
 
-    onUpdate({ id, valueSelected, actionSelected, resultSelected }) {
-        const query = this.state.query;
-        query[id] = { valueSelected, actionSelected, resultSelected }
-        query.type = this.state.type;
-        this.setState({ query }, () => this.props.onUpdate(query));
+    onUpdate(obj) {
+        const queries = [...this.state.queries.slice(0, obj.id), obj, ...this.state.queries.slice(obj.id + 1)];
+        console.log("onUpdate ", queries)
+        this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
     }
 
     renderChildren() {
-        return this.state.schema.map(({ type, id }) => {
-            if (type === 'rule') {
-                return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
-            } else {
-                return <RuleGroup key={id} id={id} onRemove={this.onRemove.bind(this)} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
-            }
+        return this.state.queries.map(({ id }) => {
+            return <Rule key={id} id={id} onRemove={this.onRemove.bind(this)} onUpdate={this.onUpdate.bind(this)} fields={this.props.fields} />
         });
     }
 
     render() {
         return (
             <div className='ruleGroup'>
-                <Combinator value={this.state.type} onChange={(e) => this.setState({ type: e.target.value })} />
                 <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
-                {/* <button onClick={this.onGroupAdd.bind(this)}>Ajouter un groupe</button> */}
-                <button className='closeButton' >X</button>
                 {this.renderChildren()}
             </div>
         )
     }
 }
 
-
-const Combinator = (props) => {
-    const choices = ['ET', 'OU'].map(option => <option key={option} value={option}>{option}</option>)
-    return (
-        <select selected="ET" value={props.value} className="combinator" onChange={props.onChange.bind(this)}>
-            {choices}
-        </select>
-    )
-}

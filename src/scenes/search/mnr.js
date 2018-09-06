@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button } from 'reactstrap';
+import { Row, Col, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import {
@@ -13,7 +13,6 @@ import {
 
 import QueryBuilder from './components/queryBuilder';
 
-import CustomButton from './components/button';
 import ExportComponent from './components/export';
 
 import Mnr from '../../entities/mnr';
@@ -69,7 +68,7 @@ export default class Search extends React.Component {
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"
-                        dataField={["INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
+                        dataField={["REF", "INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"]}
                         queryFormat="and"
                         iconPosition="left"
                         className="mainSearch"

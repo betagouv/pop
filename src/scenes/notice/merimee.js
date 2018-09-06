@@ -22,7 +22,8 @@ class Notice extends React.Component {
     state = {
         notice: null,
         error: '',
-        loading: true
+        loading: true,
+        editable: true,
     }
 
     componentWillMount() {
@@ -35,6 +36,8 @@ class Notice extends React.Component {
         }
     }
 
+
+
     load(ref) {
         this.setState({ loading: true })
         API.getNotice('merimee', ref).then((notice) => {
@@ -42,8 +45,11 @@ class Notice extends React.Component {
                 this.setState({ loading: false, error: "Cette notice n'existe pas" })
                 return;
             }
+            console.log(notice)
             this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
-            this.setState({ loading: false, notice })
+
+            const editable = notice.PRODUCTEUR === "Monument Historique" && this.props.canUpdate;
+            this.setState({ loading: false, notice, editable })
         })
     }
 
@@ -93,7 +99,7 @@ class Notice extends React.Component {
                         <Col className='image' sm={6}>
                             <FieldImages
                                 name='MEMOIRE'
-                                disabled
+                                disabled={!this.state.editable}
                                 external={true}
                             />
                         </Col>
@@ -112,13 +118,13 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Notice (REF) :'
                                 name='REF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldLink
                                 title='N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :'
                                 name='RENV'
                                 url="/notice/merimee/"
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             {/* <div>
                                 <div>N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :</div>
@@ -131,47 +137,47 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Référence dans la base Patriarche (ARCHEO) : '
                                 name='ARCHEO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date d'enquête (DENQ) :"
                                 name='DENQ'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="CopyRight (COPY) :"
                                 name='COPY'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Identifiant Patrimoine (RFPA) :"
                                 name='RFPA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date de mise à jour (DMAJ) :"
                                 name='DMAJ'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Domaines (DOMN) : '
                                 name='DOMN'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Auteurs phototype (AUTP) : '
                                 name='AUTP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Dossier adresse (DOSADRS) :'
                                 name='DOSADRS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Contact (CONTACT) :'
                                 name='CONTACT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                         </Col>
@@ -179,37 +185,37 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Liens Divers (LIENS) : '
                                 name='LIENS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Date de rédaction de la notice (DBOR) :'
                                 name='DBOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Noms des rédacteurs de la notice et du dossier (NOMS) : '
                                 name='NOMS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Cadre de l'étude (ETUD) :"
                                 name='ETUD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Dossier (DOSS) : '
                                 name='DOSS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date de chargement dans la base MERIMEE (DMIS) :"
                                 name='DMIS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="TODO-Numéro de microfiche (MICR) :"
                                 name='MICR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -223,55 +229,55 @@ class Notice extends React.Component {
                                 title='Denomination (DENO) : '
                                 name='DENO'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T96'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Destinataire (GENR) : '
                                 name='GENR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Précision sur la dénomination (PDEN) :'
                                 name='PDEN'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Vocable (VOCA) :'
                                 name='VOCA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Appellation et titre (APPL) :'
                                 name='APPL'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Destinations successives et actuelle (ACTU) :'
                                 name='ACTU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title='Titre courant (TICO) : '
                                 name='TICO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Parties constituantes (PART) : '
                                 name='PART'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldLink
                                 title='Références des parties constituantes étudiées (REFP) : '
                                 name='REFP'
                                 url="/notice/merimee/"
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Décompte des oeuvres recensées (COLL) :'
                                 name='COLL'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -285,52 +291,52 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Region (REG) : '
                                 name='REG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Département (DPT) : '
                                 name='DPT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Commune (COM) : '
                                 name='COM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Numéro INSEE de la commune (INSEE) :'
                                 name='INSEE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Précision sur la localisation (PLOC) :'
                                 name='PLOC'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Aire d'étude (AIRE) : "
                                 name='AIRE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Canton (CANT) : '
                                 name='CANT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Lieu-dit (LIEU) : '
                                 name='LIEU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Adresse (ADRS) : '
                                 name='ADRS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Edifice de conservation (EDIF) : '
                                 name='EDIF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
@@ -339,43 +345,43 @@ class Notice extends React.Component {
                                 title="Référence de l'édifice de conservation (REFE) : "
                                 name='REFE'
                                 url="/notice/merimee/"
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Référence cadastrale (CADA) :'
                                 name='CADA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='TODO-Zone Lambert ou autres (ZONE) :'
                                 name='ZONE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="TODO-Coordonnées Lambert (ou autres) d'un points (COOR ) :"
                                 name='COOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="TODO-Coordonnées Lambert (ou autres) multiples (COORM ) :"
                                 name='COORM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Milieu d'implantation (IMPL) : "
                                 name='IMPL'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T12'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Cours d'eau (HYDR) : "
                                 name='HYDR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Localisation (LOCA) : '
                                 name='LOCA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -389,28 +395,28 @@ class Notice extends React.Component {
                                 title='Datation des campagnes principales de construction (SCLE) :'
                                 name='SCLE'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T17'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldTags
                                 title="Datation en années (DATE) :"
                                 name='DATE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Justification de la datation (JDAT) :'
                                 name='JDAT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Auteurs de l'oeuvre(AUTR) : "
                                 name='AUTR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Justification de l'attribution (JATT) :"
                                 name='JATT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
@@ -419,23 +425,28 @@ class Notice extends React.Component {
                                 title='Personnalitées (PERS) :'
                                 name='PERS'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T6'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title='Remploi (REMP) : '
                                 name='REMP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Partie déplacée (DEPL) : '
                                 name='DEPL'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Commentaire historique (HIST) :'
                                 name='HIST'
-                                disabled
+                                disabled={!this.state.editable}
+                            />
+                            <FieldTags
+                                title='Datation des campagnes secondaires de construction (SCLD) : '
+                                name='SCLD'
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -449,98 +460,98 @@ class Notice extends React.Component {
                                 title='Matériau du gros-oeuvre et mise en oeuvre (MURS) : '
                                 name='MURS'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T57'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Matériau de la couverture (TOIT) : '
                                 name='TOIT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Parti de plan (PLAN) :'
                                 name='PLAN'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Vaisseau et étage (ETAG) :'
                                 name='ETAG'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T23'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Type et nature du couvrement (VOUT) :'
                                 name='VOUT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Parti d’élévation extérieure (ELEV) :'
                                 name='ELEV'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T25'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Type de la couverture (COUV) :'
                                 name='COUV'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T26'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Emplacement, forme et structure de l’escalier (ESCA) : '
                                 name='ESCA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Source de l'énergie (ENER) :"
                                 name='ENER'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T27'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Couvert et découvert de jardin (VERT) :'
                                 name='VERT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldTags
                                 title='Technique du décor des immeubles par nature (TECH) : '
                                 name='TECH'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Représentation (REPR) : '
                                 name='REPR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='TODO-Précision sur la représentation (PREP) : '
                                 name='PREP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Dimensions (DIMS) : '
                                 name='DIMS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Typologie (TYPO) : '
                                 name='TYPO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Etat de conservation (ETAT) : '
                                 name='ETAT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Commentaire description (DESC) :'
                                 name='DESC'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Parties non étud (PARN) : '
                                 name='PARN'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -554,51 +565,51 @@ class Notice extends React.Component {
                                 title='Nature de la protection MH (PROT) :'
                                 name='PROT'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T10'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Date protection (DPRO) :'
                                 name='DPRO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Précisions sur la protection MH (PPRO) :'
                                 name='PPRO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Nature de l'acte de protection MH (APRO) :"
                                 name='APRO'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T98'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title='Eléments protégés MH (MHPP) : '
                                 name='MHPP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Site, secteur ou zone de protection (SITE) :'
                                 name='SITE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title="Intérêt de l'oeuvre (INTE) :"
                                 name='INTE'
                                 thesaurus='http://data.culture.fr/thesaurus/resource/ark:/67717/T33'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Eléments remarquables (REMA) :'
                                 name='REMA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Observations (OBS) :'
                                 name='OBS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -611,39 +622,34 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Statut de la propriété (STAT) :'
                                 name='STAT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Précisions sur le statut de la propriété (PSTA): '
                                 name='PSTA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Affectataire (AFFE) :'
                                 name='AFFE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Date du label (DLAB) :'
                                 name='DLAB'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title="TODO-Précisions sur l'affectataire (PAFF) :"
                                 name='PAFF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldTags
                                 title='Ouverture au public (VISI) :'
                                 name='VISI'
-                                disabled
-                            />
-                            <FieldInput
-                                title='Proprietaire (STAT) : '
-                                name='STAT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -657,35 +663,35 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Thème (THEM) : '
                                 name='THEM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldLink
                                 title='REFO (REFO) : '
                                 name='REFO'
                                 url="/notice/palissy/"
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Visite guidé (WEB) : '
                                 name='WEB'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='intérêt oeuvre (PINT) :'
                                 name='PINT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='no Bordereaus (NBOR) : '
                                 name='NBOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title='Mosaïques (MOSA) :'
                                 name='MOSA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -694,7 +700,7 @@ class Notice extends React.Component {
                             <div className='buttons'>
                                 <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
                                 <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
-                                {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
+                                <Button disabled={!this.state.editable} color="primary" type="submit" >Sauvegarder</Button>
                             </div>) : <div />
                     }
                 </Form >
@@ -708,26 +714,8 @@ class Notice extends React.Component {
 const mapStateToProps = ({ Auth }) => {
     const { role, group } = Auth.user;
     return {
-        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "merimee" || group === "admin") : false
+        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "mh" || group === "admin") : false
     }
 }
 
 export default connect(mapStateToProps, {})(reduxForm({ form: 'notice' })(Notice));
-
-
-const Images = ({ images }) => {
-    if (images && images.length) {
-        return (
-            <Col xs={12} sm={12} md={6}>
-                <div className="thumbs-box">
-                    <div className="thumb-lg mb-3">
-                        <img src={images[0]} alt="" className="img-fluid w-100" />
-                    </div>
-                </div>
-            </Col>
-        )
-    } else {
-        return <div />
-    }
-}
-

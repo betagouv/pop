@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import Parse from 'csv-parse';
 import Merimee from '../../entities/merimee';
 import Palissy from '../../entities/palissy';
 
@@ -13,7 +12,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="MH"
+                    collection="monuments-historiques"
                     parseFiles={parseFiles}
                     dropzoneText="Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et les images associées (au format .jpg) dans cette zone"
                 />
@@ -48,9 +47,8 @@ function parseFiles(files, encoding) {
                 }
             }
 
-            resolve({ importedNotices, fileName: objectFile.name });
+            resolve({ importedNotices, fileNames: [objectFile.name] });
         })
 
     })
 }
-

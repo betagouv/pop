@@ -13,6 +13,14 @@ class api {
         return this._post(`${api_url}/auth/signin`, JSON.stringify(obj), 'application/json')
     }
 
+    getUser(token) {
+        return this._get(`${api_url}/auth/user`, {
+            headers: {
+                Authorization:  token
+            }
+        })
+    }
+
     updatePassword(email, ppwd, pwd1, pwd2) {
         const obj = { email, ppwd, pwd1, pwd2 };
         console.log(obj)
@@ -179,9 +187,9 @@ class api {
         })
     }
 
-    _get(url) {
+    _get(url, init) {
         return new Promise((resolve, reject) => {
-            fetch(url).then((response) => {
+            fetch(url, init).then((response) => {
                 if (response.status === 404) {
                     resolve(null);
                     return;

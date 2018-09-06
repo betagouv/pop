@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Progress } from 'reactstrap';
+import { Row, Progress } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 import JSZip from 'jszip';
 import Loader from '../../../components/loader';
 
 import './dropZone.css';
+
+const MAX_SIZE = 300000000;
 
 export default class ImportDropComponent extends Component {
 
@@ -15,17 +17,24 @@ export default class ImportDropComponent extends Component {
       error: '',
       encoding: props.defaultEncoding || 'ISO-8859-1',
       message: "",
+      loading: false,
     }
   }
 
 
-  onDrop(files) {
-    console.log("files", files)
+  onDrop(err, files) {
 
+    const maxSize = files.some(e => e.size > MAX_SIZE);
+
+    if (maxSize) {
+      this.props.onFinish(`Taille de fichier maximale atteinte (300Mb). Découpez votre import en plusieurs sous-parties pour importer`, files, this.state.encoding);
+      return;
+    }
+
+    this.setState({ loading: true })
     if (files.length === 1 && getExtension(files[0].name) === 'zip') {
       const new_zip = new JSZip();
-      this.setState({ progress: 0 });
-
+      this.setState({ progress: 0, loading: false });
       new_zip.loadAsync(files[0])
         .then((zip) => {
           const total = Object.keys(zip.files).length;
@@ -37,19 +46,17 @@ export default class ImportDropComponent extends Component {
             arr.push(f);
             this.setState({ message: "Dé-zipage du fichier", progress: Math.floor((i++ * 100) / total) });
             if (i > total) {
-              this.props.onFinish(arr, this.state.encoding);
+              this.props.onFinish(err, arr, this.state.encoding);
               this.setState({ message: "", progress: -1 });
             }
           })
 
         })
         .catch((e) => {
-          console.log("Error", e)
+          this.props.onFinish(e, files, this.state.encoding);
         })
     } else {
-
-      console.log('DROPED', files)
-      this.props.onFinish(files, this.state.encoding);
+      this.props.onFinish(err, files, this.state.encoding);
     }
   }
 
@@ -76,12 +83,12 @@ export default class ImportDropComponent extends Component {
 
     return (
       <div className='dropzone'>
-
         <Dropzone
           className='dropArea'
-          onDrop={this.onDrop.bind(this)}
-          onDropRejected={(e) => console.log(e)}
+          onDrop={(files) => this.onDrop(null, files)}
+          onDropRejected={() => { }}
         >
+          {this.state.loading ? <Loader /> : <div />}
           <img src={require('../../../assets/upload.png')} />
           <p>{text}</p>
         </Dropzone>

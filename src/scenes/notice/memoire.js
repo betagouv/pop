@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Input, Container, Button, Form } from 'reactstrap';
+import { Row, Col, Container, Button, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { reduxForm } from 'redux-form'
 import { toastr } from 'react-redux-toastr'
@@ -9,11 +9,9 @@ import { connect } from 'react-redux';
 import { bucket_url } from '../../config';
 
 import FieldInput from './components/fieldInput.js';
-import FieldTags from './components/fieldTags.js';
-import FieldLink from './components/fieldLink.js';
+import FieldTags from './components/fieldTags';
 import FieldImages from './components/fieldImages';
 import Section from './components/section.js';
-import Map from './components/map.js';
 
 import Loader from '../../components/loader'
 import API from '../../services/api'
@@ -25,7 +23,8 @@ class Notice extends React.Component {
     state = {
         notice: null,
         error: '',
-        loading: true
+        loading: true,
+        editable: true,
     }
 
     componentWillMount() {
@@ -46,17 +45,10 @@ class Notice extends React.Component {
                 console.error(`Impossible de charger la notice ${ref}`)
                 return;
             }
-
-            let image = null;
-            if(notice.IMG.indexOf("memoire") === 0){
-                image = `${bucket_url}${notice.IMG}`
-            }else{
-                image = `${notice.IMG}` 
-            }
-
-            console.log(notice.IMG,image)
-            this.props.initialize({ ...notice, IMG: [image]  });
-            this.setState({ loading: false, notice })
+            console.log('NOTICE', notice)
+            const editable = ["CRMH","CAOA","SAP"].includes(notice.PRODUCTEUR) && this.props.canUpdate; 
+            this.props.initialize({ ...notice, IMG: [notice.IMG] });
+            this.setState({ loading: false, notice, editable })
         })
     }
 
@@ -98,15 +90,13 @@ class Notice extends React.Component {
                     onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
                     className='main-body'
                 >
-
                     <Row>
                         <div className="back" onClick={() => this.props.history.goBack()}>Retour</div>
                     </Row>
                     <Row>
                         <FieldImages
                             name='IMG'
-                            disabled
-                            external={true}
+                            disabled={!this.state.editable}
                         />
                     </Row>
 
@@ -119,46 +109,46 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Localisation (LOCA) :"
                                 name='LOCA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Pays (PAYS) :"
                                 name='PAYS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Région (REG) :"
                                 name='REG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Département (DPT) :"
                                 name='DPT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title="Commune (COM) :"
                                 name='COM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Code INSEE (INSEE) :"
                                 name='INSEE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title='Adresse (ADRESSE) :'
                                 name='ADRESSE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Nom géographique (MCGEO) :"
                                 name='MCGEO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -172,29 +162,29 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Nom édifice (EDIF) :"
                                 name='EDIF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Nom objet (OBJT) :"
                                 name='OBJT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title="Liens bases (LBASE) :"
                                 name='LBASE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Liens base (LBASE2) :"
                                 name='LBASE2'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Ordre images (MARQ) :"
                                 name='MARQ'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -207,87 +197,87 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Type document (TYPDOC) :"
                                 name='TYPDOC'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date immatricul (DATIMM) :"
                                 name='DATIMM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title='Acquisition (ACQU) :'
                                 name='ACQU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Crédit photo (COPY) :"
                                 name='COPY'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="No phototype (NUMP) :"
                                 name='NUMP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Ancien numéro (ancienne cote du phototype) (ANUMP) :"
                                 name='ANUMP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Cote photographe (NUMAUTP) :"
                                 name='NUMAUTP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="No tirage (NUMTI) :"
                                 name='NUMTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="REPRO (REPRO) :"
                                 name='REPRO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Ancien numéro du  tirage (ANUMTI) :"
                                 name='ANUMTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Lieu cons tir. (LIEUCTI) :"
                                 name='LIEUCTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Cote conservation du tirage (COTECTI) :"
                                 name='COTECTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Mentions tirage (MENTTI) :"
                                 name='MENTTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Obs tirage (OBSTI) :"
                                 name='OBSTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Renvoi (RENV) :"
                                 name='RENV'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="NUMG (NUMG) :"
                                 name='NUMG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
 
@@ -297,49 +287,49 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="No original (NUMOR) :"
                                 name='NUMOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="No original(anc) (ANUMOR) :"
                                 name='ANUMOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Lieu cons orig. (LIEUCOR) :"
                                 name='LIEUCOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Cote cons orig. (COTECOR) :"
                                 name='COTECOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Préc original (PRECOR) :"
                                 name='PRECOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Lieu de dépôt (LIEUORIG) :"
                                 name='LIEUORIG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Mentions orig (MENTOR) :"
                                 name='MENTOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Obs original (OBSOR) :"
                                 name='OBSOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="No carte fenêtre (NUMCAF) :"
                                 name='NUMCAF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
@@ -353,44 +343,44 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Reference (REF) :'
                                 name='REF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Emetteur (code) (EMET) :"
                                 name='EMET'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Emetteur (nom) (IDPROD) :"
                                 name='IDPROD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="vidéodisque (NVD	REF ) :"
                                 name='NVD	REF '
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title="Nom Image (REFIMG) :"
                                 name='REFIMG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Ref Image (REFIM) :"
                                 name='REFIM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Vidéo (VIDEO) :"
                                 name='VIDEO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Type image num (TYPEIMG) :"
                                 name='TYPEIMG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                         </Col>
@@ -405,19 +395,19 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Auteur photo (AUTP) :"
                                 name='AUTP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Auteur tirage (AUTTI) :"
                                 name='AUTTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
                                 title="Auteur original (AUTOR) :"
                                 name='AUTOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -433,37 +423,37 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Domaine (DOM) :"
                                 name='DOM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Titre série (SERIE) :"
                                 name='SERIE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Légende (LEG) :"
                                 name='LEG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Mots clés (MCL) :"
                                 name='MCL'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Nom personne (MCPER) :"
                                 name='MCPER'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Adresse personne (ADPHOT) :'
                                 name='ADPHOT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Mots candidats (LIB) :"
                                 name='LIB'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
 
@@ -472,22 +462,22 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Publication (PUBLI) :"
                                 name='PUBLI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Pub. photograph. (TIREDE) :"
                                 name='TIREDE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Obs phototype (OBS) :"
                                 name='OBS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Mentions photo (MENTIONS) :"
                                 name='MENTIONS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -501,12 +491,12 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Date prise vue (DATPV) :"
                                 name='DATPV'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Justif date pv (JDATPV) :"
                                 name='JDATPV'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                         </Col>
@@ -514,7 +504,7 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Date original (DATOR) :"
                                 name='DATOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -528,27 +518,27 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Auteur oeuvre représentée (AUTOEU) :"
                                 name='AUTOEU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Auteur gravure (AUTG) :"
                                 name='AUTG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date oeuv année (DATOEU) :"
                                 name='DATOEU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date oeuv siècle (SCLE) :"
                                 name='SCLE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Titre (TITRE) :"
                                 name='TITRE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                         </Col>
@@ -556,27 +546,27 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Nom de théâtre (THEATRE) :"
                                 name='THEATRE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Rôle joué (ROLE) :"
                                 name='ROLE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title='Accessoire pose (ACC) :'
                                 name='ACC'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Toile de fond (TOILE) :"
                                 name='TOILE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Costume de la personne représentée (COSTUME) :"
                                 name='COSTUME'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -591,49 +581,49 @@ class Notice extends React.Component {
                         <FieldInput
                                 title="Technique photo (TECH) :"
                                 name='TECH'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Format phototype (FORMAT) :"
                                 name='FORMAT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Sens (SENS) :"
                                 name='SENS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Couleur (COULEUR) :"
                                 name='COULEUR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Technique tirage (TECHTI) :"
                                 name='TECHTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                         <Col sm={6}>
                         <FieldInput
                                 title="Format tirage (FORMATTI) :"
                                 name='FORMATTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Format original (FORMATOR) :"
                                 name='FORMATOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Technique orig (TECHOR) :"
                                 name='TECHOR'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Echelle (ECH) :"
                                 name='ECH'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section >
@@ -649,144 +639,128 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Adresse saisie (ADRS) :'
                                 name='ADRS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Aire d'étude (AIRE) :"
                                 name='AIRE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Chronologie (CHRONO) :"
                                 name='CHRONO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Contact (CONTACT) :"
                                 name='CONTACT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
-
                             <FieldInput
                                 title="Cote conservation du phototype (COTECP) :"
                                 name='COTECP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Date dessin (DATD) :"
                                 name='DATD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date gravure (DATG) :"
                                 name='DATG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
-
-
-
                             <FieldInput
                                 title="Date tirage (DATTI) :"
                                 name='DATTI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Droits diffusion (DIFF) :"
                                 name='DIFF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date mise à jour (DMAJ) :"
                                 name='DMAJ'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Date Mistral (DMIS) :"
                                 name='DMIS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
-
                             <FieldInput
                                 title="Interprétation (EDIARCH) :"
                                 name='EDIARCH'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
-
-
                             <FieldInput
                                 title="Emetteur (nom) (IDPROD) :"
                                 name='IDPROD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-                            <FieldInput
-                                title="Images qy (IMG) :"
+                            <FieldTags
+                                title="Images (IMG) :"
                                 name='IMG'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Code INSEE (INSEE) :"
                                 name='INSEE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
                             <FieldInput
                                 title="Notice biblio (LAUTP) :"
                                 name='LAUTP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
-
-
                             <FieldInput
                                 title="Légende thes. (LEG2) :"
                                 name='LEG2'
-                                disabled
+                                disabled={!this.state.editable}
                             />
-
                             <FieldInput
                                 title="Liens divers (LIENS) :"
                                 name='LIENS'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Lieu-dit (LIEU) :"
                                 name='LIEU'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Lieu cons pho. (LIEUCP) :"
                                 name='LIEUCP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Mosaïques (MOSA) :"
                                 name='MOSA'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="N° support (NUM) :"
                                 name='NUM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="No CD (NUMCD) :"
                                 name='NUMCD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="No de fond (NUMF) :"
                                 name='NUMF'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                         </Col>
@@ -794,82 +768,82 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Ident. support (NUMI) :"
                                 name='NUMI'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="N° d'opération (NUMOP) :"
                                 name='NUMOP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="N° du site (NUMSITE) :"
                                 name='NUMSITE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
 
                             <FieldInput
                                 title="Site (SITE) :"
                                 name='SITE'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Structure (STRUCT) :"
                                 name='STRUCT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Sujet (SUJET) :"
                                 name='SUJET'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Support (SUP) :"
                                 name='SUP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Titre du dossier (TICO) :"
                                 name='TICO'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Index global (TOUT) :"
                                 name='TOUT'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Type (TYP) :"
                                 name='TYP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Type support num (TYPSUPP) :"
                                 name='TYPSUPP'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="No vue CD (VUECD) :"
                                 name='VUECD'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Ville (WCOM) :"
                                 name='WCOM'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                             <FieldInput
                                 title="Accès Mémoire (WEB) :"
                                 name='WEB'
-                                disabled
+                                disabled={!this.state.editable}
                             />
                         </Col>
                     </Section>
                     {
                         this.props.canUpdate ? (
                             <div className='buttons'>
-                                <Link style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
+                                <Link disabled={!this.state.editable}  style={{ textDecoration: 'none', color: 'white' }} to="/"><Button color="danger">Annuler</Button></Link>
                                 <Button color="danger" onClick={() => this.delete()} >Supprimer</Button>
-                                {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
+                                <Button disabled={!this.state.editable} color="primary" type="submit" >Sauvegarder</Button>
                             </div>) : <div />
                     }
                 </Form >
@@ -883,7 +857,7 @@ class Notice extends React.Component {
 const mapStateToProps = ({ Auth }) => {
     const { role, group } = Auth.user;
     return {
-        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "memoire" || group === "admin") : false
+        canUpdate: Auth.user ? (role === "producteur" || role === "administrateur") && (group === "mh" || group === "admin") : false
     }
 }
 

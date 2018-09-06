@@ -49,8 +49,8 @@ class User extends Component {
           />
         </DropdownToggle>
         <DropdownMenu className="DropDown">
-          <DropdownItem className="dropdown-header" header>Configuration</DropdownItem>
-          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')} >Changer mon mot de passe</DropdownItem>
+          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')}>Modifier mes informations</DropdownItem>
+          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')}>Changer mon mot de passe</DropdownItem>
           <DropdownItem className="dropdown-item" onClick={this.logout.bind(this)}>Logout</DropdownItem>
         </DropdownMenu>
       </Dropdown >
@@ -72,4 +72,3 @@ const mapStateToProps = ({ Auth }) => {
 }
 
 export default connect(mapStateToProps, { logout })(User)
-

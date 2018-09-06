@@ -1,6 +1,4 @@
 import React from 'react';
-import { Field } from 'redux-form'
-import { Input, Modal, Button } from 'reactstrap';
 import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer, Polygon } from 'react-leaflet';
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import Importer from './importer';
-import Parse from 'csv-parse';
 import Memoire from '../../entities/memoire';
 
 import utils from './utils';
@@ -11,7 +10,7 @@ export default class Import extends React.Component {
         return (
             <Container className='import'>
                 <Importer
-                    collection="Memoire"
+                    collection="memoire"
                     parseFiles={parseFiles}
                     dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .ods  ) et les images associées (au format .jpg) dans cette zone"
                 />
@@ -43,6 +42,7 @@ function parseFiles(files, encoding) {
                 const name = notices[i].IMG.value;
                 if (!name) break;
                 let img = filesMap[convertLongNameToShort(name)];
+
                 if (!img) {
                     errors.push(`Image ${name} introuvable`)
                 } else {
@@ -51,7 +51,7 @@ function parseFiles(files, encoding) {
                 }
             }
             console.log(errors, notices)
-            resolve({ importedNotices: notices, fileName: objectFile.name });
+            resolve({ importedNotices: notices, fileNames: [objectFile.name] });
         });
 
     })
