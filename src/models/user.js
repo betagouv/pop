@@ -6,7 +6,8 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    trim: true
   },
   institution: {
     type: String,
@@ -41,6 +42,13 @@ UserSchema.pre('save', function (next) {
   } else {
     return next()
   }
+})
+
+UserSchema.method('toJSON', function () {
+  var user = this.toObject()
+  delete user.password
+  delete user.__v
+  return user
 })
 
 UserSchema.methods.comparePassword = function (passw, cb) {

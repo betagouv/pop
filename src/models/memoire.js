@@ -5,7 +5,6 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
-  MEMOIRE: [{ url: String, id: String }],
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
   ADRESSE: { type: String, default: '' },
@@ -68,7 +67,7 @@ const Schema = new mongoose.Schema({
   FORMAT: { type: String, default: '' },
   FORMATOR: { type: String, default: '' },
   FORMATTI: { type: String, default: '' },
-  LBASE: { type: String, default: '' },
+  LBASE: { type: String, index: true, default: '' },
   WEB: { type: String, default: '' },
   LIB: { type: String, default: '' },
   LOCA: { type: String, default: '' },
@@ -125,21 +124,34 @@ const Schema = new mongoose.Schema({
   LAUTP: { type: String, default: '' }
 }, { collection: 'memoire' })
 
+
+
 Schema.plugin(mongoosePaginate)
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
   index: 'memoire',
   bulk: { size: 500, delay: 2000 }
 })
-const object = mongoose.model('memoire', Schema)
+
+Schema.pre('update', function (next, done) {
+  switch (this.REF.substring(0, 2)) {
+    case 'IV': this.PRODUCTEUR = 'INV'; break
+    case 'OA': this.PRODUCTEUR = 'CAOA'; break
+    case 'MH': this.PRODUCTEUR = 'CRMH'; break
+    case 'AR': this.PRODUCTEUR = 'ARCH'; break
+    case 'AP': this.PRODUCTEUR = 'SDAP'; break
+    default: this.PRODUCTEUR = 'SAP'; break
+  }
+  next()
+})
+
+const object = mongoose.model('memoire', Schema);
+
 
 object.createMapping({
   "mappings": {
     "memoire": {
       "properties": {
-        "REF": {
-          "type": "text",
-        },
         "DMIS": {
           "type": "text",
         },
@@ -151,11 +163,7 @@ object.createMapping({
   }
 }, function (err, mapping) {
   if (err) {
-    // console.log('error creating mapping (you can safely ignore this)');
-    // console.log(err);
-  } else {
-    console.log('mapping created!');
-    // console.log(mapping);
+    console.log('error mapping created', err); return;
   }
 });
 

@@ -33,8 +33,8 @@ const Schema = new mongoose.Schema({
   DEPL: { type: String, default: '' },
   DESC: { type: String, default: '' },
   DIMS: { type: String, default: '' },
-  DMAJ: { type: String, default: '' },
-  DMIS: { type: String, default: '' },
+  DMAJ: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
+  DMIS: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
   DOMN: { type: String, default: '' },
   DOSADRS: { type: String, default: '' },
   DOSS: { type: [String], default: [] },
@@ -90,7 +90,7 @@ const Schema = new mongoose.Schema({
   PPRO: { type: String, default: '' },
   PREP: { type: String, default: '' },
   PROT: { type: String, default: '' },
-  REFA: { type: [String], default: [] },
+  REFA: { type: [String], index: true, default: [] },
   REFE: { type: [String], default: [] },
   REFM: { type: String, default: '' },
   REFP: { type: [String], default: [] },
@@ -118,25 +118,15 @@ const Schema = new mongoose.Schema({
   ZONE: { type: String, default: '' }
 }, { collection: 'palissy' })
 
-Schema.pre('update', function (next) {
-  // console.log('UPDATE', this)
-  const REF = this.getUpdate().REF
-  const IMG = this.getUpdate().IMG
-
-  let PRODUCTEUR
-  switch (REF.substring(0, 2)) {
-    case 'IM': PRODUCTEUR = 'Inventaire'; break
-    case 'PM': PRODUCTEUR = 'Monument Historique'; break
-    case 'EM': PRODUCTEUR = 'Etat'; break
-    default: PRODUCTEUR = 'Null'; break
+Schema.pre('update', function (next, done) {
+  switch (this.REF.substring(0, 2)) {
+      case 'IM': this.PRODUCTEUR = 'Inventaire'; break
+      case 'PM': this.PRODUCTEUR = 'Monument Historique'; break
+      case 'EM': this.PRODUCTEUR = 'Etat'; break
+      default: this.PRODUCTEUR = 'Null'; break
   }
 
-  let CONTIENT_IMAGE = IMG ? 'oui' : 'non'
-
-  this.update({}, {
-    PRODUCTEUR,
-    CONTIENT_IMAGE
-  })
+  this.CONTIENT_IMAGE = this.IMG ? 'oui' : 'non'
   next()
 })
 
@@ -150,22 +140,9 @@ Schema.plugin(mongoosastic, {
 const object = mongoose.model('palissy', Schema)
 
 object.createMapping({
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "folding": {
-          "tokenizer": "standard",
-          "filter": ["lowercase", "asciifolding"]
-        }
-      }
-    }
-  },
   "mappings": {
     "palissy": {
       "properties": {
-        "REF": {
-          "type": "text",
-        },
         "DMIS": {
           "type": "text",
         },
@@ -177,11 +154,7 @@ object.createMapping({
   }
 }, function (err, mapping) {
   if (err) {
-    // console.log('error creating mapping (you can safely ignore this)');
-    // console.log(err);
-  } else {
-    console.log('mapping created!');
-    // console.log(mapping);
+    console.log('error mapping created', err); return;
   }
 });
 

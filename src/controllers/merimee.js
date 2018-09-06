@@ -3,57 +3,65 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
 const Merimee = require('../models/merimee');
+const Palissy = require('../models/palissy');
+const Memoire = require('../models/memoire');
 const { uploadFile, formattedNow } = require('./utils')
 
-
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
-
-    //UPDATE MAJ DATE ( couldnt use hook ...)
-    notice.DMAJ = formattedNow();
-    const arr = [];
-    // for (var i = 0; i < req.files.length; i++) {
-    //     arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-    // }
-
-    arr.push(Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-    Promise.all(arr).then(() => {
-        res.sendStatus(200)
-    }).catch((e) => {
-        res.sendStatus(500)
+function checkIfMemoireImageExist(notice) {
+    return new Promise(async (resolve, reject) => {
+        const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
+        const arr = NoticesMemoire.map(e => { return { ref: e.REF, url: e.IMG } });
+        resolve(arr);
     })
+}
+
+function populateREFO(notice) {
+    return new Promise(async (resolve, reject) => {
+        const obj = await Palissy.findOne({ REFA: notice.REF });
+        if (!obj) {
+            resolve(notice.REFO);
+            return;
+        }
+        if (!Array.isArray(notice.REFO)) {
+            resolve([obj.REF]);
+            return;
+        }
+        if (notice.REFO.includes(obj.REF)) {
+            resolve(notice.REFO);
+            return;
+        }
+        resolve([...notice.REFO, obj.REF])
+    })
+}
+
+router.put('/:ref', upload.any(), async (req, res) => {
+    try {
+        const ref = req.params.ref;
+        const notice = JSON.parse(req.body.notice);
+        notice.DMAJ = formattedNow();
+        const arr = await checkIfMemoireImageExist(notice);
+        notice.REFO = await (populateREFO(notice));
+        notice.MEMOIRE = arr;
+        await Merimee.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true });
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 });
 
-router.post('/:ref/memoire', (req, res) => {
-    const ref = req.params.ref;
-    const link = { ...req.body };
-    
-    //Upsert looks to find a Message with that id and if it doesn't exist creates the Message 
-    Merimee.findOneAndUpdate({ REF: ref },
-        { $push: { MEMOIRE: link } },
-        { upsert: true }, function (err, data) {
-            if (error) return res.status(500).send({ error });
-            return res.status(200).send({});
-        });
-})
-
-
-router.post('/', upload.any(), (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-
-    notice.DMIS = notice.DMAJ = formattedNow();
-    const obj = new Merimee(notice);
-
-    obj.save((error) => {
-        if (error) return res.status(500).send({ error });
-        obj.on('es-indexed', (err, result) => {
-            if (err) return res.status(500).send({ error: err });
-            console.log("result", result)
-            res.status(200).send({ success: true, msg: "DOC is indexed" })
-        });
-    });
+router.post('/', upload.any(), async (req, res) => {
+    try {
+        const notice = JSON.parse(req.body.notice);
+        notice.DMIS = notice.DMAJ = formattedNow();
+        const arr = await checkIfMemoireImageExist(notice);
+        notice.REFO = await (populateREFO(notice));
+        notice.MEMOIRE = arr;
+        const obj = new Merimee(notice);
+        await obj.save();
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
 
 router.get('/:ref', (req, res) => {
@@ -64,17 +72,7 @@ router.get('/:ref', (req, res) => {
             return;
         }
         if (notice) {
-
-            //ICI
-            /*
-                REFE: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
-                REFP: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
-                REFO: { type: [{ type: mongoose.Schema.ObjectId, ref: 'palissy' }], default: [] }, //ID palissy
-                RENV: { type: [{ type: mongoose.Schema.ObjectId, ref: 'merimee' }], default: [] }, //ID merimee
-            */
             res.status(200).send(notice);
-
-
         } else {
             res.sendStatus(404);
         }

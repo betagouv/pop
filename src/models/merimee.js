@@ -45,8 +45,8 @@ const Schema = new mongoose.Schema({
     DEPL: { type: String, default: '' },
     DESC: { type: String, default: '' },
     DIMS: { type: String, default: '' },
-    DMAJ: { type: String, default: '' },
-    DMIS: { type: String, default: '' },
+    DMAJ: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
+    DMIS: { type: String, default: '', es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
     DOSS: { type: String, default: '' },
     DPRO: { type: String, default: '' },
     DPT: { type: String, default: '' },
@@ -141,7 +141,7 @@ Schema.plugin(mongoosastic, {
     bulk: { size: 500, delay: 2000 }
 })
 
-Schema.pre('update', function(next, done) {
+Schema.pre('update', function (next, done) {
     switch (this.REF.substring(0, 2)) {
         case 'IA': this.PRODUCTEUR = 'Inventaire'; break
         case 'PA': this.PRODUCTEUR = 'Monument Historique'; break
@@ -155,159 +155,23 @@ Schema.pre('update', function(next, done) {
 
 const object = mongoose.model('merimee', Schema)
 
-
-
+object.createMapping({
+    "mappings": {
+      "merimee": {
+        "properties": {
+          "DMIS": {
+            "type": "text",
+          },
+          "DMAJ": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  }, function (err, mapping) {
+    if (err) {
+      console.log('error mapping created', err); return;
+    }
+  });
 
 module.exports = object
-
-object.createMapping({
-    "settings": {
-        "analysis": {
-            "analyzer": {
-                "my_analyzer": {
-                    "type": "custom",
-                    "tokenizer": "standard",
-                    "filter": [
-                        "lowercase"
-                    ]
-                },
-                "autosuggest_analyzer": {
-                    "filter": [
-                        "lowercase",
-                        "asciifolding",
-                        "autosuggest_filter"
-                    ],
-                    "tokenizer": "standard",
-                    "type": "custom"
-                },
-                "ngram_analyzer": {
-                    "filter": [
-                        "lowercase",
-                        "asciifolding",
-                        "ngram_filter"
-                    ],
-                    "tokenizer": "standard",
-                    "type": "custom"
-                }
-            },
-            "filter": {
-                "autosuggest_filter": {
-                    "max_gram": "20",
-                    "min_gram": "1",
-                    "token_chars": [
-                        "letter",
-                        "digit",
-                        "punctuation",
-                        "symbol"
-                    ],
-                    "type": "edge_ngram"
-                },
-                "ngram_filter": {
-                    "max_gram": "9",
-                    "min_gram": "2",
-                    "token_chars": [
-                        "letter",
-                        "digit",
-                        "punctuation",
-                        "symbol"
-                    ],
-                    "type": "ngram"
-                }
-            }
-        }
-    },
-    "mappings": {
-        "merimee": {
-            "properties": {
-                "REF": {
-                    "type": "text",
-                },
-                "TICO": {
-                    "type": "text",
-                    "analyzer": "ngram_analyzer",
-                    "search_analyzer": "ngram_analyzer",
-                    "search_quote_analyzer": "my_analyzer"
-                },
-                "DMIS": {
-                    "type": "text",
-                },
-                "DMAJ": {
-                    "type": "text"
-                }
-            }
-        }
-    }
-}, function(err, mapping) {
-    if (err) {
-        // console.log('error creating mapping (you can safely ignore this)');
-        // console.log(err);
-    } else {
-        console.log('mapping created!');
-        // console.log(mapping);
-    }
-});
-
-// object.createMapping({
-//   "settings": {
-//     "number_of_shards": 1,
-//     "number_of_replicas": 0,
-//     "analysis": {
-//       "filter": {
-//         "nGram_filter": {
-//           "type": "nGram",
-//           "min_gram": 2,
-//           "max_gram": 20,
-//           "token_chars": [
-//             "letter",
-//             "digit",
-//             "punctuation",
-//             "symbol"
-//           ]
-//         }
-//       },
-//       "analyzer": {
-//         "nGram_analyzer": {
-//           "type": "custom",
-//           "tokenizer": "whitespace",
-//           "filter": [
-//             "lowercase",
-//             "asciifolding",
-//             "nGram_filter"
-//           ]
-//         },
-//         "whitespace_analyzer": {
-//           "type": "custom",
-//           "tokenizer": "whitespace",
-//           "filter": [
-//             "lowercase",
-//             "asciifolding"
-//           ]
-//         }
-//       }
-//     }
-//   },
-//   "mappings": {
-//     "merimee": {
-//       "_all": {
-//         "analyzer": "nGram_analyzer",
-//         "search_analyzer": "whitespace_analyzer"
-//       },
-//       "properties": {
-//         "DMIS": {
-//           "type": "text",
-//         },
-//         "DMAJ": {
-//           "type": "text"
-//         }
-//       }
-//     }
-//   }
-// }, function (err, mapping) {
-//   if (err) {
-//     console.log('error creating mapping (you can safely ignore this)');
-//     console.log(err);
-//   } else {
-//     console.log('mapping created!');
-//     console.log(mapping);
-//   }
-// });

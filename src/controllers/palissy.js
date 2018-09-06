@@ -2,54 +2,79 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
+const Memoire = require('../models/memoire');
+const Merimee = require('../models/merimee');
 const Palissy = require('../models/palissy');
 const { uploadFile, formattedNow } = require('./utils');
 
-
-
-router.put('/:ref', upload.any(), (req, res) => {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
-
-    //UPDATE MAJ DATE ( couldnt use hook ...)
-
-    const now = new Date();
-    notice.DMAJ = formattedNow();
-
-    const arr = [];
-    // for (var i = 0; i < req.files.length; i++) {
-    //     arr.push(uploadFile(`mnr/${notice.REF}/${req.files[i].originalname}`, req.files[i]))
-    // }
-    arr.push(Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true }))
-
-    Promise.all(arr).then(() => {
-        res.sendStatus(200)
-    }).catch((e) => {
-        res.sendStatus(500)
+function checkIfMemoireImageExist(notice) {
+    return new Promise(async (resolve, reject) => {
+        const obj = await Memoire.find({ LBASE: notice.REF });
+        if (obj) {
+            const arr = obj.map(e => { return { ref: e.REF, url: e.IMG } });
+            resolve(arr);
+            return;
+        }
+        resolve([]);
     })
+}
+
+function populateMerimeeREFO(notice) {
+    return new Promise(async (resolve, reject) => {
+        const obj = await Merimee.findOne({ REF: notice.REFA });
+        if (obj) {
+            await obj.update({ $push: { REFO: notice.REF } });
+        }
+        resolve();
+    })
+}
+
+router.put('/:ref', upload.any(), async (req, res) => {
+    try {
+        const ref = req.params.ref;
+        const notice = JSON.parse(req.body.notice);
+        const arr = await checkIfMemoireImageExist(notice)
+
+        notice.MEMOIRE = arr;
+        notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
+
+        await Palissy.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
+        await populateMerimeeREFO(notice);
+
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
 
-router.post('/', upload.any(), (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-    notice.DMIS = notice.DMAJ = formattedNow()
-    const obj = new Palissy(notice);
-    obj.save().then((e) => {
-        res.send({ success: true, msg: "OK" })
-    });
+router.post('/', upload.any(), async (req, res) => {
+    try {
+        const notice = JSON.parse(req.body.notice);
+        const arr = await checkIfMemoireImageExist(notice);
+        await populateMerimeeREFO(notice);
+        notice.MEMOIRE = arr;
+        notice.DMIS = notice.DMAJ = formattedNow()
+        const obj = new Palissy(notice);
+        await obj.save();
+        res.status(200).send({ success: true, msg: "OK" })
+    } catch (e) {
+        res.status(500).send({ success: false, msg: JSON.stringify(e) })
+    }
 })
+
 
 router.get('/:ref', (req, res) => {
     const ref = req.params.ref;
     Palissy.findOne({ REF: ref }, (err, notice) => {
         if (err) {
-            res.status(500).send(err);
-            return;
+            return res.status(500).send(err);
         }
-        if (notice) {
-            res.status(200).send(notice);
-        } else {
-            res.sendStatus(404);
+
+        if (!notice) {
+            return res.sendStatus(404);
         }
+        
+        res.status(200).send(notice);
     });
 })
 
