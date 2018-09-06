@@ -220,16 +220,8 @@ class Notice extends React.Component {
                                 name='MICR'
                                 disabled={!this.state.editable}
                             />
-                            <FieldInput
-                                title="Catégorie tech. (CATE) :"
-                                name='CATE'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title="Matériaux (MATR) :"
-                                name='MATR'
-                                disabled={!this.state.editable}
-                            />
+
+
                         </Col>
                     </Section>
                     <Section
@@ -270,6 +262,11 @@ class Notice extends React.Component {
                                 name='ACTU'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Numérotation artificielle (NART) :'
+                                name='NART'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
@@ -291,6 +288,12 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Décompte des oeuvres recensées (COLL) :'
                                 name='COLL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldLink
+                                title="Référence de l’ensemble ou de l'oeuvre (REFE) : "
+                                name='REFE'
+                                url="/notice/palissy/"
                                 disabled={!this.state.editable}
                             />
                         </Col>
@@ -356,12 +359,6 @@ class Notice extends React.Component {
                         </Col>
                         <Col sm={6}>
 
-                            <FieldLink
-                                title="Référence de l'ensemble contenant (REFE) : "
-                                name='REFE'
-                                url="/notice/palissy/"
-                                disabled={!this.state.editable}
-                            />
                             <FieldInput
                                 title='Référence cadastrale (CADA) :'
                                 name='CADA'
@@ -398,6 +395,16 @@ class Notice extends React.Component {
                                 name='LOCA'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Emplacement de l’œuvre dans l’édifice (EMPL) : '
+                                name='EMPL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Objet(s) volé(s) (VOLS) : '
+                                name='VOLS'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                     </Section>
                     <Section
@@ -428,6 +435,26 @@ class Notice extends React.Component {
                                 name='AUTR'
                                 disabled={!this.state.editable}
                             />
+                            <FieldTags
+                                title="Auteur(s) de la source figurée (AFIG) : "
+                                name='AFIG'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title="Nom de l’atelier, de la manufacture, de la fabrique ou de l’école (ATEL) : "
+                                name='ATEL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Nom actuel ou historique du lieu d’exécution (EXEC) : '
+                                name='EXEC'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Origine de l’œuvre (lieu de provenance ou de destination) (ORIG) : '
+                                name='ORIG'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldTags
@@ -450,6 +477,11 @@ class Notice extends React.Component {
                             <FieldInput
                                 title='Commentaire historique (HIST) :'
                                 name='HIST'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldTags
+                                title='Stade de la création (STAD) : '
+                                name='STAD'
                                 disabled={!this.state.editable}
                             />
                         </Col>
@@ -485,6 +517,21 @@ class Notice extends React.Component {
                                 name='PREP'
                                 disabled={!this.state.editable}
                             />
+                            <FieldTags
+                                title="Catégorie technique (CATE) :"
+                                name='CATE'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldTags
+                                title="Structure et typologie (STRU) :"
+                                name='STRU'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldTags
+                                title="Matériaux (MATR) :"
+                                name='MATR'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
@@ -510,6 +557,26 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Parties non étud (PARN) : '
                                 name='PARN'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Précisions sur les dimensions (PDIM) : '
+                                name='PDIM'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Précisions sur l’état de conservation (PETA) : '
+                                name='PETA'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldTags
+                                title='Inscriptions, marques, emblématique et poinçons (INSC) : '
+                                name='INSC'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Précisions sur les inscriptions, marques, emblématique et poinçons (PINS) : '
+                                name='PINS'
                                 disabled={!this.state.editable}
                             />
                         </Col>

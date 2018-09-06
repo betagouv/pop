@@ -443,6 +443,11 @@ class Notice extends React.Component {
                                 name='HIST'
                                 disabled={!this.state.editable}
                             />
+                            <FieldTags
+                                title='Datation des campagnes secondaires de construction (SCLD) : '
+                                name='SCLD'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                     </Section>
                     <Section
@@ -644,11 +649,6 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Ouverture au public (VISI) :'
                                 name='VISI'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='Proprietaire (STAT) : '
-                                name='STAT'
                                 disabled={!this.state.editable}
                             />
                         </Col>
