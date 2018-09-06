@@ -15,7 +15,7 @@ export default class Import extends React.Component {
                 <Importer
                     collection="inventaire"
                     parseFiles={parseFiles}
-                    dropzoneText="Glissez & déposez vos fichiers au format Renable (.xml) ou Gertrude (.csv à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
+                    dropzoneText="Glissez & déposez vos fichiers au format Renable (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
                     defaultEncoding="UTF-8"
                 />
             </Container >
