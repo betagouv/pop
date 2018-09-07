@@ -1,4 +1,5 @@
 const { api_url } = require('../config.js');
+import "isomorphic-fetch"
 
 class api {
 

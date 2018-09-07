@@ -99,7 +99,7 @@ class Notice extends React.Component {
                         <Col className='image' sm={6}>
                             <FieldImages
                                 name='MEMOIRE'
-                                disabled={!this.state.editable}
+                                disabled
                                 external={true}
                             />
                         </Col>
