@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Container, Button } from 'reactstrap';
+import { Row, Col, Container, ButtonGroup, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch/lib';
 
@@ -10,7 +10,7 @@ import QueryBuilder from './components/queryBuilder';
 import Memoire from '../../entities/memoire';
 import { es_url, bucket_url } from '../../config.js';
 
-const FILTER = ["mainSearch", "dom", "autp", "producteur"]
+const FILTER = ["mainSearch", "dom", "autp", "producteur", "loca"]
 
 export default class Search extends React.Component {
 
@@ -34,7 +34,6 @@ export default class Search extends React.Component {
     renderAdvanced() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <QueryBuilder
                     entity={Memoire}
                     componentId="advancedSearch"
@@ -56,7 +55,6 @@ export default class Search extends React.Component {
     renderNormal() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"
@@ -80,7 +78,6 @@ export default class Search extends React.Component {
                             dataField="DOM.keyword"
                             title="Domaine"
                             className="filters"
-                            showSearch={false}
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
@@ -89,7 +86,6 @@ export default class Search extends React.Component {
                             dataField="PRODUCTEUR.keyword"
                             title="Producteur"
                             className="filters"
-                            showSearch={false}
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
@@ -98,7 +94,14 @@ export default class Search extends React.Component {
                             dataField="AUTP.keyword"
                             title="Auteurs"
                             className="filters"
-                            showSearch={false}
+                            URLParams={true}
+                            react={{ and: FILTER }}
+                        />
+                        <MultiList
+                            componentId="loca"
+                            dataField="LOCA.keyword"
+                            title="Localisation"
+                            className="filters"
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
@@ -126,14 +129,15 @@ export default class Search extends React.Component {
         return (
             <Container className='search'>
                 <div className='header'>
+                    <div className='title'>Rechercher une Notice</div>
                     <div className='buttons'>
-                        <Button color="secondary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} >{this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'}</Button>
+                        <ButtonGroup>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={this.state.normalMode}>Recherche normale</Button>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={!this.state.normalMode}>Recherche experte</Button>
+                        </ButtonGroup>
                     </div>
                 </div>
-                <ReactiveBase
-                    url={`${es_url}/memoire`}
-                    app="memoire"
-                >
+                <ReactiveBase url={`${es_url}/memoire`} app="memoire" >
                     {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
             </Container >

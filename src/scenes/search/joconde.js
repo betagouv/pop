@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Container } from 'reactstrap';
+import { Row, Col, Button, ButtonGroup, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {
     ReactiveBase,
@@ -32,28 +32,25 @@ export default class Search extends React.Component {
                 fieldsToExport.push(property)
             }
         }
-
         this.state = {
             normalMode: true,
             fieldsToExport
         }
     }
 
-
     render() {
         return (
             <Container className='search'>
                 <div className='header'>
+                    <div className='title'>Rechercher une Notice</div>
                     <div className='buttons'>
-                        <Button color="secondary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} >{this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'}</Button>
-                        {/* <CustomButton icon={require('../../assets/import.png')} to='/import/joconde' text='Importer des notices' /> */}
-                        {/* <CustomButton icon={require('../../assets/edit.png')} to='/new' text='Saisir une notice' /> */}
+                        <ButtonGroup>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={this.state.normalMode}>Recherche normale</Button>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={!this.state.normalMode}>Recherche experte</Button>
+                        </ButtonGroup>
                     </div>
                 </div>
-                <ReactiveBase
-                    url={`${es_url}/joconde`}
-                    app="joconde"
-                >
+                <ReactiveBase url={`${es_url}/joconde`} app="joconde" >
                     {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
             </Container >
@@ -63,7 +60,6 @@ export default class Search extends React.Component {
     renderAdvanced() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <QueryBuilder
                     entity={Joconde}
                     componentId="advancedSearch"
@@ -82,12 +78,9 @@ export default class Search extends React.Component {
         )
     }
 
-
-
     renderNormal() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"

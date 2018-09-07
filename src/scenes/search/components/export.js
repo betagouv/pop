@@ -64,7 +64,7 @@ export default class ExportComponent extends React.Component {
 const Exp = ({ len }) => {
     return (
         <div>
-            <div>Recuperation des notices... {len}</div>
+            <div>Récuperation des notices... {len}</div>
         </div>
     );
 }
@@ -75,9 +75,11 @@ async function exportData(fileName, columns, entities) {
         const arr = []
         for (var i = 0; i < columns.length; i++) {
             let value = entities[j][columns[i]]
+            console.log("VALUE ", value, entities[j], columns[i])
             if (Array.isArray(value)) {
                 value = value.join(';')
             }
+            if (!value) value = "";
             value = ('' + value).replace(/"/g, '\"\"');
             arr.push('"' + value + '"');
         }
