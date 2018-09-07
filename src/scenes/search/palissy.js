@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Container, Button } from 'reactstrap';
+import { Row, Col, Container, ButtonGroup, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch';
 
@@ -34,7 +34,6 @@ export default class Search extends React.Component {
     renderAdvanced() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <QueryBuilder
                     entity={Palissy}
                     componentId="advancedSearch"
@@ -56,7 +55,6 @@ export default class Search extends React.Component {
     renderNormal() {
         return (
             <div>
-                <div className='title'>Rechercher une Notice</div>
                 <div className='search-and-export-zone'>
                     <DataSearch
                         componentId="mainSearch"
@@ -184,14 +182,15 @@ export default class Search extends React.Component {
         return (
             <Container className='search'>
                 <div className='header'>
+                    <div className='title'>Rechercher une Notice</div>
                     <div className='buttons'>
-                        <Button color="secondary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} >{this.state.normalMode ? 'Recherche avancée' : 'Recherche normale'}</Button>
+                        <ButtonGroup>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={this.state.normalMode}>Recherche normale</Button>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={!this.state.normalMode}>Recherche experte</Button>
+                        </ButtonGroup>
                     </div>
                 </div>
-                <ReactiveBase
-                    url={`${es_url}/palissy`}
-                    app="palissy"
-                >
+                <ReactiveBase url={`${es_url}/palissy`} app="palissy" >
                     {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
                 </ReactiveBase >
             </Container >
