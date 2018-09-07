@@ -220,7 +220,22 @@ class Notice extends React.Component {
                                 name='MICR'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Thème (THEM) : '
+                                name='THEM'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Visite guidé (WEB) : '
+                                name='WEB'
+                                disabled={!this.state.editable}
+                            />
 
+                            <FieldInput
+                                title='Mosaïques (MOSA) :'
+                                name='MOSA'
+                                disabled={!this.state.editable}
+                            />
 
                         </Col>
                     </Section>
@@ -532,6 +547,11 @@ class Notice extends React.Component {
                                 name='MATR'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Intérêt oeuvre (PINT) :'
+                                name='PINT'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldInput
@@ -666,38 +686,6 @@ class Notice extends React.Component {
                             <FieldInput
                                 title="Précisions sur l'affectataire (PAFF) :"
                                 name='PAFF'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                    </Section>
-                    <Section
-                        title='AUTRES'
-                        icon={require('../../assets/law.png')}
-                        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugia'
-                        color='#FE997B'
-                    >
-
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Thème (THEM) : '
-                                name='THEM'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='Visite guidé (WEB) : '
-                                name='WEB'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Intérêt oeuvre (PINT) :'
-                                name='PINT'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='Mosaïques (MOSA) :'
-                                name='MOSA'
                                 disabled={!this.state.editable}
                             />
                         </Col>

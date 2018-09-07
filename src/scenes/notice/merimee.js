@@ -179,7 +179,33 @@ class Notice extends React.Component {
                                 name='CONTACT'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Thème (THEM) : '
+                                name='THEM'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldLink
+                                title='REFO (REFO) : '
+                                name='REFO'
+                                url="/notice/palissy/"
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Visite guidé (WEB) : '
+                                name='WEB'
+                                disabled={!this.state.editable}
+                            />
 
+                            <FieldInput
+                                title='no Bordereaus (NBOR) : '
+                                name='NBOR'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Mosaïques (MOSA) :'
+                                name='MOSA'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldTags
@@ -553,6 +579,11 @@ class Notice extends React.Component {
                                 name='PARN'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='intérêt oeuvre (PINT) :'
+                                name='PINT'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                     </Section>
                     <Section
@@ -649,48 +680,6 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Ouverture au public (VISI) :'
                                 name='VISI'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                    </Section>
-                    <Section
-                        title='AUTRES'
-                        icon={require('../../assets/law.png')}
-                        color='#FE997B'
-                    >
-
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Thème (THEM) : '
-                                name='THEM'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldLink
-                                title='REFO (REFO) : '
-                                name='REFO'
-                                url="/notice/palissy/"
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='Visite guidé (WEB) : '
-                                name='WEB'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='intérêt oeuvre (PINT) :'
-                                name='PINT'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='no Bordereaus (NBOR) : '
-                                name='NBOR'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Mosaïques (MOSA) :'
-                                name='MOSA'
                                 disabled={!this.state.editable}
                             />
                         </Col>
