@@ -5,6 +5,7 @@ var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: 'MNR' },
+  BASE: { type: String, default: 'Oeuvres spoliées (MNR Rose-Valland)' },
   CONTIENT_IMAGE: { type: String, default: 'non' },
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
