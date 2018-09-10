@@ -4,6 +4,7 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
+  BASE: { type: String, default: 'Photographies (Mémoires)' },
   CONTIENT_IMAGE: { type: String, default: '' },
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
@@ -124,8 +125,6 @@ const Schema = new mongoose.Schema({
   LAUTP: { type: String, default: '' }
 }, { collection: 'memoire' })
 
-
-
 Schema.plugin(mongoosePaginate)
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
@@ -152,10 +151,9 @@ object.createMapping({
   "mappings": {
     "memoire": {
       "properties": {
-        "TICO": {
-          "type": "text",
-          "analyzer": "french"
-        }
+        "TICO": { "type": "text", "analyzer": "french" },
+        "DMIS": { "type": "text" },
+        "DMAJ": { "type": "text" },
       }
     }
   }

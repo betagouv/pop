@@ -4,9 +4,9 @@ var mongoosastic = require('mongoosastic')
 var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
-
   REF: { type: String, unique: true, index: true, trim: true },
   PRODUCTEUR: { type: String, default: '' },
+  BASE: { type: String, default: 'Inventaire patrimoine architectural (Mérimée)' },
   CONTIENT_IMAGE: { type: String, default: '' },
   MEMOIRE: [{ ref: String, url: String }],
   POP_COORDINATES_POINT: {
@@ -15,9 +15,7 @@ const Schema = new mongoose.Schema({
   },
   POP_COORDINATES_POLYGON: {
     'type': { type: String, enum: ['Polygon'], default: 'Polygon' },
-    coordinates: [
-      [{ type: [Number] }]
-    ]
+    coordinates: [[{ type: [Number] }]]
   },
   POP_HAS_LOCATION: { type: [String], default: '' },
   POP_DATE: { type: [Number], default: [] },
@@ -143,20 +141,12 @@ Schema.plugin(mongoosastic, {
   bulk: { size: 500, delay: 2000 }
 })
 
-Schema.pre('update', function(next, done) {
+Schema.pre('update', function (next, done) {
   switch (this.REF.substring(0, 2)) {
-    case 'IA':
-      this.PRODUCTEUR = 'Inventaire';
-      break
-    case 'PA':
-      this.PRODUCTEUR = 'Monument Historique';
-      break
-    case 'EA':
-      this.PRODUCTEUR = 'Architecture';
-      break
-    default:
-      this.PRODUCTEUR = 'Null';
-      break
+    case 'IA': this.DISCIPLINE = this.PRODUCTEUR = 'Inventaire'; break
+    case 'PA': this.DISCIPLINE = this.PRODUCTEUR = 'Monument Historique'; break
+    case 'EA': this.DISCIPLINE = this.PRODUCTEUR = 'Architecture'; break
+    default: this.DISCIPLINE = this.PRODUCTEUR = 'Null'; break
   }
 
   this.CONTIENT_IMAGE = this.IMG ? 'oui' : 'non'
@@ -169,14 +159,14 @@ object.createMapping({
   "mappings": {
     "merimee": {
       "properties": {
-        "TICO": {
-          "type": "text",
-          "analyzer": "french"
-        }
+        "DMIS": { "type": "text" },
+        "DMAJ": { "type": "text" },
+        "TICO": { "type": "text", "analyzer": "french" },
+        "TITR": { "type": "text", "analyzer": "french" },
       }
     }
   }
-}, function(err, mapping) {
+}, function (err, mapping) {
   if (err) {
     console.log('error mapping created', err)
     return

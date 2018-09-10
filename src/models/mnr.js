@@ -5,6 +5,7 @@ var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: 'MNR' },
+  BASE: { type: String, default: 'Oeuvres spoliées (MNR Rose-Valland)' },
   CONTIENT_IMAGE: { type: String, default: 'non' },
   REF: { type: String, unique: true, index: true, trim: true },
   TOUT: { type: String, default: '' },
@@ -74,14 +75,12 @@ object.createMapping({
   "mappings": {
     "mnr": {
       "properties": {
-        "TITR": {
-          "type": "text",
-          "analyzer": "french"
-        }
+        "TITR": { "type": "text", "analyzer": "french" },
+        "DMAJ": { "type": "text" },
       }
     }
   }
-}, function(err, mapping) {
+}, function (err, mapping) {
   if (err) {
     console.log('error mapping created', err)
     return

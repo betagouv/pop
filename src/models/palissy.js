@@ -6,6 +6,7 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
+  BASE: { type: String, default: 'Inventaire patrimoine mobilier (Palissy)' },
   MEMOIRE: [{ ref: String, url: String }],
   REF: { type: String, unique: true, index: true, trim: true },
   ACQU: { type: String, default: '' },
@@ -120,10 +121,10 @@ const Schema = new mongoose.Schema({
 
 Schema.pre('update', function (next, done) {
   switch (this.REF.substring(0, 2)) {
-      case 'IM': this.PRODUCTEUR = 'Inventaire'; break
-      case 'PM': this.PRODUCTEUR = 'Monument Historique'; break
-      case 'EM': this.PRODUCTEUR = 'Etat'; break
-      default: this.PRODUCTEUR = 'Null'; break
+    case 'IM': this.PRODUCTEUR = 'Inventaire'; break
+    case 'PM': this.PRODUCTEUR = 'Monument Historique'; break
+    case 'EM': this.PRODUCTEUR = 'Etat'; break
+    default: this.PRODUCTEUR = 'Null'; break
   }
 
   this.CONTIENT_IMAGE = this.IMG ? 'oui' : 'non'
