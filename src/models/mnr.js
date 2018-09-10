@@ -70,4 +70,22 @@ Schema.plugin(mongoosastic, {
 
 const object = mongoose.model('mnr', Schema)
 
+object.createMapping({
+  "mappings": {
+    "mnr": {
+      "properties": {
+        "TITR": {
+          "type": "text",
+          "analyzer": "french"
+        }
+      }
+    }
+  }
+}, function(err, mapping) {
+  if (err) {
+    console.log('error mapping created', err)
+    return
+  }
+})
+
 module.exports = object

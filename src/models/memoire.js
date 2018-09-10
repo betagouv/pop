@@ -152,11 +152,9 @@ object.createMapping({
   "mappings": {
     "memoire": {
       "properties": {
-        "DMIS": {
+        "TICO": {
           "type": "text",
-        },
-        "DMAJ": {
-          "type": "text"
+          "analyzer": "french"
         }
       }
     }

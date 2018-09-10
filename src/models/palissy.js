@@ -143,19 +143,22 @@ object.createMapping({
   "mappings": {
     "palissy": {
       "properties": {
-        "DMIS": {
+        "TICO": {
           "type": "text",
+          "analyzer": "french"
         },
-        "DMAJ": {
-          "type": "text"
+        "TITR": {
+          "type": "text",
+          "analyzer": "french"
         }
       }
     }
   }
-}, function (err, mapping) {
+}, function(err, mapping) {
   if (err) {
-    console.log('error mapping created', err); return;
+    console.log('error mapping created', err);
+    return;
   }
-});
+})
 
 module.exports = object
