@@ -100,4 +100,22 @@ Schema.plugin(mongoosastic, {
 
 const object = mongoose.model('joconde', Schema)
 
+object.createMapping({
+  "mappings": {
+    "joconde": {
+      "properties": {
+        "TICO": { "type": "text", "analyzer": "french" },
+        "TITR": { "type": "text", "analyzer": "french" },
+        "DMIS": { "type": "text" },
+        "DMAJ": { "type": "text" },
+      }
+    }
+  }
+}, function (err, mapping) {
+  if (err) {
+    console.log('error mapping created', err);
+    return;
+  }
+})
+
 module.exports = object

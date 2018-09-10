@@ -159,19 +159,18 @@ object.createMapping({
   "mappings": {
     "merimee": {
       "properties": {
-        "DMIS": {
-          "type": "text",
-        },
-        "DMAJ": {
-          "type": "text"
-        }
+        "DMIS": { "type": "text" },
+        "DMAJ": { "type": "text" },
+        "TICO": { "type": "text", "analyzer": "french" },
+        "TITR": { "type": "text", "analyzer": "french" },
       }
     }
   }
 }, function (err, mapping) {
   if (err) {
-    console.log('error mapping created', err); return;
+    console.log('error mapping created', err)
+    return
   }
-});
+})
 
 module.exports = object
