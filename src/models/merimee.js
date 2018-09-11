@@ -6,7 +6,7 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   REF: { type: String, unique: true, index: true, trim: true },
   PRODUCTEUR: { type: String, default: '' },
-  BASE: { type: String, default: 'Inventaire patrimoine architectural (Mérimée)' },
+  BASE: { type: String, default: 'Patrimoine architectural (Mérimée)' },
   CONTIENT_IMAGE: { type: String, default: '' },
   MEMOIRE: [{ ref: String, url: String }],
   POP_COORDINATES_POINT: {
