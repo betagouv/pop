@@ -137,8 +137,7 @@ const Schema = new mongoose.Schema({
 Schema.plugin(mongoosePaginate)
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
-  index: 'merimee',
-  bulk: { size: 500, delay: 2000 }
+  index: 'merimee'
 })
 
 Schema.pre('update', function (next, done) {
