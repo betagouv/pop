@@ -144,8 +144,8 @@ object.createMapping({
   "mappings": {
     "palissy": {
       "properties": {
-        "TICO": { "type": "text", "analyzer": "french" },
-        "TITR": { "type": "text", "analyzer": "french" },
+        "TICO": { "type": "text", "analyzer": "french", "fields": { "keyword": { "type": "keyword" } } },
+        "TITR": { "type": "text", "analyzer": "french", "fields": { "keyword": { "type": "keyword" } } },
         "DMIS": { "type": "text" },
         "DMAJ": { "type": "text" },
         "PRODUCTEUR": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },

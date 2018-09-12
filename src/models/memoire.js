@@ -150,7 +150,7 @@ object.createMapping({
   "mappings": {
     "memoire": {
       "properties": {
-        "TICO": { "type": "text", "analyzer": "french" },
+        "TICO": { "type": "text", "analyzer": "french", "fields": { "keyword": { "type": "keyword" } } },
         "PRODUCTEUR": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "BASE": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "CONTIENT_IMAGE": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
