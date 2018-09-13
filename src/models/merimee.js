@@ -153,12 +153,13 @@ Schema.pre('update', function (next, done) {
 })
 
 const object = mongoose.model('merimee', Schema)
+
 /*
 object.createMapping({
   "mappings": {
     "merimee": {
       "properties": {
-        "TICO": { "type": "text", "analyzer": "french" },
+        "TICO":{ "type": "text" },
         "REF": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "PRODUCTEUR": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "BASE": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
@@ -288,7 +289,7 @@ object.createMapping({
     console.log('error mapping created', err)
     return
   }
-})
-*/
+})*/
+
 
 module.exports = object

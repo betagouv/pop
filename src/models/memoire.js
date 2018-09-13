@@ -146,6 +146,8 @@ Schema.pre('update', function (next, done) {
 
 const object = mongoose.model('memoire', Schema);
 
+
+/*
 object.createMapping({
   "mappings": {
     "memoire": {
@@ -277,6 +279,7 @@ object.createMapping({
   if (err) {
     console.log('error mapping created', err); return;
   }
-});
+}); 
+*/
 
 module.exports = object
