@@ -5,15 +5,15 @@ var getElasticInstance = require('../elasticsearch')
 
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: 'MUSEE' },
-  BASE: { type: String, default: 'Collections des musées de France (Joconde)' },
-  CONTIENT_IMAGE: { type: String, default: '', es_indexed: true },
-  REF: { type: String, unique: true, index: true, trim: true, es_indexed: true },
+  BASE: { type: String, default: 'Collections des musées de France (Joconde)',  },
+  CONTIENT_IMAGE: { type: String, default: '',  },
+  REF: { type: String, unique: true, index: true, trim: true,  },
   REFMIS: { type: String, default: '' },
   ADPT: { type: [String], default: [] },
   APPL: { type: [String], default: [] },
   APTN: { type: String, default: '' },
   ATTR: { type: String, default: '' },
-  AUTR: { type: String, default: '', es_indexed: true },
+  AUTR: { type: String, default: '',  },
   BIBL: { type: String, default: '' },
   COMM: { type: String, default: '' },
   CONTACT: { type: String, default: '' },
@@ -24,7 +24,7 @@ const Schema = new mongoose.Schema({
   DATION: { type: String, default: '' },
   DDPT: { type: String, default: '' },
   DECV: { type: String, default: '' },
-  DENO: { type: [String], default: [], es_indexed: true },
+  DENO: { type: [String], default: [],  },
   DEPO: { type: String, default: '' },
   DESC: { type: String, default: '' },
   DESY: { type: String, default: '' },
@@ -32,7 +32,7 @@ const Schema = new mongoose.Schema({
   DIMS: { type: String, default: '' },
   DMAJ: { type: String, default: '' },
   DMIS: { type: String, default: '' },
-  DOMN: { type: [String], default: [], es_indexed: true },
+  DOMN: { type: [String], default: [],  },
   DREP: { type: String, default: '' },
   ECOL: { type: [String], default: [] },
   EPOQ: { type: [String], default: [] },
@@ -42,14 +42,14 @@ const Schema = new mongoose.Schema({
   GEOHI: { type: [String], default: [] },
   HIST: { type: String, default: '' },
   IMAGE: { type: String, default: '' },
-  IMG: { type: [String], default: [], es_indexed: true },
+  IMG: { type: [String], default: [],  },
   INSC: { type: [String], default: [] },
-  INV: { type: String, default: '', es_indexed: true },
+  INV: { type: String, default: '',  },
   LABEL: { type: String, default: 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002' },
   LABO: { type: String, default: '' },
   LARC: { type: String, default: '' },
   LIEUX: { type: String, default: '' },
-  LOCA: { type: String, default: '', es_indexed: true },
+  LOCA: { type: String, default: '',  },
   LOCA2: { type: String, default: '' },
   LOCA3: { type: String, default: '' },
   MILL: { type: [String], default: [] },
@@ -63,7 +63,7 @@ const Schema = new mongoose.Schema({
   PDAT: { type: String, default: '' },
   PDEC: { type: String, default: '' },
   PEOC: { type: [String], default: [] },
-  PERI: { type: [String], default: [], es_indexed: true },
+  PERI: { type: [String], default: [],  },
   PERU: { type: [String], default: [] },
   PHOT: { type: String, default: '' },
   PINS: { type: String, default: '' },
@@ -77,25 +77,20 @@ const Schema = new mongoose.Schema({
   RETIF: { type: String, default: '' },
   SREP: { type: [String], default: [] },
   STAT: { type: [String], default: [] },
-  TECH: { type: [String], default: [], es_indexed: true },
-  TICO: { type: String, default: '', es_indexed: true },
-  TITR: { type: String, default: '', es_indexed: true },
+  TECH: { type: [String], default: [],  },
+  TICO: { type: String, default: '',  },
+  TITR: { type: String, default: '',  },
   TOUT: { type: String, default: '' },
   UTIL: { type: [String], default: [] },
   VIDEO: { type: String, default: '' },
   WWW: { type: String, default: '' },
   LVID: { type: String, default: '' }
-
 }, { collection: 'joconde' })
 
 Schema.plugin(mongoosePaginate)
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
-  index: 'joconde',
-  bulk: {
-    batch: 500,
-    delay: 2000
-  }
+  index: 'joconde'
 })
 
 const object = mongoose.model('joconde', Schema)
