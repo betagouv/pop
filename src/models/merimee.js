@@ -153,7 +153,7 @@ Schema.pre('update', function (next, done) {
 })
 
 const object = mongoose.model('merimee', Schema)
-
+/*
 object.createMapping({
   "mappings": {
     "merimee": {
@@ -289,5 +289,6 @@ object.createMapping({
     return
   }
 })
+*/
 
 module.exports = object
