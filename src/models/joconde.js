@@ -104,8 +104,8 @@ object.createMapping({
   "mappings": {
     "joconde": {
       "properties": {
-        "TICO": { "type": "text", "analyzer": "french", "fields": { "keyword": { "type": "keyword" } } },
-        "TITR": { "type": "text", "analyzer": "french", "fields": { "keyword": { "type": "keyword" } } },
+        "TICO": { "type": "text", "analyzer": "french" },
+        "TITR": { "type": "text", "analyzer": "french" },
         "PRODUCTEUR": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "BASE": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
         "CONTIENT_IMAGE": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
