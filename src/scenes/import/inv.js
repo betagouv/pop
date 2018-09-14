@@ -155,6 +155,8 @@ function ParseRenabl(files, xmlFiles, encoding) {
                     const EMET = tags[i].getAttribute('EMET');
                     const NUMI = tags[i].getAttribute('NUMI');
                     obj.REF = EMET + "_" + NUMI;
+                    
+                    obj.AUTP = tags[i].getAttribute('AUT');
 
                     const memoireObj = new Memoire(obj);
 
