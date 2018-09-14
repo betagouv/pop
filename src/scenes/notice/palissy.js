@@ -183,6 +183,16 @@ class Notice extends React.Component {
                                 name='PAPP'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Dossier URL (DOSURL) : '
+                                name='DOSURL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Dossier PDF (DOSURLPDF) : '
+                                name='DOSURLPDF'
+                                disabled={true}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldTags

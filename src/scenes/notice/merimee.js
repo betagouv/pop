@@ -135,6 +135,16 @@ class Notice extends React.Component {
                             name='RENV'
                         /> */}
                             <FieldInput
+                                title='Dossier URL (DOSURL) : '
+                                name='DOSURL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Dossier PDF (DOSURLPDF) : '
+                                name='DOSURLPDF'
+                                disabled={true}
+                            />
+                            <FieldInput
                                 title='Référence dans la base Patriarche (ARCHEO) : '
                                 name='ARCHEO'
                                 disabled={!this.state.editable}
