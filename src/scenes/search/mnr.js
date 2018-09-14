@@ -156,7 +156,7 @@ export default class Search extends React.Component {
                     <div className='title'>Rechercher une Notice</div>
                     <div className='buttons'>
                         <ButtonGroup>
-                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={this.state.normalMode}>Recherche normale</Button>
+                            <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={this.state.normalMode}>Recherche simple</Button>
                             <Button color="primary" onClick={() => this.setState({ normalMode: !this.state.normalMode })} active={!this.state.normalMode}>Recherche experte</Button>
                         </ButtonGroup>
                     </div>

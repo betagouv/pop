@@ -102,7 +102,6 @@ export default class Merimee extends Notice {
         this.IMG = { type: 'String', value: body.IMG || '' };
         this.VIDEO = { type: 'String', value: body.VIDEO || '' };
         this.DOSURL = { type: 'String', value: body.DOSURL || '' };
-        this.DOSURLP = { type: 'String', value: body.DOSURLP || '' };
         this.DOSADRS = { type: 'String', value: body.DOSADRS || '' };
         this.LIENS = { type: 'Array', value: this.extractArray(body.SCLIENSLE) };
         this.IMAGE = { type: 'String', value: body.IMAGE || '' };

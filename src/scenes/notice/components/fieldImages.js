@@ -17,29 +17,34 @@ class FieldImages extends React.Component {
         selected: -1,
     }
     componentWillMount() {
-        this.loadImages();
-
+        this.loadImages(this.props.input.value);
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.input.value.length !== this.props.input.value.length) {
+            this.loadImages(nextProps.input.value)
+        }
+    }
+
     onDrop(files) {
-        this.props.input.onChange(this.props.input.value.concat(...files))
+        this.props.input.onChange([...this.props.input.value.concat(...files)])
     }
 
-    loadImages() {
-        const images = this.props.input.value.map((e, i) => {
-
+    loadImages(values) {
+        const images = values.map(e => {
             let source = "";
             let key = "";
             let link = "";
 
-            if (e instanceof Object) {            //If its a MEMOIRE STYLE 
+            if (e instanceof File) {            //If its a MEMOIRE STYLE 
+                source = e.preview
+                key = e.name
+            } else if (e instanceof Object) {
                 if (e.url) {
                     source = e.url.indexOf("www") === -1 && e.url.indexOf("http") === -1 ? `${bucket_url}${e.url}` : e.url;
                 }
                 key = e.ref
                 link = `/notice/memoire/${e.ref}`
-            } else if (e instanceof File) {
-                source = e.preview
-                key = e.name
             } else {
                 source = e.indexOf("www") === -1 && e.indexOf("http") === -1 ? `${bucket_url}${e}` : e;
                 key = e;
@@ -57,7 +62,7 @@ class FieldImages extends React.Component {
         const arr = this.state.images.map(({ source, key, link }, i) => {
             return (
                 <Col className="image" key={key}>
-                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid w-100" /> : <div className="no-image">Image absente</div>}
+                    {source ? <img onClick={() => this.setState({ selected: i })} src={source} alt={key} className="img-fluid" /> : <div className="no-image">Image absente</div>}
                     {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
                 </Col>
             )

@@ -99,7 +99,7 @@ class Notice extends React.Component {
                         <Col className='image' sm={6}>
                             <FieldImages
                                 name='MEMOIRE'
-                                disabled={!this.state.editable}
+                                disabled
                                 external={true}
                             />
                         </Col>
@@ -134,6 +134,16 @@ class Notice extends React.Component {
                             title='TODO-N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) : '
                             name='RENV'
                         /> */}
+                            <FieldInput
+                                title='Dossier URL (DOSURL) : '
+                                name='DOSURL'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Dossier PDF (DOSURLPDF) : '
+                                name='DOSURLPDF'
+                                disabled={true}
+                            />
                             <FieldInput
                                 title='Référence dans la base Patriarche (ARCHEO) : '
                                 name='ARCHEO'
@@ -179,7 +189,33 @@ class Notice extends React.Component {
                                 name='CONTACT'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='Thème (THEM) : '
+                                name='THEM'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldLink
+                                title='REFO (REFO) : '
+                                name='REFO'
+                                url="/notice/palissy/"
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Visite guidé (WEB) : '
+                                name='WEB'
+                                disabled={!this.state.editable}
+                            />
 
+                            <FieldInput
+                                title='no Bordereaus (NBOR) : '
+                                name='NBOR'
+                                disabled={!this.state.editable}
+                            />
+                            <FieldInput
+                                title='Mosaïques (MOSA) :'
+                                name='MOSA'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                         <Col sm={6}>
                             <FieldTags
@@ -553,6 +589,11 @@ class Notice extends React.Component {
                                 name='PARN'
                                 disabled={!this.state.editable}
                             />
+                            <FieldInput
+                                title='intérêt oeuvre (PINT) :'
+                                name='PINT'
+                                disabled={!this.state.editable}
+                            />
                         </Col>
                     </Section>
                     <Section
@@ -649,48 +690,6 @@ class Notice extends React.Component {
                             <FieldTags
                                 title='Ouverture au public (VISI) :'
                                 name='VISI'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                    </Section>
-                    <Section
-                        title='AUTRES'
-                        icon={require('../../assets/law.png')}
-                        color='#FE997B'
-                    >
-
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Thème (THEM) : '
-                                name='THEM'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldLink
-                                title='REFO (REFO) : '
-                                name='REFO'
-                                url="/notice/palissy/"
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='Visite guidé (WEB) : '
-                                name='WEB'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='intérêt oeuvre (PINT) :'
-                                name='PINT'
-                                disabled={!this.state.editable}
-                            />
-                            <FieldInput
-                                title='no Bordereaus (NBOR) : '
-                                name='NBOR'
-                                disabled={!this.state.editable}
-                            />
-                        </Col>
-                        <Col sm={6}>
-                            <FieldInput
-                                title='Mosaïques (MOSA) :'
-                                name='MOSA'
                                 disabled={!this.state.editable}
                             />
                         </Col>
