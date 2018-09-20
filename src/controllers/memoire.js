@@ -6,6 +6,7 @@ const Memoire = require('../models/memoire');
 const Merimee = require('../models/merimee');
 const Palissy = require('../models/palissy');
 const { uploadFile, formattedNow } = require('./utils')
+const passport = require('passport')
 
 function findCollection(ref = "") {
   const prefix = ref.substring(0, 2);
@@ -62,7 +63,7 @@ function updateMerimeeOrPalissyNotice(memoire) {
 }
 
 
-router.put('/:ref', upload.any(), (req, res) => {
+router.put('/:ref', passport.authenticate('jwt', {session: false}), upload.any(), (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
 
@@ -84,7 +85,7 @@ router.put('/:ref', upload.any(), (req, res) => {
   })
 })
 
-router.post('/', upload.any(), (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), upload.any(), (req, res) => {
   const notice = JSON.parse(req.body.notice)
 
   notice.DMIS = notice.DMAJ = formattedNow()
@@ -121,7 +122,7 @@ router.get('/:ref', (req, res) => {
   })
 })
 
-router.delete('/:ref', (req, res) => {
+router.delete('/:ref', passport.authenticate('jwt', {session: false}), (req, res) => {
   const ref = req.params.ref;
   Memoire.findOneAndRemove({ REF: ref }, (error) => {
     if (error) return res.status(500).send({ error });
