@@ -3,10 +3,11 @@ const router = express.Router()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const Joconde = require('../models/joconde')
+const passport = require('passport')
 
 const { uploadFile, deleteFile, formattedNow } = require('./utils')
 
-router.put('/:ref', upload.any(), async (req, res) => {
+router.put('/:ref', passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
   const ref = req.params.ref
   const notice = JSON.parse(req.body.notice)
 
@@ -26,7 +27,7 @@ router.put('/:ref', upload.any(), async (req, res) => {
   }
 })
 
-router.post('/', upload.any(), (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), upload.any(), (req, res) => {
   const notice = JSON.parse(req.body.notice)
 
   notice.DMIS = notice.DMAJ = formattedNow()
@@ -61,7 +62,7 @@ router.get('/:ref', (req, res) => {
 })
 
 
-router.delete('/:ref', (req, res) => {
+router.delete('/:ref', passport.authenticate('jwt', {session: false}), (req, res) => {
   const ref = req.params.ref;
   Joconde.findOneAndRemove({ REF: ref }, (error) => {
     if (error) return res.status(500).send({ error });

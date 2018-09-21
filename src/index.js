@@ -4,9 +4,10 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const Mailer = require('./mailer')
 const passport = require('passport')
-require('./mongo')
-
 const { PORT } = require('./config.js')
+
+require('./passport')(passport)
+require('./mongo')
 
 const app = express()
 
@@ -31,7 +32,7 @@ app.use('/palissy', require('./controllers/palissy'))
 app.use('/memoire', require('./controllers/memoire'))
 app.use('/thesaurus', require('./controllers/thesaurus'))
 
-app.post('/mail', (req, res) => {
+app.post('/mail', passport.authenticate('jwt', {session: false}), (req, res) => {
   const { subject, to, body } = req.body
   if (!subject || !to || !body) {
     res.status(500).send('Information incomplete')
