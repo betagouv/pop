@@ -1,3 +1,3 @@
 # POP Production
 
-Outil de production de [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/).
+Outil de production de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/).
