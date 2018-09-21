@@ -100,7 +100,7 @@ class request {
 
   delete(url) {
     return new Promise((resolve, reject) => {
-      fetch(url, this._init("DELETE", data))
+      fetch(url, this._init("DELETE", null))
         .then(response => {
           if (response.status !== 200) {
             Raven.captureException(this._errorTxt(response));
