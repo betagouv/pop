@@ -6,6 +6,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const { uploadFile, formattedNow } = require("./utils");
+const passport = require('passport')
 
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
@@ -34,7 +35,7 @@ function populateMerimeeREFO(notice) {
   });
 }
 
-router.put("/:ref", upload.any(), async (req, res) => {
+router.put("/:ref", passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
   try {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
@@ -53,7 +54,7 @@ router.put("/:ref", upload.any(), async (req, res) => {
   }
 });
 
-router.post("/", upload.any(), async (req, res) => {
+router.post("/", passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
   try {
     const notice = JSON.parse(req.body.notice);
     const arr = await checkIfMemoireImageExist(notice);
@@ -83,7 +84,7 @@ router.get("/:ref", (req, res) => {
   });
 });
 
-router.delete("/:ref", (req, res) => {
+router.delete("/:ref", passport.authenticate('jwt', {session: false}), (req, res) => {
   const ref = req.params.ref;
   Palissy.findOneAndRemove({ REF: ref }, error => {
     if (error) return res.status(500).send({ error });

@@ -22,7 +22,7 @@ function uploadFile (path, file) {
         console.log(err)
         reject(new Error())
       } else {
-        resolve()
+        resolve();
       }
     })
   })

@@ -6,6 +6,7 @@ const Merimee = require('../models/merimee');
 const Palissy = require('../models/palissy');
 const Memoire = require('../models/memoire');
 const { uploadFile, formattedNow } = require('./utils')
+const passport = require('passport')
 
 function checkIfMemoireImageExist(notice) {
     return new Promise(async (resolve, reject) => {
@@ -34,7 +35,7 @@ function populateREFO(notice) {
     })
 }
 
-router.put('/:ref', upload.any(), async (req, res) => {
+router.put('/:ref', passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
     try {
         const ref = req.params.ref;
         const notice = JSON.parse(req.body.notice);
@@ -49,7 +50,7 @@ router.put('/:ref', upload.any(), async (req, res) => {
     }
 });
 
-router.post('/', upload.any(), async (req, res) => {
+router.post('/', passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
     try {
         const notice = JSON.parse(req.body.notice);
         notice.DMIS = notice.DMAJ = formattedNow();
@@ -80,7 +81,7 @@ router.get('/:ref', (req, res) => {
 })
 
 
-router.delete('/:ref', (req, res) => {
+router.delete('/:ref', passport.authenticate('jwt', {session: false}), (req, res) => {
     const ref = req.params.ref;
     Merimee.findOneAndRemove({ REF: ref }, (error) => {
         if (error) return res.status(500).send({ error });
@@ -90,5 +91,3 @@ router.delete('/:ref', (req, res) => {
 
 
 module.exports = router
-
-
