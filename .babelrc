@@ -1,0 +1,13 @@
+{
+  "presets": [
+    "minify",
+    "react"
+  ],
+  "plugins": [
+    "class-properties-default-value",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "transform-async-generator-functions",
+    "transform-es2015-parameters"
+  ]
+}

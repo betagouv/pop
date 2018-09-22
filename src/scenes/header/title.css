@@ -1,0 +1,12 @@
+.company-title {
+  margin-right: 30px;
+}
+.company-title span {
+  display: block;
+  font-size: 22px;
+  line-height: 1;
+  color: #003f48;
+}
+.company-title span:first-letter {
+  font-weight: 700;
+}
