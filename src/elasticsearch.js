@@ -6,9 +6,7 @@ let elasticClient
 
 const getElasticInstance = () => {
   if (elasticClient) { return elasticClient }
-
   elasticClient = new elasticsearch.Client({ host: esUrl })
-
   return elasticClient
 }
 
