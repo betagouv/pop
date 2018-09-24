@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/goffle/pop_api.git"
+    "url": "git+https://github.com/betagouv/pop-api/pop_api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/goffle/pop_api/issues"
+    "url": "https://github.com/betagouv/pop-api/issues"
   },
-  "homepage": "https://github.com/goffle/pop_api#readme",
+  "homepage": "https://github.com/betagouv/pop-api#readme",
   "dependencies": {
     "asyncawait": "^1.0.6",
     "aws-sdk": "^2.266.1",
