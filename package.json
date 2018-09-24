@@ -1,7 +1,6 @@
 {
   "name": "pop_production",
   "version": "1.0.3",
-  "private": true,
   "dependencies": {
     "@appbaseio/reactivesearch": "^2.8.2",
     "autosize": "^4.0.2",

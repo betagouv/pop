@@ -7,7 +7,7 @@ import './logo.css';
 export default (props) => {
   return (
     <Link to="/" className="Logo">
-      <img src={Logo} alt="Epicurio-logo" className="md" />
+      <img src={Logo} alt="logo" className="md" />
     </Link>
   )
 }
