@@ -7,9 +7,9 @@ if (forceProd || process.env.NODE_ENV === 'production') {
 
 let bucket_url = 'https://s3.eu-west-3.amazonaws.com/pop-phototeque/';
 
-let es_url = 'http://127.0.0.1:9200';
+let es_url = 'http://127.0.0.1:3000/search';
 if (forceProd || process.env.NODE_ENV === 'production') {
-  es_url = 'https://search-pop-j3zoezftjmyiagfgm76ckgu2xy.eu-west-3.es.amazonaws.com';
+  es_url = 'http://pop-api.eu-west-3.elasticbeanstalk.com/search';
 }
 
 module.exports = {
