@@ -1,7 +1,6 @@
 {
-  "name": "pop_consultation",
-  "version": "0.0.01",
-  "private": true,
+  "name": "pop-consultation",
+  "version": "0.0.1",
   "dependencies": {
     "@appbaseio/reactivemaps": "^2.0.1",
     "@appbaseio/reactivesearch": "^2.8.2",
