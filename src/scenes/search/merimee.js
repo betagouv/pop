@@ -103,23 +103,13 @@ export default class Search extends React.Component {
                             react={{ and: FILTER }}
                         />
                         <MultiList
-                            componentId=""
+                            componentId="denomination"
                             dataField="DENO.keyword"
                             title="Dénominations"
                             className="filters"
                             placeholder="Rechercher une dénomination"
                             URLParams={true}
                             react={{ and: FILTER }}
-                            customQuery={
-                                function (value, props) {
-                                    console.log(value, props)
-                                    return {
-                                        match: {
-                                            data_field: "this is a test"
-                                        }
-                                    }
-                                }
-                            }
                         />
                         <MultiList
                             componentId="auteurs"
