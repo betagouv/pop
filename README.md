@@ -16,10 +16,10 @@ yarn
 
 Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://localhost:8080`. L'application utilise `webpack-dev-server` pour fonctionner en local.
 
-## Déploiement
-
-Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnement souhaité.
-
 ## Tests
 
 Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop-consultation. Pour lancer les tests en local, utiliser `yarn test`.
+
+## Déploiement
+
+Utiliser `yarn deploy:staging` ou `yarn deploy:production` en fonction de l'environnement souhaité.
