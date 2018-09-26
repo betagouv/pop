@@ -51,14 +51,28 @@
     "build:prod": "webpack --env.production --env.NODE_ENV=production",
     "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
     "deploy:prod": "yarn && yarn build:prod && eb deploy pop-consultation",
-    "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging"
+    "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging",
+    "test": "jest"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./src/__tests__/setup/setup.js",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testPathIgnorePatterns": [
+      "./src/__tests__/setup/"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|scss|png|jpg|scvg)$": "identity-obj-proxy"
+    }
   },
   "engines": {
     "node": ">=8.0.0 <11.0.0",
     "npm": "5.x"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.2",
     "babel-minify-webpack-plugin": "^0.3.0",
     "babel-plugin-class-properties-default-value": "0.0.1",
@@ -73,10 +87,18 @@
     "babel-preset-react": "^6.24.1",
     "babel-webpack-plugin": "^0.1.1",
     "css-loader": "^0.28.9",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-to-json": "^3.3.4",
     "file-loader": "^1.1.7",
     "fs": "0.0.1-security",
     "html-webpack-plugin": "^2.30.1",
+    "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^4.1.0",
+    "jest": "^23.6.0",
+    "jest-enzyme": "^6.1.2",
+    "react-test-renderer": "^16.5.2",
+    "regenerator-runtime": "^0.12.1",
     "sitemap": "^1.13.0",
     "style-loader": "^0.20.2",
     "svg-inline-loader": "^0.8.0",
