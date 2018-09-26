@@ -19,3 +19,7 @@ Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://l
 ## Déploiement
 
 Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnement souhaité.
+
+## Tests
+
+Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop-consultation. Pour lancer les tests en local, utiliser `yarn test`.
