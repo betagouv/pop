@@ -2,7 +2,8 @@ DELETE palissy
 {}
 PUT palissy
 
-PUT palissy/_mapping/palissy {
+PUT palissy/_mapping/palissy 
+{
        "properties": {
           "ACQU": {
             "type": "text",
@@ -172,6 +173,21 @@ PUT palissy/_mapping/palissy {
               "keyword": {
                 "type": "keyword",
                 "ignore_above": 256
+              }
+            }
+          },
+          "POP_CONTIENT_GEOLOCALISATION": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "POP_COORDINATES_POINT": {
+            "properties": {
+                "type": "geo_point"
               }
             }
           },

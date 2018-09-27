@@ -6,6 +6,19 @@ var getElasticInstance = require('../elasticsearch')
 const Schema = new mongoose.Schema({
   PRODUCTEUR: { type: String, default: '' },
   CONTIENT_IMAGE: { type: String, default: '' },
+  POP_COORDONNEES: {
+    lat: { type: Number },
+    lon: { type: Number }
+  },
+  POP_CONTIENT_GEOLOCALISATION: {
+    type: String,
+    enum: ["oui", "non"],
+    default: "non"
+  },
+  POP_COORDINATES_POLYGON: {
+    type: { type: String, enum: ["Polygon"], default: "Polygon" },
+    coordinates: [[{ type: [Number] }]]
+  },
   BASE: { type: String, default: 'Patrimoine mobilier (Palissy)' },
   MEMOIRE: [{ ref: String, url: String }],
   REF: { type: String, unique: true, index: true, trim: true },

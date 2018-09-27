@@ -2,7 +2,8 @@ DELETE merimee
 {}
 PUT merimee
 
-PUT merimee/_mapping/merimee {
+PUT merimee/_mapping/merimee 
+{
     "properties": {
           "ACMH": {
             "type": "text",
@@ -620,36 +621,7 @@ PUT merimee/_mapping/merimee {
               }
             }
           },
-          "POP_COORDINATES_POINT": {
-            "properties": {
-              "type": {
-                "type": "text",
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "ignore_above": 256
-                  }
-                }
-              }
-            }
-          },
-          "POP_COORDINATES_POLYGON": {
-            "properties": {
-              "type": {
-                "type": "text",
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "ignore_above": 256
-                  }
-                }
-              }
-            }
-          },
-          "POP_DATE": {
-            "type": "long"
-          },
-          "POP_HAS_LOCATION": {
+          "POP_CONTIENT_GEOLOCALISATION": {
             "type": "text",
             "fields": {
               "keyword": {
@@ -657,6 +629,13 @@ PUT merimee/_mapping/merimee {
                 "ignore_above": 256
               }
             }
+          },
+          "POP_COORDONNEES": {
+                "type": "geo_point"
+            }
+          },
+          "POP_DATE": {
+            "type": "long"
           },
           "PPRO": {
             "type": "text",
