@@ -45,14 +45,14 @@ module.exports = _env => {
           test: /\.js$/,
           loader: 'babel-loader',
           include: path.resolve('src'),
-          exclude: /node_modules/,
+          exclude: /(node_modules|__tests__)/,
           query: {
             babelrc: true
           }
         },
         {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
-          exclude: /node_modules/,
+          exclude: /(node_modules|__tests__)/,
           use: [
             'file-loader',
             {
