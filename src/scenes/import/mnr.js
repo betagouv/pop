@@ -27,7 +27,7 @@ function parseFiles(files, encoding) {
             return;
         }
 
-        utils.readCSV(file, ',', encoding).then(notices => {
+        utils.readCSV(file, ',', encoding, '"').then(notices => {
             const importedNotices = notices.map(e => new Mnr(e));
             resolve({ importedNotices, fileNames: [file.name] });
         })
