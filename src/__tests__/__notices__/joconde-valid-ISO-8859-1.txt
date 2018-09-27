@@ -1,7 +1,7 @@
 REF
 01610014032
 COOR
-Jeannette Ivain
+Anonyme Anonyme
 MUSEO
 M0017
 LABEL
@@ -19,7 +19,7 @@ Hauteur en cm 1.64 ; Longueur en cm 6.6 ; Epaisseur en cm
 DECV
 France, Saône-et-Loire, Autun (lieu de découverte) ; (19e siècle, date de découverte) ; (GAUTHIER, découvreur)
 PDEC
-Rue de la Croix-Verte, dans les terrassements des H.L.M. de la Croix-Verte ; REBOURG Alain -
+Rue de la Croix-Verte, dans les terrassements des H.L.M. de la Croix-Verte ; Anonyme Anonyme -
 (inventeur) ; 1980 (invention du site)
 INSC
 estampille
@@ -40,7 +40,7 @@ Inventaire B. Archéo, fiches inventaire, Bulliot#Autun Augustodunum - Capitale -
 des Eduens, musée Rolin - Hôtel de Ville - Autun, 16 mars- 27 octobre 1985 (p. -
 159-162)
 PHOT
-Cliché C. Massard
+Cliché Anonyme
 EPOQ
 gallo-romain
 REFIM
@@ -60,7 +60,7 @@ NSDA
 REF
 01610014134
 COOR
-Jeannette Ivain
+Anonyme Anonyme
 MUSEO
 M0017
 LABEL
@@ -77,12 +77,12 @@ DIMS
 Diamètre extérieur en cm 5.6 ; Diamètre intérieur en cm 5 ; Diamètre extérieur -
 en cm 5.1 ; Diamètre intérieur en cm 4.7
 DECV
-France, Saône-et-Loire, Autun (lieu de découverte) ; fouilles ; (1977, date de découverte) ; (REBOURG Alain, -
+France, Saône-et-Loire, Autun (lieu de découverte) ; fouilles ; (1977, date de découverte) ; (Anonyme, -
 découvreur)
 PDEC
 Caserne; Faubourg d'Arroux, Proviendraient de la fouille de la Caserne Changarnier, n° 82.9 Fouille -
 réalisée lors de l'aménagement du stade ; 82.9 (N° de site), (coordonnées de -
-l'objet) ; BULLIOT Jacques-Gabriel (inventeur)
+l'objet) ; AnonymeAnonyme (inventeur)
 LOCA
 Autun ; musée Rolin
 STAT
@@ -106,7 +106,7 @@ Oui
 REF
 01610014147
 COOR
-Jeannette Ivain
+Anonyme Anonyme
 MUSEO
 M0017
 LABEL
@@ -124,7 +124,7 @@ céramique (claire)
 DIMS
 Longueur en cm 2.3 ; Largeur en cm 1.9
 DECV
-France, Saône-et-Loire, Antully;(lieu de découverte) (1982, date de découverte) ; (BRUGNIAUX et LEBALLEUX Pierre et Henri, -
+France, Saône-et-Loire, Antully;(lieu de découverte) (1982, date de découverte) ; (Anonyme Anonyme, -
 découvreur)
 PDEC
 Antully, lieu-dit "Champ du Temple" ou "Champ des Médailles" (Référence -
@@ -141,7 +141,7 @@ BIBL
 Vertet, Vuillemot, Figurines gallo-romaines en argile d'Autun, Autun, 1974 -
 (analogie)
 PHOT
-Cliché C. Massard
+Cliché Anonyme Anonyme
 EPOQ
 gallo-romain
 REFIM
