@@ -185,10 +185,8 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "POP_COORDINATES_POINT": {
-            "properties": {
+          "POP_COORDONNEES": {
                 "type": "geo_point"
-              }
             }
           },
           "COPY": {
