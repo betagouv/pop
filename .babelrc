@@ -1,7 +1,8 @@
 {
   "presets": [
     "minify",
-    "react"
+    "react",
+    "env"
   ],
   "plugins": [
     "class-properties-default-value",
