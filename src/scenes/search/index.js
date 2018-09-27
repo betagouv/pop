@@ -25,6 +25,7 @@ import { history } from "../../redux/store";
 import CardList from "./cardList";
 import CardMosaique from "./cardMosaique";
 import Map from "./map";
+import { ReactiveMap } from 'reactivemaps-tmp-mapbox';
 
 import { es_url } from "../../config.js";
 
@@ -40,7 +41,8 @@ const FILTER = [
   "region",
   "departement",
   "commune",
-  "base"
+  "base",
+  "geolocalisation"
 ];
 
 const departements = [
@@ -257,6 +259,28 @@ export default class Search extends React.Component {
                       and: FILTER
                     }}
                   />
+                    <MultiDataList
+                        componentId="geolocalisation"
+                        dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+                        title="Est géolocalisé"
+                        filterLabel="Est géolocalisé "
+                        queryFormat="or"
+                        className="filters"
+                        size={2}
+                        showSearch={false}
+                        showCheckbox={true}
+                        URLParams={true}
+                        defaultSelected={
+                            this.state.activeTab === "2" ? ["oui"] : []
+                        } // TODO clean this
+                        data={[
+                            { label: "oui", value: "oui" },
+                            { label: "non", value: "non" }
+                        ]}
+                        react={{
+                            and: FILTER
+                        }}
+                    />
                   {/* <MultiList
                     componentId="auteur"
                     dataField={"AUTP.keyword"}
@@ -387,6 +411,19 @@ export default class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
+                            active: this.state.activeTab === "2"
+                          })}
+                          onClick={() => {
+                            this.toggle("2");
+                          }}
+                        >
+                          MAP
+                        </NavLink>
+                      </NavItem>
+
+                        <NavItem>
+                        <NavLink
+                          className={classnames({
                             active: this.state.activeTab === "3"
                           })}
                           onClick={() => {
@@ -424,9 +461,38 @@ export default class Search extends React.Component {
                       pagination={true}
                     />
                   </TabPane>
-                  {/* <TabPane tabId="2">
-                    <Map />
-                  </TabPane> */}
+                  <TabPane tabId="2">
+                      <ReactiveMap
+                          componentId="map"
+                          dataField="POP_COORDONNEES"
+                          react={{
+                              and: FILTER
+                          }}
+                          size={2000}
+                          autoClosePopover
+                          customClusterMarker={
+                              (coordinates, pointCount)=> {
+                                  return (
+                                      <svg width="30px" height="30px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" key="content">
+                                          <circle className="circle first-circle" fill="#FF6347" cx="10" cy="10" r="10"></circle>
+                                          {
+                                              pointCount < 10
+                                                  ? <text x="7" y="14" fill="white">{pointCount}</text>
+                                                  : <text x="3" y="14" fill="white">{pointCount}</text>
+                                          }
+                                      </svg>
+                                  );
+                              }
+                          }
+                          customMarker={
+                              (item, markerProps)=> {
+                                  return (
+                                      <img src={`https://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange.png`} width="24px" />
+                                  );
+                              }
+                          }
+                      />
+                  </TabPane>
                   <TabPane tabId="3">
                     <ReactiveList
                       componentId="results"
