@@ -5,6 +5,7 @@
     "env"
   ],
   "plugins": [
+    "transform-runtime",
     "class-properties-default-value",
     "transform-class-properties",
     "transform-object-rest-spread",
