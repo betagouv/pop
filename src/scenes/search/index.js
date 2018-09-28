@@ -462,36 +462,7 @@ export default class Search extends React.Component {
                     />
                   </TabPane>
                   <TabPane tabId="2">
-                      <ReactiveMap
-                          componentId="map"
-                          dataField="POP_COORDONNEES"
-                          react={{
-                              and: FILTER
-                          }}
-                          size={2000}
-                          autoClosePopover
-                          customClusterMarker={
-                              (coordinates, pointCount)=> {
-                                  return (
-                                      <svg width="30px" height="30px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" key="content">
-                                          <circle className="circle first-circle" fill="#FF6347" cx="10" cy="10" r="10"></circle>
-                                          {
-                                              pointCount < 10
-                                                  ? <text x="7" y="14" fill="white">{pointCount}</text>
-                                                  : <text x="3" y="14" fill="white">{pointCount}</text>
-                                          }
-                                      </svg>
-                                  );
-                              }
-                          }
-                          customMarker={
-                              (item, markerProps)=> {
-                                  return (
-                                      <img src={`https://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange.png`} width="24px" />
-                                  );
-                              }
-                          }
-                      />
+                     <Map filter={FILTER} />
                   </TabPane>
                   <TabPane tabId="3">
                     <ReactiveList
