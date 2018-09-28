@@ -223,3 +223,8 @@
 .css-yljddh:hover + label::before {
   border-color: #377d87 !important;
 }
+
+.search .map {
+  margin-top: 10px;
+  border-radius: 5px;
+}
