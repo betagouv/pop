@@ -6,6 +6,8 @@ const Schema = new mongoose.Schema({
   value: String
 }, { collection: 'thesaurus' })
 
+Schema.index({ value: 'text' });
+
 Schema.plugin(mongoosePaginate)
 const object = mongoose.model('thesaurus', Schema)
 
