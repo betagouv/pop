@@ -4,7 +4,6 @@ import { image } from "./image";
 import "./cardMap.css";
 
 const joinData = f => {
-  console.log("f", f);
   return f
     .map(x => {
       return x && String(x).trim();
