@@ -2,6 +2,8 @@ import React from 'react';
 import { ReactiveMap } from 'reactivemaps-tmp-mapbox';
 import CardMap from "./CardMap";
 
+import MarkerIcon from '../../assets/marker-circle.png';
+
 const bases = [
     {
         label: "Photographies (Mémoire)",
@@ -34,6 +36,13 @@ const bases = [
     }
 ];
 
+
+const markerImage = new Image();
+markerImage.src = MarkerIcon;
+markerImage.alt = 'alt';
+markerImage.width = 24;
+markerImage.height = 24;
+
 const MapComponent = ({ filter }) => {
     return (
         <ReactiveMap
@@ -44,7 +53,7 @@ const MapComponent = ({ filter }) => {
             react={{
                 and: filter,
             }}
-            size={500}
+            size={8000}
             onPopoverClick={
                 (item, closePopup) => {
                     return <CardMap className="" key={item.REF} data={item} />;
@@ -52,6 +61,7 @@ const MapComponent = ({ filter }) => {
             }
             autoClosePopover
             showSearchAsMove
+            markerIcon={markerImage}
             customClusterMarker={
                 (coordinates, pointCount)=> {
                     const color = {
@@ -89,10 +99,12 @@ const MapComponent = ({ filter }) => {
             }
             customMarker={
                 (item, markerProps)=> {
-                    let pin = `https://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange.png`;
-                    for(let i=0; i< bases.length ; i++) {
-                        if(item.BASE === bases[i].value) {
-                            pin = bases[i].pin;
+                    let pin = bases[0].pin;
+                    if(item && markerProps) {
+                        for(let i=0; i< bases.length ; i++) {
+                            if(item.BASE === bases[i].value) {
+                                pin = bases[i].pin;
+                            }
                         }
                     }
                     return (
