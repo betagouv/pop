@@ -107,6 +107,14 @@ router.post('/', passport.authenticate('jwt', {session: false}), upload.any(), (
   })
 })
 
+router.get("/", (req, res) => {
+  const offset = parseInt(req.query.offset) || 0;
+  const limit = parseInt(req.query.limit) || 20;
+  Memoire.paginate({}, { offset, limit }).then(results => {
+    res.status(200).send(results.docs);
+  });
+});
+
 router.get('/:ref', (req, res) => {
   const ref = req.params.ref
   Memoire.findOne({ REF: ref }, (err, notice) => {

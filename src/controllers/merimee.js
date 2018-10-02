@@ -80,6 +80,13 @@ router.get('/:ref', (req, res) => {
     });
 })
 
+router.get("/", (req, res) => {
+    const offset = parseInt(req.query.offset) || 0;
+    const limit = parseInt(req.query.limit) || 20;
+    Merimee.paginate({}, { offset, limit }).then(results => {
+      res.status(200).send(results.docs);
+    });
+  });
 
 router.delete('/:ref', passport.authenticate('jwt', {session: false}), (req, res) => {
     const ref = req.params.ref;

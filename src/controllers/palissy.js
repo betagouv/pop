@@ -42,6 +42,8 @@ router.put("/:ref", passport.authenticate('jwt', {session: false}), upload.any()
     const arr = await checkIfMemoireImageExist(notice);
     notice.MEMOIRE = arr;
     notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
+
+    console.log("UPDATE", notice)
     await Palissy.findOneAndUpdate({ REF: ref }, notice, {
       upsert: true,
       new: true
@@ -75,12 +77,18 @@ router.get("/:ref", (req, res) => {
     if (err) {
       return res.status(500).send(err);
     }
-
     if (!notice) {
       return res.sendStatus(404);
     }
-
     res.status(200).send(notice);
+  });
+});
+
+router.get("/", (req, res) => {
+  const offset = parseInt(req.query.offset) || 0;
+  const limit = parseInt(req.query.limit) || 20;
+  Palissy.paginate({}, { offset, limit }).then(results => {
+    res.status(200).send(results.docs);
   });
 });
 
