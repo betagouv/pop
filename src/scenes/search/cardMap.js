@@ -81,10 +81,10 @@ export default ({ data }) => {
           <h2>
             {capitalizeFirstLetter(content.title)}
             <br />
-            <small>{content.categories}</small>
+            <h3>{content.categories}</h3>
           </h2>
           <span>
-            <small className="base">{bases[data._index]}</small>
+            <span className="base">{bases[data._index]}</span>
             <br />
             {data.REF}
           </span>
