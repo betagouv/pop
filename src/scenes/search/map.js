@@ -44,7 +44,7 @@ const MapComponent = ({ filter }) => {
             react={{
                 and: filter,
             }}
-            size={5000}
+            size={500}
             onPopoverClick={
                 (item, closePopup) => {
                     return <CardMap className="" key={item.REF} data={item} />;
@@ -100,6 +100,13 @@ const MapComponent = ({ filter }) => {
                     );
                 }
             }
+            onResultStats={(total, took) => {
+                if (total === 1) {
+                    return `1 résultat trouvé en ${took} ms.`;
+                }
+                return `${total} résultats trouvés en ${took} ms.`;
+            }}
+            showResultStats
         />
     );
 };

@@ -172,11 +172,12 @@
 .search .nav-pills .nav-link {
   background-color: #fff;
   color: #777;
-  padding: 15px;
   border-radius: 0;
   cursor: pointer;
   font-weight: 400;
   font-size: 20px;
+  height: 43px;
+  padding-top: 5px;
 }
 .search .nav-pills .nav-item {
   flex-grow: 1;
@@ -227,4 +228,9 @@
 .search .map {
   margin-top: 10px;
   border-radius: 5px;
+}
+
+.search .mapboxgl-map {
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
 }
