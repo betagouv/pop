@@ -25,7 +25,6 @@ import { history } from "../../redux/store";
 import CardList from "./cardList";
 import CardMosaique from "./cardMosaique";
 import Map from "./map";
-import { ReactiveMap } from 'reactivemaps-tmp-mapbox';
 
 import { es_url } from "../../config.js";
 
