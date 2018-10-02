@@ -21,7 +21,6 @@ piwik.push(["setDomains", ["*.pop.beta.gouv","*.pop.culture.gouv.fr","*.producti
 export default class PublicRoutes extends React.Component {
 
   componentWillReceiveProps(newProps){
-    console.log(newProps);
   }
 
   render() {

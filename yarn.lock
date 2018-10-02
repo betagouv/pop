@@ -7796,9 +7796,9 @@ react@^16.5.0:
     prop-types "^15.6.2"
     schedule "^0.5.0"
 
-reactivemaps-tmp-mapbox@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/reactivemaps-tmp-mapbox/-/reactivemaps-tmp-mapbox-2.0.5.tgz#73bdf07a6394c09027aec3ab822c2afa396bc8bc"
+reactivemaps-tmp-mapbox@^2.0.1:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/reactivemaps-tmp-mapbox/-/reactivemaps-tmp-mapbox-2.0.3.tgz#d162f303eb20a79c47a8fd74a0a31018a470a81f"
   dependencies:
     downshift "^1.31.2"
     emotion "^9.0.0"

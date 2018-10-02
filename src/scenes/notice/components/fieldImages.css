@@ -19,6 +19,13 @@
   text-align: center;
 }
 
+.fieldImages .image-gallery span{
+  font-size: 10px;
+  color: #808d9e;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
 .fieldImages img {
   max-height: 500px;
   object-fit: contain;

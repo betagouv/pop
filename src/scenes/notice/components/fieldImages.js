@@ -5,6 +5,8 @@ import Viewer from "react-viewer";
 import "react-viewer/dist/index.css";
 import ImageGallery from "react-image-gallery";
 
+import { history } from './../../../redux/store';
+
 import { bucket_url } from "../../../config";
 
 import "./fieldImages.css";
@@ -45,7 +47,16 @@ export default class FieldImages extends React.Component {
     const images = this.state.images.map(e => {
       let obj = { original: e.source, thumbnail: e.source };
       if (e.link) {
-        obj.thumbnailLabel = <a href={e.link}>{e.key}</a>;
+        obj.thumbnailLabel = (
+          <span
+            onClick={() => {
+              history.push(e.link);
+            }}
+            href={e.link}
+          >
+            LIEN
+          </span>
+        );
       }
       return obj;
     });
