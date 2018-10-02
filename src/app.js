@@ -156,7 +156,9 @@ function joconde(arr) {
     "DMIS",
     "DMAJ",
     "MUSEO",
-    "LABEL"
+    "LABEL",
+    "ECOL",
+    "DEPO",
   ];
 
   for (let i = 0; i < arr.length; i++) {
