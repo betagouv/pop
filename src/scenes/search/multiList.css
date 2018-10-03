@@ -1,9 +1,46 @@
-.multilist .form-check{
+.multilist {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  margin-bottom: 20px;
+  max-height: 300px;
+  padding: 10px;
+  font-family: "Comfortaa";
+}
+
+.multilist .form-check {
   display: flex;
   flex-direction: column;
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 210px;
   overflow-y: auto;
 }
 
+.multilist .name {
+  font-weight: bold;
+}
+
+.multilist .collapse {
+  border-top: 1px solid rgb(203, 203, 203);
+  padding-top: 10px;
+}
+
+.multilist .searchBox {
+  height: 30px;
+  margin-bottom: 5px;
+  border: 1px solid #d7d3d3;
+}
+
+.multilist .topBar{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  cursor: pointer;
+}
+
+.multilist .topBar .v{
+  font-size: 16px;
+  font-weight: bold;
+  color: #8999AE;
+}

@@ -1,16 +1,36 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
-import { Input, Label, FormGroup } from "reactstrap";
+import { Input, Label, FormGroup, Collapse } from "reactstrap";
 import "./multiList.css";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
+  state = {
+    collapse: false
+  };
+
   render() {
     return (
-      <ReactiveComponent
-        componentId={this.props.componentId} // a unique id we will refer to later
-      >
-        <MultiListUmbrella field={this.props.field} limit={this.props.limit} />
-      </ReactiveComponent>
+      <div className="multilist">
+        <div
+          className="topBar"
+          onClick={() => this.setState({ collapse: !this.state.collapse })}
+        >
+          <div className="name">{this.props.name}</div>
+          <div className="v">V</div>
+        </div>
+        <Collapse isOpen={this.state.collapse}>
+          <ReactiveComponent
+            componentId={this.props.componentId} // a unique id we will refer to later
+            URLParams={this.props.URLParams || true}
+            react={this.props.react || {}}
+          >
+            <MultiListUmbrella
+              field={this.props.field}
+              limit={this.props.limit}
+            />
+          </ReactiveComponent>
+        </Collapse>
+      </div>
     );
   }
 }
@@ -27,6 +47,16 @@ class MultiListUmbrella extends React.Component {
 
   componentWillMount() {
     this.updateInternalQuery();
+  }
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.selectedValue === null &&
+      this.props.selectedValue !== nextProps.selectedValue
+    ) {
+      const selected = [];
+      this.setState({ selected });
+      this.updateExternalQuery(selected);
+    }
   }
 
   select(elt) {
@@ -63,21 +93,19 @@ class MultiListUmbrella extends React.Component {
 
   render() {
     return (
-      <div className="multilist">
-        <ReactiveComponent
-          componentId={`MultiList-${this.props.field}`}
-          defaultQuery={() => this.state.query}
-        >
-          <MultiList
-            onSelect={this.select.bind(this)}
-            selected={this.state.selected}
-            search={this.state.search}
-            onSearchChange={search =>
-              this.setState({ search }, this.updateInternalQuery())
-            }
-          />
-        </ReactiveComponent>
-      </div>
+      <ReactiveComponent
+        componentId={`MultiList-${this.props.field}`}
+        defaultQuery={() => this.state.query}
+      >
+        <MultiList
+          onSelect={this.select.bind(this)}
+          selected={this.state.selected}
+          search={this.state.search}
+          onSearchChange={search =>
+            this.setState({ search }, this.updateInternalQuery())
+          }
+        />
+      </ReactiveComponent>
     );
   }
 }
@@ -96,7 +124,7 @@ class MultiList extends React.Component {
             type="checkbox"
             onChange={event => this.props.onSelect(e.key)}
           />
-          {`${e.key} (${e.doc_count})`}
+          {`${e.key}`}
         </Label>
       ));
       return <FormGroup check>{options}</FormGroup>;
@@ -108,6 +136,8 @@ class MultiList extends React.Component {
     return (
       <div>
         <Input
+          className="searchBox"
+          placeholder="Rechercher"
           value={this.props.search}
           onChange={e => this.props.onSearchChange(e.target.value)}
         />
