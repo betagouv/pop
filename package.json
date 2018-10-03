@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@appbaseio/reactivemaps": "^2.0.1",
-    "@appbaseio/reactivesearch": "^2.8.2",
+    "@appbaseio/reactivesearch": "^2.10.3",
     "bootstrap": "^4.0.0",
     "brace": "^0.11.1",
     "classnames": "^2.2.5",
