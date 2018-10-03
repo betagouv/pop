@@ -119,15 +119,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "AUTP": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "AUTP": {"type": "text", "analyzer": "french"},
           "AUTTI": {
             "type": "text",
             "fields": {
@@ -155,15 +147,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "COM": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "COM": {"type": "text", "analyzer": "french"},
           "CONTACT": {
             "type": "text",
             "fields": {
@@ -560,15 +544,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "LOCA": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "LOCA": {"type": "text", "analyzer": "french"},
           "MARQ": {
             "type": "text",
             "fields": {
@@ -785,15 +761,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "PAYS": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "PAYS": {"type": "text", "analyzer": "french"},
           "PRECOR": {
             "type": "text",
             "fields": {
@@ -848,15 +816,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "REG": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REG": {"type": "text", "analyzer": "french"},
           "RENV": {
             "type": "text",
             "fields": {
@@ -875,15 +835,7 @@ PUT memoire/_mapping/memoire {
               }
             }
           },
-          "SCLE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "SCLE": {"type": "text", "analyzer": "french"},
           "SENS": {
             "type": "text",
             "fields": {
@@ -1083,4 +1035,3 @@ PUT memoire/_mapping/memoire {
           }
         }
 }
- 

@@ -68,24 +68,8 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "AUTP": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "AUTR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "AUTP": {"type": "text", "analyzer": "french"},
+          "AUTR": {"type": "text", "analyzer": "french"},
           "BASE": {
             "type": "text",
             "fields": {
@@ -122,15 +106,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "COM": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "COM": {"type": "text", "analyzer": "french"},
           "COM2": {
             "type": "text",
             "fields": {
@@ -198,15 +174,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "DATE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "DATE": {"type": "text", "analyzer": "french"},
           "DBOR": {
             "type": "text",
             "fields": {
@@ -216,15 +184,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "DENO": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "DENO": {"type": "text", "analyzer": "french"},
           "DENQ": {
             "type": "text",
             "fields": {
@@ -537,15 +497,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "LOCA": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "LOCA": {"type": "text", "analyzer": "french"},
           "MATR": {
             "type": "text",
             "fields": {
@@ -703,15 +655,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "PDEN": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "PDEN": {"type": "text", "analyzer": "french"},
           "PDIM": {
             "type": "text",
             "fields": {
@@ -721,15 +665,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "PERS": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "PERS": {"type": "text", "analyzer": "french"},
           "PETA": {
             "type": "text",
             "fields": {
@@ -856,15 +792,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "REG": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REG": {"type": "text", "analyzer": "french"},
           "RENP": {
             "type": "text",
             "fields": {
@@ -883,33 +811,9 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "REPR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "SCLD": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "SCLE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REPR": {"type": "text", "analyzer": "french"},
+          "SCLD": {"type": "text", "analyzer": "french"},
+          "SCLE": {"type": "text", "analyzer": "french"},
           "SCLX": {
             "type": "text",
             "fields": {
@@ -1046,4 +950,3 @@ PUT palissy/_mapping/palissy
           }
         }
 }
- 

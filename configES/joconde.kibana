@@ -43,14 +43,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "AUTR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
+          "AUTR": {"type": "text", "analyzer": "french"},
           "BASE": {
             "type": "text",
             "fields": {
@@ -147,14 +140,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "DENO": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
+          "DENO": {"type": "text", "analyzer": "french"},
           "DEPO": {
             "type": "text",
             "fields": {
@@ -235,14 +221,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "EPOQ": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
+          "EPOQ": {"type": "text", "analyzer": "french"},
           "ETAT": {
             "type": "text",
             "fields": {
@@ -347,14 +326,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "LOCA": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
+          "LOCA": {"type": "text", "analyzer": "french"},
           "LOCA2": {
             "type": "text",
             "fields": {
@@ -571,14 +543,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "REPR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword"
-              }
-            }
-          },
+          "REPR": {"type": "text", "analyzer": "french"},
           "RETIF": {
             "type": "text",
             "fields": {
