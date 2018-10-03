@@ -21,8 +21,7 @@ WebFont.load({
 dotenv.load();
 
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-  console.log("RUN RAVEN")
-  Raven.config('https://35972ad83fff46c69b160ad6bde8e96d@sentry.io/1235014').install()
+  Raven.config('https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21').install();
 }
 
 if (process.env.NODE_ENV === 'production') {

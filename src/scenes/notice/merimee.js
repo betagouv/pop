@@ -127,14 +127,6 @@ class Notice extends React.Component {
                 url="/notice/merimee/"
                 disabled={!this.state.editable}
               />
-              {/* <div>
-                                <div>N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :</div>
-                                {this.state.notice.RENV ? <NoticeLink url={this.state.notice.RENV.replace('merimee/', '')} /> : <div />}
-                            </div> */}
-              {/* <FieldInput
-                            title='TODO-N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) : '
-                            name='RENV'
-                        /> */}
               <FieldInput
                 title="Dossier URL (DOSURL) : "
                 name="DOSURL"
@@ -389,17 +381,17 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Zone Lambert ou autres (ZONE) :"
+                title="Zone Lambert ou autres (ZONE) :"
                 name="ZONE"
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Coordonnées Lambert (ou autres) d'un points (COOR ) :"
+                title="Coordonnées Lambert (ou autres) d'un points (COOR ) :"
                 name="COOR"
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Coordonnées Lambert (ou autres) multiples (COORM ) :"
+                title="Coordonnées Lambert (ou autres) multiples (COORM ) :"
                 name="COORM"
                 disabled={!this.state.editable}
               />
@@ -559,7 +551,7 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldTags
-                title="TODO-Précision sur la représentation (PREP) : "
+                title="Précision sur la représentation (PREP) : "
                 name="PREP"
                 disabled={!this.state.editable}
               />
@@ -682,7 +674,7 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6}>
               <FieldInput
-                title="TODO-Précisions sur l'affectataire (PAFF) :"
+                title="Précisions sur l'affectataire (PAFF) :"
                 name="PAFF"
                 disabled={!this.state.editable}
               />
