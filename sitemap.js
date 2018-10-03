@@ -60,7 +60,7 @@ function getAll(index) {
     const objs = [];
     while (tag) {
       let data = await getContent(
-        `http://localhost:3000/${index}?offset=${offset}&limit=${limit}`
+        `http://api.pop.culture.gouv.fr/${index}?offset=${offset}&limit=${limit}`
       );
       console.log(index, offset);
       offset += limit;
