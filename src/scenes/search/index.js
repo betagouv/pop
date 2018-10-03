@@ -102,12 +102,13 @@ export default class Search extends React.Component {
                     clearAllLabel="Tout supprimer"
                   />
                   <h4>Affiner par</h4>
+
+                  <MultiList field="BASE" name="Base" componentId="base" />
                   <MultiList
                     field="DENO"
                     name="Dénomination"
                     componentId="deno"
                   />
-                  <MultiList field="BASE" name="Base" componentId="base" />
                   <MultiList
                     field="DOMN"
                     name="Sous-Domaine"
@@ -129,6 +130,11 @@ export default class Search extends React.Component {
                     field="CONTIENT_IMAGE"
                     name="Contient une image"
                     componentId="image"
+                  />
+                  <MultiList
+                    field="TECH"
+                    name="techniques"
+                    componentId="tech"
                   />
                 </aside>
               </Col>

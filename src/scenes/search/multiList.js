@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Input, Label, FormGroup, Collapse } from "reactstrap";
+import queryString from "query-string";
 import "./multiList.css";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
@@ -26,6 +27,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           >
             <MultiListUmbrella
               field={this.props.field}
+              onCollapse={collapse => this.setState({ collapse })}
               limit={this.props.limit}
             />
           </ReactiveComponent>
@@ -47,6 +49,16 @@ class MultiListUmbrella extends React.Component {
 
   componentWillMount() {
     this.updateInternalQuery();
+    // query string
+    const values = queryString.parse(location.search);
+    const field = this.props.field.toLowerCase()
+    if (values[field]) {
+      const str = values[field].slice(1, -1);
+      const selected = str.split(", ");
+      this.updateExternalQuery(selected);
+      this.setState({ selected });
+      this.props.onCollapse(true);
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (
@@ -56,6 +68,7 @@ class MultiListUmbrella extends React.Component {
       const selected = [];
       this.setState({ selected });
       this.updateExternalQuery(selected);
+      this.props.onCollapse(false);
     }
   }
 
@@ -87,7 +100,8 @@ class MultiListUmbrella extends React.Component {
     const value = this.props.field;
     const limit = this.props.limit || 20;
     const search = this.state.search;
-    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_count": "desc"},"size": ${limit}}}}}`;
+    // const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_count": "desc"},"size": ${limit}}}}}`;
+    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_key": "asc"},"size": ${limit}}}}}`;
     this.setState({ query: JSON.parse(query) });
   }
 
