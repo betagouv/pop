@@ -8422,6 +8422,10 @@ sharkdown@^0.1.0:
     stream-spigot "~2.1.2"
     through "~2.3.4"
 
+shave@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/shave/-/shave-2.5.1.tgz#07a9478344be9dcb4de63f5655687e6c361e27cb"
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"

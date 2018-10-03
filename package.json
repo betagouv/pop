@@ -34,6 +34,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
     "redux-saga": "^0.16.0",
+    "shave": "^2.5.1",
     "tls": "^0.0.1",
     "url-search-params-polyfill": "^3.0.0",
     "webfontloader": "^1.6.28"
