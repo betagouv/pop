@@ -219,11 +219,11 @@ export default class Home extends React.Component {
       <div className="home">
         {this.renderBanner()}
         <div className="home-search">
-          <p>
+          <h1>
             La plateforme POP regroupe les contenus numériques du patrimoine
             français afin de les rendre accessibles et consultables au plus
             grand nombre
-          </p>
+          </h1>
           <Input
             id="main-search"
             placeholder="Recherchez sur tous les champs des bases indiquées ci-dessous"
