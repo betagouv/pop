@@ -6,7 +6,8 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const { uploadFile, formattedNow } = require("./utils");
-const passport = require('passport')
+const { capture } = require("./../sentry.js");
+const passport = require("passport");
 
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
@@ -35,46 +36,58 @@ function populateMerimeeREFO(notice) {
   });
 }
 
-router.put("/:ref", passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
-  try {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
-    const arr = await checkIfMemoireImageExist(notice);
-    notice.MEMOIRE = arr;
-    notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
+router.put(
+  "/:ref",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    try {
+      const ref = req.params.ref;
+      const notice = JSON.parse(req.body.notice);
+      const arr = await checkIfMemoireImageExist(notice);
+      notice.MEMOIRE = arr;
+      notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
 
-    console.log("UPDATE", notice)
-    await Palissy.findOneAndUpdate({ REF: ref }, notice, {
-      upsert: true,
-      new: true
-    });
-    await populateMerimeeREFO(notice);
-    res.status(200).send({ success: true, msg: "OK" });
-  } catch (e) {
-    console.error(e);
-    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+      console.log("UPDATE", notice);
+      await Palissy.findOneAndUpdate({ REF: ref }, notice, {
+        upsert: true,
+        new: true
+      });
+      await populateMerimeeREFO(notice);
+      res.status(200).send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-});
+);
 
-router.post("/", passport.authenticate('jwt', {session: false}), upload.any(), async (req, res) => {
-  try {
-    const notice = JSON.parse(req.body.notice);
-    const arr = await checkIfMemoireImageExist(notice);
-    await populateMerimeeREFO(notice);
-    notice.MEMOIRE = arr;
-    notice.DMIS = notice.DMAJ = formattedNow();
-    const obj = new Palissy(notice);
-    await obj.save();
-    res.status(200).send({ success: true, msg: "OK" });
-  } catch (e) {
-    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    try {
+      const notice = JSON.parse(req.body.notice);
+      const arr = await checkIfMemoireImageExist(notice);
+      await populateMerimeeREFO(notice);
+      notice.MEMOIRE = arr;
+      notice.DMIS = notice.DMAJ = formattedNow();
+      const obj = new Palissy(notice);
+      await obj.save();
+      res.status(200).send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-});
+);
 
 router.get("/:ref", (req, res) => {
   const ref = req.params.ref;
   Palissy.findOne({ REF: ref }, (err, notice) => {
     if (err) {
+      capture(err);
       return res.status(500).send(err);
     }
     if (!notice) {
@@ -92,12 +105,19 @@ router.get("/", (req, res) => {
   });
 });
 
-router.delete("/:ref", passport.authenticate('jwt', {session: false}), (req, res) => {
-  const ref = req.params.ref;
-  Palissy.findOneAndRemove({ REF: ref }, error => {
-    if (error) return res.status(500).send({ error });
-    return res.status(200).send({});
-  });
-});
+router.delete(
+  "/:ref",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const ref = req.params.ref;
+    Palissy.findOneAndRemove({ REF: ref }, error => {
+      if (error) {
+        capture(error);
+        return res.status(500).send({ error });
+      }
+      return res.status(200).send({});
+    });
+  }
+);
 
 module.exports = router;

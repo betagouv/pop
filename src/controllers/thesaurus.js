@@ -3,20 +3,22 @@ const request = require("request");
 const X2JS = require("x2js");
 
 const Thesaurus = require("./../models/thesaurus");
+const { capture } = require("./../sentry.js");
 
 const x2js = new X2JS();
 const router = express.Router();
 
-router.get('/search', (req, res) => {
-  var id = req.query.id
-  var value = req.query.value
-  var q = Thesaurus.find({ 'arc': id, 'value': { $regex: new RegExp('^' + value) } }).limit(10)
+router.get("/search", (req, res) => {
+  var id = req.query.id;
+  var value = req.query.value;
+  var q = Thesaurus.find({
+    arc: id,
+    value: { $regex: new RegExp("^" + value) }
+  }).limit(10);
   q.exec((e, values) => {
-    res.send(values)
-  })
-})
-
-
+    res.send(values);
+  });
+});
 
 router.get("/validate", (req, res) => {
   var id = req.query.id;
@@ -28,7 +30,7 @@ router.get("/validate", (req, res) => {
       $caseSensitive: false,
       $diacriticSensitive: false
     }
-  }
+  };
   var q = Thesaurus.find(query).limit(1);
   q.exec((e, values) => {
     const exist = !!values.length;
@@ -75,7 +77,9 @@ router.get("/update", (req, res) => {
           e => new Thesaurus({ arc: thesaurusId, value: e })
         );
         Thesaurus.insertMany(arr, function(err, docs) {
-          console.log(err);
+          if (err) {
+            capture(err);
+          }
           console.log("SAVED ", docs.length);
           resolve();
         });
@@ -84,6 +88,7 @@ router.get("/update", (req, res) => {
 
       console.log("DONE UPDATE ", thesaurusId);
     } catch (e) {
+      capture(e);
       res.status(500).send({ success: false, msg: "FAIL UPDATE" });
       console.log("FAIL UPDATE ", thesaurusId);
     }
@@ -157,6 +162,7 @@ function post(req, service) {
           }
         } else {
           // console.log('Err', response, error)
+          capture(error);
           reject(error);
         }
       }

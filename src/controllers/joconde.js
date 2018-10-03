@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
+const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
 const { uploadFile, deleteFile, formattedNow } = require("./utils");
@@ -33,7 +34,7 @@ router.put(
       ]);
       res.sendStatus(200);
     } catch (e) {
-      console.log(e);
+      capture(e);
       res.sendStatus(500);
     }
   }
@@ -65,11 +66,11 @@ router.post(
         res.send({ success: true, msg: "OK" });
       })
       .catch(e => {
+        capture(e);
         res.sendStatus(500);
       });
   }
 );
-
 
 router.get("/", (req, res) => {
   const offset = parseInt(req.query.offset) || 0;
@@ -78,8 +79,6 @@ router.get("/", (req, res) => {
     res.status(200).send(results.docs);
   });
 });
-
-
 
 router.get("/:ref", (req, res) => {
   const ref = req.params.ref;
@@ -102,7 +101,10 @@ router.delete(
   (req, res) => {
     const ref = req.params.ref;
     Joconde.findOneAndRemove({ REF: ref }, error => {
-      if (error) return res.status(500).send({ error });
+      if (error) {
+        capture(error);
+        return res.status(500).send({ error });
+      }
       return res.status(200).send({});
     });
   }

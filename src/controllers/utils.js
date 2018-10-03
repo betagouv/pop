@@ -1,6 +1,7 @@
 const fs = require('fs')
 const AWS = require('aws-sdk')
 const { s3Bucket } = require('./../config.js')
+const { capture } = require("./../sentry.js");
 
 // Surement pas besoin de l'écrire sur le disque ...
 function uploadFile (path, file) {

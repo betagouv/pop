@@ -4,6 +4,7 @@ const upload = multer({ dest: "uploads/" });
 const Mnr = require("../models/mnr");
 const passport = require("passport");
 
+const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow } = require("./utils");
 
 const router = express.Router();
@@ -30,7 +31,7 @@ router.put(
       ]);
       res.sendStatus(200);
     } catch (e) {
-      console.log(e);
+      capture(e);
       res.sendStatus(500);
     }
   }
@@ -76,7 +77,10 @@ router.delete(
   (req, res) => {
     const ref = req.params.ref;
     Mnr.findOneAndRemove({ REF: ref }, error => {
-      if (error) return res.status(500).send({ error });
+      if (error) {
+        capture(error);
+        return res.status(500).send({ error });
+      }
       return res.status(200).send({});
     });
   }

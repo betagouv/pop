@@ -7,6 +7,7 @@ const proxy = require("http-proxy-middleware");
 const { PORT } = require("./config.js");
 const Mailer = require("./mailer");
 const { esUrl } = require("./config.js");
+const { capture } = require("./sentry.js");
 
 require("./passport")(passport);
 require("./mongo");
@@ -25,7 +26,10 @@ app.use(cors());
 
 app.use(passport.initialize());
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => {
+  capture("Hello"); 
+  res.send("Hello World!");
+});
 
 app.use("/auth", require("./controllers/auth"));
 
@@ -42,6 +46,7 @@ app.post(
   (req, res) => {
     const { subject, to, body } = req.body;
     if (!subject || !to || !body) {
+      capture("Mail information incomplete");
       res.status(500).send("Information incomplete");
       return;
     }
@@ -50,7 +55,6 @@ app.post(
     });
   }
 );
-
 
 //START ELASTIC SEARCH PROXY
 const options = {
@@ -73,6 +77,5 @@ const options = {
 
 // /* Here we proxy all the requests from reactivesearch to our backend */
 app.use("/search/*/_msearch", proxy(options));
-
 
 app.listen(PORT, () => console.log("Listening on port " + PORT));
