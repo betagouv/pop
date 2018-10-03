@@ -14,7 +14,6 @@ import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
-  MultiList,
   SelectedFilters,
   ReactiveComponent,
   MultiDataList
@@ -25,6 +24,8 @@ import { history } from "../../redux/store";
 import CardList from "./cardList";
 import CardMosaique from "./cardMosaique";
 import Map from "./map";
+
+import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
 
@@ -101,7 +102,9 @@ export default class Search extends React.Component {
                     clearAllLabel="Tout supprimer"
                   />
                   <h4>Affiner par</h4>
-                  <MultiDataList
+                  <MultiList field="DENO" componentId="deno" />
+                  <MultiList field="BASE" componentId="base" />
+                  {/* <MultiDataList
                     componentId="base"
                     dataField="BASE.keyword"
                     title="Domaine"
@@ -137,8 +140,8 @@ export default class Search extends React.Component {
                         value: "Oeuvres spoliées (MNR Rose-Valland)"
                       }
                     ]}
-                  />
-                  <MultiList
+                  /> */}
+                  {/* <MultiList
                     componentId="domn"
                     dataField="DOMN.keyword"
                     title="Sous-Domaine"
@@ -202,9 +205,9 @@ export default class Search extends React.Component {
                     react={{
                       and: FILTER
                     }}
-                  />
+                  /> */}
 
-                  <MultiList
+                  {/* <MultiList
                     componentId="commune"
                     dataField="COM.keyword"
                     title="Commune"
@@ -256,21 +259,8 @@ export default class Search extends React.Component {
                     react={{
                       and: FILTER
                     }}
-                  />
-                  {/* <MultiList
-                    componentId="auteur"
-                    dataField={"AUTP.keyword"}
-                    title="Auteurs"
-                    queryFormat="or"
-                    filterLabel="Auteurs "
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
                   /> */}
-                  <MultiList
+                  {/* <MultiList
                     componentId="tech"
                     dataField="TECH.keyword"
                     title="Techniques"
@@ -285,7 +275,7 @@ export default class Search extends React.Component {
                     react={{
                       and: FILTER
                     }}
-                  />
+                  /> */}
                 </aside>
               </Col>
               <Col xs="9">
