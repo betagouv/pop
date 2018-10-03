@@ -16,7 +16,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           className="topBar"
           onClick={() => this.setState({ collapse: !this.state.collapse })}
         >
-          <div className="name">{this.props.name}</div>
+          <div className="name">{this.props.title}</div>
           <div className="v">V</div>
         </div>
         <Collapse isOpen={this.state.collapse}>
@@ -26,7 +26,8 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
             react={this.props.react || {}}
           >
             <MultiListUmbrella
-              field={this.props.field}
+              dataField={this.props.dataField}
+              componentId={this.props.componentId}
               sortByName={this.props.sortByName}
               onCollapse={collapse => this.setState({ collapse })}
               limit={this.props.limit}
@@ -52,7 +53,7 @@ class MultiListUmbrella extends React.Component {
     this.updateInternalQuery();
     // query string
     const values = queryString.parse(location.search);
-    const field = this.props.field.toLowerCase();
+    const field = this.props.componentId;
     if (values[field]) {
       const str = values[field].slice(1, -1);
       const selected = str.split(", ");
@@ -90,7 +91,7 @@ class MultiListUmbrella extends React.Component {
     const query = {
       bool: {
         should: selected.map(e =>
-          JSON.parse(`{"term":{"${this.props.field}.keyword":"${e}"}}`)
+          JSON.parse(`{"term":{"${this.props.dataField}":"${e}"}}`)
         )
       }
     };
@@ -98,22 +99,21 @@ class MultiListUmbrella extends React.Component {
   }
 
   updateInternalQuery() {
-    const value = this.props.field;
+    const value = this.props.dataField;
     const limit = this.props.limit || 20;
     const search = this.state.search;
     const sort =
       this.props.sortByName !== undefined
         ? `"order": {"_key": "asc"}`
         : `"order": {"_count": "desc"}`;
-    // const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_count": "desc"},"size": ${limit}}}}}`;
-    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
+    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
     this.setState({ query: JSON.parse(query) });
   }
 
   render() {
     return (
       <ReactiveComponent
-        componentId={`MultiList-${this.props.field}`}
+        componentId={`MultiList-${this.props.dataField}`}
         defaultQuery={() => this.state.query}
       >
         <MultiList

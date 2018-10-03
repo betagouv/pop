@@ -103,43 +103,44 @@ export default class Search extends React.Component {
                   />
                   <h4>Affiner par</h4>
 
-                  <MultiList field="BASE" name="Base" componentId="base" />
+                  <MultiList dataField="BASE.keyword" title="Base" componentId="base" />
                   <MultiList
-                    field="DENO"
-                    name="Dénomination"
+                    dataField="DENO.keyword"
+                    title="Dénomination"
                     componentId="deno"
                   />
                   <MultiList
-                    field="DOMN"
-                    name="Sous-Domaine"
+                    dataField="DOMN.keyword"
+                    title="Sous-Domaine"
                     componentId="domn"
                   />
                   <MultiList
-                    field="REG"
-                    name="Région"
+                    dataField="REG.keyword"
+                    title="Région"
                     componentId="region"
                     sortByName
                   />
                   <MultiList
-                    field="DPT"
-                    name="Département"
+                    dataField="DPT.keyword"
+                    title="Département"
                     componentId="departement"
                     sortByName
                   />
-                  <MultiList field="COM" name="Commune" componentId="commune" />
+                  <MultiList dataField="COM.keyword" title="Commune" componentId="commune" />
                   <MultiList
-                    field="PERI"
-                    name="Période"
+                    dataField="PERI.keyword"
+                    title="Période"
                     componentId="periode"
+                    
                   />
                   <MultiList
-                    field="CONTIENT_IMAGE"
-                    name="Contient une image"
+                    dataField="CONTIENT_IMAGE.keyword"
+                    title="Contient une image"
                     componentId="image"
                   />
                   <MultiList
-                    field="TECH"
-                    name="Techniques"
+                    dataField="TECH.keyword"
+                    title="Techniques"
                     componentId="tech"
                   />
                 </aside>
