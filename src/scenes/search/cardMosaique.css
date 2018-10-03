@@ -30,6 +30,7 @@
   height: 60px;
   line-height: 60px;
   padding: 15px;
+  box-shadow: 0 -1px 1px rgba(0,0,0, .05);
 }
 
 .mosaique-card .content span {
@@ -53,7 +54,7 @@
 }
 
 .mosaique-card img {
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   object-fit: cover;
 }
