@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
+import "./title.css";
+
 
 export default class Title extends React.Component {
   render() {
@@ -9,11 +11,7 @@ export default class Title extends React.Component {
           : this.props.notice[f]
     ).length;
     if (hasVisibleFields) {
-      return this.props.h5 ? (
-        <h5>{this.props.content}</h5>
-      ) : (
-        <h4>{this.props.content}</h4>
-      );
+      return <h2>{this.props.content}</h2>;
     }
     return <div />;
   }

@@ -85,7 +85,7 @@ class Notice extends React.Component {
             </div>
           </Col>
           <Col>
-            <h2 className="heading">{this.state.notice.TICO}</h2>
+            <h1 className="heading">{this.state.notice.TICO}</h1>
           </Col>
         </Row>
         <Row>
@@ -213,6 +213,7 @@ class Notice extends React.Component {
               <Field
                 title="Représentation :"
                 content={this.state.notice.REPR}
+                separator="£"
               />
               <Field
                 title="Précision sur la représentation :"
@@ -299,6 +300,7 @@ class Notice extends React.Component {
               <Field
                 title="Commentaire historique :"
                 content={this.state.notice.HIST}
+                separator="£"
               />
               <Title
                 content="Statut juridique et protection"
@@ -420,6 +422,7 @@ class Notice extends React.Component {
               <Field
                 title="Dossier adresse :"
                 content={this.state.notice.DOSADRS}
+                separator="£"
               />
               <Field title="Autres liens :" content={this.state.notice.IMAGE} />
               <Field title="Visite guidé :" content={this.state.notice.WEB} />

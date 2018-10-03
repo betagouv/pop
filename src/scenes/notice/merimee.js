@@ -93,7 +93,7 @@ class Notice extends React.Component {
             </div>
           </Col>
           <Col>
-            <h2 className="heading">{this.state.notice.TICO}</h2>
+            <h1 className="heading">{this.state.notice.TICO}</h1>
           </Col>
         </Row>
         <Row>
@@ -263,6 +263,7 @@ class Notice extends React.Component {
               <Field
                 title="Commentaire historique :"
                 content={this.state.notice.HIST}
+                separator="£"
               />
               <Title
                 content="Description"
@@ -327,6 +328,7 @@ class Notice extends React.Component {
               <Field
                 title="Commentaire description :"
                 content={this.state.notice.DESC}
+                separator="£"
               />
               <Field
                 title="Technique du décor des immeubles par nature : "
@@ -441,7 +443,6 @@ class Notice extends React.Component {
                   'REFIM',
                   'WEB',
                   'ARCHEO',
-                  'IDAGR',
                   'DOSADRS',
                   'IMAGE'
                 ]}
@@ -472,10 +473,6 @@ class Notice extends React.Component {
               <Field
                 title="Référence dans la base Patriarche : "
                 content={this.state.notice.ARCHEO}
-              />
-              <Field
-                title="Identifiant AgrEgée : "
-                content={this.state.notice.IDAGR}
               />
               <Field
                 title="Dossier adresse :"

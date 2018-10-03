@@ -1,0 +1,21 @@
+.field {
+  padding-bottom: 10px;
+}
+
+.field p {
+  font-weight: bold;
+  word-wrap:break-word; 
+  display: inline;
+  white-space: pre-line; 
+}
+
+.field h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  display: inline;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: #212529;
+  text-align: left;
+  padding-right: 7px;
+}

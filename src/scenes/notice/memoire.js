@@ -83,7 +83,7 @@ class Notice extends React.Component {
             </div>
           </Col>
           <Col>
-            <h2 className="heading">{this.state.notice.TICO}</h2>
+            <h1 className="heading">{this.state.notice.TICO}</h1>
           </Col>
         </Row>
         <Row>

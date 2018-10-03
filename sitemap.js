@@ -7,13 +7,45 @@ async function run() {
   urls.push(getURL("pop.culture.gouv.fr"));
 
   //// MERIMEE
-  const refs = await getAll("merimee");
+  
+  let refs = await getAll("merimee");
   for (var i = 0; i < refs.length; i++) {
     const url = `/notice/merimee/${refs[i]}`;
     urls.push(getURL(url));
   }
-  console.log("DDD",urls)
-  var sitemap = sm.createSitemap({hostname: 'http://pop.culture.gouv.fr', urls });
+
+  //// MEMOIRE
+  refs = await getAll("memoire");
+  for (var i = 0; i < refs.length; i++) {
+    const url = `/notice/memoire/${refs[i]}`;
+    urls.push(getURL(url));
+  }
+
+  //// Palissy
+  refs = await getAll("palissy");
+  for (var i = 0; i < refs.length; i++) {
+    const url = `/notice/palissy/${refs[i]}`;
+    urls.push(getURL(url));
+  }
+
+  //// Mnr
+  refs = await getAll("mnr");
+  for (var i = 0; i < refs.length; i++) {
+    const url = `/notice/mnr/${refs[i]}`;
+    urls.push(getURL(url));
+  }
+
+  //// Joconde
+  refs = await getAll("joconde");
+  for (var i = 0; i < refs.length; i++) {
+    const url = `/notice/joconde/${refs[i]}`;
+    urls.push(getURL(url));
+  }
+
+  var sitemap = sm.createSitemap({
+    hostname: "http://pop.culture.gouv.fr",
+    urls
+  });
   fs.writeFileSync("./src/assets/sitemap.xml", sitemap.toString());
   //   fs.writeFileSync("./build/sitemap.xml", sitemap.toString());
 }
