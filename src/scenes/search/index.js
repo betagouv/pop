@@ -114,11 +114,17 @@ export default class Search extends React.Component {
                     name="Sous-Domaine"
                     componentId="domn"
                   />
-                  <MultiList field="REG" name="Région" componentId="region" />
+                  <MultiList
+                    field="REG"
+                    name="Région"
+                    componentId="region"
+                    sortByName
+                  />
                   <MultiList
                     field="DPT"
                     name="Département"
                     componentId="departement"
+                    sortByName
                   />
                   <MultiList field="COM" name="Commune" componentId="commune" />
                   <MultiList
@@ -133,7 +139,7 @@ export default class Search extends React.Component {
                   />
                   <MultiList
                     field="TECH"
-                    name="techniques"
+                    name="Techniques"
                     componentId="tech"
                   />
                 </aside>

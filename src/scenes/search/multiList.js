@@ -27,6 +27,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           >
             <MultiListUmbrella
               field={this.props.field}
+              sortByName={this.props.sortByName}
               onCollapse={collapse => this.setState({ collapse })}
               limit={this.props.limit}
             />
@@ -51,7 +52,7 @@ class MultiListUmbrella extends React.Component {
     this.updateInternalQuery();
     // query string
     const values = queryString.parse(location.search);
-    const field = this.props.field.toLowerCase()
+    const field = this.props.field.toLowerCase();
     if (values[field]) {
       const str = values[field].slice(1, -1);
       const selected = str.split(", ");
@@ -100,8 +101,12 @@ class MultiListUmbrella extends React.Component {
     const value = this.props.field;
     const limit = this.props.limit || 20;
     const search = this.state.search;
+    const sort =
+      this.props.sortByName !== undefined
+        ? `"order": {"_key": "asc"}`
+        : `"order": {"_count": "desc"}`;
     // const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_count": "desc"},"size": ${limit}}}}}`;
-    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*","order": {"_key": "asc"},"size": ${limit}}}}}`;
+    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}.keyword","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
     this.setState({ query: JSON.parse(query) });
   }
 
