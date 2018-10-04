@@ -1,20 +1,20 @@
-import React from 'react';
-import { Row, Col, Container } from 'reactstrap';
-import LinkedNotices from './components/linkedNotices';
-import FieldImages from './components/fieldImages';
-import Field from './components/field';
-import Map from './components/map.js';
-import Loader from '../../components/loader';
-import Title from './components/title';
-import API from '../../services/api';
-import NotFound from './components/not-found';
+import React from "react";
+import { Row, Col, Container } from "reactstrap";
+import LinkedNotices from "./components/linkedNotices";
+import FieldImages from "./components/fieldImages";
+import Field from "./components/field";
+import Map from "./components/map.js";
+import Loader from "../../components/loader";
+import Title from "./components/title";
+import API from "../../services/api";
+import NotFound from "./components/not-found";
 
-import './index.css';
+import "./index.css";
 
 class Notice extends React.Component {
   state = {
     notice: null,
-    error: '',
+    error: "",
     loading: true,
     links: []
   };
@@ -34,7 +34,7 @@ class Notice extends React.Component {
 
   load(ref) {
     this.setState({ loading: true });
-    API.getNotice('joconde', ref).then(notice => {
+    API.getNotice("joconde", ref).then(notice => {
       this.setState({ loading: false, notice });
     });
   }
@@ -82,30 +82,30 @@ class Notice extends React.Component {
                 content="Identification du bien culturel"
                 notice={this.state.notice}
                 fields={[
-                  'INV',
-                  'DOMN',
-                  'DENO',
-                  'APPL',
-                  'TITR',
-                  'AUTR',
-                  'PAUT',
-                  'ECOL',
-                  'ATTR',
-                  'PERI',
-                  'MILL',
-                  'EPOQ',
-                  'PEOC',
-                  'TECH',
-                  'DIMS',
-                  'INSC',
-                  'PINS',
-                  'ONOM',
-                  'DESC',
-                  'ETAT',
-                  'REPR',
-                  'PREP',
-                  'DREP',
-                  'SREP'
+                  "INV",
+                  "DOMN",
+                  "DENO",
+                  "APPL",
+                  "TITR",
+                  "AUTR",
+                  "PAUT",
+                  "ECOL",
+                  "ATTR",
+                  "PERI",
+                  "MILL",
+                  "EPOQ",
+                  "PEOC",
+                  "TECH",
+                  "DIMS",
+                  "INSC",
+                  "PINS",
+                  "ONOM",
+                  "DESC",
+                  "ETAT",
+                  "REPR",
+                  "PREP",
+                  "DREP",
+                  "SREP"
                 ]}
               />
 
@@ -186,18 +186,18 @@ class Notice extends React.Component {
                 content="Contexte historique"
                 notice={this.state.notice}
                 fields={[
-                  'GENE',
-                  'HIST',
-                  'LIEUX',
-                  'PLIEUX',
-                  'GEOHI',
-                  'UTIL',
-                  'PUTI',
-                  'PERU',
-                  'MILU',
-                  'DECV',
-                  'PDEC',
-                  'NSDA'
+                  "GENE",
+                  "HIST",
+                  "LIEUX",
+                  "PLIEUX",
+                  "GEOHI",
+                  "UTIL",
+                  "PUTI",
+                  "PERU",
+                  "MILU",
+                  "DECV",
+                  "PDEC",
+                  "NSDA"
                 ]}
               />
               <Field title="Genèse :" content={this.state.notice.GENE} />
@@ -249,13 +249,13 @@ class Notice extends React.Component {
                 content="Informations juridiques"
                 notice={this.state.notice}
                 fields={[
-                  'STAT',
-                  'DACQ',
-                  'APTN',
-                  'DEPO',
-                  'DDPT',
-                  'ADPT',
-                  'LOCA'
+                  "STAT",
+                  "DACQ",
+                  "APTN",
+                  "DEPO",
+                  "DDPT",
+                  "ADPT",
+                  "LOCA"
                 ]}
               />
               <Field
@@ -287,15 +287,15 @@ class Notice extends React.Component {
               <Title
                 content="Informations complémentaires"
                 notice={this.state.notice}
-                fields={[
-                  'COMM',
-                  'EXPO',
-                  'BIBL',
-                ]}
+                fields={["COMM", "EXPO", "BIBL"]}
               />
               <Field title="Commentaires :" content={this.state.notice.COMM} />
               <Field title="Exposition :" content={this.state.notice.EXPO} />
-              <Field title="Bibliographie :" content={this.state.notice.BIBL} />
+              <Field
+                title="Bibliographie :"
+                content={this.state.notice.BIBL}
+                separator="#"
+              />
             </div>
           </Col>
           <Col sm="3">
@@ -350,14 +350,16 @@ const SeeMore = ({ notice }) => {
   const arr = [];
 
   if (notice.LVID) {
-    arr.push(<Field title="Lien Vidéo :" content={notice.LVID} key={`notice.LVID`}/>);
+    arr.push(
+      <Field title="Lien Vidéo :" content={notice.LVID} key={`notice.LVID`} />
+    );
   }
 
   if (notice.WWW) {
     arr.push(
       <p className="field" key={`notice.WWW`}>
         Site complémentaire:
-        <span style={{ width: '100%' }}>
+        <span style={{ width: "100%" }}>
           <a href={notice.WWW}>{notice.WWW}</a>
         </span>
       </p>
@@ -368,7 +370,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <p className="field" key={`notice.MUSEO`}>
         Lien vers la base MUSEOFILE :
-        <span style={{ width: '100%' }}>
+        <span style={{ width: "100%" }}>
           <a
             href={`http://www2.culture.gouv.fr/public/mistral/museo_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
               notice.MUSEO

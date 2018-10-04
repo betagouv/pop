@@ -139,7 +139,7 @@ class Notice extends React.Component {
                   'VOLS'
                 ]}
               />
-              <Field title="Region :" content={this.state.notice.REG} />
+              <Field title="Région :" content={this.state.notice.REG} />
               <Field title="Département :" content={this.state.notice.DPT} />
               <Field title="Commune :" content={this.state.notice.COM} />
               <Field

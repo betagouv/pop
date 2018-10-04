@@ -14,7 +14,6 @@ import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
-  MultiList,
   SelectedFilters,
   ReactiveComponent,
   MultiDataList
@@ -25,6 +24,8 @@ import { history } from "../../redux/store";
 import CardList from "./cardList";
 import CardMosaique from "./cardMosaique";
 import Map from "./map";
+
+import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
 
@@ -101,190 +102,53 @@ export default class Search extends React.Component {
                     clearAllLabel="Tout supprimer"
                   />
                   <h4>Affiner par</h4>
-                  <MultiDataList
-                    componentId="base"
-                    dataField="BASE.keyword"
-                    title="Domaine"
-                    queryFormat="or"
-                    filterLabel="Domaine "
-                    className="filters"
-                    showSearch={false}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
-                    data={[
-                      {
-                        label: "Photographies (Mémoire)",
-                        value: "Photographies (Mémoires)"
-                      },
-                      {
-                        label: "Patrimoine mobilier (Palissy)",
-                        value: "Patrimoine mobilier (Palissy)"
-                      },
-                      {
-                        label: "Collections des musées de France (Joconde)",
-                        value: "Collections des musées de France (Joconde)"
-                      },
-                      {
-                        label: "Patrimoine architectural (Mérimée)",
-                        value: "Patrimoine architectural (Mérimée)"
-                      },
-                      {
-                        label: "Oeuvres spoliées (MNR Rose-Valland)",
-                        value: "Oeuvres spoliées (MNR Rose-Valland)"
-                      }
-                    ]}
-                  />
+
+                  <MultiList dataField="BASE.keyword" title="Base" componentId="base" />
                   <MultiList
-                    componentId="domn"
-                    dataField="DOMN.keyword"
-                    title="Sous-Domaine"
-                    queryFormat="or"
-                    filterLabel="Domaine "
-                    className="filters"
-                    size={100}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
-                  />
-                  <MultiList
-                    componentId="deno"
                     dataField="DENO.keyword"
                     title="Dénomination"
-                    queryFormat="or"
-                    filterLabel="Dénomination "
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
+                    placeholder="Rechercher une dénomination"
+                    componentId="deno"
                   />
                   <MultiList
-                    componentId="region"
+                    dataField="DOMN.keyword"
+                    title="Sous-Domaine"
+                    placeholder="Rechercher un sous-domaine"
+                    componentId="domn"
+                  />
+                  <MultiList
                     dataField="REG.keyword"
                     title="Région"
-                    filterLabel="Région "
-                    queryFormat="or"
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
+                    componentId="region"
+                    placeholder="Rechercher une région"
+                    sortByName
                   />
-                  <MultiDataList
-                    componentId="departement"
+                  <MultiList
                     dataField="DPT.keyword"
                     title="Département"
-                    filterLabel="Département "
-                    queryFormat="or"
-                    size={120}
-                    className="filters"
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    data={departements}
-                    react={{
-                      and: FILTER
-                    }}
+                    componentId="departement"
+                    placeholder="Rechercher un département"
+                    sortByName
                   />
-
+                  <MultiList dataField="COM.keyword" title="Commune" componentId="commune" />
                   <MultiList
-                    componentId="commune"
-                    dataField="COM.keyword"
-                    title="Commune"
-                    filterLabel="Commune "
-                    queryFormat="or"
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
-                  />
-                  <MultiList
-                    componentId="periode"
                     dataField="PERI.keyword"
                     title="Période"
-                    filterLabel="Période "
-                    queryFormat="or"
-                    className="filters"
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
+                    componentId="periode"
+                    placeholder="Rechercher une période"
+                    
                   />
-                  <MultiDataList
-                    componentId="image"
+                  <MultiList
                     dataField="CONTIENT_IMAGE.keyword"
                     title="Contient une image"
-                    filterLabel="Contient une image "
-                    queryFormat="or"
-                    className="filters"
-                    size={2}
-                    showSearch={false}
-                    showCheckbox={true}
-                    URLParams={true}
-                    defaultSelected={
-                      this.state.activeTab === "3" ? ["oui"] : []
-                    } // TODO clean this
-                    data={[
-                      { label: "oui", value: "oui" },
-                      { label: "non", value: "non" }
-                    ]}
-                    react={{
-                      and: FILTER
-                    }}
+                    componentId="image"
+                    placeholder="oui ou non"
                   />
-                  {/* <MultiList
-                    componentId="auteur"
-                    dataField={"AUTP.keyword"}
-                    title="Auteurs"
-                    queryFormat="or"
-                    filterLabel="Auteurs "
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                  /> */}
                   <MultiList
-                    componentId="tech"
                     dataField="TECH.keyword"
                     title="Techniques"
-                    queryFormat="or"
-                    filterLabel="Techniques "
-                    className="filters"
-                    size={50}
-                    showSearch={true}
-                    showCheckbox={true}
-                    URLParams={true}
-                    placeholder="Rechercher"
-                    react={{
-                      and: FILTER
-                    }}
+                    componentId="tech"
+                    placeholder="Rechercher une technique"
                   />
                 </aside>
               </Col>
