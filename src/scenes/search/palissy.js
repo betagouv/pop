@@ -127,7 +127,7 @@ export default class Search extends React.Component {
             <MultiList
               componentId="region"
               dataField="REG.keyword"
-              title="Region"
+              title="Régions"
               displayCount
               className="filters"
               placeholder="Rechercher une région"
@@ -139,7 +139,7 @@ export default class Search extends React.Component {
             <MultiList
               componentId="departement"
               dataField="DPT.keyword"
-              title="Departements"
+              title="Départements"
               displayCount
               className="filters"
               placeholder="Rechercher un département"
