@@ -98,7 +98,11 @@ export default class Search extends React.Component {
                   />
                   <h4>Affiner par</h4>
 
-                  <MultiList dataField="BASE.keyword" title="Base" componentId="base" />
+                  <MultiList
+                    dataField="BASE.keyword"
+                    title="Base"
+                    componentId="base"
+                  />
                   <MultiList
                     dataField="DENO.keyword"
                     title="Dénomination"
@@ -125,19 +129,25 @@ export default class Search extends React.Component {
                     placeholder="Rechercher un département"
                     sortByName
                   />
-                  <MultiList dataField="COM.keyword" title="Commune" componentId="commune" />
+                  <MultiList
+                    dataField="COM.keyword"
+                    title="Commune"
+                    componentId="commune"
+                  />
                   <MultiList
                     dataField="PERI.keyword"
                     title="Période"
                     componentId="periode"
                     placeholder="Rechercher une période"
-                    
                   />
                   <MultiList
                     dataField="CONTIENT_IMAGE.keyword"
                     title="Contient une image"
                     componentId="image"
                     placeholder="oui ou non"
+                    defaultSelected={
+                      this.state.activeTab === "3" ? ["oui"] : []
+                    } 
                   />
                   <MultiList
                     dataField="TECH.keyword"
