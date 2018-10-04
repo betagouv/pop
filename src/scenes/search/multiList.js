@@ -17,7 +17,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           onClick={() => this.setState({ collapse: !this.state.collapse })}
         >
           <div className="name">{this.props.title}</div>
-          <div className="v">V</div>
+          <div className="v">⌄</div>
         </div>
         <Collapse isOpen={this.state.collapse}>
           <ReactiveComponent
@@ -150,7 +150,7 @@ class MultiList extends React.Component {
       Object.keys(this.props.aggregations).length
     ) {
       const key = Object.keys(this.props.aggregations)[0];
-      const options = this.props.aggregations[key].buckets.map(e => (
+      const options = this.props.aggregations[key].buckets.filter(e => e.key).map(e => (
         <Label check key={e.key}>
           <Input
             checked={this.props.selected.includes(e.key)}
@@ -167,7 +167,7 @@ class MultiList extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="searchBoxContainer">
         <Input
           className="searchBox"
           placeholder={this.props.placeholder}
