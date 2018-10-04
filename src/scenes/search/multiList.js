@@ -26,6 +26,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
             react={this.props.react || {}}
           >
             <MultiListUmbrella
+              placeholder={this.props.placeholder}
               dataField={this.props.dataField}
               componentId={this.props.componentId}
               sortByName={this.props.sortByName}
@@ -118,6 +119,7 @@ class MultiListUmbrella extends React.Component {
       >
         <MultiList
           onSelect={this.select.bind(this)}
+          placeholder={this.props.placeholder}
           selected={this.state.selected}
           search={this.state.search}
           onSearchChange={search =>
@@ -156,7 +158,7 @@ class MultiList extends React.Component {
       <div>
         <Input
           className="searchBox"
-          placeholder="Rechercher"
+          placeholder={this.props.placeholder}
           value={this.props.search}
           onChange={e => this.props.onSearchChange(e.target.value)}
         />

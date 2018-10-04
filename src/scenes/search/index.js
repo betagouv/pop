@@ -107,23 +107,27 @@ export default class Search extends React.Component {
                   <MultiList
                     dataField="DENO.keyword"
                     title="Dénomination"
+                    placeholder="Rechercher une dénomination"
                     componentId="deno"
                   />
                   <MultiList
                     dataField="DOMN.keyword"
                     title="Sous-Domaine"
+                    placeholder="Rechercher un sous-domaine"
                     componentId="domn"
                   />
                   <MultiList
                     dataField="REG.keyword"
                     title="Région"
                     componentId="region"
+                    placeholder="Rechercher une région"
                     sortByName
                   />
                   <MultiList
                     dataField="DPT.keyword"
                     title="Département"
                     componentId="departement"
+                    placeholder="Rechercher un département"
                     sortByName
                   />
                   <MultiList dataField="COM.keyword" title="Commune" componentId="commune" />
@@ -131,17 +135,20 @@ export default class Search extends React.Component {
                     dataField="PERI.keyword"
                     title="Période"
                     componentId="periode"
+                    placeholder="Rechercher une période"
                     
                   />
                   <MultiList
                     dataField="CONTIENT_IMAGE.keyword"
                     title="Contient une image"
                     componentId="image"
+                    placeholder="oui ou non"
                   />
                   <MultiList
                     dataField="TECH.keyword"
                     title="Techniques"
                     componentId="tech"
+                    placeholder="Rechercher une technique"
                   />
                 </aside>
               </Col>
