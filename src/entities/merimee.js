@@ -9,7 +9,7 @@ export default class Merimee extends Notice {
         this.PRODUCTEUR = { type: 'String', value: body.PRODUCTEUR || '' };
         // this.POP_COORDINATES_POINT = { type: 'String', value: body.NOTE || '' };
         // this.POP_COORDINATES_POLYGON = { type: 'String', value: body.NOTE || '' };
-        // this.POP_HAS_LOCATION = { type: 'String', value: body.NOTE || '' };
+        // this.POP_CONTIENT_GEOLOCALISATION = { type: 'String', value: body.NOTE || '' };
         // this.POP_DATE = { type: 'String', value: body.NOTE || '' };
         this.TOUT = { type: 'String', value: body.TOUT || '' };
         this.ACTU = { type: 'String', value: body.ACTU || '' };

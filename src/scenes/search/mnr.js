@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import {
     ReactiveBase,
     DataSearch,
-    MultiList,
     ReactiveList,
     SelectedFilters,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
 
 import QueryBuilder from './components/queryBuilder';
+import MultiList from "./components/multiList";
 
 import ExportComponent from './components/export';
 
@@ -97,6 +97,7 @@ export default class Search extends React.Component {
                             componentId="cate"
                             dataField="CATE.keyword"
                             title="Catégorie"
+                            displayCount
                             className="filters"
                             showSearch={true}
                             URLParams={true}
@@ -109,6 +110,7 @@ export default class Search extends React.Component {
                             dataField="TECH.keyword"
                             title="Technique"
                             className="filters"
+                            displayCount
                             showSearch={true}
                             URLParams={true}
                             react={{
@@ -120,6 +122,7 @@ export default class Search extends React.Component {
                             dataField="PROV.keyword"
                             title="Provenance"
                             className="filters"
+                            displayCount
                             showSearch={true}
                             URLParams={true}
                             react={{

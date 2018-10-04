@@ -5,17 +5,13 @@ import {
     ReactiveBase,
     DataSearch,
     ReactiveList,
-    MultiList,
     SelectedFilters,
     ReactiveComponent
 } from '@appbaseio/reactivesearch';
-
-
+import MultiList from "./components/multiList";
 import ExportComponent from './components/export';
 import QueryBuilder from './components/queryBuilder';
-
 import { es_url, bucket_url } from '../../config.js';
-
 import Joconde from '../../entities/joconde';
 
 const FILTER = ["mainSearch", "domn", "deno", "periode", "image", "tech", "loca", "autr"]
@@ -116,7 +112,7 @@ export default class Search extends React.Component {
                             dataField="DOMN.keyword"
                             title="Domaine"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -128,7 +124,7 @@ export default class Search extends React.Component {
                             dataField="DENO.keyword"
                             title="Dénomination"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -140,7 +136,7 @@ export default class Search extends React.Component {
                             dataField="PERI.keyword"
                             title="Période"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -151,7 +147,7 @@ export default class Search extends React.Component {
                             dataField="CONTIENT_IMAGE.keyword"
                             title="Contient une image"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -163,7 +159,7 @@ export default class Search extends React.Component {
                             dataField="TECH.keyword"
                             title="Techniques"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -175,7 +171,7 @@ export default class Search extends React.Component {
                             dataField="LOCA.keyword"
                             title="Localisation"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER
@@ -187,7 +183,7 @@ export default class Search extends React.Component {
                             dataField="AUTR.keyword"
                             title="Auteurs"
                             className="filters"
-                            showSearch={true}
+                            displayCount
                             URLParams={true}
                             react={{
                                 and: FILTER

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col, Container, ButtonGroup, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { ReactiveBase, DataSearch, ReactiveList, MultiList, SelectedFilters } from '@appbaseio/reactivesearch/lib';
+import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch/lib';
+import MultiList from "./components/multiList";
 
 import ExportComponent from './components/export';
 
@@ -79,6 +80,7 @@ export default class Search extends React.Component {
                             title="Domaine"
                             className="filters"
                             URLParams={true}
+                            displayCount
                             react={{ and: FILTER }}
                         />
                         <MultiList
@@ -86,6 +88,7 @@ export default class Search extends React.Component {
                             dataField="PRODUCTEUR.keyword"
                             title="Producteur"
                             className="filters"
+                            displayCount
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
@@ -94,6 +97,7 @@ export default class Search extends React.Component {
                             dataField="AUTP.keyword"
                             title="Auteurs"
                             className="filters"
+                            displayCount
                             URLParams={true}
                             react={{ and: FILTER }}
                         />
@@ -101,6 +105,7 @@ export default class Search extends React.Component {
                             componentId="loca"
                             dataField="LOCA.keyword"
                             title="Localisation"
+                            displayCount
                             className="filters"
                             URLParams={true}
                             react={{ and: FILTER }}
