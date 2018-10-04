@@ -73,7 +73,7 @@ class MultiListUmbrella extends React.Component {
       const selected = [];
       this.setState({ selected });
       this.updateExternalQuery(selected);
-      this.props.onCollapse(false);
+      // this.props.onCollapse(false);
     }
 
     //default selected
