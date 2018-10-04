@@ -11,6 +11,7 @@ export default class Joconde extends Notice {
         this.ATTR = { type: 'String', value: body.ATTR || '' };
         this.AUTR = { type: 'String', value: body.AUTR || '', thesaurus: 'http://data.culture.fr/thesaurus/resource/ark:/67717/T513' };
         this.BIBL = { type: 'String', value: body.BIBL || '' };
+        this.APPL = { type: 'String', value: body.APPL || '' };
         this.COMM = { type: 'String', value: body.COMM || '' };
         this.CONTACT = { type: 'String', value: this.extractEmail(body.CONTACT) };
         this.COOR = { type: 'String', value: body.COOR || '' };
@@ -88,6 +89,7 @@ export default class Joconde extends Notice {
         //  For Ajout piloté,  sometime the file is broken and a new line doesn mean a new filed. To check all fileld and line, I'm checkiong if I know the field. If I dont know it,n its not a field.
         // So I need to declare it if I want it te be considered as a field
         this.REFMIS = { type: 'String', value: '' };
+        
 
 
         //Check required fields
