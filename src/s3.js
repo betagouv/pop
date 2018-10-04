@@ -1,20 +1,21 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
-async function toS3 (path, file) {
-  const s3 = new AWS.S3()
+async function toS3(path, file) {
+  const s3 = new AWS.S3();
   const params = {
     Bucket: process.env.AWS_BUCKET,
     Key: path,
     Body: file,
     ACL: 'public-read'
-  }
-  await s3.upload(params)
-    .on('httpUploadProgress', function (evt) {
-      console.log(evt)
+  };
+  await s3
+    .upload(params)
+    .on('httpUploadProgress', function(evt) {
+      console.log(evt);
     })
-    .send(function (err, data) {
-      console.log(err, data)
-    })
+    .send(function(err, data) {
+      console.log(err, data);
+    });
 }
 
-module.exports = toS3
+module.exports = toS3;
