@@ -44,11 +44,6 @@ const FILTER = [
   "base"
 ];
 
-const departements = [
-  ...Array.from({ length: 95 }, (_v, k) => k + 1), // 0 to 99
-  ...["2a", "2b", 971, 972, 973, 974, 975, 976] // other departements
-].map(v => ({ label: `${v}`.padStart(2, "0"), value: v }));
-
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
