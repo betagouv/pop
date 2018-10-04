@@ -23,7 +23,11 @@ async function collectionToCsv(db, name, transform) {
   const col = db.collection(name);
   const filename = `storage/${name}.csv`;
   console.log(`File: ${filename}`);
-  for (let i = 0, l = 2000, c = await col.countDocuments(); i < c; i += l) {
+  for (
+    let i = 0, l = 2000, c = await col.countDocuments(), h = true;
+    i < c;
+    i += l
+  ) {
     console.log(`${i}/${c}`);
     let items = await col
       .find()
@@ -37,10 +41,11 @@ async function collectionToCsv(db, name, transform) {
       continue;
     }
 
-    if (i === 0) {
-      fs.writeFileSync(filename, json2csv(items));
-    } else {
+    if (h) {
+      h = false;
       fs.appendFileSync(filename, json2csv(items, { header: false }));
+    } else {
+      fs.writeFileSync(filename, json2csv(items));
     }
   }
   if (process.env.SEND_TO_S3 === 1) {
@@ -61,12 +66,12 @@ function mkStorage() {
 
 // Remove arrays
 function removeArrays(e) {
-  return Object.keys(e).map(k => {
+  Object.keys(e).forEach(k => {
     if (Array.isArray(e[k])) {
       e[k] = e[k].join(' ; ');
     }
-    return e[k];
   });
+  return e;
 }
 
 function merimee(elements) {
