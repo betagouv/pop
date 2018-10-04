@@ -27,6 +27,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           >
             <MultiListUmbrella
               placeholder={this.props.placeholder}
+              displayCount={this.props.displayCount}
               defaultSelected={this.props.defaultSelected}
               dataField={this.props.dataField}
               componentId={this.props.componentId}
@@ -64,7 +65,6 @@ class MultiListUmbrella extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-
     //get from url
     if (
       nextProps.selectedValue === null &&
@@ -132,6 +132,7 @@ class MultiListUmbrella extends React.Component {
         <MultiList
           onSelect={this.select.bind(this)}
           placeholder={this.props.placeholder}
+          displayCount={this.props.displayCount}
           selected={this.state.selected}
           search={this.state.search}
           onSearchChange={search =>
@@ -157,7 +158,7 @@ class MultiList extends React.Component {
             type="checkbox"
             onChange={event => this.props.onSelect(e.key)}
           />
-          {`${e.key}`}
+          {this.props.displayCount ? `${e.key} (${e.doc_count})` : `${e.key} `}
         </Label>
       ));
       return <FormGroup check>{options}</FormGroup>;
