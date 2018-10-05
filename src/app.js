@@ -43,9 +43,9 @@ async function collectionToCsv(db, name, transform) {
 
     if (h) {
       h = false;
-      fs.appendFileSync(filename, json2csv(items, { header: false }));
-    } else {
       fs.writeFileSync(filename, json2csv(items));
+    } else {
+      fs.appendFileSync(filename, json2csv(items, { header: false }));
     }
   }
   if (process.env.SEND_TO_S3 === 1) {
