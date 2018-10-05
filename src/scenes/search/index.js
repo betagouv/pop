@@ -7,7 +7,8 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  Container
+  Container,
+  Alert
 } from "reactstrap";
 import queryString from "query-string";
 import {
@@ -147,30 +148,29 @@ export default class Search extends React.Component {
                     placeholder="oui ou non"
                     defaultSelected={
                       this.state.activeTab === "3" ? ["oui"] : []
-                    } 
+                    }
                   />
-                    <MultiDataList
-                        componentId="geolocalisation"
-                        dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
-                        title="Est géolocalisé"
-                        filterLabel="Est géolocalisé "
-                        queryFormat="or"
-                        className="filters"
-                        size={2}
-                        showSearch={false}
-                        showCheckbox={true}
-                        URLParams={true}
-                        defaultSelected={
-                            this.state.activeTab === "2" ? ["oui"] : []
-                        } // TODO clean this
-                        data={[
-                            { label: "oui", value: "oui" },
-                            { label: "non", value: "non" }
-                        ]}
-                        react={{
-                            and: FILTER
-                        }}
-                    />
+                  <MultiList
+                    componentId="geolocalisation"
+                    dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+                    title="Est géolocalisé"
+                    filterLabel="Est géolocalisé "
+                    queryFormat="or"
+                    className="filters"
+                    showSearch={false}
+                    showCheckbox={true}
+                    URLParams={true}
+                    defaultSelected={
+                      this.state.activeTab === "2" ? ["oui"] : []
+                    } // TODO clean this
+                    data={[
+                      { label: "oui", value: "oui" },
+                      { label: "non", value: "non" }
+                    ]}
+                    react={{
+                      and: FILTER
+                    }}
+                  />
                   {/* <MultiList
                     componentId="auteur"
                     dataField={"AUTP.keyword"}
@@ -301,7 +301,7 @@ export default class Search extends React.Component {
                         </NavLink>
                       </NavItem>
 
-                        <NavItem>
+                      <NavItem>
                         <NavLink
                           className={classnames({
                             active: this.state.activeTab === "3"
@@ -342,7 +342,14 @@ export default class Search extends React.Component {
                     />
                   </TabPane>
                   <TabPane tabId="2">
-                     <Map filter={FILTER} />
+                    <Alert
+                      color="danger"
+                      isOpen={this.state.alert}
+                      toggle={() => this.setState({ alert: false })}
+                    >
+                      Cette carte est en "beta". Les 8000 premiers résultats sont affichés et certaines données ne sont pas encore géolocalisées correctement
+                    </Alert>
+                    <Map filter={FILTER} />
                   </TabPane>
                   <TabPane tabId="3">
                     <ReactiveList
