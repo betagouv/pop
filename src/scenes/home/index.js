@@ -33,7 +33,7 @@ const bases = [
   },
   {
     name: 'memoire',
-    title: "Photographies (Mémoire)",
+    title: "Photographies (Mémoires)",
     description: `Base de données des fonds graphiques et photographiques
     illustrant le patrimoine français et des collections
     photographiques.
@@ -97,7 +97,7 @@ export default class Home extends React.Component {
     const searchValue = document.getElementById("main-search").value;
     history.push(
       `/search?base=${encodeURI(
-        this.state.selected.length === 5 ? '' : JSON.stringify(this.state.selected)
+        this.state.selected.length === 5 ? '' : JSON.stringify(this.state.selected.join(', '))
       )}&mainSearch="${encodeURI(searchValue)}"`
     );
   }
