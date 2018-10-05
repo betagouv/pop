@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
-import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
 import Header from './scenes/header';
 import Footer from './scenes/footer';
@@ -22,7 +21,6 @@ piwik.push(["setDomains", ["*.pop.beta.gouv","*.pop.culture.gouv.fr","*.producti
 export default class PublicRoutes extends React.Component {
 
   componentWillReceiveProps(newProps){
-    console.log(newProps);
   }
 
   render() {

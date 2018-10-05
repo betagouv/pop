@@ -40,7 +40,8 @@ const FILTER = [
   "region",
   "departement",
   "commune",
-  "base"
+  "base",
+  "geolocalisation"
 ];
 
 export default class Search extends React.Component {
@@ -148,6 +149,41 @@ export default class Search extends React.Component {
                       this.state.activeTab === "3" ? ["oui"] : []
                     } 
                   />
+                    <MultiDataList
+                        componentId="geolocalisation"
+                        dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+                        title="Est géolocalisé"
+                        filterLabel="Est géolocalisé "
+                        queryFormat="or"
+                        className="filters"
+                        size={2}
+                        showSearch={false}
+                        showCheckbox={true}
+                        URLParams={true}
+                        defaultSelected={
+                            this.state.activeTab === "2" ? ["oui"] : []
+                        } // TODO clean this
+                        data={[
+                            { label: "oui", value: "oui" },
+                            { label: "non", value: "non" }
+                        ]}
+                        react={{
+                            and: FILTER
+                        }}
+                    />
+                  {/* <MultiList
+                    componentId="auteur"
+                    dataField={"AUTP.keyword"}
+                    title="Auteurs"
+                    queryFormat="or"
+                    filterLabel="Auteurs "
+                    className="filters"
+                    size={50}
+                    showSearch={true}
+                    showCheckbox={true}
+                    URLParams={true}
+                    placeholder="Rechercher"
+                  /> */}
                   <MultiList
                     dataField="TECH.keyword"
                     title="Techniques"
@@ -255,6 +291,19 @@ export default class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
+                            active: this.state.activeTab === "2"
+                          })}
+                          onClick={() => {
+                            this.toggle("2");
+                          }}
+                        >
+                          MAP
+                        </NavLink>
+                      </NavItem>
+
+                        <NavItem>
+                        <NavLink
+                          className={classnames({
                             active: this.state.activeTab === "3"
                           })}
                           onClick={() => {
@@ -292,9 +341,9 @@ export default class Search extends React.Component {
                       pagination={true}
                     />
                   </TabPane>
-                  {/* <TabPane tabId="2">
-                    <Map />
-                  </TabPane> */}
+                  <TabPane tabId="2">
+                     <Map filter={FILTER} />
+                  </TabPane>
                   <TabPane tabId="3">
                     <ReactiveList
                       componentId="results"

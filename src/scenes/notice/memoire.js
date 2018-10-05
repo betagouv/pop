@@ -1,22 +1,22 @@
-import React from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import React from "react";
+import { Row, Col, Container } from "reactstrap";
 
-import FieldImages from './components/fieldImages';
-import Field from './components/field';
-import LinkedNotices from './components/linkedNotices';
-import Map from './components/map.js';
-import Title from './components/title';
-import Loader from '../../components/loader';
-import API from '../../services/api';
-import NotFound from './components/not-found';
-import { findCollection } from './utils';
+import FieldImages from "./components/fieldImages";
+import Field from "./components/field";
+import LinkedNotices from "./components/linkedNotices";
+import Map from "./components/map.js";
+import Title from "./components/title";
+import Loader from "../../components/loader";
+import API from "../../services/api";
+import NotFound from "./components/not-found";
+import { findCollection } from "./utils";
 
-import './index.css';
+import "./index.css";
 
 class Notice extends React.Component {
   state = {
     notice: null,
-    error: '',
+    error: "",
     links: null,
     loading: true
   };
@@ -36,22 +36,20 @@ class Notice extends React.Component {
 
   load(ref) {
     this.setState({ loading: true });
-    API.getNotice('memoire', ref).then(notice => {
+    API.getNotice("memoire", ref).then(notice => {
       console.log(notice);
       const arr = [];
-      for (let i = 0; i < notice.LBASE.length; i++) {
-        const collection = findCollection(notice.LBASE[i]);
-        if (collection) {
-          arr.push(API.getNotice(collection, notice.LBASE[i]));
-        } else {
-          console.log('Cant get notice of ', notice.LBASE[i]);
-        }
+      const collection = findCollection(notice.LBASE);
+      if (collection) {
+        arr.push(API.getNotice(collection, notice.LBASE));
+      } else {
+        console.log("Cant get notice of ", notice.LBASE);
       }
       Promise.all(arr).then(values => {
         const links = [];
         for (let i = 0; i < values.length; i++) {
           if (!values[i]) {
-            console.log('IMPOSSIBLE DE CHARGER LA NOTICE');
+            console.log("IMPOSSIBLE DE CHARGER LA NOTICE");
           } else {
             links.push(values[i]);
           }
@@ -105,37 +103,37 @@ class Notice extends React.Component {
                 content="1. Sujet de la photographie"
                 notice={this.state.notice}
                 fields={[
-                  'LOCA',
-                  'INSEE',
-                  'ADRESSE',
-                  'MCGEO',
-                  'EDIF',
-                  'OBJT',
-                  'TICO',
-                  'LEG',
-                  'TITRE',
-                  'THEATRE',
-                  'ROLE',
-                  'AUTOEU',
-                  'SCLE',
-                  'DATOEU',
-                  'LIEUORIG',
-                  'SERIE',
-                  'MCL',
-                  'SUJET',
-                  'MCPER',
-                  'AUTOR',
-                  'TIREDE',
-                  'LIEUCOR',
-                  'COTECOR',
-                  'AUTG'
+                  "LOCA",
+                  "INSEE",
+                  "ADRESSE",
+                  "MCGEO",
+                  "EDIF",
+                  "OBJT",
+                  "TICO",
+                  "LEG",
+                  "TITRE",
+                  "THEATRE",
+                  "ROLE",
+                  "AUTOEU",
+                  "SCLE",
+                  "DATOEU",
+                  "LIEUORIG",
+                  "SERIE",
+                  "MCL",
+                  "SUJET",
+                  "MCPER",
+                  "AUTOR",
+                  "TIREDE",
+                  "LIEUCOR",
+                  "COTECOR",
+                  "AUTG"
                 ]}
               />
               <Title
                 content="Localisation"
                 h5={true}
                 notice={this.state.notice}
-                fields={['LOCA', 'INSEE', 'ADRESSE', 'MCGEO']}
+                fields={["LOCA", "INSEE", "ADRESSE", "MCGEO"]}
               />
               <Field title="Localisation :" content={this.state.notice.LOCA} />
               <Field title="Code INSEE :" content={this.state.notice.INSEE} />
@@ -149,21 +147,21 @@ class Notice extends React.Component {
                 h5={true}
                 notice={this.state.notice}
                 fields={[
-                  'EDIF',
-                  'OBJT',
-                  'TICO',
-                  'LEG',
-                  'TITRE',
-                  'THEATRE',
-                  'ROLE',
-                  'AUTOEU',
-                  'SCLE',
-                  'DATOEU',
-                  'LIEUORIG',
-                  'SERIE',
-                  'MCL',
-                  'SUJET',
-                  'MCPER'
+                  "EDIF",
+                  "OBJT",
+                  "TICO",
+                  "LEG",
+                  "TITRE",
+                  "THEATRE",
+                  "ROLE",
+                  "AUTOEU",
+                  "SCLE",
+                  "DATOEU",
+                  "LIEUORIG",
+                  "SERIE",
+                  "MCL",
+                  "SUJET",
+                  "MCPER"
                 ]}
               />
               <Field title="Nom édifice :" content={this.state.notice.EDIF} />
@@ -202,7 +200,7 @@ class Notice extends React.Component {
               />
               <Field
                 title="Mots-clés :"
-                content={this.state.notice.MCL + ' ' + this.state.notice.SUJET}
+                content={this.state.notice.MCL + " " + this.state.notice.SUJET}
               />
               <Field
                 title="Identité de la personne photographiée :"
@@ -212,7 +210,7 @@ class Notice extends React.Component {
                 content="Références des documents reproduits"
                 h5={true}
                 notice={this.state.notice}
-                fields={['AUTOR', 'TIREDE', 'LIEUCOR', 'COTECOR', 'AUTG']}
+                fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
               />
               <Field
                 title="Auteur du document original :"
@@ -239,7 +237,7 @@ class Notice extends React.Component {
               <Title
                 content="2. Auteur"
                 notice={this.state.notice}
-                fields={['AUTP', 'AUTTI']}
+                fields={["AUTP", "AUTTI"]}
               />
               <Field
                 title="Photographe ou dessinateur :"
@@ -255,40 +253,40 @@ class Notice extends React.Component {
                 content="3. Description de la photographie"
                 notice={this.state.notice}
                 fields={[
-                  'TYPDOC',
-                  'NUMI',
-                  'NUMP',
-                  'ANUMP',
-                  'NUMAUTP',
-                  'NUMTI',
-                  'ANUMTI',
-                  'REPRO',
-                  'NUMG',
-                  'NUMOR',
-                  'ANUMOR',
-                  'RENV',
-                  'LIEUCTI',
-                  'COTECTI',
-                  'PRECOR',
-                  'ACQU',
-                  'DIFF',
-                  'ECH',
-                  'TECH',
-                  'FORMAT',
-                  'TECHTI',
-                  'FORMATTI',
-                  'TECHOR',
-                  'FORMATOR',
-                  'MENTIONS',
-                  'MENTTI',
-                  'SENS',
-                  'DATPV',
-                  'JDATPV',
-                  'DATOR',
-                  'PUBLI',
-                  'OBS',
-                  'OBSTI',
-                  'OBSOR'
+                  "TYPDOC",
+                  "NUMI",
+                  "NUMP",
+                  "ANUMP",
+                  "NUMAUTP",
+                  "NUMTI",
+                  "ANUMTI",
+                  "REPRO",
+                  "NUMG",
+                  "NUMOR",
+                  "ANUMOR",
+                  "RENV",
+                  "LIEUCTI",
+                  "COTECTI",
+                  "PRECOR",
+                  "ACQU",
+                  "DIFF",
+                  "ECH",
+                  "TECH",
+                  "FORMAT",
+                  "TECHTI",
+                  "FORMATTI",
+                  "TECHOR",
+                  "FORMATOR",
+                  "MENTIONS",
+                  "MENTTI",
+                  "SENS",
+                  "DATPV",
+                  "JDATPV",
+                  "DATOR",
+                  "PUBLI",
+                  "OBS",
+                  "OBSTI",
+                  "OBSOR"
                 ]}
               />
               <Title
@@ -296,24 +294,24 @@ class Notice extends React.Component {
                 h5={true}
                 notice={this.state.notice}
                 fields={[
-                  'TYPDOC',
-                  'NUMI',
-                  'NUMP',
-                  'ANUMP',
-                  'NUMAUTP',
-                  'NUMTI',
-                  'ANUMTI',
-                  'REPRO',
-                  'NUMG',
-                  'NUMOR',
-                  'ANUMOR',
-                  'RENV',
-                  'LIEUCTI',
-                  'COTECTI',
-                  'PRECOR',
-                  'ACQU',
-                  'DIFF',
-                  'ECH',
+                  "TYPDOC",
+                  "NUMI",
+                  "NUMP",
+                  "ANUMP",
+                  "NUMAUTP",
+                  "NUMTI",
+                  "ANUMTI",
+                  "REPRO",
+                  "NUMG",
+                  "NUMOR",
+                  "ANUMOR",
+                  "RENV",
+                  "LIEUCTI",
+                  "COTECTI",
+                  "PRECOR",
+                  "ACQU",
+                  "DIFF",
+                  "ECH"
                 ]}
               />
               <Field
@@ -394,15 +392,15 @@ class Notice extends React.Component {
                 h5={true}
                 notice={this.state.notice}
                 fields={[
-                  'TECH',
-                  'FORMAT',
-                  'TECHTI',
-                  'FORMATTI',
-                  'TECHOR',
-                  'FORMATOR',
-                  'MENTIONS',
-                  'MENTTI',
-                  'SENS',
+                  "TECH",
+                  "FORMAT",
+                  "TECHTI",
+                  "FORMATTI",
+                  "TECHOR",
+                  "FORMATOR",
+                  "MENTIONS",
+                  "MENTTI",
+                  "SENS"
                 ]}
               />
               <Field
@@ -446,13 +444,13 @@ class Notice extends React.Component {
                 h5={true}
                 notice={this.state.notice}
                 fields={[
-                  'DATPV',
-                  'JDATPV',
-                  'DATOR',
-                  'PUBLI',
-                  'OBS',
-                  'OBSTI',
-                  'OBSOR'
+                  "DATPV",
+                  "JDATPV",
+                  "DATOR",
+                  "PUBLI",
+                  "OBS",
+                  "OBSTI",
+                  "OBSOR"
                 ]}
               />
               <Field

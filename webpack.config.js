@@ -4,13 +4,11 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const BabelPlugin = require("babel-webpack-plugin");
 
 
 module.exports = env => {
-  const production = env['production'];
-  console.log('PRODUCTION ', production);
-
+  const mode = env['production'] ? 'production' : 'staging';
+  console.log('MODE :', mode)
   const plugins = [
     new ManifestPlugin({
       seed: require('./public/manifest.json')
@@ -31,7 +29,7 @@ module.exports = env => {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify(mode)
       }
     }),
     new UglifyJsPlugin({
@@ -39,28 +37,12 @@ module.exports = env => {
       exclude: /node_modules/,
       cache: false,
       parallel: 4
-    }),
-    new BabelPlugin({
-      test: /\.js$/,
-      presets: [
-        ['env', {
-          exclude: ['transform-regenerator'],
-          loose: true,
-          modules: false,
-          targets: {
-            browsers: ['>1%']
-          },
-          useBuiltIns: true
-        }]
-      ],
-      sourceMaps: false,
-      compact: false
     })
-
   ];
 
 
   return {
+    mode: 'production',
     entry: ['babel-polyfill', './src/index.js'],
     devtool: false,
     output: {
@@ -68,17 +50,11 @@ module.exports = env => {
       filename: '[hash].index.js',
       publicPath: '/'
     },
-    devServer: {
-      contentBase: 'build',
-      historyApiFallback: true,
-      inline: true,
-      stats: 'errors-only'
-    },
     node: {
       fs: 'empty'
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
           loader: "style-loader!css-loader"
@@ -87,14 +63,31 @@ module.exports = env => {
           test: /\.js$/,
           loader: 'babel-loader',
           include: path.resolve('src'),
-          exclude: /(node_modules|__tests__)/,
-          query: {
-            babelrc: true
+          exclude: /node_modules/,
+          options: {
+              babelrc: true,
+              cacheDirectory: true,
+              sourceMaps: false,
+              compact: false,
+              presets: [
+                  ['env', {
+                      loose: true,
+                      modules: false,
+                      targets: {
+                          browsers: ['>1%']
+                      },
+                      useBuiltIns: true
+                  }],
+              ],
+              plugins: [
+                  'transform-class-properties',
+                  'transform-object-rest-spread'
+              ]
           }
         },
         {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
-          exclude: /(node_modules|__tests__)/,
+          exclude: /node_modules/,
           use: [
             'file-loader',
             {

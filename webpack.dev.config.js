@@ -1,9 +1,11 @@
 const path = require('path');
+
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 
-module.exports = _env => {
+module.exports = env => {
 
   const plugins = [
     new ManifestPlugin({
@@ -15,10 +17,16 @@ module.exports = _env => {
       inject: 'body',
       favicon: path.join('public/favicon.ico'),
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('dev')
+      }
+    }),
   ];
 
 
   return {
+    mode: 'development',
     entry: ['./src/index.js'],
     devtool: 'source-map',
     output: {
@@ -36,7 +44,7 @@ module.exports = _env => {
       fs: 'empty'
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
           loader: "style-loader!css-loader"
@@ -45,14 +53,14 @@ module.exports = _env => {
           test: /\.js$/,
           loader: 'babel-loader',
           include: path.resolve('src'),
-          exclude: /(node_modules|__tests__)/,
+          exclude: /node_modules/,
           query: {
             babelrc: true
           }
         },
         {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
-          exclude: /(node_modules|__tests__)/,
+          exclude: /node_modules/,
           use: [
             'file-loader',
             {
