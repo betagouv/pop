@@ -477,6 +477,7 @@ class Notice extends React.Component {
               <Field
                 title="Dossier adresse :"
                 content={this.state.notice.DOSADRS}
+                separator="£"
               />
               <Field title="Autres liens :" content={this.state.notice.IMAGE} />
             </div>
