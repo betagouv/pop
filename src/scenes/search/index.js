@@ -15,8 +15,7 @@ import {
   DataSearch,
   ReactiveList,
   SelectedFilters,
-  ReactiveComponent,
-  MultiDataList
+  ReactiveComponent
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
 import { history } from "../../redux/store";
