@@ -34,7 +34,7 @@ function generateHeader() {
       urls
     });
     fs.writeFileSync(
-      `./src/server/sitemap/sitemap_general.xml`,
+      `./sitemap/sitemap_general.xml`,
       sitemap.toString()
     );
     resolve();
