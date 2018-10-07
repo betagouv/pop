@@ -2,30 +2,25 @@ const fs = require("fs");
 const sm = require("sitemap");
 
 async function run() {
-  await generateHeader();
+  await generateGeneral();
   // await generateSiteMapFile("merimee");
   // await generateSiteMapFile("palissy");
   // await generateSiteMapFile("mnr");
-  generateSiteMapFile("joconde");
-  await generateSiteMapFile("memoire");
+  await generateSiteMapFile("joconde");
+  // await generateSiteMapFile("memoire");
 
+  const files = fs.readdirSync(`sitemap`);
+  const urls = files.map(e => `http://pop.culture.gouv.fr/${e}`);
   const smi = sm.buildSitemapIndex({
-    urls: [
-      "http://pop.culture.gouv.fr/sitemap_general.xml",
-      "http://pop.culture.gouv.fr/sitemap_merimee.xml",
-      "http://pop.culture.gouv.fr/sitemap_mnr.xml",
-      "http://pop.culture.gouv.fr/sitemap_palissy.xml",
-      "http://pop.culture.gouv.fr/sitemap_memoire.xml",
-      "http://pop.culture.gouv.fr/sitemap_joconde.xml"
-    ]
+    urls
   });
 
-  fs.writeFileSync(`./src/server/sitemap/sitemap.xml`, smi.toString());
+  fs.writeFileSync(`./sitemap/sitemap.xml`, smi.toString());
 }
 
 run();
 
-function generateHeader() {
+function generateGeneral() {
   return new Promise((resolve, reject) => {
     let urls = [];
     urls.push(getURL("pop.culture.gouv.fr"));
@@ -33,10 +28,7 @@ function generateHeader() {
       hostname: "http://pop.culture.gouv.fr",
       urls
     });
-    fs.writeFileSync(
-      `./sitemap/sitemap_general.xml`,
-      sitemap.toString()
-    );
+    fs.writeFileSync(`./sitemap/sitemap_general.xml`, sitemap.toString());
     resolve();
   });
 }
@@ -44,7 +36,7 @@ function generateHeader() {
 function getAll(index) {
   let offset = 0;
   let tag = true;
-  const limit = 100;
+  const limit = 1000;
   return new Promise(async (resolve, reject) => {
     const objs = [];
     while (tag) {
@@ -65,20 +57,27 @@ function getAll(index) {
 
 async function generateSiteMapFile(index) {
   return new Promise(async (resolve, reject) => {
-    const urls = [];
+    let count = 0;
+    let urls = [];
     const refs = await getAll(index);
+
     for (var i = 0; i < refs.length; i++) {
       const url = `/notice/${index}/${refs[i]}`;
       urls.push(getURL(url));
+
+      if (urls.length === 50000 || i === refs.length - 1) {
+        var sitemap = sm.createSitemap({
+          hostname: "http://pop.culture.gouv.fr",
+          urls
+        });
+        const name = `./sitemap/sitemap_${index}_${count++}.xml`;
+        urls = [];
+        console.log("WRITE ", name);
+        fs.writeFileSync(name, sitemap.toString());
+      }
     }
-    var sitemap = sm.createSitemap({
-      hostname: "http://pop.culture.gouv.fr",
-      urls
-    });
-    fs.writeFileSync(
-      `./src/server/sitemap/sitemap_${index}.xml`,
-      sitemap.toString()
-    );
+
+    resolve();
   });
 }
 
