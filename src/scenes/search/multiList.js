@@ -120,7 +120,6 @@ class MultiListUmbrella extends React.Component {
         ? `"order": {"_key": "asc"}`
         : `"order": {"_count": "desc"}`;
     const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
-    console.log("QUERY ", query);
     this.setState({ query: JSON.parse(query) });
   }
 
