@@ -209,6 +209,7 @@ class Notice extends React.Component {
               <Field
                 title="Commentaire description :"
                 content={this.state.notice.DESC}
+                separator="£"
               />
               <Field
                 title="Représentation :"
