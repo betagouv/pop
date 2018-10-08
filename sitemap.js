@@ -2,12 +2,12 @@ const fs = require("fs");
 const sm = require("sitemap");
 
 async function run() {
-  await generateGeneral();
+  // await generateGeneral();
   // await generateSiteMapFile("merimee");
   // await generateSiteMapFile("palissy");
   // await generateSiteMapFile("mnr");
-  await generateSiteMapFile("joconde");
-  // await generateSiteMapFile("memoire");
+  // await generateSiteMapFile("joconde");
+  await generateSiteMapFile("memoire");
 
   const files = fs.readdirSync(`sitemap`);
   const urls = files.map(e => `http://pop.culture.gouv.fr/${e}`);
