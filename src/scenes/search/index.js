@@ -100,87 +100,87 @@ export default class Search extends React.Component {
                   <h4>Affiner par</h4>
 
                   {
-                    // <MultiList
-                    //   dataField="BASE.keyword"
-                    //   title="Base"
-                    //   componentId="base"
-                    //   showSearch={false}
-                    // />
-                    // <MultiList
-                    //   dataField="DENO.keyword"
-                    //   title="Dénomination"
-                    //   placeholder="Rechercher une dénomination"
-                    //   componentId="deno"
-                    // />
-                    // <MultiList
-                    //   dataField="DOMN.keyword"
-                    //   title="Sous-Domaine"
-                    //   placeholder="Rechercher un sous-domaine"
-                    //   componentId="domn"
-                    // />
-                    // <MultiList
-                    //   dataField="REG.keyword"
-                    //   title="Région"
-                    //   componentId="region"
-                    //   placeholder="Rechercher une région"
-                    //   sortByName
-                    // />
-                    // <MultiList
-                    //   dataField="DPT.keyword"
-                    //   title="Département"
-                    //   componentId="departement"
-                    //   placeholder="Rechercher un département"
-                    //   sortByName
-                    //   react={{ FILTER: "region" }}
-                    // />
-                    // <MultiList
-                    //   dataField="COM.keyword"
-                    //   title="Commune"
-                    //   componentId="commune"
-                    // />
-                    // <MultiList
-                    //   dataField="PERI.keyword"
-                    //   title="Période"
-                    //   componentId="periode"
-                    //   placeholder="Rechercher une période"
-                    // />
-                    // <MultiList
-                    //   dataField="CONTIENT_IMAGE.keyword"
-                    //   title="Contient une image"
-                    //   componentId="image"
-                    //   placeholder="oui ou non"
-                    //   showSearch={false}
-                    //   defaultSelected={
-                    //     this.state.activeTab === "3" ? ["oui"] : []
-                    //   }
-                    // />
-                    // <MultiList
-                    //   componentId="geolocalisation"
-                    //   dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
-                    //   title="Est géolocalisé"
-                    //   filterLabel="Est géolocalisé "
-                    //   queryFormat="or"
-                    //   className="filters"
-                    //   showSearch={false}
-                    //   URLParams={true}
-                    //   showSearch={false}
-                    //   defaultSelected={
-                    //     this.state.activeTab === "2" ? ["oui"] : []
-                    //   } // TODO clean this
-                    //   data={[
-                    //     { label: "oui", value: "oui" },
-                    //     { label: "non", value: "non" }
-                    //   ]}
-                    //   react={{
-                    //     and: FILTER
-                    //   }}
-                    // />
-                    // <MultiList
-                    //   dataField="TECH.keyword"
-                    //   title="Techniques"
-                    //   componentId="tech"
-                    //   placeholder="Rechercher une technique"
-                    // />
+                    <MultiList
+                      dataField="BASE.keyword"
+                      title="Base"
+                      componentId="base"
+                      showSearch={false}
+                    />
+                    <MultiList
+                      dataField="DENO.keyword"
+                      title="Dénomination"
+                      placeholder="Rechercher une dénomination"
+                      componentId="deno"
+                    />
+                    <MultiList
+                      dataField="DOMN.keyword"
+                      title="Sous-Domaine"
+                      placeholder="Rechercher un sous-domaine"
+                      componentId="domn"
+                    />
+                    <MultiList
+                      dataField="REG.keyword"
+                      title="Région"
+                      componentId="region"
+                      placeholder="Rechercher une région"
+                      sortByName
+                    />
+                    <MultiList
+                      dataField="DPT.keyword"
+                      title="Département"
+                      componentId="departement"
+                      placeholder="Rechercher un département"
+                      sortByName
+                      react={{ FILTER: "region" }}
+                    />
+                    <MultiList
+                      dataField="COM.keyword"
+                      title="Commune"
+                      componentId="commune"
+                    />
+                    <MultiList
+                      dataField="PERI.keyword"
+                      title="Période"
+                      componentId="periode"
+                      placeholder="Rechercher une période"
+                    />
+                    <MultiList
+                      dataField="CONTIENT_IMAGE.keyword"
+                      title="Contient une image"
+                      componentId="image"
+                      placeholder="oui ou non"
+                      showSearch={false}
+                      defaultSelected={
+                        this.state.activeTab === "3" ? ["oui"] : []
+                      }
+                    />
+                    <MultiList
+                      componentId="geolocalisation"
+                      dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+                      title="Est géolocalisé"
+                      filterLabel="Est géolocalisé "
+                      queryFormat="or"
+                      className="filters"
+                      showSearch={false}
+                      URLParams={true}
+                      showSearch={false}
+                      defaultSelected={
+                        this.state.activeTab === "2" ? ["oui"] : []
+                      } // TODO clean this
+                      data={[
+                        { label: "oui", value: "oui" },
+                        { label: "non", value: "non" }
+                      ]}
+                      react={{
+                        and: FILTER
+                      }}
+                    />
+                    <MultiList
+                      dataField="TECH.keyword"
+                      title="Techniques"
+                      componentId="tech"
+                      placeholder="Rechercher une technique"
+                    />
                   }
                 </aside>
               </Col>
