@@ -8,9 +8,13 @@ const { capture } = require("./../sentry.js");
 const x2js = new X2JS();
 const router = express.Router();
 
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}
+
 router.get("/search", (req, res) => {
   var id = req.query.id;
-  var value = req.query.value;
+  var value = escapeRegExp(req.query.value);
   var q = Thesaurus.find({
     arc: id,
     value: { $regex: new RegExp("^" + value) }
@@ -22,7 +26,7 @@ router.get("/search", (req, res) => {
 
 router.get("/validate", (req, res) => {
   var id = req.query.id;
-  var value = req.query.value;
+  var value = escapeRegExp(req.query.value);
   const query = {
     arc: id,
     $text: {
