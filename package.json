@@ -91,6 +91,7 @@
     "image-webpack-loader": "^4.1.0",
     "jest": "^23.6.0",
     "jest-enzyme": "^6.1.2",
+    "jscpd": "^0.6.24",
     "react-test-renderer": "^16.5.2",
     "regenerator-runtime": "^0.12.1",
     "sitemap": "^1.13.0",
