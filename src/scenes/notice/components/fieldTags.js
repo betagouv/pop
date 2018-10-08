@@ -1,99 +1,107 @@
-import React from 'react';
-import { Field } from 'redux-form'
-import ReactTags from 'react-tag-input';
-import api from '../../../services/api'
-import './fieldTags.css';
+import React from "react";
+import { Field } from "redux-form";
+import ReactTags from "react-tag-input";
+import api from "../../../services/api";
+import "./fieldTags.css";
 
 const Tags = ReactTags.WithContext;
 
-
 class TagsInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            suggestions: [],
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      suggestions: []
+    };
+  }
 
-    handleDelete(i) {
-        const arr = this.props.input.value;
-        const newArr = arr.filter((tag, index) => index !== i);
-        this.props.input.onChange(newArr);
-    }
+  handleDelete(i) {
+    const arr = this.props.input.value;
+    const newArr = arr.filter((tag, index) => index !== i);
+    this.props.input.onChange(newArr);
+  }
 
-    handleAddition(tag) {
-        const arr = this.props.input.value;
-        const newArr = arr.concat(tag.text);
-        this.props.input.onChange(newArr);
-    }
+  handleAddition(tag) {
+    const arr = this.props.input.value;
+    const newArr = arr.concat(tag.text);
+    this.props.input.onChange(newArr);
+  }
 
-    handleInputChange(str) {
-        if (str) {
-            api.getThesaurus(this.props.thesaurus, str).then((values) => {
-                if (values) {
-                    const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-                    this.setState({ suggestions });
-                }
-            })
+  handleInputChange(str) {
+    if (str && this.props.thesaurus) {
+      api.getThesaurus(this.props.thesaurus, str).then(values => {
+        if (values) {
+          const suggestions = values.map(e => ({ id: e.value, text: e.value }));
+          this.setState({ suggestions });
         }
+      });
     }
+  }
 
-    render() {
-        if (!Array.isArray(this.props.input.value)) {
-            return (<div>{`${this.props.input.name} should be an array but got : ${JSON.stringify(this.props.input.value)}`} </div>)
-        }
-        return (
-            <div>
-                <Tags
-                    tags={this.props.input.value ? this.props.input.value.map(e => { return { id: e, text: e } }) : []}
-                    suggestions={this.state.suggestions}
-                    handleDelete={this.handleDelete.bind(this)}
-                    handleAddition={this.handleAddition.bind(this)}
-                    handleInputChange={this.handleInputChange.bind(this)}
-                    autocomplete={0}
-                    autofocus={false}
-                    readOnly={this.props.disabled}
-                />
-            </div>
-        );
+  render() {
+    if (!Array.isArray(this.props.input.value)) {
+      return (
+        <div>
+          {`${
+            this.props.input.name
+          } should be an array but got : ${JSON.stringify(
+            this.props.input.value
+          )}`}{" "}
+        </div>
+      );
     }
+    return (
+      <div>
+        <Tags
+          tags={
+            this.props.input.value
+              ? this.props.input.value.map(e => {
+                  return { id: e, text: e };
+                })
+              : []
+          }
+          suggestions={this.state.suggestions}
+          handleDelete={this.handleDelete.bind(this)}
+          handleAddition={this.handleAddition.bind(this)}
+          handleInputChange={this.handleInputChange.bind(this)}
+          autocomplete={0}
+          autofocus={false}
+          readOnly={this.props.disabled}
+        />
+      </div>
+    );
+  }
 }
 
 const makeField = ({ ...rest }) => {
-    return (
-        <TagsInput  {...rest} />
-    );
-}
-
-export default ({ title, ...rest }) => {
-    return (
-        <div style={styles.container}>
-            {title && <div style={styles.title} >{title}</div>}
-            <Field component={makeField} {...rest} />
-        </div>
-    )
+  return <TagsInput {...rest} />;
 };
 
+export default ({ title, ...rest }) => {
+  return (
+    <div style={styles.container}>
+      {title && <div style={styles.title}>{title}</div>}
+      <Field component={makeField} {...rest} />
+    </div>
+  );
+};
 
 const styles = {
-    container: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'start',
-        alignItems: 'start',
-        paddingTop: '10px',
-        paddingBottom: '10px',
-    },
-    title: {
-        paddingRight: '15px',
-        minWidth: '100px',
-        color: '#5a5a5a',
-        fontStyle: 'italic'
-    }
-}
-
-
+  container: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "start",
+    alignItems: "start",
+    paddingTop: "10px",
+    paddingBottom: "10px"
+  },
+  title: {
+    paddingRight: "15px",
+    minWidth: "100px",
+    color: "#5a5a5a",
+    fontStyle: "italic"
+  }
+};
 
 // // Set up test data
 // const Countries = [
@@ -304,7 +312,6 @@ const styles = {
 //     'Zambia',
 //     'Zimbabwe',
 // ];
-
 
 // const suggestions = Countries.map((country) => {
 //     return {
