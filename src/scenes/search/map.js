@@ -44,107 +44,97 @@ markerImage.alt = "alt";
 markerImage.width = 24;
 markerImage.height = 24;
 
-export default class MapComponent extends React.Component {
-  state = { loaded: false };
-
-  componentDidMount() {
-    this.setState({ loaded: true });
-  }
-
-  render() {
-    if (!this.state.loaded) {
-      return <div />;
-    }
-
-    return (
-      <ReactiveMap
-        defaultZoom={5.15}
-        componentId="map"
-        className="map"
-        dataField="POP_COORDONNEES"
-        react={{
-          and: this.props.filter
-        }}
-        size={8000}
-        onPopoverClick={(item, closePopup) => {
-          return <CardMap className="" key={item.REF} data={item} />;
-        }}
-        autoClosePopover
-        showSearchAsMove
-        markerIcon={markerImage}
-        customClusterMarker={(coordinates, pointCount) => {
-          const color = {
-            rouge: "#ff6347",
-            orange: "#ffae47",
-            jaune: "#fffb47",
-            vertDense: "#39ea4b",
-            vert: "#c8ff47",
-            bleu: "#43ccf1",
-            purple: "#db43f1"
-          };
-          return (
-            <svg
-              width="30px"
-              height="30px"
-              viewBox="0 0 32 32"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              key="content"
-            >
-              <circle
-                className="circle first-circle"
-                fill={
-                  pointCount < 10
-                    ? color.vertDense
-                    : pointCount < 100
-                      ? color.jaune
-                      : pointCount < 1000
-                        ? color.orange
-                        : color.rouge
-                }
-                cx="16"
-                cy="16"
-                r="16"
-              />
-              {pointCount < 10 ? (
-                <text x="13" y="19" fill="white">
-                  {pointCount}
-                </text>
-              ) : pointCount < 100 ? (
-                <text x="10" y="19" fill="black">
-                  {pointCount}
-                </text>
-              ) : pointCount < 1000 ? (
-                <text x="6" y="19" fill="white">
-                  {pointCount}
-                </text>
-              ) : (
-                <text x="2" y="19" fill="white">
-                  {pointCount}
-                </text>
-              )}
-            </svg>
-          );
-        }}
-        customMarker={(item, markerProps) => {
-          let pin = bases[0].pin;
-          if (item && markerProps) {
-            for (let i = 0; i < bases.length; i++) {
-              if (item.BASE === bases[i].value) {
-                pin = bases[i].pin;
+const MapComponent = ({ filter }) => {
+  return (
+    <ReactiveMap
+      defaultZoom={5.15}
+      componentId="map"
+      className="map"
+      dataField="POP_COORDONNEES"
+      react={{
+        and: filter
+      }}
+      size={8000}
+      onPopoverClick={(item, closePopup) => {
+        return <CardMap className="" key={item.REF} data={item} />;
+      }}
+      autoClosePopover
+      showSearchAsMove
+      markerIcon={markerImage}
+      customClusterMarker={(coordinates, pointCount) => {
+        const color = {
+          rouge: "#ff6347",
+          orange: "#ffae47",
+          jaune: "#fffb47",
+          vertDense: "#39ea4b",
+          vert: "#c8ff47",
+          bleu: "#43ccf1",
+          purple: "#db43f1"
+        };
+        return (
+          <svg
+            width="30px"
+            height="30px"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            key="content"
+          >
+            <circle
+              className="circle first-circle"
+              fill={
+                pointCount < 10
+                  ? color.vertDense
+                  : pointCount < 100
+                    ? color.jaune
+                    : pointCount < 1000
+                      ? color.orange
+                      : color.rouge
               }
+              cx="16"
+              cy="16"
+              r="16"
+            />
+            {pointCount < 10 ? (
+              <text x="13" y="19" fill="white">
+                {pointCount}
+              </text>
+            ) : pointCount < 100 ? (
+              <text x="10" y="19" fill="black">
+                {pointCount}
+              </text>
+            ) : pointCount < 1000 ? (
+              <text x="6" y="19" fill="white">
+                {pointCount}
+              </text>
+            ) : (
+              <text x="2" y="19" fill="white">
+                {pointCount}
+              </text>
+            )}
+          </svg>
+        );
+      }}
+      customMarker={(item, markerProps) => {
+        let pin = bases[0].pin;
+        if (item && markerProps) {
+          for (let i = 0; i < bases.length; i++) {
+            if (item.BASE === bases[i].value) {
+              pin = bases[i].pin;
             }
           }
-          return <img src={pin} width="24px" />;
-        }}
-        onResultStats={(total, took) => {
-          if (total === 1) {
-            return `1 résultat trouvé en ${took} ms.`;
-          }
-          return `${total} résultats trouvés en ${took} ms.`;
-        }}
-        showResultStats
-      />
-    );
-  }
-}
+        }
+        return <img src={pin} width="24px" />;
+      }}
+      onResultStats={(total, took) => {
+        if (total === 1) {
+          return `1 résultat trouvé en ${took} ms.`;
+        }
+        return `${total} résultats trouvés en ${took} ms.`;
+      }}
+      showResultStats
+    />
+  );
+};
+
+export default MapComponent;

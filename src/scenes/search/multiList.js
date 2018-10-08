@@ -27,6 +27,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           >
             <MultiListUmbrella
               placeholder={this.props.placeholder}
+              showSearch={this.props.showSearch}
               displayCount={this.props.displayCount}
               defaultSelected={this.props.defaultSelected}
               dataField={this.props.dataField}
@@ -53,7 +54,7 @@ class MultiListUmbrella extends React.Component {
   }
 
   componentWillMount() {
-    this.updateInternalQuery();
+    this.updateInternalQuery("");
     const values = queryString.parse(location.search);
     const field = this.props.componentId;
     if (values[field]) {
@@ -111,15 +112,15 @@ class MultiListUmbrella extends React.Component {
     this.props.setQuery({ query, value: selected.join(", ") });
   }
 
-  updateInternalQuery() {
+  updateInternalQuery(search) {
     const value = this.props.dataField;
     const limit = this.props.limit || 20;
-    const search = this.state.search;
     const sort =
       this.props.sortByName !== undefined
         ? `"order": {"_key": "asc"}`
         : `"order": {"_count": "desc"}`;
     const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
+    console.log("QUERY ", query);
     this.setState({ query: JSON.parse(query) });
   }
 
@@ -133,11 +134,13 @@ class MultiListUmbrella extends React.Component {
           onSelect={this.select.bind(this)}
           placeholder={this.props.placeholder}
           displayCount={this.props.displayCount}
+          showSearch={this.props.showSearch}
           selected={this.state.selected}
           search={this.state.search}
-          onSearchChange={search =>
-            this.setState({ search }, this.updateInternalQuery())
-          }
+          onSearchChange={search => {
+            this.setState({ search });
+            this.updateInternalQuery(search);
+          }}
         />
       </ReactiveComponent>
     );
@@ -151,16 +154,20 @@ class MultiList extends React.Component {
       Object.keys(this.props.aggregations).length
     ) {
       const key = Object.keys(this.props.aggregations)[0];
-      const options = this.props.aggregations[key].buckets.filter(e => e.key).map(e => (
-        <Label check key={e.key}>
-          <Input
-            checked={this.props.selected.includes(e.key)}
-            type="checkbox"
-            onChange={event => this.props.onSelect(e.key)}
-          />
-          {this.props.displayCount ? `${e.key} (${e.doc_count})` : `${e.key} `}
-        </Label>
-      ));
+      const options = this.props.aggregations[key].buckets
+        .filter(e => e.key)
+        .map(e => (
+          <Label check key={e.key}>
+            <Input
+              checked={this.props.selected.includes(e.key)}
+              type="checkbox"
+              onChange={() => this.props.onSelect(e.key)}
+            />
+            {this.props.displayCount
+              ? `${e.key} (${e.doc_count})`
+              : `${e.key} `}
+          </Label>
+        ));
       return <FormGroup check>{options}</FormGroup>;
     }
     return <div />;
@@ -169,12 +176,16 @@ class MultiList extends React.Component {
   render() {
     return (
       <div className="searchBoxContainer">
-        <Input
-          className="searchBox"
-          placeholder={this.props.placeholder}
-          value={this.props.search}
-          onChange={e => this.props.onSearchChange(e.target.value)}
-        />
+        {this.props.showSearch === false ? (
+          <div />
+        ) : (
+          <Input
+            className="searchBox"
+            placeholder={this.props.placeholder}
+            value={this.props.search}
+            onChange={e => this.props.onSearchChange(e.target.value)}
+          />
+        )}
         {this.renderSuggestion()}
       </div>
     );
