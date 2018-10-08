@@ -98,8 +98,6 @@ export default class Search extends React.Component {
                     clearAllLabel="Tout supprimer"
                   />
                   <h4>Affiner par</h4>
-
-                  {
                     <MultiList
                       dataField="BASE.keyword"
                       title="Base"
@@ -181,7 +179,6 @@ export default class Search extends React.Component {
                       componentId="tech"
                       placeholder="Rechercher une technique"
                     />
-                  }
                 </aside>
               </Col>
               <Col xs="9">
