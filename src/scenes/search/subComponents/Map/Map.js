@@ -1,108 +1,106 @@
 import React from "react";
-import { ReactiveMap } from "reactivemaps-tmp-mapbox";
-import CardMap from "./CardMap";
-import MarkerIcon from "../../../../assets/marker-circle.png";
-
+import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import "./mapbox-gl.css";
 
-const bases = [
-  {
-    label: "Photographies (Mémoire)",
-    value: "Photographies (Mémoires)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,FF6347&scale=2.0"
-  },
-  {
-    label: "Patrimoine mobilier (Palissy)",
-    value: "Patrimoine mobilier (Palissy)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,FFAE47&scale=2.0"
-  },
-  {
-    label: "Collections des musées de France (Joconde)",
-    value: "Collections des musées de France (Joconde)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,39EA4B&scale=2.0"
-  },
-  {
-    label: "Patrimoine architectural (Mérimée)",
-    value: "Patrimoine architectural (Mérimée)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1499-shape_circle_4x.png&highlight=ff000000,9C27B0&scale=2.0"
-  },
-  {
-    label: "Oeuvres spoliées (MNR Rose-Valland)",
-    value: "Oeuvres spoliées (MNR Rose-Valland)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,43CCF1&scale=2.0"
+export default class Umbrella extends React.Component {
+  state = {};
+  componentWillMount() {
+    this.updateQuery(51, -5, 41, -6, 3);
   }
-];
 
-const markerImage = new Image();
-markerImage.src = MarkerIcon;
-markerImage.alt = "alt";
-markerImage.width = 24;
-markerImage.height = 24;
-
-
-const boundsInfo = (map, evt)=>{
-  const mapBounds = map.getBounds();
-
-  return {
-    zoom:  map.getZoom(),
-    bounds: mapBounds,
-    north: mapBounds._ne.lat,
-    south: mapBounds._sw.lat,
-    east: mapBounds._ne.lng,
-    west: mapBounds._sw.lng,
+  updateQuery(
+    top_left_lat,
+    top_left_lon,
+    bottom_right_lat,
+    bottom_right_lon,
+    precision
+  ) {
+    const query = `{
+      "size": 0,
+      "query": {
+        "constant_score": {
+          "filter": {
+            "geo_bounding_box": {
+              "POP_COORDONNEES": {
+                "top_left": {
+                  "lat": "${top_left_lat}",
+                  "lon": "${top_left_lon}"
+                },
+                "bottom_right": {
+                  "lat": "${bottom_right_lat}",
+                  "lon": "${bottom_right_lon}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "aggs": {
+        "france": {
+          "geohash_grid": {
+            "field": "POP_COORDONNEES",
+            "precision": ${precision}
+          }
+        }
+      }
+    }`;
+    this.setState({ query: JSON.parse(query) });
   }
-    
-};
 
+  render() {
+    return (
+      <ReactiveComponent
+        componentId={this.props.componentId || "map"} // a unique id we will refer to later
+        URLParams={this.props.URLParams || true}
+        react={this.props.react || {}}
+        defaultQuery={() => this.state.query}
+      >
+        <Map />
+      </ReactiveComponent>
+    );
+  }
+}
 
-export default ({ filter, onChanged }) => (
-  <ReactiveMap
-    defaultZoom={5.15}
-    componentId="map"
-    className="map"
-    dataField="POP_COORDONNEES"
-    react={{
-      and: filter
-    }}
-    size={8000}
-    onPopoverClick={(item, closePopup) => {
-      return <CardMap className="" key={item.REF} data={item} />;
-    }}
-    autoClosePopover
-    showSearchAsMove
-    markerIcon={markerImage}
-    onResultStats={(total, took) => {
-      if (total === 1) {
-        return `1 résultat trouvé en ${took} ms.`;
-      }
-      return `${total} résultats trouvés en ${took} ms.`;
-    }}
-    showResultStats
-    onStyleLoad={
-      (map, evt)=>{
-        map.resize();
-      }
+class Map extends React.Component {
+  state = {
+    loaded: false
+  };
+  componentDidMount() {
+    const center = [2.367101341254551, 48.86162755885409];
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
+
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: "mapbox://styles/mapbox/light-v9",
+      center,
+      zoom: 13
+    });
+    const map = this.map;
+    map.on("load", () => {
+      this.setState({ loaded: true });
+    });
+  }
+
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
+  renderClusters() {
+    if(this.props.aggregations){
+      console.log("CLUSTERS", this.props.aggregations.france.buckets);
     }
-    mapBoxProps={{
-      onZoom: (map, evt)=> onChanged(boundsInfo(map, evt))
-    }}
-    onDragEnd={
-      (map, evt)=>{
+  }
 
-      }
-    }
-    onZoomEnd={
-      (map, evt)=>{
-
-      }
-    }
-    containerStyle={{
-      height: '100vh'
-    }}
-  />
-);
+  render() {
+    const style = {
+      width: "100%",
+      height: "1000px"
+    };
+    return (
+      <div style={style} ref={el => (this.mapContainer = el)}>
+        {this.renderClusters()}
+      </div>
+    );
+  }
+}
