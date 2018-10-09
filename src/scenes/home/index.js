@@ -97,7 +97,7 @@ export default class Home extends React.Component {
     const searchValue = document.getElementById("main-search").value;
     const base = this.state.selected.length === 5  ? "" : `base=${JSON.stringify(this.state.selected.join(', '))}&`
     history.push(
-      `/search?${base}mainSearch="${encodeURI(searchValue)}"`
+      `/search/list?${base}mainSearch="${encodeURI(searchValue)}"`
     );
   }
 

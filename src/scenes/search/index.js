@@ -1,4 +1,7 @@
 import React from "react";
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import {
   Row,
   Col,
@@ -14,16 +17,14 @@ import queryString from "query-string";
 import {
   ReactiveBase,
   DataSearch,
-  ReactiveList,
   SelectedFilters,
   ReactiveComponent
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
-import { history } from "../../redux/store";
 
-import CardList from "./cardList";
-import CardMosaique from "./cardMosaique";
-import Map from "./map";
+import List from "./subComponents/List";
+import Map from "./subComponents/Map";
+import Mosaique from "./subComponents/Mosaique";
 
 import MultiList from "./multiList";
 
@@ -45,51 +46,75 @@ const FILTER = [
   "geolocalisation"
 ];
 
-export default class Search extends React.Component {
+class Search extends React.Component {
+
+  state = {
+    activeTab: "list",
+    bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
+    defaultSelected: '',
+  }
+
   constructor(props) {
     super(props);
-    const values = queryString.parse(props.location.search);
-    const mainSearch = () => {
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  componentDidMount() {
+    const { location } = this.props;
+    const values = queryString.parse(location.search);
+    const { bases, mainSearch } = values;
+    const mainSearchSelected = () => {
       try {
-        return JSON.parse(values.mainSearch);
+        return JSON.parse(mainSearch);
       } catch (e) {
         return "";
       }
     };
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      activeTab: values.onglet ? values.onglet : "1",
-      bases:
-        values.bases ||
-        ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
-      defaultSelected: mainSearch()
-    };
+    let activeTab = "list";
+    if(/search\/map/.test(location.pathname)) {
+      activeTab = "map";
+    } else if(/search\/mosaique/.test(location.pathname)) {
+      activeTab = "mosaique";
+    }
+
+    this.setState({
+      activeTab,
+      bases: bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
+      defaultSelected: mainSearchSelected()
+    });
   }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      let str = this.props.location.search;
-      const index = str.indexOf("onglet=");
-      if (index === -1) {
-        const pos = this.props.location.search.indexOf("?") + 1;
-        const url = str.slice(0, pos) + `onglet=${tab}&` + str.slice(pos);
-        history.push(url);
-      } else {
-        const url =
-          str.slice(0, index) + `onglet=${tab}` + str.slice(index + 8);
-        history.push(url);
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    const { location: prevLocation } = prevProps;
+
+    if(location.pathname !== prevLocation.pathname) {
+      let activeTab = "list";
+      if(/search\/map/.test(location.pathname)) {
+        activeTab = "map";
+      } else if(/search\/mosaique/.test(location.pathname)) {
+        activeTab = "mosaique";
       }
-      this.setState({ activeTab: tab });
+      this.setState({ activeTab });
+    }
+  }
+
+  toggle(subRoute) {
+    const { onTabClicked, location } = this.props;
+    if (this.state.activeTab !== subRoute) {
+      onTabClicked(subRoute,location.search);
     }
   }
 
   render() {
+    const { bases } = this.state;
     return (
       <div className="search">
         <Container fluid style={{ maxWidth: 1860 }}>
           <h2 className="title">Votre recherche</h2>
-          <ReactiveBase url={`${es_url}`} app={this.state.bases}>
+          <ReactiveBase url={`${es_url}`} app={bases}>
             <Row>
               <Col xs="3">
                 <aside className="search-sidebar">
@@ -149,7 +174,7 @@ export default class Search extends React.Component {
                       placeholder="oui ou non"
                       showSearch={false}
                       defaultSelected={
-                        this.state.activeTab === "3" ? ["oui"] : []
+                        this.state.activeTab === "mosaique" ? ["oui"] : []
                       }
                     />
                     <MultiList
@@ -163,7 +188,7 @@ export default class Search extends React.Component {
                       URLParams={true}
                       showSearch={false}
                       defaultSelected={
-                        this.state.activeTab === "2" ? ["oui"] : []
+                        this.state.activeTab === "map" ? ["oui"] : []
                       } // TODO clean this
                       data={[
                         { label: "oui", value: "oui" },
@@ -267,10 +292,10 @@ export default class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "1"
+                            active: this.state.activeTab === "list"
                           })}
                           onClick={() => {
-                            this.toggle("1");
+                            this.toggle('list');
                           }}
                         >
                           LISTE
@@ -280,10 +305,10 @@ export default class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "2"
+                            active: this.state.activeTab === "map"
                           })}
                           onClick={() => {
-                            this.toggle("2");
+                            this.toggle('map');
                           }}
                         >
                           MAP
@@ -293,10 +318,10 @@ export default class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "3"
+                            active: this.state.activeTab === "mosaique"
                           })}
                           onClick={() => {
-                            this.toggle("3");
+                            this.toggle('mosaique');
                           }}
                         >
                           MOSAIQUE
@@ -306,31 +331,16 @@ export default class Search extends React.Component {
                   </Col>
                 </Row>
                 <TabContent activeTab={this.state.activeTab}>
-                  <TabPane tabId="1">
-                    <ReactiveList
-                      componentId="results"
-                      react={{
-                        and: FILTER
-                      }}
-                      onResultStats={(total, took) => {
-                        if (total === 1) {
-                          return `1 résultat trouvé en ${took} ms.`;
-                        }
-                        return `${total} résultats trouvés en ${took} ms.`;
-                      }}
-                      dataField=""
-                      onNoResults="Aucun résultat trouvé."
-                      loader="Préparation de l'affichage des résultats..."
-                      URLParams={true}
-                      size={20}
-                      className="list-view"
-                      onData={data => (
-                        <CardList className="" key={data.REF} data={data} />
+                  <TabPane tabId="list">
+                    <Route
+                      exact
+                      path="/search/list"
+                      render={() => (
+                        <List filter={FILTER} />
                       )}
-                      // pagination={true}
                     />
                   </TabPane>
-                  <TabPane tabId="2">
+                  <TabPane tabId="map">
                     <Alert
                       color="danger"
                       isOpen={this.state.alert}
@@ -340,30 +350,21 @@ export default class Search extends React.Component {
                       sont affichés et certaines données ne sont pas encore
                       géolocalisées correctement
                     </Alert>
-                    <Map filter={FILTER} />
-                  </TabPane>
-                  <TabPane tabId="3">
-                    <ReactiveList
-                      componentId="results"
-                      react={{
-                        and: FILTER
-                      }}
-                      onResultStats={(total, took) => {
-                        if (total === 1) {
-                          return `1 résultat trouvé en ${took} ms.`;
-                        }
-                        return `${total} résultats trouvés en ${took} ms.`;
-                      }}
-                      onNoResults="Aucun résultat trouvé."
-                      loader="Préparation de l'affichage des résultats..."
-                      dataField=""
-                      URLParams={true}
-                      size={18}
-                      className="mosaique-view"
-                      onData={data => (
-                        <CardMosaique key={data.REF} data={data} />
+                    <Route
+                      exact
+                      path="/search/map"
+                      render={() => (
+                        <Map filter={FILTER} />
                       )}
-                      pagination={true}
+                    />
+                  </TabPane>
+                  <TabPane tabId="mosaique">
+                    <Route
+                      exact
+                      path="/search/mosaique"
+                      render={() => (
+                        <Mosaique filter={FILTER} />
+                      )}
                     />
                   </TabPane>
                 </TabContent>
@@ -375,3 +376,18 @@ export default class Search extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onTabClicked: (subPath, params) => {
+    dispatch(push(`/search/${subPath}${params}`));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);
