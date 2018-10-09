@@ -16,7 +16,7 @@ export default class Umbrella extends React.Component {
     precision
   ) {
     const query = `{
-      "size": 0,
+      "size": 1,
       "query": {
         "constant_score": {
           "filter": {
