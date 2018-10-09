@@ -78,6 +78,13 @@ class Map extends React.Component {
     });
     const map = this.map;
     map.on("load", () => {
+      map.addSource("pop", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: []
+        }
+      });
       this.setState({ loaded: true });
     });
   }
@@ -87,8 +94,10 @@ class Map extends React.Component {
   }
 
   renderClusters() {
-    if(this.props.aggregations){
-      console.log("CLUSTERS", this.props.aggregations.france.buckets);
+    if (this.state.loaded && this.props.aggregations) {
+      const geojson = toGeoJson(this.props.aggregations.france.buckets);
+      console.log("add", geojson);
+      this.map.getSource("pop").setData(geojson);
     }
   }
 
@@ -103,4 +112,29 @@ class Map extends React.Component {
       </div>
     );
   }
+}
+
+function toGeoJson(arr) {
+  const geoJsonFormated = {
+    type: "FeatureCollection",
+    crs: { type: "name", properties: { name: "POP" } },
+    features: []
+  };
+
+  for (var i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    geoJsonFormated.features.push({
+      type: "Feature",
+      properties: {
+        id: item.key,
+        count: item.doc_count
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [1.092157, 47.551314]
+      }
+    });
+  }
+
+  return geoJsonFormated;
 }
