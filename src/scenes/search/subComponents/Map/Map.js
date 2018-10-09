@@ -133,5 +133,13 @@ export default ({ filter }) => (
       return `${total} résultats trouvés en ${took} ms.`;
     }}
     showResultStats
+    onStyleLoad={
+      (map, evt)=>{
+        map.resize();
+      }
+    }
+    containerStyle={{
+      height: '100vh'
+    }}
   />
 );
