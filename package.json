@@ -2,7 +2,7 @@
   "name": "pop_production",
   "version": "1.0.3",
   "dependencies": {
-    "@appbaseio/reactivesearch": "^2.8.2",
+    "@appbaseio/reactivesearch": "^2.11.0",
     "autosize": "^4.0.2",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
