@@ -138,6 +138,12 @@ export default class Home extends React.Component {
         text: 'Rue du Gros Horloge et la cathédrale.',
         author: 'Denis Couchaux (photographe).',
         source: 'Inventaire général - région Normandie, base Mémoire.'
+      },
+      {
+        id: 8,
+        text: 'Masque "cara grande" de la population Tapirapé, XXe siècle.',
+        author: 'Amérique du Sud.',
+        source: 'Museum d\'histoire naturelle de Toulouse.'
       }
     ].map(e => (
       <div key={e.id} className="img-item">
