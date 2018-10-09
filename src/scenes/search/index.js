@@ -108,6 +108,10 @@ class Search extends React.Component {
     }
   }
 
+  onMapChanged(info) {
+    console.log(info);
+  }
+
   render() {
     const { bases } = this.state;
     return (
@@ -354,7 +358,7 @@ class Search extends React.Component {
                       exact
                       path="/search/map"
                       render={() => (
-                        <Map filter={FILTER} />
+                        <Map filter={FILTER} onChanged={this.onMapChanged} />
                       )}
                     />
                   </TabPane>
