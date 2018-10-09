@@ -27,7 +27,7 @@
 }
 
 .fieldImages img {
-  max-height: 500px;
+  max-height: 380px;
   object-fit: contain;
   background-color: transparent;
 }
@@ -56,5 +56,5 @@
 }
 
 .image-gallery-image {
-  height: 460px;
+  height: 360px;
 }
