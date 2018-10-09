@@ -8,6 +8,24 @@ export default class Umbrella extends React.Component {
     this.updateQuery(51, -5, 41, -6, 3);
   }
 
+  /*
+
+GeoHash length
+Area width x height
+1-5,009.4km x 4,992.6km
+2-1,252.3km x 624.1km
+3-156.5km x 156km
+4-39.1km x 19.5km
+5-4.9km x 4.9km
+6-1.2km x 609.4m
+7-152.9m x 152.4m
+8-38.2m x 19m
+9-4.8m x 4.8m
+10-1.2m x 59.5cm
+11-14.9cm x 14.9cm
+12- 3.7cm x 1.9cm
+*/
+
   updateQuery(
     top_left_lat,
     top_left_lon,
@@ -40,6 +58,13 @@ export default class Umbrella extends React.Component {
           "geohash_grid": {
             "field": "POP_COORDONNEES",
             "precision": ${precision}
+          },
+          "aggs": {
+            "top_hits": {
+              "top_hits": {
+                "size": 1
+              }
+            }
           }
         }
       }
@@ -117,7 +142,7 @@ class Map extends React.Component {
 function toGeoJson(arr) {
   const geoJsonFormated = {
     type: "FeatureCollection",
-    crs: { type: "name", properties: { name: "POP" } },
+    info: { type: "name", properties: { name: "POP" } },
     features: []
   };
 
@@ -127,7 +152,8 @@ function toGeoJson(arr) {
       type: "Feature",
       properties: {
         id: item.key,
-        count: item.doc_count
+        count: item.doc_count,
+        hit: item.top_hits.hits.hits[0]
       },
       geometry: {
         type: "Point",
