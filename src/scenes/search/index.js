@@ -63,7 +63,7 @@ class Search extends React.Component {
   componentDidMount() {
     const { location } = this.props;
     const values = queryString.parse(location.search);
-    const { bases, onglet, mainSearch } = values;
+    const { bases, mainSearch } = values;
     const mainSearchSelected = () => {
       try {
         return JSON.parse(mainSearch);
@@ -72,8 +72,15 @@ class Search extends React.Component {
       }
     };
 
+    let activeTab = "list";
+    if(/search\/map/.test(location.pathname)) {
+      activeTab = "map";
+    } else if(/search\/mosaique/.test(location.pathname)) {
+      activeTab = "mosaique";
+    }
+
     this.setState({
-      activeTab: onglet ? onglet : "list",
+      activeTab,
       bases: bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
       defaultSelected: mainSearchSelected()
     });
