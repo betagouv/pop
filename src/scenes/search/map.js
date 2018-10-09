@@ -3,7 +3,7 @@ import { ReactiveMap } from "reactivemaps-tmp-mapbox";
 import CardMap from "./CardMap";
 import MarkerIcon from "../../assets/marker-circle.png";
 
-import "mapbox-gl/dist/mapbox-gl.css";
+import "./mapbox-gl.css";
 
 const bases = [
   {
