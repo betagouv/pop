@@ -47,50 +47,67 @@ const FILTER = [
 ];
 
 class Search extends React.Component {
+
+  state = {
+    activeTab: "list",
+    bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
+    defaultSelected: '',
+  }
+
   constructor(props) {
     super(props);
-    const values = queryString.parse(props.location.search);
-    const mainSearch = () => {
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  componentDidMount() {
+    const { location } = this.props;
+    const values = queryString.parse(location.search);
+    const { bases, onglet, mainSearch } = values;
+    const mainSearchSelected = () => {
       try {
-        return JSON.parse(values.mainSearch);
+        return JSON.parse(mainSearch);
       } catch (e) {
         return "";
       }
     };
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      activeTab: values.onglet ? values.onglet : "1",
-      bases:
-        values.bases ||
-        ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
-      defaultSelected: mainSearch()
-    };
+    this.setState({
+      activeTab: onglet ? onglet : "list",
+      bases: bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
+      defaultSelected: mainSearchSelected()
+    });
   }
 
-  toggle(tab, subRoute) {
-    const { onTabClicked, location } = this.props;
-    let url = '';
-    if (this.state.activeTab !== tab) {
-      let str = location.search;
-      const index = str.indexOf("onglet=");
-      if (index === -1) {
-        const pos = location.search.indexOf("?") + 1;
-        url = str.slice(0, pos) + `onglet=${tab}&` + str.slice(pos);
-      } else {
-        url = str.slice(0, index) + `onglet=${tab}` + str.slice(index + 8);
+  componentDidUpdate(prevProps) {
+    const { location } = this.props;
+    const { location: prevLocation } = prevProps;
+
+    if(location.pathname !== prevLocation.pathname) {
+      let activeTab = "list";
+      if(/search\/map/.test(location.pathname)) {
+        activeTab = "map";
+      } else if(/search\/mosaique/.test(location.pathname)) {
+        activeTab = "mosaique";
       }
-      onTabClicked(subRoute,url);
-      this.setState({ activeTab: tab });
+      this.setState({ activeTab });
+    }
+  }
+
+  toggle(subRoute) {
+    const { onTabClicked, location } = this.props;
+    if (this.state.activeTab !== subRoute) {
+      onTabClicked(subRoute,location.search);
     }
   }
 
   render() {
+    const { bases } = this.state;
     return (
       <div className="search">
         <Container fluid style={{ maxWidth: 1860 }}>
           <h2 className="title">Votre recherche</h2>
-          <ReactiveBase url={`${es_url}`} app={this.state.bases}>
+          <ReactiveBase url={`${es_url}`} app={bases}>
             <Row>
               <Col xs="3">
                 <aside className="search-sidebar">
@@ -150,7 +167,7 @@ class Search extends React.Component {
                       placeholder="oui ou non"
                       showSearch={false}
                       defaultSelected={
-                        this.state.activeTab === "3" ? ["oui"] : []
+                        this.state.activeTab === "mosaique" ? ["oui"] : []
                       }
                     />
                     <MultiList
@@ -164,7 +181,7 @@ class Search extends React.Component {
                       URLParams={true}
                       showSearch={false}
                       defaultSelected={
-                        this.state.activeTab === "2" ? ["oui"] : []
+                        this.state.activeTab === "map" ? ["oui"] : []
                       } // TODO clean this
                       data={[
                         { label: "oui", value: "oui" },
@@ -268,10 +285,10 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "1"
+                            active: this.state.activeTab === "list"
                           })}
                           onClick={() => {
-                            this.toggle("1",'list');
+                            this.toggle('list');
                           }}
                         >
                           LISTE
@@ -281,10 +298,10 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "2"
+                            active: this.state.activeTab === "map"
                           })}
                           onClick={() => {
-                            this.toggle("2",'map');
+                            this.toggle('map');
                           }}
                         >
                           MAP
@@ -294,10 +311,10 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "3"
+                            active: this.state.activeTab === "mosaique"
                           })}
                           onClick={() => {
-                            this.toggle("3",'mosaique');
+                            this.toggle('mosaique');
                           }}
                         >
                           MOSAIQUE
@@ -307,7 +324,7 @@ class Search extends React.Component {
                   </Col>
                 </Row>
                 <TabContent activeTab={this.state.activeTab}>
-                  <TabPane tabId="1">
+                  <TabPane tabId="list">
                     <Route
                       exact
                       path="/search/list"
@@ -316,7 +333,7 @@ class Search extends React.Component {
                       )}
                     />
                   </TabPane>
-                  <TabPane tabId="2">
+                  <TabPane tabId="map">
                     <Alert
                       color="danger"
                       isOpen={this.state.alert}
@@ -334,7 +351,7 @@ class Search extends React.Component {
                       )}
                     />
                   </TabPane>
-                  <TabPane tabId="3">
+                  <TabPane tabId="mosaique">
                     <Route
                       exact
                       path="/search/mosaique"

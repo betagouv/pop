@@ -7,8 +7,8 @@ import rootSaga from '../redux/sagas';
 
 const history = createHistory();
 const sagaMiddleware = createSagaMiddleware();
-const routeMiddleware = routerMiddleware(history);
-const middlewares = [sagaMiddleware, routeMiddleware];
+const routerMiddlewareWithHistory = routerMiddleware(history);
+const middlewares = [sagaMiddleware, routerMiddlewareWithHistory];
 
 const store = createStore(
   combineReducers({
