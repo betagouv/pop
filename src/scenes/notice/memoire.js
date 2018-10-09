@@ -538,7 +538,7 @@ const SeeMore = ({ notice }) => {
           Lien vers la base Autor:
           <span>
             <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/autor_cible.html">
-              {this.state.notice.LAUTP}
+              {notice.LAUTP}
             </a>
           </span>
         </p>
