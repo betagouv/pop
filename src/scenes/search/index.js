@@ -1,4 +1,7 @@
 import React from "react";
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import {
   Row,
   Col,
@@ -23,7 +26,7 @@ import { history } from "../../redux/store";
 
 import CardList from "./cardList";
 import CardMosaique from "./cardMosaique";
-import Map from "./map";
+import Map from "./subComponents/Map";
 
 import MultiList from "./multiList";
 
@@ -45,7 +48,7 @@ const FILTER = [
   "geolocalisation"
 ];
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props);
     const values = queryString.parse(props.location.search);
@@ -340,7 +343,13 @@ export default class Search extends React.Component {
                       sont affichés et certaines données ne sont pas encore
                       géolocalisées correctement
                     </Alert>
-                    <Map filter={FILTER} />
+                    <Route
+                      exact
+                      path="/search/map"
+                      render={() => (
+                        <Map filter={FILTER} />
+                      )}
+                    />
                   </TabPane>
                   <TabPane tabId="3">
                     <ReactiveList
@@ -375,3 +384,18 @@ export default class Search extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onMapTabClicked: () => {
+      
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);
