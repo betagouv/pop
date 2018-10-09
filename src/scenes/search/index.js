@@ -17,16 +17,14 @@ import queryString from "query-string";
 import {
   ReactiveBase,
   DataSearch,
-  ReactiveList,
   SelectedFilters,
   ReactiveComponent
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
-import { history } from "../../redux/store";
 
-import CardList from "./cardList";
-import CardMosaique from "./cardMosaique";
+import List from "./subComponents/List";
 import Map from "./subComponents/Map";
+import Mosaique from "./subComponents/Mosaique";
 
 import MultiList from "./multiList";
 
@@ -70,19 +68,19 @@ class Search extends React.Component {
     };
   }
 
-  toggle(tab) {
+  toggle(tab, subRoute) {
+    const { onTabClicked, location } = this.props;
+    let url = '';
     if (this.state.activeTab !== tab) {
-      let str = this.props.location.search;
+      let str = location.search;
       const index = str.indexOf("onglet=");
       if (index === -1) {
-        const pos = this.props.location.search.indexOf("?") + 1;
-        const url = str.slice(0, pos) + `onglet=${tab}&` + str.slice(pos);
-        history.push(url);
+        const pos = location.search.indexOf("?") + 1;
+        url = str.slice(0, pos) + `onglet=${tab}&` + str.slice(pos);
       } else {
-        const url =
-          str.slice(0, index) + `onglet=${tab}` + str.slice(index + 8);
-        history.push(url);
+        url = str.slice(0, index) + `onglet=${tab}` + str.slice(index + 8);
       }
+      onTabClicked(subRoute,url);
       this.setState({ activeTab: tab });
     }
   }
@@ -273,7 +271,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "1"
                           })}
                           onClick={() => {
-                            this.toggle("1");
+                            this.toggle("1",'list');
                           }}
                         >
                           LISTE
@@ -286,7 +284,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "2"
                           })}
                           onClick={() => {
-                            this.toggle("2");
+                            this.toggle("2",'map');
                           }}
                         >
                           MAP
@@ -299,7 +297,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "3"
                           })}
                           onClick={() => {
-                            this.toggle("3");
+                            this.toggle("3",'mosaique');
                           }}
                         >
                           MOSAIQUE
@@ -310,27 +308,12 @@ class Search extends React.Component {
                 </Row>
                 <TabContent activeTab={this.state.activeTab}>
                   <TabPane tabId="1">
-                    <ReactiveList
-                      componentId="results"
-                      react={{
-                        and: FILTER
-                      }}
-                      onResultStats={(total, took) => {
-                        if (total === 1) {
-                          return `1 résultat trouvé en ${took} ms.`;
-                        }
-                        return `${total} résultats trouvés en ${took} ms.`;
-                      }}
-                      dataField=""
-                      onNoResults="Aucun résultat trouvé."
-                      loader="Préparation de l'affichage des résultats..."
-                      URLParams={true}
-                      size={20}
-                      className="list-view"
-                      onData={data => (
-                        <CardList className="" key={data.REF} data={data} />
+                    <Route
+                      exact
+                      path="/search/list"
+                      render={() => (
+                        <List filter={FILTER} />
                       )}
-                      // pagination={true}
                     />
                   </TabPane>
                   <TabPane tabId="2">
@@ -352,27 +335,12 @@ class Search extends React.Component {
                     />
                   </TabPane>
                   <TabPane tabId="3">
-                    <ReactiveList
-                      componentId="results"
-                      react={{
-                        and: FILTER
-                      }}
-                      onResultStats={(total, took) => {
-                        if (total === 1) {
-                          return `1 résultat trouvé en ${took} ms.`;
-                        }
-                        return `${total} résultats trouvés en ${took} ms.`;
-                      }}
-                      onNoResults="Aucun résultat trouvé."
-                      loader="Préparation de l'affichage des résultats..."
-                      dataField=""
-                      URLParams={true}
-                      size={18}
-                      className="mosaique-view"
-                      onData={data => (
-                        <CardMosaique key={data.REF} data={data} />
+                    <Route
+                      exact
+                      path="/search/mosaique"
+                      render={() => (
+                        <Mosaique filter={FILTER} />
                       )}
-                      pagination={true}
                     />
                   </TabPane>
                 </TabContent>
@@ -390,8 +358,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMapTabClicked: () => {
-      
+  onTabClicked: (subPath, params) => {
+    dispatch(push(`/search/${subPath}${params}`));
   },
 });
 
