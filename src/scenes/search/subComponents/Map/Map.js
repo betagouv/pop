@@ -45,6 +45,21 @@ markerImage.width = 24;
 markerImage.height = 24;
 
 
+const boundsInfo = (map, evt)=>{
+  const mapBounds = map.getBounds();
+
+  return {
+    zoom:  map.getZoom(),
+    bounds: mapBounds,
+    north: mapBounds._ne.lat,
+    south: mapBounds._sw.lat,
+    east: mapBounds._ne.lng,
+    west: mapBounds._sw.lng,
+  }
+    
+};
+
+
 export default ({ filter }) => (
   <ReactiveMap
     defaultZoom={5.15}
@@ -136,6 +151,21 @@ export default ({ filter }) => (
     onStyleLoad={
       (map, evt)=>{
         map.resize();
+      }
+    }
+    mapBoxProps={{
+      onZoom: (map, evt)=>{
+        console.log(boundsInfo(map, evt));
+      }
+    }}
+    onDragEnd={
+      (map, evt)=>{
+
+      }
+    }
+    onZoomEnd={
+      (map, evt)=>{
+
       }
     }
     containerStyle={{

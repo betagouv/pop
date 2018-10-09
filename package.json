@@ -29,7 +29,7 @@
     "react-slick": "^0.23.1",
     "react-tag-input": "^5.0.1",
     "react-viewer": "^2.6.0",
-    "reactivemaps-tmp-mapbox": "^2.1.1",
+    "reactivemaps-tmp-mapbox": "^2.1.2",
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
