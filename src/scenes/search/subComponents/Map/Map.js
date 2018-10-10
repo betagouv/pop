@@ -22,25 +22,35 @@ export default class Umbrella extends React.Component {
   }
 
   onMapChange(originalEvent, boxZoomBounds) {
-    //console.log(boxZoomBounds)
+    console.log(boxZoomBounds.zoom)
 
-    let precision = (boxZoomBounds.zoom * 8) / 15;
-    if (precision < 1) precision = 1;
-    if (precision > 8) precision = 8;
+    const obj = {
+      2: 3,
+      3: 3,
+      4: 3,
+      5: 3,
+      6: 3,
+      7: 4,
+      8: 4,
+      9: 4,
+      10: 5,
+      11: 6,
+      12: 6,
+      13: 7,
+      14: 7,
+      15: 8
+    };
 
-    precision = Math.round(precision);
+    const precision = obj[Math.round(boxZoomBounds.zoom)];
+    this.prevPrecision = precision;
 
-    //if (precision !== this.prevPrecision) {
-      this.prevPrecision = precision;
-      //this.updateQuery(51, -5, 41, -6, precision);
-
-      this.updateQuery(
-        boxZoomBounds.north,
-        boxZoomBounds.west,
-        boxZoomBounds.south,
-        boxZoomBounds.east,
-        precision
-      );
+    this.updateQuery(
+      boxZoomBounds.north,
+      boxZoomBounds.west,
+      boxZoomBounds.south,
+      boxZoomBounds.east,
+      precision
+    );
     //}
   }
 
