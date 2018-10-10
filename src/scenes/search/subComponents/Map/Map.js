@@ -195,7 +195,7 @@ class Map extends React.Component {
       waiting();
     });
 
-    this.map.on("zoomend", originalEvent => {
+    this.map.on("moveend", originalEvent => {
       const mapBounds = this.map.getBounds();
 
       // if(this.debounceTimeout) {
