@@ -82,7 +82,10 @@ Area width x height
     const query = `{
       "size": 1,
       "query": {
-        "constant_score": {
+        "bool": {
+          "must": {
+              "match": {"POP_CONTIENT_GEOLOCALISATION":"oui"}
+          },
           "filter": {
             "geo_bounding_box": {
               "POP_COORDONNEES": {
