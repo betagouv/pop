@@ -86,8 +86,8 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "AUTP": {"type": "text", "analyzer": "french"},
-          "AUTR": {"type": "text", "analyzer": "french"},
+          "AUTP": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "AUTR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "BASE": {
             "type": "text",
             "fields": {
@@ -115,7 +115,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "COM": {"type": "text", "analyzer": "french"},
+          "COM": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "CONTACT": {
             "type": "text",
             "fields": {
@@ -161,7 +161,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "DATE": {"type": "text", "analyzer": "french"},
+          "DATE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DBOR": {
             "type": "text",
             "fields": {
@@ -171,7 +171,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "DENO": {"type": "text", "analyzer": "french"},
+          "DENO": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DENQ": {
             "type": "text",
             "fields": {
@@ -442,7 +442,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "LOCA": {"type": "text", "analyzer": "french"},
+          "LOCA": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "MEMOIRE": {
             "properties": {
               "ref": {
@@ -528,8 +528,8 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "PDEN": {"type": "text", "analyzer": "french"},
-          "PERS": {"type": "text", "analyzer": "french"},
+          "PDEN": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "PERS": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "PINT": {
             "type": "text",
             "fields": {
@@ -568,8 +568,7 @@ PUT merimee/_mapping/merimee
           },
           "POP_COORDONNEES": {
                 "type": "geo_point"
-            }
-          },
+            },
           "POP_DATE": {
             "type": "long"
           },
@@ -645,7 +644,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "REG": {"type": "text", "analyzer": "french"},
+          "REG": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "REMA": {
             "type": "text",
             "fields": {
@@ -673,7 +672,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "REPR": {"type": "text", "analyzer": "french"},
+          "REPR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "RFPA": {
             "type": "text",
             "fields": {
@@ -683,7 +682,7 @@ PUT merimee/_mapping/merimee
               }
             }
           },
-          "SCLE": {"type": "text", "analyzer": "french"},
+          "SCLE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "SCLX": {
             "type": "text",
             "fields": {

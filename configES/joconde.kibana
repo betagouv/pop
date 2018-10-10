@@ -43,7 +43,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "AUTR": {"type": "text", "analyzer": "french"},
+          "AUTR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "BASE": {
             "type": "text",
             "fields": {
@@ -140,7 +140,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "DENO": {"type": "text", "analyzer": "french"},
+          "DENO": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DEPO": {
             "type": "text",
             "fields": {
@@ -221,7 +221,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "EPOQ": {"type": "text", "analyzer": "french"},
+          "EPOQ": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "ETAT": {
             "type": "text",
             "fields": {
@@ -326,7 +326,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "LOCA": {"type": "text", "analyzer": "french"},
+          "LOCA": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "LOCA2": {
             "type": "text",
             "fields": {
@@ -543,7 +543,7 @@ PUT joconde/_mapping/joconde
               }
             }
           },
-          "REPR": {"type": "text", "analyzer": "french"},
+          "REPR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "RETIF": {
             "type": "text",
             "fields": {
