@@ -1,13 +1,12 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
-import nGeoHash from 'ngeohash';
-
+import nGeoHash from "ngeohash";
 
 import "./mapbox-gl.css";
 
 export default class Umbrella extends React.Component {
   state = {
-    query: {},
+    query: {}
   };
 
   prevPrecision = 1;
@@ -22,30 +21,26 @@ export default class Umbrella extends React.Component {
   }
 
   onMapChange(originalEvent, boxZoomBounds) {
-      //console.log(boxZoomBounds)
+    //console.log(boxZoomBounds)
 
-      let precision = (boxZoomBounds.zoom * 8)/15;
-      if(precision < 1) precision = 1;
-      if(precision > 8) precision = 8;
+    let precision = (boxZoomBounds.zoom * 8) / 15;
+    if (precision < 1) precision = 1;
+    if (precision > 8) precision = 8;
 
-      precision = Math.round(precision);
+    precision = Math.round(precision);
 
-      if(precision !== this.prevPrecision) {
-        this.prevPrecision = precision;
-        //this.updateQuery(51, -5, 41, -6, precision);
+    if (precision !== this.prevPrecision) {
+      this.prevPrecision = precision;
+      //this.updateQuery(51, -5, 41, -6, precision);
 
-        this.updateQuery(
-          Math.round(boxZoomBounds.north),
-          Math.round(boxZoomBounds.east),
-          Math.round(boxZoomBounds.south),
-          Math.round(boxZoomBounds.west), 
-          precision,
-        );
-
-
-
-
-      }
+      this.updateQuery(
+        boxZoomBounds.north,
+        boxZoomBounds.west,
+        boxZoomBounds.south,
+        boxZoomBounds.east,
+        precision
+      );
+    }
   }
 
   /*
@@ -73,6 +68,13 @@ Area width x height
     bottom_right_lon,
     precision
   ) {
+    console.log(
+      top_left_lat,
+      top_left_lon,
+      bottom_right_lat,
+      bottom_right_lon,
+      precision
+    );
     const query = `{
       "size": 1,
       "query": {
@@ -147,43 +149,34 @@ class Map extends React.Component {
       source: "pop",
       filter: ["has", "count"],
       paint: {
-          "circle-color": [
-              "step",
-              ["get", "count"],
-              "#51bbd6",
-              100,
-              "#f1f075",
-              750,
-              "#f28cb1"
-          ],
-          "circle-radius": [
-              "step",
-              ["get", "count"],
-              20,
-              100,
-              30,
-              750,
-              40
-          ]
+        "circle-color": [
+          "step",
+          ["get", "count"],
+          "#51bbd6",
+          100,
+          "#f1f075",
+          750,
+          "#f28cb1"
+        ],
+        "circle-radius": ["step", ["get", "count"], 20, 100, 30, 750, 40]
       }
     });
 
     this.map.addLayer({
-        id: "cluster-count",
-        type: "symbol",
-        source: "pop",
-        filter: ["has", "count"],
-        layout: {
-            "text-field": "{count}",
-            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-            "text-size": 12
-        }
+      id: "cluster-count",
+      type: "symbol",
+      source: "pop",
+      filter: ["has", "count"],
+      layout: {
+        "text-field": "{count}",
+        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+        "text-size": 12
+      }
     });
 
     this.setState({ loaded: true });
     this.map.resize();
   }
-
 
   componentDidMount() {
     const center = [2.367101341254551, 48.86162755885409];
@@ -197,53 +190,49 @@ class Map extends React.Component {
       zoom: 13
     });
 
-    this.map.on('style.load', () => {
+    this.map.on("style.load", () => {
       const waiting = () => {
         if (!this.map.isStyleLoaded()) {
           setTimeout(waiting, 200);
         } else {
-            this.mapDataAndLayer();
+          this.mapDataAndLayer();
         }
       };
       waiting();
     });
 
-    this.map.on('zoomend', (originalEvent) => {
+    this.map.on("zoomend", originalEvent => {
       const mapBounds = this.map.getBounds();
-      
+
       // if(this.debounceTimeout) {
       //   clearTimeout(this.debounceTimeout);
       // }
 
-    //   this.debounceTimeout = setTimeout(
-    //      ()=>{
-    //        this.props.onChange(
-    //          originalEvent,
-    //          {
-    //            zoom: this.map.getZoom(),
-    //            bounds: mapBounds,
-    //            north: mapBounds._ne.lat,
-    //            south: mapBounds._sw.lat,
-    //            east: mapBounds._ne.lng,
-    //            west: mapBounds._sw.lng
-    //           }
-    //        );
-    //      },
-    //      200
-    //  );
+      //   this.debounceTimeout = setTimeout(
+      //      ()=>{
+      //        this.props.onChange(
+      //          originalEvent,
+      //          {
+      //            zoom: this.map.getZoom(),
+      //            bounds: mapBounds,
+      //            north: mapBounds._ne.lat,
+      //            south: mapBounds._sw.lat,
+      //            east: mapBounds._ne.lng,
+      //            west: mapBounds._sw.lng
+      //           }
+      //        );
+      //      },
+      //      200
+      //  );
 
-       this.props.onChange(
-         originalEvent,
-         {
-         zoom: this.map.getZoom(),
-           bounds: mapBounds,
-           north: mapBounds._ne.lat,
-         south: mapBounds._sw.lat,
-           east: mapBounds._ne.lng,
-          west: mapBounds._sw.lng
-         }
-       );
-
+      this.props.onChange(originalEvent, {
+        zoom: this.map.getZoom(),
+        bounds: mapBounds,
+        north: mapBounds._ne.lat,
+        south: mapBounds._sw.lat,
+        east: mapBounds._ne.lng,
+        west: mapBounds._sw.lng
+      });
     });
   }
 
@@ -252,8 +241,15 @@ class Map extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.loaded && this.props.aggregations && nextProps.aggregations) {
-      return (this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets);
+    if (
+      this.state.loaded &&
+      this.props.aggregations &&
+      nextProps.aggregations
+    ) {
+      return (
+        this.props.aggregations.france.buckets !==
+        nextProps.aggregations.france.buckets
+      );
     }
     return true;
   }
@@ -294,12 +290,14 @@ function toGeoJson(arr) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);
 
+    // console.log(item.top_hits.hits.hits[0])
+
     geoJsonFormated.features.push({
       type: "Feature",
       properties: {
         id: item.key,
         count: item.doc_count,
-        hit: item.top_hits.hits.hits[0],
+        hit: item.top_hits.hits.hits[0]
       },
       geometry: {
         type: "Point",
