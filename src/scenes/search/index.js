@@ -29,7 +29,7 @@ import Mosaique from "./subComponents/Mosaique";
 import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
-import { isDepartmentNumber, departmentText } from './department';
+import { isDepartmentNumber, departmentText } from "./department";
 
 import "./index.css";
 
@@ -110,6 +110,10 @@ class Search extends React.Component {
     }
   }
 
+  onMapChanged(info) {
+    console.log(info);
+  }
+
   render() {
     const { bases } = this.state;
     return (
@@ -161,11 +165,12 @@ class Search extends React.Component {
                     react={{ FILTER: "region" }}
                     renderListItem={(label, count) => {
                       if (isDepartmentNumber(label)) {
-                        return <div>
-                          {departmentText(label)} ({count})
-                        </div>;
+                        return (
+                          <div>
+                            {departmentText(label)} ({count})
+                          </div>
+                        );
                       }
-                      
                     }}
                   />
                   <MultiList
@@ -357,15 +362,6 @@ class Search extends React.Component {
                     />
                   </TabPane>
                   <TabPane tabId="map">
-                    <Alert
-                      color="danger"
-                      isOpen={this.state.alert}
-                      toggle={() => this.setState({ alert: false })}
-                    >
-                      Cette carte est en "beta". Les 8000 premiers résultats
-                      sont affichés et certaines données ne sont pas encore
-                      géolocalisées correctement
-                    </Alert>
                     <Route
                       exact
                       path="/search/map"
