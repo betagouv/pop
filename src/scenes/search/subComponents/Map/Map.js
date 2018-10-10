@@ -1,145 +1,405 @@
 import React from "react";
-import { ReactiveMap } from "reactivemaps-tmp-mapbox";
+import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import nGeoHash from "ngeohash";
+import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
+
 import CardMap from "./CardMap";
-import MarkerIcon from "../../../../assets/marker-circle.png";
 
 import "./mapbox-gl.css";
 
-const bases = [
-  {
-    label: "Photographies (Mémoire)",
-    value: "Photographies (Mémoires)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,FF6347&scale=2.0"
-  },
-  {
-    label: "Patrimoine mobilier (Palissy)",
-    value: "Patrimoine mobilier (Palissy)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,FFAE47&scale=2.0"
-  },
-  {
-    label: "Collections des musées de France (Joconde)",
-    value: "Collections des musées de France (Joconde)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,39EA4B&scale=2.0"
-  },
-  {
-    label: "Patrimoine architectural (Mérimée)",
-    value: "Patrimoine architectural (Mérimée)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1499-shape_circle_4x.png&highlight=ff000000,9C27B0&scale=2.0"
-  },
-  {
-    label: "Oeuvres spoliées (MNR Rose-Valland)",
-    value: "Oeuvres spoliées (MNR Rose-Valland)",
-    pin:
-      "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-pin-container-bg_4x.png,icons/onion/SHARED-mymaps-pin-container_4x.png,icons/onion/1899-blank-shape_pin_4x.png&highlight=ff000000,43CCF1&scale=2.0"
+
+const MapBox = ReactMapboxGl({
+  accessToken: "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ"
+});
+
+export default class Umbrella extends React.Component {
+  state = {
+    query: {}
+  };
+
+  prevPrecision = 1;
+  prevBounds = null;
+
+  constructor(props) {
+    super(props);
+    this.onMapChange = this.onMapChange.bind(this);
   }
-];
 
-const markerImage = new Image();
-markerImage.src = MarkerIcon;
-markerImage.alt = "alt";
-markerImage.width = 24;
-markerImage.height = 24;
+  componentWillMount() {
+    this.updateQuery(51, -5, 41, -6, 8);
+  }
 
+  onMapChange(originalEvent, boxZoomBounds) {
+    //console.log(boxZoomBounds.zoom)
 
-export default ({ filter }) => (
-  <ReactiveMap
-    defaultZoom={5.15}
-    componentId="map"
-    className="map"
-    dataField="POP_COORDONNEES"
-    react={{
-      and: filter
-    }}
-    size={8000}
-    onPopoverClick={(item, closePopup) => {
-      return <CardMap className="" key={item.REF} data={item} />;
-    }}
-    autoClosePopover
-    showSearchAsMove
-    markerIcon={markerImage}
-    customClusterMarker={(coordinates, pointCount) => {
-      const color = {
-        rouge: "#ff6347",
-        orange: "#ffae47",
-        jaune: "#fffb47",
-        vertDense: "#39ea4b",
-        vert: "#c8ff47",
-        bleu: "#43ccf1",
-        purple: "#db43f1"
-      };
-      return (
-        <svg
-          width="30px"
-          height="30px"
-          viewBox="0 0 32 32"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          key="content"
-        >
-          <circle
-            className="circle first-circle"
-            fill={
-              pointCount < 10
-                ? color.vertDense
-                : pointCount < 100
-                  ? color.jaune
-                  : pointCount < 1000
-                    ? color.orange
-                    : color.rouge
+    let zoom = Math.round(boxZoomBounds.zoom);
+    if(zoom < 2) {
+      zoom = 2;
+    } else if(zoom > 15) {
+      zoom = 15;
+    }
+
+    const obj = {
+      2: 3,
+      3: 3,
+      4: 3,
+      5: 3,
+      6: 3,
+      7: 4,
+      8: 4,
+      9: 4,
+      10: 5,
+      11: 6,
+      12: 6,
+      13: 7,
+      14: 7,
+      15: 8
+    };
+
+    const precision = obj[zoom];
+    this.prevPrecision = precision;
+
+    this.updateQuery(
+      boxZoomBounds.north,
+      boxZoomBounds.west,
+      boxZoomBounds.south,
+      boxZoomBounds.east,
+      precision
+    );
+    
+  }
+
+  /*
+
+GeoHash length
+Area width x height
+1-5,009.4km x 4,992.6km
+2-1,252.3km x 624.1km
+3-156.5km x 156km
+4-39.1km x 19.5km
+5-4.9km x 4.9km
+6-1.2km x 609.4m
+7-152.9m x 152.4m
+8-38.2m x 19m
+9-4.8m x 4.8m
+10-1.2m x 59.5cm
+11-14.9cm x 14.9cm
+12- 3.7cm x 1.9cm
+*/
+
+  updateQuery(
+    top_left_lat,
+    top_left_lon,
+    bottom_right_lat,
+    bottom_right_lon,
+    precision
+  ) {
+    const query = `{
+      "size": 1,
+      "query": {
+        "bool": {
+          "must": {
+              "match": {"POP_CONTIENT_GEOLOCALISATION":"oui"}
+          },
+          "filter": {
+            "geo_bounding_box": {
+              "POP_COORDONNEES": {
+                "top_left": {
+                  "lat": "${top_left_lat}",
+                  "lon": "${top_left_lon}"
+                },
+                "bottom_right": {
+                  "lat": "${bottom_right_lat}",
+                  "lon": "${bottom_right_lon}"
+                }
+              }
             }
-            cx="16"
-            cy="16"
-            r="16"
-          />
-          {pointCount < 10 ? (
-            <text x="13" y="19" fill="white">
-              {pointCount}
-            </text>
-          ) : pointCount < 100 ? (
-            <text x="10" y="19" fill="black">
-              {pointCount}
-            </text>
-          ) : pointCount < 1000 ? (
-            <text x="6" y="19" fill="white">
-              {pointCount}
-            </text>
-          ) : (
-            <text x="2" y="19" fill="white">
-              {pointCount}
-            </text>
-          )}
-        </svg>
-      );
-    }}
-    customMarker={(item, markerProps) => {
-      let pin = bases[0].pin;
-      if (item && markerProps) {
-        for (let i = 0; i < bases.length; i++) {
-          if (item.BASE === bases[i].value) {
-            pin = bases[i].pin;
+          }
+        }
+      },
+      "aggs": {
+        "france": {
+          "geohash_grid": {
+            "field": "POP_COORDONNEES",
+            "precision": ${precision}
+          },
+          "aggs": {
+            "top_hits": {
+              "top_hits": {
+                "size": 1
+              }
+            }
           }
         }
       }
-      return <img src={pin} width="24px" />;
-    }}
-    onResultStats={(total, took) => {
-      if (total === 1) {
-        return `1 résultat trouvé en ${took} ms.`;
-      }
-      return `${total} résultats trouvés en ${took} ms.`;
-    }}
-    showResultStats
-    onStyleLoad={
-      (map, evt)=>{
-        map.resize();
-      }
+    }`;
+    this.setState({ query: JSON.parse(query) });
+  }
+
+  render() {
+    return (
+      <ReactiveComponent
+        componentId={this.props.componentId || "map"} // a unique id we will refer to later
+        URLParams={this.props.URLParams || true}
+        react={this.props.react || {}}
+        defaultQuery={() => this.state.query}
+      >
+        <Map onChange={this.onMapChange} />
+      </ReactiveComponent>
+    );
+  }
+}
+
+class Map extends React.Component {
+  state = {
+    loaded: false,
+    center: [2.515597, 46.856731],
+    zoom: 5,
+    popup: null
+  };
+
+  mapRef = null;
+
+  constructor(props) {
+    super(props);
+
+    this.mapRef = React.createRef();
+    this.onMoveEnd = this.onMoveEnd.bind(this);
+
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.loaded &&
+      this.props.aggregations &&
+      nextProps.aggregations
+    ) {
+      let should = ( this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets );
+      if(!should && (this.state.popup !== nextState.popup)) should = true;
+      return should;
     }
-    containerStyle={{
-      height: '100vh'
-    }}
-  />
-);
+    return true;
+  }
+
+  componentDidUpdate() {
+    this.renderClusters();
+  }
+
+  onMoveEnd (map, event) {
+    const mapBounds = map.getBounds();
+
+    const currentCenter = map.getCenter();
+    const currentZoom = map.getZoom();
+
+    this.setState({ 
+      center: [currentCenter.lng,currentCenter.lat],
+      zoom: currentZoom,
+      popup: null,
+    });
+
+    this.props.onChange(event, {
+      zoom: currentZoom,
+      bounds: mapBounds,
+      north: mapBounds._ne.lat,
+      south: mapBounds._sw.lat,
+      east: mapBounds._ne.lng,
+      west: mapBounds._sw.lng
+    });
+  }
+
+  renderClusters() {
+    if (this.state.loaded && this.props.aggregations) {
+      //console.log("points", this.props.aggregations.france.buckets.length);
+      const geojson = toGeoJson(this.props.aggregations.france.buckets);
+      //console.log("add", geojson);
+      //const before = window.performance.now();
+      this.map.getSource("pop").setData(geojson);
+      //const timeExec = window.performance.now() - before;
+      //console.log(`setData ${timeExec} ms`);
+    }
+  }
+
+  render() {
+    const style = {
+      width: "100%",
+      height: "1000px"
+    };
+    return (
+      <MapBox
+        style="mapbox://styles/mapbox/streets-v9"
+        containerStyle={style}
+        zoom={[this.state.zoom]}
+        center={this.state.center}
+        ref={this.mapRef}
+        onStyleLoad={
+            (map)=>{
+              map.resize();
+              this.map = this.mapRef.current.state.map;
+
+              map.on('click', 'unclustered-point', (e) => {
+                
+                const features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-point'] });
+                console.log(features)
+                if(features.length === 1) {
+                  const itemId = features[0].properties.id;
+                  const hit = JSON.parse(features[0].properties.hit);
+                  const item = {...hit, ...hit._source};
+        
+                  console.log(item)
+                  
+                  const popup = (
+                    <Popup
+                      key={`Popup`}
+                      coordinates={[item.POP_COORDONNEES.lon, item.POP_COORDONNEES.lat]}
+                    >
+                      <CardMap className="" key={item.REF} data={item} />
+                    </Popup>
+                  );
+                  
+                  this.setState({ popup });
+                  
+                }
+              });
+
+              map.on('mouseenter', 'unclustered-point', () => { this.map.getCanvas().style.cursor = 'pointer'; });
+              map.on('mouseleave', 'unclustered-point', () => { this.map.getCanvas().style.cursor = ''; });
+
+
+
+              this.setState({ loaded: true });
+            }
+        }
+        onMoveEnd={this.onMoveEnd}
+        onData={
+          (map)=> {
+
+          }
+        }
+      >
+        <Source 
+          id="pop" 
+          geoJsonSource={
+            {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: []
+              }
+            }
+          }
+        />
+        <Layer 
+          type="circle"
+          id="clusters"
+          sourceId="pop"
+          filter={["has", "count"]}
+          paint={{
+              "circle-color": [
+                "step",
+                ["get", "count"],
+                "#9C27B0",
+                2,
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1"
+              ],
+              "circle-radius": [
+                "step",
+                ["get", "count"],
+                9,
+                2,
+                20,
+                100,
+                30,
+                750,
+                40
+              ],
+              "circle-stroke-width": [
+                "step",
+                ["get", "count"],
+                2,
+                2,
+                0
+              ],
+              "circle-stroke-color": "#fff"
+          }}
+				/>
+        <Layer 
+          type="symbol"
+          id="cluster-count"
+          sourceId="pop"
+          filter={["has", "count"]}
+          layout={{
+              "text-field": "{count}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 12
+          }}
+          paint={{
+            'text-color': [
+              "step",
+              ["get", "count"],
+              "#ffffff",
+              2,
+              "#000000"
+            ],
+          }}
+				/>
+        <Layer 
+          type="circle"
+          id="unclustered-point"
+          sourceId="pop"
+          filter={["!", ["has", "count"]]}
+          paint={
+            {
+                    "circle-color": "#9C27B0",
+                    "circle-radius": 9,
+                    "circle-stroke-width": 2,
+                    "circle-stroke-color": "#fff"
+                }
+          }
+        />
+        {this.state.popup}
+      </MapBox>
+    );
+  }
+}
+
+function toGeoJson(arr) {
+  //const before = window.performance.now();
+  const geoJsonFormated = {
+    type: "FeatureCollection",
+    info: { type: "name", properties: { name: "POP" } },
+    features: []
+  };
+  console.log("FOUND", arr.length);
+
+  for (var i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    const ncoordinates = nGeoHash.decode(item.key);
+    const hit = item.top_hits.hits.hits[0];
+    let feature = {
+      type: "Feature",
+      properties: {
+        id: item.key,
+        hit,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [ncoordinates.longitude, ncoordinates.latitude]
+      }
+    };
+    if(item.doc_count > 1) {
+      feature.properties.count = item.doc_count;
+    } else {
+      feature.geometry.coordinates = [hit._source.POP_COORDONNEES.lon, hit._source.POP_COORDONNEES.lat];
+    }
+    geoJsonFormated.features.push(feature);
+  }
+
+  //const timeExec = window.performance.now() - before;
+  //console.log(`toGeoJson ${timeExec} ms`);
+
+  return geoJsonFormated;
+}
