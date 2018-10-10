@@ -256,6 +256,7 @@ class Map extends React.Component {
 
   renderClusters() {
     if (this.state.loaded && this.props.aggregations) {
+      console.log("points", this.props.aggregations.france.buckets.length);
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
       //console.log("add", geojson);
       const before = window.performance.now();
