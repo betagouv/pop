@@ -174,8 +174,8 @@ class Map extends React.Component {
       this.props.aggregations &&
       nextProps.aggregations
     ) {
-      const should = ( this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets );
-      //console.log(should)
+      let should = ( this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets );
+      if(!should && (this.state.popup !== nextState.popup)) should = true;
       return should;
     }
     return true;
