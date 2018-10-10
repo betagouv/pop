@@ -345,15 +345,6 @@ class Search extends React.Component {
                     />
                   </TabPane>
                   <TabPane tabId="map">
-                    <Alert
-                      color="danger"
-                      isOpen={this.state.alert}
-                      toggle={() => this.setState({ alert: false })}
-                    >
-                      Cette carte est en "beta". Les 8000 premiers résultats
-                      sont affichés et certaines données ne sont pas encore
-                      géolocalisées correctement
-                    </Alert>
                     <Route
                       exact
                       path="/search/map"
