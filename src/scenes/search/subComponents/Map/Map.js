@@ -1,8 +1,16 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
+import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
+
+import CardMap from "./CardMap";
 
 import "./mapbox-gl.css";
+
+
+const MapBox = ReactMapboxGl({
+  accessToken: "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ"
+});
 
 export default class Umbrella extends React.Component {
   state = {
@@ -22,7 +30,14 @@ export default class Umbrella extends React.Component {
   }
 
   onMapChange(originalEvent, boxZoomBounds) {
-    console.log(boxZoomBounds.zoom)
+    //console.log(boxZoomBounds.zoom)
+
+    let zoom = Math.round(boxZoomBounds.zoom);
+    if(zoom < 2) {
+      zoom = 2;
+    } else if(zoom > 15) {
+      zoom = 15;
+    }
 
     const obj = {
       2: 3,
@@ -41,7 +56,7 @@ export default class Umbrella extends React.Component {
       15: 8
     };
 
-    const precision = obj[Math.round(boxZoomBounds.zoom)];
+    const precision = obj[zoom];
     this.prevPrecision = precision;
 
     this.updateQuery(
@@ -51,7 +66,7 @@ export default class Umbrella extends React.Component {
       boxZoomBounds.east,
       precision
     );
-    //}
+    
   }
 
   /*
@@ -137,114 +152,20 @@ Area width x height
 
 class Map extends React.Component {
   state = {
-    loaded: false
+    loaded: false,
+    center: [2.367101341254551, 48.86162755885409],
+    zoom: 13,
+    popup: null
   };
-  //debounceTimeout = null;
 
-  mapDataAndLayer() {
-    this.map.addSource("pop", {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: []
-      }
-    });
+  mapRef = null;
 
-    this.map.addLayer({
-      id: "clusters",
-      type: "circle",
-      source: "pop",
-      filter: ["has", "count"],
-      paint: {
-        "circle-color": [
-          "step",
-          ["get", "count"],
-          "#51bbd6",
-          100,
-          "#f1f075",
-          750,
-          "#f28cb1"
-        ],
-        "circle-radius": ["step", ["get", "count"], 20, 100, 30, 750, 40]
-      }
-    });
+  constructor(props) {
+    super(props);
 
-    this.map.addLayer({
-      id: "cluster-count",
-      type: "symbol",
-      source: "pop",
-      filter: ["has", "count"],
-      layout: {
-        "text-field": "{count}",
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-        "text-size": 12
-      }
-    });
+    this.mapRef = React.createRef();
+    this.onMoveEnd = this.onMoveEnd.bind(this);
 
-    this.setState({ loaded: true });
-    this.map.resize();
-  }
-
-  componentDidMount() {
-    const center = [2.367101341254551, 48.86162755885409];
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
-
-    this.map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v9",
-      center,
-      zoom: 13
-    });
-
-    this.map.on("style.load", () => {
-      const waiting = () => {
-        if (!this.map.isStyleLoaded()) {
-          setTimeout(waiting, 200);
-        } else {
-          this.mapDataAndLayer();
-        }
-      };
-      waiting();
-    });
-
-    this.map.on("moveend", originalEvent => {
-      const mapBounds = this.map.getBounds();
-
-      // if(this.debounceTimeout) {
-      //   clearTimeout(this.debounceTimeout);
-      // }
-
-      //   this.debounceTimeout = setTimeout(
-      //      ()=>{
-      //        this.props.onChange(
-      //          originalEvent,
-      //          {
-      //            zoom: this.map.getZoom(),
-      //            bounds: mapBounds,
-      //            north: mapBounds._ne.lat,
-      //            south: mapBounds._sw.lat,
-      //            east: mapBounds._ne.lng,
-      //            west: mapBounds._sw.lng
-      //           }
-      //        );
-      //      },
-      //      200
-      //  );
-
-      this.props.onChange(originalEvent, {
-        zoom: this.map.getZoom(),
-        bounds: mapBounds,
-        north: mapBounds._ne.lat,
-        south: mapBounds._sw.lat,
-        east: mapBounds._ne.lng,
-        west: mapBounds._sw.lng
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.map.remove();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -253,23 +174,47 @@ class Map extends React.Component {
       this.props.aggregations &&
       nextProps.aggregations
     ) {
-      return (
-        this.props.aggregations.france.buckets !==
-        nextProps.aggregations.france.buckets
-      );
+      const should = ( this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets );
+      //console.log(should)
+      return should;
     }
     return true;
   }
 
+  componentDidUpdate() {
+    this.renderClusters();
+  }
+
+  onMoveEnd (map, event) {
+    const mapBounds = map.getBounds();
+
+    const currentCenter = map.getCenter();
+    const currentZoom = map.getZoom();
+
+    this.setState({ 
+      center: [currentCenter.lng,currentCenter.lat],
+      zoom: currentZoom,
+    });
+
+    this.props.onChange(event, {
+      zoom: currentZoom,
+      bounds: mapBounds,
+      north: mapBounds._ne.lat,
+      south: mapBounds._sw.lat,
+      east: mapBounds._ne.lng,
+      west: mapBounds._sw.lng
+    });
+  }
+
   renderClusters() {
     if (this.state.loaded && this.props.aggregations) {
-      console.log("points", this.props.aggregations.france.buckets.length);
+      //console.log("points", this.props.aggregations.france.buckets.length);
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
       //console.log("add", geojson);
-      const before = window.performance.now();
+      //const before = window.performance.now();
       this.map.getSource("pop").setData(geojson);
-      const timeExec = window.performance.now() - before;
-      console.log(`setData ${timeExec} ms`);
+      //const timeExec = window.performance.now() - before;
+      //console.log(`setData ${timeExec} ms`);
     }
   }
 
@@ -279,15 +224,134 @@ class Map extends React.Component {
       height: "1000px"
     };
     return (
-      <div style={style} ref={el => (this.mapContainer = el)}>
-        {this.renderClusters()}
-      </div>
+      <MapBox
+        style="mapbox://styles/mapbox/streets-v9"
+        containerStyle={style}
+        zoom={[this.state.zoom]}
+        center={this.state.center}
+        ref={this.mapRef}
+        onStyleLoad={
+            (map)=>{
+              map.resize();
+              this.map = this.mapRef.current.state.map;
+
+              map.on('click', 'clusters', (e) => {
+                const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+
+                if(features.length === 1 && features[0].properties.count === 1) {
+                  const itemId = features[0].properties.id;
+                  const hit = JSON.parse(features[0].properties.hit);
+                  const item = {...hit, ...hit._source};
+        
+                  console.log(item)
+                  
+                  const popup = (
+                    <Popup
+                      key={`Popup`}
+                      coordinates={[item.POP_COORDONNEES.lon, item.POP_COORDONNEES.lat]}
+                    >
+                      <CardMap className="" key={item.REF} data={item} />
+                    </Popup>
+                  );
+                  
+                  this.setState({ popup });
+                  
+                }
+              });
+
+              map.on('mouseenter', 'clusters', () => { this.map.getCanvas().style.cursor = 'pointer'; });
+              map.on('mouseleave', 'clusters', () => { this.map.getCanvas().style.cursor = ''; });
+
+
+
+              this.setState({ loaded: true });
+            }
+        }
+        onMoveEnd={this.onMoveEnd}
+        onData={
+          (map)=> {
+
+          }
+        }
+      >
+        <Source 
+          id="pop" 
+          geoJsonSource={
+            {
+              type: "geojson",
+              data: {
+                type: "FeatureCollection",
+                features: []
+              }
+            }
+          }
+        />
+        <Layer 
+          type="circle"
+          id="clusters"
+          sourceId="pop"
+          filter={["has", "count"]}
+          paint={{
+              "circle-color": [
+                "step",
+                ["get", "count"],
+                "#9C27B0",
+                2,
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1"
+              ],
+              "circle-radius": [
+                "step",
+                ["get", "count"],
+                9,
+                2,
+                20,
+                100,
+                30,
+                750,
+                40
+              ],
+              "circle-stroke-width": [
+                "step",
+                ["get", "count"],
+                2,
+                2,
+                0
+              ],
+              "circle-stroke-color": "#fff"
+          }}
+				/>
+        <Layer 
+          type="symbol"
+          id="cluster-count"
+          sourceId="pop"
+          filter={["has", "count"]}
+          layout={{
+              "text-field": "{count}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 12
+          }}
+          paint={{
+            'text-color': [
+              "step",
+              ["get", "count"],
+              "#ffffff",
+              2,
+              "#000000"
+            ],
+          }}
+				/>
+        {this.state.popup}
+      </MapBox>
     );
   }
 }
 
 function toGeoJson(arr) {
-  const before = window.performance.now();
+  //const before = window.performance.now();
   const geoJsonFormated = {
     type: "FeatureCollection",
     info: { type: "name", properties: { name: "POP" } },
@@ -297,9 +361,6 @@ function toGeoJson(arr) {
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);
-
-    // console.log(item.top_hits.hits.hits[0])
-
     geoJsonFormated.features.push({
       type: "Feature",
       properties: {
@@ -314,8 +375,8 @@ function toGeoJson(arr) {
     });
   }
 
-  const timeExec = window.performance.now() - before;
-  console.log(`toGeoJson ${timeExec} ms`);
+  //const timeExec = window.performance.now() - before;
+  //console.log(`toGeoJson ${timeExec} ms`);
 
   return geoJsonFormated;
 }
