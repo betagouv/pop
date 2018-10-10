@@ -29,7 +29,7 @@ import Mosaique from "./subComponents/Mosaique";
 import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
-import { isDepartmentNumber, departmentText } from './department';
+import { isDepartmentNumber, departmentText } from "./department";
 
 import "./index.css";
 
@@ -164,11 +164,12 @@ class Search extends React.Component {
                     react={{ FILTER: "region" }}
                     renderListItem={(label, count) => {
                       if (isDepartmentNumber(label)) {
-                        return <div>
-                          {departmentText(label)} ({count})
-                        </div>;
+                        return (
+                          <div>
+                            {departmentText(label)} ({count})
+                          </div>
+                        );
                       }
-                      
                     }}
                   />
                   <MultiList
@@ -357,7 +358,6 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/map"
-                      render={() => (
                       render={() => <Map filter={FILTER} />}
                     />
                   </TabPane>
