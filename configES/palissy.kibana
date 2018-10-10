@@ -68,24 +68,8 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "AUTP": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "AUTR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "AUTP": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "AUTR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "BASE": {
             "type": "text",
             "fields": {
@@ -122,15 +106,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "COM": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "COM": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "COM2": {
             "type": "text",
             "fields": {
@@ -187,8 +163,7 @@ PUT palissy/_mapping/palissy
           },
           "POP_COORDONNEES": {
                 "type": "geo_point"
-            }
-          },
+            },
           "COPY": {
             "type": "text",
             "fields": {
@@ -198,17 +173,10 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "DATE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "DATE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DBOR": {
             "type": "text",
+             "analyzer": "french",
             "fields": {
               "keyword": {
                 "type": "keyword",
@@ -216,15 +184,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "DENO": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "DENO": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DENQ": {
             "type": "text",
             "fields": {
@@ -537,15 +497,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "LOCA": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "LOCA": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "MATR": {
             "type": "text",
             "fields": {
@@ -703,15 +655,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "PDEN": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "PDEN": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "PDIM": {
             "type": "text",
             "fields": {
@@ -721,15 +665,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "PERS": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "PERS": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "PETA": {
             "type": "text",
             "fields": {
@@ -856,15 +792,7 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "REG": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REG": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "RENP": {
             "type": "text",
             "fields": {
@@ -883,33 +811,9 @@ PUT palissy/_mapping/palissy
               }
             }
           },
-          "REPR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "SCLD": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "SCLE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REPR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "SCLD": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "SCLE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "SCLX": {
             "type": "text",
             "fields": {
@@ -1046,4 +950,3 @@ PUT palissy/_mapping/palissy
           }
         }
 }
- 

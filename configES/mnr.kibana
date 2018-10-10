@@ -40,24 +40,8 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "AUTI": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
-          "AUTR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "AUTI": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "AUTR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "BASE": {
             "type": "text",
             "fields": {
@@ -112,15 +96,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "DENO": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "DENO": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DESC": {
             "type": "text",
             "fields": {
@@ -268,15 +244,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "LOCA": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "LOCA": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "MARQ": {
             "type": "text",
             "fields": {
@@ -412,15 +380,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "REPR": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "REPR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "RESUME": {
             "type": "text",
             "fields": {
@@ -430,15 +390,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "SCLE": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          },
+          "SCLE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "SREP": {
             "type": "text",
             "fields": {
@@ -499,4 +451,3 @@ PUT mnr/_mapping/mnr {
           }
         }
 }
- 
