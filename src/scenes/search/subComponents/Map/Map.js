@@ -27,9 +27,9 @@ export default class Umbrella extends React.Component {
       //   3
       // );
 
-      let precision = (boxZoomBounds.zoom * 6)/15;
+      let precision = (boxZoomBounds.zoom * 8)/15;
       if(precision < 1) precision = 1;
-      if(precision > 6) precision = 6;
+      if(precision > 8) precision = 8;
 
       this.updateQuery(51, -5, 41, -6, Math.round(precision));
   }
