@@ -154,7 +154,6 @@ class Map extends React.Component {
   state = {
     loaded: false,
     center: [2.515597, 46.856731],
-    zoom: 5,
     popup: null
   };
 
@@ -194,7 +193,6 @@ class Map extends React.Component {
 
     this.setState({
       center: [currentCenter.lng, currentCenter.lat],
-      zoom: currentZoom,
       popup: null
     });
 
@@ -229,7 +227,6 @@ class Map extends React.Component {
       <MapBox
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={style}
-        zoom={[this.state.zoom]}
         center={this.state.center}
         ref={this.mapRef}
         onStyleLoad={map => {
