@@ -40,8 +40,8 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "AUTI": {"type": "text", "analyzer": "french"},
-          "AUTR": {"type": "text", "analyzer": "french"},
+          "AUTI": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
+          "AUTR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "BASE": {
             "type": "text",
             "fields": {
@@ -96,7 +96,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "DENO": {"type": "text", "analyzer": "french"},
+          "DENO": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "DESC": {
             "type": "text",
             "fields": {
@@ -244,7 +244,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "LOCA": {"type": "text", "analyzer": "french"},
+          "LOCA": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "MARQ": {
             "type": "text",
             "fields": {
@@ -380,7 +380,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "REPR": {"type": "text", "analyzer": "french"},
+          "REPR": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "RESUME": {
             "type": "text",
             "fields": {
@@ -390,7 +390,7 @@ PUT mnr/_mapping/mnr {
               }
             }
           },
-          "SCLE": {"type": "text", "analyzer": "french"},
+          "SCLE": {             "type": "text",              "analyzer": "french",             "fields": {               "keyword": {                 "type": "keyword",                 "ignore_above": 256               }             }           },
           "SREP": {
             "type": "text",
             "fields": {
