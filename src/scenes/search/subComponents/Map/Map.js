@@ -236,10 +236,11 @@ class Map extends React.Component {
               map.resize();
               this.map = this.mapRef.current.state.map;
 
-              map.on('click', 'clusters', (e) => {
-                const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-
-                if(features.length === 1 && features[0].properties.count === 1) {
+              map.on('click', 'unclustered-point', (e) => {
+                
+                const features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-point'] });
+                console.log(features)
+                if(features.length === 1) {
                   const itemId = features[0].properties.id;
                   const hit = JSON.parse(features[0].properties.hit);
                   const item = {...hit, ...hit._source};
@@ -260,8 +261,8 @@ class Map extends React.Component {
                 }
               });
 
-              map.on('mouseenter', 'clusters', () => { this.map.getCanvas().style.cursor = 'pointer'; });
-              map.on('mouseleave', 'clusters', () => { this.map.getCanvas().style.cursor = ''; });
+              map.on('mouseenter', 'unclustered-point', () => { this.map.getCanvas().style.cursor = 'pointer'; });
+              map.on('mouseleave', 'unclustered-point', () => { this.map.getCanvas().style.cursor = ''; });
 
 
 
@@ -345,6 +346,20 @@ class Map extends React.Component {
             ],
           }}
 				/>
+        <Layer 
+          type="circle"
+          id="unclustered-point"
+          sourceId="pop"
+          filter={["!", ["has", "count"]]}
+          paint={
+            {
+                    "circle-color": "#9C27B0",
+                    "circle-radius": 9,
+                    "circle-stroke-width": 2,
+                    "circle-stroke-color": "#fff"
+                }
+          }
+        />
         {this.state.popup}
       </MapBox>
     );
@@ -363,18 +378,24 @@ function toGeoJson(arr) {
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);
-    geoJsonFormated.features.push({
+    const hit = item.top_hits.hits.hits[0];
+    let feature = {
       type: "Feature",
       properties: {
         id: item.key,
-        count: item.doc_count,
-        hit: item.top_hits.hits.hits[0]
+        hit,
       },
       geometry: {
         type: "Point",
         coordinates: [ncoordinates.longitude, ncoordinates.latitude]
       }
-    });
+    };
+    if(item.doc_count > 1) {
+      feature.properties.count = item.doc_count;
+    } else {
+      feature.geometry.coordinates = [hit._source.POP_COORDONNEES.lon, hit._source.POP_COORDONNEES.lat];
+    }
+    geoJsonFormated.features.push(feature);
   }
 
   //const timeExec = window.performance.now() - before;
