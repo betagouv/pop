@@ -194,6 +194,7 @@ class Map extends React.Component {
     this.setState({ 
       center: [currentCenter.lng,currentCenter.lat],
       zoom: currentZoom,
+      popup: null,
     });
 
     this.props.onChange(event, {
