@@ -44,7 +44,8 @@ const FILTER = [
   "departement",
   "commune",
   "base",
-  "geolocalisation"
+  "geolocalisation",
+  "auteur"
 ];
 
 class Search extends React.Component {
@@ -177,6 +178,12 @@ class Search extends React.Component {
                     title="Période"
                     componentId="periode"
                     placeholder="Rechercher une période"
+                  />
+                  <MultiList
+                    dataField={["AUTP.keyword", "AUTR.keyword"]}
+                    title="Auteur"
+                    componentId="auteur"
+                    placeholder="Rechercher un auteur"
                   />
                   <MultiList
                     dataField="CONTIENT_IMAGE.keyword"
