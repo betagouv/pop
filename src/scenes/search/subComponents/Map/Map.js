@@ -1,11 +1,38 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import GeoHash from 'latlon-geohash';
+import nGeoHash from 'ngeohash';
+
+
 import "./mapbox-gl.css";
 
 export default class Umbrella extends React.Component {
   state = {};
+
+  constructor(props) {
+    super(props);
+    this.onMapChange = this.onMapChange.bind(this);
+  }
+
   componentWillMount() {
-    this.updateQuery(51, -5, 41, -6, 3);
+    this.updateQuery(51, -5, 41, -6, 1);
+  }
+
+  onMapChange(originalEvent, boxZoomBounds) {
+      //console.log(boxZoomBounds)
+      // this.updateQuery(
+      //   Math.round(boxZoomBounds.north),
+      //     Math.round(boxZoomBounds.east),
+      //       Math.round(boxZoomBounds.south),
+      //         Math.round(boxZoomBounds.west),
+      //   3
+      // );
+
+      let precision = (boxZoomBounds.zoom * 12)/15;
+      if(precision < 1) precision = 1;
+      if(precision > 12) precision = 12;
+
+      this.updateQuery(51, -5, 41, -6, Math.round(precision));
   }
 
   /*
@@ -80,7 +107,7 @@ Area width x height
         react={this.props.react || {}}
         defaultQuery={() => this.state.query}
       >
-        <Map />
+        <Map onChange={this.onMapChange} />
       </ReactiveComponent>
     );
   }
@@ -90,6 +117,60 @@ class Map extends React.Component {
   state = {
     loaded: false
   };
+
+  mapDataAndLayer() {
+    this.map.addSource("pop", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: []
+      }
+    });
+
+    this.map.addLayer({
+      id: "clusters",
+      type: "circle",
+      source: "pop",
+      filter: ["has", "count"],
+      paint: {
+          "circle-color": [
+              "step",
+              ["get", "count"],
+              "#51bbd6",
+              100,
+              "#f1f075",
+              750,
+              "#f28cb1"
+          ],
+          "circle-radius": [
+              "step",
+              ["get", "count"],
+              20,
+              100,
+              30,
+              750,
+              40
+          ]
+      }
+    });
+
+    this.map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "pop",
+        filter: ["has", "count"],
+        layout: {
+            "text-field": "{count}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
+        }
+    });
+
+    this.setState({ loaded: true });
+    this.map.resize();
+  }
+
+
   componentDidMount() {
     const center = [2.367101341254551, 48.86162755885409];
     mapboxgl.accessToken =
@@ -97,20 +178,36 @@ class Map extends React.Component {
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/mapbox/light-v9",
+      style: "mapbox://styles/mapbox/streets-v9",
       center,
       zoom: 13
     });
-    const map = this.map;
-    map.on("load", () => {
-      map.addSource("pop", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: []
+
+    this.map.on('style.load', () => {
+      const waiting = () => {
+        if (!this.map.isStyleLoaded()) {
+          setTimeout(waiting, 200);
+        } else {
+            this.mapDataAndLayer();
         }
-      });
-      this.setState({ loaded: true });
+      };
+      waiting();
+    });
+
+    this.map.on('zoom', (originalEvent) => {
+      const mapBounds = this.map.getBounds();
+      
+      this.props.onChange(
+        originalEvent,
+        {
+          zoom: this.map.getZoom(),
+          bounds: mapBounds,
+          north: mapBounds._ne.lat,
+          south: mapBounds._sw.lat,
+          east: mapBounds._ne.lng,
+          west: mapBounds._sw.lng
+        }
+      );
     });
   }
 
@@ -121,7 +218,7 @@ class Map extends React.Component {
   renderClusters() {
     if (this.state.loaded && this.props.aggregations) {
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
-      console.log("add", geojson);
+      //console.log("add", geojson);
       this.map.getSource("pop").setData(geojson);
     }
   }
@@ -148,16 +245,23 @@ function toGeoJson(arr) {
 
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
+    const coordinates = GeoHash.decode(item.key);
+    const ncoordinates = nGeoHash.decode(item.key);
+
+    //console.log(coordinates)
+    //console.log('----')
+    //console.log(ncoordinates)
+
     geoJsonFormated.features.push({
       type: "Feature",
       properties: {
         id: item.key,
         count: item.doc_count,
-        hit: item.top_hits.hits.hits[0]
+        hit: item.top_hits.hits.hits[0],
       },
       geometry: {
         type: "Point",
-        coordinates: [1.092157, 47.551314]
+        coordinates: [ncoordinates.longitude, ncoordinates.latitude]
       }
     });
   }

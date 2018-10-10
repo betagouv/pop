@@ -6579,6 +6579,11 @@ kleur@^2.0.1:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-2.0.2.tgz#b704f4944d95e255d038f0cb05fb8a602c55a300"
   integrity sha512-77XF9iTllATmG9lSlIv0qdQ2BQ/h9t0bJllHlbvsQ0zUWfU7Yi0S8L5JXzPZgkefIiajLmBJJ4BsMJmqcf7oxQ==
 
+latlon-geohash@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/latlon-geohash/-/latlon-geohash-1.1.0.tgz#7abe15224c4800e3eaecac71c753a20bfb6cbf65"
+  integrity sha1-er4VIkxIAOPq7Kxxx1OiC/tsv2U=
+
 lazy-req@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/lazy-req/-/lazy-req-1.1.0.tgz#bdaebead30f8d824039ce0ce149d4daa07ba1fac"
@@ -7423,6 +7428,11 @@ net@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/net/-/net-1.0.2.tgz#d1757ec9a7fb2371d83cf4755ce3e27e10829388"
   integrity sha1-0XV+yaf7I3HYPPR1XOPifhCCk4g=
+
+ngeohash@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ngeohash/-/ngeohash-0.6.0.tgz#329713e9e73d1f1a46d92aab0b94adb94533f687"
+  integrity sha1-MpcT6ec9HxpG2SqrC5StuUUz9oc=
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -9076,10 +9086,10 @@ react@^16.5.0:
     prop-types "^15.6.2"
     schedule "^0.5.0"
 
-reactivemaps-tmp-mapbox@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/reactivemaps-tmp-mapbox/-/reactivemaps-tmp-mapbox-2.1.1.tgz#97fd3abd3b4db6ceecbf8dfe60b1b631e401c859"
-  integrity sha512-Y9lGHixOa0uXNHCfdUjBd1w/KUWnwbMqwp4k7xD1j1VbpXuigo6sHgLbGCwLgKYHR1Hcq3+aUYhpgeVHViI6Fg==
+reactivemaps-tmp-mapbox@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/reactivemaps-tmp-mapbox/-/reactivemaps-tmp-mapbox-2.1.2.tgz#3e171cddc9a1476f993c7875efad0584b01d2b13"
+  integrity sha512-B0L2idQCWqnJzUDPQIPioJCgAy2fAn3fWziq3WBBTMv4SV/ONKAY+O3KG9eqhdw3rx3zS3UQhkA4KPpSFXZdSg==
   dependencies:
     downshift "^1.31.2"
     emotion "^9.0.0"
