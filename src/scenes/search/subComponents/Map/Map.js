@@ -6,7 +6,11 @@ import nGeoHash from 'ngeohash';
 import "./mapbox-gl.css";
 
 export default class Umbrella extends React.Component {
-  state = {};
+  state = {
+    query: {},
+  };
+
+  prevPrecision = 1;
 
   constructor(props) {
     super(props);
@@ -14,7 +18,7 @@ export default class Umbrella extends React.Component {
   }
 
   componentWillMount() {
-    this.updateQuery(51, -5, 41, -6, 1);
+    this.updateQuery(51, -5, 41, -6, 8);
   }
 
   onMapChange(originalEvent, boxZoomBounds) {
@@ -31,7 +35,12 @@ export default class Umbrella extends React.Component {
       if(precision < 1) precision = 1;
       if(precision > 8) precision = 8;
 
-      this.updateQuery(51, -5, 41, -6, Math.round(precision));
+      precision = Math.round(precision);
+
+      if(precision !== this.prevPrecision) {
+        this.prevPrecision = precision;
+        this.updateQuery(51, -5, 41, -6, precision);
+      }
   }
 
   /*
@@ -116,6 +125,7 @@ class Map extends React.Component {
   state = {
     loaded: false
   };
+  //debounceTimeout = null;
 
   mapDataAndLayer() {
     this.map.addSource("pop", {
@@ -193,20 +203,42 @@ class Map extends React.Component {
       waiting();
     });
 
-    this.map.on('zoom', (originalEvent) => {
+    this.map.on('zoomend', (originalEvent) => {
       const mapBounds = this.map.getBounds();
       
-      this.props.onChange(
-        originalEvent,
-        {
-          zoom: this.map.getZoom(),
-          bounds: mapBounds,
-          north: mapBounds._ne.lat,
-          south: mapBounds._sw.lat,
-          east: mapBounds._ne.lng,
+      // if(this.debounceTimeout) {
+      //   clearTimeout(this.debounceTimeout);
+      // }
+
+    //   this.debounceTimeout = setTimeout(
+    //      ()=>{
+    //        this.props.onChange(
+    //          originalEvent,
+    //          {
+    //            zoom: this.map.getZoom(),
+    //            bounds: mapBounds,
+    //            north: mapBounds._ne.lat,
+    //            south: mapBounds._sw.lat,
+    //            east: mapBounds._ne.lng,
+    //            west: mapBounds._sw.lng
+    //           }
+    //        );
+    //      },
+    //      200
+    //  );
+
+       this.props.onChange(
+         originalEvent,
+         {
+         zoom: this.map.getZoom(),
+           bounds: mapBounds,
+           north: mapBounds._ne.lat,
+         south: mapBounds._sw.lat,
+           east: mapBounds._ne.lng,
           west: mapBounds._sw.lng
-        }
-      );
+         }
+       );
+
     });
   }
 
@@ -214,11 +246,21 @@ class Map extends React.Component {
     this.map.remove();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.loaded && this.props.aggregations && nextProps.aggregations) {
+      return (this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets);
+    }
+    return true;
+  }
+
   renderClusters() {
     if (this.state.loaded && this.props.aggregations) {
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
       //console.log("add", geojson);
+      const before = window.performance.now();
       this.map.getSource("pop").setData(geojson);
+      const timeExec = window.performance.now() - before;
+      console.log(`setData ${timeExec} ms`);
     }
   }
 
