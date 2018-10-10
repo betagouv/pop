@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
-import GeoHash from 'latlon-geohash';
 import nGeoHash from 'ngeohash';
 
 
@@ -28,9 +27,9 @@ export default class Umbrella extends React.Component {
       //   3
       // );
 
-      let precision = (boxZoomBounds.zoom * 12)/15;
+      let precision = (boxZoomBounds.zoom * 6)/15;
       if(precision < 1) precision = 1;
-      if(precision > 12) precision = 12;
+      if(precision > 6) precision = 6;
 
       this.updateQuery(51, -5, 41, -6, Math.round(precision));
   }
@@ -237,6 +236,7 @@ class Map extends React.Component {
 }
 
 function toGeoJson(arr) {
+  const before = window.performance.now();
   const geoJsonFormated = {
     type: "FeatureCollection",
     info: { type: "name", properties: { name: "POP" } },
@@ -245,12 +245,7 @@ function toGeoJson(arr) {
 
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
-    const coordinates = GeoHash.decode(item.key);
     const ncoordinates = nGeoHash.decode(item.key);
-
-    //console.log(coordinates)
-    //console.log('----')
-    //console.log(ncoordinates)
 
     geoJsonFormated.features.push({
       type: "Feature",
@@ -265,6 +260,8 @@ function toGeoJson(arr) {
       }
     });
   }
+
+  console.log(`toGeoJson ${(window.performance.now() - before)} ms`;
 
   return geoJsonFormated;
 }
