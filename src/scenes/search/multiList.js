@@ -29,6 +29,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
               placeholder={this.props.placeholder}
               showSearch={this.props.showSearch}
               displayCount={this.props.displayCount}
+              renderListItem={this.props.renderListItem}
               defaultSelected={this.props.defaultSelected}
               dataField={this.props.dataField}
               componentId={this.props.componentId}
@@ -134,6 +135,7 @@ class MultiListUmbrella extends React.Component {
           placeholder={this.props.placeholder}
           displayCount={this.props.displayCount}
           showSearch={this.props.showSearch}
+          renderListItem={this.props.renderListItem}
           selected={this.state.selected}
           search={this.state.search}
           onSearchChange={search => {
@@ -147,6 +149,12 @@ class MultiListUmbrella extends React.Component {
 }
 
 class MultiList extends React.Component {
+  renderListItem(item) {
+    if (this.props.renderListItem) {
+      return this.props.renderListItem(item.key, item.doc_count);
+    }
+    return this.props.displayCount ? `${item.key} (${item.doc_count})` : `${item.key} `;
+  }
   renderSuggestion() {
     if (
       this.props.aggregations &&
@@ -155,16 +163,14 @@ class MultiList extends React.Component {
       const key = Object.keys(this.props.aggregations)[0];
       const options = this.props.aggregations[key].buckets
         .filter(e => e.key)
-        .map(e => (
-          <Label check key={e.key}>
+        .map(item => (
+          <Label check key={item.key}>
             <Input
-              checked={this.props.selected.includes(e.key)}
+              checked={this.props.selected.includes(item.key)}
               type="checkbox"
-              onChange={() => this.props.onSelect(e.key)}
+              onChange={() => this.props.onSelect(item.key)}
             />
-            {this.props.displayCount
-              ? `${e.key} (${e.doc_count})`
-              : `${e.key} `}
+            {this.renderListItem(item)}
           </Label>
         ));
       return <FormGroup check>{options}</FormGroup>;

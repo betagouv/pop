@@ -1,7 +1,7 @@
 import React from "react";
-import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import {
   Row,
   Col,
@@ -47,12 +47,11 @@ const FILTER = [
 ];
 
 class Search extends React.Component {
-
   state = {
     activeTab: "list",
     bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
-    defaultSelected: '',
-  }
+    defaultSelected: ""
+  };
 
   constructor(props) {
     super(props);
@@ -73,15 +72,16 @@ class Search extends React.Component {
     };
 
     let activeTab = "list";
-    if(/search\/map/.test(location.pathname)) {
+    if (/search\/map/.test(location.pathname)) {
       activeTab = "map";
-    } else if(/search\/mosaique/.test(location.pathname)) {
+    } else if (/search\/mosaique/.test(location.pathname)) {
       activeTab = "mosaique";
     }
 
     this.setState({
       activeTab,
-      bases: bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
+      bases:
+        bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
       defaultSelected: mainSearchSelected()
     });
   }
@@ -90,11 +90,11 @@ class Search extends React.Component {
     const { location } = this.props;
     const { location: prevLocation } = prevProps;
 
-    if(location.pathname !== prevLocation.pathname) {
+    if (location.pathname !== prevLocation.pathname) {
       let activeTab = "list";
-      if(/search\/map/.test(location.pathname)) {
+      if (/search\/map/.test(location.pathname)) {
         activeTab = "map";
-      } else if(/search\/mosaique/.test(location.pathname)) {
+      } else if (/search\/mosaique/.test(location.pathname)) {
         activeTab = "mosaique";
       }
       this.setState({ activeTab });
@@ -104,7 +104,7 @@ class Search extends React.Component {
   toggle(subRoute) {
     const { onTabClicked, location } = this.props;
     if (this.state.activeTab !== subRoute) {
-      onTabClicked(subRoute,location.search);
+      onTabClicked(subRoute, location.search);
     }
   }
 
@@ -123,87 +123,95 @@ class Search extends React.Component {
                     clearAllLabel="Tout supprimer"
                   />
                   <h4>Affiner par</h4>
-                    <MultiList
-                      dataField="BASE.keyword"
-                      title="Base"
-                      componentId="base"
-                      showSearch={false}
-                    />
-                    <MultiList
-                      dataField="DENO.keyword"
-                      title="Dénomination"
-                      placeholder="Rechercher une dénomination"
-                      componentId="deno"
-                    />
-                    <MultiList
-                      dataField="DOMN.keyword"
-                      title="Sous-Domaine"
-                      placeholder="Rechercher un sous-domaine"
-                      componentId="domn"
-                    />
-                    <MultiList
-                      dataField="REG.keyword"
-                      title="Région"
-                      componentId="region"
-                      placeholder="Rechercher une région"
-                      sortByName
-                    />
-                    <MultiList
-                      dataField="DPT.keyword"
-                      title="Département"
-                      componentId="departement"
-                      placeholder="Rechercher un département"
-                      sortByName
-                      react={{ FILTER: "region" }}
-                    />
-                    <MultiList
-                      dataField="COM.keyword"
-                      title="Commune"
-                      componentId="commune"
-                    />
-                    <MultiList
-                      dataField="PERI.keyword"
-                      title="Période"
-                      componentId="periode"
-                      placeholder="Rechercher une période"
-                    />
-                    <MultiList
-                      dataField="CONTIENT_IMAGE.keyword"
-                      title="Contient une image"
-                      componentId="image"
-                      placeholder="oui ou non"
-                      showSearch={false}
-                      defaultSelected={
-                        this.state.activeTab === "mosaique" ? ["oui"] : []
-                      }
-                    />
-                    <MultiList
-                      componentId="geolocalisation"
-                      dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
-                      title="Est géolocalisé"
-                      filterLabel="Est géolocalisé "
-                      queryFormat="or"
-                      className="filters"
-                      showSearch={false}
-                      URLParams={true}
-                      showSearch={false}
-                      defaultSelected={
-                        this.state.activeTab === "map" ? ["oui"] : []
-                      } // TODO clean this
-                      data={[
-                        { label: "oui", value: "oui" },
-                        { label: "non", value: "non" }
-                      ]}
-                      react={{
-                        and: FILTER
-                      }}
-                    />
-                    <MultiList
-                      dataField="TECH.keyword"
-                      title="Techniques"
-                      componentId="tech"
-                      placeholder="Rechercher une technique"
-                    />
+                  <MultiList
+                    dataField="BASE.keyword"
+                    title="Base"
+                    componentId="base"
+                    showSearch={false}
+                  />
+                  <MultiList
+                    dataField="DENO.keyword"
+                    title="Dénomination"
+                    placeholder="Rechercher une dénomination"
+                    componentId="deno"
+                  />
+                  <MultiList
+                    dataField="DOMN.keyword"
+                    title="Sous-Domaine"
+                    placeholder="Rechercher un sous-domaine"
+                    componentId="domn"
+                  />
+                  <MultiList
+                    dataField="REG.keyword"
+                    title="Région"
+                    componentId="region"
+                    placeholder="Rechercher une région"
+                    sortByName
+                  />
+                  <MultiList
+                    dataField="DPT.keyword"
+                    title="Département"
+                    componentId="departement"
+                    placeholder="Rechercher un département"
+                    sortByName
+                    react={{ FILTER: "region" }}
+                    renderListItem={(label, count) => (
+                      <div>
+                        {label}
+                        <span style={{ marginLeft: 5, color: "dodgerblue" }}>
+                          {count}
+                        </span>
+                      </div>
+                    )}
+                  />
+                  <MultiList
+                    dataField="COM.keyword"
+                    title="Commune"
+                    componentId="commune"
+                  />
+                  <MultiList
+                    dataField="PERI.keyword"
+                    title="Période"
+                    componentId="periode"
+                    placeholder="Rechercher une période"
+                  />
+                  <MultiList
+                    dataField="CONTIENT_IMAGE.keyword"
+                    title="Contient une image"
+                    componentId="image"
+                    placeholder="oui ou non"
+                    showSearch={false}
+                    defaultSelected={
+                      this.state.activeTab === "mosaique" ? ["oui"] : []
+                    }
+                  />
+                  <MultiList
+                    componentId="geolocalisation"
+                    dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+                    title="Est géolocalisé"
+                    filterLabel="Est géolocalisé "
+                    queryFormat="or"
+                    className="filters"
+                    showSearch={false}
+                    URLParams={true}
+                    showSearch={false}
+                    defaultSelected={
+                      this.state.activeTab === "map" ? ["oui"] : []
+                    } // TODO clean this
+                    data={[
+                      { label: "oui", value: "oui" },
+                      { label: "non", value: "non" }
+                    ]}
+                    react={{
+                      and: FILTER
+                    }}
+                  />
+                  <MultiList
+                    dataField="TECH.keyword"
+                    title="Techniques"
+                    componentId="tech"
+                    placeholder="Rechercher une technique"
+                  />
                 </aside>
               </Col>
               <Col xs="9">
@@ -295,7 +303,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "list"
                           })}
                           onClick={() => {
-                            this.toggle('list');
+                            this.toggle("list");
                           }}
                         >
                           LISTE
@@ -308,7 +316,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "map"
                           })}
                           onClick={() => {
-                            this.toggle('map');
+                            this.toggle("map");
                           }}
                         >
                           MAP
@@ -321,7 +329,7 @@ class Search extends React.Component {
                             active: this.state.activeTab === "mosaique"
                           })}
                           onClick={() => {
-                            this.toggle('mosaique');
+                            this.toggle("mosaique");
                           }}
                         >
                           MOSAIQUE
@@ -335,9 +343,7 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/list"
-                      render={() => (
-                        <List filter={FILTER} />
-                      )}
+                      render={() => <List filter={FILTER} />}
                     />
                   </TabPane>
                   <TabPane tabId="map">
@@ -353,18 +359,14 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/map"
-                      render={() => (
-                        <Map filter={FILTER} />
-                      )}
+                      render={() => <Map filter={FILTER} />}
                     />
                   </TabPane>
                   <TabPane tabId="mosaique">
                     <Route
                       exact
                       path="/search/mosaique"
-                      render={() => (
-                        <Mosaique filter={FILTER} />
-                      )}
+                      render={() => <Mosaique filter={FILTER} />}
                     />
                   </TabPane>
                 </TabContent>
@@ -377,14 +379,12 @@ class Search extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({});
 
-const mapStateToProps = (state) => ({
-});
-
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   onTabClicked: (subPath, params) => {
     dispatch(push(`/search/${subPath}${params}`));
-  },
+  }
 });
 
 export default connect(
