@@ -10,6 +10,7 @@ export default class Umbrella extends React.Component {
   };
 
   prevPrecision = 1;
+  prevBounds = null;
 
   constructor(props) {
     super(props);
@@ -29,7 +30,7 @@ export default class Umbrella extends React.Component {
 
     precision = Math.round(precision);
 
-    if (precision !== this.prevPrecision) {
+    //if (precision !== this.prevPrecision) {
       this.prevPrecision = precision;
       //this.updateQuery(51, -5, 41, -6, precision);
 
@@ -40,7 +41,7 @@ export default class Umbrella extends React.Component {
         boxZoomBounds.east,
         precision
       );
-    }
+    //}
   }
 
   /*
@@ -68,13 +69,6 @@ Area width x height
     bottom_right_lon,
     precision
   ) {
-    console.log(
-      top_left_lat,
-      top_left_lon,
-      bottom_right_lat,
-      bottom_right_lon,
-      precision
-    );
     const query = `{
       "size": 1,
       "query": {
