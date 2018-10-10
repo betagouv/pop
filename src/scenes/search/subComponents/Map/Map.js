@@ -153,7 +153,6 @@ Area width x height
 class Map extends React.Component {
   state = {
     loaded: false,
-    center: [2.515597, 46.856731],
     popup: null
   };
 
@@ -187,13 +186,10 @@ class Map extends React.Component {
 
   onMoveEnd(map, event) {
     const mapBounds = map.getBounds();
-
-    const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
 
     this.setState({
-      center: [currentCenter.lng, currentCenter.lat],
-      popup: null
+      popup: null,
     });
 
     this.props.onChange(event, {
@@ -227,11 +223,40 @@ class Map extends React.Component {
       <MapBox
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={style}
-        center={this.state.center}
         ref={this.mapRef}
-        onStyleLoad={map => {
-          map.resize();
-          this.map = this.mapRef.current.state.map;
+        onStyleLoad={
+            (map)=>{
+              map.resize();
+              map.setZoom(5);
+              map.setCenter({lng:2.515597, lat:46.856731});
+              this.map = map;
+
+              window.mapRef = map;
+            
+              map.on('click', 'unclustered-point', (e) => {
+                
+                const features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-point'] });
+                console.log(features)
+                if(features.length === 1) {
+                  const itemId = features[0].properties.id;
+                  const hit = JSON.parse(features[0].properties.hit);
+                  const item = {...hit, ...hit._source};
+        
+                  console.log(item)
+                  
+                  const popup = (
+                    <Popup
+                      key={`Popup`}
+                      coordinates={[item.POP_COORDONNEES.lon, item.POP_COORDONNEES.lat]}
+                    >
+                      <CardMap className="" key={item.REF} data={item} />
+                    </Popup>
+                  );
+                  
+                  this.setState({ popup });
+                  
+                }
+              });
 
           map.on("click", "unclustered-point", e => {
             const features = map.queryRenderedFeatures(e.point, {

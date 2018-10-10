@@ -1,8 +1,8 @@
-import React from "react";
-import { ReactiveComponent } from "@appbaseio/reactivesearch";
-import { Input, Label, FormGroup, Collapse } from "reactstrap";
-import queryString from "query-string";
-import "./multiList.css";
+import React from 'react';
+import { ReactiveComponent } from '@appbaseio/reactivesearch';
+import { Input, Label, FormGroup, Collapse } from 'reactstrap';
+import queryString from 'query-string';
+import './multiList.css';
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
@@ -49,18 +49,18 @@ class MultiListUmbrella extends React.Component {
     super(props);
     this.state = {
       query: {},
-      search: "",
+      search: '',
       selected: []
     };
   }
 
   componentWillMount() {
-    this.updateInternalQuery("");
+    this.updateInternalQuery('');
     const values = queryString.parse(location.search);
     const field = this.props.componentId;
     if (values[field]) {
       const str = values[field].slice(1, -1);
-      const selected = str.split(", ");
+      const selected = str.split(', ');
       this.updateExternalQuery(selected);
       this.setState({ selected });
       this.props.onCollapse(true);
@@ -103,25 +103,42 @@ class MultiListUmbrella extends React.Component {
   }
 
   updateExternalQuery(selected) {
+    let should;
+    if (!Array.isArray(this.props.dataField)) {
+      should = selected.map(e => ({ term: { [this.props.dataField]: e } }));
+    } else {
+      should = selected
+        .map(e => this.props.dataField.map(d => ({ term: { [d]: e } })))
+        .reduce((a, b) => a.concat(b), []);
+    }
+
     const query = {
       bool: {
-        should: selected.map(e =>
-          JSON.parse(`{"term":{"${this.props.dataField}":"${e}"}}`)
-        )
+        should
       }
     };
-    this.props.setQuery({ query, value: selected.join(", ") });
+    this.props.setQuery({ query, value: selected.join(', ') });
   }
 
   updateInternalQuery(search) {
     const value = this.props.dataField;
-    const limit = this.props.limit || 20;
+    const size = this.props.limit || 20;
     const sort =
       this.props.sortByName !== undefined
-        ? `"order": {"_key": "asc"}`
-        : `"order": {"_count": "desc"}`;
-    const query = `{"aggs": {"${value}.keyword": {"terms": {"field": "${value}","include" : ".*${search}.*",${sort},"size": ${limit}}}}}`;
-    this.setState({ query: JSON.parse(query) });
+        ? { order: { _key: 'asc' } }
+        : { order: { _count: 'desc' } };
+
+    const fields = Array.isArray(value) ? value : [value];
+    const query = {
+      aggs: fields.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field]: { terms: { field, include: `.*${search}.*`, ...sort, size } }
+        }),
+        {}
+      )
+    };
+    this.setState({ query });
   }
 
   render() {
@@ -153,7 +170,9 @@ class MultiList extends React.Component {
     if (this.props.renderListItem) {
       return this.props.renderListItem(item.key, item.doc_count);
     }
-    return this.props.displayCount ? `${item.key} (${item.doc_count})` : `${item.key} `;
+    return this.props.displayCount
+      ? `${item.key} (${item.doc_count})`
+      : `${item.key} `;
   }
   renderSuggestion() {
     if (
