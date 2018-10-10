@@ -153,7 +153,6 @@ Area width x height
 class Map extends React.Component {
   state = {
     loaded: false,
-    center: [2.515597, 46.856731],
     popup: null
   };
 
@@ -186,12 +185,9 @@ class Map extends React.Component {
 
   onMoveEnd (map, event) {
     const mapBounds = map.getBounds();
-
-    const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
 
-    this.setState({ 
-      center: [currentCenter.lng,currentCenter.lat],
+    this.setState({
       popup: null,
     });
 
@@ -226,13 +222,15 @@ class Map extends React.Component {
       <MapBox
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={style}
-        center={this.state.center}
         ref={this.mapRef}
         onStyleLoad={
             (map)=>{
               map.resize();
               map.setZoom(5);
-              this.map = this.mapRef.current.state.map;
+              map.setCenter({lng:2.515597, lat:46.856731});
+              this.map = map;
+
+              window.mapRef = map;
             
               map.on('click', 'unclustered-point', (e) => {
                 
