@@ -153,8 +153,8 @@ Area width x height
 class Map extends React.Component {
   state = {
     loaded: false,
-    center: [2.367101341254551, 48.86162755885409],
-    zoom: 13,
+    center: [2.515597, 46.856731],
+    zoom: 5,
     popup: null
   };
 
@@ -358,6 +358,7 @@ function toGeoJson(arr) {
     info: { type: "name", properties: { name: "POP" } },
     features: []
   };
+  console.log("FOUND", arr.length);
 
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
