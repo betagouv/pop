@@ -29,6 +29,7 @@ import Mosaique from "./subComponents/Mosaique";
 import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
+import { isDepartmentNumber, departmentText } from './department';
 
 import "./index.css";
 
@@ -154,15 +155,17 @@ class Search extends React.Component {
                     componentId="departement"
                     placeholder="Rechercher un département"
                     sortByName
+                    showSearch={false}
+                    limit={200}
                     react={{ FILTER: "region" }}
-                    renderListItem={(label, count) => (
-                      <div>
-                        {label}
-                        <span style={{ marginLeft: 5, color: "dodgerblue" }}>
-                          {count}
-                        </span>
-                      </div>
-                    )}
+                    renderListItem={(label, count) => {
+                      if (isDepartmentNumber(label)) {
+                        return <div>
+                          {departmentText(label)} ({count})
+                        </div>;
+                      }
+                      
+                    }}
                   />
                   <MultiList
                     dataField="COM.keyword"
