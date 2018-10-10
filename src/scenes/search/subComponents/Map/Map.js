@@ -261,7 +261,8 @@ function toGeoJson(arr) {
     });
   }
 
-  console.log(`toGeoJson ${(window.performance.now() - before)} ms`;
+  const timeExec = window.performance.now() - before;
+  console.log(`toGeoJson ${timeExec} ms`);
 
   return geoJsonFormated;
 }
