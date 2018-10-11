@@ -7,9 +7,9 @@ import CardMap from "./CardMap";
 
 import "./mapbox-gl.css";
 
-
 const MapBox = ReactMapboxGl({
-  accessToken: "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ"
+  accessToken:
+    "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ"
 });
 
 export default class Umbrella extends React.Component {
@@ -33,9 +33,9 @@ export default class Umbrella extends React.Component {
     //console.log(boxZoomBounds.zoom)
 
     let zoom = Math.round(boxZoomBounds.zoom);
-    if(zoom < 2) {
+    if (zoom < 2) {
       zoom = 2;
-    } else if(zoom > 15) {
+    } else if (zoom > 15) {
       zoom = 15;
     }
 
@@ -66,7 +66,6 @@ export default class Umbrella extends React.Component {
       boxZoomBounds.east,
       precision
     );
-    
   }
 
   /*
@@ -137,11 +136,12 @@ Area width x height
   }
 
   render() {
+    console.log("this.props.filter", this.props.filter);
     return (
       <ReactiveComponent
         componentId={this.props.componentId || "map"} // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
-        react={this.props.react || {}}
+        react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
       >
         <Map onChange={this.onMapChange} />
@@ -153,7 +153,6 @@ Area width x height
 class Map extends React.Component {
   state = {
     loaded: false,
-    center: [2.515597, 46.856731],
     popup: null
   };
 
@@ -164,7 +163,6 @@ class Map extends React.Component {
 
     this.mapRef = React.createRef();
     this.onMoveEnd = this.onMoveEnd.bind(this);
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -173,8 +171,10 @@ class Map extends React.Component {
       this.props.aggregations &&
       nextProps.aggregations
     ) {
-      let should = ( this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets );
-      if(!should && (this.state.popup !== nextState.popup)) should = true;
+      let should =
+        this.props.aggregations.france.buckets !==
+        nextProps.aggregations.france.buckets;
+      if (!should && this.state.popup !== nextState.popup) should = true;
       return should;
     }
     return true;
@@ -184,14 +184,11 @@ class Map extends React.Component {
     this.renderClusters();
   }
 
-  onMoveEnd (map, event) {
+  onMoveEnd(map, event) {
     const mapBounds = map.getBounds();
-
-    const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
 
-    this.setState({ 
-      center: [currentCenter.lng,currentCenter.lat],
+    this.setState({
       popup: null,
     });
 
@@ -226,13 +223,15 @@ class Map extends React.Component {
       <MapBox
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={style}
-        center={this.state.center}
         ref={this.mapRef}
         onStyleLoad={
             (map)=>{
               map.resize();
               map.setZoom(5);
-              this.map = this.mapRef.current.state.map;
+              map.setCenter({lng:2.515597, lat:46.856731});
+              this.map = map;
+
+              window.mapRef = map;
             
               map.on('click', 'unclustered-point', (e) => {
                 
@@ -259,104 +258,113 @@ class Map extends React.Component {
                 }
               });
 
-              map.on('mouseenter', 'unclustered-point', () => { this.map.getCanvas().style.cursor = 'pointer'; });
-              map.on('mouseleave', 'unclustered-point', () => { this.map.getCanvas().style.cursor = ''; });
+          map.on("click", "unclustered-point", e => {
+            const features = map.queryRenderedFeatures(e.point, {
+              layers: ["unclustered-point"]
+            });
+            console.log(features);
+            if (features.length === 1) {
+              const itemId = features[0].properties.id;
+              const hit = JSON.parse(features[0].properties.hit);
+              const item = { ...hit, ...hit._source };
 
+              console.log(item);
 
+              const popup = (
+                <Popup
+                  key={`Popup`}
+                  coordinates={[
+                    item.POP_COORDONNEES.lon,
+                    item.POP_COORDONNEES.lat
+                  ]}
+                >
+                  <CardMap className="" key={item.REF} data={item} />
+                </Popup>
+              );
 
-              this.setState({ loaded: true });
+              this.setState({ popup });
             }
-        }
+          });
+
+          map.on("mouseenter", "unclustered-point", () => {
+            this.map.getCanvas().style.cursor = "pointer";
+          });
+          map.on("mouseleave", "unclustered-point", () => {
+            this.map.getCanvas().style.cursor = "";
+          });
+
+          this.setState({ loaded: true });
+        }}
         onMoveEnd={this.onMoveEnd}
-        onData={
-          (map)=> {
-
-          }
-        }
+        onData={map => {}}
       >
-        <Source 
-          id="pop" 
-          geoJsonSource={
-            {
-              type: "geojson",
-              data: {
-                type: "FeatureCollection",
-                features: []
-              }
+        <Source
+          id="pop"
+          geoJsonSource={{
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: []
             }
-          }
+          }}
         />
-        <Layer 
+        <Layer
           type="circle"
           id="clusters"
           sourceId="pop"
           filter={["has", "count"]}
           paint={{
-              "circle-color": [
-                "step",
-                ["get", "count"],
-                "#9C27B0",
-                2,
-                "#51bbd6",
-                100,
-                "#f1f075",
-                750,
-                "#f28cb1"
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "count"],
-                9,
-                2,
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-stroke-width": [
-                "step",
-                ["get", "count"],
-                2,
-                2,
-                0
-              ],
-              "circle-stroke-color": "#fff"
+            "circle-color": [
+              "step",
+              ["get", "count"],
+              "#9C27B0",
+              2,
+              "#51bbd6",
+              100,
+              "#f1f075",
+              750,
+              "#f28cb1"
+            ],
+            "circle-radius": [
+              "step",
+              ["get", "count"],
+              9,
+              2,
+              20,
+              100,
+              30,
+              750,
+              40
+            ],
+            "circle-stroke-width": ["step", ["get", "count"], 2, 2, 0],
+            "circle-stroke-color": "#fff"
           }}
-				/>
-        <Layer 
+        />
+        <Layer
           type="symbol"
           id="cluster-count"
           sourceId="pop"
           filter={["has", "count"]}
           layout={{
-              "text-field": "{count}",
-              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-              "text-size": 12
+            "text-field": "{count}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
           }}
           paint={{
-            'text-color': [
-              "step",
-              ["get", "count"],
-              "#ffffff",
-              2,
-              "#000000"
-            ],
+            "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
           }}
-				/>
-        <Layer 
+        />
+        <Layer
           type="circle"
           id="unclustered-point"
           sourceId="pop"
           filter={["!", ["has", "count"]]}
-          paint={
-            {
-                    "circle-color": "#9C27B0",
-                    "circle-radius": 9,
-                    "circle-stroke-width": 2,
-                    "circle-stroke-color": "#fff"
-                }
-          }
+          paint={{
+            "circle-color": "#9C27B0",
+            "circle-radius": 9,
+            "circle-stroke-width": 2,
+            "circle-stroke-color": "#fff"
+          }}
         />
         {this.state.popup}
       </MapBox>
@@ -381,17 +389,20 @@ function toGeoJson(arr) {
       type: "Feature",
       properties: {
         id: item.key,
-        hit,
+        hit
       },
       geometry: {
         type: "Point",
         coordinates: [ncoordinates.longitude, ncoordinates.latitude]
       }
     };
-    if(item.doc_count > 1) {
+    if (item.doc_count > 1) {
       feature.properties.count = item.doc_count;
     } else {
-      feature.geometry.coordinates = [hit._source.POP_COORDONNEES.lon, hit._source.POP_COORDONNEES.lat];
+      feature.geometry.coordinates = [
+        hit._source.POP_COORDONNEES.lon,
+        hit._source.POP_COORDONNEES.lat
+      ];
     }
     geoJsonFormated.features.push(feature);
   }
