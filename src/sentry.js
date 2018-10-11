@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV !== "development") {
   var Raven = require("raven");
-  console.log("RUN RAVEN")
+  console.log("RUN RAVEN");
   Raven.config(
     "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21",
     {

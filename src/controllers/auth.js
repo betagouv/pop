@@ -77,7 +77,7 @@ router.get("/", (req, res) => {
 
   User.find(query, (error, users) => {
     if (error) {
-      capture(error)
+      capture(error);
       return res.status(500).send({ error });
     }
     res.status(200).send(users);
