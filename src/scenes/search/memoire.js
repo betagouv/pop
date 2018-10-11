@@ -1,22 +1,22 @@
-import React from 'react';
-import { Row, Col, Container, ButtonGroup, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Row, Col, Container, ButtonGroup, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import {
   ReactiveBase,
   DataSearch,
   ReactiveList,
   SelectedFilters
-} from '@appbaseio/reactivesearch/lib';
-import MultiList from './components/multiList';
+} from "@appbaseio/reactivesearch/lib";
+import MultiList from "./components/multiList";
 
-import ExportComponent from './components/export';
+import ExportComponent from "./components/export";
 
-import QueryBuilder from './components/queryBuilder';
+import QueryBuilder from "./components/queryBuilder";
 
-import Memoire from '../../entities/memoire';
-import { es_url, bucket_url } from '../../config.js';
+import Memoire from "../../entities/memoire";
+import { es_url, bucket_url } from "../../config.js";
 
-const FILTER = ['mainSearch', 'dom', 'autp', 'producteur', 'loca'];
+const FILTER = ["mainSearch", "dom", "autp", "producteur", "loca"];
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -27,8 +27,8 @@ export default class Search extends React.Component {
     for (var property in obj) {
       if (
         obj.hasOwnProperty(property) &&
-        property.indexOf('_') !== 0 &&
-        typeof obj[property] === 'object'
+        property.indexOf("_") !== 0 &&
+        typeof obj[property] === "object"
       ) {
         fieldsToExport.push(property);
       }
@@ -46,14 +46,14 @@ export default class Search extends React.Component {
         <QueryBuilder entity={Memoire} componentId="advancedSearch" />
         <div className="text-center m-4">
           <ExportComponent
-            FILTER={['advancedSearch']}
+            FILTER={["advancedSearch"]}
             filename="merimee.csv"
             columns={this.state.fieldsToExport}
           />
         </div>
         <ReactiveList
           componentId="results"
-          react={{ and: ['advancedSearch'] }}
+          react={{ and: ["advancedSearch"] }}
           onResultStats={(total, took) => {
             return `${total} résultats trouvés en ${took} ms.`;
           }}
@@ -73,7 +73,7 @@ export default class Search extends React.Component {
         <div className="search-and-export-zone">
           <DataSearch
             componentId="mainSearch"
-            dataField={['TICO', 'DENO', 'REF', 'LOCA']}
+            dataField={["TICO", "DENO", "REF", "LOCA"]}
             queryFormat="and"
             iconPosition="left"
             className="mainSearch"
@@ -184,25 +184,25 @@ export default class Search extends React.Component {
 const Card = ({ data }) => {
   // const image = data.IMG ? `${data.IMG}` : require('../../assets/noimage.jpg');
 
-  let image = '';
-  if (data.IMG.indexOf('memoire') === 0) {
+  let image = "";
+  if (data.IMG.indexOf("memoire") === 0) {
     image = `${bucket_url}${data.IMG}`;
   } else if (data.IMG) {
     image = `${data.IMG}`;
   } else {
-    image = require('../../assets/noimage.jpg');
+    image = require("../../assets/noimage.jpg");
   }
 
   return (
     <Link
-      style={{ textDecoration: 'none' }}
+      style={{ textDecoration: "none" }}
       to={`/notice/memoire/${data.REF}`}
       className="card"
       key={data.REF}
     >
       <img src={image} alt="Lien cassé" />
       <div className="content">
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
           <h2>{data.TICO}</h2>
           <span>{data.REF}</span>
         </div>

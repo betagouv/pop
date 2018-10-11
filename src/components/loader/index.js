@@ -1,14 +1,10 @@
-import React from 'react';
-import './index.css';
+import React from "react";
+import "./index.css";
 
 export default () => {
   return (
-   <div className='loader-container'>
-      <div id="loader"/>
-  </div>)
-
-}
-
-
-
-
+    <div className="loader-container">
+      <div id="loader" />
+    </div>
+  );
+};

@@ -1,35 +1,34 @@
-
-.notice .section{
-  background-color: #F4F4F4;
+.notice .section {
+  background-color: #f4f4f4;
   margin: 20px;
   padding: 10px;
   border-radius: 5px;
 }
 
-.notice .section .title{
+.notice .section .title {
   font-size: 30px;
 }
 
-.notice .section .subtitle{
+.notice .section .subtitle {
   font-weight: bold;
   font-size: 22px;
-  margin-bottom: 20Px;
+  margin-bottom: 20px;
   border-left: thick solid #ff0000;
   padding-left: 16px;
 }
-.notice .section .sectionheader{
+.notice .section .sectionheader {
   display: flex;
 }
 
-.notice .section .icon{
+.notice .section .icon {
   width: 50px;
   height: 50px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 50%;
   margin-right: 20px;
 }
 
-.notice .section .row{
+.notice .section .row {
   /* padding-right: 20px;
   padding-left: 20px; */
 }

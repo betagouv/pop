@@ -1,4 +1,4 @@
-.auth .container{
+.auth .container {
   display: flex;
   justify-content: center;
   display: flex;
@@ -7,20 +7,20 @@
   align-items: center;
   margin-top: 20px;
   padding: 20px;
-  box-shadow: 0 2px 6px 0 #E4E4E4;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
 }
 
-.auth .error{
-  color:red;
+.auth .error {
+  color: red;
 }
 
-.auth button{
+.auth button {
   width: 100%;
   outline: none;
   border: 0;
   padding: 13px 0;
   text-align: center;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   margin-top: 15px;
   margin-bottom: 15px;
   cursor: pointer;
@@ -31,33 +31,34 @@
   text-align: center;
   margin-bottom: 30px;
 }
-.auth .block{
+.auth .block {
   padding: 20px;
   max-width: 400px;
 }
-.auth .block a:hover{
+.auth .block a:hover {
   color: #890f3c;
   text-decoration: none;
 }
 
-.auth .forgot-link{
+.auth .forgot-link {
   float: right;
 }
 
-.auth .submit-button{
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+.auth .submit-button {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   color: #fff;
   background-color: #007bff;
 }
 
-.auth .signin .ORText, .auth .signup .ORText {
+.auth .signin .ORText,
+.auth .signup .ORText {
   text-align: center;
   display: block;
   color: #c0c5c7;
   margin: 18px auto;
 }
 
-.auth .link{
+.auth .link {
   font-weight: 900;
   font-size: 14px;
   color: #007bff;
@@ -65,42 +66,42 @@
   cursor: pointer;
 }
 
-.auth  .signin-block .input-field {
+.auth .signin-block .input-field {
   width: 100%;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   border: 0;
   height: auto;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 3px;
 }
-.auth .signin-block .submit-button{
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+.auth .signin-block .submit-button {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   color: #fff;
   background-color: #890f3c;
 }
-.auth .signup-text{
+.auth .signup-text {
   margin: 10px 0;
   text-align: center;
 }
-.auth .forgot-block{
+.auth .forgot-block {
   padding: 20px;
   max-width: 400px;
 }
-.auth .forgot-text{
+.auth .forgot-text {
   margin-bottom: 15px;
   padding: 0 50px;
   color: #c0c5c7;
   text-align: center;
 }
 
-.auth .message{
+.auth .message {
   text-align: center;
 }
 
 .auth .input-field {
   width: 100%;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   border: 0;
   padding: 15px;
   margin-bottom: 25px;

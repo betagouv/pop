@@ -1,49 +1,51 @@
-const path = require('path');
+const path = require("path");
 
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 const BabelPlugin = require("babel-webpack-plugin");
 
-
 module.exports = env => {
-  const mode = env['production'] ? 'production' : 'staging';
-  console.log('MODE :', mode)
+  const mode = env["production"] ? "production" : "staging";
+  console.log("MODE :", mode);
   const plugins = [
     new ManifestPlugin({
-      seed: require('./public/manifest.json')
+      seed: require("./public/manifest.json")
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'index.html',
-      inject: 'body',
-      favicon: path.join('public/favicon.ico'),
+      template: "./public/index.html",
+      filename: "index.html",
+      inject: "body",
+      favicon: path.join("public/favicon.ico"),
       minify: {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
         html5: true,
         minifyCSS: true,
         removeComments: true,
-        removeEmptyAttributes: true,
+        removeEmptyAttributes: true
       }
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(mode)
+      "process.env": {
+        NODE_ENV: JSON.stringify(mode)
       }
     }),
     new BabelPlugin({
       test: /\.js$/,
       presets: [
-        ['env', {
-          loose: true,
-          modules: false,
-          targets: {
-            browsers: ['>1%']
-          },
-          useBuiltIns: true
-        }]
+        [
+          "env",
+          {
+            loose: true,
+            modules: false,
+            targets: {
+              browsers: [">1%"]
+            },
+            useBuiltIns: true
+          }
+        ]
       ],
       sourceMaps: false,
       compact: false
@@ -56,18 +58,17 @@ module.exports = env => {
     })
   ];
 
-
   return {
-    mode: 'production',
-    entry: ['babel-polyfill', './src/index.js'],
+    mode: "production",
+    entry: ["babel-polyfill", "./src/index.js"],
     devtool: false,
     output: {
-      path: path.resolve('build'),
-      filename: '[hash].index.js',
-      publicPath: '/'
+      path: path.resolve("build"),
+      filename: "[hash].index.js",
+      publicPath: "/"
     },
     node: {
-      fs: 'empty'
+      fs: "empty"
     },
     module: {
       rules: [
@@ -77,8 +78,8 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          loader: 'babel-loader',
-          include: path.resolve('src'),
+          loader: "babel-loader",
+          include: path.resolve("src"),
           exclude: /(node_modules|__tests__)/,
           query: {
             babelrc: true
@@ -88,17 +89,17 @@ module.exports = env => {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           use: [
-            'file-loader',
+            "file-loader",
             {
-              loader: 'image-webpack-loader',
+              loader: "image-webpack-loader",
               options: {
-                bypassOnDebug: true,
-              },
-            },
-          ],
+                bypassOnDebug: true
+              }
+            }
+          ]
         }
       ]
     },
     plugins: plugins
-  }
+  };
 };

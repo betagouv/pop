@@ -1,47 +1,44 @@
-const path = require('path');
+const path = require("path");
 
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = env => {
-
   const plugins = [
     new ManifestPlugin({
-      seed: require('./public/manifest.json')
+      seed: require("./public/manifest.json")
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'index.html',
-      inject: 'body',
-      favicon: path.join('public/favicon.ico'),
+      template: "./public/index.html",
+      filename: "index.html",
+      inject: "body",
+      favicon: path.join("public/favicon.ico")
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('dev')
+      "process.env": {
+        NODE_ENV: JSON.stringify("dev")
       }
-    }),
+    })
   ];
 
-
   return {
-    mode: 'development',
-    entry: ['./src/index.js'],
-    devtool: 'source-map',
+    mode: "development",
+    entry: ["./src/index.js"],
+    devtool: "source-map",
     output: {
-      path: path.resolve('build'),
-      filename: '[hash].index.js',
-      publicPath: '/'
+      path: path.resolve("build"),
+      filename: "[hash].index.js",
+      publicPath: "/"
     },
     devServer: {
-      contentBase: 'build',
+      contentBase: "build",
       historyApiFallback: true,
       inline: true,
-      stats: 'errors-only'
+      stats: "errors-only"
     },
     node: {
-      fs: 'empty'
+      fs: "empty"
     },
     module: {
       rules: [
@@ -51,8 +48,8 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          loader: 'babel-loader',
-          include: path.resolve('src'),
+          loader: "babel-loader",
+          include: path.resolve("src"),
           exclude: /(node_modules|__tests__)/,
           query: {
             babelrc: true
@@ -62,17 +59,17 @@ module.exports = env => {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           use: [
-            'file-loader',
+            "file-loader",
             {
-              loader: 'image-webpack-loader',
+              loader: "image-webpack-loader",
               options: {
-                bypassOnDebug: true,
-              },
-            },
-          ],
+                bypassOnDebug: true
+              }
+            }
+          ]
         }
       ]
     },
     plugins: plugins
-  }
+  };
 };
