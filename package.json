@@ -1,7 +1,7 @@
 {
-  "name": "pop_api",
+  "name": "pop-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "POP API",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
@@ -9,15 +9,14 @@
     "start": "node ./src/index.js  ",
     "deploy:prod": " eb deploy pop-api",
     "deploy:staging": "eb deploy pop-api-staging",
-    "test": "mocha --timeout 10000",
-    "lint": "standard --fix"
+    "test": "mocha --timeout 10000"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/betagouv/pop-api/pop_api.git"
+    "url": "git+https://github.com/betagouv/pop-api.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/betagouv/pop-api/issues"
   },
@@ -53,7 +52,6 @@
     "chai-http": "^4.0.0",
     "cross-env": "^5.1.6",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.3",
-    "standard": "^11.0.1"
+    "nodemon": "^1.18.3"
   }
 }
