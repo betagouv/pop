@@ -1,86 +1,81 @@
-
-.home-import{
-    /* background-image: url("./../../assets/background.jpg"); */
+.home-import .title {
+  text-align: center;
+  margin-bottom: 80px;
+  font-size: 30px;
+  padding-top: 20px;
 }
 
-.home-import .title{
-    text-align: center;
-    margin-bottom: 80px;
-    font-size: 30px;
-    padding-top: 20px
+.home-import .subtitle {
+  text-align: center;
+  font-size: 27px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.home-import .subtitle{
-    text-align: center;
-    font-size: 27px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.home-import .activities h4 {
+  background: url("./../../assets/002-time.png") left center no-repeat;
+  -webkit-background-size: 18px;
+  padding-left: 25px;
+  background-size: 18px;
 }
 
-.home-import .activities h4{
-    background: url('./../../assets/002-time.png') left center no-repeat;
-    -webkit-background-size: 18px; ;
-    padding-left: 25px;
-    background-size: 18px; ;
+.home-import .row {
+  display: flex;
+  justify-content: center;
 }
 
-.home-import .row{
-display: flex;
-justify-content: center;
-}
-
-.home-import .box{
-    padding: 20px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.home-import .box {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home-import .tile:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .home-import .tile {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    /* padding: 10px; */
-    cursor: pointer;
-    max-width: 250px;
-    height: 350px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  /* padding: 10px; */
+  cursor: pointer;
+  max-width: 250px;
+  height: 350px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.home-import .tile .caption{
-    height: 60px;
-    position: absolute;
-    background-color: white;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    bottom: 0px;
+.home-import .tile .caption {
+  height: 60px;
+  position: absolute;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  bottom: 0px;
 }
 
 .home-import .tile .name {
-    font-size: 20px;
+  font-size: 20px;
 }
 
-.home-import .tile img{
-    object-fit: contain;
-    padding: 20px;
-    width: 100%;
-    min-width: 200px;
-    height: 75%;
+.home-import .tile img {
+  object-fit: contain;
+  padding: 20px;
+  width: 100%;
+  min-width: 200px;
+  height: 75%;
 }
 
-.home-import .tile .thumb{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.home-import .tile .thumb {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

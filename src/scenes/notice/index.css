@@ -2,41 +2,40 @@
   margin-top: 20px;
   display: flex;
   justify-content: start;
-  align-items: 'center';
+  align-items: "center";
   background-color: white;
   flex-direction: column;
 }
 
-.notice .main-title{
+.notice .main-title {
   text-align: center;
   padding: 50px;
 }
 
-.notice .buttons{
+.notice .buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.notice .buttons button{
+.notice .buttons button {
   margin: 10px;
 }
 
-.notice .back{
+.notice .back {
   padding: 20px;
   cursor: pointer;
   color: #007bff;
 }
 
-.notice .image{
+.notice .image {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
-.notice button{
+.notice button {
   margin-top: 20px;
 }
 
@@ -46,8 +45,7 @@
   width: 100%;
 }
 
-
-.notice .error{
+.notice .error {
   height: 200px;
   display: flex;
   justify-content: center;

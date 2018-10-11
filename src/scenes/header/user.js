@@ -1,60 +1,75 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import { connect } from 'react-redux'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import Avatar from '../../components/avatar'
+import { connect } from "react-redux";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
+import Avatar from "../../components/avatar";
 
-import authAction from './../../redux/auth/actions'
-const { logout } = authAction
+import authAction from "./../../redux/auth/actions";
+const { logout } = authAction;
 
-import { history } from '../../redux/store';
+import { history } from "../../redux/store";
 
-import './user.css'
+import "./user.css";
 
 class User extends Component {
-
   state = {
     dropdownOpen: false
-  }
+  };
 
   logout() {
-    this.props.logout()
+    this.props.logout();
   }
 
   renderSigninSignup() {
     if (this.props.account) {
-      return <div />
+      return <div />;
     }
-    return (
-      <Link to='/auth/signin'>Se connecter</Link>
-    )
+    return <Link to="/auth/signin">Se connecter</Link>;
   }
 
   renderPicto() {
     if (!this.props.account) {
-      return <div />
+      return <div />;
     }
     return (
-      <Dropdown
-        isOpen={true}
-        className="DropDownCont"
-        toggle={() => { }}
-      >
+      <Dropdown isOpen={true} className="DropDownCont" toggle={() => {}}>
         <DropdownToggle className="UserImageContainer">
           <Avatar
             email={this.props.account.email}
-            toggle={() => this.setState({ dropdownOpen: !this.state.dropdownOpen })}
+            toggle={() =>
+              this.setState({ dropdownOpen: !this.state.dropdownOpen })
+            }
             isOpen={this.state.dropdownOpen}
           />
         </DropdownToggle>
         <DropdownMenu className="DropDown">
-          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')}>Modifier mes informations</DropdownItem>
-          <DropdownItem className="dropdown-item" onClick={() => history.push('/auth/updatepassword')}>Changer mon mot de passe</DropdownItem>
-          <DropdownItem className="dropdown-item" onClick={this.logout.bind(this)}>Logout</DropdownItem>
+          <DropdownItem
+            className="dropdown-item"
+            onClick={() => history.push("/auth/updatepassword")}
+          >
+            Modifier mes informations
+          </DropdownItem>
+          <DropdownItem
+            className="dropdown-item"
+            onClick={() => history.push("/auth/updatepassword")}
+          >
+            Changer mon mot de passe
+          </DropdownItem>
+          <DropdownItem
+            className="dropdown-item"
+            onClick={this.logout.bind(this)}
+          >
+            Logout
+          </DropdownItem>
         </DropdownMenu>
-      </Dropdown >
-    )
+      </Dropdown>
+    );
   }
 
   render() {
@@ -63,12 +78,15 @@ class User extends Component {
         {this.renderSigninSignup()}
         {this.renderPicto()}
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { account: Auth.user }
-}
+  return { account: Auth.user };
+};
 
-export default connect(mapStateToProps, { logout })(User)
+export default connect(
+  mapStateToProps,
+  { logout }
+)(User);

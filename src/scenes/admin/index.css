@@ -1,13 +1,13 @@
 .admin {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    align-items: center;
-    margin: 20px;
-    padding: 20px;
-    box-shadow: 0 2px 6px 0 #E4E4E4;
-  }
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+}
 
-.admin .usersList{
-    padding: 20px
+.admin .usersList {
+  padding: 20px;
 }
