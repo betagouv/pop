@@ -1,7 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
-const proxy = require("http-proxy-middleware");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const { PORT } = require("./config.js");
@@ -17,7 +16,6 @@ const app = express();
 const aws4 = require("aws4");
 
 // /* Here we proxy all the requests from reactivesearch to our backend */
-// app.use("/search/*/_msearch", proxy(options));
 
 app.use(bodyParser.json({ limit: "50mb" }));
 // /* Parse the ndjson as text for ES proxy*/
