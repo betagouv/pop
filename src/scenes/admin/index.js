@@ -15,12 +15,12 @@ class Admin extends React.Component {
   componentWillMount() {
     this.setState({ loading: true });
     api.getUsers(this.props.group).then(users => {
-      this.setState({ users, loading: false });
+      this.setState({ users: users || [], loading: false });
     });
   }
 
   renderUsers() {
-    return [
+    return <Table>
       <thead>
         <tr>
           <th>Email</th>
@@ -30,7 +30,7 @@ class Admin extends React.Component {
           <th>Institution</th>
           <th>Role</th>
         </tr>
-      </thead>,
+      </thead>
       <tbody>
         {this.state.users.map(user => {
           const { email, prenom, nom, role, institution, group } = user;
@@ -46,7 +46,8 @@ class Admin extends React.Component {
           );
         })}
       </tbody>
-    ];
+      </Table>
+    ;
   }
 
   render() {
@@ -54,7 +55,7 @@ class Admin extends React.Component {
       <div className="admin">
         <CreateUser />
         <div className="usersList">
-          <Table>{this.renderUsers()}</Table>
+          {this.renderUsers()}
         </div>
       </div>
     );
