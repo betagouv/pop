@@ -65,7 +65,6 @@ router.get("/:ref", (req, res) => {
     if (err || !notice) {
       res.sendStatus(404);
     } else {
-      console.log("FOUND", notice);
       res.send(notice);
     }
   });
