@@ -74,7 +74,7 @@ module.exports = env => {
                       loose: true,
                       modules: false,
                       targets: {
-                          browsers: ['>1%']
+                          browsers: ['>0.03%']
                       },
                       useBuiltIns: true
                   }],
