@@ -10,7 +10,7 @@ class Mailer {
       service: "gmail",
       auth: {
         user: "popbetagouv@gmail.com",
-        pass: "poppippup!"
+        pass: process.env.GMAIL_PASSWD
       }
     });
 
