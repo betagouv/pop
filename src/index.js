@@ -1,9 +1,9 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
+const proxy = require("http-proxy-middleware");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const proxy = require("http-proxy-middleware");
 const { PORT } = require("./config.js");
 const Mailer = require("./mailer");
 const { esUrl } = require("./config.js");
@@ -14,8 +14,13 @@ require("./mongo");
 
 const app = express();
 
+const aws4 = require("aws4");
+
+// /* Here we proxy all the requests from reactivesearch to our backend */
+// app.use("/search/*/_msearch", proxy(options));
+
 app.use(bodyParser.json({ limit: "50mb" }));
-/* Parse the ndjson as text for ES proxy*/
+// /* Parse the ndjson as text for ES proxy*/
 app.use(bodyParser.text({ type: "application/x-ndjson" }));
 
 // secure apps by setting various HTTP headers
@@ -27,7 +32,6 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {
-  capture("Hello");
   res.send("Hello World!");
 });
 
@@ -39,6 +43,24 @@ app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
 app.use("/thesaurus", require("./controllers/thesaurus"));
+
+const http = require("http");
+app.use("/search/*/_msearch", (req, res) => {
+  var opts = {
+    host:
+      "search-pop-staging-zukwe7tuull7zntiuqs3mp3gr4.eu-west-3.es.amazonaws.com",
+    path: req.originalUrl.replace("/search", ""),
+    body: req.body,
+    method: "POST",
+    headers: { "Content-Type": "Application/x-ndjson" }
+  };
+  aws4.sign(opts);
+  http
+    .request(opts, res1 => {
+      res1.pipe(res);
+    })
+    .end(opts.body || "");
+});
 
 app.post(
   "/mail",
@@ -55,27 +77,5 @@ app.post(
     });
   }
 );
-
-//START ELASTIC SEARCH PROXY
-const options = {
-  target: esUrl,
-  changeOrigin: true,
-  pathRewrite: {
-    "^/search/": "/" //remove base path
-  },
-  onProxyReq: (proxyReq, req) => {
-    const { body } = req;
-    if (body) {
-      if (typeof body === "object") {
-        proxyReq.write(JSON.stringify(body));
-      } else {
-        proxyReq.write(body);
-      }
-    }
-  }
-};
-
-// /* Here we proxy all the requests from reactivesearch to our backend */
-app.use("/search/*/_msearch", proxy(options));
 
 app.listen(PORT, () => console.log("Listening on port " + PORT));
