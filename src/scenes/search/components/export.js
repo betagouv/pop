@@ -1,6 +1,6 @@
-import React from 'react';
-import { ReactiveComponent } from '@appbaseio/reactivesearch';
-import { Button } from 'reactstrap';
+import React from "react";
+import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import { Button } from "reactstrap";
 
 export default class ExportComponent extends React.Component {
   state = {
@@ -75,19 +75,19 @@ const Exp = ({ len }) => {
 };
 
 async function exportData(fileName, columns, entities) {
-  let csv = columns.join(',') + '\n';
+  let csv = columns.join(",") + "\n";
   for (let j = 0; j < entities.length; j++) {
     const arr = [];
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
       if (Array.isArray(value)) {
-        value = value.join(';');
+        value = value.join(";");
       }
-      if (!value) value = '';
-      value = ('' + value).replace(/"/g, '""');
+      if (!value) value = "";
+      value = ("" + value).replace(/"/g, '""');
       arr.push('"' + value + '"');
     }
-    csv += arr.join(',') + '\n';
+    csv += arr.join(",") + "\n";
   }
 
   initiateFileDownload(csv, fileName);
@@ -99,9 +99,9 @@ function initiateFileDownload(csv, fileName) {
     // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
     window.navigator.msSaveBlob(blob, fileName);
   else {
-    let a = window.document.createElement('a');
+    let a = window.document.createElement("a");
     a.href = window.URL.createObjectURL(blob, {
-      type: 'text/plain;charset=UTF-8'
+      type: "text/plain;charset=UTF-8"
     });
     a.download = fileName;
     document.body.appendChild(a);

@@ -1,9 +1,5 @@
 {
-  "presets": [
-    "minify",
-    "react",
-    "env"
-  ],
+  "presets": ["minify", "react", "env"],
   "plugins": [
     "transform-runtime",
     "class-properties-default-value",

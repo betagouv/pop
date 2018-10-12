@@ -5,7 +5,6 @@ import "isomorphic-fetch";
  * Use it via `request.post`, `request.put`, etc.
  */
 class request {
-
   _init(verb, data, headers) {
     headers = headers || {};
     headers["user-agent"] = "POP application";

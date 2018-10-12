@@ -51,7 +51,11 @@ class api {
   }
 
   getUsers(group) {
-    return request.get(`${api_url}/auth?group=${group}`);
+    return request.get(`${api_url}/users?group=${group}`,{
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
   }
 
   sendReport(subject, to, body) {
