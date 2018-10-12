@@ -334,7 +334,7 @@ class Search extends React.Component {
                             this.toggle("map");
                           }}
                         >
-                          MAP
+                          CARTE
                         </NavLink>
                       </NavItem>
 
