@@ -110,10 +110,18 @@ class Notice extends React.Component {
               <Field title="Style :" content={this.state.notice.STYL} />
               <Field title="Technique :" content={this.state.notice.TECH} />
               <Field title="Dimensions :" content={this.state.notice.DIMS} />
-              <Field title="Description :" content={this.state.notice.DESC} />
+              <Field
+                title="Description :"
+                content={this.state.notice.DESC}
+                separator="#"
+              />
               <Field title="Inscriptions :" content={this.state.notice.INSC} />
               <Field title="Genèse :" content={this.state.notice.GENE} />
-              <Field title="Historique :" content={this.state.notice.HIST} />
+              <Field
+                title="Historique :"
+                content={this.state.notice.HIST}
+                separator="#"
+              />
               <Field title="Provenance :" content={this.state.notice.PROV} />
               <Field title="Commentaire :" content={this.state.notice.COMM} />
               <Field title="Catégorie :" content={this.state.notice.CATE} />
@@ -200,7 +208,5 @@ class Notice extends React.Component {
     );
   }
 }
-
-
 
 export default Notice;
