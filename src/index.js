@@ -47,8 +47,7 @@ app.use("/thesaurus", require("./controllers/thesaurus"));
 const http = require("http");
 app.use("/search/*/_msearch", (req, res) => {
   var opts = {
-    host:
-      "search-pop-staging-zukwe7tuull7zntiuqs3mp3gr4.eu-west-3.es.amazonaws.com",
+    host: esUrl,
     path: req.originalUrl.replace("/search", ""),
     body: req.body,
     method: "POST",
