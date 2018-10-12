@@ -4,11 +4,8 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const generator = require("generate-password");
-const { capture } = require("./../sentry.js");
 const mailer = require("../mailer");
-
 require("../passport")(passport);
-
 const User = require("../models/user");
 const config = require("../config.js");
 
@@ -28,7 +25,11 @@ router.post("/signup", (req, res) => {
     });
   }
 
-  var password = generator.generate({ length: 10, numbers: true });
+  var password = generator.generate({
+    length: 12,
+    numbers: true,
+    symbols: true
+  });
 
   const newUser = new User({
     nom: req.body.nom,
@@ -66,21 +67,6 @@ router.post("/signup", (req, res) => {
           Et en cas de problème, vous pouvez toujours nous contacter à sebastien.legoff@beta.gouv.fr<br />
       `
     );
-  });
-});
-
-router.get("/", (req, res) => {
-  const query = {};
-  if (req.query.group && req.query.group !== "admin") {
-    query.group = req.query.group;
-  }
-
-  User.find(query, (error, users) => {
-    if (error) {
-      capture(error);
-      return res.status(500).send({ error });
-    }
-    res.status(200).send(users);
   });
 });
 
@@ -205,17 +191,6 @@ router.post("/signin", (req, res) => {
     }
   );
 });
-
-router.post(
-  "/test",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.send({
-      success: true,
-      msg: "It works!"
-    });
-  }
-);
 
 router.get(
   "/user",
