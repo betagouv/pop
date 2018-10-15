@@ -24,3 +24,9 @@
   height: 32px;
   border-radius: 5px;
 }
+
+@media screen and (max-width: 767px) {
+  .footer a {
+    font-size: 14px;
+  }
+}

@@ -45,7 +45,7 @@ class SmallNotice extends React.Component {
         to={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}
         className="card"
       >
-        <img src={image} alt="Book Cover" />
+        <img src={image} alt={this.props.notice.TICO} />
         <div className="content">
           <h2>{this.props.notice.TICO}</h2>
           <p className="categories">{this.props.notice.DENO.join(", ")}</p>

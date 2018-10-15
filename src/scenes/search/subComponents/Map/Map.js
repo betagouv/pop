@@ -136,7 +136,6 @@ Area width x height
   }
 
   render() {
-    console.log("this.props.filter", this.props.filter);
     return (
       <ReactiveComponent
         componentId={this.props.componentId || "map"} // a unique id we will refer to later

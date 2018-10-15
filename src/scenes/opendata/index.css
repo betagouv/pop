@@ -1,4 +1,8 @@
 .opendata-view {
-  margin: 60px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin: 7px;
   max-width: 800px;
 }

@@ -19,3 +19,12 @@
   color: #777;
   margin: 0;
 }
+
+@media screen and (max-width: 767px) {
+  .logo img {
+    height: 110px;
+  }
+  .logo h1 {
+    font-size: 20px;
+  }
+}

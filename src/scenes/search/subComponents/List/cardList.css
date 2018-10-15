@@ -72,5 +72,28 @@
 }
 
 .list-card .base {
-    float: right;
+  float: right;
+}
+
+@media screen and (max-width: 767px) {
+  .list-card {
+    height: 110px;
+  }
+
+  .list-card .thumbnail {
+    width: 150px;
+    margin-right: 10px;
+  }
+
+  .list-card img.no-img {
+    width: 80px;
+    height: 80px;
+  }
+  .list-card h2 {
+    font-size: 15px;
+  }
+  .list-card p,
+  .list-cardspan {
+    font-size: 11px;
+  }
 }

@@ -11,7 +11,7 @@ import {
   TabContent,
   TabPane,
   Container,
-  Alert
+  Badge
 } from "reactstrap";
 import queryString from "query-string";
 import {
@@ -30,6 +30,8 @@ import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
 import { isDepartmentNumber, departmentText } from "./department";
+
+import filterImg from "../../assets/filter.png";
 
 import "./index.css";
 
@@ -52,7 +54,8 @@ class Search extends React.Component {
   state = {
     activeTab: "list",
     bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
-    defaultSelected: ""
+    defaultSelected: "",
+    mobile_menu: "close"
   };
 
   constructor(props) {
@@ -122,8 +125,14 @@ class Search extends React.Component {
           <h2 className="title">Votre recherche</h2>
           <ReactiveBase url={`${es_url}`} app={bases}>
             <Row>
-              <Col xs="3">
+              <div className={`search-filters ${this.state.mobile_menu}`}>
                 <aside className="search-sidebar">
+                  <div
+                    className="close_mobile_menu"
+                    onClick={() => this.setState({ mobile_menu: "close" })}
+                  >
+                    x
+                  </div>
                   <SelectedFilters
                     className="selected-filters"
                     clearAllLabel="Tout supprimer"
@@ -228,8 +237,8 @@ class Search extends React.Component {
                     placeholder="Rechercher une technique"
                   />
                 </aside>
-              </Col>
-              <Col xs="9">
+              </div>
+              <div className="search-results">
                 <Row>
                   <Col sm={8}>
                     <div className="search-and-export-zone">
@@ -298,16 +307,36 @@ class Search extends React.Component {
                           };
                         }}
                       />
-                      <ReactiveComponent
-                        componentId="export"
-                        react={{
-                          and: FILTER
-                        }}
-                        defaultQuery={() => ({
-                          size: 100,
-                          aggs: {}
-                        })}
-                      />
+                      <div
+                        className="filter_mobile_menu"
+                        onClick={() => this.setState({ mobile_menu: "open" })}
+                      >
+                        <SelectedFilters
+                          render={props => {
+                            return (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center"
+                                }}
+                              >
+                                <img src={filterImg} />
+                                <Badge color="secondary">
+                                  {Object.keys(props.selectedValues).reduce(
+                                    (acc, current) => {
+                                      return props.selectedValues[current]
+                                        .value !== ""
+                                        ? acc + 1
+                                        : acc;
+                                    },
+                                    0
+                                  )}
+                                </Badge>
+                              </div>
+                            );
+                          }}
+                        />
+                      </div>
                     </div>
                   </Col>
                   <Col sm={4}>
@@ -376,7 +405,7 @@ class Search extends React.Component {
                     />
                   </TabPane>
                 </TabContent>
-              </Col>
+              </div>
             </Row>
           </ReactiveBase>
         </Container>
