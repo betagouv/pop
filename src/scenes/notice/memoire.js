@@ -143,7 +143,7 @@ class Notice extends React.Component {
                 content={this.state.notice.MCGEO}
               />
               <Title
-                content="Identification MH"
+                content="Identification"
                 h5={true}
                 notice={this.state.notice}
                 fields={[

@@ -52,7 +52,7 @@ export default ({ data }) => {
       break;
     case "memoire":
       content = {
-        title: data.TICO,
+        title: data.TICO || data.LEG ,
         subtitle: joinData([
           data.OBJET,
           data.EDIF,
