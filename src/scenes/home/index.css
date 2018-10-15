@@ -164,3 +164,10 @@
 .tooltip-inner {
     min-width: 500px;
 }
+
+
+@media screen and (max-width: 767px) {
+  .home .home-search input::placeholder {
+    font-size: 14px;
+  }
+}

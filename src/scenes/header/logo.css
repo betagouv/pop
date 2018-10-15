@@ -23,6 +23,7 @@
 @media screen and (max-width: 767px) {
   .logo img {
     height: 110px;
+    width: 120px;
   }
   .logo h1 {
     font-size: 20px;

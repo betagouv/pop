@@ -148,7 +148,7 @@
   .search .open {
     transform: translateX(0);
   }
-  .search .mainSearch input:placeholder {
+  .search .mainSearch input::placeholder {
     font-size: 14px;
   }
   .search .search-results {

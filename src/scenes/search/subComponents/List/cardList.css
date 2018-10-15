@@ -93,7 +93,7 @@
     font-size: 15px;
   }
   .list-card p,
-  .list-cardspan {
+  .list-card span {
     font-size: 11px;
   }
 }
