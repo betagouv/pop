@@ -1,7 +1,7 @@
 import api from "../../../services/api";
 
-export default async function checkThesaurus(importedNotices) {
-  return new Promise((resolve,reject) =>{
+export default function checkThesaurus(importedNotices) {
+  return new Promise(async (resolve, reject) => {
     const optimMap = {};
 
     if (!importedNotices.length) {
@@ -21,7 +21,13 @@ export default async function checkThesaurus(importedNotices) {
 
         let values = [].concat(importedNotices[i][field].value);
         if (importedNotices[i][field].thesaurus_separator) {
-          values = values.reduce((acc,val) => acc.concat(val.split(importedNotices[i][field].thesaurus_separator)),[])
+          values = values.reduce(
+            (acc, val) =>
+              acc.concat(
+                val.split(importedNotices[i][field].thesaurus_separator)
+              ),
+            []
+          );
         }
         values = values.map(e => e.trim());
 
@@ -29,7 +35,10 @@ export default async function checkThesaurus(importedNotices) {
           const value = values[k];
           if (value) {
             let val = null;
-            if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
+            if (
+              optimMap[thesaurus] &&
+              optimMap[thesaurus][value] !== undefined
+            ) {
               val = optimMap[thesaurus][value];
             } else {
               val = await api.validateWithThesaurus(thesaurus, value);
@@ -53,5 +62,5 @@ export default async function checkThesaurus(importedNotices) {
       }
     }
     resolve();
-  })
+  });
 }

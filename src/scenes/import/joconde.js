@@ -13,6 +13,10 @@ export default class Import extends React.Component {
           collection="joconde"
           parseFiles={parseFiles}
           report={report}
+          fieldsToExport={[
+            { name: "Identifiant", key: "REF" },
+            { name: "N° inventaire", key: "INV" }
+          ]}
           dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt) et les images associées (au format .jpg) dans cette zone"
         />
       </Container>
