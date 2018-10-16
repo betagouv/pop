@@ -102,66 +102,13 @@
 
 .search .search-filters .close_mobile_menu,
 .search .filter_mobile_menu {
-  visibility: hidden;
+  display: none;
 }
 
 .search .search-icon {
-  visibility: hidden;
+  display: none;
 }
 
-.search .search-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media screen and (max-width: 767px) {
-  .search .search-filters {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: #fff;
-    width: 100%;
-    z-index: 1000;
-    transform: translateX(-100%);
-    overflow-y: auto;
-    transition: all 0.4s;
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-  .search .filter_mobile_menu {
-    visibility: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .search .filter_mobile_menu img {
-    width: 20px;
-    margin: 5px;
-  }
-
-  .search .search-filters .close_mobile_menu {
-    visibility: visible;
-    display: flex;
-    justify-content: flex-end;
-    font-weight: bold;
-    font-size: 25px;
-    margin-bottom: 30px;
-  }
-
-  .search .mobile_open {
-    transform: translateX(0);
-  }
-  .search .mainSearch input::placeholder {
-    font-size: 14px;
-  }
-  .search .search-results {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
 
 .search #mainSearch-downshift-input {
   height: 60px;
@@ -175,7 +122,6 @@
 
 .search .search-and-export-zone {
   display: flex;
-  align-items: center;
 }
 
 .search .search-and-export-zone .button {
@@ -251,4 +197,59 @@
 .search .mapboxgl-map {
   border-radius: 5px;
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+
+
+
+
+@media screen and (max-width: 767px) {
+  .search .search-filters {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #fff;
+    width: 100%;
+    z-index: 1000;
+    transform: translateX(-100%);
+    overflow-y: auto;
+    transition: all 0.4s;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .search .filter_mobile_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search .filter_mobile_menu img {
+    width: 20px;
+    margin: 5px;
+  }
+
+  .search .search-filters .close_mobile_menu {
+    visibility: visible;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+
+  .search #mainSearch-downshift-input {
+    height: 40px;
+    padding-left: 30px;
+  }
+
+  .search .mobile_open {
+    transform: translateX(0);
+  }
+  .search .mainSearch input::placeholder {
+    font-size: 14px;
+  }
+  .search .search-results {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
