@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Button } from "reactstrap";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import api from "../../services/api";
 import Loader from "../../components/loader";
@@ -34,6 +35,18 @@ class updatePassword extends Component {
       });
   }
 
+  resetPasswordMessage() {
+    if (this.props.hasResetPassword) {
+      return <div />;
+    }
+    return (
+      <p>
+        Vous n'avez pas encore changé votre mot de passe. Pour votre sécurité,
+        vous devez le changer avant de continuer.
+      </p>
+    );
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -50,14 +63,27 @@ class updatePassword extends Component {
       );
     }
 
+    //If the user is not login, he shouldnt have access to the page. Its a restricted page
+    if (!this.props.email) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/auth/signin",
+            state: { from: this.props.location }
+          }}
+        />
+      );
+    }
+
     return (
       <Container className="signin">
         <div className="block">
           <h1>Changer mon mot de passe</h1>
+          {this.resetPasswordMessage()}
           <div>{this.state.error}</div>
           <input
             className="input-field"
-            placeholder="Ancien Mot de passe"
+            placeholder="Mot de passe actuel"
             type="password"
             value={this.state.ppwd}
             onChange={e => this.setState({ ppwd: e.target.value })}
@@ -89,7 +115,10 @@ class updatePassword extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { email: Auth.user ? Auth.user.email : "" };
+  return {
+    email: Auth.user ? Auth.user.email : "",
+    hasResetPassword: !!Auth.user && Auth.user.hasResetPassword
+  };
 };
 
 export default connect(

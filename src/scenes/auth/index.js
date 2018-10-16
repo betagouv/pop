@@ -1,7 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
 
 import Signin from "./signin";
 import Forget from "./forget";

@@ -38,7 +38,7 @@ export default class ForgotPassword extends Component {
           <span>{this.state.error}</span>
           <p className="forgot-text">
             Entrez votre email. Nous allons vous renvoyer un mot de passe
-            temporaire
+            temporaire.
           </p>
           <input
             className="input-field"
