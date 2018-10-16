@@ -38,7 +38,8 @@ router.post("/signup", (req, res) => {
     group: req.body.group,
     role: req.body.role,
     institution: req.body.institution,
-    password
+    password,
+    hasResetPassword: false
   });
 
   newUser.save(function(err) {
@@ -136,7 +137,7 @@ router.post("/updatePassword", (req, res) => {
       user.comparePassword(ppwd, function(err, isMatch) {
         if (isMatch && !err) {
           user.set({ password: pwd1 });
-
+          user.set({ hasResetPassword: true });
           user.save(function(err) {
             if (err) throw err;
             return res.status(200).send({
