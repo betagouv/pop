@@ -47,6 +47,20 @@ class updatePassword extends Component {
     );
   }
 
+  lastConnectedAt() {
+    if (!this.props.lastConnectedAt) {
+      return <div />;
+    }
+    return (
+      <p className="lastConnectedAt">
+        <em>
+          Date de dernière connection:{" "}
+          {new Date(this.props.lastConnectedAt).toLocaleString("fr-FR")}
+        </em>
+      </p>
+    );
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -108,6 +122,7 @@ class updatePassword extends Component {
           >
             Mettre à jour mon mot de passe
           </Button>
+          {this.lastConnectedAt()}
         </div>
       </Container>
     );
@@ -117,7 +132,8 @@ class updatePassword extends Component {
 const mapStateToProps = ({ Auth }) => {
   return {
     email: Auth.user ? Auth.user.email : "",
-    hasResetPassword: !!Auth.user && Auth.user.hasResetPassword
+    hasResetPassword: !!Auth.user && Auth.user.hasResetPassword,
+    lastConnectedAt: !!Auth.user && Auth.user.lastConnectedAt
   };
 };
 

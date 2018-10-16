@@ -107,3 +107,9 @@
   margin-bottom: 25px;
   border-radius: 3px;
 }
+
+.lastConnectedAt {
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+}
