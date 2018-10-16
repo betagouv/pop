@@ -109,7 +109,6 @@
   display: none;
 }
 
-
 .search #mainSearch-downshift-input {
   height: 60px;
 }
@@ -178,16 +177,16 @@
   margin-left: -15px;
 }
 
-.css-ixn26d {
+.css-ixn26d,
+.search .mosaique-view > div.css-ixn26d {
   margin-bottom: 12px;
+  margin-left: 0;
 }
 .search .active input:checked + label::before,
 .search .active input:hover + label::before,
 .css-yljddh:hover + label::before {
   border-color: #377d87 !important;
 }
-
-
 
 .search .map {
   margin-top: 10px;
@@ -198,9 +197,6 @@
   border-radius: 5px;
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
 }
-
-
-
 
 @media screen and (max-width: 767px) {
   .search .search-filters {

@@ -75,9 +75,9 @@ export default ({ filter, onChanged }) => (
     markerIcon={markerImage}
     onResultStats={(total, took) => {
       if (total === 1) {
-        return `1 résultat trouvé en ${took} ms.`;
+        return `1 résultat`;
       }
-      return `${total} résultats trouvés en ${took} ms.`;
+      return `${total} résultats`;
     }}
     showResultStats
     onStyleLoad={(map, evt) => {
