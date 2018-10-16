@@ -31,6 +31,7 @@ app.use(passport.initialize());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
+  console.log("Hello World");
 });
 
 app.use("/auth", require("./controllers/auth"));
@@ -63,6 +64,7 @@ app.post(
   "/mail",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log("RECEIVE MAIL TO SEND");
     const { subject, to, body } = req.body;
     if (!subject || !to || !body) {
       capture("Mail information incomplete");
