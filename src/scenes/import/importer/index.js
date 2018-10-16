@@ -83,22 +83,18 @@ class Importer extends Component {
         loading: false,
         loadingMessage: ""
       });
-      amplitude
-        .getInstance()
-        .logEvent("Import - Drop files", {
-          "Files droped": files.length,
-          Success: true
-        });
+      amplitude.getInstance().logEvent("Import - Drop files", {
+        "Files droped": files.length,
+        Success: true
+      });
     } catch (e) {
       const errors = e || "Erreur detectée";
       Raven.captureException(errors);
-      amplitude
-        .getInstance()
-        .logEvent("Import - Drop files", {
-          "Files droped": files.length,
-          Success: false,
-          "Message ": errors
-        });
+      amplitude.getInstance().logEvent("Import - Drop files", {
+        "Files droped": files.length,
+        Success: false,
+        "Message ": errors
+      });
       this.setState({ errors, loading: false });
       return;
     }
@@ -180,14 +176,12 @@ class Importer extends Component {
         loadingMessage: `Import effectué avec succès`,
         step: 2
       });
-      amplitude
-        .getInstance()
-        .logEvent("Import - Done", {
-          "Notices total": total,
-          "Notices created": created.length,
-          "Notices updated": updated.length,
-          "Notices rejected": rejected.length
-        });
+      amplitude.getInstance().logEvent("Import - Done", {
+        "Notices total": total,
+        "Notices created": created.length,
+        "Notices updated": updated.length,
+        "Notices rejected": rejected.length
+      });
     } catch (e) {
       let errors = e.message ? e.message : e;
       Raven.captureException(errors);
@@ -266,7 +260,7 @@ class Importer extends Component {
               amplitude.getInstance().logEvent("Import - Download report");
             }}
           >
-            + de details
+            Téléchargez le détail au format csv (UTF8)
           </Button>
         </div>
         <div className="buttons">
