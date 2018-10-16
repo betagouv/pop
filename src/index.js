@@ -64,16 +64,27 @@ app.post(
   "/mail",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("RECEIVE MAIL TO SEND");
+    console.log("RECEIVE MAIL TO SEND", req.body);
     const { subject, to, body } = req.body;
+    
+    console.log("RECEIVE MAIL TO SEND 1");
     if (!subject || !to || !body) {
+      
+    console.log("RECEIVE MAIL TO SEND 1.1");
       capture("Mail information incomplete");
       res.status(500).send("Information incomplete");
       return;
     }
-    Mailer.send(subject, to, body).then(e => {
-      return res.status(200).send({ success: true, msg: "OK" });
-    });
+    
+    console.log("RECEIVE MAIL TO SEND 2");
+    Mailer.send(subject, to, body)
+      .then(e => {
+        return res.status(200).send({ success: true, msg: "OK" });
+      })
+      .catch(e => {
+        console.log("ERROR", e);
+        return res.status(200);
+      });
   }
 );
 

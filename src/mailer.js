@@ -2,7 +2,10 @@ const nodemailer = require("nodemailer");
 
 class Mailer {
   send(subject, to, html) {
+    
+    console.log("RECEIVE MAIL TO SEND 4");
     if (!process.env.GMAIL_PASSWD) {
+      console.log("RECEIVE MAIL TO SEND 5");
       console.log("Mail not sent cause not credentials");
       return new Promise(resolve => resolve());
     }
@@ -10,6 +13,9 @@ class Mailer {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     // create reusable transporter object using the default SMTP transport
+    
+    console.log("RECEIVE MAIL TO SEND 6");
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -28,6 +34,8 @@ class Mailer {
     };
 
     // send mail with defined transport object
+    
+    console.log("RECEIVE MAIL TO SEND 6");
     return transporter.sendMail(mailOptions);
   }
 }
