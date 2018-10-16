@@ -147,7 +147,7 @@ Schema.plugin(mongoosastic, {
   index: "merimee"
 });
 
-Schema.pre("update", function(next, done) {
+Schema.pre("save", function(next, done) {
   switch (this.REF.substring(0, 2)) {
     case "IA":
       this.DISCIPLINE = this.PRODUCTEUR = "Inventaire";

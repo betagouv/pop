@@ -135,7 +135,7 @@ Schema.plugin(mongoosastic, {
   bulk: { size: 500, delay: 2000 }
 });
 
-Schema.pre("update", function(next, done) {
+Schema.pre("save", function(next, done) {
   switch (this.REF.substring(0, 2)) {
     case "IV":
       this.PRODUCTEUR = "INV";
@@ -156,6 +156,8 @@ Schema.pre("update", function(next, done) {
       this.PRODUCTEUR = "SAP";
       break;
   }
+
+  this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
   next();
 });
 
