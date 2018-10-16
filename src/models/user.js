@@ -9,32 +9,14 @@ const UserSchema = new Schema({
     required: true,
     trim: true
   },
-  institution: {
-    type: String,
-    required: true
-  },
-  nom: {
-    type: String
-  },
-  prenom: {
-    type: String
-  },
-  group: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  hasResetPassword: {
-    type: Boolean,
-    default: true
-  }
+  institution: { type: String, required: true },
+  nom: { type: String },
+  prenom: { type: String },
+  group: { type: String, required: true },
+  role: { type: String, required: true },
+  password: { type: String, required: true },
+  hasResetPassword: { type: Boolean, default: true },
+  lastConnectedAt: { type: Date }
 });
 
 UserSchema.pre("save", function(next) {
