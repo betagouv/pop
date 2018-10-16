@@ -2,6 +2,10 @@ const nodemailer = require("nodemailer");
 
 class Mailer {
   send(subject, to, html) {
+    if (!process.env.GMAIL_PASSWD) {
+      console.log("Mail not sent cause not credentials");
+      return new Promise(resolve => resolve());
+    }
     // console.log (subject, to, html)
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
