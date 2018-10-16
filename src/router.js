@@ -38,6 +38,7 @@ class PublicRoutes extends React.Component {
               path={"/"}
               component={Home}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
             <Route path={"/auth/"} component={Auth} />
             <Route
@@ -45,26 +46,31 @@ class PublicRoutes extends React.Component {
               path={"/thesaurus"}
               component={Thesaurus}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
               path={"/recherche/"}
               component={Search}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
               path={"/admin/"}
               component={Admin}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
               path={"/import/"}
               component={Import}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
               path={"/notice/:collection/:ref"}
               component={Notice}
               isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
             />
           </Switch>
         </div>
@@ -73,11 +79,18 @@ class PublicRoutes extends React.Component {
   }
 }
 
-const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
+const RestrictedRoute = ({ component: Component, isLoggedIn, hasResetPassword, ...rest }) => (
   <Route
     {...rest}
     render={props => {
       if (isLoggedIn) {
+        if (!hasResetPassword) {
+          return (
+            <Redirect
+              to={{ pathname: "/auth/updatePassword", state: { from: props.location } }}
+            />
+          );
+        }
         return (
           <div>
             <Component {...props} />
@@ -95,7 +108,8 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
 
 const mapstatetoprops = ({ Auth }) => {
   return {
-    isLoggedIn: !!Auth.user
+    isLoggedIn: !!Auth.user,
+    hasResetPassword: !!Auth.user && Auth.user.hasResetPassword
   };
 };
 export default connect(
