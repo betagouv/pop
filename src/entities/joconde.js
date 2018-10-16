@@ -16,7 +16,8 @@ export default class Joconde extends Notice {
     this.AUTR = {
       type: "String",
       value: body.AUTR || "",
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513",
+      thesaurus_separator: /[(,)]/g
     };
     this.BIBL = { type: "String", value: body.BIBL || "" };
     this.APPL = { type: "String", value: body.APPL || "" };
@@ -31,12 +32,14 @@ export default class Joconde extends Notice {
     this.DECV = {
       type: "String",
       value: body.DECV || "",
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115",
+      thesaurus_separator: /[(,)]/g
     };
     this.DENO = {
       type: "Array",
       value: this.extractArray(body.DENO),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505",
+      thesaurus_separator: /[(,)]/g
     };
     this.DEPO = { type: "String", value: body.DEPO || "" };
     this.DESC = { type: "String", value: body.DESC || "" };
@@ -49,25 +52,29 @@ export default class Joconde extends Notice {
       type: "Array",
       value: this.extractArray(body.DOMN),
       required: true,
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51",
+      thesaurus_separator: /[(,)]/g
     };
     this.DREP = { type: "String", value: body.DREP || "" };
     this.ECOL = {
       type: "Array",
       value: this.extractArray(body.ECOL),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517",
+      thesaurus_separator: /[(,)]/g
     };
     this.EPOQ = {
       type: "Array",
       value: this.extractArray(body.EPOQ),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93",
+      thesaurus_separator: /[(,)]/g
     };
     this.ETAT = { type: "Array", value: this.extractArray(body.ETAT) };
     this.EXPO = { type: "String", value: body.EXPO || "" };
     this.GENE = {
       type: "Array",
       value: this.extractArray(body.GENE),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506",
+      thesaurus_separator: /[(,)]/g
     };
     this.GEOHI = { type: "Array", value: this.extractArray(body.GEOHI) };
     this.HIST = { type: "String", value: body.HIST || "" };
@@ -81,7 +88,8 @@ export default class Joconde extends Notice {
     this.INSC = {
       type: "Array",
       value: this.extractArray(body.INSC),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520",
+      thesaurus_separator: /[(,)]/g
     };
     this.INV = { type: "String", value: body.INV || "", required: true };
     this.LABEL = { type: "String", value: body.LABEL || "", generated: true };
@@ -90,12 +98,14 @@ export default class Joconde extends Notice {
     this.LIEUX = {
       type: "String",
       value: body.LIEUX || "",
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84",
+      thesaurus_separator: /[(,)]/g
     };
     this.LOCA = {
       type: "String",
       value: body.LOCA || "",
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+      thesaurus_separator: /[(,)]/g
     };
     this.LOCA2 = { type: "String", value: body.LOCA2 || "" };
     this.LOCA3 = { type: "String", value: body.LOCA3 || "" };
@@ -112,17 +122,20 @@ export default class Joconde extends Notice {
     this.PEOC = {
       type: "Array",
       value: this.extractArray(body.PEOC),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+      thesaurus_separator: /[(,)]/g
     };
     this.PERI = {
       type: "Array",
       value: this.extractArray(body.PERI),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+      thesaurus_separator: /[(,)]/g
     };
     this.PERU = {
       type: "Array",
       value: this.extractArray(body.PERU),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+      thesaurus_separator: /[(,)]/g
     };
     this.PHOT = { type: "String", value: body.PHOT || "" };
     this.PINS = { type: "String", value: body.PINS || "" };
@@ -135,13 +148,15 @@ export default class Joconde extends Notice {
     this.REPR = {
       type: "String",
       value: body.REPR || "",
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523",
+      thesaurus_separator: /[(,)]/g
     };
     this.RETIF = { type: "String", value: body.RETIF || "" };
     this.SREP = {
       type: "Array",
       value: this.extractArray(body.SREP),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523",
+      thesaurus_separator: /[(,)]/g
     };
     this.STAT = {
       type: "Array",
@@ -151,7 +166,8 @@ export default class Joconde extends Notice {
     this.TECH = {
       type: "Array",
       value: this.extractArray(body.TECH),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516",
+      thesaurus_separator: /[(,)]/g
     };
     this.TICO = { type: "String", value: body.TICO || "" };
     this.TITR = { type: "String", value: body.TITR || "" };
@@ -159,7 +175,8 @@ export default class Joconde extends Notice {
     this.UTIL = {
       type: "Array",
       value: this.extractArray(body.UTIL),
-      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86"
+      thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86",
+      thesaurus_separator: /[(,)]/g
     };
     this.VIDEO = { type: "String", value: body.VIDEO || "" };
     this.WWW = { type: "Array", value: this.extractUrls(body.WWW) };

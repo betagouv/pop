@@ -16,7 +16,17 @@ export default async function checkThesaurus(importedNotices) {
     for (var j = 0; j < allfieldswiththesaurus.length; j++) {
       const field = allfieldswiththesaurus[j];
       const thesaurus = importedNotices[i][field].thesaurus;
-      const values = [].concat(importedNotices[i][field].value);
+
+      let values = [];
+      //Make it multiple on test
+      if (importedNotices[i][field].thesaurus_separator) {
+        values = importedNotices[i][field].value.split(
+          importedNotices[i][field].thesaurus_separator
+        );
+      } else {
+        values = [].concat(importedNotices[i][field].value);
+      }
+
       for (var k = 0; k < values.length; k++) {
         const value = values[k];
         if (value) {
