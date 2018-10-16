@@ -162,6 +162,7 @@ class Importer extends Component {
 
       const dest = [
         "sandrine.della-bartolomea@culture.gouv.fr",
+        "se.legoff@gmail.com",
         "sebastien.legoff@beta.gouv.fr",
         "carine.prunet@culture.gouv.fr",
         "jeannette.ivain@culture.gouv.fr"
