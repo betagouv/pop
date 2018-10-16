@@ -37,20 +37,19 @@ function parseFiles(files, encoding) {
       for (var i = 0; i < files.length; i++) {
         filesMap[convertLongNameToShort(files[i].name)] = files[i];
       }
-      //ADD IMAGES
+
       for (var i = 0; i < notices.length; i++) {
         const name = notices[i].IMG.value;
         if (!name) break;
-        let img = filesMap[convertLongNameToShort(name)];
-
+        const shortName = convertLongNameToShort(name);
+        let img = filesMap[shortName];
         if (!img) {
-          errors.push(`Image ${name} introuvable`);
+          notices[i]._errors.push(`Image ${shortName} introuvable`);
         } else {
           const newImage = new Blob([img], { type: "image/jpeg" });
           notices[i]._images.push(newImage);
         }
       }
-      console.log(errors, notices);
       resolve({ importedNotices: notices, fileNames: [objectFile.name] });
     });
   });

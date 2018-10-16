@@ -27,8 +27,6 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
   return new Promise((resolve, reject) => {
-    const errors = [];
-
     var file = files.find(
       file => ("" + file.name.split(".").pop()).toLowerCase() === "txt"
     );
@@ -54,7 +52,9 @@ function parseFiles(files, encoding) {
         for (var j = 0; j < names.length; j++) {
           let img = filesMap[Joconde.convertLongNameToShort(names[j])];
           if (!img) {
-            errors.push(`Image ${names[j]} introuvable`);
+            importedNotices[i]._errors.push(
+              `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+            );
           } else {
             let newImage = null;
             try {
@@ -70,12 +70,6 @@ function parseFiles(files, encoding) {
           }
         }
       }
-
-      if (errors.length) {
-        reject(errors.join("\n"));
-        return;
-      }
-      console.log("importedNotices", importedNotices);
 
       resolve({ importedNotices, fileNames: [file.name] });
     });
