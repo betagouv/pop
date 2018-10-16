@@ -174,7 +174,7 @@ router.post("/signin", (req, res) => {
       } else {
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (isMatch && !err) {
-            const token = jwt.sign({ _id: user._id }, config.secret);
+            const token = jwt.sign({ _id: user._id }, config.secret, {expiresIn: "1d" });
             user.set({ lastConnectedAt: Date.now() });
             user.save();
             res.status(200).send({
