@@ -3,7 +3,7 @@
   border-radius: 5px;
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
   margin-bottom: 20px;
-  max-height: 300px;
+  max-height: 325px;
   padding: 10px;
   font-size: 16px;
   font-weight: normal;
@@ -42,6 +42,7 @@
   display: flex;
   justify-content: space-between;
   text-align: center;
+  margin: 10px;
   cursor: pointer;
 }
 

@@ -55,7 +55,7 @@ class Search extends React.Component {
     activeTab: "list",
     bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
     defaultSelected: "",
-    mobile_menu: "close"
+    mobile_menu: "mobile_close"
   };
 
   constructor(props) {
@@ -129,7 +129,7 @@ class Search extends React.Component {
                 <aside className="search-sidebar">
                   <div
                     className="close_mobile_menu"
-                    onClick={() => this.setState({ mobile_menu: "close" })}
+                    onClick={() => this.setState({ mobile_menu: "mobile_close" })}
                   >
                     x
                   </div>
@@ -309,7 +309,7 @@ class Search extends React.Component {
                       />
                       <div
                         className="filter_mobile_menu"
-                        onClick={() => this.setState({ mobile_menu: "open" })}
+                        onClick={() => this.setState({ mobile_menu: "mobile_open" })}
                       >
                         <SelectedFilters
                           render={props => {

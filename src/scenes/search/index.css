@@ -151,7 +151,7 @@
     margin-bottom: 30px;
   }
 
-  .search .open {
+  .search .mobile_open {
     transform: translateX(0);
   }
   .search .mainSearch input::placeholder {
@@ -240,6 +240,7 @@
 .css-yljddh:hover + label::before {
   border-color: #377d87 !important;
 }
+
 
 
 .search .map {
