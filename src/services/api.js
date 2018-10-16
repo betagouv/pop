@@ -51,7 +51,7 @@ class api {
   }
 
   getUsers(group) {
-    return request.get(`${api_url}/users?group=${group}`,{
+    return request.get(`${api_url}/users?group=${group}`, {
       headers: {
         Authorization: localStorage.getItem("token")
       }
@@ -60,6 +60,13 @@ class api {
 
   sendReport(subject, to, body) {
     const obj = { subject, to, body };
+
+    if (process.env.NODE_ENV !== "production") {
+      obj.subject = "TEST " + obj.subject;
+    }
+
+    console.log("POST MAIL", obj);
+
     return request.post(
       `${api_url}/mail`,
       JSON.stringify(obj),

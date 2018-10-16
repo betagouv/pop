@@ -151,7 +151,6 @@ class Importer extends Component {
         progress: Math.floor((count * 100) / total)
       });
 
-      console.log("BIM", generate, this.props.report);
       const generateReport = this.props.report || generate;
 
       let body = generateReport(
