@@ -26,7 +26,8 @@
 }
 
 @media screen and (max-width: 767px) {
-  .footer a {
-    font-size: 11px;
+  .footer a,
+  .footer a:hover {
+    font-size: 12px;
   }
 }
