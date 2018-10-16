@@ -335,7 +335,8 @@ class Importer extends Component {
                 className="button"
                 color="primary"
                 onClick={() => {
-                  const body = Report.generate(
+                  const generateReport = this.props.report || generate;
+                  const body = generateReport(
                     this.state.importedNotices,
                     this.props.collection,
                     this.props.email,

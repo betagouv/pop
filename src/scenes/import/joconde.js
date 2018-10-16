@@ -161,7 +161,7 @@ function regexIt(str) {
     });
   }
 
-  return { terme: arr[1], champ: arr[2], thesaurus: arr[3] };
+  return { terme: arr[2], champ: arr[1], thesaurus: arr[3] };
 }
 
 function parseFiles(files, encoding) {
