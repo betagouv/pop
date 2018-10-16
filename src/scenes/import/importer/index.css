@@ -54,7 +54,7 @@
 .importer-container .button {
   background-color: #70b7b3;
   border-radius: 3px;
-  width: 209px;
+  min-width: 209px;
   height: 45px;
   margin: 10px;
   border: 0;
@@ -66,7 +66,7 @@
 .importer-container .buttonReverse {
   background-color: white;
   border-radius: 3px;
-  width: 209px;
+  min-width: 209px;
   height: 45px;
   margin: 10px;
   font-size: 16px;

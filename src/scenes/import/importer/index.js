@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 import DropZone from "./dropZone";
 import api from "../../../services/api";
-import Report from "./report";
+import generate from "./report";
 import controleThesaurus from "./thesaurus";
 import ExportData from "./export";
 import AsideIcon from "../../../assets/outbox.png";
@@ -143,25 +143,29 @@ class Importer extends Component {
         const collection = created[i]._type;
         await api.createNotice(collection, notice, created[i]._images);
       }
+
       //Sending rapport
       this.setState({
         loading: true,
         loadingMessage: `Envoi du  rapport ... `,
         progress: Math.floor((count * 100) / total)
       });
-      let body = Report.generate(
+
+      console.log("BIM", generate, this.props.report);
+      const generateReport = this.props.report || generate;
+
+      let body = generateReport(
         this.state.importedNotices,
         this.props.collection,
         this.props.email,
-        this.props.institution,
-        this.props.fieldsToExport
+        this.props.institution
       );
+
       const dest = [
         "sandrine.della-bartolomea@culture.gouv.fr",
         "sebastien.legoff@beta.gouv.fr",
         "carine.prunet@culture.gouv.fr",
-        "jeannette.ivain@culture.gouv.fr",
-        "sophie.daenens@culture.gouv.fr"
+        "jeannette.ivain@culture.gouv.fr"
       ];
 
       await api.sendReport(
@@ -173,8 +177,7 @@ class Importer extends Component {
       this.setState({
         loading: false,
         step: 2,
-        loadingMessage: `Import effectué avec succès`,
-        step: 2
+        loadingMessage: `Import effectué avec succès`
       });
       amplitude.getInstance().logEvent("Import - Done", {
         "Notices total": total,

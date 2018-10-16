@@ -17,15 +17,11 @@ export default async function checkThesaurus(importedNotices) {
       const field = allfieldswiththesaurus[j];
       const thesaurus = importedNotices[i][field].thesaurus;
 
-      let values = [];
-      //Make it multiple on test
+      let values = [].concat(importedNotices[i][field].value);
       if (importedNotices[i][field].thesaurus_separator) {
-        values = importedNotices[i][field].value.split(
-          importedNotices[i][field].thesaurus_separator
-        );
-      } else {
-        values = [].concat(importedNotices[i][field].value);
+        values = values.reduce((acc,val) => acc.concat(val.split(importedNotices[i][field].thesaurus_separator)),[])
       }
+      values = values.map(e => e.trim());
 
       for (var k = 0; k < values.length; k++) {
         const value = values[k];
@@ -39,11 +35,11 @@ export default async function checkThesaurus(importedNotices) {
           if (!val) {
             if (allfieldswiththesaurus[j].thesaurus_strict === true) {
               importedNotices[i]._errors.push(
-                `Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
+                `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
               );
             } else {
               importedNotices[i]._warnings.push(
-                `Le champs ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
+                `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
               );
             }
           }

@@ -110,7 +110,7 @@ export default function diff(importedNotices, existingNotices) {
           const to = Array.isArray(importedNotices[i][e].value)
             ? importedNotices[i][e].value.join(", ")
             : importedNotices[i][e].value;
-          return `Le champs ${e} à évolué de ${from} à ${to}`;
+          return `Le champ ${e} à évolué de ${from} à ${to}`;
         });
 
         if (differences.length) {

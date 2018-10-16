@@ -155,7 +155,7 @@ export default class Palissy extends Notice {
         typeof this[property] === "object"
       ) {
         if (this[property].required && !this[property].value) {
-          this._errors.push(`Le champs ${property} ne doit pas être vide`);
+          this._errors.push(`Le champ ${property} ne doit pas être vide`);
         }
       }
     }
