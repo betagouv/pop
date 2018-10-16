@@ -131,7 +131,7 @@ router.post("/updatePassword", (req, res) => {
     if (!user) {
       res.status(401).send({
         success: false,
-        msg: `La mise à jour du mot de passe à échouée. Utilisateur ${email} introuvable`
+        msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
       });
     } else {
       user.comparePassword(ppwd, function(err, isMatch) {
@@ -142,13 +142,13 @@ router.post("/updatePassword", (req, res) => {
             if (err) throw err;
             return res.status(200).send({
               success: true,
-              msg: `La mise à jour du mot de passe à été effectuée avec succès`
+              msg: `La mise à jour du mot de passe a été effectuée avec succès`
             });
           });
         } else {
           res.status(401).send({
             success: false,
-            msg: `La mise à jour du mot de passe à échouée. Utilisateur introuvable`
+            msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
           });
         }
       });
@@ -157,6 +157,10 @@ router.post("/updatePassword", (req, res) => {
 });
 
 router.post("/signin", (req, res) => {
+  const failMessage = {
+    success: false,
+    msg: `L'authentification a échouée. Email ou mot de passe incorrect.`
+  };
   User.findOne(
     {
       email: req.body.email
@@ -165,16 +169,13 @@ router.post("/signin", (req, res) => {
       if (err) throw err;
 
       if (!user) {
-        res.status(401).send({
-          success: false,
-          msg: `L'authentification à échouée. Utilisateur ${
-            req.body.email
-          } introuvable`
-        });
+        res.status(401).send(failMessage);
       } else {
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (isMatch && !err) {
-            const token = jwt.sign({ _id: user._id }, config.secret, {expiresIn: "1d" });
+            const token = jwt.sign({ _id: user._id }, config.secret, {
+              expiresIn: "1d"
+            });
             user.set({ lastConnectedAt: Date.now() });
             user.save();
             res.status(200).send({
@@ -183,11 +184,7 @@ router.post("/signin", (req, res) => {
               user
             });
           } else {
-            res.status(401).send({
-              success: false,
-              msg:
-                "Impossible de se connecter. Le mot de passe ne correspond pas."
-            });
+            res.status(401).send(failMessage);
           }
         });
       }
