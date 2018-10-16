@@ -239,7 +239,7 @@ class Search extends React.Component {
                 </aside>
               </div>
               <div className="search-results">
-                <Row>
+                <Row className="search-row">
                   <Col sm={8}>
                     <div className="search-and-export-zone">
                       <DataSearch
