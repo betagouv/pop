@@ -63,6 +63,7 @@ class updatePassword extends Component {
       );
     }
 
+    //If the user is not login, he shouldnt have access to the page. Its a restricted page
     if (!this.props.email) {
       return (
         <Redirect
