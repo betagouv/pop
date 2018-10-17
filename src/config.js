@@ -5,7 +5,7 @@ let api_url = 'http://127.0.0.1:3000';
 let es_url = 'http://127.0.0.1:3000/search/';
 let bucket_url = 'https://s3.eu-west-3.amazonaws.com/pop-phototeque-dev/';
 
-env = 'production';
+env = 'staging';
 switch (env) {
   case 'production':
     api_url = 'http://pop-api.eu-west-3.elasticbeanstalk.com';
