@@ -82,7 +82,7 @@ export default function generate(notices, collection, email, institution) {
   arr.push(`</ul>`);
   arr.push(`<p>Nombre d'images chargées: ${imagesNumber}</p>`);
 
-  arr.push(`<h1>Notices créees</h1>`);
+  arr.push(`<h1>Notices créées</h1>`);
   {
     const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
     const lines = [];
