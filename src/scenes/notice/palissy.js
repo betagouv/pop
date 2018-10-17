@@ -394,17 +394,17 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Zone Lambert ou autres (ZONE) :"
+                title="Zone Lambert ou autres (ZONE) :"
                 name="ZONE"
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Coordonnées Lambert (ou autres) d'un points (COOR ) :"
+                title="Coordonnées Lambert (ou autres) d'un points (COOR ) :"
                 name="COOR"
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Coordonnées Lambert (ou autres) multiples (COORM ) :"
+                title="Coordonnées Lambert (ou autres) multiples (COORM ) :"
                 name="COORM"
                 disabled={!this.state.editable}
               />

@@ -73,7 +73,7 @@ function report(notices, collection, email, institution) {
   arr.push(`<li>${notices.length - rejected.length} notice(s) valide(s)</li>`);
   arr.push(`<li style="list-style-type:none">`);
   arr.push(`<ul>`);
-  arr.push(`<li>${created.length} notice(s) crée(s)</li>`);
+  arr.push(`<li>${created.length} notice(s) créée(s)</li>`);
   arr.push(`<li>${updated.length} notice(s) mise(s) à jour</li>`);
   arr.push(
     `<li>${notices.length -

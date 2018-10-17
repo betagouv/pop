@@ -242,7 +242,7 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="TODO-Numéro de microfiche (MICR) :"
+                title="Numéro de microfiche (MICR) :"
                 name="MICR"
                 disabled={!this.state.editable}
               />
