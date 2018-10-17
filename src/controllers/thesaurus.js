@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request");
 const X2JS = require("x2js");
+const passport = require("passport");
 
 const Thesaurus = require("./../models/thesaurus");
 const { capture } = require("./../sentry.js");
@@ -42,62 +43,66 @@ router.get("/validate", (req, res) => {
   });
 });
 
-router.get("/update", (req, res) => {
-  const thesaurusId = req.query.id;
-  return new Promise(async (resolve, reject) => {
-    try {
-      const allTerms = [];
-      // je récupère les top concepts des thesaurus
-      console.log("START GET TOP CONCEPT FOR THESAURUS ", thesaurusId);
-      const topconcepts = await getTopConceptsByThesaurusId(thesaurusId);
-      const arr = [];
+router.get(
+  "/update",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const thesaurusId = req.query.id;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const allTerms = [];
+        // je récupère les top concepts des thesaurus
+        console.log("START GET TOP CONCEPT FOR THESAURUS ", thesaurusId);
+        const topconcepts = await getTopConceptsByThesaurusId(thesaurusId);
+        const arr = [];
 
-      //send a confirmation here, so the timeout error is not call
-      res.status(200).send({ success: true, msg: "OK" });
+        //send a confirmation here, so the timeout error is not call
+        res.status(200).send({ success: true, msg: "OK" });
 
-      console.log("END TOP CONCEPT ", topconcepts.length);
-      // je vais chercher tous les enfants recursivement
-      console.log("START GET ALL CONCEPTS FOR THESAURUS ", thesaurusId);
-      for (let i = 0; i < topconcepts.length; i++) {
-        await getAllChildrenConcept(topconcepts[i], arr);
-      }
+        console.log("END TOP CONCEPT ", topconcepts.length);
+        // je vais chercher tous les enfants recursivement
+        console.log("START GET ALL CONCEPTS FOR THESAURUS ", thesaurusId);
+        for (let i = 0; i < topconcepts.length; i++) {
+          await getAllChildrenConcept(topconcepts[i], arr);
+        }
 
-      console.log("GOT CHILDREN CONCEPT ", arr.length);
-      console.log("START GET ALL PREFERED TERMS FOR THESAURUS ", thesaurusId);
-      // je prend tous les term préféré de tous les concepts
-      for (let i = 0; i < arr.length; i++) {
-        const r = await getPreferredTermByConceptId(arr[i]);
-        for (let j = 0; j < r.length; j++) {
-          if (r[j].languageId === "fr-FR") {
-            allTerms.push(r[j].lexicalValue);
+        console.log("GOT CHILDREN CONCEPT ", arr.length);
+        console.log("START GET ALL PREFERED TERMS FOR THESAURUS ", thesaurusId);
+        // je prend tous les term préféré de tous les concepts
+        for (let i = 0; i < arr.length; i++) {
+          const r = await getPreferredTermByConceptId(arr[i]);
+          for (let j = 0; j < r.length; j++) {
+            if (r[j].languageId === "fr-FR") {
+              allTerms.push(r[j].lexicalValue);
+            }
           }
         }
-      }
-      console.log("GOT TERMS ", allTerms.length);
-      // je supprime les terms qui existent
-      Thesaurus.remove({ arc: thesaurusId }, function() {
-        // je créé tous les terms qui existent
-        const arr = allTerms.map(
-          e => new Thesaurus({ arc: thesaurusId, value: e })
-        );
-        Thesaurus.insertMany(arr, function(err, docs) {
-          if (err) {
-            capture(err);
-          }
-          console.log("SAVED ", docs.length);
-          resolve();
+        console.log("GOT TERMS ", allTerms.length);
+        // je supprime les terms qui existent
+        Thesaurus.remove({ arc: thesaurusId }, function() {
+          // je créé tous les terms qui existent
+          const arr = allTerms.map(
+            e => new Thesaurus({ arc: thesaurusId, value: e })
+          );
+          Thesaurus.insertMany(arr, function(err, docs) {
+            if (err) {
+              capture(err);
+            }
+            console.log("SAVED ", docs.length);
+            resolve();
+          });
+          console.log(allTerms);
         });
-        console.log(allTerms);
-      });
 
-      console.log("DONE UPDATE ", thesaurusId);
-    } catch (e) {
-      capture(e);
-      res.status(500).send({ success: false, msg: "FAIL UPDATE" });
-      console.log("FAIL UPDATE ", thesaurusId);
-    }
-  });
-});
+        console.log("DONE UPDATE ", thesaurusId);
+      } catch (e) {
+        capture(e);
+        res.status(500).send({ success: false, msg: "FAIL UPDATE" });
+        console.log("FAIL UPDATE ", thesaurusId);
+      }
+    });
+  }
+);
 
 module.exports = router;
 
