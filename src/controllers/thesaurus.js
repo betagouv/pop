@@ -2,6 +2,7 @@ const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
 const X2JS = require("x2js");
+const passport = require("passport");
 
 const Thesaurus = require("./../models/thesaurus");
 const { capture } = require("./../sentry.js");
