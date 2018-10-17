@@ -41,7 +41,7 @@ app.use("/joconde", require("./controllers/joconde"));
 app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
-app.use("/thesaurus", require("./controllers/thesaurus"));
+app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 
 const http = require("http");
 app.use("/search/*/_msearch", (req, res) => {
@@ -64,19 +64,14 @@ app.post(
   "/mail",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("RECEIVE MAIL TO SEND", req.body);
     const { subject, to, body } = req.body;
-    
-    console.log("RECEIVE MAIL TO SEND 1");
+
     if (!subject || !to || !body) {
-      
-    console.log("RECEIVE MAIL TO SEND 1.1");
       capture("Mail information incomplete");
       res.status(500).send("Information incomplete");
       return;
     }
-    
-    console.log("RECEIVE MAIL TO SEND 2");
+
     Mailer.send(subject, to, body)
       .then(e => {
         return res.status(200).send({ success: true, msg: "OK" });

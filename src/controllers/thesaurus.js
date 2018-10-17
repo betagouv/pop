@@ -1,5 +1,6 @@
 const express = require("express");
 const request = require("request");
+const bodyParser = require("body-parser");
 const X2JS = require("x2js");
 
 const Thesaurus = require("./../models/thesaurus");
@@ -42,62 +43,136 @@ router.get("/validate", (req, res) => {
   });
 });
 
-router.get("/update", (req, res) => {
-  const thesaurusId = req.query.id;
-  return new Promise(async (resolve, reject) => {
-    try {
-      const allTerms = [];
-      // je récupère les top concepts des thesaurus
-      console.log("START GET TOP CONCEPT FOR THESAURUS ", thesaurusId);
-      const topconcepts = await getTopConceptsByThesaurusId(thesaurusId);
-      const arr = [];
+router.get("/getTopConceptsByThesaurusId", (req, res) => {
+  try {
+    const thesaurusId = req.query.id;
+    getTopConceptsByThesaurusId(thesaurusId).then(arr => {
+      res.status(200).send(arr);
+    });
+  } catch (e) {
+    capture(e);
+    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
+});
 
-      //send a confirmation here, so the timeout error is not call
-      res.status(200).send({ success: true, msg: "OK" });
+router.get("/getAllChildrenConcept", (req, res) => {
+  try {
+    const topconcepts = req.query.id;
+    const arr = [];
+    getAllChildrenConcept(topconcepts, arr).then(() => {
+      res.status(200).send(arr);
+    });
+  } catch (e) {
+    capture(e);
+    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
+});
 
-      console.log("END TOP CONCEPT ", topconcepts.length);
-      // je vais chercher tous les enfants recursivement
-      console.log("START GET ALL CONCEPTS FOR THESAURUS ", thesaurusId);
-      for (let i = 0; i < topconcepts.length; i++) {
-        await getAllChildrenConcept(topconcepts[i], arr);
-      }
-
-      console.log("GOT CHILDREN CONCEPT ", arr.length);
-      console.log("START GET ALL PREFERED TERMS FOR THESAURUS ", thesaurusId);
-      // je prend tous les term préféré de tous les concepts
-      for (let i = 0; i < arr.length; i++) {
-        const r = await getPreferredTermByConceptId(arr[i]);
-        for (let j = 0; j < r.length; j++) {
-          if (r[j].languageId === "fr-FR") {
-            allTerms.push(r[j].lexicalValue);
-          }
+router.get("/getPreferredTermByConceptId", (req, res) => {
+  try {
+    const conceptId = req.query.id;
+    const allTerms = [];
+    getPreferredTermByConceptId(conceptId).then(r => {
+      for (let j = 0; j < r.length; j++) {
+        if (r[j].languageId === "fr-FR") {
+          allTerms.push(r[j].lexicalValue);
         }
       }
-      console.log("GOT TERMS ", allTerms.length);
-      // je supprime les terms qui existent
-      Thesaurus.remove({ arc: thesaurusId }, function() {
-        // je créé tous les terms qui existent
-        const arr = allTerms.map(
-          e => new Thesaurus({ arc: thesaurusId, value: e })
-        );
-        Thesaurus.insertMany(arr, function(err, docs) {
-          if (err) {
-            capture(err);
-          }
-          console.log("SAVED ", docs.length);
-          resolve();
-        });
-        console.log(allTerms);
-      });
-
-      console.log("DONE UPDATE ", thesaurusId);
-    } catch (e) {
-      capture(e);
-      res.status(500).send({ success: false, msg: "FAIL UPDATE" });
-      console.log("FAIL UPDATE ", thesaurusId);
-    }
-  });
+      res.status(200).send(allTerms);
+    });
+  } catch (e) {
+    capture(e);
+    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
 });
+
+router.get("/deleteAllThesaurus", (req, res) => {
+  try {
+    const thesaurusId = req.query.id;
+    Thesaurus.remove({ arc: thesaurusId }, function() {
+      res.status(200).send({});
+    });
+  } catch (e) {
+    capture(e);
+    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
+});
+
+router.post("/createThesaurus", (req, res) => {
+  try {
+    const thesaurusId = req.query.id;
+    const terms = req.body.terms;
+    // je créé tous les terms qui existent
+    const arr = terms.map(e => new Thesaurus({ arc: thesaurusId, value: e }));
+    Thesaurus.insertMany(arr, (err, docs) => {
+      if (err) {
+        console.log("ERROR", err);
+        capture(err);
+      }
+      res.status(200).send({ success: true, msg: "OK" });
+    });
+  } catch (e) {
+    capture(e);
+    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
+});
+
+// router.get("/update", (req, res) => {
+//   const thesaurusId = req.query.id;
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const allTerms = [];
+//       // je récupère les top concepts des thesaurus
+//       console.log("START GET TOP CONCEPT FOR THESAURUS ", thesaurusId);
+//       const topconcepts = await getTopConceptsByThesaurusId(thesaurusId);
+//       const arr = [];
+
+//       //send a confirmation here, so the timeout error is not call
+//       res.status(200).send({ success: true, msg: "OK" });
+
+//       console.log("END TOP CONCEPT ", topconcepts.length);
+//       // je vais chercher tous les enfants recursivement
+//       console.log("START GET ALL CONCEPTS FOR THESAURUS ", thesaurusId);
+//       for (let i = 0; i < topconcepts.length; i++) {
+//         await getAllChildrenConcept(topconcepts[i], arr);
+//       }
+
+//       console.log("GOT CHILDREN CONCEPT ", arr.length);
+//       console.log("START GET ALL PREFERED TERMS FOR THESAURUS ", thesaurusId);
+//       // je prend tous les term préféré de tous les concepts
+//       for (let i = 0; i < arr.length; i++) {
+//         const r = await getPreferredTermByConceptId(arr[i]);
+//         for (let j = 0; j < r.length; j++) {
+//           if (r[j].languageId === "fr-FR") {
+//             allTerms.push(r[j].lexicalValue);
+//           }
+//         }
+//       }
+//       console.log("GOT TERMS ", allTerms.length);
+//       // je supprime les terms qui existent
+//       Thesaurus.remove({ arc: thesaurusId }, function() {
+//         // je créé tous les terms qui existent
+//         const arr = allTerms.map(
+//           e => new Thesaurus({ arc: thesaurusId, value: e })
+//         );
+//         Thesaurus.insertMany(arr, function(err, docs) {
+//           if (err) {
+//             capture(err);
+//           }
+//           console.log("SAVED ", docs.length);
+//           resolve();
+//         });
+//         console.log(allTerms);
+//       });
+
+//       console.log("DONE UPDATE ", thesaurusId);
+//     } catch (e) {
+//       capture(e);
+//       res.status(500).send({ success: false, msg: "FAIL UPDATE" });
+//       console.log("FAIL UPDATE ", thesaurusId);
+//     }
+//   });
+// });
 
 module.exports = router;
 
