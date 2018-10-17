@@ -178,18 +178,24 @@ router.post("/createThesaurus", (req, res) => {
 module.exports = router;
 
 function getAllChildrenConcept(conceptId, arr) {
-  return new Promise(async (resolve, reject) => {
-    arr.push(conceptId);
-    const childs = await getChildrenByConceptId(conceptId);
-    const ArrP = [];
-    if (childs) {
-      for (var i = 0; i < childs.length; i++) {
-        ArrP.push(getAllChildrenConcept(childs[i], arr));
+  try {
+    return new Promise(async (resolve, reject) => {
+      arr.push(conceptId);
+      const childs = await getChildrenByConceptId(conceptId);
+      const ArrP = [];
+      if (childs) {
+        for (var i = 0; i < childs.length; i++) {
+          ArrP.push(getAllChildrenConcept(childs[i], arr));
+        }
       }
-    }
-    await Promise.all(ArrP);
+      await Promise.all(ArrP);
+      resolve();
+    });
+  } catch (e) {
+    capture(e);
     resolve();
-  });
+    // res.status(500).send({ success: false, msg: JSON.stringify(e) });
+  }
 }
 
 function getChildrenByConceptId(conceptId) {
