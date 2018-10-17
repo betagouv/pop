@@ -527,24 +527,39 @@ const SeeMore = ({ notice }) => {
   const arr = [];
 
   if (notice.DOSUR) {
-    arr.push(<a href={notice.DOSURL} key='notice.DOSURL'>Dossier électronique</a>);
+    arr.push(
+      <li key='notice.DOSURL'>
+        <a href={notice.DOSURL}>Dossier électronique</a>
+      </li>
+    );
   }
 
   if (notice.DOSURLPDF) {
-    arr.push(<a href={notice.DOSURLPDF} key='notice.DOSURLPDF'>Dossier pdf</a>);
+    arr.push(
+      <li key='notice.DOSURLPDF'>
+        <a href={notice.DOSURLPDF}>Dossier pdf</a>
+      </li>
+    );
   }
 
   if (notice.LIENS && notice.LIENS.length) {
     for (let i = 0; i < notice.LIENS.length; i++) {
-      arr.push(<a href={notice.LIENS[i]} key={`notice.LIENS${i}`}>LIENS</a>);
+      arr.push(
+        <li key={`notice.LIENS${i}`}>
+          <a href={notice.LIENS[i]}>LIENS</a>
+        </li>
+      );
     }
   }
 
   if (notice.LMDP) {
     arr.push(
-      <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html" key={`mediathek_cible`}>
-        Lien vers les archives MH (base Mediathek)
-      </a>
+      <li key={`mediathek_cible`}>
+        <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
+          Lien vers les archives MH (base Mediathek)
+        </a>
+      </li>
+      
     );
   }
 
@@ -556,7 +571,7 @@ const SeeMore = ({ notice }) => {
     <div className="sidebar-section info">
       <h4>Voir aussi</h4>
       <hr />
-      <div>{arr}</div>
+      <ul>{arr}</ul>
     </div>
   );
 };
