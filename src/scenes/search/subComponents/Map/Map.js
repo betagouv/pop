@@ -5,6 +5,8 @@ import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
 
 import CardMap from "./CardMap";
 
+import LinkedNotices from '../../../notice/components/linkedNotices';
+
 import "./mapbox-gl.css";
 import "./map.css";
 
@@ -66,15 +68,17 @@ export default class Umbrella extends React.Component {
     //console.log(boxZoomBounds.zoom)
 
     const precision = getPrecision(boxZoomBounds.zoom);
-    this.prevPrecision = precision;
+    //if(this.prevPrecision !== precision) {
+      this.prevPrecision = precision;
 
-    this.updateQuery(
-      boxZoomBounds.north,
-      boxZoomBounds.west,
-      boxZoomBounds.south,
-      boxZoomBounds.east,
-      precision
-    );
+      this.updateQuery(
+        boxZoomBounds.north,
+        boxZoomBounds.west,
+        boxZoomBounds.south,
+        boxZoomBounds.east,
+        precision
+      );
+    //}
   }
 
   /*
@@ -289,7 +293,9 @@ class Map extends React.Component {
 
                   const hits = JSON.parse(features[0].properties.hits).map(hit => ({...hit, ...hit._source}));
 
-                  const drawerContent = 'ok';
+                  const drawerContent = (
+                    <LinkedNotices links={hits} />
+                  );
                   
                   this.setState({ drawerContent });
                 }
