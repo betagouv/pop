@@ -47,6 +47,7 @@ function parseFiles(files, encoding) {
           notices[i]._errors.push(`Image ${shortName} introuvable`);
         } else {
           const newImage = new Blob([img], { type: "image/jpeg" });
+          newImage.name = shortName;
           notices[i]._images.push(newImage);
         }
       }

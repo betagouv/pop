@@ -128,7 +128,7 @@ function report(notices, collection, email, institution) {
     const { terme, champ, thesaurus } = regexIt(key);
 
     arr.push(
-      `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> sur le(s) notice(s) : </li>`
+      `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
     );
     arr.push(`<ul>`);
     arr.push(...nots.map(e => `<li>${e}</li>`));
@@ -200,16 +200,16 @@ function parseFiles(files, encoding) {
             );
           } else {
             let newImage = null;
+            const shortname = Joconde.convertLongNameToShort(img.name);
             try {
-              newImage = new File(
-                [img],
-                Joconde.convertLongNameToShort(img.name),
-                { type: img.type }
-              );
+              newImage = new File([img], shortname, { type: img.type });
             } catch (err) {
               newImage = new Blob([img], { type: "image/jpeg" });
+              newImage.name = shortname;
             }
             importedNotices[i]._images.push(newImage);
+
+            console.log("newImage", newImage);
           }
         }
       }
