@@ -9,7 +9,7 @@ import Title from './components/title';
 import Loader from '../../components/loader';
 import API from '../../services/api';
 import NotFound from './components/not-found';
-
+import { postFixedLink } from "./utils";
 import './index.css';
 
 class Notice extends React.Component {
@@ -531,7 +531,7 @@ const SeeMore = ({ notice }) => {
   }
 
   if (notice.DOSURLPDF) {
-    arr.push(<a href={notice.DOSURLPDF} key='notice.DOSURLPDF'>Dossier pdf</a>);
+    arr.push(<a href={postFixedLink(notice.DOSURLPDF)} target="_blank" key='notice.DOSURLPDF'>Dossier pdf</a>);
   }
 
   if (notice.LIENS && notice.LIENS.length) {
