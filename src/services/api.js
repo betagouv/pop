@@ -85,7 +85,7 @@ class api {
 
   createNotice(collection, data, images = []) {
     for (let propName in data) {
-      //clean object
+      // Clean object.
       if (!data[propName]) {
         delete data[propName];
       }
@@ -108,7 +108,11 @@ class api {
   }
 
   updateThesaurus(thesaurusId, str) {
-    return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`);
+    return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`, {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
   }
 
   getThesaurus(thesaurusId, str) {
