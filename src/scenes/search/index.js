@@ -129,7 +129,9 @@ class Search extends React.Component {
                 <aside className="search-sidebar">
                   <div
                     className="close_mobile_menu"
-                    onClick={() => this.setState({ mobile_menu: "mobile_close" })}
+                    onClick={() =>
+                      this.setState({ mobile_menu: "mobile_close" })
+                    }
                   >
                     x
                   </div>
@@ -172,14 +174,13 @@ class Search extends React.Component {
                     showSearch={false}
                     limit={200}
                     react={{ FILTER: "region" }}
+                    filterListItem={bucket => isDepartmentNumber(bucket.key)}
                     renderListItem={(label, count) => {
-                      if (isDepartmentNumber(label)) {
-                        return (
-                          <div>
-                            {departmentText(label)} ({count})
-                          </div>
-                        );
-                      }
+                      return (
+                        <div>
+                          {departmentText(label)} ({count})
+                        </div>
+                      );
                     }}
                   />
                   <MultiList
@@ -309,7 +310,9 @@ class Search extends React.Component {
                       />
                       <div
                         className="filter_mobile_menu"
-                        onClick={() => this.setState({ mobile_menu: "mobile_open" })}
+                        onClick={() =>
+                          this.setState({ mobile_menu: "mobile_open" })
+                        }
                       >
                         <SelectedFilters
                           render={props => {

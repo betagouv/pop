@@ -30,6 +30,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
               showSearch={this.props.showSearch}
               displayCount={this.props.displayCount}
               renderListItem={this.props.renderListItem}
+              filterListItem={this.props.filterListItem}
               defaultSelected={this.props.defaultSelected}
               dataField={this.props.dataField}
               componentId={this.props.componentId}
@@ -153,6 +154,7 @@ class MultiListUmbrella extends React.Component {
           displayCount={this.props.displayCount}
           showSearch={this.props.showSearch}
           renderListItem={this.props.renderListItem}
+          filterListItem={this.props.filterListItem}
           selected={this.state.selected}
           search={this.state.search}
           onSearchChange={search => {
@@ -181,12 +183,15 @@ class MultiList extends React.Component {
     ) {
       // Flat buckets (it may contain more than one aggregation)
       const aggs = this.props.aggregations;
-      const buckets = [].concat.apply(
+      let buckets = [].concat.apply(
         [],
         Object.keys(aggs).map(key => {
           return aggs[key].buckets.filter(item => item.key);
         })
       );
+      if (this.props.filterListItem) {
+        buckets = buckets.filter(this.props.filterListItem)
+      }
 
       const options = buckets.map(item => (
         <Label check key={item.key}>
