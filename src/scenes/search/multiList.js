@@ -1,8 +1,8 @@
-import React from 'react';
-import { ReactiveComponent } from '@appbaseio/reactivesearch';
-import { Input, Label, FormGroup, Collapse } from 'reactstrap';
-import queryString from 'query-string';
-import './multiList.css';
+import React from "react";
+import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import { Input, Label, FormGroup, Collapse } from "reactstrap";
+import queryString from "query-string";
+import "./multiList.css";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
@@ -49,18 +49,18 @@ class MultiListUmbrella extends React.Component {
     super(props);
     this.state = {
       query: {},
-      search: '',
+      search: "",
       selected: []
     };
   }
 
   componentWillMount() {
-    this.updateInternalQuery('');
+    this.updateInternalQuery("");
     const values = queryString.parse(location.search);
     const field = this.props.componentId;
     if (values[field]) {
       const str = values[field].slice(1, -1);
-      const selected = str.split(', ');
+      const selected = str.split(", ");
       this.updateExternalQuery(selected);
       this.setState({ selected });
       this.props.onCollapse(true);
@@ -117,7 +117,7 @@ class MultiListUmbrella extends React.Component {
         should
       }
     };
-    this.props.setQuery({ query, value: selected.join(', ') });
+    this.props.setQuery({ query, value: selected.join(", ") });
   }
 
   updateInternalQuery(search) {
@@ -125,8 +125,8 @@ class MultiListUmbrella extends React.Component {
     const size = this.props.limit || 20;
     const sort =
       this.props.sortByName !== undefined
-        ? { order: { _key: 'asc' } }
-        : { order: { _count: 'desc' } };
+        ? { order: { _key: "asc" } }
+        : { order: { _count: "desc" } };
 
     const fields = Array.isArray(value) ? value : [value];
     const query = {
@@ -138,6 +138,7 @@ class MultiListUmbrella extends React.Component {
         {}
       )
     };
+    // console.log(query);
     this.setState({ query });
   }
 
@@ -179,19 +180,25 @@ class MultiList extends React.Component {
       this.props.aggregations &&
       Object.keys(this.props.aggregations).length
     ) {
-      const key = Object.keys(this.props.aggregations)[0];
-      const options = this.props.aggregations[key].buckets
-        .filter(e => e.key)
-        .map(item => (
-          <Label check key={item.key}>
-            <Input
-              checked={this.props.selected.includes(item.key)}
-              type="checkbox"
-              onChange={() => this.props.onSelect(item.key)}
-            />
-            {this.renderListItem(item)}
-          </Label>
-        ));
+      // Flat buckets (it may contain more than one aggregation)
+      const aggs = this.props.aggregations;
+      const buckets = [].concat.apply(
+        [],
+        Object.keys(aggs).map(key => {
+          return aggs[key].buckets.filter(item => item.key);
+        })
+      );
+
+      const options = buckets.map(item => (
+        <Label check key={item.key}>
+          <Input
+            checked={this.props.selected.includes(item.key)}
+            type="checkbox"
+            onChange={() => this.props.onSelect(item.key)}
+          />
+          {this.renderListItem(item)}
+        </Label>
+      ));
       return <FormGroup check>{options}</FormGroup>;
     }
     return <div />;
