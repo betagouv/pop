@@ -85,7 +85,7 @@ class api {
 
   createNotice(collection, data, images = []) {
     for (let propName in data) {
-      //clean object
+      // Clean object.
       if (!data[propName]) {
         delete data[propName];
       }
@@ -115,6 +115,15 @@ class api {
       `${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`
     );
   }
+  /*
+    updateThesaurus(thesaurusId, str) {
+    return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`, {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
+  }*/
+
   getAllChildrenConcept(thesaurusId) {
     return request.get(
       `${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`
