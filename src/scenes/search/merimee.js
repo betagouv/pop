@@ -55,7 +55,18 @@ export default class Search extends React.Component {
   renderAdvanced() {
     return (
       <div>
-        <QueryBuilder entity={Merimee} componentId="advancedSearch" />
+        <Row>
+          <Col md={9}>
+            <QueryBuilder entity={Merimee} componentId="advancedSearch" />
+          </Col>
+          <Col md={3}>
+            <ExportComponent
+              FILTER={FILTER}
+              filename="merimee.csv"
+              columns={this.state.fieldsToExport}
+            />
+          </Col>
+        </Row>
         <ReactiveList
           componentId="results"
           react={{ and: "advancedSearch" }}

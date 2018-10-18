@@ -63,6 +63,12 @@ class User extends Component {
           </DropdownItem>
           <DropdownItem
             className="dropdown-item"
+            onClick={() => history.push("/thesaurus")}
+          >
+            Mettre à jour le thesaurus
+          </DropdownItem>
+          <DropdownItem
+            className="dropdown-item"
             onClick={this.logout.bind(this)}
           >
             Logout

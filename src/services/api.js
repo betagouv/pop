@@ -106,8 +106,36 @@ class api {
     return request.delete(`${api_url}/${collection}/${ref}`);
   }
 
-  updateThesaurus(thesaurusId, str) {
-    return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`);
+  // updateThesaurus(thesaurusId) {
+  //   return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`);
+  // }
+
+  getTopConceptsByThesaurusId(thesaurusId) {
+    return request.get(
+      `${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`
+    );
+  }
+  getAllChildrenConcept(thesaurusId) {
+    return request.get(
+      `${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`
+    );
+  }
+  getPreferredTermByConceptId(thesaurusId) {
+    return request.get(
+      `${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`
+    );
+  }
+  deleteAllThesaurus(thesaurusId) {
+    return request.get(
+      `${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`
+    );
+  }
+  createThesaurus(thesaurusId, terms) {
+    return request.post(
+      `${api_url}/thesaurus/createThesaurus?id=${thesaurusId}`,
+      JSON.stringify(terms),
+      "application/json"
+    );
   }
 
   getThesaurus(thesaurusId, str) {
