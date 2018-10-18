@@ -5,7 +5,8 @@ import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
 
 import CardMap from "./CardMap";
 
-import LinkedNotices from '../../../notice/components/linkedNotices';
+import LinkedNotices from './subComponents/LinkedNotices';
+import SingleNotice from './subComponents/SingleNotice';
 
 import "./mapbox-gl.css";
 import "./map.css";
@@ -332,7 +333,9 @@ class Map extends React.Component {
                     </Popup>
                   );
 
-                  const drawerContent = 'ok';
+                  const drawerContent = (
+                    <SingleNotice className="" key={item.REF} data={item} />
+                  );
                   
                   this.setState({ popup, drawerContent });
                   
