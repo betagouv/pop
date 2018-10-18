@@ -25,6 +25,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get("/", (_req, res) => {
+  capture("POP API");
   res.send("POP API listening.");
   console.log("POP API listening.");
 });
