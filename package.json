@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/betagouv/pop-api#readme",
   "dependencies": {
+    "@sentry/node": "^4.1.1",
     "asyncawait": "^1.0.6",
     "aws-sdk": "^2.266.1",
     "aws4": "^1.8.0",
@@ -44,7 +45,6 @@
     "nodemailer": "^4.6.7",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "raven": "^2.6.4",
     "request": "^2.87.0",
     "x2js": "^3.2.1",
     "xml2js": "^0.4.19"
