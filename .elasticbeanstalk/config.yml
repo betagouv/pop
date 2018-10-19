@@ -1,0 +1,25 @@
+branch-defaults:
+  develop:
+    environment: pop-production-staging
+  master:
+    environment: pop-production
+environment-defaults:
+  pop-production:
+    branch: null
+    repository: null
+  production:
+    branch: null
+    repository: null
+global:
+  application_name: pop_production
+  default_ec2_keyname: null
+  default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Node.js running on
+    64bit Amazon Linux/4.5.0
+  default_region: eu-west-3
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: git
+  workspace_type: Application
