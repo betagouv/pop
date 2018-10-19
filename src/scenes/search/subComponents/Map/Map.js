@@ -176,6 +176,7 @@ class Map extends React.Component {
   mapRef = null;
   singleFeatureClicked = null;
   clusterFeatureClicked = null;
+  featureClicked = null;
 
   constructor(props) {
     super(props);
@@ -253,6 +254,47 @@ class Map extends React.Component {
     });
   }
 
+  onPointClicked (e, layerType){
+    if(layerType === 'clusters') {
+      const precision = getPrecision(this.map.getZoom());
+      if(precision < MAX_PRECISION) {
+        return false;
+      }
+    }
+
+    const features = this.map.queryRenderedFeatures(e.point, { layers: [layerType] });
+
+    if(features.length === 1) {
+      if(this.featureClicked) {
+        this.map.setFeatureState(this.featureClicked, { clicked: false});
+      }
+    
+      this.featureClicked = features[0];
+      this.map.setFeatureState(features[0], { clicked: true});
+      this.map.flyTo({
+        center: features[0].geometry.coordinates,
+        offset: [130, 0],
+      });
+
+      let drawerContent = null;
+      if(layerType === 'clusters') {
+        const hits = JSON.parse(features[0].properties.hits).map(hit => ({...hit, ...hit._source}));
+        drawerContent = (
+          <LinkedNotices links={hits} />
+        );
+      } else if(layerType === 'unclustered-point') {
+        const itemId = features[0].properties.id;
+        const hits = JSON.parse(features[0].properties.hits);
+        const item = {...hits[0], ...hits[0]._source};
+        drawerContent = (
+          <SingleNotice className="" key={item.REF} data={item} />
+        );
+      }
+
+      this.setState({ drawerContent });
+    }
+  }
+
   render() {
     const style = {
       width: "100%",
@@ -276,73 +318,11 @@ class Map extends React.Component {
                 window.mapRef = map;
                 
                 map.on('click', 'clusters', (e) => {
-                  const precision = getPrecision(map.getZoom());
-                  if(precision < MAX_PRECISION) {
-                    return false;
-                  }
-                  const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-                  if(features.length === 1) {
-                    if(this.clusterFeatureClicked) {
-                      map.setFeatureState(this.clusterFeatureClicked, { clicked: false});
-                    }
-                    if(this.singleFeatureClicked) {
-                      map.setFeatureState(this.singleFeatureClicked, { clicked: false});
-                    }
-                    this.clusterFeatureClicked = features[0];
-                    map.setFeatureState(features[0], { clicked: true});
-                    map.flyTo({
-                      center: features[0].geometry.coordinates,
-                      offset: [130, 0],
-                    });
-
-                    const hits = JSON.parse(features[0].properties.hits).map(hit => ({...hit, ...hit._source}));
-
-                    const drawerContent = (
-                      <LinkedNotices links={hits} />
-                    );
-                    
-                    this.setState({ drawerContent });
-                  }
+                    this.onPointClicked(e, 'clusters');
                 });
 
                 map.on('click', 'unclustered-point', (e) => {
-
-                  const features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-point'] });
-
-                  if(features.length === 1) {
-                    if(this.singleFeatureClicked) {
-                      map.setFeatureState(this.singleFeatureClicked, { clicked: false});
-                    }
-                    if(this.clusterFeatureClicked) {
-                      map.setFeatureState(this.clusterFeatureClicked, { clicked: false});
-                    }
-                    this.singleFeatureClicked = features[0];
-                    map.setFeatureState(features[0], { clicked: true});
-                    map.flyTo({
-                      center: features[0].geometry.coordinates,
-                      offset: [130, 0],
-                    });
-
-                    const itemId = features[0].properties.id;
-                    const hits = JSON.parse(features[0].properties.hits);
-                    const item = {...hits[0], ...hits[0]._source};
-                    
-                    const popup = (
-                      <Popup
-                        key={`Popup`}
-                        coordinates={[item.POP_COORDONNEES.lon, item.POP_COORDONNEES.lat]}
-                      >
-                        <CardMap className="" key={item.REF} data={item} />
-                      </Popup>
-                    );
-
-                    const drawerContent = (
-                      <SingleNotice className="" key={item.REF} data={item} />
-                    );
-                    
-                    this.setState({ popup, drawerContent });
-                    
-                  }
+                  this.onPointClicked(e, 'unclustered-point');
                 });
 
                 map.on("mouseenter", "unclustered-point", () => {
