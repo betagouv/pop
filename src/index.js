@@ -25,6 +25,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get("/", (_req, res) => {
+  capture({ error: "POP API" });
   res.send("POP API listening.");
   console.log("POP API listening.");
 });
@@ -36,14 +37,13 @@ app.use("/joconde", require("./controllers/joconde"));
 app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
-app.use("/thesaurus", require("./controllers/thesaurus"));
+app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 app.use("/search", require("./controllers/search"));
 
 app.post(
   "/mail",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("RECEIVE MAIL TO SEND", req.body);
     const { subject, to, body } = req.body;
 
     console.log("RECEIVE MAIL TO SEND 1");
