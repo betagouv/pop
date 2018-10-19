@@ -1,6 +1,7 @@
 import React from "react";
 import Loader from "../../../../../../components/loader";
 import { Link } from "react-router-dom";
+import shave from 'shave';
 import { bucket_url } from "../../../../../../config";
 import "./linkedNotices.css";
 
@@ -22,7 +23,7 @@ export default class LinkedNotices extends React.Component {
     this.setState({ 
       singleNotice : (
         <div>
-          <div onClick={this.onBackClicked} >&lt; retour à la liste</div>
+          <div onClick={this.onBackClicked} className='back'>&lt; retour à la liste</div>
           <SingleNotice className="" key={item.REF} data={item} />
         </div>
       )
@@ -63,6 +64,15 @@ export default class LinkedNotices extends React.Component {
 }
 
 class SmallNotice extends React.Component {
+  constructor(props) {
+      super(props);
+      this.titleRef = React.createRef();
+  }
+
+  componentDidMount() {
+      shave(this.titleRef.current, 50);
+  }
+
   render() {
     let image = "";
     if (this.props.notice.MEMOIRE.length) {
@@ -82,7 +92,7 @@ class SmallNotice extends React.Component {
       >
         <img src={image} alt={this.props.notice.TICO} />
         <div className="content">
-          <h2>{this.props.notice.TICO}</h2>
+          <h2 ref={this.titleRef}>{this.props.notice.TICO}</h2>
           <p className="categories">{this.props.notice.DENO.join(", ")}</p>
           <div>
             <p>{this.props.notice.DOMN}</p>

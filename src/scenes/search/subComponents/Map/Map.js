@@ -1,6 +1,7 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
+import { uniqueId } from 'lodash';
 import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
 
 import CardMap from "./CardMap";
@@ -474,6 +475,14 @@ class Map extends React.Component {
   }
 }
 
+const mapGeoHashToUniqId = {};
+function getGeoHashUniqId(geoHash) { // NOT NICE AT ALL, TODO CHECK THE PERF HERE
+  if(!mapGeoHashToUniqId.hasOwnProperty(geoHash)) {
+    mapGeoHashToUniqId[geoHash] = uniqueId();
+  }
+  return mapGeoHashToUniqId[geoHash];
+}
+
 function toGeoJson(arr) {
   //const before = window.performance.now();
   const geoJsonFormated = {
@@ -486,9 +495,10 @@ function toGeoJson(arr) {
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);
+    
     let feature = {
       type: "Feature",
-      id: i,
+      id: getGeoHashUniqId(item.key),
       properties: {
         id: item.key,
         hits: item.top_hits.hits.hits
