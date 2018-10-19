@@ -1,11 +1,11 @@
 import React from 'react';
 import './index.css';
 
-export default () => (
+export default ({isOpen = true}) => isOpen?(
    <div className='loader-container'>
       <div id="loader"/>
   </div>
-);
+) : null;
 
 
 

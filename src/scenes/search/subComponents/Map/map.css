@@ -33,3 +33,12 @@
 .search-map .drawer.open {
     margin-left: auto;
 }
+
+.search-map .loader-container {
+    position: absolute;
+    z-index: 5;
+    width: 98%;
+    height: 600px;
+    background: #00000082;
+    padding: 0;
+}
