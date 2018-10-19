@@ -64,7 +64,7 @@ const bases = [
   },
   {
     name: 'mnr',
-    title: "Oeuvres spoliées (MNR Rose-Valland)",
+    title: "Récupération artistique (MNR Rose-Valland)",
     description: `A la fin de la dernière guerre, de nombreuses œuvres
     récupérées en Allemagne ont été renvoyées en France
     parce que certains indices (archives, inscriptions, etc.)
