@@ -72,9 +72,10 @@ async function run() {
             {
               title: "Reindex",
               enabled: ctx => ctx.rootExists === true && ctx.error !== true,
-              task: async () => {
+              task: async ctx => {
                 const response = await es.reindex({
-                  timeout: "1h",
+                  requestTimeout: 120 * 60 * 1000,
+                  timeout: "2h",
                   body: {
                     source: { index: rootDbname },
                     dest: { index: dbname }
