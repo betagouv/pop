@@ -2,6 +2,9 @@ environment-defaults:
   pop-production:
     branch: null
     repository: null
+  pop-production-staging:
+    branch: null
+    repository: null
 global:
   application_name: pop_production
   default_ec2_keyname: null
@@ -12,6 +15,6 @@ global:
   instance_profile: null
   platform_name: null
   platform_version: null
-  profile: null
+  profile: eb-cli
   sc: git
   workspace_type: Application
