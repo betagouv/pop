@@ -7,8 +7,8 @@
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
     "dev:env": "nodemon -r dotenv/config ./src/index.js",
     "start": "node ./src/index.js  ",
-    "deploy:prod": " eb deploy pop-api",
-    "deploy:staging": "eb deploy pop-api-staging",
+    "deploy:prod": "yarn && eb deploy pop-api",
+    "deploy:staging": "yarn && eb deploy pop-api-staging",
     "test": "mocha --timeout 10000",
     "elasticsearch-reindex": "node src/elasticsearch/index.js"
   },
