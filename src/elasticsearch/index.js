@@ -49,86 +49,104 @@ async function run() {
           const dbname = db + new Date().valueOf();
 
           // Sub-task list for each index.
-          return new Listr([
-            {
-              title: "Create a new index with correct settings and mappings.",
-              task: async ctx => {
-                const filename = `./indices/${db}.js`;
-                if (!fs.existsSync(`${__dirname}/${filename}`)) {
-                  ctx.error = true;
-                  throw new Error(`Failed to locate ${__dirname}/${filename}`);
-                }
-                const response = await es.indices.create({
-                  index: dbname,
-                  body: require(filename)
-                });
-                if (!response.acknowledged) {
-                  ctx.error = true;
-                  throw new Error("Failed to create new index.");
-                }
-                ctx.rootExists = await es.indices.exists({ index: rootDbname });
-              }
-            },
-            {
-              title: "Reindex",
-              enabled: ctx => ctx.rootExists === true && ctx.error !== true,
-              task: async ctx => {
-                const response = await es.reindex({
-                  requestTimeout: 120 * 60 * 1000,
-                  timeout: "2h",
-                  body: {
-                    source: { index: rootDbname },
-                    dest: { index: dbname }
+          return new Listr(
+            [
+              {
+                title: "Create a new index with correct settings and mappings.",
+                task: async ctx => {
+                  const filename = `./indices/${db}.js`;
+                  if (!fs.existsSync(`${__dirname}/${filename}`)) {
+                    ctx.error = true;
+                    throw new Error(
+                      `Failed to locate ${__dirname}/${filename}`
+                    );
                   }
-                });
-                if (response.failures.length) {
-                  ctx.error = true;
-                  console.error(response);
-                  throw new Error("Oups. There where some failures.");
-                }
-              }
-            },
-            {
-              title: "Create alias to the rootname and remove previous db",
-              enabled: ctx => ctx.rootExists === true && ctx.error !== true,
-              task: async () => {
-                // Find previous db name.
-                const aliases = await es.indices.getAlias({ index: "*" });
-                const previousDbname =
-                  Object.keys(aliases).find(
-                    key => aliases[key].aliases[rootDbname]
-                  ) || rootDbname;
-                // Create alias to the rootname and remove previous db.
-                const response = await es.indices.updateAliases({
-                  body: {
-                    actions: [
-                      { add: { index: dbname, alias: rootDbname } },
-                      { remove_index: { index: previousDbname } }
-                    ]
+                  const response = await es.indices.create({
+                    index: dbname,
+                    body: require(filename)
+                  });
+                  if (!response.acknowledged) {
+                    ctx.error = true;
+                    throw new Error("Failed to create new index.");
                   }
-                });
-                if (!response.acknowledged) {
-                  console.error(response);
-                  throw new Error("Fatal error!");
+                  ctx.rootExists = await es.indices.exists({
+                    index: rootDbname
+                  });
                 }
-              }
-            },
-            {
-              title: "Create alias to the rootname",
-              enabled: ctx => ctx.rootExists === false && ctx.error !== true,
-              task: async () => {
-                const response = await es.indices.updateAliases({
-                  body: {
-                    actions: [{ add: { index: dbname, alias: rootDbname } }]
+              },
+              {
+                title: "Reindex",
+                enabled: ctx => ctx.rootExists === true && ctx.error !== true,
+                task: async ctx => {
+                  let response;
+                  try {
+                    response = await es.reindex({
+                      requestTimeout: 120 * 60 * 1000,
+                      timeout: "2h",
+                      body: {
+                        source: {
+                          index: rootDbname,
+                        },
+                        dest: {
+                          index: dbname,
+                        }
+                      }
+                    });
+                  } catch (e) {
+                    ctx.error = true;
+                    console.error(e);
+                    throw new Error(e);
                   }
-                });
-                if (!response.acknowledged) {
-                  console.error(response);
-                  throw new Error("Fatal error!");
+                  if (response.failures.length) {
+                    ctx.error = true;
+                    console.error(response);
+                    throw new Error("Oups. There where some failures.");
+                  }
+                }
+              },
+              {
+                title: "Create alias to the rootname and remove previous db",
+                enabled: ctx => ctx.rootExists === true && ctx.error !== true,
+                task: async () => {
+                  // Find previous db name.
+                  const aliases = await es.indices.getAlias({ index: "*" });
+                  const previousDbname =
+                    Object.keys(aliases).find(
+                      key => aliases[key].aliases[rootDbname]
+                    ) || rootDbname;
+                  // Create alias to the rootname and remove previous db.
+                  const response = await es.indices.updateAliases({
+                    body: {
+                      actions: [
+                        { add: { index: dbname, alias: rootDbname } },
+                        { remove_index: { index: previousDbname } }
+                      ]
+                    }
+                  });
+                  if (!response.acknowledged) {
+                    console.error(response);
+                    throw new Error("Fatal error!");
+                  }
+                }
+              },
+              {
+                title: "Create alias to the rootname",
+                enabled: ctx => ctx.rootExists === false && ctx.error !== true,
+                task: async () => {
+                  const response = await es.indices.updateAliases({
+                    body: {
+                      actions: [{ add: { index: dbname, alias: rootDbname } }]
+                    }
+                  });
+                  if (!response.acknowledged) {
+                    console.error(response);
+                    throw new Error("Fatal error!");
+                  }
                 }
               }
-            }
-          ], { exitOnError: false });
+            ],
+            { exitOnError: false }
+          );
         }
       },
       { concurrent: true }
