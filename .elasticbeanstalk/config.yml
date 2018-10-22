@@ -1,13 +1,5 @@
-branch-defaults:
-  develop:
-    environment: pop-production-staging
-  master:
-    environment: pop-production
 environment-defaults:
   pop-production:
-    branch: null
-    repository: null
-  production:
     branch: null
     repository: null
 global:
