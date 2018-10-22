@@ -40,6 +40,15 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     const obj = {};
     obj[`${valueSelected}.keyword`] = { gt: resultSelected };
     return { range: obj };
+  } else if (actionSelected === "^" && resultSelected) {
+    //start with
+    const obj = {};
+    obj[`${valueSelected}.keyword`] = `${resultSelected}*`;
+    return { wildcard: obj };
+  } else if (actionSelected === "€" && resultSelected) {
+    const obj = {};
+    obj[`${valueSelected}.keyword`] = `*${resultSelected}*`;
+    return { wildcard: obj };
   } else {
     return null;
   }
@@ -149,9 +158,12 @@ class Rule extends React.Component {
           value={this.state.resultSelected}
           aggregations={this.props.aggregations}
           onChange={e => {
-            this.setState({ resultSelected: e.target.value }, () => {
-              this.update();
-            });
+            this.setState(
+              { resultSelected: e.target.value.replace('"', "") },
+              () => {
+                this.update();
+              }
+            );
           }}
         />
         <button
@@ -283,8 +295,10 @@ const ActionElement = ({ onChange, value }) => {
     { value: "<=", text: "inférieur ou égal à" },
     { value: ">", text: "strictement supérieur à" },
     { value: "<", text: "strictement inférieur à" },
-    { value: "<>", text: "exist" },
-    { value: "><", text: "n'existe pas" }
+    { value: "<>", text: "existe" },
+    { value: "><", text: "n'existe pas" },
+    { value: "€", text: "contient" },
+    { value: "^", text: "commence par" }
   ].map(({ value, text }) => (
     <option key={value} value={value}>
       {text}
