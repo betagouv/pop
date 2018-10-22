@@ -38,6 +38,27 @@ function populateREFO(notice) {
   });
 }
 
+router.get(
+  "/newId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const prefix = req.query.prefix;
+    const dpt = req.query.dpt;
+
+    if (!prefix || !dpt) {
+      return res.status(500).send({ error: "Missing dpt or prefix" });
+    }
+
+    getNewId(Merimee, prefix, dpt)
+      .then(id => {
+        return res.status(200).send({ id });
+      })
+      .catch(error => {
+        return res.status(500).send({ error });
+      });
+  }
+);
+
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
