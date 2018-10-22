@@ -43,16 +43,11 @@ app.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { subject, to, body } = req.body;
-
-    console.log("RECEIVE MAIL TO SEND 1");
     if (!subject || !to || !body) {
-      console.log("RECEIVE MAIL TO SEND 1.1");
       capture("Mail information incomplete");
       res.status(500).send("Information incomplete");
       return;
     }
-
-    console.log("RECEIVE MAIL TO SEND 2");
     Mailer.send(subject, to, body)
       .then(e => {
         return res.status(200).send({ success: true, msg: "OK" });
