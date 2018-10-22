@@ -25,9 +25,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.get("/", (_req, res) => {
-  capture({ error: "POP API" });
   res.send("POP API listening.");
-  console.log("POP API listening.");
 });
 
 app.use("/auth", require("./controllers/auth"));

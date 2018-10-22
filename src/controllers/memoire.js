@@ -109,7 +109,6 @@ router.post(
     const notice = JSON.parse(req.body.notice);
 
     notice.DMIS = notice.DMAJ = formattedNow();
-    console.log("uploadFILE", req.files);
     const arr = [];
     for (var i = 0; i < req.files.length; i++) {
       arr.push(

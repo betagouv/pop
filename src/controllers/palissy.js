@@ -47,8 +47,6 @@ router.put(
       const arr = await checkIfMemoireImageExist(notice);
       notice.MEMOIRE = arr;
       notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
-
-      console.log("UPDATE", notice);
       await Palissy.findOneAndUpdate({ REF: ref }, notice, {
         upsert: true,
         new: true
