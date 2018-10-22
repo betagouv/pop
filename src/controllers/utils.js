@@ -52,11 +52,11 @@ function deleteFile(path) {
 function formattedNow() {
   const now = new Date();
   return (formattedNow =
-    ("0" + now.getDate()).slice(-2) +
+    now.getFullYear() +
     "-" +
     ("0" + (now.getMonth() + 1)).slice(-2) +
     "-" +
-    now.getFullYear());
+    ("0" + now.getDate()).slice(-2));
 }
 
 module.exports = {
