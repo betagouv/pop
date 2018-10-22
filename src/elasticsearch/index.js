@@ -2,6 +2,7 @@ const program = require("commander");
 const inquirer = require("inquirer");
 const es = require("../elasticsearch")();
 const Listr = require("listr");
+const Observable = require('rxjs').Observable;
 const fs = require("fs");
 
 async function run() {
@@ -83,13 +84,10 @@ async function run() {
                     response = await es.reindex({
                       requestTimeout: 120 * 60 * 1000,
                       timeout: "2h",
+                      waitForCompletion: false,
                       body: {
-                        source: {
-                          index: rootDbname,
-                        },
-                        dest: {
-                          index: dbname,
-                        }
+                        source: { index: rootDbname },
+                        dest: { index: dbname }
                       }
                     });
                   } catch (e) {
@@ -97,11 +95,26 @@ async function run() {
                     console.error(e);
                     throw new Error(e);
                   }
-                  if (response.failures.length) {
+                  if (!response || !response.task) {
                     ctx.error = true;
                     console.error(response);
                     throw new Error("Oups. There where some failures.");
                   }
+                  return new Observable(observer => {
+                    const intervalId = setInterval(async () => {
+                      const task = await es.tasks.get({ taskId: response.task });
+                      if (!task || task.completed === true) {
+                        clearInterval(intervalId);
+                        observer.complete();
+                      }
+                      observer.next('Reindexing - ' + JSON.stringify({
+                        total: task.task.status.total,
+                        updated: task.task.status.updated,
+                        created: task.task.status.created,
+                        deleted: task.task.status.deleted
+                      }));
+                    }, 2000);
+                  });
                 }
               },
               {
@@ -144,18 +157,16 @@ async function run() {
                   }
                 }
               }
-            ],
-            { exitOnError: false }
+            ]
           );
         }
-      },
-      { concurrent: true }
+      }
     );
   });
   try {
     await tasks.run();
   } catch (e) {
-    console.error(e.errors);
+    console.error(e);
   }
 }
 
