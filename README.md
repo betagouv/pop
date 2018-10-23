@@ -16,7 +16,11 @@ yarn
 
 Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://localhost:3000`.
 
-
-## Déploiement
+### Déploiement
 
 Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnement souhaité.
+
+### Ré-indexation Elasticsearch
+
+La modification des _mappings_ nécessite une ré-indexation, qu'on peut lancer avec la commande
+`yarn elasticsearch-reindex`. Cette opération utilise les _mappings_ présents dans `src/elasticsearch/indices`.
