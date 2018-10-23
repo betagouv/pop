@@ -3,6 +3,7 @@ import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Input, Label, FormGroup, Collapse } from "reactstrap";
 import queryString from "query-string";
 import "./multiList.css";
+import { toFrenchRegex } from './utils';
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
@@ -134,7 +135,7 @@ class MultiListUmbrella extends React.Component {
       aggs: fields.reduce(
         (acc, field) => ({
           ...acc,
-          [field]: { terms: { field, include: `.*${search}.*`, ...sort, size } }
+          [field]: { terms: { field, include: `.*${toFrenchRegex(search)}.*`, ...sort, size } }
         }),
         {}
       )
