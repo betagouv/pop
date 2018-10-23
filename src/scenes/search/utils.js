@@ -13,7 +13,7 @@ export function toFrenchRegex(text) {
     .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
     .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
     .replace(
-      /(^|[\s.\-,;!?])([a-zéèëê])/gi,
+      /(^|[\s.\-,;!?])([a-zéèëêÉÈÊËàâäÀÂÄçÇïîÏÎôöÔÖùûüÙÛÜ])/gi,
       (v, w, x) => `${w}[${x.toUpperCase()}${x.toLowerCase()}]`
     );
 }
