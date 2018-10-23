@@ -1,15 +1,4 @@
 module.exports = {
-  settings: {
-    analysis: {
-      normalizer: {
-        my_normalizer: {
-          type: "custom",
-          char_filter: [],
-          filter: ["lowercase", "asciifolding"]
-        }
-      }
-    }
-  },
   mappings: {
     merimee: {
       properties: {
@@ -18,7 +7,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -28,7 +16,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -38,7 +25,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -48,7 +34,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -58,7 +43,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -68,7 +52,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -78,7 +61,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -88,7 +70,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -98,7 +79,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -109,7 +89,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -120,7 +99,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -130,7 +108,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -140,7 +117,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -150,7 +126,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -161,7 +136,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -171,7 +145,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -181,7 +154,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -191,7 +163,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -201,7 +172,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -211,7 +181,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -222,7 +191,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -232,7 +200,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -243,7 +210,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -253,7 +219,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -263,7 +228,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -273,7 +237,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -283,7 +246,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -293,7 +255,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -303,7 +264,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -313,7 +273,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -323,7 +282,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -333,7 +291,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -343,7 +300,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -353,7 +309,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -363,7 +318,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -373,7 +327,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -383,7 +336,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -393,7 +345,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -403,7 +354,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -413,7 +363,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -423,7 +372,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -433,7 +381,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -443,7 +390,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -453,7 +399,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -463,7 +408,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -473,7 +417,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -483,7 +426,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -493,7 +435,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -503,7 +444,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -513,7 +453,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -523,7 +462,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -533,7 +471,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -543,7 +480,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -554,7 +490,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -566,7 +501,6 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  normalizer: "my_normalizer",
                   ignore_above: 256
                 }
               }
@@ -576,7 +510,6 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  normalizer: "my_normalizer",
                   ignore_above: 256
                 }
               }
@@ -588,7 +521,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -598,7 +530,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -608,7 +539,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -618,7 +548,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -628,7 +557,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -638,7 +566,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -648,7 +575,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -659,7 +585,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -670,7 +595,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -680,7 +604,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -690,7 +613,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -700,7 +622,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -710,7 +631,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -726,7 +646,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -736,7 +655,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -746,7 +664,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -756,7 +673,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -766,7 +682,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -776,7 +691,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -786,7 +700,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -796,7 +709,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -807,7 +719,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -817,7 +728,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -827,7 +737,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -837,7 +746,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -848,7 +756,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -858,7 +765,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -869,7 +775,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -879,7 +784,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -889,7 +793,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -899,7 +802,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -909,7 +811,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -919,7 +820,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -933,7 +833,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -943,7 +842,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -953,7 +851,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -963,7 +860,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -973,7 +869,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -983,7 +878,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -993,7 +887,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -1003,7 +896,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -1013,7 +905,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -1023,7 +914,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
@@ -1033,7 +923,6 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              normalizer: "my_normalizer",
               ignore_above: 256
             }
           }
