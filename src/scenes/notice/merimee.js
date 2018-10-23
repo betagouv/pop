@@ -237,7 +237,7 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="Date de chargement dans la base MERIMEE (DMIS) :"
+                title="Date de chargement dans la base (DMIS) :"
                 name="DMIS"
                 disabled={!this.state.editable}
               />

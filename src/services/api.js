@@ -106,6 +106,17 @@ class api {
     return request.delete(`${api_url}/${collection}/${ref}`);
   }
 
+  getNewId(collection, prefix, dpt) {
+    return request.get(
+      `${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`,
+      {
+        headers: {
+          Authorization: localStorage.getItem("token")
+        }
+      }
+    );
+  }
+
   // updateThesaurus(thesaurusId) {
   //   return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`);
   // }
