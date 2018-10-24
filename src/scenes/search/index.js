@@ -145,24 +145,28 @@ class Search extends React.Component {
                     title="Base"
                     componentId="base"
                     showSearch={false}
+                    react={{ and: ["deno","domn"] }}
                   />
                   <MultiList
                     dataField="DENO.keyword"
                     title="Dénomination"
                     placeholder="Rechercher une dénomination"
                     componentId="deno"
+                    react={{ and: ["base","domn"] }}
                   />
                   <MultiList
                     dataField="DOMN.keyword"
                     title="Sous-Domaine"
                     placeholder="Rechercher un sous-domaine"
                     componentId="domn"
+                    react={{ and: ["base","deno"] }}
                   />
                   <MultiList
                     dataField="REG.keyword"
                     title="Région"
                     componentId="region"
                     placeholder="Rechercher une région"
+                    react={{ and: ["departement","commune"] }}
                     sortByName
                   />
                   <MultiList
@@ -173,7 +177,7 @@ class Search extends React.Component {
                     sortByName
                     showSearch={false}
                     limit={200}
-                    react={{ FILTER: "region" }}
+                    react={{ and: ["region","commune"] }}
                     filterListItem={bucket => isDepartmentNumber(bucket.key)}
                     renderListItem={(label, count) => {
                       return (
@@ -187,6 +191,7 @@ class Search extends React.Component {
                     dataField="COM.keyword"
                     title="Commune"
                     componentId="commune"
+                    react={{ and: ["region","departement"] }}
                   />
                   <MultiList
                     dataField="PERI.keyword"

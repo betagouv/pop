@@ -3,7 +3,7 @@ import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Input, Label, FormGroup, Collapse } from "reactstrap";
 import queryString from "query-string";
 import "./multiList.css";
-import { toFrenchRegex } from './utils';
+import { toFrenchRegex } from "./utils";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
@@ -11,6 +11,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   };
 
   render() {
+    console.log("REACT", this.props.react);
     return (
       <div className="multilist">
         <div
@@ -135,7 +136,14 @@ class MultiListUmbrella extends React.Component {
       aggs: fields.reduce(
         (acc, field) => ({
           ...acc,
-          [field]: { terms: { field, include: `.*${toFrenchRegex(search)}.*`, ...sort, size } }
+          [field]: {
+            terms: {
+              field,
+              include: `.*${toFrenchRegex(search)}.*`,
+              ...sort,
+              size
+            }
+          }
         }),
         {}
       )
@@ -148,6 +156,7 @@ class MultiListUmbrella extends React.Component {
       <ReactiveComponent
         componentId={`MultiList-${this.props.dataField}`}
         defaultQuery={() => this.state.query}
+        react={this.props.react}
       >
         <MultiList
           onSelect={this.select.bind(this)}
@@ -158,6 +167,7 @@ class MultiListUmbrella extends React.Component {
           filterListItem={this.props.filterListItem}
           selected={this.state.selected}
           search={this.state.search}
+          react={this.props.react}
           onSearchChange={search => {
             this.setState({ search });
             this.updateInternalQuery(search);
@@ -191,7 +201,7 @@ class MultiList extends React.Component {
         })
       );
       if (this.props.filterListItem) {
-        buckets = buckets.filter(this.props.filterListItem)
+        buckets = buckets.filter(this.props.filterListItem);
       }
 
       const options = buckets.map(item => (
