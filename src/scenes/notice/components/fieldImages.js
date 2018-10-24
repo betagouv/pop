@@ -66,8 +66,9 @@ export default class FieldImages extends React.Component {
         showFullscreenButton={false}
         showPlayButton={false}
         onClick={i => {
-          const selected = this.props.images.findIndex(
-            e => e.url === i.target.src
+          console.log("click", i.target.src, this.state.images);
+          const selected = this.state.images.findIndex(
+            e => e.source === i.target.src
           );
           this.setState({ selected });
         }}
@@ -85,8 +86,10 @@ export default class FieldImages extends React.Component {
     });
     return (
       <Viewer
+        // container={document.getElementById("viewer")}
         visible
         onClose={() => {
+          document.body.style.overflow = "auto";
           this.setState({ selected: -1 });
         }}
         images={images}
@@ -99,6 +102,7 @@ export default class FieldImages extends React.Component {
     return (
       <div className="fieldImages">
         {this.renderModal()}
+
         <Row>{this.renderImages()}</Row>
       </div>
     );
