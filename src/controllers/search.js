@@ -12,11 +12,13 @@ router.use("/*/_msearch", (req, res) => {
     method: "POST",
     headers: { "Content-Type": "Application/x-ndjson" }
   };
+  const n = Date.now();
   console.log(Date.now(), "RECEIVE");
   aws4.sign(opts);
+  console.log(Date.now() - n, "SIGN");
   http
     .request(opts, res1 => {
-      console.log(Date.now(), "SEND");
+      console.log(Date.now() - n, "SEND");
       res1.pipe(res);
     })
     .end(opts.body || "");
