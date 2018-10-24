@@ -5,7 +5,7 @@ import Viewer from "react-viewer";
 import "react-viewer/dist/index.css";
 import ImageGallery from "react-image-gallery";
 
-import { history } from './../../../redux/store';
+import { history } from "./../../../redux/store";
 
 import { bucket_url } from "../../../config";
 
@@ -61,7 +61,19 @@ export default class FieldImages extends React.Component {
       return obj;
     });
 
-    return <ImageGallery showPlayButton={false} items={images} />;
+    return (
+      <ImageGallery
+        showFullscreenButton={false}
+        showPlayButton={false}
+        onClick={i => {
+          const selected = this.props.images.findIndex(
+            e => e.url === i.target.src
+          );
+          this.setState({ selected });
+        }}
+        items={images}
+      />
+    );
   }
 
   renderModal() {
