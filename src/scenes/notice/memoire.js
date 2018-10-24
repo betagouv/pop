@@ -492,7 +492,7 @@ class Notice extends React.Component {
                   content={this.state.notice.DMIS}
                 />
                 <Field
-                  title="Date de création : "
+                  title="Date de modification : "
                   content={this.state.notice.DMAJ}
                 />
                 <Field
