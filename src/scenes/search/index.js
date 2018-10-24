@@ -47,7 +47,8 @@ const FILTER = [
   "commune",
   "base",
   "geolocalisation",
-  "auteur"
+  "auteur",
+  "ou"
 ];
 
 class Search extends React.Component {
@@ -145,23 +146,37 @@ class Search extends React.Component {
                     title="Base"
                     componentId="base"
                     showSearch={false}
-                    react={{ and: ["deno","domn"] }}
+                    react={{ and: ["deno", "domn"] }}
                   />
                   <MultiList
+                    dataField={["AUTP.keyword", "AUTR.keyword"]}
+                    title="Auteur"
+                    componentId="auteur"
+                    placeholder="Rechercher un auteur"
+                  />
+                  <MultiList
+                    dataField="DOMN.keyword"
+                    title="Domaine"
+                    placeholder="Rechercher un domaine"
+                    componentId="domn"
+                    react={{ and: ["base", "deno"] }}
+                  />
+                  <MultiList
+                    dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
+                    title="Où voir l'oeuvre?"
+                    placeholder="Commune, musée"
+                    componentId="ou"
+                    react={{ and: ["base"] }}
+                  />
+                  {/* <MultiList
                     dataField="DENO.keyword"
                     title="Dénomination"
                     placeholder="Rechercher une dénomination"
                     componentId="deno"
                     react={{ and: ["base","domn"] }}
-                  />
-                  <MultiList
-                    dataField="DOMN.keyword"
-                    title="Sous-Domaine"
-                    placeholder="Rechercher un sous-domaine"
-                    componentId="domn"
-                    react={{ and: ["base","deno"] }}
-                  />
-                  <MultiList
+                  /> */}
+
+                  {/* <MultiList
                     dataField="REG.keyword"
                     title="Région"
                     componentId="region"
@@ -186,25 +201,20 @@ class Search extends React.Component {
                         </div>
                       );
                     }}
-                  />
-                  <MultiList
+                  /> */}
+                  {/* <MultiList
                     dataField="COM.keyword"
                     title="Commune"
                     componentId="commune"
-                    react={{ and: ["region","departement"] }}
-                  />
+                    react={{ and: ["region", "departement"] }}
+                  /> */}
                   <MultiList
                     dataField="PERI.keyword"
                     title="Période"
                     componentId="periode"
                     placeholder="Rechercher une période"
                   />
-                  <MultiList
-                    dataField={["AUTP.keyword", "AUTR.keyword"]}
-                    title="Auteur"
-                    componentId="auteur"
-                    placeholder="Rechercher un auteur"
-                  />
+
                   <MultiList
                     dataField="CONTIENT_IMAGE.keyword"
                     title="Contient une image"
