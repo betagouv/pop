@@ -239,7 +239,7 @@ class Importer extends Component {
           <div className="lines">
             <div className="line">
               <div className="round" style={{ backgroundColor: "#58FB02" }} />
-              {`${noticesCrees} sont des nouvelles notices (non créees précedemment)`}
+              {`${noticesCrees} sont des nouvelles notices (non créées précedemment)`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#F9B234" }} />
