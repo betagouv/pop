@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import shave from 'shave';
+import { Button } from 'reactstrap';
 import Loader from "../../../../../../components/loader";
 import { bucket_url } from "../../../../../../config";
 import "./singleNotice.css";
@@ -85,6 +86,7 @@ export default class SingleNotice extends React.Component {
         }
         return (
             <div className="map-single-notice">
+              {this.props.onClose ? <div onClick={this.props.onClose} className="closeButton">X</div> : null }
               <div className="thumbnail">{image(data)}</div>
               <div className="content">
                   <div style={{ display: "flex" }}>

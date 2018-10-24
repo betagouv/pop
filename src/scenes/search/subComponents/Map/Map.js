@@ -212,6 +212,7 @@ class Map extends React.Component {
         nextProps.aggregations.france.buckets;
       if (!should && this.state.popup !== nextState.popup) should = true;
       if (!should && this.state.style !== nextState.style) should = true;
+      if (!should && this.state.drawerContent !== nextState.drawerContent) should = true;
       if (!should && this.props.isNewSearch !== nextProps.isNewSearch) should = true;
       return should;
     }
@@ -302,19 +303,24 @@ class Map extends React.Component {
       if(layerType === 'clusters') {
         const hits = JSON.parse(features[0].properties.hits).map(hit => ({...hit, ...hit._source}));
         drawerContent = (
-          <LinkedNotices links={hits} />
+          <LinkedNotices links={hits} onClose={this.closeDrawer} />
         );
       } else if(layerType === 'unclustered-point') {
         const itemId = features[0].properties.id;
         const hits = JSON.parse(features[0].properties.hits);
         const item = {...hits[0], ...hits[0]._source};
         drawerContent = (
-          <SingleNotice className="" key={item.REF} data={item} />
+          <SingleNotice className="" key={item.REF} data={item} onClose={this.closeDrawer}/>
         );
       }
 
       this.setState({ drawerContent });
     }
+  }
+
+  closeDrawer = ()=>{
+    console.log('close')
+    this.setState({ drawerContent: null });
   }
 
   mapInitialPosition = (map)=> {
