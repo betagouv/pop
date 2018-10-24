@@ -5,21 +5,10 @@ html {
 body {
   margin: 0;
   margin-bottom: 60px;
-  overflow: none;
+  overflow: hidden;
+  overflow-y: auto;
   font-family: "Open Sans", sans-serif;
   color: #2a282b;
-}
-
-body,
-html,
-#root,
-.main {
-  width: 100%;
-  height: 100%;
-}
-
-#root {
-  overflow-y: auto;
 }
 
 @font-face {
