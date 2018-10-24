@@ -17,6 +17,14 @@ export default function checkThesaurus(importedNotices) {
     for (var i = 0; i < importedNotices.length; i++) {
       for (var j = 0; j < allfieldswiththesaurus.length; j++) {
         const field = allfieldswiththesaurus[j];
+        if (!importedNotices[i][field]) {
+          console.log(
+            field,
+            importedNotices[i],
+            `${importedNotices[i][field]} n'existe pas`
+          );
+          continue;
+        }
         const thesaurus = importedNotices[i][field].thesaurus;
 
         let values = [].concat(importedNotices[i][field].value);
