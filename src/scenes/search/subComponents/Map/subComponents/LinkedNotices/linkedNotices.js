@@ -23,7 +23,12 @@ export default class LinkedNotices extends React.Component {
     this.setState({ 
       singleNotice : (
         <div>
-          <div onClick={this.onBackClicked} className='back'>&lt; retour à la liste</div>
+          <div onClick={this.onBackClicked} className='back'>
+            <div className="back-text">
+              &lt; retour à la liste 
+            </div>
+            <div onClick={this.props.onClose}>X</div>
+          </div>
           <SingleNotice className="" key={item.REF} data={item} />
         </div>
       )
@@ -56,6 +61,7 @@ export default class LinkedNotices extends React.Component {
     ));
     return (
       <div className="sidebar-section links">
+        <div onClick={this.props.onClose} className="closeButton">X</div>
         <h6>Ce point est liée aux notices suivantes</h6>
         <div className="linked-notice-container">{notices}</div>
       </div>
