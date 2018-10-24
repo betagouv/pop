@@ -17,6 +17,7 @@ async function run() {
     .version("0.1.0")
     .option("-f, --force", "Force sync")
     .option("-c, --chunks [chunks]", "Size of chunks", 3000)
+    .option("-s, --skip <skip>", "Skip n first entries")
     .option(
       "-i --indices <indices>",
       "The name of the indices",
@@ -64,8 +65,19 @@ async function run() {
       title: `Processing ${db}`,
       task: () => {
         return new Observable(async observer => {
-          observer.next(await noticeClass.countDocuments() + " notices to go.");
           let counter = 0;
+          if (program.skip) {
+            counter = Math.floor(program.skip / program.chunks);
+            observer.next(
+              (await noticeClass.countDocuments()) +
+                " notices to go, start at " +
+                program.chunks * counter
+            );
+          } else {
+            observer.next(
+              (await noticeClass.countDocuments()) + " notices to go."
+            );
+          }
           while (true) {
             let notices = await noticeClass
               .find()
@@ -88,7 +100,11 @@ async function run() {
             if (bulk.length) {
               res = await es.bulk({ body: bulk });
               if (res.errors) {
-                console.error(res.items[0]);
+                observer.error({
+                  message: "Error in bulk", 
+                  sampleError: JSON.stringify(res.items[0]),
+                });
+                break;
               }
               counter++;
               observer.next(counter * program.chunks + " notices done.");
