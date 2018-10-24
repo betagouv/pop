@@ -2,6 +2,7 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import { uniqueId } from 'lodash';
+import queryString from "query-string";
 import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
 import Loader from "../../../../components/loader";
 
@@ -52,11 +53,13 @@ const getPrecision = (zoom)=> {
 
 export default class Umbrella extends React.Component {
   state = {
-    query: {}
+    query: {},
+    isNewSearch: false
   };
 
   prevPrecision = 1;
   prevBounds = null;
+  currentSearch = null;
 
   constructor(props) {
     super(props);
@@ -65,6 +68,17 @@ export default class Umbrella extends React.Component {
 
   componentWillMount() {
     this.updateQuery(51, -5, 41, -6, 8);
+  }
+
+  componentDidUpdate(prevProps) {
+    const parsed = queryString.parse(location.search);
+    const nextSearch = JSON.stringify(parsed);
+    if(this.currentSearch !== nextSearch) { // New Search
+      this.currentSearch = nextSearch;
+      this.setState({ isNewSearch: true });
+    } else if(this.state.isNewSearch) {
+      this.setState({ isNewSearch: false });
+    }
   }
 
   onMapChange(originalEvent, boxZoomBounds) {
@@ -159,7 +173,7 @@ Area width x height
         react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
       >
-        <Map onChange={this.onMapChange} />
+        <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
       </ReactiveComponent>
     );
   }
@@ -177,6 +191,7 @@ class Map extends React.Component {
   singleFeatureClicked = null;
   clusterFeatureClicked = null;
   featureClicked = null;
+  map = null;
 
   constructor(props) {
     super(props);
@@ -197,12 +212,19 @@ class Map extends React.Component {
         nextProps.aggregations.france.buckets;
       if (!should && this.state.popup !== nextState.popup) should = true;
       if (!should && this.state.style !== nextState.style) should = true;
+      if (!should && this.props.isNewSearch !== nextProps.isNewSearch) should = true;
       return should;
     }
     return true;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if(this.props.isNewSearch && !prevProps.isNewSearch) {
+      if(this.state.drawerContent) {
+        this.setState({ drawerContent: null });
+      }
+      this.mapInitialPosition(this.map);
+    }
     this.renderClusters();
   }
 
@@ -295,6 +317,14 @@ class Map extends React.Component {
     }
   }
 
+  mapInitialPosition = (map)=> {
+    if(map) {
+      map.resize();
+      map.setZoom(5);
+      map.setCenter({lng:2.515597, lat:46.856731});
+    }
+  }
+
   render() {
     const style = {
       width: "100%",
@@ -310,9 +340,7 @@ class Map extends React.Component {
           ref={this.mapRef}
           onStyleLoad={
               (map)=>{
-                map.resize();
-                map.setZoom(5);
-                map.setCenter({lng:2.515597, lat:46.856731});
+                this.mapInitialPosition(map);
                 this.map = map;
 
                 window.mapRef = map;
