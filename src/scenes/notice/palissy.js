@@ -45,11 +45,14 @@ class Notice extends React.Component {
       // REFA -> MERIMEE
       // LBASE2 -> MERIMEE
       const arr = [];
-      const l = [...RENV, ...REFP, ...REFE, ...REFA, ...LBASE2];
+      const l = [...RENV, ...REFP, ...REFE, ...REFA, LBASE2];
       for (let i = 0; i < l.length; i++) {
-        const collection = findCollection(l[i]);
-        arr.push(API.getNotice(collection, l[i]));
+        if (l[i]) {
+          const collection = findCollection(l[i]);
+          arr.push(API.getNotice(collection, l[i]));
+        }
       }
+
       Promise.all(arr).then(values => {
         const links = [];
         for (let i = 0; i < values.length; i++) {
@@ -480,9 +483,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSUR) {
     arr.push(
       <li key="notice.DOSURL">
-        <a href={notice.DOSURL}>
-          Dossier électronique
-        </a>
+        <a href={notice.DOSURL}>Dossier électronique</a>
       </li>
     );
   }
@@ -490,9 +491,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSURLPDF) {
     arr.push(
       <li key="notice.DOSURLPDF">
-        <a href={notice.DOSURLPDF}>
-          Dossier pdf
-        </a>
+        <a href={notice.DOSURLPDF}>Dossier pdf</a>
       </li>
     );
   }
@@ -501,9 +500,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.LIENS.length; i++) {
       arr.push(
         <li key={`notice.LIENS${i}`}>
-          <a href={notice.LIENS[i]}>
-            LIENS
-          </a>
+          <a href={notice.LIENS[i]}>LIENS</a>
         </li>
       );
     }
@@ -512,9 +509,7 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <li key={`mediathek_cible`}>
-        <a
-          href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html"
-        >
+        <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
           Lien vers les archives MH (base Mediathek)
         </a>
       </li>
