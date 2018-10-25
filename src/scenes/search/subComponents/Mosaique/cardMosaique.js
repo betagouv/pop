@@ -9,7 +9,7 @@ export default ({ data }) => (
   <Col l={4}>
     <Link
       style={{ textDecoration: "none" }}
-      to={`/notice/${data._index}/${data.REF}`}
+      to={`/notice/${data._index.replace(/[0-9]+/, '')}/${data.REF}`}
       className="mosaique-card"
       key={data.REF}
     >
