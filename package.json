@@ -9,8 +9,7 @@
     "start": "node ./src/index.js  ",
     "deploy:prod": "yarn && eb deploy pop-api",
     "deploy:staging": "yarn && eb deploy pop-api-staging",
-    "test": "mocha --timeout 10000",
-    "elasticsearch-reindex": "node src/elasticsearch/index.js"
+    "test": "mocha --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -57,6 +56,7 @@
     "cross-env": "^5.1.6",
     "inquirer": "^6.2.0",
     "listr": "^0.14.2",
+    "listr-update-renderer": "^0.4.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
     "rxjs": "^6.3.3"
