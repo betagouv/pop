@@ -24,7 +24,7 @@ const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default ({ data }) => {
   let content = {};
-  const index = data._index.replace(/[0-9]+/, '');
+  const index = data._index.replace(/[0-9]+/, "");
   switch (index) {
     case "joconde":
     case "mnr":
@@ -53,7 +53,7 @@ export default ({ data }) => {
       break;
     case "memoire":
       content = {
-        title: data.TICO || data.LEG ,
+        title: data.TICO || data.LEG,
         subtitle: joinData([
           data.OBJET,
           data.EDIF,
@@ -71,6 +71,7 @@ export default ({ data }) => {
   }
   return (
     <Link
+      target="_blank"
       style={{ textDecoration: "none" }}
       to={`/notice/${index}/${data.REF}`}
       className="list-card"

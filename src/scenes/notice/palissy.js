@@ -79,14 +79,14 @@ class Notice extends React.Component {
     return (
       <Container className="notice" fluid>
         <Row className="top-section">
-          <Col sm="4">
+          {/* <Col sm="4">
             <div
               className="back notice-btn"
               onClick={() => this.props.history.goBack()}
             >
               Revenir à la recherche
             </div>
-          </Col>
+          </Col> */}
           <Col>
             <h1 className="heading">{this.state.notice.TICO}</h1>
           </Col>

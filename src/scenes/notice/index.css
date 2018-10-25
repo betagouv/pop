@@ -33,6 +33,7 @@
   font-size: 28px;
   text-transform: capitalize;
   margin-bottom: 0;
+  text-align: center;
 }
 .notice .back.notice-btn {
   cursor: pointer;
