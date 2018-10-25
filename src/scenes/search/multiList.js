@@ -29,6 +29,16 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+      if(prevProps.defaultSelected !== this.props.defaultSelected) {
+        if(this.props.defaultSelected && this.props.defaultSelected.length > 0) {
+          this.onCollapseChange(false);
+        } else if (!this.state.collapse) {
+          this.onCollapseChange(true);
+        }
+      }
+  }
+
   render() {
     console.log("REACT", this.props.react);
     return (
@@ -88,6 +98,10 @@ class MultiListUmbrella extends React.Component {
       const selected = str.split(", ");
       this.updateExternalQuery(selected);
       this.setState({ selected });
+    } else {
+      const selected = this.props.defaultSelected;
+      this.updateExternalQuery(selected);
+      this.setState({ selected });
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -107,7 +121,7 @@ class MultiListUmbrella extends React.Component {
       this.props.defaultSelected !== nextProps.defaultSelected
     ) {
       const selected = nextProps.defaultSelected;
-      this.setState({ selected });
+      // this.setState({ selected });
       this.updateExternalQuery(selected);
     }
   }
@@ -135,7 +149,6 @@ class MultiListUmbrella extends React.Component {
         if (selected.includes('Patrimoine mobilier (Palissy)')) {
           should = ['Inventaire patrimoine mobilier (Palissy)', ...selected].map(e => ({ term: { [this.props.dataField]: e } }));
         }
-        
       } else {
         should = selected.map(e => ({ term: { [this.props.dataField]: e } }));
       }
