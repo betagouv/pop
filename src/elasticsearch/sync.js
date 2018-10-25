@@ -69,20 +69,20 @@ async function run() {
           if (program.skip) {
             counter = Math.floor(program.skip / program.chunks);
             observer.next(
-              (await noticeClass.countDocuments()) +
+              (await noticeClass.estimatedDocumentCount()) +
                 " notices to go, start at " +
                 program.chunks * counter
             );
           } else {
             observer.next(
-              (await noticeClass.countDocuments()) + " notices to go."
+              (await noticeClass.estimatedDocumentCount()) + " notices to go."
             );
           }
+          let lastId;
           while (true) {
             let notices = await noticeClass
-              .find()
+              .find(lastId ? {'_id': {'$gt': lastId}} : {})
               .sort({ _id: 1 })
-              .skip(program.chunks * counter)
               .limit(program.chunks);
             if (!notices.length) {
               observer.complete();
@@ -101,12 +101,13 @@ async function run() {
               res = await es.bulk({ body: bulk });
               if (res.errors) {
                 observer.error({
-                  message: "Error in bulk", 
-                  sampleError: JSON.stringify(res.items[0]),
+                  message: "Error in bulk",
+                  sampleError: JSON.stringify(res.items[0])
                 });
                 break;
               }
               counter++;
+              lastId = notices[notices.length - 1];
               observer.next(counter * program.chunks + " notices done.");
             }
           }
