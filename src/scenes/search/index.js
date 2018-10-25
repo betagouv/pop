@@ -171,7 +171,7 @@ class Search extends React.Component {
                     componentId="base"
                     showSearch={false}
                     react={{ and: ["deno", "domn"] }}
-                    filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)'}
+                    filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)' && bucket.key !== 'Inventaire patrimoine mobilier (Palissy)'}
                     onCollapseChange={changeActiveFilter}
                     data={[
                       { label: "Récupération artistique (MNR Rose-Valland)", value: "Oeuvres spoliées (MNR Rose-Valland)" },
