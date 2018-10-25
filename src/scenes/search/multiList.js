@@ -146,7 +146,8 @@ class MultiListUmbrella extends React.Component {
           }
         }),
         {}
-      )
+      ),
+      size: 0
     };
     this.setState({ query });
   }
