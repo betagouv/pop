@@ -170,7 +170,7 @@ Area width x height
       <ReactiveComponent
         componentId={this.props.componentId || "map"} // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
-        //react={{ and: this.props.filter }}
+        react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
       >
         <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
