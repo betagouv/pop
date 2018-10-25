@@ -24,7 +24,8 @@ const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default ({ data }) => {
   let content = {};
-  switch (data._index) {
+  const index = data._index.replace(/[0-9]+/, '');
+  switch (index) {
     case "joconde":
     case "mnr":
       content = {
@@ -71,7 +72,7 @@ export default ({ data }) => {
   return (
     <Link
       style={{ textDecoration: "none" }}
-      to={`/notice/${data._index}/${data.REF}`}
+      to={`/notice/${index}/${data.REF}`}
       className="list-card"
       key={data.REF}
     >
@@ -84,7 +85,7 @@ export default ({ data }) => {
             <small>{content.categories}</small>
           </h2>
           <span>
-            <small className="base">{bases[data._index]}</small>
+            <small className="base">{bases[index]}</small>
             <br />
             {data.REF}
           </span>

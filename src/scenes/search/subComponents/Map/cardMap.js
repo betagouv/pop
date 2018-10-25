@@ -36,7 +36,8 @@ export default class CardMap extends React.Component {
     render() {
       const { data } =  this.props;
         let content = {};
-        switch (data._index) {
+        const index = data._index.replace(/[0-9]+/, '');
+        switch (index) {
             case "joconde":
             case "mnr":
                 content = {
@@ -83,7 +84,7 @@ export default class CardMap extends React.Component {
         return (
             <Link
                 style={{ textDecoration: "none" }}
-                to={`/notice/${data._index}/${data.REF}`}
+                to={`/notice/${index}/${data.REF}`}
                 className="map-card"
                 key={data.REF}
             >
@@ -96,7 +97,7 @@ export default class CardMap extends React.Component {
                             <small>{content.categories}</small>
                         </h2>
                         <span>
-            <span className="base">{bases[data._index]}</span>
+            <span className="base">{bases[index]}</span>
             <br />
                             {data.REF}
           </span>

@@ -40,7 +40,8 @@ export default class SingleNotice extends React.Component {
     render() {
       const { data } =  this.props;
         let content = {};
-        switch (data._index) {
+        const index = data._index.replace(/[0-9]+/, '');
+        switch (index) {
             case "joconde":
             case "mnr":
                 content = {
@@ -104,13 +105,13 @@ export default class SingleNotice extends React.Component {
                   </div>
                   <div className="bottom">
                     <span>
-                      <span className="base">{bases[data._index]}</span>
+                      <span className="base">{bases[index]}</span>
                         <br />
                         {data.REF}
                     </span>
                     <Link
                       style={{ textDecoration: "none" }}
-                      to={`/notice/${data._index}/${data.REF}`}
+                      to={`/notice/${index}/${data.REF}`}
                       className="more"
                       key={data.REF}
                     >
