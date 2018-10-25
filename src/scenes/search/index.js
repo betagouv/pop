@@ -177,7 +177,7 @@ class Search extends React.Component {
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
                     title="Auteur"
                     componentId="auteur"
-                    react={{ and: DEFAULT_FILTER }}
+                    react={{ and: ["deno", "domn", "mainSearch"] }}
                     placeholder="Rechercher un auteur"
                     onCollapseChange={changeActiveFilter}
                   />
