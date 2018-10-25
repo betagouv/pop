@@ -170,18 +170,23 @@ class Search extends React.Component {
                     title="Base"
                     componentId="base"
                     showSearch={false}
-                    react={{ and: ["deno", "domn"] }}
-                    filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)'}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
+                    filterListItem={bucket =>
+                      bucket.key !== "Photographies (Mémoires)"
+                    }
                     onCollapseChange={changeActiveFilter}
                     data={[
-                      { label: "Récupération artistique (MNR Rose-Valland)", value: "Oeuvres spoliées (MNR Rose-Valland)" },
+                      {
+                        label: "Récupération artistique (MNR Rose-Valland)",
+                        value: "Oeuvres spoliées (MNR Rose-Valland)"
+                      }
                     ]}
                   />
                   <MultiList
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
                     title="Auteur"
                     componentId="auteur"
-                    react={{ and: ["deno", "domn", "mainSearch"] }}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
                     placeholder="Rechercher un auteur"
                     onCollapseChange={changeActiveFilter}
                   />
@@ -190,7 +195,7 @@ class Search extends React.Component {
                     title="Domaine"
                     placeholder="Rechercher un domaine"
                     componentId="domn"
-                    react={{ and: ["base", "deno"] }}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
                     onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
@@ -198,7 +203,7 @@ class Search extends React.Component {
                     title="Où voir l'oeuvre?"
                     placeholder="Commune, musée"
                     componentId="ou"
-                    react={{ and: ["base"] }}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
                     onCollapseChange={changeActiveFilter}
                   />
                   {/* <MultiList
@@ -245,6 +250,7 @@ class Search extends React.Component {
                     dataField="PERI.keyword"
                     title="Période"
                     componentId="periode"
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "periode") }}
                     placeholder="Rechercher une période"
                     onCollapseChange={changeActiveFilter}
                   />
@@ -283,6 +289,7 @@ class Search extends React.Component {
                     dataField="TECH.keyword"
                     title="Techniques"
                     componentId="tech"
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
                     placeholder="Rechercher une technique"
                     onCollapseChange={changeActiveFilter}
                   />
