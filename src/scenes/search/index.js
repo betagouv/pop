@@ -35,7 +35,7 @@ import filterImg from "../../assets/filter.png";
 
 import "./index.css";
 
-const FILTER = [
+const DEFAULT_FILTER = [
   "mainSearch",
   "domn",
   "deno",
@@ -50,6 +50,30 @@ const FILTER = [
   "auteur",
   "ou"
 ];
+
+const ACTIVE_FILTER = {
+  "mainSearch": true
+};
+
+const changeActiveFilter = (collapsed, componentId)=> {
+  if(!collapsed) {
+    addActiveFilter(componentId);
+  } else {
+    removeActiveFilter(componentId);
+  }
+};
+
+const addActiveFilter = (componentId)=> {
+  if(!ACTIVE_FILTER.hasOwnProperty(componentId)) {
+    ACTIVE_FILTER[componentId] = true;
+  }
+};
+
+const removeActiveFilter = (componentId)=> {
+  if(ACTIVE_FILTER.hasOwnProperty(componentId)) {
+     delete ACTIVE_FILTER[componentId];
+  }
+};
 
 class Search extends React.Component {
   state = {
@@ -147,12 +171,14 @@ class Search extends React.Component {
                     componentId="base"
                     showSearch={false}
                     react={{ and: ["deno", "domn"] }}
+                    onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
                     title="Auteur"
                     componentId="auteur"
                     placeholder="Rechercher un auteur"
+                    onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
                     dataField="DOMN.keyword"
@@ -160,6 +186,7 @@ class Search extends React.Component {
                     placeholder="Rechercher un domaine"
                     componentId="domn"
                     react={{ and: ["base", "deno"] }}
+                    onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
                     dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -167,6 +194,7 @@ class Search extends React.Component {
                     placeholder="Commune, musée"
                     componentId="ou"
                     react={{ and: ["base"] }}
+                    onCollapseChange={changeActiveFilter}
                   />
                   {/* <MultiList
                     dataField="DENO.keyword"
@@ -213,6 +241,7 @@ class Search extends React.Component {
                     title="Période"
                     componentId="periode"
                     placeholder="Rechercher une période"
+                    onCollapseChange={changeActiveFilter}
                   />
 
                   <MultiList
@@ -224,6 +253,7 @@ class Search extends React.Component {
                     defaultSelected={
                       this.state.activeTab === "mosaique" ? ["oui"] : []
                     }
+                    onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
                     componentId="geolocalisation"
@@ -237,20 +267,19 @@ class Search extends React.Component {
                     showSearch={false}
                     defaultSelected={
                       this.state.activeTab === "map" ? ["oui"] : []
-                    } // TODO clean this
+                    }
                     data={[
                       { label: "oui", value: "oui" },
                       { label: "non", value: "non" }
                     ]}
-                    react={{
-                      and: FILTER
-                    }}
+                    onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
                     dataField="TECH.keyword"
                     title="Techniques"
                     componentId="tech"
                     placeholder="Rechercher une technique"
+                    onCollapseChange={changeActiveFilter}
                   />
                 </aside>
               </div>
@@ -405,21 +434,21 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/list"
-                      render={() => <List filter={FILTER} />}
+                      render={() => <List filter={DEFAULT_FILTER} />}
                     />
                   </TabPane>
                   <TabPane tabId="map">
                     <Route
                       exact
                       path="/search/map"
-                      render={() => <Map filter={FILTER} />}
+                      render={() => <Map filter={DEFAULT_FILTER} />}
                     />
                   </TabPane>
                   <TabPane tabId="mosaique">
                     <Route
                       exact
                       path="/search/mosaique"
-                      render={() => <Mosaique filter={FILTER} />}
+                      render={() => <Mosaique filter={DEFAULT_FILTER} />}
                     />
                   </TabPane>
                 </TabContent>

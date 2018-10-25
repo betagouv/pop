@@ -7,8 +7,27 @@ import { toFrenchRegex } from "./utils";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
-    collapse: false
+    collapse: true
   };
+
+  onListClicked = ()=> {
+    this.onCollapseChange(!this.state.collapse);
+  };
+
+  onCollapseChange = (nextCollapseState)=> {
+    this.setState({ collapse: nextCollapseState });
+    if(this.props.onCollapseChange) {
+      this.props.onCollapseChange(nextCollapseState, this.props.componentId);
+    }
+  }
+
+  componentWillMount() {
+    const values = queryString.parse(location.search);
+    const field = this.props.componentId;
+    if (values[field]) {
+      this.onCollapseChange(false);
+    }
+  }
 
   render() {
     console.log("REACT", this.props.react);
@@ -16,31 +35,33 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
       <div className="multilist">
         <div
           className="topBar"
-          onClick={() => this.setState({ collapse: !this.state.collapse })}
+          onClick={this.onListClicked}
         >
           <div className="name">{this.props.title}</div>
           <div className="v">⌄</div>
         </div>
-        <Collapse isOpen={this.state.collapse}>
-          <ReactiveComponent
-            componentId={this.props.componentId} // a unique id we will refer to later
-            URLParams={this.props.URLParams || true}
-            react={this.props.react || {}}
-          >
-            <MultiListUmbrella
-              placeholder={this.props.placeholder}
-              showSearch={this.props.showSearch}
-              displayCount={this.props.displayCount}
-              renderListItem={this.props.renderListItem}
-              filterListItem={this.props.filterListItem}
-              defaultSelected={this.props.defaultSelected}
-              dataField={this.props.dataField}
-              componentId={this.props.componentId}
-              sortByName={this.props.sortByName}
-              onCollapse={collapse => this.setState({ collapse })}
-              limit={this.props.limit}
-            />
-          </ReactiveComponent>
+        <Collapse isOpen={!this.state.collapse}>
+          { !this.state.collapse
+              ? <ReactiveComponent
+                componentId={this.props.componentId} // a unique id we will refer to later
+                URLParams={this.props.URLParams || true}
+                react={this.props.react || {}}
+              >
+                <MultiListUmbrella
+                  placeholder={this.props.placeholder}
+                  showSearch={this.props.showSearch}
+                  displayCount={this.props.displayCount}
+                  renderListItem={this.props.renderListItem}
+                  filterListItem={this.props.filterListItem}
+                  defaultSelected={this.props.defaultSelected}
+                  dataField={this.props.dataField}
+                  componentId={this.props.componentId}
+                  sortByName={this.props.sortByName}
+                  limit={this.props.limit}
+                />
+              </ReactiveComponent>
+              : null
+          }
         </Collapse>
       </div>
     );
@@ -66,7 +87,6 @@ class MultiListUmbrella extends React.Component {
       const selected = str.split(", ");
       this.updateExternalQuery(selected);
       this.setState({ selected });
-      this.props.onCollapse(true);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -78,7 +98,6 @@ class MultiListUmbrella extends React.Component {
       const selected = [];
       this.setState({ selected });
       this.updateExternalQuery(selected);
-      // this.props.onCollapse(false);
     }
 
     //default selected
