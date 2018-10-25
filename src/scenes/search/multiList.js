@@ -127,7 +127,12 @@ class MultiListUmbrella extends React.Component {
   updateExternalQuery(selected) {
     let should;
     if (!Array.isArray(this.props.dataField)) {
-      should = selected.map(e => ({ term: { [this.props.dataField]: e } }));
+      if (selected.includes('Photographies (Mémoire)')) {
+        should = ['Photographies (Mémoires)', ...selected].map(e => ({ term: { [this.props.dataField]: e } }));
+      } else {
+        should = selected.map(e => ({ term: { [this.props.dataField]: e } }));
+      }
+      
     } else {
       should = selected
         .map(e => this.props.dataField.map(d => ({ term: { [d]: e } })))

@@ -171,6 +171,7 @@ class Search extends React.Component {
                     componentId="base"
                     showSearch={false}
                     react={{ and: ["deno", "domn"] }}
+                    filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)'}
                     onCollapseChange={changeActiveFilter}
                   />
                   <MultiList
