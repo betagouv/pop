@@ -52,26 +52,26 @@ const DEFAULT_FILTER = [
 ];
 
 const ACTIVE_FILTER = {
-  "mainSearch": true
+  mainSearch: true
 };
 
-const changeActiveFilter = (collapsed, componentId)=> {
-  if(!collapsed) {
+const changeActiveFilter = (collapsed, componentId) => {
+  if (!collapsed) {
     addActiveFilter(componentId);
   } else {
     removeActiveFilter(componentId);
   }
 };
 
-const addActiveFilter = (componentId)=> {
-  if(!ACTIVE_FILTER.hasOwnProperty(componentId)) {
+const addActiveFilter = componentId => {
+  if (!ACTIVE_FILTER.hasOwnProperty(componentId)) {
     ACTIVE_FILTER[componentId] = true;
   }
 };
 
-const removeActiveFilter = (componentId)=> {
-  if(ACTIVE_FILTER.hasOwnProperty(componentId)) {
-     delete ACTIVE_FILTER[componentId];
+const removeActiveFilter = componentId => {
+  if (ACTIVE_FILTER.hasOwnProperty(componentId)) {
+    delete ACTIVE_FILTER[componentId];
   }
 };
 
@@ -177,6 +177,7 @@ class Search extends React.Component {
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
                     title="Auteur"
                     componentId="auteur"
+                    react={{ and: DEFAULT_FILTER }}
                     placeholder="Rechercher un auteur"
                     onCollapseChange={changeActiveFilter}
                   />
