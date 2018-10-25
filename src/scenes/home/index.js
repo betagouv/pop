@@ -33,7 +33,7 @@ const bases = [
   },
   {
     name: 'memoire',
-    title: "Photographies (Mémoires)",
+    title: "Photographies (Mémoire)",
     description: `Base de données des fonds graphiques et photographiques
     illustrant le patrimoine français et des collections
     photographiques.
