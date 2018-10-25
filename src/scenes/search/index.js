@@ -173,6 +173,9 @@ class Search extends React.Component {
                     react={{ and: ["deno", "domn"] }}
                     filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)'}
                     onCollapseChange={changeActiveFilter}
+                    data={[
+                      { label: "Récupération artistique (MNR Rose-Valland)", value: "Oeuvres spoliées (MNR Rose-Valland)" },
+                    ]}
                   />
                   <MultiList
                     dataField={["AUTP.keyword", "AUTR.keyword"]}

@@ -46,6 +46,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
                 componentId={this.props.componentId} // a unique id we will refer to later
                 URLParams={this.props.URLParams || true}
                 react={this.props.react || {}}
+                data={this.props.data || []}
               >
                 <MultiListUmbrella
                   placeholder={this.props.placeholder}
@@ -182,6 +183,7 @@ class MultiListUmbrella extends React.Component {
         componentId={`MultiList-${this.props.dataField}`}
         defaultQuery={() => this.state.query}
         react={this.props.react}
+        data={this.props.data}
       >
         <MultiList
           onSelect={this.select.bind(this)}
@@ -193,6 +195,7 @@ class MultiListUmbrella extends React.Component {
           selected={this.state.selected}
           search={this.state.search}
           react={this.props.react}
+          data={this.props.data}
           onSearchChange={search => {
             this.setState({ search });
             this.updateInternalQuery(search);
@@ -208,9 +211,20 @@ class MultiList extends React.Component {
     if (this.props.renderListItem) {
       return this.props.renderListItem(item.key, item.doc_count);
     }
+    
+    let label = item.key;
+    if(this.props.data && this.props.data.length > 0) {
+      for (let i = 0; i < this.props.data.length; i++) {
+        const data = this.props.data[i];
+        if(data.value === item.key) {
+          label = data.label;
+          break;
+        }
+      }
+    }
     return this.props.displayCount
-      ? `${item.key} (${item.doc_count})`
-      : `${item.key} `;
+      ? `${label} (${item.doc_count})`
+      : `${label} `;
   }
   renderSuggestion() {
     if (
