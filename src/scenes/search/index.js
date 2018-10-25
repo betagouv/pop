@@ -172,6 +172,9 @@ class Search extends React.Component {
                     showSearch={false}
                     react={{ and: ["deno", "domn"] }}
                     onCollapseChange={changeActiveFilter}
+                    data={[
+                      { label: "Récupération artistique (MNR Rose-Valland)", value: "Oeuvres spoliées (MNR Rose-Valland)" },
+                    ]}
                   />
                   <MultiList
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
