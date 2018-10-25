@@ -67,7 +67,7 @@ export default class Umbrella extends React.Component {
   }
 
   componentWillMount() {
-    this.updateQuery(51, -5, 41, -6, 8);
+    this.updateQuery(51, -5, 41, -6, 3);
   }
 
   componentDidUpdate(prevProps) {
@@ -81,9 +81,9 @@ export default class Umbrella extends React.Component {
     }
   }
 
-  onMapChange(originalEvent, boxZoomBounds) {
+  onMapChange(boxZoomBounds) {
     //console.log(boxZoomBounds.zoom)
-
+    console.log(boxZoomBounds.zoom)
     const precision = getPrecision(boxZoomBounds.zoom);
     //if(this.prevPrecision !== precision) {
       this.prevPrecision = precision;
@@ -170,7 +170,7 @@ Area width x height
       <ReactiveComponent
         componentId={this.props.componentId || "map"} // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
-        react={{ and: this.props.filter }}
+        //react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
       >
         <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
@@ -229,22 +229,24 @@ class Map extends React.Component {
     this.renderClusters();
   }
 
-  onMoveEnd(map, event) {
-    const mapBounds = map.getBounds();
-    const currentZoom = map.getZoom();
+  onMoveEnd(map) {
+    if(this.state.loaded) {
+      const mapBounds = map.getBounds();
+      const currentZoom = map.getZoom();
 
-    this.setState({
-      popup: null,
-    });
+      this.setState({
+        popup: null,
+      });
 
-    this.props.onChange(event, {
-      zoom: currentZoom,
-      bounds: mapBounds,
-      north: mapBounds._ne.lat,
-      south: mapBounds._sw.lat,
-      east: mapBounds._ne.lng,
-      west: mapBounds._sw.lng
-    });
+      this.props.onChange({
+        zoom: currentZoom,
+        bounds: mapBounds,
+        north: mapBounds._ne.lat,
+        south: mapBounds._sw.lat,
+        east: mapBounds._ne.lng,
+        west: mapBounds._sw.lng
+      });
+    }
   }
 
   renderClusters() {
@@ -366,10 +368,15 @@ class Map extends React.Component {
                   this.map.getCanvas().style.cursor = "";
                 });
 
-                this.setState({ loaded: true });
+                setTimeout(
+                  ()=>{
+                    this.setState({ loaded: true });
+                    // this.onMoveEnd(map);
+                  },
+                  1000
+                )
           }}
           onMoveEnd={this.onMoveEnd}
-          onData={map => {}}
         >
           <Source
             id="pop"
