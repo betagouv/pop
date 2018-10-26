@@ -1,21 +1,21 @@
-import React from 'react';
-import { Row, Col, Container } from 'reactstrap';
+import React from "react";
+import { Row, Col, Container } from "reactstrap";
 
-import FieldImages from './components/fieldImages';
-import Field from './components/field';
-import LinkedNotices from './components/linkedNotices';
-import Map from './components/map.js';
-import Title from './components/title';
-import Loader from '../../components/loader';
-import API from '../../services/api';
-import NotFound from './components/not-found';
+import FieldImages from "./components/fieldImages";
+import Field from "./components/field";
+import LinkedNotices from "./components/linkedNotices";
+import Map from "./components/map.js";
+import Title from "./components/title";
+import Loader from "../../components/loader";
+import API from "../../services/api";
+import NotFound from "./components/not-found";
 import { postFixedLink } from "./utils";
-import './index.css';
+import "./index.css";
 
 class Notice extends React.Component {
   state = {
     notice: null,
-    error: '',
+    error: "",
     links: null,
     loading: true
   };
@@ -35,7 +35,7 @@ class Notice extends React.Component {
 
   load(ref) {
     this.setState({ loading: true });
-    API.getNotice('merimee', ref).then(notice => {
+    API.getNotice("merimee", ref).then(notice => {
       console.log(notice);
       this.setState({ loading: false, notice });
 
@@ -61,7 +61,7 @@ class Notice extends React.Component {
         const links = [];
         for (let i = 0; i < values.length; i++) {
           if (!values[i]) {
-            console.log('IMPOSSIBLE DE CHARGER LA NOTICE');
+            console.log("IMPOSSIBLE DE CHARGER LA NOTICE");
           } else {
             links.push(values[i]);
           }
@@ -114,13 +114,13 @@ class Notice extends React.Component {
                 content="Désignation"
                 notice={this.state.notice}
                 fields={[
-                  'DENO',
-                  'GENR',
-                  'PDEN',
-                  'VOCA',
-                  'APPL',
-                  'ACTU',
-                  'TICO'
+                  "DENO",
+                  "GENR",
+                  "PDEN",
+                  "VOCA",
+                  "APPL",
+                  "ACTU",
+                  "TICO"
                 ]}
               />
               <Field title="Dénomination : " content={this.state.notice.DENO} />
@@ -146,30 +146,30 @@ class Notice extends React.Component {
                 content="Localisation"
                 notice={this.state.notice}
                 fields={[
-                  'REG',
-                  'DPT',
-                  'COM',
-                  'PLOC',
-                  'AIRE',
-                  'CANT',
-                  'LIEU',
-                  'ADRS',
-                  'CADA',
-                  'IMPL',
-                  'HYDR',
-                  'PARN',
-                  'EDIF',
-                  'REFE',
-                  'COLL'
+                  "REG",
+                  "DPT",
+                  "COM",
+                  "PLOC",
+                  "AIRE",
+                  "CANT",
+                  "LIEU",
+                  "ADRS",
+                  "CADA",
+                  "IMPL",
+                  "HYDR",
+                  "PARN",
+                  "EDIF",
+                  "REFE",
+                  "COLL"
                 ]}
               />
               <Field
                 title="Localisation : "
                 content={
                   this.state.notice.REG +
-                  ' ' +
+                  " " +
                   this.state.notice.DPT +
-                  ' ' +
+                  " " +
                   this.state.notice.COM
                 }
               />
@@ -210,17 +210,17 @@ class Notice extends React.Component {
                 content="Historique"
                 notice={this.state.notice}
                 fields={[
-                  'SCLE',
-                  'SCLD',
-                  'DATE',
-                  'JDAT',
-                  'AUTR',
-                  'REFM',
-                  'JATT',
-                  'PERS',
-                  'REMP',
-                  'DEPL',
-                  'HIST'
+                  "SCLE",
+                  "SCLD",
+                  "DATE",
+                  "JDAT",
+                  "AUTR",
+                  "REFM",
+                  "JATT",
+                  "PERS",
+                  "REMP",
+                  "DEPL",
+                  "HIST"
                 ]}
               />
               <Field
@@ -269,23 +269,23 @@ class Notice extends React.Component {
                 content="Description"
                 notice={this.state.notice}
                 fields={[
-                  'MURS',
-                  'TOIT',
-                  'PLAN',
-                  'ETAG',
-                  'VOUT',
-                  'ELEV',
-                  'COUV',
-                  'ESCA',
-                  'ENER',
-                  'VERT',
-                  'DESC',
-                  'TECH',
-                  'REPR',
-                  'PREP',
-                  'DIMS',
-                  'TYPO',
-                  'ETAT'
+                  "MURS",
+                  "TOIT",
+                  "PLAN",
+                  "ETAG",
+                  "VOUT",
+                  "ELEV",
+                  "COUV",
+                  "ESCA",
+                  "ENER",
+                  "VERT",
+                  "DESC",
+                  "TECH",
+                  "REPR",
+                  "PREP",
+                  "DIMS",
+                  "TYPO",
+                  "ETAT"
                 ]}
               />
               <Field
@@ -352,18 +352,18 @@ class Notice extends React.Component {
                 content="Protection"
                 notice={this.state.notice}
                 fields={[
-                  'PROT',
-                  'DPRO',
-                  'PPRO',
-                  'APRO',
-                  'MHPP',
-                  'REFO',
-                  'SITE',
-                  'INTE',
-                  'PINT',
-                  'REMA',
-                  'DLAB',
-                  'OBS'
+                  "PROT",
+                  "DPRO",
+                  "PPRO",
+                  "APRO",
+                  "MHPP",
+                  "REFO",
+                  "SITE",
+                  "INTE",
+                  "PINT",
+                  "REMA",
+                  "DLAB",
+                  "OBS"
                 ]}
               />
               <Field
@@ -411,7 +411,7 @@ class Notice extends React.Component {
               <Title
                 content="Statut juridique"
                 notice={this.state.notice}
-                fields={['STAT', 'PSTA', 'AFFE', 'PAFF', 'VISI']}
+                fields={["STAT", "PSTA", "AFFE", "PAFF", "VISI"]}
               />
               <Field
                 title="Statut de la propriété :"
@@ -434,17 +434,17 @@ class Notice extends React.Component {
                 content="Références documentaires"
                 notice={this.state.notice}
                 fields={[
-                  'DENQ',
-                  'COPY',
-                  'DBOR',
-                  'NOMS',
-                  'ETUD',
-                  'DOSS',
-                  'REFIM',
-                  'WEB',
-                  'ARCHEO',
-                  'DOSADRS',
-                  'IMAGE'
+                  "DENQ",
+                  "COPY",
+                  "DBOR",
+                  "NOMS",
+                  "ETUD",
+                  "DOSS",
+                  "REFIM",
+                  "WEB",
+                  "ARCHEO",
+                  "DOSADRS",
+                  "IMAGE"
                 ]}
               />
               <Field
@@ -528,7 +528,7 @@ const SeeMore = ({ notice }) => {
 
   if (notice.DOSUR) {
     arr.push(
-      <li key='notice.DOSURL'>
+      <li key="notice.DOSURL">
         <a href={notice.DOSURL}>Dossier électronique</a>
       </li>
     );
@@ -536,8 +536,10 @@ const SeeMore = ({ notice }) => {
 
   if (notice.DOSURLPDF) {
     arr.push(
-      <li key='notice.DOSURLPDF'>
-        <a href={notice.DOSURLPDF} target="_blank">Dossier pdf</a>
+      <li key="notice.DOSURLPDF">
+        <a href={postFixedLink(notice.DOSURLPDF)} target="_blank">
+          Dossier pdf
+        </a>
       </li>
     );
   }
@@ -559,7 +561,6 @@ const SeeMore = ({ notice }) => {
           Lien vers les archives MH (base Mediathek)
         </a>
       </li>
-      
     );
   }
 
