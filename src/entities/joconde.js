@@ -5,191 +5,151 @@ export default class Joconde extends Notice {
     super();
     this._type = "joconde";
 
-    this.REF = {
-      type: "String",
-      value: (body.REF || "").trim(),
+    this.setProperty("REF", "String", body.REF.trim(), {
       required: true
-    };
-    this.ADPT = { type: "Array", value: this.extractArray(body.ADPT) };
-    this.APTN = { type: "String", value: body.APTN || "" };
-    this.ATTR = { type: "String", value: body.ATTR || "" };
-    this.AUTR = {
-      type: "String",
-      value: body.AUTR || "",
+    });
+    this.setProperty("ADPT", "Array", this.extractArray(body.ADPT));
+    this.setProperty("APTN", "String", body.APTN);
+    this.setProperty("ATTR", "String", body.ATTR);
+    this.setProperty("AUTR", "String", body.AUTR, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.BIBL = { type: "String", value: body.BIBL || "" };
-    this.APPL = { type: "String", value: body.APPL || "" };
-    this.COMM = { type: "String", value: body.COMM || "" };
-    this.CONTACT = { type: "String", value: this.extractEmail(body.CONTACT) };
-    this.COOR = { type: "String", value: body.COOR || "" };
-    this.COPY = { type: "String", value: body.COPY || "" };
-    this.DACQ = { type: "String", value: body.DACQ || "" };
-    this.DATA = { type: "String", value: body.DATA || "" };
-    this.DATION = { type: "String", value: body.DATION || "" };
-    this.DDPT = { type: "String", value: body.DDPT || "" };
-    this.DECV = {
-      type: "String",
-      value: body.DECV || "",
+    });
+    this.setProperty("BIBL", "String", body.BIBL);
+    this.setProperty("APPL", "String", body.APPL);
+    this.setProperty("COMM", "String", body.COMM);
+    this.setProperty("CONTACT", "String", this.extractEmail(body.CONTACT));
+    this.setProperty("COOR", "String", body.COOR);
+    this.setProperty("COPY", "String", body.COPY);
+    this.setProperty("DACQ", "String", body.DACQ);
+    this.setProperty("DATA", "String", body.DATA);
+    this.setProperty("DATION", "String", body.DATION);
+    this.setProperty("DDPT", "String", body.DDPT);
+    this.setProperty("DECV", "String", body.DECV, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.DENO = {
-      type: "Array",
-      value: this.extractArray(body.DENO),
+    });
+    this.setProperty("DENO", "Array", this.extractArray(body.DENO), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.DEPO = { type: "String", value: body.DEPO || "" };
-    this.DESC = { type: "String", value: body.DESC || "" };
-    this.DESY = { type: "String", value: body.DESY || "" };
-    this.DIFFU = { type: "String", value: body.DIFFU ? "oui" : "non" };
-    this.DIMS = { type: "String", value: body.DIMS || "" };
-    this.DMAJ = { type: "String", value: body.DMAJ || "", generated: true };
-    this.DMIS = { type: "String", value: body.DMIS || "", generated: true };
-    this.DOMN = {
-      type: "Array",
-      value: this.extractArray(body.DOMN),
-      required: true,
+    });
+    this.setProperty("DEPO", "String", body.DEPO);
+    this.setProperty("DESC", "String", body.DESC);
+    this.setProperty("DESY", "String", body.DESY);
+    // this.setProperty("DIFFU","String",body.DIFFU ? "oui" : "non" };
+    this.setProperty("DIMS", "String", body.DIMS);
+    this.setProperty("DMAJ", "String", body.DMAJ, { generated: true });
+    this.setProperty("DMIS", "String", body.DMIS, { generated: true });
+
+    this.setProperty("DOMN", "Array", this.extractArray(body.DOMN), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51",
-      thesaurus_separator: /[(,);#]/g
-    };
-    this.DREP = { type: "String", value: body.DREP || "" };
-    this.ECOL = {
-      type: "Array",
-      value: this.extractArray(body.ECOL),
+      thesaurus_separator: /[(,);#]/g,
+      required: true
+    });
+    this.setProperty("DREP", "String", body.DREP);
+    this.setProperty("ECOL", "Array", this.extractArray(body.ECOL), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.EPOQ = {
-      type: "Array",
-      value: this.extractArray(body.EPOQ),
+    });
+    this.setProperty("EPOQ", "Array", this.extractArray(body.EPOQ), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.ETAT = { type: "Array", value: this.extractArray(body.ETAT) };
-    this.EXPO = { type: "String", value: body.EXPO || "" };
-    this.GENE = {
-      type: "Array",
-      value: this.extractArray(body.GENE),
+    });
+    this.setProperty("ETAT", "Array", this.extractArray(body.ETAT));
+    this.setProperty("EXPO", "String", body.EXPO);
+    this.setProperty("GENE", "Array", this.extractArray(body.GENE), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.GEOHI = { type: "Array", value: this.extractArray(body.GEOHI) };
-    this.HIST = { type: "String", value: body.HIST || "" };
-    this.IMAGE = { type: "String", value: body.IMAGE || "" };
-    this.IMG = {
-      type: "Array",
-      value: this.extractIMGNames(body.REFIM).map(
+    });
+    this.setProperty("GEOHI", "Array", this.extractArray(body.GEOHI));
+    this.setProperty("HIST", "String", body.HIST);
+    this.setProperty("IMAGE", "String", body.IMAGE);
+    this.setProperty(
+      "IMG",
+      "Array",
+      this.extractIMGNames(body.REFIM).map(
         e => `joconde/${this.REF.value}/${e}`
       )
-    };
-    this.INSC = {
-      type: "Array",
-      value: this.extractArray(body.INSC),
+    );
+    this.setProperty("INSC", "Array", this.extractArray(body.INSC), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.INV = { type: "String", value: body.INV || "", required: true };
-    this.LABEL = { type: "String", value: body.LABEL || "", generated: true };
-    this.LABO = { type: "String", value: body.LABO || "" };
-    this.LARC = { type: "String", value: body.LARC || "" };
-    this.LIEUX = {
-      type: "String",
-      value: body.LIEUX || "",
+    });
+    this.setProperty("INV", "String", body.INV, { required: true });
+    this.setProperty("LABEL", "String", body.LABEL, { generated: true });
+    this.setProperty("LABO", "String", body.LABO);
+    this.setProperty("LARC", "String", body.LARC);
+    this.setProperty("LIEUX", "String", body.LIEUX, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.LOCA = {
-      type: "String",
-      value: body.LOCA || "",
+    });
+    this.setProperty("LOCA", "String", body.LOCA, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.LOCA2 = { type: "String", value: body.LOCA2 || "" };
-    this.LOCA3 = { type: "String", value: body.LOCA3 || "" };
-    this.MILL = { type: "String", value: body.MILL || "" };
-    this.MILU = { type: "String", value: body.MILU || "" };
-    this.MOSA = { type: "String", value: body.MOSA || "" };
-    this.MSGCOM = { type: "String", value: body.MSGCOM || "" };
-    this.MUSEO = { type: "String", value: body.MUSEO || "" };
-    this.NSDA = { type: "String", value: body.NSDA || "" };
-    this.ONOM = { type: "Array", value: this.extractArray(body.ONOM) };
-    this.PAUT = { type: "String", value: body.PAUT || "" };
-    this.PDAT = { type: "String", value: body.PDAT || "" };
-    this.PDEC = { type: "String", value: body.PDEC || "" };
-    this.PEOC = {
-      type: "Array",
-      value: this.extractArray(body.PEOC),
+    });
+    this.setProperty("LOCA2", "String", body.LOCA2);
+    this.setProperty("LOCA3", "String", body.LOCA3);
+    this.setProperty("MILL", "String", body.MILL);
+    this.setProperty("MILU", "String", body.MILU);
+    this.setProperty("MOSA", "String", body.MOSA);
+    this.setProperty("MSGCOM", "String", body.MSGCOM);
+    this.setProperty("MUSEO", "String", body.MUSEO);
+    this.setProperty("NSDA", "String", body.NSDA);
+    this.setProperty("ONOM", "Array", this.extractArray(body.ONOM));
+    this.setProperty("PAUT", "String", body.PAUT);
+    this.setProperty("PDAT", "String", body.PDAT);
+    this.setProperty("PDEC", "String", body.PDEC);
+    this.setProperty("PEOC", "Array", this.extractArray(body.PEOC), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.PERI = {
-      type: "Array",
-      value: this.extractArray(body.PERI),
+    });
+    this.setProperty("PERI", "Array", this.extractArray(body.PERI), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.PERU = {
-      type: "Array",
-      value: this.extractArray(body.PERU),
+    });
+    this.setProperty("PERU", "Array", this.extractArray(body.PERU), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.PHOT = { type: "String", value: body.PHOT || "" };
-    this.PINS = { type: "String", value: body.PINS || "" };
-    this.PLIEUX = { type: "String", value: body.PLIEUX || "" };
-    this.PREP = { type: "Array", value: this.extractArray(body.PREP) };
-    this.PUTI = { type: "String", value: body.PUTI || "" };
-    this.RANG = { type: "String", value: body.RANG || "" };
-    this.REDA = { type: "Array", value: this.extractArray(body.REDA) };
-    this.REFIM = { type: "String", value: body.REFIM || "" };
-    this.REPR = {
-      type: "String",
-      value: body.REPR || "",
+    });
+    this.setProperty("PHOT", "String", body.PHOT);
+    this.setProperty("PINS", "String", body.PINS);
+    this.setProperty("PLIEUX", "String", body.PLIEUX);
+    this.setProperty("PREP", "Array", this.extractArray(body.PREP));
+    this.setProperty("PUTI", "String", body.PUTI);
+    this.setProperty("RANG", "String", body.RANG);
+    this.setProperty("REDA", "Array", this.extractArray(body.REDA));
+    this.setProperty("REFIM", "String", body.REFIM);
+    this.setProperty("REPR", "String", body.REPR, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.RETIF = { type: "String", value: body.RETIF || "" };
-    this.SREP = {
-      type: "Array",
-      value: this.extractArray(body.SREP),
+    });
+    this.setProperty("RETIF", "String", body.RETIF);
+    this.setProperty("SREP", "Array", this.extractArray(body.SREP), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.STAT = {
-      type: "Array",
-      value: this.extractArray(body.STAT),
+    });
+    this.setProperty("STAT", "Array", this.extractArray(body.STAT), {
       required: true
-    };
-    this.TECH = {
-      type: "Array",
-      value: this.extractArray(body.TECH),
+    });
+    this.setProperty("TECH", "Array", this.extractArray(body.TECH), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.TICO = { type: "String", value: body.TICO || "" };
-    this.TITR = { type: "String", value: body.TITR || "" };
-    this.TOUT = { type: "String", value: body.TOUT || "" };
-    this.UTIL = {
-      type: "Array",
-      value: this.extractArray(body.UTIL),
+    });
+    this.setProperty("TICO", "String", body.TICO);
+    this.setProperty("TITR", "String", body.TITR);
+    this.setProperty("TOUT", "String", body.TOUT);
+    this.setProperty("UTIL", "Array", this.extractArray(body.UTIL), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86",
       thesaurus_separator: /[(,);#]/g
-    };
-    this.VIDEO = { type: "String", value: body.VIDEO || "" };
-    this.WWW = { type: "Array", value: this.extractUrls(body.WWW) };
-    this.LVID = { type: "String", value: body.LVID || "" };
-    this.CONTIENT_IMAGE = {
-      type: "String",
-      value: this.IMG.value.length > 0 ? "oui" : "non"
-    };
+    });
+    this.setProperty("VIDEO", "String", body.VIDEO);
+    this.setProperty("WWW", "Array", this.extractUrls(body.WWW));
+    this.setProperty("LVID", "String", body.LVID);
 
     // This field is in the old format but its not imported in the one. But you need to track it in order to import joconde properly
     //  For Ajout piloté,  sometime the file is broken and a new line doesn mean a new filed. To check all fileld and line, I'm checkiong if I know the field. If I dont know it,n its not a field.
     // So I need to declare it if I want it te be considered as a field
-    this.REFMIS = { type: "String", value: "" };
+    this.setProperty("REFMIS", "String", "");
 
     // Check required fields
     for (let property in this) {
