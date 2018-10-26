@@ -142,10 +142,10 @@ const Schema = new mongoose.Schema(
 );
 
 Schema.plugin(mongoosePaginate);
-Schema.plugin(mongoosastic, {
-  esClient: getElasticInstance(),
-  index: "merimee"
-});
+// Schema.plugin(mongoosastic, {
+//   esClient: getElasticInstance(),
+//   index: "merimee"
+// });
 
 Schema.pre("save", function(next, done) {
   switch (this.REF.substring(0, 2)) {

@@ -97,10 +97,10 @@ const Schema = new mongoose.Schema(
 );
 
 Schema.plugin(mongoosePaginate);
-Schema.plugin(mongoosastic, {
-  esClient: getElasticInstance(),
-  index: "joconde"
-});
+// Schema.plugin(mongoosastic, {
+//   esClient: getElasticInstance(),
+//   index: "joconde"
+// });
 
 const object = mongoose.model("joconde", Schema);
 

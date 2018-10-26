@@ -129,11 +129,11 @@ const Schema = new mongoose.Schema(
 );
 
 Schema.plugin(mongoosePaginate);
-Schema.plugin(mongoosastic, {
-  esClient: getElasticInstance(),
-  index: "memoire",
-  bulk: { size: 500, delay: 2000 }
-});
+// Schema.plugin(mongoosastic, {
+//   esClient: getElasticInstance(),
+//   index: "memoire",
+//   bulk: { size: 500, delay: 2000 }
+// });
 
 Schema.pre("save", function(next, done) {
   switch (this.REF.substring(0, 2)) {
