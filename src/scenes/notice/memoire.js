@@ -37,7 +37,6 @@ class Notice extends React.Component {
   load(ref) {
     this.setState({ loading: true });
     API.getNotice("memoire", ref).then(notice => {
-      console.log(notice);
       const arr = [];
       const collection = findCollection(notice.LBASE);
       if (collection) {

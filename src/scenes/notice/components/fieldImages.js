@@ -66,7 +66,6 @@ export default class FieldImages extends React.Component {
         showFullscreenButton={false}
         showPlayButton={false}
         onClick={i => {
-          console.log("click", i.target.src, this.state.images);
           const selected = this.state.images.findIndex(
             e => e.source === i.target.src
           );
