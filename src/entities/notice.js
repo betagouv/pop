@@ -7,15 +7,6 @@ export default class Notice {
     this._type = "";
   }
 
-  setProperty(property, type, value, opt = null) {
-    if (value !== undefined) {
-      this[property] = { type, value };
-      if (opt) {
-        this[property] = { ...this[property], ...opt };
-      }
-    }
-  }
-
   makeItFlat = function() {
     let flat = {};
     for (var property in this) {
@@ -33,9 +24,6 @@ export default class Notice {
   };
 
   extractArray = function(str, delim = ";") {
-    if (str === undefined) {
-      return undefined;
-    }
     if (!str) {
       return [];
     }
@@ -50,9 +38,6 @@ export default class Notice {
   };
 
   extractEmail = function(str) {
-    if (str === undefined) {
-      return str;
-    }
     if (!str) {
       return "";
     }
@@ -65,10 +50,6 @@ export default class Notice {
     return str;
   };
   extractUrls = function(str) {
-    if (str === undefined) {
-      return str;
-    }
-
     if (!str) {
       return [];
     }
@@ -81,14 +62,16 @@ export default class Notice {
   };
 
   stripHTML(html) {
-    if (html === undefined) {
-      return html;
-    }
     var tmp = document.createElement("DIV");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
   }
 }
+
+Notice.has = function(key) {
+  const obj = new this({});
+  return obj.hasOwnProperty(key);
+};
 
 function _regex(str, reg) {
   if (!str) {
@@ -108,8 +91,3 @@ function _regex(str, reg) {
   }
   return arr;
 }
-
-Notice.has = function(key) {
-  const obj = new this({});
-  return obj.hasOwnProperty(key);
-};
