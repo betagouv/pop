@@ -22,21 +22,8 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
 
-    const fieldsToExport = [];
-    const obj = new Memoire({});
-    for (var property in obj) {
-      if (
-        obj.hasOwnProperty(property) &&
-        property.indexOf("_") !== 0 &&
-        typeof obj[property] === "object"
-      ) {
-        fieldsToExport.push(property);
-      }
-    }
-
     this.state = {
-      normalMode: true,
-      fieldsToExport
+      normalMode: true
     };
   }
 
@@ -51,7 +38,6 @@ export default class Search extends React.Component {
             <ExportComponent
               FILTER={["advancedSearch"]}
               filename="merimee.csv"
-              columns={this.state.fieldsToExport}
             />
           </Col>
         </Row>
@@ -87,7 +73,6 @@ export default class Search extends React.Component {
           <ExportComponent
             FILTER={FILTER}
             filename="merimee.csv"
-            columns={this.state.fieldsToExport}
           />
         </div>
         <Row>

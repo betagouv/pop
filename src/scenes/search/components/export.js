@@ -25,7 +25,7 @@ export default class ExportComponent extends React.Component {
   };
 
   exec(res) {
-    exportData(this.props.filename, this.props.columns, res);
+    exportData(this.props.filename, res);
     this.setState({ res: [], page: 0, run: false });
   }
 
@@ -74,7 +74,22 @@ const Exp = ({ len }) => {
   );
 };
 
-async function exportData(fileName, columns, entities) {
+async function exportData(fileName, entities) {
+  if (!entities.length) {
+    return;
+  }
+
+  const columns = ["REF"];
+  for (let property in entities[0]) {
+    if (
+      property.indexOf("_") !== 0 &&
+      property.indexOf("POP_") !== 0 && //because nobody ask for those fields and I think there gonna be complains if I export something people dont understand
+      property !== "REF"
+    ) {
+      columns.push(property);
+    }
+  }
+
   let csv = columns.join(",") + "\n";
   for (let j = 0; j < entities.length; j++) {
     const arr = [];
