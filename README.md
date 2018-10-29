@@ -12,7 +12,9 @@ cd pop-api
 yarn
 ```
 
-## Utilisation (locale)
+## Utilisation
+
+### Développement local
 
 Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://localhost:3000`.
 
