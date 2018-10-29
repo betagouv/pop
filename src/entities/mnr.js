@@ -73,7 +73,5 @@ export default class MNR extends Notice {
         }
       }
     }
-
-    console.log(this);
   }
 }
