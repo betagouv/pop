@@ -76,7 +76,7 @@ export default class MapComponent extends React.Component {
     }
 
     if (!center) {
-      return <div>No map available</div>;
+      return <div>Carte non disponible</div>;
     }
 
     console.log("CENTER", center);

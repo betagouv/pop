@@ -35,10 +35,6 @@
   align-items: center;
 }
 
-.notice button {
-  margin-top: 20px;
-}
-
 .notice .leaflet-container {
   height: 600px;
   padding-top: 10px;
