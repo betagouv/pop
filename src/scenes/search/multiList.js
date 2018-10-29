@@ -40,7 +40,6 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   }
 
   render() {
-    console.log("REACT", this.props.react);
     return (
       <div className="multilist">
         <div

@@ -18,7 +18,6 @@ import {
   ReactiveBase,
   DataSearch,
   SelectedFilters,
-  ReactiveComponent
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
 
@@ -29,7 +28,6 @@ import Mosaique from "./subComponents/Mosaique";
 import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
-import { isDepartmentNumber, departmentText } from "./department";
 
 import filterImg from "../../assets/filter.png";
 
@@ -163,6 +161,7 @@ class Search extends React.Component {
                   <SelectedFilters
                     className="selected-filters"
                     clearAllLabel="Tout supprimer"
+                    title={<h4>Vos filtres</h4>}
                   />
                   <h4>Affiner par</h4>
                   <MultiList
@@ -204,46 +203,6 @@ class Search extends React.Component {
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
                     onCollapseChange={changeActiveFilter}
                   />
-                  {/* <MultiList
-                    dataField="DENO.keyword"
-                    title="Dénomination"
-                    placeholder="Rechercher une dénomination"
-                    componentId="deno"
-                    react={{ and: ["base","domn"] }}
-                  /> */}
-
-                  {/* <MultiList
-                    dataField="REG.keyword"
-                    title="Région"
-                    componentId="region"
-                    placeholder="Rechercher une région"
-                    react={{ and: ["departement","commune"] }}
-                    sortByName
-                  />
-                  <MultiList
-                    dataField="DPT.keyword"
-                    title="Département"
-                    componentId="departement"
-                    placeholder="Rechercher un département"
-                    sortByName
-                    showSearch={false}
-                    limit={200}
-                    react={{ and: ["region","commune"] }}
-                    filterListItem={bucket => isDepartmentNumber(bucket.key)}
-                    renderListItem={(label, count) => {
-                      return (
-                        <div>
-                          {departmentText(label)} ({count})
-                        </div>
-                      );
-                    }}
-                  /> */}
-                  {/* <MultiList
-                    dataField="COM.keyword"
-                    title="Commune"
-                    componentId="commune"
-                    react={{ and: ["region", "departement"] }}
-                  /> */}
                   <MultiList
                     dataField="PERI.keyword"
                     title="Période"

@@ -81,7 +81,7 @@ class Notice extends React.Component {
                 content={this.state.notice.DOMN}
               />
               <Field
-                title="Auteur /exécutant / collecteur :"
+                title="Auteur / exécutant / collecteur :"
                 content={this.state.notice.AUTR}
               />
               <Field

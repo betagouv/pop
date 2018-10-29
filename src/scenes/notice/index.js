@@ -1,8 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
-// import HeaderBase from '../headerBase'
-
 import Merimee from './merimee';
 import Palissy from './palissy';
 import Joconde from './joconde';

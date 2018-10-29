@@ -19,7 +19,7 @@
   text-align: center;
 }
 
-.fieldImages .image-gallery span{
+.fieldImages .image-gallery span {
   font-size: 10px;
   color: #808d9e;
   font-weight: 500;
@@ -36,14 +36,14 @@
   width: 100%;
 }
 
-.fieldImages  .image-gallery-thumbnail-label{
+.fieldImages .image-gallery-thumbnail-label {
   position: relative;
   padding: 0px;
   transform: none;
   text-shadow: none;
 }
 
-.fieldImages  .image-gallery-thumbnail-label a{
+.fieldImages .image-gallery-thumbnail-label a {
   font-size: 12px;
   color: grey;
 }

@@ -8,7 +8,7 @@ const Field = ({ content, title, separator }) => {
 
   let str = Array.isArray(content) ? content.join(", ") : content;
   str = str.replace(/\u0092/g, `'`);
-  
+
   if (separator) {
     str = replaceAll(str, separator, "\n");
   }

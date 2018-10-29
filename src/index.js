@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 dotenv.load();
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('Run raven');
   Raven.config('https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21', {
       release: 'pop-consultation-' + require("../package.json").version
   }).install();
