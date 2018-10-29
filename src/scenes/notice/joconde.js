@@ -375,6 +375,7 @@ const SeeMore = ({ notice }) => {
             href={`http://www2.culture.gouv.fr/public/mistral/museo_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
               notice.MUSEO
             }`}
+            target="_blank"
           >
             {notice.MUSEO}
           </a>
