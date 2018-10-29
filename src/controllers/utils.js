@@ -48,6 +48,39 @@ function deleteFile(path) {
   });
 }
 
+function getNewId(object, prefix, dpt) {
+  return new Promise((resolve, reject) => {
+    var q = object
+      .findOne({
+        REF: { $regex: new RegExp("^" + prefix + dpt) }
+      })
+      .sort({
+        REF: -1
+      });
+    q.exec((error, doc) => {
+      if (error) {
+        reject(error);
+      }
+      if (doc) {
+        const ref = doc.REF.substring((prefix + dpt).length);
+        const newId = addZeros(parseInt(ref) + 1, ref.length);
+        resolve(prefix + dpt + newId);
+      } else {
+        const ln = 10 - (prefix + dpt).length;
+        const newId = addZeros(1, ln);
+        resolve(prefix + dpt + newId);
+      }
+    });
+  });
+}
+
+function addZeros(v, zeros) {
+  return new Array(zeros)
+    .concat([v])
+    .join("0")
+    .slice(-zeros);
+}
+
 function formattedNow() {
   const now = new Date();
   return (formattedNow =
@@ -61,5 +94,6 @@ function formattedNow() {
 module.exports = {
   uploadFile,
   deleteFile,
-  formattedNow
+  formattedNow,
+  getNewId
 };

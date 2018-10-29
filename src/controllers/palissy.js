@@ -5,7 +5,7 @@ const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { uploadFile, formattedNow } = require("./utils");
+const { uploadFile, formattedNow, getNewId } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -35,6 +35,27 @@ function populateMerimeeREFO(notice) {
     resolve();
   });
 }
+
+router.get(
+  "/newId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const prefix = req.query.prefix;
+    const dpt = req.query.dpt;
+
+    if (!prefix || !dpt) {
+      return res.status(500).send({ error: "Missing dpt or prefix" });
+    }
+
+    getNewId(Palissy, prefix, dpt)
+      .then(id => {
+        return res.status(200).send({ id });
+      })
+      .catch(error => {
+        return res.status(500).send({ error });
+      });
+  }
+);
 
 router.put(
   "/:ref",
