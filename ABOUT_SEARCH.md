@@ -4,7 +4,7 @@ La recherche libre est privilégiée dans l'outil de consultation, avec possibil
 
 ## Barre de recherche
 
-(image)
+<img width="1423" alt="capture d ecran 2018-10-29 a 14 58 20" src="https://user-images.githubusercontent.com/1575946/47661681-d2ec9780-db99-11e8-9aca-84dce364718a.png">
 
 La recherche et l'autocomplétion sont faites sur les mêmes règles. Un score est appliqué sur chaque résultat en fonction de différent critères, ce qui déterminera son ordre d'apparition dans les résultats.
  - Si le champs est vide, l'**ensemble des données** de la base sont retournées dans un **ordre arbitraire**.
@@ -44,7 +44,7 @@ Le code source est [disponible ici](https://github.com/betagouv/pop-consultation
 
 ## Filtres à facettes
 
-(image)
+<img width="1411" alt="capture d ecran 2018-10-29 a 15 41 54" src="https://user-images.githubusercontent.com/1575946/47661657-c6683f00-db99-11e8-9344-a8da5dddebd6.png">
 
 Les filtres à facettes sur le côté permettent de filtrer les résultats obtenus grâce à la barre de recherche et à limiter les prochaines recherches.
 
