@@ -23,3 +23,7 @@ Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb
 ## Déploiement
 
 Utiliser `yarn deploy:staging` ou `yarn deploy:production` en fonction de l'environnement souhaité.
+
+## Recherche
+
+Une documentation à propos du fonctionnement de la recherche est [accessible ici](https://github.com/betagouv/pop-consultation/blob/master/ABOUT_SEARCH.md).
