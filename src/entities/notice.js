@@ -109,7 +109,3 @@ function _regex(str, reg) {
   return arr;
 }
 
-Notice.has = function(key) {
-  const obj = new this({});
-  return obj.hasOwnProperty(key);
-};
