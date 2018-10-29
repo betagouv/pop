@@ -23,8 +23,6 @@ test("Create new Joconde entity without errors from file joconde-valid-ISO-8859-
     expect(n.DOMN.value).toBeInstanceOf(Array);
     expect(n.DOMN.value.length).toBeGreaterThanOrEqual(1);
     expect(n.DOMN.value).toContain("archéologie");
-    // All have images
-    expect(n.CONTIENT_IMAGE.value).toBe("oui");
   });
   expect(notices[0].IMG.value).toEqual([
     "joconde/01610014032/0016630.jpg",
