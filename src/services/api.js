@@ -74,6 +74,12 @@ class api {
     );
   }
 
+  createImport(data) {
+    let formData = new FormData();
+    formData.append("import", JSON.stringify(data));
+    return request.post(`${api_url}/import`, formData);
+  }
+
   updateNotice(ref, collection, data, images = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
