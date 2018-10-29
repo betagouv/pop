@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "redux-form";
 import Dropzone from "react-dropzone";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import Viewer from "react-viewer";
 import { Link } from "react-router-dom";
 import "react-viewer/dist/index.css";
@@ -66,6 +66,20 @@ class FieldImages extends React.Component {
     }
 
     const arr = this.state.images.map(({ source, key, link }, i) => {
+      const button = !this.props.disabled ? (
+        <Button
+          color="danger"
+          onClick={() => {
+            const arr = this.props.input.value.filter(e => e !== key);
+            this.props.input.onChange(arr);
+          }}
+        >
+          Supprimer
+        </Button>
+      ) : (
+        <div />
+      );
+
       return (
         <Col className="image" key={key}>
           {source ? (
@@ -78,6 +92,7 @@ class FieldImages extends React.Component {
           ) : (
             <div className="no-image">Image absente</div>
           )}
+          {button}
           {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
         </Col>
       );
