@@ -124,11 +124,11 @@ class Notice extends React.Component {
               <Field title="Appellation :" content={this.state.notice.APPL} />
               <Field title="Titre :" content={this.state.notice.TITR} />
               <Field
-                title="Auteur /exécutant / collecteur :"
+                title="Auteur / exécutant / collecteur :"
                 content={this.state.notice.AUTR}
               />
               <Field
-                title="Précisions /auteur / exécutant / collecteur :"
+                title="Précisions / auteur / exécutant / collecteur :"
                 content={this.state.notice.PAUT}
               />
               <Field title="Ecole :" content={this.state.notice.ECOL} />
@@ -146,7 +146,7 @@ class Notice extends React.Component {
               />
 
               <Field
-                title="Epoque /style / mouvement :"
+                title="Epoque / style / mouvement :"
                 content={this.state.notice.EPOQ}
               />
               <Field
@@ -210,7 +210,7 @@ class Notice extends React.Component {
                 content={this.state.notice.LIEUX}
               />
               <Field
-                title="Précisions sur le lieu de création/ d’exécution / d’utilisation :"
+                title="Précisions sur le lieu de création / d’exécution / d’utilisation :"
                 content={this.state.notice.PLIEUX}
               />
               <Field
@@ -313,10 +313,6 @@ class Notice extends React.Component {
                   title="Dernière mise à jour : "
                   content={this.state.notice.DMAJ}
                 />
-                {/* <Field
-                  title="Crédits photographiques :"
-                  content={this.state.notice.PHOT}
-                /> */}
                 <Field
                   title="Crédits photographiques : "
                   content={this.state.notice.AUTP}

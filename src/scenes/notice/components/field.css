@@ -4,9 +4,9 @@
 
 .field p {
   font-weight: bold;
-  word-wrap:break-word; 
+  word-wrap: break-word;
   display: inline;
-  white-space: pre-line; 
+  white-space: pre-line;
 }
 
 .field h3 {
