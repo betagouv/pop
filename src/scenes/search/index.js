@@ -161,6 +161,7 @@ class Search extends React.Component {
                   <SelectedFilters
                     className="selected-filters"
                     clearAllLabel="Tout supprimer"
+                    title={<h4>Vos filtres</h4>}
                   />
                   <h4>Affiner par</h4>
                   <MultiList
