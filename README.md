@@ -22,7 +22,9 @@ Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://l
 
 Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnement souhaité.
 
-### Ré-indexation Elasticsearch
+### Elasticsearch
+
+#### Ré-indexation
 
 La modification des _mappings_ nécessite une ré-indexation, qu'on peut lancer avec la commande
 `node src/elasticsearch/reindex.js`. Cette opération utilise les _mappings_ présents dans 
@@ -33,9 +35,9 @@ En staging ou en production, préciser les variables d'environnements :
 AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y ES_ENDPOINT=z node src/elasticsearch/reindex.js
 ```
 
-### Synchronisation de MongoDB vers Elasticsearch
+#### Synchronisation depuis MongoDB
 
-Utiliser la commande `node src/elasticsearch/sync.js`.
+Utiliser la commande `node src/elasticsearch/sync.js` pour mettre à jour (ou créer si elles n'existent pas) l'ensemble des notices depuis MongoDB vers Elasticsearch.
 
 En staging ou en production, préciser les variables
 d'environnements sans oublier MongoDB (`DB_ENDPOINT`) :
