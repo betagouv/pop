@@ -10,16 +10,16 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     collapse: true
   };
 
-  onListClicked = ()=> {
+  onListClicked = () => {
     this.onCollapseChange(!this.state.collapse);
   };
 
-  onCollapseChange = (nextCollapseState)=> {
+  onCollapseChange = nextCollapseState => {
     this.setState({ collapse: nextCollapseState });
-    if(this.props.onCollapseChange) {
+    if (this.props.onCollapseChange) {
       this.props.onCollapseChange(nextCollapseState, this.props.componentId);
     }
-  }
+  };
 
   componentWillMount() {
     const values = queryString.parse(location.search);
@@ -30,48 +30,46 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-      if(prevProps.defaultSelected !== this.props.defaultSelected) {
-        if(this.props.defaultSelected && this.props.defaultSelected.length > 0) {
-          this.onCollapseChange(false);
-        } else if (!this.state.collapse) {
-          this.onCollapseChange(true);
-        }
+    if (prevProps.defaultSelected !== this.props.defaultSelected) {
+      if (this.props.defaultSelected && this.props.defaultSelected.length > 0) {
+        this.onCollapseChange(false);
+      } else if (!this.state.collapse) {
+        this.onCollapseChange(true);
       }
+    }
   }
 
   render() {
+    const style = this.props.show === false ? { display: "none" } : {};
+
     return (
-      <div className="multilist">
-        <div
-          className="topBar"
-          onClick={this.onListClicked}
-        >
+      <div className="multilist" style={style}>
+        <div className="topBar" onClick={this.onListClicked}>
           <div className="name">{this.props.title}</div>
           <div className="v">⌄</div>
         </div>
         <Collapse isOpen={!this.state.collapse}>
-          { !this.state.collapse
-              ? <ReactiveComponent
-                componentId={this.props.componentId} // a unique id we will refer to later
-                URLParams={this.props.URLParams || true}
-                react={this.props.react || {}}
-                data={this.props.data || []}
-              >
-                <MultiListUmbrella
-                  placeholder={this.props.placeholder}
-                  showSearch={this.props.showSearch}
-                  displayCount={this.props.displayCount}
-                  renderListItem={this.props.renderListItem}
-                  filterListItem={this.props.filterListItem}
-                  defaultSelected={this.props.defaultSelected}
-                  dataField={this.props.dataField}
-                  componentId={this.props.componentId}
-                  sortByName={this.props.sortByName}
-                  limit={this.props.limit}
-                />
-              </ReactiveComponent>
-              : null
-          }
+          {!this.state.collapse ? (
+            <ReactiveComponent
+              componentId={this.props.componentId} // a unique id we will refer to later
+              URLParams={this.props.URLParams || true}
+              react={this.props.react || {}}
+              data={this.props.data || []}
+            >
+              <MultiListUmbrella
+                placeholder={this.props.placeholder}
+                showSearch={this.props.showSearch}
+                displayCount={this.props.displayCount}
+                renderListItem={this.props.renderListItem}
+                filterListItem={this.props.filterListItem}
+                defaultSelected={this.props.defaultSelected}
+                dataField={this.props.dataField}
+                componentId={this.props.componentId}
+                sortByName={this.props.sortByName}
+                limit={this.props.limit}
+              />
+            </ReactiveComponent>
+          ) : null}
         </Collapse>
       </div>
     );
@@ -97,7 +95,7 @@ class MultiListUmbrella extends React.Component {
       const selected = str.split(", ");
       this.updateExternalQuery(selected);
       this.setState({ selected });
-    } else if(this.props.defaultSelected){
+    } else if (this.props.defaultSelected) {
       const selected = this.props.defaultSelected;
       this.updateExternalQuery(selected);
       this.setState({ selected });
@@ -141,17 +139,24 @@ class MultiListUmbrella extends React.Component {
   updateExternalQuery(selected) {
     let should;
     if (!Array.isArray(this.props.dataField)) {
-      if (selected.includes('Photographies (Mémoire)') || selected.includes('Patrimoine mobilier (Palissy)')) {
-        if (selected.includes('Photographies (Mémoire)')) {
-          should = ['Photographies (Mémoires)', ...selected].map(e => ({ term: { [this.props.dataField]: e } }));
+      if (
+        selected.includes("Photographies (Mémoire)") ||
+        selected.includes("Patrimoine mobilier (Palissy)")
+      ) {
+        if (selected.includes("Photographies (Mémoire)")) {
+          should = ["Photographies (Mémoires)", ...selected].map(e => ({
+            term: { [this.props.dataField]: e }
+          }));
         }
-        if (selected.includes('Patrimoine mobilier (Palissy)')) {
-          should = ['Inventaire patrimoine mobilier (Palissy)', ...selected].map(e => ({ term: { [this.props.dataField]: e } }));
+        if (selected.includes("Patrimoine mobilier (Palissy)")) {
+          should = [
+            "Inventaire patrimoine mobilier (Palissy)",
+            ...selected
+          ].map(e => ({ term: { [this.props.dataField]: e } }));
         }
       } else {
         should = selected.map(e => ({ term: { [this.props.dataField]: e } }));
       }
-      
     } else {
       should = selected
         .map(e => this.props.dataField.map(d => ({ term: { [d]: e } })))
@@ -229,12 +234,12 @@ class MultiList extends React.Component {
     if (this.props.renderListItem) {
       return this.props.renderListItem(item.key, item.doc_count);
     }
-    
+
     let label = item.key;
-    if(this.props.data && this.props.data.length > 0) {
+    if (this.props.data && this.props.data.length > 0) {
       for (let i = 0; i < this.props.data.length; i++) {
         const data = this.props.data[i];
-        if(data.value === item.key) {
+        if (data.value === item.key) {
           label = data.label;
           break;
         }
