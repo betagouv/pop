@@ -97,10 +97,15 @@ const Schema = new mongoose.Schema(
 );
 
 Schema.plugin(mongoosePaginate);
-// Schema.plugin(mongoosastic, {
-//   esClient: getElasticInstance(),
-//   index: "joconde"
-// });
+Schema.plugin(mongoosastic, {
+  esClient: getElasticInstance(),
+  index: "joconde"
+});
+
+Schema.pre("save", function(next, done) {
+  this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
+  next();
+});
 
 const object = mongoose.model("joconde", Schema);
 

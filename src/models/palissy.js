@@ -156,11 +156,11 @@ Schema.pre("save", function(next, done) {
 });
 
 Schema.plugin(mongoosePaginate);
-// Schema.plugin(mongoosastic, {
-//   esClient: getElasticInstance(),
-//   index: "palissy",
-//   bulk: { size: 500, delay: 2000 }
-// });
+Schema.plugin(mongoosastic, {
+  esClient: getElasticInstance(),
+  index: "palissy",
+  bulk: { size: 500, delay: 2000 }
+});
 
 const object = mongoose.model("palissy", Schema);
 
