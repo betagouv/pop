@@ -10,7 +10,6 @@ import { store, history } from './redux/store';
 import PublicRoutes from './router';
 
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 dotenv.load();
 
