@@ -8,24 +8,12 @@ export default function checkThesaurus(importedNotices) {
       return;
     }
 
-    const allfieldswiththesaurus = Object.keys(importedNotices[0]).filter(
-      e =>
-        typeof importedNotices[0][e] === "object" &&
-        importedNotices[0][e].thesaurus
-    );
-
     for (var i = 0; i < importedNotices.length; i++) {
-      for (var j = 0; j < allfieldswiththesaurus.length; j++) {
-        const field = allfieldswiththesaurus[j];
-        if (!importedNotices[i][field]) {
-          // console.log(
-          //   field,
-          //   importedNotices[i],
-          //   `${importedNotices[i][field]} n'existe pas`
-          // );
+      for (var field in importedNotices[i]) {
+        const thesaurus = importedNotices[i][field].thesaurus;
+        if (thesaurus === undefined) {
           continue;
         }
-        const thesaurus = importedNotices[i][field].thesaurus;
 
         let values = [].concat(importedNotices[i][field].value);
         if (importedNotices[i][field].thesaurus_separator) {
@@ -52,7 +40,7 @@ export default function checkThesaurus(importedNotices) {
               val = await api.validateWithThesaurus(thesaurus, value);
             }
             if (!val) {
-              if (allfieldswiththesaurus[j].thesaurus_strict === true) {
+              if (importedNotices[i][field].thesaurus_strict === true) {
                 importedNotices[i]._errors.push(
                   `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
                 );
@@ -69,6 +57,7 @@ export default function checkThesaurus(importedNotices) {
         }
       }
     }
+
     resolve();
   });
 }
