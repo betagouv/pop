@@ -1,0 +1,43 @@
+{
+  "name": "pop-shared",
+  "version": "0.1.0",
+  "description": "POP shared components and libs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/betagouv/pop-shared.git"
+  },
+  "author": "betagouv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/betagouv/pop-shared/issues"
+  },
+  "homepage": "https://github.com/betagouv/pop-shared#readme",
+  "dependencies": {
+    "@appbaseio/reactivesearch": "^2.12.1",
+    "query-string": "^6.2.0",
+    "react": "^16.6.0",
+    "reactstrap": "^6.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^23.6.0",
+    "react-dom": "^16.6.0",
+    "react-test-renderer": "^16.6.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/__tests__/__mocks__/fileMock.js",
+      "^.+\\.(css|scss)$": "identity-obj-proxy"
+    }
+  }
+}
