@@ -15,8 +15,10 @@ export function findCollection(ref = "") {
 
 // Sometimes, links are f***ed up. We try to post-fix them.
 export function postFixedLink(link) {
-  return link.replace(
-    /^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i,
-    "http://www2.culture.gouv.fr$1"
-  );
+  return link
+    .replace(/^<a href=([^ ]+)?.*$/, "$1")
+    .replace(
+      /^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i,
+      "http://www2.culture.gouv.fr$1"
+    );
 }
