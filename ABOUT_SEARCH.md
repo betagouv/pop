@@ -57,11 +57,12 @@ Un filtre à facette est composée de deux parties :
  - Chaque valeur cochée dans un filtre vient s'ajouter aux autres valeurs cochées de ce même filtre (`OU` logique). Donc si je coche "Soutine" et "Mondrian" dans le filtre auteur, je verrai les œuvres de Soutine et Mondrian (+ je coche de cases, + j'ai de résultats). Si je ne coche aucune case, aucun filtre n'est appliqué. 
  - Les filtres à facettes peuvent réagir à des éléments extérieurs (d'autres filtres ou les résultats de recherche).
  - La recherche à l'intérieur d'un filtre à facettes est basée sur une [analyse _maison_](https://github.com/betagouv/pop-consultation/blob/175835ebfee789c1d1bcb52baa1ebcf53ec9cffd/src/scenes/search/utils.js#L1-L19) insensible à la casse et aux accents, acceptant des caractères avant et après le terme de recherche. Cela permet de proposer dans la liste des valeurs "Picasso", "PICASSO" et "X dit pablo picasso" même si la recherche était simplement "picasso". Cependant, les cases cochées appliqueront un filtre en fonction de la valeur exacte (si je coche "picasso", j'aurai uniquement les résultats dont l'auteur est exactement "picasso").
-- Quand un filtre à facette est "fermé" (collapse), il est également annulé.
+ - Les valeurs d'un filtre à facettes sont triées par nombre de résultats correspondants (les valeurs du filtre qui concernent plus de résultats sont retournées en premier).
+ - Quand un filtre à facette est "fermé" (collapse), il est également annulé.
 
-| Filtre | Champs | Réagit à | Valeurs |
+| Filtre | Champs | Réagit à | Valeurs | 
 | ------ | ------ | -------- | -------- |
-| Base | BASE | tout sauf lui-même | |
+| Base | BASE | tout sauf lui-même | | 
 | Auteur | AUTP, AUTR | tout sauf lui-même | |
 | Domaine | DOMN | tout sauf lui-même | |
 | Où voir l'oeuvre | REG, COM, LOCA | tout sauf lui-même | |
