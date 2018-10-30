@@ -1,16 +1,20 @@
 import React from "react";
-import L from "leaflet";
-import { Map, Marker, Popup, TileLayer, Polygon } from "react-leaflet";
 
 import "./map.css";
-//https://react-leaflet.js.org/docs/en/components.html#geojson
 
 export default class MapComponent extends React.Component {
   state = {
     center: null
   };
 
-  componentWillMount() {
+  map = null;
+
+  constructor(props) {
+    super(props);
+    this.mapRef = React.createRef();
+  }
+
+  getCenter = ()=> {
     let center = null;
 
     const {
@@ -26,68 +30,85 @@ export default class MapComponent extends React.Component {
       center = POP_COORDINATES_POINT.coordinates;
     }
 
-    if (
-      POP_COORDINATES_POLYGON &&
-      POP_COORDINATES_POLYGON.coordinates &&
-      POP_COORDINATES_POLYGON.coordinates.length
-    ) {
-      center = POP_COORDINATES_POLYGON.coordinates[0];
+    return center;
+  }
+
+  componentWillMount() {
+    this.setState({center: this.getCenter()});
+  }
+
+  componentDidMount() {
+    if(this.state.center) {
+      mapboxgl.accessToken = "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
+      this.map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v9'
+      });
+      this.map.on('load', (e) => {
+
+        this.map.resize();
+        this.map.setZoom(11);
+        this.map.setCenter({lng:this.state.center[1], lat:this.state.center[0]});
+          
+        this.map.addSource(
+          'pop',
+          {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: [
+                {
+                  type: "Feature",
+                  id: 0,
+                  properties: {
+                    id: 0,
+                  },
+                  geometry: {
+                    type: "Point",
+                    coordinates: [this.state.center[1], this.state.center[0]]
+                  }
+                }
+              ]
+            }
+          }
+        );
+        this.map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "pop",
+            filter: ["!", ["has", "count"]],
+            paint: {
+              "circle-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  "#fff",
+                  "#9C27B0"
+              ],
+              "circle-radius": 9,
+              "circle-stroke-width": 2,
+              "circle-stroke-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  "#9C27B0",
+                  "#fff"
+              ],
+            }
+        });
+      });
     }
-
-    this.setState({ center });
   }
-
-  renderPoint() {
-    return (
-      <Marker
-        position={this.state.center}
-        icon={L.icon({
-          iconUrl: require("../../../assets/marker-icon.png"),
-          iconSize: [38, 55],
-          iconAnchor: [22, 54],
-          popupAnchor: [-3, -76],
-          shadowUrl: require("../../../assets/marker-shadow.png"),
-          shadowSize: [68, 55],
-          shadowAnchor: [22, 54]
-        })}
-      >
-        <Popup>
-          <span>
-            {this.props.notice.TICO}
-            <br />
-            {this.props.notice.DENO}
-          </span>
-        </Popup>
-      </Marker>
-    );
-  }
-
-  // renderGeometry() {
-  //     if (!this.props.notice.POP_COORDINATES_POLYGON.coordinates.length) {
-  //         return <div />
-  //     }
-
-  //     return (
-  //         <Polygon color="purple" positions={this.props.notice.POP_COORDINATES_POLYGON.coordinates} />
-  //     )
-
-  // }
 
   render() {
     if (!this.state.center) {
       return <div />;
     }
 
+    const style = {
+      width: "100%",
+      height: "100%"
+    };
+
     return (
       <div className="map-container">
-        <Map center={this.state.center} zoom={15}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          />
-          {/* {this.renderGeometry()} */}
-          {this.renderPoint()}
-        </Map>
+        <div id="map" ref={this.mapRef} style={style}></div>
       </div>
     );
   }

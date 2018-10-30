@@ -1,9 +1,7 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
-import { uniqueId } from 'lodash';
 import queryString from "query-string";
-import ReactMapboxGl, { Layer, Source, Popup } from "react-mapbox-gl";
 import Loader from "../../../../components/loader";
 
 import CardMap from "./CardMap";
@@ -16,12 +14,6 @@ import "./map.css";
 
 import SateliteImg from '../../../../assets/Satelite.png';
 import StreetImg from '../../../../assets/street.png';
-
-
-const MapBox = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ"
-});
 
 const MAX_PRECISION = 8;
 const getPrecision = (zoom)=> {
@@ -50,6 +42,20 @@ const getPrecision = (zoom)=> {
 
   return obj[correctedZoom];
 };
+
+const idCounter = {}
+const uniqueId = (prefix='$lodash$') => {
+  if (!idCounter[prefix]) {
+    idCounter[prefix] = 0
+  }
+
+  const id =++idCounter[prefix]
+  if (prefix === '$lodash$') {
+    return `${id}`
+  }
+
+  return `${prefix + id}`
+}
 
 export default class Umbrella extends React.Component {
   state = {
@@ -219,6 +225,152 @@ class Map extends React.Component {
     return true;
   }
 
+  componentDidMount() {
+    mapboxgl.accessToken = "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
+    this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9'
+    });
+
+    this.map.on('load', (e) => {
+        this.mapInitialPosition(this.map);
+
+        this.map.addSource(
+          'pop',
+          {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: []
+            }
+          }
+        );
+        this.map.addLayer({
+            "id": "clusters",
+            "type": "circle",
+            "source": "pop",
+            filter: ["has", "count"],
+            "paint": {
+              "circle-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  "#fff",
+                  [
+                    "step",
+                    ["get", "count"],
+                    "#9C27B0",
+                    2,
+                    "#51bbd6",
+                    100,
+                    "#f1f075",
+                    750,
+                    "#f28cb1"
+                  ]
+              ],
+              "circle-radius": [
+                "step",
+                ["get", "count"],
+                9,
+                2,
+                20,
+                100,
+                30,
+                750,
+                40
+              ],
+              "circle-stroke-width": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  2,
+                  [
+                    "step",
+                    ["get", "count"],
+                    2,
+                    2,
+                    0
+                  ]
+              ],
+              "circle-stroke-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  [
+                    "step",
+                    ["get", "count"],
+                    "#9C27B0",
+                    2,
+                    "#51bbd6",
+                    100,
+                    "#f1f075",
+                    750,
+                    "#f28cb1"
+                  ],
+                  "#fff"
+              ],
+            }
+        });
+
+        this.map.addLayer({
+            id: "cluster-count",
+            type: "symbol",
+            source: "pop",
+            filter: ["has", "count"],
+            layout: {
+              "text-field": "{count}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 12
+            },
+            paint: {
+              "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
+            }
+        });
+
+        this.map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "pop",
+            filter: ["!", ["has", "count"]],
+            paint: {
+              "circle-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  "#fff",
+                  "#9C27B0"
+              ],
+              "circle-radius": 9,
+              "circle-stroke-width": 2,
+              "circle-stroke-color": ["case",
+                  ["boolean", ["feature-state", "clicked"], false],
+                  "#9C27B0",
+                  "#fff"
+              ],
+            }
+        });
+
+        setTimeout(
+          ()=>{
+            this.setState({ loaded: true });
+          },
+          1000
+        )
+    });
+
+    this.map.on('click', 'clusters', (e) => {
+      this.onPointClicked(e, 'clusters');
+    });
+
+    this.map.on('click', 'unclustered-point', (e) => {
+      this.onPointClicked(e, 'unclustered-point');
+    });
+
+    this.map.on("mouseenter", "unclustered-point", () => {
+      this.map.getCanvas().style.cursor = "pointer";
+    });
+    this.map.on("mouseleave", "unclustered-point", () => {
+      this.map.getCanvas().style.cursor = "";
+    });
+
+    this.map.on("moveend", () => {
+      this.onMoveEnd(this.map);
+    });
+
+  }
+
   componentDidUpdate(prevProps) {
     if(this.props.isNewSearch && !prevProps.isNewSearch) {
       if(this.state.drawerContent) {
@@ -342,149 +494,9 @@ class Map extends React.Component {
     return (
       <div style={style} className="search-map">
         <Loader isOpen={!this.state.loaded} />
-        <MapBox
-          style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={style}
-          ref={this.mapRef}
-          onStyleLoad={
-              (map)=>{
-                this.mapInitialPosition(map);
-                this.map = map;
-
-                window.mapRef = map;
-                
-                map.on('click', 'clusters', (e) => {
-                    this.onPointClicked(e, 'clusters');
-                });
-
-                map.on('click', 'unclustered-point', (e) => {
-                  this.onPointClicked(e, 'unclustered-point');
-                });
-
-                map.on("mouseenter", "unclustered-point", () => {
-                  this.map.getCanvas().style.cursor = "pointer";
-                });
-                map.on("mouseleave", "unclustered-point", () => {
-                  this.map.getCanvas().style.cursor = "";
-                });
-
-                setTimeout(
-                  ()=>{
-                    this.setState({ loaded: true });
-                    // this.onMoveEnd(map);
-                  },
-                  1000
-                )
-          }}
-          onMoveEnd={this.onMoveEnd}
-        >
-          <Source
-            id="pop"
-            geoJsonSource={{
-              type: "geojson",
-              data: {
-                type: "FeatureCollection",
-                features: []
-              }
-            }}
-          />
-          <Layer
-            type="circle"
-            id="clusters"
-            sourceId="pop"
-            filter={["has", "count"]}
-            paint={{
-              "circle-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#fff",
-                  [
-                    "step",
-                    ["get", "count"],
-                    "#9C27B0",
-                    2,
-                    "#51bbd6",
-                    100,
-                    "#f1f075",
-                    750,
-                    "#f28cb1"
-                  ]
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "count"],
-                9,
-                2,
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-stroke-width": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  2,
-                  [
-                    "step",
-                    ["get", "count"],
-                    2,
-                    2,
-                    0
-                  ]
-              ],
-              "circle-stroke-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  [
-                    "step",
-                    ["get", "count"],
-                    "#9C27B0",
-                    2,
-                    "#51bbd6",
-                    100,
-                    "#f1f075",
-                    750,
-                    "#f28cb1"
-                  ],
-                  "#fff"
-              ],
-            }}
-          />
-          <Layer
-            type="symbol"
-            id="cluster-count"
-            sourceId="pop"
-            filter={["has", "count"]}
-            layout={{
-              "text-field": "{count}",
-              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-              "text-size": 12
-            }}
-            paint={{
-              "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
-            }}
-          />
-          <Layer
-            type="circle"
-            id="unclustered-point"
-            sourceId="pop"
-            filter={["!", ["has", "count"]]}
-            paint={{
-              "circle-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#fff",
-                  "#9C27B0"
-              ],
-              "circle-radius": 9,
-              "circle-stroke-width": 2,
-              "circle-stroke-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#9C27B0",
-                  "#fff"
-              ],
-            }}
-          />
-          {/* {this.state.popup} */}
+        <div id="map" ref={this.mapRef} style={style}>
           <div className={`drawer ${this.state.drawerContent? "open": "" }`}>
-              {this.state.drawerContent}
+                {this.state.drawerContent}
           </div>
           <div className="switch-view" onClick={this.onSwitchStyle}>
           {
@@ -493,13 +505,13 @@ class Map extends React.Component {
             : <img src={StreetImg} className="thumbnailStyle" alt="style" />
           }
           </div>
-        </MapBox>
+        </div>
       </div>
     );
   }
 }
 
-const mapGeoHashToUniqId = {};
+const mapGeoHashToUniqId = {}; 
 function getGeoHashUniqId(geoHash) { // NOT NICE AT ALL, TODO CHECK THE PERF HERE
   if(!mapGeoHashToUniqId.hasOwnProperty(geoHash)) {
     mapGeoHashToUniqId[geoHash] = uniqueId();
