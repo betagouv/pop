@@ -130,6 +130,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
     Promise.all(arr).then(values => {
       notices.push(...values[0].map(e => new Palissy(e)));
       notices.push(...values[1].map(e => new Merimee(e)));
+
       notices.push(
         ...values[2].map(e => {
           //changement du modèle de donnée gertrude -> pop
@@ -140,7 +141,9 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
           e.AUTOEU = e.AUTR;
           e.PRECOR = e.DOC;
           e.ADRESSE = e.LIEU + ";" + e.ADRS;
+
           const memoireObj = new Memoire(e);
+
           const imageFile = files.find(
             e =>
               convertLongNameToShort(e.name)
@@ -148,8 +151,10 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
                 .indexOf(imagePath.toUpperCase()) !== -1
           );
           if (imageFile) {
-            memoireObj._images.push(imageFile);
-            memoireObj.IMG.value = `memoire/${e.REF}/${imageFile.name}`;
+            const shortname = convertLongNameToShort(imageFile.name);
+            const newImage = utils.renameFile(imageFile, shortname);
+            memoireObj._images.push(newImage);
+            memoireObj.IMG.value = `memoire/${e.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(
               `Impossible de trouver l'image ${imagePath}`
@@ -194,8 +199,10 @@ function ParseRenabl(files, xmlFiles, encoding) {
               image.toUpperCase()
           );
           if (imageFile) {
-            memoireObj._images.push(imageFile);
-            memoireObj.IMG.value = `memoire/${obj.REF}/${imageFile.name}`;
+            const shortname = convertLongNameToShort(imageFile.name);
+            const newImage = utils.renameFile(imageFile, shortname);
+            memoireObj._images.push(newImage);
+            memoireObj.IMG.value = `memoire/${obj.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(`Impossible de trouver l'image ${image}`);
           }

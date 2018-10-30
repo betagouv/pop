@@ -240,6 +240,7 @@ class Importer extends Component {
         e._warnings.length
     ).length;
 
+
     const filesnames = this.state.fileNames.map(e => <div>{e}</div>);
     return (
       <div className="working-area">
@@ -339,7 +340,8 @@ class Importer extends Component {
           </div>
           <div className="feedback">Merci pour votre contribution !</div>
           <div>
-            Vous pouvez consulter les notices modifiées lors de cet import ici :{" "}
+            Vous pouvez consulter les notices modifiées lors de cet import ici
+            dans quelques secondes/minutes:{" "}
             <a href={URL} target="_blanck">
               Consultation
             </a>

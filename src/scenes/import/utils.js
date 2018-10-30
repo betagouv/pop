@@ -127,10 +127,22 @@ function parseAjoutPilote(res, object) {
   return notices;
 }
 
+function renameFile(file, newName) {
+  let newFile = null;
+  try {
+    newFile = new File([file], newName, { type: file.type });
+  } catch (err) {
+    newFile = new Blob([file], { type: "image/jpeg" });
+    newFile.name = newName;
+  }
+  return newFile;
+}
+
 export default {
   readFile,
   readXML,
   readCSV,
   readODS,
-  parseAjoutPilote
+  parseAjoutPilote,
+  renameFile
 };

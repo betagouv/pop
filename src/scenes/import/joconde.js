@@ -199,14 +199,8 @@ function parseFiles(files, encoding) {
               `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
             );
           } else {
-            let newImage = null;
             const shortname = Joconde.convertLongNameToShort(img.name);
-            try {
-              newImage = new File([img], shortname, { type: img.type });
-            } catch (err) {
-              newImage = new Blob([img], { type: "image/jpeg" });
-              newImage.name = shortname;
-            }
+            let newImage = utils.renameFile(img, shortname);
             importedNotices[i]._images.push(newImage);
           }
         }
