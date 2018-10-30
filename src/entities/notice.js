@@ -5,7 +5,7 @@ export default class Notice {
     this._warnings = [];
     this._images = [];
     this._type = "";
-    this.POP_IMPORT = { value: [], generated: true };
+    this.POP_IMPORT = { value: [] };
   }
 
   setProperty(property, type, value, opt = null) {
@@ -30,8 +30,6 @@ export default class Notice {
         }
       }
     }
-    console.log(this["POP_IMPORT"]);
-    console.log("FLAT", flat);
     return flat;
   };
 

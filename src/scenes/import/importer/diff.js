@@ -1,6 +1,7 @@
 function compare(importedObject, existed) {
   //make the imported object flat
   let imported = importedObject.makeItFlat();
+  delete imported['POP_IMPORT']
 
   const differences = [];
 
