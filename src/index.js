@@ -30,12 +30,19 @@ app.get("/", (_req, res) => {
 
 app.use("/auth", require("./controllers/auth"));
 app.use("/users", require("./controllers/users"));
+app.use("/import", require("./controllers/import"));
+
+//notices
 app.use("/merimee", require("./controllers/merimee"));
 app.use("/joconde", require("./controllers/joconde"));
 app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
+
+//proxy to GINCO API
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
+
+//proxy to ES
 app.use("/search", require("./controllers/search"));
 
 app.post(

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const mongoose = require("mongoose");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
@@ -81,6 +82,14 @@ router.put(
         )
       );
     }
+
+    //Update IMPORT ID
+    if (notice.POP_IMPORT.length) {
+      const id = notice.POP_IMPORT[0];
+      delete notice.POP_IMPORT;
+      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
     arr.push(
       Memoire.findOneAndUpdate({ REF: ref }, notice, {
         upsert: true,

@@ -24,6 +24,7 @@ const Schema = new mongoose.Schema(
       coordinates: [[{ type: [Number] }]]
     },
     POP_DATE: { type: [Number], default: [] },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     TOUT: { type: String, default: "" },
     ACTU: { type: String, default: "" },
     ADRS: { type: String, default: "" },

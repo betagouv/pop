@@ -9,6 +9,7 @@ const Schema = new mongoose.Schema(
     BASE: { type: String, default: "Oeuvres spoliées (MNR Rose-Valland)" },
     CONTIENT_IMAGE: { type: String, default: "non" },
     REF: { type: String, unique: true, index: true, trim: true },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     TOUT: { type: String, default: "" },
     AUTR: { type: [String], default: [] },
     PAUT: { type: String, default: "" },

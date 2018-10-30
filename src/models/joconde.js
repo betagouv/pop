@@ -12,6 +12,7 @@ const Schema = new mongoose.Schema(
     },
     CONTIENT_IMAGE: { type: String, default: "" },
     REF: { type: String, unique: true, index: true, trim: true },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     REFMIS: { type: String, default: "" },
     ADPT: { type: [String], default: [] },
     APPL: { type: [String], default: [] },

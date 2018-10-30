@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const mongoose = require("mongoose");
 const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
@@ -68,6 +69,14 @@ router.put(
       const arr = await checkIfMemoireImageExist(notice);
       notice.MEMOIRE = arr;
       notice.DMAJ = formattedNow(); //UPDATE MAJ DATE ( couldnt use hook ...)
+
+      //Update IMPORT ID
+      if (notice.POP_IMPORT.length) {
+        const id = notice.POP_IMPORT[0];
+        delete notice.POP_IMPORT;
+        notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+      }
+
       await Palissy.findOneAndUpdate({ REF: ref }, notice, {
         upsert: true,
         new: true

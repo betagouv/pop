@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const mongoose = require("mongoose");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const { capture } = require("./../sentry.js");
@@ -20,18 +21,30 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      await Promise.all([
+      const arr = [
         ...(prevNotice.IMG || [])
           .filter(x => !(notice.IMG || []).includes(x))
           .map(f => deleteFile(f)),
         ...req.files.map(f =>
           uploadFile(`joconde/${notice.REF}/${f.originalname}`, f)
-        ),
+        )
+      ];
+
+      //Update IMPORT ID
+      if (notice.POP_IMPORT.length) {
+        const id = notice.POP_IMPORT[0];
+        delete notice.POP_IMPORT;
+        notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+      }
+      //Update Notice
+      arr.push(
         Joconde.findOneAndUpdate({ REF: ref }, notice, {
           upsert: true,
           new: true
         })
-      ]);
+      );
+
+      await Promise.all(arr);
       res.sendStatus(200);
     } catch (e) {
       capture(e);
@@ -46,7 +59,6 @@ router.post(
   upload.any(),
   (req, res) => {
     const notice = JSON.parse(req.body.notice);
-
     notice.DMIS = notice.DMAJ = formattedNow();
 
     const arr = [];

@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 const Merimee = require("../models/merimee");
@@ -71,6 +72,14 @@ router.put(
       const arr = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       notice.MEMOIRE = arr;
+
+      //Update IMPORT ID
+      if (notice.POP_IMPORT.length) {
+        const id = notice.POP_IMPORT[0];
+        delete notice.POP_IMPORT;
+        notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+      }
+
       await Merimee.findOneAndUpdate({ REF: ref }, notice, {
         upsert: true,
         new: true

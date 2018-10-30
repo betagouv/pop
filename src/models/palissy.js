@@ -23,6 +23,7 @@ const Schema = new mongoose.Schema(
     BASE: { type: String, default: "Patrimoine mobilier (Palissy)" },
     MEMOIRE: [{ ref: String, url: String }],
     REF: { type: String, unique: true, index: true, trim: true },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     ACQU: { type: String, default: "" },
     ADRS: { type: String, default: "" },
     ADRS2: { type: String, default: "" },

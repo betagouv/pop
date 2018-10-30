@@ -7,6 +7,7 @@ const Schema = new mongoose.Schema(
     PRODUCTEUR: { type: String, default: "" },
     BASE: { type: String, default: "Photographies (Mémoire)" },
     CONTIENT_IMAGE: { type: String, default: "" },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     REF: { type: String, unique: true, index: true, trim: true },
     TOUT: { type: String, default: "" },
     ADRESSE: { type: String, default: "" },

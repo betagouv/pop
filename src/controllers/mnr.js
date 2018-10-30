@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const upload = multer({ dest: "uploads/" });
 const Mnr = require("../models/mnr");
 const passport = require("passport");
@@ -20,15 +21,29 @@ router.put(
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
-      await Promise.all([
+
+      const arr = [
         ...(prevNotice.VIDEO || [])
           .filter(x => !(notice.VIDEO || []).includes(x))
           .map(f => deleteFile(f)),
         ...req.files.map(f =>
           uploadFile(`mnr/${notice.REF}/${f.originalname}`, f)
-        ),
+        )
+      ];
+
+      //Update IMPORT ID
+      if (notice.POP_IMPORT.length) {
+        const id = notice.POP_IMPORT[0];
+        delete notice.POP_IMPORT;
+        notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+      }
+
+      arr.push(
         Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
-      ]);
+      );
+
+      await Promise.all(arr);
+
       res.sendStatus(200);
     } catch (e) {
       capture(e);
