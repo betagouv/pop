@@ -10,8 +10,9 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   };
 
   render() {
+    const style = this.props.show === false ? { display: "none" } : {};
     return (
-      <div className="multilist">
+      <div className="multilist" style={style}>
         <div
           className="topBar"
           onClick={() => this.setState({ collapse: !this.state.collapse })}

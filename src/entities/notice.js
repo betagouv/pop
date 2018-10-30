@@ -5,6 +5,7 @@ export default class Notice {
     this._warnings = [];
     this._images = [];
     this._type = "";
+    this.POP_IMPORT = { value: [] };
   }
 
   setProperty(property, type, value, opt = null) {
@@ -108,4 +109,3 @@ function _regex(str, reg) {
   }
   return arr;
 }
-

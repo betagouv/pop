@@ -76,10 +76,7 @@ export default class Search extends React.Component {
             <QueryBuilder entity={Joconde} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
-            <ExportComponent
-              FILTER={FILTER}
-              filename="joconde.csv"
-            />
+            <ExportComponent FILTER={FILTER} filename="joconde.csv" />
           </Col>
         </Row>
         <ReactiveList
@@ -122,10 +119,7 @@ export default class Search extends React.Component {
               aggs: {}
             })}
           >
-            <ExportComponent
-              FILTER={FILTER}
-              filename="joconde.csv"
-            />
+            <ExportComponent FILTER={FILTER} filename="joconde.csv" />
           </ReactiveComponent>
         </div>
         <Row>

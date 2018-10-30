@@ -29,6 +29,7 @@ class Importer extends Component {
       progress: 0,
       step: 0,
       email: props.email,
+      importId: null,
       emailSent: false
     };
   }
@@ -65,7 +66,7 @@ class Importer extends Component {
       }
 
       //CALCUL DE LA DIFF
-      this.setState({ loadingMessage: "Calcul des differences...." });
+      this.setState({ loadingMessage: "Calcul des différences...." });
       importedNotices = diff(importedNotices, existingNotices);
 
       await controleThesaurus(importedNotices);
@@ -112,6 +113,24 @@ class Importer extends Component {
       e => e._status === "rejected"
     );
 
+    ///////////////////////////////////////////////
+    const doc = await api.createImport({
+      institution: this.props.institution,
+      user: this.props.userId,
+      created: created.length,
+      updated: updated.length,
+      rejected: updated.length,
+      unChanged: total - created.length - updated.length - updated.length
+    });
+    const importId = doc.doc._id;
+    this.setState({ importId });
+    for (let i = 0; i < created.length; i++) {
+      created[i].POP_IMPORT.value = [importId];
+    }
+    for (let i = 0; i < updated.length; i++) {
+      updated[i].POP_IMPORT.value = [importId];
+    }
+    //////////////////////////////////////////////
     let count = 0;
     try {
       //Update notice
@@ -122,7 +141,6 @@ class Importer extends Component {
           progress: Math.floor((count * 100) / total)
         });
         const notice = updated[i].makeItFlat();
-        console.log("update notice ", notice);
         const collection = updated[i]._type;
         await api.updateNotice(
           notice.REF,
@@ -308,6 +326,10 @@ class Importer extends Component {
       e => e._status === "created" || e._status === "updated"
     ).length;
 
+    const URL = `http://pop${
+      process.env.NODE_ENV === "production" ? "" : "-staging"
+    }.culture.gouv.fr/search/list?import="${this.state.importId}"`;
+
     return (
       <div className="working-area">
         <h4 className="subtitle">Confirmation de l'import</h4>
@@ -316,6 +338,12 @@ class Importer extends Component {
             Vous avez importé avec succès {noticesupdated} notices.
           </div>
           <div className="feedback">Merci pour votre contribution !</div>
+          <div>
+            Vous pouvez consulter les notices modifiées lors de cet import ici :{" "}
+            <a href={URL} target="_blanck">
+              Consultation
+            </a>
+          </div>
           <div>
             Vous pouvez récupérer le rapport d'import en nous laissant vos
             coordonnées mail
@@ -439,10 +467,11 @@ class Importer extends Component {
 }
 
 const mapstatetoprops = ({ Auth }) => {
-  const { email, institution } = Auth.user;
+  const { email, institution, _id } = Auth.user;
   return {
     email,
-    institution
+    institution,
+    userId: _id
   };
 };
 

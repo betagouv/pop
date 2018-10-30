@@ -208,8 +208,6 @@ function parseFiles(files, encoding) {
               newImage.name = shortname;
             }
             importedNotices[i]._images.push(newImage);
-
-            console.log("newImage", newImage);
           }
         }
       }
