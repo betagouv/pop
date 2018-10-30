@@ -113,8 +113,6 @@ class Importer extends Component {
       e => e._status === "rejected"
     );
 
-    console.log("PLPOP", this.state.importedNotices);
-
     ///////////////////////////////////////////////
     const doc = await api.createImport({
       institution: this.props.institution,
@@ -160,7 +158,6 @@ class Importer extends Component {
           progress: Math.floor((count * 100) / total)
         });
         const notice = created[i].makeItFlat();
-        console.log("CREATE NOTICE", notice);
         const collection = created[i]._type;
         await api.createNotice(collection, notice, created[i]._images);
       }
