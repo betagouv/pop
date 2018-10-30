@@ -8,8 +8,8 @@ const Schema = new mongoose.Schema(
     PRODUCTEUR: { type: String, default: "" },
     CONTIENT_IMAGE: { type: String, default: "" },
     POP_COORDONNEES: {
-      lat: { type: Number },
-      lon: { type: Number }
+      lat: { type: Number, default: 0 },
+      lon: { type: Number, default: 0 }
     },
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
