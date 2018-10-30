@@ -17,7 +17,7 @@ import queryString from "query-string";
 import {
   ReactiveBase,
   DataSearch,
-  SelectedFilters,
+  SelectedFilters
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
 
@@ -46,7 +46,8 @@ const DEFAULT_FILTER = [
   "base",
   "geolocalisation",
   "auteur",
-  "ou"
+  "ou",
+  "import"
 ];
 
 const ACTIVE_FILTER = {
@@ -170,7 +171,10 @@ class Search extends React.Component {
                     componentId="base"
                     showSearch={false}
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
-                    filterListItem={bucket => bucket.key !== 'Photographies (Mémoires)' && bucket.key !== 'Inventaire patrimoine mobilier (Palissy)'}
+                    filterListItem={bucket =>
+                      bucket.key !== "Photographies (Mémoires)" &&
+                      bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
+                    }
                     onCollapseChange={changeActiveFilter}
                     data={[
                       {
@@ -249,6 +253,16 @@ class Search extends React.Component {
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
                     placeholder="Rechercher une technique"
                     onCollapseChange={changeActiveFilter}
+                  />
+                  <MultiList
+                    show={false}
+                    componentId="import"
+                    dataField="POP_IMPORT.keyword"
+                    title="Import"
+                    className="filters"
+                    displayCount
+                    URLParams={true}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
                   />
                 </aside>
               </div>
