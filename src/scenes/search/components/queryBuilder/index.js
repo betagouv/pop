@@ -6,18 +6,8 @@ export default class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props);
     const object = new props.entity({});
-    const properties = [];
-    for (var property in object) {
-      if (
-        object.hasOwnProperty(property) &&
-        property.indexOf("_") !== 0 &&
-        typeof object[property] === "object"
-      ) {
-        properties.push(property);
-      }
-    }
     this.state = {
-      properties
+      properties: object._fields
     };
   }
 

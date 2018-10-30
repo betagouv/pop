@@ -5,7 +5,7 @@ export default class Joconde extends Notice {
     super();
     this._type = "joconde";
 
-    this.setProperty("REF", "String", body.REF.trim(), {
+    this.setProperty("REF", "String", String(body.REF).trim(), {
       required: true
     });
     this.setProperty("ADPT", "Array", this.extractArray(body.ADPT));

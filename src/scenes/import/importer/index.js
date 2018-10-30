@@ -240,7 +240,6 @@ class Importer extends Component {
         e._warnings.length
     ).length;
 
-
     const filesnames = this.state.fileNames.map(e => <div>{e}</div>);
     return (
       <div className="working-area">
@@ -340,11 +339,16 @@ class Importer extends Component {
           </div>
           <div className="feedback">Merci pour votre contribution !</div>
           <div>
-            Vous pouvez consulter les notices modifiées lors de cet import ici
-            dans quelques secondes/minutes:{" "}
+            Vous pouvez consulter les notices modifiées lors de cet import ici:{" "}
             <a href={URL} target="_blanck">
-              Consultation
+              Consulter vos notices importées
             </a>
+            <p>
+              (Généralement, l'indexation des résultats dans le moteur de
+              recherche POP prend de quelques secondes à 1 ou 2 minutes. Vous
+              pouvez raffraichir la page si tous les résultats ne sont pas
+              disponibles)
+            </p>
           </div>
           <div>
             Vous pouvez récupérer le rapport d'import en nous laissant vos

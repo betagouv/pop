@@ -5,10 +5,12 @@ export default class Notice {
     this._warnings = [];
     this._images = [];
     this._type = "";
+    this._fields = [];
     this.POP_IMPORT = { value: [] };
   }
 
   setProperty(property, type, value, opt = null) {
+    this._fields.push(property);
     if (value !== undefined) {
       this[property] = { type, value };
       if (opt) {
