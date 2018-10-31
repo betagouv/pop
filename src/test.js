@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import { MultiList } from './'
 
-describe('ExampleComponent', () => {
+describe('MultiList', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(MultiList).toBeTruthy()
   })
 })

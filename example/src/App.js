@@ -1,13 +1,37 @@
-import React, { Component } from 'react'
-
-import ExampleComponent from 'pop-shared'
+import React, { Component } from "react";
+import { ReactiveBase } from "@appbaseio/reactivesearch";
+import { MultiList } from "pop-shared";
 
 export default class App extends Component {
-  render () {
+  render() {
     return (
       <div>
-        <ExampleComponent text='Modern React component module' />
+        <ReactiveBase
+          url="http://pop-api-staging.eu-west-3.elasticbeanstalk.com/search/"
+          app="*"
+        >
+          <MultiList
+            dataField="PERI.keyword"
+            title="Période"
+            componentId="periode"
+            placeholder="Rechercher une période"
+          />
+          <MultiList
+            componentId="geolocalisation"
+            dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
+            title="Est géolocalisé"
+            filterLabel="Est géolocalisé "
+            queryFormat="or"
+            className="filters"
+            URLParams={true}
+            defaultSelected={["oui"]}
+            data={[
+              { label: "oui", value: "oui" },
+              { label: "non", value: "non" }
+            ]}
+          />
+        </ReactiveBase>
       </div>
-    )
+    );
   }
 }
