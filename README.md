@@ -7,25 +7,29 @@
 ## Install
 
 ```bash
-npm install --save pop-shared
+yarn add --dev pop-shared
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
-
-import MyComponent from 'pop-shared'
+import React, { Component } from "react";
+import { MultiList } from "pop-shared";
 
 class Example extends Component {
-  render () {
+  render() {
     return (
-      <MyComponent />
-    )
+      <MultiList
+        dataField="PERI.keyword"
+        title="Période"
+        componentId="periode"
+        placeholder="Rechercher une période"
+      />
+    );
   }
 }
 ```
 
 ## License
 
-MIT © [rap2hpoutre](https://github.com/rap2hpoutre)
+MIT © [betagouv](https://github.com/betagouv)
