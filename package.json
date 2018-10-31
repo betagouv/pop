@@ -1,10 +1,10 @@
 {
   "name": "pop-shared",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "pop shared components",
-  "author": "rap2hpoutre",
+  "author": "betagouv",
   "license": "MIT",
-  "repository": "rap2hpoutre/pop-shared",
+  "repository": "betagouv/pop-shared",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
