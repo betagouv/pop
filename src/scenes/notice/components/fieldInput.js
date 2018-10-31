@@ -59,8 +59,9 @@ class CustomInput extends React.Component {
           {...this.props}
           value={this.props.input.value}
           onChange={e => {
+            const str = String(e.target.value).replace("(c)", "©");
             this.handleInputChange();
-            this.props.input.onChange(e.target.value);
+            this.props.input.onChange(str);
           }}
         />
         {this.renderSuggestion()}
