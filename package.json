@@ -1,6 +1,6 @@
 {
   "name": "pop-shared",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "POP shared components and libs",
   "main": "src/index.js",
   "scripts": {
