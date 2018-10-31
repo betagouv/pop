@@ -133,14 +133,26 @@ class Notice extends React.Component {
                 title="Autres numéros :"
                 content={this.state.notice.NUMS}
               />
-              <Field title="Marquages :" content={this.state.notice.MARQ} />
+              <Field
+                title="Marquages :"
+                content={this.state.notice.MARQ}
+                separator="#"
+              />
               <Field title="Localisation :" content={this.state.notice.LOCA} />
               <Field
                 title="Etablissement affectataire qui existe dans d’autres bases :"
                 content={this.state.notice.AFFE}
               />
-              <Field title="Expositions :" content={this.state.notice.EXPO} />
-              <Field title="Bibliographie :" content={this.state.notice.BIBL} />
+              <Field
+                title="Expositions :"
+                content={this.state.notice.EXPO}
+                separator="#"
+              />
+              <Field
+                title="Bibliographie :"
+                content={this.state.notice.BIBL}
+                separator="#"
+              />
               <Field title="Notes :" content={this.state.notice.NOTE} />
               <Field title="Résumé :" content={this.state.notice.RESUME} />
               <Field
@@ -175,6 +187,7 @@ class Notice extends React.Component {
               <Field
                 title="Droits de copie photo :"
                 content={this.state.notice.PHOT}
+                separator="#"
               />
             </div>
           </Col>
