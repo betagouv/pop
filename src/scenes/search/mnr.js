@@ -203,7 +203,7 @@ const Card = ({ data }) => {
       <div className="content">
         <div style={{ display: "flex" }}>
           <h2>{data.TITR}</h2>
-          <span>{data.REF}</span>
+          <span>{data.INV}</span>
         </div>
         <div>
           <p>{data.DOMN}</p>
