@@ -27,15 +27,10 @@ export default ({ data }) => {
   const index = data._index.replace(/[0-9]+/, "");
   switch (index) {
     case "joconde":
+      return <Joconde data={data} />;
+      break;
     case "mnr":
-      content = {
-        title: data.TICO || data.TITR,
-        ref: data.REF,
-        categories: data.DENO ? data.DENO.join(", ") : "",
-        author: joinData([data.AUTR, data.ECOL, data.EPOQ]),
-        data: data.PERI,
-        loc: data.LOCA
-      };
+      return <Mnr data={data} />;
       break;
     case "merimee":
     case "palissy":
@@ -96,6 +91,91 @@ export default ({ data }) => {
           <p>{content.author}</p>
           <p>{content.data}</p>
           <p>{content.loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const Mnr = ({ data, index }) => {
+  const REF = data.REF;
+  const INV = data.INV;
+  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const title = data.TICO || data.TITR;
+  const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+  const peri = data.PERI;
+  const loc = data.LOCA;
+  const img = image(data);
+
+  return (
+    <Link
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      to={`/notice/mnr/${REF}`}
+      className="list-card"
+      key={REF}
+    >
+      <div className="thumbnail">{img}</div>
+      <div className="content">
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(title)}
+            <br />
+            <small>{categories}</small>
+          </h2>
+          <span>
+            <small className="base">Mnr</small>
+            <br />
+            {REF}
+            <br />
+            {INV}
+          </span>
+        </div>
+        <div>
+          <p>{author}</p>
+          <p>{peri}</p>
+          <p>{loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const Joconde = ({ data, index }) => {
+  const REF = data.REF;
+  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const title = data.TICO || data.TITR;
+  const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+  const peri = data.PERI;
+  const loc = data.LOCA;
+  const img = image(data);
+
+  return (
+    <Link
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      to={`/notice/joconde/${REF}`}
+      className="list-card"
+      key={REF}
+    >
+      <div className="thumbnail">{img}</div>
+      <div className="content">
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(title)}
+            <br />
+            <small>{categories}</small>
+          </h2>
+          <span>
+            <small className="base">Joconde</small>
+            <br />
+            {REF}
+          </span>
+        </div>
+        <div>
+          <p>{author}</p>
+          <p>{peri}</p>
+          <p>{loc}</p>
         </div>
       </div>
     </Link>
