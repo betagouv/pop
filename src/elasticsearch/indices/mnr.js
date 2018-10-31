@@ -140,6 +140,15 @@ module.exports = {
             }
           }
         },
+        DMIS: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
         DMAJ: {
           type: "text",
           fields: {
