@@ -14,7 +14,17 @@ export default class Import extends React.Component {
         <Importer
           collection="monuments-historiques"
           parseFiles={parseFiles}
-          dropzoneText="Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText={
+            <div>
+              Glissez & déposez vos fichiers au format MH ( extension .csv avec
+              séparateur | ) et les images associées (au format .jpg) dans cette
+              zone
+              <br /> <br />1-Les champs INSEE et DPT sont obligatoires à
+              l'import
+              <br />2-Une création de notice implique de noter en REF uniquement PA ou PM
+              <br />3-Une mise à jour de notice implique de noter la REF complète, DPT et INSEE avec leur valeur
+            </div>
+          }
         />
       </Container>
     );
