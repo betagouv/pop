@@ -100,17 +100,12 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      console.log("SAVE8");
       const arr = await checkIfMemoireImageExist(notice);
-      console.log("SAVE9");
       await populateMerimeeREFO(notice);
-      console.log("SAVE10");
       notice.MEMOIRE = arr;
       notice.DMIS = notice.DMAJ = formattedNow();
       const obj = new Palissy(notice);
-      console.log("SAVE1");
       await obj.save();
-      console.log("SAVE2");
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
