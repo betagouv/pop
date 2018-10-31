@@ -70,6 +70,7 @@ class Notice extends React.Component {
                 <FieldImages
                   images={this.state.notice.IMG}
                   disabled
+                  name={this.state.notice.TICO}
                   external={false}
                 />
               </Col>
@@ -169,6 +170,7 @@ class Notice extends React.Component {
               <Field
                 title="Sujet représenté :"
                 content={this.state.notice.REPR}
+                separator="#"
               />
               <Field
                 title="Précisions sur le sujet représenté :"

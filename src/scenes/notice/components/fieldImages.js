@@ -41,8 +41,13 @@ export default class FieldImages extends React.Component {
     if (!this.state.images.length) {
       return <div />;
     }
-    const images = this.state.images.map(e => {
-      let obj = { original: e.source, thumbnail: e.source };
+    const images = this.state.images.map((e, i) => {
+      let obj = {
+        original: e.source,
+        thumbnail: e.source,
+        originalAlt: `${this.props.name}`,
+        thumbnailAlt: `${this.props.name} vignette `
+      };
       if (e.link) {
         obj.thumbnailLabel = (
           <span

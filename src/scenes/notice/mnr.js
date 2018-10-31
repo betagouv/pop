@@ -65,7 +65,10 @@ class Notice extends React.Component {
           <Col sm="9">
             <Row>
               <Col className="image" sm={6}>
-                <FieldImages images={this.state.notice.VIDEO} />
+                <FieldImages
+                  images={this.state.notice.VIDEO}
+                  name={this.state.notice.TICO}
+                />
               </Col>
               <Col className="image" sm={6}>
                 <Map notice={this.state.notice} />

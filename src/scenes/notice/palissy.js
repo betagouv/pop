@@ -98,6 +98,7 @@ class Notice extends React.Component {
                 <FieldImages
                   images={this.state.notice.MEMOIRE}
                   external={true}
+                  name={this.state.notice.TICO}
                 />
               </Col>
               <Col className="image" sm={6}>

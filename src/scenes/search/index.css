@@ -146,6 +146,7 @@
 }
 .search .nav-pills .nav-item .active {
   background-color: #377d87;
+  color: #fff;
 }
 .search .nav-pills .nav-item:first-child .nav-link {
   border-radius: 0.25rem;

@@ -90,6 +90,7 @@ class Notice extends React.Component {
                 <FieldImages
                   images={[this.state.notice.IMG]}
                   disabled
+                  name={this.state.notice.TICO}
                   external={true}
                 />
               </Col>
