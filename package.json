@@ -15,6 +15,7 @@
     "net": "^1.0.2",
     "ngeohash": "^0.6.0",
     "piwik-react-router": "^0.12.1",
+    "pop-shared": "^0.2.0",
     "prop-types": "^15.6.1",
     "query-string": "^6.1.0",
     "react": "^16.5.0",

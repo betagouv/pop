@@ -20,12 +20,11 @@ import {
   SelectedFilters
 } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
+import { MultiList } from "pop-shared";
 
 import List from "./subComponents/List";
 import Map from "./subComponents/Map";
 import Mosaique from "./subComponents/Mosaique";
-
-import MultiList from "./multiList";
 
 import { es_url } from "../../config.js";
 
