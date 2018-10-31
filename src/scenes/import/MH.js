@@ -73,7 +73,10 @@ function parseFiles(files, encoding) {
         if (!newNotice.DPT || !newNotice.DPT.value) {
           newNotice._errors.push("DPT ne doit pas être vide");
         }
+
         if (
+          newNotice.INSEE &&
+          newNotice.DPT &&
           !String(newNotice.INSEE.value).startsWith(String(newNotice.DPT.value))
         ) {
           newNotice._errors.push("INSEE et Département ne coincident pas");
