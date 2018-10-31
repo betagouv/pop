@@ -12,7 +12,6 @@ router.use("/*/_msearch", (req, res) => {
     method: "POST",
     headers: { "Content-Type": "Application/x-ndjson" }
   };
-  const n = Date.now();
   aws4.sign(opts);
   http
     .request(opts, res1 => {

@@ -55,6 +55,7 @@ const Schema = new mongoose.Schema(
     SREP: { type: String, default: "" },
     REFIM: { type: String, default: "" },
     DMAJ: { type: String, default: "" },
+    DMIS: { type: String, default: "" },
     AFFE: { type: String, default: "" },
     NUMS: { type: String, default: "" },
     SUITE: { type: String, default: "" },
