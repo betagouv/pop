@@ -26,6 +26,9 @@ function checkIfMemoireImageExist(notice) {
 
 function populateMerimeeREFO(notice) {
   return new Promise(async (resolve, reject) => {
+    if (!notice.REFA) {
+      resolve();
+    }
     for (var i = 0; i < notice.REFA.length; i++) {
       const obj = await Merimee.findOne({ REF: notice.REFA[i] });
       if (obj && Array.isArray(obj.REFO) && !obj.REFO.includes(notice.REF)) {
