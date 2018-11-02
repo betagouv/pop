@@ -1,8 +1,9 @@
-const MongoClient = require('mongodb').MongoClient;
-const json2csv = require('json2csv').parse;
-const fs = require('fs');
-const toS3 = require('./s3');
-const mongoUrl = process.env.DB_ENDPOINT || 'mongodb://127.0.0.1:27017/pop';
+const MongoClient = require("mongodb").MongoClient;
+const json2csv = require("json2csv").parse;
+const fs = require("fs");
+const toS3 = require("./s3");
+const mongoUrl = process.env.DB_ENDPOINT || "mongodb://127.0.0.1:27017/pop";
+const { removeArrays, mkStorage } = require("./lib.js");
 
 // Export all collections.
 async function main() {
@@ -12,9 +13,9 @@ async function main() {
   );
   const db = await client.db();
   mkStorage();
-  await collectionToCsv(db, 'palissy', palissy);
-  await collectionToCsv(db, 'merimee', merimee);
-  await collectionToCsv(db, 'joconde', joconde);
+  await collectionToCsv(db, "palissy", palissy);
+  await collectionToCsv(db, "merimee", merimee);
+  await collectionToCsv(db, "joconde", joconde);
   await client.close();
 }
 
@@ -53,30 +54,9 @@ async function collectionToCsv(db, name, transform) {
   }
 }
 
-// Create storage dir (temporary).
-function mkStorage() {
-  try {
-    fs.mkdirSync('storage');
-  } catch (err) {
-    if (err.code !== 'EEXIST') {
-      throw err;
-    }
-  }
-}
-
-// Remove arrays
-function removeArrays(e) {
-  Object.keys(e).forEach(k => {
-    if (Array.isArray(e[k])) {
-      e[k] = e[k].join(' ; ');
-    }
-  });
-  return e;
-}
-
 function merimee(elements) {
   return elements
-    .filter(e => e.PRODUCTEUR === 'Monument Historique')
+    .filter(e => e.PRODUCTEUR === "Monument Historique")
     .map(removeArrays)
     .map(e => ({
       REF: e.REF,
@@ -98,7 +78,7 @@ function merimee(elements) {
 
 function palissy(elements) {
   return elements
-    .filter(e => e.PRODUCTEUR === 'Monument Historique')
+    .filter(e => e.PRODUCTEUR === "Monument Historique")
     .map(removeArrays)
     .map(e => ({
       REF: e.REF,
