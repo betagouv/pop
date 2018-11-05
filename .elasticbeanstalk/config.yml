@@ -1,5 +1,11 @@
+branch-defaults:
+  master:
+    environment: pop-consultation-staging
 environment-defaults:
   pop-consultation:
+    branch: null
+    repository: null
+  pop-consultation-staging:
     branch: null
     repository: null
 global:
@@ -12,6 +18,6 @@ global:
   instance_profile: null
   platform_name: null
   platform_version: null
-  profile: null
+  profile: eb-cli
   sc: git
   workspace_type: Application
