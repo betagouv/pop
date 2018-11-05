@@ -298,7 +298,7 @@ class Search extends React.Component {
                                   multi_match: {
                                     query: value,
                                     type: "phrase",
-                                    fields: ["TICO", "TITRE", "TITR"],
+                                    fields: ["TICO", "TITRE", "TITR", "LEG"],
                                     boost: 15
                                   }
                                 },
@@ -310,6 +310,7 @@ class Search extends React.Component {
                                       "TICO^10",
                                       "TITRE^9",
                                       "TITR^9",
+                                      "LEG^9",
                                       "AUTI^8",
                                       "DENO^5",
                                       "REPR^5",
@@ -317,6 +318,9 @@ class Search extends React.Component {
                                       "AUTR^4",
                                       "AUTP^4",
                                       "PERS^4",
+                                      "EDIF^4",
+                                      "OBJT^4",
+                                      "SERIE^4",
                                       "LOCA^7",
                                       "PAYS^3",
                                       "REG^3",

@@ -8,7 +8,7 @@ La recherche libre est privilégiée dans l'outil de consultation, avec possibil
 
 La recherche et l'autocomplétion sont faites sur les mêmes règles. Un score est appliqué sur chaque résultat en fonction de différent critères, ce qui déterminera son ordre d'apparition dans les résultats.
  - Si le champ est vide, l'**ensemble des données** de la base sont retournées dans un **ordre arbitraire**.
- - Si l'un des champs `TICO`, `TITRE`, `TITR` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop-consultation/blob/175835ebfee789c1d1bcb52baa1ebcf53ec9cffd/src/scenes/search/index.js#L285-L290).
+ - Si l'un des champs `TICO`, `TITRE`, `TITR` et `LEG` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop-consultation/blob/175835ebfee789c1d1bcb52baa1ebcf53ec9cffd/src/scenes/search/index.js#L285-L290).
 
 Les champs suivants augmentent également le score, si une correspondance floue est trouvée avec ces champs. Le poids de chaque champ dans le score du résultat de recherche est précisé en deuxième colonne :
 
@@ -17,14 +17,18 @@ Les champs suivants augmentent également le score, si une correspondance floue 
 | TICO | 10 |
 | TITRE | 9 |
 | TITR | 9 |
+| LEG | 9 |
 | AUTI | 8 |
+| LOCA | 7 |
 | DENO | 5 |
 | REPR | 5 |
 | PDEN | 5 |
 | AUTR | 4 |
 | AUTP | 4 |
 | PERS | 4 |
-| LOCA | 7 |
+| EDIF | 4 |
+| OBJT | 4 |
+| SERIE | 4 |
 | PAYS | 3 |
 | REG | 3 |
 | DEP | 3 |
