@@ -50,7 +50,7 @@ class UpdateProfile extends Component {
     }
     return (
       <p>
-        Vous n'avez pas encore changé votre mot de passe. Pour votre sécurité,
+        Vous n&apos;avez pas encore chang&eacute; votre mot de passe. Pour votre s&eacute;curit&eacute;,
         vous devez le changer avant de continuer.
       </p>
     );
@@ -284,7 +284,7 @@ class UpdateProfile extends Component {
             className="submit-button"
             onClick={this.updateProfile}
           >
-            Mettre à jour mes informations
+            Mettre &agrave; jour mes informations
           </Button>
           {this.lastConnectedAt()}
         </div>
