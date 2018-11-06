@@ -130,6 +130,11 @@
   margin-bottom: 25px;
 }
 
+.auth .error-message {
+  margin: 15px;
+  color:red;
+}
+
 .lastConnectedAt {
   font-size: 12px;
   color: #aaa;

@@ -10,16 +10,6 @@ import Loader from "../../components/loader";
 import authAction from "./../../redux/auth/actions";
 const { logout } = authAction;
 
-    /*email: "antoine.bigard@beta.gouv.fr"
-    group: "admin"
-    hasResetPassword: true
-    institution: "POP"
-    lastConnectedAt: "2018-11-06T12:32:01.710Z"
-    nom: "Bigard"
-    prenom: "Antoine"
-    role: "administrateur"
-    _id: "5be17cdb2ef6b005c90be1e3"*/
-
 class UpdateProfile extends Component {
   state = {
     ppwd: "",
@@ -39,14 +29,16 @@ class UpdateProfile extends Component {
 
   componentWillMount() {
     const { user } = this.props;
-    const { hasResetPassword, nom, prenom, institution, group, role } = user;
-    this.setState({ hasResetPassword, nom, prenom, institution, group, role });
+    if(user) {
+      const { hasResetPassword, nom, prenom, institution, group, role } = user;
+      this.setState({ hasResetPassword, nom, prenom, institution, group, role });
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { user } = this.props;
     const { user: prevUser } = prevProps;
-    if(user !== prevUser) {
+    if(user && user !== prevUser) {
       const { hasResetPassword, nom, prenom, institution, group, role } = user;
       this.setState({ hasResetPassword, nom, prenom, institution, group, role });
     }
@@ -205,7 +197,7 @@ class UpdateProfile extends Component {
         <div className="block">
           <h1>Modifier mes informations</h1>
           {this.resetPasswordMessage()}
-          <div>{error}</div>
+          <div className="error-message">{error}</div>
           <div className="sub-block">
             <h4>Mon descriptif</h4>
             <input
@@ -233,22 +225,34 @@ class UpdateProfile extends Component {
           <hr /> 
           <div className="sub-block">
           <h4>Mes groupes et  roles</h4>
-            <Input
-              type="select"
-              value={group}
-              onChange={this.handleChange('group')}
-              className="input-field select-field"
-            >
-              {this.renderGroups()}
-            </Input>
-            <Input
-              type="select"
-              value={role}
-              onChange={this.handleChange('role')}
-              className="input-field select-field"
-            >
-              {this.renderRoles()}
-            </Input>
+            {
+              (group === "admin")
+              ? (
+                <Input
+                  type="select"
+                  value={group}
+                  onChange={this.handleChange('group')}
+                  className="input-field select-field"
+                >
+                  {this.renderGroups()}
+                </Input>
+                )
+              : null  
+            }
+            {
+              (role === "administrateur" || group === "admin")
+              ? (
+                <Input
+                  type="select"
+                  value={role}
+                  onChange={this.handleChange('role')}
+                  className="input-field select-field"
+                >
+                  {this.renderRoles()}
+                </Input>
+                ) 
+              : null
+            }
           </div>
           <hr /> 
           <div className="sub-block">
@@ -291,10 +295,10 @@ class UpdateProfile extends Component {
 
 const mapStateToProps = ({ Auth }) => {
   return {
-    user: Auth.user,
+    user: Auth.user ? Auth.user : null,
     email: Auth.user ? Auth.user.email : "",
-    hasResetPassword: !!Auth.user && Auth.user.hasResetPassword,
-    lastConnectedAt: !!Auth.user && Auth.user.lastConnectedAt
+    hasResetPassword: Auth.user ? Auth.user.hasResetPassword : false,
+    lastConnectedAt: Auth.user ? Auth.user.lastConnectedAt : null,
   };
 };
 
