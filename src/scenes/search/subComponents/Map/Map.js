@@ -199,6 +199,8 @@ class Map extends React.Component {
   featureClicked = null;
   map = null;
 
+  styleChanged = false;
+
   constructor(props) {
     super(props);
 
@@ -225,6 +227,123 @@ class Map extends React.Component {
     return true;
   }
 
+  addSourceAndLayers = ()=>{
+    this.map.addSource(
+      'pop',
+      {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: []
+        }
+      }
+    );
+    this.map.addLayer({
+        "id": "clusters",
+        "type": "circle",
+        "source": "pop",
+        filter: ["has", "count"],
+        "paint": {
+          "circle-color": ["case",
+              ["boolean", ["feature-state", "clicked"], false],
+              "#fff",
+              [
+                "step",
+                ["get", "count"],
+                "#9C27B0",
+                2,
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1"
+              ]
+          ],
+          "circle-radius": [
+            "step",
+            ["get", "count"],
+            9,
+            2,
+            20,
+            100,
+            30,
+            750,
+            40
+          ],
+          "circle-stroke-width": ["case",
+              ["boolean", ["feature-state", "clicked"], false],
+              2,
+              [
+                "step",
+                ["get", "count"],
+                2,
+                2,
+                0
+              ]
+          ],
+          "circle-stroke-color": ["case",
+              ["boolean", ["feature-state", "clicked"], false],
+              [
+                "step",
+                ["get", "count"],
+                "#9C27B0",
+                2,
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1"
+              ],
+              "#fff"
+          ],
+        }
+    });
+
+    this.map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "pop",
+        filter: ["has", "count"],
+        layout: {
+          "text-field": "{count}",
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-size": 12
+        },
+        paint: {
+          "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
+        }
+    });
+
+    this.map.addLayer({
+        id: "unclustered-point",
+        type: "circle",
+        source: "pop",
+        filter: ["!", ["has", "count"]],
+        paint: {
+          "circle-color": ["case",
+              ["boolean", ["feature-state", "clicked"], false],
+              "#fff",
+              "#9C27B0"
+          ],
+          "circle-radius": 9,
+          "circle-stroke-width": 2,
+          "circle-stroke-color": ["case",
+              ["boolean", ["feature-state", "clicked"], false],
+              "#9C27B0",
+              "#fff"
+          ],
+        }
+    });
+
+    setTimeout(
+      ()=>{
+        this.setState({ loaded: true });
+        this.styleChanged = false;
+      },
+      1000
+    )
+  };
+
   componentDidMount() {
     mapboxgl.accessToken = "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
     this.map = new mapboxgl.Map({
@@ -232,122 +351,33 @@ class Map extends React.Component {
         style: 'mapbox://styles/mapbox/streets-v9'
     });
 
-    this.map.on('load', (e) => {
-        this.mapInitialPosition(this.map);
-
-        this.map.addSource(
-          'pop',
-          {
-            type: "geojson",
-            data: {
-              type: "FeatureCollection",
-              features: []
-            }
-          }
-        );
-        this.map.addLayer({
-            "id": "clusters",
-            "type": "circle",
-            "source": "pop",
-            filter: ["has", "count"],
-            "paint": {
-              "circle-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#fff",
-                  [
-                    "step",
-                    ["get", "count"],
-                    "#9C27B0",
-                    2,
-                    "#51bbd6",
-                    100,
-                    "#f1f075",
-                    750,
-                    "#f28cb1"
-                  ]
-              ],
-              "circle-radius": [
-                "step",
-                ["get", "count"],
-                9,
-                2,
-                20,
-                100,
-                30,
-                750,
-                40
-              ],
-              "circle-stroke-width": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  2,
-                  [
-                    "step",
-                    ["get", "count"],
-                    2,
-                    2,
-                    0
-                  ]
-              ],
-              "circle-stroke-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  [
-                    "step",
-                    ["get", "count"],
-                    "#9C27B0",
-                    2,
-                    "#51bbd6",
-                    100,
-                    "#f1f075",
-                    750,
-                    "#f28cb1"
-                  ],
-                  "#fff"
-              ],
-            }
-        });
-
-        this.map.addLayer({
-            id: "cluster-count",
-            type: "symbol",
-            source: "pop",
-            filter: ["has", "count"],
-            layout: {
-              "text-field": "{count}",
-              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-              "text-size": 12
-            },
-            paint: {
-              "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
-            }
-        });
-
-        this.map.addLayer({
-            id: "unclustered-point",
-            type: "circle",
-            source: "pop",
-            filter: ["!", ["has", "count"]],
-            paint: {
-              "circle-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#fff",
-                  "#9C27B0"
-              ],
-              "circle-radius": 9,
-              "circle-stroke-width": 2,
-              "circle-stroke-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#9C27B0",
-                  "#fff"
-              ],
-            }
-        });
-
+    this.map.on('styledata', (e) => {
+      if(this.styleChanged) {
         setTimeout(
           ()=>{
-            this.setState({ loaded: true });
+            if(this.map.getLayer("clusters")) {
+              this.map.removeLayer('clusters');
+            }
+            if(this.map.getLayer("cluster-count")) {
+              this.map.removeLayer('cluster-count');
+            }
+            if(this.map.getLayer("unclustered-point")) {
+              this.map.removeLayer('unclustered-point');
+            }
+            if(this.map.getSource("pop")) {
+              this.map.removeSource('pop');
+            }
+            this.addSourceAndLayers();
+            this.renderClusters();
           },
-          1000
+          500
         )
+      }
+    });
+
+    this.map.on('load', (e) => {
+        this.mapInitialPosition(this.map);
+        this.addSourceAndLayers();
     });
 
     this.map.on('click', 'clusters', (e) => {
@@ -416,6 +446,8 @@ class Map extends React.Component {
   }
 
   onSwitchStyle() {
+    this.setState({ loaded: false });
+    this.styleChanged = true;
     let styleName = '';
     let nextStyle = '';
     if(this.state.style === "streets") {
