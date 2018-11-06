@@ -70,10 +70,7 @@ export default class Search extends React.Component {
             placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
             URLParams={true}
           />
-          <ExportComponent
-            FILTER={FILTER}
-            filename="merimee.csv"
-          />
+          <ExportComponent FILTER={FILTER} filename="merimee.csv" />
         </div>
         <Row>
           <Col xs="3">
@@ -115,7 +112,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{ and: FILTER }}

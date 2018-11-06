@@ -85,10 +85,7 @@ export default class Search extends React.Component {
               aggs: {}
             })}
           >
-            <ExportComponent
-              FILTER={FILTER}
-              filename="mnr.csv"
-            />
+            <ExportComponent FILTER={FILTER} filename="mnr.csv" />
           </ReactiveComponent>
         </div>
         <Row>
@@ -131,7 +128,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{
