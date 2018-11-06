@@ -11,7 +11,7 @@ import {
 } from "@appbaseio/reactivesearch";
 
 import QueryBuilder from "./components/queryBuilder";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 
 import ExportComponent from "./components/export";
 

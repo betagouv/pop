@@ -7,7 +7,7 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 
 import Merimee from "../../entities/merimee";

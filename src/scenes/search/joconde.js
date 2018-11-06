@@ -8,7 +8,7 @@ import {
   SelectedFilters,
   ReactiveComponent
 } from "@appbaseio/reactivesearch";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
 import { es_url, bucket_url } from "../../config.js";

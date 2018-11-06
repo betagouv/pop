@@ -10,7 +10,7 @@ import {
 import ExportComponent from "./components/export";
 import Palissy from "../../entities/palissy";
 import QueryBuilder from "./components/queryBuilder";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [
