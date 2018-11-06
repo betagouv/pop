@@ -171,7 +171,7 @@ class UpdateProfile extends Component {
                 )
               :
                 (
-                  `Vosinformations ont été changées.`
+                  `Vos informations ont été changées.`
                 )
 
             }
@@ -224,7 +224,7 @@ class UpdateProfile extends Component {
           </div>
           <hr /> 
           <div className="sub-block">
-          <h4>Mes groupes et  roles</h4>
+          <h4>Mes groupes et roles</h4>
             {
               (group === "admin")
               ? (
