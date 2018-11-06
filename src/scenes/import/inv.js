@@ -59,27 +59,6 @@ function parseFiles(files, encoding) {
         );
         return;
       }
-      // if (!RenameFile) {
-      //     reject("Impossible d'importer le(s) fichier(s). Fichier GERTRUDE_xmlToRenommeIllustrations_Toutes.txt introuvable")
-      //     return;
-      // }
-
-      //RENAME FILES
-      // console.log(files);
-      // console.log("RenameFile", RenameFile)
-      // const images = [];
-      // utils.readFile(RenameFile, encoding, (e) => {
-      //     const renamedFiles = e.split('\n').map(f => f.split(' '))
-      //     for (var i = 0; i < renamedFiles.length; i++) {
-      //         console.log(renamedFiles[i])
-      //         const imageFile = files.find(e => e.name === renamedFiles[i][1]);
-      //         if(imageFile){
-      //             var blob = imageFile.slice(0, -1, 'image/jpg');
-      //             images.push(new File([blob], `${renamedFiles[i][2]}`, { type: 'image/jpg' }))
-      //         }
-      //     }
-      //     console.log(images)
-      // });
 
       const otherFiles = files.filter(file => file.name.indexOf(".xml") === -1);
       const importedNotices = await ParseGertrude(
@@ -89,7 +68,10 @@ function parseFiles(files, encoding) {
         otherFiles,
         encoding
       );
-      console.log("importedNotices", importedNotices);
+
+      for (let i = 0; i < importedNotices.length; i++) {
+        checkReference(importedNotices[i]);
+      }
       resolve({
         importedNotices,
         fileNames: [PalissyFile.name, MemoireFile.name, MerimeeFile.name]
@@ -107,6 +89,10 @@ function parseFiles(files, encoding) {
       if (fileNames.length > 10) {
         fileNames = fileNames.slice(1, 10);
         fileNames.push(` ${xmlFiles.length - 10} supplémentaires`);
+      }
+
+      for (let i = 0; i < importedNotices.length; i++) {
+        checkReference(importedNotices[i]);
       }
       resolve({ importedNotices, fileNames });
       return;
@@ -214,6 +200,17 @@ function ParseRenabl(files, xmlFiles, encoding) {
     }
     resolve(notices);
   });
+}
+
+function checkReference(notice) {
+  if (
+    (notice.REF && String(notice.REF.value).startsWith("IA000")) ||
+    (notice.REF && String(notice.REF.value).startsWith("IM000"))
+  ) {
+    notice._errors.push(
+      "Import de cette notice est impossible car l'identifiant ne contient pas de département"
+    );
+  }
 }
 
 function convertLongNameToShort(str, delim = "/") {
