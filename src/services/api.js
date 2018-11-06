@@ -41,6 +41,15 @@ class api {
     );
   }
 
+  updateProfile(email, nom, prenom, group, role) {
+    const obj = { email, nom, prenom, group, role };
+    return request.post(
+      `${api_url}/auth/updateProfile`,
+      JSON.stringify(obj),
+      "application/json"
+    );
+  }
+
   forgetPassword(email) {
     const obj = { email };
     return request.post(

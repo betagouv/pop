@@ -34,11 +34,11 @@ class UpdateProfile extends Component {
     institution: "",
     group: "",
     role: "",
+    hasChangedPassword: false,
   };
 
   componentWillMount() {
     const { user } = this.props;
-    console.log(user)
     const { hasResetPassword, nom, prenom, institution, group, role } = user;
     this.setState({ hasResetPassword, nom, prenom, institution, group, role });
   }
@@ -66,19 +66,48 @@ class UpdateProfile extends Component {
 
 
   updateProfile = ()=> {
-    const { ppwd, ppwd1, ppwd2 } = this.state;
-    this.setState({ loading: true });
-    api
-      .updatePassword(this.props.email, ppwd, ppwd1, ppwd2)
-      .then(() => {
-        this.setState({ loading: false, done: true });
-        setTimeout(() => {
-          this.props.logout();
-        }, 5000);
-      })
-      .catch(e => {
-        this.setState({ error: e, loading: false, done: false });
+    const { email, logout, user } = this.props;
+    const { nom, prenom, institution, group, role } = user;
+    const { 
+      ppwd,
+      ppwd1, 
+      ppwd2, 
+      nom: stateNom, 
+      prenom: statePrenom, 
+      institution: stateInstitution, 
+      group: stateGroup, 
+      role: stateRole,
+    } = this.state;
+    
+    const hasChangedPassword = (ppwd !== "" && ppwd1 !== "" && ppwd2 !== "");
+    const hasChangedProfileInfo = (nom !== stateNom || prenom !== statePrenom || group !== stateGroup || role !== stateRole);
+    let promise = Promise.resolve();
+
+    if(hasChangedProfileInfo) {
+      promise = promise.then(() => {
+        return api.updateProfile(email, nom, prenom, group, role);
       });
+    }
+
+    if(hasChangedPassword) {
+      promise = promise.then(() => {
+        return api.updatePassword(email, ppwd, ppwd1, ppwd2);
+      });
+    }
+
+    this.setState({ loading: true });
+    promise = promise.then(() => {
+      this.setState({ loading: false, done: true, hasChangedPassword: !!(hasChangedPassword) });
+      if(hasChangedPassword) {
+        setTimeout(() => logout(), 5000);
+      }
+      this.setState({ loading: false, done: true });
+      return Promise.resolve();
+    });
+  
+    return promise.catch((e) => {
+        this.setState({ error: e, loading: false, done: false });
+    });
   }
 
   lastConnectedAt() {
@@ -132,27 +161,28 @@ class UpdateProfile extends Component {
 
   render() {
     const { email, location } = this.props;
-    const { loading, done, error, nom, prenom, institution, group, role } = this.state;
+    const { loading, done, error, nom, prenom, institution, group, role, hasChangedPassword } = this.state;
+    
     if (loading) {
       return <Loader />;
     }
-
-    // if (done) {
-    //   return (
-    //     <Container className="signin">
-    //       <div>
-    //         Votre mot de passe à été changé. <br />
-    //         Vous allez être deconnecté dans 5 secondes ...{" "}
-    //       </div>
-    //     </Container>
-    //   );
-    // }
 
     if (done) {
       return (
         <Container className="signin">
           <div>
-            Vosinformations ont été changées. <br />
+            {
+              hasChangedPassword
+              ? (
+                  `Votre mot de passe à été changé.
+                  Vous allez être deconnecté dans 5 secondes ...`
+                )
+              :
+                (
+                  `Vosinformations ont été changées.`
+                )
+
+            }
           </div>
         </Container>
       );
