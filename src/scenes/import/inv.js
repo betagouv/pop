@@ -208,7 +208,7 @@ function checkReference(notice) {
     (notice.REF && String(notice.REF.value).startsWith("IM000"))
   ) {
     notice._errors.push(
-      "Import de cette notice est impossible car l'identifiant ne contient pas de département"
+      "L'import de cette notice est impossible car l'identifiant ne contient pas de département"
     );
   }
 }
