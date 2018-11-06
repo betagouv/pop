@@ -48,7 +48,7 @@ export default class Search extends React.Component {
           </Col>
           <Col md={3}>
             <ExportComponent
-              FILTER={FILTER}
+              FILTER={["advancedSearch"]}
               filename="merimee.csv"
             />
           </Col>
