@@ -108,53 +108,104 @@ router.post("/forgetPassword", (req, res) => {
   });
 });
 
-router.post("/updatePassword", (req, res) => {
-  const { email, ppwd, pwd1, pwd2 } = req.body;
+router.post(
+  "/updatePassword",
+  (req, res) => {
+    const { email, ppwd, pwd1, pwd2 } = req.body;
 
-  if (!pwd1) {
-    return res.status(401).send({
-      success: false,
-      msg: `Le nouveau mot de passe ne peut être vide`
-    });
-  }
-
-  if (pwd1 !== pwd2) {
-    return res.status(401).send({
-      success: false,
-      msg: `Les mots de passe ne sont pas identiques`
-    });
-  }
-
-  User.findOne({ email }, function(err, user) {
-    if (err) throw err;
-
-    if (!user) {
-      res.status(401).send({
+    if (!pwd1) {
+      return res.status(401).send({
         success: false,
-        msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
+        msg: `Le nouveau mot de passe ne peut être vide`
       });
-    } else {
-      user.comparePassword(ppwd, function(err, isMatch) {
-        if (isMatch && !err) {
-          user.set({ password: pwd1 });
-          user.set({ hasResetPassword: true });
+    }
+
+    if (pwd1 !== pwd2) {
+      return res.status(401).send({
+        success: false,
+        msg: `Les mots de passe ne sont pas identiques`
+      });
+    }
+
+    User.findOne({ email }, function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.status(401).send({
+          success: false,
+          msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
+        });
+      } else {
+        user.comparePassword(ppwd, function(err, isMatch) {
+          if (isMatch && !err) {
+            user.set({ password: pwd1 });
+            user.set({ hasResetPassword: true });
+            user.save(function(err) {
+              if (err) throw err;
+              return res.status(200).send({
+                success: true,
+                msg: `La mise à jour du mot de passe a été effectuée avec succès`
+              });
+            });
+          } else {
+            res.status(401).send({
+              success: false,
+              msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
+            });
+          }
+        });
+      }
+    });
+  }
+);
+
+router.post(
+  "/updateProfile", 
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { email, nom, prenom, institution, group, role } = req.body;
+
+    if (!nom || !prenom || !institution || !group || !role) {
+      return res.status(401).send({
+        success: false,
+        msg: `Les informations ne peuvent pas être vides`
+      });
+    }
+
+    User.findOne({ email }, function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.status(401).send({
+          success: false,
+          msg: `La mise à jour de vos informations a échouée. Utilisateur ${email} introuvable.`
+        });
+      } else {
+        try {
+          user.set({ 
+            institution,
+            nom,
+            prenom,
+            group,
+            role
+          });
           user.save(function(err) {
             if (err) throw err;
             return res.status(200).send({
               success: true,
-              msg: `La mise à jour du mot de passe a été effectuée avec succès`
+              msg: `La mise à jour de vos informations a été effectuée avec succès`
             });
           });
-        } else {
+        } catch (e) {
           res.status(401).send({
             success: false,
-            msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
+            msg: `La mise à jour de vos informations a échoué`
           });
         }
-      });
-    }
-  });
-});
+      }
+    });
+  }
+);
 
 router.post("/signin", (req, res) => {
   const failMessage = {
