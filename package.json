@@ -44,8 +44,8 @@
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
     "build:prod": "webpack --env.production --env.NODE_ENV=production",
     "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
-    "deploy:prod": "yarn && yarn build:prod && eb deploy pop-consultation",
-    "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging",
+    "deploy:prod": "yarn && yarn build:prod && eb deploy pop-consultation --profil POP",
+    "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging --profil POP",
     "test": "jest"
   },
   "jest": {
