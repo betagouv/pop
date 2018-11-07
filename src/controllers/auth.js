@@ -156,6 +156,48 @@ router.post("/updatePassword", (req, res) => {
   });
 });
 
+router.post("/updateProfile", (req, res) => {
+  const { email, nom, prenom, institution, group, role } = req.body;
+
+  if (!nom || !prenom || !institution || !group || !role) {
+    return res.status(401).send({
+      success: false,
+      msg: `Les informations ne peuvent pas être vide`
+    });
+  }
+
+  User.findOne({ email }, function(err, user) {
+    if (err) throw err;
+
+    if (!user) {
+      res.status(401).send({
+        success: false,
+        msg: `La mise à jour de vos informations a échouée. Utilisateur ${email} introuvable.`
+      });
+    } else {
+      try {
+        user.set({ institution: institution });
+        user.set({ nom: nom });
+        user.set({ prenom: prenom });
+        user.set({ group: group });
+        user.set({ role: role });
+        user.save(function(err) {
+          if (err) throw err;
+          return res.status(200).send({
+            success: true,
+            msg: `La mise à jour de vos informations a été effectuée avec succès`
+          });
+        });
+      } catch (e) {
+        res.status(401).send({
+          success: false,
+          msg: `La mise à jour de vos informations a échouée`
+        });
+      }
+    }
+  });
+});
+
 router.post("/signin", (req, res) => {
   const failMessage = {
     success: false,
