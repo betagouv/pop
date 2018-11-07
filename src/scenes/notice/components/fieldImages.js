@@ -4,8 +4,6 @@ import Viewer from "react-viewer";
 import "react-viewer/dist/index.css";
 import ImageGallery from "react-image-gallery";
 import { history } from "../../../redux/store";
-import { bucket_url } from "../../../config";
-
 import "./fieldImages.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 
@@ -16,25 +14,7 @@ export default class FieldImages extends React.Component {
   };
 
   componentWillMount() {
-    let images = this.props.images.map(e => {
-      let source = e;
-      let key = e;
-      let link = "";
-
-      if (e instanceof Object) {
-        source = e.url;
-        key = e.ref;
-        link = `/notice/memoire/${e.ref}`;
-      }
-
-      if (!source.match(/^http/)) {
-        source = `${bucket_url}${source}`;
-      }
-      return { source, key, link };
-    });
-
-    images = images.filter(e => e.source);
-    this.setState({ images });
+    this.setState({ images: this.props.images });
   }
 
   renderImages() {

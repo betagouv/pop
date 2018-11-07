@@ -1,7 +1,8 @@
 .fieldImages {
   width: 100%;
   margin-bottom: 15px;
-  margin-left: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .fieldImages .item {

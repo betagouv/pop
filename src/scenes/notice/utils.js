@@ -1,3 +1,5 @@
+import { bucket_url } from "../../config";
+
 export function findCollection(ref = "") {
   const prefix = ref.substring(0, 2);
   switch (prefix) {
@@ -20,5 +22,34 @@ export function postFixedLink(link) {
     .replace(
       /^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i,
       "http://www2.culture.gouv.fr$1"
+    );
+}
+
+export function toFieldImages(images) {
+  return images
+    .map(e => {
+      let source = e;
+      let key = e;
+      let link = "";
+
+      if (e instanceof Object) {
+        source = e.url;
+        key = e.ref;
+        link = `/notice/memoire/${e.ref}`;
+      }
+
+      if (!source.match(/^http/)) {
+        source = `${bucket_url}${source}`;
+      }
+      return { source, key, link };
+    })
+    .filter(e => e.source);
+}
+
+export function hasCoordinates(point) {
+    return !!(
+      point &&
+      point.lat &&
+      point.lon
     );
 }
