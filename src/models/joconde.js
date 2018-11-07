@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 var mongoosastic = require("mongoosastic");
 var getElasticInstance = require("../elasticsearch");
+const Museo = require("./museo");
 
 const Schema = new mongoose.Schema(
   {
@@ -11,6 +12,10 @@ const Schema = new mongoose.Schema(
       default: "Collections des musées de France (Joconde)"
     },
     CONTIENT_IMAGE: { type: String, default: "" },
+    POP_COORDONNEES: {
+      lat: { type: Number, default: 0 },
+      lon: { type: Number, default: 0 }
+    },
     REF: { type: String, unique: true, index: true, trim: true },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     REFMIS: { type: String, default: "" },
@@ -105,7 +110,16 @@ Schema.plugin(mongoosastic, {
 
 Schema.pre("save", function(next, done) {
   this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
-  next();
+  if (this.MUSEO) {
+    Museo.findOne({ REF: this.MUSEO }, (err, museo) => {
+      if (!err && museo && museo.location && museo.location.lat) {
+        this.POP_COORDONNEES = museo.location;
+      }
+      next();
+    });
+  } else {
+    next();
+  }
 });
 
 const object = mongoose.model("joconde", Schema);
