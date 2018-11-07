@@ -1,3 +1,7 @@
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
+
 const { api_url } = require('../config.js');
 
 class api {
