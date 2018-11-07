@@ -72,12 +72,12 @@ class UpdateProfile extends Component {
     } = this.state;
     
     const hasChangedPassword = (ppwd !== "" && ppwd1 !== "" && ppwd2 !== "");
-    const hasChangedProfileInfo = (nom !== stateNom || prenom !== statePrenom || group !== stateGroup || role !== stateRole);
+    const hasChangedProfileInfo = (nom !== stateNom || prenom !== statePrenom || institution !== stateInstitution || group !== stateGroup || role !== stateRole);
     let promise = Promise.resolve();
 
     if(hasChangedProfileInfo) {
       promise = promise.then(() => {
-        return api.updateProfile(email, nom, prenom, group, role);
+        return api.updateProfile(email, nom, prenom, institution, group, role);
       });
     }
 

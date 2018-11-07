@@ -41,8 +41,8 @@ class api {
     );
   }
 
-  updateProfile(email, nom, prenom, group, role) {
-    const obj = { email, nom, prenom, group, role };
+  updateProfile(email, nom, prenom, institution, group, role) {
+    const obj = { email, nom, prenom, institution, group, role };
     return request.post(
       `${api_url}/auth/updateProfile`,
       JSON.stringify(obj),
