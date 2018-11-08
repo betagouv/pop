@@ -183,7 +183,8 @@ class Importer extends Component {
         "se.legoff@gmail.com",
         "sebastien.legoff@beta.gouv.fr",
         "sophie.daenens@culture.gouv.fr",
-        "jeannette.ivain@culture.gouv.fr"
+        "jeannette.ivain@culture.gouv.fr",
+        "jennifer.stephan@beta.gouv.fr"
       ];
 
       await api.sendReport(
