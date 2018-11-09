@@ -32,7 +32,7 @@ export default () => (
       Dans un souci de clarté et de simplicité pour les ré-utilisateurs, les
       informations publiques au sens du code des relations entre le public et
       l’Administration, regroupées au sein de la plateforme POP, sont
-      téléchargeables au lien suivant .<br />
+      téléchargeables au lien suivant.<br />
        <br />
       S’agissant desdites informations publiques, le lecteur dispose d’un droit
       non exclusif et gratuit de libre « réutilisation » à des fins commerciales
