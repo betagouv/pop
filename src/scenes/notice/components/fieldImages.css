@@ -61,5 +61,6 @@
 }
 
 .image-gallery-slide .image-gallery-image > img {
-  width: initial;
+  width: auto;
+  max-width: 100%;
 }
