@@ -110,15 +110,25 @@ router.get("/:ref", (req, res) => {
 router.delete(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const ref = req.params.ref;
-    Joconde.findOneAndRemove({ REF: ref }, error => {
-      if (error) {
-        capture(error);
-        return res.status(500).send({ error });
+  async (req, res) => {
+    try {
+      const ref = req.params.ref;
+      const doc = await Joconde.findOne({ REF: ref });
+      if (!doc) {
+        return res.status(500).send({
+          error: `Je ne trouve pas la notice joconde ${ref} à supprimer`
+        });
       }
+      const arr = doc.IMG.map(f => deleteFile(f));
+      arr.push(doc.remove());
+      await Promise.all(arr);
       return res.status(200).send({});
-    });
+    } catch (error) {
+      capture(error);
+      return res.status(500).send({
+        error
+      });
+    }
   }
 );
 
