@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./components/field";
 import NotFound from "./components/not-found";
-import LinkedNotices from "./components/linkedNotices";
+import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
 import Loader from "../../components/loader";
 import Header from "./components/header";

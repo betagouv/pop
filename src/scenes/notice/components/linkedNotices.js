@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "../../../components/loader";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config";
-import "./linkedNotices.css";
+import "./LinkedNotices.css";
 
 const noImage = require("../../../assets/noimage.png");
 

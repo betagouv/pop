@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { image } from "../../image";
-import "./cardList.css";
+import "./CardList.css";
 
 const joinData = f => {
   return f

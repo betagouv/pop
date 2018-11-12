@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Header from "./components/header";
 import Field from "./components/field";
-import LinkedNotices from "./components/linkedNotices";
+import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
 import Loader from "../../components/loader";
 import API from "../../services/api";

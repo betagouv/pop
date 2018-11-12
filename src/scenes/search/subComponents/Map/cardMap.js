@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { image } from "../../image";
 import shave from 'shave';
-import "./cardMap.css";
+import "./CardMap.css";
 
 const joinData = f => {
   return f

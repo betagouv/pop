@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import LinkedNotices from "./components/linkedNotices";
+import LinkedNotices from "./components/LinkedNotices";
 import Field from "./components/field";
 import Loader from "../../components/loader";
 import Title from "./components/title";
