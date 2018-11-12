@@ -1,9 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import FieldImages from "./components/fieldImages";
 import Field from "./components/field";
 import NotFound from "./components/not-found";
-import Map from "./components/map.js";
 import LinkedNotices from "./components/linkedNotices";
 import Title from "./components/title";
 import Loader from "../../components/loader";

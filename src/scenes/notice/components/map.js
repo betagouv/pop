@@ -18,16 +18,15 @@ export default class MapComponent extends React.Component {
     let center = null;
 
     const {
-      POP_COORDINATES_POINT,
-      POP_COORDINATES_POLYGON
+      POP_COORDONNEES
     } = this.props.notice;
 
     if (
-      POP_COORDINATES_POINT &&
-      POP_COORDINATES_POINT.coordinates &&
-      POP_COORDINATES_POINT.coordinates.length
+      POP_COORDONNEES &&
+      POP_COORDONNEES.lat &&
+      POP_COORDONNEES.lon
     ) {
-      center = POP_COORDINATES_POINT.coordinates;
+      center = [POP_COORDONNEES.lat, POP_COORDONNEES.lon];
     }
 
     return center;
