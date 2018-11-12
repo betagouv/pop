@@ -6,7 +6,14 @@ const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { uploadFile, formattedNow, getNewId } = require("./utils");
+const {
+  uploadFile,
+  formattedNow,
+  getNewId,
+  checkESIndex,
+  updateNotice
+} = require("./utils");
+
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -80,10 +87,8 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      await Palissy.findOneAndUpdate({ REF: ref }, notice, {
-        upsert: true,
-        new: true
-      });
+      await updateNotice(Palissy, ref, notice);
+
       await populateMerimeeREFO(notice);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -105,6 +110,8 @@ router.post(
       notice.MEMOIRE = arr;
       notice.DMIS = notice.DMAJ = formattedNow();
       const obj = new Palissy(notice);
+      //send error if obj is not well sync with ES
+      checkESIndex(obj);
       await obj.save();
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {

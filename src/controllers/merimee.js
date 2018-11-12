@@ -6,7 +6,12 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
-const { uploadFile, formattedNow } = require("./utils");
+const {
+  uploadFile,
+  formattedNow,
+  checkESIndex,
+  updateNotice
+} = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -80,10 +85,8 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      await Merimee.findOneAndUpdate({ REF: ref }, notice, {
-        upsert: true,
-        new: true
-      });
+      await updateNotice(Merimee, ref, notice);
+      
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -104,6 +107,8 @@ router.post(
       notice.REFO = await populateREFO(notice);
       notice.MEMOIRE = arr;
       const obj = new Merimee(notice);
+      //send error if obj is not well sync with ES
+      checkESIndex(obj);
       await obj.save();
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {

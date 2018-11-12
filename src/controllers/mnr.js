@@ -6,7 +6,13 @@ const Mnr = require("../models/mnr");
 const passport = require("passport");
 
 const { capture } = require("./../sentry.js");
-const { uploadFile, deleteFile, formattedNow } = require("./utils");
+const {
+  uploadFile,
+  deleteFile,
+  formattedNow,
+  checkESIndex,
+  updateNotice
+} = require("./utils");
 
 const router = express.Router();
 
@@ -38,9 +44,7 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      arr.push(
-        Mnr.findOneAndUpdate({ REF: ref }, notice, { upsert: true, new: true })
-      );
+      arr.push(updateNotice(Mnr, ref, notice));
 
       await Promise.all(arr);
 
@@ -60,6 +64,8 @@ router.post(
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
     const obj = new Mnr(notice);
+    //send error if obj is not well sync with ES
+    checkESIndex(obj);
     obj.save().then(e => {
       res.send({ success: true, msg: "OK" });
     });
