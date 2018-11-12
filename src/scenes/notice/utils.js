@@ -27,6 +27,7 @@ export function postFixedLink(link) {
 
 export function toFieldImages(images) {
   return images
+    .slice(0, 200)
     .map(e => {
       let source = e;
       let key = e;

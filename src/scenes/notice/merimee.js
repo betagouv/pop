@@ -45,15 +45,19 @@ class Notice extends React.Component {
       const arr = [];
       for (let i = 0; i < RENV.length; i++) {
         arr.push(API.getNotice("merimee", RENV[i]));
+        if (arr.length > 50) break;
       }
       for (let i = 0; i < REFP.length; i++) {
         arr.push(API.getNotice("merimee", REFP[i]));
+        if (arr.length > 50) break;
       }
       for (let i = 0; i < REFE.length; i++) {
         arr.push(API.getNotice("merimee", REFE[i]));
+        if (arr.length > 50) break;
       }
       for (let i = 0; i < REFO.length; i++) {
         arr.push(API.getNotice("palissy", REFO[i]));
+        if (arr.length > 50) break;
       }
       Promise.all(arr).then(values => {
         const links = [];
