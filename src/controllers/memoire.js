@@ -6,7 +6,12 @@ const mongoose = require("mongoose");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { uploadFile, formattedNow } = require("./utils");
+const {
+  uploadFile,
+  formattedNow,
+  checkESIndex,
+  updateNotice
+} = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -90,12 +95,7 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    arr.push(
-      Memoire.findOneAndUpdate({ REF: ref }, notice, {
-        upsert: true,
-        new: true
-      })
-    );
+    arr.push(updateNotice(Memoire, ref, notice));
 
     arr.push(updateMerimeeOrPalissyNotice(notice));
 
@@ -131,6 +131,10 @@ router.post(
     arr.push(updateMerimeeOrPalissyNotice(notice));
 
     const obj = new Memoire(notice);
+
+    //send error if obj is not well sync with ES
+    checkESIndex(obj);
+
     arr.push(obj.save());
     Promise.all(arr)
       .then(() => {
