@@ -7,6 +7,8 @@ import { history } from "../../../redux/store";
 import "./fieldImages.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 
+const noImage = require("../../../assets/noimage.png");
+
 export default class FieldImages extends React.Component {
   state = {
     images: [],
@@ -47,6 +49,7 @@ export default class FieldImages extends React.Component {
       <ImageGallery
         showFullscreenButton={false}
         showPlayButton={false}
+        defaultImage={noImage}
         onClick={i => {
           const selected = this.state.images.findIndex(
             e => e.source === i.target.src
