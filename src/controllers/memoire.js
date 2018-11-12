@@ -10,7 +10,8 @@ const {
   uploadFile,
   formattedNow,
   checkESIndex,
-  updateNotice
+  updateNotice,
+  deleteFile
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -80,6 +81,9 @@ router.put(
 
     const arr = [];
     for (let i = 0; i < req.files.length; i++) {
+      //TODO
+      //DELETE the current file IMAGE when update a new file
+
       arr.push(
         uploadFile(
           `memoire/${notice.REF}/${req.files[i].originalname}`,
@@ -174,15 +178,25 @@ router.get("/:ref", (req, res) => {
 router.delete(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const ref = req.params.ref;
-    Memoire.findOneAndRemove({ REF: ref }, error => {
-      if (error) {
-        capture(error);
-        return res.status(500).send({ error });
+  async (req, res) => {
+    try {
+      const ref = req.params.ref;
+      const doc = await Memoire.findOne({ REF: ref });
+      if (!doc) {
+        return res.status(500).send({
+          error: `Je ne trouve pas la notice memoire ${ref} à supprimer`
+        });
       }
+      const arr = [deleteFile(doc.IMG), doc.remove()];
+      await Promise.all(arr);
       return res.status(200).send({});
-    });
+    } catch (error) {
+      capture(error);
+      console.log("error", error);
+      return res.status(500).send({
+        error
+      });
+    }
   }
 );
 
