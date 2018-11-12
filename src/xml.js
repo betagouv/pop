@@ -5,7 +5,7 @@ const { mkStorage } = require("./lib.js");
 const js2xmlparser = require("js2xmlparser");
 const iconv = require("iconv-lite");
 
-const LIMIT = 200;
+const LIMIT = 1000;
 
 async function main() {
   const client = await MongoClient.connect(
