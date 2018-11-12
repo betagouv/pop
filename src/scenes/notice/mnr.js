@@ -91,6 +91,7 @@ class Notice extends React.Component {
                   <Field
                     title="Anciennes attributions :"
                     content={this.state.notice.ATTR}
+                    separator="#"
                   />
                   <Field
                     title="Ancienne attribution :"
