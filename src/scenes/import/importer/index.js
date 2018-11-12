@@ -90,7 +90,7 @@ class Importer extends Component {
       });
     } catch (e) {
       const errors = e || "Erreur detectée";
-      Raven.captureException(errors);
+      // Raven.captureException(errors);
       amplitude.getInstance().logEvent("Import - Drop files", {
         "Files droped": files.length,
         Success: false,
