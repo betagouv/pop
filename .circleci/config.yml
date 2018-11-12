@@ -26,11 +26,11 @@ jobs:
           name: Install awscli
           command: |
             sudo apt-get update
-            sudo apt-get -y -qq install python3.4-dev
+            sudo apt-get -y -qq install python3.4-dev libpng-dev
             sudo curl -O https://bootstrap.pypa.io/get-pip.py
             sudo python3.4 get-pip.py --user
             sudo pip install awsebcli --upgrade --user
-      - run: yarn && yarn build:staging && eb deploy pop-consultation-staging
+      - run: yarn && yarn build:staging
 workflows:
   version: 2
   test-then-deploy:
