@@ -7,7 +7,13 @@ const Joconde = require("../models/joconde");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
-const { uploadFile, deleteFile, formattedNow } = require("./utils");
+const {
+  uploadFile,
+  deleteFile,
+  formattedNow,
+  checkESIndex,
+  updateNotice
+} = require("./utils");
 
 router.put(
   "/:ref",
@@ -36,13 +42,9 @@ router.put(
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
+
       //Update Notice
-      arr.push(
-        Joconde.findOneAndUpdate({ REF: ref }, notice, {
-          upsert: true,
-          new: true
-        })
-      );
+      arr.push(updateNotice(Joconde, ref, notice));
 
       await Promise.all(arr);
       res.sendStatus(200);
@@ -72,7 +74,12 @@ router.post(
     }
 
     const obj = new Joconde(notice);
+
+    //send error if obj is not well sync with ES
+    checkESIndex(obj);
+
     arr.push(obj.save());
+
     Promise.all(arr)
       .then(() => {
         res.send({ success: true, msg: "OK" });

@@ -74,6 +74,35 @@ function getNewId(object, prefix, dpt) {
   });
 }
 
+function checkESIndex(doc) {
+  doc.on("es-indexed", (err, res) => {
+    if (err) capture(err);
+    // Je laisse ce console log en attendant pour visualiser si ca passe bien.
+    console.log("ES INDEX SUCCESS ", doc.REF);
+  });
+}
+
+function updateNotice(collection, REF, notice) {
+  return new Promise((resolve, reject) => {
+    collection.findOneAndUpdate(
+      { REF },
+      notice,
+      {
+        upsert: true,
+        new: true
+      },
+      (err, doc) => {
+        if (err) {
+          reject();
+          return;
+        }
+        checkESIndex(doc);
+        resolve(doc);
+      }
+    );
+  });
+}
+
 function addZeros(v, zeros) {
   return new Array(zeros)
     .concat([v])
@@ -95,5 +124,7 @@ module.exports = {
   uploadFile,
   deleteFile,
   formattedNow,
-  getNewId
+  getNewId,
+  checkESIndex,
+  updateNotice
 };
