@@ -39,20 +39,19 @@ class Notice extends React.Component {
     API.getNotice("palissy", ref).then(notice => {
       this.setState({ loading: false, notice });
 
-      const { RENV, REFP, REFE, REFA, LBASE2 } = notice;
+      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice;
       // RENV -> MERIMEE
       // REFP -> MERIMEE
       // REFE -> MERIMEE
       // REFA -> MERIMEE
       // LBASE2 -> MERIMEE
       const arr = [];
-      const l = [...RENV, ...REFP, ...REFE, ...REFA, LBASE2];
-      for (let i = 0; i < l.length; i++) {
-        if (l[i]) {
-          const collection = findCollection(l[i]);
-          arr.push(API.getNotice(collection, l[i]));
-        }
-      }
+      [...RENV, ...REFP, ...REFE, ...REFA, LBASE2]
+        .filter(e => e && e != REF)
+        .forEach(e => {
+          const collection = findCollection(e);
+          arr.push(API.getNotice(collection, e));
+        });
 
       Promise.all(arr).then(values => {
         const links = [];
