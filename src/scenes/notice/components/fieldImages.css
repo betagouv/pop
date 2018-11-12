@@ -29,7 +29,6 @@
 
 .fieldImages img {
   max-height: 380px;
-  object-fit: contain;
   background-color: transparent;
 }
 
@@ -58,4 +57,9 @@
 
 .image-gallery-image {
   height: 360px;
+  text-align: center;
+}
+
+.image-gallery-slide .image-gallery-image > img {
+  width: initial;
 }
