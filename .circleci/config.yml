@@ -22,18 +22,24 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: 
+          name: Build
+          command: yarn && yarn build:staging
       - run:
           name: Install awscli
           command: |
             sudo apt-get update
             sudo apt-get -y -qq install nasm python-dev libpng-dev python-pip build-essential libpython-dev
-            sudo pip install awsebcli --upgrade --user
-      - run: 
-          name: Build
-          command: yarn && yarn build:staging
+            pip install awsebcli --upgrade --user
+      - run:
+          name: AWS credentials
+          command: |
+            echo "[eb-cli]" >> ~/.aws/credentials
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
       - run:
           name: Deploy
-          command: sudo /root/.local/bin/eb deploy pop-consultation-staging
+          command: ~/.local/bin/eb deploy pop-consultation-staging
 workflows:
   version: 2
   test-then-deploy:
