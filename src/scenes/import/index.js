@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import Home from "./home";
-import Mh from "./mh";
+import Mh from "./MH";
 import Joconde from "./joconde";
 import Mnr from "./mnr";
 import Inv from "./inv";
