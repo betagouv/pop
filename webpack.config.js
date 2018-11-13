@@ -59,6 +59,7 @@ module.exports = env => {
     mode: "production",
     entry: ["babel-polyfill", "./src/index.js"],
     devtool: false,
+    bail: true,
     output: {
       path: path.resolve("build"),
       filename: "[hash].index.js",
