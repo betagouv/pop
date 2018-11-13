@@ -23,7 +23,7 @@ class NoticeField extends React.Component {
       // notices.push(<Col m={3} key='new' ><div className='notice-new' key='notice' onClick={() => { this.setState({ modal: true }) }}>Ajouter une notice</div> </Col>)
       return notices;
     } else {
-      return <div>This field should be an array</div>;
+      return <div>Ce champs devrait être multiple</div>;
     }
   }
 

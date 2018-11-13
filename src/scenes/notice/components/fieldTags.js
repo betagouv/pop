@@ -43,7 +43,7 @@ class TagsInput extends React.Component {
         <div>
           {`${
             this.props.input.name
-          } should be an array but got : ${JSON.stringify(
+          } devrait être multiple mais est : ${JSON.stringify(
             this.props.input.value
           )}`}{" "}
         </div>

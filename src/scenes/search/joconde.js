@@ -8,7 +8,7 @@ import {
   SelectedFilters,
   ReactiveComponent
 } from "@appbaseio/reactivesearch";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
 import { es_url, bucket_url } from "../../config.js";
@@ -76,7 +76,7 @@ export default class Search extends React.Component {
             <QueryBuilder entity={Joconde} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
-            <ExportComponent FILTER={FILTER} filename="joconde.csv" />
+            <ExportComponent FILTER={["advancedSearch"]} filename="joconde.csv" />
           </Col>
         </Row>
         <ReactiveList
@@ -208,7 +208,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{

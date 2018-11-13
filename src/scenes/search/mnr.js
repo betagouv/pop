@@ -11,7 +11,7 @@ import {
 } from "@appbaseio/reactivesearch";
 
 import QueryBuilder from "./components/queryBuilder";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 
 import ExportComponent from "./components/export";
 
@@ -39,7 +39,7 @@ export default class Search extends React.Component {
           </Col>
           <Col md={3}>
             <ExportComponent
-              FILTER={FILTER}
+              FILTER={["advancedSearch"]}
               filename="mnr.csv"
             />
           </Col>
@@ -85,10 +85,7 @@ export default class Search extends React.Component {
               aggs: {}
             })}
           >
-            <ExportComponent
-              FILTER={FILTER}
-              filename="mnr.csv"
-            />
+            <ExportComponent FILTER={FILTER} filename="mnr.csv" />
           </ReactiveComponent>
         </div>
         <Row>
@@ -131,7 +128,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{

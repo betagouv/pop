@@ -10,7 +10,7 @@ import {
 import ExportComponent from "./components/export";
 import Palissy from "../../entities/palissy";
 import QueryBuilder from "./components/queryBuilder";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [
@@ -41,7 +41,7 @@ export default class Search extends React.Component {
           </Col>
           <Col md={3}>
             <ExportComponent
-              FILTER={FILTER}
+              FILTER={["advancedSearch"]}
               filename="merimee.csv"
             />
           </Col>
@@ -76,10 +76,7 @@ export default class Search extends React.Component {
             placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
             URLParams={true}
           />
-          <ExportComponent
-            FILTER={FILTER}
-            filename="merimee.csv"
-          />
+          <ExportComponent FILTER={FILTER} filename="merimee.csv" />
         </div>
         <Row>
           <Col xs="3">
@@ -181,7 +178,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{ and: FILTER }}

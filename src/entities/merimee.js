@@ -11,7 +11,7 @@ export default class Merimee extends Notice {
     this.setProperty("TOUT", "String", body.TOUT);
     this.setProperty("ACTU", "String", body.ACTU);
     this.setProperty("ADRS", "String", body.ADRS);
-    this.setProperty("AFFE", "String", body.ADRS, {
+    this.setProperty("AFFE", "String", body.AFFE, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T97"
     });
     this.setProperty("AIRE", "String", body.AIRE);

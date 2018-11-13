@@ -7,7 +7,7 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch";
-import MultiList from "./components/multiList";
+import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 
 import Merimee from "../../entities/merimee";
@@ -48,7 +48,7 @@ export default class Search extends React.Component {
           </Col>
           <Col md={3}>
             <ExportComponent
-              FILTER={FILTER}
+              FILTER={["advancedSearch"]}
               filename="merimee.csv"
             />
           </Col>
@@ -83,10 +83,7 @@ export default class Search extends React.Component {
             URLParams={true}
             debounce={0}
           />
-          <ExportComponent
-            FILTER={FILTER}
-            filename="merimee.csv"
-          />
+          <ExportComponent FILTER={FILTER} filename="merimee.csv" />
         </div>
         <Row>
           <Col xs="3">
@@ -176,7 +173,7 @@ export default class Search extends React.Component {
             />
           </Col>
           <Col xs="9">
-            <SelectedFilters />
+            <SelectedFilters clearAllLabel="Tout supprimer" />
             <ReactiveList
               componentId="results"
               react={{ and: FILTER }}

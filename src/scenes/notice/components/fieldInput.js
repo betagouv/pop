@@ -50,7 +50,11 @@ class CustomInput extends React.Component {
 
   render() {
     if (Array.isArray(this.props.input.value)) {
-      return <div>The data is an array and should be a string</div>;
+      return (
+        <div>
+          Cette donnée est multiple(array) et devrait etre simple(string)
+        </div>
+      );
     }
     return (
       <div className="input">
