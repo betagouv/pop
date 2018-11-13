@@ -22,7 +22,8 @@ Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb
 
 ## Déploiement
 
-Utiliser `yarn deploy:staging` ou `yarn deploy:production` en fonction de l'environnement souhaité.
+Utiliser `yarn deploy:staging` ou `yarn deploy:production` en fonction de l'environnement souhaité. 
+La branche _master_ est automatiquement livré sur la plateforme de _staging_ à chaque _push_ grâce à CircleCI.
 
 ## Recherche
 
