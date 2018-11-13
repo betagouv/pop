@@ -33,7 +33,7 @@
 }
 .auth .block {
   padding: 20px;
-  max-width: 400px;
+  max-width: 500px;
 }
 .auth .block a:hover {
   color: #890f3c;
@@ -44,10 +44,21 @@
   float: right;
 }
 
+.auth .block hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 .auth .submit-button {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   color: #fff;
   background-color: #007bff;
+}
+
+.auth .change-password {
+  width: 70%;
+  background-color: #00b6ff ;
+  font-size: 0.8rem;
 }
 
 .auth .signin .ORText,
@@ -75,6 +86,7 @@
   margin-bottom: 15px;
   border-radius: 3px;
 }
+
 .auth .signin-block .submit-button {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   color: #fff;
@@ -106,6 +118,21 @@
   padding: 15px;
   margin-bottom: 25px;
   border-radius: 3px;
+}
+
+.auth .sub-block .input-field:last-child {
+  margin-bottom: 0;
+}
+
+.auth .select-field {
+  padding: 15px;
+  height: 53px;
+  margin-bottom: 25px;
+}
+
+.auth .error-message {
+  margin: 15px;
+  color:red;
 }
 
 .lastConnectedAt {

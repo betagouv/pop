@@ -6,10 +6,10 @@ import { Redirect } from "react-router-dom";
 import api from "../../services/api";
 import Loader from "../../components/loader";
 
-import authAction from "./../../redux/auth/actions";
+import authAction from "../../redux/auth/actions";
 const { logout } = authAction;
 
-class updatePassword extends Component {
+class UpdatePassword extends Component {
   state = {
     ppwd: "",
     ppwd1: "",
@@ -140,4 +140,4 @@ const mapStateToProps = ({ Auth }) => {
 export default connect(
   mapStateToProps,
   { logout }
-)(updatePassword);
+)(UpdatePassword);

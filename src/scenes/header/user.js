@@ -51,15 +51,9 @@ class User extends Component {
         <DropdownMenu className="DropDown">
           <DropdownItem
             className="dropdown-item"
-            onClick={() => history.push("/auth/updatepassword")}
+            onClick={() => history.push("/auth/updateprofile")}
           >
             Modifier mes informations
-          </DropdownItem>
-          <DropdownItem
-            className="dropdown-item"
-            onClick={() => history.push("/auth/updatepassword")}
-          >
-            Changer mon mot de passe
           </DropdownItem>
           <DropdownItem
             className="dropdown-item"
@@ -71,7 +65,7 @@ class User extends Component {
             className="dropdown-item"
             onClick={this.logout.bind(this)}
           >
-            Logout
+            Se déconnecter
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
