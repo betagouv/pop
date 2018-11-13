@@ -26,9 +26,9 @@ jobs:
           name: Install awscli
           command: |
             sudo apt-get update
-            sudo apt-get -y -qq install nasm python-dev libpng-dev python-pip build-essential
+            sudo apt-get -y -qq install nasm python-dev libpng-dev python-pip build-essential libpython-dev
             sudo pip install awsebcli --upgrade --user
-      - run: yarn && yarn build:staging
+      - run: yarn && yarn build:staging && eb deploy pop-consultation-staging
 workflows:
   version: 2
   test-then-deploy:
