@@ -64,9 +64,3 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy-eb-staging:
-          requires:
-            - build-staging
-          filters:
-            branches:
-              only: master
