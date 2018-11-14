@@ -97,7 +97,11 @@ class Notice extends React.Component {
                     title="Ancienne attribution :"
                     content={this.state.notice.AATT}
                   />
-                  <Field title="Ecole :" content={this.state.notice.ECOL} />
+                  <Field
+                    title="Ecole :"
+                    content={this.state.notice.ECOL}
+                    separator="#"
+                  />
                   <Field title="Titre :" content={this.state.notice.TITR} />
                   <Field
                     title="Ancien titre :"
@@ -121,7 +125,11 @@ class Notice extends React.Component {
                   />
                   <Field title="Siècle :" content={this.state.notice.SCLE} />
                   <Field title="Style :" content={this.state.notice.STYL} />
-                  <Field title="Technique :" content={this.state.notice.TECH} />
+                  <Field
+                    title="Technique :"
+                    content={this.state.notice.TECH}
+                    separator="#"
+                  />
                   <Field
                     title="Dimensions :"
                     content={this.state.notice.DIMS}
@@ -136,7 +144,11 @@ class Notice extends React.Component {
                     content={this.state.notice.INSC}
                     separator="#"
                   />
-                  <Field title="Genèse :" content={this.state.notice.GENE} />
+                  <Field
+                    title="Genèse :"
+                    content={this.state.notice.GENE}
+                    separator="#"
+                  />
                   <Field
                     title="Historique :"
                     content={this.state.notice.HIST}
@@ -149,6 +161,7 @@ class Notice extends React.Component {
                   <Field
                     title="Commentaire :"
                     content={this.state.notice.COMM}
+                    separator="#"
                   />
                   <Field title="Catégorie :" content={this.state.notice.CATE} />
                   <Field
