@@ -74,168 +74,224 @@ class Notice extends React.Component {
                   <Field
                     title="N°Inventaire : "
                     content={this.state.notice.INV}
+                    join=" ; "
                   />
                   <Field
                     title="Domaine (catégorie du bien) :"
                     content={this.state.notice.DOMN}
+                    join=" ; "
                   />
                   <Field
                     title="Auteur :"
                     content={this.state.notice.AUTR}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Precisions auteur :"
                     content={this.state.notice.PAUT}
+                    join=" ; "
                   />
                   <Field
                     title="Anciennes attributions :"
                     content={this.state.notice.ATTR}
+                    join=" ; "
                     separator="#"
                   />
                   <Field
                     title="Ancienne attribution :"
                     content={this.state.notice.AATT}
+                    join=" ; "
                   />
                   <Field
                     title="Ecole :"
                     content={this.state.notice.ECOL}
                     separator="#"
+                    join=" ; "
                   />
-                  <Field title="Titre :" content={this.state.notice.TITR} />
+                  <Field
+                    title="Titre :"
+                    content={this.state.notice.TITR}
+                    join=" ; "
+                  />
                   <Field
                     title="Ancien titre :"
                     content={this.state.notice.ATIT}
+                    join=" ; "
                   />
                   <Field
                     title="Précision titre :"
                     content={this.state.notice.PTIT}
+                    join=" ; "
                   />
                   <Field
                     title="Autre titre :"
                     content={this.state.notice.AUTI}
+                    join=" ; "
                   />
                   <Field
                     title="Dénomination :"
                     content={this.state.notice.DENO}
+                    join=" ; "
                   />
                   <Field
                     title="Millénaire :"
                     content={this.state.notice.MILL}
+                    join=" ; "
                   />
-                  <Field title="Siècle :" content={this.state.notice.SCLE} />
-                  <Field title="Style :" content={this.state.notice.STYL} />
+                  <Field
+                    title="Siècle :"
+                    content={this.state.notice.SCLE}
+                    join=" ; "
+                  />
+                  <Field
+                    title="Style :"
+                    content={this.state.notice.STYL}
+                    join=" ; "
+                  />
                   <Field
                     title="Technique :"
                     content={this.state.notice.TECH}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Dimensions :"
                     content={this.state.notice.DIMS}
+                    join=" ; "
                   />
                   <Field
                     title="Description :"
                     content={this.state.notice.DESC}
+                    join=" ; "
                     separator="#"
                   />
                   <Field
                     title="Inscriptions :"
                     content={this.state.notice.INSC}
+                    join=" ; "
                     separator="#"
                   />
                   <Field
                     title="Genèse :"
                     content={this.state.notice.GENE}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Historique :"
                     content={this.state.notice.HIST}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Provenance :"
                     content={this.state.notice.PROV}
+                    join=" ; "
                   />
                   <Field
                     title="Commentaire :"
                     content={this.state.notice.COMM}
                     separator="#"
+                    join=" ; "
                   />
-                  <Field title="Catégorie :" content={this.state.notice.CATE} />
+                  <Field
+                    title="Catégorie :"
+                    content={this.state.notice.CATE}
+                    join=" ; "
+                  />
                   <Field
                     title="Observations :"
                     content={this.state.notice.OBSE}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Autres numéros :"
                     content={this.state.notice.NUMS}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Marquages :"
                     content={this.state.notice.MARQ}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Localisation :"
                     content={this.state.notice.LOCA}
+                    join=" ; "
                   />
                   <Field
                     title="Etablissement affectataire qui existe dans d’autres bases :"
                     content={this.state.notice.AFFE}
+                    join=" ; "
                   />
                   <Field
                     title="Expositions :"
                     content={this.state.notice.EXPO}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Bibliographie :"
                     content={this.state.notice.BIBL}
                     separator="#"
+                    join=" ; "
                   />
                   <Field
                     title="Notes :"
                     content={this.state.notice.NOTE}
                     separator="#"
+                    join=" ; "
                   />
-                  <Field title="Résumé :" content={this.state.notice.RESUME} />
+                  <Field
+                    title="Résumé :"
+                    content={this.state.notice.RESUME}
+                    join=" ; "
+                  />
                   <Field
                     title="Etat de conservation :"
                     content={this.state.notice.ETAT}
+                    join=" ; "
                   />
                   <Field
                     title="OEuvres liées, ensemble :"
                     content={this.state.notice.SUITE}
+                    join=" ; "
                   />
                   <Field
                     title="Représentation :"
                     content={this.state.notice.REPR}
+                    join=" ; "
                   />
                   <Field
                     title="Sujet de la représentation (source littéraire ou musicale) :"
                     content={this.state.notice.SREP}
+                    join=" ; "
                   />
                   <Field
                     title="Précisions sur la représentation. :"
                     content={this.state.notice.PREP}
+                    join=" ; "
                   />
                   <Field
                     title="Date de la représentation :"
                     content={this.state.notice.DREP}
+                    join=" ; "
                   />
                   <Field
                     title="Date mise à jour :"
                     content={this.state.notice.DMAJ}
+                    join=" ; "
                   />
 
                   <Field
                     title="Droits de copie photo :"
                     content={this.state.notice.PHOT}
                     separator="#"
+                    join=" ; "
                   />
                 </div>
               </Col>
@@ -251,10 +307,15 @@ class Notice extends React.Component {
                   title="Dernière mise à jour : "
                   content={this.state.notice.DMAJ}
                 />
-                <Field title="Rédacteur : " content={this.state.notice.NOMS} />
+                <Field
+                  title="Rédacteur : "
+                  content={this.state.notice.NOMS}
+                  join=" ; "
+                />
                 <Field
                   title="Crédits photographiques : "
                   content={this.state.notice.AUTP}
+                  join=" ; "
                 />
               </div>
               <a

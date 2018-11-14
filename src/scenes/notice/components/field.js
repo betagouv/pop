@@ -1,12 +1,12 @@
 import * as React from "react";
 import "./field.css";
 
-const Field = ({ content, title, separator }) => {
+const Field = ({ content, title, separator, join = ", " }) => {
   if (!content || (Array.isArray(content) && content.length === 0)) {
     return <div />;
   }
 
-  let str = Array.isArray(content) ? content.join(", ") : content;
+  let str = Array.isArray(content) ? content.join(join) : content;
   str = str.replace(/\u0092/g, `'`);
 
   if (separator) {
