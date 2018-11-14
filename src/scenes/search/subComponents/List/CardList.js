@@ -102,9 +102,14 @@ const Mnr = ({ data, index }) => {
   const INV = data.INV;
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const title = data.TICO || data.TITR;
-  const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
-  const peri = data.PERI;
+  // const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+  const domn = data.DOMN ? data.DOMN.join(", ") : "";
+  const author = String(data.AUTR).replace("#", " ");
   const loc = data.LOCA;
+  const affe = data.AFFE;
+  const cate = data.CATE;
+  const phot = data.PHOT;
+
   const img = image(data);
 
   return (
@@ -117,6 +122,7 @@ const Mnr = ({ data, index }) => {
     >
       <div className="thumbnail">{img}</div>
       <div className="content">
+        <p>{author}</p>
         <div style={{ display: "flex" }}>
           <h2>
             {capitalizeFirstLetter(title)}
@@ -126,15 +132,15 @@ const Mnr = ({ data, index }) => {
           <span>
             <small className="base">Mnr</small>
             <br />
-            {REF}
-            <br />
             {INV}
           </span>
         </div>
         <div>
-          <p>{author}</p>
-          <p>{peri}</p>
+          <p>{domn}</p>
           <p>{loc}</p>
+          <p>{affe}</p>
+          <p>{cate}</p>
+          <p>{phot}</p>
         </div>
       </div>
     </Link>

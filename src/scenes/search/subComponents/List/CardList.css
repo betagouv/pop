@@ -7,7 +7,7 @@
   height: 110px;
   overflow: hidden;
   background-color: white;
-  height: 250px;
+  height: auto;
   border-radius: 5px;
 }
 
