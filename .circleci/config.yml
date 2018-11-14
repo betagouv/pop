@@ -52,8 +52,14 @@ jobs:
         - run:
             name: Install awscli
             command: sudo pip install awsebcli
-        - run: eb use pop-consultation-staging --profile default
-        - run: eb deploy --profile default
+          - run:
+            name: AWS credentials
+            command: |
+              mkdir ~/.aws
+              echo "[eb-cli]" > ~/.aws/credentials
+              echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+              echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+        - run: eb deploy pop-consultation-staging
 
 workflows:
   version: 2
