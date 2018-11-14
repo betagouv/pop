@@ -40,6 +40,9 @@ jobs:
             root: ~/repo
             paths:
                 - build
+                - .ebextensions
+                - .elasticbeanstalk
+                - .ebignore
   deploy-eb-staging:
     working_directory: ~/repo
     docker:
