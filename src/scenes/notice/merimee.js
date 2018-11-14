@@ -6,7 +6,7 @@ import Header from "./components/header";
 import Title from "./components/title";
 import Loader from "../../components/loader";
 import API from "../../services/api";
-import NotFound from "./components/not-found";
+import NotFound from "../../components/NotFound";
 import { postFixedLink } from "./utils";
 import "./index.css";
 

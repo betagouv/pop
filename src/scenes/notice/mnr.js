@@ -4,7 +4,7 @@ import Field from "./components/field";
 import Header from "./components/header";
 import Loader from "../../components/loader";
 import API from "../../services/api";
-import NotFound from "./components/not-found";
+import NotFound from "../../components/NotFound";
 
 import "./index.css";
 

@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import Header from './scenes/header';
 import Footer from './scenes/footer';
+import NotFound from "./components/NotFound";
 
 import Home from './scenes/home';
 import Search from './scenes/search';
@@ -33,6 +34,7 @@ export default class PublicRoutes extends React.Component {
             <Route path={'/search'} component={Search} />
             <Route path={'/opendata'} component={Opendata} />
             <Route path={'/notice/:ref'} component={Notice} />
+            <Route component={NotFound} />
           </Switch>
           <Footer />
         </div>
