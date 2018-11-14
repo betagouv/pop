@@ -72,7 +72,7 @@ class Notice extends React.Component {
               <Col className="image" sm="12">
                 <div className="notice-details">
                   <Field
-                    title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt :"
+                    title="N°Inventaire : "
                     content={this.state.notice.INV}
                   />
                   <Field
@@ -80,7 +80,7 @@ class Notice extends React.Component {
                     content={this.state.notice.DOMN}
                   />
                   <Field
-                    title="Auteur / exécutant / collecteur :"
+                    title="Auteur :"
                     content={this.state.notice.AUTR}
                     separator="#"
                   />
