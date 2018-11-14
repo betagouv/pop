@@ -37,6 +37,7 @@
     "redux-form": "^7.3.0",
     "redux-saga": "^0.16.0",
     "shave": "^2.5.1",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "tls": "^0.0.1",
     "url-search-params-polyfill": "^3.0.0",
     "webfontloader": "^1.6.28"
@@ -59,7 +60,7 @@
       "./src/__tests__/setup/"
     ],
     "moduleNameMapper": {
-      "^.+\\.(css|scss|png|jpg|scvg)$": "identity-obj-proxy"
+      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "identity-obj-proxy"
     }
   },
   "engines": {

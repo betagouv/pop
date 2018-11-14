@@ -1,0 +1,19 @@
+.notice-not-found {
+  text-align: center;
+  padding-top: 35vh;
+  display: flex;
+  padding: 60px;
+}
+
+.notice-not-found img {
+  width: 400px;
+}
+.notice-not-found .notice-not-found-right {
+  flex: 1;
+}
+.notice-not-found .notice-not-found-left {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 50px;
+  flex: 1;
+}
