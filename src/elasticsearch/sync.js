@@ -16,7 +16,7 @@ async function run() {
   program
     .version("0.1.0")
     .option("-f, --force", "Force sync")
-    .option("-c, --chunks [chunks]", "Size of chunks", 3000)
+    .option("-c, --chunks [chunks]", "Size of chunks", 1000)
     .option("-s, --skip <skip>", "Skip n first entries")
     .option(
       "-i --indices <indices>",
