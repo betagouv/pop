@@ -16,42 +16,42 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
-    build-staging:
-        working_directory: ~/repo
-        docker:
-            - image: circleci/node:8.10
-        steps:
-            - checkout
-            - attach_workspace:
-                # Must be absolute path or relative path from working_directory
-                at: ~/repo
-            - restore_cache: # special step to restore the dependency cache
-                key: dependency-cache-{{ checksum "package.json" }}
-            - run: yarn install
-            - save_cache:
-                key: dependency-cache-{{ checksum "package.json" }}
-                paths:
-                    - node_modules
-                    - yarn.lock
-            - run: yarn build:staging
-            - persist_to_workspace:
-                # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-                # taken to be the root directory of the workspace.
-                root: ~/repo
-                paths:
-                    - build
-    deploy-eb-staging:
-        working_directory: ~/repo
-        docker:
-            - image: circleci/python:2.7-jessie
-        steps:
-            - attach_workspace:
-                # Must be absolute path or relative path from working_directory
-                at: ~/repo
-            - run:
-                name: Install awscli
-                command: sudo pip install awsebcli
-            - run: eb deploy pop-consultation-staging
+  build-staging:
+    working_directory: ~/repo
+    docker:
+        - image: circleci/node:8.10
+    steps:
+        - checkout
+        - attach_workspace:
+            # Must be absolute path or relative path from working_directory
+            at: ~/repo
+        - restore_cache: # special step to restore the dependency cache
+            key: dependency-cache-{{ checksum "package.json" }}
+        - run: yarn install
+        - save_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
+            paths:
+                - node_modules
+                - yarn.lock
+        - run: yarn build:staging
+        - persist_to_workspace:
+            # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+            # taken to be the root directory of the workspace.
+            root: ~/repo
+            paths:
+                - build
+  deploy-eb-staging:
+    working_directory: ~/repo
+    docker:
+        - image: circleci/python:2.7-jessie
+    steps:
+        - attach_workspace:
+            # Must be absolute path or relative path from working_directory
+            at: ~/repo
+        - run:
+            name: Install awscli
+            command: sudo pip install awsebcli
+        - run: eb deploy pop-consultation-staging
 
 workflows:
   version: 2
