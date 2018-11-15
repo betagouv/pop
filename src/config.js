@@ -7,7 +7,7 @@ const secret = process.env.SECRET || "not-so-secret";
 
 if (process.env.NODE_ENV === "test") {
   PORT = 3000;
-  mongoUrl = `mongodb://127.0.0.1/poptest`;
+  mongoUrl = `mongodb://localhost:27017/poptest`;
   esUrl = "127.0.0.1:9200";
   s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 }

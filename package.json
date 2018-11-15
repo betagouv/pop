@@ -9,7 +9,7 @@
     "start": "node ./src/index.js  ",
     "deploy:prod": "yarn && eb deploy pop-api --profil POP",
     "deploy:staging": "yarn && eb deploy pop-api-staging --profil POP",
-    "test": "mocha --timeout 10000"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "elasticsearch": "^14.2.2",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "fs": "^0.0.1-security",
     "generate-password": "^1.4.0",
     "helmet": "^3.12.0",
@@ -39,7 +39,7 @@
     "http-proxy-middleware": "^0.19.0",
     "jsonwebtoken": "^8.3.0",
     "mongoosastic": "^4.4.1",
-    "mongoose": "^5.3.4",
+    "mongoose": "^5.3.8",
     "mongoose-paginate": "^5.0.3",
     "multer": "^1.3.1",
     "nodemailer": "^4.6.7",
@@ -55,10 +55,12 @@
     "commander": "^2.19.0",
     "cross-env": "^5.1.6",
     "inquirer": "^6.2.0",
+    "jest": "^23.6.0",
     "listr": "^0.14.2",
     "listr-update-renderer": "^0.4.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "supertest": "^3.3.0"
   }
 }
