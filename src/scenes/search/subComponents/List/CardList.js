@@ -47,22 +47,7 @@ export default ({ data }) => {
       };
       break;
     case "memoire":
-      content = {
-        title: data.TICO || data.LEG,
-        subtitle: joinData([
-          data.OBJET,
-          data.EDIF,
-          data.LEG,
-          data.DATOEU,
-          data.DATOEU ? "" : data.SCLE
-        ]),
-        ref: data.REF,
-        categories: data.TECH,
-        author: data.AUTP,
-        data: joinData([data.DATPV, data.DATOR]),
-        loc: data.LOCA
-      };
-      break;
+      return <Memoire data={data} />;
   }
   return (
     <Link
@@ -91,6 +76,48 @@ export default ({ data }) => {
           <p>{content.author}</p>
           <p>{content.data}</p>
           <p>{content.loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const Memoire = ({ data, index }) => {
+  const REF = data.REF;
+  const LOCA = data.LOCA;
+  const EDIF = data.EDIF;
+  const LEGOBJT = joinData([data.LOG, data.OBJT]);
+  const DATPB = data.DATPB;
+  const AUTP = data.AUTP;
+  const SERIE = data.SERIE;
+  const TITRE = data.TITRE;
+
+  const img = image(data);
+
+  return (
+    <Link
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      to={`/notice/memoire/${REF}`}
+      className="list-card"
+      key={REF}
+    >
+      <div className="thumbnail">{img}</div>
+      <div className="content">
+        <p>{author}</p>
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(TITRE)}
+            <br />
+            <small>{LEGOBJT}</small>
+          </h2>
+        </div>
+        <div>
+          <p>{EDIF}</p>
+          <p>{DATPB}</p>
+          <p>{AUTP}</p>
+          <p>{SERIE}</p>
+          <p>{LOCA}</p>
         </div>
       </div>
     </Link>
