@@ -9,7 +9,8 @@
     "start": "node ./src/index.js  ",
     "deploy:prod": "yarn && eb deploy pop-api --profil POP",
     "deploy:staging": "yarn && eb deploy pop-api-staging --profil POP",
-    "test": "jest"
+    "test": "jest",
+    "export-db-schemas": "node src/export-db-schemas"
   },
   "repository": {
     "type": "git",
