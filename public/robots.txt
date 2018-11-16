@@ -1,4 +1,4 @@
 User-Agent: * 
 Disallow: 
 
-Sitemap: http://pop.culture.gouv.fr/sitemap.xml
+Sitemap: http://www.pop.culture.gouv.fr/sitemap/sitemap.xml
