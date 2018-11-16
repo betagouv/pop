@@ -4,8 +4,8 @@ import Field from "./components/field";
 import Header from "./components/header";
 import Loader from "../../components/loader";
 import API from "../../services/api";
+import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";
-
 import "./index.css";
 
 class Notice extends React.Component {
@@ -318,16 +318,10 @@ class Notice extends React.Component {
                   join=" ; "
                 />
               </div>
-              <a
-                href={`mailto:${
-                  this.state.notice.CONTACT
-                }?subject=Demande à propos de la notice n°${
-                  this.state.notice.REF
-                }`}
-                className="notice-btn"
-              >
-                Contactez-nous
-              </a>
+              <ContactUs
+                contact={this.state.notice.CONTACT}
+                reference={this.state.notice.REF}
+              />
             </div>
           </Col>
         </Row>

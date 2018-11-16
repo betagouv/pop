@@ -6,6 +6,7 @@ import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
 import Loader from "../../components/loader";
 import API from "../../services/api";
+import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";
 import { findCollection } from "./utils";
 
@@ -505,16 +506,10 @@ class Notice extends React.Component {
                 />
                 <Field title="" content={this.state.notice.COPY} />
               </div>
-              <a
-                href={`mailto:${
-                  this.state.notice.CONTACT
-                }?subject=Demande à propos de la notice n°${
-                  this.state.notice.REF
-                }`}
-                className="notice-btn"
-              >
-                Contactez-nous
-              </a>
+              <ContactUs
+                contact={this.state.notice.CONTACT}
+                reference={this.state.notice.REF}
+              />
             </div>
             <SeeMore notice={this.state.notice} />
           </Col>

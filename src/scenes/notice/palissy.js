@@ -8,7 +8,7 @@ import Loader from "../../components/loader";
 import Header from "./components/header";
 import API from "../../services/api";
 import { findCollection } from "./utils";
-
+import ContactUs from "./components/ContactUs";
 import "./index.css";
 
 class Notice extends React.Component {
@@ -482,16 +482,10 @@ class Notice extends React.Component {
                 />
                 <Field title="" content={this.state.notice.COPY} />
               </div>
-              <a
-                href={`mailto:${
-                  this.state.notice.CONTACT
-                }?subject=Demande à propos de la notice n°${
-                  this.state.notice.REF
-                }`}
-                className="notice-btn"
-              >
-                Contactez-nous
-              </a>
+              <ContactUs
+                contact={this.state.notice.CONTACT}
+                reference={this.state.notice.REF}
+              />
             </div>
             <SeeMore notice={this.state.notice} />
           </Col>

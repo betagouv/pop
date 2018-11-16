@@ -18,7 +18,7 @@ export function findCollection(ref = "") {
 // Sometimes, links are f***ed up. We try to post-fix them.
 export function postFixedLink(link) {
   return link
-    .replace(/^<a href=([^ ]+)?.*$/, "$1")
+    .replace(/^<a href=([^ ]+)?.*$/i, "$1")
     .replace(
       /^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i,
       "http://www2.culture.gouv.fr$1"
@@ -48,9 +48,5 @@ export function toFieldImages(images) {
 }
 
 export function hasCoordinates(point) {
-    return !!(
-      point &&
-      point.lat &&
-      point.lon
-    );
+  return !!(point && point.lat && point.lon);
 }
