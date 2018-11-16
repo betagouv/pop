@@ -21,6 +21,12 @@
   "bugs": {
     "url": "https://github.com/betagouv/pop-api/issues"
   },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./src/__tests__/setup/setup.js",
+    "testPathIgnorePatterns": [
+      "./src/__tests__/setup/"
+    ]
+  },
   "homepage": "https://github.com/betagouv/pop-api#readme",
   "dependencies": {
     "@sentry/node": "^4.1.1",

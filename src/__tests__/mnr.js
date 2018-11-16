@@ -1,4 +1,4 @@
-const app = require("../src/app");
+const app = require("../app");
 const request = require("supertest");
 const mongoose = require("mongoose");
 
@@ -6,11 +6,12 @@ afterAll(() => {
   mongoose.disconnect();
 });
 
-describe("/GET joconde", () => {
-  test(`It should return joconde`, async () => {
+describe("/GET mnr", () => {
+  test(`It should return mnr`, async () => {
     const response = await request(app)
-      .get("/joconde")
+      .get("/mnr")
       .set("Accept", "application/json")
       .expect(200);
   });
 });
+// trigger CI

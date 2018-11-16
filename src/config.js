@@ -12,10 +12,12 @@ if (process.env.NODE_ENV === "test") {
   s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 }
 
-console.log(`PORT : ${PORT}`);
-console.log(`MONGO : ${mongoUrl}`);
-console.log(`ES : ${esUrl}`);
-console.log(`S3 : ${s3Bucket}`);
+if (process.env.NODE_ENV !== "test") {
+  console.log(`PORT : ${PORT}`);
+  console.log(`MONGO : ${mongoUrl}`);
+  console.log(`ES : ${esUrl}`);
+  console.log(`S3 : ${s3Bucket}`);
+}
 
 module.exports = {
   mongoUrl,
