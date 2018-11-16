@@ -9,7 +9,7 @@ export default () => (
             <h1>POPSI !</h1>
             <p>
                 La page que vous recherchez est introuvable...<br/><br/>
-                Ne désespérez pas, nos archéologues sont sur le coup !<br/>
+                Ne désespérez pas, nos archéobogues sont sur le coup !<br/>
                 Vous pouvez{" "}
                 <a href="/">essayer une nouvelle recherche</a>
             </p>
