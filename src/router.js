@@ -13,6 +13,8 @@ import Notice from './scenes/notice';
 
 import PiwikReactRouter from 'piwik-react-router';
 
+import ScrollToTop from "./components/ScrollToTop";
+
 const piwik = PiwikReactRouter({
 	url: 'https://stats.data.gouv.fr',
 	siteId: 63
@@ -28,6 +30,7 @@ export default class PublicRoutes extends React.Component {
     return (
       <ConnectedRouter history={piwik.connectToHistory(this.props.history)}>
         <div className='main'>
+          <ScrollToTop />
           <Header />
           <Switch>
             <Route exact path={'/'} component={Home} />
