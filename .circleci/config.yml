@@ -30,8 +30,7 @@ jobs:
     steps:
       - checkout
       - restore_node_modules
-      # Too bad: can't use --frozen-lockfile because old yarn version :/
-      - run: yarn install 
+      - run: yarn install --frozen-lockfile
       - save_node_modules
   test:
     docker:
