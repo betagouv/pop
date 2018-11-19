@@ -84,18 +84,20 @@ module.exports = env => {
           }
         },
         {
-          test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
+          test: /\.(woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           use: [
             "file-loader",
-            {
-              loader: "image-webpack-loader",
-              options: {
-                bypassOnDebug: true
-              }
-            }
           ]
-        }
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
+          loader: require.resolve('url-loader'),
+          options: {
+            limit: 10000,
+            name: '[name].[hash:8].[ext]',
+          },
+        },
       ]
     },
     plugins: plugins
