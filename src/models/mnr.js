@@ -5,10 +5,42 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
   {
-    PRODUCTEUR: { type: String, default: "MNR" },
-    BASE: { type: String, default: "Récupération artistique (MNR Rose-Valland)" },
-    CONTIENT_IMAGE: { type: String, default: "non" },
-    REF: { type: String, unique: true, index: true, trim: true },
+    PRODUCTEUR: {
+      type: String,
+      default: "MNR",
+      documentation: {
+        description: "Producteur de la donnée : Valeur MNR",
+        master: true
+      }
+    },
+    BASE: {
+      type: String,
+      default: "Récupération artistique (MNR Rose-Valland)",
+      documentation: {
+        description:
+          "Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)",
+        master: true
+      }
+    },
+    CONTIENT_IMAGE: {
+      type: String,
+      default: "non",
+      documentation: {
+        description:
+          "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
+        master: true
+      }
+    },
+    REF: {
+      type: String,
+      unique: true,
+      index: true,
+      trim: true,
+      documentation: {
+        description: "Référence unique de la notice",
+        master: false
+      }
+    },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     TOUT: { type: String, default: "" },
     AUTR: { type: [String], default: [] },
@@ -54,8 +86,22 @@ const Schema = new mongoose.Schema(
     REPR: { type: String, default: "" },
     SREP: { type: String, default: "" },
     REFIM: { type: String, default: "" },
-    DMAJ: { type: String, default: "" },
-    DMIS: { type: String, default: "" },
+    DMAJ: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la dernière mise à jour",
+        master: true
+      }
+    },
+    DMIS: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la création POP/Mistral",
+        master: true
+      }
+    },
     AFFE: { type: String, default: "" },
     NUMS: { type: String, default: "" },
     SUITE: { type: String, default: "" },
