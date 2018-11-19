@@ -1,80 +1,88 @@
-version: 2
+version: 2.1
+
+commands:
+  restore_node_modules:
+    steps:
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+  save_node_modules:
+    steps:
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+  configure_aws_ebcli:
+    steps:
+      - run: sudo pip install awsebcli
+      - run:
+          name: AWS credentials
+          command: |
+            mkdir ~/.aws
+            echo "[eb-cli]" > ~/.aws/credentials
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
 jobs:
+  prepare:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_node_modules
+      - run: yarn install --frozen-lockfile
+      - save_node_modules
   test:
     docker:
       - image: circleci/node:8.10
     working_directory: ~/repo
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-      - run: yarn install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - restore_node_modules
       - run: yarn test
-  build-staging:
-    working_directory: ~/repo
+  build_staging:
     docker:
-        - image: circleci/node:8.10
-    steps:
-        - checkout
-        - attach_workspace:
-            # Must be absolute path or relative path from working_directory
-            at: ~/repo
-        - restore_cache: # special step to restore the dependency cache
-            key: dependency-cache-{{ checksum "package.json" }}
-        - run: yarn install
-        - save_cache:
-            key: dependency-cache-{{ checksum "package.json" }}
-            paths:
-                - node_modules
-                - yarn.lock
-        - run: yarn build:staging
-        - persist_to_workspace:
-            # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-            # taken to be the root directory of the workspace.
-            root: ~/repo
-            paths:
-                - build
-  deploy-eb-staging:
+      - image: circleci/node:8.10
     working_directory: ~/repo
-    docker:
-        - image: circleci/python:2.7-jessie
     steps:
-        - checkout
-        - attach_workspace:
-            # Must be absolute path or relative path from working_directory
-            at: ~/repo
-        - run:
-            name: Install awscli
-            command: sudo pip install awsebcli
-        - run:
-            name: AWS credentials
-            command: |
-              mkdir ~/.aws
-              echo "[eb-cli]" > ~/.aws/credentials
-              echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
-              echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-        - run: eb deploy pop-consultation-staging
+      - checkout
+      - restore_node_modules
+      - run: yarn build:staging
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - build
+  deploy_eb_staging:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - checkout
+      - restore_node_modules
+      - configure_aws_ebcli
+      - run: eb deploy pop-consultation-staging
 
 workflows:
-  version: 2
-  test-then-deploy:
+  version: 2.1
+  ci_cd:
     jobs:
-      - test
-      - build-staging:
+      - prepare
+      - test:
           requires:
-            - test
+            - prepare
+      - build_staging:
+          requires:
+            - prepare
           filters:
             branches:
               only: master
-      - deploy-eb-staging:
+      - deploy_eb_staging:
           requires:
-            - build-staging
+            - prepare
+            - test
+            - build_staging
           filters:
             branches:
               only: master
