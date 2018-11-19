@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const hsts = require("hsts");
+const forceDomain = require("forcedomain");
 
 const app = express();
 const port = 8081;
@@ -9,6 +9,14 @@ console.log("START", new Date());
 
 app.use(express.static(path.join(__dirname, "/../../build")));
 app.use(express.static(path.join(__dirname, "/../../sitemap")));
+
+app.use(
+  forceDomain({
+    hostname: "www.pop.culture.gouv.fr",
+    excludeRule: /elasticbeanstalk\.com/i
+    // For later add: `protocol: 'https'`
+  })
+);
 
 // Sitemap redirection
 app.get("/sitemap/*", (req, res) => {
