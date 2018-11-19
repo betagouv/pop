@@ -58,9 +58,9 @@ jobs:
       - image: circleci/python:2.7-jessie
     working_directory: ~/repo
     steps:
+      - checkout
       - attach_workspace:
           at: ~/repo
-      - checkout
       - restore_node_modules
       - configure_aws_ebcli
       - run: eb deploy pop-consultation-staging
