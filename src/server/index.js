@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, "/../../sitemap")));
 app.use(
   forceDomain({
     hostname: "www.pop.culture.gouv.fr",
-    excludeRule: /elasticbeanstalk\.com/i
+    excludeRule: /elasticbeanstalk\.com|pop-staging\.culture\.gouv\.fr/i
     // For later add: `protocol: 'https'`
   })
 );
