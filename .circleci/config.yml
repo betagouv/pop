@@ -63,6 +63,29 @@ jobs:
       - restore_node_modules
       - configure_aws_ebcli
       - run: eb deploy pop-consultation-staging
+  build_prod:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_node_modules
+      - run: yarn build:prod
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+              - build
+  deploy_eb_prod:
+    docker:
+      - image: circleci/python:2.7-jessie
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - restore_node_modules
+      - configure_aws_ebcli
+      - run: eb deploy pop-consultation
 
 workflows:
   version: 2.1
@@ -80,9 +103,20 @@ workflows:
               only: master
       - deploy_eb_staging:
           requires:
-            - prepare
             - test
             - build_staging
+          filters:
+            branches:
+              only: master
+      - build_prod:
+          requires:
+            - deploy_eb_staging
+          filters:
+            branches:
+              only: master
+      - deploy_eb_prod:
+          requires:
+            - build_prod
           filters:
             branches:
               only: master
