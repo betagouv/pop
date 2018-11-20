@@ -1,13 +1,17 @@
 const fs = require("fs");
 const sm = require("sitemap");
-var ObjectId = require("mongoose").Types.ObjectId;
+const ObjectId = require("mongoose").Types.ObjectId;
 require("../mongo");
 
 async function run() {
-  // await generateGeneral();
+  if (!fs.existsSync(`sitemap`)) {
+    fs.mkdirSync(`sitemap`);
+  }
+
+  await generateGeneral();
   // await generateSiteMapFile("merimee");
   // await generateSiteMapFile("palissy");
-  // await generateSiteMapFile("mnr");
+  await generateSiteMapFile("mnr");
   // await generateSiteMapFile("joconde");
   // await generateSiteMapFile("memoire");
 
@@ -26,9 +30,9 @@ setTimeout(() => {
 
 function generateGeneral() {
   return new Promise((resolve, reject) => {
-    let urls = [];
+    const urls = [];
     urls.push(getURL("http://www.pop.culture.gouv.fr"));
-    var sitemap = sm.createSitemap({
+    const sitemap = sm.createSitemap({
       hostname: "http://www.pop.culture.gouv.fr",
       urls
     });
