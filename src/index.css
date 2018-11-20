@@ -8,6 +8,7 @@ body {
   overflow-y: auto;
   font-family: "Open Sans", sans-serif;
   color: #2a282b;
+  margin-bottom: 60px;
 }
 
 @font-face {
