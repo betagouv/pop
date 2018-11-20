@@ -70,8 +70,13 @@ workflows:
             - build
       - deploy_eb_staging:
           requires:
-            - build
             - test
+          filters:
+            branches:
+              only: master
+      - deploy_eb_prod:
+          requires:
+            - deploy_eb_staging
           filters:
             branches:
               only: master
