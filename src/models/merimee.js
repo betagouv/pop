@@ -5,14 +5,52 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
   {
-    REF: { type: String, unique: true, index: true, trim: true },
+    REF: {
+      type: String,
+      unique: true,
+      index: true,
+      trim: true,
+      documentation: {
+        description: "Référence unique de la notice",
+        master: false
+      }
+    },
     PRODUCTEUR: { type: String, default: "" },
-    BASE: { type: String, default: "Patrimoine architectural (Mérimée)" },
-    CONTIENT_IMAGE: { type: String, default: "" },
+    BASE: {
+      type: String,
+      default: "Patrimoine architectural (Mérimée)",
+      documentation: {
+        description: "Nom de la base : Patrimoine architectural (Mérimée)",
+        master: true
+      }
+    },
+    CONTIENT_IMAGE: {
+      type: String,
+      default: "",
+      documentation: {
+        description:
+          "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
+        master: true
+      }
+    },
     MEMOIRE: [{ ref: String, url: String }],
     POP_COORDONNEES: {
-      lat: { type: Number, default: 0 },
-      lon: { type: Number, default: 0 }
+      lat: {
+        type: Number,
+        default: 0,
+        documentation: {
+          description: "Latitude de la notice en WGS84",
+          master: true
+        }
+      },
+      lon: {
+        type: Number,
+        default: 0,
+        documentation: {
+          description: "Longitude de la notice en WGS84",
+          master: true
+        }
+      }
     },
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
@@ -51,8 +89,22 @@ const Schema = new mongoose.Schema(
     DEPL: { type: String, default: "" },
     DESC: { type: String, default: "" },
     DIMS: { type: String, default: "" },
-    DMAJ: { type: String, default: "", es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
-    DMIS: { type: String, default: "", es_type: "keyword" }, // The format of date is not a date object everywhere. I cant translate it to date without a deepclean
+    DMAJ: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la dernière mise à jour",
+        master: true
+      }
+    },
+    DMIS: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la création POP/Mistral",
+        master: true
+      }
+    },
     DOSS: { type: String, default: "" },
     DPRO: { type: String, default: "" },
     DPT: { type: String, default: "" },

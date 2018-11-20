@@ -15,8 +15,11 @@ const models = fs
       name: v.path,
       type: v.instance,
       required: v.options.required,
-      opendata: v.options.opendata,
-      description: v.options.description
+      opendata: v.options.documentation ? v.options.documentation.opendata : "",
+      master: v.options.documentation ? v.options.documentation.master : "",
+      description: v.options.documentation
+        ? v.options.documentation.description
+        : ""
     }))
   }));
 
