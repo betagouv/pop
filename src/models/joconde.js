@@ -50,6 +50,16 @@ const Schema = new mongoose.Schema(
         }
       }
     },
+    POP_CONTIENT_GEOLOCALISATION: {
+      type: String,
+      enum: ["oui", "non"],
+      default: "non",
+      documentation: {
+        description:
+          "Champ qui permet de savoir si la geolocalisation est disponible ou non",
+        master: true
+      }
+    },
     REF: {
       type: String,
       unique: true,
