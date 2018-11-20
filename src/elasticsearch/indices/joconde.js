@@ -651,7 +651,16 @@ module.exports = {
               type: "keyword"
             }
           }
-        }
+        },
+        POP_CONTIENT_GEOLOCALISATION: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
       }
     }
   }
