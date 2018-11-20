@@ -56,7 +56,7 @@ const Schema = new mongoose.Schema(
       default: "non",
       documentation: {
         description:
-          "Champs qui permet de savoir si la geolocalisation est disponible ou non",
+          "Champ qui permet de savoir si la geolocalisation est disponible ou non",
         master: true
       }
     },
