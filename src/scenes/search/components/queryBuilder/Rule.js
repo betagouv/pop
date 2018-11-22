@@ -9,7 +9,7 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     return { exists: { field: valueSelected } };
   } else if (actionSelected === "><") {
     // { value: "><", text: "n'existe pas" }
-    return { exists: { field: valueSelected } };
+    return {bool: { must_not: { exists: { field: valueSelected } } } };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
     const obj = {};
@@ -41,11 +41,12 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     obj[`${valueSelected}.keyword`] = { gt: resultSelected };
     return { range: obj };
   } else if (actionSelected === "^" && resultSelected) {
-    //start with
+    // { value: "^", text: "commence par" }
     const obj = {};
     obj[`${valueSelected}.keyword`] = `${resultSelected}*`;
     return { wildcard: obj };
-  } else if (actionSelected === "€" && resultSelected) {
+  } else if (actionSelected === "*" && resultSelected) {
+    // { value: "*", text: "contient" }
     const obj = {};
     obj[`${valueSelected}.keyword`] = `*${resultSelected}*`;
     return { wildcard: obj };
@@ -297,8 +298,8 @@ const ActionElement = ({ onChange, value }) => {
     { value: "<", text: "strictement inférieur à" },
     { value: "<>", text: "existe" },
     { value: "><", text: "n'existe pas" },
-    { value: "€", text: "contient" },
-    { value: "^", text: "commence par" }
+    { value: "*", text: "contient" },
+    { value: "^", text: "commence par" },
   ].map(({ value, text }) => (
     <option key={value} value={value}>
       {text}

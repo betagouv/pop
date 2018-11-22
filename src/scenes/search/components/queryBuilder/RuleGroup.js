@@ -32,26 +32,6 @@ function getQuery(q) {
   return obj;
 }
 
-/*
-{
-    "query": {
-        "bool": {
-            "must": [
-                {
-                    "term": {"shape": "round"},
-                    "bool": {
-                        "should": [
-                            {"term": {"color": "red"}},
-                            {"term": {"color": "blue"}}
-                        ]
-                    }
-                }
-            ]
-        }
-    }
-}
-*/
-
 export default class RuleGroup extends React.Component {
   constructor(props) {
     super(props);
