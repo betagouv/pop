@@ -56,12 +56,20 @@ class Notice extends React.Component {
 
   delete() {
     const ref = this.props.match.params.ref;
-    API.deleteNotice("joconde", ref).then(() => {
-      toastr.success(
-        "Notice supprimée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
-      );
-    });
+    const confirmText =
+      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
+      `Êtes-vous certain·e de vouloir continuer ?`;
+    const toastrConfirmOptions = {
+      onOk: () => {
+        API.deleteNotice("joconde", ref).then(() => {
+          toastr.success(
+            "Notice supprimée",
+            "La modification sera visible dans 1 à 5 min en diffusion"
+          );
+        });
+      }
+    };
+    toastr.confirm(confirmText, toastrConfirmOptions)
   }
 
   onSubmit(values) {
@@ -406,7 +414,6 @@ class Notice extends React.Component {
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-              {/* <Button color="primary" type="submit" >Sauvegarder</Button> */}
             </div>
           ) : (
             <div />

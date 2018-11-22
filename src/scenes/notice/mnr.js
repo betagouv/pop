@@ -92,12 +92,20 @@ class Notice extends React.Component {
 
   delete() {
     const ref = this.props.match.params.ref;
-    API.deleteNotice("mnr", ref).then(() => {
-      toastr.success(
-        "Notice supprimée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
-      );
-    });
+    const confirmText =
+      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
+      `Êtes-vous certain·e de vouloir continuer ?`;
+    const toastrConfirmOptions = {
+      onOk: () => {
+        API.deleteNotice("mnr", ref).then(() => {
+          toastr.success(
+            "Notice supprimée",
+            "La modification sera visible dans 1 à 5 min en diffusion"
+          );
+        });
+      }
+    };
+    toastr.confirm(confirmText, toastrConfirmOptions);
   }
 
   render() {

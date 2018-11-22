@@ -30,6 +30,7 @@ class PublicRoutes extends React.Component {
             position="top-right"
             transitionIn="fadeIn"
             transitionOut="fadeOut"
+            confirmOptions={{okText: 'Oui', cancelText: 'Annuler'}}
           />
           <Header />
           <Switch>
