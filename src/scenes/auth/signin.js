@@ -6,7 +6,15 @@ import Actions from "../../redux/auth/actions";
 const { signin } = Actions;
 
 class Signin extends Component {
-  state = { email: "", password: "", error: "" };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      error: "",
+      cgu: localStorage.getItem("cgu") || false
+    };
+  }
 
   loginWithEmail() {
     this.props.signin(this.state.email, this.state.password);
@@ -43,6 +51,20 @@ class Signin extends Component {
             value={this.state.password}
             onChange={e => this.setState({ password: e.target.value })}
           />
+          <div className="cgu">
+            <input
+              type="checkbox"
+              id="scales"
+              onChange={e => {
+                this.setState({ cgu: e.target.checked });
+              }}
+              checked={this.state.cgu}
+            />
+            En cliquant sur "se connecter", vous acceptez les{" "}
+            <a href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf">
+              CGU
+            </a>
+          </div>
           <Link
             style={{ textDecoration: "none" }}
             to="/auth/forget"
@@ -51,6 +73,7 @@ class Signin extends Component {
             Mot de passe oublié ?
           </Link>
           <Button
+            disabled={!this.state.cgu}
             className="submit-button"
             onClick={this.loginWithEmail.bind(this)}
           >

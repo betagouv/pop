@@ -14,6 +14,7 @@ export function* signin({ email, password }) {
 
     yield put({ type: actions.SIGNIN_SUCCESS, user, token });
     localStorage.setItem("token", token);
+    localStorage.setItem("cgu", true);
 
     if (
       process.env.NODE_ENV === "production" ||

@@ -14,6 +14,11 @@
   color: red;
 }
 
+.auth .cgu{
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
 .auth button {
   width: 100%;
   outline: none;
