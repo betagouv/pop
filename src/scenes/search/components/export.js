@@ -25,7 +25,15 @@ export default class ExportComponent extends React.Component {
   };
 
   exec(res) {
-    exportData(this.props.filename, res);
+    const d = new Date();
+    const date = ("0" + d.getDate()).slice(-2);
+    const month = ("0" + (d.getMonth() + 1)).slice(-2);
+    const year = d.getFullYear();
+    const minutes = ("0" + d.getMinutes()).slice(-2);
+    const hours = ("0" + d.getHours()).slice(-2);
+    const secondes = ("0" + d.getSeconds()).slice(-2);
+    const fileName = `${this.props.collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
+    exportData(fileName, res);
     this.setState({ res: [], page: 0, run: false });
   }
 

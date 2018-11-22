@@ -127,7 +127,7 @@ export default class Search extends React.Component {
               aggs: {}
             })}
           >
-            <ExportComponent FILTER={FILTER} filename="joconde.csv" />
+            <ExportComponent FILTER={FILTER} collection="joconde" />
           </ReactiveComponent>
         </div>
         <Row>

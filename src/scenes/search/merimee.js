@@ -88,7 +88,7 @@ export default class Search extends React.Component {
             URLParams={true}
             debounce={0}
           />
-          <ExportComponent FILTER={FILTER} filename="merimee.csv" />
+          <ExportComponent FILTER={FILTER} collection="merimee" />
         </div>
         <Row>
           <Col xs="3">
