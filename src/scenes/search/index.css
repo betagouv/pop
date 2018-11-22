@@ -110,7 +110,7 @@
 }
 
 .search #mainSearch-downshift-input {
-  height: 60px;
+  height: 50px;
 }
 
 .search .buttons {
@@ -137,8 +137,8 @@
   cursor: pointer;
   font-weight: 400;
   font-size: 20px;
-  height: 60px;
-  padding-top: 15px;
+  height: 50px;
+  padding-top: 10px;
 }
 .search .nav-pills .nav-item {
   flex-grow: 1;

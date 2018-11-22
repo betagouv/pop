@@ -50,14 +50,14 @@
 
 .list-card h2 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   color: #2a282b;
   margin-bottom: 0;
 }
 
 .list-card span {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   color: #19414c;
   margin-left: auto;
   text-align: right;
@@ -66,7 +66,7 @@
 .list-card p {
   color: #2a282b;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
