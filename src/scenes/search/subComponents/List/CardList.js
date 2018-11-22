@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { image } from "../../image";
 import "./CardList.css";
+import mdf from '../../../../assets/musee-de-france.jpg';
 
 const joinData = f => {
   return f
@@ -178,6 +179,7 @@ const Joconde = ({ data, index }) => {
             {REF}
           </span>
         </div>
+        <img src={mdf} className="mdf" />
         <div>
           <p>{author}</p>
           <p>{peri}</p>

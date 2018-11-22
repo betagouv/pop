@@ -19,6 +19,7 @@
   padding: 15px 30px 10px 0;
   overflow: hidden;
   width: 100%;
+  position: relative;
 }
 .list-card .thumbnail {
   width: 290px;
@@ -74,6 +75,14 @@
 
 .list-card .base {
   float: right;
+}
+
+.list-card img.mdf {
+  width: 50px;
+  height: auto;
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
 }
 
 @media screen and (max-width: 767px) {
