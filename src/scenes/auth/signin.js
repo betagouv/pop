@@ -54,12 +54,11 @@ class Signin extends Component {
           <div className="cgu">
             <input
               type="checkbox"
-              id="scales"
               onChange={e => {
                 this.setState({ cgu: e.target.checked });
               }}
               checked={this.state.cgu}
-            />
+            />{" "}
             En cliquant sur "se connecter", vous acceptez les{" "}
             <a href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf">
               CGU
