@@ -49,8 +49,13 @@ export default class Search extends React.Component {
           componentId="results"
           react={{ and: "advancedSearch" }}
           onResultStats={(total, took) => {
-            return `${total} résultats trouvés en ${took} ms.`;
+            if (total === 1) {
+              return `1 résultat`;
+            }
+            return `${total} résultats`;
           }}
+          onNoResults="Aucun résultat trouvé."
+          loader="Préparation de l'affichage des résultats..."
           URLParams={true}
           dataField=""
           size={20}
@@ -135,8 +140,13 @@ export default class Search extends React.Component {
                 and: FILTER
               }}
               onResultStats={(total, took) => {
-                return `${total} résultats trouvés en ${took} ms.`;
+                if (total === 1) {
+                  return `1 résultat`;
+                }
+                return `${total} résultats`;
               }}
+              onNoResults="Aucun résultat trouvé."
+              loader="Préparation de l'affichage des résultats..."
               dataField=""
               URLParams={true}
               size={20}
