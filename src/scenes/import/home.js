@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 
 import "./home.css";
 
@@ -24,6 +24,7 @@ export default class Import extends React.Component {
 
   render() {
     return (
+      <Container fluid>
       <div className="home-import">
         <div className="subtitle">Je souhaite importer</div>
         <Row>
@@ -56,6 +57,7 @@ export default class Import extends React.Component {
           ])}
         </Row>
       </div>
+      </Container>
     );
   }
 }

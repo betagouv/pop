@@ -36,7 +36,7 @@ export default class Home extends React.Component {
           Les notices que vous versez sur cette plateforme de test ne seront pas
           publiées en diffusion. Si vous souhaitez publier vos données sur notre
           site pop.culture.gouv.fr, connectez-vous sur la plateforme de
-          production :
+          production :&nbsp;
           <a
             href="http://pop-production.eu-west-3.elasticbeanstalk.com/auth/signin"
             className="alert-link"
