@@ -51,7 +51,7 @@ class Notice extends React.Component {
       }
       console.log("NOTICE", notice);
       const editable =
-        ["CRMH", "CAOA", "SAP"].includes(notice.PRODUCTEUR) &&
+        ["CRMH", "CAOA", "SAP","SDAP"].includes(notice.PRODUCTEUR) &&
         this.props.canUpdate;
       this.props.initialize({ ...notice, IMG: [notice.IMG] });
       this.setState({ loading: false, notice, editable });
