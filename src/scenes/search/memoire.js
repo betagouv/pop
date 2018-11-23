@@ -16,7 +16,17 @@ import QueryBuilder from "./components/queryBuilder";
 import Memoire from "../../entities/memoire";
 import { es_url, bucket_url } from "../../config.js";
 
-const FILTER = ["mainSearch", "dom", "autp", "producteur", "loca"];
+const FILTER = [
+  "mainSearch",
+  "dom",
+  "autp",
+  "producteur",
+  "loca",
+  "region",
+  "departement",
+  "commune",
+  "pays"
+];
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -103,6 +113,7 @@ export default class Search extends React.Component {
               title="Auteurs"
               className="filters"
               displayCount
+              sortByName={true}
               URLParams={true}
               react={{ and: FILTER }}
             />
@@ -111,6 +122,48 @@ export default class Search extends React.Component {
               dataField="LOCA.keyword"
               title="Localisation"
               displayCount
+              sortByName={true}
+              className="filters"
+              URLParams={true}
+              react={{ and: FILTER }}
+            />
+            <MultiList
+              componentId="pays"
+              dataField="PAYS.keyword"
+              title="Pays"
+              displayCount
+              sortByName={true}
+              className="filters"
+              URLParams={true}
+              react={{ and: FILTER }}
+            />
+
+            <MultiList
+              componentId="region"
+              dataField="REG.keyword"
+              title="Région"
+              displayCount
+              sortByName={true}
+              className="filters"
+              URLParams={true}
+              react={{ and: FILTER }}
+            />
+            <MultiList
+              componentId="departement"
+              dataField="DPT.keyword"
+              title="Département"
+              displayCount
+              sortByName={true}
+              className="filters"
+              URLParams={true}
+              react={{ and: FILTER }}
+            />
+            <MultiList
+              componentId="commune"
+              dataField="COM.keyword"
+              title="Commune"
+              displayCount
+              sortByName={true}
               className="filters"
               URLParams={true}
               react={{ and: FILTER }}
