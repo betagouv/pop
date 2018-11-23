@@ -65,6 +65,7 @@ const Schema = new mongoose.Schema(
       unique: true,
       index: true,
       trim: true,
+      required: true,
       documentation: {
         description: "Référence unique de la notice",
         master: false
@@ -563,6 +564,7 @@ const Schema = new mongoose.Schema(
     STAT: {
       type: [String],
       default: [],
+      required: true,
       documentation: {
         description:
           "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire",
