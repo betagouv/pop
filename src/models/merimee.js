@@ -206,7 +206,7 @@ Schema.pre("save", function(next, done) {
       this.DISCIPLINE = this.PRODUCTEUR = "Inventaire";
       break;
     case "PA":
-      this.DISCIPLINE = this.PRODUCTEUR = "Monument Historique";
+      this.DISCIPLINE = this.PRODUCTEUR = "Monuments Historiques";
       break;
     case "EA":
       this.DISCIPLINE = this.PRODUCTEUR = "Architecture";

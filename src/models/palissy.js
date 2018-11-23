@@ -194,7 +194,7 @@ Schema.pre("save", function(next, done) {
       this.PRODUCTEUR = "Inventaire";
       break;
     case "PM":
-      this.PRODUCTEUR = "Monument Historique";
+      this.PRODUCTEUR = "Monuments Historiques";
       break;
     case "EM":
       this.PRODUCTEUR = "Etat";
