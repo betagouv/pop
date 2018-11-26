@@ -5,32 +5,53 @@ const ImportSchema = new Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "user",
-    description: "Identifiant de l'utilisateur à l'origine de l'import"
+    documentation: {
+      description: "Identifiant de l'utilisateur à l'origine de l'import",
+      master: true
+    }
   },
   importedAt: {
     type: Date,
     default: Date.now(),
-    description: "Date de l'import "
+    documentation: {
+      description: "Date de l'import ",
+      master: true
+    }
   },
   institution: {
     type: String,
-    description: "Institution à l'origine de l'import"
+    documentation: {
+      description: "Institution à l'origine de l'import",
+      master: true
+    }
   },
   created: {
     type: Number,
-    description: "Nombre de notices créées lors de l'import"
+    documentation: {
+      description: "Nombre de notices créées lors de l'import",
+      master: true
+    }
   },
   updated: {
     type: Number,
-    description: "Nombre de notices mises à jour lors de l'import"
+    documentation: {
+      description: "Nombre de notices mises à jour lors de l'import",
+      master: true
+    }
   },
   rejected: {
     type: Number,
-    description: "Nombre de notices rejetées lors de l'import"
+    documentation: {
+      description: "Nombre de notices rejetées lors de l'import",
+      master: true
+    }
   },
   unChanged: {
     type: Number,
-    description: "Nombre de notices non mises à jour lors de l'import"
+    documentation: {
+      description: "Nombre de notices non mises à jour lors de l'import",
+      master: true
+    }
   }
 });
 

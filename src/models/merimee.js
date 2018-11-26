@@ -15,7 +15,11 @@ const Schema = new mongoose.Schema(
         master: false
       }
     },
-    PRODUCTEUR: { type: String, default: "" },
+    PRODUCTEUR: {
+      type: String,
+      default: "",
+      documentation: { description: "", master: false }
+    },
     BASE: {
       type: String,
       default: "Patrimoine architectural (Mérimée)",
@@ -55,40 +59,179 @@ const Schema = new mongoose.Schema(
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
       enum: ["oui", "non"],
-      default: "non"
+      default: "non",
+      documentation: {
+        description:
+          "Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'",
+        master: true
+      }
     },
     POP_COORDINATES_POLYGON: {
       type: { type: String, enum: ["Polygon"], default: "Polygon" },
       coordinates: [[{ type: [Number] }]]
     },
-    POP_DATE: { type: [Number], default: [] },
+    POP_DATE: {
+      type: [Number],
+      default: [],
+      documentation: {
+        description:
+          "Champ qui sera utilisé pour traduire les date en format requetable",
+        master: true
+      }
+    },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
-    TOUT: { type: String, default: "" },
-    ACTU: { type: String, default: "" },
-    ADRS: { type: String, default: "" },
-    AFFE: { type: String, default: "" },
-    AIRE: { type: String, default: "" },
-    APPL: { type: String, default: "" },
-    APRO: { type: [String], default: [] },
-    ARCHEO: { type: String, default: "" },
-    AUTP: { type: [String], default: [] },
-    AUTR: { type: [String], default: [] },
-    CADA: { type: [String], default: [] },
-    CANT: { type: String, default: "" },
-    COLL: { type: [String], default: [] },
-    COM: { type: String, default: "" },
-    COOR: { type: String, default: "" },
-    COORM: { type: String, default: "" },
-    COPY: { type: [String], default: [] },
-    COUV: { type: [String], default: [] },
-    DATE: { type: [String], default: [] },
-    DBOR: { type: String, default: "" },
-    DOMN: { type: [String], default: [] },
-    DENO: { type: [String], default: [] },
-    DENQ: { type: String, default: "" },
-    DEPL: { type: String, default: "" },
-    DESC: { type: String, default: "" },
-    DIMS: { type: String, default: "" },
+    TOUT: {
+      type: String,
+      default: "",
+      documentation: {
+        description:
+          "Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [DEPRECIE ?]",
+        master: false
+      }
+    },
+    ACTU: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Destinations successives et actuelle ",
+        master: false
+      }
+    },
+    ADRS: {
+      type: String,
+      default: "",
+      documentation: { description: "Adresse", master: false }
+    },
+    AFFE: {
+      type: String,
+      default: "",
+      documentation: { description: "Affectataire", master: false }
+    },
+    AIRE: {
+      type: String,
+      default: "",
+      documentation: { description: "Aire d'étude", master: false }
+    },
+    APPL: {
+      type: String,
+      default: "",
+      documentation: { description: "Appellation et titre", master: false }
+    },
+    APRO: {
+      type: [String],
+      default: [],
+      documentation: { description: "", master: false }
+    },
+    ARCHEO: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Référence dans la base Patriarche",
+        master: false
+      }
+    },
+    AUTP: {
+      type: [String],
+      default: [],
+      documentation: { description: "Auteurs phototype", master: false }
+    },
+    AUTR: {
+      type: [String],
+      default: [],
+      documentation: { description: "Auteurs de l'oeuvre", master: false }
+    },
+    CADA: {
+      type: [String],
+      default: [],
+      documentation: { description: "Référence cadastrale", master: false }
+    },
+    CANT: {
+      type: String,
+      default: "",
+      documentation: { description: "Canton", master: false }
+    },
+    COLL: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Décompte des oeuvres recensées",
+        master: false
+      }
+    },
+    COM: {
+      type: String,
+      default: "",
+      documentation: { description: "Commune", master: false }
+    },
+    COOR: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Coordonnées Lambert (ou autres) d'un points",
+        master: false
+      }
+    },
+    COORM: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Coordonnées Lambert (ou autres) multiples",
+        master: false
+      }
+    },
+    COPY: {
+      type: [String],
+      default: [],
+      documentation: { description: "CopyRight", master: false }
+    },
+    COUV: {
+      type: [String],
+      default: [],
+      documentation: { description: "Type de la couverture", master: false }
+    },
+    DATE: {
+      type: [String],
+      default: [],
+      documentation: { description: "Date protection", master: false }
+    },
+    DBOR: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de rédaction de la notice",
+        master: false
+      }
+    },
+    DOMN: {
+      type: [String],
+      default: [],
+      documentation: { description: "Domaines", master: false }
+    },
+    DENO: {
+      type: [String],
+      default: [],
+      documentation: { description: "Dénomination ", master: false }
+    },
+    DENQ: {
+      type: String,
+      default: "",
+      documentation: { description: "Date d'enquête", master: false }
+    },
+    DEPL: {
+      type: String,
+      default: "",
+      documentation: { description: "Partie déplacée", master: false }
+    },
+    DESC: {
+      type: String,
+      default: "",
+      documentation: { description: "Commentaire description", master: false }
+    },
+    DIMS: {
+      type: String,
+      default: "",
+      documentation: { description: "Dimensions", master: false }
+    },
     DMAJ: {
       type: String,
       default: "",
@@ -105,91 +248,501 @@ const Schema = new mongoose.Schema(
         master: true
       }
     },
-    DOSS: { type: String, default: "" },
-    DPRO: { type: String, default: "" },
-    DPT: { type: String, default: "" },
-    EDIF: { type: String, default: "" },
-    ELEV: { type: [String], default: [] },
-    ENER: { type: [String], default: [] },
-    ESCA: { type: [String], default: [] },
-    ETAG: { type: [String], default: [] },
-    ETAT: { type: String, default: "" },
-    ETUD: { type: String, default: "" },
-    GENR: { type: String, default: "" },
-    HIST: { type: String, default: "" },
-    HYDR: { type: String, default: "" },
-    IMPL: { type: [String], default: [] },
-    INSEE: { type: String, default: "" },
-    INTE: { type: [String], default: [] },
-    JATT: { type: [String], default: [] },
-    JDAT: { type: [String], default: [] },
-    LBASE2: { type: String, default: "" },
-    LIEU: { type: String, default: "" },
-    LOCA: { type: String, default: "" },
-    MFICH: { type: String, default: "" },
-    MOSA: { type: String, default: "" },
-    MHPP: { type: String, default: "" },
-    MICR: { type: String, default: "" },
-    MURS: { type: [String], default: [] },
-    NBOR: { type: String, default: "" },
-    NOMS: { type: [String], default: [] },
-    OBS: { type: String, default: "" },
-    PAFF: { type: String, default: "" },
-    PART: { type: [String], default: [] },
-    PARN: { type: [String], default: [] },
-    PDEN: { type: String, default: "" },
-    PERS: { type: [String], default: [] },
-    PLAN: { type: String, default: "" },
-    PLOC: { type: String, default: "" },
-    PPRO: { type: String, default: "" },
-    PREP: { type: [String], default: [] },
-    PROT: { type: [String], default: [] },
-    PSTA: { type: String, default: "" },
-    REFE: { type: [String], default: [] },
-    REFP: { type: [String], default: [] },
-    REFO: { type: [String], default: [] },
-    REFO: { type: [String], default: [] },
-    REG: { type: String, default: "" },
-    REMA: { type: String, default: "" },
-    REMP: { type: String, default: "" },
-    RENV: { type: [String], default: [] },
-    REPR: { type: String, default: "" },
-    RFPA: { type: String, default: "" },
-    SCLD: { type: [String], default: [] },
-    SCLE: { type: [String], default: [] },
-    SCLX: { type: [String], default: [] },
-    SITE: { type: String, default: "" },
-    STAT: { type: String, default: "" },
-    TECH: { type: [String], default: [] },
-    TICO: { type: String, default: "" },
-    TOIT: { type: [String], default: [] },
-    TYPO: { type: String, default: "" },
-    VERT: { type: String, default: "" },
-    REFIM: { type: String, default: "" },
-    IMG: { type: [String], default: [] },
-    VIDEO: { type: String, default: "" },
-    DOSURL: { type: String, default: "" },
-    DOSURLPDF: { type: String, default: "" },
-    DOSADRS: { type: String, default: "" },
-    LIENS: { type: [String], default: [] },
-    IMAGE: { type: String, default: "" },
-    VISI: { type: [String], default: [] },
-    VOCA: { type: String, default: "" },
-    VOUT: { type: [String], default: [] },
-    WEB: { type: String, default: "" },
-    ZONE: { type: String, default: "" },
-    THEM: { type: String, default: "" },
-    ACMH: { type: String, default: "" },
-    ACURL: { type: String, default: "" },
-    WADRS: { type: String, default: "" },
-    WCOM: { type: String, default: "" },
-    WRENV: { type: String, default: "" },
-    REFM: { type: String, default: "" },
-    CONTACT: { type: String, default: "" },
-    IDAGR: { type: String, default: "" },
-    LMDP: { type: String, default: "" },
-    PINT: { type: String, default: "" },
-    DLAB: { type: String, default: "" }
+    DOSS: {
+      type: String,
+      default: "",
+      documentation: { description: "Dossier", master: false }
+    },
+    DPRO: {
+      type: String,
+      default: "",
+      documentation: { description: "Date protection", master: false }
+    },
+    DPT: {
+      type: String,
+      default: "",
+      documentation: { description: "Département", master: false }
+    },
+    EDIF: {
+      type: String,
+      default: "",
+      documentation: { description: "Edifice de conservation", master: false }
+    },
+    ELEV: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Parti d’élévation extérieure",
+        master: false
+      }
+    },
+    ENER: {
+      type: [String],
+      default: [],
+      documentation: { description: "Source de l'énergie", master: false }
+    },
+    ESCA: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Emplacement, forme et structure de l’escalier ",
+        master: false
+      }
+    },
+    ETAG: {
+      type: [String],
+      default: [],
+      documentation: { description: "Vaisseau et étage", master: false }
+    },
+    ETAT: {
+      type: String,
+      default: "",
+      documentation: { description: "Etat de conservation", master: false }
+    },
+    ETUD: {
+      type: String,
+      default: "",
+      documentation: { description: "Parties non étud", master: false }
+    },
+    GENR: {
+      type: String,
+      default: "",
+      documentation: { description: "Destinataire", master: false }
+    },
+    HIST: {
+      type: String,
+      default: "",
+      documentation: { description: "Commentaire historique", master: false }
+    },
+    HYDR: {
+      type: String,
+      default: "",
+      documentation: { description: "Cours d'eau", master: false }
+    },
+    IMPL: {
+      type: [String],
+      default: [],
+      documentation: { description: "Milieu d'implantation", master: false }
+    },
+    INSEE: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Numéro INSEE de la commune",
+        master: false
+      }
+    },
+    INTE: {
+      type: [String],
+      default: [],
+      documentation: { description: "Intérêt de l'oeuvre", master: false }
+    },
+    JATT: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Justification de l'attribution",
+        master: false
+      }
+    },
+    JDAT: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Justification de la datation",
+        master: false
+      }
+    },
+    LBASE2: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    LIEU: {
+      type: String,
+      default: "",
+      documentation: { description: "Lieu-dit", master: false }
+    },
+    LOCA: {
+      type: String,
+      default: "",
+      documentation: { description: "Localisation ", master: false }
+    },
+    MFICH: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    MOSA: {
+      type: String,
+      default: "",
+      documentation: { description: "Mosaïques", master: false }
+    },
+    MHPP: {
+      type: String,
+      default: "",
+      documentation: { description: "Eléments protégés MH", master: false }
+    },
+    MICR: {
+      type: String,
+      default: "",
+      documentation: { description: "Numéro de microfiche", master: false }
+    },
+    MURS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Matériau du gros-oeuvre et mise en oeuvre ",
+        master: false
+      }
+    },
+    NBOR: {
+      type: String,
+      default: "",
+      documentation: { description: "no Bordereaus", master: false }
+    },
+    NOMS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Noms des rédacteurs de la notice et du dossier",
+        master: false
+      }
+    },
+    OBS: {
+      type: String,
+      default: "",
+      documentation: { description: "Observations", master: false }
+    },
+    PAFF: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Précisions sur l'affectataire ",
+        master: false
+      }
+    },
+    PART: {
+      type: [String],
+      default: [],
+      documentation: { description: "Parties constituantes", master: false }
+    },
+    PARN: {
+      type: [String],
+      default: [],
+      documentation: { description: "Parties non étud", master: false }
+    },
+    PDEN: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Précision sur la dénomination",
+        master: false
+      }
+    },
+    PERS: {
+      type: [String],
+      default: [],
+      documentation: { description: "Personnalitées", master: false }
+    },
+    PLAN: {
+      type: String,
+      default: "",
+      documentation: { description: "Parti de plan", master: false }
+    },
+    PLOC: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Précision sur la localisation",
+        master: false
+      }
+    },
+    PPRO: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Précisions sur la protection MH",
+        master: false
+      }
+    },
+    PREP: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Précision sur la représentation",
+        master: false
+      }
+    },
+    PROT: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Nature de la protection MH",
+        master: false
+      }
+    },
+    PSTA: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Précisions sur le statut de la propriété",
+        master: false
+      }
+    },
+    REFE: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Référence de l'édifice de conservation",
+        master: false
+      }
+    },
+    REFP: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des parties constituantes étudiées",
+        master: false
+      }
+    },
+    REFO: {
+      type: [String],
+      default: [],
+      documentation: { description: "REFO", master: false }
+    },
+    REG: {
+      type: String,
+      default: "",
+      documentation: { description: "Region", master: false }
+    },
+    REMA: {
+      type: String,
+      default: "",
+      documentation: { description: "Eléments remarquables", master: false }
+    },
+    REMP: {
+      type: String,
+      default: "",
+      documentation: { description: "Remploi", master: false }
+    },
+    RENV: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
+        master: false
+      }
+    },
+    REPR: {
+      type: String,
+      default: "",
+      documentation: { description: "Représentation ", master: false }
+    },
+    RFPA: {
+      type: String,
+      default: "",
+      documentation: { description: "Identifiant Patrimoine", master: false }
+    },
+    SCLD: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Datation des campagnes secondaires de construction",
+        master: false
+      }
+    },
+    SCLE: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Datation des campagnes principales de construction",
+        master: false
+      }
+    },
+    SCLX: {
+      type: [String],
+      default: [],
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    SITE: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Site, secteur ou zone de protection",
+        master: false
+      }
+    },
+    STAT: {
+      type: String,
+      default: "",
+      documentation: { description: "Statut de la propriété", master: false }
+    },
+    TECH: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Technique du décor des immeubles par nature ",
+        master: false
+      }
+    },
+    TICO: {
+      type: String,
+      default: "",
+      documentation: { description: "Titre courant", master: false }
+    },
+    TOIT: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Matériau de la couverture ",
+        master: false
+      }
+    },
+    TYPO: {
+      type: String,
+      default: "",
+      documentation: { description: "Typologie ", master: false }
+    },
+    VERT: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Couvert et découvert de jardin ",
+        master: false
+      }
+    },
+    REFIM: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    IMG: {
+      type: [String],
+      default: [],
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    VIDEO: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    DOSURL: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Dossier URL",
+        master: false
+      }
+    },
+    DOSURLPDF: {
+      type: String,
+      default: "",
+      documentation: { description: "Dossier PDF", master: true }
+    },
+    DOSADRS: {
+      type: String,
+      default: "",
+      documentation: { description: "Dossier adresse", master: false }
+    },
+    LIENS: {
+      type: [String],
+      default: [],
+      documentation: { description: "Liens Divers", master: false }
+    },
+    IMAGE: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    VISI: {
+      type: [String],
+      default: [],
+      documentation: { description: "Ouverture au public", master: false }
+    },
+    VOCA: {
+      type: String,
+      default: "",
+      documentation: { description: "Vocable ", master: false }
+    },
+    VOUT: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Type et nature du couvrement ",
+        master: false
+      }
+    },
+    WEB: {
+      type: String,
+      default: "",
+      documentation: { description: "Visite guidé", master: false }
+    },
+    ZONE: {
+      type: String,
+      default: "",
+      documentation: { description: "Zone Lambert ou autres", master: false }
+    },
+    THEM: {
+      type: String,
+      default: "",
+      documentation: { description: "Thème ", master: false }
+    },
+    ACMH: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    ACURL: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    WADRS: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    WCOM: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    WRENV: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    REFM: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    CONTACT: {
+      type: String,
+      default: "",
+      documentation: { description: "Contact ", master: true }
+    },
+    IDAGR: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    LMDP: {
+      type: String,
+      default: "",
+      documentation: { description: "[PAS affiché]", master: false }
+    },
+    PINT: {
+      type: String,
+      default: "",
+      documentation: { description: "intérêt oeuvre", master: false }
+    },
+    DLAB: {
+      type: String,
+      default: "",
+      documentation: { description: "Date du label", master: false }
+    }
   },
   { collection: "merimee" }
 );
