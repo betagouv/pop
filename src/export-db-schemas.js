@@ -33,20 +33,23 @@ fs.writeFileSync(
       return [
         // Upper case title
         `## ${model.name[0].toUpperCase() + model.name.slice(1)}`,
-        // Headers
-        `|Name|Type|Required|Master|Opendata|Description|`,
-        `|----|----|--------|------|--------|-----------|`,
-        // Lines, one line for each model property
+        // One block for each model property (title, description, info)
         ...model.paths.map(path => {
           const elements = [
-            path.name,
             path.type,
             path.required ? "true" : "false",
             path.master ? "true" : "false",
-            path.opendata ? "true" : "false",
-            path.description
+            path.opendata ? "true" : "false"
           ];
-          return "|" + elements.join("|") + "|";
+          return [
+            `### ${path.name}`,
+            path.description,
+            "",
+            `|Type|Required|Master|Opendata|`,
+            `|----|--------|------|--------|`,
+            `|${elements.join("|")}|`,
+            ""
+          ].join("\n");
         })
       ].join("\n");
     })

@@ -1,642 +1,4307 @@
 # POP SCHEMAS
 ## Import
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|user|ObjectID|false|true|false|Identifiant de l'utilisateur à l'origine de l'import|
-|importedAt|Date|false|true|false|Date de l'import |
-|institution|String|false|true|false|Institution à l'origine de l'import|
-|created|Number|false|true|false|Nombre de notices créées lors de l'import|
-|updated|Number|false|true|false|Nombre de notices mises à jour lors de l'import|
-|rejected|Number|false|true|false|Nombre de notices rejetées lors de l'import|
-|unChanged|Number|false|true|false|Nombre de notices non mises à jour lors de l'import|
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### user
+Identifiant de l'utilisateur à l'origine de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|true|false|
+
+### importedAt
+Date de l'import 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Date|false|true|false|
+
+### institution
+Institution à l'origine de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### created
+Nombre de notices créées lors de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### updated
+Nombre de notices mises à jour lors de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### rejected
+Nombre de notices rejetées lors de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### unChanged
+Nombre de notices non mises à jour lors de l'import
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Joconde
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|PRODUCTEUR|String|false|true|false|Producteur de la donnée : MUSEE|
-|BASE|String|false|true|false|Nom de la base : Collections des musées de France (Joconde)|
-|CONTIENT_IMAGE|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES|
-|POP_COORDONNEES.lat|Number|false|true|false|Latitude de la notice en WGS84|
-|POP_COORDONNEES.lon|Number|false|true|false|Longitude de la notice en WGS84|
-|POP_CONTIENT_GEOLOCALISATION|String|false|true|false|Champ qui permet de savoir si la geolocalisation est disponible ou non|
-|REF|String|true|false|false|Référence unique de la notice|
-|POP_IMPORT|Array|false|false|false||
-|REFMIS|String|false|false|false|Référence de mise à jour (marque de la modification de la notice)|
-|ADPT|Array|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation] Ancien dépôt / changement d’affectation|
-|APPL|Array|false|false|false|Appellation|
-|APTN|String|false|false|false|Ancienne appartenance (nom du donateur / testateur/ vendeur) |
-|ATTR|String|false|false|false|Anciennes attributions|
-|AUTR|String|false|false|false|Auteur /exécutant / collecteur|
-|BIBL|String|false|false|false|Bibliographie|
-|COMM|String|false|false|false|Commentaires|
-|CONTACT|String|false|true|false|Lien contact musée|
-|COOR|String|false|false|false|Coordinateur|
-|COPY|String|false|false|false|Copyright notice|
-|DACQ|String|false|false|false|Date d’acquisition|
-|DATA|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]  |
-|DATION|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]  |
-|DDPT|String|false|false|false|Date de dépôt / changement d’affectation|
-|DECV|String|false|false|false|Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) |
-|DENO|Array|false|false|false|Dénomination du bien|
-|DEPO|String|false|false|false|Dépôt / établissement dépositaire|
-|DESC|String|false|false|false|Description |
-|DESY|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|DIFFU|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|DIMS|String|false|false|false|Mesures  / Dimensions|
-|DMAJ|String|false|true|false|Date de la dernière mise à jour|
-|DMIS|String|false|true|false|Date de la création POP/Mistral|
-|DOMN|Array|false|false|false|Domaine (catégorie du bien) |
-|DREP|String|false|false|false|Date de la représentation|
-|ECOL|Array|false|false|false|Ecole |
-|EPOQ|Array|false|false|false|Epoque /style / mouvement |
-|ETAT|Array|false|false|false|[surement à nettoyer] Etat du bien. C'est une liste finie de valeurs possibles|
-|EXPO|String|false|false|false|Exposition |
-|GENE|Array|false|false|false|Genèse |
-|GEOHI|Array|false|false|false|Géographie historique|
-|HIST|String|false|false|false|Historique – Objets associés |
-|IMAGE|String|false|false|false|[Je ne sais pas à quoi ce champ sert]  |
-|IMG|Array|false|true|false|Contient les images. Le plus souvent généré grâce à REFIM|
-|INSC|Array|false|false|false|Inscriptions |
-|INV|String|false|false|false|N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt|
-|LABEL|String|false|true|false|Appellation musée de France : logo : Champs ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'|
-|LABO|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|LARC|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|LIEUX|String|false|false|false|Lieu de création / d’exécution / d’utilisation|
-|LOCA|String|false|false|false|Localisation|
-|LOCA2|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|LOCA3|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|MILL|Array|false|false|false|Millésime de création / exécution |
-|MILU|String|false|false|false|Millésime d’utilisation |
-|MOSA|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|MSGCOM|String|false|false|false|[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation |
-|MUSEO|String|false|false|false|Lien Numéro MUSEOFILE|
-|NSDA|String|false|false|false|Numéro de site|
-|ONOM|Array|false|false|false|Onomastique|
-|PAUT|String|false|false|false|Précisions /auteur / exécutant / collecteur|
-|PDAT|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation]|
-|PDEC|String|false|false|false|Précisions sur la découverte / collecte / récolte|
-|PEOC|Array|false|false|false|Période de l’original copié|
-|PERI|Array|false|false|false|Période de création / exécution |
-|PERU|Array|false|false|false|Période d’utilisation|
-|PHOT|String|false|false|false|Crédits photographiques|
-|PINS|String|false|false|false|Précisions sur les inscriptions|
-|PLIEUX|String|false|false|false|Précisions sur le lieu de création/ d’exécution / d’utilisation|
-|PREP|Array|false|false|false|Précisions sur le sujet représenté |
-|PUTI|String|false|false|false|Précisions sur l’utilisation |
-|RANG|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation] |
-|REDA|Array|false|false|false|Rédacteur |
-|REFIM|String|false|false|false|Référence image : lien texte/ image : C'est un code qui permet de retrouver l'url de l'image|
-|REPR|String|false|false|false|Sujet représenté |
-|RETIF|String|false|false|false|[Peut être déprécié : Pas affiché en production ni en consultation] |
-|SREP|Array|false|false|false|Source de la représentation|
-|STAT|Array|true|false|false|Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire|
-|TECH|Array|false|false|false|Matériaux et techniques|
-|TICO|String|false|false|false|[Peut être déprécié : A vérifier. Non présent en production] |
-|TITR|String|false|false|false|Titre de l'oeuvre |
-|TOUT|String|false|false|false|[Peut être déprécié : A vérifier. Non présent en production] |
-|UTIL|Array|false|false|false|Utilisation / Destination|
-|VIDEO|Array|false|false|false|[Peut être déprécié : A vérifier]|
-|WWW|String|false|false|false|Lien site associé / site complémentaire|
-|LVID|String|false|false|false|Lien video|
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### PRODUCTEUR
+Producteur de la donnée : MUSEE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### BASE
+Nom de la base : Collections des musées de France (Joconde)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### POP_COORDONNEES.lat
+Latitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_COORDONNEES.lon
+Longitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_CONTIENT_GEOLOCALISATION
+Champ qui permet de savoir si la geolocalisation est disponible ou non
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### REF
+Référence unique de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### POP_IMPORT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFMIS
+Référence de mise à jour (marque de la modification de la notice)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADPT
+[Peut être déprécié : Pas affiché en production ni en consultation] Ancien dépôt / changement d’affectation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### APPL
+Appellation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### APTN
+Ancienne appartenance (nom du donateur / testateur/ vendeur) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ATTR
+Anciennes attributions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTR
+Auteur /exécutant / collecteur
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### BIBL
+Bibliographie
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COMM
+Commentaires
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CONTACT
+Lien contact musée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### COOR
+Coordinateur
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COPY
+Copyright notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DACQ
+Date d’acquisition
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATA
+[Peut être déprécié : Pas affiché en production ni en consultation]  
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATION
+[Peut être déprécié : Pas affiché en production ni en consultation]  
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DDPT
+Date de dépôt / changement d’affectation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DECV
+Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DENO
+Dénomination du bien
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DEPO
+Dépôt / établissement dépositaire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DESC
+Description 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DESY
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DIFFU
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DIMS
+Mesures  / Dimensions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DMAJ
+Date de la dernière mise à jour
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMIS
+Date de la création POP/Mistral
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DOMN
+Domaine (catégorie du bien) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DREP
+Date de la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ECOL
+Ecole 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### EPOQ
+Epoque /style / mouvement 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ETAT
+[surement à nettoyer] Etat du bien. C'est une liste finie de valeurs possibles
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### EXPO
+Exposition 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### GENE
+Genèse 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### GEOHI
+Géographie historique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### HIST
+Historique – Objets associés 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMAGE
+[Je ne sais pas à quoi ce champ sert]  
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMG
+Contient les images. Le plus souvent généré grâce à REFIM
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### INSC
+Inscriptions 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### INV
+N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LABEL
+Appellation musée de France : logo : Champs ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### LABO
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LARC
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEUX
+Lieu de création / d’exécution / d’utilisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA
+Localisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA2
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA3
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MILL
+Millésime de création / exécution 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### MILU
+Millésime d’utilisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MOSA
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MSGCOM
+[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MUSEO
+Lien Numéro MUSEOFILE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NSDA
+Numéro de site
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ONOM
+Onomastique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PAUT
+Précisions /auteur / exécutant / collecteur
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PDAT
+[Peut être déprécié : Pas affiché en production ni en consultation]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PDEC
+Précisions sur la découverte / collecte / récolte
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PEOC
+Période de l’original copié
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PERI
+Période de création / exécution 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PERU
+Période d’utilisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PHOT
+Crédits photographiques
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PINS
+Précisions sur les inscriptions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PLIEUX
+Précisions sur le lieu de création/ d’exécution / d’utilisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PREP
+Précisions sur le sujet représenté 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PUTI
+Précisions sur l’utilisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RANG
+[Peut être déprécié : Pas affiché en production ni en consultation] 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REDA
+Rédacteur 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFIM
+Référence image : lien texte/ image : C'est un code qui permet de retrouver l'url de l'image
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REPR
+Sujet représenté 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RETIF
+[Peut être déprécié : Pas affiché en production ni en consultation] 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SREP
+Source de la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### STAT
+Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|true|false|false|
+
+### TECH
+Matériaux et techniques
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### TICO
+[Peut être déprécié : A vérifier. Non présent en production] 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TITR
+Titre de l'oeuvre 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOUT
+[Peut être déprécié : A vérifier. Non présent en production] 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### UTIL
+Utilisation / Destination
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### VIDEO
+[Peut être déprécié : A vérifier]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### WWW
+Lien site associé / site complémentaire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LVID
+Lien video
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Memoire
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|PRODUCTEUR|String|false|true|false|      Producteur de la donnée déterminé grâce à la référence :       IV=INV      OA=CAOA      MH=CRMH      AR=ARCH      AP=SDAP      Autre=SAP|
-|BASE|String|false|true|false|Nom de la base : Photographies (Mémoire)|
-|CONTIENT_IMAGE|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES|
-|POP_IMPORT|Array|false|false|false||
-|REF|String|false|false|false|Référence unique de la notice|
-|TOUT|String|false|false|false|Index global [Peut etre déprécié]|
-|ADRESSE|String|false|false|false|Adresse |
-|AUTOEU|String|false|false|false|Auteur oeuvre représentée|
-|AUTG|String|false|false|false|Auteur gravure|
-|AUTP|String|false|false|false|Notice biblio|
-|AUTOR|String|false|false|false|Auteur original|
-|AUTTI|String|false|false|false|Auteur tirage|
-|COM|String|false|false|false|Commune|
-|DOM|String|false|false|false|Domaine|
-|EDIF|String|false|false|false|Nom édifice|
-|EXPO|String|false|false|false|[Peut être déprécié. Non afficher en production]|
-|JDATPV|String|false|false|false|Justif date pv|
-|LIEUCOR|String|false|false|false|Lieu cons orig.|
-|COTECOR|String|false|false|false|Cote cons orig. |
-|LIEUCTI|String|false|false|false|Lieu cons tir. |
-|COTECTI|String|false|false|false|Cote conservation du tirage |
-|LIEUCP|String|false|false|false|Lieu cons pho.|
-|COTECP|String|false|false|false|Cote conservation du phototype|
-|LEG|String|false|false|false|Légende |
-|OBJT|String|false|false|false|Nom objet|
-|OBS|String|false|false|false|Obs phototype|
-|OBSOR|String|false|false|false|Obs original|
-|OBSTI|String|false|false|false|Obs tirage|
-|PAYS|String|false|false|false|Pays   |
-|PUBLI|String|false|false|false|Publication |
-|TIREDE|String|false|false|false|Pub. photograph.|
-|ROLE|String|false|false|false||
-|PRECOR|String|false|false|false|Préc original|
-|SERIE|String|false|false|false|Titre série|
-|THEATRE|String|false|false|false||
-|TITRE|String|false|false|false||
-|DMAJ|String|false|true|false|Date de la dernière mise à jour|
-|DMIS|String|false|true|false|Date de la création POP/Mistral|
-|IDPROD|String|false|false|false|Emetteur (nom) |
-|NUMCD|String|false|false|false|Numéro CD|
-|NUMF|String|false|false|false|No de fond|
-|INSEE|String|false|false|false|Code INSEE|
-|NVD|String|false|false|false|vidéodisque|
-|MARQ|String|false|false|false|Ordre images|
-|ACC|String|false|false|false|Accessoire pose|
-|ACQU|String|false|false|false|Acquisition|
-|ADPHOT|String|false|false|false|Adresse personne |
-|AIRE|String|false|false|false|Aire d'étude|
-|ANUMP|String|false|false|false|Ancien numéro (ancienne cote du phototype)|
-|COPY|String|false|false|false|Crédit photo |
-|COULEUR|String|false|false|false|Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoyer]|
-|COSTUME|String|false|false|false|Costume de la personne représentée|
-|DATIMM|String|false|false|false|Date immatricul|
-|DATOEU|String|false|false|false|Date oeuv année|
-|DATPV|String|false|false|false|Date prise vue |
-|DATOR|String|false|false|false|Date original|
-|DATTI|String|false|false|false|Date tirage|
-|DATG|String|false|false|false|Date gravure|
-|DATD|String|false|false|false|Date dessin|
-|DIFF|String|false|false|false|Droits diffusion|
-|DPT|String|false|false|false|Département |
-|EDIARCH|String|false|false|false|Interprétation|
-|ECH|String|false|false|false|Echelle |
-|FORMAT|String|false|false|false|Format phototype|
-|FORMATOR|String|false|false|false|Format original|
-|FORMATTI|String|false|false|false|Format tirage|
-|LBASE|String|false|false|false|Liens bases|
-|WEB|String|false|false|false|Accès Mémoire|
-|LIB|String|false|false|false|Mots candidats|
-|LOCA|String|false|false|false|Localisation |
-|LIEUORIG|String|false|false|false|Lieu de dépôt|
-|MCGEO|String|false|false|false|Nom géographique|
-|MCL|String|false|false|false|Mots clés|
-|MENTIONS|String|false|false|false|Mentions photo|
-|MENTOR|String|false|false|false|Mentions orig|
-|MENTTI|String|false|false|false|Mentions tirage|
-|MCPER|String|false|false|false|Nom personne|
-|VUECD|String|false|false|false|No vue CD|
-|NUMAUTP|String|false|false|false|Cote photographe|
-|NUMCAF|String|false|false|false|No carte fenêtre|
-|ANUMOR|String|false|false|false|No original(anc)|
-|NUMOR|String|false|false|false|No original|
-|NUMP|String|false|false|false|No phototype |
-|ANUMTI|String|false|false|false|Ancien numéro du tirage|
-|NUMTI|String|false|false|false|No tirage|
-|RENV|String|false|false|false|Renvoi |
-|REG|String|false|false|false|Région |
-|SENS|String|false|false|false|Sens [Qu'est ce que c'est ?] |
-|SCLE|String|false|false|false|Date oeuv siècle|
-|SUP|String|false|false|false|Support |
-|TECH|String|false|false|false|Technique photo|
-|TECHOR|String|false|false|false|Technique orig|
-|TECHTI|String|false|false|false|Technique tirage|
-|TOILE|String|false|false|false|Toile de fond|
-|TYP|String|false|false|false|Type  [Qu'est ce que c'est ?]|
-|TYPDOC|String|false|false|false|phototype argentique|
-|TYPEIMG|String|false|false|false|Type image num|
-|TYPSUPP|String|false|false|false|Type support num |
-|VIDEO|String|false|false|false|Vidéo [Semble être doublon avec IMG]|
-|LBASE2|String|false|false|false|Liens base  [Quelle différence avec LBASE?]|
-|LEG2|String|false|false|false|Légende thes. |
-|REFIM|String|false|false|false|Ref Image|
-|REFIMG|String|false|false|false|Nom Image|
-|MOSA|String|false|false|false|Mosaïques |
-|SITE|String|false|false|false|SITE|
-|NUMSITE|String|false|false|false|N° du site |
-|NUMOP|String|false|false|false|N° d'opération|
-|CHRONO|String|false|false|false|Chronologie |
-|STRUCT|String|false|false|false|Structure |
-|SUJET|String|false|false|false|Sujet |
-|TICO|String|false|false|false|Titre du dossier|
-|NUMI|String|false|false|false|Ident. support|
-|LIEU|String|false|false|false|Lieu-dit |
-|ADRS|String|false|false|false|Adresse saisie|
-|CONTACT|String|false|true|false|Contact |
-|EMET|String|false|false|false|Emetteur (nom) |
-|NUM|String|false|false|false|N° support |
-|IMG|String|false|false|false|Lien vers l'image|
-|WCOM|String|false|false|false|Ville [Quelle difference avec COM ?]|
-|LIENS|String|false|false|false|Liens divers|
-|LAUTP|String|false|false|false|Notice biblio|
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### PRODUCTEUR
+      Producteur de la donnée déterminé grâce à la référence :       IV=INV      OA=CAOA      MH=CRMH      AR=ARCH      AP=SDAP      Autre=SAP
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### BASE
+Nom de la base : Photographies (Mémoire)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### POP_IMPORT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REF
+Référence unique de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOUT
+Index global [Peut etre déprécié]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRESSE
+Adresse 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTOEU
+Auteur oeuvre représentée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTG
+Auteur gravure
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTP
+Notice biblio
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTOR
+Auteur original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTTI
+Auteur tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COM
+Commune
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOM
+Domaine
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EDIF
+Nom édifice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EXPO
+[Peut être déprécié. Non afficher en production]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### JDATPV
+Justif date pv
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEUCOR
+Lieu cons orig.
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COTECOR
+Cote cons orig. 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEUCTI
+Lieu cons tir. 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COTECTI
+Cote conservation du tirage 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEUCP
+Lieu cons pho.
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COTECP
+Cote conservation du phototype
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LEG
+Légende 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBJT
+Nom objet
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBS
+Obs phototype
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBSOR
+Obs original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBSTI
+Obs tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PAYS
+Pays   
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PUBLI
+Publication 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TIREDE
+Pub. photograph.
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ROLE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PRECOR
+Préc original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SERIE
+Titre série
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### THEATRE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TITRE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DMAJ
+Date de la dernière mise à jour
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMIS
+Date de la création POP/Mistral
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### IDPROD
+Emetteur (nom) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMCD
+Numéro CD
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMF
+No de fond
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INSEE
+Code INSEE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NVD
+vidéodisque
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MARQ
+Ordre images
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACC
+Accessoire pose
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACQU
+Acquisition
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADPHOT
+Adresse personne 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AIRE
+Aire d'étude
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANUMP
+Ancien numéro (ancienne cote du phototype)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COPY
+Crédit photo 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COULEUR
+Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoyer]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COSTUME
+Costume de la personne représentée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATIMM
+Date immatricul
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATOEU
+Date oeuv année
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATPV
+Date prise vue 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATOR
+Date original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATTI
+Date tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATG
+Date gravure
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATD
+Date dessin
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DIFF
+Droits diffusion
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPT
+Département 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EDIARCH
+Interprétation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ECH
+Echelle 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### FORMAT
+Format phototype
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### FORMATOR
+Format original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### FORMATTI
+Format tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LBASE
+Liens bases
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WEB
+Accès Mémoire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIB
+Mots candidats
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA
+Localisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEUORIG
+Lieu de dépôt
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MCGEO
+Nom géographique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MCL
+Mots clés
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MENTIONS
+Mentions photo
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MENTOR
+Mentions orig
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MENTTI
+Mentions tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MCPER
+Nom personne
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VUECD
+No vue CD
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMAUTP
+Cote photographe
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMCAF
+No carte fenêtre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANUMOR
+No original(anc)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMOR
+No original
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMP
+No phototype 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANUMTI
+Ancien numéro du tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMTI
+No tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RENV
+Renvoi 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REG
+Région 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SENS
+Sens [Qu'est ce que c'est ?] 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SCLE
+Date oeuv siècle
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SUP
+Support 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TECH
+Technique photo
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TECHOR
+Technique orig
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TECHTI
+Technique tirage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOILE
+Toile de fond
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TYP
+Type  [Qu'est ce que c'est ?]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TYPDOC
+phototype argentique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TYPEIMG
+Type image num
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TYPSUPP
+Type support num 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VIDEO
+Vidéo [Semble être doublon avec IMG]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LBASE2
+Liens base  [Quelle différence avec LBASE?]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LEG2
+Légende thes. 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFIM
+Ref Image
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFIMG
+Nom Image
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MOSA
+Mosaïques 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SITE
+SITE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMSITE
+N° du site 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMOP
+N° d'opération
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CHRONO
+Chronologie 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### STRUCT
+Structure 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SUJET
+Sujet 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TICO
+Titre du dossier
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMI
+Ident. support
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEU
+Lieu-dit 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRS
+Adresse saisie
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CONTACT
+Contact 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### EMET
+Emetteur (nom) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUM
+N° support 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMG
+Lien vers l'image
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WCOM
+Ville [Quelle difference avec COM ?]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIENS
+Liens divers
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LAUTP
+Notice biblio
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Merimee
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|REF|String|false|false|false|Référence unique de la notice|
-|PRODUCTEUR|String|false|false|false||
-|BASE|String|false|true|false|Nom de la base : Patrimoine architectural (Mérimée)|
-|CONTIENT_IMAGE|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES|
-|MEMOIRE|Array|false|false|false||
-|POP_COORDONNEES.lat|Number|false|true|false|Latitude de la notice en WGS84|
-|POP_COORDONNEES.lon|Number|false|true|false|Longitude de la notice en WGS84|
-|POP_CONTIENT_GEOLOCALISATION|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'|
-|POP_COORDINATES_POLYGON.type|String|false|false|false||
-|POP_COORDINATES_POLYGON.coordinates|Array|false|false|false||
-|POP_DATE|Array|false|true|false|Champ qui sera utilisé pour traduire les date en format requetable|
-|POP_IMPORT|Array|false|false|false||
-|TOUT|String|false|false|false|Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [DEPRECIE ?]|
-|ACTU|String|false|false|false|Destinations successives et actuelle |
-|ADRS|String|false|false|false|Adresse|
-|AFFE|String|false|false|false|Affectataire|
-|AIRE|String|false|false|false|Aire d'étude|
-|APPL|String|false|false|false|Appellation et titre|
-|APRO|Array|false|false|false||
-|ARCHEO|String|false|false|false|Référence dans la base Patriarche|
-|AUTP|Array|false|false|false|Auteurs phototype|
-|AUTR|Array|false|false|false|Auteurs de l'oeuvre|
-|CADA|Array|false|false|false|Référence cadastrale|
-|CANT|String|false|false|false|Canton|
-|COLL|Array|false|false|false|Décompte des oeuvres recensées|
-|COM|String|false|false|false|Commune|
-|COOR|String|false|false|false|Coordonnées Lambert (ou autres) d'un points|
-|COORM|String|false|false|false|Coordonnées Lambert (ou autres) multiples|
-|COPY|Array|false|false|false|CopyRight|
-|COUV|Array|false|false|false|Type de la couverture|
-|DATE|Array|false|false|false|Date protection|
-|DBOR|String|false|false|false|Date de rédaction de la notice|
-|DOMN|Array|false|false|false|Domaines|
-|DENO|Array|false|false|false|Dénomination |
-|DENQ|String|false|false|false|Date d'enquête|
-|DEPL|String|false|false|false|Partie déplacée|
-|DESC|String|false|false|false|Commentaire description|
-|DIMS|String|false|false|false|Dimensions|
-|DMAJ|String|false|true|false|Date de la dernière mise à jour|
-|DMIS|String|false|true|false|Date de la création POP/Mistral|
-|DOSS|String|false|false|false|Dossier|
-|DPRO|String|false|false|false|Date protection|
-|DPT|String|false|false|false|Département|
-|EDIF|String|false|false|false|Edifice de conservation|
-|ELEV|Array|false|false|false|Parti d’élévation extérieure|
-|ENER|Array|false|false|false|Source de l'énergie|
-|ESCA|Array|false|false|false|Emplacement, forme et structure de l’escalier |
-|ETAG|Array|false|false|false|Vaisseau et étage|
-|ETAT|String|false|false|false|Etat de conservation|
-|ETUD|String|false|false|false|Parties non étud|
-|GENR|String|false|false|false|Destinataire|
-|HIST|String|false|false|false|Commentaire historique|
-|HYDR|String|false|false|false|Cours d'eau|
-|IMPL|Array|false|false|false|Milieu d'implantation|
-|INSEE|String|false|false|false|Numéro INSEE de la commune|
-|INTE|Array|false|false|false|Intérêt de l'oeuvre|
-|JATT|Array|false|false|false|Justification de l'attribution|
-|JDAT|Array|false|false|false|Justification de la datation|
-|LBASE2|String|false|false|false|[PAS affiché]|
-|LIEU|String|false|false|false|Lieu-dit|
-|LOCA|String|false|false|false|Localisation |
-|MFICH|String|false|false|false|[PAS affiché]|
-|MOSA|String|false|false|false|Mosaïques|
-|MHPP|String|false|false|false|Eléments protégés MH|
-|MICR|String|false|false|false|Numéro de microfiche|
-|MURS|Array|false|false|false|Matériau du gros-oeuvre et mise en oeuvre |
-|NBOR|String|false|false|false|no Bordereaus|
-|NOMS|Array|false|false|false|Noms des rédacteurs de la notice et du dossier|
-|OBS|String|false|false|false|Observations|
-|PAFF|String|false|false|false|Précisions sur l'affectataire |
-|PART|Array|false|false|false|Parties constituantes|
-|PARN|Array|false|false|false|Parties non étud|
-|PDEN|String|false|false|false|Précision sur la dénomination|
-|PERS|Array|false|false|false|Personnalitées|
-|PLAN|String|false|false|false|Parti de plan|
-|PLOC|String|false|false|false|Précision sur la localisation|
-|PPRO|String|false|false|false|Précisions sur la protection MH|
-|PREP|Array|false|false|false|Précision sur la représentation|
-|PROT|Array|false|false|false|Nature de la protection MH|
-|PSTA|String|false|false|false|Précisions sur le statut de la propriété|
-|REFE|Array|false|false|false|Référence de l'édifice de conservation|
-|REFP|Array|false|false|false|Références des parties constituantes étudiées|
-|REFO|Array|false|false|false|REFO|
-|REG|String|false|false|false|Region|
-|REMA|String|false|false|false|Eléments remarquables|
-|REMP|String|false|false|false|Remploi|
-|RENV|Array|false|false|false|N° de renvoi au domaine MH ou au domaine INVENTAIRE|
-|REPR|String|false|false|false|Représentation |
-|RFPA|String|false|false|false|Identifiant Patrimoine|
-|SCLD|Array|false|false|false|Datation des campagnes secondaires de construction|
-|SCLE|Array|false|false|false|Datation des campagnes principales de construction|
-|SCLX|Array|false|false|false|[PAS affiché]|
-|SITE|String|false|false|false|Site, secteur ou zone de protection|
-|STAT|String|false|false|false|Statut de la propriété|
-|TECH|Array|false|false|false|Technique du décor des immeubles par nature |
-|TICO|String|false|false|false|Titre courant|
-|TOIT|Array|false|false|false|Matériau de la couverture |
-|TYPO|String|false|false|false|Typologie |
-|VERT|String|false|false|false|Couvert et découvert de jardin |
-|REFIM|String|false|false|false|[PAS affiché]|
-|IMG|Array|false|false|false|[PAS affiché]|
-|VIDEO|String|false|false|false|[PAS affiché]|
-|DOSURL|String|false|false|false|Dossier URL|
-|DOSURLPDF|String|false|true|false|Dossier PDF|
-|DOSADRS|String|false|false|false|Dossier adresse|
-|LIENS|Array|false|false|false|Liens Divers|
-|IMAGE|String|false|false|false|[PAS affiché]|
-|VISI|Array|false|false|false|Ouverture au public|
-|VOCA|String|false|false|false|Vocable |
-|VOUT|Array|false|false|false|Type et nature du couvrement |
-|WEB|String|false|false|false|Visite guidé|
-|ZONE|String|false|false|false|Zone Lambert ou autres|
-|THEM|String|false|false|false|Thème |
-|ACMH|String|false|false|false|[PAS affiché]|
-|ACURL|String|false|false|false|[PAS affiché]|
-|WADRS|String|false|false|false|[PAS affiché]|
-|WCOM|String|false|false|false|[PAS affiché]|
-|WRENV|String|false|false|false|[PAS affiché]|
-|REFM|String|false|false|false|[PAS affiché]|
-|CONTACT|String|false|true|false|Contact |
-|IDAGR|String|false|false|false|[PAS affiché]|
-|LMDP|String|false|false|false|[PAS affiché]|
-|PINT|String|false|false|false|intérêt oeuvre|
-|DLAB|String|false|false|false|Date du label|
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### REF
+Référence unique de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PRODUCTEUR
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### BASE
+Nom de la base : Patrimoine architectural (Mérimée)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### MEMOIRE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### POP_COORDONNEES.lat
+Latitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_COORDONNEES.lon
+Longitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_CONTIENT_GEOLOCALISATION
+Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### POP_COORDINATES_POLYGON.type
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### POP_COORDINATES_POLYGON.coordinates
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### POP_DATE
+Champ qui sera utilisé pour traduire les date en format requetable
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### POP_IMPORT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### TOUT
+Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [DEPRECIE ?]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACTU
+Destinations successives et actuelle 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRS
+Adresse
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AFFE
+Affectataire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AIRE
+Aire d'étude
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### APPL
+Appellation et titre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### APRO
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ARCHEO
+Référence dans la base Patriarche
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTP
+Auteurs phototype
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### AUTR
+Auteurs de l'oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### CADA
+Référence cadastrale
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### CANT
+Canton
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COLL
+Décompte des oeuvres recensées
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### COM
+Commune
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COOR
+Coordonnées Lambert (ou autres) d'un points
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COORM
+Coordonnées Lambert (ou autres) multiples
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COPY
+CopyRight
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### COUV
+Type de la couverture
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DATE
+Date protection
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DBOR
+Date de rédaction de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOMN
+Domaines
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DENO
+Dénomination 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DENQ
+Date d'enquête
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DEPL
+Partie déplacée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DESC
+Commentaire description
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DIMS
+Dimensions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DMAJ
+Date de la dernière mise à jour
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMIS
+Date de la création POP/Mistral
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DOSS
+Dossier
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPRO
+Date protection
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPT
+Département
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EDIF
+Edifice de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ELEV
+Parti d’élévation extérieure
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ENER
+Source de l'énergie
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ESCA
+Emplacement, forme et structure de l’escalier 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ETAG
+Vaisseau et étage
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ETAT
+Etat de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ETUD
+Parties non étud
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### GENR
+Destinataire
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### HIST
+Commentaire historique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### HYDR
+Cours d'eau
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMPL
+Milieu d'implantation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### INSEE
+Numéro INSEE de la commune
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INTE
+Intérêt de l'oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### JATT
+Justification de l'attribution
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### JDAT
+Justification de la datation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### LBASE2
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEU
+Lieu-dit
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA
+Localisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MFICH
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MOSA
+Mosaïques
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MHPP
+Eléments protégés MH
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MICR
+Numéro de microfiche
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MURS
+Matériau du gros-oeuvre et mise en oeuvre 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### NBOR
+no Bordereaus
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOMS
+Noms des rédacteurs de la notice et du dossier
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### OBS
+Observations
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PAFF
+Précisions sur l'affectataire 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PART
+Parties constituantes
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PARN
+Parties non étud
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PDEN
+Précision sur la dénomination
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PERS
+Personnalitées
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PLAN
+Parti de plan
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PLOC
+Précision sur la localisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PPRO
+Précisions sur la protection MH
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PREP
+Précision sur la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PROT
+Nature de la protection MH
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PSTA
+Précisions sur le statut de la propriété
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFE
+Référence de l'édifice de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFP
+Références des parties constituantes étudiées
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFO
+REFO
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REG
+Region
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REMA
+Eléments remarquables
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REMP
+Remploi
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RENV
+N° de renvoi au domaine MH ou au domaine INVENTAIRE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REPR
+Représentation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RFPA
+Identifiant Patrimoine
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SCLD
+Datation des campagnes secondaires de construction
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SCLE
+Datation des campagnes principales de construction
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SCLX
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SITE
+Site, secteur ou zone de protection
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### STAT
+Statut de la propriété
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TECH
+Technique du décor des immeubles par nature 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### TICO
+Titre courant
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOIT
+Matériau de la couverture 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### TYPO
+Typologie 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VERT
+Couvert et découvert de jardin 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFIM
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMG
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### VIDEO
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOSURL
+Dossier URL
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOSURLPDF
+Dossier PDF
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DOSADRS
+Dossier adresse
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIENS
+Liens Divers
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### IMAGE
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VISI
+Ouverture au public
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### VOCA
+Vocable 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VOUT
+Type et nature du couvrement 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### WEB
+Visite guidé
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ZONE
+Zone Lambert ou autres
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### THEM
+Thème 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACMH
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACURL
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WADRS
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WCOM
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WRENV
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFM
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CONTACT
+Contact 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### IDAGR
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LMDP
+[PAS affiché]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PINT
+intérêt oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DLAB
+Date du label
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Mnr
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|PRODUCTEUR|String|false|true|false|Producteur de la donnée : Valeur MNR|
-|BASE|String|false|true|false|Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)|
-|CONTIENT_IMAGE|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES|
-|REF|String|false|true|false|Référence unique de la notice|
-|POP_IMPORT|Array|false|false|false||
-|TOUT|String|false|true|false|[PAS AFFICHE]|
-|AUTR|Array|false|true|false|Auteur /exécutant / collecteur|
-|PAUT|String|false|true|false|Precisions auteur|
-|ATTR|String|false|true|false|Anciennes attributions|
-|ECOL|String|false|true|false|Ecole |
-|TITR|String|false|true|false|Titre |
-|ATIT|String|false|true|false|Ancien titre|
-|PTIT|String|false|true|false|Précision titre|
-|DENO|Array|false|true|false|Dénomination du bien|
-|DESC|String|false|true|false|Description |
-|DOMN|Array|false|true|false|Domaine (catégorie du bien)|
-|LOCA|String|false|true|false|Localisation |
-|INSC|String|false|true|false|Inscriptions |
-|MARQ|String|false|true|false|Marques |
-|OBSE|String|false|true|false|Observations |
-|ETAT|String|false|true|false|Etat de conservation|
-|GENE|String|false|true|false|Genèse |
-|PROV|String|false|true|false|Provenance |
-|HIST|String|false|true|false|Historique |
-|HIST2|String|false|true|false|[PAS AFFICHE]|
-|HIST3|String|false|true|false|[PAS AFFICHE]|
-|HIST4|String|false|true|false|[PAS AFFICHE]|
-|HIST5|String|false|true|false|[PAS AFFICHE]|
-|HIST6|String|false|true|false|[PAS AFFICHE]|
-|SCLE|Array|false|true|false|Siècle |
-|STYL|String|false|true|false|Style |
-|MILL|String|false|true|false|Millenaire |
-|TECH|Array|false|true|false|Technique |
-|DIMS|Array|false|true|false|Dimensions |
-|VIDEO|Array|false|true|false|[PAS AFFICHE]|
-|INV|String|false|true|false|N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt|
-|EXPO|String|false|true|false|Exposition |
-|BIBL|String|false|true|false|Bibliographie |
-|AATT|String|false|true|false|Ancienne attribution|
-|AUTI|String|false|true|false|Autre titre|
-|CATE|String|false|true|false|Catégorie |
-|CATE_DEPREC|String|false|true|false|[PAS AFFICHE]|
-|NOTE|String|false|true|false|Notes |
-|REDC|Array|false|true|false|Rédacteurs |
-|DREP|String|false|true|false|Date de la représentation|
-|PREP|String|false|true|false|Précisions sur la représentation|
-|REPR|String|false|true|false|Représentation |
-|SREP|String|false|true|false|Sujet de la représentation (source littéraire ou musicale) |
-|REFIM|String|false|true|false|Adresses images jointes générique (actuellement non utilisé)|
-|DMAJ|String|false|true|false|Date de la dernière mise à jour|
-|DMIS|String|false|true|false|Date de la création POP/Mistral|
-|AFFE|String|false|true|false|Etablissement affectataire qui existe dans d’autres bases|
-|NUMS|String|false|true|false|Autres numéros|
-|SUITE|String|false|true|false|OEuvres liées, ensemble|
-|COMM|String|false|true|false|Commentaire |
-|NOTE2|String|false|true|false|[PAS AFFICHE]|
-|RESUME|String|false|true|false|Résumé |
-|PHOT|String|false|true|false|Droits de copie photo |
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### PRODUCTEUR
+Producteur de la donnée : Valeur MNR
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### BASE
+Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### REF
+Référence unique de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### POP_IMPORT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### TOUT
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### AUTR
+Auteur /exécutant / collecteur
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### PAUT
+Precisions auteur
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### ATTR
+Anciennes attributions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### ECOL
+Ecole 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### TITR
+Titre 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### ATIT
+Ancien titre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### PTIT
+Précision titre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DENO
+Dénomination du bien
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### DESC
+Description 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DOMN
+Domaine (catégorie du bien)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### LOCA
+Localisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### INSC
+Inscriptions 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### MARQ
+Marques 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### OBSE
+Observations 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### ETAT
+Etat de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### GENE
+Genèse 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### PROV
+Provenance 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST
+Historique 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST3
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST4
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST5
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### HIST6
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### SCLE
+Siècle 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### STYL
+Style 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### MILL
+Millenaire 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### TECH
+Technique 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### DIMS
+Dimensions 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### VIDEO
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### INV
+N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### EXPO
+Exposition 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### BIBL
+Bibliographie 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### AATT
+Ancienne attribution
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### AUTI
+Autre titre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CATE
+Catégorie 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### CATE_DEPREC
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### NOTE
+Notes 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### REDC
+Rédacteurs 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|true|false|
+
+### DREP
+Date de la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### PREP
+Précisions sur la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### REPR
+Représentation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### SREP
+Sujet de la représentation (source littéraire ou musicale) 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### REFIM
+Adresses images jointes générique (actuellement non utilisé)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMAJ
+Date de la dernière mise à jour
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMIS
+Date de la création POP/Mistral
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### AFFE
+Etablissement affectataire qui existe dans d’autres bases
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### NUMS
+Autres numéros
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### SUITE
+OEuvres liées, ensemble
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### COMM
+Commentaire 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### NOTE2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### RESUME
+Résumé 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### PHOT
+Droits de copie photo 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Museo
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|REF|String|false|false|false||
-|TOUT|String|false|false|false||
-|ACCES|String|false|false|false||
-|ACTIV|String|false|false|false||
-|ADRESSE|String|false|false|false||
-|ADRL1_M|String|false|false|false||
-|AMIS|String|false|false|false||
-|AN_CREAT|String|false|false|false||
-|ANNEE_FE|String|false|false|false||
-|ANNEXE|String|false|false|false||
-|ANTARIF|String|false|false|false||
-|ARTISTE|String|false|false|false||
-|ATOUT|String|false|false|false||
-|CEDEX_AD|String|false|false|false||
-|COPY|String|false|false|false||
-|CP_M|String|false|false|false||
-|CTRLTECH|String|false|false|false||
-|DOMPAL|String|false|false|false||
-|DPT|String|false|false|false||
-|DT_CREAT|String|false|false|false||
-|DT_MODIF|String|false|false|false||
-|DT_SAISI|String|false|false|false||
-|GESTION|String|false|false|false||
-|HIST|String|false|false|false||
-|INTERET|String|false|false|false||
-|ITI2_M|String|false|false|false||
-|ITI_M|String|false|false|false||
-|JOCONDE|String|false|false|false||
-|LABEL|String|false|false|false||
-|LEGS|String|false|false|false||
-|LIEU_M|String|false|false|false||
-|MEL|String|false|false|false||
-|MONOPLUR|String|false|false|false||
-|NB_AMI|String|false|false|false||
-|NOM_AMI|String|false|false|false||
-|NOMANC|String|false|false|false||
-|NOMOFF|String|false|false|false||
-|NOMUSAGE|String|false|false|false||
-|OBS_AMI|String|false|false|false||
-|OBS_TOUR|String|false|false|false||
-|PHARE|String|false|false|false||
-|PROPBAT|String|false|false|false||
-|PROPCOLL|String|false|false|false||
-|PROT|String|false|false|false||
-|PUBLI|String|false|false|false||
-|REGION|String|false|false|false||
-|REPCOLL|String|false|false|false||
-|SERVICES|String|false|false|false||
-|SIGLE_M|String|false|false|false||
-|STATUT|String|false|false|false||
-|SURFACES|String|false|false|false||
-|TEL_M|String|false|false|false||
-|THEMES|String|false|false|false||
-|URL_M2|String|false|false|false||
-|URL_M|String|false|false|false||
-|VIDEO|String|false|false|false||
-|VILLE_M|String|false|false|false||
-|RESP|String|false|false|false||
-|GRESP|String|false|false|false||
-|PSC|String|false|false|false||
-|DPSC|String|false|false|false||
-|DMDF|String|false|false|false||
-|SPUB|String|false|false|false||
-|INVR|String|false|false|false||
-|NUMER|String|false|false|false||
-|LGN|String|false|false|false||
-|REST|String|false|false|false||
-|ACQU|String|false|false|false||
-|RECOL|String|false|false|false||
-|location.lat|Number|false|false|false||
-|location.lon|Number|false|false|false||
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### REF
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOUT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACCES
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACTIV
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRESSE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRL1_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AMIS
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AN_CREAT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANNEE_FE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANNEXE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ANTARIF
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ARTISTE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ATOUT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CEDEX_AD
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COPY
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CP_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CTRLTECH
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOMPAL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DT_CREAT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DT_MODIF
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DT_SAISI
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### GESTION
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### HIST
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INTERET
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ITI2_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ITI_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### JOCONDE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LABEL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LEGS
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIEU_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MEL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MONOPLUR
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NB_AMI
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOM_AMI
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOMANC
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOMOFF
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOMUSAGE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBS_AMI
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBS_TOUR
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PHARE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PROPBAT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PROPCOLL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PROT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PUBLI
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REGION
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REPCOLL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SERVICES
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SIGLE_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### STATUT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SURFACES
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TEL_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### THEMES
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### URL_M2
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### URL_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VIDEO
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VILLE_M
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RESP
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### GRESP
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PSC
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPSC
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DMDF
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### SPUB
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INVR
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMER
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LGN
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REST
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ACQU
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RECOL
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### location.lat
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
+### location.lon
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Palissy
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|PRODUCTEUR|String|false|false|false||
-|CONTIENT_IMAGE|String|false|true|false|Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES|
-|POP_COORDONNEES.lat|Number|false|true|false|Latitude de la notice en WGS84|
-|POP_COORDONNEES.lon|Number|false|true|false|Longitude de la notice en WGS84|
-|POP_CONTIENT_GEOLOCALISATION|String|false|false|false||
-|POP_COORDINATES_POLYGON.type|String|false|false|false||
-|POP_COORDINATES_POLYGON.coordinates|Array|false|false|false||
-|BASE|String|false|true|false|Nom de la base : Patrimoine mobilier (Palissy)|
-|MEMOIRE|Array|false|false|false||
-|REF|String|false|false|false|Référence unique de la notice|
-|POP_IMPORT|Array|false|false|false||
-|ACQU|String|false|false|false|[PAS AFFICHE]|
-|ADRS|String|false|false|false|Adresse |
-|ADRS2|String|false|false|false|[PAS AFFICHE]|
-|AFIG|Array|false|false|false|Auteur(s) de la source figurée|
-|AIRE|String|false|false|false|Aire d'étude|
-|APPL|String|false|false|false|Appellation et titre|
-|ATEL|String|false|false|false|Nom de l’atelier, de la manufacture, de la fabrique ou de l’école |
-|AUTP|String|false|false|false|Auteurs phototype|
-|AUTR|Array|false|false|false|Auteurs de l'oeuvre|
-|BIBL|String|false|false|false|[PAS AFFICHE]|
-|CANT|String|false|false|false|Canton |
-|CATE|Array|false|false|false|Catégorie technique|
-|COM|String|false|false|false|Commune |
-|COM2|String|false|false|false|[PAS AFFICHE]|
-|CONTACT|String|false|true|false|Contact |
-|COOR|String|false|false|false|Coordonnées Lambert (ou autres) d'un points |
-|COORM|String|false|false|false|Coordonnées Lambert (ou autres) multiples |
-|COPY|String|false|false|false|CopyRight|
-|DATE|Array|false|false|false|Datation en années|
-|DBOR|Array|false|false|false|Date de rédaction de la notice|
-|DENO|Array|false|false|false|Dénomination |
-|DENQ|Array|false|false|false|Date d'enquête|
-|DEPL|String|false|false|false|Partie déplacée|
-|DESC|String|false|false|false|Commentaire description|
-|DIMS|String|false|false|false|Dimensions |
-|DMAJ|String|false|true|false|Date de la dernière mise à jour|
-|DMIS|String|false|true|false|Date de la création POP/Mistral|
-|DOMN|String|false|false|false|Domaines |
-|DOSADRS|String|false|false|false|Dossier adresse|
-|DOSS|Array|false|false|false|Dossier |
-|DOSURL|String|false|false|false|Dossier URL|
-|DOSURLPDF|String|false|true|false|Dossier PDF |
-|DPRO|String|false|false|false|Date protection|
-|DPT|String|false|false|false|Département |
-|EDIF|String|false|false|false|Edifice de conservation|
-|EDIF2|String|false|false|false|[PAS AFFICHE]|
-|EMPL|String|false|false|false|Emplacement de l’œuvre dans l’édifice|
-|EMPL2|String|false|false|false|[PAS AFFICHE]|
-|ETAT|Array|false|false|false|Etat de conservation|
-|ETUD|String|false|false|false|Parties non étud|
-|EXEC|String|false|false|false|Nom actuel ou historique du lieu d’exécution |
-|EXPO|String|false|false|false|[PAS AFFICHE]|
-|HIST|String|false|false|false|Commentaire historique|
-|IDAGR|Array|false|false|false|[PAS AFFICHE]|
-|IMAGE|String|false|false|false|[PAS AFFICHE]|
-|IMG|Array|false|false|false|[PAS AFFICHE]|
-|IMPL|String|false|false|false|Milieu d'implantation|
-|INSC|Array|false|false|false|Inscriptions, marques, emblématique et poinçons|
-|INSEE|String|false|false|false|Numéro INSEE de la commune|
-|INSEE2|String|false|false|false|[PAS AFFICHE]|
-|INTE|String|false|false|false|Intérêt de l'oeuvre|
-|JDAT|Array|false|false|false|Justification de la datation|
-|LBASE2|String|false|false|false|[PAS AFFICHE]|
-|LIENS|Array|false|false|false|Liens Divers|
-|LIEU|String|false|false|false|Lieu-dit |
-|LMDP|String|false|false|false|[PAS AFFICHE]|
-|LOCA|String|false|false|false|Localisation |
-|MATR|Array|false|false|false|Matériaux |
-|MFICH|Array|false|false|false|[PAS AFFICHE]|
-|MICR|String|false|false|false|Numéro de microfiche|
-|MOSA|String|false|false|false|Mosaïques |
-|NART|String|false|false|false|Numérotation artificielle|
-|NINV|String|false|false|false|[PAS AFFICHE]|
-|NOMS|Array|false|false|false|Noms des rédacteurs de la notice et du dossier |
-|NUMA|String|false|false|false|[PAS AFFICHE]|
-|NUMP|String|false|false|false|[PAS AFFICHE]|
-|OBS|String|false|false|false|Observations |
-|ORIG|String|false|false|false|Origine de l’œuvre (lieu de provenance ou de destination)|
-|PAPP|String|false|false|false|Préc. appart|
-|PARN|Array|false|false|false|Parties non étud|
-|PART|Array|false|false|false|Parties constituantes|
-|PDEN|Array|false|false|false|Précision sur la dénomination|
-|PDIM|String|false|false|false|Précisions sur les dimensions|
-|PERS|Array|false|false|false|Personnalitées |
-|PETA|String|false|false|false|Précisions sur l’état de conservation|
-|PHOTO|String|false|false|false|[PAS AFFICHE]|
-|PINS|String|false|false|false|Précisions sur les inscriptions, marques, emblématique et poinçons |
-|PINT|String|false|false|false|Intérêt oeuvre|
-|PLOC|String|false|false|false|Précision sur la localisation|
-|PPRO|String|false|false|false|Précisions sur la protection MH|
-|PREP|String|false|false|false|Précision sur la représentation|
-|PROT|String|false|false|false|Nature de la protection MH|
-|REFA|Array|false|false|false|Référence de l'édifice de conservation|
-|REFE|Array|false|false|false|Référence de l’ensemble ou de l'oeuvre|
-|REFM|String|false|false|false|[PAS AFFICHE]|
-|REFP|Array|false|false|false|Références des parties constituantes étudiées |
-|REG|String|false|false|false|Region |
-|RENP|Array|false|false|false|[PAS AFFICHE]|
-|RENV|Array|false|false|false|N° de renvoi au domaine MH ou au domaine INVENTAIRE|
-|REPR|Array|false|false|false|Représentation |
-|SCLD|Array|false|false|false|[PAS AFFICHE]|
-|SCLE|Array|false|false|false|Datation des campagnes principales de construction |
-|SCLX|Array|false|false|false|[PAS AFFICHE]|
-|SOUR|String|false|false|false|[PAS AFFICHE]|
-|STAD|Array|false|false|false|Stade de la création|
-|STAT|Array|false|false|false|Statut de la propriété|
-|STRU|Array|false|false|false|Structure et typologie|
-|THEM|String|false|false|false|Thème |
-|TICO|String|false|false|false|Titre courant|
-|TITR|String|false|false|false|[PAS AFFICHE]|
-|TOUT|String|false|false|false|[PAS AFFICHE]|
-|VIDEO|Array|false|false|false|[PAS AFFICHE]|
-|VOLS|String|false|false|false|Objet(s) volé(s)|
-|WADRS|String|false|false|false|[PAS AFFICHE]|
-|WCOM|String|false|false|false|[PAS AFFICHE]|
-|WEB|String|false|false|false|Visite guidé |
-|WRENV|String|false|false|false|[PAS AFFICHE]|
-|ZONE|String|false|false|false|Zone Lambert ou autre|
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### PRODUCTEUR
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### POP_COORDONNEES.lat
+Latitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_COORDONNEES.lon
+Longitude de la notice en WGS84
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|true|false|
+
+### POP_CONTIENT_GEOLOCALISATION
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### POP_COORDINATES_POLYGON.type
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### POP_COORDINATES_POLYGON.coordinates
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### BASE
+Nom de la base : Patrimoine mobilier (Palissy)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### MEMOIRE
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REF
+Référence unique de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### POP_IMPORT
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ACQU
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRS
+Adresse 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ADRS2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AFIG
+Auteur(s) de la source figurée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### AIRE
+Aire d'étude
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### APPL
+Appellation et titre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ATEL
+Nom de l’atelier, de la manufacture, de la fabrique ou de l’école 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTP
+Auteurs phototype
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### AUTR
+Auteurs de l'oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### BIBL
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CANT
+Canton 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CATE
+Catégorie technique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### COM
+Commune 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COM2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### CONTACT
+Contact 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### COOR
+Coordonnées Lambert (ou autres) d'un points 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COORM
+Coordonnées Lambert (ou autres) multiples 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### COPY
+CopyRight
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DATE
+Datation en années
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DBOR
+Date de rédaction de la notice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DENO
+Dénomination 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DENQ
+Date d'enquête
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DEPL
+Partie déplacée
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DESC
+Commentaire description
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DIMS
+Dimensions 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DMAJ
+Date de la dernière mise à jour
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DMIS
+Date de la création POP/Mistral
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DOMN
+Domaines 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOSADRS
+Dossier adresse
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOSS
+Dossier 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### DOSURL
+Dossier URL
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DOSURLPDF
+Dossier PDF 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|true|false|
+
+### DPRO
+Date protection
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### DPT
+Département 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EDIF
+Edifice de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EDIF2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EMPL
+Emplacement de l’œuvre dans l’édifice
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EMPL2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ETAT
+Etat de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### ETUD
+Parties non étud
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EXEC
+Nom actuel ou historique du lieu d’exécution 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### EXPO
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### HIST
+Commentaire historique
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IDAGR
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### IMAGE
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### IMG
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### IMPL
+Milieu d'implantation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INSC
+Inscriptions, marques, emblématique et poinçons
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### INSEE
+Numéro INSEE de la commune
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INSEE2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### INTE
+Intérêt de l'oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### JDAT
+Justification de la datation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### LBASE2
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LIENS
+Liens Divers
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### LIEU
+Lieu-dit 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LMDP
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### LOCA
+Localisation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MATR
+Matériaux 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### MFICH
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### MICR
+Numéro de microfiche
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### MOSA
+Mosaïques 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NART
+Numérotation artificielle
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NINV
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NOMS
+Noms des rédacteurs de la notice et du dossier 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### NUMA
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### NUMP
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### OBS
+Observations 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ORIG
+Origine de l’œuvre (lieu de provenance ou de destination)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PAPP
+Préc. appart
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PARN
+Parties non étud
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PART
+Parties constituantes
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PDEN
+Précision sur la dénomination
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PDIM
+Précisions sur les dimensions
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PERS
+Personnalitées 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### PETA
+Précisions sur l’état de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PHOTO
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PINS
+Précisions sur les inscriptions, marques, emblématique et poinçons 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PINT
+Intérêt oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PLOC
+Précision sur la localisation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PPRO
+Précisions sur la protection MH
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PREP
+Précision sur la représentation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### PROT
+Nature de la protection MH
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFA
+Référence de l'édifice de conservation
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFE
+Référence de l’ensemble ou de l'oeuvre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REFM
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### REFP
+Références des parties constituantes étudiées 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REG
+Region 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### RENP
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### RENV
+N° de renvoi au domaine MH ou au domaine INVENTAIRE
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### REPR
+Représentation 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SCLD
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SCLE
+Datation des campagnes principales de construction 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SCLX
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### SOUR
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### STAD
+Stade de la création
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### STAT
+Statut de la propriété
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### STRU
+Structure et typologie
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### THEM
+Thème 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TICO
+Titre courant
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TITR
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### TOUT
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### VIDEO
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Array|false|false|false|
+
+### VOLS
+Objet(s) volé(s)
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WADRS
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WCOM
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WEB
+Visite guidé 
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### WRENV
+[PAS AFFICHE]
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### ZONE
+Zone Lambert ou autre
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## Thesaurus
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|arc|String|false|false|false||
-|value|String|false|false|false||
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### arc
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### value
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
+
 ## User
-|Name|Type|Required|Master|Opendata|Description|
-|----|----|--------|------|--------|-----------|
-|email|String|true|false|false||
-|institution|String|true|false|false||
-|nom|String|false|false|false||
-|prenom|String|false|false|false||
-|group|String|true|false|false||
-|role|String|true|false|false||
-|password|String|true|false|false||
-|hasResetPassword|Boolean|false|false|false||
-|lastConnectedAt|Date|false|false|false||
-|_id|ObjectID|false|false|false||
-|__v|Number|false|false|false||
+### email
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### institution
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### nom
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### prenom
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
+
+### group
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### role
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### password
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|true|false|false|
+
+### hasResetPassword
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Boolean|false|false|false|
+
+### lastConnectedAt
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Date|false|false|false|
+
+### _id
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|ObjectID|false|false|false|
+
+### __v
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|Number|false|false|false|
