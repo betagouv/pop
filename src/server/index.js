@@ -7,9 +7,6 @@ const port = 8081;
 
 console.log("START", new Date());
 
-app.use(express.static(path.join(__dirname, "/../../build")));
-app.use(express.static(path.join(__dirname, "/../../sitemap")));
-
 app.use(
   forceDomain({
     hostname: "www.pop.culture.gouv.fr",
@@ -17,6 +14,9 @@ app.use(
     // For later add: `protocol: 'https'`
   })
 );
+
+app.use(express.static(path.join(__dirname, "/../../build")));
+app.use(express.static(path.join(__dirname, "/../../sitemap")));
 
 // Sitemap redirection
 app.get("/sitemap/*", (req, res) => {
