@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { Container, Button, Input } from "reactstrap";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { history } from "../../redux/store";
+import { toastr } from "react-redux-toastr";
 
 import api from "../../services/api";
 import Loader from "../../components/loader";
-
 import authAction from "./../../redux/auth/actions";
-const { logout } = authAction;
+const { logout, signinByToken } = authAction;
 
 class UpdateProfile extends Component {
   state = {
@@ -23,24 +22,37 @@ class UpdateProfile extends Component {
     prenom: "",
     institution: "",
     group: "",
-    role: "",
-    hasChangedPassword: false,
+    role: ""
   };
 
   componentWillMount() {
     const { user } = this.props;
-    if(user) {
+    if (user) {
       const { hasResetPassword, nom, prenom, institution, group, role } = user;
-      this.setState({ hasResetPassword, nom, prenom, institution, group, role });
+      this.setState({
+        hasResetPassword,
+        nom,
+        prenom,
+        institution,
+        group,
+        role
+      });
     }
   }
 
   componentDidUpdate(prevProps) {
     const { user } = this.props;
     const { user: prevUser } = prevProps;
-    if(user && user !== prevUser) {
+    if (user && user !== prevUser) {
       const { hasResetPassword, nom, prenom, institution, group, role } = user;
-      this.setState({ hasResetPassword, nom, prenom, institution, group, role });
+      this.setState({
+        hasResetPassword,
+        nom,
+        prenom,
+        institution,
+        group,
+        role
+      });
     }
   }
 
@@ -50,38 +62,53 @@ class UpdateProfile extends Component {
     }
     return (
       <p>
-        Vous n&apos;avez pas encore chang&eacute; votre mot de passe. Pour votre s&eacute;curit&eacute;,
-        vous devez le changer avant de continuer.
+        Vous n&apos;avez pas encore chang&eacute; votre mot de passe. Pour votre
+        s&eacute;curit&eacute;, vous devez le changer avant de continuer.
       </p>
     );
   }
 
-
-  updateProfile = ()=> {
+  updateProfile = () => {
     const { email, logout, user } = this.props;
     const { nom, prenom, institution, group, role } = user;
-    const { 
+    const {
       ppwd,
-      ppwd1, 
-      ppwd2, 
-      nom: stateNom, 
-      prenom: statePrenom, 
-      institution: stateInstitution, 
-      group: stateGroup, 
-      role: stateRole,
+      ppwd1,
+      ppwd2,
+      nom: stateNom,
+      prenom: statePrenom,
+      institution: stateInstitution,
+      group: stateGroup,
+      role: stateRole
     } = this.state;
-    
-    const hasChangedPassword = (ppwd !== "" && ppwd1 !== "" && ppwd2 !== "");
-    const hasChangedProfileInfo = (nom !== stateNom || prenom !== statePrenom || institution !== stateInstitution || group !== stateGroup || role !== stateRole);
+
+    const hasChangedPassword = ppwd !== "" && ppwd1 !== "" && ppwd2 !== "";
+    const hasChangedProfileInfo =
+      nom !== stateNom ||
+      prenom !== statePrenom ||
+      institution !== stateInstitution ||
+      group !== stateGroup ||
+      role !== stateRole;
     let promise = Promise.resolve();
 
-    if(hasChangedProfileInfo) {
-      promise = promise.then(() => {
-        return api.updateProfile(email, nom, prenom, institution, group, role);
-      });
+    if (hasChangedProfileInfo) {
+      promise = promise
+        .then(() => {
+          return api.updateProfile(
+            email,
+            stateNom,
+            statePrenom,
+            stateInstitution,
+            stateGroup,
+            stateRole
+          );
+        })
+        .then(() => {
+          return this.props.signinByToken();
+        });
     }
 
-    if(hasChangedPassword) {
+    if (hasChangedPassword) {
       promise = promise.then(() => {
         return api.updatePassword(email, ppwd, ppwd1, ppwd2);
       });
@@ -89,18 +116,29 @@ class UpdateProfile extends Component {
 
     this.setState({ loading: true });
     promise = promise.then(() => {
-      this.setState({ loading: false, done: true, hasChangedPassword: !!(hasChangedPassword) });
-      if(hasChangedPassword) {
+      this.setState({
+        loading: false,
+        done: true,
+        hasChangedPassword: !!hasChangedPassword
+      });
+
+      if (hasChangedPassword) {
+        toastr.success(
+          "Votre mot de passe à été changé.",
+          "Vous allez être deconnecté dans 5 secondes…"
+        );
         setTimeout(() => logout(), 5000);
+      } else {
+        toastr.success("Vos informations ont été enregistrées.");
       }
       this.setState({ loading: false, done: true });
       return Promise.resolve();
     });
-  
-    return promise.catch((e) => {
-        this.setState({ error: e, loading: false, done: false });
+
+    return promise.catch(e => {
+      this.setState({ error: e, loading: false, done: false });
     });
-  }
+  };
 
   lastConnectedAt() {
     if (!this.props.lastConnectedAt) {
@@ -116,7 +154,7 @@ class UpdateProfile extends Component {
     );
   }
 
-  renderGroups = ()=>{
+  renderGroups = () => {
     const { group } = this.state;
     let groupes = [];
 
@@ -132,52 +170,44 @@ class UpdateProfile extends Component {
     } else {
       groupes.push(group);
     }
-    return groupes.map((e,i) => <option key={`${e}${i}`}>{e}</option>);
-  }
+    return groupes.map((e, i) => <option key={`${e}${i}`}>{e}</option>);
+  };
 
-  renderRoles = ()=> {
+  renderRoles = () => {
     const { group, role } = this.state;
     let roles = [];
     if (role === "administrateur" || group === "admin") {
       roles = roles.concat(["utilisateur", "producteur", "administrateur"]);
     }
 
-    return roles.map((e,i) => <option key={`${e}${i}`}>{e}</option>);
-  }
+    return roles.map((e, i) => <option key={`${e}${i}`}>{e}</option>);
+  };
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
   };
 
   render() {
     const { email, location } = this.props;
-    const { loading, done, error, nom, prenom, institution, group, role, hasChangedPassword } = this.state;
-    
+    const {
+      loading,
+      done,
+      error,
+      nom,
+      prenom,
+      institution,
+      group,
+      role
+    } = this.state;
+
     if (loading) {
       return <Loader />;
     }
 
     if (done) {
-      return (
-        <Container className="signin">
-          <div>
-            {
-              hasChangedPassword
-              ? (
-                  `Votre mot de passe à été changé.
-                  Vous allez être deconnecté dans 5 secondes ...`
-                )
-              :
-                (
-                  `Vos informations ont été changées.`
-                )
-
-            }
-          </div>
-        </Container>
-      );
+      return <Redirect to="/recherche" />;
     }
 
     //If the user is not login, he shouldnt have access to the page. Its a restricted page
@@ -205,56 +235,48 @@ class UpdateProfile extends Component {
               placeholder="Mon nom"
               type="text"
               value={nom}
-              onChange={this.handleChange('nom')}
+              onChange={this.handleChange("nom")}
             />
             <input
               className="input-field"
               placeholder="Mon prénom"
               type="text"
               value={prenom}
-              onChange={this.handleChange('prenom')}
+              onChange={this.handleChange("prenom")}
             />
             <input
               className="input-field"
               placeholder="Institution"
               type="text"
               value={institution}
-              onChange={this.handleChange('institution')}
+              onChange={this.handleChange("institution")}
             />
           </div>
-          <hr /> 
+          <hr />
           <div className="sub-block">
-          <h4>Mes groupes et roles</h4>
-            {
-              (group === "admin")
-              ? (
-                <Input
-                  type="select"
-                  value={group}
-                  onChange={this.handleChange('group')}
-                  className="input-field select-field"
-                >
-                  {this.renderGroups()}
-                </Input>
-                )
-              : null  
-            }
-            {
-              (role === "administrateur" || group === "admin")
-              ? (
-                <Input
-                  type="select"
-                  value={role}
-                  onChange={this.handleChange('role')}
-                  className="input-field select-field"
-                >
-                  {this.renderRoles()}
-                </Input>
-                ) 
-              : null
-            }
+            <h4>Mes groupes et roles</h4>
+            {group === "admin" ? (
+              <Input
+                type="select"
+                value={group}
+                onChange={this.handleChange("group")}
+                className="input-field select-field"
+              >
+                {this.renderGroups()}
+              </Input>
+            ) : null}
+            {role === "administrateur" || group === "admin" ? (
+              <Input
+                type="select"
+                value={role}
+                onChange={this.handleChange("role")}
+                className="input-field select-field"
+              >
+                {this.renderRoles()}
+              </Input>
+            ) : null}
           </div>
-          <hr /> 
+          <hr />
           <div className="sub-block">
             <h4>Mon mot de passe</h4>
             <input
@@ -279,11 +301,8 @@ class UpdateProfile extends Component {
               onChange={e => this.setState({ ppwd2: e.target.value })}
             />
           </div>
-          <hr /> 
-          <Button
-            className="submit-button"
-            onClick={this.updateProfile}
-          >
+          <hr />
+          <Button className="submit-button" onClick={this.updateProfile}>
             Mettre &agrave; jour mes informations
           </Button>
           {this.lastConnectedAt()}
@@ -298,11 +317,11 @@ const mapStateToProps = ({ Auth }) => {
     user: Auth.user ? Auth.user : null,
     email: Auth.user ? Auth.user.email : "",
     hasResetPassword: Auth.user ? Auth.user.hasResetPassword : false,
-    lastConnectedAt: Auth.user ? Auth.user.lastConnectedAt : null,
+    lastConnectedAt: Auth.user ? Auth.user.lastConnectedAt : null
   };
 };
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, signinByToken }
 )(UpdateProfile);
