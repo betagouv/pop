@@ -9,7 +9,7 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     return { exists: { field: valueSelected } };
   } else if (actionSelected === "><") {
     // { value: "><", text: "n'existe pas" }
-    return {bool: { must_not: { exists: { field: valueSelected } } } };
+    return { bool: { must_not: { exists: { field: valueSelected } } } };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
     const obj = {};
@@ -84,6 +84,7 @@ export default class RuleComponent extends React.Component {
           id={this.props.id}
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
+          autocomplete={this.props.autocomplete}
           fields={this.props.fields}
         />
       </ReactiveComponent>
@@ -158,6 +159,7 @@ class Rule extends React.Component {
           actionSelected={this.state.actionSelected}
           value={this.state.resultSelected}
           aggregations={this.props.aggregations}
+          autocomplete={this.props.autocomplete}
           onChange={e => {
             this.setState(
               { resultSelected: e.target.value.replace('"', "") },
@@ -228,6 +230,7 @@ class ValueEditor extends React.Component {
 
     let suggestions = [];
     if (
+      this.props.autocomplete &&
       this.props.aggregations &&
       Object.keys(this.props.aggregations).length
     ) {
@@ -299,7 +302,7 @@ const ActionElement = ({ onChange, value }) => {
     { value: "<>", text: "existe" },
     { value: "><", text: "n'existe pas" },
     { value: "*", text: "contient" },
-    { value: "^", text: "commence par" },
+    { value: "^", text: "commence par" }
   ].map(({ value, text }) => (
     <option key={value} value={value}>
       {text}

@@ -358,7 +358,7 @@ class Notice extends React.Component {
                 name="REFIM"
                 disabled
               />
-              <FieldInput title="Videos (VIDEO) :" name="VIDEO" disabled />
+              <FieldTags title="Videos (VIDEO) :" name="VIDEO" disabled />
               <FieldTags title="Images (IMG) :" name="IMG" disabled />
               <FieldInput
                 title="Appellation musée de France : logo (LABEL) :"
@@ -408,9 +408,6 @@ class Notice extends React.Component {
           </Section>
           {this.props.canUpdate ? (
             <div className="buttons">
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
-                <Button color="danger">Annuler</Button>
-              </Link>
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>

@@ -16,7 +16,14 @@ export default class AdvancedSearch extends React.Component {
       <ReactiveComponent
         componentId={this.props.componentId} // a unique id we will refer to later
       >
-        <QueryBuilder fields={this.state.properties} />
+        <QueryBuilder
+          fields={this.state.properties}
+          autocomplete={
+            this.props.autocomplete === undefined
+              ? true
+              : this.props.autocomplete
+          }
+        />
       </ReactiveComponent>
     );
   }

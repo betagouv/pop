@@ -230,9 +230,6 @@ class Notice extends React.Component {
           </Section>
           {this.props.canUpdate ? (
             <div className="buttons">
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
-                <Button color="danger">Annuler</Button>
-              </Link>
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>

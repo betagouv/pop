@@ -58,7 +58,6 @@ export default class RuleGroup extends React.Component {
       obj,
       ...this.state.queries.slice(obj.id + 1)
     ];
-    console.log("onUpdate ", queries);
     this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
   }
 
@@ -66,6 +65,7 @@ export default class RuleGroup extends React.Component {
     return this.state.queries.map(({ id }) => {
       return (
         <Rule
+          autocomplete={this.props.autocomplete}
           key={id}
           id={id}
           onRemove={this.onRemove.bind(this)}

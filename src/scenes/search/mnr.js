@@ -40,7 +40,7 @@ export default class Search extends React.Component {
           <Col md={3}>
             <ExportComponent
               FILTER={["advancedSearch"]}
-              filename="mnr.csv"
+              collection="mnr"
             />
           </Col>
         </Row>

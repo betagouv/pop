@@ -44,12 +44,17 @@ export default class Search extends React.Component {
       <div>
         <Row>
           <Col md={9}>
-            <QueryBuilder entity={Merimee} componentId="advancedSearch" />
+            <QueryBuilder
+              entity={Merimee}
+              componentId="advancedSearch"
+              autocomplete={false}
+            />
           </Col>
           <Col md={3}>
             <ExportComponent
               FILTER={["advancedSearch"]}
-              filename="merimee.csv"
+              collection="merimee"
+              autocomplete
             />
           </Col>
         </Row>

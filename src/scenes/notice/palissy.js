@@ -52,7 +52,7 @@ class Notice extends React.Component {
       console.log("NOTICE", notice);
       this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
       const editable =
-        notice.PRODUCTEUR === "Monument Historique" && this.props.canUpdate;
+        notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
     });
   }
@@ -714,9 +714,6 @@ class Notice extends React.Component {
           </Section>
           {this.props.canUpdate ? (
             <div className="buttons">
-              <Link style={{ textDecoration: "none", color: "white" }} to="/">
-                <Button color="danger">Annuler</Button>
-              </Link>
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
