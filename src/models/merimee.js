@@ -769,7 +769,7 @@ Schema.pre("save", function(next, done) {
       break;
   }
 
-  this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
+  this.CONTIENT_IMAGE = this.MEMOIRE && this.MEMOIRE.length ? "oui" : "non";
   next();
 });
 
