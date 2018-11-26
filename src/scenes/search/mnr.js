@@ -26,7 +26,9 @@ export default class Search extends React.Component {
     super(props);
 
     this.state = {
-      normalMode: true
+      normalMode: true,
+      sortOrder: "asc",
+      sortKey: "REF"
     };
   }
 
@@ -44,7 +46,20 @@ export default class Search extends React.Component {
             />
           </Col>
         </Row>
-
+        <div className="text-center my-3">
+          Trier par :
+          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
+            {new Mnr({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
+              <option key={e} value={e}>
+                {e}
+              </option>
+            ))}
+          </select>
+          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+            <option value="asc">Ascendant</option>
+            <option value="desc">Descendant</option>
+          </select>
+        </div>
         <ReactiveList
           componentId="results"
           react={{ and: "advancedSearch" }}
@@ -56,8 +71,9 @@ export default class Search extends React.Component {
           }}
           onNoResults="Aucun résultat trouvé."
           loader="Préparation de l'affichage des résultats..."
+          dataField={`${this.state.sortKey}.keyword`}
+          sortBy={this.state.sortOrder}
           URLParams={true}
-          dataField=""
           size={20}
           onData={data => <Card key={data.REF} data={data} />}
           pagination={true}
