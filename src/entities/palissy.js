@@ -8,7 +8,6 @@ export default class Palissy extends Notice {
     this.setProperty("REF", "String", (body.REF || "").trim(), {
       required: true
     });
-    this.setProperty("VIDEO", "String", body.VIDEO);
     this.setProperty("CONTACT", "String", body.CONTACT);
     this.setProperty("ACQU", "String", body.ACQU);
     this.setProperty("ADRS", "String", body.ADRS);
