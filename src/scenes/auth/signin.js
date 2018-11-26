@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Button } from "reactstrap";
+import { Container, Button, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Actions from "../../redux/auth/actions";
@@ -51,26 +51,32 @@ class Signin extends Component {
             value={this.state.password}
             onChange={e => this.setState({ password: e.target.value })}
           />
-          <div className="cgu">
-            <input
-              type="checkbox"
-              onChange={e => {
-                this.setState({ cgu: e.target.checked });
-              }}
-              checked={this.state.cgu}
-            />{" "}
-            En cliquant sur "se connecter", vous acceptez les{" "}
-            <a href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf">
-              CGU
-            </a>
-          </div>
-          <Link
-            style={{ textDecoration: "none" }}
-            to="/auth/forget"
-            className="link"
-          >
-            Mot de passe oublié ?
-          </Link>
+          <Row>
+            <Col>
+              <div className="cgu">
+                <label>
+                  <input
+                    type="checkbox"
+                    onChange={e => {
+                      this.setState({ cgu: e.target.checked });
+                    }}
+                    checked={this.state.cgu}
+                  />{" "}
+                  J'accepte les{" "}
+                  <a
+                    target="_blank"
+                    href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf"
+                  >
+                    CGU
+                  </a>
+                </label>
+              </div>
+            </Col>
+            <Col>
+              <Link className="forget-password float-right" to="/auth/forget">Mot de passe oublié&nbsp;?</Link>
+            </Col>
+          </Row>
+
           <Button
             disabled={!this.state.cgu}
             className="submit-button"

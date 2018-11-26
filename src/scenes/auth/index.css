@@ -15,7 +15,7 @@
   color: red;
 }
 
-.auth .cgu{
+.auth .cgu, .auth .forget-password {
   font-size: 14px;
   padding-bottom: 10px;
 }
