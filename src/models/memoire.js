@@ -390,7 +390,11 @@ const Schema = new mongoose.Schema(
       type: String,
       index: true,
       default: "",
-      documentation: { description: "Liens bases", master: false }
+      documentation: {
+        description:
+          "LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image",
+        master: false
+      }
     },
     WEB: {
       type: String,
