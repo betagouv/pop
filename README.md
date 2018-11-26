@@ -1,5 +1,7 @@
 # API POP 
 
+[![CircleCI](https://circleci.com/gh/betagouv/pop-api.svg?style=svg)](https://circleci.com/gh/betagouv/pop-api)
+
 L'API de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr). Elle fournit un accès aux données à [POP Consultation](https://github.com/betagouv/pop-consultation) et [POP Production](https://github.com/betagouv/pop-production). Elle est développée en Javascript, utilise le framework [Express](https://expressjs.com) et une base de données [MongoDB](https://www.mongodb.com/). La recherche de données est rendue possible grâce à [Elasticsearch](https://www.elastic.co/fr/products/elasticsearch). 
 
 ## Installation
