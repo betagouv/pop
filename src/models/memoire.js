@@ -108,7 +108,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Peut être déprécié. Non afficher en production]",
+        description: "Référence d’exposition de l’image ",
         master: false
       }
     },
