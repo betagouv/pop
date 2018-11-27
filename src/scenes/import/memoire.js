@@ -46,7 +46,7 @@ function parseFiles(files, encoding) {
         if (!img) {
           notices[i]._errors.push(`Image ${shortName} introuvable`);
         } else {
-          const newImage = utils.renameFile(img, shortname);
+          const newImage = utils.renameFile(img, shortName);
           notices[i]._images.push(newImage);
         }
       }
