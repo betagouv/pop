@@ -498,7 +498,7 @@ class Notice extends React.Component {
 const SeeMore = ({ notice }) => {
   const arr = [];
 
-  if (notice.DOSUR) {
+  if (notice.DOSURL) {
     arr.push(
       <li key="notice.DOSURL">
         <a href={notice.DOSURL}>Dossier électronique</a>
