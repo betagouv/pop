@@ -295,18 +295,18 @@ const Schema = new mongoose.Schema(
       documentation: { description: "Vaisseau et étage", master: false }
     },
     ETAT: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: { description: "Etat de conservation", master: false }
     },
     ETUD: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: { description: "Parties non étud", master: false }
     },
     GENR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: { description: "Destinataire", master: false }
     },
     HIST: {
