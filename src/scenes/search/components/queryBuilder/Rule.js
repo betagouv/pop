@@ -1,55 +1,59 @@
 import React from "react";
 import Autocomplete from "react-autocomplete";
-
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 
 function getQuery(valueSelected, actionSelected, resultSelected) {
   if (actionSelected === "<>") {
     // { value: "<>", text: "exist" },
-    return { exists: { field: valueSelected } };
+    return {
+      bool: {
+        // Must exists ...
+        must: { exists: { field: valueSelected } },
+        // ... and must be not empty.
+        must_not: { term: { [`${valueSelected}.keyword`]: "" } }
+      }
+    };
   } else if (actionSelected === "><") {
     // { value: "><", text: "n'existe pas" }
-    return { bool: { must_not: { exists: { field: valueSelected } } } };
+    return {
+      bool: {
+        // Should be ...
+        should: [
+          // ... empty string ...
+          { term: { [`${valueSelected}.keyword`]: "" } },
+          // ... or not exists.
+          { bool: { must_not: { exists: { field: valueSelected } } } }
+        ]
+      }
+    };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = resultSelected;
-    return { term: obj };
+    return { term: { [`${valueSelected}.keyword`]: resultSelected } };
   } else if (actionSelected === "!=" && resultSelected) {
     // { value: "!=", text: "différent de" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = resultSelected;
-    return { must_not: { term: obj } };
+    return {
+      must_not: { term: { [`${valueSelected}.keyword`]: resultSelected } }
+    };
   } else if (actionSelected === ">=" && resultSelected) {
     // { value: ">=", text: "supérieur ou égal à" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = { gte: resultSelected };
-    return { range: obj };
+    return { range: { [`${valueSelected}.keyword`]: { gte: resultSelected } } };
   } else if (actionSelected === "<=" && resultSelected) {
     // { value: "<=", text: "inférieur ou égal à" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = { lte: resultSelected };
-    return { range: obj };
+    return { range: { [`${valueSelected}.keyword`]: { lte: resultSelected } } };
   } else if (actionSelected === "<" && resultSelected) {
     // { value: "<", text: "strictement inférieur à" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = { lt: resultSelected };
-    return { range: obj };
+    return { range: { [`${valueSelected}.keyword`]: { lt: resultSelected } } };
   } else if (actionSelected === ">" && resultSelected) {
     // { value: ">", text: "strictement supérieur à" },
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = { gt: resultSelected };
-    return { range: obj };
+    return { range: { [`${valueSelected}.keyword`]: { gt: resultSelected } } };
   } else if (actionSelected === "^" && resultSelected) {
     // { value: "^", text: "commence par" }
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = `${resultSelected}*`;
-    return { wildcard: obj };
+    return { wildcard: { [`${valueSelected}.keyword`]: `${resultSelected}*` } };
   } else if (actionSelected === "*" && resultSelected) {
     // { value: "*", text: "contient" }
-    const obj = {};
-    obj[`${valueSelected}.keyword`] = `*${resultSelected}*`;
-    return { wildcard: obj };
+    return {
+      wildcard: { [`${valueSelected}.keyword`]: `*${resultSelected}*` }
+    };
   } else {
     return null;
   }
