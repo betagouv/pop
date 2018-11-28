@@ -51,7 +51,7 @@ class Notice extends React.Component {
       }
       console.log("NOTICE", notice);
       const editable =
-        ["CRMH", "CAOA", "SAP","SDAP"].includes(notice.PRODUCTEUR) &&
+        ["CRMH", "CAOA", "SAP", "SDAP"].includes(notice.PRODUCTEUR) &&
         this.props.canUpdate;
       this.props.initialize({ ...notice, IMG: [notice.IMG] });
       this.setState({ loading: false, notice, editable });
@@ -843,6 +843,9 @@ class Notice extends React.Component {
               />
             </Col>
           </Section>
+          <div className="back" onClick={() => this.props.history.goBack()}>
+            Retour
+          </div>
           {this.props.canUpdate ? (
             <div className="buttons">
               <Button color="danger" onClick={() => this.delete()}>
