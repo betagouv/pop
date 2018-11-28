@@ -44,19 +44,19 @@ class Notice extends React.Component {
       // REFE -> MERIMEE
       // REFO -> PALISSY
       const arr = [];
-      for (let i = 0; i < RENV.length; i++) {
+      for (let i = 0; Array.isArray(RENV) && i < RENV.length; i++) {
         arr.push(API.getNotice("merimee", RENV[i]));
         if (arr.length > 50) break;
       }
-      for (let i = 0; i < REFP.length; i++) {
+      for (let i = 0; Array.isArray(REFP) && i < REFP.length; i++) {
         arr.push(API.getNotice("merimee", REFP[i]));
         if (arr.length > 50) break;
       }
-      for (let i = 0; i < REFE.length; i++) {
+      for (let i = 0; Array.isArray(REFE) && i < REFE.length; i++) {
         arr.push(API.getNotice("merimee", REFE[i]));
         if (arr.length > 50) break;
       }
-      for (let i = 0; i < REFO.length; i++) {
+      for (let i = 0; Array.isArray(REFO) && i < REFO.length; i++) {
         arr.push(API.getNotice("palissy", REFO[i]));
         if (arr.length > 50) break;
       }
