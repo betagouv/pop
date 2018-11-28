@@ -91,8 +91,8 @@ const Schema = new mongoose.Schema(
       }
     },
     APPL: {
-      type: [String],
-      default: [],
+      type: String,
+      default: "",
       documentation: { description: "Appellation", master: false }
     },
     APTN: {
