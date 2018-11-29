@@ -10,6 +10,8 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     collapse: true
   };
 
+  urlLocation = null;
+
   onListClicked = () => {
     this.onCollapseChange(!this.state.collapse);
   };
@@ -21,9 +23,22 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     }
   };
 
-  componentWillMount() {
-    const values = queryString.parse(location.search);
-    const field = this.props.componentId;
+  componentDidMount() {
+    const { componentId } = this.props;
+    try {
+      if(location) {
+        this.urlLocation = location.search;
+      } 
+    } catch (error) {
+      if(this.props.location) { // If window.location not defined use props
+        this.urlLocation = this.props.location.search;
+      } else {
+        throw new Error("location is not defined");
+      }
+    }
+
+    const values = queryString.parse(this.urlLocation);
+    const field = componentId;
     if (values[field]) {
       this.onCollapseChange(false);
     }
@@ -41,7 +56,6 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
 
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
-
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
@@ -67,6 +81,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
                 componentId={this.props.componentId}
                 sortByName={this.props.sortByName}
                 limit={this.props.limit}
+                location={this.urlLocation}
               />
             </ReactiveComponent>
           ) : null}
@@ -87,16 +102,17 @@ class MultiListUmbrella extends React.Component {
   }
 
   componentWillMount() {
+    const { location, componentId, defaultSelected } = this.props;
     this.updateInternalQuery("");
-    const values = queryString.parse(location.search);
-    const field = this.props.componentId;
+    const values = queryString.parse(location);
+    const field = componentId;
     if (values[field]) {
       const str = values[field].slice(1, -1);
       const selected = str.split(", ");
       this.updateExternalQuery(selected);
       this.setState({ selected });
-    } else if (this.props.defaultSelected) {
-      const selected = this.props.defaultSelected;
+    } else if (defaultSelected) {
+      const selected = defaultSelected;
       this.updateExternalQuery(selected);
       this.setState({ selected });
     }

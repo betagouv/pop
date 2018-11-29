@@ -7986,6 +7986,13 @@ rollup-plugin-commonjs@^9.1.3:
     resolve "^1.8.1"
     rollup-pluginutils "^2.3.3"
 
+rollup-plugin-copy-assets@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-copy-assets/-/rollup-plugin-copy-assets-1.0.0.tgz#05f081e702d3be5ab19596ea3a43dcaa049a8c9f"
+  integrity sha512-xDhOwE7QNjqaRF1v5y8diVhMRLfUEXIEjUSn/4U7Z+mQ6eh2lEfsCJBnHSi0VFF4P0BTh4esoj0VYHyN3Gabcg==
+  dependencies:
+    fs-extra "^5.0.0"
+
 rollup-plugin-node-resolve@^3.3.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-3.4.0.tgz#908585eda12e393caac7498715a01e08606abc89"
