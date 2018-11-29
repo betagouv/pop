@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { image } from "../../image";
 import "./CardList.css";
-import mdf from '../../../../assets/musee-de-france.jpg';
+import mdf from "../../../../assets/musee-de-france.jpg";
+import inv from "../../../../assets/inventaire.jpg";
 
 const joinData = f => {
   return f
@@ -34,18 +35,10 @@ export default ({ data }) => {
       return <Mnr data={data} />;
       break;
     case "merimee":
+      return <Merimee data={data} />;
+      break;
     case "palissy":
-      content = {
-        title: data.TICO || data.TITR,
-        ref: data.REF,
-        categories: data.DENO ? data.DENO.join(", ") : "",
-        author: data.AUTR,
-        data: data.SCLE,
-        loc: data.LOCA
-          ? joinData([data.LOCA])
-          : joinData([data.REG, data.DPT, data.COM]),
-        spe: data.DPRO
-      };
+      return <Palissy data={data} />;
       break;
     case "memoire":
       content = {
@@ -92,6 +85,92 @@ export default ({ data }) => {
           <p>{content.author}</p>
           <p>{content.data}</p>
           <p>{content.loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const Palissy = ({ data }) => {
+  const title = data.TICO || data.TITR;
+  const ref = data.REF;
+  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const author = data.AUTR;
+  const siecle = data.SCLE;
+  const loc = data.LOCA
+    ? joinData([data.LOCA])
+    : joinData([data.REG, data.DPT, data.COM]);
+
+  return (
+    <Link
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      to={`/notice/palissy/${ref}`}
+      className="list-card"
+      key={ref}
+    >
+      <div className="thumbnail">{image(data)}</div>
+      <div className="content">
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(title)}
+            <br />
+            <small>{categories}</small>
+          </h2>
+          <span>
+            <small className="base">Palissy</small>
+            <br />
+            {ref}
+          </span>
+        </div>
+        {data.PRODUCTEUR === "Inventaire" ? <img src={inv} className="producteur" /> : <div/>}
+        <div>
+          <p>{author}</p>
+          <p>{siecle}</p>
+          <p>{loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const Merimee = ({ data }) => {
+  const title = data.TICO || data.TITR;
+  const ref = data.REF;
+  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const author = data.AUTR;
+  const siecle = data.SCLE;
+  const loc = data.LOCA
+    ? joinData([data.LOCA])
+    : joinData([data.REG, data.DPT, data.COM]);
+
+  return (
+    <Link
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      to={`/notice/merimee/${ref}`}
+      className="list-card"
+      key={ref}
+    >
+      <div className="thumbnail">{image(data)}</div>
+      <div className="content">
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(title)}
+            <br />
+            <small>{categories}</small>
+          </h2>
+          <span>
+            <small className="base">Mérimée</small>
+            <br />
+            {ref}
+          </span>
+        </div>
+        {data.PRODUCTEUR === "Inventaire" ? <img src={inv} className="producteur" /> : <div/>}
+        <div>
+          <p>{author}</p>
+          <p>{siecle}</p>
+          <p>{loc}</p>
         </div>
       </div>
     </Link>
@@ -179,7 +258,7 @@ const Joconde = ({ data, index }) => {
             {REF}
           </span>
         </div>
-        <img src={mdf} className="mdf" />
+        <img src={mdf} className="producteur" />
         <div>
           <p>{author}</p>
           <p>{peri}</p>
