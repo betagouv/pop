@@ -10,7 +10,8 @@ const {
   uploadFile,
   formattedNow,
   checkESIndex,
-  updateNotice
+  updateNotice,
+  enrichBeforeSave
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -85,8 +86,11 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
+      //Add generate fields
+      enrichBeforeSave(notice);
+
       await updateNotice(Merimee, ref, notice);
-      
+
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -106,7 +110,12 @@ router.post(
       const arr = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       notice.MEMOIRE = arr;
+
+      //Add generate fields
+      enrichBeforeSave(notice);
+
       const obj = new Merimee(notice);
+
       //send error if obj is not well sync with ES
       checkESIndex(obj);
       await obj.save();
@@ -156,5 +165,6 @@ router.delete(
     });
   }
 );
+
 
 module.exports = router;

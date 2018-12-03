@@ -11,7 +11,8 @@ const {
   formattedNow,
   getNewId,
   checkESIndex,
-  updateNotice
+  updateNotice,
+  enrichBeforeSave
 } = require("./utils");
 
 const { capture } = require("./../sentry.js");
@@ -87,6 +88,9 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
+      //Add generate fields
+      enrichBeforeSave(notice);
+
       await updateNotice(Palissy, ref, notice);
 
       await populateMerimeeREFO(notice);
@@ -109,6 +113,9 @@ router.post(
       await populateMerimeeREFO(notice);
       notice.MEMOIRE = arr;
       notice.DMIS = notice.DMAJ = formattedNow();
+      //Add generate fields
+      enrichBeforeSave(notice);
+
       const obj = new Palissy(notice);
       //send error if obj is not well sync with ES
       checkESIndex(obj);
