@@ -290,12 +290,12 @@ const Card = ({ data }) => {
           <div>
             <p>{data.LOCA}</p>
             <p>{data.EDIF}</p>
-            <p>{data.AUTR}</p>
-            <p>{data.CATE}</p>
-            <p>{data.MATR}</p>
-            <p>{data.SCLE}</p>
+            <p>{data.AUTR.join(' ; ')}</p>
+            <p>{data.CATE.join(' ; ')}</p>
+            <p>{data.MATR.join(' ; ')}</p>
+            <p>{data.SCLE.join(' ; ')}</p>
             <p>{data.DEPL}</p>
-            <p>{data.STAT}</p>
+            <p>{data.STAT.join(' ; ')}</p>
             <p>{data.DPRO}</p>
             <p>{data.DOMN}</p>
           </div>
@@ -319,9 +319,9 @@ const Card = ({ data }) => {
         </div>
         <div>
           <p>{data.DOMN}</p>
-          <p>{data.DENO}</p>
+          <p>{data.DENO.join(' ; ')}</p>
           <p>{data.LOCA}</p>
-          <p>{data.AUTR}</p>
+          <p>{data.AUTR.join(' ; ')}</p>
         </div>
       </div>
     </Link>
