@@ -18,14 +18,12 @@ class NavComponent extends React.Component {
           <Link to="/">Accueil</Link>
           <Link to="/recherche">Recherche</Link>
           {this.props.role === "administrateur" ||
-          this.props.role === "producteur" ||
-          this.props.group === "admin" ? (
+          this.props.role === "producteur" ? (
             <Link to="/import">Import</Link>
           ) : (
             <div />
           )}
-          {this.props.role === "administrateur" ||
-          this.props.group === "admin" ? (
+          {this.props.role === "administrateur" ? (
             <Link to="/admin">Administration</Link>
           ) : (
             <div />

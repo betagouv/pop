@@ -20,7 +20,22 @@ class CreateUser extends React.Component {
 
   createUser() {
     this.setState({ loading: true });
-    const { group, email, role, institution, prenom, nom, museofile } = this.state;
+    const {
+      group,
+      email,
+      role,
+      institution,
+      prenom,
+      nom,
+      museofile
+    } = this.state;
+    if (group === "admin" && role !== "administrateur") {
+      this.setState({
+        error:
+          "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
+      });
+      return;
+    }
     api
       .createUser(email, group, role, institution, prenom, nom, museofile)
       .then(() => {
@@ -38,7 +53,9 @@ class CreateUser extends React.Component {
 
     return (
       <div className="input-container">
-        <div>Code Musée<em class="text-muted"> - MUSEOFILE</em></div>
+        <div>
+          Code Musée<em class="text-muted"> - MUSEOFILE</em>
+        </div>
         <Input
           value={this.state.museofile}
           placeholder="Exemple : M5043"
@@ -66,7 +83,7 @@ class CreateUser extends React.Component {
     groups = groups.map(e => <option key={e}>{e}</option>);
 
     let roles = [];
-    if (this.props.role === "administrateur" || this.props.group === "admin") {
+    if (this.props.role === "administrateur") {
       roles = roles.concat(["administrateur", "producteur", "utilisateur"]);
     }
 

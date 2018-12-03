@@ -20,22 +20,18 @@ class UpdateProfile extends Component {
     hasResetPassword: false,
     nom: "",
     prenom: "",
-    institution: "",
-    group: "",
-    role: ""
+    institution: ""
   };
 
   componentWillMount() {
     const { user } = this.props;
     if (user) {
-      const { hasResetPassword, nom, prenom, institution, group, role } = user;
+      const { hasResetPassword, nom, prenom, institution } = user;
       this.setState({
         hasResetPassword,
         nom,
         prenom,
-        institution,
-        group,
-        role
+        institution
       });
     }
   }
@@ -44,14 +40,12 @@ class UpdateProfile extends Component {
     const { user } = this.props;
     const { user: prevUser } = prevProps;
     if (user && user !== prevUser) {
-      const { hasResetPassword, nom, prenom, institution, group, role } = user;
+      const { hasResetPassword, nom, prenom, institution } = user;
       this.setState({
         hasResetPassword,
         nom,
         prenom,
-        institution,
-        group,
-        role
+        institution
       });
     }
   }
@@ -77,18 +71,24 @@ class UpdateProfile extends Component {
       ppwd2,
       nom: stateNom,
       prenom: statePrenom,
-      institution: stateInstitution,
-      group: stateGroup,
-      role: stateRole
+      institution: stateInstitution
     } = this.state;
+
+    if (group === "admin" && role !== "administrateur") {
+      this.setState({
+        error:
+          "Les membres du groupe « admin » doivent avoir le rôle « administrateur »",
+        loading: false,
+        done: false
+      });
+      return;
+    }
 
     const hasChangedPassword = ppwd !== "" && ppwd1 !== "" && ppwd2 !== "";
     const hasChangedProfileInfo =
       nom !== stateNom ||
       prenom !== statePrenom ||
-      institution !== stateInstitution ||
-      group !== stateGroup ||
-      role !== stateRole;
+      institution !== stateInstitution;
     let promise = Promise.resolve();
 
     if (hasChangedProfileInfo) {
@@ -99,8 +99,8 @@ class UpdateProfile extends Component {
             stateNom,
             statePrenom,
             stateInstitution,
-            stateGroup,
-            stateRole
+            group,
+            role
           );
         })
         .then(() => {
@@ -154,35 +154,6 @@ class UpdateProfile extends Component {
     );
   }
 
-  renderGroups = () => {
-    const { group } = this.state;
-    let groupes = [];
-
-    if (group === "admin") {
-      groupes = groupes.concat([
-        "admin",
-        "mnr",
-        "joconde",
-        "mh",
-        "inv",
-        "memoire"
-      ]);
-    } else {
-      groupes.push(group);
-    }
-    return groupes.map((e, i) => <option key={`${e}${i}`}>{e}</option>);
-  };
-
-  renderRoles = () => {
-    const { group, role } = this.state;
-    let roles = [];
-    if (role === "administrateur" || group === "admin") {
-      roles = roles.concat(["utilisateur", "producteur", "administrateur"]);
-    }
-
-    return roles.map((e, i) => <option key={`${e}${i}`}>{e}</option>);
-  };
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -197,9 +168,7 @@ class UpdateProfile extends Component {
       error,
       nom,
       prenom,
-      institution,
-      group,
-      role
+      institution
     } = this.state;
 
     if (loading) {
@@ -251,30 +220,6 @@ class UpdateProfile extends Component {
               value={institution}
               onChange={this.handleChange("institution")}
             />
-          </div>
-          <hr />
-          <div className="sub-block">
-            <h4>Mes groupes et roles</h4>
-            {group === "admin" ? (
-              <Input
-                type="select"
-                value={group}
-                onChange={this.handleChange("group")}
-                className="input-field select-field"
-              >
-                {this.renderGroups()}
-              </Input>
-            ) : null}
-            {role === "administrateur" || group === "admin" ? (
-              <Input
-                type="select"
-                value={role}
-                onChange={this.handleChange("role")}
-                className="input-field select-field"
-              >
-                {this.renderRoles()}
-              </Input>
-            ) : null}
           </div>
           <hr />
           <div className="sub-block">
