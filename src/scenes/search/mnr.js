@@ -19,7 +19,19 @@ import Mnr from "../../entities/mnr";
 
 import { es_url, bucket_url } from "../../config.js";
 
-const FILTER = ["mainSearch", "prov", "cate", "tech"];
+const FILTER = [
+  "mainSearch",
+  "prov",
+  "cate",
+  "tech",
+  "contientimage",
+  "dmaj",
+  "affe",
+  "loca",
+  "peri",
+  "autr",
+  "domn"
+];
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -40,22 +52,27 @@ export default class Search extends React.Component {
             <QueryBuilder entity={Mnr} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
-            <ExportComponent
-              FILTER={["advancedSearch"]}
-              collection="mnr"
-            />
+            <ExportComponent FILTER={["advancedSearch"]} collection="mnr" />
           </Col>
         </Row>
         <div className="text-center my-3">
           Trier par :
-          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-            {new Mnr({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortKey: e.target.value })}
+          >
+            {new Mnr({})._fields
+              .filter(e => !["TICO", "TITR"].includes(e))
+              .map(e => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
           </select>
-          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortOrder: e.target.value })}
+          >
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>
@@ -112,11 +129,59 @@ export default class Search extends React.Component {
         <Row>
           <Col xs="3">
             <MultiList
+              componentId="domn"
+              dataField="DOMN.keyword"
+              title="Domaine"
+              displayCount
+              className="filters"
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
               componentId="cate"
               dataField="CATE.keyword"
               title="Catégorie"
               displayCount
               className="filters"
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="prov"
+              dataField="PROV.keyword"
+              title="Provenance"
+              className="filters"
+              displayCount
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="autr"
+              dataField="AUTR.keyword"
+              title="Auteur"
+              className="filters"
+              displayCount
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="peri"
+              dataField="PERI.keyword"
+              title="Période"
+              className="filters"
+              displayCount
               showSearch={true}
               URLParams={true}
               react={{
@@ -136,9 +201,45 @@ export default class Search extends React.Component {
               }}
             />
             <MultiList
-              componentId="prov"
-              dataField="PROV.keyword"
-              title="Provenance"
+              componentId="loca"
+              dataField="LOCA.keyword"
+              title="Localisation"
+              className="filters"
+              displayCount
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="affe"
+              dataField="AFFE.keyword"
+              title="Etablissement affectataire"
+              className="filters"
+              displayCount
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="dmaj"
+              dataField="DMAJ.keyword"
+              title="Date de mise à jour"
+              className="filters"
+              displayCount
+              showSearch={true}
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="contientimage"
+              dataField="CONTIENT_IMAGE.keyword"
+              title="Contient une image"
               className="filters"
               displayCount
               showSearch={true}
