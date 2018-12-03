@@ -1,5 +1,5 @@
-import React from 'react';
-import { bucket_url } from '../../config';
+import React from "react";
+import { bucket_url } from "../../config";
 
 export function image(data) {
   const alt = data.TICO || data.TITR || data.REF;
@@ -16,18 +16,20 @@ export function image(data) {
   } else {
     const imgProp = data.IMG || data.VIDEO;
     if (imgProp && imgProp.length) {
-      const img = typeof imgProp === 'string' ? imgProp : imgProp[0];
-      if (img.match(/^http/)) {
-        return <img src={img} alt={alt} />;
-      } else {
-        return <img src={`${bucket_url}${img}`} alt={alt} />;
+      const img = typeof imgProp === "string" ? imgProp : imgProp[0];
+      if (img) {
+        if (img.match(/^http/)) {
+          return <img src={img} alt={alt} />;
+        } else {
+          return <img src={`${bucket_url}${img}`} alt={alt} />;
+        }
       }
     }
   }
 
   return (
     <img
-      src={require('../../assets/noimage.png')}
+      src={require("../../assets/noimage.png")}
       className="no-img"
       alt={alt}
     />
