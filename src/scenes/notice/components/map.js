@@ -7,12 +7,12 @@ import "./map.css";
 
 export default class MapComponent extends React.Component {
   renderPoint() {
-    if (!this.props.notice.POP_COORDINATES_POINT.coordinates.length) {
+    if (this.props.notice.POP_CONTIENT_GEOLOCALISATION !== "oui") {
       return <div />;
     }
     return (
       <Marker
-        position={this.props.notice.POP_COORDINATES_POINT.coordinates}
+        position={[this.props.notice.POP_COORDONNEES.lat,this.props.notice.POP_COORDONNEES.lon]}
         icon={L.icon({
           iconUrl: require("../../../assets/marker-icon.png"),
           iconSize: [38, 55],
@@ -55,16 +55,15 @@ export default class MapComponent extends React.Component {
     }
 
     const {
-      POP_COORDINATES_POINT,
+      POP_COORDONNEES,
       POP_COORDINATES_POLYGON
     } = this.props.notice;
 
     if (
-      POP_COORDINATES_POINT &&
-      POP_COORDINATES_POINT.coordinates &&
-      POP_COORDINATES_POINT.coordinates.length
+      POP_COORDONNEES &&
+      POP_COORDONNEES.lat !== 0
     ) {
-      center = POP_COORDINATES_POINT.coordinates;
+      center = [this.props.notice.POP_COORDONNEES.lat,this.props.notice.POP_COORDONNEES.lon];
     }
 
     if (
@@ -85,7 +84,7 @@ export default class MapComponent extends React.Component {
         <Map center={center} zoom={15}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           {this.renderGeometry()}
           {this.renderPoint()}
