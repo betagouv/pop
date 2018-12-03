@@ -25,13 +25,32 @@ router.post("/signup", (req, res) => {
     });
   }
 
-  var password = generator.generate({
+  // museofile is required
+  const needMuseofile =
+    req.body.role === "producteur" && req.body.group === "joconde";
+  if (needMuseofile) {
+    if (!req.body.museofile) {
+      return res.status(400).json({
+        success: false,
+        msg:
+          "Le champ muséofile est obligatoire pour les producteurs du groupe joconde."
+      });
+    } else if (!req.body.museofile.match(/^M[0-9]+$/)) {
+      return res.status(400).json({
+        success: false,
+        msg:
+          "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)"
+      });
+    }
+  }
+
+  const password = generator.generate({
     length: 12,
     numbers: true,
     symbols: true
   });
 
-  const newUser = new User({
+  const userData = {
     nom: req.body.nom,
     prenom: req.body.prenom,
     email: req.body.email,
@@ -40,7 +59,11 @@ router.post("/signup", (req, res) => {
     institution: req.body.institution,
     password,
     hasResetPassword: false
-  });
+  };
+  if (needMuseofile) {
+    userData.museofile = req.body.museofile;
+  }
+  const newUser = new User(userData);
 
   newUser.save(function(err) {
     if (err) {
@@ -108,59 +131,56 @@ router.post("/forgetPassword", (req, res) => {
   });
 });
 
-router.post(
-  "/updatePassword",
-  (req, res) => {
-    const { email, ppwd, pwd1, pwd2 } = req.body;
+router.post("/updatePassword", (req, res) => {
+  const { email, ppwd, pwd1, pwd2 } = req.body;
 
-    if (!pwd1) {
-      return res.status(401).send({
-        success: false,
-        msg: `Le nouveau mot de passe ne peut être vide`
-      });
-    }
-
-    if (pwd1 !== pwd2) {
-      return res.status(401).send({
-        success: false,
-        msg: `Les mots de passe ne sont pas identiques`
-      });
-    }
-
-    User.findOne({ email }, function(err, user) {
-      if (err) throw err;
-
-      if (!user) {
-        res.status(401).send({
-          success: false,
-          msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
-        });
-      } else {
-        user.comparePassword(ppwd, function(err, isMatch) {
-          if (isMatch && !err) {
-            user.set({ password: pwd1 });
-            user.set({ hasResetPassword: true });
-            user.save(function(err) {
-              if (err) throw err;
-              return res.status(200).send({
-                success: true,
-                msg: `La mise à jour du mot de passe a été effectuée avec succès`
-              });
-            });
-          } else {
-            res.status(401).send({
-              success: false,
-              msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
-            });
-          }
-        });
-      }
+  if (!pwd1) {
+    return res.status(401).send({
+      success: false,
+      msg: `Le nouveau mot de passe ne peut être vide`
     });
   }
-);
+
+  if (pwd1 !== pwd2) {
+    return res.status(401).send({
+      success: false,
+      msg: `Les mots de passe ne sont pas identiques`
+    });
+  }
+
+  User.findOne({ email }, function(err, user) {
+    if (err) throw err;
+
+    if (!user) {
+      res.status(401).send({
+        success: false,
+        msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
+      });
+    } else {
+      user.comparePassword(ppwd, function(err, isMatch) {
+        if (isMatch && !err) {
+          user.set({ password: pwd1 });
+          user.set({ hasResetPassword: true });
+          user.save(function(err) {
+            if (err) throw err;
+            return res.status(200).send({
+              success: true,
+              msg: `La mise à jour du mot de passe a été effectuée avec succès`
+            });
+          });
+        } else {
+          res.status(401).send({
+            success: false,
+            msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
+          });
+        }
+      });
+    }
+  });
+});
 
 router.post(
-  "/updateProfile", 
+  "/updateProfile",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { email, nom, prenom, institution, group, role } = req.body;
@@ -182,7 +202,7 @@ router.post(
         });
       } else {
         try {
-          user.set({ 
+          user.set({
             institution,
             nom,
             prenom,
