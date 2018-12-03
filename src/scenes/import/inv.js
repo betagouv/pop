@@ -117,6 +117,8 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
       notices.push(...values[0].map(e => new Palissy(e)));
       notices.push(...values[1].map(e => new Merimee(e)));
 
+      //COORWGS84
+
       notices.push(
         ...values[2].map(e => {
           //changement du modèle de donnée gertrude -> pop
@@ -164,9 +166,11 @@ function ParseRenabl(files, xmlFiles, encoding) {
       for (var i = 0; i < tags.length; i++) {
         if (tags[i].nodeName === "MERIMEE") {
           const obj = RenablXMLToObj(tags[i]);
+          convertGPS(obj);
           notices.push(new Merimee(obj));
         } else if (tags[i].nodeName === "PALISSY") {
           const obj = RenablXMLToObj(tags[i]);
+          convertGPS(obj);
           notices.push(new Palissy(obj));
         } else if (tags[i].nodeName === "ILLUSTRATION") {
           const obj = RenablXMLToObj(tags[i]);
@@ -200,6 +204,18 @@ function ParseRenabl(files, xmlFiles, encoding) {
     }
     resolve(notices);
   });
+}
+
+function convertGPS(e) {
+  if (e.COORWGS84) {
+    const arr = e.COORWGS84.split(",");
+    if (arr.length === 2) {
+      e.COORWGS84 = { lat: parseFloat(arr[0]), lon: parseFloat(arr[1]) };
+    } else {
+      e._errors.push(`Can't convert ${e.COORWGS84} to GPS `);
+      e.COORWGS84 = null;
+    }
+  }
 }
 
 function checkReference(notice) {

@@ -19,6 +19,8 @@ export default class Merimee extends Notice {
     this.setProperty("APRO", "Array", this.extractArray(body.APRO), {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T98"
     });
+
+    this.setProperty("POP_COORDONNEES", "Object", body.COORWGS84);
     this.setProperty("ARCHEO", "String", body.ARCHEO);
     this.setProperty("AUTP", "Array", this.extractArray(body.AUTP));
     this.setProperty("AUTR", "Array", this.extractArray(body.AUTR));
@@ -153,6 +155,7 @@ export default class Merimee extends Notice {
     this.setProperty("LMDP", "String", body.LMDP);
     this.setProperty("PINT", "String", body.PINT);
     this.setProperty("DLAB", "String", body.DLAB);
+
 
     //Check required fields
     for (var property in this) {

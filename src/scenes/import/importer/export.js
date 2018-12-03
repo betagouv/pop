@@ -28,7 +28,7 @@ class Export {
       lines.push([...fields, "Création", ""].join(","));
       for (var j = 0; j < created[i]._warnings.length; j++) {
         lines.push(
-          [...fields, "Avertissement", `"${created[i]._warnings[j]}"`].join(",")
+          [...fields, "Avertissement", `"${doubleBrakets(created[i]._warnings[j])}"`].join(",")
         );
       }
     }
@@ -36,15 +36,14 @@ class Export {
     for (var i = 0; i < updated.length; i++) {
       const fields = fieldToExport.map(e => `"${updated[i][e.key].value}"`);
       lines.push([...fields, "Modification", ""].join(","));
-
       for (var j = 0; j < updated[i]._messages.length; j++) {
         lines.push(
-          [...fields, "Changement", `"${updated[i]._messages[j]}"`].join(",")
+          [...fields, "Changement", `"${doubleBrakets(updated[i]._messages[j])}"`].join(",")
         );
       }
       for (var j = 0; j < updated[i]._warnings.length; j++) {
         lines.push(
-          [...fields, "Avertissement", `"${updated[i]._warnings[j]}"`].join(",")
+          [...fields, "Avertissement", `"${doubleBrakets(updated[i]._warnings[j])}"`].join(",")
         );
       }
     }
@@ -55,12 +54,12 @@ class Export {
       lines.push([...fields, "Rejet", ""].join(","));
       for (var j = 0; j < rejected[i]._errors.length; j++) {
         lines.push(
-          [...fields, "Erreur", `"${rejected[i]._errors[j]}"`].join(",")
+          [...fields, "Erreur", `"${doubleBrakets(rejected[i]._errors[j])}"`].join(",")
         );
       }
       for (var j = 0; j < rejected[i]._warnings.length; j++) {
         lines.push(
-          [...fields, "Avertissement", `"${rejected[i]._warnings[j]}"`].join(
+          [...fields, "Avertissement", `"${doubleBrakets(rejected[i]._warnings[j])}"`].join(
             ","
           )
         );
@@ -68,9 +67,12 @@ class Export {
     }
 
     csv += lines.join("\n");
-
     initiateFileDownload(csv, fileName);
   }
+}
+
+function doubleBrakets(str) {
+  return str.replace(/"/g, '""');
 }
 
 function initiateFileDownload(csv, fileName) {

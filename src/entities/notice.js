@@ -10,9 +10,12 @@ export default class Notice {
   }
 
   setProperty(property, type, value, opt = null) {
+    // in order to know which properties compose an entity
     this._fields.push(property);
+
+    //if there is a value, add it. Otherwise I dont want to overwrite a value if there is nothing
     if (value !== undefined) {
-      this[property] = { type, value };
+      this[property] = { type, value }; // The type is used in order to check if the value is different from the production. I need the type
       if (opt) {
         this[property] = { ...this[property], ...opt };
       }
