@@ -8,22 +8,6 @@ export default class Home extends React.Component {
   state = {
     alert: process.env.NODE_ENV !== "production"
   };
-  renderTiles(tiles) {
-    return tiles.map(({ url, name, image }, i) => {
-      return (
-        <Col md="2" className="box text-center" key={i}>
-          <Link style={{ textDecoration: "none" }} to={url}>
-            <div className="tile">
-              <img src={image} alt="dummy image" className="img-fluid" />
-              <div className="caption">
-                <div className="name">{name}</div>
-              </div>
-            </div>
-          </Link>
-        </Col>
-      );
-    });
-  }
 
   renderAlert() {
     return (
