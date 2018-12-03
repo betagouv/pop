@@ -387,9 +387,9 @@ const Schema = new mongoose.Schema(
       documentation: { description: "Format tirage", master: false }
     },
     LBASE: {
-      type: String,
+      type: [String],
+      default: [],
       index: true,
-      default: "",
       documentation: {
         description:
           "LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image",
