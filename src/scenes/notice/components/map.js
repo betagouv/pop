@@ -12,7 +12,10 @@ export default class MapComponent extends React.Component {
     }
     return (
       <Marker
-        position={[this.props.notice.POP_COORDONNEES.lat,this.props.notice.POP_COORDONNEES.lon]}
+        position={[
+          this.props.notice.POP_COORDONNEES.lat,
+          this.props.notice.POP_COORDONNEES.lon
+        ]}
         icon={L.icon({
           iconUrl: require("../../../assets/marker-icon.png"),
           iconSize: [38, 55],
@@ -35,7 +38,10 @@ export default class MapComponent extends React.Component {
   }
 
   renderGeometry() {
-    if (!this.props.notice.POP_COORDINATES_POLYGON.coordinates.length) {
+    if (
+      !this.props.notice.POP_COORDINATES_POLYGON ||
+      !this.props.notice.POP_COORDINATES_POLYGON.coordinates.length
+    ) {
       return <div />;
     }
 
@@ -54,16 +60,13 @@ export default class MapComponent extends React.Component {
       return <div />;
     }
 
-    const {
-      POP_COORDONNEES,
-      POP_COORDINATES_POLYGON
-    } = this.props.notice;
+    const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = this.props.notice;
 
-    if (
-      POP_COORDONNEES &&
-      POP_COORDONNEES.lat !== 0
-    ) {
-      center = [this.props.notice.POP_COORDONNEES.lat,this.props.notice.POP_COORDONNEES.lon];
+    if (POP_COORDONNEES && POP_COORDONNEES.lat !== 0) {
+      center = [
+        this.props.notice.POP_COORDONNEES.lat,
+        this.props.notice.POP_COORDONNEES.lon
+      ];
     }
 
     if (
