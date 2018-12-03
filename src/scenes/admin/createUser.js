@@ -1,9 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Button, Modal, Input } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Button, Modal, Input, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import api from "../../services/api";
-import Loader from "../../components/loader";
 import "./createUser.css";
 
 class CreateUser extends React.Component {
@@ -16,14 +14,15 @@ class CreateUser extends React.Component {
     group: this.props.group,
     role: this.props.role,
     loading: false,
-    error: ""
+    error: "",
+    museofile: null
   };
 
   createUser() {
     this.setState({ loading: true });
-    const { group, email, role, institution, prenom, nom } = this.state;
+    const { group, email, role, institution, prenom, nom, museofile } = this.state;
     api
-      .createUser(email, group, role, institution, prenom, nom)
+      .createUser(email, group, role, institution, prenom, nom, museofile)
       .then(() => {
         this.setState({ modal: false });
       })
@@ -32,11 +31,28 @@ class CreateUser extends React.Component {
       });
   }
 
+  museofile() {
+    if (this.state.group !== "joconde" || this.state.role !== "producteur") {
+      return <div />;
+    }
+
+    return (
+      <div className="input-container">
+        <div>Code Musée<em class="text-muted"> - MUSEOFILE</em></div>
+        <Input
+          value={this.state.museofile}
+          placeholder="Exemple : M5043"
+          onChange={e => this.setState({ museofile: e.target.value })}
+        />
+      </div>
+    );
+  }
+
   renderModal() {
-    let groupes = [];
+    let groups = [];
 
     if (this.props.group === "admin") {
-      groupes = groupes.concat([
+      groups = groups.concat([
         "admin",
         "mnr",
         "joconde",
@@ -45,9 +61,9 @@ class CreateUser extends React.Component {
         "memoire"
       ]);
     } else {
-      groupes.push(this.props.group);
+      groups.push(this.props.group);
     }
-    groupes = groupes.map(e => <option key={e}>{e}</option>);
+    groups = groups.map(e => <option key={e}>{e}</option>);
 
     let roles = [];
     if (this.props.role === "administrateur" || this.props.group === "admin") {
@@ -72,20 +88,26 @@ class CreateUser extends React.Component {
             />
           </div>
         </div>
-        <div className="input-container">
-          <div>Prénom</div>
-          <Input
-            value={this.state.prenom}
-            onChange={e => this.setState({ prenom: e.target.value })}
-          />
-        </div>
-        <div className="input-container">
-          <div>Nom</div>
-          <Input
-            value={this.state.nom}
-            onChange={e => this.setState({ nom: e.target.value })}
-          />
-        </div>
+        <Row>
+          <Col sm="6">
+            <div className="input-container">
+              <div>Prénom</div>
+              <Input
+                value={this.state.prenom}
+                onChange={e => this.setState({ prenom: e.target.value })}
+              />
+            </div>
+          </Col>
+          <Col sm="6">
+            <div className="input-container">
+              <div>Nom</div>
+              <Input
+                value={this.state.nom}
+                onChange={e => this.setState({ nom: e.target.value })}
+              />
+            </div>
+          </Col>
+        </Row>
         <div className="input-container">
           <div>Institution</div>
           <Input
@@ -93,26 +115,33 @@ class CreateUser extends React.Component {
             onChange={e => this.setState({ institution: e.target.value })}
           />
         </div>
-        <div className="input-container">
-          <div>Groupe</div>
-          <Input
-            type="select"
-            value={this.state.group}
-            onChange={e => this.setState({ group: e.target.value })}
-          >
-            {groupes}
-          </Input>
-        </div>
-        <div className="input-container">
-          <div>Rôle</div>
-          <Input
-            type="select"
-            value={this.state.role}
-            onChange={e => this.setState({ role: e.target.value })}
-          >
-            {roles}
-          </Input>
-        </div>
+        <Row>
+          <Col sm="6">
+            <div className="input-container">
+              <div>Groupe</div>
+              <Input
+                type="select"
+                value={this.state.group}
+                onChange={e => this.setState({ group: e.target.value })}
+              >
+                {groups}
+              </Input>
+            </div>
+          </Col>
+          <Col sm="6">
+            <div className="input-container">
+              <div>Rôle</div>
+              <Input
+                type="select"
+                value={this.state.role}
+                onChange={e => this.setState({ role: e.target.value })}
+              >
+                {roles}
+              </Input>
+            </div>
+          </Col>
+        </Row>
+        {this.museofile()}
         <div className="button-container">
           <Button color="primary" onClick={this.createUser.bind(this)}>
             Créer
