@@ -409,7 +409,7 @@ class Notice extends React.Component {
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
-          {this.props.canUpdate ? (
+          {this.props.canDelete ? (
             <div className="buttons">
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
@@ -426,11 +426,12 @@ class Notice extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
+  const canDelete =
+    Auth.user &&
+    role === "administrateur" &&
+    (group === "joconde" || group === "admin");
   return {
-    canUpdate: Auth.user
-      ? (role === "producteur" || role === "administrateur") &&
-        (group === "joconde" || group === "admin")
-      : false
+    canDelete
   };
 };
 
