@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
-import { Link } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
@@ -44,13 +43,16 @@ class Notice extends React.Component {
           loading: false,
           error: `Impossible de charger la notice ${ref}`
         });
-        console.error(`Impossible de charger la notice ${ref}`);
         return;
       }
       console.log("NOTICE", notice);
-      const initData = notice;
-      this.props.initialize(initData);
-      this.setState({ loading: false, notice });
+      this.props.initialize(notice);
+      // As a "producteur", I can edit if "museofile" matches with notice.
+      const editable =
+        this.props.canUpdate &&
+        (this.props.user.role === "administrateur" ||
+          notice.MUSEOFILE === this.props.museofile);
+      this.setState({ loading: false, notice, editable });
     });
   }
 
@@ -105,7 +107,7 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="IMG" disabled />
+              <FieldImages name="IMG" disabled={!this.state.editable} />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
@@ -120,95 +122,131 @@ class Notice extends React.Component {
               <FieldInput
                 title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt (INV) :"
                 name="INV"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Domaine (catégorie du bien) (DOMN) :"
                 name="DOMN"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Dénomination du bien (DENO) : "
                 name="DENO"
                 thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldTags title="Appellation (APPL) :" name="APPL" disabled />
-              <FieldInput title="Titre (TITR) :" name="TITR" disabled />
+              <FieldTags
+                title="Appellation (APPL) :"
+                name="APPL"
+                disabled={!this.state.editable}
+              />
+              <FieldInput
+                title="Titre (TITR) :"
+                name="TITR"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Auteur /exécutant / collecteur (AUTR) :"
                 name="AUTR"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Précisions /auteur / exécutant / collecteur (PAUT) :"
                 name="PAUT"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldTags title="Ecole (ECOL) :" name="ECOL" disabled />
+              <FieldTags
+                title="Ecole (ECOL) :"
+                name="ECOL"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Anciennes attributions (ATTR) :"
                 name="ATTR"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Période de création / exécution (PERI) :"
                 name="PERI"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Millésime de création / exécution (MILL) :"
                 name="MILL"
-                disabled
+                disabled={!this.state.editable}
               />
 
               <FieldTags
                 title="Epoque /style / mouvement (EPOQ) :"
                 name="EPOQ"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Période de l’original copié (PEOC) :"
                 name="PEOC"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Matériaux et techniques (TECH) :"
                 name="TECH"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
             <Col sm={6}>
-              <FieldInput title="Localisation (LOCA) :" name="LOCA" disabled />
-              <FieldInput title="Mesures (DIMS) :" name="DIMS" disabled />
-              <FieldTags title="Inscriptions (INSC) :" name="INSC" disabled />
+              <FieldInput
+                title="Localisation (LOCA) :"
+                name="LOCA"
+                disabled={!this.state.editable}
+              />
+              <FieldInput
+                title="Mesures (DIMS) :"
+                name="DIMS"
+                disabled={!this.state.editable}
+              />
+              <FieldTags
+                title="Inscriptions (INSC) :"
+                name="INSC"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Précisions sur les inscriptions (PINS) :"
                 name="PINS"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldTags title="Onomastique (ONOM) :" name="ONOM" disabled />
-              <FieldInput title="Description (DESC) :" name="DESC" disabled />
-              <FieldTags title="Etat du bien (ETAT) :" name="ETAT" disabled />
+              <FieldTags
+                title="Onomastique (ONOM) :"
+                name="ONOM"
+                disabled={!this.state.editable}
+              />
+              <FieldInput
+                title="Description (DESC) :"
+                name="DESC"
+                disabled={!this.state.editable}
+              />
+              <FieldTags
+                title="Etat du bien (ETAT) :"
+                name="ETAT"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Sujet représenté (REPR) :"
                 name="REPR"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Précisions sur le sujet représenté (PREP) :"
                 name="PREP"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Date de la représentation (DREP) :"
                 name="DREP"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Source de la représentation (SREP) :"
                 name="SREP"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
           </Section>
@@ -218,63 +256,67 @@ class Notice extends React.Component {
             color="#FE997B"
           >
             <Col sm={6}>
-              <FieldTags title="Genèse (GENE) :" name="GENE" disabled />
+              <FieldTags
+                title="Genèse (GENE) :"
+                name="GENE"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Historique – Objets associés (HIST) :"
                 name="HIST"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Lieu de création / d’exécution / d’utilisation(LIEUX) :"
                 name="LIEUX"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Précisions sur le lieu de création/ d’exécution / d’utilisation(PLIEUX) :"
                 name="PLIEUX"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Géographie historique (GEOHI) :"
                 name="GEOHI"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldTags
                 title="Utilisation / Destination (UTIL) :"
                 name="UTIL"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
             <Col sm={6}>
               <FieldTags
                 title="Période d’utilisation (PERU) :"
                 name="PERU"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Précisions sur l’utilisation (PUTI) :"
                 name="PUTI"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Millésime d’utilisation (MILU) :"
                 name="MILU"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) (DECV) :"
                 name="DECV"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Précisions sur la découverte / collecte / récolte (PDEC) :"
                 name="PDEC"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Numéro de site (NSDA) :"
                 name="NSDA"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
           </Section>
@@ -287,34 +329,34 @@ class Notice extends React.Component {
               <FieldTags
                 title="Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire (STAT) :"
                 name="STAT"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Date d’acquisition (DACQ) :"
                 name="DACQ"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Ancienne appartenance (nom du donateur / testateur/ vendeur) (APTN) :"
                 name="APTN"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Dépôt / établissement dépositaire (DEPO) :"
                 name="DEPO"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Date de dépôt / changement d’affectation (DDPT) :"
                 name="DDPT"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
             <Col sm={6}>
               <FieldTags
                 title="Ancien dépôt / changement d’affectation (ADPT) :"
                 name="ADPT"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
           </Section>
@@ -324,16 +366,32 @@ class Notice extends React.Component {
             color="#FE997B"
           >
             <Col sm={6}>
-              <FieldInput title="Commentaires (COMM) :" name="COMM" disabled />
-              <FieldInput title="Exposition (EXPO) :" name="EXPO" disabled />
-              <FieldInput title="Bibliographie (BIBL) :" name="BIBL" disabled />
+              <FieldInput
+                title="Commentaires (COMM) :"
+                name="COMM"
+                disabled={!this.state.editable}
+              />
+              <FieldInput
+                title="Exposition (EXPO) :"
+                name="EXPO"
+                disabled={!this.state.editable}
+              />
+              <FieldInput
+                title="Bibliographie (BIBL) :"
+                name="BIBL"
+                disabled={!this.state.editable}
+              />
             </Col>
             <Col sm={6}>
-              <FieldTags title="Rédacteur (REDA) :" name="REDA" disabled />
+              <FieldTags
+                title="Rédacteur (REDA) :"
+                name="REDA"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Crédits photographiques (PHOT) :"
                 name="PHOT"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
           </Section>
@@ -346,78 +404,101 @@ class Notice extends React.Component {
               <FieldInput
                 title="Référence (numéro système de la notice) (REF) :"
                 name="REF"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Référence de mise à jour (marque de la modification de la notice) (REFMIS) :"
                 name="REFMIS"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Référence image : lien texte/ image (REFIM) :"
                 name="REFIM"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldTags title="Videos (VIDEO) :" name="VIDEO" disabled />
-              <FieldTags title="Images (IMG) :" name="IMG" disabled />
+              <FieldTags
+                title="Videos (VIDEO) :"
+                name="VIDEO"
+                disabled={!this.state.editable}
+              />
+              <FieldTags
+                title="Images (IMG) :"
+                name="IMG"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Appellation musée de France : logo (LABEL) :"
                 name="LABEL"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Copyright notice (COPY) :"
                 name="COPY"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Lien commande de reproduction et/ou de conditions d’utilisation (MSGCOM) :"
                 name="MSGCOM"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
             <Col sm={6}>
               <FieldInput
                 title="Lien contact musée (CONTACT) :"
                 name="CONTACT"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Lien site associé / site complémentaire (WWW) :"
                 name="WWW"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldInput title="Lien Vidéo (LVID) :" name="LVID" disabled />
+              <FieldInput
+                title="Lien Vidéo (LVID) :"
+                name="LVID"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Lien Numéro MUSEOFILE (MUSEO) :"
                 name="MUSEO"
-                disabled
+                disabled={!this.state.editable}
               />
-              <FieldInput title="Coordinateur (COOR) :" name="COOR" disabled />
+              <FieldInput
+                title="Coordinateur (COOR) :"
+                name="COOR"
+                disabled={!this.state.editable}
+              />
               <FieldInput
                 title="Date de mise a jour (DMAJ) :"
                 name="DMAJ"
-                disabled
+                disabled={!this.state.editable}
               />
               <FieldInput
                 title="Date de creation (DMIS) :"
                 name="DMIS"
-                disabled
+                disabled={!this.state.editable}
               />
             </Col>
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
-          {this.props.canDelete ? (
-            <div className="buttons">
+          <div className="buttons">
+            {this.props.canDelete ? (
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-            </div>
-          ) : (
-            <div />
-          )}
+            ) : (
+              <div />
+            )}
+            <Button
+              disabled={!this.state.editable}
+              color="primary"
+              type="submit"
+            >
+              Sauvegarder
+            </Button>
+          </div>
         </Form>
       </Container>
     );
@@ -425,13 +506,21 @@ class Notice extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  const { role, group } = Auth.user;
+  const { role, group, museofile } = Auth.user;
+  // An "administrateur" (from "joconde" or "admin" group) can delete.
   const canDelete =
     Auth.user &&
     role === "administrateur" &&
     (group === "joconde" || group === "admin");
+  // If you can delete, you can update (see above).
+  // Also, you can update if you are a "producteur" from "joconde"
+  // (assuming user.museofile === notice.museofile, see "editable" state)
+  const canUpdate =
+    canDelete || (Auth.user && role === "producteur" && group === "joconde");
   return {
-    canDelete
+    canDelete,
+    canUpdate,
+    user: { museofile, role, group }
   };
 };
 
