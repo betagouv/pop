@@ -131,9 +131,14 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <FieldInput
-                title="Notice (REF) :"
+                title="Référence notice (REF) :"
                 name="REF"
-                disabled={!this.state.editable}
+                disabled={true}
+              />
+              <FieldInput
+                title="Producteur (PRODUCTEUR) :"
+                name="PRODUCTEUR"
+                disabled={true}
               />
               <FieldLink
                 title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"

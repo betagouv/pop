@@ -125,9 +125,14 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <FieldInput
-                title="Notice (REF) :"
+                title="Référence notice (REF) :"
                 name="REF"
-                disabled={!this.state.editable}
+                disabled={true}
+              />
+              <FieldInput
+                title="Producteur (PRODUCTEUR) :"
+                name="PRODUCTEUR"
+                disabled={true}
               />
               <FieldLink
                 title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
@@ -234,7 +239,7 @@ class Notice extends React.Component {
                 name="NOMS"
                 disabled={!this.state.editable}
               />
-              <FieldInput
+              <FieldTags
                 title="Cadre de l'étude (ETUD) :"
                 name="ETUD"
                 disabled={!this.state.editable}
@@ -268,7 +273,7 @@ class Notice extends React.Component {
                 thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
                 disabled={!this.state.editable}
               />
-              <FieldInput
+              <FieldTags
                 title="Destinataire (GENR) : "
                 name="GENR"
                 disabled={!this.state.editable}

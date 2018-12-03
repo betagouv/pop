@@ -355,10 +355,15 @@ class Notice extends React.Component {
             color="#FF7676"
           >
             <Col sm={6}>
-              <FieldInput
-                title="Reference (REF) :"
+            <FieldInput
+                title="Référence (REF) :"
                 name="REF"
-                disabled={!this.state.editable}
+                disabled={true}
+              />
+              <FieldInput
+                title="Producteur (PRODUCTEUR) :"
+                name="PRODUCTEUR"
+                disabled={true}
               />
               <FieldInput
                 title="Emetteur (code) (EMET) :"
