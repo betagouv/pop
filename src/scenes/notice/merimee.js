@@ -49,7 +49,7 @@ class Notice extends React.Component {
       this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
 
       const editable =
-        notice.PRODUCTEUR === "Monument Historique" && this.props.canUpdate;
+        notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
     });
   }
