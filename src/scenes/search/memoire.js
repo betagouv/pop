@@ -274,8 +274,14 @@ const Card = ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.DOMN}</p>
           <p>{data.LOCA}</p>
+          <p>{data.EDIF}</p>
+          <p>{data.LEG}</p>
+          <p>{data.OBJT}</p>
+          <p>{data.DATPV}</p>
+          <p>{data.AUTP}</p>
+          <p>{data.SERIE}</p>
+          <p>{data.TITRE}</p>
         </div>
       </div>
     </Link>
