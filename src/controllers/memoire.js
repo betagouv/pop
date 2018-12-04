@@ -31,36 +31,30 @@ function findCollection(ref = "") {
   }
 }
 
-function getMerimeeOrPalissyNotice(memoire) {
+function getMerimeeOrPalissyNotice(LBASE) {
   return new Promise(async (resolve, reject) => {
-    if (!memoire.LBASE) {
-      console.log(`No link LBASE ${memoire.REF}`);
-      resolve(null);
-      return;
-    }
-
-    const collection = findCollection(memoire.LBASE);
+    const collection = findCollection(LBASE);
     if (!collection) {
-      console.log(`No collection ${memoire.LBASE}`);
+      console.log(`No collection ${LBASE}`);
       reject();
       return;
     }
-    const notice = await collection.findOne({ REF: memoire.LBASE });
+    const notice = await collection.findOne({ REF: LBASE });
     resolve(notice);
   });
 }
 
-function removeLinkedNotice(memoire) {
+function removeLinkedNotice(ref, LBASE) {
   return new Promise(async (resolve, reject) => {
     try {
-      const notice = await getMerimeeOrPalissyNotice(memoire);
+      const notice = await getMerimeeOrPalissyNotice(LBASE);
       if (!notice) {
         resolve();
         return;
       }
       await notice.collection.updateOne(
         { _id: notice._id },
-        { $pull: { MEMOIRE: { ref: memoire.REF } } }
+        { $pull: { MEMOIRE: { ref } } }
       );
       resolve();
     } catch (e) {
@@ -69,21 +63,22 @@ function removeLinkedNotice(memoire) {
     }
   });
 }
-function updateLinkedNotice(memoire) {
+
+function updateLinkedNotice(url, ref, LBASE) {
   return new Promise(async (resolve, reject) => {
-    const notice = getMerimeeOrPalissyNotice(memoire);
+    const notice = getMerimeeOrPalissyNotice(LBASE);
     if (!notice) {
-      console.log(`No notice ${memoire.LBASE}`);
-      resolve({ success: false, msg: `No notice ${memoire.LBASE}` });
+      console.log(`No notice ${LBASE}`);
+      resolve({ success: false, msg: `No notice ${LBASE}` });
       return;
     }
 
-    let isInArray = notice.MEMOIRE.some(function(doc) {
-      return doc.equals(memoire.REF, doc.ref);
+    let isInArray = notice.MEMOIRE.some(doc => {
+      return doc.equals(ref, doc.ref);
     });
 
     if (!isInArray) {
-      notice.MEMOIRE.push({ ref: memoire.REF, url: memoire.IMG });
+      notice.MEMOIRE.push({ ref, url });
       notice.save().then(() => {
         resolve({ success: true, msg: `` });
       });
@@ -125,7 +120,9 @@ router.put(
 
     arr.push(updateNotice(Memoire, ref, notice));
 
-    arr.push(updateLinkedNotice(notice));
+    for (let i = 0; i < notice.LBASE.length; i++) {
+      arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
+    }
 
     Promise.all(arr)
       .then(() => {
@@ -156,7 +153,9 @@ router.post(
       );
     }
 
-    arr.push(updateLinkedNotice(notice));
+    for (let i = 0; i < notice.LBASE.length; i++) {
+      arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
+    }
 
     const obj = new Memoire(notice);
 
@@ -212,7 +211,9 @@ router.delete(
         });
       }
 
-      await removeLinkedNotice(doc);
+      for (let i = 0; i < notice.LBASE.length; i++) {
+        await removeLinkedNotice(notice.REF, notice.LBASE[i]);
+      }
 
       const arr = [deleteFile(doc.IMG), doc.remove()];
       await Promise.all(arr);

@@ -139,7 +139,7 @@ Appellation
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
-|Array|false|false|false|
+|String|false|false|false|
 
 ### APTN
 Ancienne appartenance (nom du donateur / testateur/ vendeur) 
@@ -780,7 +780,7 @@ Nom édifice
 |String|false|false|false|
 
 ### EXPO
-[Peut être déprécié. Non afficher en production]
+Référence d’exposition de l’image 
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
@@ -1137,11 +1137,11 @@ Format tirage
 |String|false|false|false|
 
 ### LBASE
-Liens bases
+LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
-|String|false|false|false|
+|Array|false|false|false|
 
 ### WEB
 Accès Mémoire
@@ -1877,21 +1877,21 @@ Etat de conservation
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
-|String|false|false|false|
+|Array|false|false|false|
 
 ### ETUD
 Parties non étud
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
-|String|false|false|false|
+|Array|false|false|false|
 
 ### GENR
 Destinataire
 
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
-|String|false|false|false|
+|Array|false|false|false|
 
 ### HIST
 Commentaire historique
@@ -4291,6 +4291,13 @@ Zone Lambert ou autre
 |Type|Required|Master|Opendata|
 |----|--------|------|--------|
 |Date|false|false|false|
+
+### museofile
+
+
+|Type|Required|Master|Opendata|
+|----|--------|------|--------|
+|String|false|false|false|
 
 ### _id
 
