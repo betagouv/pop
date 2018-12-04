@@ -57,7 +57,7 @@ export default class Memoire extends Notice {
     this.setProperty("INSEE", "String", body.INSEE);
     this.setProperty("JDATPV", "String", body.JDATPV);
     this.setProperty("LAUTP", "String", body.LAUTP);
-    this.setProperty("LBASE", "String", body.LBASE);
+    this.setProperty("LBASE", "Array", this.extractArray(body.LBASE));
     this.setProperty("LBASE2", "String", body.LBASE2);
     this.setProperty("LEG", "String", body.LEG);
     this.setProperty("LEG2", "String", body.LEG2);
