@@ -52,7 +52,7 @@ export default class Import extends React.Component {
               },
               {
                 url: "/import/memoire",
-                name: "Mémoire",
+                name: "MAP (Service Archives Photos)",
                 image
               }
             ])}
