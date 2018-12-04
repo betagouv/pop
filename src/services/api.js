@@ -6,8 +6,8 @@ import request from "./request";
  * Buisness level access to POP API.
  */
 class api {
-  createUser(email, group, role, institution, prenom, nom) {
-    const obj = { email, group, role, institution, prenom, nom };
+  createUser(email, group, role, institution, prenom, nom, museofile) {
+    const obj = { email, group, role, institution, prenom, nom, museofile };
     return request.post(
       `${api_url}/auth/signup`,
       JSON.stringify(obj),
