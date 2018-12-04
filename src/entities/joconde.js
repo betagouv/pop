@@ -8,9 +8,14 @@ export default class Joconde extends Notice {
     this.setProperty("REF", "String", String(body.REF).trim(), {
       required: true
     });
+    this.setProperty("PRODUCTEUR", "String", body.PRODUCTEUR, {
+      generated: true
+    });
+
     this.setProperty("ADPT", "Array", this.extractArray(body.ADPT));
     this.setProperty("APTN", "String", body.APTN);
     this.setProperty("ATTR", "String", body.ATTR);
+
     this.setProperty("AUTR", "String", body.AUTR, {
       thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513",
       thesaurus_separator: /[(,);#]/g

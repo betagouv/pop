@@ -7,6 +7,9 @@ export default class Memoire extends Notice {
     this.setProperty("REF", "String", (body.REF || "").trim(), {
       required: true
     });
+    this.setProperty("PRODUCTEUR", "String", body.PRODUCTEUR, {
+      generated: true
+    });
     this.setProperty("ACC", "String", body.ACC);
     this.setProperty("ACQU", "String", body.ACQU);
     this.setProperty("ADPHOT", "String", body.ADPHOT);

@@ -8,6 +8,8 @@ export default class Merimee extends Notice {
     this.setProperty("REF", "String", (body.REF || "").trim(), {
       required: true
     });
+    this.setProperty("PRODUCTEUR", "String", body.PRODUCTEUR, { generated: true });
+
     this.setProperty("TOUT", "String", body.TOUT);
     this.setProperty("ACTU", "String", body.ACTU);
     this.setProperty("ADRS", "String", body.ADRS);
@@ -155,7 +157,6 @@ export default class Merimee extends Notice {
     this.setProperty("LMDP", "String", body.LMDP);
     this.setProperty("PINT", "String", body.PINT);
     this.setProperty("DLAB", "String", body.DLAB);
-
 
     //Check required fields
     for (var property in this) {

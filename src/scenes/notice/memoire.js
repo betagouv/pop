@@ -189,7 +189,7 @@ class Notice extends React.Component {
               />
             </Col>
             <Col sm={6}>
-              <FieldInput
+              <FieldTags
                 title="Liens bases (LBASE) :"
                 name="LBASE"
                 disabled={!this.state.editable}
