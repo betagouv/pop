@@ -198,10 +198,13 @@ router.post(
       if (!user) {
         res.status(401).send({
           success: false,
-          msg: `La mise à jour de vos informations a échouée. Utilisateur ${email} introuvable.`
+          msg: `La mise à jour des informations a échouée. Utilisateur ${email} introuvable.`
         });
       } else {
         try {
+          if (req.body.museofile) {
+            user.set({ museofile: req.body.museofile });
+          }
           user.set({
             institution,
             nom,
@@ -213,13 +216,13 @@ router.post(
             if (err) throw err;
             return res.status(200).send({
               success: true,
-              msg: `La mise à jour de vos informations a été effectuée avec succès`
+              msg: `La mise à jour des informations a été effectuée avec succès`
             });
           });
         } catch (e) {
           res.status(401).send({
             success: false,
-            msg: `La mise à jour de vos informations a échoué`
+            msg: `La mise à jour des informations a échoué`
           });
         }
       }
