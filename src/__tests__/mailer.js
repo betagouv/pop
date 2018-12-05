@@ -9,8 +9,7 @@ describe("Testing Mailer", () => {
 
   it('should correctly send email', async () => {
     const subject = 'Jest Test email';
-    const to = 'antoine.bigard@beta.gouv.fr';
-    //const to = 'antoine.bigard@beta.gouv.fr, sebastien.legoff@beta.gouv.fr';
+    const to = 'antoine.bigard@beta.gouv.fr, sebastien.legoff@beta.gouv.fr';
     const body = 'Bonjour!<br /><br />Jest';
     await mailer.send(subject, to, body);
   });
