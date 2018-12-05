@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mongoose = require("mongoose");
 const inquirer = require("inquirer");
 const program = require("commander");
