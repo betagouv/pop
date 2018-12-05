@@ -693,30 +693,38 @@ Schema.plugin(mongoosastic, {
 });
 
 Schema.pre("save", function(next, done) {
-  switch (this.REF.substring(0, 2)) {
-    case "IV":
-      this.PRODUCTEUR = "INV";
-      break;
-    case "OA":
-      this.PRODUCTEUR = "CAOA";
-      break;
-    case "MH":
-      this.PRODUCTEUR = "CRMH";
-      break;
-    case "AR":
-      this.PRODUCTEUR = "ARCH";
-      break;
-    case "AP":
-      this.PRODUCTEUR = "SDAP";
-      break;
-    default:
-      this.PRODUCTEUR = "SAP";
-      break;
-  }
-
+  this.PRODUCTEUR = findProducteur(this.REF, this.IDPROD, this.EMET);
   this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
   next();
 });
+
+function findProducteur(REF, IDPROD, EMET) {
+  if (
+    String(REF).startsWith("IVN") ||
+    String(REF).startsWith("IVR") ||
+    String(REF).startsWith("IVD") ||
+    String(REF).startsWith("IVC")
+  ) {
+    return "INV";
+  } else if (String(REF).startsWith("OA")) {
+    return "CAOA";
+  } else if (String(REF).startsWith("MH")) {
+    return "CRMH";
+  } else if (String(REF).startsWith("AR")) {
+    return "ARCH";
+  } else if (
+    String(REF).startsWith("AP") &&
+    String(IDPROD).startsWith("Service départemental")
+  ) {
+    return "UDAP";
+  } else if (
+    String(IDPROD).startsWith("SAP") ||
+    String(EMET).startsWith("SAP")
+  ) {
+    return "SAP";
+  }
+  return "AUTRE";
+}
 
 const object = mongoose.model("memoire", Schema);
 
