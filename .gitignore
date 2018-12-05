@@ -168,3 +168,4 @@ packaged.yaml
 
 **/*.css
 **/*.css.map
+prod\.env
