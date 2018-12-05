@@ -153,7 +153,7 @@ router.post(
       );
     }
 
-    for (let i = 0; i < notice.LBASE.length; i++) {
+    for (let i = 0; notice.LBASE && i < notice.LBASE.length; i++) {
       arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
     }
 
@@ -211,8 +211,8 @@ router.delete(
         });
       }
 
-      for (let i = 0; i < notice.LBASE.length; i++) {
-        await removeLinkedNotice(notice.REF, notice.LBASE[i]);
+      for (let i = 0; i < doc.LBASE && doc.LBASE.length; i++) {
+        await removeLinkedNotice(doc.REF, doc.LBASE[i]);
       }
 
       const arr = [deleteFile(doc.IMG), doc.remove()];
