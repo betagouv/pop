@@ -53,7 +53,7 @@ export default class Home extends React.Component {
               </li>
               <li>
                 importer des données pour alimenter les bases en nouvelles
-                création ou pour remplacer intégralement des notices existantes.
+                créations ou pour remplacer intégralement des notices existantes.
               </li>
             </ul>
           </div>
