@@ -1,6 +1,9 @@
 import { bucket_url } from "../../config";
 
 export function findCollection(ref = "") {
+  if(typeof ref !== 'string') {
+    return "";
+  }
   const prefix = ref.substring(0, 2);
   switch (prefix) {
     case "EA":
