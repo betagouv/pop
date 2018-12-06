@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
 import CreateUser from "./createUser";
+import UpdateUser from "./UpdateUser";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import api from "../../services/api";
@@ -13,11 +14,15 @@ class Admin extends React.Component {
     loading: true
   };
 
-  componentWillMount() {
+  fetchUsers = () => {
     this.setState({ loading: true });
     api.getUsers(this.props.group).then(users => {
       this.setState({ users: users || [], loading: false });
     });
+  };
+
+  componentWillMount() {
+    this.fetchUsers();
   }
 
   renderUsers() {
@@ -31,6 +36,7 @@ class Admin extends React.Component {
             <th>Groupe</th>
             <th>Institution</th>
             <th>Role</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +50,9 @@ class Admin extends React.Component {
                 <td>{group}</td>
                 <td>{institution}</td>
                 <td>{role}</td>
+                <td>
+                  <UpdateUser user={user} callback={this.fetchUsers} />
+                </td>
               </tr>
             );
           })}
