@@ -9,9 +9,6 @@ import CardMap from "./CardMap";
 import LinkedNotices from './subComponents/LinkedNotices';
 import SingleNotice from './subComponents/SingleNotice';
 
-import "./mapbox-gl.css";
-import "./map.css";
-
 import SateliteImg from '../../../../assets/Satelite.png';
 import StreetImg from '../../../../assets/street.png';
 
@@ -67,6 +64,8 @@ export default class Umbrella extends React.Component {
   prevBounds = null;
   currentSearch = null;
 
+  urlLocation = null;
+
   constructor(props) {
     super(props);
     this.onMapChange = this.onMapChange.bind(this);
@@ -77,7 +76,18 @@ export default class Umbrella extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const parsed = queryString.parse(location.search);
+    try {
+      if(location) {
+        this.urlLocation = location.search;
+      } 
+    } catch (error) {
+      if(this.props.location) { // If window.location not defined use props
+        this.urlLocation = this.props.location.search;
+      } else {
+        throw new Error("location is not defined");
+      }
+    }
+    const parsed = queryString.parse(this.urlLocation);
     const nextSearch = JSON.stringify(parsed);
     if(this.currentSearch !== nextSearch) { // New Search
       this.currentSearch = nextSearch;

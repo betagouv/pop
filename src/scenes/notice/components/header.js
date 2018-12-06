@@ -4,7 +4,7 @@ import FieldImages from "./fieldImages";
 import Map from "./map";
 import { toFieldImages, hasCoordinates } from "../utils";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   render() {
     const images = toFieldImages(this.props.images);
     const showMap = hasCoordinates(this.props.notice.POP_COORDONNEES);
@@ -35,3 +35,5 @@ export default class Header extends React.Component {
     return <Row>{cols}</Row>;
   }
 }
+
+export default Header;

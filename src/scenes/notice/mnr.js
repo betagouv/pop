@@ -6,16 +6,15 @@ import Loader from "../../components/loader";
 import API from "../../services/api";
 import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";
-import "./index.css";
 
-class Notice extends React.Component {
+class Mnr extends React.Component {
   state = {
     notice: null,
     error: "",
     loading: true
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.load(this.props.match.params.ref);
   }
 
@@ -330,4 +329,4 @@ class Notice extends React.Component {
   }
 }
 
-export default Notice;
+export default Mnr;

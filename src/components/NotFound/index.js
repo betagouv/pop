@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import './index.css';
 import courbet from '../../assets/courbet.jpeg';
 
-export default () => (
+const NotFound = () => (
     <Container className="notice-not-found" fluid>
         <div className="notice-not-found-left">
             <h1>POPSI !</h1>
@@ -20,3 +19,5 @@ export default () => (
         </div>
     </Container>
 );
+
+export default NotFound;

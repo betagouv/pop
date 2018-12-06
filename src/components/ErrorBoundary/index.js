@@ -1,9 +1,10 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import "./index.css";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+import styles from './index.css';
 import roy from '../../assets/roy-lichtenstein.jpg';
 
-export default class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -46,3 +47,6 @@ export default class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
+
+export default withStyles(styles)(ErrorBoundary);
+

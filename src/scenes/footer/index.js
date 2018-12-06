@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
 
-import "./index.css";
+import styles from './index.css';
 
 import Logo from '../../assets/logo-incubateur.svg';
 
-export default () => (
+const Footer = () => (
   <div className="footer">
     <a href="https://beta.gouv.fr/startup/pop.html"><img src={Logo} alt="betagouv" id="betagouv" /></a>
     <Link to="/opendata">Télécharger les bases</Link>
     <a href={`mailto:pop@culture.gouv.fr`}>Nous contacter</a>
   </div>
 );
+
+export default withStyles(styles)(Footer);

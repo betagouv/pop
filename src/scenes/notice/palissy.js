@@ -9,9 +9,8 @@ import Header from "./components/header";
 import API from "../../services/api";
 import { findCollection } from "./utils";
 import ContactUs from "./components/ContactUs";
-import "./index.css";
 
-class Notice extends React.Component {
+class Palissy extends React.Component {
   state = {
     notice: null,
     error: "",
@@ -19,7 +18,7 @@ class Notice extends React.Component {
     links: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.load(this.props.match.params.ref);
   }
 
@@ -549,4 +548,4 @@ const SeeMore = ({ notice }) => {
   );
 };
 
-export default Notice;
+export default Palissy;

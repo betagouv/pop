@@ -165,6 +165,14 @@
     min-width: 500px;
 }
 
+.slick-slider {
+  width: 100%;
+  max-height: 470px;
+  text-align: center;
+  overflow: hidden;
+}
+
+
 
 @media screen and (max-width: 767px) {
   .home .home-search input::placeholder {

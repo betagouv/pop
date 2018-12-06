@@ -20,7 +20,7 @@ module.exports = env => {
     ),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      filename: "index.html",
+      filename: "index-template.html",
       inject: "body",
       favicon: path.join("public/favicon.ico"),
       minify: {
@@ -69,7 +69,7 @@ module.exports = env => {
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
       navigateFallbackWhitelist: [/^(?!\/__).*/],
       // Don't precache sourcemaps (they're large) and build asset manifest:
-      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/] //, /index\.html$/
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/, /index\.html$/]
     })
   ];
 
@@ -93,7 +93,25 @@ module.exports = env => {
       rules: [
         {
           test: /\.css$/,
-          loader: "style-loader!css-loader"
+          use: [
+            'isomorphic-style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [
+                  require('postcss-flexbugs-fixes'),
+                  require('autoprefixer')
+                ]
+              }
+            },
+          ]
         },
         {
           test: /\.js$/,

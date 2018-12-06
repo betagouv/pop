@@ -1,9 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
-import "./index.css";
-import "./slider.css";
-import { history } from "../../redux/store";
 
 const bases = [
   {
@@ -83,7 +80,7 @@ const bases = [
   }
 ];
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +91,7 @@ export default class Home extends React.Component {
   }
 
   gotoSearch() {
+    const { history } = this.props;
     const searchValue = document.getElementById("main-search").value;
     const base = this.state.selected.length === 5  ? "" : `base=${JSON.stringify(this.state.selected.join(', ').replace('Récupération artistique', 'Oeuvres spoliées'))}&`
     history.push(
@@ -264,3 +262,5 @@ export default class Home extends React.Component {
     );
   }
 }
+
+export default Home;

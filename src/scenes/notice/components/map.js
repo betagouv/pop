@@ -1,8 +1,6 @@
 import React from "react";
 
-import "./map.css";
-
-export default class MapComponent extends React.Component {
+class MapComponent extends React.Component {
   state = {
     center: null
   };
@@ -100,15 +98,12 @@ export default class MapComponent extends React.Component {
       return <div />;
     }
 
-    const style = {
-      width: "100%",
-      height: "100%"
-    };
-
     return (
       <div className="map-container">
-        <div id="map" ref={this.mapRef} style={style}></div>
+        <div id="map" ref={this.mapRef}></div>
       </div>
     );
   }
 }
+
+export default MapComponent;

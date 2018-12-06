@@ -7,9 +7,7 @@ import Mnr from './mnr';
 import Memoire from './memoire';
 import NotFound from "../../components/NotFound";
 
-import './index.css';
-
-export default () => (
+const Notice = () => (
     <div>
         <Switch>
             <Route path={`/notice/merimee/:ref`} component={Merimee} />
@@ -21,3 +19,5 @@ export default () => (
         </Switch>
     </div>
 );
+
+export default Notice;

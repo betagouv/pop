@@ -1,12 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import Logo from '../../assets/logo.png';
-import './logo.css';
+import LogoImg from '../../assets/logo.png';
 
-export default () => {
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+import styles from './logo.css';
+
+const Logo = () => {
   return <Link to="/" className="logo">
-      <img src={Logo} alt="Logo" className="md" />
+      <img src={LogoImg} alt="Logo" className="md" />
       <h1>Ministère de la Culture</h1>
     </Link>;
 }
+
+export default withStyles(styles)(Logo);

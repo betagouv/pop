@@ -1,8 +1,6 @@
 import React from "react";
-import "./title.css";
 
-
-export default class Title extends React.Component {
+class Title extends React.Component {
   render() {
     const hasVisibleFields = !!this.props.fields.filter(
       f =>
@@ -16,3 +14,5 @@ export default class Title extends React.Component {
     return <div />;
   }
 }
+
+export default Title;

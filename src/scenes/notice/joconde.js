@@ -8,9 +8,8 @@ import API from "../../services/api";
 import NotFound from "../../components/NotFound";
 import Header from "./components/header";
 import ContactUs from "./components/ContactUs";
-import "./index.css";
 
-class Notice extends React.Component {
+class Joconde extends React.Component {
   state = {
     notice: null,
     error: "",
@@ -18,8 +17,9 @@ class Notice extends React.Component {
     links: []
   };
 
-  componentWillMount() {
-    this.load(this.props.match.params.ref);
+  componentDidMount() {
+    const { match } = this.props;
+    this.load(match.params.ref);
   }
 
   componentWillReceiveProps(newProps) {
@@ -409,4 +409,4 @@ const SeeMore = ({ notice }) => {
 
 //http://www2.culture.gouv.fr/public/mistral/museo_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=M5027
 
-export default Notice;
+export default Joconde;

@@ -3,12 +3,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import dotenv from "dotenv";
 import WebFont from "webfontloader";
+import { BrowserRouter } from "react-router-dom";
 
 import registerServiceWorker from "./registerServiceWorker";
-import { store, history } from "./redux/store";
+import createStore from "./redux/store";
 import PublicRoutes from "./router";
+import ContextProvider from "./ContextProvider";
 
-import "./index.css";
+const { store, history } = createStore();
 
 dotenv.load();
 
@@ -27,9 +29,22 @@ WebFont.load({
   }
 });
 
-ReactDOM.render(
+const css = new Set(); // CSS for all rendered React components
+const injectCssContext = {
+  insertCss: (...styles) => {
+    return styles.forEach(style => {
+        if(style) {
+          css.add(style._getCss());
+        }
+    })
+  }
+};
+
+ReactDOM.hydrate(
   <Provider store={store}>
-    <PublicRoutes history={history} />
+        <ContextProvider context={injectCssContext}>
+          <PublicRoutes history={history} />
+        </ContextProvider>
   </Provider>,
   document.getElementById("root")
 );

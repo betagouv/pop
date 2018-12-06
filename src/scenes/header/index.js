@@ -5,9 +5,10 @@ import { Container } from "reactstrap";
 import Title from "./title.js";
 import Logo from "./logo.js";
 
-import "./index.css";
+import withStyles from "isomorphic-style-loader/lib/withStyles";
+import styles from './index.css';
 
-export default () => (
+const header = () => (
     <div className="header">
         <Container className="NavContainer">
             <Logo />
@@ -20,4 +21,6 @@ export default () => (
         </Container>
     </div>
 );
+
+export default withStyles(styles)(header);
 

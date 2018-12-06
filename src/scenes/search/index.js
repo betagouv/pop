@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { connect } from "react-redux";
-import { push } from "react-router-redux";
+
 import {
   Row,
   Col,
@@ -29,8 +28,6 @@ import Mosaique from "./subComponents/Mosaique";
 import { es_url } from "../../config.js";
 
 import filterImg from "../../assets/filter.png";
-
-import "./index.css";
 
 const DEFAULT_FILTER = [
   "mainSearch",
@@ -130,9 +127,11 @@ class Search extends React.Component {
   }
 
   toggle(subRoute) {
-    const { onTabClicked, location } = this.props;
+    const { location, history } = this.props;
     if (this.state.activeTab !== subRoute) {
-      onTabClicked(subRoute, location.search);
+      history.push(
+        `/search/${subRoute}${location.search}`
+      );
     }
   }
 
@@ -141,6 +140,7 @@ class Search extends React.Component {
   }
 
   render() {
+    const { location } = this.props;
     const { bases } = this.state;
     return (
       <div className="search">
@@ -181,6 +181,7 @@ class Search extends React.Component {
                         value: "Oeuvres spoliées (MNR Rose-Valland)"
                       }
                     ]}
+                    location={location}
                   />
                   <MultiList
                     dataField={["AUTP.keyword", "AUTR.keyword"]}
@@ -189,6 +190,7 @@ class Search extends React.Component {
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
                     placeholder="Rechercher un auteur"
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     dataField="DOMN.keyword"
@@ -197,6 +199,7 @@ class Search extends React.Component {
                     componentId="domn"
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -205,6 +208,7 @@ class Search extends React.Component {
                     componentId="ou"
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     dataField="PERI.keyword"
@@ -213,6 +217,7 @@ class Search extends React.Component {
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "periode") }}
                     placeholder="Rechercher une période"
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
 
                   <MultiList
@@ -225,6 +230,7 @@ class Search extends React.Component {
                       this.state.activeTab === "mosaique" ? ["oui"] : []
                     }
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     componentId="geolocalisation"
@@ -244,6 +250,7 @@ class Search extends React.Component {
                       { label: "non", value: "non" }
                     ]}
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     dataField="TECH.keyword"
@@ -252,6 +259,7 @@ class Search extends React.Component {
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
                     placeholder="Rechercher une technique"
                     onCollapseChange={changeActiveFilter}
+                    location={location}
                   />
                   <MultiList
                     show={false}
@@ -262,6 +270,7 @@ class Search extends React.Component {
                     displayCount
                     URLParams={true}
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
+                    location={location}
                   />
                 </aside>
               </div>
@@ -427,7 +436,7 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/map"
-                      render={() => <Map filter={DEFAULT_FILTER} />}
+                      render={() => <Map filter={DEFAULT_FILTER} location={location} />}
                     />
                   </TabPane>
                   <TabPane tabId="mosaique">
@@ -447,15 +456,4 @@ class Search extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = dispatch => ({
-  onTabClicked: (subPath, params) => {
-    dispatch(push(`/search/${subPath}${params}`));
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Search);
+export default Search;

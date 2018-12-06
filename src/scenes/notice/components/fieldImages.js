@@ -1,15 +1,12 @@
 import React from "react";
 import { Row } from "reactstrap";
 import Viewer from "react-viewer";
-import "react-viewer/dist/index.css";
 import ImageGallery from "react-image-gallery";
 import { history } from "../../../redux/store";
-import "./fieldImages.css";
-import "react-image-gallery/styles/css/image-gallery.css";
 
 const noImage = require("../../../assets/noimage.png");
 
-export default class FieldImages extends React.Component {
+class FieldImages extends React.Component {
   state = {
     images: [],
     selected: -1
@@ -91,3 +88,6 @@ export default class FieldImages extends React.Component {
     );
   }
 }
+
+
+export default FieldImages;

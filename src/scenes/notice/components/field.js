@@ -1,7 +1,6 @@
 import * as React from "react";
-import "./field.css";
 
-const Field = ({ content, title, separator, join = ", " }) => {
+export default ({ content, title, separator, join = ", " }) => {
   if (!content || (Array.isArray(content) && content.length === 0)) {
     return <div />;
   }
@@ -24,5 +23,3 @@ const Field = ({ content, title, separator, join = ", " }) => {
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, "g"), replace);
 }
-
-export default Field;

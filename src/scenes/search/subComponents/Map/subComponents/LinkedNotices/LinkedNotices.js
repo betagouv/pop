@@ -3,7 +3,6 @@ import Loader from "../../../../../../components/loader";
 import { Link } from "react-router-dom";
 import shave from 'shave';
 import { bucket_url } from "../../../../../../config";
-import "./LinkedNotices.css";
 
 const noImage = require("../../../../../../assets/noimage.png");
 import SingleNotice from '../SingleNotice';

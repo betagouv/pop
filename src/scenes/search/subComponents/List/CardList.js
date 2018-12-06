@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { image } from "../../image";
-import "./CardList.css";
 import mdf from "../../../../assets/musee-de-france.jpg";
 import inv from "../../../../assets/inventaire.jpg";
 

@@ -2,11 +2,10 @@ import React from "react";
 import Loader from "../../../components/loader";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config";
-import "./LinkedNotices.css";
 
 const noImage = require("../../../assets/noimage.png");
 
-export default class LinkedNotice extends React.Component {
+class LinkedNotice extends React.Component {
   render() {
     if (!this.props.links) {
       return <Loader />;
@@ -58,3 +57,5 @@ class SmallNotice extends React.Component {
     );
   }
 }
+
+export default LinkedNotice;

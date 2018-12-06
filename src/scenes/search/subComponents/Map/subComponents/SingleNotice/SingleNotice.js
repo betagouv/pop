@@ -4,7 +4,6 @@ import shave from 'shave';
 import { Button } from 'reactstrap';
 import Loader from "../../../../../../components/loader";
 import { bucket_url } from "../../../../../../config";
-import "./singleNotice.css";
 
 import { image } from "../../../../image";
 

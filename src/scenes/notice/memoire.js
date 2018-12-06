@@ -10,9 +10,8 @@ import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";
 import { findCollection } from "./utils";
 
-import "./index.css";
 
-class Notice extends React.Component {
+class Memoire extends React.Component {
   state = {
     notice: null,
     error: "",
@@ -20,7 +19,7 @@ class Notice extends React.Component {
     loading: true
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.load(this.props.match.params.ref);
   }
 
@@ -542,4 +541,4 @@ const SeeMore = ({ notice }) => {
   );
 };
 
-export default Notice;
+export default Memoire;
