@@ -39,9 +39,8 @@ function parseFiles(files, encoding) {
       }
 
       for (var i = 0; i < notices.length; i++) {
-        const name = notices[i].IMG.value;
-        if (!name) break;
-        const shortName = convertLongNameToShort(name);
+        if (!notices[i].IMG || !notices[i].IMG.value) break;
+        const shortName = convertLongNameToShort(notices[i].IMG.value);
         let img = filesMap[shortName];
         if (!img) {
           notices[i]._errors.push(`Image ${shortName} introuvable`);

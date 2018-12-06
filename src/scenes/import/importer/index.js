@@ -52,7 +52,7 @@ class Importer extends Component {
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({
           loading: true,
-          loadingMessage: `Récuperation des notices existantes ... `,
+          loadingMessage: `Récupération des notices existantes ... `,
           progress: Math.floor((i * 100) / (importedNotices.length * 2))
         });
         const collection = importedNotices[i]._type;

@@ -141,13 +141,12 @@ export default class Memoire extends Notice {
   }
 
   extractImage(body) {
-    if (body === undefined) {
-      return body;
+    let name = body.IMG || body.NOMSN || "";
+    if (name) {
+      return `memoire/${body.REF}/${name}`;
     }
-    const e = body.IMG || body.NOMSN || "";
-    if (!e) {
-      return "";
-    }
-    return `memoire/${this.REF.value}/${e}`;
+
+    // On retourne null car on ne veut pas overwrite les données avec ""
+    return null;
   }
 }
