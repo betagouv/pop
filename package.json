@@ -58,8 +58,8 @@
     "dev": "yarn build:dev && yarn build:server && npm-run-all --parallel dev:*",
     "build:server": "webpack --config webpack.server.js --mode=development",
     "build:dev": "webpack --config webpack.dev.config.js",
-    "build:prod": "webpack --env.production --env.NODE_ENV=production",
-    "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
+    "build:prod": "webpack --config webpack.server.js --mode=production && webpack --env.production --env.NODE_ENV=production",
+    "build:staging": "webpack --config webpack.server.js --mode=production && webpack --env.staging --env.NODE_ENV=staging",
     "deploy:prod": "yarn && yarn build:prod && eb deploy pop-consultation --profil POP",
     "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging --profil POP",
     "test": "jest"
