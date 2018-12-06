@@ -120,7 +120,7 @@ router.put(
 
     arr.push(updateNotice(Memoire, ref, notice));
 
-    for (let i = 0; i < notice.LBASE.length; i++) {
+    for (let i = 0; notice.LBASE && i < notice.LBASE.length; i++) {
       arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
     }
 
