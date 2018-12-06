@@ -68,7 +68,7 @@ export default function generate(notices, collection, email, institution) {
   arr.push(`<li>${notices.length - rejected.length} notices valides</li>`);
   arr.push(`<li style="list-style-type:none">`);
   arr.push(`<ul>`);
-  arr.push(`<li>${created.length} notices crées</li>`);
+  arr.push(`<li>${created.length} notices créées</li>`);
   arr.push(`<li>${updated.length} notices mises à jour</li>`);
   arr.push(
     `<li>${notices.length -
