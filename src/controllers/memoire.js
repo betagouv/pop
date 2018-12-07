@@ -66,7 +66,7 @@ function removeLinkedNotice(ref, LBASE) {
 
 function updateLinkedNotice(url, ref, LBASE) {
   return new Promise(async (resolve, reject) => {
-    const notice = getMerimeeOrPalissyNotice(LBASE);
+    const notice = await getMerimeeOrPalissyNotice(LBASE);
     if (!notice) {
       console.log(`No notice ${LBASE}`);
       resolve({ success: false, msg: `No notice ${LBASE}` });
