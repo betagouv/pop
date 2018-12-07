@@ -1,16 +1,29 @@
-# pop-shared
-
-> pop shared components
-
+# pop-shared 
 [![NPM](https://img.shields.io/npm/v/pop-shared.svg)](https://www.npmjs.com/package/pop-shared)
 
-## Install
+Composants partagés pour la plateforme ouverte du patrimoine.
+
+
+
+## Installation
 
 ```bash
 yarn add --dev pop-shared
 ```
 
+## Tests
+
+Pour lancer les tests automatisés : `yarn test`.
+
+Il est aussi possible de tester manuellement les composants depuis le dossier `example` :
+```bash
+cd example
+yarn start
+```
+
 ## Usage
+
+### MultiList
 
 ```jsx
 import React, { Component } from "react";
@@ -30,6 +43,8 @@ class Example extends Component {
 }
 ```
 
-## License
+## Publication
 
-MIT © [betagouv](https://github.com/betagouv)
+```
+npm publish
+```
