@@ -114,9 +114,9 @@ workflows:
           filters:
             branches:
               only: master
-#      - deploy_eb_prod:
-#          requires:
-#            - build_prod
-#          filters:
-#            branches:
-#              only: master
+      - deploy_eb_prod:
+          requires:
+            - build_prod
+          filters:
+            branches:
+              only: master
