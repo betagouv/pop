@@ -16,21 +16,21 @@ async function exec(req, res) {
   const injectCssContext = {
     insertCss: (...styles) => {
       return styles.forEach(style => {
-          if(style) {
-            css.add(style._getCss());
-          }
-      })
+        if (style) {
+          css.add(style._getCss());
+        }
+      });
     }
   };
   const { store, history } = createStore(req.url);
-  const staticRouterContext = { };
+  const staticRouterContext = {};
   const body = ReactDOMServer.renderToString(
     <Provider store={store}>
-        <StaticRouter context={staticRouterContext} location={ req.url }>
-          <ContextProvider context={injectCssContext}>
-            <PublicRoutes history={history} />
-          </ContextProvider>
-        </StaticRouter>
+      <StaticRouter context={staticRouterContext} location={req.url}>
+        <ContextProvider context={injectCssContext}>
+          <PublicRoutes history={history} />
+        </ContextProvider>
+      </StaticRouter>
     </Provider>
   );
   const cssString = [...css].join("");
@@ -45,6 +45,8 @@ async function exec(req, res) {
 
     let status = 404;
     if (
+      req.url === "" ||
+      req.url === "/" ||
       /\/notice\/(merimee|palissy|mnr|joconde|memoire)\/\w+/.test(req.url) ||
       /\/search\/(list|map|mosaique)/.test(req.url) ||
       /\/opendata/.test(req.url)
@@ -54,9 +56,11 @@ async function exec(req, res) {
     return res.status(status).send(
       data
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
-        .replace("</head>", ` <style type="text/css">${cssString}</style></head>`) //TODO pas ouf le replace </head>
+        .replace(
+          "</head>",
+          ` <style type="text/css">${cssString}</style></head>`
+        ) //TODO pas ouf le replace </head>
     );
-
   });
 }
 
