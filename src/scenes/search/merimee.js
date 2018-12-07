@@ -10,7 +10,7 @@ import {
 import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 
-import Merimee from "../../entities/merimee";
+import Merimee from "../../entities/Merimee";
 
 import QueryBuilder from "./components/queryBuilder";
 

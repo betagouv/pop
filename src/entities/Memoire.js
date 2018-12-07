@@ -1,4 +1,4 @@
-import Notice from "./notice";
+import Notice from "./Notice";
 
 export default class Memoire extends Notice {
   constructor(body) {

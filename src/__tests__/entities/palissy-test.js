@@ -1,4 +1,4 @@
-import Palissy from "../../entities/palissy";
+import Palissy from "../../entities/Palissy";
 import utils from "../../scenes/import/utils";
 import fs from "fs";
 

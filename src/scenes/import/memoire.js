@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import Importer from "./importer";
-import Memoire from "../../entities/memoire";
+import Memoire from "../../entities/Memoire";
 
 import utils from "./utils";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
 import Importer from "./importer";
-import Merimee from "../../entities/merimee";
-import Palissy from "../../entities/palissy";
+import Merimee from "../../entities/Merimee";
+import Palissy from "../../entities/Palissy";
 
 import api from "../../services/api";
 import utils from "./utils";

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Row, Progress } from "reactstrap";
 import Dropzone from "react-dropzone";
 import JSZip from "jszip";
-import Loader from "../../../components/loader";
+import Loader from "../../../components/Loader";
 
 import "./dropZone.css";
 

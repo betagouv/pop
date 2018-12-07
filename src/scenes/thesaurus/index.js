@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Input, Container, Button, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import api from "../../services/api";
 
 import "./index.css";

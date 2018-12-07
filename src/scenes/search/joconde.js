@@ -12,7 +12,7 @@ import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
 import { es_url, bucket_url } from "../../config.js";
-import Joconde from "../../entities/joconde";
+import Joconde from "../../entities/Joconde";
 
 const FILTER = [
   "mainSearch",

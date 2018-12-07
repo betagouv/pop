@@ -8,7 +8,7 @@ import {
   SelectedFilters
 } from "@appbaseio/reactivesearch";
 import ExportComponent from "./components/export";
-import Palissy from "../../entities/palissy";
+import Palissy from "../../entities/Palissy";
 import QueryBuilder from "./components/queryBuilder";
 import { MultiList } from "pop-shared";
 import { es_url, bucket_url } from "../../config.js";

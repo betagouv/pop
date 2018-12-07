@@ -1,4 +1,4 @@
-import Mnr from "../../entities/mnr";
+import Mnr from "../../entities/Mnr";
 import utils from "../../scenes/import/utils";
 import fs from "fs";
 

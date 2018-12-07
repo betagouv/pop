@@ -12,7 +12,7 @@ import FieldTags from "./components/fieldTags";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import API from "../../services/api";
 
 import "./index.css";

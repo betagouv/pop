@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import Importer from "./importer";
-import Mnr from "../../entities/mnr";
+import Mnr from "../../entities/Mnr";
 
 import utils from "./utils";
 

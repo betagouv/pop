@@ -2,9 +2,9 @@ import React from "react";
 import { Container } from "reactstrap";
 import Importer from "./importer";
 
-import Merimee from "../../entities/merimee";
-import Palissy from "../../entities/palissy";
-import Memoire from "../../entities/memoire";
+import Merimee from "../../entities/Merimee";
+import Palissy from "../../entities/Palissy";
+import Memoire from "../../entities/Memoire";
 
 import utils from "./utils";
 

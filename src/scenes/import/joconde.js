@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import Importer from "./importer";
-import Joconde from "../../entities/joconde";
+import Joconde from "../../entities/Joconde";
 
 import utils from "./utils";
 

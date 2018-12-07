@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "./components/loader";
+import Loader from "./components/Loader";
 
 import { history } from "./redux/store";
 import PublicRoutes from "./router";

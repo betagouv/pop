@@ -13,7 +13,7 @@ import ExportComponent from "./components/export";
 
 import QueryBuilder from "./components/queryBuilder";
 
-import Memoire from "../../entities/memoire";
+import Memoire from "../../entities/Memoire";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [

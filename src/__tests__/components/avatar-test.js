@@ -1,5 +1,5 @@
 import React from "react";
-import Avatar from "../../components/avatar";
+import Avatar from "../../components/Avatar";
 import renderer from "react-test-renderer";
 
 test("Avatar displays two letters (FB)", () => {

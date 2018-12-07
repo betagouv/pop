@@ -15,7 +15,7 @@ import { MultiList } from "pop-shared";
 
 import ExportComponent from "./components/export";
 
-import Mnr from "../../entities/mnr";
+import Mnr from "../../entities/Mnr";
 
 import { es_url, bucket_url } from "../../config.js";
 

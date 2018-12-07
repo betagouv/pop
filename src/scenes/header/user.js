@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import Avatar from "../../components/avatar";
+import Avatar from "../../components/Avatar";
 
 import authAction from "./../../redux/auth/actions";
 const { logout } = authAction;

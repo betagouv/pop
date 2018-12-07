@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { toastr } from "react-redux-toastr";
 
 import api from "../../services/api";
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import authAction from "./../../redux/auth/actions";
 const { logout, signinByToken } = authAction;
 

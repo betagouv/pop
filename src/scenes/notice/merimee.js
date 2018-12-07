@@ -12,7 +12,7 @@ import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
 
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import API from "../../services/api";
 
 import "./index.css";

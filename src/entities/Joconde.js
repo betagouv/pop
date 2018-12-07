@@ -1,4 +1,4 @@
-import Notice from "./notice";
+import Notice from "./Notice";
 
 export default class Joconde extends Notice {
   constructor(body) {

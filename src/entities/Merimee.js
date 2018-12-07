@@ -1,4 +1,4 @@
-import Notice from "./notice";
+import Notice from "./Notice";
 
 export default class Merimee extends Notice {
   constructor(body) {

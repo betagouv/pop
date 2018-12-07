@@ -1,4 +1,4 @@
-import Joconde from "../../entities/joconde";
+import Joconde from "../../entities/Joconde";
 import utils from "../../scenes/import/utils";
 import fs from "fs";
 
