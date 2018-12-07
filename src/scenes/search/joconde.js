@@ -78,22 +78,27 @@ export default class Search extends React.Component {
             <QueryBuilder entity={Joconde} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
-            <ExportComponent
-              FILTER={["advancedSearch"]}
-              collection="joconde"
-            />
+            <ExportComponent FILTER={["advancedSearch"]} collection="joconde" />
           </Col>
         </Row>
         <div className="text-center my-3">
           Trier par :
-          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-            {new Joconde({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortKey: e.target.value })}
+          >
+            {new Joconde({})._fields
+              .filter(e => !["TICO", "TITR"].includes(e))
+              .map(e => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
           </select>
-          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortOrder: e.target.value })}
+          >
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>
@@ -155,6 +160,18 @@ export default class Search extends React.Component {
               title="Domaine"
               className="filters"
               displayCount
+              URLParams={true}
+              react={{
+                and: FILTER
+              }}
+            />
+            <MultiList
+              componentId="aptn"
+              dataField="APTN.keyword"
+              title="Ancien propriétaire"
+              className="filters"
+              displayCount
+              sortByName={true}
               URLParams={true}
               react={{
                 and: FILTER
