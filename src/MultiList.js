@@ -7,7 +7,7 @@ import { toFrenchRegex } from "./utils";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
   state = {
-    collapse: true
+    collapse: null
   };
 
   urlLocation = null;
@@ -23,8 +23,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     }
   };
 
-  componentDidMount() {
-    const { componentId } = this.props;
+  componentWillMount() {
     try {
       if(location) {
         this.urlLocation = location.search;
@@ -36,12 +35,10 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
         throw new Error("location is not defined");
       }
     }
+  }
 
-    const values = queryString.parse(this.urlLocation);
-    const field = componentId;
-    if (values[field]) {
-      this.onCollapseChange(false);
-    }
+  componentDidMount() {
+    this.onCollapseChange(this.shouldCollapse());
   }
 
   componentDidUpdate(prevProps) {
@@ -54,16 +51,24 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     }
   }
 
+  shouldCollapse = () => {
+    const { componentId } = this.props;
+    const values = queryString.parse(this.urlLocation);
+    const field = componentId;
+    return Boolean(!values[field]);
+  }
+
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
+    const collapse = this.state.collapse === null ? this.shouldCollapse() : this.state.collapse;
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
           <div className="name">{this.props.title}</div>
           <div className="v">⌄</div>
         </div>
-        <Collapse isOpen={!this.state.collapse}>
-          {!this.state.collapse ? (
+        <Collapse isOpen={!collapse}>
+          {!collapse ? (
             <ReactiveComponent
               componentId={this.props.componentId} // a unique id we will refer to later
               URLParams={this.props.URLParams || true}
@@ -101,7 +106,7 @@ class MultiListUmbrella extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { location, componentId, defaultSelected } = this.props;
     this.updateInternalQuery("");
     const values = queryString.parse(location);
