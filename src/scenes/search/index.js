@@ -26,6 +26,7 @@ import Map from "./subComponents/Map";
 import Mosaique from "./subComponents/Mosaique";
 
 import { es_url } from "../../config.js";
+import { isServer } from "../../redux/store";
 
 import filterImg from "../../assets/filter.png";
 
@@ -72,7 +73,7 @@ const removeActiveFilter = componentId => {
 
 class Search extends React.Component {
   state = {
-    activeTab: "list",
+    activeTab: null,
     bases: ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
     defaultSelected: "",
     mobile_menu: "mobile_close"
@@ -87,27 +88,13 @@ class Search extends React.Component {
   componentDidMount() {
     const { location } = this.props;
     const values = queryString.parse(location.search);
-    const { bases, mainSearch } = values;
-    const mainSearchSelected = () => {
-      try {
-        return JSON.parse(mainSearch);
-      } catch (e) {
-        return "";
-      }
-    };
-
-    let activeTab = "list";
-    if (/search\/map/.test(location.pathname)) {
-      activeTab = "map";
-    } else if (/search\/mosaique/.test(location.pathname)) {
-      activeTab = "mosaique";
-    }
+    const { bases } = values;
 
     this.setState({
-      activeTab,
+      activeTab: this.getActiveTab(),
       bases:
         bases || ["merimee", "palissy", "memoire", "joconde", "mnr"].join(","),
-      defaultSelected: mainSearchSelected()
+      defaultSelected: this.getMainSearchSelected()
     });
   }
 
@@ -116,14 +103,43 @@ class Search extends React.Component {
     const { location: prevLocation } = prevProps;
 
     if (location.pathname !== prevLocation.pathname) {
-      let activeTab = "list";
-      if (/search\/map/.test(location.pathname)) {
-        activeTab = "map";
-      } else if (/search\/mosaique/.test(location.pathname)) {
-        activeTab = "mosaique";
-      }
-      this.setState({ activeTab });
+      this.setState({ activeTab: this.getActiveTab() });
     }
+  }
+
+  getMainSearchSelected = ()=> {
+    const { location } = this.props;
+    const values = queryString.parse(location.search);
+    const { bases, mainSearch } = values;
+    try {
+      return JSON.parse(mainSearch);
+    } catch (e) {
+      return "";
+    }
+  }
+
+  getSelectedValues = ()=> {
+    const { location } = this.props;
+    const values = queryString.parse(location.search.replace(/%22/g, ""));
+    let selectedValues = {};
+    for (const key in values) {
+      const value = values[key];
+      selectedValues[key] = {
+        value,
+      }
+    }
+    return selectedValues;
+  }
+
+  getActiveTab = ()=>{
+    const { location } = this.props;
+    let activeTab = "list";
+    if (/search\/map/.test(location.pathname)) {
+      activeTab = "map";
+    } else if (/search\/mosaique/.test(location.pathname)) {
+      activeTab = "mosaique";
+    }
+    return activeTab;
   }
 
   toggle(subRoute) {
@@ -136,12 +152,13 @@ class Search extends React.Component {
   }
 
   onMapChanged(info) {
-    console.log(info);
   }
 
   render() {
     const { location } = this.props;
-    const { bases } = this.state;
+    const { bases, activeTab: activeTabState } = this.state;
+    const activeTab = activeTabState || this.getActiveTab();
+
     return (
       <div className="search">
         <Container fluid style={{ maxWidth: 1860 }}>
@@ -161,7 +178,7 @@ class Search extends React.Component {
                   <SelectedFilters
                     className="selected-filters"
                     clearAllLabel="Tout supprimer"
-                    title={<h4>Vos filtres</h4>}
+                    title="Vos filtres"
                   />
                   <h4>Affiner par</h4>
                   <MultiList
@@ -227,7 +244,7 @@ class Search extends React.Component {
                     placeholder="oui ou non"
                     showSearch={false}
                     defaultSelected={
-                      this.state.activeTab === "mosaique" ? ["oui"] : []
+                      activeTab === "mosaique" ? ["oui"] : []
                     }
                     onCollapseChange={changeActiveFilter}
                     location={location}
@@ -243,7 +260,7 @@ class Search extends React.Component {
                     URLParams={true}
                     showSearch={false}
                     defaultSelected={
-                      this.state.activeTab === "map" ? ["oui"] : []
+                      activeTab === "map" ? ["oui"] : []
                     }
                     data={[
                       { label: "oui", value: "oui" },
@@ -355,6 +372,12 @@ class Search extends React.Component {
                       >
                         <SelectedFilters
                           render={props => {
+                            let selectedValues = {};
+                            if(isServer) {
+                              selectedValues = this.getSelectedValues();
+                            } else {
+                              selectedValues = props.selectedValues;
+                            }
                             return (
                               <div
                                 style={{
@@ -364,9 +387,9 @@ class Search extends React.Component {
                               >
                                 <img src={filterImg} />
                                 <Badge color="secondary">
-                                  {Object.keys(props.selectedValues).reduce(
+                                  {Object.keys(selectedValues).reduce(
                                     (acc, current) => {
-                                      return props.selectedValues[current]
+                                      return selectedValues[current]
                                         .value !== ""
                                         ? acc + 1
                                         : acc;
@@ -386,7 +409,7 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "list"
+                            active: activeTab === "list"
                           })}
                           onClick={() => {
                             this.toggle("list");
@@ -399,7 +422,7 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "map"
+                            active: activeTab === "map"
                           })}
                           onClick={() => {
                             this.toggle("map");
@@ -412,7 +435,7 @@ class Search extends React.Component {
                       <NavItem>
                         <NavLink
                           className={classnames({
-                            active: this.state.activeTab === "mosaique"
+                            active: activeTab === "mosaique"
                           })}
                           onClick={() => {
                             this.toggle("mosaique");
@@ -424,7 +447,7 @@ class Search extends React.Component {
                     </Nav>
                   </Col>
                 </Row>
-                <TabContent activeTab={this.state.activeTab}>
+                <TabContent activeTab={activeTab}>
                   <TabPane tabId="list">
                     <Route
                       exact

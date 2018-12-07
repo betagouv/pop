@@ -21,7 +21,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
 }
-.search .search-sidebar h4 {
+.search .search-sidebar h4, .search .search-sidebar .selected-filters h2 {
   color: #19414c;
   font-weight: 700;
   font-size: 20px;
