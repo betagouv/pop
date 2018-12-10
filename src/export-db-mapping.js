@@ -37,5 +37,7 @@ fs.writeFileSync(
       return `const ${model.name} = ${JSON.stringify(obj)}`;
     })
     .join("\n")}
-    export {${models.map(e => e.name).join(",")}}`
+    const mapping = {${models.map(e => e.name).join(",")}}
+    export default mapping;
+    `
 );
