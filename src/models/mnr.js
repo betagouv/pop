@@ -196,7 +196,10 @@ const Schema = new mongoose.Schema(
     VIDEO: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: {
+        description: "Champ qui contient les images",
+        master: true
+      }
     },
     INV: {
       type: String,

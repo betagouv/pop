@@ -783,20 +783,6 @@ Schema.plugin(mongoosastic, {
   index: "joconde"
 });
 
-Schema.pre("save", function(next, done) {
-  this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
-  if (this.MUSEO) {
-    Museo.findOne({ REF: this.MUSEO }, (err, museo) => {
-      if (!err && museo && museo.location && museo.location.lat) {
-        this.POP_COORDONNEES = museo.location;
-      }
-      next();
-    });
-  } else {
-    next();
-  }
-});
-
 const object = mongoose.model("joconde", Schema);
 
 module.exports = object;

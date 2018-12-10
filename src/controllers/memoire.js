@@ -31,6 +31,45 @@ function findCollection(ref = "") {
   }
 }
 
+function transformBeforeUpdate(notice) {
+  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  notice.DMAJ = formattedNow();
+}
+
+function transformBeforeCreate(notice) {
+  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  notice.DMAJ = notice.DMIS = formattedNow();
+  notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+}
+
+function findProducteur(REF, IDPROD, EMET) {
+  if (
+    String(REF).startsWith("IVN") ||
+    String(REF).startsWith("IVR") ||
+    String(REF).startsWith("IVD") ||
+    String(REF).startsWith("IVC")
+  ) {
+    return "INV";
+  } else if (String(REF).startsWith("OA")) {
+    return "CAOA";
+  } else if (String(REF).startsWith("MH")) {
+    return "CRMH";
+  } else if (String(REF).startsWith("AR")) {
+    return "ARCH";
+  } else if (
+    String(REF).startsWith("AP") &&
+    String(IDPROD).startsWith("Service départemental")
+  ) {
+    return "UDAP";
+  } else if (
+    String(IDPROD).startsWith("SAP") ||
+    String(EMET).startsWith("SAP")
+  ) {
+    return "SAP";
+  }
+  return "AUTRE";
+}
+
 function getMerimeeOrPalissyNotice(LBASE) {
   return new Promise(async (resolve, reject) => {
     const collection = findCollection(LBASE);
@@ -118,6 +157,8 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
+    transformBeforeUpdate(notice)
+
     arr.push(updateNotice(Memoire, ref, notice));
 
     for (let i = 0; notice.LBASE && i < notice.LBASE.length; i++) {
@@ -157,6 +198,7 @@ router.post(
       arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
     }
 
+    transformBeforeCreate(notice);
     const obj = new Memoire(notice);
 
     //send error if obj is not well sync with ES

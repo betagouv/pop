@@ -692,40 +692,6 @@ Schema.plugin(mongoosastic, {
   bulk: { size: 500, delay: 2000 }
 });
 
-Schema.pre("save", function(next, done) {
-  this.PRODUCTEUR = findProducteur(this.REF, this.IDPROD, this.EMET);
-  this.CONTIENT_IMAGE = this.IMG ? "oui" : "non";
-  next();
-});
-
-function findProducteur(REF, IDPROD, EMET) {
-  if (
-    String(REF).startsWith("IVN") ||
-    String(REF).startsWith("IVR") ||
-    String(REF).startsWith("IVD") ||
-    String(REF).startsWith("IVC")
-  ) {
-    return "INV";
-  } else if (String(REF).startsWith("OA")) {
-    return "CAOA";
-  } else if (String(REF).startsWith("MH")) {
-    return "CRMH";
-  } else if (String(REF).startsWith("AR")) {
-    return "ARCH";
-  } else if (
-    String(REF).startsWith("AP") &&
-    String(IDPROD).startsWith("Service départemental")
-  ) {
-    return "UDAP";
-  } else if (
-    String(IDPROD).startsWith("SAP") ||
-    String(EMET).startsWith("SAP")
-  ) {
-    return "SAP";
-  }
-  return "AUTRE";
-}
-
 const object = mongoose.model("memoire", Schema);
 
 module.exports = object;

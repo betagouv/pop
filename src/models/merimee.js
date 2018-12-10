@@ -753,26 +753,6 @@ Schema.plugin(mongoosastic, {
   index: "merimee"
 });
 
-Schema.pre("save", function(next, done) {
-  switch (this.REF.substring(0, 2)) {
-    case "IA":
-      this.DISCIPLINE = this.PRODUCTEUR = "Inventaire";
-      break;
-    case "PA":
-      this.DISCIPLINE = this.PRODUCTEUR = "Monuments Historiques";
-      break;
-    case "EA":
-      this.DISCIPLINE = this.PRODUCTEUR = "Architecture";
-      break;
-    default:
-      this.DISCIPLINE = this.PRODUCTEUR = "Null";
-      break;
-  }
-
-  this.CONTIENT_IMAGE = this.MEMOIRE && this.MEMOIRE.length ? "oui" : "non";
-  next();
-});
-
 const object = mongoose.model("merimee", Schema);
 
 module.exports = object;

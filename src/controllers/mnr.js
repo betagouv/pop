@@ -16,6 +16,16 @@ const {
 
 const router = express.Router();
 
+function transformBeforeUpdate(notice) {
+  notice.DMAJ = formattedNow();
+  notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+}
+
+async function transformBeforeCreate(notice) {
+  notice.DMAJ = notice.DMIS = formattedNow();
+  notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+}
+
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
@@ -23,7 +33,6 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-    notice.DMAJ = formattedNow();
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
@@ -44,6 +53,8 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
+      transformBeforeUpdate(notice);
+
       arr.push(updateNotice(Mnr, ref, notice));
 
       await Promise.all(arr);
@@ -62,7 +73,8 @@ router.post(
   upload.any(),
   (req, res) => {
     const notice = JSON.parse(req.body.notice);
-    notice.DMIS = notice.DMAJ = formattedNow();
+    transformBeforeCreate(notice);
+    
     const obj = new Mnr(notice);
     //send error if obj is not well sync with ES
     checkESIndex(obj);
@@ -117,6 +129,5 @@ router.delete(
     }
   }
 );
-
 
 module.exports = router;

@@ -695,25 +695,6 @@ const Schema = new mongoose.Schema(
   { collection: "palissy" }
 );
 
-Schema.pre("save", function(next, done) {
-  switch (this.REF.substring(0, 2)) {
-    case "IM":
-      this.PRODUCTEUR = "Inventaire";
-      break;
-    case "PM":
-      this.PRODUCTEUR = "Monuments Historiques";
-      break;
-    case "EM":
-      this.PRODUCTEUR = "Etat";
-      break;
-    default:
-      this.PRODUCTEUR = "Null";
-      break;
-  }
-
-  this.CONTIENT_IMAGE = this.MEMOIRE && this.MEMOIRE.length ? "oui" : "non";
-  next();
-});
 
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
