@@ -404,7 +404,7 @@ const Schema = new mongoose.Schema(
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
         master: false,
-        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
+        label: "N°Inventaire"
       }
     },
     LABEL: {
@@ -505,7 +505,7 @@ const Schema = new mongoose.Schema(
         description:
           "[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation ",
         master: false,
-        label: "Lien commande de reproduction et/ou de conditions d’utilisation"
+        label: "Lien commande"
       }
     },
     MUSEO: {
@@ -614,7 +614,7 @@ const Schema = new mongoose.Schema(
         description:
           "Précisions sur le lieu de création/ d’exécution / d’utilisation",
         master: false,
-        label: "Précisions sur le lieu de création/ d’exécution / d’utilisation"
+        label: "Précisions sur le lieu"
       }
     },
     PREP: {
