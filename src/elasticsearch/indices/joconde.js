@@ -661,6 +661,9 @@ module.exports = {
             }
           }
         },
+        POP_COORDONNEES: {
+          type: "geo_point"
+        }
       }
     }
   }
