@@ -31,20 +31,13 @@ et peut être générée avec la commande `yarn export-db-schemas`.
 
 ### Elasticsearch
 
-#### Ré-indexation
+#### Ré-indexation et synchronisation
 
-La modification des _mappings_ nécessite une ré-indexation, qu'on peut lancer avec la commande
-`node src/elasticsearch/reindex.js`. Cette opération utilise les _mappings_ présents dans 
+La modification des _mappings_ nécessite une ré-indexation. 
+Utiliser la commande `node src/elasticsearch/sync.js`
+pour re-créer l'ensemble des notices depuis MongoDB vers Elasticsearch.
+Cette opération utilise les _mappings_ présents dans 
 `src/elasticsearch/indices`.
-
-En staging ou en production, préciser les variables d'environnements :
-```
-AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y ES_ENDPOINT=z node src/elasticsearch/reindex.js
-```
-
-#### Synchronisation depuis MongoDB
-
-Utiliser la commande `node src/elasticsearch/sync.js` pour mettre à jour (ou créer si elles n'existent pas) l'ensemble des notices depuis MongoDB vers Elasticsearch.
 
 En staging ou en production, préciser les variables
 d'environnements sans oublier MongoDB (`DB_ENDPOINT`) :
