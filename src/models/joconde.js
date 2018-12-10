@@ -11,7 +11,8 @@ const Schema = new mongoose.Schema(
       default: "MUSEE",
       documentation: {
         description: "Producteur de la donnée : MUSEE",
-        master: true
+        master: true,
+        label: "Producteur"
       }
     },
     BASE: {
@@ -20,7 +21,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Nom de la base : Collections des musées de France (Joconde)",
-        master: true
+        master: true,
+        label: "Nom de la base"
       }
     },
     CONTIENT_IMAGE: {
@@ -29,7 +31,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true
+        master: true,
+        label: "Contient une image"
       }
     },
     POP_COORDONNEES: {
@@ -57,7 +60,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ qui permet de savoir si la geolocalisation est disponible ou non",
-        master: true
+        master: true,
+        label: "Contient une position"
       }
     },
     REF: {
@@ -68,7 +72,8 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: false
+        master: false,
+        label: "Référence"
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -78,22 +83,27 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Référence de mise à jour (marque de la modification de la notice)",
-        master: false
+        master: false,
+        label: "Référence de mise à jour"
       }
     },
     ADPT: {
       type: [String],
       default: [],
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation] Ancien dépôt / changement d’affectation",
-        master: false
+        description: "Ancien dépôt / changement d’affectation",
+        master: false,
+        label: "Ancien dépôt"
       }
     },
     APPL: {
       type: String,
       default: "",
-      documentation: { description: "Appellation", master: false }
+      documentation: {
+        description: "Appellation",
+        master: false,
+        label: "Appellation"
+      }
     },
     APTN: {
       type: String,
@@ -101,51 +111,81 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Ancienne appartenance (nom du donateur / testateur/ vendeur) ",
-        master: false
+        master: false,
+        label: "Ancienne appartenance"
       }
     },
     ATTR: {
       type: String,
       default: "",
-      documentation: { description: "Anciennes attributions", master: false }
+      documentation: {
+        description: "Anciennes attributions",
+        master: false,
+        label: "Anciennes attributions"
+      }
     },
     AUTR: {
       type: String,
       default: "",
       documentation: {
         description: "Auteur /exécutant / collecteur",
-        master: false
+        master: false,
+        label: "Auteur /exécutant / collecteur"
       }
     },
     BIBL: {
       type: String,
       default: "",
-      documentation: { description: "Bibliographie", master: false }
+      documentation: {
+        description: "Bibliographie",
+        master: false,
+        label: "Bibliographie"
+      }
     },
     COMM: {
       type: String,
       default: "",
-      documentation: { description: "Commentaires", master: false }
+      documentation: {
+        description: "Commentaires",
+        master: false,
+        label: "Commentaires"
+      }
     },
     CONTACT: {
       type: String,
       default: "",
-      documentation: { description: "Lien contact musée", master: true }
+      documentation: {
+        description: "Lien contact musée",
+        master: true,
+        label: "Lien contact musée"
+      }
     },
     COOR: {
       type: String,
       default: "",
-      documentation: { description: "Coordinateur", master: false }
+      documentation: {
+        description: "Coordinateur",
+        master: false,
+        label: "Coordinateur"
+      }
     },
     COPY: {
       type: String,
       default: "",
-      documentation: { description: "Copyright notice", master: false }
+      documentation: {
+        description: "Copyright notice",
+        master: false,
+        label: "Copyright notice"
+      }
     },
     DACQ: {
       type: String,
       default: "",
-      documentation: { description: "Date d’acquisition", master: false }
+      documentation: {
+        description: "Date d’acquisition",
+        master: false,
+        label: "Date d’acquisition"
+      }
     },
     DATA: {
       type: String,
@@ -170,7 +210,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de dépôt / changement d’affectation",
-        master: false
+        master: false,
+        label: "Date de dépôt"
       }
     },
     DECV: {
@@ -179,26 +220,36 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) ",
-        master: false
+        master: false,
+        label: "Découvertes"
       }
     },
     DENO: {
       type: [String],
       default: [],
-      documentation: { description: "Dénomination du bien", master: false }
+      documentation: {
+        description: "Dénomination du bien",
+        master: false,
+        label: "Dénomination du bien"
+      }
     },
     DEPO: {
       type: String,
       default: "",
       documentation: {
         description: "Dépôt / établissement dépositaire",
-        master: false
+        master: false,
+        label: "dépot"
       }
     },
     DESC: {
       type: String,
       default: "",
-      documentation: { description: "Description ", master: false }
+      documentation: {
+        description: "Description ",
+        master: false,
+        label: "Description"
+      }
     },
     DESY: {
       type: String,
@@ -221,14 +272,19 @@ const Schema = new mongoose.Schema(
     DIMS: {
       type: String,
       default: "",
-      documentation: { description: "Mesures  / Dimensions", master: false }
+      documentation: {
+        description: "Mesures  / Dimensions",
+        master: false,
+        label: "Mesures"
+      }
     },
     DMAJ: {
       type: String,
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true
+        master: true,
+        label: "Date de mise à jour"
       }
     },
     DMIS: {
@@ -236,7 +292,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true
+        master: true,
+        label: "Date de création"
       }
     },
     DOMN: {
@@ -244,25 +301,31 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Domaine (catégorie du bien) ",
-        master: false
+        master: false,
+        label: "Domaine (catégorie du bien) "
       }
     },
     DREP: {
       type: String,
       default: "",
-      documentation: { description: "Date de la représentation", master: false }
+      documentation: {
+        description: "Date de la représentation",
+        master: false,
+        label: "Date de la représentation"
+      }
     },
     ECOL: {
       type: [String],
       default: [],
-      documentation: { description: "Ecole ", master: false }
+      documentation: { description: "Ecole ", master: false, label: "Ecole" }
     },
     EPOQ: {
       type: [String],
       default: [],
       documentation: {
         description: "Epoque /style / mouvement ",
-        master: false
+        master: false,
+        label: "Epoque /style / mouvement"
       }
     },
     ETAT: {
@@ -271,30 +334,40 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[surement à nettoyer] Etat du bien. C'est une liste finie de valeurs possibles",
-        master: false
+        master: false,
+        label: "Etat du bien"
       }
     },
     EXPO: {
       type: String,
       default: "",
-      documentation: { description: "Exposition ", master: false }
+      documentation: {
+        description: "Exposition ",
+        master: false,
+        label: "Exposition"
+      }
     },
     GENE: {
       type: [String],
       default: [],
-      documentation: { description: "Genèse ", master: false }
+      documentation: { description: "Genèse ", master: false, label: "Genèse" }
     },
     GEOHI: {
       type: [String],
       default: [],
-      documentation: { description: "Géographie historique", master: false }
+      documentation: {
+        description: "Géographie historique",
+        master: false,
+        label: "Géographie historique"
+      }
     },
     HIST: {
       type: String,
       default: "",
       documentation: {
         description: "Historique – Objets associés ",
-        master: false
+        master: false,
+        label: "Historique – Objets associés"
       }
     },
     IMAGE: {
@@ -311,13 +384,18 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Contient les images. Le plus souvent généré grâce à REFIM",
-        master: true
+        master: true,
+        label: "Images"
       }
     },
     INSC: {
       type: [String],
       default: [],
-      documentation: { description: "Inscriptions ", master: false }
+      documentation: {
+        description: "Inscriptions ",
+        master: false,
+        label: "Inscriptions"
+      }
     },
     INV: {
       type: String,
@@ -325,7 +403,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
-        master: false
+        master: false,
+        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
       }
     },
     LABEL: {
@@ -334,7 +413,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Appellation musée de France : logo : Champs ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'",
-        master: true
+        master: true,
+        label: "Appellation musée de France"
       }
     },
     LABO: {
@@ -360,13 +440,18 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu de création / d’exécution / d’utilisation",
-        master: false
+        master: false,
+        label: "Lieu de création / d’exécution / d’utilisation"
       }
     },
     LOCA: {
       type: String,
       default: "",
-      documentation: { description: "Localisation", master: false }
+      documentation: {
+        description: "Localisation",
+        master: false,
+        label: "Localisation"
+      }
     },
     LOCA2: {
       type: String,
@@ -391,13 +476,18 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Millésime de création / exécution ",
-        master: false
+        master: false,
+        label: "Millésime de création / exécution"
       }
     },
     MILU: {
       type: String,
       default: "",
-      documentation: { description: "Millésime d’utilisation ", master: false }
+      documentation: {
+        description: "Millésime d’utilisation ",
+        master: false,
+        label: "Millésime d’utilisation"
+      }
     },
     MOSA: {
       type: String,
@@ -414,30 +504,44 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation ",
-        master: false
+        master: false,
+        label: "Lien commande de reproduction et/ou de conditions d’utilisation"
       }
     },
     MUSEO: {
       type: String,
       default: "",
-      documentation: { description: "Lien Numéro MUSEOFILE", master: false }
+      documentation: {
+        description: "Lien Numéro MUSEOFILE",
+        master: false,
+        label: "Lien Numéro MUSEOFILE"
+      }
     },
     NSDA: {
       type: String,
       default: "",
-      documentation: { description: "Numéro de site", master: false }
+      documentation: {
+        description: "Numéro de site",
+        master: false,
+        label: "Numéro de site"
+      }
     },
     ONOM: {
       type: [String],
       default: [],
-      documentation: { description: "Onomastique", master: false }
+      documentation: {
+        description: "Onomastique",
+        master: false,
+        label: "Onomastique"
+      }
     },
     PAUT: {
       type: String,
       default: "",
       documentation: {
         description: "Précisions /auteur / exécutant / collecteur",
-        master: false
+        master: false,
+        label: "Précisions /auteur / exécutant / collecteur"
       }
     },
     PDAT: {
@@ -454,7 +558,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur la découverte / collecte / récolte",
-        master: false
+        master: false,
+        label: "Précisions sur la découverte / collecte / récolte"
       }
     },
     PEOC: {
@@ -462,7 +567,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Période de l’original copié",
-        master: false
+        master: false,
+        label: "Période de l’original copié"
       }
     },
     PERI: {
@@ -470,25 +576,35 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Période de création / exécution ",
-        master: false
+        master: false,
+        label: "Période de création / exécution"
       }
     },
     PERU: {
       type: [String],
       default: [],
-      documentation: { description: "Période d’utilisation", master: false }
+      documentation: {
+        description: "Période d’utilisation",
+        master: false,
+        label: "Période d’utilisation"
+      }
     },
     PHOT: {
       type: String,
       default: "",
-      documentation: { description: "Crédits photographiques", master: false }
+      documentation: {
+        description: "Crédits photographiques",
+        master: false,
+        label: "Crédits photographiques"
+      }
     },
     PINS: {
       type: String,
       default: "",
       documentation: {
         description: "Précisions sur les inscriptions",
-        master: false
+        master: false,
+        label: "Précisions sur les inscriptions"
       }
     },
     PLIEUX: {
@@ -497,7 +613,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Précisions sur le lieu de création/ d’exécution / d’utilisation",
-        master: false
+        master: false,
+        label: "Précisions sur le lieu de création/ d’exécution / d’utilisation"
       }
     },
     PREP: {
@@ -505,7 +622,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Précisions sur le sujet représenté ",
-        master: false
+        master: false,
+        label: "Précisions sur le sujet représenté"
       }
     },
     PUTI: {
@@ -513,7 +631,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur l’utilisation ",
-        master: false
+        master: false,
+        label: "Précisions sur l’utilisation"
       }
     },
     RANG: {
@@ -528,7 +647,11 @@ const Schema = new mongoose.Schema(
     REDA: {
       type: [String],
       default: [],
-      documentation: { description: "Rédacteur ", master: false }
+      documentation: {
+        description: "Rédacteur ",
+        master: false,
+        label: "Rédacteur"
+      }
     },
     REFIM: {
       type: String,
@@ -536,13 +659,18 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Référence image : lien texte/ image : C'est un code qui permet de retrouver l'url de l'image",
-        master: false
+        master: false,
+        label: "Référence image"
       }
     },
     REPR: {
       type: String,
       default: "",
-      documentation: { description: "Sujet représenté ", master: false }
+      documentation: {
+        description: "Sujet représenté ",
+        master: false,
+        label: "Sujet représenté"
+      }
     },
     RETIF: {
       type: String,
@@ -558,7 +686,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de la représentation",
-        master: false
+        master: false,
+        label: "Source de la représentation"
       }
     },
     STAT: {
@@ -568,13 +697,18 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire",
-        master: false
+        master: false,
+        label: "Statut juridique"
       }
     },
     TECH: {
       type: [String],
       default: [],
-      documentation: { description: "Matériaux et techniques", master: false }
+      documentation: {
+        description: "Matériaux et techniques",
+        master: false,
+        label: "Matériaux et techniques"
+      }
     },
     TICO: {
       type: String,
@@ -588,7 +722,11 @@ const Schema = new mongoose.Schema(
     TITR: {
       type: String,
       default: "",
-      documentation: { description: "Titre de l'oeuvre ", master: false }
+      documentation: {
+        description: "Titre de l'oeuvre ",
+        master: false,
+        label: "Titre"
+      }
     },
     TOUT: {
       type: String,
@@ -602,14 +740,19 @@ const Schema = new mongoose.Schema(
     UTIL: {
       type: [String],
       default: [],
-      documentation: { description: "Utilisation / Destination", master: false }
+      documentation: {
+        description: "Utilisation / Destination",
+        master: false,
+        label: "Utilisation / Destination"
+      }
     },
     VIDEO: {
       type: [String],
       default: [],
       documentation: {
         description: "[Peut être déprécié : A vérifier]",
-        master: false
+        master: false,
+        label: "Videos"
       }
     },
     WWW: {
@@ -617,13 +760,18 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien site associé / site complémentaire",
-        master: false
+        master: false,
+        label: "Lien site associé / site complémentaire"
       }
     },
     LVID: {
       type: String,
       default: "",
-      documentation: { description: "Lien video", master: false }
+      documentation: {
+        description: "Lien video",
+        master: false,
+        label: "Lien Vidéo"
+      }
     }
   },
   { collection: "joconde" }
