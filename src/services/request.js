@@ -46,14 +46,14 @@ class request {
       )
         .then(response => {
           if (response.status !== 200) {
-            Raven.captureException(this._errorTxt(response));
+            Raven.captureException(JSON.stringify(response));
             reject(this._errorTxt(response));
             return;
           }
           resolve();
         })
         .catch(err => {
-          Raven.captureException(err);
+          Raven.captureException(JSON.stringify(err));
           reject("L'api est inaccessible", err);
         });
     });
@@ -71,7 +71,7 @@ class request {
       )
         .then(response => {
           if (response.status === 500) {
-            Raven.captureException(this._errorTxt(response));
+            Raven.captureException(JSON.stringify(response));
             reject(this._errorTxt(response));
             return;
           }
@@ -86,12 +86,12 @@ class request {
               }
             })
             .catch(e => {
-              Raven.captureException(e);
+              Raven.captureException(JSON.stringify(e));
               reject("Probleme lors de la récupération de la donnée", e);
             });
         })
         .catch(err => {
-          Raven.captureException(err);
+          Raven.captureException(JSON.stringify(err));
           reject("L'api est inaccessible", err);
         });
     });
@@ -102,14 +102,14 @@ class request {
       fetch(url, this._init("DELETE", null))
         .then(response => {
           if (response.status !== 200) {
-            Raven.captureException(this._errorTxt(response));
+            Raven.captureException(JSON.stringify(response));
             reject(this._errorTxt(response));
             return;
           }
           resolve();
         })
         .catch(err => {
-          Raven.captureException(err);
+          Raven.captureException(JSON.stringify(err));
           reject("L'api est inaccessible", err);
         });
     });
@@ -125,7 +125,7 @@ class request {
           }
 
           if (response.status !== 200) {
-            Raven.captureException(this._errorTxt(response));
+            Raven.captureException(JSON.stringify(response));
             reject(this._errorTxt(response));
             return;
           }
@@ -136,13 +136,13 @@ class request {
               resolve(data);
             })
             .catch(e => {
-              Raven.captureException(e);
+              Raven.captureException(JSON.stringify(e));
               reject("Probleme lors de la récupération de la donnée", e);
             });
           return;
         })
         .catch(err => {
-          Raven.captureException(err);
+          Raven.captureException(JSON.stringify(err));
           reject("L'api est inaccessible", err);
         });
     });
