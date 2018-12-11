@@ -1,43 +1,38 @@
 import React from "react";
 import Loader from "../../../../../../components/loader";
-import { Link } from "react-router-dom";
-import shave from 'shave';
-import { bucket_url } from "../../../../../../config";
-
-const noImage = require("../../../../../../assets/noimage.png");
-import SingleNotice from '../SingleNotice';
+import shave from "shave";
+import { image } from "../../../../image";
+import SingleNotice from "../SingleNotice";
 
 export default class LinkedNotices extends React.Component {
   state = {
     singleNotice: null
   };
 
-  onBackClicked = ()=> {
-    this.setState({ 
-      singleNotice : null
+  onBackClicked = () => {
+    this.setState({
+      singleNotice: null
     });
-  }
+  };
 
-  onSmallNoticeClicked = (item)=> {
-    this.setState({ 
-      singleNotice : (
+  onSmallNoticeClicked = item => {
+    this.setState({
+      singleNotice: (
         <div>
-          <div onClick={this.onBackClicked} className='back'>
-            <div className="back-text">
-              &lt; retour à la liste 
-            </div>
+          <div onClick={this.onBackClicked} className="back">
+            <div className="back-text">&lt; retour à la liste</div>
             <div onClick={this.props.onClose}>X</div>
           </div>
           <SingleNotice className="" key={item.REF} data={item} />
         </div>
       )
     });
-  }
+  };
 
   componentDidUpdate(prevProps) {
-    if(this.props.links !== prevProps.links) {
-      this.setState({ 
-        singleNotice : null
+    if (this.props.links !== prevProps.links) {
+      this.setState({
+        singleNotice: null
       });
     }
   }
@@ -51,16 +46,22 @@ export default class LinkedNotices extends React.Component {
       return <div />;
     }
 
-    if(this.state.singleNotice) {
+    if (this.state.singleNotice) {
       return this.state.singleNotice;
     }
 
     const notices = this.props.links.map(notice => (
-      <SmallNotice notice={notice} key={notice.REF} onClicked={this.onSmallNoticeClicked}/>
+      <SmallNotice
+        notice={notice}
+        key={notice.REF}
+        onClicked={this.onSmallNoticeClicked}
+      />
     ));
     return (
       <div className="sidebar-section links">
-        <div onClick={this.props.onClose} className="closeButton">X</div>
+        <div onClick={this.props.onClose} className="closeButton">
+          X
+        </div>
         <h6>Ce point est liée aux notices suivantes</h6>
         <div className="linked-notice-container">{notices}</div>
       </div>
@@ -70,32 +71,22 @@ export default class LinkedNotices extends React.Component {
 
 class SmallNotice extends React.Component {
   constructor(props) {
-      super(props);
-      this.titleRef = React.createRef();
+    super(props);
+    this.titleRef = React.createRef();
   }
 
   componentDidMount() {
-      shave(this.titleRef.current, 50);
+    shave(this.titleRef.current, 50);
   }
 
   render() {
-    let image = "";
-    if (this.props.notice.MEMOIRE.length) {
-      image = this.props.notice.MEMOIRE[0].url;
-      if (!image.match(/^http/)) {
-        image = `${bucket_url}${image}`;
-      }
-    } else {
-      image = noImage;
-    }
-    //to={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}
     return (
       <div
         style={{ textDecoration: "none" }}
         className="card"
-        onClick={ ()=> this.props.onClicked(this.props.notice)}
+        onClick={() => this.props.onClicked(this.props.notice)}
       >
-        <img src={image} alt={this.props.notice.TICO} />
+        {image(this.props.notice)}
         <div className="content">
           <h2 ref={this.titleRef}>{this.props.notice.TICO}</h2>
           <p className="categories">{this.props.notice.DENO.join(", ")}</p>

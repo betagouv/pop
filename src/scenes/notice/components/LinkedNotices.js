@@ -1,9 +1,7 @@
 import React from "react";
 import Loader from "../../../components/loader";
 import { Link } from "react-router-dom";
-import { bucket_url } from "../../../config";
-
-const noImage = require("../../../assets/noimage.png");
+import { image } from "../../search/image";
 
 class LinkedNotice extends React.Component {
   render() {
@@ -28,23 +26,13 @@ class LinkedNotice extends React.Component {
 
 class SmallNotice extends React.Component {
   render() {
-    let image = "";
-    if (this.props.notice.MEMOIRE.length) {
-      image = this.props.notice.MEMOIRE[0].url;
-      if (!image.match(/^http/)) {
-        image = `${bucket_url}${image}`;
-      }
-    } else {
-      image = noImage;
-    }
-
     return (
       <Link
         style={{ textDecoration: "none" }}
         to={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}
         className="card"
       >
-        <img src={image} alt={this.props.notice.TICO} />
+        {image(this.props.notice)}
         <div className="content">
           <h2>{this.props.notice.TICO}</h2>
           <p className="categories">{this.props.notice.DENO.join(", ")}</p>
