@@ -36,7 +36,7 @@ class Admin extends React.Component {
             <th>Groupe</th>
             <th>Institution</th>
             <th>Role</th>
-            <th>Dernière Connection</th>
+            <th>Dernière connexion</th>
             <th>Action</th>
           </tr>
         </thead>

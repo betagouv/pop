@@ -43,7 +43,7 @@ export function* signinByToken() {
         process.env.NODE_ENV === "production" ||
         process.env.NODE_ENV === "staging"
       ) {
-        Raven.setUserContext({ emai: response.user.email });
+        Raven.setUserContext({ email: response.user.email });
       }
 
       yield put({ type: actions.SIGNIN_SUCCESS, user: response.user, token });
