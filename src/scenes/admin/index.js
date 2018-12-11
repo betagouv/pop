@@ -42,7 +42,6 @@ class Admin extends React.Component {
         </thead>
         <tbody>
           {this.state.users.map(user => {
-            console.log("USER", user);
             const {
               email,
               prenom,
