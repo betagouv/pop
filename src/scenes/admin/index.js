@@ -36,12 +36,26 @@ class Admin extends React.Component {
             <th>Groupe</th>
             <th>Institution</th>
             <th>Role</th>
+            <th>Dernière Connection</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {this.state.users.map(user => {
-            const { email, prenom, nom, role, institution, group } = user;
+            console.log("USER", user);
+            const {
+              email,
+              prenom,
+              nom,
+              role,
+              lastConnectedAt,
+              institution,
+              group
+            } = user;
+            const date = new Date(lastConnectedAt);
+            const lastCo = lastConnectedAt
+              ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+              : "jamais";
             return (
               <tr key={email}>
                 <td>{email}</td>
@@ -50,6 +64,7 @@ class Admin extends React.Component {
                 <td>{group}</td>
                 <td>{institution}</td>
                 <td>{role}</td>
+                <td>{lastCo}</td>
                 <td>
                   <UpdateUser user={user} callback={this.fetchUsers} />
                 </td>
