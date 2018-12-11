@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
-const markdownPath = "../SCHEMAS.md";
+const markdownPath = "../doc";
 
 // 1. Load models
 const models = fs
@@ -23,35 +23,56 @@ const models = fs
     }))
   }));
 
-// 2. Convert to markdown and write to file
+//write ReadMe
 fs.writeFileSync(
-  path.join(__dirname, markdownPath),
-  // Page Title
-  `# POP SCHEMAS\n${models
-    // Write one "table" for each model
-    .map(model => {
-      return [
-        // Upper case title
-        `## ${model.name[0].toUpperCase() + model.name.slice(1)}`,
-        // One block for each model property (title, description, info)
-        ...model.paths.map(path => {
-          const elements = [
-            path.type,
-            path.required ? "true" : "false",
-            path.master ? "true" : "false",
-            path.opendata ? "true" : "false"
-          ];
-          return [
-            `### ${path.name}`,
-            path.description,
-            "",
-            `|Type|Required|Master|Opendata|`,
-            `|----|--------|------|--------|`,
-            `|${elements.join("|")}|`,
-            ""
-          ].join("\n");
-        })
-      ].join("\n");
-    })
+  path.join(__dirname, markdownPath + "/README.md"),
+  `# POP SCHEMAS\n 
+  ${models
+    .map(
+      model =>
+        `- [${model.name[0].toUpperCase() + model.name.slice(1)}](/doc/${
+          model.name
+        }.md)`
+    )
     .join("\n")}`
 );
+
+for (let i = 0; i < models.length; i++) {
+  const model = models[i];
+  const arr = [];
+
+  //TITRE
+  arr.push(`# POP SCHEMAS ${model.name}\n`);
+
+  //SUMMARY
+  for (let j = 0; j < model.paths.length; j++) {
+    arr.push(
+      `- [${model.paths[j].name}](/doc/${model.name}.md#${model.paths[j].name})`
+    );
+  }
+
+  arr.push(
+    ...model.paths.map(path => {
+      const elements = [
+        path.type,
+        path.required ? "true" : "false",
+        path.master ? "true" : "false",
+        path.opendata ? "true" : "false"
+      ];
+      return [
+        `### ${path.name}`,
+        path.description,
+        "",
+        `|Type|Required|Master|Opendata|`,
+        `|----|--------|------|--------|`,
+        `|${elements.join("|")}|`,
+        ""
+      ].join("\n");
+    })
+  );
+
+  fs.writeFileSync(
+    path.join(__dirname, `${markdownPath}/${model.name}.md`),
+    arr.join("\n")
+  );
+}
