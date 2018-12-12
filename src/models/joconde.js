@@ -73,7 +73,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence unique de la notice",
         master: false,
-        label: "Référence"
+        label: "Référence",
+        validation: "Alphanumeric"
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -130,7 +131,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Auteur /exécutant / collecteur",
         master: false,
-        label: "Auteur /exécutant / collecteur"
+        label: "Auteur /exécutant / collecteur",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513"
       }
     },
     BIBL: {
@@ -157,7 +159,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Lien contact musée",
         master: true,
-        label: "Lien contact musée"
+        label: "Lien contact musée",
+        validation: "email"
       }
     },
     COOR: {
@@ -221,7 +224,8 @@ const Schema = new mongoose.Schema(
         description:
           "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) ",
         master: false,
-        label: "Découvertes"
+        label: "Découvertes",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
       }
     },
     DENO: {
@@ -230,7 +234,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Dénomination du bien",
         master: false,
-        label: "Dénomination du bien"
+        label: "Dénomination du bien",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505"
       }
     },
     DEPO: {
@@ -302,7 +307,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Domaine (catégorie du bien) ",
         master: false,
-        label: "Domaine (catégorie du bien) "
+        label: "Domaine (catégorie du bien) ",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51"
       }
     },
     DREP: {
@@ -317,7 +323,12 @@ const Schema = new mongoose.Schema(
     ECOL: {
       type: [String],
       default: [],
-      documentation: { description: "Ecole ", master: false, label: "Ecole" }
+      documentation: {
+        description: "Ecole ",
+        master: false,
+        label: "Ecole",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517"
+      }
     },
     EPOQ: {
       type: [String],
@@ -325,7 +336,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Epoque /style / mouvement ",
         master: false,
-        label: "Epoque /style / mouvement"
+        label: "Epoque /style / mouvement",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93"
       }
     },
     ETAT: {
@@ -350,7 +362,12 @@ const Schema = new mongoose.Schema(
     GENE: {
       type: [String],
       default: [],
-      documentation: { description: "Genèse ", master: false, label: "Genèse" }
+      documentation: {
+        description: "Genèse ",
+        master: false,
+        label: "Genèse",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506"
+      }
     },
     GEOHI: {
       type: [String],
@@ -394,7 +411,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Inscriptions ",
         master: false,
-        label: "Inscriptions"
+        label: "Inscriptions",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520"
       }
     },
     INV: {
@@ -441,7 +459,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Lieu de création / d’exécution / d’utilisation",
         master: false,
-        label: "Lieu de création / d’exécution / d’utilisation"
+        label: "Lieu de création / d’exécution / d’utilisation",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84"
       }
     },
     LOCA: {
@@ -450,7 +469,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Localisation",
         master: false,
-        label: "Localisation"
+        label: "Localisation",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
       }
     },
     LOCA2: {
@@ -568,7 +588,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période de l’original copié",
         master: false,
-        label: "Période de l’original copié"
+        label: "Période de l’original copié",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
       }
     },
     PERI: {
@@ -577,7 +598,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période de création / exécution ",
         master: false,
-        label: "Période de création / exécution"
+        label: "Période de création / exécution",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
       }
     },
     PERU: {
@@ -586,7 +608,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période d’utilisation",
         master: false,
-        label: "Période d’utilisation"
+        label: "Période d’utilisation",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
       }
     },
     PHOT: {
@@ -669,7 +692,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Sujet représenté ",
         master: false,
-        label: "Sujet représenté"
+        label: "Sujet représenté",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
       }
     },
     RETIF: {
@@ -687,7 +711,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Source de la représentation",
         master: false,
-        label: "Source de la représentation"
+        label: "Source de la représentation",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
       }
     },
     STAT: {
@@ -707,7 +732,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Matériaux et techniques",
         master: false,
-        label: "Matériaux et techniques"
+        label: "Matériaux et techniques",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516"
       }
     },
     TICO: {
@@ -743,7 +769,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Utilisation / Destination",
         master: false,
-        label: "Utilisation / Destination"
+        label: "Utilisation / Destination",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86"
       }
     },
     VIDEO: {

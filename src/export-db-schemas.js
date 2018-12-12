@@ -19,6 +19,12 @@ const models = fs
       master: v.options.documentation ? v.options.documentation.master : "",
       description: v.options.documentation
         ? v.options.documentation.description
+        : "",
+      validation: v.options.documentation
+        ? v.options.documentation.validation
+        : "",
+      thesaurus: v.options.documentation
+        ? v.options.documentation.thesaurus
         : ""
     }))
   }));
@@ -57,14 +63,16 @@ for (let i = 0; i < models.length; i++) {
         path.type,
         path.required ? "true" : "false",
         path.master ? "true" : "false",
-        path.opendata ? "true" : "false"
+        path.opendata ? "true" : "false",
+        path.validation
       ];
       return [
         `### ${path.name}`,
-        path.description,
+        path.description + "\n\n",
+        path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
         "",
-        `|Type|Required|Master|Opendata|`,
-        `|----|--------|------|--------|`,
+        `|Type|Required|Master|Opendata|Validation|`,
+        `|----|--------|------|--------|------|`,
         `|${elements.join("|")}|`,
         ""
       ].join("\n");

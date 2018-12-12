@@ -15,83 +15,119 @@
 ### email
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|true|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|true|false|false||
 
 ### institution
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|true|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|true|false|false||
 
 ### nom
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|false|false|false||
 
 ### prenom
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|false|false|false||
 
 ### group
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|true|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|true|false|false||
 
 ### role
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|true|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|true|false|false||
 
 ### password
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|true|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|true|false|false||
 
 ### hasResetPassword
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|Boolean|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|Boolean|false|false|false||
 
 ### lastConnectedAt
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|Date|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|Date|false|false|false||
 
 ### museofile
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|false|false|false||
 
 ### _id
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|ObjectID|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|ObjectID|false|false|false||
 
 ### __v
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|Number|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|Number|false|false|false||

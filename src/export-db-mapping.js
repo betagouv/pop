@@ -11,17 +11,21 @@ const models = fs
   // Build an object from object's schema properties
   .map(model => ({
     name: model.modelName,
-    paths: Object.entries(model.schema.paths).map(([k, v]) => ({
-      path: v.path,
-      type: v.instance,
-      required: v.options.required,
-      label: v.options.documentation ? v.options.documentation.label : "",
-      opendata: v.options.documentation ? v.options.documentation.opendata : "",
-      master: v.options.documentation ? v.options.documentation.master : "",
-      description: v.options.documentation
-        ? v.options.documentation.description
-        : ""
-    }))
+    paths: Object.entries(model.schema.paths).map(([k, v]) => {
+      const { documentation, required } = v.options;
+      const obj = {
+        path: v.path,
+        type: v.instance,
+        required: required,
+        label: documentation ? documentation.label || "" : "",
+        opendata: documentation ? documentation.opendata || "" : "",
+        master: documentation ? documentation.master || "" : "",
+        description: documentation ? documentation.description || "" : "",
+        validation: documentation ? documentation.validation || "" : "",
+        thesaurus: documentation ? documentation.thesaurus || "" : ""
+      };
+      return obj;
+    })
   }));
 
 // 2. Convert to markdown and write to file

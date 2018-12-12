@@ -10,9 +10,11 @@ const Schema = new mongoose.Schema(
       unique: true,
       index: true,
       trim: true,
+      required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: false
+        master: false,
+        validation: "Alphanumeric"
       }
     },
     PRODUCTEUR: {
@@ -105,7 +107,11 @@ const Schema = new mongoose.Schema(
     AFFE: {
       type: String,
       default: "",
-      documentation: { description: "Affectataire", master: false }
+      documentation: {
+        description: "Affectataire",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T97"
+      }
     },
     AIRE: {
       type: String,
@@ -120,7 +126,11 @@ const Schema = new mongoose.Schema(
     APRO: {
       type: [String],
       default: [],
-      documentation: { description: "", master: false }
+      documentation: {
+        description: "",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T98"
+      }
     },
     ARCHEO: {
       type: String,
@@ -182,12 +192,20 @@ const Schema = new mongoose.Schema(
     COPY: {
       type: [String],
       default: [],
-      documentation: { description: "CopyRight", master: false }
+      documentation: {
+        description: "CopyRight",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T21"
+      }
     },
     COUV: {
       type: [String],
       default: [],
-      documentation: { description: "Type de la couverture", master: false }
+      documentation: {
+        description: "Type de la couverture",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T26"
+      }
     },
     DATE: {
       type: [String],
@@ -210,7 +228,11 @@ const Schema = new mongoose.Schema(
     DENO: {
       type: [String],
       default: [],
-      documentation: { description: "Dénomination ", master: false }
+      documentation: {
+        description: "Dénomination ",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
+      }
     },
     DENQ: {
       type: String,
@@ -220,7 +242,11 @@ const Schema = new mongoose.Schema(
     DEPL: {
       type: String,
       default: "",
-      documentation: { description: "Partie déplacée", master: false }
+      documentation: {
+        description: "Partie déplacée",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T14"
+      }
     },
     DESC: {
       type: String,
@@ -230,7 +256,11 @@ const Schema = new mongoose.Schema(
     DIMS: {
       type: String,
       default: "",
-      documentation: { description: "Dimensions", master: false }
+      documentation: {
+        description: "Dimensions",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T11"
+      }
     },
     DMAJ: {
       type: String,
@@ -251,7 +281,11 @@ const Schema = new mongoose.Schema(
     DOSS: {
       type: String,
       default: "",
-      documentation: { description: "Dossier", master: false }
+      documentation: {
+        description: "Dossier",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T13"
+      }
     },
     DPRO: {
       type: String,
@@ -273,41 +307,63 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parti d’élévation extérieure",
-        master: false
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T25"
       }
     },
     ENER: {
       type: [String],
       default: [],
-      documentation: { description: "Source de l'énergie", master: false }
+      documentation: {
+        description: "Source de l'énergie",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T27"
+      }
     },
     ESCA: {
       type: [String],
       default: [],
       documentation: {
         description: "Emplacement, forme et structure de l’escalier ",
-        master: false
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T29"
       }
     },
     ETAG: {
       type: [String],
       default: [],
-      documentation: { description: "Vaisseau et étage", master: false }
+      documentation: {
+        description: "Vaisseau et étage",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T23"
+      }
     },
     ETAT: {
       type: [String],
       default: [],
-      documentation: { description: "Etat de conservation", master: false }
+      documentation: {
+        description: "Etat de conservation",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T30"
+      }
     },
     ETUD: {
       type: [String],
       default: [],
-      documentation: { description: "Parties non étud", master: false }
+      documentation: {
+        description: "Parties non étud",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68"
+      }
     },
     GENR: {
       type: [String],
       default: [],
-      documentation: { description: "Destinataire", master: false }
+      documentation: {
+        description: "Destinataire",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T197"
+      }
     },
     HIST: {
       type: String,
@@ -322,7 +378,11 @@ const Schema = new mongoose.Schema(
     IMPL: {
       type: [String],
       default: [],
-      documentation: { description: "Milieu d'implantation", master: false }
+      documentation: {
+        description: "Milieu d'implantation",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T12"
+      }
     },
     INSEE: {
       type: String,
@@ -335,7 +395,11 @@ const Schema = new mongoose.Schema(
     INTE: {
       type: [String],
       default: [],
-      documentation: { description: "Intérêt de l'oeuvre", master: false }
+      documentation: {
+        description: "Intérêt de l'oeuvre",
+        master: false,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T33"
+      }
     },
     JATT: {
       type: [String],
@@ -721,7 +785,11 @@ const Schema = new mongoose.Schema(
     CONTACT: {
       type: String,
       default: "",
-      documentation: { description: "Contact ", master: true }
+      documentation: {
+        description: "Contact ",
+        master: true,
+        validation: "email"
+      }
     },
     IDAGR: {
       type: String,

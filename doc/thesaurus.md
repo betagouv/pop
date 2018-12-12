@@ -7,27 +7,39 @@
 ### arc
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|false|false|false||
 
 ### value
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|String|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|String|false|false|false||
 
 ### _id
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|ObjectID|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|ObjectID|false|false|false||
 
 ### __v
 
 
-|Type|Required|Master|Opendata|
-|----|--------|------|--------|
-|Number|false|false|false|
+
+
+
+|Type|Required|Master|Opendata|Validation|
+|----|--------|------|--------|------|
+|Number|false|false|false||

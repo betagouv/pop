@@ -36,9 +36,11 @@ const Schema = new mongoose.Schema(
       unique: true,
       index: true,
       trim: true,
+      required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: true
+        master: true,
+        validation: "Alphanumeric"
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -88,7 +90,11 @@ const Schema = new mongoose.Schema(
     DENO: {
       type: [String],
       default: [],
-      documentation: { description: "Dénomination du bien", master: true }
+      documentation: {
+        description: "Dénomination du bien",
+        master: true,
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
+      }
     },
     DESC: {
       type: String,
