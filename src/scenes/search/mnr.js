@@ -334,6 +334,7 @@ const Card = ({ data }) => {
           <p>{data.DENO}</p>
           <p>{data.LOCA}</p>
           <p>{data.AUTR}</p>
+          <p>{data.DIMS.join(" ")}</p>
         </div>
       </div>
     </Link>

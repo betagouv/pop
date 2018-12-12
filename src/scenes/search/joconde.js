@@ -298,9 +298,10 @@ const Card = ({ data }) => {
           <p>{data.DOMN.join(", ")}</p>
           <p>{data.DENO.join(", ")}</p>
           <p>{data.AUTR}</p>
+          <p>{data.EPOQ.join(", ")}</p>
+          <p>{data.DECV}</p>
           <p>{data.PERI.join(", ")}</p>
           <p>{data.LOCA}</p>
-          <p>{data.INV}</p>
         </div>
       </div>
     </Link>
