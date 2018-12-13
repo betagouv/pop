@@ -162,7 +162,7 @@ class Search extends React.Component {
     return (
       <div className="search">
         <Container fluid style={{ maxWidth: 1860 }}>
-          <h2 className="title">Votre recherche</h2>
+          <h1 className="title">Votre recherche</h1>
           <ReactiveBase url={`${es_url}`} app={bases}>
             <Row>
               <div className={`search-filters ${this.state.mobile_menu}`}>
