@@ -31,14 +31,20 @@ class TagsInput extends React.Component {
 
   handleInputChange(str) {
     if (str && this.props.thesaurus) {
-      api.getThesaurus(this.props.thesaurus, str).then(values => {
-        if (values) {
-          const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-          this.setState({ suggestions });
-        }
-      }).catch(error){
-        console.log('ERROR',error)
-      }
+      api
+        .getThesaurus(this.props.thesaurus, str)
+        .then(values => {
+          if (values) {
+            const suggestions = values.map(e => ({
+              id: e.value,
+              text: e.value
+            }));
+            this.setState({ suggestions });
+          }
+        })
+        .catch(e => {
+          console.log("ERROR", error);
+        });
     }
   }
 
