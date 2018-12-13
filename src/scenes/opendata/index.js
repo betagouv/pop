@@ -1,7 +1,12 @@
 import React from "react";
+import Helmet from "../../components/Helmet";
 
 export default () => (
   <div className="opendata-view">
+    <Helmet 
+      title="POP - Plateforme Ouverte du Patrimoine"
+      description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+    />
     <div>
       La plateforme POP vise à rendre accessible au public l’ensemble des
       informations d’intérêt collectées, vérifiées et/ou produites par le

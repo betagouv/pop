@@ -30,6 +30,7 @@
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.5.0",
     "react-flex": "^2.2.8",
+    "react-helmet": "^5.2.0",
     "react-image-gallery": "^0.8.11",
     "react-instantsearch": "^4.3.0",
     "react-redux": "^5.0.6",

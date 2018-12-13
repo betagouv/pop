@@ -6,6 +6,7 @@ import Loader from "../../components/loader";
 import API from "../../services/api";
 import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";
+import Helmet from "../../components/Helmet";
 
 class Mnr extends React.Component {
   state = {
@@ -45,6 +46,10 @@ class Mnr extends React.Component {
 
     return (
       <Container className="notice" fluid>
+        <Helmet 
+            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+        />
         <Row className="top-section">
           {/* <Col sm="4">
             <div

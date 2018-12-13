@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./components/field";
+import Helmet from "../../components/Helmet";
 import NotFound from "../../components/NotFound";
 import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
@@ -75,6 +76,10 @@ class Palissy extends React.Component {
 
     return (
       <Container className="notice" fluid>
+        <Helmet
+            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+        />
         <Row className="top-section">
           <Col>
             <h1 className="heading">{this.state.notice.TICO}</h1>

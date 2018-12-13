@@ -5,6 +5,7 @@ import Field from "./components/field";
 import Loader from "../../components/loader";
 import Title from "./components/title";
 import API from "../../services/api";
+import Helmet from "../../components/Helmet";
 import NotFound from "../../components/NotFound";
 import Header from "./components/header";
 import ContactUs from "./components/ContactUs";
@@ -52,6 +53,10 @@ class Joconde extends React.Component {
 
     return (
       <Container className="notice" fluid>
+        <Helmet 
+            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+        />
         <Row className="top-section">
           <Col>
             <h1 className="heading">{this.state.notice.TICO}</h1>

@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import React from "react";
+import { Helmet } from "react-helmet";
 import express from "express";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
@@ -33,6 +34,7 @@ async function exec(req, res) {
       </StaticRouter>
     </Provider>
   );
+  const helmetData = Helmet.renderStatic( );
   const cssString = [...css].join("");
 
   const indexFile = path.resolve("build/index-template.html");
@@ -56,6 +58,11 @@ async function exec(req, res) {
     return res.status(status).send(
       data
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
+        .replace(
+          "<title>POP - Plateforme Ouverte du Patrimoine</title>",
+          ` ${ helmetData.title.toString( ) }
+          ${ helmetData.meta.toString( ) }`
+        )
         .replace(
           "</head>",
           ` <style type="text/css">${cssString}</style></head>`

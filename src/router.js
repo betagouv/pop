@@ -7,6 +7,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Header from "./scenes/header";
 import Footer from "./scenes/footer";
 import NotFound from "./components/NotFound";
+import Helmet from "./components/Helmet";
 
 import Home from "./scenes/home";
 import Search from "./scenes/search";
@@ -55,6 +56,10 @@ class PublicRoutes extends React.Component {
     return (
       <ConnectedRouter history={piwik.connectToHistory(this.props.history)}>
         <div className="main">
+          <Helmet 
+            title="POP - Plateforme Ouverte du Patrimoine"
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+          />
           <ScrollToTop />
           <Header />
           <ErrorBoundary>

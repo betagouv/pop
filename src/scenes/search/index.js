@@ -21,6 +21,7 @@ import {
 import classnames from "classnames";
 import { MultiList } from "pop-shared";
 
+import Helmet from "../../components/Helmet";
 import List from "./subComponents/List";
 import Map from "./subComponents/Map";
 import Mosaique from "./subComponents/Mosaique";
@@ -161,6 +162,10 @@ class Search extends React.Component {
 
     return (
       <div className="search">
+        <Helmet 
+            title="POP - Plateforme Ouverte du Patrimoine"
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+        />
         <Container fluid style={{ maxWidth: 1860 }}>
           <h1 className="title">Votre recherche</h1>
           <ReactiveBase url={`${es_url}`} app={bases}>
