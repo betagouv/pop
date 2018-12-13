@@ -782,7 +782,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Datation des campagnes principales de construction",
         master: false,
-        thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
+        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
         label: "Datation des campagnes principales de construction"
       }
     },
