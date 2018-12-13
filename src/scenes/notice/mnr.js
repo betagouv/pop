@@ -35,6 +35,18 @@ class Mnr extends React.Component {
     });
   }
 
+  getMetaDescription = ()=> {
+    const titre =  this.state.notice.TICO || this.state.notice.TITR;
+    const auteur = this.state.notice.AUTR? this.state.notice.AUTR.join(' ') : '';
+    if(this.state.notice.DOMN && this.state.notice.DOMN.length === 1) {
+      const category = this.state.notice.DOMN[0];
+      if(category.toLowerCase() === "peinture") {
+        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`;
+      }
+    }
+    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -43,12 +55,13 @@ class Mnr extends React.Component {
     if (!this.state.notice) {
       return <NotFound />;
     }
-
+    
+    const description = this.getMetaDescription();
     return (
       <Container className="notice" fluid>
         <Helmet 
-            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+            title={`${this.state.notice.TICO || this.state.notice.TITR} - ${this.state.notice.AUTR? this.state.notice.AUTR.join(' ') : ''} - POP`}
+            description={description}
         />
         <Row className="top-section">
           {/* <Col sm="4">
