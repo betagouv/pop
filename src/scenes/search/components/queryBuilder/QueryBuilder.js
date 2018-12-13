@@ -21,7 +21,7 @@ export default class QueryBuilder extends React.Component {
           autocomplete={this.props.autocomplete}
           id="0"
           onUpdate={this.onUpdate.bind(this)}
-          fields={this.props.fields}
+          entity={this.props.entity}
         />
       </div>
     );

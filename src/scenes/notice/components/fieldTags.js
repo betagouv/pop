@@ -64,6 +64,7 @@ class TagsInput extends React.Component {
           handleAddition={this.handleAddition.bind(this)}
           handleInputChange={this.handleInputChange.bind(this)}
           autocomplete={0}
+          placeholder="Ajouter une nouvelle entrée"
           autofocus={false}
           readOnly={this.props.disabled}
         />

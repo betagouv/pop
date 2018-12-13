@@ -7,13 +7,12 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch/lib";
-import { MultiList } from "pop-shared";
+import { MultiList, Mapping } from "pop-shared";
 
 import ExportComponent from "./components/export";
 
 import QueryBuilder from "./components/queryBuilder";
 
-import Memoire from "../../entities/Memoire";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [
@@ -43,27 +42,37 @@ export default class Search extends React.Component {
     return (
       <div>
         <Row>
-          <Col md={9}>
+          <Col md={12}>
             <QueryBuilder
-              entity={Memoire}
+              entity={Mapping.memoire}
               componentId="advancedSearch"
               autocomplete={false}
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={3}>
             <ExportComponent FILTER={["advancedSearch"]} collection="memoire" />
           </Col>
         </Row>
         <div className="text-center my-3">
           Trier par :
-          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-            {new Memoire({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortKey: e.target.value })}
+          >
+            {Object.keys(Mapping.memoire)
+              .filter(e => !["TICO", "TITR"].includes(e))
+              .map(e => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
           </select>
-          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortOrder: e.target.value })}
+          >
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>

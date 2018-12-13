@@ -89,7 +89,7 @@ export default class RuleComponent extends React.Component {
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
-          fields={this.props.fields}
+          entity={this.props.entity}
         />
       </ReactiveComponent>
     );
@@ -99,8 +99,9 @@ export default class RuleComponent extends React.Component {
 class Rule extends React.Component {
   constructor(props) {
     super(props);
+    console.log("this.props.entity", this.props.entity);
     this.state = {
-      valueSelected: this.props.fields[0],
+      valueSelected: this.props.entity.REF.label,
       actionSelected: "==",
       resultSelected: "",
       combinator: "ET"
@@ -136,7 +137,7 @@ class Rule extends React.Component {
           <div />
         )}
         <ValueSelector
-          fields={this.props.fields}
+          entity={this.props.entity}
           value={this.state.valueSelected}
           onChange={e => {
             this.setState(
@@ -324,12 +325,16 @@ const ActionElement = ({ onChange, value }) => {
   );
 };
 
-const ValueSelector = ({ fields, onChange, value }) => {
-  const choices = fields.map(e => (
-    <option key={e} value={e}>
-      {e}
-    </option>
-  ));
+const ValueSelector = ({ entity, onChange, value }) => {
+  const choices = [];
+  for (let key in entity) {
+    choices.push(
+      <option key={key} value={key}>
+        {/*décommenter ca pour afficher les labels {entity[key].label || */ key}
+      </option>
+    );
+  }
+
   return (
     <select className="valueselector" value={value} onChange={onChange}>
       {choices}

@@ -70,7 +70,7 @@ export default class RuleGroup extends React.Component {
           id={id}
           onRemove={this.onRemove.bind(this)}
           onUpdate={this.onUpdate.bind(this)}
-          fields={this.props.fields}
+          entity={this.props.entity}
         />
       );
     });

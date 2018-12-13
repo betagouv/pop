@@ -11,11 +11,9 @@ import {
 } from "@appbaseio/reactivesearch";
 
 import QueryBuilder from "./components/queryBuilder";
-import { MultiList } from "pop-shared";
+import { MultiList, Mapping } from "pop-shared";
 
 import ExportComponent from "./components/export";
-
-import Mnr from "../../entities/Mnr";
 
 import { es_url, bucket_url } from "../../config.js";
 
@@ -49,7 +47,7 @@ export default class Search extends React.Component {
       <div>
         <Row>
           <Col md={9}>
-            <QueryBuilder entity={Mnr} componentId="advancedSearch" />
+            <QueryBuilder entity={Mapping.mnr} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
             <ExportComponent FILTER={["advancedSearch"]} collection="mnr" />
@@ -61,8 +59,7 @@ export default class Search extends React.Component {
             className="ml-2"
             onChange={e => this.setState({ sortKey: e.target.value })}
           >
-            {new Mnr({})._fields
-              .filter(e => !["TICO", "TITR"].includes(e))
+            {Object.keys(Mapping.mnr).filter(e => !["TICO", "TITR"].includes(e))
               .map(e => (
                 <option key={e} value={e}>
                   {e}

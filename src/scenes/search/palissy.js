@@ -7,10 +7,9 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch";
+import { MultiList, Mapping } from "pop-shared";
 import ExportComponent from "./components/export";
-import Palissy from "../../entities/Palissy";
 import QueryBuilder from "./components/queryBuilder";
-import { MultiList } from "pop-shared";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [
@@ -38,27 +37,37 @@ export default class Search extends React.Component {
     return (
       <div>
         <Row>
-          <Col md={9}>
+          <Col md={12}>
             <QueryBuilder
-              entity={Palissy}
+              entity={Mapping.palissy}
               componentId="advancedSearch"
               autocomplete={false}
             />
           </Col>
-          <Col md={3}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <ExportComponent FILTER={["advancedSearch"]} collection="palissy" />
           </Col>
         </Row>
         <div className="text-center my-3">
           Trier par :
-          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-            {new Palissy({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortKey: e.target.value })}
+          >
+            {Object.keys(Mapping.palissy)
+              .filter(e => !["TICO", "TITR"].includes(e))
+              .map(e => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
           </select>
-          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortOrder: e.target.value })}
+          >
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>
@@ -290,12 +299,12 @@ const Card = ({ data }) => {
           <div>
             <p>{data.LOCA}</p>
             <p>{data.EDIF}</p>
-            <p>{data.AUTR.join(' ; ')}</p>
-            <p>{data.CATE.join(' ; ')}</p>
-            <p>{data.MATR.join(' ; ')}</p>
-            <p>{data.SCLE.join(' ; ')}</p>
+            <p>{data.AUTR.join(" ; ")}</p>
+            <p>{data.CATE.join(" ; ")}</p>
+            <p>{data.MATR.join(" ; ")}</p>
+            <p>{data.SCLE.join(" ; ")}</p>
             <p>{data.DEPL}</p>
-            <p>{data.STAT.join(' ; ')}</p>
+            <p>{data.STAT.join(" ; ")}</p>
             <p>{data.DPRO}</p>
             <p>{data.DOMN}</p>
           </div>
@@ -319,9 +328,9 @@ const Card = ({ data }) => {
         </div>
         <div>
           <p>{data.DOMN}</p>
-          <p>{data.DENO.join(' ; ')}</p>
+          <p>{data.DENO.join(" ; ")}</p>
           <p>{data.LOCA}</p>
-          <p>{data.AUTR.join(' ; ')}</p>
+          <p>{data.AUTR.join(" ; ")}</p>
         </div>
       </div>
     </Link>
