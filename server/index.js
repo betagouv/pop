@@ -10,8 +10,8 @@ console.log("START", new Date());
 app.use(
   forceDomain({
     hostname: "www.pop.culture.gouv.fr",
-    excludeRule: /elasticbeanstalk\.com|pop-staging\.culture\.gouv\.fr/i
-    // For later add: `protocol: 'https'`
+    excludeRule: /elasticbeanstalk\.com|pop-staging\.culture\.gouv\.fr/i,
+    protocol: 'https'
   })
 );
 
