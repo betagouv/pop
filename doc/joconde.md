@@ -108,7 +108,7 @@ Nom de la base : Collections des musées de France (Joconde)
 |String|false|true|false||
 
 ### CONTIENT_IMAGE
-Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
 
 
 
@@ -554,7 +554,7 @@ N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
 |String|false|false|false||
 
 ### LABEL
-Appellation musée de France : logo : Champs ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'
+Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'
 
 
 

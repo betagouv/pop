@@ -137,7 +137,7 @@ Référence unique de la notice
 |String|true|false|false|Alphanumeric|
 
 ### PRODUCTEUR
-
+PRODUCTEUR
 
 
 
@@ -309,7 +309,7 @@ Appellation et titre
 |String|false|false|false||
 
 ### APRO
-
+Nature de l'acte de protection MH 
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T98 
@@ -391,7 +391,7 @@ Commune
 |String|false|false|false||
 
 ### COOR
-Coordonnées Lambert (ou autres) d'un points
+Coordonnées Lambert (ou autres) d'un point
 
 
 
@@ -643,7 +643,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T30
 |Array|false|false|false||
 
 ### ETUD
-Parties non étud
+
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T68 
@@ -814,6 +814,8 @@ Numéro de microfiche
 Matériau du gros-oeuvre et mise en oeuvre 
 
 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T57 
+
 
 
 |Type|Required|Master|Opendata|Validation|
@@ -894,6 +896,8 @@ Précision sur la dénomination
 Personnalitées
 
 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T6 
+
 
 
 |Type|Required|Master|Opendata|Validation|
@@ -944,6 +948,8 @@ Précision sur la représentation
 Nature de la protection MH
 
 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T10 
+
 
 
 |Type|Required|Master|Opendata|Validation|
@@ -991,7 +997,7 @@ REFO
 |Array|false|false|false||
 
 ### REG
-Region
+Région
 
 
 
@@ -1063,6 +1069,8 @@ Datation des campagnes secondaires de construction
 ### SCLE
 Datation des campagnes principales de construction
 
+
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17 
 
 
 
@@ -1381,7 +1389,7 @@ Contact
 |String|false|false|false||
 
 ### PINT
-intérêt oeuvre
+Intérêt oeuvre
 
 
 

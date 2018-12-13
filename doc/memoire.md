@@ -226,7 +226,7 @@ Auteur gravure
 |String|false|false|false||
 
 ### AUTP
-Notice biblio
+Auteur photo
 
 
 
@@ -416,7 +416,7 @@ Obs tirage
 |String|false|false|false||
 
 ### PAYS
-Pays   
+Pays
 
 
 
@@ -476,7 +476,7 @@ Titre série
 |String|false|false|false||
 
 ### THEATRE
-
+Nom de théâtre
 
 
 
@@ -486,7 +486,7 @@ Titre série
 |String|false|false|false||
 
 ### TITRE
-
+Titre
 
 
 
@@ -996,7 +996,7 @@ Renvoi
 |String|false|false|false||
 
 ### REG
-Région 
+Région
 
 
 
@@ -1006,7 +1006,7 @@ Région
 |String|false|false|false||
 
 ### SENS
-Sens [Qu'est ce que c'est ?] 
+Sens 
 
 
 
@@ -1066,7 +1066,7 @@ Technique tirage
 |String|false|false|false||
 
 ### TOILE
-Toile de fond
+Toile de fond 
 
 
 
@@ -1086,7 +1086,7 @@ Type  [Qu'est ce que c'est ?]
 |String|false|false|false||
 
 ### TYPDOC
-phototype argentique
+Catégorie de phototype
 
 
 
@@ -1286,7 +1286,7 @@ Contact
 |String|false|true|false|email|
 
 ### EMET
-Emetteur (nom) 
+Emetteur (code) 
 
 
 
@@ -1306,7 +1306,7 @@ N° support
 |String|false|false|false||
 
 ### IMG
-Lien vers l'image
+Images
 
 
 

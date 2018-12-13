@@ -40,52 +40,70 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence unique de la notice",
         master: true,
-        validation: "Alphanumeric"
+        validation: "Alphanumeric",
+        label: "Référence"
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     TOUT: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     AUTR: {
       type: [String],
       default: [],
       documentation: {
-        description: "Auteur /exécutant / collecteur",
-        master: true
+        description: "Auteur / exécutant / collecteur",
+        master: true,
+        label: "Auteur / exécutant / collecteur"
       }
     },
     PAUT: {
       type: String,
       default: "",
-      documentation: { description: "Precisions auteur", master: true }
+      documentation: {
+        description: "Précisions auteur",
+        master: true,
+        label: "Précisions auteur"
+      }
     },
     ATTR: {
       type: String,
       default: "",
-      documentation: { description: "Anciennes attributions", master: true }
+      documentation: {
+        description: "Anciennes attributions",
+        master: true,
+        label: "Anciennes attributions"
+      }
     },
     ECOL: {
       type: String,
       default: "",
-      documentation: { description: "Ecole ", master: true }
+      documentation: { description: "Ecole ", master: true, label: "Ecole" }
     },
     TITR: {
       type: String,
       default: "",
-      documentation: { description: "Titre ", master: true }
+      documentation: { description: "Titre ", master: true, label: "Titre" }
     },
     ATIT: {
       type: String,
       default: "",
-      documentation: { description: "Ancien titre", master: true }
+      documentation: {
+        description: "Ancien titre",
+        master: true,
+        label: "Ancien titre"
+      }
     },
     PTIT: {
       type: String,
       default: "",
-      documentation: { description: "Précision titre", master: true }
+      documentation: {
+        description: "Précision titre",
+        master: true,
+        label: "Précision titre"
+      }
     },
     DENO: {
       type: [String],
@@ -93,111 +111,153 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Dénomination du bien",
         master: true,
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
+        label: "Dénomination du bien"
       }
     },
     DESC: {
       type: String,
       default: "",
-      documentation: { description: "Description ", master: true }
+      documentation: {
+        description: "Description ",
+        master: true,
+        label: "Description"
+      }
     },
     DOMN: {
       type: [String],
       default: [],
       documentation: {
         description: "Domaine (catégorie du bien)",
-        master: true
+        master: true,
+        label: "Domaine (catégorie du bien)"
       }
     },
     LOCA: {
       type: String,
       default: "",
-      documentation: { description: "Localisation ", master: true }
+      documentation: {
+        description: "Localisation ",
+        master: true,
+        label: "Localisation"
+      }
     },
     INSC: {
       type: String,
       default: "",
-      documentation: { description: "Inscriptions ", master: true }
+      documentation: {
+        description: "Inscriptions ",
+        master: true,
+        label: "Inscriptions"
+      }
     },
     MARQ: {
       type: String,
       default: "",
-      documentation: { description: "Marques ", master: true }
+      documentation: { description: "Marques ", master: true, label: "Marques" }
     },
     OBSE: {
       type: String,
       default: "",
-      documentation: { description: "Observations ", master: true }
+      documentation: {
+        description: "Observations ",
+        master: true,
+        label: "Observations"
+      }
     },
     ETAT: {
       type: String,
       default: "",
-      documentation: { description: "Etat de conservation", master: true }
+      documentation: {
+        description: "Etat de conservation",
+        master: true,
+        label: "Etat de conservation"
+      }
     },
     GENE: {
       type: String,
       default: "",
-      documentation: { description: "Genèse ", master: true }
+      documentation: { description: "Genèse ", master: true, label: "Genèse" }
     },
     PROV: {
       type: String,
       default: "",
-      documentation: { description: "Provenance ", master: true }
+      documentation: {
+        description: "Provenance ",
+        master: true,
+        label: "Provenance"
+      }
     },
     HIST: {
       type: String,
       default: "",
-      documentation: { description: "Historique ", master: true }
+      documentation: {
+        description: "Historique ",
+        master: true,
+        label: "Historique"
+      }
     },
     HIST2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     HIST3: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     HIST4: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     HIST5: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     HIST6: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     SCLE: {
       type: [String],
       default: [],
-      documentation: { description: "Siècle ", master: true }
+      documentation: { description: "Siècle ", master: true, label: "Siècle " }
     },
     STYL: {
       type: String,
       default: "",
-      documentation: { description: "Style ", master: true }
+      documentation: { description: "Style ", master: true, label: "Style" }
     },
     MILL: {
       type: String,
       default: "",
-      documentation: { description: "Millenaire ", master: true }
+      documentation: {
+        description: "Millénaire ",
+        master: true,
+        label: "Millénaire"
+      }
     },
     TECH: {
       type: [String],
       default: [],
-      documentation: { description: "Technique ", master: true }
+      documentation: {
+        description: "Technique ",
+        master: true,
+        label: "Technique"
+      }
     },
     DIMS: {
       type: [String],
       default: [],
-      documentation: { description: "Dimensions ", master: true }
+      documentation: {
+        description: "Dimensions ",
+        master: true,
+        label: "Dimensions"
+      }
     },
     VIDEO: {
       type: [String],
@@ -213,66 +273,100 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
-        master: true
+        master: true,
+        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
       }
     },
     EXPO: {
       type: String,
       default: "",
-      documentation: { description: "Exposition ", master: true }
+      documentation: {
+        description: "Exposition ",
+        master: true,
+        label: "Exposition"
+      }
     },
     BIBL: {
       type: String,
       default: "",
-      documentation: { description: "Bibliographie ", master: true }
+      documentation: {
+        description: "Bibliographie ",
+        master: true,
+        label: "Bibliographie"
+      }
     },
     AATT: {
       type: String,
       default: "",
-      documentation: { description: "Ancienne attribution", master: true }
+      documentation: {
+        description: "Ancienne attribution",
+        master: true,
+        label: "Ancienne attribution"
+      }
     },
     AUTI: {
       type: String,
       default: "",
-      documentation: { description: "Autre titre", master: true }
+      documentation: {
+        description: "Autre titre",
+        master: true,
+        label: "Autre titre"
+      }
     },
     CATE: {
       type: String,
       default: "",
-      documentation: { description: "Catégorie ", master: true }
+      documentation: {
+        description: "Catégorie ",
+        master: true,
+        label: "Catégorie"
+      }
     },
     CATE_DEPREC: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     NOTE: {
       type: String,
       default: "",
-      documentation: { description: "Notes ", master: true }
+      documentation: { description: "Notes ", master: true, label: "Notes" }
     },
     REDC: {
       type: [String],
       default: [],
-      documentation: { description: "Rédacteurs ", master: true }
+      documentation: {
+        description: "Rédacteurs ",
+        master: true,
+        label: "Rédacteurs"
+      }
     },
     DREP: {
       type: String,
       default: "",
-      documentation: { description: "Date de la représentation", master: true }
+      documentation: {
+        description: "Date de la représentation",
+        master: true,
+        label: "Date de la représentation"
+      }
     },
     PREP: {
       type: String,
       default: "",
       documentation: {
         description: "Précisions sur la représentation",
-        master: true
+        master: true,
+        label: "Précisions sur la représentation"
       }
     },
     REPR: {
       type: String,
       default: "",
-      documentation: { description: "Représentation ", master: true }
+      documentation: {
+        description: "Représentation ",
+        master: true,
+        label: "Représentation"
+      }
     },
     SREP: {
       type: String,
@@ -280,7 +374,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Sujet de la représentation (source littéraire ou musicale) ",
-        master: true
+        master: true,
+        label: "Sujet de la représentation (source littéraire ou musicale) "
       }
     },
     REFIM: {
@@ -289,7 +384,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Adresses images jointes générique (actuellement non utilisé)",
-        master: true
+        master: true,
+        label: "Adresses images jointes générique (actuellement non utilisé)"
       }
     },
     DMAJ: {
@@ -297,7 +393,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true
+        master: true,
+        label: "Date de la dernière mise à jour"
       }
     },
     DMIS: {
@@ -314,38 +411,55 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Etablissement affectataire qui existe dans d’autres bases",
-        master: true
+        master: true,
+        label: "Etablissement affectataire qui existe dans d’autres bases"
       }
     },
     NUMS: {
       type: String,
       default: "",
-      documentation: { description: "Autres numéros", master: true }
+      documentation: {
+        description: "Autres numéros",
+        master: true,
+        label: "Autres numéros"
+      }
     },
     SUITE: {
       type: String,
       default: "",
-      documentation: { description: "OEuvres liées, ensemble", master: true }
+      documentation: {
+        description: "OEuvres liées, ensemble",
+        master: true,
+        label: "OEuvres liées, ensemble"
+      }
     },
     COMM: {
       type: String,
       default: "",
-      documentation: { description: "Commentaire ", master: true }
+      documentation: {
+        description: "Commentaire ",
+        master: true,
+        label: "Commentaire"
+      }
     },
     NOTE2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true }
+      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
     },
     RESUME: {
       type: String,
       default: "",
-      documentation: { description: "Résumé ", master: true }
+      documentation: { description: "Résumé ", master: true, label: "Résumé" }
     },
     PHOT: {
       type: String,
       default: "",
-      documentation: { description: "Droits de copie photo ", master: true }
+      documentation: {
+        description: "Droits de copie photo ",
+        master: true,
+        label: "Droits de copie photo"
+      }
     }
   },
   { collection: "mnr" }

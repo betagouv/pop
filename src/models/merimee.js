@@ -566,6 +566,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Matériau du gros-oeuvre et mise en oeuvre ",
         master: false,
+        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
         label: "Matériau du gros-oeuvre et mise en oeuvre"
       }
     },
@@ -638,6 +639,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Personnalitées",
         master: false,
+        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
         label: "Personnalitées"
       }
     },
@@ -683,6 +685,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Nature de la protection MH",
         master: false,
+        thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection MH"
       }
     },
@@ -779,6 +782,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Datation des campagnes principales de construction",
         master: false,
+        thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
         label: "Datation des campagnes principales de construction"
       }
     },
