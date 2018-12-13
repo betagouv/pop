@@ -7,10 +7,10 @@ let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque-dev/";
 switch (env) {
   case "production":
     // Certaines personnes du ministère utilisent encore l'addresse EB car ils n'ont pas accès a l'adresse en culture.gouv.fr
-    api_url = "http://pop-api.eu-west-3.elasticbeanstalk.com/";
-    es_url = "http://pop-api.eu-west-3.elasticbeanstalk.com/search";
-    // api_url = "https://api.pop.culture.gouv.fr";
-    // es_url = "https://api.pop.culture.gouv.fr/search/";
+    // api_url = "http://pop-api.eu-west-3.elasticbeanstalk.com/";
+    // es_url = "http://pop-api.eu-west-3.elasticbeanstalk.com/search";
+    api_url = "https://api.pop.culture.gouv.fr";
+    es_url = "https://api.pop.culture.gouv.fr/search/";
     bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
     break;
 
