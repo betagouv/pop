@@ -392,7 +392,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[Je ne sais pas à quoi ce champ sert]  ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     IMG: {
