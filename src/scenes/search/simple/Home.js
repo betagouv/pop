@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
 
-import "./home.css";
+import "./Home.css";
 
 export default class Search extends React.Component {
   renderTiles(tiles) {
@@ -32,27 +32,27 @@ export default class Search extends React.Component {
               {
                 url: "/recherche/joconde",
                 name: "Joconde",
-                image: require("../../assets/joconde.jpg")
+                image: require("../../../assets/joconde.jpg")
               },
               {
                 url: "/recherche/merimee",
                 name: "Mérimée",
-                image: require("../../assets/merimee.jpg")
+                image: require("../../../assets/merimee.jpg")
               },
               {
                 url: "/recherche/palissy",
                 name: "Palissy",
-                image: require("../../assets/palissy.jpg")
+                image: require("../../../assets/palissy.jpg")
               },
               {
                 url: "/recherche/memoire",
                 name: "Mémoire",
-                image: require("../../assets/memoire.jpg")
+                image: require("../../../assets/memoire.jpg")
               },
               {
                 url: "/recherche/mnr",
                 name: "MNR",
-                image: require("../../assets/MNR.jpg")
+                image: require("../../../assets/MNR.jpg")
               }
             ])}
           </Row>
