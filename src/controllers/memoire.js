@@ -96,7 +96,8 @@ function removeLinkedNotice(ref, LBASE) {
         { $pull: { MEMOIRE: { ref } } }
       );
       resolve();
-    } catch (e) {
+    } catch (error) {
+      capture(error);
       console.log(e);
       reject();
     }
@@ -105,31 +106,34 @@ function removeLinkedNotice(ref, LBASE) {
 
 function updateLinkedNotice(url, ref, LBASE) {
   return new Promise(async (resolve, reject) => {
-    const notice = await getMerimeeOrPalissyNotice(LBASE);
-    if (!notice) {
-      console.log(`No notice ${LBASE}`);
-      resolve({ success: false, msg: `No notice ${LBASE}` });
-      return;
-    }
-    if (!notice.MEMOIRE) {
+    try {
+      const notice = await getMerimeeOrPalissyNotice(LBASE);
+      if (!notice) {
+        console.log(`No notice ${LBASE}`);
+        resolve({ success: false, msg: `No notice ${LBASE}` });
+        return;
+      }
+      if (!notice.MEMOIRE) {
+        resolve({ success: true, msg: `` });
+        return;
+      }
+
+      //check if we need to add url
+      let isInArray = notice.MEMOIRE.some(doc => {
+        return doc.equals(ref, doc.ref);
+      });
+
+      if (!isInArray) {
+        notice.MEMOIRE.push({ ref, url });
+        await notice.save();
+      }
+
       resolve({ success: true, msg: `` });
       return;
+    } catch (error) {
+      capture(error);
+      resolve({ success: false, msg: JSON.stringify(error) });
     }
-
-
-    //check if we need to add url
-    let isInArray = notice.MEMOIRE.some(doc => {
-      return doc.equals(ref, doc.ref);
-    });
-
-    if (!isInArray) {
-      notice.MEMOIRE.push({ ref, url });
-      await notice.save();
-    }
-
-    resolve({ success: true, msg: `` });
-    return;
-
   });
 }
 
@@ -215,8 +219,8 @@ router.post(
       .then(() => {
         res.send({ success: true, msg: "OK" });
       })
-      .catch(e => {
-        capture(e);
+      .catch(error => {
+        capture(error);
         res.sendStatus(500);
       });
   }
