@@ -223,8 +223,8 @@ class Home extends React.Component {
     return (
       <div className="home">
         <Helmet 
-            title="POP - Plateforme Ouverte du Patrimoine"
-            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
+            title="POP - Plateforme Ouverte du Patrimoine - Ministère de la Culture"
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer. Découvrez ici tous les biens nationaux."
         />
         {this.renderBanner()}
         <div className="home-search">
