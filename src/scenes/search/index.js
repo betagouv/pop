@@ -163,8 +163,8 @@ class Search extends React.Component {
     return (
       <div className="search">
         <Helmet 
-            title="Recercher - POP - Plateforme Ouverte du Patrimoine"
-            description="Effectuer une recherche sur POP. Découvrez le moteur de cherche qui vous aidera à trouver facilement ce que vous recherchez sur POP."
+            title="POP - Plateforme Ouverte du Patrimoine"
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
         />
         <Container fluid style={{ maxWidth: 1860 }}>
           <h1 className="title">Votre recherche</h1>

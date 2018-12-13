@@ -74,18 +74,6 @@ class Merimee extends React.Component {
     });
   }
 
-  getMetaDescription = ()=> {
-    const titre =  this.state.notice.TICO || this.state.notice.TITR;
-    const datation = this.state.notice.SCLE? this.state.notice.SCLE.join(' ') : '';
-    if(this.state.notice.DENO && this.state.notice.DENO.length === 1) {
-      const category = this.state.notice.DENO[0];
-      if(category.toLowerCase() === "église") {
-        return `Découvrez ${titre}, cette ${category} du ${datation}. Cliquez ici !`;
-      }
-    }
-    return `Découvrez ${titre}, du ${datation}. Cliquez ici !`;
-  }
-
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -95,12 +83,12 @@ class Merimee extends React.Component {
       return <NotFound />;
     }
 
-    const description = this.getMetaDescription();
+    console.log(this.state.notice);
     return (
       <Container className="notice" fluid>
         <Helmet
             title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description={description}
+            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer."
         />
         <Row className="top-section">
           <Col>
