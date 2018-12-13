@@ -685,7 +685,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Nature de la protection MH",
         master: false,
-        thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
+        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection MH"
       }
     },
