@@ -111,19 +111,25 @@ function updateLinkedNotice(url, ref, LBASE) {
       resolve({ success: false, msg: `No notice ${LBASE}` });
       return;
     }
+    if (!notice.MEMOIRE) {
+      resolve({ success: true, msg: `` });
+      return;
+    }
 
+
+    //check if we need to add url
     let isInArray = notice.MEMOIRE.some(doc => {
       return doc.equals(ref, doc.ref);
     });
 
     if (!isInArray) {
       notice.MEMOIRE.push({ ref, url });
-      notice.save().then(() => {
-        resolve({ success: true, msg: `` });
-      });
-    } else {
-      resolve({ success: true, msg: `` });
+      await notice.save();
     }
+
+    resolve({ success: true, msg: `` });
+    return;
+
   });
 }
 
@@ -157,7 +163,7 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    transformBeforeUpdate(notice)
+    transformBeforeUpdate(notice);
 
     arr.push(updateNotice(Memoire, ref, notice));
 
