@@ -93,7 +93,7 @@ class FieldImages extends React.Component {
             <div className="no-image">Image absente</div>
           )}
           {button}
-          {link ? <Link to={`/notice/memoire/${key}`}>{key}</Link> : <div />}
+          {link ? <Link to={`/notice/memoire/${key}`} target="_blank">{key}</Link> : <div />}
         </Col>
       );
     });
