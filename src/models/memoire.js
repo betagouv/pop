@@ -16,7 +16,7 @@ const Schema = new mongoose.Schema(
       AP=SDAP\n
       Autre=SAP`,
         master: true,
-        label: "PRODUCTEUR"
+        label: "Producteur"
       }
     },
     BASE: {
