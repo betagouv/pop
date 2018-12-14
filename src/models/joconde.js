@@ -196,7 +196,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     DATION: {
@@ -205,7 +206,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     DDPT: {
@@ -262,7 +264,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     DIFFU: {
@@ -271,7 +274,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     DIMS: {
@@ -442,7 +446,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     LARC: {
@@ -451,7 +456,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     LIEUX: {
@@ -480,7 +486,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     LOCA3: {
@@ -489,7 +496,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     MILL: {
@@ -516,7 +524,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     MSGCOM: {
@@ -571,7 +580,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     PDEC: {
@@ -665,7 +675,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation] ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     REDA: {
@@ -703,7 +714,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation] ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     SREP: {
@@ -743,7 +755,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : A vérifier. Non présent en production] ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     TITR: {
@@ -761,7 +774,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : A vérifier. Non présent en production] ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     UTIL: {

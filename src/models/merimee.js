@@ -425,9 +425,10 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Cadre de l'étude",
         master: false,
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68",
+        label: "Cadre de l'étude"
       }
     },
     GENR: {
@@ -508,7 +509,12 @@ const Schema = new mongoose.Schema(
     LBASE2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     LIEU: {
       type: String,
@@ -531,7 +537,12 @@ const Schema = new mongoose.Schema(
     MFICH: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     MOSA: {
       type: String,
@@ -566,7 +577,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Matériau du gros-oeuvre et mise en oeuvre ",
         master: false,
-        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
         label: "Matériau du gros-oeuvre et mise en oeuvre"
       }
     },
@@ -639,7 +650,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Personnalitées",
         master: false,
-        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
         label: "Personnalitées"
       }
     },
@@ -685,7 +696,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Nature de la protection MH",
         master: false,
-        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection MH"
       }
     },
@@ -782,14 +793,19 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Datation des campagnes principales de construction",
         master: false,
-        thesaurus:"http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
         label: "Datation des campagnes principales de construction"
       }
     },
     SCLX: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     SITE: {
       type: String,
@@ -857,17 +873,32 @@ const Schema = new mongoose.Schema(
     REFIM: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     IMG: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     VIDEO: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     DOSURL: {
       type: String,
@@ -908,7 +939,12 @@ const Schema = new mongoose.Schema(
     IMAGE: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     VISI: {
       type: [String],
@@ -963,32 +999,62 @@ const Schema = new mongoose.Schema(
     ACMH: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     ACURL: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     WADRS: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     WCOM: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     WRENV: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     REFM: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     CONTACT: {
       type: String,
@@ -1003,12 +1069,22 @@ const Schema = new mongoose.Schema(
     IDAGR: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     LMDP: {
       type: String,
       default: "",
-      documentation: { description: "[PAS affiché]", master: false, label: "" }
+      documentation: {
+        description: "[PAS affiché]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     PINT: {
       type: String,

@@ -28,7 +28,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true
+        master: true,
+        deprecated: true
       }
     },
     REF: {
@@ -48,7 +49,12 @@ const Schema = new mongoose.Schema(
     TOUT: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     AUTR: {
       type: [String],
@@ -200,27 +206,52 @@ const Schema = new mongoose.Schema(
     HIST2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     HIST3: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     HIST4: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     HIST5: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     HIST6: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     SCLE: {
       type: [String],
@@ -264,7 +295,9 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Champ qui contient les images",
-        master: true
+        master: true,
+        deprecated: true,
+        label: "Champ qui contient les images"
       }
     },
     INV: {
@@ -325,7 +358,12 @@ const Schema = new mongoose.Schema(
     CATE_DEPREC: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     NOTE: {
       type: String,
@@ -402,7 +440,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true
+        master: true,
+        label: "Date de la création POP/Mistral"
       }
     },
     AFFE: {
@@ -445,7 +484,12 @@ const Schema = new mongoose.Schema(
     NOTE2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: true, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: true,
+        label: "",
+        deprecated: true
+      }
     },
     RESUME: {
       type: String,

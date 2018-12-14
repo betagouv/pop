@@ -140,7 +140,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence d’exposition de l’image ",
-        master: false
+        master: false,
+        deprecated: true
       }
     },
     JDATPV: {
@@ -567,7 +568,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Format phototype",
         master: false,
-        label: ""
+        label: "Format phototype"
       }
     },
     FORMATOR: {
@@ -778,7 +779,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Sens ",
-        master: false
+        master: false,
+        label: "Sens"
       }
     },
     SCLE: {
@@ -829,7 +831,12 @@ const Schema = new mongoose.Schema(
     TOILE: {
       type: String,
       default: "",
-      documentation: { description: "Toile de fond ", master: false, label: "" }
+      documentation: {
+        description: "Toile de fond ",
+        master: false,
+        label: "Toile de fond",
+        deprecated: true
+      }
     },
     TYP: {
       type: String,

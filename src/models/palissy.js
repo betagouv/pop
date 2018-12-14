@@ -76,7 +76,12 @@ const Schema = new mongoose.Schema(
     ACQU: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     ADRS: {
       type: String,
@@ -90,7 +95,12 @@ const Schema = new mongoose.Schema(
     ADRS2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     AFIG: {
       type: [String],
@@ -151,7 +161,12 @@ const Schema = new mongoose.Schema(
     BIBL: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     CANT: {
       type: String,
@@ -179,7 +194,12 @@ const Schema = new mongoose.Schema(
     COM2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     CONTACT: {
       type: String,
@@ -242,7 +262,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Dénomination ",
         master: false,
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T69",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
         label: "Dénomination"
       }
     },
@@ -375,7 +395,12 @@ const Schema = new mongoose.Schema(
     EDIF2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     EMPL: {
       type: String,
@@ -389,7 +414,12 @@ const Schema = new mongoose.Schema(
     EMPL2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     ETAT: {
       type: [String],
@@ -421,7 +451,12 @@ const Schema = new mongoose.Schema(
     EXPO: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     HIST: {
       type: String,
@@ -435,17 +470,32 @@ const Schema = new mongoose.Schema(
     IDAGR: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     IMAGE: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     IMG: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     IMPL: {
       type: String,
@@ -478,7 +528,12 @@ const Schema = new mongoose.Schema(
     INSEE2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     INTE: {
       type: String,
@@ -502,7 +557,12 @@ const Schema = new mongoose.Schema(
     LBASE2: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     LIENS: {
       type: [String],
@@ -525,7 +585,12 @@ const Schema = new mongoose.Schema(
     LMDP: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     LOCA: {
       type: String,
@@ -548,7 +613,12 @@ const Schema = new mongoose.Schema(
     MFICH: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     MICR: {
       type: String,
@@ -580,7 +650,12 @@ const Schema = new mongoose.Schema(
     NINV: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     NOMS: {
       type: [String],
@@ -594,12 +669,22 @@ const Schema = new mongoose.Schema(
     NUMA: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     NUMP: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     OBS: {
       type: String,
@@ -687,7 +772,12 @@ const Schema = new mongoose.Schema(
     PHOTO: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     PINS: {
       type: String,
@@ -768,7 +858,12 @@ const Schema = new mongoose.Schema(
     REFM: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     REFP: {
       type: [String],
@@ -787,7 +882,12 @@ const Schema = new mongoose.Schema(
     RENP: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     RENV: {
       type: [String],
@@ -810,7 +910,12 @@ const Schema = new mongoose.Schema(
     SCLD: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     SCLE: {
       type: [String],
@@ -825,12 +930,22 @@ const Schema = new mongoose.Schema(
     SCLX: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     SOUR: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     STAD: {
       type: [String],
@@ -847,7 +962,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Statut de la propriété",
         master: false,
-        label: ""
+        label: "",
+        deprecated: true
       }
     },
     STRU: {
@@ -876,17 +992,32 @@ const Schema = new mongoose.Schema(
     TITR: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     TOUT: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     VIDEO: {
       type: [String],
       default: [],
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     VOLS: {
       type: String,
@@ -894,18 +1025,29 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Objet(s) volé(s)",
         master: false,
-        label: "Objet(s) volé(s)"
+        label: "Objet(s) volé(s)",
+        deprecated: true
       }
     },
     WADRS: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     WCOM: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     WEB: {
       type: String,
@@ -913,13 +1055,19 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Visite guidé ",
         master: false,
-        label: "Visite guidé"
+        label: "Visite guidé",
+        deprecated: true
       }
     },
     WRENV: {
       type: String,
       default: "",
-      documentation: { description: "[PAS AFFICHE]", master: false, label: "" }
+      documentation: {
+        description: "[PAS AFFICHE]",
+        master: false,
+        label: "",
+        deprecated: true
+      }
     },
     ZONE: {
       type: String,
