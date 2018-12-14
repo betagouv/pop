@@ -83,60 +83,58 @@ function getMerimeeOrPalissyNotice(LBASE) {
   });
 }
 
-function removeLinkedNotice(ref, LBASE) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const notice = await getMerimeeOrPalissyNotice(LBASE);
-      if (!notice) {
-        resolve();
-        return;
+async function updateLinks(notice) {
+  try {
+    const REF = notice.REF;
+    const URL = notice.IMG;
+    let LBASE = notice.LBASE || [];
+    const toAdd = [...LBASE];
+
+    console.log("UPDATE LINKS");
+
+    const palissyNotices = await Palissy.find({ "MEMOIRE.ref": REF });
+    const merimeeNotices = await Merimee.find({ "MEMOIRE.ref": REF });
+
+    console.log("DELETE PALISSY ");
+    //Supression palissy
+    for (let i = 0; i < palissyNotices.length; i++) {
+      if (!LBASE.includes(palissyNotices[i].REF)) {
+        await palissyNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
+        console.log("DELETED", palissyNotices[i].REF);
+      } else {
+        const index = toAdd.indexOf(palissyNotices[i].REF);
+        if (index > -1) {
+          toAdd.splice(index, 1);
+        }
       }
-      await notice.collection.updateOne(
-        { _id: notice._id },
-        { $pull: { MEMOIRE: { ref } } }
-      );
-      resolve();
-    } catch (error) {
-      capture(error);
-      console.log(e);
-      reject();
     }
-  });
-}
 
-function updateLinkedNotice(url, ref, LBASE) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const notice = await getMerimeeOrPalissyNotice(LBASE);
-      if (!notice) {
-        console.log(`No notice ${LBASE}`);
-        resolve({ success: false, msg: `No notice ${LBASE}` });
-        return;
+    console.log("DELETE Merimee ");
+    //Supression Merimee
+    for (let i = 0; i < merimeeNotices.length; i++) {
+      if (!LBASE.includes(merimeeNotices[i].REF)) {
+        await merimeeNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
+        console.log("DELETED", merimeeNotices[i].REF);
+      } else {
+        const index = toAdd.indexOf(merimeeNotices[i].REF);
+        if (index > -1) {
+          toAdd.splice(index, 1);
+        }
       }
-      if (!notice.MEMOIRE) {
-        resolve({ success: true, msg: `` });
-        return;
-      }
-
-      //check if we need to add url
-      let isInArray = notice.MEMOIRE.some(doc => {
-        return doc.equals(ref, doc.ref);
-      });
-
-      if (!isInArray) {
-        notice.MEMOIRE.push({ ref, url });
+    }
+    console.log("AJOUT  ");
+    //Ajout
+    for (let i = 0; i < toAdd.length; i++) {
+      const notice = await getMerimeeOrPalissyNotice(toAdd[i]);
+      if (notice) {
+        notice.MEMOIRE.push({ ref: REF, url: URL });
         await notice.save();
       }
-
-      resolve({ success: true, msg: `` });
-      return;
-    } catch (error) {
-      capture(error);
-      resolve({ success: false, msg: JSON.stringify(error) });
     }
-  });
+  } catch (error) {
+    capture(error);
+  }
 }
-
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
@@ -144,8 +142,6 @@ router.put(
   (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-
-    notice.DMAJ = formattedNow();
 
     const arr = [];
     for (let i = 0; i < req.files.length; i++) {
@@ -169,11 +165,8 @@ router.put(
 
     transformBeforeUpdate(notice);
 
+    arr.push(updateLinks(notice));
     arr.push(updateNotice(Memoire, ref, notice));
-
-    for (let i = 0; notice.LBASE && i < notice.LBASE.length; i++) {
-      arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
-    }
 
     Promise.all(arr)
       .then(() => {
@@ -204,11 +197,10 @@ router.post(
       );
     }
 
-    for (let i = 0; notice.LBASE && i < notice.LBASE.length; i++) {
-      arr.push(updateLinkedNotice(notice.IMG, notice.REF, notice.LBASE[i]));
-    }
+    arr.push(updateLinks(notice));
 
     transformBeforeCreate(notice);
+
     const obj = new Memoire(notice);
 
     //send error if obj is not well sync with ES
@@ -263,9 +255,9 @@ router.delete(
         });
       }
 
-      for (let i = 0; i < doc.LBASE && doc.LBASE.length; i++) {
-        await removeLinkedNotice(doc.REF, doc.LBASE[i]);
-      }
+      //DELETE LBASE
+      doc.LBASE = [];
+      await updateLinks(notice);
 
       const arr = [deleteFile(doc.IMG), doc.remove()];
       await Promise.all(arr);
