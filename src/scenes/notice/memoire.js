@@ -38,6 +38,14 @@ class Notice extends React.Component {
     }
   }
 
+  canUpdate(PRODUCTEUR) {
+    const { role, group } = this.props;
+    const roles = ["producteur","administrateur"];
+    const groups = ["mh","admin"];
+    const services = ["CRMH", "CAOA", "SAP", "SDAP", "ETAT"];
+    return services.includes(PRODUCTEUR) && groups.includes(group) && roles.includes(role);
+  }
+
   load(ref) {
     this.setState({ loading: true });
     API.getNotice("memoire", ref).then(notice => {
@@ -49,10 +57,7 @@ class Notice extends React.Component {
         console.error(`Impossible de charger la notice ${ref}`);
         return;
       }
-      console.log("NOTICE", notice);
-      const editable =
-        ["CRMH", "CAOA", "SAP", "SDAP"].includes(notice.PRODUCTEUR) &&
-        this.props.canUpdate;
+      const editable = this.canUpdate(notice.PRODUCTEUR);
       this.props.initialize({ ...notice, IMG: [notice.IMG] });
       this.setState({ loading: false, notice, editable });
     });
@@ -355,7 +360,7 @@ class Notice extends React.Component {
             color="#FF7676"
           >
             <Col sm={6}>
-            <FieldInput
+              <FieldInput
                 title="Référence (REF) :"
                 name="REF"
                 disabled={true}
@@ -876,10 +881,8 @@ class Notice extends React.Component {
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
   return {
-    canUpdate: Auth.user
-      ? (role === "producteur" || role === "administrateur") &&
-        (group === "mh" || group === "admin")
-      : false
+    role,
+    group
   };
 };
 
