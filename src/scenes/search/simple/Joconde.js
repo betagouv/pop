@@ -23,8 +23,7 @@ const FILTER = [
   "loca",
   "autr",
   "util",
-  "epoq",
-  "aptn"
+  "epoq"
 ];
 
 export default class Search extends React.Component {
@@ -153,17 +152,6 @@ export default class Search extends React.Component {
                   componentId="loca"
                   dataField="LOCA.keyword"
                   title="Localisation"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER
-                  }}
-                />
-                <MultiList
-                  componentId="aptn"
-                  dataField="APTN.keyword"
-                  title="Appartenance"
                   className="filters"
                   displayCount
                   URLParams={true}
