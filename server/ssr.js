@@ -58,6 +58,7 @@ async function exec(req, res) {
     return res.status(status).send(
       data
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
+        .replace('<div id=root></div>', `<div id="root">${body}</div>`)
         .replace(
           "<title>POP - Plateforme Ouverte du Patrimoine</title>",
           ` ${ helmetData.title.toString( ) }
