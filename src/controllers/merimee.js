@@ -20,7 +20,7 @@ function transformBeforeUpdate(notice) {
 
   notice.CONTIENT_IMAGE =
     notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
-  if (notice.COOR && notice.ZONE) {
+  if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
   notice.POP_CONTIENT_GEOLOCALISATION =
@@ -31,7 +31,7 @@ function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE =
     notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
-  if (notice.COOR && notice.ZONE) {
+  if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
   notice.POP_CONTIENT_GEOLOCALISATION =
