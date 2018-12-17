@@ -1,62 +1,12 @@
 import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import ruleQuery from "./ruleQuery";
 
-function getQuery(valueSelected, actionSelected, resultSelected) {
-  if (actionSelected === "<>") {
-    // { value: "<>", text: "exist" },
-    return {
-      bool: {
-        // Must exists ...
-        must: { exists: { field: valueSelected } },
-        // ... and must be not empty.
-        must_not: { term: { [`${valueSelected}.keyword`]: "" } }
-      }
-    };
-  } else if (actionSelected === "><") {
-    // { value: "><", text: "n'existe pas" }
-    return {
-      bool: {
-        // Should be ...
-        should: [
-          // ... empty string ...
-          { term: { [`${valueSelected}.keyword`]: "" } },
-          // ... or not exists.
-          { bool: { must_not: { exists: { field: valueSelected } } } }
-        ]
-      }
-    };
-  } else if (actionSelected === "==" && resultSelected) {
-    // { value: "==", text: "égal à" },
-    return { term: { [`${valueSelected}.keyword`]: resultSelected } };
-  } else if (actionSelected === "!=" && resultSelected) {
-    // { value: "!=", text: "différent de" },
-    return {
-      must_not: { term: { [`${valueSelected}.keyword`]: resultSelected } }
-    };
-  } else if (actionSelected === ">=" && resultSelected) {
-    // { value: ">=", text: "supérieur ou égal à" },
-    return { range: { [`${valueSelected}.keyword`]: { gte: resultSelected } } };
-  } else if (actionSelected === "<=" && resultSelected) {
-    // { value: "<=", text: "inférieur ou égal à" },
-    return { range: { [`${valueSelected}.keyword`]: { lte: resultSelected } } };
-  } else if (actionSelected === "<" && resultSelected) {
-    // { value: "<", text: "strictement inférieur à" },
-    return { range: { [`${valueSelected}.keyword`]: { lt: resultSelected } } };
-  } else if (actionSelected === ">" && resultSelected) {
-    // { value: ">", text: "strictement supérieur à" },
-    return { range: { [`${valueSelected}.keyword`]: { gt: resultSelected } } };
-  } else if (actionSelected === "^" && resultSelected) {
-    // { value: "^", text: "commence par" }
-    return { wildcard: { [`${valueSelected}.keyword`]: `${resultSelected}*` } };
-  } else if (actionSelected === "*" && resultSelected) {
-    // { value: "*", text: "contient" }
-    return {
-      wildcard: { [`${valueSelected}.keyword`]: `*${resultSelected}*` }
-    };
-  } else {
-    return null;
-  }
+function sortObjectByKeys(o) {
+  return Object.keys(o)
+    .sort()
+    .reduce((r, k) => ((r[k] = o[k]), r), {});
 }
 
 export default class RuleComponent extends React.Component {
@@ -64,16 +14,17 @@ export default class RuleComponent extends React.Component {
     query: {}
   };
 
-  onUpdate(combinator, valueSelected, actionSelected, resultSelected) {
-    if (valueSelected) {
-      const query = `{"aggs": {"${valueSelected}.keyword": {"terms": {"field": "${valueSelected}.keyword","include" : ".*${resultSelected}.*","order": {"_count": "desc"},"size": 10}}}}`;
+  onUpdate(data) {
+    const { combinator, key, operator, value } = data;
+    if (key) {
+      const query = `{"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}}`;
       this.setState({ query: JSON.parse(query) });
     } else {
       this.setState({ query: {} });
     }
-    const query = getQuery(valueSelected, actionSelected, resultSelected);
+    const query = ruleQuery(key, operator, value);
     if (query) {
-      this.props.onUpdate({ id: this.props.id, query, combinator });
+      this.props.onUpdate({ id: this.props.id, query, combinator, data });
     }
   }
 
@@ -86,6 +37,7 @@ export default class RuleComponent extends React.Component {
         <Rule
           first={this.props.first}
           id={this.props.id}
+          data={this.props.data}
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
@@ -99,12 +51,11 @@ export default class RuleComponent extends React.Component {
 class Rule extends React.Component {
   constructor(props) {
     super(props);
-    console.log("this.props.entity", this.props.entity);
     this.state = {
-      valueSelected: this.props.entity.REF.label,
-      actionSelected: "==",
-      resultSelected: "",
-      combinator: "ET"
+      valueSelected: this.props.data.key || "REF",
+      actionSelected: this.props.data.operator || "==",
+      resultSelected: this.props.data.value || "",
+      combinator: this.props.data.combinator || "ET"
     };
   }
   componentDidMount() {
@@ -112,13 +63,18 @@ class Rule extends React.Component {
   }
 
   update() {
-    const { valueSelected, actionSelected, resultSelected } = this.state;
-    this.props.onUpdate(
-      this.state.combinator,
+    const {
+      combinator,
       valueSelected,
       actionSelected,
       resultSelected
-    );
+    } = this.state;
+    this.props.onUpdate({
+      combinator,
+      key: valueSelected,
+      operator: actionSelected,
+      value: resultSelected
+    });
   }
 
   render() {
@@ -327,7 +283,7 @@ const ActionElement = ({ onChange, value }) => {
 
 const ValueSelector = ({ entity, onChange, value }) => {
   const choices = [];
-  for (let key in entity) {
+  for (let key in sortObjectByKeys(entity)) {
     choices.push(
       <option key={key} value={key}>
         {/*décommenter ca pour afficher les labels {entity[key].label || */ key}

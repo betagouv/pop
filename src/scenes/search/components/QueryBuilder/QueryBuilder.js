@@ -10,7 +10,7 @@ export default class QueryBuilder extends React.Component {
       return;
     }
     const query = { bool: { ...q } };
-    console.log("Set query", JSON.stringify(query));
+    console.log("QueryBuilder: ", JSON.stringify(query));
     this.props.setQuery({ query, value: "hey" }); // ???
   }
 

@@ -13,23 +13,11 @@ export default () => {
   return (
     <div>
       <Switch>
-        <Route
-          path={`/recherche-avancee/merimee`}
-          component={() => <Merimee />}
-        />
-        <Route
-          path={`/recherche-avancee/palissy`}
-          component={() => <Palissy />}
-        />
-        <Route path={`/recherche-avancee/mnr`} component={() => <Mnr />} />
-        <Route
-          path={`/recherche-avancee/joconde`}
-          component={() => <Joconde />}
-        />
-        <Route
-          path={`/recherche-avancee/memoire`}
-          component={() => <Memoire />}
-        />
+        <Route path={`/recherche-avancee/merimee`} component={Merimee} />
+        <Route path={`/recherche-avancee/palissy`} component={Palissy} />
+        <Route path={`/recherche-avancee/mnr`} component={Mnr} />
+        <Route path={`/recherche-avancee/joconde`} component={Joconde} />
+        <Route path={`/recherche-avancee/memoire`} component={Memoire} />
       </Switch>
     </div>
   );
