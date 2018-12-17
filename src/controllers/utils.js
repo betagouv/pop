@@ -208,20 +208,6 @@ function formattedNow() {
     ("0" + now.getDate()).slice(-2));
 }
 
-function enrichBeforeSave(notice) {
-  notice.CONTIENT_IMAGE =
-    notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
-  if (notice.COOR && notice.ZONE) {
-    notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
-  }
-  notice.POP_CONTIENT_GEOLOCALISATION =
-    notice.POP_COORDONNEES &&
-    notice.POP_COORDONNEES.lat &&
-    notice.POP_COORDONNEES.lat !== 0
-      ? "oui"
-      : "non";
-}
-
 module.exports = {
   uploadFile,
   deleteFile,
@@ -229,5 +215,5 @@ module.exports = {
   getNewId,
   checkESIndex,
   updateNotice,
-  enrichBeforeSave
+  lambertToWGS84
 };
