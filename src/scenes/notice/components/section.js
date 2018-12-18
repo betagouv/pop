@@ -6,7 +6,7 @@ export default ({ title, icon, description, color, children }) => {
   return (
     <div className="section">
       <Row>
-        <Col md="8">
+        <Col md="12">
           <div className="sectionheader">
             <img
               className="icon"

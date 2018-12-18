@@ -1,12 +1,11 @@
 import React from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
-import { Link } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Mapping } from "pop-shared";
 
-import FieldInput from "./components/fieldInput.js";
-import FieldTags from "./components/fieldTags.js";
+import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 
@@ -36,7 +35,6 @@ class Notice extends React.Component {
   }
 
   load(ref) {
-    console.log("Load");
     this.setState({ loading: true });
     API.getNotice("mnr", ref)
       .then(notice => {
@@ -139,93 +137,52 @@ class Notice extends React.Component {
             color="#FF7676"
           >
             <Col sm={6}>
-              <FieldInput title="REF (REF) :" name="REF" disabled />
-              <FieldInput
-                title="Références mistral (REFMIS) :"
-                name="REFMIS"
-                disabled
-              />
-              <FieldInput
-                title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt (INV) :"
-                name="INV"
-              />
-              <FieldTags
-                title="Domaine (catégorie du bien) (DOMN) :"
-                name="DOMN"
-              />
-              <FieldTags
-                title="Dénomination du bien (DENO) : "
-                name="DENO"
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
-              />
-              <FieldTags
-                title="Auteur /exécutant / collecteur (AUTR) :"
-                name="AUTR"
-              />
-              <FieldInput title="Precisions auteur (PAUT) :" name="PAUT" />
-              <FieldInput title="Anciennes attributions (ATTR) :" name="ATTR" />
-              <FieldInput title="Ecole (ECOL) :" name="ECOL" />
-              <FieldInput title="Genèse (GENE) :" name="GENE" />
-              <FieldInput title="Titre (TITR) :" name="TITR" />
-              <FieldInput title="Ancien titre (ATIT) :" name="ATIT" />
-              <FieldInput title="Précision titre (PTIT) :" name="PTIT" />
-              <FieldTags title="Siècle (SCLE) :" name="SCLE" />
-              <FieldInput title="Style (STYL) :" name="STYL" />
-              <FieldInput title="Millenaire (MILL) :" name="MILL" />
-              <FieldTags title="Technique (TECH) :" name="TECH" />
-              <FieldTags title="Dimensions (DIMS) :" name="DIMS" />
-              <FieldInput title="Description (DESC) :" name="DESC" />
-              <FieldInput title="Inscriptions (INSC) :" name="INSC" />
-              <FieldInput title="Historique (HIST) :" name="HIST" />
-              <FieldInput title="Provenance (PROV) :" name="PROV" />
-              <FieldInput title="Exposition (EXPO) :" name="EXPO" />
-              <FieldInput title="Localisation (LOCA) :" name="LOCA" />
+              <CustomField title="REF (REF) :" name="REF" disabled />
+              <CustomField name="INV" />
+              <CustomField name="DOMN" />
+              <CustomField name="DENO" />
+              <CustomField name="AUTR" />
+              <CustomField name="PAUT" />
+              <CustomField name="ATTR" />
+              <CustomField name="ECOL" />
+              <CustomField name="GENE" />
+              <CustomField name="TITR" />
+              <CustomField name="ATIT" />
+              <CustomField name="PTIT" />
+              <CustomField name="SCLE" />
+              <CustomField name="STYL" />
+              <CustomField name="MILL" />
+              <CustomField name="TECH" />
+              <CustomField name="DIMS" />
+              <CustomField name="DESC" />
+              <CustomField name="INSC" />
+              <CustomField name="HIST" />
+              <CustomField name="PROV" />
+              <CustomField name="EXPO" />
+              <CustomField name="LOCA" />
             </Col>
             <Col sm={6}>
-              <FieldInput title="Bibliographie (BIBL) :" name="BIBL" />
-              <FieldInput title="Observations (OBSE) :" name="OBSE" />
-              <FieldInput
-                title="Adresses images jointes générique (actuellement non utilisé) (REFIM) :"
-                name="REFIM"
-              />
-              <FieldInput title="Ancienne attribution (AATT) :" name="AATT" />
-              <FieldInput title="Autre titre (AUTI) :" name="AUTI" />
-              <FieldInput title="Date mise à jour (DMAJ) :" name="DMAJ" />
-              <FieldInput title="Etat de conservation (ETAT) :" name="ETAT" />
-              <FieldInput title="Résumé (RESUME) :" name="RESUME" />
-              <FieldInput title="Notes (NOTE) :" name="NOTE" />
-              <FieldInput
-                title="Précisions sur la représentation. (PREP) :"
-                name="PREP"
-              />
-              <FieldInput
-                title="OEuvres liées, ensemble (SUITE) :"
-                name="SUITE"
-              />
-              <FieldInput
-                title="Sujet de la représentation (source littéraire ou musicale) (SREP) :"
-                name="SREP"
-              />
-              <FieldInput title="Représentation (REPR) :" name="REPR" />
-              <FieldTags title="Rédacteurs (REDC) :" name="REDC" />
-              <FieldInput title="Droits de copie photo (PHOT) :" name="PHOT" />
-              <FieldInput title="Autres numéros (NUMS) :" name="NUMS" />
-              <FieldInput title="Marques (MARQ) :" name="MARQ" />
-              <FieldInput
-                title="Date de la représentation (DREP) :"
-                name="DREP"
-              />
-              <FieldInput title="Catégorie (CATE) :" name="CATE" />
-              <FieldInput title="Commentaire (COMM) :" name="COMM" />
-              <FieldInput
-                title="Etablissement affectataire qui existe dans d’autres bases (AFFE) :"
-                name="AFFE"
-              />
-
-              <FieldInput
-                title="Mentions de spoliations (SPOL) :"
-                name="SPOL"
-              />
+              <CustomField name="BIBL" />
+              <CustomField name="OBSE" />
+              <CustomField name="REFIM" />
+              <CustomField name="AATT" />
+              <CustomField name="AUTI" />
+              <CustomField name="DMAJ" />
+              <CustomField name="ETAT" />
+              <CustomField name="RESUME" />
+              <CustomField name="NOTE" />
+              <CustomField name="PREP" />
+              <CustomField name="SUITE" />
+              <CustomField name="SREP" />
+              <CustomField name="REPR" />
+              <CustomField name="REDC" />
+              <CustomField name="PHOT" />
+              <CustomField name="NUMS" />
+              <CustomField name="MARQ" />
+              <CustomField name="DREP" />
+              <CustomField name="CATE" />
+              <CustomField name="COMM" />
+              <CustomField name="AFFE" />
             </Col>
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
@@ -248,6 +205,10 @@ class Notice extends React.Component {
     );
   }
 }
+
+const CustomField = ({ name, ...rest }) => {
+  return <Field {...Mapping.mnr[name]} name={name} {...rest} />;
+};
 
 const mapStateToProps = ({ Auth }) => {
   return {

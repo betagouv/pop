@@ -1,13 +1,12 @@
 import React from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
-import { Link } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Mapping } from "pop-shared";
 
-import FieldInput from "./components/fieldInput.js";
+import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
-import FieldTags from "./components/fieldTags.js";
 import FieldLink from "./components/fieldLink.js";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
@@ -130,141 +129,42 @@ class Notice extends React.Component {
             color="#FF7676"
           >
             <Col sm={6}>
-              <FieldInput
-                title="Référence notice (REF) :"
-                name="REF"
-                disabled={true}
-              />
-              <FieldInput
-                title="Producteur (PRODUCTEUR) :"
-                name="PRODUCTEUR"
-                disabled={true}
-              />
+              <CustomField name="REF" disabled={true} />
+              <CustomField name="PRODUCTEUR" disabled={true} />
               <FieldLink
                 title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
                 name="RENV"
                 url="/notice/palissy/"
                 disabled={!this.state.editable}
               />
-              <FieldInput
-                title="Référence dans la base Patriarche (ARCHEO) : "
-                name="ARCHEO"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Date d'enquête (DENQ) :"
-                name="DENQ"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="CopyRight (COPY) :"
-                name="COPY"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Identifiant Patrimoine (RFPA) :"
-                name="RFPA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Date de mise à jour (DMAJ) :"
-                name="DMAJ"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Domaines (DOMN) : "
-                name="DOMN"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="DENQ" disabled={!this.state.editable} />
+              <CustomField name="COPY" disabled={!this.state.editable} />
+              <CustomField name="DMAJ" disabled={!this.state.editable} />
+              <CustomField name="DOMN" disabled={!this.state.editable} />
               <FieldLink
                 title="Référence de l'édifice de conservation (REFA) : "
                 name="REFA"
                 url="/notice/merimee/"
                 disabled={!this.state.editable}
               />
-              <FieldInput
-                title="Auteurs phototype (AUTP) : "
-                name="AUTP"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Dossier adresse (DOSADRS) :"
-                name="DOSADRS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Contact (CONTACT) :"
-                name="CONTACT"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Préc. appart. (PAPP) : "
-                name="PAPP"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Dossier URL (DOSURL) : "
-                name="DOSURL"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Dossier PDF (DOSURLPDF) : "
-                name="DOSURLPDF"
-                disabled={true}
-              />
+              <CustomField name="AUTP" disabled={!this.state.editable} />
+              <CustomField name="DOSADRS" disabled={!this.state.editable} />
+              <CustomField name="CONTACT" disabled={!this.state.editable} />
+              <CustomField name="PAPP" disabled={!this.state.editable} />
+              <CustomField name="DOSURL" disabled={!this.state.editable} />
+              <CustomField name="DOSURLPDF" disabled={true} />
             </Col>
             <Col sm={6}>
-              <FieldTags
-                title="Liens Divers (LIENS) : "
-                name="LIENS"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Date de rédaction de la notice (DBOR) :"
-                name="DBOR"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Noms des rédacteurs de la notice et du dossier (NOMS) : "
-                name="NOMS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Cadre de l'étude (ETUD) :"
-                name="ETUD"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Dossier (DOSS) : "
-                name="DOSS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Date de chargement dans la base (DMIS) :"
-                name="DMIS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Numéro de microfiche (MICR) :"
-                name="MICR"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Thème (THEM) : "
-                name="THEM"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Visite guidé (WEB) : "
-                name="WEB"
-                disabled={!this.state.editable}
-              />
-
-              <FieldInput
-                title="Mosaïques (MOSA) :"
-                name="MOSA"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="LIENS" disabled={!this.state.editable} />
+              <CustomField name="DBOR" disabled={!this.state.editable} />
+              <CustomField name="NOMS" disabled={!this.state.editable} />
+              <CustomField name="ETUD" disabled={!this.state.editable} />
+              <CustomField name="DOSS" disabled={!this.state.editable} />
+              <CustomField name="DMIS" disabled={!this.state.editable} />
+              <CustomField name="MICR" disabled={!this.state.editable} />
+              <CustomField name="THEM" disabled={!this.state.editable} />
+              <CustomField name="WEB" disabled={!this.state.editable} />
+              <CustomField name="MOSA" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -274,63 +174,18 @@ class Notice extends React.Component {
             color="#FE997B"
           >
             <Col sm={6}>
-              <FieldTags
-                title="Denomination (DENO) : "
-                name="DENO"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
-              />
-              <FieldInput
-                title="Destinataire (GENR) : "
-                name="GENR"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Précision sur la dénomination (PDEN) :"
-                name="PDEN"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Vocable (VOCA) :"
-                name="VOCA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Appellation et titre (APPL) :"
-                name="APPL"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Destinations successives et actuelle (ACTU) :"
-                name="ACTU"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Numérotation artificielle (NART) :"
-                name="NART"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="DENO" disabled={!this.state.editable} />
+              <CustomField name="PDEN" disabled={!this.state.editable} />
+              <CustomField name="APPL" disabled={!this.state.editable} />
+              <CustomField name="NART" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldInput
-                title="Titre courant (TICO) : "
-                name="TICO"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Parties constituantes (PART) : "
-                name="PART"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="TICO" disabled={!this.state.editable} />
+              <CustomField name="PART" disabled={!this.state.editable} />
               <FieldLink
                 title="Références des parties constituantes étudiées (REFP) : "
                 name="REFP"
                 url="/notice/palissy/"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Décompte des oeuvres recensées (COLL) :"
-                name="COLL"
                 disabled={!this.state.editable}
               />
               <FieldLink
@@ -349,104 +204,25 @@ class Notice extends React.Component {
             color="#FFC070"
           >
             <Col sm={6}>
-              <FieldInput
-                title="Region (REG) : "
-                name="REG"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Département (DPT) : "
-                name="DPT"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Commune (COM) : "
-                name="COM"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Numéro INSEE de la commune (INSEE) :"
-                name="INSEE"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précision sur la localisation (PLOC) :"
-                name="PLOC"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Aire d'étude (AIRE) : "
-                name="AIRE"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Canton (CANT) : "
-                name="CANT"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Lieu-dit (LIEU) : "
-                name="LIEU"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Adresse (ADRS) : "
-                name="ADRS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Edifice de conservation (EDIF) : "
-                name="EDIF"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="REG" disabled={!this.state.editable} />
+              <CustomField name="DPT" disabled={!this.state.editable} />
+              <CustomField name="COM" disabled={!this.state.editable} />
+              <CustomField name="INSEE" disabled={!this.state.editable} />
+              <CustomField name="PLOC" disabled={!this.state.editable} />
+              <CustomField name="AIRE" disabled={!this.state.editable} />
+              <CustomField name="CANT" disabled={!this.state.editable} />
+              <CustomField name="LIEU" disabled={!this.state.editable} />
+              <CustomField name="ADRS" disabled={!this.state.editable} />
+              <CustomField name="EDIF" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldInput
-                title="Référence cadastrale (CADA) :"
-                name="CADA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Zone Lambert ou autres (ZONE) :"
-                name="ZONE"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Coordonnées Lambert (ou autres) d'un points (COOR ) :"
-                name="COOR"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Coordonnées Lambert (ou autres) multiples (COORM ) :"
-                name="COORM"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Milieu d'implantation (IMPL) : "
-                name="IMPL"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T12"
-              />
-              <FieldInput
-                title="Cours d'eau (HYDR) : "
-                name="HYDR"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Localisation (LOCA) : "
-                name="LOCA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Emplacement de l’œuvre dans l’édifice (EMPL) : "
-                name="EMPL"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Objet(s) volé(s) (VOLS) : "
-                name="VOLS"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="ZONE" disabled={!this.state.editable} />
+              <CustomField name="COOR" disabled={!this.state.editable} />
+              <CustomField name="COORM" disabled={!this.state.editable} />
+              <CustomField name="IMPL" disabled={!this.state.editable} />
+              <CustomField name="LOCA" disabled={!this.state.editable} />
+              <CustomField name="EMPL" disabled={!this.state.editable} />
+              <CustomField name="VOLS" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -456,76 +232,20 @@ class Notice extends React.Component {
             color="#668796"
           >
             <Col sm={6}>
-              <FieldTags
-                title="Datation des campagnes principales de construction (SCLE) :"
-                name="SCLE"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T17"
-              />
-              <FieldTags
-                title="Datation en années (DATE) :"
-                name="DATE"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Justification de la datation (JDAT) :"
-                name="JDAT"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Auteurs de l'oeuvre(AUTR) : "
-                name="AUTR"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Auteur(s) de la source figurée (AFIG) : "
-                name="AFIG"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Nom de l’atelier, de la manufacture, de la fabrique ou de l’école (ATEL) : "
-                name="ATEL"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Nom actuel ou historique du lieu d’exécution (EXEC) : "
-                name="EXEC"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Origine de l’œuvre (lieu de provenance ou de destination) (ORIG) : "
-                name="ORIG"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="SCLE" disabled={!this.state.editable} />
+              <CustomField name="DATE" disabled={!this.state.editable} />
+              <CustomField name="JDAT" disabled={!this.state.editable} />
+              <CustomField name="AUTR" disabled={!this.state.editable} />
+              <CustomField name="AFIG" disabled={!this.state.editable} />
+              <CustomField name="ATEL" disabled={!this.state.editable} />
+              <CustomField name="EXEC" disabled={!this.state.editable} />
+              <CustomField name="ORIG" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldTags
-                title="Personnalitées (PERS) :"
-                name="PERS"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T6"
-              />
-
-              <FieldInput
-                title="Remploi (REMP) : "
-                name="REMP"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Partie déplacée (DEPL) : "
-                name="DEPL"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Commentaire historique (HIST) :"
-                name="HIST"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Stade de la création (STAD) : "
-                name="STAD"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="PERS" disabled={!this.state.editable} />
+              <CustomField name="DEPL" disabled={!this.state.editable} />
+              <CustomField name="HIST" disabled={!this.state.editable} />
+              <CustomField name="STAD" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -534,98 +254,22 @@ class Notice extends React.Component {
             color="#FBE367"
           >
             <Col sm={6}>
-              <FieldInput
-                title="Parti de plan (PLAN) :"
-                name="PLAN"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Emplacement, forme et structure de l’escalier (ESCA) : "
-                name="ESCA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Couvert et découvert de jardin (VERT) :"
-                name="VERT"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Représentation (REPR) : "
-                name="REPR"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précision sur la représentation (PREP) : "
-                name="PREP"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Catégorie technique (CATE) :"
-                name="CATE"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Structure et typologie (STRU) :"
-                name="STRU"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Matériaux (MATR) :"
-                name="MATR"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Intérêt oeuvre (PINT) :"
-                name="PINT"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="REPR" disabled={!this.state.editable} />
+              <CustomField name="PREP" disabled={!this.state.editable} />
+              <CustomField name="CATE" disabled={!this.state.editable} />
+              <CustomField name="STRU" disabled={!this.state.editable} />
+              <CustomField name="MATR" disabled={!this.state.editable} />
+              <CustomField name="PINT" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldInput
-                title="Dimensions (DIMS) : "
-                name="DIMS"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Typologie (TYPO) : "
-                name="TYPO"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Etat de conservation (ETAT) : "
-                name="ETAT"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Commentaire description (DESC) :"
-                name="DESC"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Parties non étud (PARN) : "
-                name="PARN"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précisions sur les dimensions (PDIM) : "
-                name="PDIM"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précisions sur l’état de conservation (PETA) : "
-                name="PETA"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Inscriptions, marques, emblématique et poinçons (INSC) : "
-                name="INSC"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précisions sur les inscriptions, marques, emblématique et poinçons (PINS) : "
-                name="PINS"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="DIMS" disabled={!this.state.editable} />
+              <CustomField name="ETAT" disabled={!this.state.editable} />
+              <CustomField name="DESC" disabled={!this.state.editable} />
+              <CustomField name="PARN" disabled={!this.state.editable} />
+              <CustomField name="PDIM" disabled={!this.state.editable} />
+              <CustomField name="PETA" disabled={!this.state.editable} />
+              <CustomField name="INSC" disabled={!this.state.editable} />
+              <CustomField name="PINS" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -635,50 +279,13 @@ class Notice extends React.Component {
             color="#FE997B"
           >
             <Col sm={6}>
-              <FieldInput
-                title="Nature de la protection MH (PROT) :"
-                name="PROT"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T10"
-              />
-              <FieldInput
-                title="Date protection (DPRO) :"
-                name="DPRO"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précisions sur la protection MH (PPRO) :"
-                name="PPRO"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="PROT" disabled={!this.state.editable} />
+              <CustomField name="DPRO" disabled={!this.state.editable} />
+              <CustomField name="PPRO" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldInput
-                title="Eléments protégés MH (MHPP) : "
-                name="MHPP"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Site, secteur ou zone de protection (SITE) :"
-                name="SITE"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Intérêt de l'oeuvre (INTE) :"
-                name="INTE"
-                disabled={!this.state.editable}
-                thesaurus="http://data.culture.fr/thesaurus/resource/ark:/67717/T33"
-              />
-              <FieldInput
-                title="Eléments remarquables (REMA) :"
-                name="REMA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Observations (OBS) :"
-                name="OBS"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="INTE" disabled={!this.state.editable} />
+              <CustomField name="OBS" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -688,33 +295,9 @@ class Notice extends React.Component {
             color="#00BEB2"
           >
             <Col sm={6}>
-              <FieldTags
-                title="Statut de la propriété (STAT) :"
-                name="STAT"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Précisions sur le statut de la propriété (PSTA): "
-                name="PSTA"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Affectataire (AFFE) :"
-                name="AFFE"
-                disabled={!this.state.editable}
-              />
-              <FieldInput
-                title="Date du label (DLAB) :"
-                name="DLAB"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="STAT" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <FieldInput
-                title="Précisions sur l'affectataire (PAFF) :"
-                name="PAFF"
-                disabled={!this.state.editable}
-              />
             </Col>
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
@@ -741,6 +324,10 @@ class Notice extends React.Component {
     );
   }
 }
+
+const CustomField = ({ name, ...rest }) => {
+  return <Field {...Mapping.palissy[name]} name={name} {...rest} />;
+};
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
