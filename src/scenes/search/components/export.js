@@ -1,6 +1,9 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
+import { history } from "../../../redux/store";
+import operators from "./QueryBuilder/operators";
+import qs from "qs";
 
 export default class ExportComponent extends React.Component {
   state = {
@@ -32,7 +35,9 @@ export default class ExportComponent extends React.Component {
     const minutes = ("0" + d.getMinutes()).slice(-2);
     const hours = ("0" + d.getHours()).slice(-2);
     const secondes = ("0" + d.getSeconds()).slice(-2);
-    const fileName = `${this.props.collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
+    const fileName = `${
+      this.props.collection
+    }_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
     exportData(fileName, res);
     this.setState({ res: [], page: 0, run: false });
   }
@@ -98,7 +103,29 @@ async function exportData(fileName, entities) {
     }
   }
 
-  let csv = columns.join(",") + "\n";
+  const csv = [];
+
+  // Add a first line with query parameters.
+  const search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
+  if (search && search.q) {
+    // Get an array of queries with rules as text.
+    const queries = search.q.map(s => {
+      const operatorAsText = operators.filter(o => s.operator === o.value)[0]
+        .text;
+      const combinatorAsText = s.combinator.toLowerCase();
+      return `${combinatorAsText} ${s.key} ${operatorAsText} ${s.value}`;
+    });
+    // Transform the whole queries into readable text.
+    const queryAsText = queries
+      .join(" ")
+      .replace(/"/g, '""')
+      .replace(/^(et|ou) /, "");
+    // Ads this text on first line
+    csv.push(`"Critères de recherche : ${queryAsText}"`);
+  }
+
+  csv.push(columns.join(","));
+
   for (let j = 0; j < entities.length; j++) {
     const arr = [];
     for (let i = 0; i < columns.length; i++) {
@@ -110,10 +137,10 @@ async function exportData(fileName, entities) {
       value = ("" + value).replace(/"/g, '""');
       arr.push('"' + value + '"');
     }
-    csv += arr.join(",") + "\n";
+    csv.push(arr.join(","));
   }
 
-  initiateFileDownload(csv, fileName);
+  initiateFileDownload(csv.join("\n"), fileName);
 }
 
 function initiateFileDownload(csv, fileName) {

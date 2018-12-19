@@ -2,6 +2,7 @@ import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import ruleQuery from "./ruleQuery";
+import operators from "./operators";
 
 function sortObjectByKeys(o) {
   return Object.keys(o)
@@ -253,18 +254,7 @@ const Combinator = props => {
 };
 
 const ActionElement = ({ onChange, value }) => {
-  const choices = [
-    { value: "==", text: "égal à" },
-    { value: "!=", text: "différent de" },
-    { value: ">=", text: "supérieur ou égal à" },
-    { value: "<=", text: "inférieur ou égal à" },
-    { value: ">", text: "strictement supérieur à" },
-    { value: "<", text: "strictement inférieur à" },
-    { value: "<>", text: "existe" },
-    { value: "><", text: "n'existe pas" },
-    { value: "*", text: "contient" },
-    { value: "^", text: "commence par" }
-  ].map(({ value, text }) => (
+  const choices = operators.map(({ value, text }) => (
     <option key={value} value={value}>
       {text}
     </option>
