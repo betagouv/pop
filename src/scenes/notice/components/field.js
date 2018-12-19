@@ -60,12 +60,41 @@ class TagsInput extends React.Component {
         </div>
       );
     }
+
     return (
       <div>
         <Tags
           tags={
             this.props.input.value
               ? this.props.input.value.map(e => {
+                  /* this is a little bit dirty. 
+                It Was not suposed to have to build url in a tag component. 
+                I hate put business logic inside generic componenent. 
+                I also know they dont like the tag component 
+                So it could come inside small refactor */
+
+                  if (this.props.input.name === "LBASE") {
+                    const prefix = e.substring(0, 2);
+                    let url = "";
+                    switch (prefix) {
+                      case "EA":
+                      case "PA":
+                      case "IA":
+                        url = `/notice/merimee/${e}`;
+                        break;
+                      case "IM":
+                      case "PM":
+                        url = `/notice/palissy/${e}`;
+                        break;
+                      default:
+                        url = "";
+                    }
+                    return {
+                      id: e,
+                      text: <a href={url} target="_blank">{e}</a>
+                    };
+                  }
+
                   return { id: e, text: e };
                 })
               : []
@@ -157,34 +186,20 @@ export default class AbstractField extends React.Component {
     tooltipOpen: false
   };
   render() {
-    const { label, type, name, description, disabled, thesaurus } = this.props;
+    const { label, type, name, description, ...rest } = this.props;
 
     let desc = description || "En attente de description" + "\n";
 
     let Comp = <div />;
     if (type === "String") {
-      Comp = (
-        <Field
-          component={CustomInput}
-          disabled={disabled}
-          name={name}
-          thesaurus={thesaurus}
-        />
-      );
+      Comp = <Field component={CustomInput} name={name} {...rest} />;
     } else if (type === "Array") {
-      Comp = (
-        <Field
-          component={TagsInput}
-          name={name}
-          disabled={disabled}
-          thesaurus={thesaurus}
-        />
-      );
+      Comp = <Field component={TagsInput} name={name} {...rest} />;
     }
     return (
       <div className="field">
         {(label || name) && (
-          <div style={styles.title} id={`Tooltip_${name}`}>
+          <div id={`Tooltip_${name}`}>
             {label ? `${label} (${name})` : name}
           </div>
         )}
@@ -205,7 +220,3 @@ export default class AbstractField extends React.Component {
     );
   }
 }
-
-const styles = {
-  title: {}
-};
