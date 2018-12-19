@@ -38,6 +38,7 @@
     "redux-mock-store": "^1.5.3",
     "redux-saga": "^0.16.0",
     "url-search-params-polyfill": "^3.0.0",
+    "validator": "^10.9.0",
     "webfontloader": "^1.6.28",
     "x2js": "^3.2.1",
     "xlsx": "^0.13.3"

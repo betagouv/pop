@@ -1,3 +1,5 @@
+import { Mapping } from "pop-shared";
+import validator from "validator";
 import Notice from "./Notice";
 
 export default class Memoire extends Notice {
@@ -135,6 +137,26 @@ export default class Memoire extends Notice {
       ) {
         if (this[property].required && !this[property].value) {
           this._errors.push(`Le champ ${property} ne doit pas être vide`);
+        }
+      }
+    }
+
+    ////////////////////////////We can mutualise this code to all notice. Must be done after the MVP
+    const memoireMapping = Mapping.memoire;
+    for (let key in memoireMapping) {
+      if (memoireMapping[key].validation && this[key]) {
+        let validate = true;
+        switch (memoireMapping[key].validation) {
+          case "Alphanumeric":
+            validate = validator.isAlphanumeric(this[key].value, "fr-FR");
+            break;
+          default:
+            console.log("TODO", memoireMapping[key].validation);
+            break;
+        }
+
+        if(!validate){
+          this._errors.push(`Le champ ${key} n'est pas de type ${memoireMapping[key].validation}`)
         }
       }
     }
