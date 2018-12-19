@@ -268,7 +268,7 @@ class Importer extends Component {
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#E32634" }} />
-              {`${noticesRejetees} notices ne peuvent etre importees car non conformes`}
+              {`${noticesRejetees} notices ne peuvent être importées car non conformes`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#FEEA10" }} />

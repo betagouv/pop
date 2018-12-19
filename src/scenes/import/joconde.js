@@ -1,17 +1,66 @@
 import React from "react";
 import { Container } from "reactstrap";
+import { connect } from "react-redux";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 
 import utils from "./utils";
 
-export default class Import extends React.Component {
+class Import extends React.Component {
+  parseFiles(files, encoding) {
+    return new Promise((resolve, reject) => {
+      var file = files.find(
+        file => ("" + file.name.split(".").pop()).toLowerCase() === "txt"
+      );
+      if (!file) {
+        reject("Fichier .txt absent");
+        return;
+      }
+
+      utils.readFile(file, encoding, res => {
+        const importedNotices = utils
+          .parseAjoutPilote(res, Joconde)
+          .map(value => {
+            if (!value.MUSEO && this.props.museofile) {
+              value.MUSEO = this.props.museofile;
+            }
+            return value;
+          })
+          .map(value => new Joconde(value));
+
+        const filesMap = {};
+        for (var i = 0; i < files.length; i++) {
+          //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+          filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+        }
+
+        //ADD IMAGES
+        for (var i = 0; i < importedNotices.length; i++) {
+          const names = importedNotices[i].IMG.value;
+          for (var j = 0; j < names.length; j++) {
+            let img = filesMap[Joconde.convertLongNameToShort(names[j])];
+            if (!img) {
+              importedNotices[i]._errors.push(
+                `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+              );
+            } else {
+              const shortname = Joconde.convertLongNameToShort(img.name);
+              let newImage = utils.renameFile(img, shortname);
+              importedNotices[i]._images.push(newImage);
+            }
+          }
+        }
+
+        resolve({ importedNotices, fileNames: [file.name] });
+      });
+    });
+  }
   render() {
     return (
       <Container className="import">
         <Importer
           collection="joconde"
-          parseFiles={parseFiles}
+          parseFiles={this.parseFiles.bind(this)}
           report={report}
           fieldsToExport={[
             { name: "Identifiant", key: "REF" },
@@ -23,6 +72,18 @@ export default class Import extends React.Component {
     );
   }
 }
+
+const mapstatetoprops = ({ Auth }) => {
+  const { museofile } = Auth.user;
+  return {
+    museofile
+  };
+};
+
+export default connect(
+  mapstatetoprops,
+  {}
+)(Import);
 
 function report(notices, collection, email, institution) {
   const arr = [];
@@ -135,16 +196,6 @@ function report(notices, collection, email, institution) {
     arr.push(`</ul>`);
   }
   arr.push(`</ul>`);
-
-  /*
-
-15 avertissements dont : 
-4 sur le terme "siège" du champs TECH est non conforme au thésaurus #ARC sur les notices (REF_NOTICE,  REF_NOTICE    , REF_NOTICE  , REF_NOTICE  )
-1 sur le terme "endroit A" du champs LIEUX est non conforme au thésaurus #ARC sur les notices ( REF_NOTICE  ) 
-10 sur le terme "ville B" du champs LOCA est non conforme au thésaurus #ARC sur les notices ( REF_NOTICE  , REF_NOTICE  , REF_NOTICE  , REF_NOTICE  )
-
-*/
-
   return arr.join("");
 }
 
@@ -166,47 +217,4 @@ function regexIt(str) {
   }
 
   return { terme: arr[2], champ: arr[1], thesaurus: arr[3] };
-}
-
-function parseFiles(files, encoding) {
-  return new Promise((resolve, reject) => {
-    var file = files.find(
-      file => ("" + file.name.split(".").pop()).toLowerCase() === "txt"
-    );
-    if (!file) {
-      reject("Fichier .txt absent");
-      return;
-    }
-
-    utils.readFile(file, encoding, res => {
-      const importedNotices = utils
-        .parseAjoutPilote(res, Joconde)
-        .map(value => new Joconde(value));
-
-      const filesMap = {};
-      for (var i = 0; i < files.length; i++) {
-        //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-        filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
-      }
-
-      //ADD IMAGES
-      for (var i = 0; i < importedNotices.length; i++) {
-        const names = importedNotices[i].IMG.value;
-        for (var j = 0; j < names.length; j++) {
-          let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-          if (!img) {
-            importedNotices[i]._errors.push(
-              `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
-            );
-          } else {
-            const shortname = Joconde.convertLongNameToShort(img.name);
-            let newImage = utils.renameFile(img, shortname);
-            importedNotices[i]._images.push(newImage);
-          }
-        }
-      }
-
-      resolve({ importedNotices, fileNames: [file.name] });
-    });
-  });
 }
