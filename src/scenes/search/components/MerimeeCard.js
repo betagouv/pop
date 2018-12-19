@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { bucket_url } from "../../../config.js";
 
 function getMemoireImage(memoire) {
   if (!memoire.length || !memoire[0].url) {
