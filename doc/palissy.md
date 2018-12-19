@@ -122,7 +122,7 @@
 - [_id](/doc/palissy.md#_id)
 - [__v](/doc/palissy.md#__v)
 ### PRODUCTEUR
-
+Producteur  de la notice
 
 
 
@@ -382,7 +382,7 @@ Contact
 |String|false|true|false|email|
 
 ### COOR
-Coordonnées Lambert (ou autres) d'un points 
+Coordonnées Lambert (ou autres) d'un point 
 
 
 
@@ -435,7 +435,7 @@ Date de rédaction de la notice
 Dénomination 
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T69 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T96 
 
 
 
@@ -624,7 +624,7 @@ Etat de conservation
 |Array|false|false|false||
 
 ### ETUD
-Parties non étud
+Cadre de l'étude 
 
 
 
@@ -1102,7 +1102,7 @@ Références des parties constituantes étudiées
 |Array|false|false|false||
 
 ### REG
-Region 
+Région 
 
 
 

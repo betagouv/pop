@@ -183,7 +183,7 @@ Référence unique de la notice
 
 |Type|Required|Master|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false|Alphanumeric|
+|String|true|false|false||
 
 ### TOUT
 Index global [Peut etre déprécié]
@@ -196,7 +196,7 @@ Index global [Peut etre déprécié]
 |String|false|false|false||
 
 ### ADRESSE
-Adresse 
+Adresse
 
 
 
@@ -956,7 +956,7 @@ No original
 |String|false|false|false||
 
 ### NUMP
-No phototype 
+No phototype
 
 
 
@@ -1276,7 +1276,7 @@ Adresse saisie
 |String|false|false|false||
 
 ### CONTACT
-Contact 
+Contact
 
 
 

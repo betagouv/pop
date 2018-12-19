@@ -121,7 +121,7 @@ Référence unique de la notice
 |String|false|true|false||
 
 ### AUTR
-Auteur /exécutant / collecteur
+Auteur / exécutant / collecteur
 
 
 
@@ -131,7 +131,7 @@ Auteur /exécutant / collecteur
 |Array|false|true|false||
 
 ### PAUT
-Precisions auteur
+Précisions auteur
 
 
 
@@ -373,7 +373,7 @@ Style
 |String|false|true|false||
 
 ### MILL
-Millenaire 
+Millénaire 
 
 
 

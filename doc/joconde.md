@@ -218,7 +218,7 @@ Anciennes attributions
 |String|false|false|false||
 
 ### AUTR
-Auteur /exécutant / collecteur
+Auteur / exécutant / collecteur
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T513 

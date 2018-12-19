@@ -643,7 +643,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T30
 |Array|false|false|false||
 
 ### ETUD
-
+Cadre de l'étude
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T68 

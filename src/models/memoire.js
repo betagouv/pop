@@ -46,7 +46,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence unique de la notice",
         master: false,
-        validation: "Alphanumeric",
         label: "Référence"
       }
     },
