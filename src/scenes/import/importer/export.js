@@ -14,7 +14,7 @@ class Export {
     const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
 
     let csv = "";
-    const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
+    const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"]; // Add columns ETAT(create, updated, rejected) and informations about warning or errors
     csv += columns.join(",") + "\n";
 
     const created = notices.filter(e => e._status === "created");
@@ -24,7 +24,7 @@ class Export {
     const lines = [];
 
     for (var i = 0; i < created.length; i++) {
-      const fields = fieldToExport.map(e => `"${created[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${created[i][e.key] ? created[i][e.key].value : ""}"`);
       lines.push([...fields, "Création", ""].join(","));
       for (var j = 0; j < created[i]._warnings.length; j++) {
         lines.push(
@@ -34,7 +34,7 @@ class Export {
     }
 
     for (var i = 0; i < updated.length; i++) {
-      const fields = fieldToExport.map(e => `"${updated[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${updated[i][e.key] ? updated[i][e.key].value : ""}"`);
       lines.push([...fields, "Modification", ""].join(","));
       for (var j = 0; j < updated[i]._messages.length; j++) {
         lines.push(
@@ -49,7 +49,7 @@ class Export {
     }
 
     for (var i = 0; i < rejected.length; i++) {
-      const fields = fieldToExport.map(e => `"${rejected[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${rejected[i][e.key]? rejected[i][e.key].value : ""}"`);
 
       lines.push([...fields, "Rejet", ""].join(","));
       for (var j = 0; j < rejected[i]._errors.length; j++) {
