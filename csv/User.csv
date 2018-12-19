@@ -1,0 +1,13 @@
+path,type,required,label,opendata,master,description,validation,thesaurus
+"email","String","oui","","","","","",""
+"institution","String","oui","","","","","",""
+"nom","String","non","","","","","",""
+"prenom","String","non","","","","","",""
+"group","String","oui","","","","","",""
+"role","String","oui","","","","","",""
+"password","String","oui","","","","","",""
+"hasResetPassword","Boolean","non","","","","","",""
+"lastConnectedAt","Date","non","","","","","",""
+"museofile","String","non","","","","","",""
+"_id","ObjectID","non","","","","","",""
+"__v","Number","non","","","","","",""

@@ -1,0 +1,10 @@
+path,type,required,label,opendata,master,description,validation,thesaurus
+"user","ObjectID","non","","","true","Identifiant de l'utilisateur à l'origine de l'import","",""
+"importedAt","Date","non","","","true","Date de l'import ","",""
+"institution","String","non","","","true","Institution à l'origine de l'import","",""
+"created","Number","non","","","true","Nombre de notices créées lors de l'import","",""
+"updated","Number","non","","","true","Nombre de notices mises à jour lors de l'import","",""
+"rejected","Number","non","","","true","Nombre de notices rejetées lors de l'import","",""
+"unChanged","Number","non","","","true","Nombre de notices non mises à jour lors de l'import","",""
+"_id","ObjectID","non","","","","","",""
+"__v","Number","non","","","","","",""

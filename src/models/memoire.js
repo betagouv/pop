@@ -63,7 +63,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Adresse ",
+        description: "Adresse",
         master: false,
         label: "Adresse"
       }
@@ -123,7 +123,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Domaine",
-        master: false
+        master: false,
+        label: "Domaine"
       }
     },
     EDIF: {
@@ -739,7 +740,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "No phototype ",
+        description: "No phototype",
         master: false,
         validation: "Alphanumeric",
         label: "No phototype"
@@ -1015,7 +1016,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Contact ",
+        description: "Contact",
         master: true,
         validation: "email",
         label: "CONTACT"

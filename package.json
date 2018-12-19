@@ -12,6 +12,7 @@
     "test": "jest",
     "sitemap": "nodemon -r dotenv/config src/sitemap/sitemap.js",
     "export:schemas": "node src/export-db-schemas",
+    "export:csv": "node src/export-db-csv",
     "export:mapping": "node src/export-db-mapping"
   },
   "repository": {

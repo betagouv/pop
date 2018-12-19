@@ -85,7 +85,7 @@ const Schema = new mongoose.Schema(
         description:
           "Référence de mise à jour (marque de la modification de la notice)",
         master: false,
-        label: "Référence de mise à jour"
+        label: "Référence de mise à jour (marque de la modification de la notice) "
       }
     },
     ADPT: {
@@ -129,7 +129,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Auteur /exécutant / collecteur",
+        description: "Auteur / exécutant / collecteur",
         master: false,
         label: "Auteur /exécutant / collecteur",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513"
@@ -226,7 +226,8 @@ const Schema = new mongoose.Schema(
         description:
           "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) ",
         master: false,
-        label: "Découvertes",
+        label:
+          "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur)",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
       }
     },
@@ -427,7 +428,7 @@ const Schema = new mongoose.Schema(
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
         master: false,
-        label: "N°Inventaire"
+        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
       }
     },
     LABEL: {
@@ -535,7 +536,7 @@ const Schema = new mongoose.Schema(
         description:
           "[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation ",
         master: false,
-        label: "Lien commande"
+        label: "Lien commande de reproduction et/ou de conditions d’utilisation"
       }
     },
     MUSEO: {
@@ -648,7 +649,7 @@ const Schema = new mongoose.Schema(
         description:
           "Précisions sur le lieu de création/ d’exécution / d’utilisation",
         master: false,
-        label: "Précisions sur le lieu"
+        label: "Précisions sur le lieu de création/ d’exécution / d’utilisation"
       }
     },
     PREP: {
@@ -736,7 +737,7 @@ const Schema = new mongoose.Schema(
         description:
           "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire",
         master: false,
-        label: "Statut juridique"
+        label: "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire"
       }
     },
     TECH: {

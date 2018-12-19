@@ -1,0 +1,5 @@
+path,type,required,label,opendata,master,description,validation,thesaurus
+"arc","String","non","","","","","",""
+"value","String","non","","","","","",""
+"_id","ObjectID","non","","","","","",""
+"__v","Number","non","","","","","",""
