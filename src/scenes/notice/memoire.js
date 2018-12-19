@@ -38,9 +38,14 @@ class Notice extends React.Component {
   canUpdate(PRODUCTEUR) {
     const { role, group } = this.props;
     const roles = ["producteur","administrateur"];
-    const groups = ["mh","admin"];
-    const services = ["CRMH", "CAOA", "SAP", "SDAP", "ETAT"];
-    return services.includes(PRODUCTEUR) && groups.includes(group) && roles.includes(role);
+    if(group === "mh"){
+      return ["CRMH", "CAOA", "UDAP", "ETAT","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+    }else if(group ==="memoire"){
+      return [ "SAP","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+    }else if(group === "admin"){
+      return ["CRMH", "CAOA", "UDAP", "ETAT","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+    }
+    return false;
   }
 
   load(ref) {
