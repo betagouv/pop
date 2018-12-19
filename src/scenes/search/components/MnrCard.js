@@ -25,7 +25,7 @@ export default ({ data }) => {
           <p>{data.DOMN}</p>
           <p>{data.DENO}</p>
           <p>{data.LOCA}</p>
-          <p>{data.AUTR}</p>
+          <p>{data.AUTR.join(", ").replace("#", ", ")}</p>
         </div>
       </div>
     </Link>
