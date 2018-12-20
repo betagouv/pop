@@ -29,10 +29,9 @@
 }
 .notice .heading {
   color: #025d59;
-  font-weight: 700;
   font-size: 28px;
   text-transform: capitalize;
-  margin-bottom: 0;
+  margin: 30px 15px 30px 15px;
   text-align: center;
 }
 .notice .back.notice-btn {

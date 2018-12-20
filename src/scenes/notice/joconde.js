@@ -117,92 +117,92 @@ class Joconde extends React.Component {
                   />
 
                   <Field
-                    title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt :"
+                    title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
                     content={this.state.notice.INV}
                   />
                   <Field
-                    title="Domaine (catégorie du bien) :"
+                    title="Domaine (catégorie du bien)"
                     content={this.state.notice.DOMN}
                   />
                   <Field
-                    title="Dénomination du bien : "
+                    title="Dénomination du bien"
                     content={this.state.notice.DENO}
                   />
                   <Field
-                    title="Appellation :"
+                    title="Appellation"
                     content={this.state.notice.APPL}
                   />
-                  <Field title="Titre :" content={this.state.notice.TITR} />
+                  <Field title="Titre" content={this.state.notice.TITR} />
                   <Field
-                    title="Auteur / exécutant / collecteur :"
+                    title="Auteur / exécutant / collecteur"
                     content={this.state.notice.AUTR}
                   />
                   <Field
-                    title="Précisions / auteur / exécutant / collecteur :"
+                    title="Précisions / auteur / exécutant / collecteur"
                     content={this.state.notice.PAUT}
                   />
-                  <Field title="Ecole :" content={this.state.notice.ECOL} />
+                  <Field title="Ecole" content={this.state.notice.ECOL} />
                   <Field
-                    title="Anciennes attributions :"
+                    title="Anciennes attributions"
                     content={this.state.notice.ATTR}
                   />
                   <Field
-                    title="Période de création / exécution :"
+                    title="Période de création / exécution"
                     content={this.state.notice.PERI}
                   />
                   <Field
-                    title="Millésime de création / exécution :"
+                    title="Millésime de création / exécution"
                     content={this.state.notice.MILL}
                   />
 
                   <Field
-                    title="Epoque / style / mouvement :"
+                    title="Epoque / style / mouvement"
                     content={this.state.notice.EPOQ}
                   />
                   <Field
-                    title="Période de l’original copié :"
+                    title="Période de l’original copié"
                     content={this.state.notice.PEOC}
                   />
                   <Field
-                    title="Matériaux et techniques :"
+                    title="Matériaux et techniques"
                     content={this.state.notice.TECH}
                   />
-                  <Field title="Mesures :" content={this.state.notice.DIMS} />
+                  <Field title="Mesures" content={this.state.notice.DIMS} />
                   <Field
-                    title="Inscriptions :"
+                    title="Inscriptions"
                     content={this.state.notice.INSC}
                   />
                   <Field
-                    title="Précisions sur les inscriptions :"
+                    title="Précisions sur les inscriptions"
                     content={this.state.notice.PINS}
                   />
                   <Field
-                    title="Onomastique :"
+                    title="Onomastique"
                     content={this.state.notice.ONOM}
                   />
                   <Field
-                    title="Description :"
+                    title="Description"
                     content={this.state.notice.DESC}
                   />
                   <Field
-                    title="Etat du bien :"
+                    title="Etat du bien"
                     content={this.state.notice.ETAT}
                   />
                   <Field
-                    title="Sujet représenté :"
+                    title="Sujet représenté"
                     content={this.state.notice.REPR}
                     separator="#"
                   />
                   <Field
-                    title="Précisions sur le sujet représenté :"
+                    title="Précisions sur le sujet représenté"
                     content={this.state.notice.PREP}
                   />
                   <Field
-                    title="Date de la représentation :"
+                    title="Date de la représentation"
                     content={this.state.notice.DREP}
                   />
                   <Field
-                    title="Source de la représentation :"
+                    title="Source de la représentation"
                     content={this.state.notice.SREP}
                   />
                   <Title
@@ -223,49 +223,49 @@ class Joconde extends React.Component {
                       "NSDA"
                     ]}
                   />
-                  <Field title="Genèse :" content={this.state.notice.GENE} />
+                  <Field title="Genèse" content={this.state.notice.GENE} />
                   <Field
-                    title="Historique – Objets associés :"
+                    title="Historique – Objets associés"
                     content={this.state.notice.HIST}
                   />
                   <Field
-                    title="Lieu de création / d’exécution / d’utilisation :"
+                    title="Lieu de création / d’exécution / d’utilisation"
                     content={this.state.notice.LIEUX}
                   />
                   <Field
-                    title="Précisions sur le lieu de création / d’exécution / d’utilisation :"
+                    title="Précisions sur le lieu de création / d’exécution / d’utilisation"
                     content={this.state.notice.PLIEUX}
                   />
                   <Field
-                    title="Géographie historique :"
+                    title="Géographie historique"
                     content={this.state.notice.GEOHI}
                   />
                   <Field
-                    title="Utilisation / Destination :"
+                    title="Utilisation / Destination"
                     content={this.state.notice.UTIL}
                   />
                   <Field
-                    title="Précisions sur l’utilisation :"
+                    title="Précisions sur l’utilisation"
                     content={this.state.notice.PUTI}
                   />
                   <Field
-                    title="Période d’utilisation :"
+                    title="Période d’utilisation"
                     content={this.state.notice.PERU}
                   />
                   <Field
-                    title="Millésime d’utilisation :"
+                    title="Millésime d’utilisation"
                     content={this.state.notice.MILU}
                   />
                   <Field
-                    title="Découverte / collecte :"
+                    title="Découverte / collecte"
                     content={this.state.notice.DECV}
                   />
                   <Field
-                    title="Précisions sur la découverte / collecte / récolte :"
+                    title="Précisions sur la découverte / collecte / récolte"
                     content={this.state.notice.PDEC}
                   />
                   <Field
-                    title="Numéro de site :"
+                    title="Numéro de site"
                     content={this.state.notice.NSDA}
                   />
                   <Title
@@ -282,33 +282,33 @@ class Joconde extends React.Component {
                     ]}
                   />
                   <Field
-                    title="Statut juridique :"
+                    title="Statut juridique"
                     content={this.state.notice.STAT}
                   />
                   <Field
-                    title="Date d’acquisition :"
+                    title="Date d’acquisition"
                     content={this.state.notice.DACQ}
                   />
                   <Field
-                    title="Ancienne appartenance :"
+                    title="Ancienne appartenance"
                     content={this.state.notice.APTN}
                     separator="#"
                   />
                   <Field
-                    title="Dépôt / établissement dépositaire :"
+                    title="Dépôt / établissement dépositaire"
                     content={this.state.notice.DEPO}
                   />
                   <Field
-                    title="Date de dépôt / changement d’affectation :"
+                    title="Date de dépôt / changement d’affectation"
                     content={this.state.notice.DDPT}
                   />
 
                   <Field
-                    title="Ancien dépôt / changement d’affectation :"
+                    title="Ancien dépôt / changement d’affectation"
                     content={this.state.notice.ADPT}
                   />
                   <Field
-                    title="Localisation :"
+                    title="Localisation"
                     content={this.state.notice.LOCA}
                   />
                   <Title
@@ -317,16 +317,16 @@ class Joconde extends React.Component {
                     fields={["COMM", "EXPO", "BIBL"]}
                   />
                   <Field
-                    title="Commentaires :"
+                    title="Commentaires"
                     content={this.state.notice.COMM}
                     separator="#"
                   />
                   <Field
-                    title="Exposition :"
+                    title="Exposition"
                     content={this.state.notice.EXPO}
                   />
                   <Field
-                    title="Bibliographie :"
+                    title="Bibliographie"
                     content={this.state.notice.BIBL}
                     separator="#"
                   />
@@ -340,21 +340,21 @@ class Joconde extends React.Component {
               <h4>A propos de cette notice</h4>
               <hr />
               <div>
-                <Field title="Référence : " content={this.state.notice.REF} />
+                <Field title="Référence" content={this.state.notice.REF} />
                 <Field
-                  title="Date de création : "
+                  title="Date de création"
                   content={this.state.notice.DMIS}
                 />
                 <Field
-                  title="Dernière mise à jour : "
+                  title="Dernière mise à jour"
                   content={this.state.notice.DMAJ}
                 />
                 <Field
-                  title="Crédits photographiques : "
+                  title="Crédits photographiques"
                   content={this.state.notice.AUTP}
                 />
                 <Field
-                  title="Auteur de l'oeuvre ou de l'original : "
+                  title="Auteur de l'oeuvre ou de l'original"
                   content={this.state.notice.AUTOR}
                 />
                 <Field title="" content={this.state.notice.COPY} />
@@ -379,7 +379,7 @@ const SeeMore = ({ notice }) => {
 
   if (notice.LVID) {
     arr.push(
-      <Field title="Lien Vidéo :" content={notice.LVID} key={`notice.LVID`} />
+      <Field title="Lien Vidéo" content={notice.LVID} key={`notice.LVID`} />
     );
   }
 

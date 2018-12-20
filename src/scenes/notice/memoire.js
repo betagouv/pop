@@ -138,16 +138,16 @@ class Memoire extends React.Component {
                     fields={["LOCA", "INSEE", "ADRESSE", "MCGEO"]}
                   />
                   <Field
-                    title="Localisation :"
+                    title="Localisation"
                     content={this.state.notice.LOCA}
                   />
                   <Field
-                    title="Code INSEE :"
+                    title="Code INSEE"
                     content={this.state.notice.INSEE}
                   />
                   <Field title="Adresse:" content={this.state.notice.ADRESSE} />
                   <Field
-                    title="Nom géographique :"
+                    title="Nom géographique"
                     content={this.state.notice.MCGEO}
                   />
                   <Title
@@ -173,50 +173,50 @@ class Memoire extends React.Component {
                     ]}
                   />
                   <Field
-                    title="Nom édifice :"
+                    title="Nom édifice"
                     content={this.state.notice.EDIF}
                   />
-                  <Field title="Nom objet :" content={this.state.notice.OBJT} />
+                  <Field title="Nom objet" content={this.state.notice.OBJT} />
                   <Field
-                    title="Titre du dossier :"
+                    title="Titre du dossier"
                     content={this.state.notice.TICO}
                   />
 
-                  <Field title="Légende :" content={this.state.notice.LEG} />
-                  <Field title="Titre :" content={this.state.notice.TITRE} />
+                  <Field title="Légende" content={this.state.notice.LEG} />
+                  <Field title="Titre" content={this.state.notice.TITRE} />
                   <Field
-                    title="Nom de théâtre :"
+                    title="Nom de théâtre"
                     content={this.state.notice.THEATRE}
                   />
-                  <Field title="Rôle joué :" content={this.state.notice.ROLE} />
+                  <Field title="Rôle joué" content={this.state.notice.ROLE} />
                   <Field
-                    title="Auteur de l’œuvre :"
+                    title="Auteur de l’œuvre"
                     content={this.state.notice.AUTOEU}
                   />
                   <Field
-                    title="Siècle de l’œuvre :"
+                    title="Siècle de l’œuvre"
                     content={this.state.notice.SCLE}
                   />
                   <Field
-                    title="Date de l’œuvre :"
+                    title="Date de l’œuvre"
                     content={this.state.notice.DATOEU}
                   />
                   <Field
-                    title="Lieu d’origine de l’élément réemployé :"
+                    title="Lieu d’origine de l’élément réemployé"
                     content={this.state.notice.LIEUORIG}
                   />
                   <Field
-                    title="Titre de la série :"
+                    title="Titre de la série"
                     content={this.state.notice.SERIE}
                   />
                   <Field
-                    title="Mots-clés :"
+                    title="Mots-clés"
                     content={
                       this.state.notice.MCL + " " + this.state.notice.SUJET
                     }
                   />
                   <Field
-                    title="Identité de la personne photographiée :"
+                    title="Identité de la personne photographiée"
                     content={this.state.notice.MCPER}
                   />
                   <Title
@@ -226,23 +226,23 @@ class Memoire extends React.Component {
                     fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
                   />
                   <Field
-                    title="Auteur du document original :"
+                    title="Auteur du document original"
                     content={this.state.notice.AUTOR}
                   />
                   <Field
-                    title="Référence bibliographique ou documentaire :"
+                    title="Référence bibliographique ou documentaire"
                     content={this.state.notice.TIREDE}
                   />
                   <Field
-                    title="Lieu de conservation :"
+                    title="Lieu de conservation"
                     content={this.state.notice.LIEUCOR}
                   />
                   <Field
-                    title="Cote de conservation :"
+                    title="Cote de conservation"
                     content={this.state.notice.COTECOR}
                   />
                   <Field
-                    title="Auteur de la gravure :"
+                    title="Auteur de la gravure"
                     content={this.state.notice.AUTG}
                   />
                 </div>
@@ -253,11 +253,11 @@ class Memoire extends React.Component {
                     fields={["AUTP", "AUTTI"]}
                   />
                   <Field
-                    title="Photographe ou dessinateur :"
+                    title="Photographe ou dessinateur"
                     content={this.state.notice.AUTP}
                   />
                   <Field
-                    title="Auteur du tirage :"
+                    title="Auteur du tirage"
                     content={this.state.notice.AUTTI}
                   />
                 </div>
@@ -328,76 +328,76 @@ class Memoire extends React.Component {
                     ]}
                   />
                   <Field
-                    title="Catégorie de phototype :"
+                    title="Catégorie de phototype"
                     content={this.state.notice.TYPDOC}
                   />
 
                   <Field
-                    title="Numéro du phototype :"
+                    title="Numéro du phototype"
                     content={this.state.notice.NUMI}
                   />
                   <Field
-                    title="Numéro du négatif :"
+                    title="Numéro du négatif"
                     content={this.state.notice.NUMP}
                   />
                   <Field
-                    title="Ancien numéro du négatif :"
+                    title="Ancien numéro du négatif"
                     content={this.state.notice.ANUMP}
                   />
                   <Field
-                    title="Numéro donné par le photographe :"
+                    title="Numéro donné par le photographe"
                     content={this.state.notice.NUMAUTP}
                   />
                   <Field
-                    title="Numéro du tirage :"
+                    title="Numéro du tirage"
                     content={this.state.notice.NUMTI}
                   />
                   <Field
-                    title="Ancien numéro du tirage :"
+                    title="Ancien numéro du tirage"
                     content={this.state.notice.ANUMTI}
                   />
                   <Field
-                    title="Numéro de reproduction :"
+                    title="Numéro de reproduction"
                     content={this.state.notice.REPRO}
                   />
                   <Field
-                    title="Numéro de la gravure :"
+                    title="Numéro de la gravure"
                     content={this.state.notice.NUMG}
                   />
                   <Field
-                    title="Numéro de l’original :"
+                    title="Numéro de l’original"
                     content={this.state.notice.NUMOR}
                   />
                   <Field
-                    title="Ancien numéro de l’original :"
+                    title="Ancien numéro de l’original"
                     content={this.state.notice.ANUMOR}
                   />
                   <Field
-                    title="Phototype(s) en relation :"
+                    title="Phototype(s) en relation"
                     content={this.state.notice.RENV}
                   />
                   <Field
-                    title="Lieu de conservation du tirage :"
+                    title="Lieu de conservation du tirage"
                     content={this.state.notice.LIEUCTI}
                   />
                   <Field
-                    title="Cote de conservation du tirage :"
+                    title="Cote de conservation du tirage"
                     content={this.state.notice.COTECTI}
                   />
                   <Field
-                    title="Précisions sur la conservation de l’original :"
+                    title="Précisions sur la conservation de l’original"
                     content={this.state.notice.PRECOR}
                   />
                   <Field
-                    title="Modalité d’entrée :"
+                    title="Modalité d’entrée"
                     content={this.state.notice.ACQU}
                   />
                   <Field
-                    title="Droits de diffusion :"
+                    title="Droits de diffusion"
                     content={this.state.notice.DIFF}
                   />
                   <Field
-                    title="Échelle du graphique :"
+                    title="Échelle du graphique"
                     content={this.state.notice.ECH}
                   />
                   <Title
@@ -417,39 +417,39 @@ class Memoire extends React.Component {
                     ]}
                   />
                   <Field
-                    title="Description technique du négatif :"
+                    title="Description technique du négatif"
                     content={this.state.notice.TECH}
                   />
                   <Field
-                    title="Format du négatif :"
+                    title="Format du négatif"
                     content={this.state.notice.FORMAT}
                   />
                   <Field
-                    title="Description technique du tirage :"
+                    title="Description technique du tirage"
                     content={this.state.notice.TECHTI}
                   />
                   <Field
-                    title="Format du tirage :"
+                    title="Format du tirage"
                     content={this.state.notice.FORMATTI}
                   />
                   <Field
-                    title="Description technique de l’original :"
+                    title="Description technique de l’original"
                     content={this.state.notice.TECHOR}
                   />
                   <Field
-                    title="Format de l'original :"
+                    title="Format de l'original"
                     content={this.state.notice.FORMATOR}
                   />
                   <Field
-                    title="Annotations présentes sur le négatif :"
+                    title="Annotations présentes sur le négatif"
                     content={this.state.notice.MENTIONS}
                   />
                   <Field
-                    title="Mentions tirage :"
+                    title="Mentions tirage"
                     content={this.state.notice.MENTTI}
                   />
                   <Field
-                    title="Orientation du phototype :"
+                    title="Orientation du phototype"
                     content={this.state.notice.SENS}
                   />
                   <Title
@@ -467,31 +467,31 @@ class Memoire extends React.Component {
                     ]}
                   />
                   <Field
-                    title="Date prise vue :"
+                    title="Date prise vue"
                     content={this.state.notice.DATPV}
                   />
                   <Field
-                    title="Précision sur la date de prise de vue :"
+                    title="Précision sur la date de prise de vue"
                     content={this.state.notice.JDATPV}
                   />
                   <Field
-                    title="Date de l'original :"
+                    title="Date de l'original"
                     content={this.state.notice.DATOR}
                   />
                   <Field
-                    title="Référence de publication de l’image :"
+                    title="Référence de publication de l’image"
                     content={this.state.notice.PUBLI}
                   />
                   <Field
-                    title="Observations :"
+                    title="Observations"
                     content={this.state.notice.OBS}
                   />
                   <Field
-                    title="Observations sur le tirage :"
+                    title="Observations sur le tirage"
                     content={this.state.notice.OBSTI}
                   />
                   <Field
-                    title="Observations sur l’original :"
+                    title="Observations sur l’original"
                     content={this.state.notice.OBSOR}
                   />
                 </div>
@@ -504,21 +504,21 @@ class Memoire extends React.Component {
               <h4>A propos de cette notice</h4>
               <hr />
               <div>
-                <Field title="Référence : " content={this.state.notice.REF} />
+                <Field title="Référence" content={this.state.notice.REF} />
                 <Field
-                  title="Date de création : "
+                  title="Date de création"
                   content={this.state.notice.DMIS}
                 />
                 <Field
-                  title="Date de modification : "
+                  title="Date de modification"
                   content={this.state.notice.DMAJ}
                 />
                 <Field
-                  title="Crédits photographiques : "
+                  title="Crédits photographiques"
                   content={this.state.notice.AUTP}
                 />
                 <Field
-                  title="Auteur de l'oeuvre ou de l'original : "
+                  title="Auteur de l'oeuvre ou de l'original"
                   content={this.state.notice.AUTOR}
                 />
                 <Field title="" content={this.state.notice.COPY} />

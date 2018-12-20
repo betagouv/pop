@@ -14,7 +14,7 @@ export default ({ content, title, separator, join = ", " }) => {
 
   return (
     <div id={title} className="field">
-      <h3>{title} </h3>
+      <h3>{title}</h3>
       <p>{str}</p>
     </div>
   );

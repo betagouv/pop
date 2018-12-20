@@ -3,18 +3,19 @@
 }
 
 .field p {
-  font-weight: bold;
+  font-weight: normal;
+  font-size: 1rem;
   word-wrap: break-word;
-  display: inline;
   white-space: pre-line;
+  margin-bottom: 25px;
 }
 
 .field h3 {
   font-size: 1rem;
-  font-weight: 400;
-  display: inline;
+  font-weight: 700;
   line-height: 1.5;
-  color: #212529;
+  color: #19414cd0;
   text-align: left;
   padding-right: 7px;
+  margin-bottom: 3px;
 }
