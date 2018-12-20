@@ -16,7 +16,6 @@ export default ({ title, icon, description, color, children }) => {
             />
             <div className="title">{title}</div>
           </div>
-          <hr />
         </Col>
       </Row>
       <Row>{children}</Row>
