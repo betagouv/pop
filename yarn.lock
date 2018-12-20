@@ -8068,10 +8068,10 @@ polished@^1.9.3:
   resolved "https://registry.yarnpkg.com/polished/-/polished-1.9.3.tgz#d61b8a0c4624efe31e2583ff24a358932b6b75e1"
   integrity sha512-4NmSD7fMFlM8roNxs7YXPv7UFRbYzb0gufR5zBxJLRzY54+zFsavxBo6zsQzP9ep6Hh3pC2pTyrpSTBEaB6IkQ==
 
-pop-shared@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/pop-shared/-/pop-shared-0.5.6.tgz#c8a97596be5b037a4b8309e78c63d1e9f839da5e"
-  integrity sha512-DI/ZTin+Eh18rbw5FaGdPSQA5SnpWx/h+v0o6rqdA/xwEamRqMJZ2dSYbGI8tuWzKKLaSnz+ZyaK3lo0w99/EQ==
+pop-shared@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/pop-shared/-/pop-shared-0.5.7.tgz#f79e3423e3f6c8129b308c71b03411dc8bdc9611"
+  integrity sha512-jNhgyDMUVBdL9da6Gd/XayR964qrHn1cqhL3E2NS8eEAC9QB1ihrp7syKHnXUMYt0aDw3rNXDAq2EaDZjVYU3Q==
 
 popper.js@^1.12.9:
   version "1.14.3"

@@ -144,7 +144,7 @@ export default class Memoire extends Notice {
     ////////////////////////////We can mutualise this code to all notice. Must be done after the MVP
     const memoireMapping = Mapping.memoire;
     for (let key in memoireMapping) {
-      if (memoireMapping[key].validation && this[key]) {
+      if (memoireMapping[key].validation && this[key] && this[key].value) {
         let validate = true;
         switch (memoireMapping[key].validation) {
           case "Alphanumeric":
@@ -156,7 +156,7 @@ export default class Memoire extends Notice {
         }
 
         if(!validate){
-          this._errors.push(`Le champ ${key} n'est pas de type ${memoireMapping[key].validation}`)
+          this._errors.push(`Le champ ${key} avec la valeur "${this[key].value}" n'est pas de type ${memoireMapping[key].validation}`)
         }
       }
     }
