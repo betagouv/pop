@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Row, Col, Container } from "reactstrap";
 import Field from "./components/field";
 import LinkedNotices from "./components/LinkedNotices";
@@ -13,113 +14,82 @@ import { postFixedLink } from "./utils";
 
 class Merimee extends React.Component {
   state = {
-    notice: null,
     error: "",
-    links: null,
-    loading: true
+    loading: false
   };
 
   componentDidMount() {
-    this.load(this.props.match.params.ref);
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
-      this.load(newProps.match.params.ref);
+    const { match, fetchNotice, notice } = this.props;
+    if(notice === null) {
+      this.setState({ loading: true });
+      fetchNotice(match.params.ref, true);
     }
   }
 
-  load(ref) {
-    this.setState({ loading: true });
-    API.getNotice("merimee", ref).then(notice => {
-      console.log(notice);
-      this.setState({ loading: false, notice });
-
-      const { RENV, REFP, REFE, REFO } = notice;
-      // RENV -> MERIMEE
-      // REFP -> MERIMEE
-      // REFE -> MERIMEE
-      // REFO -> PALISSY
-      const arr = [];
-      for (let i = 0; Array.isArray(RENV) && i < RENV.length; i++) {
-        arr.push(API.getNotice("merimee", RENV[i]));
-        if (arr.length > 50) break;
-      }
-      for (let i = 0; Array.isArray(REFP) && i < REFP.length; i++) {
-        arr.push(API.getNotice("merimee", REFP[i]));
-        if (arr.length > 50) break;
-      }
-      for (let i = 0; Array.isArray(REFE) && i < REFE.length; i++) {
-        arr.push(API.getNotice("merimee", REFE[i]));
-        if (arr.length > 50) break;
-      }
-      for (let i = 0; Array.isArray(REFO) && i < REFO.length; i++) {
-        arr.push(API.getNotice("palissy", REFO[i]));
-        if (arr.length > 50) break;
-      }
-      Promise.all(arr).then(values => {
-        const links = [];
-        for (let i = 0; i < values.length; i++) {
-          if (!values[i]) {
-            console.log("IMPOSSIBLE DE CHARGER LA NOTICE");
-          } else {
-            links.push(values[i]);
-          }
-        }
-        this.setState({ links });
+  componentDidUpdate(prevProps) {
+    const { notice } = this.props;
+    const { notice: prevNotice } = prevProps;
+    if(notice !== null && notice !== prevNotice) {
+      this.setState({
+        loading: false,
       });
-    });
+    }
   }
 
-  getMetaDescription = ()=> {
-    const titre =  this.state.notice.TICO || this.state.notice.TITR;
-    const datation = this.state.notice.SCLE? this.state.notice.SCLE.join(' ') : '';
-    if(this.state.notice.DENO && this.state.notice.DENO.length === 1) {
-      const category = this.state.notice.DENO[0];
+  getMeta = ()=> {
+    const { notice } = this.props;
+    const title =  notice.TICO || notice.TITR;
+    const datation = notice.SCLE? notice.SCLE.join(' ') : '';
+    if(notice.DENO && notice.DENO.length === 1) {
+      const category = notice.DENO[0];
       if(category.toLowerCase() === "église") {
-        return `Découvrez ${titre}, cette ${category} du ${datation}. Cliquez ici !`;
+        return {
+          title: title? `${title} - POP` : `${notice.REF} - POP`,
+          description: `Découvrez ${title? title : notice.REF}, cette ${category} du ${datation}. Cliquez ici !`,
+        }
       }
     }
-    return `Découvrez ${titre}, du ${datation}. Cliquez ici !`;
+
+    return {
+      title: title? `${title} - POP` : `${notice.REF} - POP`,
+      description: `Découvrez ${title? title : notice.REF}, du ${datation}. Cliquez ici !`,
+    }
   }
 
   render() {
     if (this.state.loading) {
       return <Loader />;
     }
-
-    if (!this.state.notice) {
+    const { notice, links } = this.props;
+    if (!notice) {
       return <NotFound />;
     }
 
-    const description = this.getMetaDescription();
+    const meta = this.getMeta();
     return (
       <Container className="notice" fluid>
         <Helmet
-            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description={description}
+          title={meta.title}
+          description={meta.description}
         />
         <Row className="top-section">
           <Col>
-            <h1 className="heading">{this.state.notice.TICO}</h1>
+            <h1 className="heading">{notice.TICO}</h1>
           </Col>
         </Row>
         <Row>
           <Col sm="9">
             <Header
-              notice={this.state.notice}
+              notice={notice}
               externalImages={false}
-              images={this.state.notice.MEMOIRE}
+              images={notice.MEMOIRE}
             />
             <Row>
               <Col sm="12">
                 <div className="notice-details">
                   <Title
                     content="Désignation"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "DENO",
                       "GENR",
@@ -132,32 +102,32 @@ class Merimee extends React.Component {
                   />
                   <Field
                     title="Dénomination"
-                    content={this.state.notice.DENO}
+                    content={notice.DENO}
                   />
                   <Field
                     title="Destinataire"
-                    content={this.state.notice.GENR}
+                    content={notice.GENR}
                   />
                   <Field
                     title="Précision sur la dénomination"
-                    content={this.state.notice.PDEN}
+                    content={notice.PDEN}
                   />
-                  <Field title="Vocable" content={this.state.notice.VOCA} />
+                  <Field title="Vocable" content={notice.VOCA} />
                   <Field
                     title="Appellation et titre"
-                    content={this.state.notice.APPL}
+                    content={notice.APPL}
                   />
                   <Field
                     title="Destinations successives et actuelle"
-                    content={this.state.notice.ACTU}
+                    content={notice.ACTU}
                   />
                   <Field
                     title="Titre courant"
-                    content={this.state.notice.TICO}
+                    content={notice.TICO}
                   />
                   <Title
                     content="Localisation"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "REG",
                       "DPT",
@@ -179,55 +149,55 @@ class Merimee extends React.Component {
                   <Field
                     title="Localisation"
                     content={
-                      this.state.notice.REG +
+                      notice.REG +
                       " " +
-                      this.state.notice.DPT +
+                      notice.DPT +
                       " " +
-                      this.state.notice.COM
+                      notice.COM
                     }
                   />
                   <Field
                     title="Précision sur la localisation"
-                    content={this.state.notice.PLOC}
+                    content={notice.PLOC}
                   />
                   <Field
                     title="Aire d'étude"
-                    content={this.state.notice.AIRE}
+                    content={notice.AIRE}
                   />
-                  <Field title="Canton" content={this.state.notice.CANT} />
-                  <Field title="Lieu-dit" content={this.state.notice.LIEU} />
-                  <Field title="Adresse" content={this.state.notice.ADRS} />
+                  <Field title="Canton" content={notice.CANT} />
+                  <Field title="Lieu-dit" content={notice.LIEU} />
+                  <Field title="Adresse" content={notice.ADRS} />
                   <Field
                     title="Référence cadastrale"
-                    content={this.state.notice.CADA}
+                    content={notice.CADA}
                   />
                   <Field
                     title="Milieu d'implantation"
-                    content={this.state.notice.IMPL}
+                    content={notice.IMPL}
                   />
                   <Field
                     title="Cours d'eau"
-                    content={this.state.notice.HYDR}
+                    content={notice.HYDR}
                   />
                   <Field
                     title="Parties non étud"
-                    content={this.state.notice.PARN}
+                    content={notice.PARN}
                   />
                   <Field
                     title="Edifice de conservation"
-                    content={this.state.notice.EDIF}
+                    content={notice.EDIF}
                   />
                   <Field
                     title="Référence de l'édifice de conservation"
-                    content={this.state.notice.REFE}
+                    content={notice.REFE}
                   />
                   <Field
                     title="Décompte des oeuvres recensées"
-                    content={this.state.notice.COLL}
+                    content={notice.COLL}
                   />
                   <Title
                     content="Historique"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "SCLE",
                       "SCLD",
@@ -244,49 +214,49 @@ class Merimee extends React.Component {
                   />
                   <Field
                     title="Datation des campagnes principales de construction"
-                    content={this.state.notice.SCLE}
+                    content={notice.SCLE}
                   />
                   <Field
                     title="Datation des campagnes secondaires de construction"
-                    content={this.state.notice.SCLD}
+                    content={notice.SCLD}
                   />
                   <Field
                     title="Datation en années"
-                    content={this.state.notice.DATE}
+                    content={notice.DATE}
                   />
                   <Field
                     title="Justification de la datation"
-                    content={this.state.notice.JDAT}
+                    content={notice.JDAT}
                   />
                   <Field
                     title="Auteurs de l'oeuvre"
-                    content={this.state.notice.AUTR}
+                    content={notice.AUTR}
                   />
                   <Field
                     title="Référence auteur"
-                    content={this.state.notice.REFM}
+                    content={notice.REFM}
                   />
                   <Field
                     title="Justification de l'attribution"
-                    content={this.state.notice.JATT}
+                    content={notice.JATT}
                   />
                   <Field
                     title="Personnalitées"
-                    content={this.state.notice.PERS}
+                    content={notice.PERS}
                   />
-                  <Field title="Remploi" content={this.state.notice.REMP} />
+                  <Field title="Remploi" content={notice.REMP} />
                   <Field
                     title="Partie déplacée"
-                    content={this.state.notice.DEPL}
+                    content={notice.DEPL}
                   />
                   <Field
                     title="Commentaire historique"
-                    content={this.state.notice.HIST}
+                    content={notice.HIST}
                     separator="£"
                   />
                   <Title
                     content="Description"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "MURS",
                       "TOIT",
@@ -309,76 +279,76 @@ class Merimee extends React.Component {
                   />
                   <Field
                     title="Matériau du gros-oeuvre et mise en oeuvre"
-                    content={this.state.notice.MURS}
+                    content={notice.MURS}
                   />
                   <Field
                     title="Matériau de la couverture"
-                    content={this.state.notice.TOIT}
+                    content={notice.TOIT}
                   />
                   <Field
                     title="Parti de plan"
-                    content={this.state.notice.PLAN}
+                    content={notice.PLAN}
                   />
                   <Field
                     title="Vaisseau et étage"
-                    content={this.state.notice.ETAG}
+                    content={notice.ETAG}
                   />
                   <Field
                     title="Type et nature du couvrement"
-                    content={this.state.notice.VOUT}
+                    content={notice.VOUT}
                   />
                   <Field
                     title="Parti d’élévation extérieure"
-                    content={this.state.notice.ELEV}
+                    content={notice.ELEV}
                   />
                   <Field
                     title="Type de la couverture"
-                    content={this.state.notice.COUV}
+                    content={notice.COUV}
                   />
                   <Field
                     title="Emplacement, forme et structure de l’escalier"
-                    content={this.state.notice.ESCA}
+                    content={notice.ESCA}
                   />
                   <Field
                     title="Source de l'énergie"
-                    content={this.state.notice.ENER}
+                    content={notice.ENER}
                   />
                   <Field
                     title="Couvert et découvert de jardin"
-                    content={this.state.notice.VERT}
+                    content={notice.VERT}
                   />
                   <Field
                     title="Commentaire description"
-                    content={this.state.notice.DESC}
+                    content={notice.DESC}
                     separator="£"
                   />
                   <Field
                     title="Technique du décor des immeubles par nature"
-                    content={this.state.notice.TECH}
+                    content={notice.TECH}
                   />
                   <Field
                     title="Représentation"
-                    content={this.state.notice.REPR}
+                    content={notice.REPR}
                   />
                   <Field
                     title="Précision sur la représentation"
-                    content={this.state.notice.PREP}
+                    content={notice.PREP}
                   />
                   <Field
                     title="Dimensions"
-                    content={this.state.notice.DIMS}
+                    content={notice.DIMS}
                   />
                   <Field
                     title="Typologie"
-                    content={this.state.notice.TYPO}
+                    content={notice.TYPO}
                   />
                   <Field
                     title="Etat de conservation"
-                    content={this.state.notice.ETAT}
+                    content={notice.ETAT}
                   />
                   <Title
                     content="Protection"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "PROT",
                       "DPRO",
@@ -396,80 +366,80 @@ class Merimee extends React.Component {
                   />
                   <Field
                     title="Nature de la protection MH"
-                    content={this.state.notice.PROT}
+                    content={notice.PROT}
                   />
                   <Field
                     title="Date protection"
-                    content={this.state.notice.DPRO}
+                    content={notice.DPRO}
                   />
                   <Field
                     title="Précisions sur la protection MH"
-                    content={this.state.notice.PPRO}
+                    content={notice.PPRO}
                   />
                   <Field
                     title="Nature de l'acte de protection MH"
-                    content={this.state.notice.APRO}
+                    content={notice.APRO}
                   />
                   <Field
                     title="Eléments protégés MH"
-                    content={this.state.notice.MHPP}
+                    content={notice.MHPP}
                   />
                   <Field
                     title="Référence aux objects conservés dans l'édifice"
-                    content={this.state.notice.REFO}
+                    content={notice.REFO}
                   />
                   <Field
                     title="Site, secteur ou zone de protection"
-                    content={this.state.notice.SITE}
+                    content={notice.SITE}
                   />
                   <Field
                     title="Intérêt de l'oeuvre"
-                    content={this.state.notice.INTE}
+                    content={notice.INTE}
                   />
                   <Field
                     title="intérêt oeuvre"
-                    content={this.state.notice.PINT}
+                    content={notice.PINT}
                   />
                   <Field
                     title="Eléments remarquables"
-                    content={this.state.notice.REMA}
+                    content={notice.REMA}
                   />
                   <Field
                     title="Date du label"
-                    content={this.state.notice.DLAB}
+                    content={notice.DLAB}
                   />
                   <Field
                     title="Observations"
-                    content={this.state.notice.OBS}
+                    content={notice.OBS}
                   />
                   <Title
                     content="Statut juridique"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={["STAT", "PSTA", "AFFE", "PAFF", "VISI"]}
                   />
                   <Field
                     title="Statut de la propriété"
-                    content={this.state.notice.STAT}
+                    content={notice.STAT}
                   />
                   <Field
                     title="Précisions sur le statut de la propriété: "
-                    content={this.state.notice.PSTA}
+                    content={notice.PSTA}
                   />
                   <Field
                     title="Affectataire"
-                    content={this.state.notice.AFFE}
+                    content={notice.AFFE}
                   />
                   <Field
                     title="Précisions sur l'affectataire"
-                    content={this.state.notice.PAFF}
+                    content={notice.PAFF}
                   />
                   <Field
                     title="Ouverture au public"
-                    content={this.state.notice.VISI}
+                    content={notice.VISI}
                   />
                   <Title
                     content="Références documentaires"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "DENQ",
                       "COPY",
@@ -486,75 +456,75 @@ class Merimee extends React.Component {
                   />
                   <Field
                     title="Date d'enquête"
-                    content={this.state.notice.DENQ}
+                    content={notice.DENQ}
                   />
-                  <Field title="Crédits" content={this.state.notice.COPY} />
+                  <Field title="Crédits" content={notice.COPY} />
                   <Field
                     title="Date de rédaction de la notice"
-                    content={this.state.notice.DBOR}
+                    content={notice.DBOR}
                   />
                   <Field
                     title="Noms des rédacteurs de la notice et du dossier"
-                    content={this.state.notice.NOMS}
+                    content={notice.NOMS}
                   />
                   <Field
                     title="Cadre de l'étude"
-                    content={this.state.notice.ETUD}
+                    content={notice.ETUD}
                   />
-                  <Field title="Dossier" content={this.state.notice.DOSS} />
+                  <Field title="Dossier" content={notice.DOSS} />
                   <Field
                     title="Référence images"
-                    content={this.state.notice.REFIM}
+                    content={notice.REFIM}
                   />
                   <Field
                     title="Visite guidé"
-                    content={this.state.notice.WEB}
+                    content={notice.WEB}
                   />
                   <Field
                     title="Référence dans la base Patriarche"
-                    content={this.state.notice.ARCHEO}
+                    content={notice.ARCHEO}
                   />
                   <Field
                     title="Dossier adresse"
-                    content={this.state.notice.DOSADRS}
+                    content={notice.DOSADRS}
                     separator="£"
                   />
                   <Field
                     title="Autres liens"
-                    content={this.state.notice.IMAGE}
+                    content={notice.IMAGE}
                   />
                 </div>
               </Col>
             </Row>
           </Col>
           <Col sm="3">
-            <LinkedNotices links={this.state.links} />
+            <LinkedNotices links={links} />
             <div className="sidebar-section info">
               <h4>A propos de cette notice</h4>
               <hr />
               <div>
-                <Field title="Référence" content={this.state.notice.REF} />
+                <Field title="Référence" content={notice.REF} />
                 <Field
                   title="Date de création"
-                  content={this.state.notice.DMIS}
+                  content={notice.DMIS}
                 />
                 <Field
                   title="Dernière mise à jour"
-                  content={this.state.notice.DMAJ}
+                  content={notice.DMAJ}
                 />
-                <Field title="Rédacteur" content={this.state.notice.NOMS} />
+                <Field title="Rédacteur" content={notice.NOMS} />
                 <Field
                   title="Crédits photographiques"
-                  content={this.state.notice.AUTP}
+                  content={notice.AUTP}
                 />
-                <Field title="" content={this.state.notice.COPY} />
+                <Field title="" content={notice.COPY} />
               </div>
               <ContactUs
-                contact={this.state.notice.CONTACT}
-                reference={this.state.notice.REF}
+                contact={notice.CONTACT}
+                reference={notice.REF}
               />
             </div>
-            <SeeMore notice={this.state.notice} />
+            <SeeMore notice={notice} />
           </Col>
         </Row>
       </Container>
@@ -618,4 +588,23 @@ const SeeMore = ({ notice }) => {
   );
 };
 
-export default Merimee;
+const mapStateToProps = (state) => ({
+  notice: state.app.notice,
+  links: state.app.links
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotice: (ref, withLinks) => {
+    dispatch({
+      type: "notice/WILL_FETCH",
+      ref,
+      withLinks,
+      base: "merimee",
+    });
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Merimee);

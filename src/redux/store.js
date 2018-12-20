@@ -23,13 +23,25 @@ export default (url = '/') => {
   const sagaMiddleware = createSagaMiddleware();
   const routerMiddlewareWithHistory = routerMiddleware(history);
   const middlewares = [sagaMiddleware, routerMiddlewareWithHistory];
+  const enhancers = [];
+
+  if (process.env.NODE_ENV === 'dev' && typeof window !== 'undefined') {
+    const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
+
+    if (typeof devToolsExtension === 'function') {
+        enhancers.push(devToolsExtension());
+    }
+  }
 
   const store = createStore(
     combineReducers({
       ...reducers,
       router: routerReducer
     }),
-    compose(applyMiddleware(...middlewares))
+    compose(
+      applyMiddleware(...middlewares),
+      ...enhancers
+    )
   );
   sagaMiddleware.run(rootSaga);
   return {

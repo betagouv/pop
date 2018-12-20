@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Row, Col, Container } from "reactstrap";
 import Field from "./components/field";
 import Helmet from "../../components/Helmet";
@@ -8,73 +9,49 @@ import Title from "./components/title";
 import Loader from "../../components/loader";
 import Header from "./components/header";
 import API from "../../services/api";
-import { findCollection } from "./utils";
 import ContactUs from "./components/ContactUs";
 
 class Palissy extends React.Component {
   state = {
-    notice: null,
     error: "",
-    loading: true,
-    links: null
+    loading: false,
   };
 
   componentDidMount() {
-    this.load(this.props.match.params.ref);
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
-      this.load(newProps.match.params.ref);
+    const { match, fetchNotice, notice } = this.props;
+    if(notice === null) {
+      this.setState({ loading: true });
+      fetchNotice(match.params.ref, true);
     }
   }
 
-  load(ref) {
-    this.setState({ loading: true });
-    API.getNotice("palissy", ref).then(notice => {
-      this.setState({ loading: false, notice });
-
-      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice;
-      // RENV -> MERIMEE
-      // REFP -> MERIMEE
-      // REFE -> MERIMEE
-      // REFA -> MERIMEE
-      // LBASE2 -> MERIMEE
-      const arr = [];
-      [...RENV, ...REFP, ...REFE, ...REFA, LBASE2]
-        .filter(e => e && e != REF)
-        .forEach(e => {
-          const collection = findCollection(e);
-          arr.push(API.getNotice(collection, e));
-        });
-
-      Promise.all(arr).then(values => {
-        const links = [];
-        for (let i = 0; i < values.length; i++) {
-          if (!values[i]) {
-            console.log("IMPOSSIBLE DE CHARGER LA NOTICE");
-          } else {
-            links.push(values[i]);
-          }
-        }
-        this.setState({ links });
+  componentDidUpdate(prevProps) {
+    const { notice } = this.props;
+    const { notice: prevNotice } = prevProps;
+    if(notice !== null && notice !== prevNotice) {
+      this.setState({
+        loading: false,
       });
-    });
+    }
   }
 
-  getMetaDescription = ()=> {
-    const titre =  this.state.notice.TICO || this.state.notice.TITR;
-    const auteur = this.state.notice.AUTR? this.state.notice.AUTR.join(' ') : '';
-    if(this.state.notice.CATE && this.state.notice.CATE.length === 1) {
-      const category = this.state.notice.CATE[0];
+  getMeta = ()=> {
+    const { notice } = this.props;
+    const title =  notice.TICO || notice.TITR;
+    const auteur = notice.AUTR? notice.AUTR.join(' ') : '';
+    if(notice.CATE && notice.CATE.length === 1) {
+      const category = notice.CATE[0];
       if(category.toLowerCase() === "sculpture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`;
+        return {
+          title: title? `${title} - POP` : `${notice.REF} - POP`,
+          description: `Découvrez ${title? title : notice.REF}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`,
+        }
       }
     }
-    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+    return {
+      title: title? `${title} - POP` : `${notice.REF} - POP`,
+      description: `Découvrez ${title? title : notice.REF}, par ${auteur}. Cliquez ici !`,
+    }
   }
 
   render() {
@@ -82,57 +59,58 @@ class Palissy extends React.Component {
       return <Loader />;
     }
 
-    if (!this.state.notice) {
+    const { notice, links } = this.props;
+    if (!notice) {
       return <NotFound />;
     }
 
-    const description = this.getMetaDescription();
+    const meta = this.getMeta();
     return (
       <Container className="notice" fluid>
         <Helmet
-            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description={description}
+          title={meta.title}
+          description={meta.description}
         />
         <Row className="top-section">
           <Col>
-            <h1 className="heading">{this.state.notice.TICO}</h1>
+            <h1 className="heading">{notice.TICO}</h1>
           </Col>
         </Row>
         <Row>
           <Col sm="9">
             <Header
-              notice={this.state.notice}
+              notice={notice}
               externalImages={true}
-              images={this.state.notice.MEMOIRE}
+              images={notice.MEMOIRE}
             />
             <Row>
               <Col sm="12">
                 <div className="notice-details">
                   <Title
                     content="Désignation"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={["DENO", "PDEN", "NART", "APPL", "TICO"]}
                   />
                   <Field
                     title="Dénomination"
-                    content={this.state.notice.DENO}
+                    content={notice.DENO}
                   />
                   <Field
                     title="Précision sur la dénomination"
-                    content={this.state.notice.PDEN}
+                    content={notice.PDEN}
                   />
-                  <Field title="Numéro" content={this.state.notice.NART} />
+                  <Field title="Numéro" content={notice.NART} />
                   <Field
                     title="Appellation et titre"
-                    content={this.state.notice.APPL}
+                    content={notice.APPL}
                   />
                   <Field
                     title="Titre courant"
-                    content={this.state.notice.TICO}
+                    content={notice.TICO}
                   />
                   <Title
                     content="Localisation"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "REG",
                       "DPT",
@@ -151,52 +129,52 @@ class Palissy extends React.Component {
                       "VOLS"
                     ]}
                   />
-                  <Field title="Région" content={this.state.notice.REG} />
+                  <Field title="Région" content={notice.REG} />
                   <Field
                     title="Département"
-                    content={this.state.notice.DPT}
+                    content={notice.DPT}
                   />
-                  <Field title="Commune" content={this.state.notice.COM} />
+                  <Field title="Commune" content={notice.COM} />
                   <Field
                     title="Numéro INSEE de la commune"
-                    content={this.state.notice.INSEE}
+                    content={notice.INSEE}
                   />
                   <Field
                     title="Précision sur la localisation"
-                    content={this.state.notice.PLOC}
+                    content={notice.PLOC}
                   />
                   <Field
                     title="Aire d'étude"
-                    content={this.state.notice.AIRE}
+                    content={notice.AIRE}
                   />
-                  <Field title="Canton" content={this.state.notice.CANT} />
-                  <Field title="Lieu-dit " content={this.state.notice.LIEU} />
-                  <Field title="Adresse" content={this.state.notice.ADRS} />
+                  <Field title="Canton" content={notice.CANT} />
+                  <Field title="Lieu-dit " content={notice.LIEU} />
+                  <Field title="Adresse" content={notice.ADRS} />
                   <Field
                     title="Edifice de conservation"
-                    content={this.state.notice.EDIF}
+                    content={notice.EDIF}
                   />
                   <Field
                     title="Référence de l'édifice de conservation"
-                    content={this.state.notice.REFA}
+                    content={notice.REFA}
                   />
                   <Field
                     title="Milieu d'implantation"
-                    content={this.state.notice.IMPL}
+                    content={notice.IMPL}
                   />
                   <Field
                     title="Emplacement de l’œuvre dans l’édifice"
-                    content={this.state.notice.EMPL}
+                    content={notice.EMPL}
                   />
                   <Field
                     title="Partie déplacée"
-                    content={this.state.notice.DEPL}
+                    content={notice.DEPL}
                   />
-                  <Field title="Vols" content={this.state.notice.VOLS} />
+                  <Field title="Vols" content={notice.VOLS} />
 
                   <Title
                     content="Description"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "CATE",
                       "STRU",
@@ -214,58 +192,58 @@ class Palissy extends React.Component {
                   />
                   <Field
                     title="Catégorie technique"
-                    content={this.state.notice.CATE}
+                    content={notice.CATE}
                   />
                   <Field
                     title="Structure et typologie"
-                    content={this.state.notice.STRU}
+                    content={notice.STRU}
                   />
                   <Field
                     title="Matériaux et techniques"
-                    content={this.state.notice.MATR}
+                    content={notice.MATR}
                   />
                   <Field
                     title="Commentaire description"
-                    content={this.state.notice.DESC}
+                    content={notice.DESC}
                     separator="£"
                   />
                   <Field
                     title="Représentation"
-                    content={this.state.notice.REPR}
+                    content={notice.REPR}
                     separator="£"
                   />
                   <Field
                     title="Précision sur la représentation"
-                    content={this.state.notice.PREP}
+                    content={notice.PREP}
                   />
                   <Field
                     title="Dimensions"
-                    content={this.state.notice.DIMS}
+                    content={notice.DIMS}
                     separator="£"
                   />
                   <Field
                     title="Précisions sur les dimensions"
-                    content={this.state.notice.PDIM}
+                    content={notice.PDIM}
                   />
                   <Field
                     title="Etat de conservation"
-                    content={this.state.notice.ETAT}
+                    content={notice.ETAT}
                   />
                   <Field
                     title="Précisions sur l’état de conservation"
-                    content={this.state.notice.PETA}
+                    content={notice.PETA}
                   />
                   <Field
                     title="Inscriptions"
-                    content={this.state.notice.INSC}
+                    content={notice.INSC}
                   />
                   <Field
                     title="Précisions sur l’inscription"
-                    content={this.state.notice.PINS}
+                    content={notice.PINS}
                   />
                   <Title
                     content="Historique"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "AUTR",
                       "AFIG",
@@ -283,54 +261,54 @@ class Palissy extends React.Component {
                   />
                   <Field
                     title="Auteurs de l'oeuvre"
-                    content={this.state.notice.AUTR}
+                    content={notice.AUTR}
                   />
                   <Field
                     title="Auteur de la source figurée"
-                    content={this.state.notice.AFIG}
+                    content={notice.AFIG}
                   />
-                  <Field title="Atelier" content={this.state.notice.ATEL} />
+                  <Field title="Atelier" content={notice.ATEL} />
                   <Field
                     title="Référence auteur"
-                    content={this.state.notice.REFM}
+                    content={notice.REFM}
                   />
                   <Field
                     title="Personnalitées"
-                    content={this.state.notice.PERS}
+                    content={notice.PERS}
                   />
                   <Field
                     title="Lieu d’exécution"
-                    content={this.state.notice.EXEC}
+                    content={notice.EXEC}
                   />
                   <Field
                     title="Lieu de provenance"
-                    content={this.state.notice.ORIG}
+                    content={notice.ORIG}
                   />
                   <Field
                     title="Stade de création"
-                    content={this.state.notice.STAD}
+                    content={notice.STAD}
                   />
 
                   <Field
                     title="Datation des campagnes principales de construction"
-                    content={this.state.notice.SCLE}
+                    content={notice.SCLE}
                   />
                   <Field
                     title="Datation en années"
-                    content={this.state.notice.DATE}
+                    content={notice.DATE}
                   />
                   <Field
                     title="Justification de la datation"
-                    content={this.state.notice.JDAT}
+                    content={notice.JDAT}
                   />
                   <Field
                     title="Commentaire historique"
-                    content={this.state.notice.HIST}
+                    content={notice.HIST}
                     separator="£"
                   />
                   <Title
                     content="Statut juridique et protection"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "STAT",
                       "PROT",
@@ -350,62 +328,62 @@ class Palissy extends React.Component {
                   />
                   <Field
                     title="Statut de la propriété"
-                    content={this.state.notice.STAT}
+                    content={notice.STAT}
                   />
                   <Field
                     title="Nature de la protection MH"
-                    content={this.state.notice.PROT}
+                    content={notice.PROT}
                   />
                   <Field
                     title="Date de protection"
-                    content={this.state.notice.DPRO}
+                    content={notice.DPRO}
                   />
                   <Field
                     title="Précisions sur la protection MH"
-                    content={this.state.notice.PPRO}
+                    content={notice.PPRO}
                   />
                   <Field
                     title="Numéro de l’arrêté"
-                    content={this.state.notice.NUMA}
+                    content={notice.NUMA}
                   />
                   <Field
                     title="Numéro d’inventaire"
-                    content={this.state.notice.NINV}
+                    content={notice.NINV}
                   />
 
                   <Field
                     title="Observations"
-                    content={this.state.notice.OBS}
+                    content={notice.OBS}
                   />
                   <Field
                     title="Intérêt de l'oeuvre"
-                    content={this.state.notice.INTE}
+                    content={notice.INTE}
                   />
                   <Field
                     title="Intérêt oeuvre"
-                    content={this.state.notice.PINT}
+                    content={notice.PINT}
                   />
                   <Field
                     title="Acquisition"
-                    content={this.state.notice.ACQU}
+                    content={notice.ACQU}
                   />
                   <Field
                     title="Exposition"
-                    content={this.state.notice.EXPO}
+                    content={notice.EXPO}
                   />
                   <Field
                     title="Bibliographie"
-                    content={this.state.notice.BIBL}
+                    content={notice.BIBL}
                   />
-                  <Field title="Sources" content={this.state.notice.SOUR} />
+                  <Field title="Sources" content={notice.SOUR} />
                   <Field
                     title="Photographies"
-                    content={this.state.notice.PHOTO}
+                    content={notice.PHOTO}
                   />
 
                   <Title
                     content="Références documentaires"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "ETUD",
                       "DOSS",
@@ -424,87 +402,87 @@ class Palissy extends React.Component {
                   />
                   <Field
                     title="Cadre de l'étude"
-                    content={this.state.notice.ETUD}
+                    content={notice.ETUD}
                   />
-                  <Field title="Dossier" content={this.state.notice.DOSS} />
+                  <Field title="Dossier" content={notice.DOSS} />
                   <Field
                     title="Parties constituantes"
-                    content={this.state.notice.PART}
+                    content={notice.PART}
                   />
                   <Field
                     title="Références des parties constituantes étudiées"
-                    content={this.state.notice.REFP}
+                    content={notice.REFP}
                   />
                   <Field
                     title="Parties non étud"
-                    content={this.state.notice.PARN}
+                    content={notice.PARN}
                   />
                   <Field
                     title="Préc. appart."
-                    content={this.state.notice.PAPP}
+                    content={notice.PAPP}
                   />
                   <Field
                     title="Référence de l'édifice de conservation"
-                    content={this.state.notice.REFE}
+                    content={notice.REFE}
                   />
                   <Field
                     title="Date d'enquête"
-                    content={this.state.notice.DENQ}
+                    content={notice.DENQ}
                   />
                   <Field
                     title="Date de rédaction de la notice"
-                    content={this.state.notice.DBOR}
+                    content={notice.DBOR}
                   />
                   <Field
                     title="Lexique noms propres"
-                    content={this.state.notice.RENP}
+                    content={notice.RENP}
                   />
 
                   <Field
                     title="Dossier adresse"
-                    content={this.state.notice.DOSADRS}
+                    content={notice.DOSADRS}
                     separator="£"
                   />
                   <Field
                     title="Autres liens"
-                    content={this.state.notice.IMAGE}
+                    content={notice.IMAGE}
                   />
                   <Field
                     title="Visite guidé"
-                    content={this.state.notice.WEB}
+                    content={notice.WEB}
                   />
                 </div>
               </Col>
             </Row>
           </Col>
           <Col sm="3">
-            <LinkedNotices links={this.state.links} />
+            <LinkedNotices links={links} />
             <div className="sidebar-section info">
               <h4>A propos de cette notice</h4>
               <hr />
               <div>
-                <Field title="Référence" content={this.state.notice.REF} />
+                <Field title="Référence" content={notice.REF} />
                 <Field
                   title="Date de création"
-                  content={this.state.notice.DMIS}
+                  content={notice.DMIS}
                 />
                 <Field
                   title="Dernière mise à jour"
-                  content={this.state.notice.DMAJ}
+                  content={notice.DMAJ}
                 />
-                <Field title="Rédacteur" content={this.state.notice.NOMS} />
+                <Field title="Rédacteur" content={notice.NOMS} />
                 <Field
                   title="Crédits photographiques"
-                  content={this.state.notice.AUTP}
+                  content={notice.AUTP}
                 />
-                <Field title="" content={this.state.notice.COPY} />
+                <Field title="" content={notice.COPY} />
               </div>
               <ContactUs
-                contact={this.state.notice.CONTACT}
-                reference={this.state.notice.REF}
+                contact={notice.CONTACT}
+                reference={notice.REF}
               />
             </div>
-            <SeeMore notice={this.state.notice} />
+            <SeeMore notice={notice} />
           </Col>
         </Row>
       </Container>
@@ -566,4 +544,23 @@ const SeeMore = ({ notice }) => {
   );
 };
 
-export default Palissy;
+const mapStateToProps = (state) => ({
+  notice: state.app.notice,
+  links: state.app.links
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotice: (ref, withLinks) => {
+    dispatch({
+      type: "notice/WILL_FETCH",
+      ref,
+      withLinks,
+      base: "palissy",
+    });
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Palissy);

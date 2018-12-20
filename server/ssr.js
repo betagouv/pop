@@ -5,12 +5,14 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import express from "express";
 import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
+import { StaticRouter, matchPath } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import createStore from "./../src/redux/store";
 import PublicRoutes from "./../src/router";
 import ContextProvider from "./../src/ContextProvider";
+
+import { onFetch, onCollectionFetch } from '../src/redux/sagas';
 
 async function exec(req, res) {
   const css = new Set(); // CSS for all rendered React components
@@ -24,6 +26,42 @@ async function exec(req, res) {
     }
   };
   const { store, history } = createStore(req.url);
+  
+  const matchNotice = matchPath( req.url, {
+    path: `/notice/:baseNotice/:ref`,
+    exact: false,
+    strict: false
+  } );
+
+  if(matchNotice 
+    && matchNotice.params 
+    && matchNotice.params.ref 
+    && matchNotice.params.baseNotice
+    && ( 
+      matchNotice.params.baseNotice === "joconde" 
+      || matchNotice.params.baseNotice === "memoire" 
+      || matchNotice.params.baseNotice === "merimee"
+      || matchNotice.params.baseNotice === "mnr"
+      || matchNotice.params.baseNotice === "palissy"
+    )
+  ) {
+    const notice = await onFetch({base: matchNotice.params.baseNotice, ref: matchNotice.params.ref});
+    if(matchNotice.params.baseNotice === "joconde" || matchNotice.params.baseNotice === "mnr") {
+      store.dispatch({
+        type: "notice/DID_FETCH",
+        notice,
+        links: null,
+      })
+    } else if(matchNotice.params.baseNotice === "memoire" || matchNotice.params.baseNotice === "merimee" || matchNotice.params.baseNotice === "palissy") {
+      const links = await onCollectionFetch(notice, matchNotice.params.baseNotice);
+      store.dispatch({
+        type: "notice/DID_FETCH",
+        notice,
+        links,
+      })
+    }
+  }
+  
   const staticRouterContext = {};
   const body = ReactDOMServer.renderToString(
     <Provider store={store}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Row, Col, Container } from "reactstrap";
 import LinkedNotices from "./components/LinkedNotices";
 import Field from "./components/field";
@@ -12,46 +13,46 @@ import ContactUs from "./components/ContactUs";
 
 class Joconde extends React.Component {
   state = {
-    notice: null,
-    error: "",
-    loading: true,
+    loading: false,
     links: []
   };
 
   componentDidMount() {
-    const { match } = this.props;
-    this.load(match.params.ref);
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
-      this.load(newProps.match.params.ref);
+    const { match, fetchNotice, notice } = this.props;
+    if(notice === null) {
+      this.setState({ loading: true });
+      fetchNotice(match.params.ref, false);
     }
   }
 
-  load(ref) {
-    this.setState({ loading: true });
-    API.getNotice("joconde", ref).then(notice => {
+  componentDidUpdate(prevProps) {
+    const { notice } = this.props;
+    const { notice: prevNotice } = prevProps;
+    if(notice !== null && notice !== prevNotice) {
       this.setState({
         loading: false,
-        notice
       });
-    });
+    }
   }
 
-  getMetaDescription = ()=> {
-    const titre =  this.state.notice.TICO || this.state.notice.TITR;
-    const auteur = this.state.notice.AUTR? this.state.notice.AUTR : '';
-    if(this.state.notice.DOMN && this.state.notice.DOMN.length === 1) {
-      const category = this.state.notice.DOMN[0];
+  getMeta = ()=> {
+    const { notice } = this.props;
+    const title =  notice.TICO || notice.TITR;
+    const auteur = notice.AUTR? notice.AUTR : '';
+    if(notice.DOMN && notice.DOMN.length === 1) {
+      const category = notice.DOMN[0];
       if(category.toLowerCase() === "peinture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`;
+        return {
+          title: title? `${title} - POP` : `${notice.REF} - POP`,
+          description: `Découvrez ${title? title : notice.REF}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`,
+        }
       }
     }
-    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+
+    return {
+      title: title? `${title} - POP` : `${notice.REF} - POP`,
+      description: `Découvrez ${title? title : notice.REF}, par ${auteur}. Cliquez ici !`,
+    }
   }
 
   render() {
@@ -59,35 +60,36 @@ class Joconde extends React.Component {
       return <Loader />;
     }
 
-    if (!this.state.notice) {
+    const { notice } = this.props;
+    if (!notice) {
       return <NotFound />;
     }
-
-    const description = this.getMetaDescription();
+    
+    const meta = this.getMeta();
     return (
       <Container className="notice" fluid>
         <Helmet 
-            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description={description}
+          title={meta.title}
+          description={meta.description}
         />
         <Row className="top-section">
           <Col>
-            <h1 className="heading">{this.state.notice.TICO}</h1>
+            <h1 className="heading">{notice.TICO}</h1>
           </Col>
         </Row>
         <Row>
           <Col sm="9">
             <Header
-              notice={this.state.notice}
+              notice={notice}
               externalImages={false}
-              images={this.state.notice.IMG}
+              images={notice.IMG}
             />
             <Row>
               <Col sm="12">
                 <div className="notice-details">
                   <Title
                     content="Identification du bien culturel"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "INV",
                       "DOMN",
@@ -118,96 +120,96 @@ class Joconde extends React.Component {
 
                   <Field
                     title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
-                    content={this.state.notice.INV}
+                    content={notice.INV}
                   />
                   <Field
                     title="Domaine (catégorie du bien)"
-                    content={this.state.notice.DOMN}
+                    content={notice.DOMN}
                   />
                   <Field
                     title="Dénomination du bien"
-                    content={this.state.notice.DENO}
+                    content={notice.DENO}
                   />
                   <Field
                     title="Appellation"
-                    content={this.state.notice.APPL}
+                    content={notice.APPL}
                   />
-                  <Field title="Titre" content={this.state.notice.TITR} />
+                  <Field title="Titre" content={notice.TITR} />
                   <Field
                     title="Auteur / exécutant / collecteur"
-                    content={this.state.notice.AUTR}
+                    content={notice.AUTR}
                   />
                   <Field
                     title="Précisions / auteur / exécutant / collecteur"
-                    content={this.state.notice.PAUT}
+                    content={notice.PAUT}
                   />
-                  <Field title="Ecole" content={this.state.notice.ECOL} />
+                  <Field title="Ecole" content={notice.ECOL} />
                   <Field
                     title="Anciennes attributions"
-                    content={this.state.notice.ATTR}
+                    content={notice.ATTR}
                   />
                   <Field
                     title="Période de création / exécution"
-                    content={this.state.notice.PERI}
+                    content={notice.PERI}
                   />
                   <Field
                     title="Millésime de création / exécution"
-                    content={this.state.notice.MILL}
+                    content={notice.MILL}
                   />
 
                   <Field
                     title="Epoque / style / mouvement"
-                    content={this.state.notice.EPOQ}
+                    content={notice.EPOQ}
                   />
                   <Field
                     title="Période de l’original copié"
-                    content={this.state.notice.PEOC}
+                    content={notice.PEOC}
                   />
                   <Field
                     title="Matériaux et techniques"
-                    content={this.state.notice.TECH}
+                    content={notice.TECH}
                   />
-                  <Field title="Mesures" content={this.state.notice.DIMS} />
+                  <Field title="Mesures" content={notice.DIMS} />
                   <Field
                     title="Inscriptions"
-                    content={this.state.notice.INSC}
+                    content={notice.INSC}
                   />
                   <Field
                     title="Précisions sur les inscriptions"
-                    content={this.state.notice.PINS}
+                    content={notice.PINS}
                   />
                   <Field
                     title="Onomastique"
-                    content={this.state.notice.ONOM}
+                    content={notice.ONOM}
                   />
                   <Field
                     title="Description"
-                    content={this.state.notice.DESC}
+                    content={notice.DESC}
                   />
                   <Field
                     title="Etat du bien"
-                    content={this.state.notice.ETAT}
+                    content={notice.ETAT}
                   />
                   <Field
                     title="Sujet représenté"
-                    content={this.state.notice.REPR}
+                    content={notice.REPR}
                     separator="#"
                   />
                   <Field
                     title="Précisions sur le sujet représenté"
-                    content={this.state.notice.PREP}
+                    content={notice.PREP}
                   />
                   <Field
                     title="Date de la représentation"
-                    content={this.state.notice.DREP}
+                    content={notice.DREP}
                   />
                   <Field
                     title="Source de la représentation"
-                    content={this.state.notice.SREP}
+                    content={notice.SREP}
                   />
                   <Title
                     content="Contexte historique"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "GENE",
                       "HIST",
@@ -223,54 +225,54 @@ class Joconde extends React.Component {
                       "NSDA"
                     ]}
                   />
-                  <Field title="Genèse" content={this.state.notice.GENE} />
+                  <Field title="Genèse" content={notice.GENE} />
                   <Field
                     title="Historique – Objets associés"
-                    content={this.state.notice.HIST}
+                    content={notice.HIST}
                   />
                   <Field
                     title="Lieu de création / d’exécution / d’utilisation"
-                    content={this.state.notice.LIEUX}
+                    content={notice.LIEUX}
                   />
                   <Field
                     title="Précisions sur le lieu de création / d’exécution / d’utilisation"
-                    content={this.state.notice.PLIEUX}
+                    content={notice.PLIEUX}
                   />
                   <Field
                     title="Géographie historique"
-                    content={this.state.notice.GEOHI}
+                    content={notice.GEOHI}
                   />
                   <Field
                     title="Utilisation / Destination"
-                    content={this.state.notice.UTIL}
+                    content={notice.UTIL}
                   />
                   <Field
                     title="Précisions sur l’utilisation"
-                    content={this.state.notice.PUTI}
+                    content={notice.PUTI}
                   />
                   <Field
                     title="Période d’utilisation"
-                    content={this.state.notice.PERU}
+                    content={notice.PERU}
                   />
                   <Field
                     title="Millésime d’utilisation"
-                    content={this.state.notice.MILU}
+                    content={notice.MILU}
                   />
                   <Field
                     title="Découverte / collecte"
-                    content={this.state.notice.DECV}
+                    content={notice.DECV}
                   />
                   <Field
                     title="Précisions sur la découverte / collecte / récolte"
-                    content={this.state.notice.PDEC}
+                    content={notice.PDEC}
                   />
                   <Field
                     title="Numéro de site"
-                    content={this.state.notice.NSDA}
+                    content={notice.NSDA}
                   />
                   <Title
                     content="Informations juridiques"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={[
                       "STAT",
                       "DACQ",
@@ -283,51 +285,51 @@ class Joconde extends React.Component {
                   />
                   <Field
                     title="Statut juridique"
-                    content={this.state.notice.STAT}
+                    content={notice.STAT}
                   />
                   <Field
                     title="Date d’acquisition"
-                    content={this.state.notice.DACQ}
+                    content={notice.DACQ}
                   />
                   <Field
                     title="Ancienne appartenance"
-                    content={this.state.notice.APTN}
+                    content={notice.APTN}
                     separator="#"
                   />
                   <Field
                     title="Dépôt / établissement dépositaire"
-                    content={this.state.notice.DEPO}
+                    content={notice.DEPO}
                   />
                   <Field
                     title="Date de dépôt / changement d’affectation"
-                    content={this.state.notice.DDPT}
+                    content={notice.DDPT}
                   />
 
                   <Field
                     title="Ancien dépôt / changement d’affectation"
-                    content={this.state.notice.ADPT}
+                    content={notice.ADPT}
                   />
                   <Field
                     title="Localisation"
-                    content={this.state.notice.LOCA}
+                    content={notice.LOCA}
                   />
                   <Title
                     content="Informations complémentaires"
-                    notice={this.state.notice}
+                    notice={notice}
                     fields={["COMM", "EXPO", "BIBL"]}
                   />
                   <Field
                     title="Commentaires"
-                    content={this.state.notice.COMM}
+                    content={notice.COMM}
                     separator="#"
                   />
                   <Field
                     title="Exposition"
-                    content={this.state.notice.EXPO}
+                    content={notice.EXPO}
                   />
                   <Field
                     title="Bibliographie"
-                    content={this.state.notice.BIBL}
+                    content={notice.BIBL}
                     separator="#"
                   />
                 </div>
@@ -340,33 +342,33 @@ class Joconde extends React.Component {
               <h4>A propos de cette notice</h4>
               <hr />
               <div>
-                <Field title="Référence" content={this.state.notice.REF} />
+                <Field title="Référence" content={notice.REF} />
                 <Field
                   title="Date de création"
-                  content={this.state.notice.DMIS}
+                  content={notice.DMIS}
                 />
                 <Field
                   title="Dernière mise à jour"
-                  content={this.state.notice.DMAJ}
+                  content={notice.DMAJ}
                 />
                 <Field
                   title="Crédits photographiques"
-                  content={this.state.notice.AUTP}
+                  content={notice.AUTP}
                 />
                 <Field
                   title="Auteur de l'oeuvre ou de l'original"
-                  content={this.state.notice.AUTOR}
+                  content={notice.AUTOR}
                 />
-                <Field title="" content={this.state.notice.COPY} />
+                <Field title="" content={notice.COPY} />
               </div>
 
               <ContactUs
-                contact={this.state.notice.CONTACT}
-                reference={this.state.notice.REF}
+                contact={notice.CONTACT}
+                reference={notice.REF}
               />
             </div>
 
-            <SeeMore notice={this.state.notice} />
+            <SeeMore notice={notice} />
           </Col>
         </Row>
       </Container>
@@ -427,4 +429,23 @@ const SeeMore = ({ notice }) => {
 
 //http://www2.culture.gouv.fr/public/mistral/museo_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=M5027
 
-export default Joconde;
+
+const mapStateToProps = (state) => ({
+  notice: state.app.notice
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotice: (ref, withLinks) => {
+    dispatch({
+      type: "notice/WILL_FETCH",
+      ref,
+      withLinks,
+      base: "joconde",
+    });
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Joconde);

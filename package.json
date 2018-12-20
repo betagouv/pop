@@ -42,6 +42,7 @@
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
+    "redux-mock-store": "^1.5.3",
     "redux-saga": "^0.16.0",
     "shave": "^2.5.1",
     "sw-precache-webpack-plugin": "^0.11.5",
