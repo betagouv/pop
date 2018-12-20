@@ -51,7 +51,8 @@ class Notice extends React.Component {
       const editable =
         this.props.canUpdate &&
         (this.props.user.role === "administrateur" ||
-          notice.MUSEOFILE === this.props.museofile);
+          notice.MUSEO === this.props.user.museofile);
+
       this.setState({ loading: false, notice, editable });
     });
   }
