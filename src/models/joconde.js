@@ -32,6 +32,7 @@ const Schema = new mongoose.Schema(
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
         master: true,
+        generated: true,
         label: "Contient une image"
       }
     },
@@ -85,7 +86,8 @@ const Schema = new mongoose.Schema(
         description:
           "Référence de mise à jour (marque de la modification de la notice)",
         master: false,
-        label: "Référence de mise à jour (marque de la modification de la notice) "
+        label:
+          "Référence de mise à jour (marque de la modification de la notice) "
       }
     },
     ADPT: {
@@ -294,6 +296,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de la dernière mise à jour",
         master: true,
+        generated: true,
         label: "Date de mise à jour"
       }
     },
@@ -303,12 +306,14 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de la création POP/Mistral",
         master: true,
+        generated: true,
         label: "Date de création"
       }
     },
     DOMN: {
       type: [String],
       default: [],
+      required: true,
       documentation: {
         description: "Domaine (catégorie du bien) ",
         master: false,
@@ -424,6 +429,7 @@ const Schema = new mongoose.Schema(
     INV: {
       type: String,
       default: "",
+      required: true,
       documentation: {
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
@@ -438,6 +444,7 @@ const Schema = new mongoose.Schema(
         description:
           "Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'",
         master: true,
+        generated: true,
         label: "Appellation musée de France"
       }
     },
@@ -737,7 +744,8 @@ const Schema = new mongoose.Schema(
         description:
           "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire",
         master: false,
-        label: "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire"
+        label:
+          "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire"
       }
     },
     TECH: {
