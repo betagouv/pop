@@ -71,10 +71,11 @@
     ],
     "testPathIgnorePatterns": [
       "./src/__tests__/setup/",
-      "./src/__tests__/__mocks__/"
+      "./src/__tests__/__mocks__/",
+      "./src/__tests__/__notices__/"
     ],
     "moduleNameMapper": {
-      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "identity-obj-proxy",
+      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/src/__tests__/__mocks__/fileMock.js",
       "isomorphic-style-loader/lib/withStyles": "<rootDir>/src/__tests__/__mocks__/withStyles.js"
     }
   },
