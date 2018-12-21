@@ -266,6 +266,7 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6}>
               <CustomField name="DATOR" disabled={!this.state.editable} />
+              <CustomField name="EXPO" disabled={!this.state.editable} />
             </Col>
           </Section>
 
