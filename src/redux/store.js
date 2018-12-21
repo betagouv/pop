@@ -1,51 +1,22 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { createBrowserHistory, createMemoryHistory } from 'history';
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import createHistory from "history/createBrowserHistory";
+import { routerReducer, routerMiddleware } from "react-router-redux";
+import createSagaMiddleware from "redux-saga";
+import reducers from "../redux/reducers";
+import rootSaga from "../redux/sagas";
 
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+const history = createHistory();
+const sagaMiddleware = createSagaMiddleware();
+const routerMiddlewareWithHistory = routerMiddleware(history);
+const middlewares = [sagaMiddleware, routerMiddlewareWithHistory];
 
-import createSagaMiddleware from 'redux-saga';
-import reducers from '../redux/reducers';
-import rootSaga from '../redux/sagas';
-
-export const isServer = !(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    router: routerReducer
+  }),
+  compose(applyMiddleware(...middlewares))
 );
 
-export default (url = '/') => {  
-  const history = isServer
-    ? createMemoryHistory({
-        initialEntries: [url]
-      })
-    : createBrowserHistory();
-
-  const sagaMiddleware = createSagaMiddleware();
-  const routerMiddlewareWithHistory = routerMiddleware(history);
-  const middlewares = [sagaMiddleware, routerMiddlewareWithHistory];
-  const enhancers = [];
-
-  if (process.env.NODE_ENV === 'dev' && typeof window !== 'undefined') {
-    const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
-
-    if (typeof devToolsExtension === 'function') {
-        enhancers.push(devToolsExtension());
-    }
-  }
-
-  const store = createStore(
-    combineReducers({
-      ...reducers,
-      router: routerReducer
-    }),
-    compose(
-      applyMiddleware(...middlewares),
-      ...enhancers
-    )
-  );
-  sagaMiddleware.run(rootSaga);
-  return {
-    store,
-    history
-  };
-};
+sagaMiddleware.run(rootSaga);
+export { store, history };

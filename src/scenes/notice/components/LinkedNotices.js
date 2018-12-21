@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "../../../components/loader";
 import { Link } from "react-router-dom";
 import { image } from "../../search/image";
-
+import "./LinkedNotices.css";
 class LinkedNotice extends React.Component {
   render() {
     if (!this.props.links) {

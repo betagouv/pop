@@ -13,7 +13,7 @@ module.exports = env => {
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      filename: "index-template.html",
+      filename: 'index.html',
       inject: 'body',
       favicon: path.join('public/favicon.ico'),
     }),
@@ -35,9 +35,10 @@ module.exports = env => {
       publicPath: '/'
     },
     devServer: {
-      proxy: {
-        '/': 'http://localhost:8081',
-      }
+      contentBase: 'build',
+      historyApiFallback: true,
+      inline: true,
+      stats: 'errors-only'
     },
     node: {
       fs: 'empty'
@@ -46,25 +47,7 @@ module.exports = env => {
       rules: [
         {
           test: /\.css$/,
-          use: [
-            'isomorphic-style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: () => [
-                  require('postcss-flexbugs-fixes'),
-                  require('autoprefixer')
-                ]
-              }
-            },
-          ]
+          loader: "style-loader!css-loader"
         },
         {
           test: /\.js$/,
@@ -76,17 +59,17 @@ module.exports = env => {
           }
         },
         {
-          test: /\.(woff|woff2)$/i,
+          test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /node_modules/,
-          use: ["file-loader"]
-        },
-        {
-          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            name: "[name].[hash:8].[ext]"
-          }
+          use: [
+            'file-loader',
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                bypassOnDebug: true,
+              },
+            },
+          ],
         }
       ]
     },

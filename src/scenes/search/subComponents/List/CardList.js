@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { image } from "../../image";
 import mdf from "../../../../assets/musee-de-france.jpg";
 import inv from "../../../../assets/inventaire.jpg";
-
+import "./CardList.css";
 const joinData = f => {
   return f
     .map(x => {

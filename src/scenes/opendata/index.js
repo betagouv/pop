@@ -1,5 +1,6 @@
 import React from "react";
 import Helmet from "../../components/Helmet";
+import "./index.css";
 
 export default () => (
   <div className="opendata-view">

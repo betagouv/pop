@@ -5,8 +5,7 @@ import { Container } from "reactstrap";
 import Title from "./title.js";
 import Logo from "./logo.js";
 
-import withStyles from "isomorphic-style-loader/lib/withStyles";
-import styles from './index.css';
+import "./index.css";
 
 const header = () => (
     <div className="header">
@@ -22,5 +21,5 @@ const header = () => (
     </div>
 );
 
-export default withStyles(styles)(header);
+export default header;
 

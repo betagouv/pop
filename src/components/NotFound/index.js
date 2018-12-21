@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
+import './index.css';
 import courbet from '../../assets/courbet.jpeg';
 import Helmet from "../Helmet";
 

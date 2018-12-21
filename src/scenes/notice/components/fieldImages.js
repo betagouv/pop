@@ -2,8 +2,10 @@ import React from "react";
 import { Row } from "reactstrap";
 import Viewer from "react-viewer";
 import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import "react-viewer/dist/index.css";
 import { history } from "../../../redux/store";
-
+import "./fieldImages.css";
 const noImage = require("../../../assets/noimage.png");
 
 class FieldImages extends React.Component {

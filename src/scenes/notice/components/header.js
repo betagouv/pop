@@ -19,7 +19,7 @@ class Header extends React.Component {
           <FieldImages
             images={images}
             disabled
-            name={this.props.notice.TICO}
+            name={this.props.notice.TICO || this.props.notice.TITR}
             external={this.props.externalImages}
           />
         </Col>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./map.css";
 class MapComponent extends React.Component {
   state = {
     center: null

@@ -3,7 +3,7 @@ import Loader from "../../../../../../components/loader";
 import shave from "shave";
 import { image } from "../../../../image";
 import SingleNotice from "../SingleNotice";
-
+import "./LinkedNotices.css";
 export default class LinkedNotices extends React.Component {
   state = {
     singleNotice: null

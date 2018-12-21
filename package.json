@@ -42,7 +42,6 @@
     "reactstrap": "^5.0.0-alpha.4",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
-    "redux-mock-store": "^1.5.3",
     "redux-saga": "^0.16.0",
     "shave": "^2.5.1",
     "sw-precache-webpack-plugin": "^0.11.5",
@@ -52,15 +51,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "start": "node ./build/index.js",
-    "dev:build": "webpack --config webpack.dev.config.js -w",
-    "dev:build-server": "webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon ./build/index.js",
-    "dev": "yarn build:dev && yarn build:server && npm-run-all --parallel dev:*",
-    "build:server": "webpack --config webpack.server.js --mode=development",
-    "build:dev": "webpack --config webpack.dev.config.js",
-    "build:prod": "webpack --config webpack.server.js --mode=production && webpack --env.production --env.NODE_ENV=production",
-    "build:staging": "webpack --config webpack.server.js --mode=production && webpack --env.staging --env.NODE_ENV=staging",
+    "start": "node server/index.js",
+    "dev": "webpack-dev-server --config webpack.dev.config.js --open",
+    "build:prod": "webpack --env.production --env.NODE_ENV=production",
     "deploy:prod": "yarn && yarn build:prod && eb deploy pop-consultation --profil POP",
     "deploy:staging": "yarn && yarn build:staging && eb deploy pop-consultation-staging --profil POP",
     "test": "jest"

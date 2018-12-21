@@ -7,6 +7,8 @@ import Mnr from './mnr';
 import Memoire from './memoire';
 import NotFound from "../../components/NotFound";
 import Helmet from "../../components/Helmet";
+import './index.css';
+
 
 const Notice = () => (
     <div>

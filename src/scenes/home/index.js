@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
-
+import "./index.css";
 import Helmet from "../../components/Helmet";
 
 const bases = [

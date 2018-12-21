@@ -1,7 +1,5 @@
 import React from 'react';
-
-import withStyles from "isomorphic-style-loader/lib/withStyles";
-import styles from './title.css';
+import './title.css';
 
 const Title = () => (
     <div className="company-title">
@@ -11,4 +9,4 @@ const Title = () => (
     </div>
 );
 
-export default withStyles(styles)(Title);
+export default Title;

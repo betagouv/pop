@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import withStyles from "isomorphic-style-loader/lib/withStyles";
 
-import styles from './index.css';
+import "./index.css";
 
 import Logo from '../../assets/logo-incubateur.svg';
 
@@ -14,4 +13,4 @@ const Footer = () => (
   </div>
 );
 
-export default withStyles(styles)(Footer);
+export default Footer;

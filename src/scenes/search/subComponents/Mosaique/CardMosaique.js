@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Col } from "reactstrap";
 import { image } from "../../image";
-
+import "./CardMosaique.css";
 export default ({ data }) => (
   <Col l={4}>
     <Link

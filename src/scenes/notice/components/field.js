@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./field.css";
 
 export default ({ content, title, separator, join = ", " }) => {
   if (!content || (Array.isArray(content) && content.length === 0)) {

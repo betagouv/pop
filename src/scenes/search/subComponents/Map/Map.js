@@ -12,6 +12,9 @@ import SingleNotice from './subComponents/SingleNotice';
 import SateliteImg from '../../../../assets/Satelite.png';
 import StreetImg from '../../../../assets/street.png';
 
+import "./mapbox-gl.css";
+import "./map.css";
+
 const MAX_PRECISION = 8;
 const getPrecision = (zoom)=> {
   let correctedZoom = Math.round(zoom);

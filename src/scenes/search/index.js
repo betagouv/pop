@@ -1,6 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-
 import {
   Row,
   Col,
@@ -30,6 +29,8 @@ import { es_url } from "../../config.js";
 import { isServer } from "../../redux/store";
 
 import filterImg from "../../assets/filter.png";
+
+import "./index.css";
 
 const DEFAULT_FILTER = [
   "mainSearch",
@@ -108,7 +109,7 @@ class Search extends React.Component {
     }
   }
 
-  getMainSearchSelected = ()=> {
+  getMainSearchSelected = () => {
     const { location } = this.props;
     const values = queryString.parse(location.search);
     const { bases, mainSearch } = values;
@@ -117,22 +118,22 @@ class Search extends React.Component {
     } catch (e) {
       return "";
     }
-  }
+  };
 
-  getSelectedValues = ()=> {
+  getSelectedValues = () => {
     const { location } = this.props;
     const values = queryString.parse(location.search.replace(/%22/g, ""));
     let selectedValues = {};
     for (const key in values) {
       const value = values[key];
       selectedValues[key] = {
-        value,
-      }
+        value
+      };
     }
     return selectedValues;
-  }
+  };
 
-  getActiveTab = ()=>{
+  getActiveTab = () => {
     const { location } = this.props;
     let activeTab = "list";
     if (/search\/map/.test(location.pathname)) {
@@ -141,19 +142,16 @@ class Search extends React.Component {
       activeTab = "mosaique";
     }
     return activeTab;
-  }
+  };
 
   toggle(subRoute) {
     const { location, history } = this.props;
     if (this.state.activeTab !== subRoute) {
-      history.push(
-        `/search/${subRoute}${location.search}`
-      );
+      history.push(`/search/${subRoute}${location.search}`);
     }
   }
 
-  onMapChanged(info) {
-  }
+  onMapChanged(info) {}
 
   render() {
     const { location } = this.props;
@@ -162,9 +160,9 @@ class Search extends React.Component {
 
     return (
       <div className="search">
-        <Helmet 
-            title="Recherche - POP - Plateforme Ouverte du Patrimoine"
-            description="Effectuer une recherche sur POP. Découvrez le moteur de cherche qui vous aidera à trouver facilement ce que vous recherchez sur POP."
+        <Helmet
+          title="Recherche - POP - Plateforme Ouverte du Patrimoine"
+          description="Effectuer une recherche sur POP. Découvrez le moteur de cherche qui vous aidera à trouver facilement ce que vous recherchez sur POP."
         />
         <Container fluid style={{ maxWidth: 1860 }}>
           <h1 className="title">Votre recherche</h1>
@@ -248,9 +246,7 @@ class Search extends React.Component {
                     componentId="image"
                     placeholder="oui ou non"
                     showSearch={false}
-                    defaultSelected={
-                      activeTab === "mosaique" ? ["oui"] : []
-                    }
+                    defaultSelected={activeTab === "mosaique" ? ["oui"] : []}
                     onCollapseChange={changeActiveFilter}
                     location={location}
                   />
@@ -264,9 +260,7 @@ class Search extends React.Component {
                     showSearch={false}
                     URLParams={true}
                     showSearch={false}
-                    defaultSelected={
-                      activeTab === "map" ? ["oui"] : []
-                    }
+                    defaultSelected={activeTab === "map" ? ["oui"] : []}
                     data={[
                       { label: "oui", value: "oui" },
                       { label: "non", value: "non" }
@@ -378,7 +372,7 @@ class Search extends React.Component {
                         <SelectedFilters
                           render={props => {
                             let selectedValues = {};
-                            if(isServer) {
+                            if (isServer) {
                               selectedValues = this.getSelectedValues();
                             } else {
                               selectedValues = props.selectedValues;
@@ -394,8 +388,8 @@ class Search extends React.Component {
                                 <Badge color="secondary">
                                   {Object.keys(selectedValues).reduce(
                                     (acc, current) => {
-                                      return selectedValues[current]
-                                        .value !== ""
+                                      return selectedValues[current].value !==
+                                        ""
                                         ? acc + 1
                                         : acc;
                                     },
@@ -464,7 +458,9 @@ class Search extends React.Component {
                     <Route
                       exact
                       path="/search/map"
-                      render={() => <Map filter={DEFAULT_FILTER} location={location} />}
+                      render={() => (
+                        <Map filter={DEFAULT_FILTER} location={location} />
+                      )}
                     />
                   </TabPane>
                   <TabPane tabId="mosaique">
