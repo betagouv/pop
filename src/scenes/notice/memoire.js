@@ -361,13 +361,12 @@ class Notice extends React.Component {
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
-          {this.props.canUpdate ? (
+          {this.state.editable ? (
             <div className="buttons">
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
               <Button
-                disabled={!this.state.editable}
                 color="primary"
                 type="submit"
               >
