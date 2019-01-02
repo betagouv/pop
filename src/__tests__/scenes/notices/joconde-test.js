@@ -19,7 +19,13 @@ describe("Joconde suite", () => {
     Joconde.prototype.load = jest.fn(function(_ref) {
       this.setState({
         loading: false,
-        notice: { TICO: "the TICO value", IMG: [] }
+        notice: {
+          TICO: "the TICO value",
+          IMG: [],
+          DOMN: [],
+          PERI: [],
+          TECH: []
+        }
       });
     });
     let wrapper = shallow(<Joconde match={placeholderParams} />);

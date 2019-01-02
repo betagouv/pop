@@ -50,6 +50,49 @@ export function toFieldImages(images) {
     .filter(e => e.source);
 }
 
+// https://schema.org/VisualArtwork
+export function schema({
+  name,
+  created_at,
+  artform,
+  image,
+  description,
+  artMedium,
+  alternateName,
+  creator,
+  comment
+}) {
+  const obj = {};
+  obj["@context"] = "http://schema.org";
+  obj["@type"] = "VisualArtwork";
+  obj["name"] = name;
+  obj["alternateName"] = alternateName;
+  obj["dateCreated"] = created_at;
+  obj["artform"] = artform;
+  obj["image"] = image;
+  obj["description"] = description;
+  obj["creator"] = (creator || []).map(name => {
+    return { "@type": "Person", name: name.trim() };
+  });
+  obj["comment"] = comment;
+
+  // obj["width"] = [
+  //   {
+  //     "@type": "Distance",
+  //     name: "55cm"
+  //   }
+  // ];
+  // obj["height"] = [
+  //   {
+  //     "@type": "Distance",
+  //     name: "42cm"
+  //   }
+  // ];
+  obj["artMedium"] = artMedium;
+  return JSON.stringify(obj);
+}
+
+
 export function hasCoordinates(point) {
   return !!(point && point.lat && point.lon);
 }

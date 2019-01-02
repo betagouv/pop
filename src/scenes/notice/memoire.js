@@ -11,7 +11,6 @@ import NotFound from "../../components/NotFound";
 import Helmet from "../../components/Helmet";
 import { findCollection } from "./utils";
 
-
 class Memoire extends React.Component {
   state = {
     notice: null,
@@ -58,9 +57,9 @@ class Memoire extends React.Component {
     });
   }
 
-  getMetaDescription = ()=> {
-    const titre =  this.state.notice.TICO || this.state.notice.TITR;
-    const auteur = this.state.notice.AUTP? this.state.notice.AUTP : '';
+  getMetaDescription = () => {
+    const titre = this.state.notice.TICO || this.state.notice.TITR;
+    const auteur = this.state.notice.AUTP ? this.state.notice.AUTP : "";
     /* if(this.state.notice.TYPDOC && this.state.notice.TYPDOC.length === 1) {
       const category = this.state.notice.TYPDOC[0];
       if(category.toLowerCase().includes("phototype")) {
@@ -68,7 +67,7 @@ class Memoire extends React.Component {
       }
     } */
     return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
-  }
+  };
 
   render() {
     if (this.state.loading) {
@@ -83,8 +82,8 @@ class Memoire extends React.Component {
     return (
       <Container className="notice" fluid>
         <Helmet
-            title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-            description={description}
+          title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
+          description={description}
         />
         <Row className="top-section">
           <Col>
@@ -141,10 +140,7 @@ class Memoire extends React.Component {
                     title="Localisation"
                     content={this.state.notice.LOCA}
                   />
-                  <Field
-                    title="Code INSEE"
-                    content={this.state.notice.INSEE}
-                  />
+                  <Field title="Code INSEE" content={this.state.notice.INSEE} />
                   <Field title="Adresse:" content={this.state.notice.ADRESSE} />
                   <Field
                     title="Nom géographique"
@@ -172,10 +168,7 @@ class Memoire extends React.Component {
                       "MCPER"
                     ]}
                   />
-                  <Field
-                    title="Nom édifice"
-                    content={this.state.notice.EDIF}
-                  />
+                  <Field title="Nom édifice" content={this.state.notice.EDIF} />
                   <Field title="Nom objet" content={this.state.notice.OBJT} />
                   <Field
                     title="Titre du dossier"
@@ -482,10 +475,7 @@ class Memoire extends React.Component {
                     title="Référence de publication de l’image"
                     content={this.state.notice.PUBLI}
                   />
-                  <Field
-                    title="Observations"
-                    content={this.state.notice.OBS}
-                  />
+                  <Field title="Observations" content={this.state.notice.OBS} />
                   <Field
                     title="Observations sur le tirage"
                     content={this.state.notice.OBSTI}
