@@ -36,7 +36,7 @@ class Import extends React.Component {
 
         //ADD IMAGES
         for (var i = 0; i < importedNotices.length; i++) {
-          const names = importedNotices[i].IMG.value;
+          const names = importedNotices[i].IMG;
           for (var j = 0; j < names.length; j++) {
             let img = filesMap[Joconde.convertLongNameToShort(names[j])];
             if (!img) {
@@ -164,17 +164,17 @@ function report(notices, collection, email, institution) {
         obj[notices[i]._warnings[j]].count =
           obj[notices[i]._warnings[j]].count + 1;
         obj[notices[i]._warnings[j]].notices.push(
-          `<a href="${URL}${notices[i].REF.value}">${
-            notices[i].REF.value
-          }<a/> (${notices[i].INV.value})`
+          `<a href="${URL}${notices[i].REF}">${
+            notices[i].REF
+          }<a/> (${notices[i].INV})`
         );
       } else {
         obj[notices[i]._warnings[j]] = {
           count: 1,
           notices: [
-            `<a href="${URL}${notices[i].REF.value}">${
-              notices[i].REF.value
-            }<a/> (${notices[i].INV.value})`
+            `<a href="${URL}${notices[i].REF}">${
+              notices[i].REF
+            }<a/> (${notices[i].INV})`
           ]
         };
       }

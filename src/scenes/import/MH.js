@@ -47,7 +47,7 @@ function parseFiles(files, encoding) {
       const importedNotices = [];
       const filesMap = {};
       for (var i = 0; i < files.length; i++) {
-        filesMap[files[i].name ] = files[i];
+        filesMap[files[i].name] = files[i];
       }
 
       for (var i = 0; i < objs.length; i++) {
@@ -87,31 +87,27 @@ function parseFiles(files, encoding) {
           obj.IMG = fileName;
           newNotice = new Memoire(obj);
           let img = filesMap[fileName];
-          if(img){
+          if (img) {
             newNotice._images.push(img);
-          }else{
-            newNotice._errors.push(`Impossible de trouver l'image "${fileName}"`)
+          } else {
+            newNotice._errors.push(
+              `Impossible de trouver l'image "${fileName}"`
+            );
           }
         } else {
           reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`);
           return;
         }
 
+        const { DPT, INSEE } = newNotice;
         if (newNotice._type !== "memoire") {
-          if (!newNotice.INSEE || !newNotice.INSEE.value) {
+          if (!INSEE) {
             newNotice._errors.push("INSEE ne doit pas être vide");
           }
-          if (!newNotice.DPT || !newNotice.DPT.value) {
+          if (!DPT) {
             newNotice._errors.push("DPT ne doit pas être vide");
           }
-
-          if (
-            newNotice.INSEE &&
-            newNotice.DPT &&
-            !String(newNotice.INSEE.value).startsWith(
-              String(newNotice.DPT.value)
-            )
-          ) {
+          if (INSEE && DPT && !String(INSEE).startsWith(String(DPT))) {
             newNotice._errors.push("INSEE et Département ne coincident pas");
           }
         }

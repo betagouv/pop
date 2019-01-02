@@ -142,7 +142,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
             const shortname = convertLongNameToShort(imageFile.name);
             const newImage = utils.renameFile(imageFile, shortname);
             memoireObj._images.push(newImage);
-            memoireObj.setProperty("IMG","String",`memoire/${e.REF}/${shortname}`)
+            memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(
               `Impossible de trouver l'image ${imagePath}`
@@ -180,7 +180,7 @@ function ParseRenabl(files, xmlFiles, encoding) {
 
           // we redirect AUT field to AUTP
           obj.AUTP = obj.AUT;
-          
+
           const memoireObj = new Memoire(obj);
           const image = convertLongNameToShort(obj.FNU2, "\\");
           const imageFile = files.find(
@@ -192,7 +192,7 @@ function ParseRenabl(files, xmlFiles, encoding) {
             const shortname = convertLongNameToShort(imageFile.name);
             const newImage = utils.renameFile(imageFile, shortname);
             memoireObj._images.push(newImage);
-            memoireObj.setProperty("IMG","String",`memoire/${obj.REF}/${shortname}`)
+            memoireObj.IMG = `memoire/${obj.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(`Impossible de trouver l'image ${image}`);
           }
@@ -220,8 +220,8 @@ function convertGPS(e) {
 
 function checkReference(notice) {
   if (
-    (notice.REF && String(notice.REF.value).startsWith("IA000")) ||
-    (notice.REF && String(notice.REF.value).startsWith("IM000"))
+    String(notice.REF).startsWith("IA000") ||
+    String(notice.REF).startsWith("IM000")
   ) {
     notice._errors.push(
       "L'import de cette notice est impossible car l'identifiant ne contient pas de département"

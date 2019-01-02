@@ -56,10 +56,7 @@ class Importer extends Component {
           progress: Math.floor((i * 100) / (importedNotices.length * 2))
         });
         const collection = importedNotices[i]._type;
-        const notice = await api.getNotice(
-          collection,
-          importedNotices[i].REF.value
-        );
+        const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
           existingNotices.push(notice);
         }
@@ -125,10 +122,10 @@ class Importer extends Component {
     const importId = doc.doc._id;
     this.setState({ importId });
     for (let i = 0; i < created.length; i++) {
-      created[i].POP_IMPORT.value = [importId];
+      created[i].POP_IMPORT = [importId];
     }
     for (let i = 0; i < updated.length; i++) {
-      updated[i].POP_IMPORT.value = [importId];
+      updated[i].POP_IMPORT = [importId];
     }
     //////////////////////////////////////////////
     let count = 0;

@@ -87,7 +87,7 @@ export default function generate(notices, collection, email, institution) {
     const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
     const lines = [];
     for (var i = 0; i < created.length; i++) {
-      const fields = fieldToExport.map(e => `"${created[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${created[i][e.key]}"`);
       lines.push([...fields, "Création", ""]);
       for (var j = 0; j < created[i]._warnings.length; j++) {
         lines.push([...fields, "Avertissement", created[i]._warnings[j]]);
@@ -101,7 +101,7 @@ export default function generate(notices, collection, email, institution) {
     const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
     const lines = [];
     for (var i = 0; i < updated.length; i++) {
-      const fields = fieldToExport.map(e => `"${updated[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${updated[i][e.key]}"`);
       lines.push([...fields, "Modification", ""]);
       for (var j = 0; j < updated[i]._warnings.length; j++) {
         lines.push([...fields, "Avertissement", updated[i]._warnings[j]]);
@@ -115,7 +115,7 @@ export default function generate(notices, collection, email, institution) {
     const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
     const lines = [];
     for (var i = 0; i < rejected.length; i++) {
-      const fields = fieldToExport.map(e => `"${rejected[i][e.key].value}"`);
+      const fields = fieldToExport.map(e => `"${rejected[i][e.key]}"`);
 
       lines.push([...fields, "Rejet", ""]);
       for (var j = 0; j < rejected[i]._warnings.length; j++) {

@@ -3,10 +3,7 @@ const diff = require("deep-diff").diff;
 function compare(importedObject, existed) {
   //make the imported object flat
   let imported = importedObject.makeItFlat();
-
-  
   delete imported["POP_IMPORT"];
-  
   let d = diff(imported, existed);
   /*
   Differences are reported as one or more change records. Change records have the following structure:
@@ -39,7 +36,7 @@ export default function checkDiff(importedNotices, existingNotices) {
     let found = false;
     for (var j = 0; j < existingNotices.length; j++) {
       const existingNotice = existingNotices[j];
-      if (importedNotices[i].REF.value === existingNotice.REF) {
+      if (importedNotices[i].REF === existingNotice.REF) {
         let differences = compare(importedNotices[i], existingNotice);
 
         //remove differences based on generated fields
@@ -47,7 +44,7 @@ export default function checkDiff(importedNotices, existingNotices) {
 
         importedNotices[i]._messages = differences.map(e => {
           const from = JSON.stringify(existingNotice[e]);
-          const to = JSON.stringify(importedNotices[i][e].value);
+          const to = JSON.stringify(importedNotices[i][e]);
           return `Le champ ${e} à évolué de ${from} à ${to}`;
         });
 

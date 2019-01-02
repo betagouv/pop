@@ -15,7 +15,7 @@ export default function checkThesaurus(importedNotices) {
           continue;
         }
 
-        let values = [].concat(importedNotices[i][field].value);
+        let values = [].concat(importedNotices[i][field]);
         if (importedNotices[i][field].thesaurus_separator) {
           values = values.reduce(
             (acc, val) =>

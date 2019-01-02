@@ -19,8 +19,8 @@ test("Create new Palissy entity without errors from file palissy-mh-valid-UTF-8.
     // This notice is valid and must have no errors.
     expect(notice._errors).toHaveLength(0);
     // VIDEO must be parsed to array
-    expect(notice.VIDEO.value).toBeInstanceOf(Array);
-    expect(notice.VIDEO.value.length).toBeGreaterThanOrEqual(1);
+    expect(notice.VIDEO).toBeInstanceOf(Array);
+    expect(notice.VIDEO.length).toBeGreaterThanOrEqual(1);
   });
-  expect(notices[2].AUTP.value).toBe("é, Anonyme");
+  expect(notices[2].AUTP).toBe("é, Anonyme");
 });
