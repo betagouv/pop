@@ -47,7 +47,7 @@ class Notice extends React.Component {
       return ["SAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
     } else if (group === "admin") {
       return (
-        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE"].includes(PRODUCTEUR) &&
+        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "SAP"].includes(PRODUCTEUR) &&
         roles.includes(role)
       );
     }
