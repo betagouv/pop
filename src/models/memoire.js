@@ -961,6 +961,15 @@ const Schema = new mongoose.Schema(
         label: "Chronologie"
       }
     },
+    REPRO: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Contient le numéro du fichier numérique",
+        master: false,
+        label: "Cote de reproduction"
+      }
+    },
     STRUCT: {
       type: String,
       default: "",
