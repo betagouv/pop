@@ -37,13 +37,19 @@ class Notice extends React.Component {
 
   canUpdate(PRODUCTEUR) {
     const { role, group } = this.props;
-    const roles = ["producteur","administrateur"];
-    if(group === "mh"){
-      return ["CRMH", "CAOA", "UDAP", "ETAT","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
-    }else if(group ==="memoire"){
-      return [ "SAP","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
-    }else if(group === "admin"){
-      return ["CRMH", "CAOA", "UDAP", "ETAT","AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+    const roles = ["producteur", "administrateur"];
+    if (group === "mh") {
+      return (
+        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE"].includes(PRODUCTEUR) &&
+        roles.includes(role)
+      );
+    } else if (group === "memoire") {
+      return ["SAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+    } else if (group === "admin") {
+      return (
+        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE"].includes(PRODUCTEUR) &&
+        roles.includes(role)
+      );
     }
     return false;
   }
@@ -156,8 +162,8 @@ class Notice extends React.Component {
             <Col sm={6}>
               <CustomField
                 name="LBASE"
+                createUrl={getUrl}
                 disabled={!this.state.editable}
-                urlRoot={`/notice/${findCollection(this.state.notice.REF)}`}
               />
               <CustomField name="LBASE2" disabled={!this.state.editable} />
               <CustomField name="MARQ" disabled={!this.state.editable} />
@@ -366,10 +372,7 @@ class Notice extends React.Component {
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-              <Button
-                color="primary"
-                type="submit"
-              >
+              <Button color="primary" type="submit">
                 Sauvegarder
               </Button>
             </div>
@@ -382,23 +385,25 @@ class Notice extends React.Component {
   }
 }
 
-function findCollection(ref = "") {
-  console.log('REF',ref)
+function getUrl(ref = "") {
   const prefix = ref.substring(0, 2);
-  console.log('prefix',prefix)
+  let url = "";
   switch (prefix) {
     case "EA":
     case "PA":
     case "IA":
-      return "merimee";
+      url = `/notice/merimee/${ref}`;
+      break;
     case "IM":
     case "PM":
-      return "palissy";
+      url = `/notice/palissy/${ref}`;
+      break;
     default:
-    console.log('FUSH')
-      return "";
+      url = "";
   }
+  return url;
 }
+
 const CustomField = ({ name, ...rest }) => {
   return <Field {...Mapping.memoire[name]} name={name} {...rest} />;
 };

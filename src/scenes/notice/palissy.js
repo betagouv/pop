@@ -7,7 +7,6 @@ import { Mapping } from "pop-shared";
 
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
-import FieldLink from "./components/fieldLink.js";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
 
@@ -131,20 +130,18 @@ class Notice extends React.Component {
             <Col sm={6}>
               <CustomField name="REF" disabled={true} />
               <CustomField name="PRODUCTEUR" disabled={true} />
-              <FieldLink
-                title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
+              <CustomField
                 name="RENV"
-                url="/notice/palissy/"
+                createUrl={e => `/notice/palissy/"${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="DENQ" disabled={!this.state.editable} />
               <CustomField name="COPY" disabled={!this.state.editable} />
               <CustomField name="DMAJ" disabled={!this.state.editable} />
               <CustomField name="DOMN" disabled={!this.state.editable} />
-              <FieldLink
-                title="Référence de l'édifice de conservation (REFA) : "
+              <CustomField
                 name="REFA"
-                url="/notice/merimee/"
+                createUrl={e => `/notice/merimee/"${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="AUTP" disabled={!this.state.editable} />
@@ -182,16 +179,14 @@ class Notice extends React.Component {
             <Col sm={6}>
               <CustomField name="TICO" disabled={!this.state.editable} />
               <CustomField name="PART" disabled={!this.state.editable} />
-              <FieldLink
-                title="Références des parties constituantes étudiées (REFP) : "
+              <CustomField
                 name="REFP"
-                url="/notice/palissy/"
+                createUrl={e => `/notice/palissy/"${e}`}
                 disabled={!this.state.editable}
               />
-              <FieldLink
-                title="Référence de l’ensemble ou de l'oeuvre (REFE) : "
+              <CustomField
                 name="REFE"
-                url="/notice/palissy/"
+                createUrl={e => `/notice/palissy/"${e}`}
                 disabled={!this.state.editable}
               />
             </Col>
@@ -297,8 +292,7 @@ class Notice extends React.Component {
             <Col sm={6}>
               <CustomField name="STAT" disabled={!this.state.editable} />
             </Col>
-            <Col sm={6}>
-            </Col>
+            <Col sm={6} />
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour

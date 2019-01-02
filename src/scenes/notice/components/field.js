@@ -61,40 +61,18 @@ class TagsInput extends React.Component {
       );
     }
 
+    const { value } = this.props.input;
+
     return (
       <div>
         <Tags
           tags={
-            this.props.input.value
-              ? this.props.input.value.map(e => {
-                  /* this is a little bit dirty. 
-                It Was not suposed to have to build url in a tag component. 
-                I hate put business logic inside generic componenent. 
-                I also know they dont like the tag component 
-                So it could come inside small refactor */
-
-                  if (this.props.input.name === "LBASE") {
-                    const prefix = e.substring(0, 2);
-                    let url = "";
-                    switch (prefix) {
-                      case "EA":
-                      case "PA":
-                      case "IA":
-                        url = `/notice/merimee/${e}`;
-                        break;
-                      case "IM":
-                      case "PM":
-                        url = `/notice/palissy/${e}`;
-                        break;
-                      default:
-                        url = "";
-                    }
-                    return {
-                      id: e,
-                      text: <a href={url} target="_blank">{e}</a>
-                    };
+            value
+              ? value.map(e => {
+                  if (this.props.createUrl) {
+                    const url = this.props.createUrl(e);
+                    return { id: e, text : <a href={url} target="_blank">{e}</a> };
                   }
-
                   return { id: e, text: e };
                 })
               : []
