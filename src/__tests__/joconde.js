@@ -2,6 +2,7 @@ const app = require("../app");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { createUser, getJwtToken, removeAllUsers } = require("./setup/helpers");
+const sampleNotice = require('./__notices__/joconde-1')
 
 jest.mock("../elasticsearch");
 const es = require("../elasticsearch");
@@ -21,7 +22,7 @@ describe("Joconde", () => {
   test(`POST /joconde - It should create a notice`, async () => {
     const response = await request(app)
       .post('/joconde')
-      .field('notice', JSON.stringify({REF: String(Date.now()) }))
+      .field('notice', JSON.stringify(sampleNotice))
       .set("Accept", "application/json")
       .set("Content-Type", "multipart/form-data")
       .set("Authorization", await getJwtToken(app, await createUser()))
