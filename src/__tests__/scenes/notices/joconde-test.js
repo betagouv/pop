@@ -15,22 +15,6 @@ const placeholderParams = {
 const headingText = wrapper => wrapper.find(".heading").text();
 
 describe("Joconde suite", () => {
-  it("should work with a simple notice", () => {
-    Joconde.prototype.load = jest.fn(function(_ref) {
-      this.setState({
-        loading: false,
-        notice: {
-          TICO: "the TICO value",
-          IMG: [],
-          DOMN: [],
-          PERI: [],
-          TECH: []
-        }
-      });
-    });
-    let wrapper = shallow(<Joconde match={placeholderParams} />);
-    expect(headingText(wrapper)).toContain("the TICO value");
-  });
 
   it("should work with a real notice", () => {
     Joconde.prototype.load = jest.fn(function(_ref) {
