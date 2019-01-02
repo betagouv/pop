@@ -75,7 +75,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "domn")
                   }}
                 />
 
@@ -87,7 +87,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "deno")
                   }}
                 />
 
@@ -99,7 +99,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "autr")
                   }}
                 />
                 <MultiList
@@ -110,7 +110,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "peri")
                   }}
                 />
                 <MultiList
@@ -121,7 +121,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "epoq")
                   }}
                 />
                 <MultiList
@@ -132,7 +132,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "util")
                   }}
                 />
 
@@ -144,7 +144,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "tech")
                   }}
                 />
 
@@ -156,7 +156,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "loca")
                   }}
                 />
                 <MultiList
@@ -167,7 +167,7 @@ export default class Search extends React.Component {
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "image")
                   }}
                 />
               </Col>

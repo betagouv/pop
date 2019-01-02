@@ -87,7 +87,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "domn")
                   }}
                 />
                 <MultiList
@@ -99,7 +99,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "cate")
                   }}
                 />
                 <MultiList
@@ -111,7 +111,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "prov")
                   }}
                 />
                 <MultiList
@@ -123,7 +123,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "autr")
                   }}
                 />
                 <MultiList
@@ -135,7 +135,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "peri")
                   }}
                 />
                 <MultiList
@@ -147,7 +147,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "tech")
                   }}
                 />
                 <MultiList
@@ -159,7 +159,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "loca")
                   }}
                 />
                 <MultiList
@@ -171,7 +171,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "affe")
                   }}
                 />
                 <MultiList
@@ -183,7 +183,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "dmaj")
                   }}
                 />
                 <MultiList
@@ -195,7 +195,7 @@ export default class Search extends React.Component {
                   showSearch={true}
                   URLParams={true}
                   react={{
-                    and: FILTER
+                    and: FILTER.filter(e => e !== "contientimage")
                   }}
                 />
               </Col>

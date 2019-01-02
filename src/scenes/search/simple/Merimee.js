@@ -66,7 +66,7 @@ export default class Search extends React.Component {
                   displayCount
                   placeholder="Rechercher une dénomination"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "denomination") }}
                 />
                 <MultiList
                   componentId="producteur"
@@ -76,7 +76,7 @@ export default class Search extends React.Component {
                   displayCount
                   showSearch={false}
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "producteur") }}
                 />
 
                 <MultiList
@@ -87,7 +87,7 @@ export default class Search extends React.Component {
                   className="filters"
                   placeholder="Rechercher un auteur"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "auteurs") }}
                 />
                 <hr />
                 <MultiList
@@ -98,7 +98,7 @@ export default class Search extends React.Component {
                   className="filters"
                   placeholder="Rechercher une région"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "region") }}
                 />
                 <MultiList
                   componentId="departement"
@@ -108,7 +108,7 @@ export default class Search extends React.Component {
                   className="filters"
                   placeholder="Rechercher un département"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "departement") }}
                 />
 
                 <MultiList
@@ -119,7 +119,7 @@ export default class Search extends React.Component {
                   className="filters"
                   placeholder="Rechercher une commune"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "commune") }}
                 />
                 <hr />
                 <MultiList
@@ -130,7 +130,7 @@ export default class Search extends React.Component {
                   showSearch={false}
                   displayCount
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "image") }}
                 />
                 <MultiList
                   componentId="location"
@@ -140,7 +140,7 @@ export default class Search extends React.Component {
                   displayCount
                   showSearch={false}
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "location") }}
                 />
               </Col>
               <Col xs="9">

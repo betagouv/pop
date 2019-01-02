@@ -61,7 +61,7 @@ export default class Search extends React.Component {
                   className="filters"
                   URLParams={true}
                   displayCount
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "dom") }}
                 />
                 <MultiList
                   componentId="producteur"
@@ -70,7 +70,7 @@ export default class Search extends React.Component {
                   className="filters"
                   displayCount
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "producteur") }}
                 />
                 <MultiList
                   componentId="autp"
@@ -80,7 +80,7 @@ export default class Search extends React.Component {
                   displayCount
                   sortByName={true}
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "autp") }}
                 />
                 <MultiList
                   componentId="loca"
@@ -90,7 +90,7 @@ export default class Search extends React.Component {
                   sortByName={true}
                   className="filters"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "loca") }}
                 />
                 <MultiList
                   componentId="pays"
@@ -100,7 +100,7 @@ export default class Search extends React.Component {
                   sortByName={true}
                   className="filters"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "pays") }}
                 />
 
                 <MultiList
@@ -111,7 +111,7 @@ export default class Search extends React.Component {
                   sortByName={true}
                   className="filters"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "region") }}
                 />
                 <MultiList
                   componentId="departement"
@@ -121,7 +121,7 @@ export default class Search extends React.Component {
                   sortByName={true}
                   className="filters"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "departement") }}
                 />
                 <MultiList
                   componentId="commune"
@@ -131,7 +131,7 @@ export default class Search extends React.Component {
                   sortByName={true}
                   className="filters"
                   URLParams={true}
-                  react={{ and: FILTER }}
+                  react={{ and: FILTER.filter(e => e !== "commune") }}
                 />
               </Col>
               <Col xs="9">
