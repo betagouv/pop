@@ -9,6 +9,7 @@ joconde
 mnr
 upload
 
+*.env
 \.env
 
 *.log
@@ -16,7 +17,6 @@ upload
 uploads
 
 sitemap/
-staging.env
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
