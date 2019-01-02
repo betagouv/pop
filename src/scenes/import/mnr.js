@@ -35,7 +35,7 @@ function parseFiles(files, encoding) {
 
 function readme() {
   const generatedFields = Object.keys(Mapping.mnr).filter(e => {
-    return Mapping.mnr[e].master;
+    return Mapping.mnr[e].generated;
   });
   const controlsFields = Object.keys(Mapping.mnr).filter(e => {
     return Mapping.mnr[e].validation;
@@ -106,10 +106,9 @@ function readme() {
         NB : à la création d'une notice, POP génère automatiquement certains
         champs utiles au traitement des données. Il s'agit des champs : <br />
         <ul>
-          <li>A compléter</li>
-          {/* {generatedFields.map(e => (
+          {generatedFields.map(e => (
             <li>{e}</li>
-          ))} */}
+          ))}
         </ul>
         Aucun besoin de les renseigner lors d'un import.
         <br />

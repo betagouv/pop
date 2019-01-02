@@ -223,7 +223,7 @@ function regexIt(str) {
 
 function readme() {
   const generatedFields = Object.keys(Mapping.joconde).filter(e => {
-    return Mapping.joconde[e].master;
+    return Mapping.joconde[e].generated;
   });
   const controlsFields = Object.keys(Mapping.joconde).filter(e => {
     return Mapping.joconde[e].validation;
@@ -320,7 +320,7 @@ function readme() {
         <br />
         <br />
         NB : à la création d'une notice, POP génère automatiquement certains
-        champs utiles au traitement des données. Il s'agit des champs : <br />
+        champs utiles au traitement des données. Il s'agit des champs : <br /><br />
         <ul>
           {generatedFields.map(e => (
             <li>{e}</li>

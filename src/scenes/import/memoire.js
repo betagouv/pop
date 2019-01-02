@@ -63,7 +63,7 @@ function convertLongNameToShort(str) {
 
 function readme() {
   const generatedFields = Object.keys(Mapping.memoire).filter(e => {
-    return Mapping.memoire[e].master;
+    return Mapping.memoire[e].generated;
   });
   const requiredFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].required;

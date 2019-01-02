@@ -249,13 +249,13 @@ function RenablXMLToObj(node) {
 
 function readme() {
   const generatedMemoireFields = Object.keys(Mapping.memoire).filter(e => {
-    return Mapping.memoire[e].master;
+    return Mapping.memoire[e].generated;
   });
   const generatedMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
-    return Mapping.merimee[e].master;
+    return Mapping.merimee[e].generated;
   });
   const generatedPalissyFields = Object.keys(Mapping.palissy).filter(e => {
-    return Mapping.palissy[e].master;
+    return Mapping.palissy[e].generated;
   });
   const validationMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].validation;
