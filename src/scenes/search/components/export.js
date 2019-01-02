@@ -52,7 +52,7 @@ export default class ExportComponent extends React.Component {
         react={{ and: this.props.FILTER }}
         onAllData={(results, streamResults, loadMoreData) => {
           const res = this.state.res.concat(results);
-          if (!results.length || res.length === 10000) {
+          if (!results.length || res.length >= 9980) {
             this.exec(res);
           } else {
             this.setState({ page: (this.state.page += 1), res });
