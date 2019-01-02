@@ -17,16 +17,20 @@
   min-height: 700px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  overflow-y: auto;
+  height: 700px;
 }
 
 .importer-container .left-col img {
   width: 100%;
+  padding: 20px;
 }
 .importer-container .left-col h5 {
   font-weight: 600;
+}
+.importer-container .left-col h6 {
+  font-weight: bold;
 }
 
 .importer-container .right-col {

@@ -438,18 +438,13 @@ class Importer extends Component {
     return (
       <Container className="importer-container">
         <Row>
-          <Col md={4} className="left-col">
-            <div className="mb-5">
+          <Col md={5} className="left-col">
+            <div>
               <img src={AsideIcon} width={100} alt="" />
             </div>
-            <h5>Plateforme Ouverte du Patrimoine</h5>
-            <p>
-              La plateforme POP regroupe les contenus numériques de patrimoine
-              français afin de les rendre accessibles et consultables au plus
-              grand nombre
-            </p>
+            {this.props.readme()}
           </Col>
-          <Col md={8} className="right-col">
+          <Col md={7} className="right-col">
             <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${
               this.props.collection
             }, selon les trois étapes suivantes`}</p>

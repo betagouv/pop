@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
+import { Mapping } from "pop-shared";
 import Importer from "./importer";
 
 import Merimee from "../../entities/Merimee";
@@ -14,6 +15,7 @@ export default class Import extends React.Component {
       <Container className="import">
         <Importer
           collection="inventaire"
+          readme={readme}
           parseFiles={parseFiles}
           dropzoneText="Glissez & déposez vos fichiers au format Renable (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
           defaultEncoding="UTF-8"
@@ -243,4 +245,205 @@ function RenablXMLToObj(node) {
     }
   }
   return obj;
+}
+
+function readme() {
+  const generatedMemoireFields = Object.keys(Mapping.memoire).filter(e => {
+    return Mapping.memoire[e].master;
+  });
+  const generatedMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
+    return Mapping.merimee[e].master;
+  });
+  const generatedPalissyFields = Object.keys(Mapping.palissy).filter(e => {
+    return Mapping.palissy[e].master;
+  });
+  const validationMemoireFields = Object.keys(Mapping.memoire).filter(e => {
+    return Mapping.memoire[e].validation;
+  });
+  const validationPalissyFields = Object.keys(Mapping.palissy).filter(e => {
+    return Mapping.palissy[e].validation;
+  });
+  const validationMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
+    return Mapping.merimee[e].validation;
+  });
+  const requiredMemoireFields = Object.keys(Mapping.memoire).filter(e => {
+    return Mapping.memoire[e].required;
+  });
+  const requiredPalissyFields = Object.keys(Mapping.palissy).filter(e => {
+    return Mapping.palissy[e].required;
+  });
+  const requiredMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
+    return Mapping.merimee[e].required;
+  });
+
+  return (
+    <div>
+      <h5>Inventaire</h5>
+      <div>
+        Cet onglet permet d’alimenter les bases Mérimée Inventaire, Palissy
+        Inventaire et Mémoire Inventaire. <br /> <br />
+        <h6>Formats d’import </h6>
+        Les formats de données pris en charge sont les suivants : <br />
+        <ul>
+          <li>
+            texte : format Renable (.xml) ou Gertrude (.txt à partir de la
+            version 1.6){" "}
+          </li>
+          <li>illustration : jpg, png.</li>
+        </ul>
+        La taille maximale d’un import est de 300Mo (soit environ 3000 notices
+        avec image, ou 1 million de notices sans images). <br /> <br />
+        <h6>Champs obligatoires et contrôles de vocabulaire </h6>
+        Les champs suivants doivent obligatoirement être renseignés : <br />
+        <br />
+        Mémoire :
+        <ul>
+          {requiredMemoireFields.map(e => (
+            <li>{e} </li>
+          ))}
+        </ul>
+        Mérimee :
+        <ul>
+          {requiredMerimeeFields.map(e => (
+            <li>{e}</li>
+          ))}
+        </ul>
+        Palissy :
+        <ul>
+          {requiredPalissyFields.map(e => (
+            <li>{e}</li>
+          ))}
+        </ul>
+        <br />
+        <h5>Particularités</h5>
+        Pour Renable illustration, la référence de la notice mémoire est
+        construite dela facon suivante : EMET + "_" + NUMI <br />
+        <br />
+        Pour Renable illustration, le champ AUTP est rempli avec le champ AUT
+        <br />
+        <br />
+        Pour Renable illustration, le champ image est rempli en simplifiant le
+        nom contenu dans le champ FNU2
+        <br /> <br />
+        Pour Renable Mérimée et Palissy, Le champ COORWGS84 est utilisé et
+        converti dans le champ POP_COORDONNEES et prioritaire sur le champ COOR
+        <br /> <br />
+        Pour Renable et Gertrude Mérimée et Palissy, Les coordonnées sont
+        converties du format Lambert vers le WGS84 automatiquement si les champs
+        COOR et ZONE sont remplis
+        <br /> <br />
+        Pour Gertrude Mémoire, les conversions suivantes sont faites : <br />
+        <ul>
+          <li>AUTP = AUT</li>
+          <li>IDPROD = EMET</li>
+          <li>AUTOEU = AUTR</li>
+          <li>PRECOR = DOC</li>
+          <li>ADRESSE = LIEU + ";" + ADRS</li>
+        </ul>
+        <br />
+        <h6>Test de validation des champs : </h6>
+        Les tests suivants sont effectués lors des imports
+        <br />
+        <br />
+        Mémoire :
+        <ul>
+          {validationMemoireFields.map(e => (
+            <li>
+              {e} : {Mapping.memoire[e].validation}
+            </li>
+          ))}
+        </ul>
+        Mérimee :
+        <ul>
+          {validationMerimeeFields.map(e => (
+            <li>
+              {e} : {Mapping.merimee[e].validation}
+            </li>
+          ))}
+        </ul>
+        Palissy :
+        <ul>
+          {validationPalissyFields.map(e => (
+            <li>
+              {e} : {Mapping.palissy[e].validation}
+            </li>
+          ))}
+        </ul>
+        <br />
+        <h5>Que voulez-vous faire ?</h5>
+        <br />
+        <h6>Je veux créer une notice :</h6>
+        J’importe la notice.
+        <br />
+        <br />
+        <h6>Je veux mettre à jour tout ou partie d’une notice :</h6>
+        J’importe les champs à mettre à jour avec leurs nouvelles valeurs et
+        j’écrase l’ancienne notice.
+        <br />
+        <br />
+        <h6>Je veux effacer une ou plusieurs valeurs d’une notice : </h6>
+        J’importe un fichier comportant le ou les champs que je veux supprimer
+        en les laissant vides.
+        <br />
+        <br />
+        <h6>Je veux supprimer une notice :</h6>
+        Je contacte l’administrateur de la base.
+        <br />
+        <br />
+        <h6>Je veux ajouter une image :</h6>
+        1) Sur une notice mémoire existante, je peux cliquer sur "Ajouter une
+        image" et télécharger une image depuis mon ordinateur. Le champ IMG
+        contiendra le lien de l'image ainsi téléchargée.
+        <br /> <br />
+        2) Importer une notice mémoire en "OA" et avoir le champ REFIMG complété
+        avec le nom de l'image exacte
+        <br /> <br />
+        NB : à la création d'une notice, POP génère automatiquement certains
+        champs utiles au traitement des données. Il s'agit des champs : <br />
+        <br />
+        Mémoire :
+        <ul>
+          {generatedMemoireFields.map(e => (
+            <li>{e} </li>
+          ))}
+        </ul>
+        Mérimee :
+        <ul>
+          {generatedMerimeeFields.map(e => (
+            <li>{e}</li>
+          ))}
+        </ul>
+        Palissy :
+        <ul>
+          {generatedPalissyFields.map(e => (
+            <li>{e}</li>
+          ))}
+        </ul>
+        Aucun besoin de les renseigner lors d'un import.
+        <br />
+        <br />
+        <a
+          href="https://github.com/betagouv/pop-api/blob/master/doc/memoire.md"
+          target="_blank"
+        >
+          Lien vers le modèle de donnée Mémoire
+        </a>
+        <br />
+        <a
+          href="https://github.com/betagouv/pop-api/blob/master/doc/palissy.md"
+          target="_blank"
+        >
+          Lien vers le modèle de donnée Palissy
+        </a>
+        <br />
+        <a
+          href="https://github.com/betagouv/pop-api/blob/master/doc/merimee.md"
+          target="_blank"
+        >
+          Lien vers le modèle de donnée Mérimée
+        </a>
+        <br />
+      </div>
+    </div>
+  );
 }
