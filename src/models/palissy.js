@@ -58,7 +58,7 @@ const Schema = new mongoose.Schema(
         master: true
       }
     },
-    MEMOIRE: [{ ref: String, url: String }],
+    MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
     REF: {
       type: String,
       unique: true,
