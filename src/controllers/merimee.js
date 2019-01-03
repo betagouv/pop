@@ -15,9 +15,7 @@ const {
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
-function transformBeforeUpdate(notice) {
-  notice.DMAJ = formattedNow();
-
+function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE =
     notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
   if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
@@ -25,18 +23,18 @@ function transformBeforeUpdate(notice) {
   }
   notice.POP_CONTIENT_GEOLOCALISATION =
     notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat ? "oui" : "non";
+  // Fix DOSURL (remove code, extract real URL)
+  notice.DOSURL = notice.DOSURL.replace(/^.*AffUrl\('(.*?)'\).*$/, "$1");
+}
+
+function transformBeforeUpdate(notice) {
+  notice.DMAJ = formattedNow();
+  transformBeforeCreateOrUpdate(notice);
 }
 
 function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
-  notice.CONTIENT_IMAGE =
-    notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
-  if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
-    notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
-  }
-  notice.POP_CONTIENT_GEOLOCALISATION =
-    notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat ? "oui" : "non";
-
+  transformBeforeCreateOrUpdate(notice);
   switch (notice.REF.substring(0, 2)) {
     case "IA":
       notice.DISCIPLINE = notice.PRODUCTEUR = "Inventaire";
