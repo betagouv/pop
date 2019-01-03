@@ -257,7 +257,7 @@ router.delete(
 
       //DELETE LBASE
       doc.LBASE = [];
-      await updateLinks(notice);
+      await updateLinks(doc);
 
       const arr = [deleteFile(doc.IMG), doc.remove()];
       await Promise.all(arr);
