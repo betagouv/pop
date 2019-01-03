@@ -2,22 +2,23 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-5.3.1.tgz#0d99d7058e2b92a9b14495e131bd2e8a42df1b8c"
-  integrity sha512-kfmw3Ktdf6trj2JJ21vSzXzfXXotdzmFtHK5xdDSX8lQFUfOONGXYQUoytlLSYMxyEJ+myuA0vkD2iH3lVVZPA==
+"@appbaseio/reactivecore@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-7.1.0.tgz#6a17c253afd2ad0bb24e8027d4ecc67f3023e8e7"
+  integrity sha512-P85tjrVeG/ebPzn/Tq44xoRuDJ4JOyTuXYYKC0y9fp/cId8KwpClbVcVpSn9yIVyzOtlXfJKKcZTi8A4pe2EyA==
   dependencies:
     prop-types "^15.6.0"
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivesearch@^2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-2.11.0.tgz#cd6045c0c4c6f3b800afbb5844f9e069ab934783"
-  integrity sha512-jZAh3V5MnEfDI/CTqhi7WAN49OqXDxT9AykOOncK3/6Pdy5mLPOYwBrQNlR6HupZhgiarsoBXhyLJLdKApAWwA==
+"@appbaseio/reactivesearch@2.16.1":
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-2.16.1.tgz#fb69db8f286c100877b50d471f6f3fdd0d7346b2"
+  integrity sha512-adlEDZALLxLQdXmN+us7xKhTsC7fuZw0cjTJZOy5QHR2d7bnU7tK7UB0GUvNVTccXKrytTzgnPFPCmLH/L8NKg==
   dependencies:
-    "@appbaseio/reactivecore" "^5.3.1"
-    appbase-js "^4.0.2-beta.02"
+    "@appbaseio/reactivecore" "^7.1.0"
+    appbase-js "^4.0.2-beta.4"
+    cross-env "^5.2.0"
     downshift "^1.31.2"
     emotion "^9.0.0"
     emotion-theming "^9.0.0"
@@ -521,17 +522,17 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appbase-js@^4.0.2-beta.02:
-  version "4.0.2-beta.2"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.2.tgz#a01155ced48c9359be04e45df6c40a312483e5b8"
-  integrity sha512-tYr2Giu5IrhqFwEvWGPut6fSnnMZfcNOMC0UMG/U7Xg5nH0MY3pnHGcBJO195KnmAAWuF0w55B+B0zdUyIR3gg==
+appbase-js@^4.0.2-beta.4:
+  version "4.0.2-beta.4"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.0.2-beta.4.tgz#59bcba7265d3f7937f8d3b1cfecb1973f5d059c8"
+  integrity sha512-yfljZF2WA4qjAEd1tqOXL49bQSGcnC8DWuDJJU3/DBgS7WB+vFeYPlk7Q+JANFx9+XCT3RXja68gu1Ic0jJWlg==
   dependencies:
     cross-fetch "^2.2.2"
     json-stable-stringify "^1.0.1"
     querystring "^0.2.0"
     stream "^0.0.2"
     url-parser-lite "^0.1.0"
-    ws "^2.2.0"
+    ws "^6.1.2"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -2835,6 +2836,14 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     ripemd160 "^2.0.0"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+cross-env@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.0.tgz#6ecd4c015d5773e614039ee529076669b9d126f2"
+  integrity sha512-jtdNFfFW1hB7sMhr/H6rW1Z45LFqyI431m3qU6bFXcQ3Eh7LtBuG3h74o7ohHZ3crrRkkqHlo4jYHFPcjroANg==
+  dependencies:
+    cross-spawn "^6.0.5"
+    is-windows "^1.0.0"
 
 cross-fetch@^2.2.2:
   version "2.2.2"
@@ -5809,7 +5818,7 @@ is-valid-glob@^0.3.0:
   resolved "https://registry.yarnpkg.com/is-valid-glob/-/is-valid-glob-0.3.0.tgz#d4b55c69f51886f9b65c70d6c2622d37e29f48fe"
   integrity sha1-1LVcafUYhvm2XHDWwmItN+KfSP4=
 
-is-windows@^1.0.2:
+is-windows@^1.0.0, is-windows@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
   integrity sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==
@@ -9341,11 +9350,6 @@ safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, s
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-safe-buffer@~5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
-  integrity sha1-0mPKVGls2KMGtcplUekt5XkY++c=
-
 safe-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/safe-regex/-/safe-regex-1.1.0.tgz#40a3669f3b077d1e943d44629e157dd48023bf2e"
@@ -10504,11 +10508,6 @@ uglifyjs-webpack-plugin@^1.2.4:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-ultron@~1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.1.tgz#9fe1536a10a664a65266a1e3ccf85fd36302bc9c"
-  integrity sha512-UIEXBNeYmKptWH6z8ZnqTeS8fV74zG0/eRU9VGkpzz+LIJNs8W/zM/L+7ctCkRrgbNnnR0xxw4bKOr0cW0N0Og==
-
 unbzip2-stream@^1.0.9:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/unbzip2-stream/-/unbzip2-stream-1.2.5.tgz#73a033a567bbbde59654b193c44d48a7e4f43c47"
@@ -11207,18 +11206,17 @@ write-file-atomic@^2.1.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-ws@^2.2.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-2.3.1.tgz#6b94b3e447cb6a363f785eaf94af6359e8e81c80"
-  integrity sha1-a5Sz5EfLajY/eF6vlK9jWejoHIA=
-  dependencies:
-    safe-buffer "~5.0.1"
-    ultron "~1.1.0"
-
 ws@^5.2.0:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
   integrity sha512-jaHFD6PFv6UgoIVda6qZllptQsMlDEJkTQcybzzXDYM1XO9Y8em691FGMPmM46WGyLU4z9KMgQN+qrux/nhlHA==
+  dependencies:
+    async-limiter "~1.0.0"
+
+ws@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.1.2.tgz#3cc7462e98792f0ac679424148903ded3b9c3ad8"
+  integrity sha512-rfUqzvz0WxmSXtJpPMX2EeASXabOrSMk1ruMOV3JBTBjo4ac2lDjGGsbQSyxj8Odhw5fBib8ZKEjDNvgouNKYw==
   dependencies:
     async-limiter "~1.0.0"
 
