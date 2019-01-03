@@ -6,7 +6,7 @@ import Helmet from "../../components/Helmet";
 
 const bases = [
   {
-    name: 'palissy',
+    name: "palissy",
     title: "Patrimoine mobilier (Palissy)",
     description: `Base de données du patrimoine mobilier français
     (hors des collections des musées) de la Préhistoire
@@ -19,7 +19,7 @@ const bases = [
     de ceux d’inscription.`
   },
   {
-    name: 'merimee',
+    name: "merimee",
     title: "Patrimoine architectural (Mérimée)",
     description: `Base de données du patrimoine monumental français
     de la Préhistoire à nos jours.
@@ -31,7 +31,7 @@ const bases = [
     d’inscription.`
   },
   {
-    name: 'memoire',
+    name: "memoire",
     title: "Photographies (Mémoire)",
     description: `Base de données des fonds graphiques et photographiques
     illustrant le patrimoine français et des collections
@@ -48,7 +48,7 @@ const bases = [
     bases Mérimée et Palissy.`
   },
   {
-    name: 'joconde',
+    name: "joconde",
     title: "Collections des musées de France (Joconde)",
     description: `La base Joconde est le catalogue collectif des collections
     des musées de France, fruit d’un partenariat entre le service
@@ -62,7 +62,7 @@ const bases = [
     techniques…).`
   },
   {
-    name: 'mnr',
+    name: "mnr",
     title: "Récupération artistique (MNR Rose-Valland)",
     description: `A la fin de la dernière guerre, de nombreuses œuvres
     récupérées en Allemagne ont été renvoyées en France
@@ -95,55 +95,65 @@ class Home extends React.Component {
   gotoSearch() {
     const { history } = this.props;
     const searchValue = document.getElementById("main-search").value;
-    const base = this.state.selected.length === 5  ? "" : `base=${JSON.stringify(this.state.selected.join(', ').replace('Récupération artistique', 'Oeuvres spoliées'))}&`
-    history.push(
-      `/search/list?${base}mainSearch="${encodeURI(searchValue)}"`
-    );
+    const selected = this.state.selected;
+    let base;
+    if (selected.length === bases.length || selected.length === 0) {
+      base = "";
+    } else {
+      base = `base=${JSON.stringify(
+        selected
+          .join(", ")
+          .replace("Récupération artistique", "Oeuvres spoliées")
+      )}&`;
+    }
+    history.push(`/search/list?${base}mainSearch="${encodeURI(searchValue)}"`);
   }
 
   renderBanner() {
     const images = [
       {
         id: 1,
-        text: 'Anthony Quinn et Gina Lollobrigida dans Notre-Dame de Paris de Jean Delannoy.',
-        author: 'Voinquel, Raymond (photographe), 1956.',
-        source: 'Médiathèque de l\'architecture et du patrimoine.'
+        text:
+          "Anthony Quinn et Gina Lollobrigida dans Notre-Dame de Paris de Jean Delannoy.",
+        author: "Voinquel, Raymond (photographe), 1956.",
+        source: "Médiathèque de l'architecture et du patrimoine."
       },
       {
         id: 2,
-        text: 'Couples de cinéma: Brigitte Bardot et Alain Delon.',
-        author: 'Lévin, Sam (photographe), 1958.',
-        source: 'Médiathèque de l\'architecture et du patrimoine, base Mémoire.'
+        text: "Couples de cinéma: Brigitte Bardot et Alain Delon.",
+        author: "Lévin, Sam (photographe), 1958.",
+        source: "Médiathèque de l'architecture et du patrimoine, base Mémoire."
       },
       {
         id: 3,
         text: 'Cathédrale Notre-Dame, "Les poules grégoriennes".',
-        author: 'Abbé Thinot (photographe), avant 1914.',
-        source: 'Médiathèque de l\'architecture et du patrimoine, base Mémoire.'
+        author: "Abbé Thinot (photographe), avant 1914.",
+        source: "Médiathèque de l'architecture et du patrimoine, base Mémoire."
       },
       {
         id: 5,
-        text: 'Promenade de bord de mer.',
-        author: 'Manuel de Rugy (photographe).',
-        source: 'Inventaire général - région Normandie, base Mémoire.'
+        text: "Promenade de bord de mer.",
+        author: "Manuel de Rugy (photographe).",
+        source: "Inventaire général - région Normandie, base Mémoire."
       },
       {
         id: 6,
-        text: 'Biscuiterie Jeannette. Détail de la doseuse pondérale à pesées associative.',
-        author: 'Manuel de Rugy (photographe).',
-        source: 'Inventaire général - région Normandie, base Mémoire.'
+        text:
+          "Biscuiterie Jeannette. Détail de la doseuse pondérale à pesées associative.",
+        author: "Manuel de Rugy (photographe).",
+        source: "Inventaire général - région Normandie, base Mémoire."
       },
       {
         id: 7,
-        text: 'Rue du Gros Horloge et la cathédrale.',
-        author: 'Denis Couchaux (photographe).',
-        source: 'Inventaire général - région Normandie, base Mémoire.'
+        text: "Rue du Gros Horloge et la cathédrale.",
+        author: "Denis Couchaux (photographe).",
+        source: "Inventaire général - région Normandie, base Mémoire."
       },
       {
         id: 8,
         text: 'Masque "cara grande" de la population Tapirapé, XXe siècle.',
-        author: 'Amérique du Sud.',
-        source: 'Museum d\'histoire naturelle de Toulouse.'
+        author: "Amérique du Sud.",
+        source: "Museum d'histoire naturelle de Toulouse."
       }
     ].map(e => (
       <div key={e.id} className="img-item">
@@ -169,20 +179,16 @@ class Home extends React.Component {
   }
 
   toggle(event) {
-    const p = event.target.name;
-    const value = event.target.checked;
-    if (p === "all") {
-      this.setState({
-        selected: bases.map(b => b.title)
-      });
+    const name = event.target.name;
+    const selected = this.state.selected;
+    if (name === "all" && selected.length === bases.length) {
+      this.setState({ selected: [] });
+    } else if (name === "all") {
+      this.setState({ selected: bases.map(b => b.title) });
+    } else if (selected.includes(name)) {
+      this.setState({ selected: selected.filter(item => item !== name) });
     } else {
-      if (this.state.selected.includes(p)) {
-        if (this.state.selected.length === 1) return; // Need a least one base
-        const selected = this.state.selected.filter(item => item !== p);
-        this.setState({ selected });
-      } else {
-        this.setState({ selected: [...this.state.selected, p] });
-      }
+      this.setState({ selected: [...selected, name] });
     }
   }
   areas() {
@@ -222,9 +228,9 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home">
-        <Helmet 
-            title="POP - Plateforme Ouverte du Patrimoine - Ministère de la Culture"
-            description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer. Découvrez ici tous les biens nationaux."
+        <Helmet
+          title="POP - Plateforme Ouverte du Patrimoine - Ministère de la Culture"
+          description="POP propose de faire des données patrimoniales un bien commun dont il sera aussi simple de se servir que d’y contribuer. Découvrez ici tous les biens nationaux."
         />
         {this.renderBanner()}
         <div className="home-search">
@@ -242,7 +248,12 @@ class Home extends React.Component {
               }
             }}
           />
-          <Button onClick={this.gotoSearch}>Rechercher</Button>
+          <Button
+            onClick={this.gotoSearch}
+            disabled={this.state.selected.length === 0}
+          >
+            Rechercher
+          </Button>
           <div className="search-areas">
             <div>
               <p>Sur quels domaines porte votre recherche ?</p>
