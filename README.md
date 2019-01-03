@@ -6,7 +6,7 @@ L'API de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr). Elle
 
 ## Installation
 
-MongoDB, NodeJS 10+ et [Yarn](https://yarnpkg.com/en/docs/install) doivent être installés pour faire fonctionner l'application. Elasticsearch n'est pas nécessaire sur l'environnement de développement.
+MongoDB, NodeJS 8+ et [Yarn](https://yarnpkg.com/en/docs/install) doivent être installés pour faire fonctionner l'application. Elasticsearch n'est pas nécessaire sur l'environnement de développement.
 
 ```
 git clone https://github.com/betagouv/pop-api.git
@@ -26,7 +26,7 @@ Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnemen
 
 ### Documentation base de données
 
-La base de données est documentée [ici](https://github.com/betagouv/pop-api/blob/master/SCHEMAS.md)
+La base de données est documentée [ici](https://github.com/betagouv/pop-api/blob/master/doc/README.md)
 et peut être générée avec la commande `yarn export-db-schemas`.
 
 ### Elasticsearch
