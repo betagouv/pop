@@ -81,12 +81,12 @@ const Schema = new mongoose.Schema(
     ECOL: {
       type: String,
       default: "",
-      documentation: { description: "Ecole ", master: true, label: "Ecole" }
+      documentation: { description: "Ecole ", label: "Ecole" }
     },
     TITR: {
       type: String,
       default: "",
-      documentation: { description: "Titre ", master: true, label: "Titre" }
+      documentation: { description: "Titre ", label: "Titre" }
     },
     ATIT: {
       type: String,
@@ -148,7 +148,7 @@ const Schema = new mongoose.Schema(
     MARQ: {
       type: String,
       default: "",
-      documentation: { description: "Marques ", master: true, label: "Marques" }
+      documentation: { description: "Marques ", label: "Marques" }
     },
     OBSE: {
       type: String,
@@ -169,7 +169,7 @@ const Schema = new mongoose.Schema(
     GENE: {
       type: String,
       default: "",
-      documentation: { description: "Genèse ", master: true, label: "Genèse" }
+      documentation: { description: "Genèse ", label: "Genèse" }
     },
     PROV: {
       type: String,
@@ -235,12 +235,12 @@ const Schema = new mongoose.Schema(
     SCLE: {
       type: [String],
       default: [],
-      documentation: { description: "Siècle ", master: true, label: "Siècle " }
+      documentation: { description: "Siècle ", label: "Siècle " }
     },
     STYL: {
       type: String,
       default: "",
-      documentation: { description: "Style ", master: true, label: "Style" }
+      documentation: { description: "Style ", label: "Style" }
     },
     MILL: {
       type: String,
@@ -336,7 +336,7 @@ const Schema = new mongoose.Schema(
     NOTE: {
       type: String,
       default: "",
-      documentation: { description: "Notes ", master: true, label: "Notes" }
+      documentation: { description: "Notes ", label: "Notes" }
     },
     REDC: {
       type: [String],
@@ -451,7 +451,7 @@ const Schema = new mongoose.Schema(
     RESUME: {
       type: String,
       default: "",
-      documentation: { description: "Résumé ", master: true, label: "Résumé" }
+      documentation: { description: "Résumé ", label: "Résumé" }
     },
     PHOT: {
       type: String,

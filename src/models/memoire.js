@@ -871,7 +871,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contient le numéro du fichier numérique",
-        master: false,
         label: "Cote de reproduction"
       }
     },

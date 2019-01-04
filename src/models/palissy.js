@@ -804,7 +804,7 @@ const Schema = new mongoose.Schema(
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région ", master: false, label: "Région" }
+      documentation: { description: "Région ", label: "Région" }
     },
     RENP: {
       type: [String],
