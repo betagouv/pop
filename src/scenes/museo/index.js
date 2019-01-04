@@ -50,7 +50,7 @@ class Museo extends React.Component {
         </a>
       );
     } else if (val.match(/#/)) {
-      const list = val.split("#").map(v => <li>{this.removeUglyChars(v)}</li>);
+      const list = val.split("#").filter(v => v).map(v => <li>{this.removeUglyChars(v)}</li>);
       return <ul>{list}</ul>;
     }
     return this.removeUglyChars(val);
