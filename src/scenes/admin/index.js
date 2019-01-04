@@ -30,9 +30,9 @@ class Admin extends React.Component {
       <Table>
         <thead>
           <tr>
-            <th>Email</th>
             <th>Nom</th>
             <th>Prénom</th>
+            <th>Email</th>
             <th>Groupe</th>
             <th>Institution</th>
             <th>Role</th>
@@ -49,7 +49,8 @@ class Admin extends React.Component {
               role,
               lastConnectedAt,
               institution,
-              group
+              group,
+              museofile
             } = user;
             const date = new Date(lastConnectedAt);
             const lastCo = lastConnectedAt
@@ -57,10 +58,14 @@ class Admin extends React.Component {
               : "jamais";
             return (
               <tr key={email}>
-                <td>{email}</td>
                 <td>{nom}</td>
                 <td>{prenom}</td>
-                <td>{group}</td>
+                <td className="admin-email">{email}</td>
+                <td>
+                  {group === "joconde" && museofile
+                    ? `${group} ${museofile}`
+                    : group}
+                </td>
                 <td>{institution}</td>
                 <td>{role}</td>
                 <td>{lastCo}</td>

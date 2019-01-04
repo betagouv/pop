@@ -12,3 +12,8 @@
   padding: 20px;
   font-size: 14px;
 }
+
+.admin .admin-email {
+  word-break: break-all;
+  width: 350px;
+}
