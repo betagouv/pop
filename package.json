@@ -25,6 +25,7 @@
     "url": "https://github.com/betagouv/pop-api/issues"
   },
   "jest": {
+    "testEnvironment": "node",
     "setupTestFrameworkScriptFile": "./src/__tests__/setup/setup.js",
     "testPathIgnorePatterns": [
       "./src/__tests__/setup/",

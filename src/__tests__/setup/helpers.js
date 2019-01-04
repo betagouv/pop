@@ -1,5 +1,6 @@
 const request = require("supertest");
 const User = require("../../models/user");
+const Joconde = require("../../models/joconde");
 
 async function createUser() {
   const email = "a@example.com";
@@ -27,8 +28,13 @@ async function removeAllUsers() {
   await User.remove({});
 }
 
+async function removeJocondeNotices() {
+  await Joconde.remove({});
+}
+
 module.exports = {
   getJwtToken,
   removeAllUsers,
+  removeJocondeNotices,
   createUser
 };
