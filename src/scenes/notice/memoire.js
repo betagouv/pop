@@ -56,17 +56,27 @@ class Memoire extends React.Component {
       this.setState({ loading: false, notice });
     });
   }
-
+  getTitle() {
+    const title = `${this.state.notice.TICO ||
+      this.state.notice.TITR ||
+      this.state.notice.EDIF} - POP`;
+    return title.charAt(0).toUpperCase() + title.slice(1);
+  }
   getMetaDescription = () => {
-    const titre = this.state.notice.TICO || this.state.notice.TITR;
-    const auteur = this.state.notice.AUTP ? this.state.notice.AUTP : "";
-    /* if(this.state.notice.TYPDOC && this.state.notice.TYPDOC.length === 1) {
-      const category = this.state.notice.TYPDOC[0];
-      if(category.toLowerCase().includes("phototype")) {
-        return `Découvrez ${titre}, cette photographie, réalisée par ${auteur}. Cliquez ici !`;
-      }
-    } */
-    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+    const title =
+      this.state.notice.TICO ||
+      this.state.notice.TITR ||
+      this.state.notice.EDIF;
+
+    let description = title;
+
+    const author = this.state.notice.AUTP ? this.state.notice.AUTP : "";
+    if (author) {
+      description = `${title}, par ${author}`;
+    }
+
+    //add uppercase
+    return description.charAt(0).toUpperCase() + description.slice(1);
   };
 
   render() {
@@ -79,12 +89,10 @@ class Memoire extends React.Component {
     }
 
     const description = this.getMetaDescription();
+    const title = this.getTitle();
     return (
       <Container className="notice" fluid>
-        <Helmet
-          title={`${this.state.notice.TICO || this.state.notice.TITR} - POP`}
-          description={description}
-        />
+        <Helmet title={title} description={description} />
         <Row className="top-section">
           <Col>
             <h1 className="heading">{this.state.notice.TICO}</h1>
