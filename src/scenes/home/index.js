@@ -1,6 +1,5 @@
 import React from "react";
-import { Col, Container, Alert } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Container, Alert } from "reactstrap";
 
 import "./index.css";
 

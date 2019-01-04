@@ -80,9 +80,8 @@ export default class Notice {
     }
     const arr = str.split(delim).map(e => e.trim());
 
-    //remove duplicates
+    // Remove duplicates
     return arr.filter((obj, key, array) => array.map(obj2 => obj !== obj2));
-    //return [...new Set(arr)]; // DOESNT WORK IN PRODUCTION
   };
 
   extractEmail = function(str) {
@@ -97,7 +96,6 @@ export default class Notice {
     if (result && result.length == 2) {
       return result[1];
     }
-    // erreurs.push(`Impossible d'extraire l'email dans ${str}`)
     return str;
   };
   extractUrls = function(str) {
@@ -112,7 +110,6 @@ export default class Notice {
     if (arr.length) {
       return arr;
     }
-    // erreurs.push(`Impossible d'extraire l'url dans ${str}`);
     return str;
   };
 

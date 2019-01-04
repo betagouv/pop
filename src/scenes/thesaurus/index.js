@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Container, Button, Badge } from "reactstrap";
+import { Input, Container, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import Loader from "../../components/Loader";
