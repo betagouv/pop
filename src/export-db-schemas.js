@@ -16,7 +16,9 @@ const models = fs
       type: v.instance,
       required: v.options.required,
       opendata: v.options.documentation ? v.options.documentation.opendata : "",
-      master: v.options.documentation ? v.options.documentation.master : "",
+      generated: v.options.documentation
+        ? v.options.documentation.generated
+        : "",
       description: v.options.documentation
         ? v.options.documentation.description
         : "",
@@ -61,9 +63,9 @@ for (let i = 0; i < models.length; i++) {
     ...model.paths.map(path => {
       const elements = [
         path.type,
-        path.required ? "true" : "false",
-        path.master ? "true" : "false",
-        path.opendata ? "true" : "false",
+        path.required ? "oui" : "non",
+        path.generated ? "oui" : "non",
+        path.opendata ? "oui" : "non",
         path.validation
       ];
       return [
@@ -71,7 +73,7 @@ for (let i = 0; i < models.length; i++) {
         path.description + "\n\n",
         path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
         "",
-        `|Type|Required|Master|Opendata|Validation|`,
+        `|Type|Requis|Généré|Opendata|Validation|`,
         `|----|--------|------|--------|------|`,
         `|${elements.join("|")}|`,
         ""

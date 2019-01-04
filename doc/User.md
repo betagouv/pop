@@ -18,9 +18,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false||
+|String|oui|non|non||
 
 ### institution
 
@@ -28,9 +28,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false||
+|String|oui|non|non||
 
 ### nom
 
@@ -38,9 +38,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### prenom
 
@@ -48,9 +48,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### group
 
@@ -58,9 +58,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false||
+|String|oui|non|non||
 
 ### role
 
@@ -68,9 +68,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false||
+|String|oui|non|non||
 
 ### password
 
@@ -78,9 +78,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false||
+|String|oui|non|non||
 
 ### hasResetPassword
 
@@ -88,9 +88,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Boolean|false|false|false||
+|Boolean|non|non|non||
 
 ### lastConnectedAt
 
@@ -98,9 +98,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Date|false|false|false||
+|Date|non|non|non||
 
 ### museofile
 
@@ -108,9 +108,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### _id
 
@@ -118,9 +118,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|ObjectID|false|false|false||
+|ObjectID|non|non|non||
 
 ### __v
 
@@ -128,6 +128,6 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|false|false||
+|Number|non|non|non||

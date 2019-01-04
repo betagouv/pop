@@ -9,9 +9,14 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Producteur  de la notice",
-        master: false,
-        label: "Producteur"
+        description: `
+        Producteur de la donnée défini selon l'algorithme suivant : 
+        IA = Inventaire
+        PA = Monuments Historiques
+        EA = Architecture
+        Autre = Null`,
+        label: "Producteur",
+        generated: true
       }
     },
     CONTIENT_IMAGE: {
@@ -20,7 +25,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true
+        generated: true
       }
     },
     POP_COORDONNEES: {
@@ -29,7 +34,7 @@ const Schema = new mongoose.Schema(
         default: 0,
         documentation: {
           description: "Latitude de la notice en WGS84",
-          master: true
+          generated: true
         }
       },
       lon: {
@@ -37,14 +42,18 @@ const Schema = new mongoose.Schema(
         default: 0,
         documentation: {
           description: "Longitude de la notice en WGS84",
-          master: true
+          generated: true
         }
       }
     },
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
       enum: ["oui", "non"],
-      default: "non"
+      default: "non",
+      documentation: {
+        description: "Champs généré pour savoir si une géolocalisation existe",
+        generated: true
+      }
     },
     POP_COORDINATES_POLYGON: {
       type: { type: String, enum: ["Polygon"], default: "Polygon" },
@@ -55,7 +64,7 @@ const Schema = new mongoose.Schema(
       default: "Patrimoine mobilier (Palissy)",
       documentation: {
         description: "Nom de la base : Patrimoine mobilier (Palissy)",
-        master: true
+        generated: true
       }
     },
     MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
@@ -67,7 +76,6 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: false,
         validation: "Alphanumeric",
         label: "Référence notice"
       }
@@ -78,7 +86,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -88,7 +95,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Adresse ",
-        master: false,
         label: "Adresse"
       }
     },
@@ -97,7 +103,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -107,7 +112,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Auteur(s) de la source figurée",
-        master: false,
         label: "Auteur(s) de la source figurée"
       }
     },
@@ -116,7 +120,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Aire d'étude",
-        master: false,
         label: "Aire d'étude"
       }
     },
@@ -125,7 +128,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Appellation et titre",
-        master: false,
         label: "Appellation et titre"
       }
     },
@@ -135,7 +137,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école ",
-        master: false,
         label:
           "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école"
       }
@@ -145,7 +146,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteurs phototype",
-        master: false,
         label: "Auteurs phototype"
       }
     },
@@ -154,7 +154,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Auteurs de l'oeuvre",
-        master: false,
         label: "Auteurs de l'oeuvre"
       }
     },
@@ -163,7 +162,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -171,14 +169,13 @@ const Schema = new mongoose.Schema(
     CANT: {
       type: String,
       default: "",
-      documentation: { description: "Canton ", master: false, label: "Canton" }
+      documentation: { description: "Canton ", label: "Canton" }
     },
     CATE: {
       type: [String],
       default: [],
       documentation: {
         description: "Catégorie technique",
-        master: false,
         label: "Catégorie technique"
       }
     },
@@ -187,7 +184,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commune ",
-        master: false,
         label: "Commune"
       }
     },
@@ -196,7 +192,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -206,8 +201,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contact ",
-        master: true,
-        validation: "email",
+        generated: true,
+        validation: "Email",
         label: "Contact"
       }
     },
@@ -216,7 +211,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordonnées Lambert (ou autres) d'un point ",
-        master: false,
         label: "Coordonnées Lambert (ou autres) d'un points"
       }
     },
@@ -225,7 +219,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordonnées Lambert (ou autres) multiples ",
-        master: false,
         label: "Coordonnées Lambert (ou autres) multiples"
       }
     },
@@ -234,7 +227,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "CopyRight",
-        master: false,
         label: "CopyRight"
       }
     },
@@ -243,7 +235,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Datation en années",
-        master: false,
         label: "Datation en années"
       }
     },
@@ -252,7 +243,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Date de rédaction de la notice",
-        master: false,
         label: "Date de rédaction de la notice"
       }
     },
@@ -261,7 +251,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Dénomination ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
         label: "Dénomination"
       }
@@ -271,7 +260,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Date d'enquête",
-        master: false,
         label: "Date d'enquête"
       }
     },
@@ -280,7 +268,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Partie déplacée",
-        master: false,
         label: "Partie déplacée"
       }
     },
@@ -289,7 +276,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commentaire description",
-        master: false,
         label: "Commentaire description "
       }
     },
@@ -298,7 +284,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dimensions ",
-        master: false,
         label: "Dimensions"
       }
     },
@@ -307,8 +292,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true,
-        label: "Date de la dernière mise à jour"
+        label: "Date de la dernière mise à jour",
+        generated: true
       }
     },
     DMIS: {
@@ -316,8 +301,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true,
-        label: "Date de chargement dans la base "
+        label: "Date de chargement dans la base ",
+        generated: true
       }
     },
     DOMN: {
@@ -325,7 +310,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Domaines ",
-        master: false,
         label: "Domaines "
       }
     },
@@ -334,7 +318,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier adresse",
-        master: false,
         label: "Dossier adresse"
       }
     },
@@ -343,7 +326,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Dossier ",
-        master: false,
         label: "Dossier"
       }
     },
@@ -352,7 +334,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier URL",
-        master: false,
         label: "Dossier URL"
       }
     },
@@ -361,7 +342,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier PDF ",
-        master: true,
+        generated: true,
         label: "Dossier PDF"
       }
     },
@@ -370,7 +351,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date protection",
-        master: false,
         label: "Date protection"
       }
     },
@@ -379,7 +359,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Département ",
-        master: false,
         label: "Département"
       }
     },
@@ -388,7 +367,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Edifice de conservation",
-        master: false,
         label: "Edifice de conservation"
       }
     },
@@ -397,7 +375,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -407,7 +384,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Emplacement de l’œuvre dans l’édifice",
-        master: false,
         label: "Emplacement de l’œuvre dans l’édifice"
       }
     },
@@ -416,7 +392,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -426,7 +401,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Etat de conservation",
-        master: false,
         label: "Etat de conservation"
       }
     },
@@ -435,7 +409,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cadre de l'étude ",
-        master: false,
         label: "Cadre de l'étude "
       }
     },
@@ -444,7 +417,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom actuel ou historique du lieu d’exécution ",
-        master: false,
         label: "Nom actuel ou historique du lieu d’exécution"
       }
     },
@@ -453,7 +425,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -463,7 +434,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commentaire historique",
-        master: false,
         label: "Commentaire historique"
       }
     },
@@ -472,7 +442,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -482,7 +451,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -492,7 +460,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -502,7 +469,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Milieu d'implantation",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
         label: "Milieu d'implantation"
       }
@@ -512,7 +478,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Inscriptions, marques, emblématique et poinçons",
-        master: false,
         label: "Inscriptions, marques, emblématique et poinçons"
       }
     },
@@ -521,7 +486,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Numéro INSEE de la commune",
-        master: false,
         label: "Numéro INSEE de la commune"
       }
     },
@@ -530,7 +494,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -540,7 +503,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Intérêt de l'oeuvre",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
         label: "Intérêt de l'oeuvre"
       }
@@ -550,7 +512,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Justification de la datation",
-        master: false,
         label: "Justification de la datation"
       }
     },
@@ -559,7 +520,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -569,7 +529,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Liens Divers",
-        master: false,
         label: "Liens Divers"
       }
     },
@@ -578,7 +537,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu-dit ",
-        master: false,
         label: "Lieu-dit"
       }
     },
@@ -587,7 +545,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -597,7 +554,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Localisation ",
-        master: false,
         label: "Localisation"
       }
     },
@@ -606,7 +562,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Matériaux ",
-        master: false,
         label: "Matériaux"
       }
     },
@@ -615,7 +570,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -625,7 +579,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro de microfiche",
-        master: false,
         label: "Numéro de microfiche"
       }
     },
@@ -634,7 +587,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mosaïques ",
-        master: false,
         label: "Mosaïques"
       }
     },
@@ -643,7 +595,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numérotation artificielle",
-        master: false,
         label: "Numérotation artificielle"
       }
     },
@@ -652,7 +603,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -662,7 +612,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Noms des rédacteurs de la notice et du dossier ",
-        master: false,
         label: "Noms des rédacteurs de la notice et du dossier"
       }
     },
@@ -671,7 +620,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -681,7 +629,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -691,7 +638,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Observations ",
-        master: false,
         label: "Observations"
       }
     },
@@ -701,7 +647,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Origine de l’œuvre (lieu de provenance ou de destination)",
-        master: false,
         label: "Origine de l’œuvre (lieu de provenance ou de destination)"
       }
     },
@@ -710,7 +655,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Préc. appart",
-        master: false,
         label: "Préc. appart"
       }
     },
@@ -719,7 +663,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parties non étud",
-        master: false,
         label: "Parties non étud"
       }
     },
@@ -728,7 +671,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parties constituantes",
-        master: false,
         label: "Parties constituantes"
       }
     },
@@ -737,7 +679,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Précision sur la dénomination",
-        master: false,
         label: "Précision sur la dénomination"
       }
     },
@@ -746,7 +687,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur les dimensions",
-        master: false,
         label: "Précisions sur les dimensions"
       }
     },
@@ -755,7 +695,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Personnalitées ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
         label: "Personnalitées"
       }
@@ -765,7 +704,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur l’état de conservation",
-        master: false,
         label: "Précisions sur l’état de conservation"
       }
     },
@@ -774,7 +712,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -785,7 +722,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Précisions sur les inscriptions, marques, emblématique et poinçons ",
-        master: false,
         label:
           "Précisions sur les inscriptions, marques, emblématique et poinçons"
       }
@@ -795,7 +731,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Intérêt oeuvre",
-        master: false,
         label: "Intérêt oeuvre"
       }
     },
@@ -804,7 +739,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision sur la localisation",
-        master: false,
         label: "Précision sur la localisation"
       }
     },
@@ -813,7 +747,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur la protection MH",
-        master: false,
         label: "Précisions sur la protection MH"
       }
     },
@@ -822,7 +755,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision sur la représentation",
-        master: false,
         label: "Précision sur la représentation"
       }
     },
@@ -831,7 +763,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nature de la protection MH",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection MH"
       }
@@ -842,7 +773,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Référence de l'édifice de conservation",
-        master: false,
         label: "Référence de l'édifice de conservation"
       }
     },
@@ -851,7 +781,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Référence de l’ensemble ou de l'oeuvre",
-        master: false,
         label: "Référence de l’ensemble ou de l'oeuvre"
       }
     },
@@ -860,7 +789,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -870,7 +798,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Références des parties constituantes étudiées ",
-        master: false,
         label: "Références des parties constituantes étudiées"
       }
     },
@@ -884,7 +811,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -894,7 +820,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
-        master: false,
         label: "N° de renvoi au domaine MH ou au domaine INVENTAIRE"
       }
     },
@@ -903,7 +828,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Représentation ",
-        master: false,
         label: "Représentation"
       }
     },
@@ -912,7 +836,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -922,7 +845,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Datation des campagnes principales de construction ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
         label: "Datation des campagnes principales de construction"
       }
@@ -932,7 +854,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -942,7 +863,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -952,7 +872,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Stade de la création",
-        master: false,
         label: "Stade de la création"
       }
     },
@@ -961,7 +880,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Statut de la propriété",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -971,21 +889,19 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Structure et typologie",
-        master: false,
         label: "Structure et typologie"
       }
     },
     THEM: {
       type: String,
       default: "",
-      documentation: { description: "Thème ", master: false, label: "Thème" }
+      documentation: { description: "Thème ", label: "Thème" }
     },
     TICO: {
       type: String,
       default: "",
       documentation: {
         description: "Titre courant",
-        master: false,
         label: "Titre courant"
       }
     },
@@ -994,7 +910,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1004,7 +919,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1014,7 +928,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1024,7 +937,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Objet(s) volé(s)",
-        master: false,
         label: "Objet(s) volé(s)",
         deprecated: true
       }
@@ -1034,7 +946,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1044,7 +955,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1054,7 +964,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Visite guidé ",
-        master: false,
         label: "Visite guidé",
         deprecated: true
       }
@@ -1064,7 +973,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1074,7 +982,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Zone Lambert ou autre",
-        master: false,
         label: "Zone Lambert ou autre"
       }
     }

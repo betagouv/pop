@@ -1,4 +1,4 @@
-path,type,required,label,opendata,master,description,validation,thesaurus
+path,type,required,label,opendata,generated,description,validation,thesaurus
 "PRODUCTEUR","String","non","Producteur","","true","Producteur de la donnée déterminé grâce à la référence : 
 
       IV=INV
@@ -15,7 +15,7 @@ path,type,required,label,opendata,master,description,validation,thesaurus
 "BASE","String","non","","","true","Nom de la base : Photographies (Mémoire)","",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "POP_IMPORT","Array","non","","","","","",""
-"REF","String","oui","Référence","","","Référence unique de la notice","",""
+"REF","String","oui","Référence","","true","Référence unique de la notice","",""
 "TOUT","String","non","Index global","","","Index global [Peut etre déprécié]","",""
 "ADRESSE","String","non","Adresse","","","Adresse","",""
 "AUTOEU","String","non","Auteur oeuvre représentée","","","Auteur oeuvre représentée","",""
@@ -125,7 +125,7 @@ path,type,required,label,opendata,master,description,validation,thesaurus
 "NUMI","String","non","Ident. support","","","Ident. support","",""
 "LIEU","String","non","Lieu-dit","","","Lieu-dit ","",""
 "ADRS","String","non","Adresse saisie","","","Adresse saisie","",""
-"CONTACT","String","non","CONTACT","","true","Contact","email",""
+"CONTACT","String","non","CONTACT","","true","Contact","Email",""
 "EMET","String","non","Emetteur (code)","","","Emetteur (code) ","",""
 "NUM","String","non","N° support","","","N° support ","",""
 "IMG","String","non","Images","","","Images","",""

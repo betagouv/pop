@@ -13,7 +13,6 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: false,
         validation: "Alphanumeric",
         label: "Référence notice"
       }
@@ -22,9 +21,15 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "PRODUCTEUR",
-        master: false,
-        label: "PRODUCTEUR"
+        description: `
+        Producteur de la donnée défini selon l'algorithme suivant : 
+        IA = Inventaire
+        PA = Monuments Historiques
+        EA = Architecture
+        Autre = Null
+        `,
+        label: "PRODUCTEUR",
+        generated: true
       }
     },
     BASE: {
@@ -32,7 +37,7 @@ const Schema = new mongoose.Schema(
       default: "Patrimoine architectural (Mérimée)",
       documentation: {
         description: "Nom de la base : Patrimoine architectural (Mérimée)",
-        master: true
+        generated: true
       }
     },
     CONTIENT_IMAGE: {
@@ -41,7 +46,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true
+        generated: true
       }
     },
     MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
@@ -51,7 +56,7 @@ const Schema = new mongoose.Schema(
         default: 0,
         documentation: {
           description: "Latitude de la notice en WGS84",
-          master: true
+          generated: true
         }
       },
       lon: {
@@ -59,7 +64,7 @@ const Schema = new mongoose.Schema(
         default: 0,
         documentation: {
           description: "Longitude de la notice en WGS84",
-          master: true
+          generated: true
         }
       }
     },
@@ -70,7 +75,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'",
-        master: true
+        generated: true
       }
     },
     POP_COORDINATES_POLYGON: {
@@ -83,7 +88,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ qui sera utilisé pour traduire les date en format requetable",
-        master: true
+        generated: true
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -92,8 +97,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description:
-          "Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [DEPRECIE ?]",
-        master: false
+          "Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [DEPRECIE ?]"
       }
     },
     ACTU: {
@@ -101,21 +105,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Destinations successives et actuelle ",
-        master: false,
         label: "Destinations successives et actuelle"
       }
     },
     ADRS: {
       type: String,
       default: "",
-      documentation: { description: "Adresse", master: false, label: "Adresse" }
+      documentation: { description: "Adresse", label: "Adresse" }
     },
     AFFE: {
       type: String,
       default: "",
       documentation: {
         description: "Affectataire",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T97",
         label: "Affectataire"
       }
@@ -125,7 +127,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Aire d'étude",
-        master: false,
         label: "Aire d'étude"
       }
     },
@@ -134,7 +135,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Appellation et titre",
-        master: false,
         label: "Appellation et titre"
       }
     },
@@ -143,7 +143,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Nature de l'acte de protection MH ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T98",
         label: "Nature de l'acte de protection MH "
       }
@@ -153,7 +152,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence dans la base Patriarche",
-        master: false,
         label: "Référence dans la base Patriarche"
       }
     },
@@ -162,7 +160,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Auteurs phototype",
-        master: false,
         label: "Auteurs phototype"
       }
     },
@@ -171,7 +168,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Auteurs de l'oeuvre",
-        master: false,
         label: "Auteurs de l'oeuvre"
       }
     },
@@ -180,35 +176,32 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Référence cadastrale",
-        master: false,
         label: "Référence cadastrale"
       }
     },
     CANT: {
       type: String,
       default: "",
-      documentation: { description: "Canton", master: false, label: "Canton" }
+      documentation: { description: "Canton", label: "Canton" }
     },
     COLL: {
       type: [String],
       default: [],
       documentation: {
         description: "Décompte des oeuvres recensées",
-        master: false,
         label: "Décompte des oeuvres recensées"
       }
     },
     COM: {
       type: String,
       default: "",
-      documentation: { description: "Commune", master: false, label: "Commune" }
+      documentation: { description: "Commune", label: "Commune" }
     },
     COOR: {
       type: String,
       default: "",
       documentation: {
         description: "Coordonnées Lambert (ou autres) d'un point",
-        master: false,
         label: "Coordonnées Lambert (ou autres) d'un point"
       }
     },
@@ -217,7 +210,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordonnées Lambert (ou autres) multiples",
-        master: false,
         label: "Coordonnées Lambert (ou autres) multiples"
       }
     },
@@ -226,7 +218,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "CopyRight",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T21",
         label: "CopyRight"
       }
@@ -236,7 +227,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Type de la couverture",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T26",
         label: "Type de la couverture"
       }
@@ -246,7 +236,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Date protection",
-        master: false,
         label: "Datation en années "
       }
     },
@@ -255,7 +244,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de rédaction de la notice",
-        master: false,
         label: "Date de rédaction de la notice"
       }
     },
@@ -264,7 +252,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Domaines",
-        master: false,
         label: "Domaines"
       }
     },
@@ -273,7 +260,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Dénomination ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
         label: "Dénomination"
       }
@@ -283,7 +269,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date d'enquête",
-        master: false,
         label: "Date d'enquête"
       }
     },
@@ -292,7 +277,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Partie déplacée",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T14",
         label: "Partie déplacée"
       }
@@ -302,7 +286,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commentaire description",
-        master: false,
         label: "Commentaire description"
       }
     },
@@ -311,7 +294,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dimensions",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T11",
         label: "Dimensions"
       }
@@ -321,8 +303,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true,
-        label: "Date de la dernière mise à jour"
+        label: "Date de la dernière mise à jour",
+        generated: true
       }
     },
     DMIS: {
@@ -330,8 +312,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true,
-        label: "Date de chargement dans la base "
+        label: "Date de chargement dans la base ",
+        generated: true
       }
     },
     DOSS: {
@@ -339,7 +321,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T13",
         label: "Dossier"
       }
@@ -349,7 +330,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date protection",
-        master: false,
         label: "Date protection"
       }
     },
@@ -358,7 +338,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Département",
-        master: false,
         label: "Département"
       }
     },
@@ -367,7 +346,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Edifice de conservation",
-        master: false,
         label: "Edifice de conservation"
       }
     },
@@ -376,7 +354,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parti d’élévation extérieure",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T25",
         label: "Parti d’élévation extérieure"
       }
@@ -386,7 +363,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de l'énergie",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T27",
         label: "Source de l'énergie"
       }
@@ -396,7 +372,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Emplacement, forme et structure de l’escalier ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T29",
         label: "Emplacement, forme et structure de l’escalier"
       }
@@ -406,7 +381,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Vaisseau et étage",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T23",
         label: "Vaisseau et étage"
       }
@@ -416,7 +390,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Etat de conservation",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T30",
         label: "ETAT"
       }
@@ -426,7 +399,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Cadre de l'étude",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68",
         label: "Cadre de l'étude"
       }
@@ -436,7 +408,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Destinataire",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T197",
         label: "Destinataire"
       }
@@ -446,7 +417,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commentaire historique",
-        master: false,
         label: "Commentaire historique"
       }
     },
@@ -455,7 +425,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cours d'eau",
-        master: false,
         label: "Cours d'eau"
       }
     },
@@ -464,7 +433,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Milieu d'implantation",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
         label: "Milieu d'implantation"
       }
@@ -474,7 +442,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro INSEE de la commune",
-        master: false,
         label: "Numéro INSEE de la commune"
       }
     },
@@ -483,7 +450,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Intérêt de l'oeuvre",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
         label: "Intérêt de l'oeuvre"
       }
@@ -493,7 +459,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Justification de l'attribution",
-        master: false,
         label: "Justification de l'attribution"
       }
     },
@@ -502,7 +467,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Justification de la datation",
-        master: false,
         label: "Justification de la datation"
       }
     },
@@ -511,7 +475,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -521,7 +484,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu-dit",
-        master: false,
         label: "Lieu-dit"
       }
     },
@@ -530,7 +492,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Localisation ",
-        master: false,
         label: "Localisation"
       }
     },
@@ -539,7 +500,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -549,7 +509,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mosaïques",
-        master: false,
         label: "Mosaïques"
       }
     },
@@ -558,7 +517,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Eléments protégés MH",
-        master: false,
         label: "Eléments protégés MH"
       }
     },
@@ -567,7 +525,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro de microfiche",
-        master: false,
         label: "Numéro de microfiche"
       }
     },
@@ -576,7 +533,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Matériau du gros-oeuvre et mise en oeuvre ",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
         label: "Matériau du gros-oeuvre et mise en oeuvre"
       }
@@ -586,7 +542,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "no Bordereaus",
-        master: false,
         label: "no Bordereaus"
       }
     },
@@ -595,7 +550,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Noms des rédacteurs de la notice et du dossier",
-        master: false,
         label: "Noms des rédacteurs de la notice et du dossier"
       }
     },
@@ -604,7 +558,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Observations",
-        master: false,
         label: "Observations"
       }
     },
@@ -613,7 +566,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur l'affectataire ",
-        master: false,
         label: "Précisions sur l'affectataire "
       }
     },
@@ -622,7 +574,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parties constituantes",
-        master: false,
         label: "Parties constituantes"
       }
     },
@@ -631,7 +582,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Parties non étud",
-        master: false,
         label: "Parties non étud"
       }
     },
@@ -640,7 +590,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision sur la dénomination",
-        master: false,
         label: "Précision sur la dénomination"
       }
     },
@@ -649,7 +598,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Personnalitées",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
         label: "Personnalitées"
       }
@@ -659,7 +607,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Parti de plan",
-        master: false,
         label: "Parti de plan"
       }
     },
@@ -668,7 +615,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision sur la localisation",
-        master: false,
         label: "Précision sur la localisation"
       }
     },
@@ -677,7 +623,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur la protection MH",
-        master: false,
         label: "Précisions sur la protection MH"
       }
     },
@@ -686,7 +631,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Précision sur la représentation",
-        master: false,
         label: "Précision sur la représentation"
       }
     },
@@ -695,7 +639,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Nature de la protection MH",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection MH"
       }
@@ -705,7 +648,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur le statut de la propriété",
-        master: false,
         label: "Précisions sur le statut de la propriété"
       }
     },
@@ -714,7 +656,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Référence de l'édifice de conservation",
-        master: false,
         label: "Référence de l'édifice de conservation"
       }
     },
@@ -723,40 +664,37 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Références des parties constituantes étudiées",
-        master: false,
         label: "Références des parties constituantes étudiées"
       }
     },
     REFO: {
       type: [String],
       default: [],
-      documentation: { description: "REFO", master: false, label: "REFO" }
+      documentation: { description: "REFO", label: "REFO" }
     },
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région", master: false, label: "Région" }
+      documentation: { description: "Région", label: "Région" }
     },
     REMA: {
       type: String,
       default: "",
       documentation: {
         description: "Eléments remarquables",
-        master: false,
         label: "Eléments remarquables"
       }
     },
     REMP: {
       type: String,
       default: "",
-      documentation: { description: "Remploi", master: false, label: "Remploi" }
+      documentation: { description: "Remploi", label: "Remploi" }
     },
     RENV: {
       type: [String],
       default: [],
       documentation: {
         description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
-        master: false,
         label: "N° de renvoi au domaine MH ou au domaine INVENTAIRE"
       }
     },
@@ -765,7 +703,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Représentation ",
-        master: false,
         label: "Représentation"
       }
     },
@@ -774,7 +711,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Identifiant Patrimoine",
-        master: false,
         label: "Identifiant Patrimoine"
       }
     },
@@ -783,7 +719,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Datation des campagnes secondaires de construction",
-        master: false,
         label: "Datation des campagnes secondaires de construction"
       }
     },
@@ -792,7 +727,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Datation des campagnes principales de construction",
-        master: false,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
         label: "Datation des campagnes principales de construction"
       }
@@ -802,7 +736,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -812,7 +745,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Site, secteur ou zone de protection",
-        master: false,
         label: "Site, secteur ou zone de protection "
       }
     },
@@ -821,7 +753,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Statut de la propriété",
-        master: false,
         label: "Statut de la propriété"
       }
     },
@@ -830,7 +761,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Technique du décor des immeubles par nature ",
-        master: false,
         label: "Technique du décor des immeubles par nature"
       }
     },
@@ -839,7 +769,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Titre courant",
-        master: false,
         label: "Titre courant"
       }
     },
@@ -848,7 +777,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Matériau de la couverture ",
-        master: false,
         label: "Matériau de la couverture"
       }
     },
@@ -857,7 +785,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Typologie ",
-        master: false,
         label: "Typologie"
       }
     },
@@ -866,7 +793,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Couvert et découvert de jardin ",
-        master: false,
         label: "Couvert et découvert de jardin"
       }
     },
@@ -875,7 +801,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -885,7 +810,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -895,7 +819,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -905,7 +828,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier URL",
-        master: false,
         label: "Dossier URL"
       }
     },
@@ -914,7 +836,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier PDF",
-        master: true,
+        generated: true,
         label: "Dossier PDF"
       }
     },
@@ -923,7 +845,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier adresse",
-        master: false,
         label: "Dossier adresse"
       }
     },
@@ -932,7 +853,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Liens Divers",
-        master: false,
         label: "Liens Divers"
       }
     },
@@ -941,7 +861,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -951,7 +870,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Ouverture au public",
-        master: false,
         label: "Ouverture au public"
       }
     },
@@ -960,7 +878,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Vocable ",
-        master: false,
         label: "Vocable"
       }
     },
@@ -969,7 +886,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Type et nature du couvrement ",
-        master: false,
         label: "Type et nature du couvrement"
       }
     },
@@ -978,7 +894,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Visite guidé",
-        master: false,
         label: "Visite guidé"
       }
     },
@@ -987,21 +902,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Zone Lambert ou autres",
-        master: false,
         label: "Zone Lambert ou autres"
       }
     },
     THEM: {
       type: String,
       default: "",
-      documentation: { description: "Thème ", master: false, label: "Thème" }
+      documentation: { description: "Thème ", label: "Thème" }
     },
     ACMH: {
       type: String,
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1011,7 +924,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1021,7 +933,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1031,7 +942,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1041,7 +951,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1051,7 +960,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1061,8 +969,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contact ",
-        master: true,
-        validation: "email",
+        generated: true,
+        validation: "Email",
         label: "Contact"
       }
     },
@@ -1071,7 +979,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1081,7 +988,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS affiché]",
-        master: false,
         label: "",
         deprecated: true
       }
@@ -1091,7 +997,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Intérêt oeuvre",
-        master: false,
         label: "Intérêt oeuvre"
       }
     },
@@ -1100,7 +1005,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date du label",
-        master: false,
         label: "Date du label"
       }
     }

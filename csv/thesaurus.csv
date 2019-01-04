@@ -1,4 +1,4 @@
-path,type,required,label,opendata,master,description,validation,thesaurus
+path,type,required,label,opendata,generated,description,validation,thesaurus
 "arc","String","non","","","","","",""
 "value","String","non","","","","","",""
 "_id","ObjectID","non","","","","","",""

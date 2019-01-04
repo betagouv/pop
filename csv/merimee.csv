@@ -1,6 +1,12 @@
-path,type,required,label,opendata,master,description,validation,thesaurus
+path,type,required,label,opendata,generated,description,validation,thesaurus
 "REF","String","oui","Référence notice","","","Référence unique de la notice","Alphanumeric",""
-"PRODUCTEUR","String","non","PRODUCTEUR","","","PRODUCTEUR","",""
+"PRODUCTEUR","String","non","PRODUCTEUR","","true","
+        Producteur de la donnée défini selon l'algorithme suivant : 
+        IA = Inventaire
+        PA = Monuments Historiques
+        EA = Architecture
+        Autre = Null
+        ","",""
 "BASE","String","non","","","true","Nom de la base : Patrimoine architectural (Mérimée)","",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "MEMOIRE","Array","non","","","","","",""
@@ -118,7 +124,7 @@ path,type,required,label,opendata,master,description,validation,thesaurus
 "WCOM","String","non","","","","[PAS affiché]","",""
 "WRENV","String","non","","","","[PAS affiché]","",""
 "REFM","String","non","","","","[PAS affiché]","",""
-"CONTACT","String","non","Contact","","true","Contact ","email",""
+"CONTACT","String","non","Contact","","true","Contact ","Email",""
 "IDAGR","String","non","","","","[PAS affiché]","",""
 "LMDP","String","non","","","","[PAS affiché]","",""
 "PINT","String","non","Intérêt oeuvre","","","Intérêt oeuvre","",""

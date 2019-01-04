@@ -79,9 +79,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### TOUT
 
@@ -89,9 +89,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ACCES
 
@@ -99,9 +99,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ACTIV
 
@@ -109,9 +109,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ADRESSE
 
@@ -119,9 +119,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ADRL1_M
 
@@ -129,9 +129,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### AMIS
 
@@ -139,9 +139,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### AN_CREAT
 
@@ -149,9 +149,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ANNEE_FE
 
@@ -159,9 +159,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ANNEXE
 
@@ -169,9 +169,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ANTARIF
 
@@ -179,9 +179,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ARTISTE
 
@@ -189,9 +189,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ATOUT
 
@@ -199,9 +199,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### CEDEX_AD
 
@@ -209,9 +209,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### COPY
 
@@ -219,9 +219,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### CP_M
 
@@ -229,9 +229,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### CTRLTECH
 
@@ -239,9 +239,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DOMPAL
 
@@ -249,9 +249,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DPT
 
@@ -259,9 +259,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DT_CREAT
 
@@ -269,9 +269,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DT_MODIF
 
@@ -279,9 +279,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DT_SAISI
 
@@ -289,9 +289,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### GESTION
 
@@ -299,9 +299,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### HIST
 
@@ -309,9 +309,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### INTERET
 
@@ -319,9 +319,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ITI2_M
 
@@ -329,9 +329,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ITI_M
 
@@ -339,9 +339,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### JOCONDE
 
@@ -349,9 +349,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LABEL
 
@@ -359,9 +359,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LEGS
 
@@ -369,9 +369,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LIEU_M
 
@@ -379,9 +379,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MEL
 
@@ -389,9 +389,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MONOPLUR
 
@@ -399,9 +399,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NB_AMI
 
@@ -409,9 +409,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NOM_AMI
 
@@ -419,9 +419,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NOMANC
 
@@ -429,9 +429,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NOMOFF
 
@@ -439,9 +439,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NOMUSAGE
 
@@ -449,9 +449,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### OBS_AMI
 
@@ -459,9 +459,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### OBS_TOUR
 
@@ -469,9 +469,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PHARE
 
@@ -479,9 +479,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PROPBAT
 
@@ -489,9 +489,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PROPCOLL
 
@@ -499,9 +499,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PROT
 
@@ -509,9 +509,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PUBLI
 
@@ -519,9 +519,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### REGION
 
@@ -529,9 +529,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### REPCOLL
 
@@ -539,9 +539,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### SERVICES
 
@@ -549,9 +549,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### SIGLE_M
 
@@ -559,9 +559,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### STATUT
 
@@ -569,9 +569,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### SURFACES
 
@@ -579,9 +579,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### TEL_M
 
@@ -589,9 +589,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### THEMES
 
@@ -599,9 +599,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### URL_M2
 
@@ -609,9 +609,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### URL_M
 
@@ -619,9 +619,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### VIDEO
 
@@ -629,9 +629,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### VILLE_M
 
@@ -639,9 +639,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### RESP
 
@@ -649,9 +649,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### GRESP
 
@@ -659,9 +659,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PSC
 
@@ -669,9 +669,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DPSC
 
@@ -679,9 +679,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DMDF
 
@@ -689,9 +689,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### SPUB
 
@@ -699,9 +699,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### INVR
 
@@ -709,9 +709,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NUMER
 
@@ -719,9 +719,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LGN
 
@@ -729,9 +729,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### REST
 
@@ -739,9 +739,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ACQU
 
@@ -749,9 +749,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### RECOL
 
@@ -759,9 +759,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### location.lat
 
@@ -769,9 +769,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|false|false||
+|Number|non|non|non||
 
 ### location.lon
 
@@ -779,9 +779,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|false|false||
+|Number|non|non|non||
 
 ### _id
 
@@ -789,9 +789,9 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|ObjectID|false|false|false||
+|ObjectID|non|non|non||
 
 ### __v
 
@@ -799,6 +799,6 @@
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|false|false||
+|Number|non|non|non||

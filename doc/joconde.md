@@ -93,9 +93,9 @@ Producteur de la donnée : MUSEE
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### BASE
 Nom de la base : Collections des musées de France (Joconde)
@@ -103,9 +103,9 @@ Nom de la base : Collections des musées de France (Joconde)
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -113,9 +113,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### POP_COORDONNEES.lat
 Latitude de la notice en WGS84
@@ -123,9 +123,9 @@ Latitude de la notice en WGS84
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|true|false||
+|Number|non|oui|non||
 
 ### POP_COORDONNEES.lon
 Longitude de la notice en WGS84
@@ -133,9 +133,9 @@ Longitude de la notice en WGS84
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|true|false||
+|Number|non|oui|non||
 
 ### POP_CONTIENT_GEOLOCALISATION
 Champ qui permet de savoir si la geolocalisation est disponible ou non
@@ -143,9 +143,9 @@ Champ qui permet de savoir si la geolocalisation est disponible ou non
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### REF
 Référence unique de la notice
@@ -153,9 +153,9 @@ Référence unique de la notice
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|true|false|false|Alphanumeric|
+|String|oui|non|non|Alphanumeric|
 
 ### POP_IMPORT
 
@@ -163,9 +163,9 @@ Référence unique de la notice
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### REFMIS
 Référence de mise à jour (marque de la modification de la notice)
@@ -173,9 +173,9 @@ Référence de mise à jour (marque de la modification de la notice)
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ADPT
 Ancien dépôt / changement d’affectation
@@ -183,9 +183,9 @@ Ancien dépôt / changement d’affectation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### APPL
 Appellation
@@ -193,9 +193,9 @@ Appellation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### APTN
 Ancienne appartenance (nom du donateur / testateur/ vendeur) 
@@ -203,9 +203,9 @@ Ancienne appartenance (nom du donateur / testateur/ vendeur)
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ATTR
 Anciennes attributions
@@ -213,9 +213,9 @@ Anciennes attributions
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### AUTR
 Auteur / exécutant / collecteur
@@ -225,9 +225,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T513
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### BIBL
 Bibliographie
@@ -235,9 +235,9 @@ Bibliographie
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### COMM
 Commentaires
@@ -245,9 +245,9 @@ Commentaires
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### CONTACT
 Lien contact musée
@@ -255,9 +255,9 @@ Lien contact musée
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false|email|
+|String|non|oui|non|Email|
 
 ### COOR
 Coordinateur
@@ -265,9 +265,9 @@ Coordinateur
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### COPY
 Copyright notice
@@ -275,9 +275,9 @@ Copyright notice
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DACQ
 Date d’acquisition
@@ -285,9 +285,9 @@ Date d’acquisition
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DATA
 [Peut être déprécié : Pas affiché en production ni en consultation]  
@@ -295,9 +295,9 @@ Date d’acquisition
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DATION
 [Peut être déprécié : Pas affiché en production ni en consultation]  
@@ -305,9 +305,9 @@ Date d’acquisition
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DDPT
 Date de dépôt / changement d’affectation
@@ -315,9 +315,9 @@ Date de dépôt / changement d’affectation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DECV
 Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) 
@@ -327,9 +327,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T115
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DENO
 Dénomination du bien
@@ -339,9 +339,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T505
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### DEPO
 Dépôt / établissement dépositaire
@@ -349,9 +349,9 @@ Dépôt / établissement dépositaire
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DESC
 Description 
@@ -359,9 +359,9 @@ Description
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DESY
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -369,9 +369,9 @@ Description
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DIFFU
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -379,9 +379,9 @@ Description
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DIMS
 Mesures  / Dimensions
@@ -389,9 +389,9 @@ Mesures  / Dimensions
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### DMAJ
 Date de la dernière mise à jour
@@ -399,9 +399,9 @@ Date de la dernière mise à jour
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### DMIS
 Date de la création POP/Mistral
@@ -409,9 +409,9 @@ Date de la création POP/Mistral
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### DOMN
 Domaine (catégorie du bien) 
@@ -421,9 +421,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T51
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|oui|non|non||
 
 ### DREP
 Date de la représentation
@@ -431,9 +431,9 @@ Date de la représentation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ECOL
 Ecole 
@@ -443,9 +443,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T517
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### EPOQ
 Epoque /style / mouvement 
@@ -455,9 +455,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T93
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### ETAT
 [surement à nettoyer] Etat du bien. C'est une liste finie de valeurs possibles
@@ -465,9 +465,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T93
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### EXPO
 Exposition 
@@ -475,9 +475,9 @@ Exposition
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### GENE
 Genèse 
@@ -487,9 +487,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T506
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### GEOHI
 Géographie historique
@@ -497,9 +497,9 @@ Géographie historique
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### HIST
 Historique – Objets associés 
@@ -507,9 +507,9 @@ Historique – Objets associés
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### IMAGE
 [Je ne sais pas à quoi ce champ sert]  
@@ -517,9 +517,9 @@ Historique – Objets associés
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### IMG
 Contient les images. Le plus souvent généré grâce à REFIM
@@ -527,9 +527,9 @@ Contient les images. Le plus souvent généré grâce à REFIM
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|true|false||
+|Array|non|oui|non||
 
 ### INSC
 Inscriptions 
@@ -539,9 +539,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T520
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### INV
 N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
@@ -549,9 +549,9 @@ N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|oui|non|non||
 
 ### LABEL
 Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'
@@ -559,9 +559,9 @@ Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de 
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|true|false||
+|String|non|oui|non||
 
 ### LABO
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -569,9 +569,9 @@ Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de 
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LARC
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -579,9 +579,9 @@ Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de 
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LIEUX
 Lieu de création / d’exécution / d’utilisation
@@ -591,9 +591,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LOCA
 Localisation
@@ -603,9 +603,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LOCA2
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -613,9 +613,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LOCA3
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -623,9 +623,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MILL
 Millésime de création / exécution 
@@ -633,9 +633,9 @@ Millésime de création / exécution
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### MILU
 Millésime d’utilisation 
@@ -643,9 +643,9 @@ Millésime d’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MOSA
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -653,9 +653,9 @@ Millésime d’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MSGCOM
 [Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation 
@@ -663,9 +663,9 @@ Millésime d’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### MUSEO
 Lien Numéro MUSEOFILE
@@ -673,9 +673,9 @@ Lien Numéro MUSEOFILE
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### NSDA
 Numéro de site
@@ -683,9 +683,9 @@ Numéro de site
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### ONOM
 Onomastique
@@ -693,9 +693,9 @@ Onomastique
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### PAUT
 Précisions /auteur / exécutant / collecteur
@@ -703,9 +703,9 @@ Précisions /auteur / exécutant / collecteur
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PDAT
 [Peut être déprécié : Pas affiché en production ni en consultation]
@@ -713,9 +713,9 @@ Précisions /auteur / exécutant / collecteur
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PDEC
 Précisions sur la découverte / collecte / récolte
@@ -723,9 +723,9 @@ Précisions sur la découverte / collecte / récolte
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PEOC
 Période de l’original copié
@@ -735,9 +735,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### PERI
 Période de création / exécution 
@@ -747,9 +747,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### PERU
 Période d’utilisation
@@ -759,9 +759,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### PHOT
 Crédits photographiques
@@ -769,9 +769,9 @@ Crédits photographiques
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PINS
 Précisions sur les inscriptions
@@ -779,9 +779,9 @@ Précisions sur les inscriptions
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PLIEUX
 Précisions sur le lieu de création/ d’exécution / d’utilisation
@@ -789,9 +789,9 @@ Précisions sur le lieu de création/ d’exécution / d’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### PREP
 Précisions sur le sujet représenté 
@@ -799,9 +799,9 @@ Précisions sur le sujet représenté
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### PUTI
 Précisions sur l’utilisation 
@@ -809,9 +809,9 @@ Précisions sur l’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### RANG
 [Peut être déprécié : Pas affiché en production ni en consultation] 
@@ -819,9 +819,9 @@ Précisions sur l’utilisation
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### REDA
 Rédacteur 
@@ -829,9 +829,9 @@ Rédacteur
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### REFIM
 Référence image : lien texte/ image : C'est un code qui permet de retrouver l'url de l'image
@@ -839,9 +839,9 @@ Référence image : lien texte/ image : C'est un code qui permet de retrouver l'
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### REPR
 Sujet représenté 
@@ -851,9 +851,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T523
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### RETIF
 [Peut être déprécié : Pas affiché en production ni en consultation] 
@@ -861,9 +861,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T523
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### SREP
 Source de la représentation
@@ -873,9 +873,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T523
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### STAT
 Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire
@@ -883,9 +883,9 @@ Statut juridique (type de propriété ; mode d’acquisition ; institution propr
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|true|false|false||
+|Array|oui|non|non||
 
 ### TECH
 Matériaux et techniques
@@ -895,9 +895,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T516
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### TICO
 [Peut être déprécié : A vérifier. Non présent en production] 
@@ -905,9 +905,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T516
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### TITR
 Titre de l'oeuvre 
@@ -915,9 +915,9 @@ Titre de l'oeuvre
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### TOUT
 [Peut être déprécié : A vérifier. Non présent en production] 
@@ -925,9 +925,9 @@ Titre de l'oeuvre
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### UTIL
 Utilisation / Destination
@@ -937,9 +937,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T86
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### VIDEO
 [Peut être déprécié : A vérifier]
@@ -947,9 +947,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T86
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Array|false|false|false||
+|Array|non|non|non||
 
 ### WWW
 Lien site associé / site complémentaire
@@ -957,9 +957,9 @@ Lien site associé / site complémentaire
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### LVID
 Lien video
@@ -967,9 +967,9 @@ Lien video
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|String|false|false|false||
+|String|non|non|non||
 
 ### _id
 
@@ -977,9 +977,9 @@ Lien video
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|ObjectID|false|false|false||
+|ObjectID|non|non|non||
 
 ### __v
 
@@ -987,6 +987,6 @@ Lien video
 
 
 
-|Type|Required|Master|Opendata|Validation|
+|Type|Requis|Généré|Opendata|Validation|
 |----|--------|------|--------|------|
-|Number|false|false|false||
+|Number|non|non|non||

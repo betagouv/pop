@@ -1,4 +1,4 @@
-path,type,required,label,opendata,master,description,validation,thesaurus
+path,type,required,label,opendata,generated,description,validation,thesaurus
 "REF","String","non","","","","","",""
 "TOUT","String","non","","","","","",""
 "ACCES","String","non","","","","","",""

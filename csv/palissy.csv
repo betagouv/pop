@@ -1,14 +1,19 @@
-path,type,required,label,opendata,master,description,validation,thesaurus
-"PRODUCTEUR","String","non","Producteur","","","Producteur  de la notice","",""
+path,type,required,label,opendata,generated,description,validation,thesaurus
+"PRODUCTEUR","String","non","Producteur","","true","
+        Producteur de la donnée défini selon l'algorithme suivant : 
+        IA = Inventaire
+        PA = Monuments Historiques
+        EA = Architecture
+        Autre = Null","",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "POP_COORDONNEES.lat","Number","non","","","true","Latitude de la notice en WGS84","",""
 "POP_COORDONNEES.lon","Number","non","","","true","Longitude de la notice en WGS84","",""
-"POP_CONTIENT_GEOLOCALISATION","String","non","","","","","",""
+"POP_CONTIENT_GEOLOCALISATION","String","non","","","true","Champs généré pour savoir si une géolocalisation existe","",""
 "POP_COORDINATES_POLYGON.type","String","non","","","","","",""
 "POP_COORDINATES_POLYGON.coordinates","Array","non","","","","","",""
 "BASE","String","non","","","true","Nom de la base : Patrimoine mobilier (Palissy)","",""
 "MEMOIRE","Array","non","","","","","",""
-"REF","String","oui","Référence notice","","","Référence unique de la notice","Alphanumeric",""
+"REF","String","oui","Référence notice","","true","Référence unique de la notice","Alphanumeric",""
 "POP_IMPORT","Array","non","","","","","",""
 "ACQU","String","non","","","","[PAS AFFICHE]","",""
 "ADRS","String","non","Adresse","","","Adresse ","",""
@@ -24,7 +29,7 @@ path,type,required,label,opendata,master,description,validation,thesaurus
 "CATE","Array","non","Catégorie technique","","","Catégorie technique","",""
 "COM","String","non","Commune","","","Commune ","",""
 "COM2","String","non","","","","[PAS AFFICHE]","",""
-"CONTACT","String","non","Contact","","true","Contact ","email",""
+"CONTACT","String","non","Contact","","true","Contact ","Email",""
 "COOR","String","non","Coordonnées Lambert (ou autres) d'un points","","","Coordonnées Lambert (ou autres) d'un point ","",""
 "COORM","String","non","Coordonnées Lambert (ou autres) multiples","","","Coordonnées Lambert (ou autres) multiples ","",""
 "COPY","String","non","CopyRight","","","CopyRight","",""

@@ -10,7 +10,7 @@ const Schema = new mongoose.Schema(
       default: "MNR",
       documentation: {
         description: "Producteur de la donnée : Valeur MNR",
-        master: true
+        generated: true
       }
     },
     BASE: {
@@ -19,7 +19,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)",
-        master: true
+        generated: true
       }
     },
     CONTIENT_IMAGE: {
@@ -28,7 +28,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true,
+        generated: true,
         deprecated: true
       }
     },
@@ -40,7 +40,6 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: true,
         validation: "Alphanumeric",
         label: "Référence"
       }
@@ -51,7 +50,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -61,7 +59,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Auteur / exécutant / collecteur",
-        master: true,
         label: "Auteur / exécutant / collecteur"
       }
     },
@@ -70,7 +67,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions auteur",
-        master: true,
         label: "Précisions auteur"
       }
     },
@@ -79,7 +75,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Anciennes attributions",
-        master: true,
         label: "Anciennes attributions"
       }
     },
@@ -98,7 +93,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ancien titre",
-        master: true,
         label: "Ancien titre"
       }
     },
@@ -107,7 +101,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision titre",
-        master: true,
         label: "Précision titre"
       }
     },
@@ -116,7 +109,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Dénomination du bien",
-        master: true,
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
         label: "Dénomination du bien"
       }
@@ -126,7 +118,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Description ",
-        master: true,
         label: "Description"
       }
     },
@@ -135,7 +126,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Domaine (catégorie du bien)",
-        master: true,
         label: "Domaine (catégorie du bien)"
       }
     },
@@ -144,7 +134,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Localisation ",
-        master: true,
         label: "Localisation"
       }
     },
@@ -153,7 +142,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Inscriptions ",
-        master: true,
         label: "Inscriptions"
       }
     },
@@ -167,7 +155,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Observations ",
-        master: true,
         label: "Observations"
       }
     },
@@ -176,7 +163,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Etat de conservation",
-        master: true,
         label: "Etat de conservation"
       }
     },
@@ -190,7 +176,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Provenance ",
-        master: true,
         label: "Provenance"
       }
     },
@@ -199,7 +184,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Historique ",
-        master: true,
         label: "Historique"
       }
     },
@@ -208,7 +192,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -218,7 +201,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -228,7 +210,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -238,7 +219,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -248,7 +228,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -268,7 +247,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Millénaire ",
-        master: true,
         label: "Millénaire"
       }
     },
@@ -277,7 +255,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Technique ",
-        master: true,
         label: "Technique"
       }
     },
@@ -286,7 +263,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Dimensions ",
-        master: true,
         label: "Dimensions"
       }
     },
@@ -295,7 +271,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Champ qui contient les images",
-        master: true,
         deprecated: true,
         label: "Champ qui contient les images"
       }
@@ -306,7 +281,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
-        master: true,
         label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
       }
     },
@@ -315,7 +289,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Exposition ",
-        master: true,
         label: "Exposition"
       }
     },
@@ -324,7 +297,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Bibliographie ",
-        master: true,
         label: "Bibliographie"
       }
     },
@@ -333,7 +305,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ancienne attribution",
-        master: true,
         label: "Ancienne attribution"
       }
     },
@@ -342,7 +313,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Autre titre",
-        master: true,
         label: "Autre titre"
       }
     },
@@ -351,7 +321,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Catégorie ",
-        master: true,
         label: "Catégorie"
       }
     },
@@ -360,7 +329,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -375,7 +343,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Rédacteurs ",
-        master: true,
         label: "Rédacteurs"
       }
     },
@@ -384,7 +351,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la représentation",
-        master: true,
         label: "Date de la représentation"
       }
     },
@@ -393,7 +359,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur la représentation",
-        master: true,
         label: "Précisions sur la représentation"
       }
     },
@@ -402,7 +367,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Représentation ",
-        master: true,
         label: "Représentation"
       }
     },
@@ -412,7 +376,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Sujet de la représentation (source littéraire ou musicale) ",
-        master: true,
         label: "Sujet de la représentation (source littéraire ou musicale) "
       }
     },
@@ -422,7 +385,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Adresses images jointes générique (actuellement non utilisé)",
-        master: true,
         label: "Adresses images jointes générique (actuellement non utilisé)"
       }
     },
@@ -431,8 +393,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true,
-        label: "Date de la dernière mise à jour"
+        label: "Date de la dernière mise à jour",
+        generated: true
       }
     },
     DMIS: {
@@ -440,8 +402,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true,
-        label: "Date de la création POP/Mistral"
+        label: "Date de la création POP/Mistral",
+        generated: true
       }
     },
     AFFE: {
@@ -450,7 +412,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Etablissement affectataire qui existe dans d’autres bases",
-        master: true,
         label: "Etablissement affectataire qui existe dans d’autres bases"
       }
     },
@@ -459,7 +420,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Autres numéros",
-        master: true,
         label: "Autres numéros"
       }
     },
@@ -468,7 +428,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "OEuvres liées, ensemble",
-        master: true,
         label: "OEuvres liées, ensemble"
       }
     },
@@ -477,7 +436,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Commentaire ",
-        master: true,
         label: "Commentaire"
       }
     },
@@ -486,7 +444,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        master: true,
         label: "",
         deprecated: true
       }
@@ -501,7 +458,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Droits de copie photo ",
-        master: true,
         label: "Droits de copie photo"
       }
     }

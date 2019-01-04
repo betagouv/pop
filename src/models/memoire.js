@@ -15,7 +15,7 @@ const Schema = new mongoose.Schema(
       AR=ARCH\n
       AP=SDAP\n
       Autre=SAP`,
-        master: true,
+        generated: true,
         label: "Producteur"
       }
     },
@@ -24,7 +24,7 @@ const Schema = new mongoose.Schema(
       default: "Photographies (Mémoire)",
       documentation: {
         description: "Nom de la base : Photographies (Mémoire)",
-        master: true
+        generated: true
       }
     },
     CONTIENT_IMAGE: {
@@ -33,7 +33,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        master: true
+        generated: true
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -45,8 +45,8 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Référence unique de la notice",
-        master: false,
-        label: "Référence"
+        label: "Référence",
+        generated: true
       }
     },
     TOUT: {
@@ -54,7 +54,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Index global [Peut etre déprécié]",
-        master: false,
         label: "Index global"
       }
     },
@@ -63,7 +62,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Adresse",
-        master: false,
         label: "Adresse"
       }
     },
@@ -72,7 +70,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteur oeuvre représentée",
-        master: false,
         label: "Auteur oeuvre représentée"
       }
     },
@@ -81,7 +78,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteur gravure",
-        master: false,
         label: "Auteur gravure"
       }
     },
@@ -90,7 +86,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteur photo",
-        master: false,
         label: "Auteur photo"
       }
     },
@@ -99,7 +94,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteur original",
-        master: false,
         label: "Auteur original"
       }
     },
@@ -108,21 +102,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Auteur tirage",
-        master: false,
         label: "Auteur tirage"
       }
     },
     COM: {
       type: String,
       default: "",
-      documentation: { description: "Commune", master: false, label: "Commune" }
+      documentation: { description: "Commune", label: "Commune" }
     },
     DOM: {
       type: String,
       default: "",
       documentation: {
         description: "Domaine",
-        master: false,
         label: "Domaine"
       }
     },
@@ -131,7 +123,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom édifice",
-        master: false,
         label: "Nom édifice"
       }
     },
@@ -140,7 +131,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence d’exposition de l’image ",
-        master: false,
         deprecated: true
       }
     },
@@ -149,7 +139,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Justif date pv",
-        master: false,
         label: "Justif date pv"
       }
     },
@@ -158,7 +147,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu cons orig.",
-        master: false,
         label: "Lieu cons orig."
       }
     },
@@ -167,7 +155,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cote cons orig. ",
-        master: false,
         label: "Cote cons orig."
       }
     },
@@ -176,7 +163,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu cons tir. ",
-        master: false,
         label: "Lieu cons tir."
       }
     },
@@ -185,7 +171,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cote conservation du tirage ",
-        master: false,
         label: "Cote conservation du tirage"
       }
     },
@@ -194,7 +179,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu cons pho.",
-        master: false,
         label: "Lieu cons pho."
       }
     },
@@ -203,7 +187,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cote conservation du phototype",
-        master: false,
         label: "COTECP"
       }
     },
@@ -212,7 +195,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Légende ",
-        master: false,
         label: "Légende"
       }
     },
@@ -221,7 +203,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom objet",
-        master: false,
         label: "Nom objet"
       }
     },
@@ -230,7 +211,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Obs phototype",
-        master: false,
         label: "Obs phototype"
       }
     },
@@ -239,7 +219,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Obs original",
-        master: false,
         label: "Obs original"
       }
     },
@@ -248,21 +227,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Obs tirage",
-        master: false,
         label: "Obs tirage"
       }
     },
     PAYS: {
       type: String,
       default: "",
-      documentation: { description: "Pays", master: false, label: "Pays" }
+      documentation: { description: "Pays", label: "Pays" }
     },
     PUBLI: {
       type: String,
       default: "",
       documentation: {
         description: "Publication ",
-        master: false,
         label: "Publication"
       }
     },
@@ -271,7 +248,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Pub. photograph.",
-        master: false,
         label: "Pub. photograph."
       }
     },
@@ -281,7 +257,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         documentation: {
           description: "Rôle joué ",
-          master: false,
           label: "Rôle joué"
         }
       }
@@ -291,7 +266,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Préc original",
-        master: false,
         label: "Préc original"
       }
     },
@@ -300,7 +274,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Titre série",
-        master: false,
         label: "Titre série"
       }
     },
@@ -309,21 +282,20 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom de théâtre",
-        master: false,
         label: "Nom de théâtre"
       }
     },
     TITRE: {
       type: String,
       default: "",
-      documentation: { description: "Titre", master: false, label: "Titre" }
+      documentation: { description: "Titre", label: "Titre" }
     },
     DMAJ: {
       type: String,
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        master: true,
+        generated: true,
         label: "Date mise à jour "
       }
     },
@@ -332,7 +304,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        master: true,
+        generated: true,
         label: "Date Mistral"
       }
     },
@@ -341,7 +313,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Emetteur (nom) ",
-        master: false,
         label: "Emetteur (nom)"
       }
     },
@@ -350,7 +321,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro CD",
-        master: false,
         label: "Numéro CD"
       }
     },
@@ -359,7 +329,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No de fond",
-        master: false,
         label: "No de fond"
       }
     },
@@ -368,7 +337,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Code INSEE",
-        master: false,
         label: "Code INSEE"
       }
     },
@@ -377,7 +345,6 @@ const Schema = new mongoose.Schema(
       default: " ",
       documentation: {
         description: "vidéodisque",
-        master: false,
         label: "vidéodisque"
       }
     },
@@ -386,7 +353,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ordre images",
-        master: false,
         label: "Ordre images"
       }
     },
@@ -395,7 +361,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Accessoire pose",
-        master: false,
         label: "Accessoire pose"
       }
     },
@@ -404,7 +369,6 @@ const Schema = new mongoose.Schema(
       default: " ",
       documentation: {
         description: "Acquisition",
-        master: false,
         label: "Acquisition"
       }
     },
@@ -413,7 +377,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Adresse personne ",
-        master: false,
         label: "Adresse personne"
       }
     },
@@ -422,7 +385,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Aire d'étude",
-        master: false,
         label: "Aire d'étude"
       }
     },
@@ -431,7 +393,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ancien numéro (ancienne cote du phototype)",
-        master: false,
         label: "Ancien numéro (ancienne cote du phototype)"
       }
     },
@@ -440,7 +401,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Crédit photo ",
-        master: false,
         label: "Crédit photo"
       }
     },
@@ -450,7 +410,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoyer]",
-        master: false,
         label: "Couleur"
       }
     },
@@ -459,7 +418,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Costume de la personne représentée",
-        master: false,
         label: "Costume de la personne représentée"
       }
     },
@@ -468,7 +426,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date immatricul",
-        master: false,
         label: "Date immatricul"
       }
     },
@@ -477,7 +434,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date oeuv année",
-        master: false,
         label: "Date oeuv année"
       }
     },
@@ -486,7 +442,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date prise vue ",
-        master: false,
         label: "Date prise vue"
       }
     },
@@ -495,7 +450,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date original",
-        master: false,
         label: "Date original"
       }
     },
@@ -504,7 +458,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date tirage",
-        master: false,
         label: "Date tirage "
       }
     },
@@ -513,7 +466,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date gravure",
-        master: false,
         label: "Date gravure"
       }
     },
@@ -522,7 +474,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date dessin",
-        master: false,
         label: "Date dessin"
       }
     },
@@ -531,7 +482,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Droits diffusion",
-        master: false,
         label: "Droits diffusion"
       }
     },
@@ -540,7 +490,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Département ",
-        master: false,
         label: "Département"
       }
     },
@@ -549,7 +498,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Interprétation",
-        master: false,
         label: "Interprétation"
       }
     },
@@ -558,7 +506,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Echelle ",
-        master: false,
         label: "Echelle"
       }
     },
@@ -567,7 +514,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Format phototype",
-        master: false,
         label: "Format phototype"
       }
     },
@@ -576,7 +522,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Format original",
-        master: false,
         label: "Format original"
       }
     },
@@ -585,7 +530,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Format tirage",
-        master: false,
         label: "Format tirage"
       }
     },
@@ -596,7 +540,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image",
-        master: false,
         label: "LBASE"
       }
     },
@@ -605,7 +548,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Accès Mémoire",
-        master: false,
         label: "Accès Mémoire"
       }
     },
@@ -614,7 +556,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mots candidats",
-        master: false,
         label: "Mots candidats"
       }
     },
@@ -623,7 +564,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Localisation ",
-        master: false,
         label: "Localisation"
       }
     },
@@ -632,7 +572,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu de dépôt",
-        master: false,
         label: "Lieu de dépôt"
       }
     },
@@ -641,7 +580,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom géographique",
-        master: false,
         label: "Nom géographique"
       }
     },
@@ -650,7 +588,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mots clés",
-        master: false,
         label: "Mots clés"
       }
     },
@@ -659,7 +596,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mentions photo",
-        master: false,
         label: "Mentions photo"
       }
     },
@@ -668,7 +604,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mentions orig",
-        master: false,
         label: "Mentions orig"
       }
     },
@@ -677,7 +612,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mentions tirage",
-        master: false,
         label: "Mentions tirage"
       }
     },
@@ -686,7 +620,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom personne",
-        master: false,
         label: "Nom personne"
       }
     },
@@ -695,7 +628,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No vue CD",
-        master: false,
         label: "No vue CD"
       }
     },
@@ -704,7 +636,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Cote photographe",
-        master: false,
         label: "Cote photographe"
       }
     },
@@ -713,7 +644,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No carte fenêtre",
-        master: false,
         label: "No carte fenêtre"
       }
     },
@@ -722,7 +652,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No original(anc)",
-        master: false,
         label: "No original(anc)"
       }
     },
@@ -731,7 +660,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No original",
-        master: false,
         label: "No original"
       }
     },
@@ -740,7 +668,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No phototype",
-        master: false,
         validation: "Alphanumeric",
         label: "No phototype"
       }
@@ -750,7 +677,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ancien numéro du tirage",
-        master: false,
         label: "Ancien numéro du tirage"
       }
     },
@@ -759,7 +685,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No tirage",
-        master: false,
         validation: "Alphanumeric",
         label: "No tirage"
       }
@@ -767,19 +692,18 @@ const Schema = new mongoose.Schema(
     RENV: {
       type: String,
       default: "",
-      documentation: { description: "Renvoi ", master: false, label: "Renvoi" }
+      documentation: { description: "Renvoi ", label: "Renvoi" }
     },
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région", master: false, label: "Région" }
+      documentation: { description: "Région", label: "Région" }
     },
     SENS: {
       type: String,
       default: "",
       documentation: {
         description: "Sens ",
-        master: false,
         label: "Sens"
       }
     },
@@ -788,7 +712,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date oeuv siècle",
-        master: false,
         label: "Date oeuv siècle"
       }
     },
@@ -797,7 +720,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Support ",
-        master: false,
         label: "Support"
       }
     },
@@ -806,7 +728,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Technique photo",
-        master: false,
         label: "Technique photo"
       }
     },
@@ -815,7 +736,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Technique orig",
-        master: false,
         label: "Technique orig"
       }
     },
@@ -824,7 +744,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Technique tirage",
-        master: false,
         label: "Technique tirage"
       }
     },
@@ -833,7 +752,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Toile de fond ",
-        master: false,
         label: "Toile de fond",
         deprecated: true
       }
@@ -843,7 +761,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Type  [Qu'est ce que c'est ?]",
-        master: false,
         label: "Type"
       }
     },
@@ -852,7 +769,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Catégorie de phototype",
-        master: false,
         label: "Catégorie de phototype"
       }
     },
@@ -861,7 +777,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Type image num",
-        master: false,
         label: "Type image num"
       }
     },
@@ -870,7 +785,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Type support num ",
-        master: false,
         label: "Type support num "
       }
     },
@@ -879,7 +793,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Vidéo [Semble être doublon avec IMG]",
-        master: false,
         label: "VIDEO"
       }
     },
@@ -888,7 +801,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Liens base  [Quelle différence avec LBASE?]",
-        master: false,
         label: "Liens base ",
         deprecated: true
       }
@@ -898,7 +810,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Légende thes. ",
-        master: false,
         label: "Légende thes."
       }
     },
@@ -907,7 +818,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ref Image",
-        master: false,
         label: "Ref Image"
       }
     },
@@ -916,7 +826,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Nom Image",
-        master: false,
         label: "Nom Image"
       }
     },
@@ -925,21 +834,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mosaïques ",
-        master: false,
         label: "Mosaïques"
       }
     },
     SITE: {
       type: String,
       default: "",
-      documentation: { description: "SITE", master: false, label: "SITE" }
+      documentation: { description: "SITE", label: "SITE" }
     },
     NUMSITE: {
       type: String,
       default: "",
       documentation: {
         description: "N° du site ",
-        master: false,
         label: "N° du site"
       }
     },
@@ -948,7 +855,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "N° d'opération",
-        master: false,
         label: "N° d'opération"
       }
     },
@@ -957,7 +863,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Chronologie ",
-        master: false,
         label: "Chronologie"
       }
     },
@@ -975,21 +880,19 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Structure ",
-        master: false,
         label: "Structure"
       }
     },
     SUJET: {
       type: String,
       default: "",
-      documentation: { description: "Sujet ", master: false, label: "Sujet" }
+      documentation: { description: "Sujet ", label: "Sujet" }
     },
     TICO: {
       type: String,
       default: "",
       documentation: {
         description: "Titre du dossier",
-        master: false,
         label: "Titre du dossier"
       }
     },
@@ -998,7 +901,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ident. support",
-        master: false,
         label: "Ident. support"
       }
     },
@@ -1007,7 +909,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu-dit ",
-        master: false,
         label: "Lieu-dit"
       }
     },
@@ -1016,7 +917,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Adresse saisie",
-        master: false,
         label: "Adresse saisie"
       }
     },
@@ -1025,8 +925,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contact",
-        master: true,
-        validation: "email",
+        generated: true,
+        validation: "Email",
         label: "CONTACT"
       }
     },
@@ -1035,7 +935,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Emetteur (code) ",
-        master: false,
         label: "Emetteur (code)"
       }
     },
@@ -1044,7 +943,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "N° support ",
-        master: false,
         label: "N° support"
       }
     },
@@ -1053,7 +951,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Images",
-        master: false,
         label: "Images"
       }
     },
@@ -1062,7 +959,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ville [Quelle difference avec COM ?]",
-        master: false,
         label: "Ville"
       }
     },
@@ -1071,7 +967,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Liens divers",
-        master: false,
         label: "Liens divers"
       }
     },
@@ -1080,7 +975,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Notice biblio",
-        master: false,
         label: "Notice biblio"
       }
     }
