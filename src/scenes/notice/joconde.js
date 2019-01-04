@@ -362,6 +362,10 @@ class Joconde extends React.Component {
                   title="Auteur de l'oeuvre ou de l'original"
                   content={notice.AUTOR}
                 />
+                <Field
+                  title="Droits photographiques"
+                  content={notice.PHOT}
+                />
                 <Field title="" content={notice.COPY} />
               </div>
 
