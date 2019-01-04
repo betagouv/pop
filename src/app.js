@@ -11,13 +11,14 @@ require("./mongo");
 const app = express();
 
 app.use(bodyParser.json({ limit: "50mb" }));
+
 // Parse the ndjson as text for ES proxy
 app.use(bodyParser.text({ type: "application/x-ndjson" }));
 
-// secure apps by setting various HTTP headers
+// Secure apps by setting various HTTP headers
 app.use(helmet());
 
-// enable CORS - Cross Origin Resource Sharing
+// Enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
 app.use(passport.initialize());
@@ -30,17 +31,20 @@ app.use("/auth", require("./controllers/auth"));
 app.use("/users", require("./controllers/users"));
 app.use("/import", require("./controllers/import"));
 
-//notices
+// Notices
 app.use("/merimee", require("./controllers/merimee"));
 app.use("/joconde", require("./controllers/joconde"));
 app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
 
-//proxy to GINCO API
+// Museo
+app.use("/museo", require("./controllers/museo"));
+
+// Proxy to GINCO API
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 
-//proxy to ES
+// Proxy to ES
 app.use("/search", require("./controllers/search"));
 
 app.post(
