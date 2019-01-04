@@ -38,6 +38,9 @@ class Merimee extends React.Component {
     API.getNotice("merimee", ref).then(notice => {
       console.log(notice);
       this.setState({ loading: false, notice });
+      if (!notice) {
+        return;
+      }
 
       const { RENV, REFP, REFE, REFO } = notice;
       // RENV -> MERIMEE
