@@ -402,17 +402,10 @@ const SeeMore = ({ notice }) => {
   if (notice.MUSEO) {
     arr.push(
       <p className="field" key={`notice.MUSEO`}>
-        Lien vers la base MUSEOFILE :
-        <span style={{ width: "100%" }}>
-          <a
-            href={`http://www2.culture.gouv.fr/public/mistral/museo_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
-              notice.MUSEO
-            }`}
-            target="_blank"
-          >
-            {notice.MUSEO}
-          </a>
-        </span>
+        Fiche musée :{" "}
+        <a href={`/museo/${notice.MUSEO}`}>
+          {notice.MUSEO}
+        </a>
       </p>
     );
   }

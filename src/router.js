@@ -12,7 +12,8 @@ import Helmet from "./components/Helmet";
 import Home from "./scenes/home";
 import Search from "./scenes/search";
 import Opendata from "./scenes/opendata";
-import Notice from "./scenes/notice";
+import Notice from "./scenes/notice"
+import Museo from "./scenes/museo"
 
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -42,6 +43,7 @@ export default class PublicRoutes extends React.Component {
               <Route path={"/search"} component={Search} />
               <Route exact path={"/opendata"} component={Opendata} />
               <Route path={"/notice/:ref"} component={Notice} />
+              <Route path={"/museo/:ref"} component={Museo} />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>

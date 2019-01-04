@@ -1,0 +1,28 @@
+.museo {
+  margin: 50px auto;
+  max-width: 800px;
+  padding: 30px 25px 30px 25px;
+  margin-bottom: 100px;
+}
+
+@media screen and (min-width: 800px) {
+  .museo {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
+  }
+}
+
+.museo h1 {
+  color: #025d59;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.museo dl > dt {
+  color: #025d59;
+  margin-top: 15px;
+}
+
+.museo-map {
+  margin-top: 25px;
+}

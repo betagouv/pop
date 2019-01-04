@@ -16,6 +16,10 @@ class api {
     });
   }
 
+  getMuseo(ref) {
+    return this._get(`${api_url}/museo/${ref}`);
+  }
+
   _get(url) {
     return new Promise((resolve, reject) => {
       fetch(url)
