@@ -1,4 +1,4 @@
 import MultiList from "./MultiList";
-import Mapping from "./pop_mapping";
+import Mapping from "./Mapping";
 
 export { MultiList, Mapping };
