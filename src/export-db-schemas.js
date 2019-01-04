@@ -19,8 +19,11 @@ const models = fs
       generated: v.options.documentation
         ? v.options.documentation.generated
         : "",
-      description: v.options.documentation
+      description: v.options.documentation && v.options.documentation.description
         ? v.options.documentation.description
+        : "",
+      label: v.options.documentation && v.options.documentation.label
+        ? v.options.documentation.label
         : "",
       validation: v.options.documentation
         ? v.options.documentation.validation
@@ -66,15 +69,16 @@ for (let i = 0; i < models.length; i++) {
         path.required ? "oui" : "non",
         path.generated ? "oui" : "non",
         path.opendata ? "oui" : "non",
-        path.validation
+        path.validation,
+        path.label
       ];
       return [
         `### ${path.name}`,
         path.description + "\n\n",
         path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
         "",
-        `|Type|Requis|Généré|Opendata|Validation|`,
-        `|----|--------|------|--------|------|`,
+        `|Type|Requis|Généré|Opendata|Validation|Label|`,
+        `|----|------|------|--------|----------|-----|`,
         `|${elements.join("|")}|`,
         ""
       ].join("\n");
