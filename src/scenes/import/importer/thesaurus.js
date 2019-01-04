@@ -1,7 +1,7 @@
 import api from "../../../services/api";
 
 export default function checkThesaurus(importedNotices) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, _reject) => {
     const optimMap = {};
 
     if (!importedNotices.length) {
@@ -10,18 +10,17 @@ export default function checkThesaurus(importedNotices) {
 
     for (var i = 0; i < importedNotices.length; i++) {
       for (var field in importedNotices[i]) {
-        const thesaurus = importedNotices[i][field].thesaurus;
-        if (thesaurus === undefined) {
+        const noticeField = importedNotices[i][field];
+        if (!noticeField || noticeField.thesaurus === undefined) {
           continue;
         }
+        const thesaurus = noticeField.thesaurus;
 
-        let values = [].concat(importedNotices[i][field]);
-        if (importedNotices[i][field].thesaurus_separator) {
+        let values = [].concat(noticeField);
+        if (noticeField.thesaurus_separator) {
           values = values.reduce(
             (acc, val) =>
-              acc.concat(
-                val.split(importedNotices[i][field].thesaurus_separator)
-              ),
+              acc.concat(val.split(noticeField.thesaurus_separator)),
             []
           );
         }
@@ -40,14 +39,11 @@ export default function checkThesaurus(importedNotices) {
               val = await api.validateWithThesaurus(thesaurus, value);
             }
             if (!val) {
-              if (importedNotices[i][field].thesaurus_strict === true) {
-                importedNotices[i]._errors.push(
-                  `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
-                );
+              const text = `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`;
+              if (noticeField.thesaurus_strict === true) {
+                importedNotices[i]._errors.push(text);
               } else {
-                importedNotices[i]._warnings.push(
-                  `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`
-                );
+                importedNotices[i]._warnings.push(text);
               }
             }
 
