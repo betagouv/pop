@@ -169,3 +169,5 @@ packaged.yaml
 **/*.css
 **/*.css.map
 prod\.env
+
+pop_mapping.js
