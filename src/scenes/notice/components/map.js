@@ -12,82 +12,72 @@ class MapComponent extends React.Component {
     this.mapRef = React.createRef();
   }
 
-  getCenter = ()=> {
+  getCenter = () => {
     let center = null;
 
-    const {
-      POP_COORDONNEES
-    } = this.props.notice;
+    const { POP_COORDONNEES } = this.props.notice;
 
-    if (
-      POP_COORDONNEES &&
-      POP_COORDONNEES.lat &&
-      POP_COORDONNEES.lon
-    ) {
+    if (POP_COORDONNEES && POP_COORDONNEES.lat && POP_COORDONNEES.lon) {
       center = [POP_COORDONNEES.lat, POP_COORDONNEES.lon];
     }
 
     return center;
-  }
+  };
 
   componentWillMount() {
-    this.setState({center: this.getCenter()});
+    this.setState({ center: this.getCenter() });
   }
 
   componentDidMount() {
-    if(this.state.center) {
-      mapboxgl.accessToken = "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
+    if (this.state.center) {
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
       this.map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v9'
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v9",
+        center: { lng: this.state.center[1], lat: this.state.center[0] },
+        zoom: 11
       });
-      this.map.on('load', (e) => {
-
-        this.map.resize();
-        this.map.setZoom(11);
-        this.map.setCenter({lng:this.state.center[1], lat:this.state.center[0]});
-          
-        this.map.addSource(
-          'pop',
-          {
-            type: "geojson",
-            data: {
-              type: "FeatureCollection",
-              features: [
-                {
-                  type: "Feature",
-                  id: 0,
-                  properties: {
-                    id: 0,
-                  },
-                  geometry: {
-                    type: "Point",
-                    coordinates: [this.state.center[1], this.state.center[0]]
-                  }
+      this.map.on("load", e => {
+        this.map.addSource("pop", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                id: 0,
+                properties: { id: 0 },
+                geometry: {
+                  type: "Point",
+                  coordinates: [this.state.center[1], this.state.center[0]]
                 }
-              ]
-            }
+              }
+            ]
           }
-        );
+        });
+
         this.map.addLayer({
-            id: "unclustered-point",
-            type: "circle",
-            source: "pop",
-            filter: ["!", ["has", "count"]],
-            paint: {
-              "circle-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#fff",
-                  "#9C27B0"
-              ],
-              "circle-radius": 9,
-              "circle-stroke-width": 2,
-              "circle-stroke-color": ["case",
-                  ["boolean", ["feature-state", "clicked"], false],
-                  "#9C27B0",
-                  "#fff"
-              ],
-            }
+          id: "unclustered-point",
+          type: "circle",
+          source: "pop",
+          filter: ["!", ["has", "count"]],
+          paint: {
+            "circle-color": [
+              "case",
+              ["boolean", ["feature-state", "clicked"], false],
+              "#fff",
+              "#9C27B0"
+            ],
+            "circle-radius": 9,
+            "circle-stroke-width": 2,
+            "circle-stroke-color": [
+              "case",
+              ["boolean", ["feature-state", "clicked"], false],
+              "#9C27B0",
+              "#fff"
+            ]
+          }
         });
       });
     }
@@ -100,7 +90,7 @@ class MapComponent extends React.Component {
 
     return (
       <div className="map-container">
-        <div id="map" ref={this.mapRef}></div>
+        <div id="map" ref={this.mapRef} />
       </div>
     );
   }
