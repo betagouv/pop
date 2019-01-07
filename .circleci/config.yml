@@ -5,6 +5,10 @@ executors:
     working_directory: ~/repo
     docker:
       - image: circleci/node:8.10
+  docker_python:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:2.7-jessie
 
 commands:
   restore_node_modules:
@@ -147,13 +151,13 @@ jobs:
           app: production
           env: staging
   deploy_consultation_staging:
-    executor: docker_node
+    executor: docker_python
     steps:
       - deploy:
           app: consultation
           env: staging
   deploy_production_staging:
-    executor: docker_node
+    executor: docker_python
     steps:
       - deploy:
           app: production
