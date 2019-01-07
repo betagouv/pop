@@ -75,7 +75,7 @@ commands:
               - build
   deploy:
     parameters:
-      env:
+      eb_deploy:
         type: string
       app: 
         type: string
@@ -90,7 +90,21 @@ commands:
           name: deploy
           command: |
             cd apps/<< parameters.app >>
-            eb deploy pop-<< parameters.app >>-<< parameters.env >>
+            eb deploy << parameters.eb_deploy >>
+  deploy_api:
+    parameters:
+      eb_deploy:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: api
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/api
+            eb deploy << parameters.eb_deploy >>
   configure_aws_ebcli:
     steps:
       - run: sudo pip install awsebcli
@@ -102,6 +116,9 @@ commands:
             echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
             echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
 
+########
+# JOBS #
+########
 jobs:
   prepare_all:
     executor: docker_node
@@ -115,6 +132,9 @@ jobs:
           app: production
       - prepare:
           app: shared
+  ##############
+  # TEST JOBS #
+  ##############
   test_api:
     docker:
       - image: circleci/node:8.10
@@ -138,6 +158,9 @@ jobs:
     steps:
       - test:
           app: shared
+  ##############
+  # BUILD JOBS #
+  ##############
   build_consultation_staging:
     executor: docker_node
     steps:
@@ -148,18 +171,6 @@ jobs:
     executor: docker_node
     steps:
       - build:
-          app: production
-          env: staging
-  deploy_consultation_staging:
-    executor: docker_python
-    steps:
-      - deploy:
-          app: consultation
-          env: staging
-  deploy_production_staging:
-    executor: docker_python
-    steps:
-      - deploy:
           app: production
           env: staging
   build_consultation_prod:
@@ -174,7 +185,31 @@ jobs:
       - build:
           app: production
           env: prod
+  ###############
+  # DEPLOY JOBS #
+  ###############
+  deploy_consultation_staging:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: consultation
+          eb_deploy: pop-consultation-staging
+  deploy_production_staging:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: production
+          eb_deploy: pop-production-staging
+  deploy_api_staging:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: production
+          eb_deploy: pop-api-staging
 
+#############
+# WORKFLOWS #
+#############
 workflows:
   version: 2.1
   ci_cd:
@@ -204,18 +239,6 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_consultation_staging:
-          requires:
-            - build_consultation_staging
-          filters:
-            branches:
-              only: master
-      - deploy_production_staging:
-          requires:
-            - build_production_staging
-          filters:
-            branches:
-              only: master
       - build_consultation_prod:
           requires:
             - deploy_consultation_staging
@@ -225,6 +248,24 @@ workflows:
       - build_production_prod:
           requires:
             - deploy_production_staging
+          filters:
+            branches:
+              only: master
+      - deploy_api_staging:
+          requires:
+            - test_api
+          filters:
+            branches:
+              only: master
+      - deploy_consultation_staging:
+          requires:
+            - build_consultation_staging
+          filters:
+            branches:
+              only: master
+      - deploy_production_staging:
+          requires:
+            - build_production_staging
           filters:
             branches:
               only: master
