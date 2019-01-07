@@ -18,7 +18,7 @@ Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://l
 
 ## Tests
 
-Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop-consultation. Pour lancer les tests en local, utiliser `yarn test`.
+Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop. Pour lancer les tests en local, utiliser `yarn test`.
 
 ## Déploiement
 
@@ -27,4 +27,4 @@ La branche _master_ est automatiquement livré sur la plateforme de _staging_ et
 
 ## Recherche
 
-Une documentation à propos du fonctionnement de la recherche est [accessible ici](https://github.com/betagouv/pop-consultation/blob/master/ABOUT_SEARCH.md).
+Une documentation à propos du fonctionnement de la recherche est [accessible ici](https://github.com/betagouv/pop/blob/master/apps/consultation/ABOUT_SEARCH.md).
