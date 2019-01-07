@@ -1,0 +1,199 @@
+.search {
+  display: flex;
+  justify-content: "center";
+  align-items: "center";
+  flex-direction: column;
+}
+
+.search .home .title {
+  text-align: center;
+  margin-bottom: 80px;
+  font-size: 30px;
+  padding-top: 20px;
+}
+
+.search .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-top: 40px;
+}
+
+.search .home .subtitle {
+  text-align: center;
+  font-size: 27px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.search .home .activities h4 {
+  background: url("../../../assets/002-time.png") left center no-repeat;
+  -webkit-background-size: 18px;
+  padding-left: 25px;
+  background-size: 18px;
+}
+
+.search .home .box {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search .home .tile:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.search .home .tile {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  /* padding: 10px; */
+  cursor: pointer;
+  max-width: 250px;
+  height: 350px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.search .home .tile .caption {
+  height: 60px;
+  position: absolute;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  bottom: 0px;
+}
+
+.search .home .tile .name {
+  font-size: 20px;
+}
+
+.search .home .tile img {
+  object-fit: fill;
+  width: 100%;
+  min-width: 200px;
+  height: 100%;
+}
+
+.search .home .tile .thumb {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.search .mainSearch {
+  padding: 50px;
+  width: 100%;
+}
+
+.search .buttons {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.search .search-and-export-zone {
+  display: flex;
+  align-items: center;
+}
+
+.search .search-and-export-zone .button {
+  width: 235px;
+}
+
+.search .title {
+  text-align: center;
+  font-size: 30px;
+}
+
+.search .filters {
+  padding: 5px;
+  margin-top: 10px;
+}
+.search .row {
+  padding-top: 20px;
+}
+
+.search .filters span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.search .filters span:first-letter {
+  text-transform: uppercase;
+}
+
+.search .card {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  min-height: 180px;
+}
+
+.search .card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.search .card .content {
+  padding: 5px;
+  overflow: hidden;
+  /* text-transform: capitalize; */
+  padding: 15px;
+  width: 100%;
+}
+
+.search .card img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.search .card h2 {
+  font-size: 17px;
+  color: black;
+}
+
+.search .card span {
+  font-size: 12px;
+  color: grey;
+  margin-right: 0px;
+  margin-left: auto;
+}
+
+.search .card p {
+  color: black;
+  margin: 0px;
+  height: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search label::before {
+  border-radius: 0px !important;
+  min-width: 16px !important;
+}
+
+.search .active label::after {
+  left: 2px !important;
+  bottom: 7px !important;
+  top: 13px !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 0px !important;
+  -webkit-transform: scale(1) !important;
+  background-color: #0b6aff !important;
+  border-style: none !important;
+  margin-top: -6px !important;
+}

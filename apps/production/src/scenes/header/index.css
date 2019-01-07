@@ -1,0 +1,51 @@
+.header .NavContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  width: 100%;
+  max-width: 100% !important;
+  border-bottom: 1px solid #f0efef;
+  padding: 8px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+  height: 100px;
+}
+
+.header .NavComponent .navbar-toggler {
+  margin-top: 15px;
+  margin-right: 10px;
+  margin-bottom: auto;
+  border: transparent;
+  margin: 15px;
+  padding: 0px;
+}
+
+.header .NavContainer .navbar-toggler .navbar-toggler-icon {
+  background-image: none;
+  position: absolute;
+  left: 15px;
+  height: 15px;
+  top: 55px;
+  width: 20px;
+  border-top: 2px solid #890f3c;
+  border-bottom: 2px solid #890f3c;
+  outline: 0;
+}
+
+.header .NavContainer .navbar-toggler .navbar-toggler-icon:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  border-top: 2px solid #890f3c;
+}
+
+.header .NavContainer .navbar-toggler .navbar-toggler-icon:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  border-top: 2px solid #890f3c;
+}

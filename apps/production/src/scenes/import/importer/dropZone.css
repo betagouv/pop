@@ -1,0 +1,18 @@
+.dropzone .dropArea {
+  padding: 15px;
+  margin: 33px;
+  position: relative;
+  background-color: #f3f7fc;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.dropzone img {
+  margin-bottom: 20px;
+}

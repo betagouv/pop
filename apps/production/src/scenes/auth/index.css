@@ -1,0 +1,147 @@
+.auth .container {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+}
+
+.auth .error {
+  color: red;
+}
+
+.auth .cgu, .auth .forget-password {
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+.auth button {
+  width: 100%;
+  outline: none;
+  border: 0;
+  padding: 13px 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.auth .block h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.auth .block {
+  padding: 20px;
+  max-width: 500px;
+}
+.auth .block a:hover {
+  color: #890f3c;
+  text-decoration: none;
+}
+
+.auth .forgot-link {
+  float: right;
+}
+
+.auth .block hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.auth .submit-button {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  color: #fff;
+  background-color: #007bff;
+}
+
+.auth .change-password {
+  width: 70%;
+  background-color: #00b6ff ;
+  font-size: 0.8rem;
+}
+
+.auth .signin .ORText,
+.auth .signup .ORText {
+  text-align: center;
+  display: block;
+  color: #c0c5c7;
+  margin: 18px auto;
+}
+
+.auth .link {
+  font-weight: 900;
+  font-size: 14px;
+  color: #007bff;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.auth .signin-block .input-field {
+  width: 100%;
+  background-color: #f2f2f2;
+  border: 0;
+  height: auto;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 3px;
+}
+
+.auth .signin-block .submit-button {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  color: #fff;
+  background-color: #890f3c;
+}
+.auth .signup-text {
+  margin: 10px 0;
+  text-align: center;
+}
+.auth .forgot-block {
+  padding: 20px;
+  max-width: 400px;
+}
+.auth .forgot-text {
+  margin-bottom: 15px;
+  padding: 0 50px;
+  color: #c0c5c7;
+  text-align: center;
+}
+
+.auth .message {
+  text-align: center;
+}
+
+.auth .input-field {
+  width: 100%;
+  background-color: #f2f2f2;
+  border: 0;
+  padding: 15px;
+  margin-bottom: 25px;
+  border-radius: 3px;
+}
+
+.auth .sub-block .input-field:last-child {
+  margin-bottom: 0;
+}
+
+.auth .select-field {
+  padding: 15px;
+  height: 53px;
+  margin-bottom: 25px;
+}
+
+.auth .error-message {
+  margin: 15px;
+  color:red;
+}
+
+.lastConnectedAt {
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+}

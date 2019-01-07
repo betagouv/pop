@@ -1,0 +1,19 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+}
+
+.admin .usersList {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.admin .admin-email {
+  word-break: break-all;
+  width: 350px;
+}

@@ -1,0 +1,41 @@
+.fieldImages {
+  width: 100%;
+}
+
+.fieldImages .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fieldImages .item p {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.fieldImages img {
+  height: 240px;
+  min-width: 300px;
+  object-fit: contain;
+  background-color: #fff1f1;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.fieldImages .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.fieldImages .no-image {
+  display: flex;
+  align-items: center;
+  height: 240px;
+}

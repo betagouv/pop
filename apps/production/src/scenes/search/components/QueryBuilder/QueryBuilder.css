@@ -1,0 +1,62 @@
+.queryBuilder button {
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.queryBuilder .closeButton {
+  color: #fff;
+  background-color: red;
+  border-color: red;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.queryBuilder select {
+  height: 29px;
+  margin: 5px;
+}
+
+.queryBuilder .rule {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.queryBuilder .rule .input {
+  width: 350px;
+}
+
+.queryBuilder .rule ul {
+  background-color: white;
+  position: absolute;
+  z-index: 99;
+  padding: 20px;
+  min-width: 253px;
+  border: 1px solid #ced4da;
+  list-style-type: none;
+}
+
+.queryBuilder .rule li {
+  cursor: pointer;
+}
+
+.queryBuilder .rule li:hover {
+  background-color: bisque;
+}
+
+.queryBuilder .ruleGroup {
+  margin-left: 40px;
+  padding: 10px;
+  border-color: grey;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+  margin-top: 10px;
+}

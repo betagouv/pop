@@ -1,0 +1,24 @@
+.notice .section {
+  background-color: #f4f4f4;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  padding-top: 20px;
+}
+
+.notice .section .title {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.notice .section .sectionheader {
+  display: flex;
+}
+
+.notice .section .icon {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  margin-right: 20px;
+}

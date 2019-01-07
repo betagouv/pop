@@ -1,0 +1,51 @@
+.notice {
+  margin-top: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: "center";
+  background-color: white;
+  flex-direction: column;
+}
+
+.notice .main-title {
+  text-align: center;
+  padding: 50px;
+}
+
+.notice .buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.notice .buttons button {
+  margin: 10px;
+}
+
+.notice .back {
+  padding: 20px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.notice .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice .leaflet-container {
+  height: 600px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+.notice .error {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  font-weight: bold;
+}

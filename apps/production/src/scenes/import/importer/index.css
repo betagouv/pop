@@ -1,0 +1,215 @@
+.importer-container {
+  display: flex;
+  flex-direction: column !important;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+  width: 100%;
+  margin: 20px;
+}
+
+.importer-container .row {
+  height: 100%;
+}
+
+.importer-container .left-col {
+  background-color: #f4e2cc;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  height: 700px;
+}
+
+.importer-container .left-col img {
+  width: 100%;
+  padding: 20px;
+}
+.importer-container .left-col h5 {
+  font-weight: 600;
+}
+.importer-container .left-col h6 {
+  font-weight: bold;
+}
+
+.importer-container .right-col {
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.importer-container .right-col .title {
+  color: #007772;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #cccccc;
+  text-align: center;
+  font-size: 15px;
+}
+
+.importer-container .right-col .rc-steps {
+  width: 75%;
+}
+
+.importer-container .button {
+  background-color: #70b7b3;
+  border-radius: 3px;
+  min-width: 209px;
+  height: 45px;
+  margin: 10px;
+  border: 0;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.importer-container .buttonReverse {
+  background-color: white;
+  border-radius: 3px;
+  min-width: 209px;
+  height: 45px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #70b7b3;
+  border-color: #70b7b3;
+}
+
+.importer-container input {
+  background-color: #ffffff;
+  border-radius: 3px;
+  width: 329px;
+  height: 45px;
+  border: 0;
+  padding: 10px;
+}
+
+.importer-container .rc-steps-item-process .rc-steps-item-icon {
+  border-color: #70b7b3;
+  background: #70b7b3;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-wait .rc-steps-item-icon {
+  border-color: #8999ae;
+  background: #8999ae;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-finish .rc-steps-item-icon {
+  border-color: #70b7b3;
+  background: #70b7b3;
+  width: 35px;
+  height: 35px;
+  line-height: 34px;
+  text-align: center;
+}
+
+.importer-container .rc-steps-item-tail {
+  top: 16px;
+  padding: 0px 10px 0px 23px;
+}
+.importer-container .rc-steps-item-tail:after {
+  height: 2px;
+}
+.importer-container .rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: #70b7b3;
+  height: 2px;
+}
+
+.importer-container .rc-steps-icon {
+  color: white !important;
+  font-size: 20px;
+  line-height: 38px;
+}
+
+.importer-container .working-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.importer-container .working-area .progress {
+  width: 200px;
+}
+
+.importer-container .summary {
+  background-color: #f3f7fc;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  min-height: 367px;
+  padding: 20px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.importer-container .summary .round {
+  background-color: #ff0000;
+  border-radius: 50%;
+  height: 15px;
+  margin-right: 5px;
+  width: 15px;
+}
+
+.importer-container .summary .details {
+  float: right;
+  margin-top: 50px;
+}
+.importer-container .summary .lines {
+  padding-top: 10px;
+}
+.importer-container .summary .line {
+  display: flex;
+  align-items: center;
+}
+
+.importer-container .subtitle {
+  font-family: "Comfortaa";
+  padding-top: 25px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.importer-container .filename {
+  color: #007772;
+  font-family: "Nunito";
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: center;
+  margin: 13px;
+  word-wrap: break-word;
+}
+
+.importer-container .feedbacks {
+  background-color: #f3f7fc;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  height: 367px;
+  padding: 20px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.importer-container .feedbacks .feedback {
+  color: #007772;
+  text-align: center;
+  font-weight: bold;
+}

@@ -1,0 +1,19 @@
+body {
+  margin: 0px;
+  overflow: hidden;
+  background-color: #f3f7fc;
+}
+
+body,
+html,
+#root,
+.main {
+  width: 100%;
+  font-family: "Comfortaa";
+  font-size: medium;
+  height: 100%;
+  background-color: #f3f7fc;
+}
+#root {
+  overflow-y: auto;
+}
