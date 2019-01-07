@@ -10,9 +10,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### value
 
@@ -20,9 +20,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### _id
 
@@ -30,9 +30,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|ObjectID|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|ObjectID|non|non|non|||
 
 ### __v
 
@@ -40,6 +40,6 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||

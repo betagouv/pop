@@ -108,6 +108,7 @@
 - [NUMSITE](/doc/memoire.md#NUMSITE)
 - [NUMOP](/doc/memoire.md#NUMOP)
 - [CHRONO](/doc/memoire.md#CHRONO)
+- [REPRO](/doc/memoire.md#REPRO)
 - [STRUCT](/doc/memoire.md#STRUCT)
 - [SUJET](/doc/memoire.md#SUJET)
 - [TICO](/doc/memoire.md#TICO)
@@ -141,9 +142,9 @@ Producteur de la donnée déterminé grâce à la référence :
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non||Producteur|
 
 ### BASE
 Nom de la base : Photographies (Mémoire)
@@ -151,9 +152,9 @@ Nom de la base : Photographies (Mémoire)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|||
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -161,9 +162,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|||
 
 ### POP_IMPORT
 
@@ -171,9 +172,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non|||
 
 ### REF
 Référence unique de la notice
@@ -181,9 +182,9 @@ Référence unique de la notice
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|oui|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|oui|oui|non||Référence|
 
 ### TOUT
 Index global [Peut etre déprécié]
@@ -191,9 +192,9 @@ Index global [Peut etre déprécié]
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Index global|
 
 ### ADRESSE
 Adresse
@@ -201,9 +202,9 @@ Adresse
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Adresse|
 
 ### AUTOEU
 Auteur oeuvre représentée
@@ -211,9 +212,9 @@ Auteur oeuvre représentée
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Auteur oeuvre représentée|
 
 ### AUTG
 Auteur gravure
@@ -221,9 +222,9 @@ Auteur gravure
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Auteur gravure|
 
 ### AUTP
 Auteur photo
@@ -231,9 +232,9 @@ Auteur photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Auteur photo|
 
 ### AUTOR
 Auteur original
@@ -241,9 +242,9 @@ Auteur original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Auteur original|
 
 ### AUTTI
 Auteur tirage
@@ -251,9 +252,9 @@ Auteur tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Auteur tirage|
 
 ### COM
 Commune
@@ -261,9 +262,9 @@ Commune
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Commune|
 
 ### DOM
 Domaine
@@ -271,9 +272,9 @@ Domaine
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Domaine|
 
 ### EDIF
 Nom édifice
@@ -281,9 +282,9 @@ Nom édifice
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom édifice|
 
 ### EXPO
 Référence d’exposition de l’image 
@@ -291,9 +292,9 @@ Référence d’exposition de l’image
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### JDATPV
 Justif date pv
@@ -301,9 +302,9 @@ Justif date pv
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Justif date pv|
 
 ### LIEUCOR
 Lieu cons orig.
@@ -311,9 +312,9 @@ Lieu cons orig.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Lieu cons orig.|
 
 ### COTECOR
 Cote cons orig. 
@@ -321,9 +322,9 @@ Cote cons orig.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Cote cons orig.|
 
 ### LIEUCTI
 Lieu cons tir. 
@@ -331,9 +332,9 @@ Lieu cons tir.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Lieu cons tir.|
 
 ### COTECTI
 Cote conservation du tirage 
@@ -341,9 +342,9 @@ Cote conservation du tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Cote conservation du tirage|
 
 ### LIEUCP
 Lieu cons pho.
@@ -351,9 +352,9 @@ Lieu cons pho.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Lieu cons pho.|
 
 ### COTECP
 Cote conservation du phototype
@@ -361,9 +362,9 @@ Cote conservation du phototype
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||COTECP|
 
 ### LEG
 Légende 
@@ -371,9 +372,9 @@ Légende
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Légende|
 
 ### OBJT
 Nom objet
@@ -381,9 +382,9 @@ Nom objet
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom objet|
 
 ### OBS
 Obs phototype
@@ -391,9 +392,9 @@ Obs phototype
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Obs phototype|
 
 ### OBSOR
 Obs original
@@ -401,9 +402,9 @@ Obs original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Obs original|
 
 ### OBSTI
 Obs tirage
@@ -411,9 +412,9 @@ Obs tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Obs tirage|
 
 ### PAYS
 Pays
@@ -421,9 +422,9 @@ Pays
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Pays|
 
 ### PUBLI
 Publication 
@@ -431,9 +432,9 @@ Publication
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Publication|
 
 ### TIREDE
 Pub. photograph.
@@ -441,19 +442,19 @@ Pub. photograph.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Pub. photograph.|
 
 ### ROLE
-undefined
 
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### PRECOR
 Préc original
@@ -461,9 +462,9 @@ Préc original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Préc original|
 
 ### SERIE
 Titre série
@@ -471,9 +472,9 @@ Titre série
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Titre série|
 
 ### THEATRE
 Nom de théâtre
@@ -481,9 +482,9 @@ Nom de théâtre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom de théâtre|
 
 ### TITRE
 Titre
@@ -491,9 +492,9 @@ Titre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Titre|
 
 ### DMAJ
 Date de la dernière mise à jour
@@ -501,9 +502,9 @@ Date de la dernière mise à jour
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non||Date mise à jour |
 
 ### DMIS
 Date de la création POP/Mistral
@@ -511,9 +512,9 @@ Date de la création POP/Mistral
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non||Date Mistral|
 
 ### IDPROD
 Emetteur (nom) 
@@ -521,9 +522,9 @@ Emetteur (nom)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Emetteur (nom)|
 
 ### NUMCD
 Numéro CD
@@ -531,9 +532,9 @@ Numéro CD
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Numéro CD|
 
 ### NUMF
 No de fond
@@ -541,9 +542,9 @@ No de fond
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||No de fond|
 
 ### INSEE
 Code INSEE
@@ -551,9 +552,9 @@ Code INSEE
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Code INSEE|
 
 ### NVD
 vidéodisque
@@ -561,9 +562,9 @@ vidéodisque
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||vidéodisque|
 
 ### MARQ
 Ordre images
@@ -571,9 +572,9 @@ Ordre images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ordre images|
 
 ### ACC
 Accessoire pose
@@ -581,9 +582,9 @@ Accessoire pose
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Accessoire pose|
 
 ### ACQU
 Acquisition
@@ -591,9 +592,9 @@ Acquisition
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Acquisition|
 
 ### ADPHOT
 Adresse personne 
@@ -601,9 +602,9 @@ Adresse personne
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Adresse personne|
 
 ### AIRE
 Aire d'étude
@@ -611,9 +612,9 @@ Aire d'étude
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Aire d'étude|
 
 ### ANUMP
 Ancien numéro (ancienne cote du phototype)
@@ -621,9 +622,9 @@ Ancien numéro (ancienne cote du phototype)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ancien numéro (ancienne cote du phototype)|
 
 ### COPY
 Crédit photo 
@@ -631,9 +632,9 @@ Crédit photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Crédit photo|
 
 ### COULEUR
 Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoyer]
@@ -641,9 +642,9 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Couleur|
 
 ### COSTUME
 Costume de la personne représentée
@@ -651,9 +652,9 @@ Costume de la personne représentée
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Costume de la personne représentée|
 
 ### DATIMM
 Date immatricul
@@ -661,9 +662,9 @@ Date immatricul
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date immatricul|
 
 ### DATOEU
 Date oeuv année
@@ -671,9 +672,9 @@ Date oeuv année
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date oeuv année|
 
 ### DATPV
 Date prise vue 
@@ -681,9 +682,9 @@ Date prise vue
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date prise vue|
 
 ### DATOR
 Date original
@@ -691,9 +692,9 @@ Date original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date original|
 
 ### DATTI
 Date tirage
@@ -701,9 +702,9 @@ Date tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date tirage |
 
 ### DATG
 Date gravure
@@ -711,9 +712,9 @@ Date gravure
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date gravure|
 
 ### DATD
 Date dessin
@@ -721,9 +722,9 @@ Date dessin
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date dessin|
 
 ### DIFF
 Droits diffusion
@@ -731,9 +732,9 @@ Droits diffusion
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Droits diffusion|
 
 ### DPT
 Département 
@@ -741,9 +742,9 @@ Département
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Département|
 
 ### EDIARCH
 Interprétation
@@ -751,9 +752,9 @@ Interprétation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Interprétation|
 
 ### ECH
 Echelle 
@@ -761,9 +762,9 @@ Echelle
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Echelle|
 
 ### FORMAT
 Format phototype
@@ -771,9 +772,9 @@ Format phototype
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Format phototype|
 
 ### FORMATOR
 Format original
@@ -781,9 +782,9 @@ Format original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Format original|
 
 ### FORMATTI
 Format tirage
@@ -791,9 +792,9 @@ Format tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Format tirage|
 
 ### LBASE
 LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image
@@ -801,9 +802,9 @@ LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'im
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||LBASE|
 
 ### WEB
 Accès Mémoire
@@ -811,9 +812,9 @@ Accès Mémoire
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Accès Mémoire|
 
 ### LIB
 Mots candidats
@@ -821,9 +822,9 @@ Mots candidats
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mots candidats|
 
 ### LOCA
 Localisation 
@@ -831,9 +832,9 @@ Localisation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Localisation|
 
 ### LIEUORIG
 Lieu de dépôt
@@ -841,9 +842,9 @@ Lieu de dépôt
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Lieu de dépôt|
 
 ### MCGEO
 Nom géographique
@@ -851,9 +852,9 @@ Nom géographique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom géographique|
 
 ### MCL
 Mots clés
@@ -861,9 +862,9 @@ Mots clés
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mots clés|
 
 ### MENTIONS
 Mentions photo
@@ -871,9 +872,9 @@ Mentions photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mentions photo|
 
 ### MENTOR
 Mentions orig
@@ -881,9 +882,9 @@ Mentions orig
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mentions orig|
 
 ### MENTTI
 Mentions tirage
@@ -891,9 +892,9 @@ Mentions tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mentions tirage|
 
 ### MCPER
 Nom personne
@@ -901,9 +902,9 @@ Nom personne
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom personne|
 
 ### VUECD
 No vue CD
@@ -911,9 +912,9 @@ No vue CD
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||No vue CD|
 
 ### NUMAUTP
 Cote photographe
@@ -921,9 +922,9 @@ Cote photographe
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Cote photographe|
 
 ### NUMCAF
 No carte fenêtre
@@ -931,9 +932,9 @@ No carte fenêtre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||No carte fenêtre|
 
 ### ANUMOR
 No original(anc)
@@ -941,9 +942,9 @@ No original(anc)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||No original(anc)|
 
 ### NUMOR
 No original
@@ -951,9 +952,9 @@ No original
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||No original|
 
 ### NUMP
 No phototype
@@ -961,9 +962,9 @@ No phototype
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non|Alphanumeric|
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|Alphanumeric|No phototype|
 
 ### ANUMTI
 Ancien numéro du tirage
@@ -971,9 +972,9 @@ Ancien numéro du tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ancien numéro du tirage|
 
 ### NUMTI
 No tirage
@@ -981,9 +982,9 @@ No tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non|Alphanumeric|
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|Alphanumeric|No tirage|
 
 ### RENV
 Renvoi 
@@ -991,9 +992,9 @@ Renvoi
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Renvoi|
 
 ### REG
 Région
@@ -1001,9 +1002,9 @@ Région
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Région|
 
 ### SENS
 Sens 
@@ -1011,9 +1012,9 @@ Sens
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Sens|
 
 ### SCLE
 Date oeuv siècle
@@ -1021,9 +1022,9 @@ Date oeuv siècle
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date oeuv siècle|
 
 ### SUP
 Support 
@@ -1031,9 +1032,9 @@ Support
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Support|
 
 ### TECH
 Technique photo
@@ -1041,9 +1042,9 @@ Technique photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Technique photo|
 
 ### TECHOR
 Technique orig
@@ -1051,9 +1052,9 @@ Technique orig
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Technique orig|
 
 ### TECHTI
 Technique tirage
@@ -1061,9 +1062,9 @@ Technique tirage
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Technique tirage|
 
 ### TOILE
 Toile de fond 
@@ -1071,9 +1072,9 @@ Toile de fond
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Toile de fond|
 
 ### TYP
 Type  [Qu'est ce que c'est ?]
@@ -1081,9 +1082,9 @@ Type  [Qu'est ce que c'est ?]
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Type|
 
 ### TYPDOC
 Catégorie de phototype
@@ -1091,9 +1092,9 @@ Catégorie de phototype
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Catégorie de phototype|
 
 ### TYPEIMG
 Type image num
@@ -1101,9 +1102,9 @@ Type image num
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Type image num|
 
 ### TYPSUPP
 Type support num 
@@ -1111,9 +1112,9 @@ Type support num
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Type support num |
 
 ### VIDEO
 Vidéo [Semble être doublon avec IMG]
@@ -1121,9 +1122,9 @@ Vidéo [Semble être doublon avec IMG]
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||VIDEO|
 
 ### LBASE2
 Liens base  [Quelle différence avec LBASE?]
@@ -1131,9 +1132,9 @@ Liens base  [Quelle différence avec LBASE?]
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Liens base |
 
 ### LEG2
 Légende thes. 
@@ -1141,9 +1142,9 @@ Légende thes.
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Légende thes.|
 
 ### REFIM
 Ref Image
@@ -1151,9 +1152,9 @@ Ref Image
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ref Image|
 
 ### REFIMG
 Nom Image
@@ -1161,9 +1162,9 @@ Nom Image
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Nom Image|
 
 ### MOSA
 Mosaïques 
@@ -1171,9 +1172,9 @@ Mosaïques
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Mosaïques|
 
 ### SITE
 SITE
@@ -1181,9 +1182,9 @@ SITE
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||SITE|
 
 ### NUMSITE
 N° du site 
@@ -1191,9 +1192,9 @@ N° du site
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||N° du site|
 
 ### NUMOP
 N° d'opération
@@ -1201,9 +1202,9 @@ N° d'opération
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||N° d'opération|
 
 ### CHRONO
 Chronologie 
@@ -1211,9 +1212,19 @@ Chronologie
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Chronologie|
+
+### REPRO
+Contient le numéro du fichier numérique
+
+
+
+
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Cote de reproduction|
 
 ### STRUCT
 Structure 
@@ -1221,9 +1232,9 @@ Structure
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Structure|
 
 ### SUJET
 Sujet 
@@ -1231,9 +1242,9 @@ Sujet
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Sujet|
 
 ### TICO
 Titre du dossier
@@ -1241,9 +1252,9 @@ Titre du dossier
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Titre du dossier|
 
 ### NUMI
 Ident. support
@@ -1251,9 +1262,9 @@ Ident. support
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ident. support|
 
 ### LIEU
 Lieu-dit 
@@ -1261,9 +1272,9 @@ Lieu-dit
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Lieu-dit|
 
 ### ADRS
 Adresse saisie
@@ -1271,9 +1282,9 @@ Adresse saisie
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Adresse saisie|
 
 ### CONTACT
 Contact
@@ -1281,9 +1292,9 @@ Contact
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non|Email|
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|Email|CONTACT|
 
 ### EMET
 Emetteur (code) 
@@ -1291,9 +1302,9 @@ Emetteur (code)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Emetteur (code)|
 
 ### NUM
 N° support 
@@ -1301,9 +1312,9 @@ N° support
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||N° support|
 
 ### IMG
 Images
@@ -1311,9 +1322,9 @@ Images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Images|
 
 ### WCOM
 Ville [Quelle difference avec COM ?]
@@ -1321,9 +1332,9 @@ Ville [Quelle difference avec COM ?]
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ville|
 
 ### LIENS
 Liens divers
@@ -1331,9 +1342,9 @@ Liens divers
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Liens divers|
 
 ### LAUTP
 Notice biblio
@@ -1341,9 +1352,9 @@ Notice biblio
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Notice biblio|
 
 ### _id
 
@@ -1351,9 +1362,9 @@ Notice biblio
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|ObjectID|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|ObjectID|non|non|non|||
 
 ### __v
 
@@ -1361,6 +1372,6 @@ Notice biblio
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||

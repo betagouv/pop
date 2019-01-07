@@ -13,7 +13,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "POP_COORDINATES_POLYGON.coordinates","Array","non","","","","","",""
 "BASE","String","non","","","true","Nom de la base : Patrimoine mobilier (Palissy)","",""
 "MEMOIRE","Array","non","","","","","",""
-"REF","String","oui","Référence notice","","true","Référence unique de la notice","Alphanumeric",""
+"REF","String","oui","Référence notice","","","Référence unique de la notice","Alphanumeric",""
 "POP_IMPORT","Array","non","","","","","",""
 "ACQU","String","non","","","","[PAS AFFICHE]","",""
 "ADRS","String","non","Adresse","","","Adresse ","",""

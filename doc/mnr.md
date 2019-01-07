@@ -66,9 +66,9 @@ Producteur de la donnée : Valeur MNR
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|||
 
 ### BASE
 Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)
@@ -76,9 +76,9 @@ Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|||
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -86,9 +86,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non|||
 
 ### REF
 Référence unique de la notice
@@ -96,9 +96,9 @@ Référence unique de la notice
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|oui|non|non|Alphanumeric|
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|oui|non|non|Alphanumeric|Référence|
 
 ### POP_IMPORT
 
@@ -106,9 +106,9 @@ Référence unique de la notice
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non|||
 
 ### TOUT
 [PAS AFFICHE]
@@ -116,9 +116,9 @@ Référence unique de la notice
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### AUTR
 Auteur / exécutant / collecteur
@@ -126,9 +126,9 @@ Auteur / exécutant / collecteur
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Auteur / exécutant / collecteur|
 
 ### PAUT
 Précisions auteur
@@ -136,9 +136,9 @@ Précisions auteur
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Précisions auteur|
 
 ### ATTR
 Anciennes attributions
@@ -146,9 +146,9 @@ Anciennes attributions
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Anciennes attributions|
 
 ### ECOL
 Ecole 
@@ -156,9 +156,9 @@ Ecole
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ecole|
 
 ### TITR
 Titre 
@@ -166,9 +166,9 @@ Titre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Titre|
 
 ### ATIT
 Ancien titre
@@ -176,9 +176,9 @@ Ancien titre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ancien titre|
 
 ### PTIT
 Précision titre
@@ -186,9 +186,9 @@ Précision titre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Précision titre|
 
 ### DENO
 Dénomination du bien
@@ -198,9 +198,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T96
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Dénomination du bien|
 
 ### DESC
 Description 
@@ -208,9 +208,9 @@ Description
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Description|
 
 ### DOMN
 Domaine (catégorie du bien)
@@ -218,9 +218,9 @@ Domaine (catégorie du bien)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Domaine (catégorie du bien)|
 
 ### LOCA
 Localisation 
@@ -228,9 +228,9 @@ Localisation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Localisation|
 
 ### INSC
 Inscriptions 
@@ -238,9 +238,9 @@ Inscriptions
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Inscriptions|
 
 ### MARQ
 Marques 
@@ -248,9 +248,9 @@ Marques
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Marques|
 
 ### OBSE
 Observations 
@@ -258,9 +258,9 @@ Observations
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Observations|
 
 ### ETAT
 Etat de conservation
@@ -268,9 +268,9 @@ Etat de conservation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Etat de conservation|
 
 ### GENE
 Genèse 
@@ -278,9 +278,9 @@ Genèse
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Genèse|
 
 ### PROV
 Provenance 
@@ -288,9 +288,9 @@ Provenance
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Provenance|
 
 ### HIST
 Historique 
@@ -298,9 +298,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Historique|
 
 ### HIST2
 [PAS AFFICHE]
@@ -308,9 +308,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### HIST3
 [PAS AFFICHE]
@@ -318,9 +318,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### HIST4
 [PAS AFFICHE]
@@ -328,9 +328,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### HIST5
 [PAS AFFICHE]
@@ -338,9 +338,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### HIST6
 [PAS AFFICHE]
@@ -348,9 +348,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### SCLE
 Siècle 
@@ -358,9 +358,9 @@ Siècle
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Siècle |
 
 ### STYL
 Style 
@@ -368,9 +368,9 @@ Style
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Style|
 
 ### MILL
 Millénaire 
@@ -378,9 +378,9 @@ Millénaire
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Millénaire|
 
 ### TECH
 Technique 
@@ -388,9 +388,9 @@ Technique
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Technique|
 
 ### DIMS
 Dimensions 
@@ -398,9 +398,9 @@ Dimensions
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Dimensions|
 
 ### VIDEO
 Champ qui contient les images
@@ -408,9 +408,9 @@ Champ qui contient les images
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Champ qui contient les images|
 
 ### INV
 N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
@@ -418,9 +418,9 @@ N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt|
 
 ### EXPO
 Exposition 
@@ -428,9 +428,9 @@ Exposition
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Exposition|
 
 ### BIBL
 Bibliographie 
@@ -438,9 +438,9 @@ Bibliographie
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Bibliographie|
 
 ### AATT
 Ancienne attribution
@@ -448,9 +448,9 @@ Ancienne attribution
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Ancienne attribution|
 
 ### AUTI
 Autre titre
@@ -458,9 +458,9 @@ Autre titre
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Autre titre|
 
 ### CATE
 Catégorie 
@@ -468,9 +468,9 @@ Catégorie
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Catégorie|
 
 ### CATE_DEPREC
 [PAS AFFICHE]
@@ -478,9 +478,9 @@ Catégorie
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### NOTE
 Notes 
@@ -488,9 +488,9 @@ Notes
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Notes|
 
 ### REDC
 Rédacteurs 
@@ -498,9 +498,9 @@ Rédacteurs
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Array|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Array|non|non|non||Rédacteurs|
 
 ### DREP
 Date de la représentation
@@ -508,9 +508,9 @@ Date de la représentation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Date de la représentation|
 
 ### PREP
 Précisions sur la représentation
@@ -518,9 +518,9 @@ Précisions sur la représentation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Précisions sur la représentation|
 
 ### REPR
 Représentation 
@@ -528,9 +528,9 @@ Représentation
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Représentation|
 
 ### SREP
 Sujet de la représentation (source littéraire ou musicale) 
@@ -538,9 +538,9 @@ Sujet de la représentation (source littéraire ou musicale)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Sujet de la représentation (source littéraire ou musicale) |
 
 ### REFIM
 Adresses images jointes générique (actuellement non utilisé)
@@ -548,9 +548,9 @@ Adresses images jointes générique (actuellement non utilisé)
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Adresses images jointes générique (actuellement non utilisé)|
 
 ### DMAJ
 Date de la dernière mise à jour
@@ -558,9 +558,9 @@ Date de la dernière mise à jour
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non||Date de la dernière mise à jour|
 
 ### DMIS
 Date de la création POP/Mistral
@@ -568,9 +568,9 @@ Date de la création POP/Mistral
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|oui|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|oui|non||Date de la création POP/Mistral|
 
 ### AFFE
 Etablissement affectataire qui existe dans d’autres bases
@@ -578,9 +578,9 @@ Etablissement affectataire qui existe dans d’autres bases
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Etablissement affectataire qui existe dans d’autres bases|
 
 ### NUMS
 Autres numéros
@@ -588,9 +588,9 @@ Autres numéros
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Autres numéros|
 
 ### SUITE
 OEuvres liées, ensemble
@@ -598,9 +598,9 @@ OEuvres liées, ensemble
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||OEuvres liées, ensemble|
 
 ### COMM
 Commentaire 
@@ -608,9 +608,9 @@ Commentaire
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Commentaire|
 
 ### NOTE2
 [PAS AFFICHE]
@@ -618,9 +618,9 @@ Commentaire
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### RESUME
 Résumé 
@@ -628,9 +628,9 @@ Résumé
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Résumé|
 
 ### PHOT
 Droits de copie photo 
@@ -638,9 +638,9 @@ Droits de copie photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non||Droits de copie photo|
 
 ### _id
 
@@ -648,9 +648,9 @@ Droits de copie photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|ObjectID|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|ObjectID|non|non|non|||
 
 ### __v
 
@@ -658,6 +658,6 @@ Droits de copie photo
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||

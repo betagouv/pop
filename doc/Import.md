@@ -15,9 +15,9 @@ Identifiant de l'utilisateur à l'origine de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|ObjectID|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|ObjectID|non|non|non|||
 
 ### importedAt
 Date de l'import 
@@ -25,9 +25,9 @@ Date de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Date|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Date|non|non|non|||
 
 ### institution
 Institution à l'origine de l'import
@@ -35,9 +35,9 @@ Institution à l'origine de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|String|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|String|non|non|non|||
 
 ### created
 Nombre de notices créées lors de l'import
@@ -45,9 +45,9 @@ Nombre de notices créées lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||
 
 ### updated
 Nombre de notices mises à jour lors de l'import
@@ -55,9 +55,9 @@ Nombre de notices mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||
 
 ### rejected
 Nombre de notices rejetées lors de l'import
@@ -65,9 +65,9 @@ Nombre de notices rejetées lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||
 
 ### unChanged
 Nombre de notices non mises à jour lors de l'import
@@ -75,9 +75,9 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||
 
 ### _id
 
@@ -85,9 +85,9 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|ObjectID|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|ObjectID|non|non|non|||
 
 ### __v
 
@@ -95,6 +95,6 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|
-|----|--------|------|--------|------|
-|Number|non|non|non||
+|Type|Requis|Généré|Opendata|Validation|Label|
+|----|------|------|--------|----------|-----|
+|Number|non|non|non|||

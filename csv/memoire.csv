@@ -119,6 +119,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "NUMSITE","String","non","N° du site","","","N° du site ","",""
 "NUMOP","String","non","N° d'opération","","","N° d'opération","",""
 "CHRONO","String","non","Chronologie","","","Chronologie ","",""
+"REPRO","String","non","Cote de reproduction","","","Contient le numéro du fichier numérique","",""
 "STRUCT","String","non","Structure","","","Structure ","",""
 "SUJET","String","non","Sujet","","","Sujet ","",""
 "TICO","String","non","Titre du dossier","","","Titre du dossier","",""
