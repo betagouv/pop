@@ -102,7 +102,7 @@ class Palissy extends React.Component {
       description: notice.LEG,
       contentLocation: notice.LOCA,
       creator: notice.AUTR,
-      artMedium: notice.MATR.join(', ')
+      artMedium: notice.MATR.join(", ")
     };
 
     return (
@@ -274,7 +274,11 @@ class Palissy extends React.Component {
                   />
                   <Field title="Atelier" content={notice.ATEL} />
                   <Field title="Référence auteur" content={notice.REFM} />
-                  <Field title="Personnalitées" content={notice.PERS} />
+                  <Field
+                    title="Personnalitées"
+                    content={notice.PERS}
+                    separator="£"
+                  />
                   <Field title="Lieu d’exécution" content={notice.EXEC} />
                   <Field title="Lieu de provenance" content={notice.ORIG} />
                   <Field title="Stade de création" content={notice.STAD} />

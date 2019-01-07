@@ -8,6 +8,7 @@
   word-wrap: break-word;
   white-space: pre-line;
   margin-bottom: 25px;
+  text-align: justify;
 }
 
 .field h3 {
