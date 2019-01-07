@@ -54,7 +54,11 @@ commands:
       - checkout
       - restore_node_modules:
           app: << parameters.app >>
-      - run: yarn build:<< parameters.env >>
+      - run:
+          name: build
+          command: |
+            cd apps/<< parameters.app >>
+            yarn build:<< parameters.env >>
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
           paths:
@@ -143,3 +147,6 @@ workflows:
       - build_consultation_staging:
           requires:
             - test_consultation
+          filters:
+            branches:
+              only: master
