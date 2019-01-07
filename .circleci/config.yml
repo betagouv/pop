@@ -1,0 +1,119 @@
+version: 2.1
+
+commands:
+  restore_node_modules:
+    parameters:
+      app:
+        type: string
+    steps:
+      - restore_cache:
+          key: << parameters.app >>-dependencies-{{ checksum "yarn.lock" }}
+  save_node_modules:
+    parameters:
+      app:
+        type: string
+    steps:
+      - save_cache:
+          paths:
+            - apps/<< parameters.app >>/node_modules
+          key: << parameters.app >>-dependencies-{{ checksum "yarn.lock" }}
+  prepare:
+    parameters:
+      app:
+        type: string
+    steps:
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: test
+          command: |
+            cd apps/<< parameters.app >>
+            yarn install --frozen-lockfile
+      - save_node_modules:
+          app: << parameters.app >>
+  test:
+    parameters:
+      app:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: test
+          command: |
+            cd apps/<< parameters.app >>
+            yarn test
+  configure_aws_ebcli:
+    steps:
+      - run: sudo pip install awsebcli
+      - run:
+          name: AWS credentials
+          command: |
+            mkdir ~/.aws
+            echo "[eb-cli]" > ~/.aws/credentials
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
+jobs:
+  prepare_all:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - prepare:
+          app: api
+      - prepare:
+          app: consultation
+      - prepare:
+          app: production
+      - prepare:
+          app: shared
+  test_api:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - test:
+          app: api
+  test_consultation:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - test:
+          app: consultation
+  test_production:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - test:
+          app: production
+  test_shared:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - test:
+          app: shared
+
+
+workflows:
+  version: 2.1
+  ci_cd:
+    jobs:
+      - prepare_all
+      - test_api:
+          requires:
+            - prepare_all
+      - test_consultation:
+          requires:
+            - prepare_all
+      - test_production:
+          requires:
+            - prepare_all
+      - test_shared:
+          requires:
+            - prepare_all
