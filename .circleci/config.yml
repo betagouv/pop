@@ -162,6 +162,18 @@ jobs:
       - deploy:
           app: production
           env: staging
+  build_consultation_prod:
+    executor: docker_node
+    steps:
+      - build:
+          app: consultation
+          env: prod
+  build_production_prod:
+    executor: docker_node
+    steps:
+      - build:
+          app: production
+          env: prod
 
 workflows:
   version: 2.1
@@ -201,6 +213,18 @@ workflows:
       - deploy_production_staging:
           requires:
             - build_production_staging
+          filters:
+            branches:
+              only: master
+      - build_consultation_prod:
+          requires:
+            - deploy_consultation_staging
+          filters:
+            branches:
+              only: master
+      - build_production_prod:
+          requires:
+            - deploy_production_staging
           filters:
             branches:
               only: master
