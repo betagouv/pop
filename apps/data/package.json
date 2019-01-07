@@ -1,0 +1,37 @@
+{
+  "name": "pop-data",
+  "version": "1.0.0",
+  "description": "pop open data",
+  "main": "./src/app.js",
+  "scripts": {
+    "dev": "node -r dotenv/config ./src/app.js",
+    "prod": "node ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/betagouv/pop-data.git"
+  },
+  "keywords": [
+    "pop",
+    "open",
+    "data"
+  ],
+  "author": "rap2hpoutre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/betagouv/pop-data/issues"
+  },
+  "homepage": "https://github.com/betagouv/pop-data#readme",
+  "devDependencies": {
+    "csv-split-stream": "^1.0.2",
+    "dotenv": "^6.0.0",
+    "js2xmlparser": "^3.0.0",
+    "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.280.1",
+    "json2csv": "^4.1.6",
+    "mongodb": "^3.1.1"
+  }
+}
