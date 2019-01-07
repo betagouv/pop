@@ -47,7 +47,7 @@ commands:
   build:
     parameters:
       env:
-        type: sting
+        type: string
       app: 
         type: string
     steps:
