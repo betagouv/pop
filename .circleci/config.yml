@@ -205,6 +205,23 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api-staging
+  deploy_consultation_prod:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: consultation
+          eb_deploy: pop-consultation
+  deploy_production_prod:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: production
+          eb_deploy: pop-production
+  deploy_api_prod:
+    executor: docker_python
+    steps:
+      - deploy_api:
+          eb_deploy: pop-api
 
 #############
 # WORKFLOWS #
@@ -265,6 +282,24 @@ workflows:
       - deploy_production_staging:
           requires:
             - build_production_staging
+          filters:
+            branches:
+              only: master
+      - deploy_api_prod:
+          requires:
+            - deploy_api_staging
+          filters:
+            branches:
+              only: master
+      - deploy_consultation_prod:
+          requires:
+            - build_consultation_prod
+          filters:
+            branches:
+              only: master
+      - deploy_production_prod:
+          requires:
+            - build_production_prod
           filters:
             branches:
               only: master
