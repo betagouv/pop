@@ -73,6 +73,7 @@ jobs:
   test_api:
     docker:
       - image: circleci/node:8.10
+      - image: circleci/mongo:3.6
     working_directory: ~/repo
     steps:
       - test:
