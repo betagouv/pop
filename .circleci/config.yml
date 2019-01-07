@@ -44,6 +44,21 @@ commands:
           command: |
             cd apps/<< parameters.app >>
             yarn test
+  build:
+    parameters:
+      env:
+        type: sting
+      app: 
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run: yarn build:<< parameters.env >>
+      - persist_to_workspace:
+          root: ~/repo/apps/<< parameters.app >>
+          paths:
+              - build
   configure_aws_ebcli:
     steps:
       - run: sudo pip install awsebcli
@@ -99,7 +114,14 @@ jobs:
     steps:
       - test:
           app: shared
-
+  build_consultation_staging:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    steps:
+      - build:
+          app: consultation
+          env: staging
 
 workflows:
   version: 2.1
@@ -118,3 +140,6 @@ workflows:
       - test_shared:
           requires:
             - prepare_all
+      - build_consultation_staging:
+          requires:
+            - test_consultation
