@@ -17,7 +17,7 @@ export default class Import extends React.Component {
           collection="inventaire"
           readme={readme}
           parseFiles={parseFiles}
-          dropzoneText="Glissez & déposez vos fichiers au format Renable (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText="Glissez & déposez vos fichiers au format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
           defaultEncoding="UTF-8"
         />
       </Container>
@@ -81,7 +81,7 @@ function parseFiles(files, encoding) {
       return;
     }
 
-    //RENABLE
+    //RENABL
     const xmlFiles = files.filter(file => file.name.indexOf(".xml") !== -1);
     const otherFiles = files.filter(file => file.name.indexOf(".xml") === -1);
     if (xmlFiles.length) {
@@ -102,7 +102,7 @@ function parseFiles(files, encoding) {
 
     // ERROR
     reject(
-      "Impossible d'importer le(s) fichier(s). Aucun fichier Renable ou Gertrude détecté"
+      "Impossible d'importer le(s) fichier(s). Aucun fichier Renabl ou Gertrude détecté"
     );
   });
 }
@@ -286,7 +286,7 @@ function readme() {
         Les formats de données pris en charge sont les suivants : <br />
         <ul>
           <li>
-            texte : format Renable (.xml) ou Gertrude (.txt à partir de la
+            texte : format Renabl (.xml) ou Gertrude (.txt à partir de la
             version 1.6){" "}
           </li>
           <li>illustration : jpg, png.</li>
@@ -316,19 +316,19 @@ function readme() {
         </ul>
         <br />
         <h5>Particularités</h5>
-        Pour Renable illustration, la référence de la notice mémoire est
+        Pour Renabl illustration, la référence de la notice mémoire est
         construite dela facon suivante : EMET + "_" + NUMI <br />
         <br />
-        Pour Renable illustration, le champ AUTP est rempli avec le champ AUT
+        Pour Renabl illustration, le champ AUTP est rempli avec le champ AUT
         <br />
         <br />
-        Pour Renable illustration, le champ image est rempli en simplifiant le
+        Pour Renabl illustration, le champ image est rempli en simplifiant le
         nom contenu dans le champ FNU2
         <br /> <br />
-        Pour Renable Mérimée et Palissy, Le champ COORWGS84 est utilisé et
+        Pour Renabl Mérimée et Palissy, Le champ COORWGS84 est utilisé et
         converti dans le champ POP_COORDONNEES et prioritaire sur le champ COOR
         <br /> <br />
-        Pour Renable et Gertrude Mérimée et Palissy, Les coordonnées sont
+        Pour Renabl et Gertrude Mérimée et Palissy, Les coordonnées sont
         converties du format Lambert vers le WGS84 automatiquement si les champs
         COOR et ZONE sont remplis
         <br /> <br />
