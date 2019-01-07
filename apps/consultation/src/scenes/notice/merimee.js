@@ -247,7 +247,11 @@ class Merimee extends React.Component {
                     title="Justification de l'attribution"
                     content={notice.JATT}
                   />
-                  <Field title="Personnalitées" content={notice.PERS} />
+                  <Field
+                    title="Personnalitées"
+                    content={notice.PERS}
+                    separator="£"
+                  />
                   <Field title="Remploi" content={notice.REMP} />
                   <Field title="Partie déplacée" content={notice.DEPL} />
                   <Field
