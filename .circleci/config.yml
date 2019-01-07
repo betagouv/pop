@@ -1,5 +1,11 @@
 version: 2.1
 
+executors:
+  docker_node:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.10
+
 commands:
   restore_node_modules:
     parameters:
@@ -76,9 +82,7 @@ commands:
 
 jobs:
   prepare_all:
-    docker:
-      - image: circleci/node:8.10
-    working_directory: ~/repo
+    executor: docker_node
     steps:
       - checkout
       - prepare:
@@ -98,33 +102,31 @@ jobs:
       - test:
           app: api
   test_consultation:
-    docker:
-      - image: circleci/node:8.10
-    working_directory: ~/repo
+    executor: docker_node
     steps:
       - test:
           app: consultation
   test_production:
-    docker:
-      - image: circleci/node:8.10
-    working_directory: ~/repo
+    executor: docker_node
     steps:
       - test:
           app: production
   test_shared:
-    docker:
-      - image: circleci/node:8.10
-    working_directory: ~/repo
+    executor: docker_node
     steps:
       - test:
           app: shared
   build_consultation_staging:
-    docker:
-      - image: circleci/node:8.10
-    working_directory: ~/repo
+    executor: docker_node
     steps:
       - build:
           app: consultation
+          env: staging
+  build_production_staging:
+    executor: docker_node
+    steps:
+      - build:
+          app: production
           env: staging
 
 workflows:
@@ -147,6 +149,12 @@ workflows:
       - build_consultation_staging:
           requires:
             - test_consultation
+          filters:
+            branches:
+              only: master
+      - build_production_staging:
+          requires:
+            - test_production
           filters:
             branches:
               only: master
