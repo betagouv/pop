@@ -203,8 +203,7 @@ jobs:
   deploy_api_staging:
     executor: docker_python
     steps:
-      - deploy:
-          app: production
+      - deploy_api:
           eb_deploy: pop-api-staging
 
 #############
