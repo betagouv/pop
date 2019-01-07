@@ -7,7 +7,7 @@ commands:
         type: string
     steps:
       - restore_cache:
-          key: << parameters.app >>-dependencies-{{ checksum "yarn.lock" }}
+          key: << parameters.app >>-dependencies-{{ checksum "apps/<< parameters.app >>/yarn.lock" }}
   save_node_modules:
     parameters:
       app:
@@ -16,7 +16,7 @@ commands:
       - save_cache:
           paths:
             - apps/<< parameters.app >>/node_modules
-          key: << parameters.app >>-dependencies-{{ checksum "yarn.lock" }}
+          key: << parameters.app >>-dependencies-{{ checksum "apps/<< parameters.app >>/yarn.lock" }}
   prepare:
     parameters:
       app:
@@ -25,7 +25,7 @@ commands:
       - restore_node_modules:
           app: << parameters.app >>
       - run:
-          name: test
+          name: prepare
           command: |
             cd apps/<< parameters.app >>
             yarn install --frozen-lockfile
