@@ -17,6 +17,10 @@
     "open",
     "data"
   ],
+  "engines": {
+    "node": "8.11.x",
+    "npm": "5.x"
+  },
   "author": "rap2hpoutre",
   "license": "MIT",
   "bugs": {
