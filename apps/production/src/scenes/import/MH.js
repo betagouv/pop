@@ -77,7 +77,9 @@ function parseFiles(files, encoding) {
           newNotice = new Palissy(obj);
         } else if (obj.REF.indexOf("PA") !== -1) {
           newNotice = new Merimee(obj);
-        } else if (obj.REF.indexOf("OA") !== -1) {
+        } else if (
+          ["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))
+        ) {
           const fileName = String(obj.REFIMG);
           obj.IMG = fileName;
           newNotice = new Memoire(obj);
@@ -115,6 +117,7 @@ function parseFiles(files, encoding) {
 }
 
 function readme() {
+  console.log(Mapping.merimee);
   const generatedMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].generated;
   });
@@ -235,13 +238,34 @@ function readme() {
         Je contacte l’administrateur de la base.
         <br />
         <br />
-        <h6>Je veux ajouter une image :</h6>
-        1) Sur une notice mémoire existante, je peux cliquer sur "Ajouter une
-        image" et télécharger une image depuis mon ordinateur. Le champ IMG
-        contiendra le lien de l'image ainsi téléchargée.
+        <h6>Je veux ajouter une image :</h6> <br />
+        <b>
+          ATTENTION : 2 cas de figures suivant si l'ajout se fait par import (1)
+          ou par ajout d'une nouvelle image sur une notice Mémoire.
+          <br />
+          Dans les 2 cas, l'image est stockée uniquement dans la base
+          Mémoire/SAP dans le champ IMG, seul champ image affiché dans la notice
+          développée.
+        </b>{" "}
         <br /> <br />
-        2) Importer une notice mémoire en "OA" et avoir le champs REFIMG
-        complété avec le nom de l'image exacte
+        1) A l'import, dans mon fichier, je renseigne obligatoirement 3 champs :{" "}
+        <br />
+        - le champ REF contenant la Référence Mémoire à laquelle je veux
+        attacher une image
+        <br />
+        - le champ LBASE contenant la Référence Mérimée ou Palissy MH que je
+        veux illustrer
+        <br />- le champ IMG ou REFIMG contenant une image au format .jpeg (peu
+        importe le nom du champ, les deux passent à l'import. En revanche, une
+        fois l'import effectué, le champ REFIMG devient le champ IMG, seul champ
+        affiché dans la notice développée)
+        <br /> <br />
+        2) Directement depuis une notice Mémoire : je peux cliquer sur "Ajouter
+        une nouvelle image" et importer une nouvelle image directement depuis
+        mon ordinateur. La notice Mémoire reçoit alors dans son champ IMG le
+        contenu .jpeg. Si le champ LBASE contient bien la REF Mérimée ou Palissy
+        MH associée, alors l'image ainsi stockée dans IMG illustrera bien la
+        notice MH."
         <br /> <br />
         NB : à la création d'une notice, POP génère automatiquement certains
         champs utiles au traitement des données. Il s'agit des champs : <br />
@@ -268,21 +292,21 @@ function readme() {
         <br />
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/memoire.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Mémoire
         </a>
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/palissy.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/palissy.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Palissy
         </a>
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/merimee.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/merimee.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Mérimée

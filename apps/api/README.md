@@ -24,7 +24,7 @@ Utiliser `yarn deploy:staging` ou `deploy:staging` en fonction de l'environnemen
 
 ### Documentation base de données
 
-La base de données est documentée [ici](https://github.com/betagouv/pop-api/blob/master/doc/README.md)
+La base de données est documentée [ici](https://github.com/betagouv/pop/tree/master/apps/api/doc/README.md)
 et peut être générée avec la commande `yarn export-db-schemas`.
 
 ### Elasticsearch

@@ -252,8 +252,15 @@ class Notice extends React.Component {
   }
 }
 
-const CustomField = ({ name, ...rest }) => {
-  return <Field {...Mapping.joconde[name]} name={name} {...rest} />;
+const CustomField = ({ name, disabled, ...rest }) => {
+  return (
+    <Field
+      {...Mapping.joconde[name]}
+      disabled={Mapping.joconde[name].generated == true || disabled}
+      name={name}
+      {...rest}
+    />
+  );
 };
 
 const mapStateToProps = ({ Auth }) => {

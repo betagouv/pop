@@ -114,7 +114,7 @@ function readme() {
         <br />
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/mnr.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/mnr.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Mnr

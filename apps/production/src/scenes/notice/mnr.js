@@ -205,9 +205,15 @@ class Notice extends React.Component {
     );
   }
 }
-
-const CustomField = ({ name, ...rest }) => {
-  return <Field {...Mapping.mnr[name]} name={name} {...rest} />;
+const CustomField = ({ name, disabled, ...rest }) => {
+  return (
+    <Field
+      {...Mapping.mnr[name]}
+      disabled={Mapping.mnr[name].generated == true || disabled}
+      name={name}
+      {...rest}
+    />
+  );
 };
 
 const mapStateToProps = ({ Auth }) => {

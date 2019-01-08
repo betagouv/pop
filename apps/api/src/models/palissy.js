@@ -341,8 +341,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier PDF ",
-        generated: true,
+        description:
+          "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
         label: "Dossier PDF"
       }
     },
