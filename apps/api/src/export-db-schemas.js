@@ -46,9 +46,8 @@ fs.writeFileSync(
   ${models
     .map(
       model =>
-        `- [${model.name[0].toUpperCase() + model.name.slice(1)}](/doc/${
-          model.name
-        }.md)`
+        `- [${model.name[0].toUpperCase() +
+          model.name.slice(1)}](/apps/api/doc/${model.name}.md)`
     )
     .join("\n")}`
 );
@@ -63,7 +62,7 @@ for (let i = 0; i < models.length; i++) {
   //SUMMARY
   for (let j = 0; j < model.paths.length; j++) {
     arr.push(
-      `- [${model.paths[j].name}](/doc/${model.name}.md#${model.paths[j].name})`
+      `- [${model.paths[j].name}](/apps/api/doc/${model.name}.md#${model.paths[j].name})`
     );
   }
 

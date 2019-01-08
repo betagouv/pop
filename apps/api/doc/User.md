@@ -1,17 +1,17 @@
 # POP SCHEMAS User
 
-- [email](/doc/User.md#email)
-- [institution](/doc/User.md#institution)
-- [nom](/doc/User.md#nom)
-- [prenom](/doc/User.md#prenom)
-- [group](/doc/User.md#group)
-- [role](/doc/User.md#role)
-- [password](/doc/User.md#password)
-- [hasResetPassword](/doc/User.md#hasResetPassword)
-- [lastConnectedAt](/doc/User.md#lastConnectedAt)
-- [museofile](/doc/User.md#museofile)
-- [_id](/doc/User.md#_id)
-- [__v](/doc/User.md#__v)
+- [email](/apps/api/doc/User.md#email)
+- [institution](/apps/api/doc/User.md#institution)
+- [nom](/apps/api/doc/User.md#nom)
+- [prenom](/apps/api/doc/User.md#prenom)
+- [group](/apps/api/doc/User.md#group)
+- [role](/apps/api/doc/User.md#role)
+- [password](/apps/api/doc/User.md#password)
+- [hasResetPassword](/apps/api/doc/User.md#hasResetPassword)
+- [lastConnectedAt](/apps/api/doc/User.md#lastConnectedAt)
+- [museofile](/apps/api/doc/User.md#museofile)
+- [_id](/apps/api/doc/User.md#_id)
+- [__v](/apps/api/doc/User.md#__v)
 ### email
 
 
