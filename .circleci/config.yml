@@ -290,16 +290,16 @@ workflows:
             - deploy_api_staging
           filters:
             branches:
-              only: master-disabled
+              only: master
       - deploy_consultation_prod:
           requires:
             - build_consultation_prod
           filters:
             branches:
-              only: master-disabled
+              only: master
       - deploy_production_prod:
           requires:
             - build_production_prod
           filters:
             branches:
-              only: master-disabled
+              only: master
