@@ -18,9 +18,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|oui|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|oui|non|non|non|||
 
 ### institution
 
@@ -28,9 +28,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|oui|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|oui|non|non|non|||
 
 ### nom
 
@@ -38,9 +38,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non|||
 
 ### prenom
 
@@ -48,9 +48,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non|||
 
 ### group
 
@@ -58,9 +58,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|oui|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|oui|non|non|non|||
 
 ### role
 
@@ -68,9 +68,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|oui|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|oui|non|non|non|||
 
 ### password
 
@@ -78,9 +78,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|oui|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|oui|non|non|non|||
 
 ### hasResetPassword
 
@@ -88,9 +88,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Boolean|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Boolean|non|non|non|non|||
 
 ### lastConnectedAt
 
@@ -98,9 +98,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Date|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Date|non|non|non|non|||
 
 ### museofile
 
@@ -108,9 +108,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non|||
 
 ### _id
 
@@ -118,9 +118,9 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|ObjectID|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|ObjectID|non|non|non|non|||
 
 ### __v
 
@@ -128,6 +128,6 @@
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||
