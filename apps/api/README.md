@@ -24,7 +24,8 @@ Utiliser `npm run deploy:staging` ou `deploy:staging` en fonction de l'environne
 
 ### Documentation base de données
 
-La base de données est documentée [ici](https://github.com/betagouv/pop-api/blob/master/doc/README.md)
+
+La base de données est documentée [ici](https://github.com/betagouv/pop/tree/master/apps/api/doc/README.md)
 et peut être générée avec la commande `npm run export-db-schemas`.
 
 ### Elasticsearch

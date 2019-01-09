@@ -190,7 +190,6 @@ class Notice extends React.Component {
               <CustomField name="MENTTI" disabled={!this.state.editable} />
               <CustomField name="OBSTI" disabled={!this.state.editable} />
               <CustomField name="RENV" disabled={!this.state.editable} />
-              <CustomField name="NUMG" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="NUMOR" disabled={!this.state.editable} />
@@ -218,9 +217,7 @@ class Notice extends React.Component {
               <CustomField name="NVD" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="REFIMG" disabled={!this.state.editable} />
-              <CustomField name="REFIM" disabled={!this.state.editable} />
-              <CustomField name="VIDEO" disabled={!this.state.editable} />
+              <CustomField name="IMG" disabled={!this.state.editable} />
               <CustomField name="TYPEIMG" disabled={!this.state.editable} />
             </Col>
           </Section>
@@ -404,8 +401,15 @@ function getUrl(ref = "") {
   return url;
 }
 
-const CustomField = ({ name, ...rest }) => {
-  return <Field {...Mapping.memoire[name]} name={name} {...rest} />;
+const CustomField = ({ name, disabled, ...rest }) => {
+  return (
+    <Field
+      {...Mapping.memoire[name]}
+      disabled={Mapping.memoire[name].generated == true || disabled}
+      name={name}
+      {...rest}
+    />
+  );
 };
 
 const mapStateToProps = ({ Auth }) => {

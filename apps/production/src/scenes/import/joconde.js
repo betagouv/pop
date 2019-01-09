@@ -330,7 +330,7 @@ function readme() {
         <br />
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/joconde.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/joconde.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Joconde

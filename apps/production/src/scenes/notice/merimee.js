@@ -123,7 +123,7 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <CustomField name="REF" disabled={true} />
-              <CustomField name="PRODUCTEUR" disabled={true} />
+              <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
               <CustomField
                 title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
                 name="RENV"
@@ -131,7 +131,7 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <CustomField name="DOSURL" disabled={!this.state.editable} />
-              <CustomField name="DOSURLPDF" disabled={true} />
+              <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
               <CustomField name="ARCHEO" disabled={!this.state.editable} />
               <CustomField name="DENQ" disabled={!this.state.editable} />
               <CustomField name="COPY" disabled={!this.state.editable} />
@@ -326,9 +326,15 @@ class Notice extends React.Component {
     );
   }
 }
-
-const CustomField = ({ name, ...rest }) => {
-  return <Field {...Mapping.merimee[name]} name={name} {...rest} />;
+const CustomField = ({ name, disabled, ...rest }) => {
+  return (
+    <Field
+      {...Mapping.merimee[name]}
+      disabled={Mapping.merimee[name].generated == true || disabled}
+      name={name}
+      {...rest}
+    />
+  );
 };
 
 const mapStateToProps = ({ Auth }) => {
