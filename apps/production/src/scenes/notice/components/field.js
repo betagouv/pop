@@ -164,9 +164,8 @@ export default class AbstractField extends React.Component {
     tooltipOpen: false
   };
   render() {
-    const { label, type, name, description, ...rest } = this.props;
-
-    let desc = description || "En attente de description" + "\n";
+    const { label, type, name, description, generated, ...rest } = this.props;
+    let desc = description || "En attente de description";
 
     let Comp = <div />;
     if (type === "String") {
@@ -192,6 +191,7 @@ export default class AbstractField extends React.Component {
           }
         >
           {desc}
+          {generated ? <div><br />Ce champ est généré et n'est pas modifiable.</div>: ""}
         </Tooltip>
         {Comp}
       </div>
