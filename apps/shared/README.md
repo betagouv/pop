@@ -8,17 +8,17 @@ Composants partagés pour la plateforme ouverte du patrimoine.
 ## Installation
 
 ```bash
-yarn add --dev pop-shared
+npm install --save-dev pop-shared
 ```
 
 ## Tests
 
-Pour lancer les tests automatisés : `yarn test`.
+Pour lancer les tests automatisés : `npm test`.
 
 Il est aussi possible de tester manuellement les composants depuis le dossier `example` :
 ```bash
 cd example
-yarn start
+npm run start
 ```
 
 ## Usage
