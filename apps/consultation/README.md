@@ -4,25 +4,25 @@ Outil de consultation public de la [Plateforme Ouverte du Patrimoine](http://pop
 
 ## Installation
 
-NodeJS 8+ et [Yarn](https://yarnpkg.com/en/docs/install) doivent être installés pour faire fonctionner l'application.
+NodeJS 8+ doit être installé pour faire fonctionner l'application.
 
 ```
 git clone https://github.com/betagouv/pop-consultation.git
 cd pop-consultation
-yarn
+npm install
 ```
 
 ## Utilisation (locale)
 
-Lancer la commande `yarn dev` pour accéder à l'application via l'URL `http://localhost:8081`. Voir le fichier `package.json` pour le détail des commandes.
+Lancer la commande `npm run dev` pour accéder à l'application via l'URL `http://localhost:8081`. Voir le fichier `package.json` pour le détail des commandes.
 
 ## Tests
 
-Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop. Pour lancer les tests en local, utiliser `yarn test`.
+Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop. Pour lancer les tests en local, utiliser `npm test`.
 
 ## Déploiement
 
-Utiliser `yarn deploy:staging` ou `yarn deploy:production` en fonction de l'environnement souhaité. 
+Utiliser `npm run deploy:staging` ou `npm run deploy:production` en fonction de l'environnement souhaité. 
 La branche _master_ est automatiquement livré sur la plateforme de _staging_ et de _prod_ à chaque _push_ grâce à CircleCI. Il est donc recommandé de passer par des _Pull Request_ validées par un tiers.
 
 ## Recherche
