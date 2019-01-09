@@ -315,6 +315,12 @@ function readme() {
           ))}
         </ul>
         <br />
+        <b>
+          Si un champ REFIMG est renseigné mais que l'image est absente, i.e.
+          pas de .jpeg dans un des fichiers importés, alors l'import de la
+          notice est bloqué.
+        </b>
+        <br /> <br />
         <h5>Particularités</h5>
         Pour Renabl illustration, la référence de la notice mémoire est
         construite dela facon suivante : EMET + "_" + NUMI <br />
@@ -341,6 +347,8 @@ function readme() {
           <li>ADRESSE = LIEU + ";" + ADRS</li>
         </ul>
         <br />
+        Le champ DOSURL est automatiquement nettoyé du code html à l'import
+        <br /> <br />
         <h6>Test de validation des champs : </h6>
         Les tests suivants sont effectués lors des imports
         <br />
@@ -395,8 +403,8 @@ function readme() {
         image" et télécharger une image depuis mon ordinateur. Le champ IMG
         contiendra le lien de l'image ainsi téléchargée.
         <br /> <br />
-        2) Importer une notice mémoire en "OA" et avoir le champ REFIMG complété
-        avec le nom de l'image exacte
+        2) Importer une notice mémoire ( référence commençant par IV,OA,MH,AR,AP
+        ) et avoir le champ REFIMG complété avec le nom de l'image exacte
         <br /> <br />
         NB : à la création d'une notice, POP génère automatiquement certains
         champs utiles au traitement des données. Il s'agit des champs : <br />
@@ -423,21 +431,21 @@ function readme() {
         <br />
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/memoire.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Mémoire
         </a>
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/palissy.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/palissy.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Palissy
         </a>
         <br />
         <a
-          href="https://github.com/betagouv/pop-api/blob/master/doc/merimee.md"
+          href="https://github.com/betagouv/pop/tree/master/apps/api/doc/merimee.md"
           target="_blank"
         >
           Lien vers le modèle de donnée Mérimée
