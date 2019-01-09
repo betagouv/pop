@@ -1,23 +1,23 @@
 # POP SCHEMAS Import
 
-- [user](/doc/Import.md#user)
-- [importedAt](/doc/Import.md#importedAt)
-- [institution](/doc/Import.md#institution)
-- [created](/doc/Import.md#created)
-- [updated](/doc/Import.md#updated)
-- [rejected](/doc/Import.md#rejected)
-- [unChanged](/doc/Import.md#unChanged)
-- [_id](/doc/Import.md#_id)
-- [__v](/doc/Import.md#__v)
+- [user](/apps/api/doc/Import.md#user)
+- [importedAt](/apps/api/doc/Import.md#importedAt)
+- [institution](/apps/api/doc/Import.md#institution)
+- [created](/apps/api/doc/Import.md#created)
+- [updated](/apps/api/doc/Import.md#updated)
+- [rejected](/apps/api/doc/Import.md#rejected)
+- [unChanged](/apps/api/doc/Import.md#unChanged)
+- [_id](/apps/api/doc/Import.md#_id)
+- [__v](/apps/api/doc/Import.md#__v)
 ### user
 Identifiant de l'utilisateur à l'origine de l'import
 
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|ObjectID|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|ObjectID|non|non|non|non|||
 
 ### importedAt
 Date de l'import 
@@ -25,9 +25,9 @@ Date de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Date|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Date|non|non|non|non|||
 
 ### institution
 Institution à l'origine de l'import
@@ -35,9 +35,9 @@ Institution à l'origine de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|String|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non|||
 
 ### created
 Nombre de notices créées lors de l'import
@@ -45,9 +45,9 @@ Nombre de notices créées lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||
 
 ### updated
 Nombre de notices mises à jour lors de l'import
@@ -55,9 +55,9 @@ Nombre de notices mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||
 
 ### rejected
 Nombre de notices rejetées lors de l'import
@@ -65,9 +65,9 @@ Nombre de notices rejetées lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||
 
 ### unChanged
 Nombre de notices non mises à jour lors de l'import
@@ -75,9 +75,9 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||
 
 ### _id
 
@@ -85,9 +85,9 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|ObjectID|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|ObjectID|non|non|non|non|||
 
 ### __v
 
@@ -95,6 +95,6 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Opendata|Validation|Label|
-|----|------|------|--------|----------|-----|
-|Number|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||

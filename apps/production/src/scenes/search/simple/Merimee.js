@@ -24,7 +24,8 @@ const FILTER = [
   "image",
   "location",
   "date",
-  "zone"
+  "zone",
+  "domain"
 ];
 
 export default class Search extends React.Component {
@@ -78,7 +79,16 @@ export default class Search extends React.Component {
                   URLParams={true}
                   react={{ and: FILTER.filter(e => e !== "producteur") }}
                 />
-
+                <MultiList
+                  componentId="domain"
+                  dataField="DOMN.keyword"
+                  title="Domaines"
+                  className="filters"
+                  displayCount
+                  showSearch={false}
+                  URLParams={true}
+                  react={{ and: FILTER.filter(e => e !== "domain") }}
+                />
                 <MultiList
                   componentId="auteurs"
                   dataField="AUTR.keyword"

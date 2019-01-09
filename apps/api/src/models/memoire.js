@@ -818,15 +818,18 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Ref Image",
-        label: "Ref Image"
+        label: "Ref Image",
+        deprecated: true
       }
     },
     REFIMG: {
       type: String,
       default: "",
       documentation: {
-        description: "Nom Image",
-        label: "Nom Image"
+        description:
+          "Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",
+        label: "Nom Image",
+        deprecated: true
       }
     },
     MOSA: {
