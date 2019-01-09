@@ -117,7 +117,6 @@ function parseFiles(files, encoding) {
 }
 
 function readme() {
-  console.log(Mapping.merimee);
   const generatedMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].generated;
   });
