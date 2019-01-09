@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import mh from "../../../assets/mh.png";
+import inv from "../../../assets/inventaire.jpg";
 
 function getMemoireImage(memoire) {
   if (!memoire.length || !memoire[0].url) {
@@ -13,6 +15,15 @@ function getMemoireImage(memoire) {
 
 export default({ data }) => {
   const image = getMemoireImage(data.MEMOIRE);
+
+  const productorImage = p => {
+    if (p === "Inventaire") {
+      return <img src={inv} className="producteur" />;
+    } else if (p === "Monuments Historiques") {
+      return <img src={mh} className="producteur mh" />;
+    }
+    return <div />;
+  };
 
   if (data.REF.startsWith("PA") || data.REF.startsWith("PM")) {
     return (
@@ -39,6 +50,7 @@ export default({ data }) => {
             <p>{data.STAT.join(" ; ")}</p>
             <p>{data.DPRO}</p>
             <p>{data.DOMN}</p>
+            {productorImage(data.PRODUCTEUR)}
           </div>
         </div>
       </Link>
@@ -63,6 +75,7 @@ export default({ data }) => {
           <p>{data.DENO.join(" ; ")}</p>
           <p>{data.LOCA}</p>
           <p>{data.AUTR.join(" ; ")}</p>
+          {productorImage(data.PRODUCTEUR)}
         </div>
       </div>
     </Link>
