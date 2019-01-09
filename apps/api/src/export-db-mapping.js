@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
-const markdownPath = "../pop_mapping.js";
+const mappingPath = "../../shared/src/Mapping.js";
 
 // 1. Load models
 const models = fs
@@ -30,7 +30,7 @@ const models = fs
 
 // 2. Convert to markdown and write to file
 fs.writeFileSync(
-  path.join(__dirname, markdownPath),
+  path.join(__dirname, mappingPath),
   `${models
     .map(model => {
       const obj = {};
@@ -41,7 +41,7 @@ fs.writeFileSync(
       return `const ${model.name} = ${JSON.stringify(obj)}`;
     })
     .join("\n")}
-    const mapping = {${models.map(e => e.name).join(",")}}
-    export default mapping;
+    const Mapping = {${models.map(e => e.name).join(",")}}
+    export default Mapping;
     `
 );
