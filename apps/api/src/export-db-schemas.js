@@ -19,12 +19,17 @@ const models = fs
       generated: v.options.documentation
         ? v.options.documentation.generated
         : "",
-      description: v.options.documentation && v.options.documentation.description
-        ? v.options.documentation.description
+      deprecated: v.options.documentation
+        ? v.options.documentation.deprecated
         : "",
-      label: v.options.documentation && v.options.documentation.label
-        ? v.options.documentation.label
-        : "",
+      description:
+        v.options.documentation && v.options.documentation.description
+          ? v.options.documentation.description
+          : "",
+      label:
+        v.options.documentation && v.options.documentation.label
+          ? v.options.documentation.label
+          : "",
       validation: v.options.documentation
         ? v.options.documentation.validation
         : "",
@@ -41,9 +46,8 @@ fs.writeFileSync(
   ${models
     .map(
       model =>
-        `- [${model.name[0].toUpperCase() + model.name.slice(1)}](/doc/${
-          model.name
-        }.md)`
+        `- [${model.name[0].toUpperCase() +
+          model.name.slice(1)}](/apps/api/doc/${model.name}.md)`
     )
     .join("\n")}`
 );
@@ -58,7 +62,7 @@ for (let i = 0; i < models.length; i++) {
   //SUMMARY
   for (let j = 0; j < model.paths.length; j++) {
     arr.push(
-      `- [${model.paths[j].name}](/doc/${model.name}.md#${model.paths[j].name})`
+      `- [${model.paths[j].name}](/apps/api/doc/${model.name}.md#${model.paths[j].name})`
     );
   }
 
@@ -68,6 +72,7 @@ for (let i = 0; i < models.length; i++) {
         path.type,
         path.required ? "oui" : "non",
         path.generated ? "oui" : "non",
+        path.deprecated ? "oui" : "non",
         path.opendata ? "oui" : "non",
         path.validation,
         path.label
@@ -77,8 +82,8 @@ for (let i = 0; i < models.length; i++) {
         path.description + "\n\n",
         path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
         "",
-        `|Type|Requis|Généré|Opendata|Validation|Label|`,
-        `|----|------|------|--------|----------|-----|`,
+        `|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|`,
+        `|----|------|------|------|--------|----------|-----|`,
         `|${elements.join("|")}|`,
         ""
       ].join("\n");
