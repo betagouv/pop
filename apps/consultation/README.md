@@ -1,14 +1,14 @@
 # POP Consultation
 
-Outil de consultation public de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop-api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est basée sur [React](https://reactjs.org/). Le rendu des pages est effectué côté serveur (SSR).
+Outil de consultation public de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop/tree/master/apps/api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est basée sur [React](https://reactjs.org/). Le rendu des pages est effectué côté serveur (SSR).
 
 ## Installation
 
 NodeJS 8+ doit être installé pour faire fonctionner l'application.
 
 ```
-git clone https://github.com/betagouv/pop-consultation.git
-cd pop-consultation
+git clone https://github.com/betagouv/pop.git
+cd pop/apps/consultation
 npm install
 ```
 
