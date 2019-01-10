@@ -197,3 +197,15 @@
   border-style: none !important;
   margin-top: -6px !important;
 }
+
+.search img.producteur {
+  width: 50px;
+  height: auto;
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+}
+
+img.producteur.mh {
+  width: 100px;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import mh from "../../../assets/mh.png";
 
 export default ({ data }) => {
   let image = "";
@@ -11,6 +12,12 @@ export default ({ data }) => {
   } else {
     image = require("../../../assets/noimage.jpg");
   }
+  const productorImage = p => {
+    if (p === "CRMH") {
+      return <img src={mh} className="producteur mh" />;
+    }
+    return <div />;
+  };
 
   return (
     <Link
@@ -34,6 +41,7 @@ export default ({ data }) => {
           <p>{data.AUTP}</p>
           <p>{data.SERIE}</p>
           <p>{data.TITRE}</p>
+          {productorImage(data.PRODUCTEUR)}
         </div>
       </div>
     </Link>

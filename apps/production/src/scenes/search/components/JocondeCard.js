@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import mdf from "../../../assets/musee-de-france.jpg";
 
 export default ({ data }) => {
   const image = data.IMG.length
@@ -26,6 +27,7 @@ export default ({ data }) => {
           <p>{data.PERI.join(", ")}</p>
           <p>{data.LOCA}</p>
           <p>{data.INV}</p>
+          <img src={mdf} className="producteur" />
         </div>
       </div>
     </Link>
