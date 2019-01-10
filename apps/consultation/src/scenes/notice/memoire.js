@@ -59,14 +59,16 @@ class Memoire extends React.Component {
   getTitle() {
     const title = `${this.state.notice.TICO ||
       this.state.notice.TITR ||
-      this.state.notice.EDIF} - POP`;
+      this.state.notice.EDIF ||
+      ""} - POP`;
     return title.charAt(0).toUpperCase() + title.slice(1);
   }
   getMetaDescription = () => {
     const title =
       this.state.notice.TICO ||
       this.state.notice.TITR ||
-      this.state.notice.EDIF;
+      this.state.notice.EDIF ||
+      "";
 
     let description = title;
 

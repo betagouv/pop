@@ -39,7 +39,7 @@ class Mnr extends React.Component {
   }
 
   getMetaDescription = () => {
-    const titre = this.state.notice.TICO || this.state.notice.TITR;
+    const titre = this.state.notice.TICO || this.state.notice.TITR || "";
     const auteur = this.state.notice.AUTR
       ? this.state.notice.AUTR.join(" ")
       : "";
@@ -69,9 +69,7 @@ class Mnr extends React.Component {
       created_at: notice.SCLE.length ? notice.SCLE[0] : "",
       artform: notice.DOM,
       image: notice.VIDEO.length
-        ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${
-            notice.VIDEO[0]
-          }`
+        ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.VIDEO[0]}`
         : "",
       description: notice.DESC,
       artMedium: notice.TECH.join(", "),
@@ -82,7 +80,7 @@ class Mnr extends React.Component {
     return (
       <Container className="notice" fluid>
         <Helmet
-          title={`${notice.TICO || notice.TITR} - ${
+          title={`${notice.TICO || notice.TITR || ""} - ${
             notice.AUTR ? notice.AUTR.join(" ") : ""
           } - POP`}
           description={description}

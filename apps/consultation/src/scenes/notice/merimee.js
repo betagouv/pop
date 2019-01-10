@@ -79,7 +79,7 @@ class Merimee extends React.Component {
   }
 
   getMetaDescription = () => {
-    const titre = this.state.notice.TICO || this.state.notice.TITR;
+    const titre = this.state.notice.TICO || this.state.notice.TITR || "";
     const datation = this.state.notice.SCLE
       ? this.state.notice.SCLE.join(" ")
       : "";
@@ -117,7 +117,7 @@ class Merimee extends React.Component {
     return (
       <Container className="notice" fluid>
         <Helmet
-          title={`${notice.TICO || notice.TITR} - POP`}
+          title={`${notice.TICO || notice.TITR || ""} - POP`}
           description={description}
           schema={schema(obj)}
         />
