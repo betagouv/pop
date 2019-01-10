@@ -84,6 +84,9 @@
   right: 7px;
   bottom: 7px;
 }
+.list-card img.producteur.mh {
+  width: 100px;
+}
 
 @media screen and (max-width: 767px) {
   .list-card {

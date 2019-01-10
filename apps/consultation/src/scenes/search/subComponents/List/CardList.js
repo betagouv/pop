@@ -3,65 +3,61 @@ import { Link } from "react-router-dom";
 import { image } from "../../image";
 import mdf from "../../../../assets/musee-de-france.jpg";
 import inv from "../../../../assets/inventaire.jpg";
+import mh from "../../../../assets/mh.png";
 import "./CardList.css";
+
 const joinData = f => {
   return f
-    .map(x => {
-      return x && String(x).trim();
-    })
+    .map(x => x && String(x).trim())
     .filter(x => x)
     .join(" ; ");
-};
-
-const bases = {
-  palissy: "Palissy",
-  merimee: "Mérimée",
-  memoire: "Mémoire",
-  joconde: "Joconde",
-  mnr: "MNR Rose-Valland"
 };
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default ({ data }) => {
-  let content = {};
   const index = data._index.replace(/[0-9]+/, "");
   switch (index) {
     case "joconde":
       return <Joconde data={data} />;
-      break;
     case "mnr":
       return <Mnr data={data} />;
-      break;
     case "merimee":
       return <Merimee data={data} />;
-      break;
     case "palissy":
       return <Palissy data={data} />;
-      break;
     case "memoire":
-      content = {
-        title: data.TICO || data.LEG,
-        subtitle: joinData([
-          data.OBJET,
-          data.EDIF,
-          data.LEG,
-          data.DATOEU,
-          data.DATOEU ? "" : data.SCLE
-        ]),
-        ref: data.REF,
-        categories: data.TECH,
-        author: data.AUTP,
-        data: joinData([data.DATPV, data.DATOR]),
-        loc: data.LOCA
-      };
-      break;
+      return <Memoire data={data} />;
   }
+};
+
+const Memoire = ({ data }) => {
+  const content = {
+    title: data.TICO || data.LEG,
+    subtitle: joinData([
+      data.OBJET,
+      data.EDIF,
+      data.LEG,
+      data.DATOEU,
+      data.DATOEU ? "" : data.SCLE
+    ]),
+    ref: data.REF,
+    categories: data.TECH,
+    author: data.AUTP,
+    data: joinData([data.DATPV, data.DATOR]),
+    loc: data.LOCA
+  };
+  const productorImage = p => {
+    if (p === "CRMH") {
+      return <img src={mh} className="producteur mh" />;
+    }
+    return <div />;
+  };
   return (
     <Link
       target="_blank"
       style={{ textDecoration: "none" }}
-      to={`/notice/${index}/${data.REF}`}
+      to={`/notice/memoire/${data.REF}`}
       className="list-card"
       key={data.REF}
     >
@@ -74,12 +70,13 @@ export default ({ data }) => {
             <small>{content.categories}</small>
           </h2>
           <span>
-            <small className="base">{bases[index]}</small>
+            <small className="base">Mémoire</small>
             <br />
             {data.REF}
           </span>
         </div>
         <p>{content.subtitle}</p>
+        {productorImage(data.PRODUCTEUR)}
         <div>
           <p>{content.author}</p>
           <p>{content.data}</p>
@@ -99,6 +96,15 @@ const Palissy = ({ data }) => {
   const loc = data.LOCA
     ? joinData([data.LOCA])
     : joinData([data.REG, data.DPT, data.COM]);
+
+  const productorImage = p => {
+    if (p === "Inventaire") {
+      return <img src={inv} className="producteur" />;
+    } else if (p === "Monuments Historiques") {
+      return <img src={mh} className="producteur mh" />;
+    }
+    return <div />;
+  };
 
   return (
     <Link
@@ -122,11 +128,7 @@ const Palissy = ({ data }) => {
             {ref}
           </span>
         </div>
-        {data.PRODUCTEUR === "Inventaire" ? (
-          <img src={inv} className="producteur" />
-        ) : (
-          <div />
-        )}
+        {productorImage(data.PRODUCTEUR)}
         <div>
           <p>{author}</p>
           <p>{siecle}</p>
@@ -146,6 +148,15 @@ const Merimee = ({ data }) => {
   const loc = data.LOCA
     ? joinData([data.LOCA])
     : joinData([data.REG, data.DPT, data.COM]);
+
+  const productorImage = p => {
+    if (p === "Inventaire") {
+      return <img src={inv} className="producteur" />;
+    } else if (p === "Monuments Historiques") {
+      return <img src={mh} className="producteur mh" />;
+    }
+    return <div />;
+  };
 
   return (
     <Link
@@ -169,11 +180,7 @@ const Merimee = ({ data }) => {
             {ref}
           </span>
         </div>
-        {data.PRODUCTEUR === "Inventaire" ? (
-          <img src={inv} className="producteur" />
-        ) : (
-          <div />
-        )}
+        {productorImage(data.PRODUCTEUR)}
         <div>
           <p>{author}</p>
           <p>{siecle}</p>
