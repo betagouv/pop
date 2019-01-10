@@ -184,7 +184,7 @@ Référence unique de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|oui|non|non||Référence|
+|String|oui|non|non|non||Référence|
 
 ### TOUT
 Index global [Peut etre déprécié]

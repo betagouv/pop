@@ -549,14 +549,14 @@ Dossier URL
 |String|non|non|non|non||Dossier URL|
 
 ### DOSURLPDF
-Dossier PDF 
+Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Dossier PDF|
+|String|non|non|non|non||Dossier PDF|
 
 ### DPRO
 Date protection
