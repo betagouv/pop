@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
-const markdownPath = "../csv";
+const csvPath = "../csv";
 
 // 1. Load models
 const models = fs
@@ -42,7 +42,7 @@ for (let i = 0; i < models.length; i++) {
   }
 
   fs.writeFileSync(
-    path.join(__dirname, `${markdownPath}/${model.name}.csv`),
+    path.join(__dirname, `${csvPath}/${model.name}.csv`),
     arr.join("\n")
   );
 }
