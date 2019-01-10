@@ -15,7 +15,7 @@ const joinData = f => {
 
 const capitalizeFirstLetter = s => {
   if (!s) return "";
-  s.charAt(0).toUpperCase() + s.slice(1);
+  return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
 export default ({ data }) => {
