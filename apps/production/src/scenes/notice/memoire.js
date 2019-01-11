@@ -405,7 +405,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.memoire[name]}
-      disabled={Mapping.memoire[name].generated == true || disabled}
+      disabled={Mapping.memoire[name].generated == true || Mapping.memoire[name].deprecated == true  || disabled}
       name={name}
       {...rest}
     />

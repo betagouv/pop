@@ -323,7 +323,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.palissy[name]}
-      disabled={Mapping.palissy[name].generated == true || disabled}
+      disabled={Mapping.palissy[name].generated == true || Mapping.palissy[name].deprecated == true || disabled}
       name={name}
       {...rest}
     />

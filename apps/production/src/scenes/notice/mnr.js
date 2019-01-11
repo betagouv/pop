@@ -209,7 +209,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.mnr[name]}
-      disabled={Mapping.mnr[name].generated == true || disabled}
+      disabled={Mapping.mnr[name].generated == true || Mapping.mnr[name].deprecated == true || disabled}
       name={name}
       {...rest}
     />
