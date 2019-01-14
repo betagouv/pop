@@ -1,12 +1,20 @@
 .museo {
+  display: flex;
+  justify-content: start;
+  align-items: "center";
+  background-color: #e5edef;
+  flex-direction: column;
+  padding-bottom: 60px;
+}
+
+.museo-card {
   margin: 50px auto;
   max-width: 800px;
   padding: 30px 25px 30px 25px;
-  margin-bottom: 100px;
 }
 
 @media screen and (min-width: 800px) {
-  .museo {
+  .museo-card {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);

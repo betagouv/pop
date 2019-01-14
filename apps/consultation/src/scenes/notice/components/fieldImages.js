@@ -31,12 +31,7 @@ class FieldImages extends React.Component {
       };
       if (e.link) {
         obj.thumbnailLabel = (
-          <span
-            onClick={() => {
-              history.push(e.link);
-            }}
-            href={e.link}
-          >
+          <span onClick={() => history.push(e.link)} href={e.link}>
             LIEN
           </span>
         );
@@ -85,12 +80,10 @@ class FieldImages extends React.Component {
     return (
       <div className="fieldImages">
         {this.renderModal()}
-
         <Row>{this.renderImages()}</Row>
       </div>
     );
   }
 }
-
 
 export default FieldImages;

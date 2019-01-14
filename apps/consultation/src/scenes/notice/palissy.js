@@ -6,7 +6,6 @@ import NotFound from "../../components/NotFound";
 import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
 import Loader from "../../components/loader";
-import Header from "./components/header";
 import API from "../../services/api";
 import ContactUs from "./components/ContactUs";
 import FieldImages from "./components/fieldImages";
