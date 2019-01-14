@@ -48,7 +48,7 @@ function transformBeforeCreate(notice) {
       notice.DISCIPLINE = notice.PRODUCTEUR = "Architecture";
       break;
     default:
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Null";
+      notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
       break;
   }
 }

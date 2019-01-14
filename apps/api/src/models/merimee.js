@@ -26,7 +26,7 @@ const Schema = new mongoose.Schema(
         IA = Inventaire
         PA = Monuments Historiques
         EA = Architecture
-        Autre = Null
+        Autre = Autre
         `,
         label: "PRODUCTEUR",
         generated: true
