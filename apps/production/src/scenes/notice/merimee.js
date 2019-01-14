@@ -330,7 +330,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.merimee[name]}
-      disabled={Mapping.merimee[name].generated == true || disabled}
+      disabled={Mapping.merimee[name].generated == true || Mapping.merimee[name].deprecated == true  || disabled}
       name={name}
       {...rest}
     />

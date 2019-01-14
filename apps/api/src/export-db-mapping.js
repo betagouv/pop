@@ -20,6 +20,7 @@ const models = fs
         label: documentation ? documentation.label || "" : "",
         opendata: documentation ? documentation.opendata || "" : "",
         generated: documentation ? documentation.generated || "" : "",
+        deprecated: documentation ? documentation.deprecated || "" : "",
         description: documentation ? documentation.description || "" : "",
         validation: documentation ? documentation.validation || "" : "",
         thesaurus: documentation ? documentation.thesaurus || "" : ""

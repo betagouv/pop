@@ -256,7 +256,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.joconde[name]}
-      disabled={Mapping.joconde[name].generated == true || disabled}
+      disabled={Mapping.joconde[name].generated == true || Mapping.joconde[name].deprecated == true || disabled}
       name={name}
       {...rest}
     />
