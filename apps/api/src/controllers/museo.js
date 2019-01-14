@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Museo = require("../models/museo");
+const { formattedNow } = require("./utils");
+
+function transformBeforeCreateOrUpdate(notice) {
+  notice.DT_MODIF = formattedNow();
+}
 
 router.use("/:ref", async (req, res) => {
   const museo = await Museo.findOne({ REF: req.params.ref });
