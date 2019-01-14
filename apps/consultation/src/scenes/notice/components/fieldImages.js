@@ -48,6 +48,7 @@ class FieldImages extends React.Component {
       <ImageGallery
         showFullscreenButton={false}
         showPlayButton={false}
+        showThumbnails={images.length > 1}
         defaultImage={noImage}
         onClick={i => {
           const selected = this.state.images.findIndex(

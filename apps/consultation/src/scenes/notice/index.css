@@ -12,21 +12,6 @@
   padding: 50px;
 }
 
-.notice .buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.notice .buttons button {
-  margin: 10px;
-}
-.notice .top-section {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  justify-content: center;
-}
 .notice .heading {
   color: #025d59;
   font-size: 28px;
@@ -34,40 +19,16 @@
   margin: 30px 15px 30px 15px;
   text-align: center;
 }
-.notice .back.notice-btn {
-  cursor: pointer;
-  padding-left: 40px;
-  text-align: left;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  background-image: url(../../assets/angle-left.svg);
-  background-size: 15px;
-  background-position: left 15px center;
-  background-repeat: no-repeat;
-}
-
-.notice button {
-  margin-top: 20px;
-}
-
-.error {
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: x-large;
-  font-weight: bold;
-}
 
 .notice .notice-details {
   background-color: #fff;
-  padding: 30px;
+  padding: 25px;
   margin-bottom: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
 }
-.notice .notice-details h2 {
+.notice .notice-details h2,
+.notice .sidebar-section h2 {
   color: #19414c;
   font-weight: 700;
   font-size: 26px;
@@ -93,24 +54,15 @@
 .notice .field span {
   font-weight: bold;
   display: inline-block;
-  word-wrap:break-word; 
+  word-wrap: break-word;
 }
 
 .notice .sidebar-section {
   background-color: #fff;
-  padding: 15px 10px;
+  padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
   margin-bottom: 20px;
-}
-
-.notice .sidebar-section h2 {
-  color: #025d59;
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .notice .sidebar-section.links .card {
