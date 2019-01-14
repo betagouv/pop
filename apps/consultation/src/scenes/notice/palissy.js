@@ -68,7 +68,7 @@ class Palissy extends React.Component {
   }
 
   getMetaDescription = () => {
-    const titre = this.state.notice.TICO || this.state.notice.TITR;
+    const titre = this.state.notice.TICO || this.state.notice.TITR || "";
     const auteur = this.state.notice.AUTR
       ? this.state.notice.AUTR.join(" ")
       : "";
@@ -108,7 +108,7 @@ class Palissy extends React.Component {
     return (
       <Container className="notice" fluid>
         <Helmet
-          title={`${notice.TICO || notice.TITR} - POP`}
+          title={`${notice.TICO || notice.TITR || ""} - POP`}
           description={description}
           schema={schema(obj)}
         />

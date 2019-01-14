@@ -13,7 +13,10 @@ const joinData = f => {
     .join(" ; ");
 };
 
-const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
+const capitalizeFirstLetter = s => {
+  if (!s) return "";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 
 export default ({ data }) => {
   const index = data._index.replace(/[0-9]+/, "");
