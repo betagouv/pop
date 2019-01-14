@@ -41,18 +41,17 @@ function transformBeforeCreate(notice) {
   transformBeforeCreateOrUpdate(notice);
 
   switch (notice.REF.substring(0, 2)) {
-    case "IA":
+    case "IM":
       notice.DISCIPLINE = notice.PRODUCTEUR = "Inventaire";
       break;
-    case "PA":
-    case "MH":
+    case "PM":
       notice.DISCIPLINE = notice.PRODUCTEUR = "Monuments Historiques";
       break;
-    case "EA":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Architecture";
+    case "EM":
+      notice.DISCIPLINE = notice.PRODUCTEUR = "Etat";
       break;
     default:
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Null";
+      notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
       break;
   }
 }

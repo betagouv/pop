@@ -11,10 +11,10 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: `
         Producteur de la donnée défini selon l'algorithme suivant : 
-        IA = Inventaire
-        PA ou MH = Monuments Historiques
-        EA = Architecture
-        Autre = Null`,
+        IM = Inventaire
+        PM = Monuments Historiques
+        EM = ETAT
+        Autre = Autre`,
         label: "Producteur",
         generated: true
       }

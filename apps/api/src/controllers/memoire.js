@@ -25,6 +25,7 @@ function findCollection(ref = "") {
       return Merimee;
     case "IM":
     case "PM":
+    case "EM":
       return Palissy;
     default:
       return "";
