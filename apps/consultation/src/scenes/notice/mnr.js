@@ -278,8 +278,7 @@ class Mnr extends React.Component {
             </Col>
             <Col md="4">
               <div className="sidebar-section info">
-                <h4>A propos de cette notice</h4>
-                <hr />
+                <h2>À propos de la notice</h2>
                 <div>
                   <Field title="Référence" content={notice.REF} />
                   <Field title="Dernière mise à jour" content={notice.DMAJ} />

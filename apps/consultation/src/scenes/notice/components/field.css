@@ -11,6 +11,10 @@
   text-align: justify;
 }
 
+.field p::first-letter {
+  text-transform: capitalize;
+}
+
 .field h3 {
   font-size: 1rem;
   font-weight: 700;
