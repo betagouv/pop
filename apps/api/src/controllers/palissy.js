@@ -45,6 +45,7 @@ function transformBeforeCreate(notice) {
       notice.DISCIPLINE = notice.PRODUCTEUR = "Inventaire";
       break;
     case "PA":
+    case "MH":
       notice.DISCIPLINE = notice.PRODUCTEUR = "Monuments Historiques";
       break;
     case "EA":
