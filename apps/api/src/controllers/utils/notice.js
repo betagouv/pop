@@ -43,7 +43,7 @@ function updateNotice(collection, REF, notice) {
       },
       (err, doc) => {
         if (err) {
-          reject();
+          reject(err);
           return;
         }
         checkESIndex(doc);
