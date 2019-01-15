@@ -28,12 +28,12 @@ class FieldImages extends React.Component {
   }
 
   getFile(e) {
-    // si l'image fichier correspond a une image
+    // If image file is the image
     const index = this.state.imageFiles.findIndex(
       f => e.indexOf(`/${f.name}`) !== -1
     );
 
-    //if not file just uplooaded
+    //if not file just uploaded
     if (index == -1) {
       return {
         source: this.props.getAbsoluteUrl ? this.props.getAbsoluteUrl(e) : e,
@@ -68,7 +68,6 @@ class FieldImages extends React.Component {
         <Button
           color="danger"
           onClick={() => {
-
 
             //If only One Image
             if (!Array.isArray(this.props.input.value)) {
