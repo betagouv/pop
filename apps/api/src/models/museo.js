@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
   {
@@ -173,6 +174,12 @@ const Schema = new mongoose.Schema(
   },
   { collection: "museo" }
 );
+
+Schema.plugin(mongoosastic, {
+  esClient: getElasticInstance(),
+  index: "museo",
+  bulk: { size: 500, delay: 2000 }
+});
 
 const object = mongoose.model("museo", Schema);
 
