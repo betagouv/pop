@@ -42,7 +42,7 @@ class Museo extends React.Component {
 
   // Transform sh*ty text to readable text.
   text = (key, val) => {
-    if (key === "URL_M") {
+    if (key === "URL_M" || key === "URL_M2") {
       const link = val.indexOf("://") === -1 ? "http://" + val : val;
       return (
         <a href={link} target="_blank">
@@ -62,11 +62,11 @@ class Museo extends React.Component {
   // Remove HTML entities and other pollution.
   removeUglyChars = text => {
     return text
-      .replace(/&amp;lt;(?:\/?)(?:b|i)&amp;gt;/g, "")
+      .replace(/&amp;lt;(?:\/?)(?:b|i)&amp;gt;|<(?:\/?)(?:b|i)>/g, "")
       .replace(/^ -/, "")
       .replace(/&quot;/g, '"')
       .replace(
-        /&amp;lt;A HREF.*?&amp;gt;Joconde&amp;lt;\/A&amp;gt;/g,
+        /&amp;lt;A HREF.*?&amp;gt;Joconde&amp;lt;\/A&amp;gt;|<A HREF.*?>Joconde<\/A>/g,
         "Joconde"
       );
   };
@@ -75,6 +75,7 @@ class Museo extends React.Component {
   renderProperties = museo => {
     const dl = Object.entries(museo)
       .filter(([_key, val]) => val)
+      .filter(([key, _val]) => Mapping.museo[key])
       .filter(([key, _val]) => !["_id", "location", "VIDEO"].includes(key))
       .map(([key, val]) => {
         return (
