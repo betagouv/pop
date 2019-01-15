@@ -1,7 +1,7 @@
 const { lambertToWGS84 } = require("./geoloc");
 const { deleteFile, uploadFile } = require("./s3");
 const { getNewId, checkESIndex, updateNotice } = require("./notice");
-const { formattedNow } = require("./other");
+const { formattedNow } = require("./date");
 
 module.exports = {
   uploadFile,
