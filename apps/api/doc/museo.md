@@ -61,9 +61,11 @@
 - [RESP](/apps/api/doc/museo.md#RESP)
 - [GRESP](/apps/api/doc/museo.md#GRESP)
 - [PSC](/apps/api/doc/museo.md#PSC)
-- [DPSC](/apps/api/doc/museo.md#DPSC)
+- [DPSC-D](/apps/api/doc/museo.md#DPSC-D)
+- [DPSC-S](/apps/api/doc/museo.md#DPSC-S)
 - [DMDF](/apps/api/doc/museo.md#DMDF)
 - [SPUB](/apps/api/doc/museo.md#SPUB)
+- [SPUB-P](/apps/api/doc/museo.md#SPUB-P)
 - [INVR](/apps/api/doc/museo.md#INVR)
 - [NUMER](/apps/api/doc/museo.md#NUMER)
 - [LGN](/apps/api/doc/museo.md#LGN)
@@ -92,7 +94,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Index global|
 
 ### ACCES
 
@@ -122,7 +124,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse|
+|String|non|non|non|non||Adresse complète|
 
 ### ADRL1_M
 
@@ -132,7 +134,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Adresse|
 
 ### AMIS
 
@@ -142,7 +144,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Amis et soutiens|
+|String|non|non|non|non||Amis du musée|
 
 ### AN_CREAT
 
@@ -162,7 +164,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Musée fermé|
 
 ### ANNEXE
 
@@ -172,7 +174,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Annexe|
 
 ### ANTARIF
 
@@ -182,7 +184,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Année tarifs|
 
 ### ARTISTE
 
@@ -212,7 +214,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||ADM-Cédex|
 
 ### COPY
 
@@ -242,7 +244,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Ctrl tech.|
 
 ### DOMPAL
 
@@ -272,7 +274,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Date de création|
 
 ### DT_MODIF
 
@@ -282,7 +284,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Date de modification|
 
 ### DT_SAISI
 
@@ -292,7 +294,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Date d'entrée base|
 
 ### GESTION
 
@@ -302,7 +304,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Gestion musée|
 
 ### HIST
 
@@ -312,7 +314,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Historique des collections|
+|String|non|non|non|non||Historique|
 
 ### INTERET
 
@@ -322,7 +324,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Intérêt architectural|
+|String|non|non|non|non||Intérêt arch|
 
 ### ITI2_M
 
@@ -332,7 +334,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Plan Mappy|
 
 ### ITI_M
 
@@ -342,7 +344,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Itinéraire Mappy|
 
 ### JOCONDE
 
@@ -372,7 +374,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Legs|
 
 ### LIEU_M
 
@@ -382,7 +384,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Adresse compl.|
 
 ### MEL
 
@@ -392,7 +394,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Email|
+|String|non|non|non|non||Mél|
 
 ### MONOPLUR
 
@@ -402,7 +404,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Disciplines|
 
 ### NB_AMI
 
@@ -412,7 +414,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Nombre amis|
 
 ### NOM_AMI
 
@@ -422,7 +424,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Association|
 
 ### NOMANC
 
@@ -432,7 +434,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom ancien|
+|String|non|non|non|non||Ancien nom|
 
 ### NOMOFF
 
@@ -452,7 +454,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom d'usage|
+|String|non|non|non|non||Nom du musée|
 
 ### OBS_AMI
 
@@ -462,7 +464,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Ass. Amis Obs.|
 
 ### OBS_TOUR
 
@@ -482,7 +484,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Personnages|
+|String|non|non|non|non||Phare|
 
 ### PROPBAT
 
@@ -492,7 +494,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Propr. bat.|
 
 ### PROPCOLL
 
@@ -502,7 +504,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Propr. coll.|
 
 ### PROT-BAT
 
@@ -512,7 +514,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Protection Protection bâtiment|
+|String|non|non|non|non||Protect bat.|
 
 ### PROT-ESP
 
@@ -522,7 +524,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Protection espace|
+|String|non|non|non|non||Protect esp.|
 
 ### PUBLI
 
@@ -532,7 +534,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Publications|
 
 ### REGION
 
@@ -552,7 +554,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Distr. coll|
 
 ### SERVICES
 
@@ -572,7 +574,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Sigle musée|
 
 ### STATUT
 
@@ -582,7 +584,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Statut|
+|String|non|non|non|non||Statut musée|
 
 ### SURFACES
 
@@ -592,7 +594,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Surfaces|
 
 ### TEL_M
 
@@ -612,7 +614,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Thèmes des collections|
+|String|non|non|non|non||Thèmes|
 
 ### URL_M2
 
@@ -622,7 +624,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Site web 2|
 
 ### URL_M
 
@@ -642,7 +644,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Image|
 
 ### VILLE_M
 
@@ -662,7 +664,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Resp. scient.|
 
 ### GRESP
 
@@ -672,7 +674,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Resp. scient. HF|
 
 ### PSC
 
@@ -682,9 +684,9 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Projet SC|
 
-### DPSC
+### DPSC-D
 
 
 
@@ -692,7 +694,17 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||date PSC DRAC|
+
+### DPSC-S
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||date PSC SMF|
 
 ### DMDF
 
@@ -702,7 +714,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||an appel. MDF|
 
 ### SPUB
 
@@ -712,7 +724,17 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Service publics|
+
+### SPUB-P
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||S. publics préc.|
 
 ### INVR
 
@@ -722,7 +744,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Inventaire regl.|
 
 ### NUMER
 
@@ -732,7 +754,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Numérisation|
 
 ### LGN
 
@@ -742,7 +764,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Coll. en ligne|
 
 ### REST
 

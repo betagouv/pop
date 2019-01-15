@@ -142,7 +142,7 @@ Référence unique de la notice
         IA = Inventaire
         PA = Monuments Historiques
         EA = Architecture
-        Autre = Null
+        Autre = Autre
         
 
 
