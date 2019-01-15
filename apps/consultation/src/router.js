@@ -4,8 +4,8 @@ import { ConnectedRouter } from "react-router-redux";
 import PiwikReactRouter from "piwik-react-router";
 
 import ErrorBoundary from "./components/ErrorBoundary";
-import Header from "./scenes/header";
-import Footer from "./scenes/footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import Helmet from "./components/Helmet";
 

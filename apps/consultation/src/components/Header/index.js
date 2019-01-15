@@ -2,8 +2,8 @@ import React from "react";
 
 import { Container } from "reactstrap";
 
-import Title from "./title.js";
-import Logo from "./logo.js";
+import Title from "./Title.js";
+import Logo from "./Logo.js";
 
 import "./index.css";
 
@@ -22,4 +22,3 @@ const header = () => (
 );
 
 export default header;
-
