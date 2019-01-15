@@ -30,6 +30,10 @@
   margin-bottom: 20px;
 }
 
+.notice .notice-details h2.small {
+  font-size: 22px;
+}
+
 .notice .notice-btn {
   text-decoration: none;
   background-color: #377d87;
