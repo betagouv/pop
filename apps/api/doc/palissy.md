@@ -124,10 +124,10 @@
 ### PRODUCTEUR
 
         Producteur de la donnée défini selon l'algorithme suivant : 
-        IA = Inventaire
-        PA = Monuments Historiques
-        EA = Architecture
-        Autre = Null
+        IM = Inventaire
+        PM = Monuments Historiques
+        EM = ETAT
+        Autre = Autre
 
 
 

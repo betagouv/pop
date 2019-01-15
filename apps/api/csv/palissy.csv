@@ -1,10 +1,10 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
 "PRODUCTEUR","String","non","Producteur","","true","
         Producteur de la donnée défini selon l'algorithme suivant : 
-        IA = Inventaire
-        PA = Monuments Historiques
-        EA = Architecture
-        Autre = Null","",""
+        IM = Inventaire
+        PM = Monuments Historiques
+        EM = ETAT
+        Autre = Autre","",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "POP_COORDONNEES.lat","Number","non","","","true","Latitude de la notice en WGS84","",""
 "POP_COORDONNEES.lon","Number","non","","","true","Longitude de la notice en WGS84","",""
@@ -46,7 +46,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "DOSADRS","String","non","Dossier adresse","","","Dossier adresse","",""
 "DOSS","Array","non","Dossier","","","Dossier ","",""
 "DOSURL","String","non","Dossier URL","","","Dossier URL","",""
-"DOSURLPDF","String","non","Dossier PDF","","true","Dossier PDF ","",""
+"DOSURLPDF","String","non","Dossier PDF","","","Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture","",""
 "DPRO","String","non","Date protection","","","Date protection","",""
 "DPT","String","non","Département","","","Département ","",""
 "EDIF","String","non","Edifice de conservation","","","Edifice de conservation","",""
