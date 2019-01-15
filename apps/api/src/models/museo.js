@@ -53,9 +53,21 @@ const Schema = new mongoose.Schema(
       documentation: { label: "Thématiques principales" }
     },
     DPT: { type: String, default: "", documentation: { label: "Département" } },
-    DT_CREAT: { type: String, default: "" },
-    DT_MODIF: { type: String, default: "" },
-    DT_SAISI: { type: String, default: "" },
+    DT_CREAT: {
+      type: String,
+      default: "",
+      documentation: { label: "Date de création" }
+    },
+    DT_MODIF: {
+      type: String,
+      default: "",
+      documentation: { label: "Date de modification" }
+    },
+    DT_SAISI: {
+      type: String,
+      default: "",
+      documentation: { label: "Date de saisie" }
+    },
     GESTION: { type: String, default: "" },
     HIST: {
       type: String,
