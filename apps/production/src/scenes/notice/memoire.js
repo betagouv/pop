@@ -11,6 +11,7 @@ import Section from "./components/section.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import { bucket_url } from "../../config";
 
 import "./index.css";
 
@@ -19,7 +20,8 @@ class Notice extends React.Component {
     notice: null,
     error: "",
     loading: true,
-    editable: true
+    editable: true,
+    imagesFiles: []
   };
 
   componentWillMount() {
@@ -54,32 +56,35 @@ class Notice extends React.Component {
     return false;
   }
 
-  load(ref) {
+  async load(ref) {
     this.setState({ loading: true });
-    API.getNotice("memoire", ref).then(notice => {
-      if (!notice) {
-        this.setState({
-          loading: false,
-          error: `Impossible de charger la notice ${ref}`
-        });
-        console.error(`Impossible de charger la notice ${ref}`);
-        return;
-      }
-      const editable = this.canUpdate(notice.PRODUCTEUR);
-      this.props.initialize({ ...notice, IMG: [notice.IMG] });
-      this.setState({ loading: false, notice, editable });
-    });
+    const notice = await API.getNotice("memoire", ref);
+    if (!notice) {
+      this.setState({
+        loading: false,
+        error: `Impossible de charger la notice ${ref}`
+      });
+      console.error(`Impossible de charger la notice ${ref}`);
+      return;
+    }
+    const editable = this.canUpdate(notice.PRODUCTEUR);
+    this.props.initialize(notice);
+    this.setState({ loading: false, notice, editable });
   }
 
-  onSubmit(values) {
+  async onSubmit(values) {
     this.setState({ saving: true });
-    API.updateNotice(this.state.notice.REF, "memoire", values).then(e => {
-      toastr.success(
-        "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
-      );
-      this.setState({ saving: false });
-    });
+    await API.updateNotice(
+      this.state.notice.REF,
+      "memoire",
+      values,
+      this.state.imagesFiles
+    );
+    toastr.success(
+      "Modification enregistrée",
+      "La modification sera visible dans 1 à 5 min en diffusion"
+    );
+    this.setState({ saving: false });
   }
 
   delete() {
@@ -128,7 +133,15 @@ class Notice extends React.Component {
             </div>
           </Row>
           <Row>
-            <FieldImages name="IMG" disabled={!this.state.editable} />
+            <FieldImages
+              name="IMG"
+              disabled={!this.state.editable}
+              createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
+              getAbsoluteUrl={e =>
+                e.indexOf("www") === -1 ? `${bucket_url}${e}` : e
+              }
+              updateFiles={imagesFiles => this.setState({ imagesFiles })}
+            />
           </Row>
 
           <Section
@@ -217,7 +230,7 @@ class Notice extends React.Component {
               <CustomField name="NVD" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="IMG" disabled={!this.state.editable} />
+              <CustomField name="IMG" disabled={true} />
               <CustomField name="TYPEIMG" disabled={!this.state.editable} />
             </Col>
           </Section>
@@ -405,7 +418,11 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.memoire[name]}
-      disabled={Mapping.memoire[name].generated == true || Mapping.memoire[name].deprecated == true  || disabled}
+      disabled={
+        Mapping.memoire[name].generated == true ||
+        Mapping.memoire[name].deprecated == true ||
+        disabled
+      }
       name={name}
       {...rest}
     />

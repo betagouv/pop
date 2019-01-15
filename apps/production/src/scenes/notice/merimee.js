@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
+import { Link } from "react-router-dom";
 
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
@@ -110,7 +111,19 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="MEMOIRE" disabled external={true} />
+              <FieldImages
+                name="MEMOIRE"
+                disabled
+                external={true}
+                getAbsoluteUrl={e => e.url}
+                footer={e => {
+                  return (
+                    <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                      LIEN
+                    </Link>
+                  );
+                }}
+              />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
@@ -208,6 +221,11 @@ class Notice extends React.Component {
                 name="REFE"
                 createUrl={e => `/notice/merimee/"${e}`}
                 disabled={!this.state.editable}
+                footer={key => {
+                  <Link to={`/notice/memoire/${key}`} target="_blank">
+                    {key}
+                  </Link>;
+                }}
               />
               <CustomField name="CADA" disabled={!this.state.editable} />
               <CustomField name="ZONE" disabled={!this.state.editable} />
@@ -330,7 +348,11 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.merimee[name]}
-      disabled={Mapping.merimee[name].generated == true || Mapping.merimee[name].deprecated == true  || disabled}
+      disabled={
+        Mapping.merimee[name].generated == true ||
+        Mapping.merimee[name].deprecated == true ||
+        disabled
+      }
       name={name}
       {...rest}
     />

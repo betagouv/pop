@@ -5,6 +5,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
 
+import { bucket_url } from "../../config";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -18,7 +19,8 @@ class Notice extends React.Component {
   state = {
     notice: null,
     error: "",
-    loading: true
+    loading: true,
+    imagesFiles: []
   };
 
   componentWillMount() {
@@ -56,40 +58,29 @@ class Notice extends React.Component {
       });
   }
 
-  onSubmit(values) {
+  async onSubmit(values) {
     this.setState({ saving: true });
-    const files = [];
-
-    //copy the object so the image is not changing while its uploading
-    const VIDEO = [...values.VIDEO];
-    for (var i = 0; i < VIDEO.length; i++) {
-      if (VIDEO[i] instanceof File) {
-        files.push(VIDEO[i]);
-        VIDEO[i] = `mnr/${values.REF}/${VIDEO[i].name}`;
-      }
+    try {
+      await API.updateNotice(
+        this.state.notice.REF,
+        "mnr",
+        values,
+        this.state.imagesFiles
+      );
+      toastr.success(
+        "Modification enregistrée",
+        "La modification sera visible dans 1 à 5 min en diffusion"
+      );
+      this.setState({ saving: false });
+    } catch (e) {
+      toastr.error("Impossible d'enregistrer la modification");
+      this.setState({ saving: false });
     }
-
-    API.updateNotice(
-      this.state.notice.REF,
-      "mnr",
-      { ...values, ...{ VIDEO } },
-      files
-    )
-      .then(e => {
-        toastr.success(
-          "Modification enregistrée",
-          "La modification sera visible dans 1 à 5 min en diffusion"
-        );
-        this.setState({ saving: false });
-      })
-      .catch(e => {
-        toastr.error("Impossible d'enregistrer la modification");
-        this.setState({ saving: false });
-      });
   }
 
   delete() {
     const ref = this.props.match.params.ref;
+
     const confirmText =
       `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
       `Êtes-vous certain·e de vouloir continuer ?`;
@@ -128,7 +119,12 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={12}>
-              <FieldImages name="VIDEO" />
+              <FieldImages
+                name="VIDEO"
+                createUrlFromName={e => `mnr/${this.state.notice.REF}/${e}`}
+                getAbsoluteUrl={e => `${bucket_url}${e}`}
+                updateFiles={imagesFiles => this.setState({ imagesFiles })}
+              />
             </Col>
           </Row>
           <Section
@@ -209,7 +205,11 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.mnr[name]}
-      disabled={Mapping.mnr[name].generated == true || Mapping.mnr[name].deprecated == true || disabled}
+      disabled={
+        Mapping.mnr[name].generated == true ||
+        Mapping.mnr[name].deprecated == true ||
+        disabled
+      }
       name={name}
       {...rest}
     />
