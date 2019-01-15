@@ -1,16 +1,13 @@
 import React from "react";
-import "./title.css";
 
 class Title extends React.Component {
   render() {
-    const hasVisibleFields = !!this.props.fields.filter(
-      f =>
-        Array.isArray(this.props.notice[f])
-          ? this.props.notice[f].length
-          : this.props.notice[f]
+    const { fields, notice, content, small } = this.props;
+    const hasVisibleFields = !!fields.filter(f =>
+      Array.isArray(notice[f]) ? notice[f].length : notice[f]
     ).length;
     if (hasVisibleFields) {
-      return <h2>{this.props.content}</h2>;
+      return small ? <h2 className="small">{content}</h2> : <h2>{content}</h2>;
     }
     return <div />;
   }

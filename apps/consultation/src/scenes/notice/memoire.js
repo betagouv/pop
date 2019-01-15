@@ -147,7 +147,7 @@ class Memoire extends React.Component {
                 />
                 <Title
                   content="Localisation"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={["LOCA", "INSEE", "ADRESSE", "MCGEO"]}
                 />
@@ -157,7 +157,7 @@ class Memoire extends React.Component {
                 <Field title="Nom géographique" content={notice.MCGEO} />
                 <Title
                   content="Identification"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={[
                     "EDIF",
@@ -203,7 +203,7 @@ class Memoire extends React.Component {
                 />
                 <Title
                   content="Références des documents reproduits"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
                 />
@@ -274,7 +274,7 @@ class Memoire extends React.Component {
                 />
                 <Title
                   content="Éléments d’identification"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={[
                     "TYPDOC",
@@ -339,7 +339,7 @@ class Memoire extends React.Component {
                 <Field title="Échelle du graphique" content={notice.ECH} />
                 <Title
                   content="Description technique du phototype"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={[
                     "TECH",
@@ -376,7 +376,7 @@ class Memoire extends React.Component {
                 <Field title="Orientation du phototype" content={notice.SENS} />
                 <Title
                   content="Datation et événements liés à l’image"
-                  h5={true}
+                  small={true}
                   notice={notice}
                   fields={[
                     "DATPV",
