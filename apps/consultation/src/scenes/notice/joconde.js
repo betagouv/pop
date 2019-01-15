@@ -79,7 +79,7 @@ class Joconde extends React.Component {
       const links = author
         .split(";")
         .map(a => a.trim())
-        .map(a => <a href={`/search/list?auteur="${a}, ${author}"`}>{a}</a>)
+        .map(a => <a href={`/search/list?auteur="${a}, ${author}"`} key={a}>{a}</a>)
         .reduce((p, c) => [p, " ; ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
@@ -95,7 +95,7 @@ class Joconde extends React.Component {
     // Create multiple links if multiple domains.
     if (Array.isArray(domain)) {
       const links = domain
-        .map(d => <a href={`/search/list?domn="${d}"`}>{d}</a>)
+        .map(d => <a href={`/search/list?domn="${d}"`} key={d}>{d}</a>)
         .reduce((p, c) => [p, ", ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
