@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Logo from '../../../components/header/Logo.js';
+import Logo from '../../../components/Header/Logo.js';
 import { Link } from 'react-router-dom';
 
 describe('Logo suite', function() {
