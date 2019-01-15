@@ -53,7 +53,7 @@ class Museo extends React.Component {
       const list = val
         .split("#")
         .filter(v => v)
-        .map(v => <li>{this.removeUglyChars(v)}</li>);
+        .map((v, i) => <li key={i}>{this.removeUglyChars(v)}</li>);
       return <ul>{list}</ul>;
     }
     return this.removeUglyChars(val);
