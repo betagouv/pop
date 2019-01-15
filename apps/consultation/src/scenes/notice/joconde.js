@@ -68,6 +68,44 @@ class Joconde extends React.Component {
     }
   }
 
+  // Display a list of links to authors
+  author() {
+    const author = this.state.notice.AUTR;
+    if (!author) {
+      return <div />;
+    }
+    // Split authors and create links to both single author and all authors.
+    if (author.match(/;/)) {
+      const links = author
+        .split(";")
+        .map(a => a.trim())
+        .map(a => <a href={`/search/list?auteur="${a}, ${author}"`}>{a}</a>);
+      return <div>{links.reduce((p, c) => [p, " ; ", c])}</div>;
+    }
+    return <a href={`/search/list?auteur="${author}"`}>{author}</a>;
+  }
+
+  // Display a list of links to domains
+  domain() {
+    const domain = this.state.notice.DOMN;
+    if (!domain) {
+      return <div />;
+    }
+    // Create multiple links if multiple domains.
+    if (Array.isArray(domain)) {
+      const links = domain.map(d => (
+        <a href={`/search/list?domn="${d}"`}>{d}</a>
+      ));
+      return <div>{links.reduce((p, c) => [p, ", ", c])}</div>;
+    }
+    return <a href={`/search/list?domn="${domain}"`}>{domain}</a>;
+  }
+
+  period() {
+    const period = this.state.notice.PERI;
+    return period && <a href={`/search/list?periode="${period}"`}>{period}</a>;
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -145,14 +183,14 @@ class Joconde extends React.Component {
                 />
                 <Field
                   title="Domaine (catégorie du bien)"
-                  content={notice.DOMN}
+                  content={this.domain()}
                 />
                 <Field title="Dénomination du bien" content={notice.DENO} />
                 <Field title="Appellation" content={notice.APPL} />
                 <Field title="Titre" content={notice.TITR} />
                 <Field
                   title="Auteur / exécutant / collecteur"
-                  content={notice.AUTR}
+                  content={this.author()}
                 />
                 <Field
                   title="Précisions / auteur / exécutant / collecteur"
@@ -162,7 +200,7 @@ class Joconde extends React.Component {
                 <Field title="Anciennes attributions" content={notice.ATTR} />
                 <Field
                   title="Période de création / exécution"
-                  content={notice.PERI}
+                  content={this.period()}
                 />
                 <Field
                   title="Millésime de création / exécution"
