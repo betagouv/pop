@@ -73,6 +73,10 @@ function findProducteur(REF, IDPROD, EMET) {
 
 function getMerimeeOrPalissyNotice(LBASE) {
   return new Promise(async (resolve, reject) => {
+    if (!LBASE) {
+      resolve();
+      return;
+    }
     const collection = findCollection(LBASE);
     if (!collection) {
       console.log(`No collection ${LBASE}`);
@@ -91,13 +95,10 @@ async function updateLinks(notice) {
     let LBASE = notice.LBASE || [];
     const toAdd = [...LBASE];
 
-    console.log("UPDATE LINKS");
-
     const palissyNotices = await Palissy.find({ "MEMOIRE.ref": REF });
     const merimeeNotices = await Merimee.find({ "MEMOIRE.ref": REF });
 
-    console.log("DELETE PALISSY ");
-    //Supression palissy
+    //Suppression palissy
     for (let i = 0; i < palissyNotices.length; i++) {
       if (!LBASE.includes(palissyNotices[i].REF)) {
         await palissyNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
@@ -110,7 +111,6 @@ async function updateLinks(notice) {
       }
     }
 
-    console.log("DELETE Merimee ");
     //Supression Merimee
     for (let i = 0; i < merimeeNotices.length; i++) {
       if (!LBASE.includes(merimeeNotices[i].REF)) {
@@ -123,7 +123,7 @@ async function updateLinks(notice) {
         }
       }
     }
-    console.log("AJOUT  ");
+
     //Ajout
     for (let i = 0; i < toAdd.length; i++) {
       const notice = await getMerimeeOrPalissyNotice(toAdd[i]);
@@ -259,12 +259,11 @@ router.delete(
       //DELETE LBASE
       doc.LBASE = [];
       await updateLinks(doc);
-
       const arr = [deleteFile(doc.IMG), doc.remove()];
       await Promise.all(arr);
       return res.status(200).send({});
     } catch (error) {
-      capture(error);
+      capture(JSON.stringify(error));
       console.log("error", error);
       return res.status(500).send({
         error
