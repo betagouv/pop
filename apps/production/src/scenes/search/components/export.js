@@ -97,6 +97,7 @@ async function exportData(fileName, entities) {
     if (
       property.indexOf("_") !== 0 &&
       property.indexOf("POP_") !== 0 && //because nobody ask for those fields and I think there gonna be complains if I export something people dont understand
+      property.indexOf("highlight") !== 0 &&
       property !== "REF"
     ) {
       columns.push(property);
