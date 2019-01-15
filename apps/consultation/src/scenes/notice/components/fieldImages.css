@@ -1,5 +1,7 @@
 .fieldImages {
   width: 100%;
+  max-width: 500px;
+  margin: auto;
   margin-bottom: 15px;
   padding-left: 15px;
   padding-right: 15px;
@@ -49,10 +51,8 @@
 }
 
 .image-gallery {
-  background-color: #fff;
   padding: 15px 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
 }
 
 .image-gallery-image {
@@ -63,4 +63,8 @@
 .image-gallery-slide .image-gallery-image > img {
   width: auto;
   max-width: 100%;
+}
+
+.image-gallery-slide {
+  background-color: transparent;
 }

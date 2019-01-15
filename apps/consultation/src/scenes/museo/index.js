@@ -50,7 +50,10 @@ class Museo extends React.Component {
         </a>
       );
     } else if (val.match(/#/)) {
-      const list = val.split("#").filter(v => v).map(v => <li>{this.removeUglyChars(v)}</li>);
+      const list = val
+        .split("#")
+        .filter(v => v)
+        .map(v => <li>{this.removeUglyChars(v)}</li>);
       return <ul>{list}</ul>;
     }
     return this.removeUglyChars(val);
@@ -100,13 +103,15 @@ class Museo extends React.Component {
     const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
     return (
       <div className="museo">
-        <Helmet
-          title={`${title} - POP`}
-          description="À propos de la Plateforme Ouverte du Patrimoine POP."
-        />
-        <h1>{title}</h1>
-        {this.renderProperties(museo)}
-        <div className="museo-map">{this.renderMap(museo.location)}</div>
+        <div className="museo-card">
+          <Helmet
+            title={`${title} - POP`}
+            description="À propos de la Plateforme Ouverte du Patrimoine POP."
+          />
+          <h1>{title}</h1>
+          {this.renderProperties(museo)}
+          <div className="museo-map">{this.renderMap(museo.location)}</div>
+        </div>
       </div>
     );
   }

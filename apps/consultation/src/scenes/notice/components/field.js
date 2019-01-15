@@ -7,10 +7,11 @@ export default ({ content, title, separator, join = ", " }) => {
   }
 
   let str = Array.isArray(content) ? content.join(join) : content;
-  str = str.replace(/\u0092/g, `'`);
-
-  if (separator) {
-    str = replaceAll(str, separator, "\n");
+  if (!React.isValidElement(str)) {
+    str = str.replace(/\u0092/g, `'`);
+    if (separator) {
+      str = replaceAll(str, separator, "\n");
+    }
   }
 
   return (

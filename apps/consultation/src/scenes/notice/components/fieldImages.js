@@ -31,12 +31,7 @@ class FieldImages extends React.Component {
       };
       if (e.link) {
         obj.thumbnailLabel = (
-          <span
-            onClick={() => {
-              history.push(e.link);
-            }}
-            href={e.link}
-          >
+          <span onClick={() => history.push(e.link)} href={e.link}>
             LIEN
           </span>
         );
@@ -48,6 +43,7 @@ class FieldImages extends React.Component {
       <ImageGallery
         showFullscreenButton={false}
         showPlayButton={false}
+        showThumbnails={images.length > 1}
         defaultImage={noImage}
         onClick={i => {
           const selected = this.state.images.findIndex(
@@ -84,12 +80,10 @@ class FieldImages extends React.Component {
     return (
       <div className="fieldImages">
         {this.renderModal()}
-
         <Row>{this.renderImages()}</Row>
       </div>
     );
   }
 }
-
 
 export default FieldImages;

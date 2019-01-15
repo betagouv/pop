@@ -17,7 +17,7 @@ class LinkedNotice extends React.Component {
     ));
     return (
       <div className="sidebar-section links">
-        <h4>Cette notice est liée aux notices</h4>
+        <h2>Notices liées</h2>
         <div className="linked-notice-container">{notices}</div>
       </div>
     );
@@ -34,7 +34,7 @@ class SmallNotice extends React.Component {
       >
         {image(this.props.notice)}
         <div className="content">
-          <h2>{this.props.notice.TICO}</h2>
+          <h3>{this.props.notice.TICO}</h3>
           <p className="categories">{this.props.notice.DENO.join(", ")}</p>
           <div>
             <p>{this.props.notice.DOMN}</p>
