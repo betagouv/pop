@@ -25,11 +25,12 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
 
   componentWillMount() {
     try {
-      if(location) {
+      if (location) {
         this.urlLocation = location.search;
-      } 
+      }
     } catch (error) {
-      if(this.props.location) { // If window.location not defined use props
+      if (this.props.location) {
+        // If window.location not defined use props
         this.urlLocation = this.props.location.search;
       } else {
         throw new Error("location is not defined");
@@ -56,11 +57,14 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     const values = queryString.parse(this.urlLocation);
     const field = componentId;
     return Boolean(!values[field]);
-  }
+  };
 
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
-    const collapse = this.state.collapse === null ? this.shouldCollapse() : this.state.collapse;
+    const collapse =
+      this.state.collapse === null
+        ? this.shouldCollapse()
+        : this.state.collapse;
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
@@ -112,10 +116,11 @@ class MultiListUmbrella extends React.Component {
     const values = queryString.parse(location);
     const field = componentId;
     if (values[field]) {
-      const str = values[field].slice(1, -1);
-      const selected = str.split(", ");
-      this.updateExternalQuery(selected);
-      this.setState({ selected });
+      try {
+        const selected = JSON.parse(values[field]);
+        this.updateExternalQuery(selected);
+        this.setState({ selected });
+      } catch (e) {}
     } else if (defaultSelected) {
       const selected = defaultSelected;
       this.updateExternalQuery(selected);
@@ -172,7 +177,7 @@ class MultiListUmbrella extends React.Component {
         should
       }
     };
-    this.props.setQuery({ query, value: selected.join(", ") });
+    this.props.setQuery({ query, value: selected });
   }
 
   updateInternalQuery(search) {
