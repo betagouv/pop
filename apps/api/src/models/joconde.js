@@ -377,7 +377,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Contient les images. Le plus souvent généré grâce à REFIM",
-        generated: true,
         label: "Images"
       }
     },
