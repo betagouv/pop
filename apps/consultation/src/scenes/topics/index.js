@@ -65,7 +65,7 @@ export default () => (
             url={{
               base: ["Collections des musées de France (Joconde)"],
               tech: ["peinture à l'huile"],
-              peri: ["4e quart 18e siècle"]
+              periode: ["4e quart 18e siècle"]
             }}
           />
         </Col>
