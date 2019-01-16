@@ -424,7 +424,7 @@ class Memoire extends React.Component {
                   <Field title="Date de modification" content={notice.DMAJ} />
                   <Field
                     title="Crédits photographiques"
-                    content={notice.AUTP}
+                    content={this.photographer()}
                   />
                   <Field
                     title="Auteur de l'oeuvre ou de l'original"
