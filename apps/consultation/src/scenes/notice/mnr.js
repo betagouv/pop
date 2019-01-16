@@ -64,6 +64,17 @@ class Mnr extends React.Component {
     }
   }
 
+  domain() {
+    const domain = this.state.notice.DOMN;
+    if (!domain || !Array.isArray(domain)) {
+      return <div />;
+    }
+    const links = domain
+      .map(d => <a href={`/search/list?domn=["${d}"]`} key={d}>{d}</a>)
+      .reduce((p, c) => [p, ", ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -107,7 +118,7 @@ class Mnr extends React.Component {
                 <Field title="N°Inventaire" content={notice.INV} join=" ; " />
                 <Field
                   title="Domaine (catégorie du bien)"
-                  content={notice.DOMN}
+                  content={this.domain()}
                   join=" ; "
                 />
                 <Field
