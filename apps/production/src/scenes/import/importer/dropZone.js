@@ -128,17 +128,17 @@ function getExtension(name) {
 }
 
 function convertToFile(obj) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const ext = getExtension(obj.name);
-
     const type = ext === "txt" || ext === "csv" ? "text/plain" : "image/jpeg";
-    obj
-      .async("blob")
-      .then(data => {
-        resolve(new File([data], obj.name, { type }));
-      })
-      .catch(e => {
-        reject(e);
-      });
+    const data = await obj.async("blob");
+    let f = null;
+    try {
+      f = new File([data], obj.name, { type });
+    } catch (e) {
+      f = new Blob([data], { type: "image/jpeg" });
+      f.name = obj.name;
+    }
+    resolve(f);
   });
 }

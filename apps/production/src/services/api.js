@@ -93,7 +93,7 @@ class api {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < images.length; i++) {
-      formData.append("file", images[i]);
+      formData.append("file", images[i], images[i].name);
     }
     return request.put(`${api_url}/${collection}/${ref}`, formData);
   }
