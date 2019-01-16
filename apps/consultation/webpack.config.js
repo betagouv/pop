@@ -15,8 +15,7 @@ module.exports = env => {
       seed: require("./public/manifest.json")
     }),
     new CopyWebpackPlugin(
-      [{ from: "./public/robots.txt", to: "./robots.txt" }],
-      {}
+      [{ from: "./public/robots.txt", to: "./robots.txt" },{ from: "./public/googleb0e4bedffce14a4a.html", to: "./googleb0e4bedffce14a4a.html" }],{}
     ),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
