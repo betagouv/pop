@@ -10,7 +10,7 @@ export default class Import extends React.Component {
   render() {
     return (
       <Container className="import">
-        <Importer collection="mnr" parseFiles={parseFiles} readme={readme} />
+        <Importer collection="mnr" parseFiles={parseFiles} readme={readme} defaultEncoding="UTF-8"/>
       </Container>
     );
   }
@@ -26,7 +26,7 @@ function parseFiles(files, encoding) {
       return;
     }
 
-    utils.readCSV(file, ",", encoding, '"').then(notices => {
+    utils.readCSV(file, ";", encoding, '"').then(notices => {
       const importedNotices = notices.map(e => new Mnr(e));
       resolve({ importedNotices, fileNames: [file.name] });
     });

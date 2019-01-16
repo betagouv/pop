@@ -125,7 +125,7 @@ async function exportData(fileName, entities) {
     csv.push(`"Critères de recherche : ${queryAsText}"`);
   }
 
-  csv.push(columns.join(","));
+  csv.push(columns.join(";"));
 
   for (let j = 0; j < entities.length; j++) {
     const arr = [];
@@ -138,7 +138,7 @@ async function exportData(fileName, entities) {
       value = ("" + value).replace(/"/g, '""');
       arr.push('"' + value + '"');
     }
-    csv.push(arr.join(","));
+    csv.push(arr.join(";"));
   }
 
   initiateFileDownload(csv.join("\n"), fileName);
