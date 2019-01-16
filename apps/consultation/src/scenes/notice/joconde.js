@@ -79,11 +79,11 @@ class Joconde extends React.Component {
       const links = author
         .split(";")
         .map(a => a.trim())
-        .map(a => <a href={`/search/list?auteur="${a}, ${author}"`} key={a}>{a}</a>)
+        .map(a => <a href={`/search/list?auteur=${JSON.stringify(a, author)}`} key={a}>{a}</a>)
         .reduce((p, c) => [p, " ; ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
-    return <a href={`/search/list?auteur="${author}"`}>{author}</a>;
+    return <a href={`/search/list?auteur=["${author}"]`}>{author}</a>;
   }
 
   // Display a list of links to domains
@@ -95,16 +95,16 @@ class Joconde extends React.Component {
     // Create multiple links if multiple domains.
     if (Array.isArray(domain)) {
       const links = domain
-        .map(d => <a href={`/search/list?domn="${d}"`} key={d}>{d}</a>)
+        .map(d => <a href={`/search/list?domn=["${d}"]`} key={d}>{d}</a>)
         .reduce((p, c) => [p, ", ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
-    return <a href={`/search/list?domn="${domain}"`}>{domain}</a>;
+    return <a href={`/search/list?domn=["${domain}"]`}>{domain}</a>;
   }
 
   period() {
     const period = this.state.notice.PERI;
-    return period && <a href={`/search/list?periode="${period}"`}>{period}</a>;
+    return period && <a href={`/search/list?periode=["${period}"]`}>{period}</a>;
   }
 
   render() {
