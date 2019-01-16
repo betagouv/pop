@@ -12,6 +12,7 @@ import Map from "./components/map.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import { bucket_url } from "../../config";
 
 import "./index.css";
 
@@ -19,7 +20,8 @@ class Notice extends React.Component {
   state = {
     notice: null,
     error: "",
-    loading: true
+    loading: true,
+    imagesFiles: []
   };
 
   componentWillMount() {
@@ -77,7 +79,12 @@ class Notice extends React.Component {
 
   onSubmit(values) {
     this.setState({ saving: true });
-    API.updateNotice(this.state.notice.REF, "joconde", values).then(e => {
+    API.updateNotice(
+      this.state.notice.REF,
+      "joconde",
+      values,
+      this.state.imagesFiles
+    ).then(e => {
       toastr.success(
         "Modification enregistrée",
         "La modification sera visible dans 1 à 5 min en diffusion"
@@ -108,7 +115,13 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="IMG" disabled={!this.state.editable} />
+              <FieldImages
+                name="IMG"
+                disabled={!this.state.editable}
+                createUrlFromName={e => `joconde/${this.state.notice.REF}/${e}`}
+                getAbsoluteUrl={e => `${bucket_url}${e}`}
+                updateFiles={imagesFiles => this.setState({ imagesFiles })}
+              />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
@@ -256,7 +269,11 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.joconde[name]}
-      disabled={Mapping.joconde[name].generated == true || Mapping.joconde[name].deprecated == true || disabled}
+      disabled={
+        Mapping.joconde[name].generated == true ||
+        Mapping.joconde[name].deprecated == true ||
+        disabled
+      }
       name={name}
       {...rest}
     />

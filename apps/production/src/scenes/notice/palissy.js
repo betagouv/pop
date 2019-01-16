@@ -115,7 +115,12 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="MEMOIRE" disabled external={true} />
+              <FieldImages
+                name="MEMOIRE"
+                disabled
+                external={true}
+                getAbsoluteUrl={e => e.url}
+              />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
@@ -323,7 +328,11 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.palissy[name]}
-      disabled={Mapping.palissy[name].generated == true || Mapping.palissy[name].deprecated == true || disabled}
+      disabled={
+        Mapping.palissy[name].generated == true ||
+        Mapping.palissy[name].deprecated == true ||
+        disabled
+      }
       name={name}
       {...rest}
     />
