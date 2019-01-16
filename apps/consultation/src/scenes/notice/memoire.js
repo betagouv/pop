@@ -93,6 +93,11 @@ class Memoire extends React.Component {
     }
   }
 
+  photographer() {
+    const autp = this.state.notice.AUTP;
+    return autp && <a href={`/search/list?auteur=["${autp}"]`}>{autp}</a>;
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -227,7 +232,7 @@ class Memoire extends React.Component {
                 />
                 <Field
                   title="Photographe ou dessinateur"
-                  content={notice.AUTP}
+                  content={this.photographer()}
                 />
                 <Field title="Auteur du tirage" content={notice.AUTTI} />
               </div>

@@ -101,9 +101,7 @@ class Home extends React.Component {
       base = "";
     } else {
       base = `base=${JSON.stringify(
-        selected
-          .join(", ")
-          .replace("Récupération artistique", "Oeuvres spoliées")
+        selected.map(s => s.replace("Récupération artistique", "Oeuvres spoliées"))
       )}&`;
     }
     history.push(`/search/list?${base}mainSearch="${encodeURI(searchValue)}"`);
