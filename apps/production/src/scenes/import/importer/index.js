@@ -326,7 +326,7 @@ class Importer extends Component {
 
     const URL = `http://pop${
       process.env.NODE_ENV === "production" ? "" : "-staging"
-    }.culture.gouv.fr/search/list?import="${this.state.importId}"`;
+    }.culture.gouv.fr/search/list?import=["${this.state.importId}"]`;
 
     return (
       <div className="working-area">
