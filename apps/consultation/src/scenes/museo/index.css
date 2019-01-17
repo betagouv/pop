@@ -7,14 +7,14 @@
   padding-bottom: 60px;
 }
 
-.museo-card {
+.museo .museo-card {
   margin: 50px auto;
   max-width: 800px;
   padding: 30px 25px 30px 25px;
 }
 
 @media screen and (min-width: 800px) {
-  .museo-card {
+  .museo .museo-card {
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
