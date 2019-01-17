@@ -3,7 +3,7 @@ import { Row, Col, Container } from "reactstrap";
 import Field from "./components/field";
 import LinkedNotices from "./components/LinkedNotices";
 import Title from "./components/title";
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import API from "../../services/api";
 import ContactUs from "./components/ContactUs";
 import NotFound from "../../components/NotFound";

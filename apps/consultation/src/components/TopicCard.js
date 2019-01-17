@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardImg, CardTitle, CardBody } from "reactstrap";
 import queryString from "query-string";
-import "./index.css";
+import "./TopicCard.css";
 
 class TopicCard extends React.Component {
   searchUrl = data => {

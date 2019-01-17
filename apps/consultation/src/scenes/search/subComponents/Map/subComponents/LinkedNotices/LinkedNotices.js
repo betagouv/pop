@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "../../../../../../components/loader";
+import Loader from "../../../../../../components/Loader";
 import shave from "shave";
 import { image } from "../../../../image";
 import SingleNotice from "../SingleNotice";

@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 import Title from "./Title.js";
 import Logo from "./Logo.js";
 
-import "./index.css";
+import "./Header.css";
 
 const header = () => (
     <div className="header">

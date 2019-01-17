@@ -2,7 +2,7 @@ import React from "react";
 import Helmet from "../../components/Helmet";
 import API from "../../services/api";
 import { Mapping } from "pop-shared";
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import Map from "../notice/components/map";
 import "./index.css";
 

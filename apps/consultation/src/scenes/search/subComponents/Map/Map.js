@@ -2,7 +2,7 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import queryString from "query-string";
-import Loader from "../../../../components/loader";
+import Loader from "../../../../components/Loader";
 
 import CardMap from "./CardMap";
 

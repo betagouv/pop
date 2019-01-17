@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import "./index.css";
-import roy from '../../assets/roy-lichtenstein.jpg';
+import "./ErrorBoundary.css";
+import roy from '../assets/roy-lichtenstein.jpg';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -46,4 +46,3 @@ export default class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-

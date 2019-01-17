@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import LinkedNotices from "./components/LinkedNotices";
 import Field from "./components/field";
-import Loader from "../../components/loader";
+import Loader from "../../components/Loader";
 import Title from "./components/title";
 import API from "../../services/api";
 import Helmet from "../../components/Helmet";

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./index.css";
+import "./Footer.css";
 
-import Logo from '../../assets/logo-incubateur.svg';
+import Logo from '../assets/logo-incubateur.svg';
 
 const Footer = () => (
   <div className="footer">
