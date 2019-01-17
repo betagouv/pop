@@ -43,21 +43,9 @@ function parseFiles(files, encoding) {
       );
       // const RenameFile = files.find(file => file.name.includes('GERTRUDE_xmlToRenommeIllustrations_Toutes.txt'));
 
-      if (!PalissyFile) {
+      if (!PalissyFile || !MemoireFile || !MerimeeFile) {
         reject(
-          "Impossible d'importer le(s) fichier(s). Fichier GERTRUDE_xmlToPALISSY_lexicovide.txt introuvable"
-        );
-        return;
-      }
-      if (!MemoireFile) {
-        reject(
-          "Impossible d'importer le(s) fichier(s). Fichier GERTRUDE_xmlToMEMOIRE_lexicovide.txt introuvable"
-        );
-        return;
-      }
-      if (!MerimeeFile) {
-        reject(
-          "Impossible d'importer le(s) fichier(s). Fichier GERTRUDE_xmlToMERIMEE_lexicovide.txt introuvable"
+          "Impossible d'importer le(s) fichier(s). Véfifiez que vous avez bien chargé les 3 fichiers suivants : GERTRUDE_xmlToPALISSY_lexicovide.txt, GERTRUDE_xmlToMEMOIRE_lexicovide.txt, GERTRUDE_xmlToMERIMEE_lexicovide.txt"
         );
         return;
       }
@@ -124,7 +112,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
       notices.push(
         ...values[2].map(e => {
           //changement du modèle de donnée gertrude -> pop
-          const imagePath = e.NOMI || e.NUMI;
+          const imagePath = e.NOMI || e.NUMI || "";
           e.NUMP = e.NUMP;
           e.AUTP = e.AUT;
           e.IDPROD = e.EMET;
