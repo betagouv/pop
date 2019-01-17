@@ -1206,7 +1206,7 @@ Statut de la propriété
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|oui|non|||
+|Array|non|non|non|non|||
 
 ### STRU
 Structure et typologie

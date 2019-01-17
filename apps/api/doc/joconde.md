@@ -529,7 +529,7 @@ Contient les images. Le plus souvent généré grâce à REFIM
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Images|
+|Array|non|non|non|non||Images|
 
 ### INSC
 Inscriptions 
