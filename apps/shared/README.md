@@ -3,8 +3,6 @@
 
 Composants partagés pour la plateforme ouverte du patrimoine.
 
-
-
 ## Installation
 
 ```bash
