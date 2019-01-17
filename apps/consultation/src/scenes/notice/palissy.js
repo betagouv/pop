@@ -100,6 +100,23 @@ class Palissy extends React.Component {
     }
   }
 
+  // Display a list of links to authors
+  authors() {
+    const authors = this.state.notice.AUTR;
+    if (!authors || !Array.isArray(authors) || !authors.length) {
+      return <div />;
+    }
+    const links = authors
+      .map(a => a.trim())
+      .map(a => (
+        <a href={`/search/list?auteur=["${a}"]`} key={a}>
+          {a}
+        </a>
+      ))
+      .reduce((p, c) => [p, " ; ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -270,7 +287,7 @@ class Palissy extends React.Component {
                     "HIST"
                   ]}
                 />
-                <Field title="Auteurs de l'oeuvre" content={notice.AUTR} />
+                <Field title="Auteurs de l'oeuvre" content={this.authors()} />
                 <Field
                   title="Auteur de la source figurée"
                   content={notice.AFIG}

@@ -41,7 +41,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "GEOHI","Array","non","Géographie historique","","","Géographie historique","",""
 "HIST","String","non","Historique – Objets associés","","","Historique – Objets associés ","",""
 "IMAGE","String","non","","","","[Je ne sais pas à quoi ce champ sert]  ","",""
-"IMG","Array","non","Images","","true","Contient les images. Le plus souvent généré grâce à REFIM","",""
+"IMG","Array","non","Images","","","Contient les images. Le plus souvent généré grâce à REFIM","",""
 "INSC","Array","non","Inscriptions","","","Inscriptions ","","http://data.culture.fr/thesaurus/resource/ark:/67717/T520"
 "INV","String","oui","N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt","","","N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt","",""
 "LABEL","String","non","Appellation musée de France","","true","Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'","",""

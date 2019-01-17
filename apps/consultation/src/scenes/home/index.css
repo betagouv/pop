@@ -172,6 +172,10 @@
   overflow: hidden;
 }
 
+.home .home-search p {
+  font-size: 18px;
+  color: #19414c;
+}
 
 
 @media screen and (max-width: 767px) {

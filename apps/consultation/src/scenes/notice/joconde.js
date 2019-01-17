@@ -79,7 +79,7 @@ class Joconde extends React.Component {
       const links = author
         .split(";")
         .map(a => a.trim())
-        .map(a => <a href={`/search/list?auteur=${JSON.stringify(a, author)}`} key={a}>{a}</a>)
+        .map(a => <a href={`/search/list?auteur=${JSON.stringify([a, author])}`} key={a}>{a}</a>)
         .reduce((p, c) => [p, " ; ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
@@ -89,17 +89,13 @@ class Joconde extends React.Component {
   // Display a list of links to domains
   domain() {
     const domain = this.state.notice.DOMN;
-    if (!domain) {
+    if (!domain || !Array.isArray(domain)) {
       return <div />;
     }
-    // Create multiple links if multiple domains.
-    if (Array.isArray(domain)) {
-      const links = domain
-        .map(d => <a href={`/search/list?domn=["${d}"]`} key={d}>{d}</a>)
-        .reduce((p, c) => [p, ", ", c]);
-      return <React.Fragment>{links}</React.Fragment>;
-    }
-    return <a href={`/search/list?domn=["${domain}"]`}>{domain}</a>;
+    const links = domain
+      .map(d => <a href={`/search/list?domn=["${d}"]`} key={d}>{d}</a>)
+      .reduce((p, c) => [p, ", ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
   }
 
   period() {

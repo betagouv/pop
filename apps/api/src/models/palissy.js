@@ -880,8 +880,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Statut de la propriété",
-        label: "",
-        deprecated: true
+        label: ""
       }
     },
     STRU: {
