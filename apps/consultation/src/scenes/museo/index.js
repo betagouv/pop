@@ -6,6 +6,20 @@ import Loader from "../../components/loader";
 import Map from "../notice/components/map";
 import "./index.css";
 
+const hiddenFields = [
+  "_id",
+  "location",
+  "VIDEO",
+  "URL_M2",
+  "FAX_M",
+  "ANNEXE",
+  "SERVICES",
+  "ACTIV",
+  "EQUIP",
+  "OBS_TOUR",
+  "ENVIRON"
+];
+
 class Museo extends React.Component {
   state = {
     museo: null
@@ -76,7 +90,7 @@ class Museo extends React.Component {
     const dl = Object.entries(museo)
       .filter(([_key, val]) => val)
       .filter(([key, _val]) => Mapping.museo[key])
-      .filter(([key, _val]) => !["_id", "location", "VIDEO"].includes(key))
+      .filter(([key, _val]) => !hiddenFields.includes(key))
       .map(([key, val]) => {
         return (
           <React.Fragment key={key}>
