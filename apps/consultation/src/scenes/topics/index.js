@@ -26,11 +26,21 @@ export default () => (
         </Col>
         <Col lg="3" md="6">
           <TopicCard
-            img={memoireImg("1763/mhr91_20096630631nuca_p.jpg")}
-            txt="Josette Clier"
+            img={memoireImg("/2709/sap56_72l002380_p.jpg")}
+            txt="André Kertész"
             url={{
               base: ["Photographies (Mémoire)"],
-              auteur: ["Clier, Josette"]
+              auteur: ["Kertész, André", "KERTESZ André (dit), KERTESZ Andor (patronyme)","Kertész, André (photographe, 1894-1985)","Kertész, André - Donation André Kertész, Ministère de la culture (France), Médiathèque de l'architecture et du patrimoine, diffusion restreinte"]
+            }}
+          />
+        </Col>
+        <Col lg="3" md="6">
+          <TopicCard
+            img={memoireImg("1997/sap58_76l000305_p.jpg")}
+            txt="Sam Lévin"
+            url={{
+              base: ["Photographies (Mémoire)"],
+              auteur: ["Lévin, Sam", "Studio Lévin"]
             }}
           />
         </Col>
@@ -41,16 +51,6 @@ export default () => (
             url={{
               base: ["Photographies (Mémoire)"],
               auteur: ["Nadar (atelier)"]
-            }}
-          />
-        </Col>
-        <Col lg="3" md="6">
-          <TopicCard
-            img={memoireImg("1575/mhr93_04133996za_p.jpg")}
-            txt="Odile de Pierrefeu"
-            url={{
-              base: ["Photographies (Mémoire)"],
-              auteur: ["de Pierrefeu, Odile"]
             }}
           />
         </Col>
