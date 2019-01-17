@@ -272,6 +272,7 @@ class Home extends React.Component {
               </ul>
             </div>
           </div>
+          <p>Découvrir le patrimoine français à travers l'<a href="/topics">affichage thématique</a></p>
         </div>
       </div>
     );
