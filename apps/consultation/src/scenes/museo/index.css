@@ -34,3 +34,18 @@
 .museo-map {
   margin-top: 25px;
 }
+.museo .collection {
+  text-align: center;
+  margin-top: 25px;
+}
+.museo .collection a {
+  color: #fff;
+  background-color: #377d87;
+  border-color: #377d87;
+}
+
+.museo .collection a:hover {
+  color: #fff;
+  background-color: #28565e;
+  border-color: #1e4147;
+}

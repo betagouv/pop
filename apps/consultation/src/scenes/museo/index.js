@@ -112,6 +112,9 @@ class Museo extends React.Component {
           <h1>{title}</h1>
           {this.renderProperties(museo)}
           <div className="museo-map">{this.renderMap(museo.location)}</div>
+          <div className="collection">
+            <a href={`/search/list/?museo=["${museo.REF}"]`} className="btn btn-secondary">Voir les collections du musée</a>
+          </div>
         </div>
       </div>
     );

@@ -46,7 +46,8 @@ const DEFAULT_FILTER = [
   "geolocalisation",
   "auteur",
   "ou",
-  "import"
+  "import",
+  "museo"
 ];
 
 const ACTIVE_FILTER = {
@@ -282,10 +283,19 @@ class Search extends React.Component {
                     componentId="import"
                     dataField="POP_IMPORT.keyword"
                     title="Import"
-                    className="filters"
                     displayCount
                     URLParams={true}
                     react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
+                    location={location}
+                  />
+                  <MultiList
+                    show={false}
+                    componentId="museo"
+                    dataField="MUSEO.keyword"
+                    title="Museo"
+                    displayCount
+                    URLParams={true}
+                    react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
                     location={location}
                   />
                 </aside>
