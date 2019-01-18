@@ -21,6 +21,7 @@ import classnames from "classnames";
 import { MultiList } from "pop-shared";
 
 import Helmet from "../../components/Helmet";
+import MuseoCard from "../../components/MuseoCard";
 import List from "./subComponents/List";
 import Map from "./subComponents/Map";
 import Mosaique from "./subComponents/Mosaique";
@@ -152,7 +153,13 @@ class Search extends React.Component {
     }
   }
 
-  onMapChanged(info) {}
+  museo() {
+    const { location } = this.props;
+    const museo = queryString.parse(location.search).museo;
+    if (museo) {
+      return <MuseoCard museo={JSON.parse(museo)} />
+    }
+  }
 
   render() {
     const { location } = this.props;
@@ -167,6 +174,7 @@ class Search extends React.Component {
         />
         <Container fluid style={{ maxWidth: 1860 }}>
           <h1 className="title">Votre recherche</h1>
+          {this.museo()}
           <ReactiveBase url={`${es_url}`} app={bases}>
             <Row>
               <div className={`search-filters ${this.state.mobile_menu}`}>
