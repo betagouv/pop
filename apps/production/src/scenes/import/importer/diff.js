@@ -2,9 +2,16 @@ const diff = require("deep-diff").diff;
 
 function compare(importedObject, existed) {
   //make the imported object flat
+
   let imported = importedObject.makeItFlat();
   delete imported["POP_IMPORT"];
-  let d = diff(imported, existed);
+
+  // I had to do this because sometimes, on IE 11, some fields are not compared well. The origin of the issue could be somewhere else but I couldnt find it
+  let importedObj = JSON.parse(JSON.stringify(imported));
+  let existedObj = JSON.parse(JSON.stringify(existed));
+
+  let d = diff(importedObj, existedObj);
+
   /*
   Differences are reported as one or more change records. Change records have the following structure:
   kind - indicates the kind of change; will be one of the following:

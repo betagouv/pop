@@ -15,17 +15,28 @@
 .importer-container .left-col {
   background-color: #f4e2cc;
   min-height: 700px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   overflow-y: auto;
   height: 700px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.importer-container .left-col .image-container {
+  text-align: center;
 }
 
 .importer-container .left-col img {
-  width: 100%;
+  width: 50%;
   padding: 20px;
 }
+
 .importer-container .left-col h5 {
   font-weight: 600;
 }
@@ -49,6 +60,7 @@
   border-bottom: 1px solid #cccccc;
   text-align: center;
   font-size: 15px;
+  width: 100%;
 }
 
 .importer-container .right-col .rc-steps {
@@ -200,6 +212,7 @@
   border-radius: 10px;
   height: 367px;
   padding: 20px;
+  width: 100%;
   font-size: 15px;
   display: flex;
   justify-content: space-around;
@@ -212,4 +225,5 @@
   color: #007772;
   text-align: center;
   font-weight: bold;
+  width:100%;
 }

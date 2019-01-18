@@ -266,7 +266,8 @@ function readme() {
         </ul>
         <br />
         <h6>Test de validation des champs : </h6>
-        Les tests suivants sont effectués lors des imports<br />
+        Les tests suivants sont effectués lors des imports
+        <br />
         <br />
         <ul>
           {controlsFields.map(e => (
@@ -277,7 +278,8 @@ function readme() {
         </ul>
         <br />
         <h6>Test de thésaurus des champs : </h6>
-        Les champs suivants sont testés avec des thésaurus<br />
+        Les champs suivants sont testés avec des thésaurus
+        <br />
         <br />
         <ul>
           {thesaurusedFields.map(e => (
@@ -320,7 +322,8 @@ function readme() {
         <br />
         <br />
         NB : à la création d'une notice, POP génère automatiquement certains
-        champs utiles au traitement des données. Il s'agit des champs : <br /><br />
+        champs utiles au traitement des données. Il s'agit des champs : <br />
+        <br />
         <ul>
           {generatedFields.map(e => (
             <li>{e}</li>
