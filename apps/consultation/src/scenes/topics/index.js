@@ -2,6 +2,7 @@ import React from "react";
 import TopicCard from "../../components/TopicCard";
 import { Row, Col, Container } from "reactstrap";
 import { bucket_url } from "../../config";
+import Helmet from "../../components/Helmet";
 import "./index.css";
 
 const cultureUrl = "http://www2.culture.gouv.fr/Wave/image/";
@@ -10,6 +11,10 @@ const jocondeImg = uri => `${bucket_url}joconde/${uri}`;
 
 export default () => (
   <div className="topics-view">
+    <Helmet 
+      title="Explorer par thématique - POP"
+      description="Recherche par thématique de la Plateforme Ouverte du Patrimoine."
+    />
     <Container>
       <h2>Explorer par thématique</h2>
       <h3>Photographie</h3>
