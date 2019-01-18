@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Button } from "reactstrap";
+import { Container } from "reactstrap";
 
 import Title from "./Title.js";
 import Logo from "./Logo.js";
