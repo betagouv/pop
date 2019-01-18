@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
+import { Link } from "react-router-dom";
 import "./index.css";
 import Helmet from "../../components/Helmet";
 
@@ -272,7 +273,7 @@ class Home extends React.Component {
               </ul>
             </div>
           </div>
-          <p>Découvrir le patrimoine français à travers l'<a href="/topics">affichage thématique</a></p>
+          <p>Découvrir le patrimoine français à travers l'<Link to="/topics">affichage thématique</Link></p>
         </div>
       </div>
     );
