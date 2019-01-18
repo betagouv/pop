@@ -13,6 +13,19 @@
   padding: 5px 15px;
 }
 
+.header .right-container {
+  display: flex;
+}
+
+.header .right-container a {
+  display: flex;
+  padding: 10px 40px 10px 10px;
+}
+
+.header .right-container .btn {
+  background-color: #C43A2F;
+}
+
 #beta {
   position: absolute;
   width: 120px;
