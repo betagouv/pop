@@ -15,17 +15,18 @@
 
 .header .right-container {
   display: flex;
-}
-
-.header .right-container a {
-  display: flex;
-  padding: 10px 40px 10px 10px;
+  align-items: center;
 }
 
 .header .right-container .btn {
-  background-color: #C43A2F;
+  color: #c43a2f;
+  margin-right: 25px;
 }
 
+.header .right-container .btn:hover {
+  background-color: #c43a2f;
+  color: #fff;
+}
 #beta {
   position: absolute;
   width: 120px;
