@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "../../../components/loader";
+import Loader from "../../../components/Loader";
 import { Link } from "react-router-dom";
 import { image } from "../../search/image";
 import "./LinkedNotices.css";

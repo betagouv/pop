@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from 'reactstrap';
-import './index.css';
-import courbet from '../../assets/courbet.jpeg';
-import Helmet from "../Helmet";
+import './NotFound.css';
+import courbet from '../assets/courbet.jpeg';
+import Helmet from "./Helmet";
 
 const NotFound = () => (
     <Container className="notice-not-found" fluid>
