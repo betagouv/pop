@@ -11,3 +11,11 @@
   font-size: 16px;
   color: #025d59;
 }
+
+.topic-card a:hover {
+  text-decoration: none;
+}
+
+.topic-card .card:hover {
+  box-shadow: 0 2px 4px 2px #025d592a
+}
