@@ -11,13 +11,21 @@ const MAX_SIZE = 300000000;
 export default class ImportDropComponent extends Component {
   constructor(props) {
     super(props);
+    const encoding = localStorage.getItem("encoding");
     this.state = {
       progress: -1,
       error: "",
-      encoding: props.defaultEncoding || "ISO-8859-1",
+      encoding: props.defaultEncoding || encoding || "ISO-8859-1",
       message: "",
       loading: false
     };
+  }
+
+  componentWillMount() {}
+
+  updateEncoding(encoding) {
+    localStorage.setItem("encoding", encoding);
+    this.setState({ encoding });
   }
 
   onDrop(err, files) {
@@ -113,7 +121,7 @@ export default class ImportDropComponent extends Component {
           {this.state.error ? <div>{this.state.error}</div> : <div />}
         </Row>
         <select
-          onChange={e => this.setState({ encoding: e.target.value })}
+          onChange={e => this.updateEncoding(e.target.value)}
           value={this.state.encoding}
         >
           {encodings}

@@ -101,7 +101,7 @@ function parseAjoutPilote(res, object) {
       notices.push(obj);
       obj = {};
     } else {
-      const key = lines[i];
+      const key = lines[i].trim();
       let value = "";
       let tag = true;
       while (tag) {

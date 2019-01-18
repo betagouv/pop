@@ -307,7 +307,7 @@ class Importer extends Component {
 
   renderDropZone() {
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         {/* <h4 className='subtitle'>Sélection et dépot des contenus à importer</h4> */}
         <DropZone
           onFinish={this.onFilesDropped.bind(this)}
@@ -439,7 +439,7 @@ class Importer extends Component {
       <Container className="importer-container">
         <Row>
           <Col md={5} className="left-col">
-            <div>
+            <div className="image-container">
               <img src={AsideIcon} width={100} alt="" />
             </div>
             {this.props.readme()}
