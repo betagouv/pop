@@ -28,9 +28,6 @@ export default class Import extends React.Component {
 function parseFiles(files, encoding) {
   return new Promise(async (resolve, reject) => {
     //GERTRUDE
-
-    console.log(files);
-
     const gertrude = files.some(e => {
       return [
         "GERTRUDE_xmlToPALISSY_lexicovide.txt",
