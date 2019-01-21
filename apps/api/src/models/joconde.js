@@ -254,8 +254,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "Champ déprécié",
         deprecated: true
       }
     },
@@ -367,7 +366,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Je ne sais pas à quoi ce champ sert]  ",
+        description: "Champ déprécié  ",
         deprecated: true
       }
     },
@@ -413,8 +412,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "Champ déprécié",
         deprecated: true
       }
     },
@@ -423,8 +421,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        deprecated: true
+          "[Peut être déprécié : Pas affiché en production ni en consultation]"
       }
     },
     LIEUX: {
@@ -458,8 +455,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "Champ déprécié",
         deprecated: true
       }
     },
@@ -483,8 +479,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "Champ déprécié",
         deprecated: true
       }
     },
@@ -618,8 +613,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation] ",
+        description: "Champ déprécié ",
         deprecated: true
       }
     },
@@ -654,8 +648,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation] ",
-        deprecated: true
+          "[Peut être déprécié : Pas affiché en production ni en consultation] "
       }
     },
     SREP: {
@@ -691,8 +684,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : A vérifier. Non présent en production] ",
+        description: "Champ déprécié ",
         deprecated: true
       }
     },

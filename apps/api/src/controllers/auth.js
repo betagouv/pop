@@ -154,7 +154,7 @@ router.post("/updatePassword", (req, res) => {
     if (!user) {
       res.status(401).send({
         success: false,
-        msg: `La mise à jour du mot de passe a échouée. Utilisateur ${email} introuvable.`
+        msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email} introuvable.`
       });
     } else {
       user.comparePassword(ppwd, function(err, isMatch) {
@@ -171,7 +171,7 @@ router.post("/updatePassword", (req, res) => {
         } else {
           res.status(401).send({
             success: false,
-            msg: `La mise à jour du mot de passe a échouée. Utilisateur introuvable`
+            msg: `La mise à jour du mot de passe à échoué. Utilisateur introuvable`
           });
         }
       });
@@ -198,7 +198,7 @@ router.post(
       if (!user) {
         res.status(401).send({
           success: false,
-          msg: `La mise à jour des informations a échouée. Utilisateur ${email} introuvable.`
+          msg: `La mise à jour des informations à échoué. Utilisateur ${email} introuvable.`
         });
       } else {
         try {
@@ -233,7 +233,7 @@ router.post(
 router.post("/signin", (req, res) => {
   const failMessage = {
     success: false,
-    msg: `L'authentification a échouée. Email ou mot de passe incorrect.`
+    msg: `L'authentification à échoué. Email ou mot de passe incorrect.`
   };
   User.findOne(
     {
