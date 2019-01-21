@@ -936,8 +936,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Objet(s) volé(s)",
-        label: "Objet(s) volé(s)",
-        deprecated: true
+        label: "Objet(s) volé(s)"
       }
     },
     WADRS: {
