@@ -10,26 +10,37 @@ export default class Import extends React.Component {
   render() {
     return (
       <Container className="import">
-        <Importer collection="mnr" parseFiles={parseFiles} readme={readme} defaultEncoding="UTF-8"/>
+        <Importer
+          collection="mnr"
+          parseFiles={parseFiles}
+          readme={readme}
+          defaultEncoding="UTF-8"
+        />
       </Container>
     );
   }
 }
 
 function parseFiles(files, encoding) {
-  return new Promise((resolve, reject) => {
-    var file = files.find(
-      file => ("" + file.name.split(".").pop()).toLowerCase() === "csv"
-    );
-    if (!file) {
-      reject("Fichier .csv absent");
-      return;
-    }
-
-    utils.readCSV(file, ";", encoding, '"').then(notices => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      var file = files.find(
+        file => ("" + file.name.split(".").pop()).toLowerCase() === "csv"
+      );
+      if (!file) {
+        reject("Fichier .csv absent");
+        return;
+      }
+      const notices = await utils.readCSV(file, ";", encoding, '"');
       const importedNotices = notices.map(e => new Mnr(e));
       resolve({ importedNotices, fileNames: [file.name] });
-    });
+    } catch (e) {
+      reject(
+        `Erreur détectée. Vérifiez le format de votre fichier. (${JSON.stringify(
+          e
+        )} )`
+      );
+    }
   });
 }
 
