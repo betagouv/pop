@@ -15,7 +15,7 @@ const header = () => (
         <div>
           <a
             href="https://fier2.typeform.com/to/Qyz3xv"
-            class="btn btn-outline-danger d-none d-sm-block"
+            className="btn btn-outline-danger d-none d-sm-block"
             target="_blank"
           >
             Votre avis est utile
