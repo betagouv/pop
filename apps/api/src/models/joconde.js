@@ -71,7 +71,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence unique de la notice",
+        description: "Référence (numéro système de la notice)",
         label: "Référence",
         validation: "Alphanumeric"
       }
@@ -81,10 +81,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Référence de mise à jour (marque de la modification de la notice)",
-        label:
-          "Référence de mise à jour (marque de la modification de la notice) "
+        description: "Référence de mise à jour",
+        label: "Référence MAJ"
       }
     },
     ADPT: {
@@ -107,8 +105,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Ancienne appartenance (nom du donateur / testateur/ vendeur) ",
+        description: "Ancienne appartenance ",
         label: "Ancienne appartenance"
       }
     },
@@ -124,8 +121,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Auteur / exécutant / collecteur",
-        label: "Auteur /exécutant / collecteur",
+        description: "Auteur",
+        label: "Auteur",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513"
       }
     },
@@ -151,7 +148,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Lien contact musée",
         generated: true,
-        label: "Lien contact musée",
+        label: "Contact musée",
         validation: "Email"
       }
     },
@@ -176,7 +173,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date d’acquisition",
-        label: "Date d’acquisition"
+        label: "Date acquisition"
       }
     },
     DATA: {
@@ -209,10 +206,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur) ",
-        label:
-          "Découverte / collecte / récolte (lieu de découverte / collecte / récolte) ; Type de site ; Méthode de découverte /collecte / récolte ; Date de découverte / collecte / récolte ; Découvreur / collecteur)",
+        description: "Découverte / collecte",
+        label: "Découverte / collecte",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
       }
     },
@@ -220,8 +215,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Dénomination du bien",
-        label: "Dénomination du bien",
+        description: "Dénomination",
+        label: "Dénomination",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505"
       }
     },
@@ -230,7 +225,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dépôt / établissement dépositaire",
-        label: "Dépot"
+        label: "Lieu de dépot"
       }
     },
     DESC: {
@@ -245,9 +240,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        deprecated: true
+        description: "Date création avant 1995 ",
+        label: "Date création avant 1995 "
       }
     },
     DIFFU: {
@@ -262,7 +256,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Mesures  / Dimensions",
+        description: "Mesures / Dimensions",
         label: "Mesures"
       }
     },
@@ -270,7 +264,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de la dernière mise à jour",
+        description: "Date de mise à jour (format AAAA-MM-JJ)",
         generated: true,
         label: "Date de mise à jour"
       }
@@ -279,7 +273,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de la création POP/Mistral",
+        description: "Date de la création (format AAAA-MM-JJ)",
         generated: true,
         label: "Date de création"
       }
@@ -289,8 +283,8 @@ const Schema = new mongoose.Schema(
       default: [],
       required: true,
       documentation: {
-        description: "Domaine (catégorie du bien) ",
-        label: "Domaine (catégorie du bien) ",
+        description: "Domaine",
+        label: "Domaine",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51"
       }
     },
@@ -299,7 +293,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la représentation",
-        label: "Date de la représentation"
+        label: "Date sujet représenté"
       }
     },
     ECOL: {
@@ -307,7 +301,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Ecole ",
-        label: "Ecole",
+        label: "Ecole-pays",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517"
       }
     },
@@ -316,7 +310,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Epoque /style / mouvement ",
-        label: "Epoque /style / mouvement",
+        label: "Epoque",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93"
       }
     },
@@ -324,8 +318,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description:
-          "[surement à nettoyer] Etat du bien. C'est une liste finie de valeurs possibles",
+        description: "Etat du bien",
         label: "Etat du bien"
       }
     },
@@ -351,15 +344,15 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Géographie historique",
-        label: "Géographie historique"
+        label: "Lieu historique"
       }
     },
     HIST: {
       type: String,
       default: "",
       documentation: {
-        description: "Historique – Objets associés ",
-        label: "Historique – Objets associés"
+        description: "Historique",
+        label: "Historique"
       }
     },
     IMAGE: {
@@ -374,9 +367,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description:
-          "Contient les images. Le plus souvent généré grâce à REFIM",
-        label: "Images"
+        description: "IMAGE",
+        label: "Adresse image"
       }
     },
     INSC: {
@@ -393,17 +385,15 @@ const Schema = new mongoose.Schema(
       default: "",
       required: true,
       documentation: {
-        description:
-          "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
-        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
+        description: "N°Inventaire, autres numéros",
+        label: "N°Inventaire"
       }
     },
     LABEL: {
       type: String,
       default: "Musée de France au sens de la loi n°2002-5 du 4 janvier 2002",
       documentation: {
-        description:
-          "Appellation musée de France : logo : Champ ayant toujours la valeur 'Musée de France au sens de la loi n°2002-5 du 4 janvier 2002'",
+        description: "Appellation musée de France",
         generated: true,
         label: "Appellation musée de France"
       }
@@ -420,8 +410,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]"
+        description: "Lien base Arcade",
+        label: "Lien base Arcade"
       }
     },
     LIEUX: {
@@ -429,7 +419,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lieu de création / d’exécution / d’utilisation",
-        label: "Lieu de création / d’exécution / d’utilisation",
+        label: "Lieu de création/utilisation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84"
       }
     },
@@ -446,9 +436,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        deprecated: true
+        description: "Pays-region-ville",
+        deprecated: true,
+        label: "Pays-region-ville"
       }
     },
     LOCA3: {
@@ -464,14 +454,14 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Millésime de création / exécution ",
-        label: "Millésime de création / exécution"
+        label: "Millésime de création"
       }
     },
     MILU: {
       type: String,
       default: "",
       documentation: {
-        description: "Millésime d’utilisation ",
+        description: "Millésime d’utilisation / destination",
         label: "Millésime d’utilisation"
       }
     },
@@ -488,16 +478,16 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description:
-          "[Surement à nettoyer. J'ai vu du code dans ce champ] Lien commande de reproduction et/ou de conditions d’utilisation ",
-        label: "Lien commande de reproduction et/ou de conditions d’utilisation"
+          "Lien commande de reproduction et/ou de conditions d’utilisation ",
+        label: "Lien commande photo"
       }
     },
     MUSEO: {
       type: String,
       default: "",
       documentation: {
-        description: "Lien Numéro MUSEOFILE",
-        label: "Lien Numéro MUSEOFILE"
+        description: "Lien MUSEOFILE",
+        label: "Lien MUSEOFILE"
       }
     },
     NSDA: {
@@ -520,8 +510,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Précisions /auteur / exécutant / collecteur",
-        label: "Précisions /auteur / exécutant / collecteur"
+        description: "Précision auteur",
+        label: "Précision auteur"
       }
     },
     PDAT: {
@@ -530,15 +520,16 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : Pas affiché en production ni en consultation]",
-        deprecated: true
+        deprecated: true,
+        label: "Précision datation"
       }
     },
     PDEC: {
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur la découverte / collecte / récolte",
-        label: "Précisions sur la découverte / collecte / récolte"
+        description: "Précisions sur la découverte / collecte",
+        label: "Précisions découverte"
       }
     },
     PEOC: {
@@ -555,7 +546,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Période de création / exécution ",
-        label: "Période de création / exécution",
+        label: "Période de création",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
       }
     },
@@ -563,7 +554,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Période d’utilisation",
+        description: "Période d’utilisation / destination",
         label: "Période d’utilisation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
       }
@@ -573,7 +564,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Crédits photographiques",
-        label: "Crédits photographiques"
+        label: "Crédits photos"
       }
     },
     PINS: {
@@ -581,7 +572,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur les inscriptions",
-        label: "Précisions sur les inscriptions"
+        label: "Précisions inscriptions"
       }
     },
     PLIEUX: {
@@ -590,7 +581,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Précisions sur le lieu de création/ d’exécution / d’utilisation",
-        label: "Précisions sur le lieu de création/ d’exécution / d’utilisation"
+        label: "Précisions lieu création"
       }
     },
     PREP: {
@@ -598,7 +589,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Précisions sur le sujet représenté ",
-        label: "Précisions sur le sujet représenté"
+        label: "Précisions sujet représenté"
       }
     },
     PUTI: {
@@ -606,7 +597,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur l’utilisation ",
-        label: "Précisions sur l’utilisation"
+        label: "Précisions utilisation"
       }
     },
     RANG: {
@@ -629,8 +620,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Référence image : lien texte/ image : C'est un code qui permet de retrouver l'url de l'image",
+        description: "Référence image",
         label: "Référence image"
       }
     },
@@ -647,8 +637,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation] "
+        description: "Lien INHA",
+        label: "Lien INHA"
       }
     },
     SREP: {
@@ -656,7 +646,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de la représentation",
-        label: "Source de la représentation",
+        label: "Source représentation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
       }
     },
@@ -665,10 +655,8 @@ const Schema = new mongoose.Schema(
       default: [],
       required: true,
       documentation: {
-        description:
-          "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire",
-        label:
-          "Statut juridique (type de propriété ; mode d’acquisition ; institution propriétaire (ville quand la commune est propriétaire) ; établissement affectataire"
+        description: "Statut juridique",
+        label: "Statut juridique"
       }
     },
     TECH: {
@@ -676,7 +664,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Matériaux et techniques",
-        label: "Matériaux et techniques",
+        label: "Matériaux - techniques",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516"
       }
     },
@@ -692,7 +680,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Titre de l'oeuvre ",
+        description: "Titre",
         label: "Titre"
       }
     },
@@ -702,7 +690,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "[Peut être déprécié : A vérifier. Non présent en production] ",
-        deprecated: true
+        deprecated: true,
+        label: "Recherche sur tout"
       }
     },
     UTIL: {
@@ -718,16 +707,16 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[Peut être déprécié : A vérifier]",
-        label: "Videos"
+        description: "Affichage image",
+        label: "Affichage image"
       }
     },
     WWW: {
       type: String,
       default: "",
       documentation: {
-        description: "Lien site associé / site complémentaire",
-        label: "Lien site associé / site complémentaire"
+        description: "Lien site associé",
+        label: "Lien site associé"
       }
     },
     LVID: {
