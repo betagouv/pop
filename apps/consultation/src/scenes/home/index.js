@@ -101,9 +101,7 @@ class Home extends React.Component {
     if (selected.length === bases.length || selected.length === 0) {
       base = "";
     } else {
-      base = `base=${JSON.stringify(
-        selected.map(s => s.replace("Récupération artistique", "Oeuvres spoliées"))
-      )}&`;
+      base = `base=${JSON.stringify(selected)}&`;
     }
     history.push(`/search/list?${base}mainSearch="${encodeURI(searchValue)}"`);
   }

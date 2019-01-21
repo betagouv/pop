@@ -204,12 +204,6 @@ class Search extends React.Component {
                       bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
                     }
                     onCollapseChange={changeActiveFilter}
-                    data={[
-                      {
-                        label: "Récupération artistique (MNR Rose-Valland)",
-                        value: "Oeuvres spoliées (MNR Rose-Valland)"
-                      }
-                    ]}
                     location={location}
                   />
                   <MultiList
