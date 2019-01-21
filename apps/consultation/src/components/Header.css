@@ -13,6 +13,20 @@
   padding: 5px 15px;
 }
 
+.header .right-container {
+  display: flex;
+  align-items: center;
+}
+
+.header .right-container .btn {
+  color: #c43a2f;
+  margin-right: 25px;
+}
+
+.header .right-container .btn:hover {
+  background-color: #c43a2f;
+  color: #fff;
+}
 #beta {
   position: absolute;
   width: 120px;
