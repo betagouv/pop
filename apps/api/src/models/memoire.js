@@ -130,7 +130,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence d’exposition de l’image ",
-        deprecated: true
+        label: "Référence d’exposition de l’image "
       }
     },
     JDATPV: {
@@ -360,7 +360,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Accessoire pose",
-        label: "Accessoire pose"
+        label: "Accessoire pose",
+        deprecated: true
       }
     },
     ACQU: {
@@ -417,7 +418,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Costume de la personne représentée",
-        label: "Costume de la personne représentée"
+        label: "Costume de la personne représentée",
+        deprecated: true
       }
     },
     DATIMM: {
