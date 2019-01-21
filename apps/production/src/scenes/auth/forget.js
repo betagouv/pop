@@ -24,7 +24,7 @@ export default class ForgotPassword extends Component {
       return (
         <Container className="forgot">
           <div className="block">
-            <p className="message">{`Un email vous à été envoyé sur ${
+            <p className="message">{`Un email vous a été envoyé sur ${
               this.state.mail
             }`}</p>
           </div>
