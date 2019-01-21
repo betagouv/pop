@@ -11,6 +11,8 @@ import Helmet from "../../components/Helmet";
 import FieldImages from "./components/fieldImages";
 import { findCollection, toFieldImages } from "./utils.js";
 
+const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
+
 class Memoire extends React.Component {
   state = {
     notice: null,
@@ -54,29 +56,23 @@ class Memoire extends React.Component {
       this.setState({ loading: false, notice });
     });
   }
-  getTitle() {
-    const title = `${this.state.notice.TICO ||
-      this.state.notice.TITR ||
-      this.state.notice.EDIF ||
-      ""} - POP`;
-    return title.charAt(0).toUpperCase() + title.slice(1);
+
+  rawTitle() {
+    const notice = this.state.notice;
+    return notice.TICO || notice.TITR || notice.EDIF || notice.LEG || "";
   }
-  getMetaDescription = () => {
-    const title =
-      this.state.notice.TICO ||
-      this.state.notice.TITR ||
-      this.state.notice.EDIF ||
-      "";
 
-    let description = title;
+  pageTitle() {
+    const title = `${this.rawTitle()} - POP`;
+    return capitalizeFirstLetter(title);
+  }
 
-    const author = this.state.notice.AUTP ? this.state.notice.AUTP : "";
+  metaDescription = () => {
+    const author = this.state.notice.AUTP;
     if (author) {
-      description = `${title}, par ${author}`;
+      return capitalizeFirstLetter(`${this.rawTitle()}, par ${author}`);
     }
-
-    //add uppercase
-    return description.charAt(0).toUpperCase() + description.slice(1);
+    return capitalizeFirstLetter(this.rawTitle());
   };
 
   fieldImage(notice) {
@@ -109,13 +105,14 @@ class Memoire extends React.Component {
       return <NotFound />;
     }
 
-    const description = this.getMetaDescription();
-    const title = this.getTitle();
     return (
       <div className="notice">
         <Container>
-          <Helmet title={title} description={description} />
-          <h1 className="heading">{notice.TICO}</h1>
+          <Helmet
+            title={this.pageTitle()}
+            description={this.metaDescription()}
+          />
+          <h1 className="heading">{this.rawTitle()}</h1>
           {this.fieldImage(notice)}
           <Row>
             <Col md="8">
