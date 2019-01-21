@@ -28,10 +28,15 @@ export default class Import extends React.Component {
 function parseFiles(files, encoding) {
   return new Promise(async (resolve, reject) => {
     //GERTRUDE
-    var objectFile = files.find(file =>
-      file.name.includes("GERTRUDE_xmlToPALISSY_lexicovide.txt")
-    );
-    if (objectFile) {
+    const gertrude = files.some(e => {
+      return [
+        "GERTRUDE_xmlToPALISSY_lexicovide.txt",
+        "GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
+        "GERTRUDE_xmlToMERIMEE_lexicovide.txt"
+      ].includes(e.name);
+    });
+
+    if (gertrude) {
       const PalissyFile = files.find(file =>
         file.name.includes("GERTRUDE_xmlToPALISSY_lexicovide.txt")
       );
@@ -42,13 +47,6 @@ function parseFiles(files, encoding) {
         file.name.includes("GERTRUDE_xmlToMERIMEE_lexicovide.txt")
       );
       // const RenameFile = files.find(file => file.name.includes('GERTRUDE_xmlToRenommeIllustrations_Toutes.txt'));
-
-      if (!PalissyFile || !MemoireFile || !MerimeeFile) {
-        reject(
-          "Impossible d'importer le(s) fichier(s). Véfifiez que vous avez bien chargé les 3 fichiers suivants : GERTRUDE_xmlToPALISSY_lexicovide.txt, GERTRUDE_xmlToMEMOIRE_lexicovide.txt, GERTRUDE_xmlToMERIMEE_lexicovide.txt"
-        );
-        return;
-      }
 
       const otherFiles = files.filter(file => file.name.indexOf(".xml") === -1);
       const importedNotices = await ParseGertrude(
@@ -62,9 +60,10 @@ function parseFiles(files, encoding) {
       for (let i = 0; i < importedNotices.length; i++) {
         checkReference(importedNotices[i]);
       }
+
       resolve({
         importedNotices,
-        fileNames: [PalissyFile.name, MemoireFile.name, MerimeeFile.name]
+        fileNames: ["GERTRUDE_xmlToPALISSY_lexicovide.txt", "GERTRUDE_xmlToMEMOIRE_lexicovide.txt", "GERTRUDE_xmlToMERIMEE_lexicovide.txt"]
       });
       return;
     }
