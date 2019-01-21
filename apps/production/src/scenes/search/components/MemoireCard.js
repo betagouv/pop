@@ -5,7 +5,7 @@ import mh from "../../../assets/mh.png";
 
 export default ({ data }) => {
   let image = "";
-  if (data.IMG.indexOf("memoire") === 0) {
+  if (data.IMG && data.IMG.indexOf("memoire") === 0) {
     image = `${bucket_url}${data.IMG}`;
   } else if (data.IMG) {
     image = `${data.IMG}`;
