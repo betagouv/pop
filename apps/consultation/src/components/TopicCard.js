@@ -10,7 +10,7 @@ class TopicCard extends React.Component {
       ...Object.entries(data).map(([k, v]) => ({ [k]: JSON.stringify(v) }))
     );
     const qsData = queryString.stringify(jsonData);
-    return `/search/mosaique?${qsData}`;
+    return `/search/mosaique?${qsData}&image=["oui"]`;
   }
 
   render() {
