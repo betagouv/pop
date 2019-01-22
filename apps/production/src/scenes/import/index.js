@@ -9,6 +9,7 @@ import Joconde from "./joconde";
 import Mnr from "./mnr";
 import Inv from "./inv";
 import Memoire from "./memoire";
+import List from "./list";
 
 class Import extends React.Component {
   render() {
@@ -28,6 +29,7 @@ class Import extends React.Component {
           <Route path={`/import/joconde`} component={Joconde} />
           <Route path={`/import/mh`} component={Mh} />
           <Route path={`/import/inv`} component={Inv} />
+          <Route path={`/import/list`} component={List} />
         </Switch>
       </div>
     );

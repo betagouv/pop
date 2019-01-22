@@ -57,6 +57,9 @@ export default class Import extends React.Component {
               }
             ])}
           </Row>
+          <Row>
+            <Link to="/import/list">Consultez les anciens imports</Link>
+          </Row>
         </div>
       </Container>
     );

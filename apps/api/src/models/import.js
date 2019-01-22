@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+var mongoosastic = require("mongoosastic");
+
+const getElasticInstance = require("../elasticsearch");
+
 const Schema = mongoose.Schema;
 
 const ImportSchema = new Schema({
@@ -53,6 +57,11 @@ const ImportSchema = new Schema({
       master: true
     }
   }
+});
+
+ImportSchema.plugin(mongoosastic, {
+  esClient: getElasticInstance(),
+  index: "import"
 });
 
 module.exports = mongoose.model("Import", ImportSchema);
