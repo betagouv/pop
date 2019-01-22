@@ -261,7 +261,7 @@ function readme() {
         <br />
         <ul>
           {requiredFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         <br />
@@ -271,7 +271,7 @@ function readme() {
         <br />
         <ul>
           {controlsFields.map(e => (
-            <li>
+            <li key={e}>
               {e} : {Mapping.joconde[e].validation}
             </li>
           ))}
@@ -283,7 +283,7 @@ function readme() {
         <br />
         <ul>
           {thesaurusedFields.map(e => (
-            <li>
+            <li key={e}>
               {e} :{" "}
               {Mapping.joconde[e].thesaurus.replace(
                 "http://data.culture.fr/thesaurus/resource/ark:/",
@@ -326,7 +326,7 @@ function readme() {
         <br />
         <ul>
           {generatedFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         Aucun besoin de les renseigner lors d'un import.

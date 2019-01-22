@@ -73,7 +73,7 @@ function readme() {
         <br />
         <ul>
           {requiredFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         <br />
@@ -83,7 +83,7 @@ function readme() {
         <br />
         <ul>
           {controlsFields.map(e => (
-            <li>
+            <li key={e}>
               {e} : {Mapping.mnr[e].validation}
             </li>
           ))}
@@ -118,7 +118,7 @@ function readme() {
         champs utiles au traitement des données. Il s'agit des champs : <br />
         <ul>
           {generatedFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         Aucun besoin de les renseigner lors d'un import.
