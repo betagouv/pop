@@ -135,7 +135,6 @@ function renameFile(file, newName) {
 }
 
 function formatDate(d = new Date()) {
-  console.log("YO");
   var months = [
     "janvier",
     "février",

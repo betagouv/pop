@@ -94,9 +94,9 @@ const Card = ({ data }) => {
       <div className="card">
         <Row>
           <Col md="8" className="content">
-            <div className="title">{`Import le ${utils.formatDate(new Date(data.importedAt))} par ${
-              data.email
-            } (${data.institution})`}</div>
+            <div className="title">{`Import le ${utils.formatDate(
+              new Date(data.importedAt)
+            )} par ${data.email || "inconnu"} (${data.institution})`}</div>
             <div className="title">
               {`Vous pouvez consultez le résultat de l'import ici : `}
               <a href={preview_url} target="_blank">
