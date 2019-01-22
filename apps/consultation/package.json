@@ -74,6 +74,9 @@
       "isomorphic-style-loader/lib/withStyles": "<rootDir>/src/__tests__/__mocks__/withStyles.js"
     }
   },
+  "prettier": {
+    "printWidth": 100
+  },
   "engines": {
     "node": "8.11.x",
     "npm": "5.x"

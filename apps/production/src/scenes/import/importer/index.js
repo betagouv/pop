@@ -8,7 +8,7 @@ import DropZone from "./dropZone";
 import api from "../../../services/api";
 import generate from "./report";
 import controleThesaurus from "./thesaurus";
-import ExportData from "./export";
+import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 
 import diff from "./diff";
@@ -111,14 +111,24 @@ class Importer extends Component {
     );
 
     ///////////////////////////////////////////////
-    const doc = await api.createImport({
-      institution: this.props.institution,
-      user: this.props.userId,
-      created: created.length,
-      updated: updated.length,
-      rejected: updated.length,
-      unChanged: total - created.length - updated.length - updated.length
-    });
+    const { collection, fieldsToExport } = this.props;
+    const file = generateCSVFile(
+      this.state.importedNotices,
+      collection,
+      fieldsToExport
+    );
+    const doc = await api.createImport(
+      {
+        institution: this.props.institution,
+        user: this.props.userId,
+        created: created.length,
+        updated: updated.length,
+        rejected: updated.length,
+        unChanged: total - created.length - updated.length - updated.length
+      },
+      file
+    );
+
     const importId = doc.doc._id;
     this.setState({ importId });
     for (let i = 0; i < created.length; i++) {
@@ -195,6 +205,7 @@ class Importer extends Component {
         step: 2,
         loadingMessage: `Import effectué avec succès`
       });
+
       amplitude.getInstance().logEvent("Import - Done", {
         "Notices total": total,
         "Notices created": created.length,
@@ -211,11 +222,8 @@ class Importer extends Component {
 
   onExport() {
     amplitude.getInstance().logEvent("Import - Download report");
-    ExportData.generate(
-      this.state.importedNotices,
-      this.props.collection,
-      this.props.fieldsToExport
-    );
+    const { collection, fieldsToExport } = this.props;
+    downloadDetails(this.state.importedNotices, collection, fieldsToExport);
   }
 
   renderSummary() {

@@ -74,8 +74,6 @@ class api {
       obj.subject = "TEST " + obj.subject;
     }
 
-    console.log("POST MAIL", obj);
-
     return request.post(
       `${api_url}/mail`,
       JSON.stringify(obj),
@@ -83,9 +81,10 @@ class api {
     );
   }
 
-  createImport(data) {
+  createImport(data, file) {
     let formData = new FormData();
     formData.append("import", JSON.stringify(data));
+    formData.append("file", file, "import.csv");
     return request.post(`${api_url}/import`, formData);
   }
 

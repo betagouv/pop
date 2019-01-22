@@ -17,6 +17,9 @@
     "open",
     "data"
   ],
+  "prettier": {
+    "printWidth": 100
+  },
   "engines": {
     "node": "8.11.x",
     "npm": "5.x"
