@@ -18,12 +18,12 @@ export default class Import extends React.Component {
           parseFiles={parseFiles}
           readme={readme}
           dropzoneText={
-            <div>
+            <span>
               Glissez & déposez vos fichiers au format MH ( extension .csv avec
               séparateur | ) et les images associées (au format .jpg) dans cette
               zone
               <br />
-            </div>
+            </span>
           }
         />
       </Container>
@@ -171,19 +171,19 @@ function readme() {
         Mémoire :
         <ul>
           {requiredMemoireFields.map(e => (
-            <li>{e} </li>
+            <li key={e}>{e} </li>
           ))}
         </ul>
         Mérimee :
         <ul>
           {requiredMerimeeFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         Palissy :
         <ul>
           {requiredPalissyFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         <br />
@@ -194,7 +194,7 @@ function readme() {
         Mémoire :
         <ul>
           {validationMemoireFields.map(e => (
-            <li>
+            <li key={e}>
               {e} : {Mapping.memoire[e].validation}
             </li>
           ))}
@@ -202,7 +202,7 @@ function readme() {
         Mérimee :
         <ul>
           {validationMerimeeFields.map(e => (
-            <li>
+            <li key={e}>
               {e} : {Mapping.merimee[e].validation}
             </li>
           ))}
@@ -210,7 +210,7 @@ function readme() {
         Palissy :
         <ul>
           {validationPalissyFields.map(e => (
-            <li>
+            <li key={e}>
               {e} : {Mapping.palissy[e].validation}
             </li>
           ))}
@@ -272,19 +272,19 @@ function readme() {
         Mémoire :
         <ul>
           {generatedMemoireFields.map(e => (
-            <li>{e} </li>
+            <li key={e}>{e} </li>
           ))}
         </ul>
         Mérimee :
         <ul>
           {generatedMerimeeFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         Palissy :
         <ul>
           {generatedPalissyFields.map(e => (
-            <li>{e}</li>
+            <li key={e}>{e}</li>
           ))}
         </ul>
         Aucun besoin de les renseigner lors d'un import.
