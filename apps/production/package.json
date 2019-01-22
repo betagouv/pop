@@ -52,6 +52,9 @@
     "deploy:staging": "npm install && npm run build:staging && eb deploy pop-production-staging --profil POP",
     "test": "jest"
   },
+  "prettier": {
+    "printWidth": 100
+  },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/src/__tests__/setup/setup.js",
     "testPathIgnorePatterns": [
