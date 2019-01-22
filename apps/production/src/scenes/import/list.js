@@ -70,9 +70,13 @@ export default class List extends React.Component {
 const Card = ({ data }) => {
   console.log(data);
 
-  const URL = `http://pop${
+  const preview_url = `http://pop${
     process.env.NODE_ENV === "production" ? "" : "-staging"
   }.culture.gouv.fr/search/list?import=["${data._id}"]`;
+
+  const details_url = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
+    process.env.NODE_ENV === "production" ? "" : "-staging"
+  }/import/${data._id}/import.csv`;
 
   return (
     <div className="card" style={{ width: "50%" }}>
@@ -81,11 +85,15 @@ const Card = ({ data }) => {
           <div className="title">{`Import le ${data.importedAt} par ${data.user}`}</div>
           <div className="title">
             {`Vous pouvez consultez le résultat de l'import ici : `}
-            <a href={URL}>Import</a>
+            <a href={preview_url} target="_blank">
+              Voir en diffusion
+            </a>
           </div>
           <div className="title">
             {`Vous pouvez consultez le detail de l'import ici : `}
-            <a href={URL}>Import</a>
+            <a href={details_url} target="_blank">
+              Fichier de détail
+            </a>
           </div>
         </Col>
         <Col md="4">
