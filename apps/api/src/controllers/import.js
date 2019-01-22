@@ -9,30 +9,35 @@ const Import = require("../models/import");
 
 const { uploadFile } = require("./utils");
 
-router.post("/", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
-  const body = JSON.parse(req.body.import);
-  const arr = [];
-
-  for (var i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`import/${req.files[i].originalname}`, req.files[i]));
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    try {
+      const body = JSON.parse(req.body.import);
+      const obj = new Import(body);
+      const doc = await obj.save();
+      for (var i = 0; i < req.files.length; i++) {
+        await uploadFile(`import/${doc._id}/${req.files[i].originalname}`, req.files[i]);
+      }
+      return res.send({ success: true, msg: "OK", doc });
+    } catch (e) {
+      capture(JSON.stringify(e));
+      return res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-
-  const obj = new Import(body);
-  arr.push(obj.save());
-  Promise.all(arr).then(doc => {
-    res.send({ success: true, msg: "OK", doc });
-  });
-});
+);
 
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
   let imports = null;
   try {
     imports = await Import.find({});
+    res.status(200).send(imports);
   } catch (e) {
-    capture(e);
+    capture(JSON.stringify(e));
     return res.status(500).send({ e });
   }
-  res.status(200).send(imports);
 });
 
 module.exports = router;
