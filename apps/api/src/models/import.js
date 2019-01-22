@@ -22,6 +22,14 @@ const ImportSchema = new Schema({
       master: true
     }
   },
+  email: {
+    type: String,
+    default: "",
+    documentation: {
+      description: "Email de la personne qui a importé",
+      master: true
+    }
+  },
   institution: {
     type: String,
     documentation: {

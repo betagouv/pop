@@ -20,9 +20,7 @@ function readODS(file, encoding) {
       });
       workbook.SheetNames.forEach(function(sheetName) {
         // Here is your object
-        var XL_row_object = XLSX.utils.sheet_to_row_object_array(
-          workbook.Sheets[sheetName]
-        );
+        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
         // var json_object = JSON.stringify(XL_row_object);
         resolve(XL_row_object);
       });
@@ -110,13 +108,7 @@ function parseAjoutPilote(res, object) {
       let tag = true;
       while (tag) {
         value += lines[++i];
-        if (
-          !(
-            lines[i + 1] &&
-            lines[i + 1] !== "//" &&
-            (object && !object.has(lines[i + 1]))
-          )
-        ) {
+        if (!(lines[i + 1] && lines[i + 1] !== "//" && (object && !object.has(lines[i + 1])))) {
           tag = false;
         }
       }
@@ -142,11 +134,37 @@ function renameFile(file, newName) {
   return newFile;
 }
 
+function formatDate(d = new Date()) {
+  console.log("YO");
+  var months = [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "decembre"
+  ];
+  const date = ("0" + d.getDate()).slice(-2);
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+  const minutes = ("0" + d.getMinutes()).slice(-2);
+  const hours = ("0" + d.getHours()).slice(-2);
+
+  return `${date} ${month} ${year}, ${hours}h${minutes}`;
+}
+
 export default {
   readFile,
   readXML,
   readCSV,
   readODS,
   parseAjoutPilote,
-  renameFile
+  renameFile,
+  formatDate
 };
