@@ -11,6 +11,16 @@ function readFile(file, encoding, cb) {
   reader.readAsText(file, encoding || "ISO-8859-1");
 }
 
+function asyncReadFile(file, encoding) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onabort = () => reject("file reading was aborted");
+    reader.onerror = () => reject("file reading has failed");
+    reader.readAsText(file, encoding || "ISO-8859-1");
+  });
+}
+
 function readODS(file, encoding) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -144,6 +154,7 @@ function renameFile(file, newName) {
 
 export default {
   readFile,
+  asyncReadFile,
   readXML,
   readCSV,
   readODS,
