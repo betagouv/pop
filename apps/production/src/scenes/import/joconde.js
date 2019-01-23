@@ -9,51 +9,48 @@ import utils from "./utils";
 
 class Import extends React.Component {
   parseFiles(files, encoding) {
-    return new Promise((resolve, reject) => {
-      var file = files.find(
-        file => ("" + file.name.split(".").pop()).toLowerCase() === "txt"
-      );
+    return new Promise(async (resolve, reject) => {
+      let file = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
       if (!file) {
         reject("Fichier .txt absent");
         return;
       }
+      const res = await utils.asyncReadFile(file, encoding);
 
-      utils.readFile(file, encoding, res => {
-        const importedNotices = utils
-          .parseAjoutPilote(res, Joconde)
-          .map(value => {
-            if (!value.MUSEO && this.props.museofile) {
-              value.MUSEO = this.props.museofile;
-            }
-            return value;
-          })
-          .map(value => new Joconde(value));
+      const importedNotices = utils
+        .parseAjoutPilote(res, Joconde)
+        .map(value => {
+          if (!value.MUSEO && this.props.museofile) {
+            value.MUSEO = this.props.museofile;
+          }
+          return value;
+        })
+        .map(value => new Joconde(value));
 
-        const filesMap = {};
-        for (var i = 0; i < files.length; i++) {
-          //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-          filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
-        }
+      const filesMap = {};
+      for (var i = 0; i < files.length; i++) {
+        //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+        filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+      }
 
-        //ADD IMAGES
-        for (var i = 0; i < importedNotices.length; i++) {
-          const names = importedNotices[i].IMG;
-          for (var j = 0; j < names.length; j++) {
-            let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-            if (!img) {
-              importedNotices[i]._errors.push(
-                `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
-              );
-            } else {
-              const shortname = Joconde.convertLongNameToShort(img.name);
-              let newImage = utils.renameFile(img, shortname);
-              importedNotices[i]._images.push(newImage);
-            }
+      //ADD IMAGES
+      for (var i = 0; i < importedNotices.length; i++) {
+        const names = importedNotices[i].IMG;
+        for (var j = 0; j < names.length; j++) {
+          let img = filesMap[Joconde.convertLongNameToShort(names[j])];
+          if (!img) {
+            importedNotices[i]._errors.push(
+              `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+            );
+          } else {
+            const shortname = Joconde.convertLongNameToShort(img.name);
+            let newImage = utils.renameFile(img, shortname);
+            importedNotices[i]._images.push(newImage);
           }
         }
+      }
 
-        resolve({ importedNotices, fileNames: [file.name] });
-      });
+      resolve({ importedNotices, fileNames: [file.name] });
     });
   }
   render() {
@@ -122,8 +119,7 @@ function report(notices, collection, email, institution) {
     return acc;
   }, 0);
 
-  let contact =
-    "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
+  let contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
 
   arr.push(
     `<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`
@@ -163,21 +159,14 @@ function report(notices, collection, email, institution) {
     for (let j = 0; j < notices[i]._warnings.length; j++) {
       count++;
       if (obj[notices[i]._warnings[j]] !== undefined) {
-        obj[notices[i]._warnings[j]].count =
-          obj[notices[i]._warnings[j]].count + 1;
+        obj[notices[i]._warnings[j]].count = obj[notices[i]._warnings[j]].count + 1;
         obj[notices[i]._warnings[j]].notices.push(
-          `<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${
-            notices[i].INV
-          })`
+          `<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${notices[i].INV})`
         );
       } else {
         obj[notices[i]._warnings[j]] = {
           count: 1,
-          notices: [
-            `<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${
-              notices[i].INV
-            })`
-          ]
+          notices: [`<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${notices[i].INV})`]
         };
       }
     }
@@ -239,8 +228,8 @@ function readme() {
     <div>
       <h5>Joconde</h5>
       <div>
-        Cet onglet permet d’alimenter la base Joconde. Avant tout import dans la
-        base, veuillez prendre connaissance de la{" "}
+        Cet onglet permet d’alimenter la base Joconde. Avant tout import dans la base, veuillez
+        prendre connaissance de la{" "}
         <a
           href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Joconde_engagements_VD.pdf"
           target="_blank"
@@ -254,8 +243,8 @@ function readme() {
           <li>texte : txt ajout piloté </li>
           <li>illustration : jpg, png.</li>
         </ul>
-        La taille maximale d’un import est de 300Mo (soit environ 3000 notices
-        avec image, ou 1 million de notices sans images). <br /> <br />
+        La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
+        million de notices sans images). <br /> <br />
         <h6>Champs obligatoires et contrôles de vocabulaire </h6>
         Les champs suivants doivent obligatoirement être renseignés : <br />
         <br />
@@ -299,13 +288,13 @@ function readme() {
         <br />
         <br />
         <h6>Je veux mettre à jour tout ou partie d’une notice :</h6>
-        j’importe les champs à mettre à jour avec leurs nouvelles valeurs et
-        j’écrase l’ancienne notice.
+        j’importe les champs à mettre à jour avec leurs nouvelles valeurs et j’écrase l’ancienne
+        notice.
         <br />
         <br />
         <h6>Je veux effacer une ou plusieurs valeurs d’une notice : </h6>
-        j’importe un fichier comportant le ou les champs que je veux supprimer
-        en les laissant vides.
+        j’importe un fichier comportant le ou les champs que je veux supprimer en les laissant
+        vides.
         <br />
         <br />
         <h6>Je veux supprimer une notice :</h6>
@@ -313,16 +302,14 @@ function readme() {
         <br />
         <br />
         <h6>Je veux ajouter une image :</h6>
-        1) Si présence du champ Adresse d'images (REFIM) alors l'image (.jpg)
-        est obligatoire.
+        1) Si présence du champ Adresse d'images (REFIM) alors l'image (.jpg) est obligatoire.
         <br />
-        2) Sur une notice déjà existante, je peux cliquer sur "Ajouter une
-        image" et télécharger une image depuis mon ordinateur. Le champ IMG
-        contiendra le lien de l'image ainsi téléchargée.
+        2) Sur une notice déjà existante, je peux cliquer sur "Ajouter une image" et télécharger une
+        image depuis mon ordinateur. Le champ IMG contiendra le lien de l'image ainsi téléchargée.
         <br />
         <br />
-        NB : à la création d'une notice, POP génère automatiquement certains
-        champs utiles au traitement des données. Il s'agit des champs : <br />
+        NB : à la création d'une notice, POP génère automatiquement certains champs utiles au
+        traitement des données. Il s'agit des champs : <br />
         <br />
         <ul>
           {generatedFields.map(e => (
