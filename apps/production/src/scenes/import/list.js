@@ -108,7 +108,7 @@ const Card = ({ data }) => {
               </a>
             </div>
             <div className="title">
-              {`Vous pouvez consultez le detail de l'import ici : `}
+              {`Vous pouvez consultez le détail de l'import ici : `}
               <a href={details_url} target="_blank">
                 Fichier de détail
               </a>
