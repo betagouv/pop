@@ -30,7 +30,9 @@ app.route("*").all((req, res) => {
     req.url === "/" ||
     /\/notice\/(merimee|palissy|mnr|joconde|memoire)\/\w+/.test(req.url) ||
     /\/search\/(list|map|mosaique)/.test(req.url) ||
-    /\/opendata/.test(req.url)
+    /\/opendata/.test(req.url) ||
+    /\/topics/.test(req.url) ||
+    /\/museo\/.*/.test(req.url)
   ) {
     status = 200;
   }
