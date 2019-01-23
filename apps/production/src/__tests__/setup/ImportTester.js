@@ -22,10 +22,13 @@ export default class ImportTester {
   }
 
   get state() {
-    return this.component.find(Importer).children().state()
+    return this.component
+      .find(Importer)
+      .children()
+      .state();
   }
 
-  get importedNotices() {
+  get notices() {
     return this.state.importedNotices;
   }
 
@@ -56,7 +59,9 @@ export default class ImportTester {
           return new File([new Blob([doc])], f, { type: "text/plain" });
         });
       const dropzone = this.component.find(Dropzone);
-      await dropzone.instance().props.onFinish(null, [...data, ...images], null);
+      await dropzone
+        .instance()
+        .props.onFinish(null, [...data, ...images], encoding === "latin1" ? "ISO-8859-1" : "UTF-8");
       resolve();
     });
   }
@@ -66,14 +71,14 @@ export default class ImportTester {
   }
 
   summaryPicturesCount(c) {
-    return this.countFromRegex(/.*([0-9]+) sont illustrées.*/);
+    return this.countFromRegex(/.*?([0-9]+) sont illustrées.*/);
   }
 
   summaryNewDocsCount(c) {
-    return this.countFromRegex(/.*([0-9]+) sont des nouvelles notices.*/);
+    return this.countFromRegex(/.*?([0-9]+) sont des nouvelles notices.*/);
   }
 
   summaryInvalidDocsCount(c) {
-    return this.countFromRegex(/.*([0-9]+) notices ne peuvent être importées.*/);
+    return this.countFromRegex(/.*?([0-9]+) notices ne peuvent être importées.*/);
   }
 }

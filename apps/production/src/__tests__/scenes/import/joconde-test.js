@@ -23,6 +23,7 @@ test("import 3 Jocondes notices with images", async () => {
   expect(importTester.summaryPicturesCount()).toBe(3);
   expect(importTester.summaryInvalidDocsCount()).toBe(0);
   expect(importTester.summaryNewDocsCount()).toBe(3);
+  expect(importTester.notices.reduce((a, b) => a + b.IMG.length, 0)).toBe(4);
 });
 
 test("import 3 Jocondes notices without required images", async () => {
@@ -43,7 +44,7 @@ test("import file with not all required fields (only REF)", async () => {
   importTester.mount(<Joconde />);
   await importTester.dropFiles(["joconde-invalid-UTF-8.txt"]);
   expect(importTester.summaryInvalidDocsCount()).toBe(1);
-  const errors = importTester.importedNotices[0]._errors;
+  const errors = importTester.notices[0]._errors;
   const requiredFields = Object.entries(Mapping.joconde).filter(([k, v]) => v.required)
   expect(errors).toHaveLength(requiredFields.length - 1);
   errors.map(e => {

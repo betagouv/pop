@@ -56,50 +56,49 @@ function readXML(file, encoding) {
 }
 
 function readCSV(file, delimiter, encoding, quote) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if (!file) {
       resolve([]);
       return;
     }
-    readFile(file, encoding, res => {
-      const parser = Parse({
-        delimiter: delimiter,
-        from: 1,
-        quote: quote || "",
-        relax_column_count: true
-      });
-      const output = [];
-
-      let record = null;
-      let header = null;
-
-      parser.on("readable", () => {
-        while ((record = parser.read())) {
-          if (!header) {
-            header = [].concat(record);
-            continue;
-          }
-          const obj = {};
-          record.map((e, i) => {
-            obj[header[i]] = e;
-          });
-          output.push(obj);
-        }
-      });
-
-      // Catch any error
-      parser.on("error", err => {
-        reject(err.message);
-      });
-
-      // When we are done, test that the parsed output matched what expected
-      parser.on("finish", () => {
-        resolve(output);
-      });
-
-      parser.write(res);
-      parser.end();
+    const res = await asyncReadFile(file, encoding);
+    const parser = Parse({
+      delimiter: delimiter,
+      from: 1,
+      quote: quote || "",
+      relax_column_count: true
     });
+    const output = [];
+
+    let record = null;
+    let header = null;
+
+    parser.on("readable", () => {
+      while ((record = parser.read())) {
+        if (!header) {
+          header = [].concat(record);
+          continue;
+        }
+        const obj = {};
+        record.map((e, i) => {
+          obj[header[i]] = e;
+        });
+        output.push(obj);
+      }
+    });
+
+    // Catch any error
+    parser.on("error", err => {
+      reject(err.message);
+    });
+
+    // When we are done, test that the parsed output matched what expected
+    parser.on("finish", () => {
+      resolve(output);
+    });
+
+    parser.write(res);
+    parser.end();
   });
 }
 
