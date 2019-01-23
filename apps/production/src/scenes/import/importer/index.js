@@ -250,7 +250,7 @@ class Importer extends Component {
         e._warnings.length
     ).length;
 
-    const filesnames = this.state.fileNames.map(e => <div>{e}</div>);
+    const filesnames = this.state.fileNames.map(e => <div key={e}>{e}</div>);
     return (
       <div className="working-area">
         <h4 className="subtitle">Contrôle et validation de l'import</h4>
