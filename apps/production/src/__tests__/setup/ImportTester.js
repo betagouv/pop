@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { mount } from "enzyme";
 import Dropzone from "../../scenes/import/importer/dropZone";
+import Importer from "../../scenes/import/importer";
 import fs from "fs";
 
 export default class ImportTester {
@@ -18,6 +19,14 @@ export default class ImportTester {
     return mockStore({
       Auth: { user: { email: "foo.bar@example.org" }, token: null, error: "" }
     });
+  }
+
+  get state() {
+    return this.component.find(Importer).children().state()
+  }
+
+  get importedNotices() {
+    return this.state.importedNotices;
   }
 
   disableAmplitude() {
