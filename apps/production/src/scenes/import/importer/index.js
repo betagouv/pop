@@ -127,8 +127,8 @@ class Importer extends Component {
         email : this.props.email,
         created: created.length,
         updated: updated.length,
-        rejected: updated.length,
-        unChanged: total - created.length - updated.length - updated.length
+        rejected: rejected.length,
+        unChanged: total - created.length - updated.length - rejected.length
       },
       file
     );
