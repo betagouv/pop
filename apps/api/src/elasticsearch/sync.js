@@ -11,6 +11,7 @@ const Joconde = require("../models/joconde");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
 const Mnr = require("../models/mnr");
+const Import = require("../models/import");
 const es = require("../elasticsearch")();
 const chalk = require("chalk");
 const { pingElasticsearchTask } = require("./utils");
@@ -25,16 +26,14 @@ async function run() {
       "-i --indices <indices>",
       "The name of the indices",
       val => val.split(","),
-      "joconde,memoire,merimee,mnr,palissy".split(",")
+      "joconde,memoire,merimee,mnr,palissy,import".split(",")
     )
     .parse(process.argv);
 
   program.chunks = Number(program.chunks);
 
   console.log(
-    chalk.white.bgRed.bold(
-      "The script may run for several hours and should not be stopped."
-    )
+    chalk.white.bgRed.bold("The script may run for several hours and should not be stopped.")
   );
   console.log(
     "Still, it can be stopped, but it will leave temporary indices which must be cleaned manually."
@@ -72,6 +71,7 @@ async function run() {
       merimee: Merimee,
       palissy: Palissy,
       memoire: Memoire,
+      import: Import,
       mnr: Mnr
     }[db];
     tasks.add({
@@ -112,10 +112,7 @@ async function run() {
               return new Observable(async observer => {
                 ctx.error = true;
                 let counter = 0;
-                observer.next(
-                  (await noticeClass.estimatedDocumentCount()) +
-                    " notices to go."
-                );
+                observer.next((await noticeClass.estimatedDocumentCount()) + " notices to go.");
                 let lastId;
                 while (true) {
                   let notices = await noticeClass
@@ -160,9 +157,7 @@ async function run() {
               // Find previous db name.
               const aliases = await es.indices.getAlias({ index: "*" });
               const previousDbname =
-                Object.keys(aliases).find(
-                  key => aliases[key].aliases[rootDbname]
-                ) || rootDbname;
+                Object.keys(aliases).find(key => aliases[key].aliases[rootDbname]) || rootDbname;
               // Create alias to the rootname and remove previous db.
               const response = await es.indices.updateAliases({
                 body: {
