@@ -55,6 +55,10 @@ export default class List extends React.Component {
             <Col xs="12">
               <SelectedFilters clearAllLabel="Tout supprimer" />
               <ReactiveList
+                sortOptions={[
+                  { label: "Filtrer les plus récents", dataField: "importedAt", sortBy: "desc" },
+                  { label: "Filtrer les plus anciens", dataField: "importedAt", sortBy: "asc" }
+                ]}
                 componentId="results"
                 className="reactive-list"
                 react={{ and: FILTER }}
