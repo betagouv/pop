@@ -1,5 +1,5 @@
 import React from "react";
-import Mh from "../../../scenes/import/mh";
+import Mh from "../../../scenes/import/MH";
 import Importer from "../../../scenes/import/importer";
 import ImportTester from "../../setup/ImportTester";
 import api from "../../../services/api.js";
