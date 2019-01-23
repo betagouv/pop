@@ -3,14 +3,7 @@ export function generateCSVFile(
   base,
   fieldToExport = [{ name: "Identifiant", key: "REF" }]
 ) {
-  const d = new Date();
-  const date = ("0" + d.getDate()).slice(-2);
-  const month = ("0" + (d.getMonth() + 1)).slice(-2);
-  const year = d.getFullYear();
-  const minutes = ("0" + d.getMinutes()).slice(-2);
-  const hours = ("0" + d.getHours()).slice(-2);
-  const secondes = ("0" + d.getSeconds()).slice(-2);
-  const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
+
 
   let csv = "";
   const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"]; // Add columns ETAT(create, updated, rejected) and informations about warning or errors
@@ -99,6 +92,16 @@ export function downloadDetails(
   fieldToExport = [{ name: "Identifiant", key: "REF" }]
 ) {
   const file = generateCSVFile(notices, base, fieldToExport);
+
+  const d = new Date();
+  const date = ("0" + d.getDate()).slice(-2);
+  const month = ("0" + (d.getMonth() + 1)).slice(-2);
+  const year = d.getFullYear();
+  const minutes = ("0" + d.getMinutes()).slice(-2);
+  const hours = ("0" + d.getHours()).slice(-2);
+  const secondes = ("0" + d.getSeconds()).slice(-2);
+  const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
+  
   initiateFileDownload(file, fileName);
 }
 
