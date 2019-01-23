@@ -11,6 +11,8 @@ import controleThesaurus from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 
+
+
 import diff from "./diff";
 
 import "rc-steps/assets/index.css";
@@ -117,10 +119,12 @@ class Importer extends Component {
       collection,
       fieldsToExport
     );
+    
     const doc = await api.createImport(
       {
         institution: this.props.institution,
         user: this.props.userId,
+        email : this.props.email,
         created: created.length,
         updated: updated.length,
         rejected: updated.length,

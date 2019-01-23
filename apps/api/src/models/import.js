@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+var mongoosastic = require("mongoosastic");
+
+const getElasticInstance = require("../elasticsearch");
+
 const Schema = mongoose.Schema;
 
 const ImportSchema = new Schema({
@@ -15,6 +19,14 @@ const ImportSchema = new Schema({
     default: Date.now(),
     documentation: {
       description: "Date de l'import ",
+      master: true
+    }
+  },
+  email: {
+    type: String,
+    default: "",
+    documentation: {
+      description: "Email de la personne qui a importé",
       master: true
     }
   },
@@ -53,6 +65,11 @@ const ImportSchema = new Schema({
       master: true
     }
   }
+});
+
+ImportSchema.plugin(mongoosastic, {
+  esClient: getElasticInstance(),
+  index: "import"
 });
 
 module.exports = mongoose.model("Import", ImportSchema);

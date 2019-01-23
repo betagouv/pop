@@ -1,27 +1,13 @@
+
+
+import utils from "../utils";
+
+
 export default function generate(notices, collection, email, institution) {
   const fieldToExport = [{ name: "Identifiant", key: "REF" }];
   const arr = [];
 
-  const d = new Date();
-  var months = [
-    "janvier",
-    "février",
-    "mars",
-    "avril",
-    "mai",
-    "juin",
-    "juillet",
-    "août",
-    "septembre",
-    "octobre",
-    "novembre",
-    "decembre"
-  ];
-  const date = ("0" + d.getDate()).slice(-2);
-  const month = months[d.getMonth()];
-  const year = d.getFullYear();
-  const minutes = ("0" + d.getMinutes()).slice(-2);
-  const hours = ("0" + d.getHours()).slice(-2);
+  const dateStr = utils.formatDate();
 
   const created = notices.filter(e => e._status === "created");
   const updated = notices.filter(e => e._status === "updated");
@@ -58,7 +44,7 @@ export default function generate(notices, collection, email, institution) {
   }
 
   arr.push(
-    `<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`
+    `<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`
   );
   arr.push(`<h2>Établissement: ${institution}</h2>`);
   arr.push(`<h2>Producteur: ${email}</h2>`);

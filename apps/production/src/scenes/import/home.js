@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
+import { connect } from "react-redux";
 
 import "./home.css";
 
-export default class Import extends React.Component {
+class Import extends React.Component {
   renderTiles(tiles) {
     return tiles.map(({ url, name, image }, i) => {
       return (
@@ -57,8 +58,25 @@ export default class Import extends React.Component {
               }
             ])}
           </Row>
+          <Row>
+            {this.props.group === "admin" ? (
+              <Link to="/import/list">Consultez les anciens imports</Link>
+            ) : (
+              <div />
+            )}
+          </Row>
         </div>
       </Container>
     );
   }
 }
+
+const mapStateToProps = ({ Auth }) => {
+  const { group } = Auth.user;
+  return { group };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Import);
