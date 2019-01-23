@@ -419,7 +419,6 @@ class Importer extends Component {
         </div>
       );
     } else if (this.state.errors) {
-      console.log(this.state.errors);
       currentStep = (
         <div className="working-area">
           <h2>
