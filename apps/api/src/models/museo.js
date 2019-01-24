@@ -10,6 +10,15 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: { label: "Index global" }
     },
+    POP_COMMENTAIRES: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Commentaires technique",
+        label: "Commentaires POP",
+        generated: true
+      }
+    },
     ACCES: { type: String, default: "", documentation: { label: "Accès" } },
     ACTIV: {
       type: String,

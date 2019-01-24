@@ -18,8 +18,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "Collections des musées de France (Joconde)",
       documentation: {
-        description:
-          "Nom de la base : Collections des musées de France (Joconde)",
+        description: "Nom de la base : Collections des musées de France (Joconde)",
         generated: true,
         label: "Nom de la base"
       }
@@ -57,10 +56,18 @@ const Schema = new mongoose.Schema(
       enum: ["oui", "non"],
       default: "non",
       documentation: {
-        description:
-          "Champ qui permet de savoir si la geolocalisation est disponible ou non",
+        description: "Champ qui permet de savoir si la geolocalisation est disponible ou non",
         generated: true,
         label: "Contient une position"
+      }
+    },
+    POP_COMMENTAIRES: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Commentaires technique",
+        label: "Commentaires POP",
+        generated: true
       }
     },
     REF: {
@@ -179,8 +186,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
         deprecated: true
       }
     },
@@ -188,8 +194,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
         deprecated: true
       }
     },
@@ -476,8 +481,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Lien commande de reproduction et/ou de conditions d’utilisation ",
+        description: "Lien commande de reproduction et/ou de conditions d’utilisation ",
         label: "Lien commande photo"
       }
     },
@@ -517,8 +521,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]",
         deprecated: true,
         label: "Précision datation"
       }
@@ -578,8 +581,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Précisions sur le lieu de création/ d’exécution / d’utilisation",
+        description: "Précisions sur le lieu de création/ d’exécution / d’utilisation",
         label: "Précisions lieu création"
       }
     },
@@ -687,8 +689,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : A vérifier. Non présent en production] ",
+        description: "[Peut être déprécié : A vérifier. Non présent en production] ",
         deprecated: true,
         label: "Recherche sur tout"
       }

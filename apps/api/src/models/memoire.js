@@ -36,6 +36,15 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
+    POP_COMMENTAIRES: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Commentaires technique",
+        label: "Commentaires POP",
+        generated: true
+      }
+    },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     REF: {
       type: String,
