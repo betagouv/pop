@@ -17,8 +17,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "Récupération artistique (MNR Rose-Valland)",
       documentation: {
-        description:
-          "Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)",
+        description: "Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)",
         generated: true
       }
     },
@@ -279,8 +278,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
+        description: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
         label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
       }
     },
@@ -374,8 +372,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Sujet de la représentation (source littéraire ou musicale) ",
+        description: "Sujet de la représentation (source littéraire ou musicale) ",
         label: "Sujet de la représentation (source littéraire ou musicale) "
       }
     },
@@ -383,8 +380,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Adresses images jointes générique (actuellement non utilisé)",
+        description: "Adresses images jointes générique (actuellement non utilisé)",
         label: "Adresses images jointes générique (actuellement non utilisé)"
       }
     },
@@ -410,8 +406,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Etablissement affectataire qui existe dans d’autres bases",
+        description: "Etablissement affectataire qui existe dans d’autres bases",
         label: "Etablissement affectataire qui existe dans d’autres bases"
       }
     },

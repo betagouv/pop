@@ -16,12 +16,8 @@ const models = fs
       type: v.instance,
       required: v.options.required,
       opendata: v.options.documentation ? v.options.documentation.opendata : "",
-      generated: v.options.documentation
-        ? v.options.documentation.generated
-        : "",
-      deprecated: v.options.documentation
-        ? v.options.documentation.deprecated
-        : "",
+      generated: v.options.documentation ? v.options.documentation.generated : "",
+      deprecated: v.options.documentation ? v.options.documentation.deprecated : "",
       description:
         v.options.documentation && v.options.documentation.description
           ? v.options.documentation.description
@@ -30,12 +26,8 @@ const models = fs
         v.options.documentation && v.options.documentation.label
           ? v.options.documentation.label
           : "",
-      validation: v.options.documentation
-        ? v.options.documentation.validation
-        : "",
-      thesaurus: v.options.documentation
-        ? v.options.documentation.thesaurus
-        : ""
+      validation: v.options.documentation ? v.options.documentation.validation : "",
+      thesaurus: v.options.documentation ? v.options.documentation.thesaurus : ""
     }))
   }));
 
@@ -46,8 +38,7 @@ fs.writeFileSync(
   ${models
     .map(
       model =>
-        `- [${model.name[0].toUpperCase() +
-          model.name.slice(1)}](/apps/api/doc/${model.name}.md)`
+        `- [${model.name[0].toUpperCase() + model.name.slice(1)}](/apps/api/doc/${model.name}.md)`
     )
     .join("\n")}`
 );
@@ -61,9 +52,7 @@ for (let i = 0; i < models.length; i++) {
 
   //SUMMARY
   for (let j = 0; j < model.paths.length; j++) {
-    arr.push(
-      `- [${model.paths[j].name}](/apps/api/doc/${model.name}.md#${model.paths[j].name})`
-    );
+    arr.push(`- [${model.paths[j].name}](/apps/api/doc/${model.name}.md#${model.paths[j].name})`);
   }
 
   arr.push(
@@ -90,8 +79,5 @@ for (let i = 0; i < models.length; i++) {
     })
   );
 
-  fs.writeFileSync(
-    path.join(__dirname, `${markdownPath}/${model.name}.md`),
-    arr.join("\n")
-  );
+  fs.writeFileSync(path.join(__dirname, `${markdownPath}/${model.name}.md`), arr.join("\n"));
 }

@@ -6,13 +6,7 @@ const mongoose = require("mongoose");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const {
-  uploadFile,
-  formattedNow,
-  checkESIndex,
-  updateNotice,
-  deleteFile
-} = require("./utils");
+const { uploadFile, formattedNow, checkESIndex, updateNotice, deleteFile } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -57,15 +51,9 @@ function findProducteur(REF, IDPROD, EMET) {
     return "CRMH";
   } else if (String(REF).startsWith("AR")) {
     return "ARCH";
-  } else if (
-    String(REF).startsWith("AP") &&
-    String(IDPROD).startsWith("Service départemental")
-  ) {
+  } else if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
     return "UDAP";
-  } else if (
-    String(IDPROD).startsWith("SAP") ||
-    String(EMET).startsWith("SAP")
-  ) {
+  } else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
     return "SAP";
   }
   return "AUTRE";
@@ -136,88 +124,68 @@ async function updateLinks(notice) {
     capture(error);
   }
 }
-router.put(
-  "/:ref",
-  passport.authenticate("jwt", { session: false }),
-  upload.any(),
-  (req, res) => {
-    const ref = req.params.ref;
-    const notice = JSON.parse(req.body.notice);
+router.put("/:ref", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
+  const ref = req.params.ref;
+  const notice = JSON.parse(req.body.notice);
 
-    const arr = [];
-    for (let i = 0; i < req.files.length; i++) {
-      //TODO
-      //DELETE the current file IMAGE when update a new file
+  const arr = [];
+  for (let i = 0; i < req.files.length; i++) {
+    //TODO
+    //DELETE the current file IMAGE when update a new file
 
-      arr.push(
-        uploadFile(
-          `memoire/${notice.REF}/${req.files[i].originalname}`,
-          req.files[i]
-        )
-      );
-    }
-
-    //Update IMPORT ID
-    if (notice.POP_IMPORT.length) {
-      const id = notice.POP_IMPORT[0];
-      delete notice.POP_IMPORT;
-      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
-    }
-
-    transformBeforeUpdate(notice);
-
-    arr.push(updateLinks(notice));
-    arr.push(updateNotice(Memoire, ref, notice));
-
-    Promise.all(arr)
-      .then(() => {
-        res.sendStatus(200);
-      })
-      .catch(e => {
-        capture(e);
-        res.sendStatus(500);
-      });
+    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
   }
-);
 
-router.post(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  upload.any(),
-  (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-
-    notice.DMIS = notice.DMAJ = formattedNow();
-    const arr = [];
-    for (var i = 0; i < req.files.length; i++) {
-      arr.push(
-        uploadFile(
-          `memoire/${notice.REF}/${req.files[i].originalname}`,
-          req.files[i]
-        )
-      );
-    }
-
-    arr.push(updateLinks(notice));
-
-    transformBeforeCreate(notice);
-
-    const obj = new Memoire(notice);
-
-    //send error if obj is not well sync with ES
-    checkESIndex(obj);
-
-    arr.push(obj.save());
-    Promise.all(arr)
-      .then(() => {
-        res.send({ success: true, msg: "OK" });
-      })
-      .catch(error => {
-        capture(error);
-        res.sendStatus(500);
-      });
+  //Update IMPORT ID
+  if (notice.POP_IMPORT.length) {
+    const id = notice.POP_IMPORT[0];
+    delete notice.POP_IMPORT;
+    notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
   }
-);
+
+  transformBeforeUpdate(notice);
+
+  arr.push(updateLinks(notice));
+  arr.push(updateNotice(Memoire, ref, notice));
+
+  Promise.all(arr)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(e => {
+      capture(e);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
+  const notice = JSON.parse(req.body.notice);
+
+  notice.DMIS = notice.DMAJ = formattedNow();
+  const arr = [];
+  for (var i = 0; i < req.files.length; i++) {
+    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+  }
+
+  arr.push(updateLinks(notice));
+
+  transformBeforeCreate(notice);
+
+  const obj = new Memoire(notice);
+
+  //send error if obj is not well sync with ES
+  checkESIndex(obj);
+
+  arr.push(obj.save());
+  Promise.all(arr)
+    .then(() => {
+      res.send({ success: true, msg: "OK" });
+    })
+    .catch(error => {
+      capture(error);
+      res.sendStatus(500);
+    });
+});
 
 router.get("/", (req, res) => {
   const offset = parseInt(req.query.offset) || 0;
@@ -243,33 +211,29 @@ router.get("/:ref", (req, res) => {
   });
 });
 
-router.delete(
-  "/:ref",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    try {
-      const ref = req.params.ref;
-      const doc = await Memoire.findOne({ REF: ref });
-      if (!doc) {
-        return res.status(500).send({
-          error: `Je ne trouve pas la notice memoire ${ref} à supprimer`
-        });
-      }
-
-      //DELETE LBASE
-      doc.LBASE = [];
-      await updateLinks(doc);
-      const arr = [deleteFile(doc.IMG), doc.remove()];
-      await Promise.all(arr);
-      return res.status(200).send({});
-    } catch (error) {
-      capture(JSON.stringify(error));
-      console.log("error", error);
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+    const doc = await Memoire.findOne({ REF: ref });
+    if (!doc) {
       return res.status(500).send({
-        error
+        error: `Je ne trouve pas la notice memoire ${ref} à supprimer`
       });
     }
+
+    //DELETE LBASE
+    doc.LBASE = [];
+    await updateLinks(doc);
+    const arr = [deleteFile(doc.IMG), doc.remove()];
+    await Promise.all(arr);
+    return res.status(200).send({});
+  } catch (error) {
+    capture(JSON.stringify(error));
+    console.log("error", error);
+    return res.status(500).send({
+      error
+    });
   }
-);
+});
 
 module.exports = router;
