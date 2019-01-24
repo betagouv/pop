@@ -53,7 +53,7 @@ router.post("/signup", (req, res) => {
   const userData = {
     nom: req.body.nom,
     prenom: req.body.prenom,
-    email: req.body.email,
+    email: (req.body.email || "").toLowerCase(),
     group: req.body.group,
     role: req.body.role,
     institution: req.body.institution,
@@ -97,7 +97,7 @@ router.post("/signup", (req, res) => {
 router.post("/forgetPassword", (req, res) => {
   const { email } = req.body;
 
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email:(email || "").toLowerCase() }, function(err, user) {
     if (err) throw err;
 
     if (!user) {
@@ -148,7 +148,7 @@ router.post("/updatePassword", (req, res) => {
     });
   }
 
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email:(email || "").toLowerCase() }, function(err, user) {
     if (err) throw err;
 
     if (!user) {
@@ -184,6 +184,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { email, nom, prenom, institution, group, role } = req.body;
+    
 
     if (!nom || !prenom || !institution || !group || !role) {
       return res.status(401).send({
@@ -192,7 +193,7 @@ router.post(
       });
     }
 
-    User.findOne({ email }, function(err, user) {
+    User.findOne({ email: (email || "").toLowerCase() }, function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -237,7 +238,7 @@ router.post("/signin", (req, res) => {
   };
   User.findOne(
     {
-      email: req.body.email
+      email: (req.body.email || "").toLowerCase()
     },
     function(err, user) {
       if (err) throw err;
