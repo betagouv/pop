@@ -13,12 +13,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 router.post("/signup", (req, res) => {
-  if (
-    !req.body.email ||
-    !req.body.group ||
-    !req.body.role ||
-    !req.body.institution
-  ) {
+  if (!req.body.email || !req.body.group || !req.body.role || !req.body.institution) {
     return res.status(400).json({
       success: false,
       msg: "Email, group, institution ou role absent"
@@ -26,20 +21,17 @@ router.post("/signup", (req, res) => {
   }
 
   // museofile is required
-  const needMuseofile =
-    req.body.role === "producteur" && req.body.group === "joconde";
+  const needMuseofile = req.body.role === "producteur" && req.body.group === "joconde";
   if (needMuseofile) {
     if (!req.body.museofile) {
       return res.status(400).json({
         success: false,
-        msg:
-          "Le champ muséofile est obligatoire pour les producteurs du groupe joconde."
+        msg: "Le champ muséofile est obligatoire pour les producteurs du groupe joconde."
       });
     } else if (!req.body.museofile.match(/^M[0-9]+$/)) {
       return res.status(400).json({
         success: false,
-        msg:
-          "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)"
+        msg: "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)"
       });
     }
   }
@@ -179,56 +171,52 @@ router.post("/updatePassword", (req, res) => {
   });
 });
 
-router.post(
-  "/updateProfile",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { email, nom, prenom, institution, group, role } = req.body;
+router.post("/updateProfile", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const { email, nom, prenom, institution, group, role } = req.body;
 
-    if (!nom || !prenom || !institution || !group || !role) {
-      return res.status(401).send({
-        success: false,
-        msg: `Les informations ne peuvent pas être vides`
-      });
-    }
-
-    User.findOne({ email }, function(err, user) {
-      if (err) throw err;
-
-      if (!user) {
-        res.status(401).send({
-          success: false,
-          msg: `La mise à jour des informations à échoué. Utilisateur ${email} introuvable.`
-        });
-      } else {
-        try {
-          if (req.body.museofile) {
-            user.set({ museofile: req.body.museofile });
-          }
-          user.set({
-            institution,
-            nom,
-            prenom,
-            group,
-            role
-          });
-          user.save(function(err) {
-            if (err) throw err;
-            return res.status(200).send({
-              success: true,
-              msg: `La mise à jour des informations a été effectuée avec succès`
-            });
-          });
-        } catch (e) {
-          res.status(401).send({
-            success: false,
-            msg: `La mise à jour des informations a échoué`
-          });
-        }
-      }
+  if (!nom || !prenom || !institution || !group || !role) {
+    return res.status(401).send({
+      success: false,
+      msg: `Les informations ne peuvent pas être vides`
     });
   }
-);
+
+  User.findOne({ email }, function(err, user) {
+    if (err) throw err;
+
+    if (!user) {
+      res.status(401).send({
+        success: false,
+        msg: `La mise à jour des informations à échoué. Utilisateur ${email} introuvable.`
+      });
+    } else {
+      try {
+        if (req.body.museofile) {
+          user.set({ museofile: req.body.museofile });
+        }
+        user.set({
+          institution,
+          nom,
+          prenom,
+          group,
+          role
+        });
+        user.save(function(err) {
+          if (err) throw err;
+          return res.status(200).send({
+            success: true,
+            msg: `La mise à jour des informations a été effectuée avec succès`
+          });
+        });
+      } catch (e) {
+        res.status(401).send({
+          success: false,
+          msg: `La mise à jour des informations a échoué`
+        });
+      }
+    }
+  });
+});
 
 router.post("/signin", (req, res) => {
   const failMessage = {
@@ -266,35 +254,27 @@ router.post("/signin", (req, res) => {
   );
 });
 
-router.get(
-  "/user",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.send({
-      success: true,
-      user: req.user
+router.get("/user", passport.authenticate("jwt", { session: false }), (req, res) => {
+  res.send({
+    success: true,
+    user: req.user
+  });
+});
+
+router.put("/user", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  const { fname, lname } = req.body;
+  if (!fname || !lname) {
+    return res.status(400).send({
+      success: false,
+      msg: "Le nom et le prénom ne doivent pas être vide."
     });
   }
-);
-
-router.put(
-  "/user",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const { fname, lname } = req.body;
-    if (!fname || !lname) {
-      return res.status(400).send({
-        success: false,
-        msg: "Le nom et le prénom ne doivent pas être vide."
-      });
-    }
-    const user = await User.findOneAndUpdate(
-      { _id: req.user._id },
-      { $set: { nom: fname, prenom: lname } },
-      { new: true }
-    );
-    res.send({ success: true, user });
-  }
-);
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $set: { nom: fname, prenom: lname } },
+    { new: true }
+  );
+  res.send({ success: true, user });
+});
 
 module.exports = router;

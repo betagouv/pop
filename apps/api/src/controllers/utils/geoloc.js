@@ -42,12 +42,7 @@ proj4.defs("mtu", "+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs");
 function isInFrance(lat, lon) {
   const TopRight = [51.14, 8.23];
   const BottomLeft = [42.33, -4.87];
-  if (
-    lat < TopRight[0] &&
-    lat > BottomLeft[0] &&
-    lon < TopRight[1] &&
-    lon > BottomLeft[1]
-  ) {
+  if (lat < TopRight[0] && lat > BottomLeft[0] && lon < TopRight[1] && lon > BottomLeft[1]) {
     return true;
   }
   return false;
