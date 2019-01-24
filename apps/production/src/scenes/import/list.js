@@ -14,7 +14,7 @@ import "./list.css";
 
 import { es_url } from "../../config.js";
 
-const FILTER = ["mainSearch", "institution", "email"];
+const FILTER = ["mainSearch", "institution", "email","notices"];
 
 export default class List extends React.Component {
   render() {
@@ -25,7 +25,7 @@ export default class List extends React.Component {
             <Col xs="3">
               <DataSearch
                 componentId="mainSearch"
-                dataField={["institution"]}
+                dataField={["institution","email","notices"]}
                 queryFormat="and"
                 iconPosition="left"
                 title="Recherche"
@@ -50,6 +50,15 @@ export default class List extends React.Component {
                 title="Email"
                 placeholder="Sélectionnez un email"
                 react={{ and: FILTER.filter(e => e !== "email") }}
+              />
+            </Col>
+            <Col xs="3">
+              <SingleDropdownList
+                componentId="notices"
+                dataField="notices.keyword"
+                title="Notices"
+                placeholder="Sélectionnez une notice"
+                react={{ and: FILTER.filter(e => e !== "notices") }}
               />
             </Col>
             <Col xs="12">

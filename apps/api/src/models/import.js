@@ -64,6 +64,13 @@ const ImportSchema = new Schema({
       description: "Nombre de notices non mises à jour lors de l'import",
       master: true
     }
+  },
+  notices: {
+    type: [String],
+    documentation: {
+      description: "Liste des notices concernées par cet import",
+      master: true
+    }
   }
 });
 
