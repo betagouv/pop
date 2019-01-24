@@ -135,10 +135,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école ",
-        label:
-          "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école"
+        description: "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école ",
+        label: "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école"
       }
     },
     AUTP: {
@@ -645,8 +643,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Origine de l’œuvre (lieu de provenance ou de destination)",
+        description: "Origine de l’œuvre (lieu de provenance ou de destination)",
         label: "Origine de l’œuvre (lieu de provenance ou de destination)"
       }
     },
@@ -720,10 +717,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Précisions sur les inscriptions, marques, emblématique et poinçons ",
-        label:
-          "Précisions sur les inscriptions, marques, emblématique et poinçons"
+        description: "Précisions sur les inscriptions, marques, emblématique et poinçons ",
+        label: "Précisions sur les inscriptions, marques, emblématique et poinçons"
       }
     },
     PINT: {
