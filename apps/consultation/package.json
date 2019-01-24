@@ -57,7 +57,7 @@
     "build:staging": "webpack --env.staging --env.NODE_ENV=staging",
     "deploy:prod": "npm install && npm run build:prod && eb deploy pop-consultation --profil POP",
     "deploy:staging": "npm install && npm run build:staging && eb deploy pop-consultation-staging --profil POP",
-    "test": "./node_modules/.bin/jest"
+    "test": "jest"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./src/__tests__/setup/setup.js",
