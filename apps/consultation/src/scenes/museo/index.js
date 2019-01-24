@@ -5,6 +5,7 @@ import { Mapping } from "pop-shared";
 import Loader from "../../components/Loader";
 import Map from "../notice/components/map";
 import "./index.css";
+import NotFound from "../../components/NotFound";
 
 const hiddenFields = [
   "_id",
@@ -22,7 +23,8 @@ const hiddenFields = [
 
 class Museo extends React.Component {
   state = {
-    museo: null
+    museo: null,
+    loading: true,
   };
 
   componentDidMount() {
@@ -42,7 +44,8 @@ class Museo extends React.Component {
   // Load museo from API.
   async getApiMuseo(ref) {
     this.setState({
-      museo: await API.getMuseo(ref)
+      museo: await API.getMuseo(ref),
+      loading: false
     });
   }
 
@@ -111,9 +114,13 @@ class Museo extends React.Component {
 
   // The main render function.
   render() {
-    const { museo } = this.state;
-    if (!museo) {
+    const { museo, loading } = this.state;
+    if (loading) {
       return <Loader />;
+    }
+
+    if (!museo) {
+      return <NotFound />;
     }
     const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
     return (
