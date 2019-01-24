@@ -28,6 +28,7 @@ export default class Search extends React.Component {
                   entity={mapping}
                   componentId="advancedSearch"
                   autocomplete={false}
+                  displayLabel={this.props.displayLabel}
                 />
               </Col>
             </Row>
