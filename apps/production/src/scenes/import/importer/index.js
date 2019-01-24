@@ -128,6 +128,7 @@ class Importer extends Component {
         created: created.length,
         updated: updated.length,
         rejected: rejected.length,
+        notices : this.state.importedNotices.map(({REF}) => REF),
         unChanged: total - created.length - updated.length - rejected.length
       },
       file
