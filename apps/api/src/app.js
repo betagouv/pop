@@ -47,25 +47,21 @@ app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 // Proxy to ES
 app.use("/search", require("./controllers/search"));
 
-app.post(
-  "/mail",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { subject, to, body } = req.body;
-    if (!subject || !to || !body) {
-      capture("Mail information incomplete");
-      res.status(500).send("Information incomplete");
-      return;
-    }
-    Mailer.send(subject, to, body)
-      .then(e => {
-        return res.status(200).send({ success: true, msg: "OK" });
-      })
-      .catch(e => {
-        console.log("ERROR", e);
-        return res.status(200);
-      });
+app.post("/mail", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const { subject, to, body } = req.body;
+  if (!subject || !to || !body) {
+    capture("Mail information incomplete");
+    res.status(500).send("Information incomplete");
+    return;
   }
-);
+  Mailer.send(subject, to, body)
+    .then(e => {
+      return res.status(200).send({ success: true, msg: "OK" });
+    })
+    .catch(e => {
+      console.log("ERROR", e);
+      return res.status(200);
+    });
+});
 
 module.exports = app;

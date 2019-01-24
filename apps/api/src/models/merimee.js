@@ -68,6 +68,15 @@ const Schema = new mongoose.Schema(
         }
       }
     },
+    POP_COMMENTAIRES: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Commentaires technique",
+        label: "Commentaires POP",
+        generated: true
+      }
+    },
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
       enum: ["oui", "non"],
@@ -86,8 +95,7 @@ const Schema = new mongoose.Schema(
       type: [Number],
       default: [],
       documentation: {
-        description:
-          "Champ qui sera utilisé pour traduire les date en format requetable",
+        description: "Champ qui sera utilisé pour traduire les date en format requetable",
         generated: true
       }
     },
@@ -835,7 +843,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
+        description:
+          "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
         label: "Dossier PDF"
       }
     },

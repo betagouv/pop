@@ -128,6 +128,7 @@ class Importer extends Component {
         created: created.length,
         updated: updated.length,
         rejected: rejected.length,
+        notices : this.state.importedNotices.map(({REF}) => REF),
         unChanged: total - created.length - updated.length - rejected.length
       },
       file
@@ -186,7 +187,7 @@ class Importer extends Component {
         this.state.importedNotices,
         this.props.collection,
         this.props.email,
-        this.props.institution
+        this.props.institution, importId
       );
 
       const dest = [

@@ -104,6 +104,7 @@ export default class RuleGroup extends React.Component {
       return (
         <Rule
           autocomplete={this.props.autocomplete}
+          displayLabel={this.props.displayLabel}
           key={id}
           id={id}
           data={data || {}}

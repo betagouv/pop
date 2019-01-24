@@ -41,8 +41,5 @@ for (let i = 0; i < models.length; i++) {
     arr.push(line.join(","));
   }
 
-  fs.writeFileSync(
-    path.join(__dirname, `${csvPath}/${model.name}.csv`),
-    arr.join("\n")
-  );
+  fs.writeFileSync(path.join(__dirname, `${csvPath}/${model.name}.csv`), arr.join("\n"));
 }

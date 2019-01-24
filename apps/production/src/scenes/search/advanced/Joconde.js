@@ -8,6 +8,7 @@ export default class Joconde extends React.Component {
     return (
       <AdvancedSearch
         baseName="joconde"
+        displayLabel={true}
         mapping={Mapping.joconde}
         onData={data => <Card key={data.REF} data={data} />}
       />
