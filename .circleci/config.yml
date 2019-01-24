@@ -38,7 +38,7 @@ commands:
           name: prepare
           command: |
             cd apps/<< parameters.app >>
-            npm install
+            npm ci
       - save_node_modules:
           app: << parameters.app >>
   test:
@@ -124,6 +124,8 @@ jobs:
     executor: docker_node
     steps:
       - checkout
+      # Sorry.
+      - run: sudo npm install npm@latest -g
       - prepare:
           app: api
       - prepare:
