@@ -6,12 +6,22 @@ const program = require("commander");
 const Listr = require("listr");
 const Observable = require("rxjs").Observable;
 const { mongoUrl } = require("../config.js");
+
+
 const Merimee = require("../models/merimee");
 const Joconde = require("../models/joconde");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
 const Mnr = require("../models/mnr");
 const Import = require("../models/import");
+
+const ModelFolder = "./../api/src/models"
+
+const files = fs.readFileSync(ModelFolder);
+console.log(files)
+// const models = 
+
+
 const es = require("../elasticsearch")();
 const chalk = require("chalk");
 const { pingElasticsearchTask } = require("./utils");
