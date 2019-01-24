@@ -7,20 +7,15 @@ const Listr = require("listr");
 const Observable = require("rxjs").Observable;
 const { mongoUrl } = require("../config.js");
 
+// const Merimee = require("../models/merimee");
+// const Joconde = require("../models/joconde");
+// const Palissy = require("../models/palissy");
+// const Memoire = require("../models/memoire");
+// const Mnr = require("../models/mnr");
+// const Import = require("../models/import");
 
-const Merimee = require("../models/merimee");
-const Joconde = require("../models/joconde");
-const Palissy = require("../models/palissy");
-const Memoire = require("../models/memoire");
-const Mnr = require("../models/mnr");
-const Import = require("../models/import");
-
-const ModelFolder = "./../api/src/models"
-
-const files = fs.readFileSync(ModelFolder);
-console.log(files)
-// const models = 
-
+const MODELFOLDER = "./../api/src/models";
+const files = fs.readdirSync(MODELFOLDER).map(e => e.replace(".js", ""));
 
 const es = require("../elasticsearch")();
 const chalk = require("chalk");
@@ -32,12 +27,7 @@ async function run() {
     .option("-f, --force", "Force sync and reindex")
     .option("-c, --chunks [chunks]", "Size of chunks", 1000)
     .option("-s, --skip <skip>", "Skip n first entries")
-    .option(
-      "-i --indices <indices>",
-      "The name of the indices",
-      val => val.split(","),
-      "joconde,memoire,merimee,mnr,palissy,import".split(",")
-    )
+    .option("-i --indices <indices>", "The name of the indices", val => val.split(","), files)
     .parse(process.argv);
 
   program.chunks = Number(program.chunks);
@@ -76,14 +66,9 @@ async function run() {
   ]);
 
   program.indices.map(async db => {
-    const noticeClass = {
-      joconde: Joconde,
-      merimee: Merimee,
-      palissy: Palissy,
-      memoire: Memoire,
-      import: Import,
-      mnr: Mnr
-    }[db];
+
+    const noticeClass = require(`../models/${db}.js`);
+    
     tasks.add({
       title: `Processing ${db}`,
       task: () => {
