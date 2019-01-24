@@ -3,7 +3,7 @@
 import utils from "../utils";
 
 
-export default function generate(notices, collection, email, institution) {
+export default function generate(notices, collection, email, institution, importId) {
   const fieldToExport = [{ name: "Identifiant", key: "REF" }];
   const arr = [];
 
@@ -13,6 +13,14 @@ export default function generate(notices, collection, email, institution) {
   const updated = notices.filter(e => e._status === "updated");
   const rejected = notices.filter(e => e._status === "rejected");
 
+  const diffUrl = `http://pop${
+    process.env.NODE_ENV === "production" ? "" : "-staging"
+  }.culture.gouv.fr/search/list?import=["${importId}"]`;
+
+  const fileUrl = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
+    process.env.NODE_ENV === "production" ? "" : "-staging"
+  }/import/${importId}/import.csv`;
+  
   const imagesNumber = notices.reduce((acc, val) => {
     if (val.status === "created" || val.status === "updated") {
       return acc + val.images.length;
@@ -111,8 +119,14 @@ export default function generate(notices, collection, email, institution) {
         lines.push([...fields, "Erreur", rejected[i]._errors[j]]);
       }
     }
+
     const table = createHTMLTable(columns, lines);
     arr.push(...table);
+    {
+      arr.push(`<h1>Liens</h1>`);
+      arr.push(`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`);
+      arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
+    }
   }
   return arr.join("");
 }
