@@ -84,29 +84,18 @@ export default connect(
   {}
 )(Import);
 
-function report(notices, collection, email, institution) {
+function report(notices, collection, email, institution, importId) {
   const arr = [];
 
-  const d = new Date();
-  var months = [
-    "janvier",
-    "février",
-    "mars",
-    "avril",
-    "mai",
-    "juin",
-    "juillet",
-    "août",
-    "septembre",
-    "octobre",
-    "novembre",
-    "decembre"
-  ];
-  const date = ("0" + d.getDate()).slice(-2);
-  const month = months[d.getMonth()];
-  const year = d.getFullYear();
-  const minutes = ("0" + d.getMinutes()).slice(-2);
-  const hours = ("0" + d.getHours()).slice(-2);
+  const dateStr = utils.formatDate();
+
+  const diffUrl = `http://pop${
+    process.env.NODE_ENV === "production" ? "" : "-staging"
+  }.culture.gouv.fr/search/list?import=["${importId}"]`;
+
+  const fileUrl = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
+    process.env.NODE_ENV === "production" ? "" : "-staging"
+  }/import/${importId}/import.csv`;
 
   const created = notices.filter(e => e._status === "created");
   const updated = notices.filter(e => e._status === "updated");
@@ -122,7 +111,7 @@ function report(notices, collection, email, institution) {
   let contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
 
   arr.push(
-    `<h1>Rapport de chargement ${collection} du ${date} ${month} ${year}, ${hours}h${minutes}</h1>`
+    `<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`
   );
   arr.push(`<h2>Établissement: ${institution}</h2>`);
   arr.push(`<h2>Producteur: ${email}</h2>`);
@@ -148,8 +137,6 @@ function report(notices, collection, email, institution) {
 
   const obj = {};
   let count = 0;
-
-  console.log(notices);
 
   const URL = `http://pop${
     process.env.NODE_ENV === "production" ? "" : "-staging"
@@ -187,6 +174,12 @@ function report(notices, collection, email, institution) {
     arr.push(`</ul>`);
   }
   arr.push(`</ul>`);
+
+  {
+    arr.push(`<h1>Liens</h1>`);
+    arr.push(`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`);
+    arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
+  }
   return arr.join("");
 }
 
@@ -229,13 +222,13 @@ function readme() {
       <h5>Joconde</h5>
       <div>
         Cet onglet permet d’alimenter la base Joconde. Avant tout import dans la base, veuillez
-        prendre connaissance de la{" "}
+        prendre connaissance de la
         <a
           href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Joconde_engagements_VD.pdf"
           target="_blank"
         >
           Charte d'engagement
-        </a>{" "}
+        </a>
         relative au versement des données dans la base Joconde <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants : <br />

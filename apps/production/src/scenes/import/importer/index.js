@@ -186,7 +186,7 @@ class Importer extends Component {
         this.state.importedNotices,
         this.props.collection,
         this.props.email,
-        this.props.institution
+        this.props.institution, importId
       );
 
       const dest = [
