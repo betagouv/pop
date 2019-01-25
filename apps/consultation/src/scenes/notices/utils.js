@@ -27,6 +27,7 @@ export function postFixedLink(link) {
 
 export function toFieldImages(images) {
   return images
+    .filter(i => i)
     .slice(0, 200)
     .map(e => {
       let source = e;
@@ -72,19 +73,6 @@ export function schema({
     return { "@type": "Person", name: name.trim() };
   });
   obj["comment"] = comment;
-
-  // obj["width"] = [
-  //   {
-  //     "@type": "Distance",
-  //     name: "55cm"
-  //   }
-  // ];
-  // obj["height"] = [
-  //   {
-  //     "@type": "Distance",
-  //     name: "42cm"
-  //   }
-  // ];
   obj["artMedium"] = artMedium;
   return JSON.stringify(obj);
 }
