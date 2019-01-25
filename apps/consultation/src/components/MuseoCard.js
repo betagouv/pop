@@ -24,7 +24,10 @@ class MuseoCard extends React.Component {
         <h2>
           {title} - {museo.VILLE_M}
         </h2>
-        <p>{museo.ATOUT && museo.ATOUT.replace(/#/g, " ; ")} - <a href={`/museo/${museo.REF}`}>En savoir plus...</a></p>
+        <p>
+          {museo.ATOUT && museo.ATOUT.replace(/#/g, " ; ")} -{" "}
+          <a href={`/museo/${museo.REF}`}>En savoir plus...</a>
+        </p>
       </div>
     );
   }
