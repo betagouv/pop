@@ -29,17 +29,26 @@ class Joconde extends React.Component {
   componentWillReceiveProps(newProps) {
     const { match } = this.props;
     if (match && match.params.ref !== newProps.match.params.ref) {
+      this.setState({ loading: true });
       this.load(newProps.match.params.ref);
     }
   }
 
-  load(ref) {
-    this.setState({ loading: true });
-    API.getNotice("joconde", ref).then(notice => {
-      this.setState({
-        loading: false,
-        notice
-      });
+  loadMuseo(m) {
+    try {
+      return API.getMuseo(m);
+    } catch (e) {}
+    return null;
+  }
+
+  async load(ref) {
+    const notice = await API.getNotice("joconde", ref);
+    if (notice) {
+      notice.museoObject = notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
+    }
+    this.setState({
+      loading: false,
+      notice
     });
   }
 
@@ -314,10 +323,15 @@ const SeeMore = ({ notice }) => {
   }
 
   if (notice.MUSEO) {
+    const m = notice.museoObject;
+    console.log(m);
+    const text = m
+      ? [m.NOMUSAGE || m.NOMOFF || m.ANC, m.VILLE_M || m.VILLE_AD, m.REF].join(" - ")
+      : notice.MUSEO;
     arr.push(
       <Field
         title="Fiche musée"
-        content={<a href={`/museo/${notice.MUSEO}`}>{notice.MUSEO}</a>}
+        content={<a href={`/museo/${notice.MUSEO}`}>{text}</a>}
         key="notice.MUSEO"
       />
     );
