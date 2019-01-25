@@ -110,9 +110,7 @@ function report(notices, collection, email, institution, importId) {
 
   let contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
 
-  arr.push(
-    `<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`
-  );
+  arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
   arr.push(`<h2>Établissement: ${institution}</h2>`);
   arr.push(`<h2>Producteur: ${email}</h2>`);
   arr.push(`<h2>Contact: ${contact}</h2>`);
@@ -266,7 +264,7 @@ function readme() {
         <ul>
           {thesaurusedFields.map(e => (
             <li key={e}>
-              {e} :{" "}
+              {Mapping.joconde[e].label || e} :{" "}
               {Mapping.joconde[e].thesaurus.replace(
                 "http://data.culture.fr/thesaurus/resource/ark:/",
                 ""
