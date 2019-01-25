@@ -15,6 +15,33 @@ function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
 }
 
+async function checkJoconde(notice) {
+  const errors = [];
+  try {
+    //Check contact
+    if (!notice.CONTACT) {
+      errors.push("Le champ CONTACT ne doit pas être vide");
+    }
+
+    //Joconde
+    if (!notice.TICO && !notice.TITR) {
+      errors.push("Cette notice devrait avoir un TICO ou un TITR");
+    }
+
+    for (let i = 0; i < IMG.length; i++) {
+      try {
+        await rp.get(PREFIX_IMAGE + IMG[i]);
+      } catch (e) {
+        errors.push(`Image est inaccessible`);
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  return errors;
+}
+
 function transformBeforeCreate(notice) {
   return new Promise(async (resolve, reject) => {
     try {
