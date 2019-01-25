@@ -5,9 +5,9 @@ export default class Joconde extends Notice {
   constructor(body) {
     super(body, "joconde");
 
-    this.IMG = this.extractIMGNames(body.REFIM).map(
-      e => `joconde/${this.REF}/${e}`
-    );
+    if (body.REFIM) {
+      this.IMG = this.extractIMGNames(body.REFIM).map(e => `joconde/${this.REF}/${e}`);
+    }
 
     const obj = {};
     obj["AUTR"] = /[(,);#]/g;
@@ -33,7 +33,6 @@ export default class Joconde extends Notice {
     }
 
     //REFMIS ?
-
   }
 
   extractIMGNames = function(str) {
