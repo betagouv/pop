@@ -1,7 +1,7 @@
 import { bucket_url } from "../../config";
 
 export function findCollection(ref = "") {
-  if(typeof ref !== 'string') {
+  if (typeof ref !== "string") {
     return "";
   }
   const prefix = ref.substring(0, 2);
@@ -22,10 +22,7 @@ export function findCollection(ref = "") {
 export function postFixedLink(link) {
   return link
     .replace(/^<a href=([^ ]+)?.*$/i, "$1")
-    .replace(
-      /^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i,
-      "http://www2.culture.gouv.fr$1"
-    );
+    .replace(/^<a href="(\/documentation\/memoire\/[^"]+)?.*$/i, "http://www2.culture.gouv.fr$1");
 }
 
 export function toFieldImages(images) {
@@ -91,7 +88,6 @@ export function schema({
   obj["artMedium"] = artMedium;
   return JSON.stringify(obj);
 }
-
 
 export function hasCoordinates(point) {
   return !!(point && point.lat && point.lon);
