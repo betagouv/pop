@@ -43,16 +43,14 @@ export default class Notice {
 
         if (!validate) {
           this._errors.push(
-            `Le champ ${key} avec la valeur "${
-              this[key].value
-            }" n'est pas de type ${this._mapping[key].validation}`
+            `Le champ ${key} avec la valeur "${this[key].value}" n'est pas de type ${
+              this._mapping[key].validation
+            }`
           );
         }
       }
     }
   }
-
-
   makeItFlat = function() {
     let flat = {};
     for (var property in this) {
