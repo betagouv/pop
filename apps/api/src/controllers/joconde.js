@@ -53,12 +53,12 @@ router.put(
       if (notice.IMG !== undefined) {
         for (let i = 0; i < prevNotice.IMG.length; i++) {
           if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
-            deleteFile(prevNotice.IMG[i]);
+            arr.push(deleteFile(prevNotice.IMG[i]));
           }
         }
       }
 
-      for (let i = 0; i < uploadFiles.length; i++) {
+      for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
         arr.push(uploadFile(`joconde/${notice.REF}/${f.originalname}`, f));
       }
