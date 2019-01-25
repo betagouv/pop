@@ -211,8 +211,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Découverte / collecte",
-        label: "Découverte / collecte",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
+        label: "Découverte / collecte"
       }
     },
     DENO: {
@@ -229,7 +228,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dépôt / établissement dépositaire",
-        label: "Lieu de dépot"
+        label: "Lieu de dépot",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
       }
     },
     DESC: {
@@ -380,8 +380,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Inscriptions ",
-        label: "Inscriptions",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520"
+        label: "Inscriptions"
       }
     },
     INV: {
@@ -630,8 +629,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Sujet représenté ",
-        label: "Sujet représenté",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+        label: "Sujet représenté"
       }
     },
     RETIF: {
@@ -647,8 +645,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de la représentation",
-        label: "Source représentation",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+        label: "Source représentation"
       }
     },
     STAT: {
@@ -657,7 +654,8 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Statut juridique",
-        label: "Statut juridique"
+        label: "Statut juridique",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
       }
     },
     TECH: {
@@ -699,8 +697,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Utilisation / Destination",
-        label: "Utilisation / Destination",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86"
+        label: "Utilisation / Destination"
       }
     },
     VIDEO: {
