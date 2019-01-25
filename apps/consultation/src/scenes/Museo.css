@@ -2,7 +2,7 @@
   display: flex;
   justify-content: start;
   align-items: "center";
-  background-color: #e5edef;
+  background-color: #fff;
   flex-direction: column;
   padding-bottom: 60px;
 }
@@ -14,6 +14,9 @@
 }
 
 @media screen and (min-width: 800px) {
+  .museo {
+    background-color: #e5edef;
+  }
   .museo .museo-card {
     background-color: #fff;
     border-radius: 5px;
@@ -34,10 +37,11 @@
 .museo-map {
   margin-top: 25px;
 }
-.museo .collection {
+.museo .collection.collection-bottom {
   text-align: center;
   margin-top: 25px;
 }
+
 .museo .collection a {
   color: #fff;
   background-color: #377d87;
