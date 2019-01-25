@@ -36,6 +36,9 @@ class Import extends React.Component {
       //ADD IMAGES
       for (var i = 0; i < importedNotices.length; i++) {
         const names = importedNotices[i].IMG;
+        if (!names) {
+          continue;
+        }
         for (var j = 0; j < names.length; j++) {
           let img = filesMap[Joconde.convertLongNameToShort(names[j])];
           if (!img) {
