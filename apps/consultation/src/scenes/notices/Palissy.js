@@ -1,11 +1,11 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 
-import Field from "./field";
+import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
-import Title from "./title";
+import Title from "./Title";
 import ContactUs from "./ContactUs";
-import FieldImages from "./fieldImages";
+import FieldImages from "./FieldImages";
 
 import API from "../../services/api";
 import Helmet from "../../components/Helmet";
