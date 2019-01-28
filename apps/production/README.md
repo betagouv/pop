@@ -24,3 +24,14 @@ Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb
 
 Utiliser `npm run deploy:staging` ou `npm run deploy:production` en fonction de l'environnement souhaité. 
 La branche _master_ est automatiquement livré sur la plateforme de _staging_ et de _prod_ à chaque _push_ grâce à CircleCI. Il est donc recommandé de passer par des _Pull Request_ validées par un tiers.
+
+
+## How to backup
+
+Exemple avec la base MNR : 
+
+`
+mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e
+mongodump --host 127.0.0.1:27017 --db pop --collection "mnr"
+mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop 
+`
