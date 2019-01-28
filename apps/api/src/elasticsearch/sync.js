@@ -12,6 +12,7 @@ const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
 const Mnr = require("../models/mnr");
 const Import = require("../models/import");
+const Museo = require("../models/museo");
 const es = require("../elasticsearch")();
 const chalk = require("chalk");
 const { pingElasticsearchTask } = require("./utils");
@@ -26,7 +27,7 @@ async function run() {
       "-i --indices <indices>",
       "The name of the indices",
       val => val.split(","),
-      "joconde,memoire,merimee,mnr,palissy,import".split(",")
+      "joconde,memoire,merimee,mnr,palissy,import,museo".split(",")
     )
     .parse(process.argv);
 
@@ -72,7 +73,8 @@ async function run() {
       palissy: Palissy,
       memoire: Memoire,
       import: Import,
-      mnr: Mnr
+      mnr: Mnr,
+      museo: Museo
     }[db];
     tasks.add({
       title: `Processing ${db}`,
