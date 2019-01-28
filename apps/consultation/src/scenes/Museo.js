@@ -1,6 +1,7 @@
 import React from "react";
 import Helmet from "../components/Helmet";
 import API from "../services/api";
+import { Link } from "react-router-dom";
 import { Mapping } from "pop-shared";
 import Loader from "../components/Loader";
 import Map from "./notices/Map";
@@ -109,6 +110,14 @@ class Museo extends React.Component {
     return <Map notice={{ POP_COORDONNEES: { lat: loc.lat, lon: loc.lon } }} />;
   }
 
+  renderCta(museo) {
+    return (
+      <Link to={`/search/list/?museo=["${museo.REF}"]`} className="btn btn-secondary">
+        Voir les collections du musée
+      </Link>
+    );
+  }
+
   // The main render function.
   render() {
     const { museo, loading } = this.state;
@@ -119,7 +128,11 @@ class Museo extends React.Component {
     if (!museo) {
       return <NotFound />;
     }
-    const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
+    const title = [
+      museo.NOMUSAGE || museo.NOMOFF || museo.ANC,
+      museo.VILLE_M || museo.VILLE_AD
+    ].join(" - ");
+
     return (
       <div className="museo">
         <div className="museo-card">
@@ -127,14 +140,11 @@ class Museo extends React.Component {
             title={`${title} - POP`}
             description="À propos de la Plateforme Ouverte du Patrimoine POP."
           />
+          <div className="collection float-right d-none d-sm-block">{this.renderCta(museo)}</div>
           <h1>{title}</h1>
           {this.renderProperties(museo)}
           <div className="museo-map">{this.renderMap(museo.location)}</div>
-          <div className="collection">
-            <a href={`/search/list/?museo=["${museo.REF}"]`} className="btn btn-secondary">
-              Voir les collections du musée
-            </a>
-          </div>
+          <div className="collection collection-bottom">{this.renderCta(museo)}</div>
         </div>
       </div>
     );
