@@ -113,7 +113,17 @@ class Joconde extends React.Component {
 
   period() {
     const period = this.state.notice.PERI;
-    return period && <a href={`/search/list?periode=["${period}"]`}>{period}</a>;
+    if (!period || !Array.isArray(period)) {
+      return <div />;
+    }
+    const links = period
+      .map(p => (
+        <a href={`/search/list?periode=["${p}"]`} key={p}>
+          {p}
+        </a>
+      ))
+      .reduce((p, c) => [p, ", ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
   }
 
   render() {
