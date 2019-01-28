@@ -114,58 +114,90 @@ class Mnr extends React.Component {
             <Col className="image" md="8">
               <div className="notice-details">
                 <Field title="N°Inventaire" content={notice.INV} join=" ; " />
-                <Field title="Domaine (catégorie du bien)" content={this.domain()} join=" ; " />
+                <Field
+                  title="Domaine (catégorie du bien)"
+                  separator="#"
+                  content={this.domain()}
+                  join=" ; "
+                />
                 <Field title="Auteur" content={notice.AUTR} separator="#" join=" ; " />
-                <Field title="Precisions auteur" content={notice.PAUT} join=" ; " />
+                <Field title="Precisions auteur" content={notice.PAUT} separator="#" join=" ; " />
                 <Field
                   title="Anciennes attributions"
                   content={notice.ATTR}
                   join=" ; "
                   separator="#"
                 />
-                <Field title="Ancienne attribution" content={notice.AATT} join=" ; " />
+                <Field
+                  title="Ancienne attribution"
+                  separator="#"
+                  content={notice.AATT}
+                  join=" ; "
+                />
                 <Field title="Ecole" content={notice.ECOL} separator="#" join=" ; " />
-                <Field title="Titre" content={notice.TITR} join=" ; " />
-                <Field title="Ancien titre" content={notice.ATIT} join=" ; " />
-                <Field title="Précision titre" content={notice.PTIT} join=" ; " />
-                <Field title="Autre titre" content={notice.AUTI} join=" ; " />
-                <Field title="Dénomination" content={notice.DENO} join=" ; " />
-                <Field title="Millénaire" content={notice.MILL} join=" ; " />
-                <Field title="Siècle" content={notice.SCLE} join=" ; " />
-                <Field title="Style" content={notice.STYL} join=" ; " />
-                <Field title="Technique" content={notice.TECH} separator="#" join=" ; " />
-                <Field title="Dimensions" content={notice.DIMS} join=" ; " />
+                <Field title="Titre" separator="#" content={notice.TITR} join=" ; " />
+                <Field title="Ancien titre" separator="#" content={notice.ATIT} join=" ; " />
+                <Field title="Précision titre" separator="#" content={notice.PTIT} join=" ; " />
+                <Field title="Autre titre" separator="#" content={notice.AUTI} join=" ; " />
+                <Field title="Dénomination" separator="#" content={notice.DENO} join=" ; " />
+                <Field title="Millénaire" separator="#" content={notice.MILL} join=" ; " />
+                <Field title="Siècle" separator="#" content={notice.SCLE} join=" ; " />
+                <Field title="Style" separator="#" content={notice.STYL} join=" ; " />
+                <Field title="Technique" separator="#" content={notice.TECH} join=" ; " />
+                <Field title="Dimensions" separator="#" content={notice.DIMS} join=" ; " />
                 <Field title="Description" content={notice.DESC} join=" ; " separator="#" />
                 <Field title="Inscriptions" content={notice.INSC} join=" ; " separator="#" />
                 <Field title="Genèse" content={notice.GENE} separator="#" join=" ; " />
                 <Field title="Historique" content={notice.HIST} separator="#" join=" ; " />
-                <Field title="Provenance" content={notice.PROV} join=" ; " />
+                <Field title="Provenance" separator="#" content={notice.PROV} join=" ; " />
                 <Field title="Commentaire" content={notice.COMM} separator="#" join=" ; " />
-                <Field title="Catégorie" content={notice.CATE} join=" ; " />
+                <Field title="Catégorie" separator="#" content={notice.CATE} join=" ; " />
                 <Field title="Observations" content={notice.OBSE} separator="#" join=" ; " />
                 <Field title="Autres numéros" content={notice.NUMS} separator="#" join=" ; " />
                 <Field title="Marquages" content={notice.MARQ} separator="#" join=" ; " />
-                <Field title="Localisation" content={notice.LOCA} join=" ; " />
+                <Field title="Localisation" separator="#" content={notice.LOCA} join=" ; " />
                 <Field
                   title="Etablissement affectataire qui existe dans d’autres bases"
                   content={notice.AFFE}
+                  separator="#"
                   join=" ; "
                 />
-                <Field title="Expositions" content={notice.EXPO} separator="#" join=" ; " />
-                <Field title="Bibliographie" content={notice.BIBL} separator="#" join=" ; " />
-                <Field title="Notes" content={notice.NOTE} separator="#" join=" ; " />
-                <Field title="Résumé" content={notice.RESUME} join=" ; " />
-                <Field title="Etat de conservation" content={notice.ETAT} join=" ; " />
-                <Field title="OEuvres liées, ensemble" content={notice.SUITE} join=" ; " />
-                <Field title="Représentation" content={notice.REPR} join=" ; " />
+                <Field title="Expositions" separator="#" content={notice.EXPO} join=" ; " />
+                <Field title="Bibliographie" separator="#" content={notice.BIBL} join=" ; " />
+                <Field title="Notes" separator="#" content={notice.NOTE} join=" ; " />
+                <Field title="Résumé" separator="#" content={notice.RESUME} join=" ; " />
+                <Field
+                  title="Etat de conservation"
+                  separator="#"
+                  content={notice.ETAT}
+                  join=" ; "
+                />
+                <Field
+                  title="OEuvres liées, ensemble"
+                  separator="#"
+                  content={notice.SUITE}
+                  join=" ; "
+                />
+                <Field title="Représentation" separator="#" content={notice.REPR} join=" ; " />
                 <Field
                   title="Sujet de la représentation (source littéraire ou musicale)"
                   content={notice.SREP}
                   join=" ; "
+                  separator="#"
                 />
-                <Field title="Précisions sur la représentation." content={notice.PREP} join=" ; " />
-                <Field title="Date de la représentation" content={notice.DREP} join=" ; " />
-                <Field title="Date mise à jour" content={notice.DMAJ} join=" ; " />
+                <Field
+                  title="Précisions sur la représentation."
+                  separator="#"
+                  content={notice.PREP}
+                  join=" ; "
+                />
+                <Field
+                  title="Date de la représentation"
+                  separator="#"
+                  content={notice.DREP}
+                  join=" ; "
+                />
+                <Field title="Date mise à jour" separator="#" content={notice.DMAJ} join=" ; " />
 
                 <Field
                   title="Droits de copie photo"
@@ -181,8 +213,13 @@ class Mnr extends React.Component {
                 <div>
                   <Field title="Référence" content={notice.REF} />
                   <Field title="Dernière mise à jour" content={notice.DMAJ} />
-                  <Field title="Rédacteur" content={notice.NOMS} join=" ; " />
-                  <Field title="Crédits photographiques" content={notice.AUTP} join=" ; " />
+                  <Field title="Rédacteur" separator="#" content={notice.NOMS} join=" ; " />
+                  <Field
+                    title="Crédits photographiques"
+                    separator="#"
+                    content={notice.AUTP}
+                    join=" ; "
+                  />
                 </div>
                 <ContactUs
                   contact={notice.CONTACT || "francoise.gaborit@culture.gouv.fr"}
