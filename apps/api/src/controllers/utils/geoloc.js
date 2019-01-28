@@ -40,8 +40,8 @@ proj4.defs(
 proj4.defs("mtu", "+proj=utm +zone=30 +datum=WGS84 +units=m +no_defs");
 
 function isInFrance(lat, lon) {
-  const TopRight = [51.14, 8.23];
-  const BottomLeft = [42.33, -4.87];
+  const TopRight = [51.54, 10.3];
+  const BottomLeft = [41.18, -9.62];
   if (lat < TopRight[0] && lat > BottomLeft[0] && lon < TopRight[1] && lon > BottomLeft[1]) {
     return true;
   }
@@ -59,33 +59,44 @@ function lambertToWGS84(xy, zone) {
   const coords = xy.split(";").map(e => parseFloat(e.trim()));
 
   if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
-    return { lat: 0, lon: 0 };
+    return { lat: 0, lon: 0, message: "Le format des coordonnées incorrect" };
   }
 
   switch (zone.toLowerCase()) {
     case "lambert0":
     case "lambert2": {
+      let message = "";
       let c = proj4("lambert2", "WGS84", [coords[0], coords[1]]);
 
       if (!isInFrance(c[1], c[0])) {
         c = proj4("lambert2deprecated", "WGS84", [coords[0], coords[1]]);
+        message = "Cette projection lambert 2 est est dépréciée";
       }
       if (!isInFrance(c[1], c[0])) {
-        return { lat: 0, lon: 0 };
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
       }
 
-      return { lat: c[1], lon: c[0] };
+      return { lat: c[1], lon: c[0], message };
     }
     case "lambert1": {
       const c = proj4("lambert1", "WGS84", [coords[0], coords[1]]);
+      if (!isInFrance(c[1], c[0])) {
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
+      }
       return { lat: c[1], lon: c[0] };
     }
     case "lambert3": {
       const c = proj4("lambert3", "WGS84", [coords[0], coords[1]]);
+      if (!isInFrance(c[1], c[0])) {
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
+      }
       return { lat: c[1], lon: c[0] };
     }
     case "lambert4": {
       const c = proj4("lambert4", "WGS84", [coords[0], coords[1]]);
+      if (!isInFrance(c[1], c[0])) {
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
+      }
       return { lat: c[1], lon: c[0] };
     }
     case "gauss laborde": {
@@ -94,10 +105,13 @@ function lambertToWGS84(xy, zone) {
     }
     case "lambert93": {
       const c = proj4("lambert93", "WGS84", [coords[0], coords[1]]);
+      if (!isInFrance(c[1], c[0])) {
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
+      }
       return { lat: c[1], lon: c[0] };
     }
     default:
-      return { lat: 0, lon: 0 };
+      return { lat: 0, lon: 0, message: "La zone " + zone.toLowerCase() + " est incorrecte" };
   }
 }
 
