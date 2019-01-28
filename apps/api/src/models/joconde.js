@@ -705,7 +705,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Affichage image",
-        label: "Affichage image"
+        label: "Affichage image",
+        deprecated: true
       }
     },
     WWW: {
