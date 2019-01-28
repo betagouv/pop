@@ -17,6 +17,7 @@ import NotFound from "../../components/NotFound";
 class Joconde extends React.Component {
   state = {
     notice: null,
+    museo: null,
     loading: true,
     links: []
   };
@@ -29,17 +30,25 @@ class Joconde extends React.Component {
   componentWillReceiveProps(newProps) {
     const { match } = this.props;
     if (match && match.params.ref !== newProps.match.params.ref) {
+      this.setState({ loading: true });
       this.load(newProps.match.params.ref);
     }
   }
 
-  load(ref) {
-    this.setState({ loading: true });
-    API.getNotice("joconde", ref).then(notice => {
-      this.setState({
-        loading: false,
-        notice
-      });
+  loadMuseo(m) {
+    try {
+      return API.getMuseo(m);
+    } catch (e) {}
+    return null;
+  }
+
+  async load(ref) {
+    const notice = await API.getNotice("joconde", ref);
+    const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
+    this.setState({
+      loading: false,
+      notice,
+      museo
     });
   }
 
@@ -295,7 +304,7 @@ class Joconde extends React.Component {
                 <ContactUs contact={notice.CONTACT} reference={notice.REF} />
               </div>
 
-              <SeeMore notice={notice} />
+              <SeeMore notice={notice} museo={this.state.museo} />
 
               {hasCoordinates(notice.POP_COORDONNEES) ? <Map notice={notice} /> : <div />}
             </Col>
@@ -306,7 +315,7 @@ class Joconde extends React.Component {
   }
 }
 
-const SeeMore = ({ notice }) => {
+const SeeMore = ({ notice, museo }) => {
   const arr = [];
 
   if (notice.LVID) {
@@ -324,10 +333,17 @@ const SeeMore = ({ notice }) => {
   }
 
   if (notice.MUSEO) {
+    const text = museo
+      ? [
+          museo.NOMUSAGE || museo.NOMOFF || museo.ANC,
+          museo.VILLE_M || museo.VILLE_AD,
+          museo.REF
+        ].join(" - ")
+      : notice.MUSEO;
     arr.push(
       <Field
         title="Fiche musée"
-        content={<a href={`/museo/${notice.MUSEO}`}>{notice.MUSEO}</a>}
+        content={<a href={`/museo/${notice.MUSEO}`}>{text}</a>}
         key="notice.MUSEO"
       />
     );
