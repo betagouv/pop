@@ -8,6 +8,7 @@ import { Mapping } from "pop-shared";
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
 import Map from "./components/map.js";
 
 import Loader from "../../components/Loader";
@@ -28,10 +29,7 @@ class Notice extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
+    if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
       this.load(newProps.match.params.ref);
     }
   }
@@ -49,8 +47,7 @@ class Notice extends React.Component {
       }
       console.log("NOTICE", notice);
       this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
-      const editable =
-        notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
+      const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
     });
   }
@@ -104,10 +101,8 @@ class Notice extends React.Component {
 
     return (
       <Container className="notice" fluid>
-        <Form
-          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-          className="main-body"
-        >
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Row>
             <div className="back" onClick={() => this.props.history.goBack()}>
               Retour
@@ -115,12 +110,7 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages
-                name="MEMOIRE"
-                disabled
-                external={true}
-                getAbsoluteUrl={e => e.url}
-              />
+              <FieldImages name="MEMOIRE" disabled external={true} getAbsoluteUrl={e => e.url} />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
@@ -137,7 +127,7 @@ class Notice extends React.Component {
               <CustomField name="PRODUCTEUR" disabled={true} />
               <CustomField
                 name="RENV"
-                createUrl={e => `/notice/palissy/"${e}`}
+                createUrl={e => `/notice/palissy/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="DENQ" disabled={!this.state.editable} />
@@ -146,7 +136,7 @@ class Notice extends React.Component {
               <CustomField name="DOMN" disabled={!this.state.editable} />
               <CustomField
                 name="REFA"
-                createUrl={e => `/notice/merimee/"${e}`}
+                createUrl={e => `/notice/merimee/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="AUTP" disabled={!this.state.editable} />
@@ -248,11 +238,7 @@ class Notice extends React.Component {
               <CustomField name="STAD" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="DESCRIPTION"
-            icon={require("../../assets/tool.png")}
-            color="#FBE367"
-          >
+          <Section title="DESCRIPTION" icon={require("../../assets/tool.png")} color="#FBE367">
             <Col sm={6}>
               <CustomField name="REPR" disabled={!this.state.editable} />
               <CustomField name="PREP" disabled={!this.state.editable} />
@@ -307,11 +293,7 @@ class Notice extends React.Component {
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-              <Button
-                disabled={!this.state.editable}
-                color="primary"
-                type="submit"
-              >
+              <Button disabled={!this.state.editable} color="primary" type="submit">
                 Sauvegarder
               </Button>
             </div>

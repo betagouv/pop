@@ -8,6 +8,7 @@ import { Mapping } from "pop-shared";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
@@ -29,10 +30,7 @@ class Notice extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
+    if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
       this.load(newProps.match.params.ref);
     }
   }
@@ -41,10 +39,7 @@ class Notice extends React.Component {
     const { role, group } = this.props;
     const roles = ["producteur", "administrateur"];
     if (group === "mh") {
-      return (
-        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE"].includes(PRODUCTEUR) &&
-        roles.includes(role)
-      );
+      return ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
     } else if (group === "memoire") {
       return ["SAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
     } else if (group === "admin") {
@@ -74,12 +69,7 @@ class Notice extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    await API.updateNotice(
-      this.state.notice.REF,
-      "memoire",
-      values,
-      this.state.imagesFiles
-    );
+    await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles);
     toastr.success(
       "Modification enregistrée",
       "La modification sera visible dans 1 à 5 min en diffusion"
@@ -123,10 +113,8 @@ class Notice extends React.Component {
 
     return (
       <Container className="notice" fluid>
-        <Form
-          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-          className="main-body"
-        >
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Row>
             <div className="back" onClick={() => this.props.history.goBack()}>
               Retour
@@ -137,18 +125,12 @@ class Notice extends React.Component {
               name="IMG"
               disabled={!this.state.editable}
               createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
-              getAbsoluteUrl={e =>
-                e.indexOf("www") === -1 ? `${bucket_url}${e}` : e
-              }
+              getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
               updateFiles={imagesFiles => this.setState({ imagesFiles })}
             />
           </Row>
 
-          <Section
-            title="Localisation"
-            icon={require("../../assets/info.png")}
-            color="#FF7676"
-          >
+          <Section title="Localisation" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="LOCA" disabled={!this.state.editable} />
               <CustomField name="PAYS" disabled={!this.state.editable} />
@@ -173,11 +155,7 @@ class Notice extends React.Component {
               <CustomField name="OBJT" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField
-                name="LBASE"
-                createUrl={getUrl}
-                disabled={!this.state.editable}
-              />
+              <CustomField name="LBASE" createUrl={getUrl} disabled={!this.state.editable} />
               <CustomField name="LBASE2" disabled={!this.state.editable} />
               <CustomField name="MARQ" disabled={!this.state.editable} />
             </Col>
@@ -235,11 +213,7 @@ class Notice extends React.Component {
             </Col>
           </Section>
 
-          <Section
-            title="Auteur"
-            icon={require("../../assets/info.png")}
-            color="#FF7676"
-          >
+          <Section title="Auteur" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="AUTP" disabled={!this.state.editable} />
               <CustomField name="AUTTI" disabled={!this.state.editable} />
@@ -271,11 +245,7 @@ class Notice extends React.Component {
             </Col>
           </Section>
 
-          <Section
-            title="Date"
-            icon={require("../../assets/info.png")}
-            color="#FF7676"
-          >
+          <Section title="Date" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="DATPV" disabled={!this.state.editable} />
               <CustomField name="JDATPV" disabled={!this.state.editable} />
@@ -326,11 +296,7 @@ class Notice extends React.Component {
               <CustomField name="ECH" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="AUTRES"
-            icon={require("../../assets/info.png")}
-            color="#FF7676"
-          >
+          <Section title="AUTRES" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="ADRS" disabled={!this.state.editable} />
               <CustomField name="AIRE" disabled={!this.state.editable} />

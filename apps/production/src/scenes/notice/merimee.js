@@ -10,6 +10,7 @@ import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
+import Comments from "./components/comments.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
@@ -29,10 +30,7 @@ class Notice extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
+    if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
       this.load(newProps.match.params.ref);
     }
   }
@@ -47,21 +45,19 @@ class Notice extends React.Component {
       console.log(notice);
       this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
 
-      const editable =
-        notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
+      const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
     });
   }
 
-  onSubmit(values) {
+  async onSubmit(values) {
     this.setState({ saving: true });
-    API.updateNotice(this.state.notice.REF, "merimee", values).then(e => {
-      toastr.success(
-        "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
-      );
-      this.setState({ saving: false });
-    });
+    await API.updateNotice(this.state.notice.REF, "merimee", values);
+    toastr.success(
+      "Modification enregistrée",
+      "La modification sera visible dans 1 à 5 min en diffusion"
+    );
+    this.setState({ saving: false });
   }
 
   delete() {
@@ -100,10 +96,8 @@ class Notice extends React.Component {
 
     return (
       <Container className="notice" fluid>
-        <Form
-          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-          className="main-body"
-        >
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Row>
             <div className="back" onClick={() => this.props.history.goBack()}>
               Retour
@@ -174,11 +168,7 @@ class Notice extends React.Component {
               <CustomField name="MICR" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="DESIGNATION"
-            icon={require("../../assets/law.png")}
-            color="#FE997B"
-          >
+          <Section title="DESIGNATION" icon={require("../../assets/law.png")} color="#FE997B">
             <Col sm={6}>
               <CustomField name="DENO" disabled={!this.state.editable} />
               <CustomField name="GENR" disabled={!this.state.editable} />
@@ -199,11 +189,7 @@ class Notice extends React.Component {
             </Col>
           </Section>
 
-          <Section
-            title="LOCALISATION"
-            icon={require("../../assets/map.png")}
-            color="#FFC070"
-          >
+          <Section title="LOCALISATION" icon={require("../../assets/map.png")} color="#FFC070">
             <Col sm={6}>
               <CustomField name="REG" disabled={!this.state.editable} />
               <CustomField name="DPT" disabled={!this.state.editable} />
@@ -236,11 +222,7 @@ class Notice extends React.Component {
               <CustomField name="LOCA" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="HISTORIQUE"
-            icon={require("../../assets/date.png")}
-            color="#668796"
-          >
+          <Section title="HISTORIQUE" icon={require("../../assets/date.png")} color="#668796">
             <Col sm={6}>
               <CustomField name="SCLE" disabled={!this.state.editable} />
               <CustomField name="DATE" disabled={!this.state.editable} />
@@ -256,11 +238,7 @@ class Notice extends React.Component {
               <CustomField name="SCLD" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="DESCRIPTION"
-            icon={require("../../assets/tool.png")}
-            color="#FBE367"
-          >
+          <Section title="DESCRIPTION" icon={require("../../assets/tool.png")} color="#FBE367">
             <Col sm={6}>
               <CustomField name="MURS" disabled={!this.state.editable} />
               <CustomField name="TOIT" disabled={!this.state.editable} />
@@ -304,11 +282,7 @@ class Notice extends React.Component {
               <CustomField name="OBS" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="STATUT JURIDIQUE"
-            icon={require("../../assets/time.png")}
-            color="#00BEB2"
-          >
+          <Section title="STATUT JURIDIQUE" icon={require("../../assets/time.png")} color="#00BEB2">
             <Col sm={6}>
               <CustomField name="STAT" disabled={!this.state.editable} />
               <CustomField name="PSTA" disabled={!this.state.editable} />
@@ -328,11 +302,7 @@ class Notice extends React.Component {
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-              <Button
-                disabled={!this.state.editable}
-                color="primary"
-                type="submit"
-              >
+              <Button disabled={!this.state.editable} color="primary" type="submit">
                 Sauvegarder
               </Button>
             </div>

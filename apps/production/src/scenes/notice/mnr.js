@@ -9,6 +9,7 @@ import { bucket_url } from "../../config";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
@@ -28,10 +29,7 @@ class Notice extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
+    if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
       this.load(newProps.match.params.ref);
     }
   }
@@ -61,12 +59,7 @@ class Notice extends React.Component {
   async onSubmit(values) {
     this.setState({ saving: true });
     try {
-      await API.updateNotice(
-        this.state.notice.REF,
-        "mnr",
-        values,
-        this.state.imagesFiles
-      );
+      await API.updateNotice(this.state.notice.REF, "mnr", values, this.state.imagesFiles);
       toastr.success(
         "Modification enregistrée",
         "La modification sera visible dans 1 à 5 min en diffusion"
@@ -108,10 +101,8 @@ class Notice extends React.Component {
 
     return (
       <Container className="notice" fluid>
-        <Form
-          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-          className="main-body"
-        >
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Row>
             <div className="back" onClick={() => this.props.history.goBack()}>
               Retour
@@ -206,9 +197,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
     <Field
       {...Mapping.mnr[name]}
       disabled={
-        Mapping.mnr[name].generated == true ||
-        Mapping.mnr[name].deprecated == true ||
-        disabled
+        Mapping.mnr[name].generated == true || Mapping.mnr[name].deprecated == true || disabled
       }
       name={name}
       {...rest}
@@ -219,8 +208,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
 const mapStateToProps = ({ Auth }) => {
   return {
     canUpdate: Auth.user
-      ? (Auth.user.role === "producteur" ||
-          Auth.user.role === "administrateur") &&
+      ? (Auth.user.role === "producteur" || Auth.user.role === "administrateur") &&
         (Auth.user.group === "mnr" || Auth.user.group === "admin")
       : false
   };
