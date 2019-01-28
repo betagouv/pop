@@ -8,7 +8,12 @@ body {
   overflow-y: auto;
   font-family: "Open Sans", sans-serif;
   color: #2a282b;
-  margin-bottom: 60px;
+  background-color: #e5edef;
+}
+@media screen and (min-width: 499px) {
+  body {
+    margin-bottom: 60px;
+  }
 }
 
 @font-face {

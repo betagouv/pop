@@ -2,7 +2,6 @@
   display: flex;
   justify-content: start;
   align-items: "center";
-  background-color: #fff;
   flex-direction: column;
   padding-bottom: 60px;
 }

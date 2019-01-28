@@ -47,12 +47,21 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      const arr = [
-        ...(prevNotice.IMG || [])
-          .filter(x => !(notice.IMG || []).includes(x))
-          .map(f => deleteFile(f)),
-        ...req.files.map(f => uploadFile(`joconde/${notice.REF}/${f.originalname}`, f))
-      ];
+
+      const arr = [];
+
+      if (notice.IMG !== undefined) {
+        for (let i = 0; i < prevNotice.IMG.length; i++) {
+          if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
+            arr.push(deleteFile(prevNotice.IMG[i]));
+          }
+        }
+      }
+
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        arr.push(uploadFile(`joconde/${notice.REF}/${f.originalname}`, f));
+      }
 
       // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
