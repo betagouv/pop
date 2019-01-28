@@ -33,5 +33,5 @@ Exemple avec la base MNR :
 `
 mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e
 mongodump --host 127.0.0.1:27017 --db pop --collection "mnr"
-mongorestore --host Staging-shard-0/staging-shard-00-00-fkthi.mongodb.net:27017,staging-shard-00-01-fkthi.mongodb.net:27017,staging-shard-00-02-fkthi.mongodb.net:27017 --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop 
+mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop 
 `
