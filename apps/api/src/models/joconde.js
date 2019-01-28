@@ -18,8 +18,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "Collections des musées de France (Joconde)",
       documentation: {
-        description:
-          "Nom de la base : Collections des musées de France (Joconde)",
+        description: "Nom de la base : Collections des musées de France (Joconde)",
         generated: true,
         label: "Nom de la base"
       }
@@ -57,10 +56,18 @@ const Schema = new mongoose.Schema(
       enum: ["oui", "non"],
       default: "non",
       documentation: {
-        description:
-          "Champ qui permet de savoir si la geolocalisation est disponible ou non",
+        description: "Champ qui permet de savoir si la geolocalisation est disponible ou non",
         generated: true,
         label: "Contient une position"
+      }
+    },
+    POP_COMMENTAIRES: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Commentaires technique",
+        label: "Commentaires POP",
+        generated: true
       }
     },
     REF: {
@@ -179,8 +186,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
         deprecated: true
       }
     },
@@ -188,8 +194,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
         deprecated: true
       }
     },
@@ -206,8 +211,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Découverte / collecte",
-        label: "Découverte / collecte",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T115"
+        label: "Découverte / collecte"
       }
     },
     DENO: {
@@ -224,7 +228,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dépôt / établissement dépositaire",
-        label: "Lieu de dépot"
+        label: "Lieu de dépot",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
       }
     },
     DESC: {
@@ -375,8 +380,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Inscriptions ",
-        label: "Inscriptions",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T520"
+        label: "Inscriptions"
       }
     },
     INV: {
@@ -476,8 +480,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Lien commande de reproduction et/ou de conditions d’utilisation ",
+        description: "Lien commande de reproduction et/ou de conditions d’utilisation ",
         label: "Lien commande photo"
       }
     },
@@ -517,8 +520,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "[Peut être déprécié : Pas affiché en production ni en consultation]",
         deprecated: true,
         label: "Précision datation"
       }
@@ -578,8 +580,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Précisions sur le lieu de création/ d’exécution / d’utilisation",
+        description: "Précisions sur le lieu de création/ d’exécution / d’utilisation",
         label: "Précisions lieu création"
       }
     },
@@ -628,8 +629,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Sujet représenté ",
-        label: "Sujet représenté",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+        label: "Sujet représenté"
       }
     },
     RETIF: {
@@ -645,8 +645,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de la représentation",
-        label: "Source représentation",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T523"
+        label: "Source représentation"
       }
     },
     STAT: {
@@ -655,7 +654,8 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "Statut juridique",
-        label: "Statut juridique"
+        label: "Statut juridique",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
       }
     },
     TECH: {
@@ -687,8 +687,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "[Peut être déprécié : A vérifier. Non présent en production] ",
+        description: "[Peut être déprécié : A vérifier. Non présent en production] ",
         deprecated: true,
         label: "Recherche sur tout"
       }
@@ -698,8 +697,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Utilisation / Destination",
-        label: "Utilisation / Destination",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T86"
+        label: "Utilisation / Destination"
       }
     },
     VIDEO: {
@@ -707,7 +705,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Affichage image",
-        label: "Affichage image"
+        label: "Affichage image",
+        deprecated: true
       }
     },
     WWW: {

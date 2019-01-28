@@ -27,11 +27,5 @@ export function image(data) {
     }
   }
 
-  return (
-    <img
-      src={require("../../assets/noimage.png")}
-      className="no-img"
-      alt={alt}
-    />
-  );
+  return <img src={require("../../assets/noimage.png")} className="no-img" alt={alt} />;
 }

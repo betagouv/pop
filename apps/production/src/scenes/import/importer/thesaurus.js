@@ -11,18 +11,21 @@ export default function checkThesaurus(importedNotices) {
     for (var i = 0; i < importedNotices.length; i++) {
       for (var field in importedNotices[i]) {
         const noticeField = importedNotices[i][field];
-        if (!noticeField || noticeField.thesaurus === undefined) {
+
+        const thesaurus =
+          importedNotices[i]._mapping[field] && importedNotices[i]._mapping[field].thesaurus;
+          
+        const thesaurus_separator =
+          importedNotices[i]._mapping[field] &&
+          importedNotices[i]._mapping[field].thesaurus_separator;
+
+        if (!thesaurus) {
           continue;
         }
-        const thesaurus = noticeField.thesaurus;
 
         let values = [].concat(noticeField);
-        if (noticeField.thesaurus_separator) {
-          values = values.reduce(
-            (acc, val) =>
-              acc.concat(val.split(noticeField.thesaurus_separator)),
-            []
-          );
+        if (thesaurus_separator) {
+          values = values.reduce((acc, val) => acc.concat(val.split(thesaurus_separator)), []);
         }
         values = values.map(e => e.trim());
 
@@ -30,12 +33,10 @@ export default function checkThesaurus(importedNotices) {
           const value = values[k];
           if (value) {
             let val = null;
-            if (
-              optimMap[thesaurus] &&
-              optimMap[thesaurus][value] !== undefined
-            ) {
+            if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
               val = optimMap[thesaurus][value];
             } else {
+              console.log("validateWithThesaurus", value);
               val = await api.validateWithThesaurus(thesaurus, value);
             }
             if (!val) {

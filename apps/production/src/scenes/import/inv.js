@@ -63,7 +63,11 @@ function parseFiles(files, encoding) {
 
       resolve({
         importedNotices,
-        fileNames: ["GERTRUDE_xmlToPALISSY_lexicovide.txt", "GERTRUDE_xmlToMEMOIRE_lexicovide.txt", "GERTRUDE_xmlToMERIMEE_lexicovide.txt"]
+        fileNames: [
+          "GERTRUDE_xmlToPALISSY_lexicovide.txt",
+          "GERTRUDE_xmlToMEMOIRE_lexicovide.txt",
+          "GERTRUDE_xmlToMERIMEE_lexicovide.txt"
+        ]
       });
       return;
     }
@@ -88,61 +92,58 @@ function parseFiles(files, encoding) {
     }
 
     // ERROR
-    reject(
-      "Impossible d'importer le(s) fichier(s). Aucun fichier Renabl ou Gertrude détecté"
-    );
+    reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl ou Gertrude détecté");
   });
 }
 
 function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
   return new Promise(async (resolve, reject) => {
     const notices = [];
-    const arr = [];
-    arr.push(utils.readCSV(PalissyFile, "|", encoding));
-    arr.push(utils.readCSV(MerimeeFile, "|", encoding));
-    arr.push(utils.readCSV(MemoireFile, "|", encoding));
+    const arr = [
+      utils.readCSV(PalissyFile, "|", encoding),
+      utils.readCSV(MerimeeFile, "|", encoding),
+      utils.readCSV(MemoireFile, "|", encoding)
+    ];
 
-    Promise.all(arr).then(values => {
-      notices.push(...values[0].map(e => new Palissy(e)));
-      notices.push(...values[1].map(e => new Merimee(e)));
+    const values = await Promise.all(arr);
 
-      //COORWGS84
+    notices.push(...values[0].map(e => new Palissy(e)));
+    notices.push(...values[1].map(e => new Merimee(e)));
 
-      notices.push(
-        ...values[2].map(e => {
-          //changement du modèle de donnée gertrude -> pop
-          const imagePath = e.NOMI || e.NUMI || "";
-          e.NUMP = e.NUMP;
-          e.AUTP = e.AUT;
-          e.IDPROD = e.EMET;
-          e.AUTOEU = e.AUTR;
-          e.PRECOR = e.DOC;
-          e.ADRESSE = e.LIEU + ";" + e.ADRS;
+    //COORWGS84
 
-          const memoireObj = new Memoire(e);
+    notices.push(
+      ...values[2].map(e => {
+        //changement du modèle de donnée gertrude -> pop
+        const imagePath = e.NOMI || e.NUMI || "";
+        e.NUMP = e.NUMP;
+        e.AUTP = e.AUT;
+        e.IDPROD = e.EMET;
+        e.AUTOEU = e.AUTR;
+        e.PRECOR = e.DOC;
+        e.ADRESSE = e.LIEU + ";" + e.ADRS;
 
-          const imageFile = files.find(
-            e =>
-              convertLongNameToShort(e.name)
-                .toUpperCase()
-                .indexOf(imagePath.toUpperCase()) !== -1
-          );
-          if (imageFile) {
-            const shortname = convertLongNameToShort(imageFile.name);
-            const newImage = utils.renameFile(imageFile, shortname);
-            memoireObj._images.push(newImage);
-            memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
-          } else {
-            memoireObj._errors.push(
-              `Impossible de trouver l'image ${imagePath}`
-            );
-          }
+        const memoireObj = new Memoire(e);
 
-          return memoireObj;
-        })
-      );
-      resolve(notices);
-    });
+        const imageFile = files.find(
+          e =>
+            convertLongNameToShort(e.name)
+              .toUpperCase()
+              .indexOf(imagePath.toUpperCase()) !== -1
+        );
+        if (imageFile) {
+          const shortname = convertLongNameToShort(imageFile.name);
+          const newImage = utils.renameFile(imageFile, shortname);
+          memoireObj._images.push(newImage);
+          memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
+        } else {
+          memoireObj._errors.push(`Impossible de trouver l'image ${imagePath}`);
+        }
+
+        return memoireObj;
+      })
+    );
+    resolve(notices);
   });
 }
 
@@ -173,9 +174,7 @@ function ParseRenabl(files, xmlFiles, encoding) {
           const memoireObj = new Memoire(obj);
           const image = convertLongNameToShort(obj.FNU2, "\\");
           const imageFile = files.find(
-            e =>
-              convertLongNameToShort(e.name).toUpperCase() ===
-              image.toUpperCase()
+            e => convertLongNameToShort(e.name).toUpperCase() === image.toUpperCase()
           );
           if (imageFile) {
             const shortname = convertLongNameToShort(imageFile.name);
@@ -208,10 +207,7 @@ function convertGPS(e) {
 }
 
 function checkReference(notice) {
-  if (
-    String(notice.REF).startsWith("IA000") ||
-    String(notice.REF).startsWith("IM000")
-  ) {
+  if (String(notice.REF).startsWith("IA000") || String(notice.REF).startsWith("IM000")) {
     notice._errors.push(
       "L'import de cette notice est impossible car l'identifiant ne contient pas de département"
     );
@@ -267,19 +263,16 @@ function readme() {
     <div>
       <h5>Inventaire</h5>
       <div>
-        Cet onglet permet d’alimenter les bases Mérimée Inventaire, Palissy
-        Inventaire et Mémoire Inventaire. <br /> <br />
+        Cet onglet permet d’alimenter les bases Mérimée Inventaire, Palissy Inventaire et Mémoire
+        Inventaire. <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants : <br />
         <ul>
-          <li>
-            texte : format Renabl (.xml) ou Gertrude (.txt à partir de la
-            version 1.6){" "}
-          </li>
+          <li>texte : format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) </li>
           <li>illustration : jpg, png.</li>
         </ul>
-        La taille maximale d’un import est de 300Mo (soit environ 3000 notices
-        avec image, ou 1 million de notices sans images). <br /> <br />
+        La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
+        million de notices sans images). <br /> <br />
         <h6>Champs obligatoires et contrôles de vocabulaire </h6>
         Les champs suivants doivent obligatoirement être renseignés : <br />
         <br />
@@ -303,27 +296,25 @@ function readme() {
         </ul>
         <br />
         <b>
-          Si un champ REFIMG est renseigné mais que l'image est absente, i.e.
-          pas de .jpeg dans un des fichiers importés, alors l'import de la
-          notice est bloqué.
+          Si un champ REFIMG est renseigné mais que l'image est absente, i.e. pas de .jpeg dans un
+          des fichiers importés, alors l'import de la notice est bloqué.
         </b>
         <br /> <br />
         <h5>Particularités</h5>
-        Pour Renabl illustration, la référence de la notice mémoire est
-        construite dela facon suivante : EMET + "_" + NUMI <br />
+        Pour Renabl illustration, la référence de la notice mémoire est construite dela facon
+        suivante : EMET + "_" + NUMI <br />
         <br />
         Pour Renabl illustration, le champ AUTP est rempli avec le champ AUT
         <br />
         <br />
-        Pour Renabl illustration, le champ image est rempli en simplifiant le
-        nom contenu dans le champ FNU2
+        Pour Renabl illustration, le champ image est rempli en simplifiant le nom contenu dans le
+        champ FNU2
         <br /> <br />
-        Pour Renabl Mérimée et Palissy, Le champ COORWGS84 est utilisé et
-        converti dans le champ POP_COORDONNEES et prioritaire sur le champ COOR
+        Pour Renabl Mérimée et Palissy, Le champ COORWGS84 est utilisé et converti dans le champ
+        POP_COORDONNEES et prioritaire sur le champ COOR
         <br /> <br />
-        Pour Renabl et Gertrude Mérimée et Palissy, Les coordonnées sont
-        converties du format Lambert vers le WGS84 automatiquement si les champs
-        COOR et ZONE sont remplis
+        Pour Renabl et Gertrude Mérimée et Palissy, Les coordonnées sont converties du format
+        Lambert vers le WGS84 automatiquement si les champs COOR et ZONE sont remplis
         <br /> <br />
         Pour Gertrude Mémoire, les conversions suivantes sont faites : <br />
         <ul>
@@ -372,13 +363,13 @@ function readme() {
         <br />
         <br />
         <h6>Je veux mettre à jour tout ou partie d’une notice :</h6>
-        J’importe les champs à mettre à jour avec leurs nouvelles valeurs et
-        j’écrase l’ancienne notice.
+        J’importe les champs à mettre à jour avec leurs nouvelles valeurs et j’écrase l’ancienne
+        notice.
         <br />
         <br />
         <h6>Je veux effacer une ou plusieurs valeurs d’une notice : </h6>
-        J’importe un fichier comportant le ou les champs que je veux supprimer
-        en les laissant vides.
+        J’importe un fichier comportant le ou les champs que je veux supprimer en les laissant
+        vides.
         <br />
         <br />
         <h6>Je veux supprimer une notice :</h6>
@@ -386,15 +377,15 @@ function readme() {
         <br />
         <br />
         <h6>Je veux ajouter une image :</h6>
-        1) Sur une notice mémoire existante, je peux cliquer sur "Ajouter une
-        image" et télécharger une image depuis mon ordinateur. Le champ IMG
-        contiendra le lien de l'image ainsi téléchargée.
+        1) Sur une notice mémoire existante, je peux cliquer sur "Ajouter une image" et télécharger
+        une image depuis mon ordinateur. Le champ IMG contiendra le lien de l'image ainsi
+        téléchargée.
         <br /> <br />
-        2) Importer une notice mémoire ( référence commençant par IV,OA,MH,AR,AP
-        ) et avoir le champ REFIMG complété avec le nom de l'image exacte
+        2) Importer une notice mémoire ( référence commençant par IV,OA,MH,AR,AP ) et avoir le champ
+        REFIMG complété avec le nom de l'image exacte
         <br /> <br />
-        NB : à la création d'une notice, POP génère automatiquement certains
-        champs utiles au traitement des données. Il s'agit des champs : <br />
+        NB : à la création d'une notice, POP génère automatiquement certains champs utiles au
+        traitement des données. Il s'agit des champs : <br />
         <br />
         Mémoire :
         <ul>

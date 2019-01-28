@@ -8,13 +8,7 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const { capture } = require("./../sentry.js");
 
-const {
-  uploadFile,
-  deleteFile,
-  formattedNow,
-  checkESIndex,
-  updateNotice
-} = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
 
 function transformBeforeUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
@@ -53,14 +47,21 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      const arr = [
-        ...(prevNotice.IMG || [])
-          .filter(x => !(notice.IMG || []).includes(x))
-          .map(f => deleteFile(f)),
-        ...req.files.map(f =>
-          uploadFile(`joconde/${notice.REF}/${f.originalname}`, f)
-        )
-      ];
+
+      const arr = [];
+
+      if (notice.IMG !== undefined) {
+        for (let i = 0; i < prevNotice.IMG.length; i++) {
+          if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
+            arr.push(deleteFile(prevNotice.IMG[i]));
+          }
+        }
+      }
+
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        arr.push(uploadFile(`joconde/${notice.REF}/${f.originalname}`, f));
+      }
 
       // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
@@ -93,12 +94,7 @@ router.post(
 
       const arr = [];
       for (var i = 0; i < req.files.length; i++) {
-        arr.push(
-          uploadFile(
-            `joconde/${notice.REF}/${req.files[i].originalname}`,
-            req.files[i]
-          )
-        );
+        arr.push(uploadFile(`joconde/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
       }
 
       await transformBeforeCreate(notice);
@@ -142,29 +138,25 @@ router.get("/:ref", (req, res) => {
   });
 });
 
-router.delete(
-  "/:ref",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    try {
-      const ref = req.params.ref;
-      const doc = await Joconde.findOne({ REF: ref });
-      if (!doc) {
-        return res.status(500).send({
-          error: `Je ne trouve pas la notice joconde ${ref} à supprimer`
-        });
-      }
-      const arr = doc.IMG.map(f => deleteFile(f));
-      arr.push(doc.remove());
-      await Promise.all(arr);
-      return res.status(200).send({});
-    } catch (error) {
-      capture(error);
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+    const doc = await Joconde.findOne({ REF: ref });
+    if (!doc) {
       return res.status(500).send({
-        error
+        error: `Je ne trouve pas la notice joconde ${ref} à supprimer`
       });
     }
+    const arr = doc.IMG.map(f => deleteFile(f));
+    arr.push(doc.remove());
+    await Promise.all(arr);
+    return res.status(200).send({});
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({
+      error
+    });
   }
-);
+});
 
 module.exports = router;

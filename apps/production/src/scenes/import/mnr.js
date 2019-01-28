@@ -63,8 +63,7 @@ function readme() {
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants : <br />
         <ul>
-          <li>texte : csv (séparateur : virgule, encodage : UTF8) </li>
-          <li>illustration : jpg, png.</li>
+          <li>texte : csv (séparateur : point-virgule, encodage : UTF8) </li>
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices
         avec image, ou 1 million de notices sans images). <br /> <br />

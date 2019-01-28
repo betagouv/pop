@@ -18,9 +18,9 @@ const getElasticInstance = () => {
   } else {
     options = {
       host: "http://127.0.0.1:9200"
-    }
+    };
   }
-  
+
   let elasticClient = require("elasticsearch").Client(options);
   return elasticClient;
 };

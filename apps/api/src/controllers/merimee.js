@@ -6,18 +6,12 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
-const {
-  formattedNow,
-  checkESIndex,
-  updateNotice,
-  lambertToWGS84
-} = require("./utils");
+const { formattedNow, checkESIndex, updateNotice, lambertToWGS84 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
 function transformBeforeCreateOrUpdate(notice) {
-  notice.CONTIENT_IMAGE =
-    notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
+  notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
   if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
@@ -82,26 +76,22 @@ function populateREFO(notice) {
   });
 }
 
-router.get(
-  "/newId",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const prefix = req.query.prefix;
-    const dpt = req.query.dpt;
+router.get("/newId", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const prefix = req.query.prefix;
+  const dpt = req.query.dpt;
 
-    if (!prefix || !dpt) {
-      return res.status(500).send({ error: "Missing dpt or prefix" });
-    }
-
-    getNewId(Merimee, prefix, dpt)
-      .then(id => {
-        return res.status(200).send({ id });
-      })
-      .catch(error => {
-        return res.status(500).send({ error });
-      });
+  if (!prefix || !dpt) {
+    return res.status(500).send({ error: "Missing dpt or prefix" });
   }
-);
+
+  getNewId(Merimee, prefix, dpt)
+    .then(id => {
+      return res.status(200).send({ id });
+    })
+    .catch(error => {
+      return res.status(500).send({ error });
+    });
+});
 
 router.put(
   "/:ref",
@@ -186,19 +176,15 @@ router.get("/", (req, res) => {
   });
 });
 
-router.delete(
-  "/:ref",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const ref = req.params.ref;
-    Merimee.findOneAndRemove({ REF: ref }, error => {
-      if (error) {
-        capture(error);
-        return res.status(500).send({ error });
-      }
-      return res.status(200).send({});
-    });
-  }
-);
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const ref = req.params.ref;
+  Merimee.findOneAndRemove({ REF: ref }, error => {
+    if (error) {
+      capture(error);
+      return res.status(500).send({ error });
+    }
+    return res.status(200).send({});
+  });
+});
 
 module.exports = router;

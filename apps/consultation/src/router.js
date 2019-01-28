@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "react-router-redux";
 import PiwikReactRouter from "piwik-react-router";
 
@@ -9,14 +9,15 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import Helmet from "./components/Helmet";
 
-import Home from "./scenes/home";
-import Search from "./scenes/search";
-import Opendata from "./scenes/opendata";
-import Notice from "./scenes/notice"
-import Museo from "./scenes/museo"
-import Topics from "./scenes/topics"
+import Home from "./scenes/Home";
+import Search from "./scenes/search/Search";
+import Opendata from "./scenes/Opendata";
+import Notice from "./scenes/notices/Notice";
+import Museo from "./scenes/Museo";
+import Topics from "./scenes/Topics";
 
 import ScrollToTop from "./components/ScrollToTop";
+
 
 const piwik = PiwikReactRouter({
   url: "https://stats.data.gouv.fr",
