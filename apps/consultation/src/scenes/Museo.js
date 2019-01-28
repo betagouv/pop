@@ -1,6 +1,7 @@
 import React from "react";
 import Helmet from "../components/Helmet";
 import API from "../services/api";
+import { Link } from "react-router-dom";
 import { Mapping } from "pop-shared";
 import Loader from "../components/Loader";
 import Map from "./notices/Map";
@@ -111,9 +112,9 @@ class Museo extends React.Component {
 
   renderCta(museo) {
     return (
-      <a href={`/search/list/?museo=["${museo.REF}"]`} className="btn btn-secondary">
+      <Link to={`/search/list/?museo=["${museo.REF}"]`} className="btn btn-secondary">
         Voir les collections du musée
-      </a>
+      </Link>
     );
   }
 
