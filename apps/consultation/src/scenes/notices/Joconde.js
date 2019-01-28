@@ -17,6 +17,7 @@ import NotFound from "../../components/NotFound";
 class Joconde extends React.Component {
   state = {
     notice: null,
+    museo: null,
     loading: true,
     links: []
   };
@@ -43,12 +44,11 @@ class Joconde extends React.Component {
 
   async load(ref) {
     const notice = await API.getNotice("joconde", ref);
-    if (notice) {
-      notice.museoObject = notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
-    }
+    const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
     this.setState({
       loading: false,
-      notice
+      notice,
+      museo
     });
   }
 
@@ -304,7 +304,7 @@ class Joconde extends React.Component {
                 <ContactUs contact={notice.CONTACT} reference={notice.REF} />
               </div>
 
-              <SeeMore notice={notice} />
+              <SeeMore notice={notice} museo={this.state.museo} />
 
               {hasCoordinates(notice.POP_COORDONNEES) ? <Map notice={notice} /> : <div />}
             </Col>
@@ -315,7 +315,7 @@ class Joconde extends React.Component {
   }
 }
 
-const SeeMore = ({ notice }) => {
+const SeeMore = ({ notice, museo }) => {
   const arr = [];
 
   if (notice.LVID) {
@@ -333,10 +333,12 @@ const SeeMore = ({ notice }) => {
   }
 
   if (notice.MUSEO) {
-    const m = notice.museoObject;
-    console.log(m);
-    const text = m
-      ? [m.NOMUSAGE || m.NOMOFF || m.ANC, m.VILLE_M || m.VILLE_AD, m.REF].join(" - ")
+    const text = museo
+      ? [
+          museo.NOMUSAGE || museo.NOMOFF || museo.ANC,
+          museo.VILLE_M || museo.VILLE_AD,
+          museo.REF
+        ].join(" - ")
       : notice.MUSEO;
     arr.push(
       <Field
