@@ -47,6 +47,57 @@ function transformBeforeCreate(notice) {
   }
 }
 
+async function checkMerimee(notice) {
+  const errors = [];
+  try {
+    if (!notice.CONTACT) {
+      //Check contact
+      errors.push("Le champ CONTACT ne doit pas être vide");
+    }
+
+    const { message } = lambertToWGS84(notice.COOR, notice.ZONE); //Check coor
+    if (message) {
+      errors.push(message);
+    }
+
+    if (!notice.TICO && !notice.TITR) {
+      // check Title
+      errors.push("Cette notice devrait avoir un TICO ou un TITR");
+    }
+
+    const { RENV, REFP, REFE, REFO } = notice; // check Links
+    if (RENV && RENV.length) {
+      const doc = await Merimee.findOne({ REF: RENV[0] });
+      if (!doc) {
+        errors.push(`Le champ RENV ${RENV[0]} pointe vers une notice absente`);
+      }
+    }
+    if (REFP && REFP.length) {
+      const doc = await Merimee.findOne({ REF: REFP[0] });
+      if (!doc) {
+        errors.push(`Le champ REFP ${REFP[0]} pointe vers une notice absente`);
+      }
+    }
+    if (REFE && REFE.length) {
+      const doc = await Merimee.findOne({ REF: REFE[0] });
+      if (!doc) {
+        errors.push(`Le champ REFE ${REFE[0]} pointe vers une notice absente`);
+      }
+    }
+    if (REFO && REFO.length) {
+      const doc = await Palissy.findOne({ REF: REFO[0] });
+      if (!doc) {
+        errors.push(`Le champ REFO ${REFO[0]} pointe vers une notice absente`);
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  return errors;
+}
+
+
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
     const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });

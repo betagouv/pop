@@ -37,6 +37,54 @@ function transformBeforeCreate(notice) {
   notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
 }
 
+
+async function checkMemoire(notice) {
+  const errors = [];
+  try {
+    //Check contact
+    if (!notice.CONTACT) {
+      errors.push("Le champ CONTACT ne doit pas être vide");
+    }
+    if (!notice.TICO && !notice.TITR && !notice.EDIF) {
+      errors.push("Cette notice devrait avoir un TICO ou un TITR ou un EDIF");
+    }
+
+    for (let i = 0; i < notice.LBASE.length; i++) {
+      const prefix = notice.LBASE[i].substring(0, 2);
+      if (["EA", "PA", "IA"].includes(prefix)) {
+        col = Merimee;
+      } else if (["IM", "PM", "EM"].includes(prefix)) {
+        col = Palissy;
+      } else {
+        errors.push(`Lien LBASE corrompu ${notice.LBASE[i]}`);
+        continue;
+      }
+      const doc = await col.findOne({ REF: notice.LBASE[i] });
+      if (!doc) {
+        errors.push(
+          `La notice ${notice.LBASE[i]} contenue dans LBASE n'existe pas`
+        );
+      }
+    }
+
+    if (notice.IMG) {
+      try {
+        const str =
+          notice.IMG.indexOf("http://www2.culture.gouv.fr") === -1
+            ? PREFIX_IMAGE + notice.IMG
+            : notice.IMG;
+        await rp.get(str);
+      } catch (e) {
+        errors.push(`Image ${str} est inaccessible`);
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  return errors;
+}
+
+
 function findProducteur(REF, IDPROD, EMET) {
   if (
     String(REF).startsWith("IVN") ||

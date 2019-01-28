@@ -8,6 +8,7 @@ import { Mapping } from "pop-shared";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
 import Map from "./components/map.js";
 
 import Loader from "../../components/Loader";
@@ -29,10 +30,7 @@ class Notice extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.match &&
-      this.props.match.params.ref !== newProps.match.params.ref
-    ) {
+    if (this.props.match && this.props.match.params.ref !== newProps.match.params.ref) {
       this.load(newProps.match.params.ref);
     }
   }
@@ -52,8 +50,7 @@ class Notice extends React.Component {
       // As a "producteur", I can edit if "museofile" matches with notice.
       const editable =
         this.props.canUpdate &&
-        (this.props.user.role === "administrateur" ||
-          notice.MUSEO === this.props.user.museofile);
+        (this.props.user.role === "administrateur" || notice.MUSEO === this.props.user.museofile);
 
       this.setState({ loading: false, notice, editable });
     });
@@ -79,12 +76,7 @@ class Notice extends React.Component {
 
   onSubmit(values) {
     this.setState({ saving: true });
-    API.updateNotice(
-      this.state.notice.REF,
-      "joconde",
-      values,
-      this.state.imagesFiles
-    ).then(e => {
+    API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles).then(e => {
       toastr.success(
         "Modification enregistrée",
         "La modification sera visible dans 1 à 5 min en diffusion"
@@ -104,10 +96,8 @@ class Notice extends React.Component {
 
     return (
       <Container className="notice" fluid>
-        <Form
-          onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))}
-          className="main-body"
-        >
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Row>
             <div className="back" onClick={() => this.props.history.goBack()}>
               Retour
@@ -184,11 +174,7 @@ class Notice extends React.Component {
               <CustomField name="NSDA" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <Section
-            title="STATUT JURIDIQUE"
-            icon={require("../../assets/law.png")}
-            color="#FE997B"
-          >
+          <Section title="STATUT JURIDIQUE" icon={require("../../assets/law.png")} color="#FE997B">
             <Col sm={6}>
               <CustomField name="STAT" disabled={!this.state.editable} />
               <CustomField name="DACQ" disabled={!this.state.editable} />
@@ -251,11 +237,7 @@ class Notice extends React.Component {
             ) : (
               <div />
             )}
-            <Button
-              disabled={!this.state.editable}
-              color="primary"
-              type="submit"
-            >
+            <Button disabled={!this.state.editable} color="primary" type="submit">
               Sauvegarder
             </Button>
           </div>
@@ -284,14 +266,11 @@ const mapStateToProps = ({ Auth }) => {
   const { role, group, museofile } = Auth.user;
   // An "administrateur" (from "joconde" or "admin" group) can delete.
   const canDelete =
-    Auth.user &&
-    role === "administrateur" &&
-    (group === "joconde" || group === "admin");
+    Auth.user && role === "administrateur" && (group === "joconde" || group === "admin");
   // If you can delete, you can update (see above).
   // Also, you can update if you are a "producteur" from "joconde"
   // (assuming user.museofile === notice.museofile, see "editable" state)
-  const canUpdate =
-    canDelete || (Auth.user && role === "producteur" && group === "joconde");
+  const canUpdate = canDelete || (Auth.user && role === "producteur" && group === "joconde");
   return {
     canDelete,
     canUpdate,
