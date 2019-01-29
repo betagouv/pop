@@ -31,6 +31,8 @@ export default ({ data }) => {
       return <Palissy data={data} />;
     case "memoire":
       return <Memoire data={data} />;
+    case "museo":
+      return <Museo data={data} />;
   }
 };
 
@@ -276,6 +278,37 @@ const Joconde = ({ data, index }) => {
           <p>{author}</p>
           <p>{peri}</p>
           <p>{loc}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+
+const Museo = ({ data }) => {
+
+  return (
+    <Link
+      style={{ textDecoration: "none" }}
+      to={`/museo/${data.REF}`}
+      className="list-card"
+      key={data.REF}
+    >
+      <div className="content">
+        <div style={{ display: "flex" }}>
+          <h2>
+            {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
+            <br />
+            {data.VILLE_M}
+          </h2>
+          <span>
+            <small className="base">MuseoFile</small>
+            <br />
+            {data.REF}
+          </span>
+        </div>
+        <div>
+          <p>{data.ATOUT && data.ATOUT.replace(/#/g, " ; ")} -{" "}</p>
         </div>
       </div>
     </Link>

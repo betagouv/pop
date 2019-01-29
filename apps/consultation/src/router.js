@@ -15,6 +15,7 @@ import Opendata from "./scenes/Opendata";
 import Notice from "./scenes/notices/Notice";
 import Museo from "./scenes/Museo";
 import Topics from "./scenes/Topics";
+import SearchMuseo from "./scenes/search/Museo"
 
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -43,6 +44,7 @@ export default class PublicRoutes extends React.Component {
             <Switch>
               <Route exact path={"/"} component={Home} />
               <Route path={"/search"} component={Search} />
+              <Route path={"/search-museo"} component={SearchMuseo} />
               <Route exact path={"/opendata"} component={Opendata} />
               <Route exact path={"/topics"} component={Topics} />
               <Route path={"/notice/:ref"} component={Notice} />
