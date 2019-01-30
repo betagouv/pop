@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default ({ base, normalMode }) => {
   return (
     <div className="header">
-      <div className="title">Rechercher une Notice</div>
+      <div className="title">Rechercher une notice</div>
       <div className="buttons">
         <ButtonGroup>
           <Link
