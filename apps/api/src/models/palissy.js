@@ -84,7 +84,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence unique de la notice",
+        description: "Référence de la notice",
         validation: "Alphanumeric",
         label: "Référence notice"
       }
@@ -267,7 +267,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Date d'enquête",
-        label: "Date d'enquête"
+        label: "Date de l'enquête ou du dernier récolement"
       }
     },
     DEPL: {
@@ -299,7 +299,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la dernière mise à jour",
-        label: "Date de la dernière mise à jour",
+        label: "Date de la dernière modification de la notice",
         generated: true
       }
     },
@@ -308,7 +308,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de la création POP/Mistral",
-        label: "Date de chargement dans la base ",
+        label: "Date de création de la notice",
         generated: true
       }
     },
@@ -316,8 +316,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Domaines ",
-        label: "Domaines "
+        description: "Domaine",
+        label: "Domaine"
       }
     },
     DOSADRS: {
@@ -619,7 +619,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Noms des rédacteurs de la notice et du dossier ",
-        label: "Noms des rédacteurs de la notice et du dossier"
+        label: "Nom du rédacteur"
       }
     },
     NUMA: {
@@ -824,7 +824,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
-        label: "N° de renvoi au domaine MH ou au domaine INVENTAIRE"
+        label: "Numéro de renvoi vers un autre domaine"
       }
     },
     REPR: {
@@ -898,7 +898,7 @@ const Schema = new mongoose.Schema(
     THEM: {
       type: String,
       default: "",
-      documentation: { description: "Thème ", label: "Thème" }
+      documentation: { description: "Thème ", label: "Thème de l'étude" }
     },
     TICO: {
       type: String,
