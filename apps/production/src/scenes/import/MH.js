@@ -91,9 +91,9 @@ function parseFiles(files, encoding) {
         return;
       }
 
-      const { DPT, INSEE } = newNotice;
+      const { DPT, INSEE, INSEE2 } = newNotice;
       if (newNotice._type !== "memoire") {
-        if (!INSEE) {
+        if (!INSEE || INSEE2) {
           newNotice._errors.push("INSEE ne doit pas être vide");
         }
         if (!DPT) {
@@ -101,6 +101,9 @@ function parseFiles(files, encoding) {
         }
         if (INSEE && DPT && !String(INSEE).startsWith(String(DPT))) {
           newNotice._errors.push("INSEE et Département ne coincident pas");
+        }
+        if (INSEE2 && DPT && !String(INSEE2).startsWith(String(DPT))) {
+          newNotice._errors.push("INSEE2 et Département ne coincident pas");
         }
       }
 
