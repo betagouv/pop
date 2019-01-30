@@ -36,7 +36,6 @@ export default function checkThesaurus(importedNotices) {
             if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
               val = optimMap[thesaurus][value];
             } else {
-              console.log("validateWithThesaurus", value);
               val = await api.validateWithThesaurus(thesaurus, value);
             }
             if (!val) {
