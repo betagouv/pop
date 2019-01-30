@@ -285,6 +285,29 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6} />
           </Section>
+          <Section title="AUTRE" icon={require("../../assets/law.png")} color="#FE997B">
+            <Col sm={6}>
+              <CustomField name="TITR" disabled={!this.state.editable} />
+              <CustomField name="NINV" disabled={!this.state.editable} />
+              <CustomField name="NUMA" disabled={!this.state.editable} />
+              <CustomField name="IDAGR" disabled={!this.state.editable} />
+              <CustomField name="ACQU" disabled={!this.state.editable} />
+              <CustomField name="EXPO" disabled={!this.state.editable} />
+              <CustomField name="BIBL" disabled={!this.state.editable} />
+              <CustomField name="SOUR" disabled={!this.state.editable} />
+              <CustomField name="PHOTO" disabled={!this.state.editable} />
+            </Col>
+            <Col sm={6}>
+              <CustomField name="MFICH" disabled={!this.state.editable} />
+              <CustomField name="VIDEO" disabled={!this.state.editable} />
+              <CustomField name="NUMP" disabled={!this.state.editable} />
+              <CustomField name="DIFF" disabled={!this.state.editable} />
+              <CustomField name="IMAGE" disabled={!this.state.editable} />
+              <CustomField name="LBASE2" disabled={!this.state.editable} />
+              <CustomField name="WCOM" disabled={!this.state.editable} />
+              <CustomField name="RENP" disabled={!this.state.editable} />
+            </Col>
+          </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
@@ -307,6 +330,10 @@ class Notice extends React.Component {
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
+  if (!Mapping.palissy[name]) {
+    console.log(name, " n'existe pas");
+    return <div />;
+  }
   return (
     <Field
       {...Mapping.palissy[name]}

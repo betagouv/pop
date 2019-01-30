@@ -294,6 +294,23 @@ class Notice extends React.Component {
               <CustomField name="VISI" disabled={!this.state.editable} />
             </Col>
           </Section>
+          <Section title="AUTRE" icon={require("../../assets/law.png")} color="#FE997B">
+            <Col sm={6}>
+              <CustomField name="MFICH" disabled={!this.state.editable} />
+              <CustomField name="VIDEO" disabled={!this.state.editable} />
+              <CustomField name="IMAGE" disabled={!this.state.editable} />
+              <CustomField name="IMG" disabled={!this.state.editable} />
+              <CustomField name="LBASE2" disabled={!this.state.editable} />
+            </Col>
+            <Col sm={6}>
+              <CustomField name="WCOM" disabled={!this.state.editable} />
+              <CustomField name="WADRS" disabled={!this.state.editable} />
+              <CustomField name="WRENV" disabled={!this.state.editable} />
+              <CustomField name="ACMH" disabled={!this.state.editable} />
+              <CustomField name="ACURL" disabled={!this.state.editable} />
+              <CustomField name="LMDP" disabled={!this.state.editable} />
+            </Col>
+          </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
