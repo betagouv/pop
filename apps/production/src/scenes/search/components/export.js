@@ -111,8 +111,7 @@ async function exportData(fileName, entities) {
   if (search && search.q) {
     // Get an array of queries with rules as text.
     const queries = search.q.map(s => {
-      const operatorAsText = operators.filter(o => s.operator === o.value)[0]
-        .text;
+      const operatorAsText = operators.filter(o => s.operator === o.value)[0].text;
       const combinatorAsText = s.combinator.toLowerCase();
       return `${combinatorAsText} ${s.key} ${operatorAsText} ${s.value}`;
     });
@@ -132,7 +131,11 @@ async function exportData(fileName, entities) {
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
       if (Array.isArray(value)) {
-        value = value.join(";");
+        if (typeof value === "object") {
+          value = JSON.stringify(value);
+        } else {
+          value = value.join(";");
+        }
       }
       if (!value) value = "";
       value = ("" + value).replace(/"/g, '""');
