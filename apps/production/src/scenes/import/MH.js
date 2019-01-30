@@ -93,7 +93,7 @@ function parseFiles(files, encoding) {
 
       const { DPT, INSEE, INSEE2 } = newNotice;
       if (newNotice._type !== "memoire") {
-        if (!INSEE || INSEE2) {
+        if (!INSEE || !INSEE2) {
           newNotice._errors.push("INSEE ne doit pas être vide");
         }
         if (!DPT) {
