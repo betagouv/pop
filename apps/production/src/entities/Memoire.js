@@ -3,12 +3,15 @@ import Notice from "./Notice";
 export default class Memoire extends Notice {
   constructor(body) {
     super(body, "memoire");
-    this.IMG = this.extractImage(body);
+
+    if (body.IMG !== undefined || body.NOMSN !== undefined) {
+      this.IMG = this.extractImage(body);
+    }
   }
 
   extractImage(body) {
     let name = body.IMG || body.NOMSN || "";
-    name = convertLongNameToShort(name)
+    name = convertLongNameToShort(name);
     if (name) {
       return `memoire/${body.REF}/${name}`;
     }
