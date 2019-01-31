@@ -115,29 +115,44 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
     notices.push(
       ...values[2].map(e => {
         //changement du modèle de donnée gertrude -> pop
-        const imagePath = e.NOMI || e.NUMI || "";
-        e.NUMP = e.NUMP;
-        e.AUTP = e.AUT;
-        e.IDPROD = e.EMET;
-        e.AUTOEU = e.AUTR;
-        e.PRECOR = e.DOC;
-        e.ADRESSE = e.LIEU + ";" + e.ADRS;
+        if (e.AUT !== undefined) {
+          e.AUTP = e.AUT;
+        }
+        if (e.EMET !== undefined) {
+          e.IDPROD = e.EMET;
+        }
+        if (e.AUTR !== undefined) {
+          e.AUTOEU = e.AUTR;
+        }
+        if (e.DOC !== undefined) {
+          e.PRECOR = e.DOC;
+        }
+
+        if (e.LIEU !== undefined || e.ADRS !== undefined) {
+          const ADRESSEARR = [];
+          if (e.LIEU) ADRESSEARR.push(e.LIEU);
+          if (e.ADRS) ADRESSEARR.push(e.ADRS);
+          e.ADRESSE = ADRESSEARR.join(";");
+        }
 
         const memoireObj = new Memoire(e);
 
-        const imageFile = files.find(
-          e =>
-            convertLongNameToShort(e.name)
-              .toUpperCase()
-              .indexOf(imagePath.toUpperCase()) !== -1
-        );
-        if (imageFile) {
-          const shortname = convertLongNameToShort(imageFile.name);
-          const newImage = utils.renameFile(imageFile, shortname);
-          memoireObj._images.push(newImage);
-          memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
-        } else {
-          memoireObj._errors.push(`Impossible de trouver l'image ${imagePath}`);
+        if (e.NOMI !== undefined || e.NUMI !== undefined) {
+          const imagePath = e.NOMI || e.NUMI || "";
+          const imageFile = files.find(
+            e =>
+              convertLongNameToShort(e.name)
+                .toUpperCase()
+                .indexOf(imagePath.toUpperCase()) !== -1
+          );
+          if (imageFile) {
+            const shortname = convertLongNameToShort(imageFile.name);
+            const newImage = utils.renameFile(imageFile, shortname);
+            memoireObj._images.push(newImage);
+            memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
+          } else {
+            memoireObj._errors.push(`Impossible de trouver l'image ${imagePath}`);
+          }
         }
 
         return memoireObj;

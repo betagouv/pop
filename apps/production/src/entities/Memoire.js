@@ -3,28 +3,16 @@ import Notice from "./Notice";
 export default class Memoire extends Notice {
   constructor(body) {
     super(body, "memoire");
-
-    if (body.IMG !== undefined || body.NOMSN !== undefined) {
-      this.IMG = this.extractImage(body);
-    }
   }
 
-  extractImage(body) {
-    let name = body.IMG || body.NOMSN || "";
-    name = convertLongNameToShort(name);
-    if (name) {
-      return `memoire/${body.REF}/${name}`;
-    }
-    // On retourne null car on ne veut pas overwrite les données avec ""
-    return null;
-  }
-}
+  /*
+    pour inventaire gertrude, les images sont dans NOMI ou NUMI
+    Pour MAP, elles sont dans NOMSN OK
+    Pour MH, elles sont dans REFIMG 
+    Et pour inventaire renable, elles sont dans FNU2 
 
-function convertLongNameToShort(str) {
-  return str
-    .substring(str.lastIndexOf("/") + 1)
-    .replace(/_[a-zA-Z0-9]\./g, ".")
-    .replace(/^.*[\\\/]/g, "")
-    .replace(/[a-zA-Z0-9]*_/g, "")
-    .toLowerCase();
+    Cette complexité a été bougée au niveau de chanque import
+
+    Cette migration est effectuée au niveau de chaque import
+*/
 }

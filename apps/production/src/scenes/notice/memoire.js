@@ -39,12 +39,15 @@ class Notice extends React.Component {
     const { role, group } = this.props;
     const roles = ["producteur", "administrateur"];
     if (group === "mh") {
-      return ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "SAP"].includes(PRODUCTEUR) && roles.includes(role);
+      return (
+        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "SAP"].includes(PRODUCTEUR) &&
+        roles.includes(role)
+      );
     } else if (group === "memoire") {
       return ["SAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
     } else if (group === "admin") {
       return (
-        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "SAP"].includes(PRODUCTEUR) &&
+        ["CRMH", "CAOA", "UDAP", "INV", "ETAT", "AUTRE", "SAP", "SDAP", ""].includes(PRODUCTEUR) &&
         roles.includes(role)
       );
     }

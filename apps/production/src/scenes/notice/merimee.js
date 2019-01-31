@@ -11,6 +11,7 @@ import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
 import Comments from "./components/comments.js";
+import { bucket_url } from "../../config.js";
 
 import Loader from "../../components/Loader";
 import API from "../../services/api";
@@ -109,7 +110,13 @@ class Notice extends React.Component {
                 name="MEMOIRE"
                 disabled
                 external={true}
-                getAbsoluteUrl={e => e.url}
+                getAbsoluteUrl={e => {
+                  if (e.url.indexOf("memoire/") === 0) {
+                    return `${bucket_url}${e.url}`;
+                  } else {
+                    return e.url;
+                  }
+                }}
                 footer={e => {
                   return (
                     <Link to={`/notice/memoire/${e.ref}`} target="_blank">

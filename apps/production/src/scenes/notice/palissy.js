@@ -10,7 +10,7 @@ import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Map from "./components/map.js";
-
+import { bucket_url } from "../../config.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 
@@ -110,7 +110,18 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="MEMOIRE" disabled external={true} getAbsoluteUrl={e => e.url} />
+              <FieldImages
+                name="MEMOIRE"
+                disabled
+                external={true}
+                getAbsoluteUrl={e => {
+                  if (e.url.indexOf("memoire/") === 0) {
+                    return `${bucket_url}${e.url}`;
+                  } else {
+                    return e.url;
+                  }
+                }}
+              />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />

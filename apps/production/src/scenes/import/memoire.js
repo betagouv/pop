@@ -30,35 +30,55 @@ function parseFiles(files, encoding) {
       reject("Pas de fichiers .ods detecté");
       return;
     }
+
+    const filesMap = {};
+    for (var i = 0; i < files.length; i++) {
+      filesMap[convertLongNameToShort(files[i].name)] = files[i];
+    }
+
     utils.readODS(objectFile).then(data => {
       const notices = [];
+
+      //Create image map
+
       for (let i = 0; i < data.length; i++) {
-        notices.push(new Memoire(data[i]));
-      }
-      const filesMap = {};
-      for (var i = 0; i < files.length; i++) {
-        filesMap[convertLongNameToShort(files[i].name)] = files[i];
+        const obj = data[i];
+        const notice = new Memoire(obj);
+
+        // SI NOMSN nexiste pas, on ne met pas a jour le champ IMG
+        if (obj.NOMSN !== undefined) {
+          if (!obj.NOMSN) {
+            // SI REFIMG est vide, on suppr limage
+            notice.IMG = "";
+          } else {
+            let fileName = String(obj.NOMSN);
+            fileName = convertLongNameToShort(fileName);
+            let img = filesMap[fileName];
+            if (img) {
+              // const newImage = utils.renameFile(img, shortName);
+              notice.IMG = `memoire/${notice.REF}/${fileName}`;
+              notice._images.push(img);
+            } else {
+              notice._errors.push(`Impossible de trouver l'image "${fileName}"`);
+            }
+          }
+        }
+
+        notices.push(notice);
       }
 
-      for (var i = 0; i < notices.length; i++) {
-        if (!notices[i].IMG) break;
-        const shortName = convertLongNameToShort(notices[i].IMG);
-        let img = filesMap[shortName];
-        if (!img) {
-          notices[i]._errors.push(`Image ${shortName} introuvable`);
-        } else {
-          const newImage = utils.renameFile(img, shortName);
-          notices[i]._images.push(newImage);
-        }
-      }
       resolve({ importedNotices: notices, fileNames: [objectFile.name] });
     });
   });
 }
 
 function convertLongNameToShort(str) {
-  let name = str.substring(str.lastIndexOf("/") + 1);
-  return name;
+  return str
+    .substring(str.lastIndexOf("/") + 1)
+    .replace(/_[a-zA-Z0-9]\./g, ".")
+    .replace(/^.*[\\\/]/g, "")
+    .replace(/[a-zA-Z0-9]*_/g, "")
+    .toLowerCase();
 }
 
 function readme() {
@@ -76,16 +96,16 @@ function readme() {
     <div>
       <h5>Service archives photos</h5>
       <div>
-        Cet onglet permet d’alimenter la base Mémoire pour la partie Archives
-        photographiques. <br /> <br />
+        Cet onglet permet d’alimenter la base Mémoire pour la partie Archives photographiques.{" "}
+        <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants : <br />
         <ul>
           <li>texte : .ods (Open Office Document SpeardSheet) </li>
           <li>illustration : jpg, png.</li>
         </ul>
-        La taille maximale d’un import est de 300Mo (soit environ 3000 notices
-        avec image, ou 1 million de notices sans images). <br /> <br />
+        La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
+        million de notices sans images). <br /> <br />
         <h6>Champs obligatoires et contrôles de vocabulaire </h6>
         Les champs suivants doivent obligatoirement être renseignés : <br />
         <br />
@@ -112,13 +132,13 @@ function readme() {
         <br />
         <br />
         <h6>Je veux mettre à jour tout ou partie d’une notice :</h6>
-        j’importe les champs à mettre à jour avec leurs nouvelles valeurs et
-        j’écrase l’ancienne notice.
+        j’importe les champs à mettre à jour avec leurs nouvelles valeurs et j’écrase l’ancienne
+        notice.
         <br />
         <br />
         <h6>Je veux effacer une ou plusieurs valeurs d’une notice : </h6>
-        j’importe un fichier comportant le ou les champs que je veux supprimer
-        en les laissant vides.
+        j’importe un fichier comportant le ou les champs que je veux supprimer en les laissant
+        vides.
         <br />
         <br />
         <h6>Je veux supprimer une notice :</h6>
@@ -126,31 +146,28 @@ function readme() {
         <br />
         <br />
         <h6>Je veux ajouter une image :</h6>
-        1) A l'import, dans mon fichier, je renseigne la notice concernée en
-        précisant le champ REF, ainsi que le champ : IMG ou NOMSN avec le .jpeg
-        de l'illustration. Les deux champs fonctionnent mais{" "}
-        <b>IMG est prioritaire sur NOMSN</b>, i.e. si IMG est rempli avec le
-        .jpeg, alors ce champ sera utilisé par POP pour illustrer la notice. Si
-        en revanche, IMG est vide, alors POP traduira le champ NOMSN renseigné
-        pour remplir automatiquement le champ IMG. <br />   <br />
+        1) A l'import, dans mon fichier, je renseigne la notice concernée en précisant le champ REF,
+        ainsi que le champ : IMG ou NOMSN avec le .jpeg de l'illustration. Les deux champs
+        fonctionnent mais <b>IMG est prioritaire sur NOMSN</b>, i.e. si IMG est rempli avec le
+        .jpeg, alors ce champ sera utilisé par POP pour illustrer la notice. Si en revanche, IMG est
+        vide, alors POP traduira le champ NOMSN renseigné pour remplir automatiquement le champ IMG.{" "}
+        <br /> <br />
         <b>
-          ATTENTION : une fois l'import passé, seul le champ IMG est affiché
-          dans la notice développée.
+          ATTENTION : une fois l'import passé, seul le champ IMG est affiché dans la notice
+          développée.
         </b>
-        <br />   <br />
-        2) Directement depuis une notice développée : je peux cliquer sur
-        "Ajouter une nouvelle image" et télécharger une nouvelle image
-        directement depuis mon ordinateur. La notice Mémoire reçoit alors dans
-        son champ IMG le contenu .jpeg de l'image téléchargée. <br />
-        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée,
-        alors l'image ainsi stockée dans IMG pourra également illustrer une
-        notice MH associée. <br />
+        <br /> <br />
+        2) Directement depuis une notice développée : je peux cliquer sur "Ajouter une nouvelle
+        image" et télécharger une nouvelle image directement depuis mon ordinateur. La notice
+        Mémoire reçoit alors dans son champ IMG le contenu .jpeg de l'image téléchargée. <br />
+        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée, alors l'image ainsi
+        stockée dans IMG pourra également illustrer une notice MH associée. <br />
         <br /> <br />
         NB : le champ LBASE2 est inutile sur POP. Nul besoin de l'importer."
         <br />
         <br />
-        NB2 : à la création d'une notice, POP génère automatiquement certains
-        champs utiles au traitement des données. Il s'agit des champs : <br />
+        NB2 : à la création d'une notice, POP génère automatiquement certains champs utiles au
+        traitement des données. Il s'agit des champs : <br />
         <ul>
           {generatedFields.map(e => (
             <li key={e}>{e}</li>
