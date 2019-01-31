@@ -134,6 +134,8 @@ jobs:
           app: production
       - prepare:
           app: shared
+      - prepare:
+          app: diffusion
   ##############
   # TEST JOBS #
   ##############
@@ -146,6 +148,11 @@ jobs:
       - test:
           app: api
   test_consultation:
+    executor: docker_node
+    steps:
+      - test:
+          app: consultation
+  test_diffusion:
     executor: docker_node
     steps:
       - test:

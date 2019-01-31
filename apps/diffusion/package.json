@@ -9,6 +9,7 @@
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.2.1",
     "classnames": "^2.2.6",
+    "enzyme-adapter-react-16": "^1.8.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^7.0.2",
     "next-nprogress": "^1.4.0",
@@ -24,11 +25,37 @@
     "shave": "^2.5.2",
     "unfetch": "^4.0.1"
   },
-  "devDependencies": {},
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./__tests__/setup/setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testPathIgnorePatterns": [
+      "./__tests__/setup/",
+      "./__tests__/__mocks__/",
+      "./__tests__/__notices__/"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js",
+      "isomorphic-style-loader/lib/withStyles": "<rootDir>/__tests__/__mocks__/withStyles.js"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.0.0",
+    "enzyme": "^3.8.0",
+    "enzyme-to-json": "^3.3.5",
+    "jest": "^24.0.0"
+  },
   "scripts": {
     "dev": "node services/server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node services/server.js"
+    "start": "NODE_ENV=production node services/server.js",
+    "test": "jest"
   },
   "prettier": {
     "printWidth": 100
