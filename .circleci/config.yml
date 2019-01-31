@@ -249,6 +249,9 @@ workflows:
       - test_production:
           requires:
             - prepare_all
+      - test_diffusion:
+          requires:
+            - prepare_all
       - test_shared:
           requires:
             - prepare_all
