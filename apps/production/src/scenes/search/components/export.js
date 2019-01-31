@@ -131,7 +131,7 @@ async function exportData(fileName, entities) {
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
       if (Array.isArray(value)) {
-        if (typeof value === "object") {
+        if (value.length && typeof value[0] === "object") {
           value = JSON.stringify(value);
         } else {
           value = value.join(";");
