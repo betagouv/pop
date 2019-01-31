@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
+import { Link } from "react-router-dom";
 
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
@@ -110,7 +111,19 @@ class Notice extends React.Component {
           </Row>
           <Row>
             <Col className="image" sm={6}>
-              <FieldImages name="MEMOIRE" disabled external={true} getAbsoluteUrl={e => e.url} />
+              <FieldImages
+                name="MEMOIRE"
+                disabled
+                external={true}
+                getAbsoluteUrl={e => e.url}
+                footer={e => {
+                  return (
+                    <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                      {e.ref}
+                    </Link>
+                  );
+                }}
+              />
             </Col>
             <Col className="image" sm={6}>
               <Map notice={this.state.notice} />
