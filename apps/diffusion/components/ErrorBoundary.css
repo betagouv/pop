@@ -1,0 +1,11 @@
+.error-boundary {
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.error-boundary h1 {
+  padding-top: 50px;
+}
+.error-boundary img {
+  max-width: 300px;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "pop-next",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@appbaseio/reactivesearch": "^2.16.1",
+    "@sentry/browser": "^4.5.3",
+    "@zeit/next-css": "^1.0.1",
+    "bootstrap": "^4.2.1",
+    "classnames": "^2.2.6",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^7.0.2",
+    "next-nprogress": "^1.4.0",
+    "ngeohash": "^0.6.3",
+    "pop-shared": "^0.8.5",
+    "query-string": "^6.2.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-image-gallery": "^0.8.12",
+    "react-slick": "^0.23.2",
+    "react-viewer": "^2.8.0",
+    "reactstrap": "^7.1.0",
+    "shave": "^2.5.2",
+    "unfetch": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "node services/server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node services/server.js"
+  },
+  "prettier": {
+    "printWidth": 100
+  },
+  "author": "",
+  "license": "MIT"
+}
