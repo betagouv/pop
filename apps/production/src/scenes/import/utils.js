@@ -75,6 +75,11 @@ function readCSV(file, delimiter, encoding, quote) {
 
     parser.on("readable", () => {
       while ((record = parser.read())) {
+        // on suppr les lignes vides
+        if (!record.join("").trim()) {
+          continue;
+        }
+
         if (!header) {
           header = [].concat(record);
           continue;
