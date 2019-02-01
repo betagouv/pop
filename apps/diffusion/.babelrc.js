@@ -15,5 +15,9 @@ module.exports = {
       }
     ]
   ],
-  plugins: ["transform-class-properties", "transform-object-rest-spread", ["transform-define", env]]
+  plugins: [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    ["transform-define", env]
+  ]
 };
