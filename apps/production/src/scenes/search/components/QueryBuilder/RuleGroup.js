@@ -104,6 +104,7 @@ export default class RuleGroup extends React.Component {
           key={id}
           id={id}
           data={data || {}}
+          displayLabel={this.props.displayLabel}
           onRemove={this.onRemove.bind(this)}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}

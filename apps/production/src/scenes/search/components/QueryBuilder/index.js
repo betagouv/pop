@@ -26,6 +26,7 @@ export default class AdvancedSearch extends React.Component {
       >
         <QueryBuilder
           entity={this.state.entity}
+          displayLabel={this.props.displayLabel}
           autocomplete={this.props.autocomplete === undefined ? true : this.props.autocomplete}
         />
       </ReactiveComponent>
