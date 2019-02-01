@@ -171,13 +171,13 @@ class Importer extends Component {
         importId
       );
 
-      this.props.destinataires.push("sandrine.della-bartolomea@culture.gouv.fr")
-      this.props.destinataires.push("se.legoff@gmail.com")
-      this.props.destinataires.push("jenniferstephanme@gmail.com")
+      this.props.destinataires.push("sandrine.della-bartolomea@culture.gouv.fr");
+      this.props.destinataires.push("se.legoff@gmail.com");
+      this.props.destinataires.push("jenniferstephanme@gmail.com");
 
       await api.sendReport(
         `Rapport import ${this.props.collection}`,
-        [...this.props.destinataires].join(","),
+        this.props.destinataires.join(","),
         body
       );
 
