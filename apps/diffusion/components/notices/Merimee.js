@@ -18,10 +18,10 @@ class Merimee extends React.Component {
     if (this.props.notice.DENO && this.props.notice.DENO.length === 1) {
       const category = this.props.notice.DENO[0];
       if (category.toLowerCase() === "église") {
-        return `Découvrez ${titre}, cette ${category} du ${datation}. Cliquez ici !`;
+        return `Découvrez ${titre}, cette ${category} du ${datation}.`;
       }
     }
-    return `Découvrez ${titre}, du ${datation}. Cliquez ici !`;
+    return `Découvrez ${titre}, du ${datation}.`;
   };
 
   fieldImage(notice) {

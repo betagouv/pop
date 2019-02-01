@@ -17,10 +17,10 @@ class Joconde extends React.Component {
     if (this.props.notice.DOMN && this.props.notice.DOMN.length === 1) {
       const category = this.props.notice.DOMN[0];
       if (category.toLowerCase() === "peinture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`;
+        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}.`;
       }
     }
-    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+    return `Découvrez ${titre}, par ${auteur}.`;
   };
 
   fieldImage(notice) {

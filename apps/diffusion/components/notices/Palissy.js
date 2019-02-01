@@ -17,10 +17,10 @@ class Palissy extends React.Component {
     if (this.props.notice.CATE && this.props.notice.CATE.length === 1) {
       const category = this.props.notice.CATE[0];
       if (category.toLowerCase() === "sculpture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}. Cliquez ici !`;
+        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}.`;
       }
     }
-    return `Découvrez ${titre}, par ${auteur}. Cliquez ici !`;
+    return `Découvrez ${titre}, par ${auteur}.`;
   };
 
   fieldImage(notice) {

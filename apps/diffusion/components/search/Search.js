@@ -325,7 +325,7 @@ class Search extends React.Component {
                               active: activeTab === "map"
                             })}
                             onClick={() => {
-                              this.toggle("map");
+                              this.toggle("map?geolocalisation=[\"oui\"]");
                             }}
                           >
                             CARTE
@@ -338,7 +338,7 @@ class Search extends React.Component {
                               active: activeTab === "mosaic"
                             })}
                             onClick={() => {
-                              this.toggle("mosaic");
+                              this.toggle("mosaic?image=[\"oui\"]");
                             }}
                           >
                             MOSAIQUE
