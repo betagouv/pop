@@ -163,7 +163,7 @@ jobs:
   ##############
   # BUILD JOBS #
   ##############
-  build_diffusion:
+  build_diffusion_staging:
     executor: docker_node
     steps:
       - checkout
@@ -173,7 +173,22 @@ jobs:
           name: build
           command: |
             cd apps/diffusion
-            npm run build
+            npm run build:staging
+      - persist_to_workspace:
+          root: ~/repo/apps/diffusion
+          paths:
+              - .next
+  build_diffusion_prod:
+    executor: docker_node
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: diffusion
+      - run:
+          name: build
+          command: |
+            cd apps/diffusion
+            npm run build:prod
       - persist_to_workspace:
           root: ~/repo/apps/diffusion
           paths:
@@ -229,7 +244,20 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api
-
+  deploy_diffusion_prod:
+    executor: docker_python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/diffusion
+      - restore_node_modules:
+          app: diffusion
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/diffusion
+            eb deploy pop-consultation
 #############
 # WORKFLOWS #
 #############
@@ -250,9 +278,15 @@ workflows:
       - test_shared:
           requires:
             - prepare_all
-      - build_diffusion:
+      - build_diffusion_staging:
           requires:
             - test_diffusion
+          filters:
+            branches:
+              only: master
+      - build_diffusion_prod:
+          requires:
+            - deploy_diffusion_staging
           filters:
             branches:
               only: master
@@ -276,7 +310,7 @@ workflows:
               only: master
       - deploy_diffusion_staging:
           requires:
-            - build_diffusion
+            - build_diffusion_staging
           filters:
             branches:
               only: master
