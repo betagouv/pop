@@ -6,9 +6,10 @@ module.exports = {
       "next/babel",
       {
         "preset-env": {
-          targets: {
-            browsers: [">0.03%"]
-          }
+          loose: true,
+          modules: false,
+          targets: { browsers: [">0.03%"] },
+          useBuiltIns: true
         }
       }
     ]
