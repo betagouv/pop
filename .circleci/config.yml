@@ -170,12 +170,21 @@ jobs:
   ##############
   # BUILD JOBS #
   ##############
-  build_consultation_staging:
+  build_diffusion:
     executor: docker_node
     steps:
-      - build:
-          app: consultation
-          env: staging
+      - checkout
+      - restore_node_modules:
+          app: diffusion
+      - run:
+          name: build
+          command: |
+            cd apps/diffusion
+            npm run build
+      - persist_to_workspace:
+          root: ~/repo/apps/diffusion
+          paths:
+              - .next
   build_production_staging:
     executor: docker_node
     steps:
@@ -197,12 +206,20 @@ jobs:
   ###############
   # DEPLOY JOBS #
   ###############
-  deploy_consultation_staging:
+  deploy_diffusion_staging:
     executor: docker_python
     steps:
-      - deploy:
-          app: consultation
-          eb_deploy: pop-consultation-staging
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/diffusion
+      - restore_node_modules:
+          app: diffusion
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/diffusion
+            eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
     steps:
@@ -255,9 +272,9 @@ workflows:
       - test_shared:
           requires:
             - prepare_all
-      - build_consultation_staging:
+      - build_diffusion:
           requires:
-            - test_consultation
+            - test_diffusion
           filters:
             branches:
               only: master
@@ -285,9 +302,9 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_consultation_staging:
+      - deploy_diffusion_staging:
           requires:
-            - build_consultation_staging
+            - build_diffusion
           filters:
             branches:
               only: master
@@ -308,7 +325,7 @@ workflows:
             - build_consultation_prod
           filters:
             branches:
-              only: master
+              only: masterdisabled
       - deploy_production_prod:
           requires:
             - build_production_prod
