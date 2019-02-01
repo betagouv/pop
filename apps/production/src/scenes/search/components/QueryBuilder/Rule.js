@@ -39,6 +39,7 @@ export default class RuleComponent extends React.Component {
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
+          displayLabel={this.props.displayLabel}
           entity={this.props.entity}
         />
       </ReactiveComponent>
@@ -88,6 +89,7 @@ class Rule extends React.Component {
         <ValueSelector
           entity={this.props.entity}
           value={this.state.valueSelected}
+          displayLabel={this.props.displayLabel}
           onChange={e => {
             this.setState(
               {
@@ -243,12 +245,12 @@ const ActionElement = ({ onChange, value }) => {
   );
 };
 
-const ValueSelector = ({ entity, onChange, value }) => {
+const ValueSelector = ({ displayLabel, entity, onChange, value }) => {
   const choices = [];
   for (let key in sortObjectByKeys(entity)) {
     choices.push(
       <option key={key} value={key}>
-        {entity[key].label ? `${entity[key].label} (${key})` : key}
+        {displayLabel && entity[key].label ? `${key} - ${entity[key].label}` : key}
       </option>
     );
   }

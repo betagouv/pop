@@ -27,25 +27,19 @@ export default class Search extends React.Component {
                 <QueryBuilder
                   entity={mapping}
                   componentId="advancedSearch"
+                  displayLabel={this.props.displayLabel || false}
                   autocomplete={false}
                 />
               </Col>
             </Row>
             <Row>
               <Col md={12}>
-                <ExportComponent
-                  FILTER={["advancedSearch"]}
-                  collection={baseName}
-                  autocomplete
-                />
+                <ExportComponent FILTER={["advancedSearch"]} collection={baseName} autocomplete />
               </Col>
             </Row>
             <div className="text-center my-3">
               Trier par :
-              <select
-                className="ml-2"
-                onChange={e => this.setState({ sortKey: e.target.value })}
-              >
+              <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
                 {Object.keys(mapping)
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
@@ -54,10 +48,7 @@ export default class Search extends React.Component {
                     </option>
                   ))}
               </select>
-              <select
-                className="ml-2"
-                onChange={e => this.setState({ sortOrder: e.target.value })}
-              >
+              <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
                 <option value="asc">Ascendant</option>
                 <option value="desc">Descendant</option>
               </select>
