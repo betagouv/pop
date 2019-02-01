@@ -220,6 +220,7 @@ class Search extends React.Component {
                       <div className="search-and-export-zone">
                         <DataSearch
                           componentId="mainSearch"
+                          autosuggest={false}
                           filterLabel="Résultats pour "
                           dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
                           iconPosition="left"
