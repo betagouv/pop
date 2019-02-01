@@ -18,8 +18,6 @@ export default () => (
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha256-azvvU9xKluwHFJ0Cpgtf0CYzK7zgtOznnzxV4924X1w="
-        crossOrigin="anonymous"
       />
       <link
         rel="stylesheet"
