@@ -129,8 +129,6 @@ jobs:
       - prepare:
           app: api
       - prepare:
-          app: consultation
-      - prepare:
           app: production
       - prepare:
           app: shared
@@ -147,11 +145,6 @@ jobs:
     steps:
       - test:
           app: api
-  test_consultation:
-    executor: docker_node
-    steps:
-      - test:
-          app: consultation
   test_diffusion:
     executor: docker_node
     steps:
@@ -191,12 +184,6 @@ jobs:
       - build:
           app: production
           env: staging
-  build_consultation_prod:
-    executor: docker_node
-    steps:
-      - build:
-          app: consultation
-          env: prod
   build_production_prod:
     executor: docker_node
     steps:
@@ -231,12 +218,6 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api-staging
-  deploy_consultation_prod:
-    executor: docker_python
-    steps:
-      - deploy:
-          app: consultation
-          eb_deploy: pop-consultation
   deploy_production_prod:
     executor: docker_python
     steps:
@@ -260,9 +241,6 @@ workflows:
       - test_api:
           requires:
             - prepare_all
-      - test_consultation:
-          requires:
-            - prepare_all
       - test_production:
           requires:
             - prepare_all
@@ -281,12 +259,6 @@ workflows:
       - build_production_staging:
           requires:
             - test_production
-          filters:
-            branches:
-              only: master
-      - build_consultation_prod:
-          requires:
-            - deploy_consultation_staging
           filters:
             branches:
               only: master
@@ -320,12 +292,6 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_consultation_prod:
-          requires:
-            - build_consultation_prod
-          filters:
-            branches:
-              only: masterdisabled
       - deploy_production_prod:
           requires:
             - build_production_prod
