@@ -44,6 +44,11 @@ class Importer extends Component {
       //PARSE FILES
       let { importedNotices, fileNames } = await this.props.parseFiles(files, encoding);
 
+      if (!importedNotices.length) {
+        this.setState({ errors: "Aucune notice détectée à l'import", loading: false });
+        return;
+      }
+
       //RECUPERATION DES NOTICES EXISTANTES
       const existingNotices = [];
       for (var i = 0; i < importedNotices.length; i++) {

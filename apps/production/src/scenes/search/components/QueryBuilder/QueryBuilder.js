@@ -20,6 +20,7 @@ export default class QueryBuilder extends React.Component {
         <RuleGroup
           autocomplete={this.props.autocomplete}
           id="0"
+          displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}
         />
