@@ -120,7 +120,7 @@ class Notice extends React.Component {
                 footer={e => {
                   return (
                     <Link to={`/notice/memoire/${e.ref}`} target="_blank">
-                      LIEN
+                      {e.ref}
                     </Link>
                   );
                 }}

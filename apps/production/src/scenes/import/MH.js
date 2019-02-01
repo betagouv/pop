@@ -17,6 +17,11 @@ export default class Import extends React.Component {
           collection="monuments-historiques"
           parseFiles={parseFiles}
           readme={readme}
+          destinataires={[
+            "gaelle.pichon-meunier@culture.gouv.fr",
+            "antonella.rotolo@culture.gouv.fr",
+            "franck.fusibet@culture.gouv.fr"
+          ]}
           dropzoneText={
             <span>
               Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et

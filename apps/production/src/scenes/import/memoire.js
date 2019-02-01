@@ -13,6 +13,12 @@ export default class Import extends React.Component {
         <Importer
           collection="memoire"
           readme={readme}
+          destinataires={[
+            "anne.cook@culture.gouv.fr",
+            "matthieu.rivallin@culture.gouv.fr",
+            "gaelle.pichon-meunier@culture.gouv.fr",
+            "antonella.rotolo@culture.gouv.fr"
+          ]}
           parseFiles={parseFiles}
           dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .ods  ) et les images associées (au format .jpg) dans cette zone"
         />

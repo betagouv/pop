@@ -31,15 +31,11 @@ export default class RuleComponent extends React.Component {
 
   render() {
     return (
-      <ReactiveComponent
-        componentId={`Rule${this.props.id}`}
-        defaultQuery={() => this.state.query}
-      >
+      <ReactiveComponent componentId={`Rule${this.props.id}`} defaultQuery={() => this.state.query}>
         <Rule
           first={this.props.first}
           id={this.props.id}
           data={this.props.data}
-          displayLabel={this.props.displayLabel}
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
@@ -65,12 +61,7 @@ class Rule extends React.Component {
   }
 
   update() {
-    const {
-      combinator,
-      valueSelected,
-      actionSelected,
-      resultSelected
-    } = this.state;
+    const { combinator, valueSelected, actionSelected, resultSelected } = this.state;
     this.props.onUpdate({
       combinator,
       key: valueSelected,
@@ -97,7 +88,6 @@ class Rule extends React.Component {
         <ValueSelector
           entity={this.props.entity}
           value={this.state.valueSelected}
-          displayLabel={this.props.displayLabel}
           onChange={e => {
             this.setState(
               {
@@ -125,18 +115,12 @@ class Rule extends React.Component {
           aggregations={this.props.aggregations}
           autocomplete={this.props.autocomplete}
           onChange={e => {
-            this.setState(
-              { resultSelected: e.target.value.replace('"', "") },
-              () => {
-                this.update();
-              }
-            );
+            this.setState({ resultSelected: e.target.value.replace('"', "") }, () => {
+              this.update();
+            });
           }}
         />
-        <button
-          className="closeButton"
-          onClick={() => this.props.onRemove(this.props.id)}
-        >
+        <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
           X
         </button>
       </div>
@@ -157,9 +141,7 @@ class ValueEditor extends React.Component {
       Object.keys(this.props.aggregations).length
     ) {
       const key = Object.keys(this.props.aggregations)[0];
-      const options = this.props.aggregations[key].buckets.map(e => (
-        <li key={e.key}>{e.key}</li>
-      ));
+      const options = this.props.aggregations[key].buckets.map(e => <li key={e.key}>{e.key}</li>);
       return <ul>{options}</ul>;
     }
     return <div />;
@@ -171,13 +153,9 @@ class ValueEditor extends React.Component {
   }
 
   onBlur() {
-    if (
-      this.props.aggregations &&
-      Object.keys(this.props.aggregations).length
-    ) {
+    if (this.props.aggregations && Object.keys(this.props.aggregations).length) {
       const key = Object.keys(this.props.aggregations)[0];
-      const value = this.props.aggregations[key].buckets[this.state.selected]
-        .key;
+      const value = this.props.aggregations[key].buckets[this.state.selected].key;
       this.props.onChange({ target: { value } });
     }
     this.setState({ focused: false });
@@ -208,10 +186,7 @@ class ValueEditor extends React.Component {
           getItemValue={item => item.key}
           items={suggestions}
           renderItem={(item, isHighlighted) => (
-            <div
-              key={item.key}
-              style={{ background: isHighlighted ? "lightgray" : "white" }}
-            >
+            <div key={item.key} style={{ background: isHighlighted ? "lightgray" : "white" }}>
               {item.key}
             </div>
           )}
@@ -262,23 +237,18 @@ const ActionElement = ({ onChange, value }) => {
     </option>
   ));
   return (
-    <select
-      selected={choices[0]}
-      className="actionelement"
-      value={value}
-      onChange={onChange}
-    >
+    <select selected={choices[0]} className="actionelement" value={value} onChange={onChange}>
       {choices}
     </select>
   );
 };
 
-const ValueSelector = ({ entity,displayLabel, onChange, value }) => {
+const ValueSelector = ({ entity, onChange, value }) => {
   const choices = [];
   for (let key in sortObjectByKeys(entity)) {
     choices.push(
       <option key={key} value={key}>
-      {displayLabel ? entity[key].label || key : key}
+        {entity[key].label ? `${entity[key].label} (${key})` : key}
       </option>
     );
   }

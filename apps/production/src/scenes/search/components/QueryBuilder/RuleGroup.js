@@ -51,10 +51,7 @@ export default class RuleGroup extends React.Component {
 
   updateUrlParams = q => {
     const currentUrlParams = history.location.search;
-    const targetUrlParams = qs.stringify(
-      { q: q.map(e => e.data) },
-      { addQueryPrefix: true }
-    );
+    const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
     if (currentUrlParams !== targetUrlParams) {
       history.replace(targetUrlParams);
     }
@@ -104,7 +101,6 @@ export default class RuleGroup extends React.Component {
       return (
         <Rule
           autocomplete={this.props.autocomplete}
-          displayLabel={this.props.displayLabel}
           key={id}
           id={id}
           data={data || {}}

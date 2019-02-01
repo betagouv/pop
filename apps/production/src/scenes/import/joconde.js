@@ -62,6 +62,7 @@ class Import extends React.Component {
         <Importer
           collection="joconde"
           parseFiles={this.parseFiles.bind(this)}
+          destinataires={["sophie.daenens@culture.gouv.fr", "jeannette.ivain@culture.gouv.fr"]}
           report={report}
           readme={readme}
           fieldsToExport={[

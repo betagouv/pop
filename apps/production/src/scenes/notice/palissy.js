@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
+import { Link } from "react-router-dom";
 
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
@@ -120,6 +121,13 @@ class Notice extends React.Component {
                   } else {
                     return e.url;
                   }
+                }}
+                footer={e => {
+                  return (
+                    <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                    </Link>
+                      {e.ref}
+                  );
                 }}
               />
             </Col>
