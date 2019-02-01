@@ -30,7 +30,12 @@ function readODS(file, encoding) {
       });
       workbook.SheetNames.forEach(function(sheetName) {
         // Here is your object
-        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        var XL_row_object = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+          raw: true,
+          defval: ""
+        });
+
+        console.log("XL_row_object", XL_row_object);
         // var json_object = JSON.stringify(XL_row_object);
         resolve(XL_row_object);
       });
