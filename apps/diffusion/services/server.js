@@ -20,7 +20,12 @@ app.prepare().then(() => {
     ];
     const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
     const museoRegex = /^\/museo\/(.*?)$/;
-    if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
+    const sitemapRegex = /^\/sitemap\/(.*?)$/;
+    if (pathname.match(sitemapRegex)) {
+      const url = req.url.replace("/sitemap/", "");
+      res.writeHead(301, { Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}` })
+      res.end();
+    } else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
       const path = join(__dirname, "../static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname.match(noticeRegex)) {
