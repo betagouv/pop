@@ -22,6 +22,8 @@ module.exports = env => {
     })
   ];
 
+
+
   return {
     mode: "development",
     entry: { main: "./src/index.js", shared: "../shared/src/index" },
@@ -49,7 +51,7 @@ module.exports = env => {
         {
           test: /\.js$/,
           loader: "babel-loader",
-          include: [path.resolve("../shared/src/index"), path.resolve("src")],
+          include: [path.resolve("../shared/src"), path.resolve("src")],
           exclude: /(node_modules|__tests__)/,
           query: {
             babelrc: true

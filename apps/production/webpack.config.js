@@ -35,14 +35,17 @@ module.exports = env => {
     new BabelPlugin({
       test: /\.js$/,
       presets: [
-        ['env', {
-          loose: true,
-          modules: false,
-          targets: {
-            browsers: ['>0.03%']
-          },
-          useBuiltIns: true
-        }]
+        [
+          "env",
+          {
+            loose: true,
+            modules: false,
+            targets: {
+              browsers: [">0.03%"]
+            },
+            useBuiltIns: true
+          }
+        ]
       ],
       sourceMaps: false,
       compact: false
@@ -57,7 +60,8 @@ module.exports = env => {
 
   return {
     mode: "production",
-    entry: ["babel-polyfill", "./src/index.js"],
+    entry: ["babel-polyfill", "./src/index.js", "../shared/src/index"],
+
     devtool: false,
     bail: true,
     output: {
@@ -77,7 +81,7 @@ module.exports = env => {
         {
           test: /\.js$/,
           loader: "babel-loader",
-          include: path.resolve("src"),
+          include: [path.resolve("../shared/src"), path.resolve("src")],
           exclude: /(node_modules|__tests__)/,
           query: {
             babelrc: true
@@ -86,18 +90,16 @@ module.exports = env => {
         {
           test: /\.(woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
-          use: [
-            "file-loader",
-          ]
+          use: ["file-loader"]
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: require.resolve('url-loader'),
+          loader: require.resolve("url-loader"),
           options: {
             limit: 10000,
-            name: '[name].[hash:8].[ext]',
-          },
-        },
+            name: "[name].[hash:8].[ext]"
+          }
+        }
       ]
     },
     plugins: plugins
