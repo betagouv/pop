@@ -38,7 +38,6 @@
           o = document.createElement("script");
         (o.type = "text/javascript"),
           (o.async = !0),
-          (o.crossorigin = "anonymous"),
           (o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js");
         var i = document.getElementsByTagName("script")[0];
         i.parentNode.insertBefore(o, i);
