@@ -98,7 +98,7 @@ class Joconde extends React.Component {
   // Display a list of links to domains
   domain() {
     const domain = this.state.notice.DOMN;
-    if (!domain || !Array.isArray(domain)  || !domain.length) {
+    if (!domain || !Array.isArray(domain) || !domain.length) {
       return <div />;
     }
     const links = domain
@@ -114,7 +114,6 @@ class Joconde extends React.Component {
   period() {
     const period = this.state.notice.PERI;
 
-    console.log();
     if (!period || !Array.isArray(period) || !period.length) {
       return <div />;
     }

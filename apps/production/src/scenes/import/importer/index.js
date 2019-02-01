@@ -11,8 +11,6 @@ import controleThesaurus from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 
-
-
 import diff from "./diff";
 
 import "rc-steps/assets/index.css";
@@ -44,10 +42,7 @@ class Importer extends Component {
 
     try {
       //PARSE FILES
-      let { importedNotices, fileNames } = await this.props.parseFiles(
-        files,
-        encoding
-      );
+      let { importedNotices, fileNames } = await this.props.parseFiles(files, encoding);
 
       //RECUPERATION DES NOTICES EXISTANTES
       const existingNotices = [];
@@ -102,33 +97,23 @@ class Importer extends Component {
 
   async onSave() {
     const total = this.state.importedNotices.length;
-    const created = this.state.importedNotices.filter(
-      e => e._status === "created"
-    );
-    const updated = this.state.importedNotices.filter(
-      e => e._status === "updated"
-    );
-    const rejected = this.state.importedNotices.filter(
-      e => e._status === "rejected"
-    );
+    const created = this.state.importedNotices.filter(e => e._status === "created");
+    const updated = this.state.importedNotices.filter(e => e._status === "updated");
+    const rejected = this.state.importedNotices.filter(e => e._status === "rejected");
 
     ///////////////////////////////////////////////
     const { collection, fieldsToExport } = this.props;
-    const file = generateCSVFile(
-      this.state.importedNotices,
-      collection,
-      fieldsToExport
-    );
-    
+    const file = generateCSVFile(this.state.importedNotices, collection, fieldsToExport);
+
     const doc = await api.createImport(
       {
         institution: this.props.institution,
         user: this.props.userId,
-        email : this.props.email,
+        email: this.props.email,
         created: created.length,
         updated: updated.length,
         rejected: rejected.length,
-        notices : this.state.importedNotices.map(({REF}) => REF),
+        notices: this.state.importedNotices.map(({ REF }) => REF),
         unChanged: total - created.length - updated.length - rejected.length
       },
       file
@@ -154,12 +139,7 @@ class Importer extends Component {
         });
         const notice = updated[i].makeItFlat();
         const collection = updated[i]._type;
-        await api.updateNotice(
-          notice.REF,
-          collection,
-          notice,
-          updated[i]._images
-        );
+        await api.updateNotice(notice.REF, collection, notice, updated[i]._images);
       }
 
       //Create notice
@@ -187,21 +167,17 @@ class Importer extends Component {
         this.state.importedNotices,
         this.props.collection,
         this.props.email,
-        this.props.institution, importId
+        this.props.institution,
+        importId
       );
 
-      const dest = [
-        "sandrine.della-bartolomea@culture.gouv.fr",
-        "se.legoff@gmail.com",
-        "sebastien.legoff@beta.gouv.fr",
-        "sophie.daenens@culture.gouv.fr",
-        "jeannette.ivain@culture.gouv.fr",
-        "jennifer.stephan@beta.gouv.fr"
-      ];
+      this.props.destinataires.push("sandrine.della-bartolomea@culture.gouv.fr");
+      this.props.destinataires.push("se.legoff@gmail.com");
+      this.props.destinataires.push("jenniferstephanme@gmail.com");
 
       await api.sendReport(
         `Rapport import ${this.props.collection}`,
-        dest.join(","),
+        this.props.destinataires.join(","),
         body
       );
 
@@ -233,22 +209,12 @@ class Importer extends Component {
 
   renderSummary() {
     const noticesChargees = this.state.importedNotices.length;
-    const noticesCrees = this.state.importedNotices.filter(
-      e => e._status === "created"
-    ).length;
-    const noticesWithImages = this.state.importedNotices.filter(
-      e => e._images.length
-    ).length;
-    const noticesModifiees = this.state.importedNotices.filter(
-      e => e._status === "updated"
-    ).length;
-    const noticesRejetees = this.state.importedNotices.filter(
-      e => e._status === "rejected"
-    ).length;
+    const noticesCrees = this.state.importedNotices.filter(e => e._status === "created").length;
+    const noticesWithImages = this.state.importedNotices.filter(e => e._images.length).length;
+    const noticesModifiees = this.state.importedNotices.filter(e => e._status === "updated").length;
+    const noticesRejetees = this.state.importedNotices.filter(e => e._status === "rejected").length;
     const noticesWarning = this.state.importedNotices.filter(
-      e =>
-        (e._status === "created" || e._status === "updated") &&
-        e._warnings.length
+      e => (e._status === "created" || e._status === "updated") && e._warnings.length
     ).length;
 
     const filesnames = this.state.fileNames.map(e => <div key={e}>{e}</div>);
@@ -261,8 +227,8 @@ class Importer extends Component {
           } les fichiers suivants: `}</div>
           <div className="filename">{filesnames}</div>
           <div>
-            Ces fichiers totalisent {noticesChargees} notices, dont{" "}
-            {noticesWithImages} sont illustrées.
+            Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont
+            illustrées.
           </div>
           <div>Parmi ces {noticesChargees} notices:</div>
           <div className="lines">
@@ -306,11 +272,7 @@ class Importer extends Component {
           >
             Annuler l'import
           </Button>
-          <Button
-            className="button"
-            color="primary"
-            onClick={() => this.onSave()}
-          >
+          <Button className="button" color="primary" onClick={() => this.onSave()}>
             Confirmer l'import
           </Button>
         </div>
@@ -345,9 +307,7 @@ class Importer extends Component {
       <div className="working-area">
         <h4 className="subtitle">Confirmation de l'import</h4>
         <div className="feedbacks">
-          <div className="feedback">
-            Vous avez importé avec succès {noticesupdated} notices.
-          </div>
+          <div className="feedback">Vous avez importé avec succès {noticesupdated} notices.</div>
           <div className="feedback">Merci pour votre contribution !</div>
           <div>
             Vous pouvez consulter les notices modifiées lors de cet import ici:{" "}
@@ -355,16 +315,12 @@ class Importer extends Component {
               Consulter vos notices importées
             </a>
             <p>
-              (Généralement, l'indexation des résultats dans le moteur de
-              recherche POP prend de quelques secondes à 1 ou 2 minutes. Vous
-              pouvez raffraichir la page si tous les résultats ne sont pas
-              disponibles)
+              (Généralement, l'indexation des résultats dans le moteur de recherche POP prend de
+              quelques secondes à 1 ou 2 minutes. Vous pouvez raffraichir la page si tous les
+              résultats ne sont pas disponibles)
             </p>
           </div>
-          <div>
-            Vous pouvez récupérer le rapport d'import en nous laissant vos
-            coordonnées mail
-          </div>
+          <div>Vous pouvez récupérer le rapport d'import en nous laissant vos coordonnées mail</div>
           {this.state.emailSent ? (
             <div>{`Rapport envoyé à ${this.state.email}`}</div>
           ) : (
@@ -388,11 +344,7 @@ class Importer extends Component {
                     this.props.institution
                   );
                   api
-                    .sendReport(
-                      `Rapport import ${this.props.collection}`,
-                      this.state.email,
-                      body
-                    )
+                    .sendReport(`Rapport import ${this.props.collection}`, this.state.email, body)
                     .then(() => {
                       this.setState({ emailSent: true });
                     });
@@ -422,9 +374,7 @@ class Importer extends Component {
     } else if (this.state.errors) {
       currentStep = (
         <div className="working-area">
-          <h2>
-            Impossible d'importer le fichier car des erreurs ont été détectées :
-          </h2>
+          <h2>Impossible d'importer le fichier car des erreurs ont été détectées :</h2>
           <div>
             {this.state.errors.split("\n").map((e, i) => (
               <div key={i}>{e}</div>
@@ -460,11 +410,7 @@ class Importer extends Component {
             <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${
               this.props.collection
             }, selon les trois étapes suivantes`}</p>
-            <Steps
-              labelPlacement="vertical"
-              current={this.state.step}
-              size="big"
-            >
+            <Steps labelPlacement="vertical" current={this.state.step} size="big">
               <Step title="Sélection et dépot des contenus à importer" />
               <Step title="Contrôle et validation de l'import" />
               <Step title="Confirmation de l'import" />
