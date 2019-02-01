@@ -1,6 +1,6 @@
-# POP Consultation
+# POP diffusion
 
-Outil de consultation public de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop/tree/master/apps/api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est basée sur [React](https://reactjs.org/). Le rendu des pages est effectué côté serveur (SSR).
+Outil de diffusion public de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop/tree/master/apps/api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est construite avec [React](https://reactjs.org/). [NextJS](https://nextjs.org/) est utilisé, principalement pour faciliter le SSR.
 
 ## Installation
 
@@ -8,7 +8,7 @@ NodeJS 8+ doit être installé pour faire fonctionner l'application.
 
 ```
 git clone https://github.com/betagouv/pop.git
-cd pop/apps/consultation
+cd pop/apps/diffusion
 npm install
 ```
 
@@ -22,9 +22,8 @@ Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb
 
 ## Déploiement
 
-Utiliser `npm run deploy:staging` ou `npm run deploy:production` en fonction de l'environnement souhaité. 
 La branche _master_ est automatiquement livré sur la plateforme de _staging_ et de _prod_ à chaque _push_ grâce à CircleCI. Il est donc recommandé de passer par des _Pull Request_ validées par un tiers.
 
 ## Recherche
 
-Une documentation à propos du fonctionnement de la recherche est [accessible ici](https://github.com/betagouv/pop/blob/master/apps/consultation/ABOUT_SEARCH.md).
+Une documentation à propos du fonctionnement de la recherche est [accessible ici](https://github.com/betagouv/pop/blob/master/apps/diffusion/ABOUT_SEARCH.md).
