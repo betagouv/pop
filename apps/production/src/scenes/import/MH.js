@@ -82,14 +82,24 @@ function parseFiles(files, encoding) {
       } else if (obj.REF.indexOf("PA") !== -1) {
         newNotice = new Merimee(obj);
       } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
-        const fileName = String(obj.REFIMG);
-        obj.IMG = fileName;
         newNotice = new Memoire(obj);
-        let img = filesMap[fileName];
-        if (img) {
-          newNotice._images.push(img);
-        } else {
-          newNotice._errors.push(`Impossible de trouver l'image "${fileName}"`);
+
+        // SI REFIMG nexiste pas, on ne met pas a jour le champ IMG
+        if (obj.REFIMG !== undefined) {
+          if (!obj.REFIMG) {
+            // SI REFIMG est vide, on suppr limage
+            newNotice.IMG = "";
+          } else {
+            let fileName = String(obj.REFIMG);
+            filename = convertLongNameToShort(fileName);
+            let img = filesMap[fileName];
+            if (img) {
+              newNotice.IMG = `memoire/${newNotice.REF}/${fileName}`;
+              newNotice._images.push(img);
+            } else {
+              newNotice._errors.push(`Impossible de trouver l'image "${fileName}"`);
+            }
+          }
         }
       } else {
         reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`);
@@ -116,6 +126,15 @@ function parseFiles(files, encoding) {
     }
     resolve({ importedNotices, fileNames: [objectFile.name] });
   });
+}
+
+function convertLongNameToShort(str) {
+  return str
+    .substring(str.lastIndexOf("/") + 1)
+    .replace(/_[a-zA-Z0-9]\./g, ".")
+    .replace(/^.*[\\\/]/g, "")
+    .replace(/[a-zA-Z0-9]*_/g, "")
+    .toLowerCase();
 }
 
 function readme() {

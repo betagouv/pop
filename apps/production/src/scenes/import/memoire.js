@@ -36,35 +36,55 @@ function parseFiles(files, encoding) {
       reject("Pas de fichiers .ods detecté");
       return;
     }
+
+    const filesMap = {};
+    for (var i = 0; i < files.length; i++) {
+      filesMap[convertLongNameToShort(files[i].name)] = files[i];
+    }
+
     utils.readODS(objectFile).then(data => {
       const notices = [];
+
+      //Create image map
+
       for (let i = 0; i < data.length; i++) {
-        notices.push(new Memoire(data[i]));
-      }
-      const filesMap = {};
-      for (var i = 0; i < files.length; i++) {
-        filesMap[convertLongNameToShort(files[i].name)] = files[i];
+        const obj = data[i];
+        const notice = new Memoire(obj);
+
+        // SI NOMSN nexiste pas, on ne met pas a jour le champ IMG
+        if (obj.NOMSN !== undefined) {
+          if (!obj.NOMSN) {
+            // SI REFIMG est vide, on suppr limage
+            notice.IMG = "";
+          } else {
+            let fileName = String(obj.NOMSN);
+            fileName = convertLongNameToShort(fileName);
+            let img = filesMap[fileName];
+            if (img) {
+              // const newImage = utils.renameFile(img, shortName);
+              notice.IMG = `memoire/${notice.REF}/${fileName}`;
+              notice._images.push(img);
+            } else {
+              notice._errors.push(`Impossible de trouver l'image "${fileName}"`);
+            }
+          }
+        }
+
+        notices.push(notice);
       }
 
-      for (var i = 0; i < notices.length; i++) {
-        if (!notices[i].IMG) break;
-        const shortName = convertLongNameToShort(notices[i].IMG);
-        let img = filesMap[shortName];
-        if (!img) {
-          notices[i]._errors.push(`Image ${shortName} introuvable`);
-        } else {
-          const newImage = utils.renameFile(img, shortName);
-          notices[i]._images.push(newImage);
-        }
-      }
       resolve({ importedNotices: notices, fileNames: [objectFile.name] });
     });
   });
 }
 
 function convertLongNameToShort(str) {
-  let name = str.substring(str.lastIndexOf("/") + 1);
-  return name;
+  return str
+    .substring(str.lastIndexOf("/") + 1)
+    .replace(/_[a-zA-Z0-9]\./g, ".")
+    .replace(/^.*[\\\/]/g, "")
+    .replace(/[a-zA-Z0-9]*_/g, "")
+    .toLowerCase();
 }
 
 function readme() {
