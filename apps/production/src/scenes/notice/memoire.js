@@ -3,7 +3,7 @@ import { Row, Col, Container, Button, Form } from "reactstrap";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
-import { Mapping } from "pop-shared";
+import { Mapping } from "../../../../shared/src/index";
 
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";

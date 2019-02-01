@@ -1,10 +1,9 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { Link } from "react-router-dom";
 import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
-import { MultiList } from "pop-shared";
-import { es_url, bucket_url } from "../../../config.js";
+import { MultiList } from "../../../../../shared/src/index";
+import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/PalissyCard";
 

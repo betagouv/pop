@@ -1,5 +1,5 @@
 import React from "react";
-import { Mapping } from "pop-shared";
+import { Mapping } from "../../../../../shared/src/index"; 
 import Card from "../components/MerimeeCard";
 import AdvancedSearch from "./AdvancedSearch";
 
