@@ -129,11 +129,11 @@ jobs:
       - prepare:
           app: api
       - prepare:
-          app: consultation
-      - prepare:
           app: production
       - prepare:
           app: shared
+      - prepare:
+          app: diffusion
   ##############
   # TEST JOBS #
   ##############
@@ -145,7 +145,7 @@ jobs:
     steps:
       - test:
           app: api
-  test_consultation:
+  test_diffusion:
     executor: docker_node
     steps:
       - test:
@@ -163,24 +163,27 @@ jobs:
   ##############
   # BUILD JOBS #
   ##############
-  build_consultation_staging:
+  build_diffusion:
     executor: docker_node
     steps:
-      - build:
-          app: consultation
-          env: staging
+      - checkout
+      - restore_node_modules:
+          app: diffusion
+      - run:
+          name: build
+          command: |
+            cd apps/diffusion
+            npm run build
+      - persist_to_workspace:
+          root: ~/repo/apps/diffusion
+          paths:
+              - .next
   build_production_staging:
     executor: docker_node
     steps:
       - build:
           app: production
           env: staging
-  build_consultation_prod:
-    executor: docker_node
-    steps:
-      - build:
-          app: consultation
-          env: prod
   build_production_prod:
     executor: docker_node
     steps:
@@ -190,12 +193,20 @@ jobs:
   ###############
   # DEPLOY JOBS #
   ###############
-  deploy_consultation_staging:
+  deploy_diffusion_staging:
     executor: docker_python
     steps:
-      - deploy:
-          app: consultation
-          eb_deploy: pop-consultation-staging
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/diffusion
+      - restore_node_modules:
+          app: diffusion
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/diffusion
+            eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
     steps:
@@ -207,12 +218,6 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api-staging
-  deploy_consultation_prod:
-    executor: docker_python
-    steps:
-      - deploy:
-          app: consultation
-          eb_deploy: pop-consultation
   deploy_production_prod:
     executor: docker_python
     steps:
@@ -236,30 +241,24 @@ workflows:
       - test_api:
           requires:
             - prepare_all
-      - test_consultation:
+      - test_production:
           requires:
             - prepare_all
-      - test_production:
+      - test_diffusion:
           requires:
             - prepare_all
       - test_shared:
           requires:
             - prepare_all
-      - build_consultation_staging:
+      - build_diffusion:
           requires:
-            - test_consultation
+            - test_diffusion
           filters:
             branches:
               only: master
       - build_production_staging:
           requires:
             - test_production
-          filters:
-            branches:
-              only: master
-      - build_consultation_prod:
-          requires:
-            - deploy_consultation_staging
           filters:
             branches:
               only: master
@@ -275,9 +274,9 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy_consultation_staging:
+      - deploy_diffusion_staging:
           requires:
-            - build_consultation_staging
+            - build_diffusion
           filters:
             branches:
               only: master
@@ -290,12 +289,6 @@ workflows:
       - deploy_api_prod:
           requires:
             - deploy_api_staging
-          filters:
-            branches:
-              only: master
-      - deploy_consultation_prod:
-          requires:
-            - build_consultation_prod
           filters:
             branches:
               only: master
