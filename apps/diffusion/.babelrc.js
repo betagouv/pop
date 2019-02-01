@@ -8,11 +8,12 @@ module.exports = {
         "preset-env": {
           loose: true,
           modules: false,
-          targets: { browsers: [">0.03%"] },
-          useBuiltIns: true
+          targets: {
+            browsers: [">0.03%"]
+          }
         }
       }
     ]
   ],
-  plugins: [["transform-define", env]]
+  plugins: ["transform-class-properties", "transform-object-rest-spread", ["transform-define", env]]
 };
