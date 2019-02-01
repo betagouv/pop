@@ -21,7 +21,10 @@ app.prepare().then(() => {
     const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
     const museoRegex = /^\/museo\/(.*?)$/;
     const sitemapRegex = /^\/sitemap\/(.*?)$/;
-    if (pathname.match(sitemapRegex)) {
+    if (req.headers.host.match('/^pop.culture.gouv.fr/')) {
+      res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` })
+      res.end();
+    } else if (pathname.match(sitemapRegex)) {
       const url = req.url.replace("/sitemap/", "");
       res.writeHead(301, { Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}` })
       res.end();
