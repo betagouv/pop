@@ -6,8 +6,6 @@ module.exports = {
       "next/babel",
       {
         "preset-env": {
-          loose: true,
-          modules: false,
           targets: {
             browsers: [">0.03%"]
           }
@@ -16,9 +14,6 @@ module.exports = {
     ]
   ],
   plugins: [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-object-rest-spread",
-    "@babel/plugin-transform-block-scoping",
     ["transform-define", env]
   ]
 };
