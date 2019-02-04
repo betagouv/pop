@@ -58,24 +58,27 @@ class Search extends React.Component {
 
   toggle(subRoute, params) {
     if (this.props.display !== subRoute) {
-      // Sorry.
-      const encodeQueryString = object => {
+      const JsonStringifyValues = object => {
         const entries = Object.entries(object)
           .filter(([_k, v]) => (Array.isArray(v) ? v.length : v))
           .map(([k, v]) => v && { [k]: JSON.stringify(v) });
         return entries.length ? Object.assign(...entries) : null;
       };
-      const decodeQueryString = qs => {
-        return Object.assign(
-          ...Object.entries(queryString.parse(qs)).map(([k, v]) => {
+      const JsonParseValues = values => {
+        const entries =
+          values &&
+          Object.entries(values).map(([k, v]) => {
             try {
               v = JSON.parse(v);
             } catch (e) {}
-            return v && { [k]: v };
-          })
-        );
+            return { [k]: v };
+          });
+        return entries.length ? Object.assign(...entries) : {};
       };
-      const search = encodeQueryString({ ...decodeQueryString(window.location.search), ...params });
+      const search = JsonStringifyValues({
+        ...JsonParseValues(queryString.parse(window.location.search)),
+        ...params
+      });
       Router.push(`/search/${subRoute}${search ? "?" + queryString.stringify(search) : ""}`);
     }
   }
