@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Nav, NavItem, NavLink, Container, Badge } from "reactstrap";
 import Router from "next/router";
-import queryString from "query-string"
+import queryString from "query-string";
 import { ReactiveBase, DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
 import { MultiList } from "pop-shared";
@@ -56,9 +56,27 @@ class Search extends React.Component {
     this.toggle = this.toggle.bind(this);
   }
 
-  toggle(subRoute) {
+  toggle(subRoute, params) {
     if (this.props.display !== subRoute) {
-      Router.push(`/search/${subRoute}`);
+      // Sorry.
+      const encodeQueryString = object => {
+        const entries = Object.entries(object)
+          .filter(([_k, v]) => (Array.isArray(v) ? v.length : v))
+          .map(([k, v]) => v && { [k]: JSON.stringify(v) });
+        return entries.length ? Object.assign(...entries) : null;
+      };
+      const decodeQueryString = qs => {
+        return Object.assign(
+          ...Object.entries(queryString.parse(qs)).map(([k, v]) => {
+            try {
+              v = JSON.parse(v);
+            } catch (e) {}
+            return v && { [k]: v };
+          })
+        );
+      };
+      const search = encodeQueryString({ ...decodeQueryString(window.location.search), ...params });
+      Router.push(`/search/${subRoute}${search ? "?" + queryString.stringify(search) : ""}`);
     }
   }
 
@@ -71,7 +89,7 @@ class Search extends React.Component {
 
   render() {
     const { location } = this.props;
-    const activeTab = this.props.display
+    const activeTab = this.props.display;
 
     return (
       <Layout>
@@ -313,7 +331,7 @@ class Search extends React.Component {
                         <NavItem>
                           <NavLink
                             className={classnames({ active: activeTab === "list" })}
-                            onClick={() => this.toggle("list")}
+                            onClick={() => this.toggle("list", { geolocalisation: [], image: [] })}
                           >
                             LISTE
                           </NavLink>
@@ -325,7 +343,7 @@ class Search extends React.Component {
                               active: activeTab === "map"
                             })}
                             onClick={() => {
-                              this.toggle("map?geolocalisation=[\"oui\"]");
+                              this.toggle("map", { geolocalisation: ["oui"], image: [] });
                             }}
                           >
                             CARTE
@@ -338,7 +356,7 @@ class Search extends React.Component {
                               active: activeTab === "mosaic"
                             })}
                             onClick={() => {
-                              this.toggle("mosaic?image=[\"oui\"]");
+                              this.toggle("mosaic", { image: ["oui"], geolocalisation: [] });
                             }}
                           >
                             MOSAIQUE
@@ -360,7 +378,7 @@ class Search extends React.Component {
   currentTab() {
     if (this.props.display === "list") {
       return <List filter={DEFAULT_FILTER} />;
-    } else if(this.props.display === "map") {
+    } else if (this.props.display === "map") {
       return <Map filter={DEFAULT_FILTER} location={this.props.location} />;
     } else {
       return <Mosaic filter={DEFAULT_FILTER} />;
