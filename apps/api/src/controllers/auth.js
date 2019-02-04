@@ -45,7 +45,7 @@ router.post("/signup", (req, res) => {
   const userData = {
     nom: req.body.nom,
     prenom: req.body.prenom,
-    email: req.body.email,
+    email: req.body.email.toLowerCase(),
     group: req.body.group,
     role: req.body.role,
     institution: req.body.institution,
@@ -89,13 +89,13 @@ router.post("/signup", (req, res) => {
 router.post("/forgetPassword", (req, res) => {
   const { email } = req.body;
 
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email: email }, function(err, user) {
     if (err) throw err;
 
     if (!user) {
       res.status(401).send({
         success: false,
-        msg: `Utilisateur ${email} introuvable`
+        msg: `Utilisateur ${email.toLowerCase()} introuvable`
       });
     } else {
       var password = generator.generate({ length: 10, numbers: true });
@@ -110,7 +110,7 @@ router.post("/forgetPassword", (req, res) => {
 
         mailer.send(
           "Réinitialisation du mot de passe",
-          req.body.email,
+          req.body.email.toLowerCase(),
           `Bonjour!<br /><br />
               Votre nouveau mot de passe provisoire est ${password}<br />
               Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
@@ -140,13 +140,13 @@ router.post("/updatePassword", (req, res) => {
     });
   }
 
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email: email.toLowerCase() }, function(err, user) {
     if (err) throw err;
 
     if (!user) {
       res.status(401).send({
         success: false,
-        msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email} introuvable.`
+        msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
     } else {
       user.comparePassword(ppwd, function(err, isMatch) {
@@ -181,13 +181,13 @@ router.post("/updateProfile", passport.authenticate("jwt", { session: false }), 
     });
   }
 
-  User.findOne({ email }, function(err, user) {
+  User.findOne({ email: email.toLowerCase() }, function(err, user) {
     if (err) throw err;
 
     if (!user) {
       res.status(401).send({
         success: false,
-        msg: `La mise à jour des informations à échoué. Utilisateur ${email} introuvable.`
+        msg: `La mise à jour des informations à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
     } else {
       try {
@@ -225,7 +225,7 @@ router.post("/signin", (req, res) => {
   };
   User.findOne(
     {
-      email: req.body.email
+      email: req.body.email.toLowerCase()
     },
     function(err, user) {
       if (err) throw err;
