@@ -332,3 +332,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy_diffusion_prod:
+          requires:
+            - build_diffusion_prod
+          filters:
+            branches:
+              only: master
