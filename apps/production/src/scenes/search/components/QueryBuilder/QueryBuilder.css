@@ -60,3 +60,14 @@
   border-width: 1px;
   margin-top: 10px;
 }
+
+.queryBuilder .imgInfo {
+  width: 20px;
+  border-radius: 10px;
+  background-color: #1890ff;
+}
+
+.tooltipInfo > div {
+  min-width: 410px;
+  text-align: left;
+}
