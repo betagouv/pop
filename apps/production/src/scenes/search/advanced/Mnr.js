@@ -1,5 +1,5 @@
 import React from "react";
-import { Mapping } from "pop-shared";
+import Mapping from "../../../services/Mapping";
 import Card from "../components/MnrCard";
 import AdvancedSearch from "./AdvancedSearch";
 

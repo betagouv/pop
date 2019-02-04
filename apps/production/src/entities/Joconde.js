@@ -1,4 +1,4 @@
-import { Mapping } from "pop-shared";
+import Mapping from "../services/Mapping";
 import Notice from "./Notice";
 
 export default class Joconde extends Notice {

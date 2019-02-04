@@ -3,7 +3,7 @@ import Joconde from "../../../scenes/import/joconde";
 import Importer from "../../../scenes/import/importer";
 import ImportTester from "../../setup/ImportTester";
 import api from "../../../services/api.js";
-import { Mapping } from "pop-shared";
+import Mapping from "../../../services/Mapping.js";
 
 const importTester = new ImportTester({ api });
 importTester.disableAmplitude();
@@ -45,9 +45,9 @@ test("import file with not all required fields (only REF)", async () => {
   await importTester.dropFiles(["joconde-invalid-UTF-8.txt"]);
   expect(importTester.summaryInvalidDocsCount()).toBe(1);
   const errors = importTester.notices[0]._errors;
-  const requiredFields = Object.entries(Mapping.joconde).filter(([k, v]) => v.required)
+  const requiredFields = Object.entries(Mapping.joconde).filter(([k, v]) => v.required);
   expect(errors).toHaveLength(requiredFields.length - 1);
   errors.map(e => {
-    expect(e).toMatch(/Le champ [A-Z]+ ne doit pas être vide/)
+    expect(e).toMatch(/Le champ [A-Z]+ ne doit pas être vide/);
   });
 });

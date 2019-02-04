@@ -1,4 +1,4 @@
-import { Mapping } from "pop-shared";
+import Mapping from "../services/Mapping";
 import validator from "validator";
 
 export default class Notice {
