@@ -45,7 +45,6 @@ async function checkMnr(notice) {
   return errors;
 }
 
-
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
@@ -79,6 +78,7 @@ router.put(
 
       res.sendStatus(200);
     } catch (e) {
+      console.log("ERROR", e);
       capture(e);
       res.sendStatus(500);
     }
