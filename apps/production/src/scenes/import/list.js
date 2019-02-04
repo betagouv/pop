@@ -4,7 +4,7 @@ import {
   DataSearch,
   ReactiveList,
   SelectedFilters,
-  SingleDropdownList
+  MultiList
 } from "@appbaseio/reactivesearch/lib";
 import { Row, Col } from "reactstrap";
 
@@ -14,7 +14,7 @@ import "./list.css";
 
 import { es_url } from "../../config.js";
 
-const FILTER = ["mainSearch", "institution", "email","notices"];
+const FILTER = ["mainSearch", "institution", "email", "notices"];
 
 export default class List extends React.Component {
   render() {
@@ -22,10 +22,11 @@ export default class List extends React.Component {
       <div className="list-import">
         <ReactiveBase url={`${es_url}/import`} app="import">
           <Row>
-            <Col xs="3">
+            <Col md="3">
               <DataSearch
+                className="filter"
                 componentId="mainSearch"
-                dataField={["institution","email","notices"]}
+                dataField={["institution", "email", "notices"]}
                 queryFormat="and"
                 iconPosition="left"
                 title="Recherche"
@@ -33,27 +34,24 @@ export default class List extends React.Component {
                 placeholder="Saisissez une notice, une adresse email ou une institution"
                 URLParams={true}
               />
-            </Col>
-            <Col xs="3">
-              <SingleDropdownList
+              <MultiList
+                className="filter"
                 componentId="institution"
                 dataField="institution.keyword"
                 title="Institutions"
                 placeholder="Sélectionnez une institution"
                 react={{ and: FILTER.filter(e => e !== "institution") }}
               />
-            </Col>
-            <Col xs="3">
-              <SingleDropdownList
+              <MultiList
+                className="filter"
                 componentId="email"
                 dataField="email.keyword"
                 title="Email"
                 placeholder="Sélectionnez un email"
                 react={{ and: FILTER.filter(e => e !== "email") }}
               />
-            </Col>
-            <Col xs="3">
-              <SingleDropdownList
+              <MultiList
+                className="filter"
                 componentId="notices"
                 dataField="notices.keyword"
                 title="Notices"
@@ -61,7 +59,7 @@ export default class List extends React.Component {
                 react={{ and: FILTER.filter(e => e !== "notices") }}
               />
             </Col>
-            <Col xs="12">
+            <Col md="9">
               <SelectedFilters clearAllLabel="Tout supprimer" />
               <ReactiveList
                 sortOptions={[
