@@ -4,6 +4,14 @@
   padding: 18px;
 }
 
+.list-import .filter{
+  background-color: white;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+
 .list-import .reactive-list > div {
   display: flex;
   flex-wrap: wrap;
