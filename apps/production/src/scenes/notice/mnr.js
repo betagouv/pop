@@ -66,7 +66,7 @@ class Notice extends React.Component {
       );
       this.setState({ saving: false });
     } catch (e) {
-      toastr.error("Impossible d'enregistrer la modification");
+      toastr.error("Impossible d'enregistrer la modification. Error", JSON.stringify(e));
       this.setState({ saving: false });
     }
   }
