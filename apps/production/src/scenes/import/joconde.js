@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import { connect } from "react-redux";
-import { Mapping } from "pop-shared";
+import Mapping from "../../services/Mapping";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 
