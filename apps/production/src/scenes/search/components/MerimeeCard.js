@@ -4,6 +4,8 @@ import { bucket_url } from "../../../config.js";
 import mh from "../../../assets/mh.png";
 import inv from "../../../assets/inventaire.jpg";
 
+import utils from "./utils";
+
 function getMemoireImage(memoire) {
   if (!memoire.length || !memoire[0].url) {
     return require("../../../assets/noimage.jpg");
@@ -42,7 +44,7 @@ export default ({ data }) => {
         <div>
           <p>{data.DOMN}</p>
           <p>{data.DENO.join(", ")}</p>
-          <p>{data.LOCA}</p>
+          <p>{utils.generateLoca(data)}</p>
           <p>{data.AUTR.join(", ")}</p>
           {productorImage(data.PRODUCTEUR)}
         </div>
