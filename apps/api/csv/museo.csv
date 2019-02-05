@@ -1,6 +1,7 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
 "REF","String","non","Référence","","","","",""
 "TOUT","String","non","Index global","","","","",""
+"POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
 "ACCES","String","non","Accès","","","","",""
 "ACTIV","String","non","Activités culturelles","","","","",""
 "ADRESSE","String","non","Adresse complète","","","","",""

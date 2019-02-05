@@ -12,6 +12,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "MEMOIRE","Array","non","","","","","",""
 "POP_COORDONNEES.lat","Number","non","","","true","Latitude de la notice en WGS84","",""
 "POP_COORDONNEES.lon","Number","non","","","true","Longitude de la notice en WGS84","",""
+"POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
 "POP_CONTIENT_GEOLOCALISATION","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'","",""
 "POP_COORDINATES_POLYGON.type","String","non","","","","","",""
 "POP_COORDINATES_POLYGON.coordinates","Array","non","","","","","",""
