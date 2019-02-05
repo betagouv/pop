@@ -5,6 +5,7 @@ import Map from "../components/notices/Map";
 import Layout from "../components/Layout";
 import Head from "next/head";
 import Link from "next/link";
+import throw404 from "../services/throw404";
 import "./museo.css";
 
 const hiddenFields = [
@@ -24,8 +25,11 @@ const hiddenFields = [
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
-    const museo = await API.getMuseo(id);
-    return { museo };
+    try {
+      const museo = await API.getMuseo(id);
+      return { museo };
+    } catch (e) {}
+    return { museo: null };
   }
 
   // Display property label.
@@ -101,6 +105,10 @@ export default class extends React.Component {
 
   // The main render function.
   render() {
+    if (!this.props.museo) {
+      return throw404();
+    }
+
     const { museo } = this.props;
     const title = [
       museo.NOMUSAGE || museo.NOMOFF || museo.ANC,
