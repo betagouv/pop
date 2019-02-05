@@ -4,7 +4,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 import Mapping from "../../services/Mapping";
-
+import DeleteButton from "./components/DeleteButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -15,6 +15,7 @@ import API from "../../services/api";
 import { bucket_url } from "../../config";
 
 import "./index.css";
+
 
 class Notice extends React.Component {
   state = {
@@ -78,24 +79,6 @@ class Notice extends React.Component {
       "La modification sera visible dans 1 à 5 min en diffusion"
     );
     this.setState({ saving: false });
-  }
-
-  delete() {
-    const ref = this.props.match.params.ref;
-    const confirmText =
-      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
-      `Êtes-vous certain·e de vouloir continuer ?`;
-    const toastrConfirmOptions = {
-      onOk: () => {
-        API.deleteNotice("memoire", ref).then(() => {
-          toastr.success(
-            "Notice supprimée",
-            "La modification sera visible dans 1 à 5 min en diffusion"
-          );
-        });
-      }
-    };
-    toastr.confirm(confirmText, toastrConfirmOptions);
   }
 
   render() {
@@ -348,9 +331,7 @@ class Notice extends React.Component {
           </div>
           {this.state.editable ? (
             <div className="buttons">
-              <Button color="danger" onClick={() => this.delete()}>
-                Supprimer
-              </Button>
+              <DeleteButton noticeType="memoire" noticeRef={this.state.notice.REF} />
               <Button color="primary" type="submit">
                 Sauvegarder
               </Button>
