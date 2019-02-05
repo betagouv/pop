@@ -3,6 +3,7 @@ import { Field } from "redux-form";
 import Dropzone from "react-dropzone";
 import { Row, Col, Button } from "reactstrap";
 import Viewer from "react-viewer";
+import { toastr } from "react-redux-toastr";
 import "react-viewer/dist/index.css";
 
 import "./fieldImages.css";
@@ -29,9 +30,7 @@ class FieldImages extends React.Component {
 
   getFile(e) {
     // If image file is the image
-    const index = this.state.imageFiles.findIndex(
-      f => e.indexOf(`/${f.name}`) !== -1
-    );
+    const index = this.state.imageFiles.findIndex(f => e.indexOf(`/${f.name}`) !== -1);
 
     //if not file just uploaded
     if (index == -1) {
@@ -68,25 +67,28 @@ class FieldImages extends React.Component {
         <Button
           color="danger"
           onClick={() => {
+            const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
+            const toastrConfirmOptions = {
+              onOk: () => {
+                //If only One Image
+                if (!Array.isArray(this.props.input.value)) {
+                  this.props.input.onChange("");
+                  this.props.updateFiles([]);
+                  this.setState({ imageFiles: [] });
+                  return;
+                }
 
-            //If only One Image
-            if (!Array.isArray(this.props.input.value)) {
-              this.props.input.onChange("");
-              this.props.updateFiles([]);
-              this.setState({ imageFiles: [] });
-              return;
-            }
+                // Update Image path
+                const arr = this.props.input.value.filter(e => e !== name);
+                this.props.input.onChange(arr);
 
-            // Update Image path
-            const arr = this.props.input.value.filter(e => e !== name);
-            this.props.input.onChange(arr);
-
-            // Update Image file if needed
-            const imageFiles = this.state.imageFiles.filter(
-              e => e.name != name
-            );
-            this.props.updateFiles(imageFiles);
-            this.setState({ imageFiles });
+                // Update Image file if needed
+                const imageFiles = this.state.imageFiles.filter(e => e.name != name);
+                this.props.updateFiles(imageFiles);
+                this.setState({ imageFiles });
+              }
+            };
+            toastr.confirm(confirmText, toastrConfirmOptions);
           }}
         >
           Supprimer
@@ -114,8 +116,7 @@ class FieldImages extends React.Component {
     });
 
     const hideButton =
-      this.props.disabled ||
-      (!Array.isArray(this.props.input.value) && this.props.input.value);
+      this.props.disabled || (!Array.isArray(this.props.input.value) && this.props.input.value);
 
     if (!hideButton) {
       arr.push(
