@@ -20,13 +20,14 @@ class Import extends React.Component {
       const importedNotices = utils
         .parseAjoutPilote(res, Joconde)
         .map(value => {
-          if (!value.MUSEO && this.props.museofile) {
-            value.MUSEO = this.props.museofile;
+          if (!value.MUSEO && (this.props.museofile || []).length === 1) {
+            value.MUSEO = this.props.museofile[0];
           }
           return value;
         })
         .map(value => new Joconde(value));
 
+      console.log(importedNotices);
       const filesMap = {};
       for (var i = 0; i < files.length; i++) {
         //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name

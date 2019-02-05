@@ -50,8 +50,8 @@ class Notice extends React.Component {
       // As a "producteur", I can edit if "museofile" matches with notice.
       const editable =
         this.props.canUpdate &&
-        (this.props.user.role === "administrateur" || notice.MUSEO === this.props.user.museofile);
-
+        (this.props.user.role === "administrateur" ||
+          (this.props.user.museofile || []).includes(notice.MUSEO));
       this.setState({ loading: false, notice, editable });
     });
   }
