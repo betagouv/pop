@@ -3,6 +3,8 @@ import Rule from "./Rule";
 import { history } from "../../../../redux/store";
 import qs from "qs";
 import ruleQuery from "./ruleQuery";
+import { Tooltip } from "reactstrap";
+const imgInfo = require("../../../../assets/info.png");
 
 // Merge unit queries
 function getMergedQueries(q) {
@@ -38,7 +40,8 @@ export default class RuleGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queries: []
+      queries: [],
+      tooltipOpen: false
     };
   }
 
@@ -117,6 +120,40 @@ export default class RuleGroup extends React.Component {
     return (
       <div className="ruleGroup">
         <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
+        <Tooltip
+          placement="right"
+          className="tooltipInfo"
+          isOpen={this.state.tooltipOpen}
+          target="aboutSearch"
+          toggle={() =>
+            this.setState({
+              tooltipOpen: !this.state.tooltipOpen
+            })
+          }
+        >
+          <h4>Définition de certains opérateurs :</h4>
+          <dl>
+            <dt>Égal à</dt>
+            <dd>
+              Stricte égalité. Entrer ici un champ de texte avec respect de la casse ou un code
+              alphanumérique.
+            </dd>
+            <dt>Contient</dt>
+            <dd>
+              Entrer ici un champ de texte ou un code alphanumérique ou numérique. Ressortiront les
+              notices pour lesquelles le champ contient les valeurs entrées, indépendamment de ce
+              précède ou suit.
+            </dd>
+            <dt>Existe</dt>
+            <dd>
+              Cet opérateur permet d'indiquer la liste des notices pour lesquelles le champ
+              "existe", i.e. le champ "est non vide".
+            </dd>
+          </dl>
+        </Tooltip>
+        <span id="aboutSearch">
+          <img src={imgInfo} className="imgInfo" />
+        </span>
         {this.renderChildren()}
       </div>
     );
