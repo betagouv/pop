@@ -937,7 +937,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contact",
-        generated: true,
         validation: "Email",
         label: "CONTACT"
       }
