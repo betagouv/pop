@@ -5,7 +5,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";
 import { Link } from "react-router-dom";
-
+import DeleteButton from "./components/DeleteButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -59,24 +59,6 @@ class Notice extends React.Component {
       "La modification sera visible dans 1 à 5 min en diffusion"
     );
     this.setState({ saving: false });
-  }
-
-  delete() {
-    const ref = this.props.match.params.ref;
-    const confirmText =
-      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
-      `Êtes-vous certain·e de vouloir continuer ?`;
-    const toastrConfirmOptions = {
-      onOk: () => {
-        API.deleteNotice("merimee", ref).then(() => {
-          toastr.success(
-            "Notice supprimée",
-            "La modification sera visible dans 1 à 5 min en diffusion"
-          );
-        });
-      }
-    };
-    toastr.confirm(confirmText, toastrConfirmOptions);
   }
 
   render() {
@@ -323,9 +305,7 @@ class Notice extends React.Component {
           </div>
           {this.props.canUpdate ? (
             <div className="buttons">
-              <Button color="danger" onClick={() => this.delete()}>
-                Supprimer
-              </Button>
+              <DeleteButton noticeType="merimee" noticeRef={this.state.notice.REF} />
               <Button disabled={!this.state.editable} color="primary" type="submit">
                 Sauvegarder
               </Button>

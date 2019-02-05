@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";
-
+import DeleteButton from "./components/DeleteButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -54,24 +54,6 @@ class Notice extends React.Component {
 
       this.setState({ loading: false, notice, editable });
     });
-  }
-
-  delete() {
-    const ref = this.props.match.params.ref;
-    const confirmText =
-      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
-      `Êtes-vous certain·e de vouloir continuer ?`;
-    const toastrConfirmOptions = {
-      onOk: () => {
-        API.deleteNotice("joconde", ref).then(() => {
-          toastr.success(
-            "Notice supprimée",
-            "La modification sera visible dans 1 à 5 min en diffusion"
-          );
-        });
-      }
-    };
-    toastr.confirm(confirmText, toastrConfirmOptions);
   }
 
   onSubmit(values) {
@@ -231,9 +213,7 @@ class Notice extends React.Component {
           </div>
           <div className="buttons">
             {this.props.canDelete ? (
-              <Button color="danger" onClick={() => this.delete()}>
-                Supprimer
-              </Button>
+              <DeleteButton noticeType="joconde" noticeRef={this.state.notice.REF} />
             ) : (
               <div />
             )}

@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
-
+import DeleteButton from "./components/DeleteButton";
 import { bucket_url } from "../../config";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
@@ -69,25 +69,6 @@ class Notice extends React.Component {
       toastr.error("Impossible d'enregistrer la modification. Error", JSON.stringify(e));
       this.setState({ saving: false });
     }
-  }
-
-  delete() {
-    const ref = this.props.match.params.ref;
-
-    const confirmText =
-      `Vous êtes sur le point de supprimer la notice REF ${ref}. ` +
-      `Êtes-vous certain·e de vouloir continuer ?`;
-    const toastrConfirmOptions = {
-      onOk: () => {
-        API.deleteNotice("mnr", ref).then(() => {
-          toastr.success(
-            "Notice supprimée",
-            "La modification sera visible dans 1 à 5 min en diffusion"
-          );
-        });
-      }
-    };
-    toastr.confirm(confirmText, toastrConfirmOptions);
   }
 
   render() {
@@ -177,9 +158,7 @@ class Notice extends React.Component {
           </div>
           {this.props.canUpdate ? (
             <div className="buttons">
-              <Button color="danger" onClick={() => this.delete()}>
-                Supprimer
-              </Button>
+              <DeleteButton noticeType="mnr" noticeRef={this.state.notice.REF} />
               <Button color="primary" type="submit">
                 Sauvegarder
               </Button>
