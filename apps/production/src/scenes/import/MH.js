@@ -54,7 +54,8 @@ function parseFiles(files, encoding) {
 
       if (!obj.REF) {
         reject(
-          "Impossible de détecter les notices. Vérifiez que le séparateur est bien | et que chaque notice possède une référence"
+          `Problème détecté ligne ${i +
+            2}. Impossible de détecter les notices. Vérifiez que le séparateur est bien | et que chaque notice possède une référence`
         );
         return;
       }
