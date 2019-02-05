@@ -1,5 +1,6 @@
 import fetch from "isomorphic-unfetch";
 const { api_url } = require("../config");
+import Sentry from "./sentry";
 
 class api {
   getNotice(collection, ref) {
@@ -34,7 +35,7 @@ class api {
                 resolve(data);
               })
               .catch(e => {
-                Raven.captureException(e);
+                Sentry.captureException(e);
                 reject("Probleme lors de la récupération de la donnée", e);
               });
             return;
@@ -44,12 +45,12 @@ class api {
             `Un probleme a été detecté lors de la récupération de données via l'API. ` +
             `Les équipes techniques ont été notifiées. ` +
             `Status Code: ${response.status}`;
-          Raven.captureException(message);
+          Sentry.captureException(message);
           reject(message);
           return;
         })
         .catch(err => {
-          Raven.captureException(err);
+          Sentry.captureException(err);
           reject("L'api est inaccessible", err);
         });
     });

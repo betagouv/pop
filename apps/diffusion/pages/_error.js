@@ -2,13 +2,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import NotFound from "../components/NotFound";
 import ErrorBoundary from "../components/ErrorBoundary";
-import * as Sentry from '@sentry/browser';
-
-const SENTRY_PUBLIC_DSN = "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21";
-
-if (typeof window !== "undefined") {
-  Sentry.init({ dsn: SENTRY_PUBLIC_DSN });
-}
+import Sentry from "../services/sentry";
 
 const BrowserException = args => new Error(args);
 const notifySentry = err => {
