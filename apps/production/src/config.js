@@ -1,6 +1,6 @@
 //ES
 
-let env = null || process.env.NODE_ENV;
+let env = "staging" || process.env.NODE_ENV;
 
 let api_url = "http://127.0.0.1:3000";
 let es_url = "http://127.0.0.1:3000/search/";
