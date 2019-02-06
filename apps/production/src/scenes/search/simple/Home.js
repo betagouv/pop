@@ -15,14 +15,14 @@ class Search extends React.Component {
       image: require("../../../assets/joconde.jpg")
     });
     tiles.push({
+      url: "/recherche/mnr",
+      name: "MNR",
+      image: require("../../../assets/MNR.jpg")
+    });
+    tiles.push({
       url: "/recherche/merimee",
       name: "Mérimée",
       image: require("../../../assets/merimee.jpg")
-    });
-    tiles.push({
-      url: "/recherche/palissy",
-      name: "Palissy",
-      image: require("../../../assets/palissy.jpg")
     });
     tiles.push({
       url: "/recherche/palissy",
