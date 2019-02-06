@@ -49,64 +49,8 @@ export default class Search extends React.Component {
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
-                customQuery={(value, props) => utils.customQuery(value, ["COM", "TICO", "DENO", "LOCA"], ["EDIF"])
-                  /*
-                  if (!value) {
-                    return {
-                      query: { match_all: {} }
-                    };
-                  }
-                  if (value.match(/"[^"]*"| -| \+/)) {
-                    return {
-                      query: {
-                        simple_query_string: {
-                          query: value,
-                          default_operator: "and",
-                          fields: ["COM", "TICO", "DENO", "REF", "LOCA", "EDIF"]
-                        }
-                      }
-                    };
-                  }
-                  return {
-                    bool: {
-                      should: [
-                        // 1 - exact ref
-                        { term: { "REF.keyword": { value, boost: 5 } } },
-                        
-                        // 2 - exact term
-                        { term: { "COM.keyword": { value, boost: 5 } } },
-                        { term: { "TICO.keyword": { value, boost: 5 } } },
-                        { term: { "DENO.keyword": { value, boost: 5 } } },
-                        { term: { "LOCA.keyword": { value, boost: 5 } } },
-
-                        // 3 - fuzzy term
-                        { fuzzy: { "COM.keyword": { value, boost: 2 } } },
-                        { fuzzy: { "TICO.keyword": { value, boost: 2 } } },
-                        { fuzzy: { "DENO.keyword": { value, boost: 2 } } },
-                        { fuzzy: { "LOCA.keyword": { value, boost: 2 } } },
-
-                        // 4 - contains all words
-                        {
-                          simple_query_string: {
-                            query: value.replace(/ +?/g, " +"),
-                            default_operator: "and",
-                            fields: ["COM", "TICO", "DENO", "LOCA"]
-                          }
-                        },
-
-                        // 5 - contains "something"
-                        {
-                          multi_match: {
-                            query: value,
-                            type: "best_fields",
-                            fields: ["COM", "EDIF", "DENO", "LOCA", "EDIF"],
-                            boost: 0.5
-                          }
-                        }
-                      ]
-                    }
-                  };
-                  */
+                customQuery={(value, props) =>
+                  utils.customQuery(value, ["COM", "TICO", "DENO", "LOCA"], ["EDIF", "LEG"])
                 }
               />
               <ExportComponent FILTER={FILTER} collection="memoire" />

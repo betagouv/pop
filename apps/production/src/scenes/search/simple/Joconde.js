@@ -12,6 +12,7 @@ import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/JocondeCard";
+import utils from "../components/utils";
 
 const FILTER = [
   "mainSearch",
@@ -44,12 +45,14 @@ export default class Search extends React.Component {
             <div className="search-and-export-zone">
               <DataSearch
                 componentId="mainSearch"
-                dataField={["TICO", "INV", "DENO", "REF", "LOCA"]}
-                queryFormat="and"
+                dataField={[]}
                 iconPosition="left"
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
+                customQuery={(value, props) =>
+                  utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"], "and")
+                }
               />
 
               <ReactiveComponent

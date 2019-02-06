@@ -7,6 +7,7 @@ import { MultiList } from "pop-shared";
 import { es_url, bucket_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/PalissyCard";
+import utils from "../components/utils";
 
 const FILTER = [
   "mainSearch",
@@ -39,12 +40,14 @@ export default class Search extends React.Component {
               <DataSearch
                 componentId="mainSearch"
                 fuzziness={2}
-                dataField={["TICO", "DENO", "REF", "LOCA"]}
-                queryFormat="and"
+                dataField={[]}
                 iconPosition="left"
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
+                customQuery={(value, props) =>
+                  utils.customQuery(value, ["TICO", "DENO", "REF", "LOCA"], [], "and")
+                }
               />
               <ExportComponent FILTER={FILTER} collection="palissy" />
             </div>

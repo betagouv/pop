@@ -115,7 +115,7 @@ function departmentText(v) {
   );
 }
 
-function customQuery(query, primaryFields, secondaryFields = []) {
+function customQuery(query, primaryFields, secondaryFields = [], operator = "or") {
   const fields = [...primaryFields, ...secondaryFields];
 
   // No value, return all documents.
@@ -145,7 +145,7 @@ function customQuery(query, primaryFields, secondaryFields = []) {
     simple_query_string: { query: query.replace(/ +?/g, " +"), default_operator: "and", fields }
   };
   // 5 - contains "something" (boost 0.5)
-  const something = { multi_match: { query, fields, boost: 0.5 } };
+  const something = { multi_match: { query, fields, boost: 0.5, operator } };
   // 6 - return the whole query with all rules
   return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords, something] } };
 }
