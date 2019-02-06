@@ -11,7 +11,7 @@ import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/museoCard";
+import Card from "../components/MuseoCard";
 
 const FILTER = ["mainSearch", "label", "dpt"];
 
