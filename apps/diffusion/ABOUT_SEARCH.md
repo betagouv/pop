@@ -1,6 +1,6 @@
 # À propos de la recherche
 
-La recherche libre est privilégiée dans l'outil de consultation, avec possibilité d'utiliser une auto-complétion et de filtrer grâce à des filtres à facettes.
+La recherche libre est privilégiée dans l'outil de diffusion, avec possibilité d'utiliser une auto-complétion et de filtrer grâce à des filtres à facettes.
 
 ## Barre de recherche
 
@@ -8,7 +8,7 @@ La recherche libre est privilégiée dans l'outil de consultation, avec possibil
 
 La recherche et l'autocomplétion sont faites sur les mêmes règles. Un score est appliqué sur chaque résultat en fonction de différent critères, ce qui déterminera son ordre d'apparition dans les résultats.
  - Si le champ est vide, l'**ensemble des données** de la base sont retournées dans un **ordre arbitraire**.
- - Si l'un des champs `TICO`, `TITRE`, `TITR` et `LEG` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop/blob/master/apps/consultation/src/scenes/search/index.js#L331-L358).
+ - Si l'un des champs `TICO`, `TITRE`, `TITR` et `LEG` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop/blob/master/apps/diffusion/components/search/Search.js#L261-L266).
 
 Les champs suivants augmentent également le score, si une correspondance floue est trouvée avec ces champs. Le poids de chaque champ dans le score du résultat de recherche est précisé en deuxième colonne :
 
@@ -38,7 +38,7 @@ Les champs suivants augmentent également le score, si une correspondance floue 
 | SCLE | 1 |
 | SCLD | 1 |
 
-Le code source est [disponible ici](https://github.com/betagouv/pop/blob/20495dddc2c423be6ae4be2a373d695aa30ca66d/apps/consultation/src/scenes/search/index.js#L331-L358).
+Le code source est [disponible ici](https://github.com/betagouv/pop/blob/master/apps/diffusion/components/search/Search.js#L269-L297).
 
 À noter :
  - Un analyseur français est utilisé ([plus d'infos sur l'analyseur ici](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/analysis-lang-analyzer.html#french-analyzer)). En simplifiant, cet analyseur ignore les mots de séparation et les articles français, ignore la casse et applique une [racinisation](https://fr.wikipedia.org/wiki/Racinisation) française.

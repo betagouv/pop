@@ -1,9 +1,0 @@
-.opendata-view {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  padding: 15px;
-  margin: 50px auto;
-  max-width: 800px;
-}

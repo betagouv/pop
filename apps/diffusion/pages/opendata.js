@@ -43,7 +43,7 @@ export default () => (
         <br />
          <br />
         Dans le cas où le ré-utilisateur souhaiterait faire usage d’informations soumises au droit
-        d’auteur, notamment disponibles sur l’interface de consultation mais pas en téléchargement
+        d’auteur, notamment disponibles sur l’interface de diffusion mais pas en téléchargement
         au lien mentionné ci-dessus, le ré-utilisateur doit obtenir les autorisations nécessaires
         auprès des auteurs et ayant-droits.
         <br />

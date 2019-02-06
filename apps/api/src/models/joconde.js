@@ -186,7 +186,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  ",
         deprecated: true
       }
     },
@@ -194,7 +194,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Peut être déprécié : Pas affiché en production ni en consultation]  ",
+        description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  ",
         deprecated: true
       }
     },
@@ -520,7 +520,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Peut être déprécié : Pas affiché en production ni en consultation]",
+        description: "[Peut être déprécié : Pas affiché en production ni en diffusion]",
         deprecated: true,
         label: "Précision datation"
       }
