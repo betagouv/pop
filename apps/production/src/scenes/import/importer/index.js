@@ -359,8 +359,6 @@ class Importer extends Component {
               </Button>
             </div>
           )}
-          {/* <div>Vous pouvez consulter les notices importées au lien suivant:</div>
-                    <Link to={"/"}>Lien vers la consultation avec critères de recherche pre-remplis(établissement + date)</Link> */}
         </div>
       </div>
     );
