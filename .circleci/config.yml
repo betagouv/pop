@@ -149,7 +149,7 @@ jobs:
     executor: docker_node
     steps:
       - test:
-          app: consultation
+          app: diffusion
   test_production:
     executor: docker_node
     steps:
