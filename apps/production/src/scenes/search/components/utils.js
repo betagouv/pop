@@ -115,6 +115,42 @@ function departmentText(v) {
   );
 }
 
+function customQuery(query, primaryFields, secondaryFields = []) {
+  const fields = [...primaryFields, ...secondaryFields];
+
+  // No value, return all documents.
+  if (!query) {
+    return { query: { match_all: {} } };
+  }
+
+  // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
+  // treat it as a query_string (they will love that).
+  if (query.match(/"[^"]*"| -| \+/)) {
+    return { query: { simple_query_string: { query, default_operator: "and", fields } } };
+  }
+
+  // Otherwise build a complex query with these rules (by boost order):
+  // 1 - exact ref (boost 5)
+  const exactRef = { term: { "REF.keyword": { value: query, boost: 5 } } };
+  // 2 - exact term in fields (boost 5)
+  const exactTerm = primaryFields.map(f => ({
+    term: { [`${f}.keyword`]: { value: query, boost: 5 } }
+  }));
+  // 3 - fuzzy term in fields (boost 2)
+  const fuzzyTerm = primaryFields.map(f => ({
+    fuzzy: { [`${f}.keyword`]: { value: query, boost: 5 } }
+  }));
+  // 4 - contains all words in fields (boost 1)
+  const allWords = {
+    simple_query_string: { query: query.replace(/ +?/g, " +"), default_operator: "and", fields }
+  };
+  // 5 - contains "something" (boost 0.5)
+  const something = { multi_match: { query, fields, boost: 0.5 } };
+  // 6 - return the whole query with all rules
+  return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords, something] } };
+}
+
 export default {
-  generateLoca
+  generateLoca,
+  customQuery
 };
