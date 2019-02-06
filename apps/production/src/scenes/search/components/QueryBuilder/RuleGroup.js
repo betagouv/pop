@@ -1,10 +1,10 @@
 import React from "react";
 import Rule from "./Rule";
-import { history } from "../../../../redux/store";
 import qs from "qs";
 import ruleQuery from "./ruleQuery";
 import { Tooltip } from "reactstrap";
 const imgInfo = require("../../../../assets/info.png");
+import { history } from "../../../../redux/store";
 
 // Merge unit queries
 function getMergedQueries(q) {
@@ -40,7 +40,7 @@ export default class RuleGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queries: [],
+      queries: [{ id: 0 }],
       tooltipOpen: false
     };
   }
@@ -79,23 +79,21 @@ export default class RuleGroup extends React.Component {
   }
 
   onRuleAdd() {
-    this.setState({
-      queries: this.state.queries.concat({ id: this.state.queries.length })
-    });
+    const max = this.state.queries.reduce((p, v) => {
+      return p > v.id ? p : v.id;
+    }, 0);
+    this.setState({ queries: [...this.state.queries.concat({ id: max + 1 })] });
   }
 
   onRemove(id) {
+    console.log(this.state.queries);
+    console.log("id", id);
     let queries = this.state.queries.filter(e => e.id !== id);
-    queries = queries.map((q, i) => ({ ...q, id: i }));
     this.updateStateQueries(queries);
   }
 
   onUpdate(obj) {
-    const queries = [
-      ...this.state.queries.slice(0, obj.id),
-      obj,
-      ...this.state.queries.slice(obj.id + 1)
-    ];
+    const queries = this.state.queries.map(e => (e.id === obj.id ? obj : e));
     this.updateStateQueries(queries);
   }
 
@@ -108,6 +106,7 @@ export default class RuleGroup extends React.Component {
           id={id}
           data={data || {}}
           displayLabel={this.props.displayLabel}
+          onRuleAdd={this.onRuleAdd.bind(this)}
           onRemove={this.onRemove.bind(this)}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}
@@ -119,7 +118,6 @@ export default class RuleGroup extends React.Component {
   render() {
     return (
       <div className="ruleGroup">
-        <button onClick={this.onRuleAdd.bind(this)}>Ajouter une règle</button>
         <Tooltip
           placement="right"
           className="tooltipInfo"

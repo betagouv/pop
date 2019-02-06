@@ -1,11 +1,14 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import Mapping from "../../../../services/Mapping";
 import QueryBuilder from "./QueryBuilder";
+
 export default class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props);
 
-    const entity = props.entity;
+    const entity = Mapping[this.props.collection];
+
     //clean entity
     delete entity._id;
     delete entity.__v;
@@ -21,9 +24,7 @@ export default class AdvancedSearch extends React.Component {
 
   render() {
     return (
-      <ReactiveComponent
-        componentId={this.props.componentId} // a unique id we will refer to later
-      >
+      <ReactiveComponent componentId={this.props.componentId}>
         <QueryBuilder
           entity={this.state.entity}
           displayLabel={this.props.displayLabel}
