@@ -27,7 +27,7 @@ export default class Search extends React.Component {
   render() {
     return (
       <Container className="search">
-        <Header base="museo" normalMode={true} />
+        {/* <Header base="museo" normalMode={true} /> */}
         <ReactiveBase url={`${es_url}/museo`} app="museo">
           <div>
             <div className="search-and-export-zone">
