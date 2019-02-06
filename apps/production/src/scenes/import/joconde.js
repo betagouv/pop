@@ -27,7 +27,6 @@ class Import extends React.Component {
         })
         .map(value => new Joconde(value));
 
-      console.log(importedNotices);
       const filesMap = {};
       for (var i = 0; i < files.length; i++) {
         //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name

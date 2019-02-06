@@ -41,8 +41,15 @@ class UpdateUser extends React.Component {
       this.setState({ error });
       return;
     }
+    try {
+      await api.updateProfile(email, nom, prenom, institution, group, role, museofile);
+    } catch (e) {
+      this.setState({
+        error: "Impossible de mettre a jour le profil. Veuillez contacter votre administrateur "
+      });
+      return;
+    }
 
-    await api.updateProfile(email, nom, prenom, institution, group, role, museofile);
     this.setState({ modal: false });
     toastr.success("Les informations ont été enregistrées.");
     this.props.callback();
