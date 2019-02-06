@@ -6,6 +6,7 @@ import Joconde from "./Joconde";
 import Mnr from "./Mnr";
 import Memoire from "./Memoire";
 import Palissy from "./Palissy";
+import Museo from "./Museo";
 
 import "../simple/index.css";
 
@@ -18,6 +19,7 @@ export default () => {
         <Route path={`/recherche-avancee/mnr`} component={Mnr} />
         <Route path={`/recherche-avancee/joconde`} component={Joconde} />
         <Route path={`/recherche-avancee/memoire`} component={Memoire} />
+        <Route path={`/recherche-avancee/museo`} component={Museo} />
       </Switch>
     </div>
   );
