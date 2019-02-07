@@ -1,7 +1,7 @@
-import API from "../../services/api";
-import Layout from "../../components/Layout";
-import Memoire from "../../components/notices/Memoire";
-import { findCollection } from "../../components/notices/utils";
+import API from "../../src/services/api";
+import Layout from "../../src/components/Layout";
+import Memoire from "../../src/notices/Memoire";
+import { findCollection } from "../../src/notices/utils";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {

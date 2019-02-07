@@ -7,7 +7,7 @@ import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import { toFieldImages } from "./utils";
 import Head from "next/head";
-import NotFound from "../../components/NotFound";
+import NotFound from "../components/NotFound";
 import "./Notice.css";
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);

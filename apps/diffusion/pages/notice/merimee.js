@@ -1,6 +1,6 @@
-import API from "../../services/api";
-import Layout from "../../components/Layout";
-import Merimee from "../../components/notices/Merimee";
+import API from "../../src/services/api";
+import Layout from "../../src/components/Layout";
+import Merimee from "../../src/notices/Merimee";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {

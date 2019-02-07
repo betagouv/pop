@@ -1,9 +1,9 @@
 import React from "react";
-import TopicCard from "../components/TopicCard";
+import TopicCard from "../src/topics/TopicCard";
 import { Row, Col, Container } from "reactstrap";
-import { bucket_url } from "../config";
+import { bucket_url } from "../src/config";
 import Head from "next/head";
-import Layout from "../components/Layout";
+import Layout from "../src/components/Layout";
 import "./topics.css";
 
 const cultureUrl = "http://www2.culture.gouv.fr/Wave/image/";

@@ -1,4 +1,4 @@
-import Search from "../../components/search/Search"
+import Search from "../../src/search/Search"
 import Router from "next/router";
 
 export default class extends React.Component {

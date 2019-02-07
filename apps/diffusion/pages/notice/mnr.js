@@ -1,6 +1,6 @@
-import API from "../../services/api";
-import Layout from "../../components/Layout";
-import Mnr from "../../components/notices/Mnr";
+import API from "../../src/services/api";
+import Layout from "../../src/components/Layout";
+import Mnr from "../../src/notices/Mnr";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
