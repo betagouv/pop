@@ -2,6 +2,7 @@ import React from "react";
 import App, { Container } from "next/app";
 import NProgress from "next-nprogress/component";
 import Router from "next/router";
+import "./_app.css";
 
 export default class MyApp extends App {
 
