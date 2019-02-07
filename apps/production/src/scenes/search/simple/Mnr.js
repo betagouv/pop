@@ -53,8 +53,8 @@ export default class Search extends React.Component {
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
-                customQuery={(value, props) =>
-                  utils.customQuery(value, ["REF", "INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"], [], "and")
+                customQuery={value =>
+                  utils.customQuery(value, ["REF", "INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"])
                 }
               />
 
