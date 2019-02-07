@@ -189,6 +189,7 @@ class ValueEditor extends React.Component {
         <Autocomplete
           getItemValue={item => item.key}
           items={suggestions}
+          autoHighlight={false}
           renderItem={(item, isHighlighted) => (
             <div key={item.key} style={{ background: isHighlighted ? "lightgray" : "white" }}>
               {item.key}

@@ -29,7 +29,7 @@ export default class Search extends React.Component {
                   collection={baseName}
                   componentId="advancedSearch"
                   displayLabel={this.props.displayLabel || false}
-                  autocomplete={false}
+                  autocomplete={this.props.autocomplete || false}
                 />
               </Col>
             </Row>
