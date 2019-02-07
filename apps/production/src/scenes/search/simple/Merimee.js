@@ -1,17 +1,12 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { Link } from "react-router-dom";
-import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters
-} from "@appbaseio/reactivesearch";
+import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
 import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
-import { es_url, bucket_url } from "../../../config.js";
+import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/MerimeeCard";
+import utils from "../components/utils";
 
 const FILTER = [
   "mainSearch",
@@ -47,12 +42,12 @@ export default class Search extends React.Component {
             <div className="search-and-export-zone">
               <DataSearch
                 componentId="mainSearch"
-                dataField={["TICO", "DENO", "REF", "LOCA"]}
-                queryFormat="and"
+                dataField={[]}
                 iconPosition="left"
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
+                customQuery={value => utils.customQuery(value, ["TICO", "DENO", "REF", "LOCA"])}
                 debounce={0}
               />
               <ExportComponent FILTER={FILTER} collection="merimee" />
