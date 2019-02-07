@@ -10,7 +10,6 @@ export default class Home extends React.Component {
 
   renderAlert() {
     return (
-      <Container style={{ paddingTop: "20px" }}>
         <Alert
           color="danger"
           isOpen={this.state.alert}
@@ -27,15 +26,15 @@ export default class Home extends React.Component {
             Lien vers la production
           </a>
         </Alert>
-      </Container>
     );
   }
 
   render() {
     return (
       <div>
-        {this.renderAlert()}
+        
         <Container className="home">
+        {this.renderAlert()}
           <div className="title">
             Bienvenue dans l'outil d'administration des bases du Ministère de la
             Culture !

@@ -1,6 +1,7 @@
 .User {
-  margin-right: 15px;
+  margin-right: 55px;
   margin-left: 25px;
+  z-index: 2;
 }
 
 .User .dropdown-item {

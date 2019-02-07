@@ -12,7 +12,7 @@
   padding-top: 20px;
 }
 
-.search .header {
+.search .search-header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
@@ -24,13 +24,6 @@
   font-size: 27px;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.search .home .activities h4 {
-  background: url("../../../assets/002-time.png") left center no-repeat;
-  -webkit-background-size: 18px;
-  padding-left: 25px;
-  background-size: 18px;
 }
 
 .search .home .box {
@@ -212,4 +205,8 @@
 
 img.producteur.mh {
   width: 100px;
+}
+
+.search .export-btn {
+  width: 200px;
 }

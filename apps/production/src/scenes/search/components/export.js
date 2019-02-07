@@ -71,7 +71,7 @@ export default class ExportComponent extends React.Component {
 
   render() {
     return (
-      <div className="text-center">
+      <div className="export-btn text-center">
         {this.renderButton()}
         {this.renderExporting()}
       </div>
