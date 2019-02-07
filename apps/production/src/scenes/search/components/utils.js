@@ -144,8 +144,8 @@ function customQuery(query, primaryFields, secondaryFields = []) {
   const allWords = {
     simple_query_string: { query: query.replace(/ +?/g, " +"), default_operator: "and", fields }
   };
-  // 6 - return the whole query with all rules
-  return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords, something] } };
+  // 5 - return the whole query with all rules
+  return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
 }
 
 export default {
