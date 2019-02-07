@@ -5,6 +5,7 @@ import ExportComponent from "../components/export";
 import QueryBuilder from "../components/QueryBuilder";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
+import Mapping from "../../../services/Mapping";
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class Search extends React.Component {
   }
 
   render() {
-    const { baseName, mapping, onData } = this.props;
+    const { baseName, onData } = this.props;
     return (
       <Container className="search">
         <Header base={baseName} normalMode={false} />
@@ -25,10 +26,10 @@ export default class Search extends React.Component {
             <Row>
               <Col md={12}>
                 <QueryBuilder
-                  entity={mapping}
+                  collection={baseName}
                   componentId="advancedSearch"
                   displayLabel={this.props.displayLabel || false}
-                  autocomplete={false}
+                  autocomplete={this.props.autocomplete || false}
                 />
               </Col>
             </Row>
@@ -40,7 +41,7 @@ export default class Search extends React.Component {
             <div className="text-center my-3">
               Trier par :
               <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-                {Object.keys(mapping)
+                {Object.keys(Mapping[baseName])
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
                     <option key={e} value={e}>

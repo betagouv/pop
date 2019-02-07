@@ -10,6 +10,7 @@ export default class Joconde extends React.Component {
         baseName="joconde"
         mapping={Mapping.joconde}
         displayLabel={true}
+        autocomplete={true}
         onData={data => <Card key={data.REF} data={data} />}
       />
     );

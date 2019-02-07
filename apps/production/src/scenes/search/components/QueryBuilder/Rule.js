@@ -36,6 +36,7 @@ export default class RuleComponent extends React.Component {
           first={this.props.first}
           id={this.props.id}
           data={this.props.data}
+          onRuleAdd={this.props.onRuleAdd}
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
@@ -122,6 +123,7 @@ class Rule extends React.Component {
             });
           }}
         />
+        <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
         <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
           X
         </button>
@@ -187,6 +189,7 @@ class ValueEditor extends React.Component {
         <Autocomplete
           getItemValue={item => item.key}
           items={suggestions}
+          autoHighlight={false}
           renderItem={(item, isHighlighted) => (
             <div key={item.key} style={{ background: isHighlighted ? "lightgray" : "white" }}>
               {item.key}

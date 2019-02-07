@@ -6,12 +6,11 @@ import "./QueryBuilder.css";
 export default class QueryBuilder extends React.Component {
   onUpdate(q) {
     if (!q) {
-      this.props.setQuery({ query: {}, value: "hey" }); // ???
+      this.props.setQuery({ query: {}, value: "querybuilder" }); // ???
       return;
     }
     const query = { bool: { ...q } };
-    console.log("QueryBuilder: ", JSON.stringify(query));
-    this.props.setQuery({ query, value: "hey" }); // ???
+    this.props.setQuery({ query, value: "querybuilder" });
   }
 
   render() {
