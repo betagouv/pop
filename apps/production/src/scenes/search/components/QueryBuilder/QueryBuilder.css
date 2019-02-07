@@ -9,6 +9,12 @@
   border-style: none;
 }
 
+.queryBuilder #aboutSearch {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
 .queryBuilder .closeButton {
   color: #fff;
   background-color: red;
