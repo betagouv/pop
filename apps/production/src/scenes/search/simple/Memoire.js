@@ -36,6 +36,7 @@ export default class Search extends React.Component {
   }
 
   render() {
+    const fields = ["COM", "TICO", "DENO", "LOCA", "LEG", "AUTP", "OBJT", "EDIF"];
     return (
       <Container className="search">
         <Header base="memoire" normalMode={true} />
@@ -47,10 +48,10 @@ export default class Search extends React.Component {
                 dataField={[]}
                 iconPosition="left"
                 className="mainSearch"
-                placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+                placeholder={`Recherchez dans les champs suivants : ${fields.join(", ")}`}
                 URLParams={true}
                 customQuery={value =>
-                  utils.customQuery(value, ["COM", "TICO", "DENO", "LOCA"], ["EDIF", "LEG"])
+                  utils.customQuery(value, fields)
                 }
               />
               <ExportComponent FILTER={FILTER} collection="memoire" />
