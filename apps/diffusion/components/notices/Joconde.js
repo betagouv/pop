@@ -157,7 +157,11 @@ class Joconde extends React.Component {
                 <Field title="Appellation" content={notice.APPL} />
                 <Field title="Titre" content={notice.TITR} />
                 <Field title="Auteur / exécutant / collecteur" content={this.author()} />
-                <Field title="Précisions / auteur / exécutant / collecteur" content={notice.PAUT} />
+                <Field
+                  title="Précisions / auteur / exécutant / collecteur"
+                  content={notice.PAUT}
+                  separator="#"
+                />
                 <Field title="Ecole" content={notice.ECOL} />
                 <Field title="Anciennes attributions" content={notice.ATTR} />
                 <Field title="Période de création / exécution" content={this.period()} />
