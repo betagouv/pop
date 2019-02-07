@@ -89,7 +89,7 @@
 }
 
 .search .mainSearch {
-  padding: 50px;
+  padding: 20px 30px 20px 0;
   width: 100%;
 }
 
@@ -185,6 +185,10 @@
   min-width: 16px !important;
 }
 
+.search .search-icon {
+  margin-top: -8px;
+}
+
 .search .active label::after {
   left: 2px !important;
   bottom: 7px !important;
@@ -192,7 +196,7 @@
   width: 16px !important;
   height: 16px !important;
   border-radius: 0px !important;
-  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
   background-color: #0b6aff !important;
   border-style: none !important;
   margin-top: -6px !important;
