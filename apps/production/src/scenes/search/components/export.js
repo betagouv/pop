@@ -1,8 +1,9 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
+import { QueryBuilder } from "pop-shared";
 import { history } from "../../../redux/store";
-import operators from "./QueryBuilder/operators";
+
 import qs from "qs";
 
 export default class ExportComponent extends React.Component {
@@ -110,11 +111,13 @@ async function exportData(fileName, entities) {
   const search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
   if (search && search.q) {
     // Get an array of queries with rules as text.
+
     const queries = search.q.map(s => {
-      const operatorAsText = operators.filter(o => s.operator === o.value)[0].text;
+      const operatorAsText = QueryBuilder.operators.filter(o => s.operator === o.value)[0].text;
       const combinatorAsText = s.combinator.toLowerCase();
       return `${combinatorAsText} ${s.key} ${operatorAsText} ${s.value}`;
     });
+
     // Transform the whole queries into readable text.
     const queryAsText = queries
       .join(" ")

@@ -3,8 +3,8 @@ import Rule from "./Rule";
 import qs from "qs";
 import ruleQuery from "./ruleQuery";
 import { Tooltip } from "reactstrap";
-const imgInfo = require("../../../../assets/info.png");
-import { history } from "../../../../redux/store";
+// const imgInfo = require("../../../../assets/info.png");
+// import { history } from "../../../../redux/store";
 
 // Merge unit queries
 function getMergedQueries(q) {
@@ -53,17 +53,25 @@ export default class RuleGroup extends React.Component {
   };
 
   updateUrlParams = q => {
-    const currentUrlParams = history.location.search;
-    const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
-    if (currentUrlParams !== targetUrlParams) {
-      history.replace(targetUrlParams);
+    const { history } = this.props;
+    if (history) {
+      const currentUrlParams = history.location.search;
+      const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
+      if (currentUrlParams !== targetUrlParams) {
+        history.replace(targetUrlParams);
+      }
     }
   };
 
   componentDidMount() {
+    const { history } = this.props;
+    if (!history) {
+      return;
+    }
     const search = qs.parse(history.location.search, {
       ignoreQueryPrefix: true
     });
+
     if (search && search.q) {
       let id = 0;
       const queries = search.q.map(s => {
@@ -150,7 +158,8 @@ export default class RuleGroup extends React.Component {
           </dl>
         </Tooltip>
         <span id="aboutSearch">
-          <img src={imgInfo} className="imgInfo" />
+          Aide
+          {/* <img src={imgInfo} className="imgInfo" /> */}
         </span>
         {this.renderChildren()}
       </div>

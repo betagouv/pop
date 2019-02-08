@@ -17,11 +17,12 @@ export default class QueryBuilder extends React.Component {
     return (
       <div className="queryBuilder">
         <RuleGroup
+          history={this.props.history}
           autocomplete={this.props.autocomplete}
-          id="0"
           displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}
+          id="0"
         />
       </div>
     );

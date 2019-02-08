@@ -1,7 +1,8 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
-import Mapping from "../../../../services/Mapping";
+import Mapping from "../Mapping";
 import QueryBuilder from "./QueryBuilder";
+import operators from "./operators";
 
 export default class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -26,11 +27,14 @@ export default class AdvancedSearch extends React.Component {
     return (
       <ReactiveComponent componentId={this.props.componentId}>
         <QueryBuilder
-          entity={this.state.entity}
+          history={this.props.history}
           displayLabel={this.props.displayLabel}
           autocomplete={this.props.autocomplete === undefined ? true : this.props.autocomplete}
+          entity={this.state.entity}
         />
       </ReactiveComponent>
     );
   }
 }
+
+AdvancedSearch.operator = operators;
