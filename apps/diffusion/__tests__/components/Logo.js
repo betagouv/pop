@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Logo from '../../components/Logo';
+import Logo from '../../src/components/Logo';
 
 describe('Logo suite', function() {
   it('should have exactly one Link', () => {

@@ -58,10 +58,10 @@
     "jest": "^24.0.0"
   },
   "scripts": {
-    "dev": "node services/server.js",
+    "dev": "node src/services/server.js",
     "build:prod": "APP_URLS_ENV=production next build",
     "build:staging": "APP_URLS_ENV=staging next build",
-    "start": "NODE_ENV=production node services/server.js",
+    "start": "NODE_ENV=production node src/services/server.js",
     "test": "jest"
   },
   "prettier": {

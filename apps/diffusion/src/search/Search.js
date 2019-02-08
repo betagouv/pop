@@ -5,13 +5,13 @@ import queryString from "query-string";
 import { ReactiveBase, DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
 import { MultiList } from "pop-shared";
-import Layout from "../Layout";
+import Layout from "../components/Layout";
 import Head from "next/head";
 import List from "./List";
 import Map from "./Map";
 import Mosaic from "./Mosaic";
-import MuseoCard from "../../components/MuseoCard";
-import { es_url } from "../../config.js";
+import MuseoCard from "./MuseoCard";
+import { es_url } from "../config.js";
 import "./Search.css";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");

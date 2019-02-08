@@ -1,4 +1,4 @@
-const env = require("./env-config.js");
+const env = require("./src/env-config.js");
 
 module.exports = {
   presets: [

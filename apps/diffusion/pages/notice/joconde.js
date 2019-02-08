@@ -1,7 +1,7 @@
-import API from "../../services/api";
-import Layout from "../../components/Layout"
-import Joconde from "../../components/notices/Joconde"
-import throw404 from "../../services/throw404"
+import API from "../../src/services/api";
+import Layout from "../../src/components/Layout"
+import Joconde from "../../src/notices/Joconde"
+import throw404 from "../../src/services/throw404"
 
 export default class extends React.Component {
   static loadMuseo(m) {

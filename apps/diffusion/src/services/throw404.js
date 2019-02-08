@@ -1,4 +1,4 @@
-import Error from "../pages/_error";
+import Error from "../../pages/_error";
 
 export default () => {
   if (process.browser) {

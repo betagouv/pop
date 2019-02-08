@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "../components/Layout";
+import Layout from "../src/components/Layout";
 import Link from "next/link";
 import React from "react";
 import Slider from "react-slick";

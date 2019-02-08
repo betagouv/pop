@@ -1,4 +1,4 @@
-import { bucket_url } from "../../config";
+import { bucket_url } from "../config";
 
 export function findCollection(ref = "") {
   if (typeof ref !== "string") {

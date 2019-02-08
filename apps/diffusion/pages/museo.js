@@ -1,11 +1,11 @@
 import React from "react";
-import API from "../services/api";
+import API from "../src/services/api";
 import { Mapping } from "pop-shared";
-import Map from "../components/notices/Map";
-import Layout from "../components/Layout";
+import Map from "../src/notices/Map";
+import Layout from "../src/components/Layout";
 import Head from "next/head";
 import Link from "next/link";
-import throw404 from "../services/throw404";
+import throw404 from "../src/services/throw404";
 import "./museo.css";
 
 const hiddenFields = [

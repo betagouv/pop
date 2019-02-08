@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Field from '../../../components/notices/Field';
+import Field from '../../src/notices/Field';
 
 describe('Field suite', () => {
   

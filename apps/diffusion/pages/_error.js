@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "../components/Layout";
-import NotFound from "../components/NotFound";
-import ErrorBoundary from "../components/ErrorBoundary";
-import Sentry from "../services/sentry";
+import Layout from "../src/components/Layout";
+import NotFound from "../src/components/NotFound";
+import ErrorBoundary from "../src/components/ErrorBoundary";
+import Sentry from "../src/services/sentry";
 
 const BrowserException = args => new Error(args);
 const notifySentry = err => {

@@ -1,9 +1,9 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Joconde from "../../../components/notices/Joconde";
-import Title from "../../../components/notices/Title";
-import Field from "../../../components/notices/Field";
-import sampleNotice from "../../__notices__/joconde-1";
+import Joconde from "../../src/notices/Joconde";
+import Title from "../../src/notices/Title";
+import Field from "../../src/notices/Field";
+import sampleNotice from "../__notices__/joconde-1";
 
 const placeholderParams = {
   params: { ref: "x" },

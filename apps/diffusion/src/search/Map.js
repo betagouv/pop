@@ -2,7 +2,7 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import queryString from "query-string";
-import Loader from "../../components/Loader";
+import Loader from "../components/Loader";
 
 import LinkedNotices from "./LinkedNotices";
 import SingleNotice from "./SingleNotice";

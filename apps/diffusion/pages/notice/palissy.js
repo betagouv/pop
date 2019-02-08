@@ -1,7 +1,7 @@
-import API from "../../services/api";
-import Layout from "../../components/Layout";
-import Palissy from "../../components/notices/Palissy";
-import { findCollection } from "../../components/notices/utils";
+import API from "../../src/services/api";
+import Layout from "../../src/components/Layout";
+import Palissy from "../../src/notices/Palissy";
+import { findCollection } from "../../src/notices/utils";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {

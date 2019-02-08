@@ -1,5 +1,5 @@
 import React from "react";
-import { bucket_url } from "../../config";
+import { bucket_url } from "../config";
 
 export function image(data) {
   const alt = data.TICO || data.TITR || data.REF;
