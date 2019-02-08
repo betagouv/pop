@@ -56,7 +56,7 @@ function readme() {
       <div>
         Cet onglet permet d’alimenter la base MNR-Rose Valland. <br /> <br />
         <h6>Formats d’import </h6>
-        Les formats de données pris en charge sont les suivants : <br />
+        Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : csv (séparateur : point-virgule, encodage : UTF8) </li>
         </ul>

@@ -180,7 +180,7 @@ function readme() {
         Cet onglet permet d’alimenter les bases Mérimée MH, Palissy MH et Mémoire MH (CRMH, CAOA,
         UDAP) <br /> <br />
         <h6>Formats d’import </h6>
-        Les formats de données pris en charge sont les suivants : <br />
+        Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : csv (séparateur : | ) </li>
           <li>illustration : jpg, png.</li>

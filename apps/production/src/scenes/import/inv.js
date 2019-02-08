@@ -282,7 +282,7 @@ function readme() {
         Cet onglet permet d’alimenter les bases Mérimée Inventaire, Palissy Inventaire et Mémoire
         Inventaire. <br /> <br />
         <h6>Formats d’import </h6>
-        Les formats de données pris en charge sont les suivants : <br />
+        Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) </li>
           <li>illustration : jpg, png.</li>
