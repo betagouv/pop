@@ -16,10 +16,6 @@ import Thesaurus from "./scenes/thesaurus";
 import Auth from "./scenes/auth";
 
 class PublicRoutes extends React.Component {
-  componentWillReceiveProps(newProps) {
-    console.log(newProps);
-  }
-
   render() {
     return (
       <ConnectedRouter history={this.props.history}>
@@ -31,7 +27,7 @@ class PublicRoutes extends React.Component {
             position="top-right"
             transitionIn="fadeIn"
             transitionOut="fadeOut"
-            confirmOptions={{okText: 'Oui', cancelText: 'Annuler'}}
+            confirmOptions={{ okText: "Oui", cancelText: "Annuler" }}
           />
           <Header />
           <Switch>
@@ -94,9 +90,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, hasResetPassword, .
       if (isLoggedIn) {
         if (!hasResetPassword) {
           return (
-            <Redirect
-              to={{ pathname: "/auth/updatePassword", state: { from: props.location } }}
-            />
+            <Redirect to={{ pathname: "/auth/updatePassword", state: { from: props.location } }} />
           );
         }
         return (
@@ -105,11 +99,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, hasResetPassword, .
           </div>
         );
       }
-      return (
-        <Redirect
-          to={{ pathname: "/auth/signin", state: { from: props.location } }}
-        />
-      );
+      return <Redirect to={{ pathname: "/auth/signin", state: { from: props.location } }} />;
     }}
   />
 );

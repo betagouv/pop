@@ -18,10 +18,10 @@ export default class QueryBuilder extends React.Component {
       <div className="queryBuilder">
         <RuleGroup
           autocomplete={this.props.autocomplete}
-          id="0"
           displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}
+          id="0"
         />
       </div>
     );

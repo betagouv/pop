@@ -2,10 +2,11 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
-import QueryBuilder from "../components/QueryBuilder";
+import { QueryBuilder } from "../../../../../shared/dist/index";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Mapping from "../../../services/Mapping";
+import { history } from "../../../../redux/store";
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ export default class Search extends React.Component {
                 <QueryBuilder
                   collection={baseName}
                   componentId="advancedSearch"
+                  history={history}
                   displayLabel={this.props.displayLabel || false}
                   autocomplete={this.props.autocomplete || false}
                 />
