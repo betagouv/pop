@@ -45,25 +45,6 @@
   padding-bottom: 3px;
 }
 
-
-
-
-
-/*
-.header .NavContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  width: 100%;
-  max-width: 100% !important;
-  border-bottom: 1px solid #f0efef;
-  padding: 8px;
-  box-shadow: 0 2px 6px 0 #e4e4e4;
-  height: 100px;
-}
-*/
-
 .header .NavComponent .navbar-toggler {
   margin-top: 15px;
   margin-right: 10px;
