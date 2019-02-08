@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
-import { QueryBuilder } from "../../../../../shared/dist/index";
+import { QueryBuilder } from "pop-shared";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Mapping from "../../../services/Mapping";

@@ -1,8 +1,8 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
+import { QueryBuilder } from "pop-shared";
 import { history } from "../../../redux/store";
-import { QueryBuilder } from "../../../../../shared/dist/index";
 
 import qs from "qs";
 
