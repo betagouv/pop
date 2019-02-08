@@ -973,7 +973,13 @@ module.exports = {
         },
         TICO: {
           type: "text",
-          analyzer: "french"
+          analyzer: "french",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
         },
         TIREDE: {
           type: "text",
@@ -986,7 +992,13 @@ module.exports = {
         },
         TITRE: {
           type: "text",
-          analyzer: "french"
+          analyzer: "french",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
         },
         TOILE: {
           type: "text",

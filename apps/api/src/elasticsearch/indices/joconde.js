@@ -614,11 +614,23 @@ module.exports = {
         },
         TICO: {
           type: "text",
-          analyzer: "french"
+          analyzer: "french",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
         },
         TITR: {
           type: "text",
-          analyzer: "french"
+          analyzer: "french",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
         },
         TOUT: {
           type: "text",
