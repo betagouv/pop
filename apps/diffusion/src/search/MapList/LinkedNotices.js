@@ -1,7 +1,7 @@
 import React from "react";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 import shave from "shave";
-import { image } from "./image";
+import { image } from "../utils/image";
 import SingleNotice from "./SingleNotice";
 import "./LinkedNotices.css";
 export default class LinkedNotices extends React.Component {

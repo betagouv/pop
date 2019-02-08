@@ -8,10 +8,13 @@ import classnames from "classnames";
 import { MultiList, QueryBuilder } from "pop-shared";
 import Layout from "../components/Layout";
 import Head from "next/head";
-import List from "./List";
-import Map from "./Map";
-import Mosaic from "./Mosaic";
-import MuseoCard from "./MuseoCard";
+
+import List from "./NormalList/List";
+import Map from "./MapList/Map";
+import Mosaic from "./MosaicList/Mosaic";
+
+import Header from "./Header/Header.js";
+
 import { es_url } from "../config.js";
 import "./Search.css";
 
@@ -84,13 +87,6 @@ class Search extends React.Component {
     }
   }
 
-  header() {
-    const query = queryString.parseUrl(this.props.location).query;
-    if (query && query.museo) {
-      return <MuseoCard museo={JSON.parse(query.museo)} />;
-    }
-  }
-
   render() {
     const { location } = this.props;
 
@@ -108,7 +104,7 @@ class Search extends React.Component {
           </Head>
           <Container fluid style={{ maxWidth: 1860 }}>
             <h1 className="title">Votre recherche</h1>
-            {this.header()}
+            <Header location={this.props.location} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row>
                 <div className={`search-filters ${this.state.mobile_menu}`}>
@@ -242,13 +238,7 @@ class Search extends React.Component {
                     <Col sm={this.props.advanced ? 10 : 6}>
                       <div className="search-and-export-zone">
                         {this.props.advanced ? (
-                          <QueryBuilder
-                            collection="mnr"
-                            componentId="advancedSearch"
-                            history={null}
-                            displayLabel={true}
-                            autocomplete={true}
-                          />
+                          <AdvancedSearch />
                         ) : (
                           <DataSearch
                             componentId="mainSearch"
@@ -406,6 +396,25 @@ class Search extends React.Component {
     } else {
       return <Mosaic filter={DEFAULT_FILTER} />;
     }
+  }
+}
+
+class AdvancedSearch extends React.Component {
+  state = {
+    collection: ""
+  };
+
+  render() {
+    <div>
+      <div>Dans la base MNR, je cherche la notice dont</div>
+      <QueryBuilder
+        collection="mnr"
+        componentId="advancedSearch"
+        history={null}
+        displayLabel={true}
+        autocomplete={true}
+      />
+    </div>;
   }
 }
 

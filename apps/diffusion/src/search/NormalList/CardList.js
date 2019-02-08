@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { image } from "./image";
+import { image } from "../utils/image";
 import "./CardList.css";
 
 const joinData = f => {

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import shave from "shave";
 import "./SingleNotice.css";
-import { image } from "./image";
+import { image } from "../utils/image";
 
 const joinData = f => {
   return f
