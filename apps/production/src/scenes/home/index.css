@@ -11,7 +11,7 @@
 
 .home .title {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
   font-size: 30px;
   padding-top: 20px;
   max-width: 740px;
@@ -27,13 +27,6 @@
 .home .subtitle li {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-.home .activities h4 {
-  background: url("./../../assets/002-time.png") left center no-repeat;
-  -webkit-background-size: 18px;
-  padding-left: 25px;
-  background-size: 18px;
 }
 
 .home .box {

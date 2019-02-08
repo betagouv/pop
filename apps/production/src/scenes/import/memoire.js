@@ -105,7 +105,7 @@ function readme() {
         Cet onglet permet d’alimenter la base Mémoire pour la partie Archives photographiques.{" "}
         <br /> <br />
         <h6>Formats d’import </h6>
-        Les formats de données pris en charge sont les suivants : <br />
+        Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : .ods (Open Office Document SpeardSheet) </li>
           <li>illustration : jpg, png.</li>

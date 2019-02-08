@@ -59,11 +59,13 @@ class Import extends React.Component {
             ])}
           </Row>
           <Row>
+            <Col className="m-4 text-center">
             {this.props.group === "admin" ? (
               <Link to="/import/list">Consultez les anciens imports</Link>
             ) : (
               <div />
             )}
+            </Col>
           </Row>
         </div>
       </Container>

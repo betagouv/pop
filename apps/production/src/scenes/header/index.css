@@ -1,3 +1,8 @@
+.header {
+  box-shadow: 0 2px 6px 0 rgb(189, 189, 189);
+  position: relative;
+}
+
 .header .NavContainer {
   display: flex;
   align-items: center;
@@ -5,10 +10,39 @@
   background-color: white;
   width: 100%;
   max-width: 100% !important;
-  border-bottom: 1px solid #f0efef;
-  padding: 8px;
-  box-shadow: 0 2px 6px 0 #e4e4e4;
-  height: 100px;
+  padding: 5px 15px;
+}
+
+#beta {
+  position: absolute;
+  width: 120px;
+  height: 110px;
+  right: 0;
+  top: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+#beta > div {
+  position: absolute;
+  right: -31.75%;
+  top: 10%;
+  width: 100%;
+  background-color: #c43a2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+}
+
+#beta > div > span {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 700;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .header .NavComponent .navbar-toggler {

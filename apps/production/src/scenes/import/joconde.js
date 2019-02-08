@@ -224,16 +224,16 @@ function readme() {
       <h5>Joconde</h5>
       <div>
         Cet onglet permet d’alimenter la base Joconde. Avant tout import dans la base, veuillez
-        prendre connaissance de la
+        prendre connaissance de la{" "}
         <a
           href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Joconde_engagements_VD.pdf"
           target="_blank"
         >
           Charte d'engagement
-        </a>
+        </a>{" "}
         relative au versement des données dans la base Joconde <br /> <br />
         <h6>Formats d’import </h6>
-        Les formats de données pris en charge sont les suivants : <br />
+        Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : txt ajout piloté </li>
           <li>illustration : jpg, png.</li>

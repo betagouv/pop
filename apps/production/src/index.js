@@ -2,38 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import dotenv from "dotenv";
-import WebFont from "webfontloader";
 import App from "./app";
-
 import registerServiceWorker from "./registerServiceWorker";
-
 import { store } from "./redux/store";
-
-import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-WebFont.load({
-  google: {
-    families: [
-      "Open Sans",
-      "Work Sans:400,500,700",
-      "Quicksand",
-      "sans-serif",
-      "Comfortaa",
-      "Nunito"
-    ]
-  }
-});
+import "./index.css";
 
 dotenv.load();
 
 if (process.env.NODE_ENV === "production") {
-  Raven.config(
-    "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21",
-    {
-      release: "pop-production-" + require("../package.json").version
-    }
-  ).install();
+  Raven.config("https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21", {
+    release: "pop-production-" + require("../package.json").version
+  }).install();
 }
 
 if (process.env.NODE_ENV === "production") {

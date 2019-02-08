@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";
 import { Link } from "react-router-dom";
 import DeleteButton from "./components/DeleteButton";
+import BackButton from "./components/BackButton";
 import Field from "./components/field";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -83,40 +84,32 @@ class Notice extends React.Component {
     }
 
     return (
-      <Container className="notice" fluid>
+      <Container className="notice">
+        <BackButton left history={this.props.history} />
+        <h2 class="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
-          <Row>
-            <div className="back" onClick={() => this.props.history.goBack()}>
-              Retour
-            </div>
-          </Row>
-          <Row>
-            <Col className="image" sm={6}>
-              <FieldImages
-                name="MEMOIRE"
-                disabled
-                external={true}
-                getAbsoluteUrl={e => {
-                  if (e.url.indexOf("memoire/") === 0) {
-                    return `${bucket_url}${e.url}`;
-                  } else {
-                    return e.url;
-                  }
-                }}
-                footer={e => {
-                  return (
-                    <Link to={`/notice/memoire/${e.ref}`} target="_blank">
-                      {e.ref}
-                    </Link>
-                  );
-                }}
-              />
-            </Col>
-            <Col className="image" sm={6}>
-              <Map notice={this.state.notice} />
-            </Col>
-          </Row>
+
+          <FieldImages
+            name="MEMOIRE"
+            disabled
+            external={true}
+            getAbsoluteUrl={e => {
+              if (e.url.indexOf("memoire/") === 0) {
+                return `${bucket_url}${e.url}`;
+              } else {
+                return e.url;
+              }
+            }}
+            footer={e => {
+              return (
+                <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                  {e.ref}
+                </Link>
+              );
+            }}
+          />
+
           <Section
             title="REFERENCES ET GESTION DOCUMENTAIRES"
             icon={require("../../assets/info.png")}
@@ -309,19 +302,20 @@ class Notice extends React.Component {
               <CustomField name="RENP" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <div className="back" onClick={() => this.props.history.goBack()}>
-            Retour
+          <Map notice={this.state.notice} />
+          <div className="buttons">
+            <BackButton history={this.props.history} />
+            {this.props.canUpdate ? (
+              <React.Fragment>
+                <DeleteButton noticeType="palissy" noticeRef={this.state.notice.REF} />
+                <Button disabled={!this.state.editable} color="primary" type="submit">
+                  Sauvegarder
+                </Button>
+              </React.Fragment>
+            ) : (
+              <div />
+            )}
           </div>
-          {this.props.canUpdate ? (
-            <div className="buttons">
-              <DeleteButton noticeType="palissy" noticeRef={this.state.notice.REF} />
-              <Button disabled={!this.state.editable} color="primary" type="submit">
-                Sauvegarder
-              </Button>
-            </div>
-          ) : (
-            <div />
-          )}
         </Form>
       </Container>
     );

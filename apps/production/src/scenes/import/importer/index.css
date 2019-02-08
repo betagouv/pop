@@ -189,7 +189,6 @@
 }
 
 .importer-container .subtitle {
-  font-family: "Comfortaa";
   padding-top: 25px;
   font-size: 20px;
   text-align: center;
@@ -197,7 +196,6 @@
 
 .importer-container .filename {
   color: #007772;
-  font-family: "Nunito";
   font-size: 20px;
   font-weight: 400;
   line-height: 28px;
