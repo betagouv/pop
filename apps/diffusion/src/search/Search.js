@@ -2,9 +2,10 @@ import React from "react";
 import { Row, Col, Nav, NavItem, NavLink, Container, Badge } from "reactstrap";
 import Router from "next/router";
 import queryString from "query-string";
+import Link from "next/link";
 import { ReactiveBase, DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
-import { MultiList } from "pop-shared";
+import { MultiList, QueryBuilder } from "pop-shared";
 import Layout from "../components/Layout";
 import Head from "next/head";
 import List from "./List";
@@ -83,7 +84,7 @@ class Search extends React.Component {
     }
   }
 
-  museo() {
+  header() {
     const query = queryString.parseUrl(this.props.location).query;
     if (query && query.museo) {
       return <MuseoCard museo={JSON.parse(query.museo)} />;
@@ -92,6 +93,7 @@ class Search extends React.Component {
 
   render() {
     const { location } = this.props;
+
     const activeTab = this.props.display;
 
     return (
@@ -106,7 +108,7 @@ class Search extends React.Component {
           </Head>
           <Container fluid style={{ maxWidth: 1860 }}>
             <h1 className="title">Votre recherche</h1>
-            {this.museo()}
+            {this.header()}
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row>
                 <div className={`search-filters ${this.state.mobile_menu}`}>
@@ -237,70 +239,80 @@ class Search extends React.Component {
                 </div>
                 <div className="search-results">
                   <Row className="search-row">
-                    <Col sm={8}>
+                    <Col sm={this.props.advanced ? 10 : 6}>
                       <div className="search-and-export-zone">
-                        <DataSearch
-                          componentId="mainSearch"
-                          autosuggest={false}
-                          filterLabel="Résultats pour "
-                          dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
-                          iconPosition="left"
-                          className="mainSearch"
-                          placeholder="Saisissez un titre, une dénomination ou une localisation"
-                          URLParams={true}
-                          customQuery={(value, props) => {
-                            if (!value) {
-                              return {
-                                query: { match_all: {} }
-                              };
-                            }
-                            return {
-                              bool: {
-                                should: [
-                                  {
-                                    multi_match: {
-                                      query: value,
-                                      type: "phrase",
-                                      fields: ["TICO", "TITRE", "TITR", "LEG"],
-                                      boost: 15
-                                    }
-                                  },
-                                  {
-                                    multi_match: {
-                                      query: value,
-                                      type: "most_fields",
-                                      fields: [
-                                        "TICO^10",
-                                        "AUTR^10",
-                                        "TITRE^9",
-                                        "TITR^9",
-                                        "LEG^9",
-                                        "LOCA^9",
-                                        "DENO^8",
-                                        "DOMN^8",
-                                        "EDIF^8",
-                                        "OBJT^8",
-                                        "REPR^8",
-                                        "AUTP^7",
-                                        "SERIE^7",
-                                        "PDEN^5",
-                                        "PERS^4",
-                                        "PAYS^3",
-                                        "REG^3",
-                                        "DEP^3",
-                                        "COM^3",
-                                        "DATE^1",
-                                        "EPOQ^1",
-                                        "SCLE^1",
-                                        "SCLD^1"
-                                      ]
-                                    }
-                                  }
-                                ]
+                        {this.props.advanced ? (
+                          <QueryBuilder
+                            collection="mnr"
+                            componentId="advancedSearch"
+                            history={null}
+                            displayLabel={true}
+                            autocomplete={true}
+                          />
+                        ) : (
+                          <DataSearch
+                            componentId="mainSearch"
+                            autosuggest={false}
+                            filterLabel="Résultats pour "
+                            dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
+                            iconPosition="left"
+                            className="mainSearch"
+                            placeholder="Saisissez un titre, une dénomination ou une localisation"
+                            URLParams={true}
+                            customQuery={(value, props) => {
+                              if (!value) {
+                                return {
+                                  query: { match_all: {} }
+                                };
                               }
-                            };
-                          }}
-                        />
+                              return {
+                                bool: {
+                                  should: [
+                                    {
+                                      multi_match: {
+                                        query: value,
+                                        type: "phrase",
+                                        fields: ["TICO", "TITRE", "TITR", "LEG"],
+                                        boost: 15
+                                      }
+                                    },
+                                    {
+                                      multi_match: {
+                                        query: value,
+                                        type: "most_fields",
+                                        fields: [
+                                          "TICO^10",
+                                          "AUTR^10",
+                                          "TITRE^9",
+                                          "TITR^9",
+                                          "LEG^9",
+                                          "LOCA^9",
+                                          "DENO^8",
+                                          "DOMN^8",
+                                          "EDIF^8",
+                                          "OBJT^8",
+                                          "REPR^8",
+                                          "AUTP^7",
+                                          "SERIE^7",
+                                          "PDEN^5",
+                                          "PERS^4",
+                                          "PAYS^3",
+                                          "REG^3",
+                                          "DEP^3",
+                                          "COM^3",
+                                          "DATE^1",
+                                          "EPOQ^1",
+                                          "SCLE^1",
+                                          "SCLD^1"
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              };
+                            }}
+                          />
+                        )}
                         <div
                           className="filter_mobile_menu"
                           onClick={() => this.setState({ mobile_menu: "mobile_open" })}
@@ -328,6 +340,14 @@ class Search extends React.Component {
                           />
                         </div>
                       </div>
+                    </Col>
+                    <Col sm={2} className="advanced">
+                      <Link
+                        prefetch
+                        href={this.props.advanced ? "/search/list" : "/advancedsearch/list"}
+                      >
+                        <a>{this.props.advanced ? "Recherche normale" : "Recherche avancée"}</a>
+                      </Link>
                     </Col>
                     <Col sm={4}>
                       <Nav pills>

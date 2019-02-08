@@ -6,8 +6,8 @@ export default class extends React.Component {
     return { asPath }
   }
   componentDidMount() {
-    Router.prefetch("/search/map");
-    Router.prefetch("/search/mosaic");
+    Router.prefetch("/advancedsearch/map");
+    Router.prefetch("/advancedsearch/mosaic");
   }
   render = () => <Search display="list" location={this.props.asPath} />;
 }
