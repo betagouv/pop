@@ -1,15 +1,13 @@
 .notice {
   margin-top: 20px;
-  display: flex;
-  justify-content: start;
-  align-items: "center";
   background-color: white;
-  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
 }
 
 .notice .main-title {
   text-align: center;
-  padding: 50px;
+  padding: 35px;
 }
 
 .notice .buttons {
@@ -20,13 +18,7 @@
 }
 
 .notice .buttons button {
-  margin: 10px;
-}
-
-.notice .back {
-  padding: 20px;
-  cursor: pointer;
-  color: #007bff;
+  margin: 20px;
 }
 
 .notice .image {
@@ -35,10 +27,14 @@
   align-items: center;
 }
 
-.notice .leaflet-container {
-  height: 600px;
-  padding-top: 10px;
-  width: 100%;
+.notice .leaflet-parent-container {
+  max-width: 400px;
+  height: 300px;
+  margin: 20px auto;
+}
+.leaflet-container {
+  max-width: 400px;
+  height: 300px;
 }
 
 .notice .error {

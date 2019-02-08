@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { reduxForm } from "redux-form";
 import Mapping from "../../services/Mapping";
 import DeleteButton from "./components/DeleteButton";
+import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -15,7 +16,6 @@ import API from "../../services/api";
 import { bucket_url } from "../../config";
 
 import "./index.css";
-
 
 class Notice extends React.Component {
   state = {
@@ -98,23 +98,19 @@ class Notice extends React.Component {
     }
 
     return (
-      <Container className="notice" fluid>
+      <Container className="notice">
+        <BackButton left history={this.props.history} />
+        <h2 class="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
-          <Row>
-            <div className="back" onClick={() => this.props.history.goBack()}>
-              Retour
-            </div>
-          </Row>
-          <Row>
-            <FieldImages
-              name="IMG"
-              disabled={!this.state.editable}
-              createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
-              getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
-              updateFiles={imagesFiles => this.setState({ imagesFiles })}
-            />
-          </Row>
+
+          <FieldImages
+            name="IMG"
+            disabled={!this.state.editable}
+            createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
+            getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
+            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+          />
 
           <Section title="Localisation" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
@@ -164,9 +160,6 @@ class Notice extends React.Component {
               <CustomField name="ANUMTI" disabled={!this.state.editable} />
               <CustomField name="LIEUCTI" disabled={!this.state.editable} />
               <CustomField name="COTECTI" disabled={!this.state.editable} />
-              <CustomField name="MENTTI" disabled={!this.state.editable} />
-              <CustomField name="OBSTI" disabled={!this.state.editable} />
-              <CustomField name="RENV" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="NUMOR" disabled={!this.state.editable} />
@@ -178,6 +171,9 @@ class Notice extends React.Component {
               <CustomField name="MENTOR" disabled={!this.state.editable} />
               <CustomField name="OBSOR" disabled={!this.state.editable} />
               <CustomField name="NUMCAF" disabled={!this.state.editable} />
+              <CustomField name="MENTTI" disabled={!this.state.editable} />
+              <CustomField name="OBSTI" disabled={!this.state.editable} />
+              <CustomField name="RENV" disabled={!this.state.editable} />
             </Col>
           </Section>
 
@@ -191,11 +187,11 @@ class Notice extends React.Component {
               <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
               <CustomField name="EMET" disabled={!this.state.editable} />
               <CustomField name="IDPROD" disabled={!this.state.editable} />
-              <CustomField name="NVD" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="IMG" disabled={true} />
               <CustomField name="TYPEIMG" disabled={!this.state.editable} />
+              <CustomField name="NVD" disabled={!this.state.editable} />
             </Col>
           </Section>
 
@@ -221,13 +217,13 @@ class Notice extends React.Component {
               <CustomField name="MCL" disabled={!this.state.editable} />
               <CustomField name="MCPER" disabled={!this.state.editable} />
               <CustomField name="ADPHOT" disabled={!this.state.editable} />
-              <CustomField name="LIB" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="PUBLI" disabled={!this.state.editable} />
               <CustomField name="TIREDE" disabled={!this.state.editable} />
               <CustomField name="OBS" disabled={!this.state.editable} />
               <CustomField name="MENTIONS" disabled={!this.state.editable} />
+              <CustomField name="LIB" disabled={!this.state.editable} />
             </Col>
           </Section>
 
@@ -305,9 +301,6 @@ class Notice extends React.Component {
               <CustomField name="LIEU" disabled={!this.state.editable} />
               <CustomField name="LIEUCP" disabled={!this.state.editable} />
               <CustomField name="MOSA" disabled={!this.state.editable} />
-              <CustomField name="NUM" disabled={!this.state.editable} />
-              <CustomField name="NUMCD" disabled={!this.state.editable} />
-              <CustomField name="NUMF" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="NUMI" disabled={!this.state.editable} />
@@ -324,13 +317,15 @@ class Notice extends React.Component {
               <CustomField name="VUECD" disabled={!this.state.editable} />
               <CustomField name="WCOM" disabled={!this.state.editable} />
               <CustomField name="WEB" disabled={!this.state.editable} />
+              <CustomField name="NUM" disabled={!this.state.editable} />
+              <CustomField name="NUMCD" disabled={!this.state.editable} />
+              <CustomField name="NUMF" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <div className="back" onClick={() => this.props.history.goBack()}>
-            Retour
-          </div>
+
           {this.state.editable ? (
             <div className="buttons">
+              <BackButton history={this.props.history} />
               <DeleteButton noticeType="memoire" noticeRef={this.state.notice.REF} />
               <Button color="primary" type="submit">
                 Sauvegarder

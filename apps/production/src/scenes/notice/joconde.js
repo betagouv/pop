@@ -5,6 +5,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";
 import DeleteButton from "./components/DeleteButton";
+import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -77,28 +78,18 @@ class Notice extends React.Component {
     }
 
     return (
-      <Container className="notice" fluid>
+      <Container className="notice">
+        <BackButton left history={this.props.history} />
+        <h2 class="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
-          <Row>
-            <div className="back" onClick={() => this.props.history.goBack()}>
-              Retour
-            </div>
-          </Row>
-          <Row>
-            <Col className="image" sm={6}>
-              <FieldImages
-                name="IMG"
-                disabled={!this.state.editable}
-                createUrlFromName={e => `joconde/${this.state.notice.REF}/${e}`}
-                getAbsoluteUrl={e => `${bucket_url}${e}`}
-                updateFiles={imagesFiles => this.setState({ imagesFiles })}
-              />
-            </Col>
-            <Col className="image" sm={6}>
-              <Map notice={this.state.notice} />
-            </Col>
-          </Row>
+          <FieldImages
+            name="IMG"
+            disabled={!this.state.editable}
+            createUrlFromName={e => `joconde/${this.state.notice.REF}/${e}`}
+            getAbsoluteUrl={e => `${bucket_url}${e}`}
+            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+          />
           <Section
             title="IDENTIFICATION DU BIEN MUSEAL"
             icon={require("../../assets/info.png")}
@@ -208,10 +199,9 @@ class Notice extends React.Component {
               <CustomField name="DMIS" disabled={!this.state.editable} />
             </Col>
           </Section>
-          <div className="back" onClick={() => this.props.history.goBack()}>
-            Retour
-          </div>
+          <Map notice={this.state.notice} />
           <div className="buttons">
+            <BackButton history={this.props.history} />
             {this.props.canDelete ? (
               <DeleteButton noticeType="joconde" noticeRef={this.state.notice.REF} />
             ) : (

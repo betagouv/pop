@@ -5,6 +5,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
 import DeleteButton from "./components/DeleteButton";
+import BackButton from "./components/BackButton";
 import { bucket_url } from "../../config";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
@@ -81,24 +82,18 @@ class Notice extends React.Component {
     }
 
     return (
-      <Container className="notice" fluid>
+      <Container className="notice">
+        <BackButton left history={this.props.history} />
+        <h2 class="main-title">Notice {this.state.notice.REF}</h2>
+
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
-          <Row>
-            <div className="back" onClick={() => this.props.history.goBack()}>
-              Retour
-            </div>
-          </Row>
-          <Row>
-            <Col className="image" sm={12}>
-              <FieldImages
-                name="VIDEO"
-                createUrlFromName={e => `mnr/${this.state.notice.REF}/${e}`}
-                getAbsoluteUrl={e => `${bucket_url}${e}`}
-                updateFiles={imagesFiles => this.setState({ imagesFiles })}
-              />
-            </Col>
-          </Row>
+          <FieldImages
+            name="VIDEO"
+            createUrlFromName={e => `mnr/${this.state.notice.REF}/${e}`}
+            getAbsoluteUrl={e => `${bucket_url}${e}`}
+            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+          />
           <Section
             title="IDENTIFICATION DU BIEN"
             icon={require("../../assets/info.png")}
@@ -153,19 +148,19 @@ class Notice extends React.Component {
               <CustomField name="AFFE" />
             </Col>
           </Section>
-          <div className="back" onClick={() => this.props.history.goBack()}>
-            Retour
+          <div className="buttons">
+            <BackButton history={this.props.history} />
+            {this.props.canUpdate ? (
+              <React.Fragment>
+                <DeleteButton noticeType="mnr" noticeRef={this.state.notice.REF} />
+                <Button color="primary" type="submit">
+                  Sauvegarder
+                </Button>
+              </React.Fragment>
+            ) : (
+              <div />
+            )}
           </div>
-          {this.props.canUpdate ? (
-            <div className="buttons">
-              <DeleteButton noticeType="mnr" noticeRef={this.state.notice.REF} />
-              <Button color="primary" type="submit">
-                Sauvegarder
-              </Button>
-            </div>
-          ) : (
-            <div />
-          )}
         </Form>
       </Container>
     );

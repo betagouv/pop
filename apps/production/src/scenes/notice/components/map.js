@@ -3,7 +3,6 @@ import L from "leaflet";
 import { Map, Marker, Popup, TileLayer, Polygon } from "react-leaflet";
 
 import "./map.css";
-//https://react-leaflet.js.org/docs/en/components.html#geojson
 
 export default class MapComponent extends React.Component {
   renderPoint() {
@@ -12,10 +11,7 @@ export default class MapComponent extends React.Component {
     }
     return (
       <Marker
-        position={[
-          this.props.notice.POP_COORDONNEES.lat,
-          this.props.notice.POP_COORDONNEES.lon
-        ]}
+        position={[this.props.notice.POP_COORDONNEES.lat, this.props.notice.POP_COORDONNEES.lon]}
         icon={L.icon({
           iconUrl: require("../../../assets/marker-icon.png"),
           iconSize: [38, 55],
@@ -46,10 +42,7 @@ export default class MapComponent extends React.Component {
     }
 
     return (
-      <Polygon
-        color="purple"
-        positions={this.props.notice.POP_COORDINATES_POLYGON.coordinates}
-      />
+      <Polygon color="purple" positions={this.props.notice.POP_COORDINATES_POLYGON.coordinates} />
     );
   }
 
@@ -63,10 +56,7 @@ export default class MapComponent extends React.Component {
     const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = this.props.notice;
 
     if (POP_COORDONNEES && POP_COORDONNEES.lat !== 0) {
-      center = [
-        this.props.notice.POP_COORDONNEES.lat,
-        this.props.notice.POP_COORDONNEES.lon
-      ];
+      center = [this.props.notice.POP_COORDONNEES.lat, this.props.notice.POP_COORDONNEES.lon];
     }
 
     if (
@@ -81,10 +71,9 @@ export default class MapComponent extends React.Component {
       return <div>Carte non disponible</div>;
     }
 
-    console.log("CENTER", center);
     return (
-      <div className="leaflet-container">
-        <Map center={center} zoom={15}>
+      <div className="leaflet-parent-container">
+        <Map center={center} zoom={15} scrollWheelZoom={false}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -120,7 +120,7 @@ class FieldImages extends React.Component {
 
     if (!hideButton) {
       arr.push(
-        <Col className="item" md="6" key="dropzone">
+        <Col className="item" md={arr.length ? 6 : 12 } key="dropzone">
           <Dropzone onDrop={this.onDrop.bind(this)}>
             <p>Ajouter une nouvelle image</p>
           </Dropzone>
