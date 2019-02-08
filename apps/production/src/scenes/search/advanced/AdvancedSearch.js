@@ -6,7 +6,7 @@ import { QueryBuilder } from "../../../../../shared/dist/index";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Mapping from "../../../services/Mapping";
-import { history } from "../../../../redux/store";
+import { history } from "../../../redux/store";
 
 export default class Search extends React.Component {
   constructor(props) {

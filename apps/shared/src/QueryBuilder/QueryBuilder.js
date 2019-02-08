@@ -17,6 +17,7 @@ export default class QueryBuilder extends React.Component {
     return (
       <div className="queryBuilder">
         <RuleGroup
+          history={this.props.history}
           autocomplete={this.props.autocomplete}
           displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}

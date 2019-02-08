@@ -79,8 +79,6 @@ class Search extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
   const { group } = Auth.user;
-
-  console.log("GROUP", group);
   return {
     group
   };
