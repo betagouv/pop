@@ -22,7 +22,7 @@ const DEFAULT_FILTER = [
   "museo"
 ];
 
-const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
+const Menu = ({ location, mobile_menu }) => (
   <div className={`search-filters ${mobile_menu}`}>
     <aside className="search-sidebar">
       <div
@@ -47,7 +47,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
           bucket.key !== "Photographies (Mémoires)" &&
           bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
         }
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -58,7 +57,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         //   and: DEFAULT_FILTER.filter(e => e !== "auteur")
         // }}
         placeholder="Rechercher un auteur"
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -67,7 +65,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         placeholder="Rechercher un domaine"
         componentId="domn"
         // react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -76,7 +73,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         placeholder="Commune, musée"
         componentId="ou"
         // react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -87,7 +83,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         //   and: DEFAULT_FILTER.filter(e => e !== "periode")
         // }}
         placeholder="Rechercher une période"
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
 
@@ -98,7 +93,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         placeholder="oui ou non"
         showSearch={false}
         // defaultSelected={activeTab === "mosaic" ? ["oui"] : []}
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -112,7 +106,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         URLParams={true}
         // defaultSelected={activeTab === "map" ? ["oui"] : []}
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList
@@ -121,7 +114,6 @@ const Menu = ({ changeActiveFilter, location, mobile_menu }) => (
         componentId="tech"
         // react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
         placeholder="Rechercher une technique"
-        onCollapseChange={changeActiveFilter}
         location={location}
       />
       <MultiList

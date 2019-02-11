@@ -13,15 +13,10 @@ class Tabs extends React.Component {
       activeTab = "list";
     }
 
-    console.log("CCC", this.props.location);
-
     return (
       <Nav pills>
         <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === "list" })}
-            onClick={() => this.toggle("list")}
-          >
+          <NavLink className={classnames({ active: activeTab === "list" })} onClick={() => {}}>
             LISTE
           </NavLink>
         </NavItem>
@@ -31,9 +26,7 @@ class Tabs extends React.Component {
             className={classnames({
               active: activeTab === "map"
             })}
-            onClick={() => {
-              //   this.toggle("map");
-            }}
+            onClick={() => {}}
           >
             CARTE
           </NavLink>
@@ -44,9 +37,7 @@ class Tabs extends React.Component {
             className={classnames({
               active: activeTab === "mosaic"
             })}
-            onClick={() => {
-              //   this.toggle("mosaic");
-            }}
+            onClick={() => {}}
           >
             MOSAIQUE
           </NavLink>

@@ -40,60 +40,12 @@ const DEFAULT_FILTER = [
   "museo"
 ];
 
-const ACTIVE_FILTER = {
-  mainSearch: true
-};
-
-const changeActiveFilter = (collapsed, componentId) => {
-  if (!collapsed && !ACTIVE_FILTER.hasOwnProperty(componentId)) {
-    ACTIVE_FILTER[componentId] = true;
-  } else if (collapsed && ACTIVE_FILTER.hasOwnProperty(componentId)) {
-    delete ACTIVE_FILTER[componentId];
-  }
-};
-
 class Search extends React.Component {
   state = {
     mobile_menu: "mobile_close"
   };
 
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle(subRoute, params) {
-    if (this.props.display !== subRoute) {
-      const JsonStringifyValues = object => {
-        const entries = Object.entries(object)
-          .filter(([_k, v]) => (Array.isArray(v) ? v.length : v))
-          .map(([k, v]) => v && { [k]: JSON.stringify(v) });
-        return entries.length ? Object.assign(...entries) : null;
-      };
-      const JsonParseValues = values => {
-        const entries =
-          values &&
-          Object.entries(values).map(([k, v]) => {
-            try {
-              v = JSON.parse(v);
-            } catch (e) {}
-            return { [k]: v };
-          });
-        return entries.length ? Object.assign(...entries) : {};
-      };
-      const search = JsonStringifyValues({
-        ...JsonParseValues(queryString.parse(window.location.search)),
-        ...params
-      });
-      Router.push(`/search/${subRoute}${search ? "?" + queryString.stringify(search) : ""}`);
-    }
-  }
-
   render() {
-    const { location } = this.props;
-
-    const activeTab = this.props.display;
-
     return (
       <Layout>
         <div className="search">
@@ -109,81 +61,73 @@ class Search extends React.Component {
             <Header location={this.props.location} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row>
-                <Menu
-                  onCollapseChange={changeActiveFilter}
-                  location={location}
-                  mobile_menu={this.state.mobile_menu}
-                />
+                <Menu location={this.props.location} mobile_menu={this.state.mobile_menu} />
                 <div className="search-results">
                   <Row className="search-row">
                     <Col sm={this.props.advanced ? 10 : 6}>
                       <div className="search-and-export-zone">
-                        {this.props.advanced ? (
-                          <AdvancedSearch />
-                        ) : (
-                          <DataSearch
-                            componentId="mainSearch"
-                            autosuggest={false}
-                            filterLabel="Résultats pour "
-                            dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
-                            iconPosition="left"
-                            className="mainSearch"
-                            placeholder="Saisissez un titre, une dénomination ou une localisation"
-                            URLParams={true}
-                            customQuery={(value, props) => {
-                              if (!value) {
-                                return {
-                                  query: { match_all: {} }
-                                };
-                              }
+                        <DataSearch
+                          componentId="mainSearch"
+                          autosuggest={false}
+                          filterLabel="Résultats pour "
+                          dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
+                          iconPosition="left"
+                          className="mainSearch"
+                          placeholder="Saisissez un titre, une dénomination ou une localisation"
+                          URLParams={true}
+                          customQuery={(value, props) => {
+                            if (!value) {
                               return {
-                                bool: {
-                                  should: [
-                                    {
-                                      multi_match: {
-                                        query: value,
-                                        type: "phrase",
-                                        fields: ["TICO", "TITRE", "TITR", "LEG"],
-                                        boost: 15
-                                      }
-                                    },
-                                    {
-                                      multi_match: {
-                                        query: value,
-                                        type: "most_fields",
-                                        fields: [
-                                          "TICO^10",
-                                          "AUTR^10",
-                                          "TITRE^9",
-                                          "TITR^9",
-                                          "LEG^9",
-                                          "LOCA^9",
-                                          "DENO^8",
-                                          "DOMN^8",
-                                          "EDIF^8",
-                                          "OBJT^8",
-                                          "REPR^8",
-                                          "AUTP^7",
-                                          "SERIE^7",
-                                          "PDEN^5",
-                                          "PERS^4",
-                                          "PAYS^3",
-                                          "REG^3",
-                                          "DEP^3",
-                                          "COM^3",
-                                          "DATE^1",
-                                          "EPOQ^1",
-                                          "SCLE^1",
-                                          "SCLD^1"
-                                        ]
-                                      }
-                                    }
-                                  ]
-                                }
+                                query: { match_all: {} }
                               };
-                            }}
-                          />
-                        )}
+                            }
+                            return {
+                              bool: {
+                                should: [
+                                  {
+                                    multi_match: {
+                                      query: value,
+                                      type: "phrase",
+                                      fields: ["TICO", "TITRE", "TITR", "LEG"],
+                                      boost: 15
+                                    }
+                                  },
+                                  {
+                                    multi_match: {
+                                      query: value,
+                                      type: "most_fields",
+                                      fields: [
+                                        "TICO^10",
+                                        "AUTR^10",
+                                        "TITRE^9",
+                                        "TITR^9",
+                                        "LEG^9",
+                                        "LOCA^9",
+                                        "DENO^8",
+                                        "DOMN^8",
+                                        "EDIF^8",
+                                        "OBJT^8",
+                                        "REPR^8",
+                                        "AUTP^7",
+                                        "SERIE^7",
+                                        "PDEN^5",
+                                        "PERS^4",
+                                        "PAYS^3",
+                                        "REG^3",
+                                        "DEP^3",
+                                        "COM^3",
+                                        "DATE^1",
+                                        "EPOQ^1",
+                                        "SCLE^1",
+                                        "SCLD^1"
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            };
+                          }}
+                        />
                         <div
                           className="filter_mobile_menu"
                           onClick={() => this.setState({ mobile_menu: "mobile_open" })}
