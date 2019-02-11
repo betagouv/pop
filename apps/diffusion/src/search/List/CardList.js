@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { image } from "../utils/image";
+import { image } from "./../../services/image";
 import "./CardList.css";
 
 const joinData = f => {
@@ -57,11 +57,7 @@ const Memoire = ({ data }) => {
   };
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="thumbnail">{image(data)}</div>
         <div className="content">
           <div style={{ display: "flex" }}>
@@ -95,9 +91,7 @@ const Palissy = ({ data }) => {
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = data.LOCA
-    ? joinData([data.LOCA])
-    : joinData([data.REG, data.DPT, data.COM]);
+  const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   const productorImage = p => {
     if (p === "Inventaire") {
@@ -110,11 +104,7 @@ const Palissy = ({ data }) => {
 
   return (
     <Link href={`/notice/palissy/${ref}`} key={ref}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="thumbnail">{image(data)}</div>
         <div className="content">
           <div style={{ display: "flex" }}>
@@ -147,9 +137,7 @@ const Merimee = ({ data }) => {
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = data.LOCA
-    ? joinData([data.LOCA])
-    : joinData([data.REG, data.DPT, data.COM]);
+  const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   const productorImage = p => {
     if (p === "Inventaire") {
@@ -162,11 +150,7 @@ const Merimee = ({ data }) => {
 
   return (
     <Link href={`/notice/merimee/${ref}`} key={ref}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="thumbnail">{image(data)}</div>
         <div className="content">
           <div style={{ display: "flex" }}>
@@ -210,11 +194,7 @@ const Mnr = ({ data, index }) => {
 
   return (
     <Link href={`/notice/mnr/${REF}`} key={REF}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="thumbnail">{img}</div>
         <div className="content">
           <p>{author}</p>
@@ -254,11 +234,7 @@ const Joconde = ({ data, index }) => {
 
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="thumbnail">{img}</div>
         <div className="content">
           <div style={{ display: "flex" }}>
@@ -288,17 +264,11 @@ const Joconde = ({ data, index }) => {
 const Museo = ({ data }) => {
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
-      <a
-        className="list-card"
-        target="_blank"
-        style={{ textDecoration: "none" }}
-      >
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="content">
           <div style={{ display: "flex" }}>
             <h2>
-              {capitalizeFirstLetter(
-                data.NOMOFF || data.NOMANC || data.NOMUSAGE
-              )}
+              {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
               <br />
               {data.VILLE_M}
             </h2>

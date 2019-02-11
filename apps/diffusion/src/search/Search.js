@@ -9,9 +9,9 @@ import { MultiList, QueryBuilder } from "pop-shared";
 import Layout from "../components/Layout";
 import Head from "next/head";
 
-import List from "./NormalList/List";
-import Map from "./MapList/Map";
-import Mosaic from "./MosaicList/Mosaic";
+import List from "./List";
+import Map from "./Map";
+import Mosaic from "./Mosaic";
 
 import Header from "./Header.js";
 

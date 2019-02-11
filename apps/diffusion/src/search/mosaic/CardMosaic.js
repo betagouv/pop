@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Col } from "reactstrap";
-import { image } from "../utils/image";
+import { image } from "./../../services/image";
 import "./CardMosaic.css";
 export default ({ data }) => (
   <Col>
