@@ -518,8 +518,6 @@ function toGeoJson(arr) {
     info: { type: "name", properties: { name: "POP" } },
     features: []
   };
-  console.log("FOUND", arr.length);
-
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);

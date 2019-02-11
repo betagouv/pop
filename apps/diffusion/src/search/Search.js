@@ -4,10 +4,12 @@ import Router from "next/router";
 import queryString from "query-string";
 import Link from "next/link";
 import { ReactiveBase, DataSearch, SelectedFilters } from "@appbaseio/reactivesearch";
-import classnames from "classnames";
 import { MultiList, QueryBuilder } from "pop-shared";
 import Layout from "../components/Layout";
 import Head from "next/head";
+
+import Menu from "./Menu";
+import Tabs from "./Tabs";
 
 import List from "./List";
 import Map from "./Map";
@@ -107,132 +109,11 @@ class Search extends React.Component {
             <Header location={this.props.location} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row>
-                <div className={`search-filters ${this.state.mobile_menu}`}>
-                  <aside className="search-sidebar">
-                    <div
-                      className="close_mobile_menu"
-                      onClick={() => this.setState({ mobile_menu: "mobile_close" })}
-                    >
-                      x
-                    </div>
-                    <SelectedFilters
-                      className="selected-filters"
-                      clearAllLabel="Tout supprimer"
-                      title="Vos filtres"
-                    />
-                    <h4>Affiner par</h4>
-                    <MultiList
-                      dataField="BASE.keyword"
-                      title="Base"
-                      componentId="base"
-                      showSearch={false}
-                      react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
-                      filterListItem={bucket =>
-                        bucket.key !== "Photographies (Mémoires)" &&
-                        bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
-                      }
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      dataField={["AUTP.keyword", "AUTR.keyword"]}
-                      title="Auteur"
-                      componentId="auteur"
-                      react={{
-                        and: DEFAULT_FILTER.filter(e => e !== "auteur")
-                      }}
-                      placeholder="Rechercher un auteur"
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      dataField="DOMN.keyword"
-                      title="Domaine"
-                      placeholder="Rechercher un domaine"
-                      componentId="domn"
-                      react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
-                      title="Où voir l'oeuvre?"
-                      placeholder="Commune, musée"
-                      componentId="ou"
-                      react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      dataField="PERI.keyword"
-                      title="Période"
-                      componentId="periode"
-                      react={{
-                        and: DEFAULT_FILTER.filter(e => e !== "periode")
-                      }}
-                      placeholder="Rechercher une période"
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-
-                    <MultiList
-                      dataField="CONTIENT_IMAGE.keyword"
-                      title="Contient une image"
-                      componentId="image"
-                      placeholder="oui ou non"
-                      showSearch={false}
-                      defaultSelected={activeTab === "mosaic" ? ["oui"] : []}
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      componentId="geolocalisation"
-                      dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
-                      title="Est géolocalisé"
-                      filterLabel="Est géolocalisé "
-                      queryFormat="or"
-                      className="filters"
-                      showSearch={false}
-                      URLParams={true}
-                      showSearch={false}
-                      defaultSelected={activeTab === "map" ? ["oui"] : []}
-                      data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      dataField="TECH.keyword"
-                      title="Techniques"
-                      componentId="tech"
-                      react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
-                      placeholder="Rechercher une technique"
-                      onCollapseChange={changeActiveFilter}
-                      location={location}
-                    />
-                    <MultiList
-                      show={false}
-                      componentId="import"
-                      dataField="POP_IMPORT.keyword"
-                      title="Import"
-                      displayCount
-                      URLParams={true}
-                      react={{
-                        and: DEFAULT_FILTER.filter(e => e !== "import")
-                      }}
-                      location={location}
-                    />
-                    <MultiList
-                      show={false}
-                      componentId="museo"
-                      dataField="MUSEO.keyword"
-                      title="Museo"
-                      displayCount
-                      URLParams={true}
-                      react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
-                      location={location}
-                    />
-                  </aside>
-                </div>
+                <Menu
+                  onCollapseChange={changeActiveFilter}
+                  location={location}
+                  mobile_menu={this.state.mobile_menu}
+                />
                 <div className="search-results">
                   <Row className="search-row">
                     <Col sm={this.props.advanced ? 10 : 6}>
@@ -340,42 +221,7 @@ class Search extends React.Component {
                       </Link>
                     </Col>
                     <Col sm={4}>
-                      <Nav pills>
-                        <NavItem>
-                          <NavLink
-                            className={classnames({ active: activeTab === "list" })}
-                            onClick={() => this.toggle("list", { geolocalisation: [], image: [] })}
-                          >
-                            LISTE
-                          </NavLink>
-                        </NavItem>
-
-                        <NavItem>
-                          <NavLink
-                            className={classnames({
-                              active: activeTab === "map"
-                            })}
-                            onClick={() => {
-                              this.toggle("map", { geolocalisation: ["oui"], image: [] });
-                            }}
-                          >
-                            CARTE
-                          </NavLink>
-                        </NavItem>
-
-                        <NavItem>
-                          <NavLink
-                            className={classnames({
-                              active: activeTab === "mosaic"
-                            })}
-                            onClick={() => {
-                              this.toggle("mosaic", { image: ["oui"], geolocalisation: [] });
-                            }}
-                          >
-                            MOSAIQUE
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
+                      <Tabs location={this.props.location} />
                     </Col>
                   </Row>
                   {this.currentTab()}
