@@ -30,7 +30,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "CATE","Array","non","Catégorie technique","","","Catégorie technique","",""
 "COM","String","non","Commune","","","Commune ","",""
 "COM2","String","non","","","","[PAS AFFICHE]","",""
-"CONTACT","String","non","Contact","","true","Contact ","Email",""
+"CONTACT","String","non","Contact","","","Contact ","Email",""
 "COOR","String","non","Coordonnées Lambert (ou autres) d'un points","","","Coordonnées Lambert (ou autres) d'un point ","",""
 "COORM","String","non","Coordonnées Lambert (ou autres) multiples","","","Coordonnées Lambert (ou autres) multiples ","",""
 "COPY","String","non","CopyRight","","","CopyRight","",""

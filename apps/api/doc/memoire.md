@@ -3,6 +3,7 @@
 - [PRODUCTEUR](/apps/api/doc/memoire.md#PRODUCTEUR)
 - [BASE](/apps/api/doc/memoire.md#BASE)
 - [CONTIENT_IMAGE](/apps/api/doc/memoire.md#CONTIENT_IMAGE)
+- [POP_COMMENTAIRES](/apps/api/doc/memoire.md#POP_COMMENTAIRES)
 - [POP_IMPORT](/apps/api/doc/memoire.md#POP_IMPORT)
 - [REF](/apps/api/doc/memoire.md#REF)
 - [TOUT](/apps/api/doc/memoire.md#TOUT)
@@ -166,6 +167,16 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non|||
 
+### POP_COMMENTAIRES
+Commentaires technique
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Commentaires POP|
+
 ### POP_IMPORT
 
 
@@ -294,7 +305,7 @@ Référence d’exposition de l’image
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|non|non||Référence d’exposition de l’image |
 
 ### JDATPV
 Justif date pv
@@ -584,7 +595,7 @@ Accessoire pose
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Accessoire pose|
+|String|non|non|oui|non||Accessoire pose|
 
 ### ACQU
 Acquisition
@@ -654,7 +665,7 @@ Costume de la personne représentée
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Costume de la personne représentée|
+|String|non|non|oui|non||Costume de la personne représentée|
 
 ### DATIMM
 Date immatricul
@@ -1294,7 +1305,7 @@ Contact
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|Email|CONTACT|
+|String|non|non|non|non|Email|CONTACT|
 
 ### EMET
 Emetteur (code) 

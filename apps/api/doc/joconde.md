@@ -6,6 +6,7 @@
 - [POP_COORDONNEES.lat](/apps/api/doc/joconde.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/joconde.md#POP_COORDONNEES.lon)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/joconde.md#POP_CONTIENT_GEOLOCALISATION)
+- [POP_COMMENTAIRES](/apps/api/doc/joconde.md#POP_COMMENTAIRES)
 - [REF](/apps/api/doc/joconde.md#REF)
 - [POP_IMPORT](/apps/api/doc/joconde.md#POP_IMPORT)
 - [REFMIS](/apps/api/doc/joconde.md#REFMIS)
@@ -147,6 +148,16 @@ Champ qui permet de savoir si la geolocalisation est disponible ou non
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Contient une position|
 
+### POP_COMMENTAIRES
+Commentaires technique
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Commentaires POP|
+
 ### REF
 Référence (numéro système de la notice)
 
@@ -155,7 +166,7 @@ Référence (numéro système de la notice)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non|Alphanumeric|Référence|
+|String|oui|non|non|oui|Alphanumeric|Référence|
 
 ### POP_IMPORT
 
@@ -185,7 +196,7 @@ Ancien dépôt / changement d’affectation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Ancien dépôt|
+|Array|non|non|non|oui||Ancien dépôt|
 
 ### APPL
 Appellation
@@ -195,7 +206,7 @@ Appellation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Appellation|
+|String|non|non|non|oui||Appellation|
 
 ### APTN
 Ancienne appartenance 
@@ -227,7 +238,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T513
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur|
+|String|non|non|non|oui||Auteur|
 
 ### BIBL
 Bibliographie
@@ -287,10 +298,10 @@ Date d’acquisition
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date acquisition|
+|String|non|non|non|oui||Date acquisition|
 
 ### DATA
-[Peut être déprécié : Pas affiché en production ni en consultation]  
+[Peut être déprécié : Pas affiché en production ni en diffusion]  
 
 
 
@@ -300,7 +311,7 @@ Date d’acquisition
 |String|non|non|oui|non|||
 
 ### DATION
-[Peut être déprécié : Pas affiché en production ni en consultation]  
+[Peut être déprécié : Pas affiché en production ni en diffusion]  
 
 
 
@@ -317,19 +328,17 @@ Date de dépôt / changement d’affectation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date de dépôt|
+|String|non|non|non|oui||Date de dépôt|
 
 ### DECV
 Découverte / collecte
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T115 
-
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Découverte / collecte|
+|String|non|non|non|oui||Découverte / collecte|
 
 ### DENO
 Dénomination
@@ -341,17 +350,19 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T505
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Dénomination|
+|Array|non|non|non|oui||Dénomination|
 
 ### DEPO
 Dépôt / établissement dépositaire
 
 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515 
+
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu de dépot|
+|String|non|non|non|oui||Lieu de dépot|
 
 ### DESC
 Description 
@@ -391,7 +402,7 @@ Mesures / Dimensions
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mesures|
+|String|non|non|non|oui||Mesures|
 
 ### DMAJ
 Date de mise à jour (format AAAA-MM-JJ)
@@ -401,7 +412,7 @@ Date de mise à jour (format AAAA-MM-JJ)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de mise à jour|
+|String|non|oui|non|oui||Date de mise à jour|
 
 ### DMIS
 Date de la création (format AAAA-MM-JJ)
@@ -411,7 +422,7 @@ Date de la création (format AAAA-MM-JJ)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de création|
+|String|non|oui|non|oui||Date de création|
 
 ### DOMN
 Domaine
@@ -423,7 +434,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T51
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|oui|non|non|non||Domaine|
+|Array|oui|non|non|oui||Domaine|
 
 ### DREP
 Date de la représentation
@@ -445,7 +456,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T517
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Ecole-pays|
+|Array|non|non|non|oui||Ecole-pays|
 
 ### EPOQ
 Epoque /style / mouvement 
@@ -457,7 +468,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T93
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Epoque|
+|Array|non|non|non|oui||Epoque|
 
 ### ETAT
 Etat du bien
@@ -499,7 +510,7 @@ Géographie historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Lieu historique|
+|Array|non|non|non|oui||Lieu historique|
 
 ### HIST
 Historique
@@ -535,8 +546,6 @@ IMAGE
 Inscriptions 
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T520 
-
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
@@ -561,7 +570,7 @@ Appellation musée de France
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Appellation musée de France|
+|String|non|oui|non|oui||Appellation musée de France|
 
 ### LABO
 Champ déprécié
@@ -593,7 +602,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu de création/utilisation|
+|String|non|non|non|oui||Lieu de création/utilisation|
 
 ### LOCA
 Localisation
@@ -635,7 +644,7 @@ Millésime de création / exécution
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Millésime de création|
+|Array|non|non|non|oui||Millésime de création|
 
 ### MILU
 Millésime d’utilisation / destination
@@ -645,7 +654,7 @@ Millésime d’utilisation / destination
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Millésime d’utilisation|
+|String|non|non|non|oui||Millésime d’utilisation|
 
 ### MOSA
 Champ déprécié
@@ -675,7 +684,7 @@ Lien MUSEOFILE
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien MUSEOFILE|
+|String|non|non|non|oui||Lien MUSEOFILE|
 
 ### NSDA
 Numéro de site
@@ -685,7 +694,7 @@ Numéro de site
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numéro de site|
+|String|non|non|non|oui||Numéro de site|
 
 ### ONOM
 Onomastique
@@ -695,7 +704,7 @@ Onomastique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Onomastique|
+|Array|non|non|non|oui||Onomastique|
 
 ### PAUT
 Précision auteur
@@ -705,10 +714,10 @@ Précision auteur
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précision auteur|
+|String|non|non|non|oui||Précision auteur|
 
 ### PDAT
-[Peut être déprécié : Pas affiché en production ni en consultation]
+[Peut être déprécié : Pas affiché en production ni en diffusion]
 
 
 
@@ -737,7 +746,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Période de l’original copié|
+|Array|non|non|non|oui||Période de l’original copié|
 
 ### PERI
 Période de création / exécution 
@@ -749,7 +758,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Période de création|
+|Array|non|non|non|oui||Période de création|
 
 ### PERU
 Période d’utilisation / destination
@@ -761,7 +770,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Période d’utilisation|
+|Array|non|non|non|oui||Période d’utilisation|
 
 ### PHOT
 Crédits photographiques
@@ -791,7 +800,7 @@ Précisions sur le lieu de création/ d’exécution / d’utilisation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions lieu création|
+|String|non|non|non|oui||Précisions lieu création|
 
 ### PREP
 Précisions sur le sujet représenté 
@@ -847,13 +856,11 @@ Référence image
 Sujet représenté 
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T523 
-
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Sujet représenté|
+|String|non|non|non|oui||Sujet représenté|
 
 ### RETIF
 Lien INHA
@@ -869,23 +876,23 @@ Lien INHA
 Source de la représentation
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T523 
-
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Source représentation|
+|Array|non|non|non|oui||Source représentation|
 
 ### STAT
 Statut juridique
 
 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515 
+
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|oui|non|non|non||Statut juridique|
+|Array|oui|non|non|oui||Statut juridique|
 
 ### TECH
 Matériaux et techniques
@@ -897,7 +904,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T516
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Matériaux - techniques|
+|Array|non|non|non|oui||Matériaux - techniques|
 
 ### TICO
 Champ déprécié 
@@ -933,13 +940,11 @@ Titre
 Utilisation / Destination
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T86 
-
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Utilisation / Destination|
+|Array|non|non|non|oui||Utilisation / Destination|
 
 ### VIDEO
 Affichage image
@@ -949,7 +954,7 @@ Affichage image
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Affichage image|
+|Array|non|non|oui|non||Affichage image|
 
 ### WWW
 Lien site associé

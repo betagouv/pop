@@ -2,6 +2,7 @@
 
 - [PRODUCTEUR](/apps/api/doc/palissy.md#PRODUCTEUR)
 - [CONTIENT_IMAGE](/apps/api/doc/palissy.md#CONTIENT_IMAGE)
+- [POP_COMMENTAIRES](/apps/api/doc/palissy.md#POP_COMMENTAIRES)
 - [POP_COORDONNEES.lat](/apps/api/doc/palissy.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/palissy.md#POP_COORDONNEES.lon)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/palissy.md#POP_CONTIENT_GEOLOCALISATION)
@@ -146,6 +147,16 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non|||
 
+### POP_COMMENTAIRES
+Commentaires technique
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Commentaires POP|
+
 ### POP_COORDONNEES.lat
 Latitude de la notice en WGS84
 
@@ -217,7 +228,7 @@ Nom de la base : Patrimoine mobilier (Palissy)
 |Array|non|non|non|non|||
 
 ### REF
-Référence unique de la notice
+Référence de la notice
 
 
 
@@ -384,7 +395,7 @@ Contact
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|Email|Contact|
+|String|non|non|non|non|Email|Contact|
 
 ### COOR
 Coordonnées Lambert (ou autres) d'un point 
@@ -456,7 +467,7 @@ Date d'enquête
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Date d'enquête|
+|Array|non|non|non|non||Date de l'enquête ou du dernier récolement|
 
 ### DEPL
 Partie déplacée
@@ -496,7 +507,7 @@ Date de la dernière mise à jour
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de la dernière mise à jour|
+|String|non|oui|non|non||Date de la dernière modification de la notice|
 
 ### DMIS
 Date de la création POP/Mistral
@@ -506,17 +517,17 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de chargement dans la base |
+|String|non|oui|non|non||Date de création de la notice|
 
 ### DOMN
-Domaines 
+Domaine
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Domaines |
+|String|non|non|non|non||Domaine|
 
 ### DOSADRS
 Dossier adresse
@@ -880,7 +891,7 @@ Noms des rédacteurs de la notice et du dossier
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Noms des rédacteurs de la notice et du dossier|
+|Array|non|non|non|non||Nom du rédacteur|
 
 ### NUMA
 [PAS AFFICHE]
@@ -1134,7 +1145,7 @@ N° de renvoi au domaine MH ou au domaine INVENTAIRE
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||N° de renvoi au domaine MH ou au domaine INVENTAIRE|
+|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|
 
 ### REPR
 Représentation 
@@ -1226,7 +1237,7 @@ Thème
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Thème|
+|String|non|non|non|non||Thème de l'étude|
 
 ### TICO
 Titre courant
@@ -1276,7 +1287,7 @@ Objet(s) volé(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Objet(s) volé(s)|
+|String|non|non|non|non||Objet(s) volé(s)|
 
 ### WADRS
 [PAS AFFICHE]

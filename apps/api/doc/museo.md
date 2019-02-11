@@ -2,6 +2,7 @@
 
 - [REF](/apps/api/doc/museo.md#REF)
 - [TOUT](/apps/api/doc/museo.md#TOUT)
+- [POP_COMMENTAIRES](/apps/api/doc/museo.md#POP_COMMENTAIRES)
 - [ACCES](/apps/api/doc/museo.md#ACCES)
 - [ACTIV](/apps/api/doc/museo.md#ACTIV)
 - [ADRESSE](/apps/api/doc/museo.md#ADRESSE)
@@ -95,6 +96,16 @@
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Index global|
+
+### POP_COMMENTAIRES
+Commentaires technique
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Commentaires POP|
 
 ### ACCES
 

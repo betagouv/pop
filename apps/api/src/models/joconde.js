@@ -79,7 +79,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence (numéro système de la notice)",
         label: "Référence",
-        validation: "Alphanumeric"
+        validation: "Alphanumeric",
+        opendata: true
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -96,7 +97,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Ancien dépôt / changement d’affectation",
-        label: "Ancien dépôt"
+        label: "Ancien dépôt",
+        opendata: true
       }
     },
     APPL: {
@@ -104,7 +106,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Appellation",
-        label: "Appellation"
+        label: "Appellation",
+        opendata: true
       }
     },
     APTN: {
@@ -129,7 +132,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Auteur",
         label: "Auteur",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513",
+        opendata: true
       }
     },
     BIBL: {
@@ -179,7 +183,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date d’acquisition",
-        label: "Date acquisition"
+        label: "Date acquisition",
+        opendata: true
       }
     },
     DATA: {
@@ -203,7 +208,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date de dépôt / changement d’affectation",
-        label: "Date de dépôt"
+        label: "Date de dépôt",
+        opendata: true
       }
     },
     DECV: {
@@ -211,7 +217,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Découverte / collecte",
-        label: "Découverte / collecte"
+        label: "Découverte / collecte",
+        opendata: true
       }
     },
     DENO: {
@@ -220,7 +227,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Dénomination",
         label: "Dénomination",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505",
+        opendata: true
       }
     },
     DEPO: {
@@ -229,7 +237,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Dépôt / établissement dépositaire",
         label: "Lieu de dépot",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        opendata: true
       }
     },
     DESC: {
@@ -261,7 +270,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Mesures / Dimensions",
-        label: "Mesures"
+        label: "Mesures",
+        opendata: true
       }
     },
     DMAJ: {
@@ -270,7 +280,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de mise à jour (format AAAA-MM-JJ)",
         generated: true,
-        label: "Date de mise à jour"
+        label: "Date de mise à jour",
+        opendata: true
       }
     },
     DMIS: {
@@ -279,7 +290,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de la création (format AAAA-MM-JJ)",
         generated: true,
-        label: "Date de création"
+        label: "Date de création",
+        opendata: true
       }
     },
     DOMN: {
@@ -289,7 +301,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Domaine",
         label: "Domaine",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51",
+        opendata: true
       }
     },
     DREP: {
@@ -306,7 +319,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Ecole ",
         label: "Ecole-pays",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517",
+        opendata: true
       }
     },
     EPOQ: {
@@ -315,7 +329,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Epoque /style / mouvement ",
         label: "Epoque",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93",
+        opendata: true
       }
     },
     ETAT: {
@@ -348,7 +363,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Géographie historique",
-        label: "Lieu historique"
+        label: "Lieu historique",
+        opendata: true
       }
     },
     HIST: {
@@ -398,7 +414,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Appellation musée de France",
         generated: true,
-        label: "Appellation musée de France"
+        label: "Appellation musée de France",
+        opendata: true
       }
     },
     LABO: {
@@ -423,7 +440,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Lieu de création / d’exécution / d’utilisation",
         label: "Lieu de création/utilisation",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84",
+        opendata: true
       }
     },
     LOCA: {
@@ -457,7 +475,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Millésime de création / exécution ",
-        label: "Millésime de création"
+        label: "Millésime de création",
+        opendata: true
       }
     },
     MILU: {
@@ -465,7 +484,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Millésime d’utilisation / destination",
-        label: "Millésime d’utilisation"
+        label: "Millésime d’utilisation",
+        opendata: true
       }
     },
     MOSA: {
@@ -489,7 +509,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien MUSEOFILE",
-        label: "Lien MUSEOFILE"
+        label: "Lien MUSEOFILE",
+        opendata: true
       }
     },
     NSDA: {
@@ -497,7 +518,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro de site",
-        label: "Numéro de site"
+        label: "Numéro de site",
+        opendata: true
       }
     },
     ONOM: {
@@ -505,7 +527,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Onomastique",
-        label: "Onomastique"
+        label: "Onomastique",
+        opendata: true
       }
     },
     PAUT: {
@@ -513,7 +536,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précision auteur",
-        label: "Précision auteur"
+        label: "Précision auteur",
+        opendata: true
       }
     },
     PDAT: {
@@ -539,7 +563,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période de l’original copié",
         label: "Période de l’original copié",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        opendata: true
       }
     },
     PERI: {
@@ -548,7 +573,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période de création / exécution ",
         label: "Période de création",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        opendata: true
       }
     },
     PERU: {
@@ -557,7 +583,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Période d’utilisation / destination",
         label: "Période d’utilisation",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        opendata: true
       }
     },
     PHOT: {
@@ -581,7 +608,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur le lieu de création/ d’exécution / d’utilisation",
-        label: "Précisions lieu création"
+        label: "Précisions lieu création",
+        opendata: true
       }
     },
     PREP: {
@@ -629,7 +657,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Sujet représenté ",
-        label: "Sujet représenté"
+        label: "Sujet représenté",
+        opendata: true
       }
     },
     RETIF: {
@@ -645,7 +674,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Source de la représentation",
-        label: "Source représentation"
+        label: "Source représentation",
+        opendata: true
       }
     },
     STAT: {
@@ -655,7 +685,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Statut juridique",
         label: "Statut juridique",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        opendata: true
       }
     },
     TECH: {
@@ -664,7 +695,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Matériaux et techniques",
         label: "Matériaux - techniques",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516",
+        opendata: true
       }
     },
     TICO: {
@@ -697,7 +729,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Utilisation / Destination",
-        label: "Utilisation / Destination"
+        label: "Utilisation / Destination",
+        opendata: true
       }
     },
     VIDEO: {
