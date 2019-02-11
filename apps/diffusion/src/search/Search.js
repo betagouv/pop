@@ -13,7 +13,7 @@ import List from "./NormalList/List";
 import Map from "./MapList/Map";
 import Mosaic from "./MosaicList/Mosaic";
 
-import Header from "./Header/Header.js";
+import Header from "./Header.js";
 
 import { es_url } from "../config.js";
 import "./Search.css";

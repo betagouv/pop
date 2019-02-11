@@ -6,9 +6,7 @@ import CardList from "./CardList";
 export default ({ filter }) => (
   <ReactiveList
     componentId="results"
-    react={{
-      and: filter
-    }}
+    react={{ and: filter }}
     onResultStats={(total, took) => {
       if (total === 1) {
         return `1 résultat`;
@@ -21,7 +19,7 @@ export default ({ filter }) => (
     URLParams={true}
     size={20}
     className="list-view"
-    onData={data =>  <CardList className="" key={data.REF} data={data} />}
+    onData={data => <CardList className="" key={data.REF} data={data} />}
     // pagination={true}
     //
   />

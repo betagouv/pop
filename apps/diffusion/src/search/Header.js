@@ -1,6 +1,6 @@
 import React from "react";
 import queryString from "query-string";
-import API from "../../services/api";
+import API from "../services/api";
 import "./Header.css";
 
 class Header extends React.Component {
@@ -21,12 +21,10 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log("RENDR", this.state);
     const { museo } = this.state;
     if (!museo) {
       return <div />;
     }
-
     const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
     return (
       <div className="museo-card-sm">
