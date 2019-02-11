@@ -51,6 +51,7 @@ export default class RuleComponent extends React.Component {
 class Rule extends React.Component {
   constructor(props) {
     super(props);
+    console.log("PROPS RULE", this.props.data);
     this.state = {
       valueSelected: this.props.data.key || "REF",
       actionSelected: this.props.data.operator || "==",
