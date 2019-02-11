@@ -405,7 +405,8 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "N°Inventaire, autres numéros",
-        label: "N°Inventaire"
+        label: "N°Inventaire",
+        opendata: true
       }
     },
     LABEL: {
@@ -450,7 +451,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Localisation",
         label: "Localisation",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        opendata: true
       }
     },
     LOCA2: {
@@ -518,8 +520,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro de site",
-        label: "Numéro de site",
-        opendata: true
+        label: "Numéro de site"
       }
     },
     ONOM: {
@@ -608,8 +609,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Précisions sur le lieu de création/ d’exécution / d’utilisation",
-        label: "Précisions lieu création",
-        opendata: true
+        label: "Précisions lieu création"
       }
     },
     PREP: {
@@ -712,7 +712,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Titre",
-        label: "Titre"
+        label: "Titre",
+        opendata: true
       }
     },
     TOUT: {
