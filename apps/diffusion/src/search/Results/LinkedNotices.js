@@ -1,6 +1,6 @@
 import React from "react";
 import shave from "shave";
-import { image } from "./../../services/image";
+import { image } from "../../services/image";
 import Loader from "../../components/Loader";
 import SingleNotice from "./SingleNotice";
 import "./LinkedNotices.css";

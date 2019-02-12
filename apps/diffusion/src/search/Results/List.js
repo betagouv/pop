@@ -3,17 +3,35 @@ import { ReactiveList } from "@appbaseio/reactivesearch";
 
 import CardList from "./CardList";
 
-export default ({ filter }) => (
+const DEFAULT_FILTER = [
+  "mainSearch",
+  "domn",
+  "deno",
+  "periode",
+  "image",
+  "tech",
+  "region",
+  "departement",
+  "commune",
+  "base",
+  "geolocalisation",
+  "auteur",
+  "ou",
+  "import",
+  "museo"
+];
+
+export default ({}) => (
   <ReactiveList
     componentId="results"
-    react={{ and: filter }}
+    react={{ and: DEFAULT_FILTER }}
     onResultStats={(total, took) => {
       if (total === 1) {
-        return `1 résultat`;
+        return <div className="result-count">1 résultat</div>;
       }
-      return `${total} résultats`;
+      return <div className="result-count">{`${total} résultats`}</div>;
     }}
-    dataField=""
+    dataField="hey"
     onNoResults="Aucun résultat trouvé."
     loader="Préparation de l'affichage des résultats..."
     URLParams={true}

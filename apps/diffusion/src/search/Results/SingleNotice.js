@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import shave from "shave";
-import { image } from "./../../services/image";
+import { image } from "../../services/image";
 
 import "./SingleNotice.css";
 

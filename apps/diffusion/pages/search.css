@@ -13,8 +13,9 @@
   color: #19414c;
   margin-bottom: 20px;
 }
-.search .list-view{
-  width:100%
+
+.search .list-view {
+  width: 100%;
 }
 
 .search .advanced {
@@ -24,12 +25,51 @@
   margin-bottom: 10px;
 }
 
+.search .search-row .search-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.search .result-view {
+  width: 100%;
+  padding-top: 10px;
+}
+
 .search .search-sidebar {
   background-color: #fff;
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
 }
+
+.search .advanced-search {
+  border-style: solid;
+  padding: 5px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: grey;
+}
+
+.search .advanced-search .collection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2a282b;
+}
+
+.search .advanced-search .ruleGroup {
+  margin-left: 0px;
+}
+
+.search .advanced-search .collection select {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .search .search-sidebar h4,
 .search .search-sidebar .selected-filters h2 {
   color: #19414c;
@@ -68,7 +108,7 @@
 }
 
 .search .mainSearch {
-  width: 100%;
+  min-width: 600px;
   margin-bottom: 10px;
 }
 .search .mainSearch input {
@@ -137,21 +177,27 @@
   width: 235px;
 }
 
-.search .queryBuilder {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
-  transition: 0.3s;
-  height: 110px;
-  overflow: hidden;
-  background-color: white;
-  height: auto;
+.search .result-count {
+  padding-left: 6px;
+  height: 40px;
+}
+
+.search select {
+  background-color: #ffffff;
   border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  max-height: 325px;
+  margin: 10p;
+  height: 40px;
+  font-size: 16px;
+  font-weight: normal;
+  color: black;
 }
 
 .search .nav-pills {
   box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+  position: absolute;
+  right: 15px;
 }
 .search .nav-pills .nav-link {
   background-color: #fff;
@@ -160,9 +206,10 @@
   cursor: pointer;
   font-weight: 400;
   font-size: 20px;
-  height: 50px;
-  padding-top: 10px;
+  height: 42px;
+  padding-top: 7px;
 }
+
 .search .nav-pills .nav-item {
   flex-grow: 1;
   text-align: center;
