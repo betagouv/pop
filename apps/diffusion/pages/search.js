@@ -29,11 +29,21 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    Router.prefetch("/search/map");
-    Router.prefetch("/search/mosaic");
+    // Router.prefetch("/search/map");
+    // Router.prefetch("/search/mosaic");
+  }
+
+  handleUrl() {
+    console.log("this.props.asPath", this.props.asPath);
+  }
+
+  updateParam(param) {
+    console.log(param);
+    // Router.push()
   }
 
   render = () => {
+    this.handleUrl();
     return (
       <Layout>
         <div className="search">
@@ -56,10 +66,13 @@ export default class extends React.Component {
                 />
                 <div className="search-results">
                   <div style={{ display: "flex" }}>
-                    <Search location={this.props.asPath} />
+                    <Search
+                      location={this.props.asPath}
+                      updateParam={this.updateParam.bind(this)}
+                    />
                     <MobileFilters mobile_menu={this.state.mobile_menu} />
                   </div>
-                  <Results location={this.props.asPath} />
+                  <Results location={this.props.asPath} updateParam={this.updateParam.bind(this)} />
                 </div>
               </Row>
             </ReactiveBase>

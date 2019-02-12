@@ -10,7 +10,6 @@ class Header extends React.Component {
 
   async componentDidMount() {
     const query = queryString.parseUrl(this.props.location).query;
-    console.log("query");
     if (query && query.museo && query.museo) {
       const museos = JSON.parse(query.museo);
       if (museos.length) {

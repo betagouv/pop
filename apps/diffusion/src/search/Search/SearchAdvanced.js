@@ -6,7 +6,6 @@ class SearchAdvanced extends React.Component {
     base: "mnr"
   };
   render() {
-    console.log("this.state.base", this.state.base);
     return (
       <div className="advanced-search">
         <div className="collection">
