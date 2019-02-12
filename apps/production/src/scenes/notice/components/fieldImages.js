@@ -120,7 +120,7 @@ class FieldImages extends React.Component {
 
     if (!hideButton) {
       arr.push(
-        <Col className="item" md={arr.length ? 6 : 12 } key="dropzone">
+        <Col className="item" md={arr.length ? 6 : 12} key="dropzone">
           <Dropzone onDrop={this.onDrop.bind(this)}>
             <p>Ajouter une nouvelle image</p>
           </Dropzone>
@@ -145,6 +145,11 @@ class FieldImages extends React.Component {
       <Viewer
         visible
         onClose={() => {
+          try {
+            document.body.style.overflow = null;
+          } catch (e) {
+            console.log(e);
+          }
           this.setState({ selected: -1 });
         }}
         images={images}
