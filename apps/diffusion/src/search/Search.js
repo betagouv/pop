@@ -1,58 +1,71 @@
 import React from "react";
-import { Row, Col, Container } from "reactstrap";
-
-import Link from "next/link";
-import { ReactiveBase, DataSearch } from "@appbaseio/reactivesearch";
-import { QueryBuilder } from "pop-shared";
-import Head from "next/head";
-
-import Menu from "./Menu";
-import MobileFilters from "./MobileFilters";
-import Tabs from "./Tabs";
-
-import Header from "./Header.js";
-
-import { es_url } from "../config.js";
-import "./Search.css";
-
-const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");
+import { DataSearch } from "@appbaseio/reactivesearch";
 
 class Search extends React.Component {
-  state = {
-    mobile_menu: "mobile_close"
-  };
-
   render() {
     return (
-      <div className="search">
-        <Head>
-          <title>Recherche - POP</title>
-          <meta
-            name="description"
-            content="Effectuer une recherche sur POP. Découvrez le moteur de cherche qui vous aidera à trouver facilement ce que vous recherchez sur POP."
-          />
-        </Head>
-        <Container fluid style={{ maxWidth: 1860 }}>
-          <h1 className="title">Votre recherche</h1>
-          <Header location={this.props.location} />
-          <ReactiveBase url={`${es_url}`} app={BASES}>
-            <Menu location={this.props.location} mobile_menu={this.state.mobile_menu} />
-            <Row className="search-row">
-              <Col sm={6}>
-                <MobileFilters mobile_menu={this.state.mobile_menu} />
-              </Col>
-              <Col sm={2} className="advanced">
-                <Link prefetch href={this.props.advanced ? "/search/list" : "/advancedsearch/list"}>
-                  <a>{this.props.advanced ? "Recherche normale" : "Recherche avancée"}</a>
-                </Link>
-              </Col>
-              <Col sm={4}>
-                <Tabs location={this.props.location} />
-              </Col>
-            </Row>
-          </ReactiveBase>
-        </Container>
-      </div>
+      <DataSearch
+        componentId="mainSearch"
+        autosuggest={false}
+        filterLabel="Résultats pour "
+        dataField={["TICO", "TITR", "AUTP", "DENO", "AUTR", "AUTOR"]}
+        iconPosition="left"
+        className="mainSearch"
+        placeholder="Saisissez un titre, une dénomination ou une localisation"
+        URLParams={true}
+        customQuery={(value, props) => {
+          if (!value) {
+            return {
+              query: { match_all: {} }
+            };
+          }
+          return {
+            bool: {
+              should: [
+                {
+                  multi_match: {
+                    query: value,
+                    type: "phrase",
+                    fields: ["TICO", "TITRE", "TITR", "LEG"],
+                    boost: 15
+                  }
+                },
+                {
+                  multi_match: {
+                    query: value,
+                    type: "most_fields",
+                    fields: [
+                      "TICO^10",
+                      "AUTR^10",
+                      "TITRE^9",
+                      "TITR^9",
+                      "LEG^9",
+                      "LOCA^9",
+                      "DENO^8",
+                      "DOMN^8",
+                      "EDIF^8",
+                      "OBJT^8",
+                      "REPR^8",
+                      "AUTP^7",
+                      "SERIE^7",
+                      "PDEN^5",
+                      "PERS^4",
+                      "PAYS^3",
+                      "REG^3",
+                      "DEP^3",
+                      "COM^3",
+                      "DATE^1",
+                      "EPOQ^1",
+                      "SCLE^1",
+                      "SCLD^1"
+                    ]
+                  }
+                }
+              ]
+            }
+          };
+        }}
+      />
     );
   }
 }

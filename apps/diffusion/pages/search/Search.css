@@ -13,6 +13,7 @@
   color: #19414c;
   margin-bottom: 20px;
 }
+
 .search .list-view{
   width:100%
 }
@@ -160,9 +161,10 @@
   cursor: pointer;
   font-weight: 400;
   font-size: 20px;
-  height: 50px;
-  padding-top: 10px;
+  height: 42px;
+  padding-top: 7px;
 }
+
 .search .nav-pills .nav-item {
   flex-grow: 1;
   text-align: center;

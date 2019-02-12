@@ -22,13 +22,10 @@ const DEFAULT_FILTER = [
   "museo"
 ];
 
-const Menu = ({ location, mobile_menu }) => (
+const Menu = ({ location, mobile_menu, closeMenu }) => (
   <div className={`search-filters ${mobile_menu}`}>
     <aside className="search-sidebar">
-      <div
-        className="close_mobile_menu"
-        onClick={() => this.setState({ mobile_menu: "mobile_close" })}
-      >
+      <div className="close_mobile_menu" onClick={closeMenu}>
         x
       </div>
       <SelectedFilters
