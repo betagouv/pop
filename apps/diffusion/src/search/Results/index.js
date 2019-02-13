@@ -6,7 +6,7 @@ class Main extends React.Component {
   render() {
     return (
       <ReactiveComponent
-        componentId="results" // a unique id we will refer to later
+        componentId="vue" // a unique id we will refer to later
         // defaultQuery={() => ({})}
         URLParams={true}
       >

@@ -178,7 +178,7 @@ Area width x height
   render() {
     return (
       <ReactiveComponent
-        componentId={"map"} // a unique id we will refer to later
+        componentId="map" // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
         react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
@@ -483,7 +483,7 @@ class Map extends React.Component {
     };
 
     return (
-      <div style={style} className="search-map">
+      <div style={style} className="search-map view">
         <Loader isOpen={!this.state.loaded} />
         <div id="map" ref={this.mapRef} style={style}>
           <div className={`drawer ${this.state.drawerContent ? "open" : ""}`}>

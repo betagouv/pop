@@ -12,22 +12,22 @@ export default ({ filters }) => (
       const info = "La mosaïque n'affiche par défaut que les notices avec image.";
       if (total === 1) {
         return (
-          <span>
+          <div className="result-count">
             1 résultat <i className="text-muted">{info}</i>
-          </span>
+          </div>
         );
       }
       return (
-        <span>
+        <div className="result-count">
           {total} résultats. <i className="text-muted">{info}</i>
-        </span>
+        </div>
       );
     }}
     onNoResults="Aucun résultat trouvé."
     loader="Préparation de l'affichage des résultats..."
     dataField=""
     size={18}
-    className="mosaique-view"
+    className="mosaique-view view"
     onData={data => <CardMosaique key={data.REF} data={data} />}
   />
 );

@@ -2,10 +2,10 @@ import React from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import { ReactiveList } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
-import CardMosaique from "./CardMosaic";
-import CardList from "./CardList";
 
 import Map from "./Map";
+import Mosaic from "./Mosaic";
+import List from "./List";
 
 const DEFAULT_FILTER = [
   "mainSearch",
@@ -23,26 +23,40 @@ const DEFAULT_FILTER = [
   "ou",
   "import",
   "museo",
-  "results"
+  "vue"
 ];
 
 class Results extends React.Component {
-  setView(view) {
+  componentWillMount() {
+    this.setQuery(this.props.selectedValue);
+  }
+  setQuery(view) {
+    let query = { match_all: {} };
+    let value = "";
+
+    if (view === "mosaique") {
+      query = { match: { CONTIENT_IMAGE: "oui" } };
+      value = "mosaique";
+    } else if (view === "carte") {
+      query = { match: { POP_CONTIENT_GEOLOCALISATION: "oui" } };
+      value = "carte";
+    }
+
     this.props.setQuery({
-      query: {},
-      value: view
+      query,
+      value
     });
   }
 
   renderTabs() {
-    const view = this.props.selectedValue || "list";
+    const view = this.props.selectedValue || "liste";
     return (
       <Nav pills>
         <NavItem>
           <NavLink
-            className={classnames({ active: view === "list" })}
+            className={classnames({ active: view === "liste" })}
             onClick={() => {
-              this.setView("");
+              this.setQuery("");
             }}
           >
             LISTE
@@ -52,10 +66,10 @@ class Results extends React.Component {
         <NavItem>
           <NavLink
             className={classnames({
-              active: view === "map"
+              active: view === "carte"
             })}
             onClick={() => {
-              this.setView("map");
+              this.setQuery("carte");
             }}
           >
             CARTE
@@ -65,10 +79,10 @@ class Results extends React.Component {
         <NavItem>
           <NavLink
             className={classnames({
-              active: view === "mosaic"
+              active: view === "mosaique"
             })}
             onClick={() => {
-              this.setView("mosaic");
+              this.setQuery("mosaique");
             }}
           >
             MOSAIQUE
@@ -80,12 +94,12 @@ class Results extends React.Component {
 
   renderResults() {
     const view = this.props.selectedValue;
-    if (view === "mosaic") {
-      return <Mosaic filters={DEFAULT_FILTER} />;
-    } else if (view === "map") {
-      return <Map filters={DEFAULT_FILTER} />;
+    if (view === "mosaique") {
+      return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
+    } else if (view === "carte") {
+      return <Map key="carte" filters={DEFAULT_FILTER} />;
     } else {
-      return <List filters={DEFAULT_FILTER} />;
+      return <List key="liste" filters={DEFAULT_FILTER} />;
     }
   }
   render() {
