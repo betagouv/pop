@@ -36,13 +36,26 @@ function getMergedQueries(q) {
   return obj;
 }
 
+function guidGenerator() {
+  var S4 = function() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
+}
+
 export default class RuleGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queries: [{ id: 0 }],
+      queries: [{ id: guidGenerator() }],
       tooltipOpen: false
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.base !== this.props.base) {
+      this.setState({ queries: [{ id: guidGenerator() }] });
+    }
   }
 
   updateStateQueries = queries => {
@@ -87,10 +100,9 @@ export default class RuleGroup extends React.Component {
   }
 
   onRuleAdd() {
-    const max = this.state.queries.reduce((p, v) => {
-      return p > v.id ? p : v.id;
-    }, 0);
-    this.setState({ queries: [...this.state.queries.concat({ id: max + 1 })] });
+    this.setState({
+      queries: [...this.state.queries.concat({ id: guidGenerator() })]
+    });
   }
 
   onRemove(id) {
@@ -109,6 +121,7 @@ export default class RuleGroup extends React.Component {
     return this.state.queries.map(({ id, data }) => {
       return (
         <Rule
+          base={this.props.base}
           autocomplete={this.props.autocomplete}
           key={id}
           id={id}
@@ -157,10 +170,7 @@ export default class RuleGroup extends React.Component {
             </dd>
           </dl>
         </Tooltip>
-        <span id="aboutSearch">
-          ?
-          {/* <img src={imgInfo} className="imgInfo" /> */}
-        </span>
+        <span id="aboutSearch">?{/* <img src={imgInfo} className="imgInfo" /> */}</span>
         {this.renderChildren()}
       </div>
     );

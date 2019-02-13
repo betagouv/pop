@@ -38,6 +38,7 @@ export default class QueryBuilder extends React.Component {
           displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}
+          base={this.props.base}
           id="0"
         />
       </div>

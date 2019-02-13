@@ -18,11 +18,14 @@ export default class RuleComponent extends React.Component {
   onUpdate(data) {
     const { combinator, key, operator, value } = data;
     if (key) {
-      const query = `{"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}}`;
-      this.setState({ query: JSON.parse(query) });
+      const suggestionQuery = `{"query": {"term": {"BASE.keyword": "${
+        this.props.base
+      }"}},"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}, "size":0}`;
+      this.setState({ query: JSON.parse(suggestionQuery) });
     } else {
       this.setState({ query: {} });
     }
+
     const query = ruleQuery(key, operator, value);
     if (query) {
       this.props.onUpdate({ id: this.props.id, query, combinator, data });
