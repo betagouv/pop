@@ -4,12 +4,28 @@ import RuleGroup from "./RuleGroup";
 import "./QueryBuilder.css";
 
 export default class QueryBuilder extends React.Component {
+  componentWillMount() {
+    this.setQuery();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.base !== this.props.base) {
+      this.setQuery(null, nextProps.base);
+    }
+  }
   onUpdate(q) {
+    this.setQuery(q);
+  }
+
+  setQuery(q, base = this.props.base) {
+    const baseMatchQuery = JSON.parse('{"term": { "BASE.keyword": "' + base + '" }}');
     if (!q) {
-      this.props.setQuery({ query: {}, value: "querybuilder" }); // ???
+      const query = { bool: { must: [baseMatchQuery] } };
+      this.props.setQuery({ query, value: "querybuilder" }); // ???
       return;
     }
     const query = { bool: { ...q } };
+    query.bool.must.push(baseMatchQuery);
     this.props.setQuery({ query, value: "querybuilder" });
   }
 

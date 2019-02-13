@@ -41,6 +41,7 @@ export default class AdvancedSearch extends React.Component {
           displayLabel={this.props.displayLabel}
           autocomplete={this.props.autocomplete === undefined ? true : this.props.autocomplete}
           entity={this.state.entity}
+          base={this.props.base}
         />
       </ReactiveComponent>
     );
