@@ -97,7 +97,6 @@ async function checkMerimee(notice) {
   return errors;
 }
 
-
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
     const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
@@ -158,6 +157,10 @@ router.put(
 
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
+        /*
+          person.friends.push(friend);
+          person.save(done);
+      */
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
