@@ -1,5 +1,6 @@
 import React from "react";
-import { QueryBuilder } from "pop-shared";
+// import { QueryBuilder } from "pop-shared";
+import { QueryBuilder } from "../../../../shared/dist";
 
 class SearchAdvanced extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class SearchAdvanced extends React.Component {
             <option value="joconde">Joconde</option>
             <option value="memoire">Mémoire</option>
           </select>
-          <div>  je recherche :</div>
+          <div> je recherche :</div>
         </div>
         <QueryBuilder
           collection={this.state.base}

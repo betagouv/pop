@@ -5,10 +5,21 @@ import QueryBuilder from "./QueryBuilder";
 import operators from "./operators";
 
 export default class AdvancedSearch extends React.Component {
-  constructor(props) {
-    super(props);
+  componentWillMount() {
+    this.setEntity(this.props.collection);
+  }
 
-    const entity = Mapping[this.props.collection];
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.collection && this.props.collection) {
+      this.setEntity(nextProps.collection);
+    }
+  }
+
+  setEntity(collection) {
+    const entity = Mapping[collection];
+    if (!entity) {
+      console.log("Impossible de trouver la collection ", collection);
+    }
 
     //clean entity
     delete entity._id;
@@ -18,9 +29,7 @@ export default class AdvancedSearch extends React.Component {
     delete entity["POP_COORDINATES_POLYGON.type"];
     delete entity["POP_COORDINATES_POLYGON.coordinates"];
 
-    this.state = {
-      entity
-    };
+    this.setState({ entity });
   }
 
   render() {
@@ -28,6 +37,7 @@ export default class AdvancedSearch extends React.Component {
       <ReactiveComponent componentId={this.props.componentId}>
         <QueryBuilder
           history={this.props.history}
+          urlParams={true}
           displayLabel={this.props.displayLabel}
           autocomplete={this.props.autocomplete === undefined ? true : this.props.autocomplete}
           entity={this.state.entity}
