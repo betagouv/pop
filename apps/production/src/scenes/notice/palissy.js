@@ -170,12 +170,12 @@ class Notice extends React.Component {
               <CustomField name="PART" disabled={!this.state.editable} />
               <CustomField
                 name="REFP"
-                createUrl={e => `/notice/palissy/"${e}`}
+                createUrl={e => `/notice/palissy/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField
                 name="REFE"
-                createUrl={e => `/notice/palissy/"${e}`}
+                createUrl={e => `/notice/palissy/${e}`}
                 disabled={!this.state.editable}
               />
             </Col>

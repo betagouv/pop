@@ -125,7 +125,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "WCOM","String","non","","","","[PAS affiché]","",""
 "WRENV","String","non","","","","[PAS affiché]","",""
 "REFM","String","non","","","","[PAS affiché]","",""
-"CONTACT","String","non","Contact","","true","Contact ","Email",""
+"CONTACT","String","non","Contact","","","Contact ","Email",""
 "IDAGR","String","non","","","","[PAS affiché]","",""
 "LMDP","String","non","","","","[PAS affiché]","",""
 "PINT","String","non","Intérêt oeuvre","","","Intérêt oeuvre","",""

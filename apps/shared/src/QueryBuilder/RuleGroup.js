@@ -59,6 +59,7 @@ export default class RuleGroup extends React.Component {
   }
 
   updateStateQueries = queries => {
+    console.log("queries", queries);
     this.setState({ queries }, () => {
       this.updateUrlParams(queries);
       this.props.onUpdate(getMergedQueries(queries));
@@ -96,6 +97,10 @@ export default class RuleGroup extends React.Component {
         };
       });
       this.updateStateQueries(queries);
+    } else {
+      //put default value when you run the page. But It should be done differently.
+      //Actually, this component needs some optimisation
+      this.updateStateQueries([{ id: 0 }]);
     }
   }
 
@@ -106,8 +111,6 @@ export default class RuleGroup extends React.Component {
   }
 
   onRemove(id) {
-    console.log(this.state.queries);
-    console.log("id", id);
     let queries = this.state.queries.filter(e => e.id !== id);
     this.updateStateQueries(queries);
   }
@@ -119,11 +122,13 @@ export default class RuleGroup extends React.Component {
 
   renderChildren() {
     return this.state.queries.map(({ id, data }) => {
+      console.log("data", data, id);
+      // return <div key={`key_${id}`}>{data && data.value}</div>;
       return (
         <Rule
           base={this.props.base}
           autocomplete={this.props.autocomplete}
-          key={id}
+          key={`key_${id}`}
           id={id}
           data={data || {}}
           displayLabel={this.props.displayLabel}

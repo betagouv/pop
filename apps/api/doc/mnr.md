@@ -3,6 +3,7 @@
 - [PRODUCTEUR](/apps/api/doc/mnr.md#PRODUCTEUR)
 - [BASE](/apps/api/doc/mnr.md#BASE)
 - [CONTIENT_IMAGE](/apps/api/doc/mnr.md#CONTIENT_IMAGE)
+- [POP_COMMENTAIRES](/apps/api/doc/mnr.md#POP_COMMENTAIRES)
 - [REF](/apps/api/doc/mnr.md#REF)
 - [POP_IMPORT](/apps/api/doc/mnr.md#POP_IMPORT)
 - [TOUT](/apps/api/doc/mnr.md#TOUT)
@@ -89,6 +90,16 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|oui|non|||
+
+### POP_COMMENTAIRES
+Commentaires technique
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Commentaires POP|
 
 ### REF
 Référence unique de la notice

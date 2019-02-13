@@ -119,7 +119,7 @@ class Notice extends React.Component {
               <CustomField
                 title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
                 name="RENV"
-                createUrl={e => `/notice/merimee/"${e}`}
+                createUrl={e => `/notice/merimee/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="DOSURL" disabled={!this.state.editable} />
@@ -136,7 +136,7 @@ class Notice extends React.Component {
               <CustomField name="THEM" disabled={!this.state.editable} />
               <CustomField
                 name="REFO"
-                createUrl={e => `/notice/palissy/"${e}`}
+                createUrl={e => `/notice/palissy/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="WEB" disabled={!this.state.editable} />
@@ -167,7 +167,7 @@ class Notice extends React.Component {
               <CustomField name="PART" disabled={!this.state.editable} />
               <CustomField
                 name="REFP"
-                createUrl={e => `/notice/merimee/"${e}`}
+                createUrl={e => `/notice/merimee/${e}`}
                 disabled={!this.state.editable}
               />
               <CustomField name="COLL" disabled={!this.state.editable} />
@@ -190,7 +190,7 @@ class Notice extends React.Component {
             <Col sm={6}>
               <CustomField
                 name="REFE"
-                createUrl={e => `/notice/merimee/"${e}`}
+                createUrl={e => `/notice/merimee/${e}`}
                 disabled={!this.state.editable}
                 footer={key => {
                   <Link to={`/notice/memoire/${key}`} target="_blank">

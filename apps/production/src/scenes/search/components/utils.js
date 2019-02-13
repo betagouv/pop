@@ -137,9 +137,11 @@ function customQuery(query, primaryFields, secondaryFields = []) {
     term: { [`${f}.keyword`]: { value: query, boost: 5 } }
   }));
   // 3 - fuzzy term in fields (boost 2)
-  const fuzzyTerm = primaryFields.map(f => ({
-    fuzzy: { [`${f}.keyword`]: { value: query, boost: 5 } }
-  }));
+  const fuzzyTerm = primaryFields
+    .filter(a => a !== "REF" && a !== "INV")
+    .map(f => ({
+      fuzzy: { [`${f}.keyword`]: { value: query, boost: 5 } }
+    }));
   // 4 - contains all words in fields (boost 1)
   const allWords = {
     simple_query_string: { query: query.replace(/ +?/g, " +"), default_operator: "and", fields }

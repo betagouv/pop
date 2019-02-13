@@ -127,7 +127,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "NUMI","String","non","Ident. support","","","Ident. support","",""
 "LIEU","String","non","Lieu-dit","","","Lieu-dit ","",""
 "ADRS","String","non","Adresse saisie","","","Adresse saisie","",""
-"CONTACT","String","non","CONTACT","","true","Contact","Email",""
+"CONTACT","String","non","CONTACT","","","Contact","Email",""
 "EMET","String","non","Emetteur (code)","","","Emetteur (code) ","",""
 "NUM","String","non","N° support","","","N° support ","",""
 "IMG","String","non","Images","","","Images","",""
