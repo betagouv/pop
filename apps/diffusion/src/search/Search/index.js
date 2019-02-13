@@ -45,8 +45,8 @@ class Search extends React.Component {
       );
     }
     return (
-      <Link prefetch href={"/search?search=normal"}>
-        <a className="search-mode">Recherche normale</a>
+      <Link prefetch href={"/search?search=simple"}>
+        <a className="search-mode">Recherche simple</a>
       </Link>
     );
   }
@@ -55,7 +55,7 @@ class Search extends React.Component {
     return (
       <React.Fragment>
         {this.renderSearch()}
-        {this.renderLink()}
+        <div className="switch-search">{this.renderLink()}</div>
       </React.Fragment>
     );
   }

@@ -65,12 +65,12 @@ export default class extends React.Component {
                   closeMenu={() => this.setState({ mobile_menu: false })}
                 />
                 <div className="search-results">
-                  <div style={{ display: "flex" }}>
-                    {/* <Search
+                  <div className="search-container">
+                    <Search
                       location={this.props.asPath}
                       updateParam={this.updateParam.bind(this)}
                     />
-                    <MobileFilters mobile_menu={this.state.mobile_menu} /> */}
+                    <MobileFilters mobile_menu={this.state.mobile_menu} />
                   </div>
                   <Results location={this.props.asPath} updateParam={this.updateParam.bind(this)} />
                 </div>
