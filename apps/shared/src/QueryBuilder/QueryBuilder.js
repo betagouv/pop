@@ -20,12 +20,17 @@ export default class QueryBuilder extends React.Component {
   setQuery(q, base = this.props.base) {
     const baseMatchQuery = JSON.parse('{"term": { "BASE.keyword": "' + base + '" }}');
     if (!q) {
-      const query = { bool: { must: [baseMatchQuery] } };
-      this.props.setQuery({ query, value: "querybuilder" }); // ???
+      const query = { bool: { filter: [baseMatchQuery] } };
+      this.props.setQuery({ query, value: "querybuilder" });
       return;
     }
     const query = { bool: { ...q } };
-    query.bool.must.push(baseMatchQuery);
+    query.bool.filter = [baseMatchQuery];
+    if (query.bool.should.length) {
+      query.bool.minimum_should_match = 1; // MOUAAHHAHAHAH . Sinon le filter marche pas . Les résultats avec un score a 0 sont retournés
+    }
+
+    console.log("QUERY SENT", query);
     this.props.setQuery({ query, value: "querybuilder" });
   }
 
