@@ -34,10 +34,9 @@ export default class AdvancedSearch extends React.Component {
 
   render() {
     return (
-      <ReactiveComponent componentId={this.props.componentId}>
+      <ReactiveComponent URLParams={true} componentId={this.props.componentId}>
         <QueryBuilder
           history={this.props.history}
-          URLParams={true}
           displayLabel={this.props.displayLabel}
           autocomplete={this.props.autocomplete === undefined ? true : this.props.autocomplete}
           entity={this.state.entity}

@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
 }
-.search .search-container .switch-search > a {
+.search .search-container .switch-search > div {
   background-color: #377d87;
   border: 0;
   color: #fff;
@@ -38,6 +38,8 @@
   font-size: 16px;
   padding: 6px;
   border-radius: 5px;
+  width: 200px;
+  cursor: pointer;
   text-decoration: "none";
 }
 
@@ -75,6 +77,10 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.search .search-row{
+  justify-content: center;
 }
 
 .search .search-row .search-mode {

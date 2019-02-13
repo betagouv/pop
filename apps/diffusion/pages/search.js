@@ -21,7 +21,8 @@ import "./search.css";
 
 export default class extends React.Component {
   state = {
-    mobile_menu: false
+    mobile_menu: false,
+    search_mode: "normal"
   };
 
   static async getInitialProps({ asPath }) {
@@ -34,7 +35,7 @@ export default class extends React.Component {
   }
 
   handleUrl() {
-    console.log("this.props.asPath", this.props.asPath);
+    // console.log("this.props.asPath", this.props.asPath);
   }
 
   updateParam(param) {
@@ -43,7 +44,10 @@ export default class extends React.Component {
   }
 
   render = () => {
-    this.handleUrl();
+    // this.handleUrl();*
+
+    //@raph Pas fan de mon mode search_mode. mais quick win pour la demo.
+
     return (
       <Layout>
         <div className="search">
@@ -59,18 +63,27 @@ export default class extends React.Component {
             <Header location={this.props.asPath} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row className="search-row">
-                <Menu
-                  location={this.props.asPath}
-                  mobile_menu={this.state.mobile_menu}
-                  closeMenu={() => this.setState({ mobile_menu: false })}
-                />
+                {this.state.search_mode === "normal" ? (
+                  <Menu
+                    location={this.props.asPath}
+                    mobile_menu={this.state.mobile_menu}
+                    closeMenu={() => this.setState({ mobile_menu: false })}
+                  />
+                ) : (
+                  <div />
+                )}
                 <div className="search-results">
                   <div className="search-container">
                     <Search
+                      onChangeMode={search_mode => this.setState({ search_mode })}
                       location={this.props.asPath}
                       updateParam={this.updateParam.bind(this)}
                     />
-                    <MobileFilters mobile_menu={this.state.mobile_menu} />
+                    {this.state.search_mode === "normal" ? (
+                      <MobileFilters mobile_menu={this.state.mobile_menu} />
+                    ) : (
+                      <div />
+                    )}
                   </div>
                   <Results location={this.props.asPath} updateParam={this.updateParam.bind(this)} />
                 </div>

@@ -10,23 +10,11 @@ class Search extends React.Component {
     mode: "normal"
   };
 
-  // TO REPLACE
-  componentDidMount() {
-    this.getMode(this.props.location);
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.getMode(nextProps.location);
+  switch(mode) {
+    if (this.props.onChangeMode) {
+      this.props.onChangeMode(mode);
     }
-  }
-
-  getMode(url) {
-    const query = queryString.parseUrl(url).query;
-    if (query.search && query.search === "advanced") {
-      this.setState({ mode: "advanced" });
-    } else {
-      this.setState({ mode: "normal" });
-    }
+    this.setState({ mode });
   }
 
   renderSearch() {
@@ -40,15 +28,15 @@ class Search extends React.Component {
   renderLink() {
     if (this.state.mode !== "advanced") {
       return (
-        <Link prefetch href={"/search?search=advanced"}>
+        <div onClick={() => this.switch("advanced")}>
           <a className="search-mode">Recherche avancée</a>
-        </Link>
+        </div>
       );
     }
     return (
-      <Link prefetch href={"/search?search=simple"}>
+      <div onClick={() => this.switch("normal")}>
         <a className="search-mode">Recherche simple</a>
-      </Link>
+      </div>
     );
   }
 
