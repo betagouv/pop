@@ -122,8 +122,6 @@ export default class RuleGroup extends React.Component {
 
   renderChildren() {
     return this.state.queries.map(({ id, data }) => {
-      console.log("data", data, id);
-      // return <div key={`key_${id}`}>{data && data.value}</div>;
       return (
         <Rule
           base={this.props.base}
