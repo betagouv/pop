@@ -78,7 +78,7 @@ class Rule extends React.Component {
   render() {
     return (
       <div className="rule">
-        {this.props.id > 0 ? (
+        {!this.props.first ? (
           <Combinator
             value={this.state.combinator}
             onChange={e =>

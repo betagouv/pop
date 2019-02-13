@@ -121,13 +121,14 @@ export default class RuleGroup extends React.Component {
   }
 
   renderChildren() {
-    return this.state.queries.map(({ id, data }) => {
+    return this.state.queries.map(({ id, data }, i) => {
       return (
         <Rule
           base={this.props.base}
           autocomplete={this.props.autocomplete}
           key={`key_${id}`}
           id={id}
+          first={!i}
           data={data || {}}
           displayLabel={this.props.displayLabel}
           onRuleAdd={this.onRuleAdd.bind(this)}

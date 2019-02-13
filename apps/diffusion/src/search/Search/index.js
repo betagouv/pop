@@ -10,6 +10,7 @@ class Search extends React.Component {
     mode: "normal"
   };
 
+  // TO REPLACE
   componentDidMount() {
     this.getMode(this.props.location);
   }
