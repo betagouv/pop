@@ -66,11 +66,11 @@ export default class extends React.Component {
                 />
                 <div className="search-results">
                   <div style={{ display: "flex" }}>
-                    <Search
+                    {/* <Search
                       location={this.props.asPath}
                       updateParam={this.updateParam.bind(this)}
                     />
-                    <MobileFilters mobile_menu={this.state.mobile_menu} />
+                    <MobileFilters mobile_menu={this.state.mobile_menu} /> */}
                   </div>
                   <Results location={this.props.asPath} updateParam={this.updateParam.bind(this)} />
                 </div>

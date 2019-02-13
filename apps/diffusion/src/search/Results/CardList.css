@@ -1,17 +1,21 @@
 .list-card {
+  width: 100%;
+}
+
+.list-card .list-card-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 15px;
   box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
   transition: 0.3s;
   height: 110px;
   overflow: hidden;
   background-color: white;
   height: auto;
+  margin: 7px;
   border-radius: 5px;
 }
 
-.list-card:hover {
+.list-card .list-card-container:hover {
   box-shadow: 0 3px 6px 0 rgba(189, 189, 189, 1);
 }
 

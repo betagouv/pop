@@ -247,7 +247,7 @@
 .search .active input:checked + label::after {
   border-color: #377d87 !important;
 }
-.search .mosaique-view > div {
+.search .view > div {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -255,7 +255,7 @@
   margin-left: -15px;
 }
 
-.search .mosaique-view{
+.search .view{
   padding-top: 18px;
 }
 
@@ -263,11 +263,7 @@
   display:none
 }
 
-.css-ixn26d,
-.search .mosaique-view > div.css-ixn26d {
-  margin-bottom: 12px;
-  margin-left: 0;
-}
+
 .search .active input:checked + label::before,
 .search .active input:hover + label::before,
 .css-yljddh:hover + label::before {

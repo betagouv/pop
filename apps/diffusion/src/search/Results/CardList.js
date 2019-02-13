@@ -58,26 +58,28 @@ const Memoire = ({ data }) => {
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="thumbnail">{image(data)}</div>
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(content.title)}
-              <br />
-              <small>{content.categories}</small>
-            </h2>
-            <span>
-              <small className="base">Mémoire</small>
-              <br />
-              {data.REF}
-            </span>
-          </div>
-          <p>{content.subtitle}</p>
-          {productorImage(data.PRODUCTEUR)}
-          <div>
-            <p>{content.author}</p>
-            <p>{content.data}</p>
-            <p>{content.loc}</p>
+        <div className="list-card-container ">
+          <div className="thumbnail">{image(data)}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(content.title)}
+                <br />
+                <small>{content.categories}</small>
+              </h2>
+              <span>
+                <small className="base">Mémoire</small>
+                <br />
+                {data.REF}
+              </span>
+            </div>
+            <p>{content.subtitle}</p>
+            {productorImage(data.PRODUCTEUR)}
+            <div>
+              <p>{content.author}</p>
+              <p>{content.data}</p>
+              <p>{content.loc}</p>
+            </div>
           </div>
         </div>
       </a>
@@ -105,25 +107,27 @@ const Palissy = ({ data }) => {
   return (
     <Link href={`/notice/palissy/${ref}`} key={ref}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="thumbnail">{image(data)}</div>
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(title)}
-              <br />
-              <small>{categories}</small>
-            </h2>
-            <span>
-              <small className="base">Palissy</small>
-              <br />
-              {ref}
-            </span>
-          </div>
-          {productorImage(data.PRODUCTEUR)}
-          <div>
-            <p>{author}</p>
-            <p>{siecle}</p>
-            <p>{loc}</p>
+        <div className="list-card-container ">
+          <div className="thumbnail">{image(data)}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(title)}
+                <br />
+                <small>{categories}</small>
+              </h2>
+              <span>
+                <small className="base">Palissy</small>
+                <br />
+                {ref}
+              </span>
+            </div>
+            {productorImage(data.PRODUCTEUR)}
+            <div>
+              <p>{author}</p>
+              <p>{siecle}</p>
+              <p>{loc}</p>
+            </div>
           </div>
         </div>
       </a>
@@ -151,25 +155,27 @@ const Merimee = ({ data }) => {
   return (
     <Link href={`/notice/merimee/${ref}`} key={ref}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="thumbnail">{image(data)}</div>
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(title)}
-              <br />
-              <small>{categories}</small>
-            </h2>
-            <span>
-              <small className="base">Mérimée</small>
-              <br />
-              {ref}
-            </span>
-          </div>
-          {productorImage(data.PRODUCTEUR)}
-          <div>
-            <p>{author}</p>
-            <p>{siecle}</p>
-            <p>{loc}</p>
+        <div className="list-card-container ">
+          <div className="thumbnail">{image(data)}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(title)}
+                <br />
+                <small>{categories}</small>
+              </h2>
+              <span>
+                <small className="base">Mérimée</small>
+                <br />
+                {ref}
+              </span>
+            </div>
+            {productorImage(data.PRODUCTEUR)}
+            <div>
+              <p>{author}</p>
+              <p>{siecle}</p>
+              <p>{loc}</p>
+            </div>
           </div>
         </div>
       </a>
@@ -195,27 +201,29 @@ const Mnr = ({ data, index }) => {
   return (
     <Link href={`/notice/mnr/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="thumbnail">{img}</div>
-        <div className="content">
-          <p>{author}</p>
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(title)}
-              <br />
-              <small>{categories}</small>
-            </h2>
-            <span>
-              <small className="base">Mnr</small>
-              <br />
-              {INV}
-            </span>
-          </div>
-          <div>
-            <p>{domn}</p>
-            <p>{loc}</p>
-            <p>{affe}</p>
-            <p>{cate}</p>
-            <p>{phot}</p>
+        <div className="list-card-container ">
+          <div className="thumbnail">{img}</div>
+          <div className="content">
+            <p>{author}</p>
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(title)}
+                <br />
+                <small>{categories}</small>
+              </h2>
+              <span>
+                <small className="base">Mnr</small>
+                <br />
+                {INV}
+              </span>
+            </div>
+            <div>
+              <p>{domn}</p>
+              <p>{loc}</p>
+              <p>{affe}</p>
+              <p>{cate}</p>
+              <p>{phot}</p>
+            </div>
           </div>
         </div>
       </a>
@@ -235,25 +243,27 @@ const Joconde = ({ data, index }) => {
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="thumbnail">{img}</div>
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(title)}
-              <br />
-              <small>{categories}</small>
-            </h2>
-            <span>
-              <small className="base">Joconde</small>
-              <br />
-              {REF}
-            </span>
-          </div>
-          <img src="/static/musee-de-france.jpg" className="producteur" />
-          <div>
-            <p>{author}</p>
-            <p>{peri}</p>
-            <p>{loc}</p>
+        <div className="list-card-container ">
+          <div className="thumbnail">{img}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(title)}
+                <br />
+                <small>{categories}</small>
+              </h2>
+              <span>
+                <small className="base">Joconde</small>
+                <br />
+                {REF}
+              </span>
+            </div>
+            <img src="/static/musee-de-france.jpg" className="producteur" />
+            <div>
+              <p>{author}</p>
+              <p>{peri}</p>
+              <p>{loc}</p>
+            </div>
           </div>
         </div>
       </a>
@@ -265,21 +275,23 @@ const Museo = ({ data }) => {
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>
-              {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
-              <br />
-              {data.VILLE_M}
-            </h2>
-            <span>
-              <small className="base">MuseoFile</small>
-              <br />
-              {data.REF}
-            </span>
-          </div>
-          <div>
-            <p>{data.ATOUT && data.ATOUT.replace(/#/g, " ; ")} - </p>
+        <div className="list-card-container">
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
+                <br />
+                {data.VILLE_M}
+              </h2>
+              <span>
+                <small className="base">MuseoFile</small>
+                <br />
+                {data.REF}
+              </span>
+            </div>
+            <div>
+              <p>{data.ATOUT && data.ATOUT.replace(/#/g, " ; ")} - </p>
+            </div>
           </div>
         </div>
       </a>

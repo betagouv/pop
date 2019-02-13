@@ -178,7 +178,7 @@ Area width x height
   render() {
     return (
       <ReactiveComponent
-        componentId={this.props.componentId || "map"} // a unique id we will refer to later
+        componentId={"map"} // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
         react={{ and: this.props.filter }}
         defaultQuery={() => this.state.query}
