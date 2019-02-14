@@ -61,7 +61,7 @@ export default class extends React.Component {
                   <div />
                 )}
                 <div className="search-results">
-                  <div className="search-container">
+                  <div className={`search-container search-container-${this.props.mode}`}>
                     <Search mode={this.props.mode} location={this.props.asPath} />
                     {this.props.mode === "simple" ? (
                       <MobileFilters mobile_menu={this.state.mobile_menu} />

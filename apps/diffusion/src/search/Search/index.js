@@ -31,7 +31,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log("this.props.mode",this.props.mode)
     return (
       <React.Fragment>
         {this.renderSearch()}
