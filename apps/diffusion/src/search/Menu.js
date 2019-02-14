@@ -22,7 +22,7 @@ const DEFAULT_FILTER = [
   "museo"
 ];
 
-const Menu = ({ location, mobile_menu, closeMenu }) => (
+const Menu = ({ location, mobile_menu, closeMenu, view }) => (
   <div className={`search-filters ${mobile_menu}`}>
     <aside className="search-sidebar">
       <div className="close_mobile_menu" onClick={closeMenu}>
@@ -39,7 +39,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         title="Base"
         componentId="base"
         showSearch={false}
-        // react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
         filterListItem={bucket =>
           bucket.key !== "Photographies (Mémoires)" &&
           bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
@@ -50,9 +50,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         dataField={["AUTP.keyword", "AUTR.keyword"]}
         title="Auteur"
         componentId="auteur"
-        // react={{
-        //   and: DEFAULT_FILTER.filter(e => e !== "auteur")
-        // }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
         placeholder="Rechercher un auteur"
         location={location}
       />
@@ -61,7 +59,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         title="Domaine"
         placeholder="Rechercher un domaine"
         componentId="domn"
-        // react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
         location={location}
       />
       <MultiList
@@ -69,16 +67,14 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         title="Où voir l'oeuvre?"
         placeholder="Commune, musée"
         componentId="ou"
-        // react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
         location={location}
       />
       <MultiList
         dataField="PERI.keyword"
         title="Période"
         componentId="periode"
-        // react={{
-        //   and: DEFAULT_FILTER.filter(e => e !== "periode")
-        // }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "periode") }}
         placeholder="Rechercher une période"
         location={location}
       />
@@ -89,19 +85,19 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         componentId="image"
         placeholder="oui ou non"
         showSearch={false}
-        // defaultSelected={activeTab === "mosaic" ? ["oui"] : []}
+        // defaultSelected={view === "mosaic" ? ["oui"] : []}
         location={location}
       />
       <MultiList
         componentId="geolocalisation"
         dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
         title="Est géolocalisé"
-        filterLabel="Est géolocalisé "
+        filterLabel="Est géolocalisé"
         queryFormat="or"
         className="filters"
         showSearch={false}
         URLParams={true}
-        // defaultSelected={activeTab === "map" ? ["oui"] : []}
+        // defaultSelected={view === "map" ? ["oui"] : []}
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
         location={location}
       />
@@ -109,7 +105,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         dataField="TECH.keyword"
         title="Techniques"
         componentId="tech"
-        // react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
         placeholder="Rechercher une technique"
         location={location}
       />
@@ -120,9 +116,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         title="Import"
         displayCount
         URLParams={true}
-        // react={{
-        //   and: DEFAULT_FILTER.filter(e => e !== "import")
-        // }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
         location={location}
       />
       <MultiList
@@ -132,7 +126,7 @@ const Menu = ({ location, mobile_menu, closeMenu }) => (
         title="Museo"
         displayCount
         URLParams={true}
-        // react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
         location={location}
       />
     </aside>
