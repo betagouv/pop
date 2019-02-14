@@ -55,6 +55,7 @@ export default class extends React.Component {
                     location={this.props.asPath}
                     mobile_menu={this.state.mobile_menu}
                     closeMenu={() => this.setState({ mobile_menu: false })}
+                    view={this.props.view}
                   />
                 ) : (
                   <div />
