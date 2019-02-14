@@ -44,7 +44,7 @@ export default class extends React.Component {
 
   render = () => {
     // this.handleUrl();*
-    console.log("view:", this.props.view);
+    console.log("mode:", this.props.mode);
     return (
       <Layout>
         <div className="search">
