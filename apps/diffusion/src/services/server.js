@@ -21,7 +21,7 @@ app.prepare().then(() => {
     const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
     const museoRegex = /^\/museo\/(.*?)$/;
     const sitemapRegex = /^\/sitemap\/(.*?)$/;
-    const searchRegex = /^\/search\/(.*?)$/;
+    const searchRegex = /^\/(advanced-search|search)\/(.*?)$/;
     if (req.headers.host.match('/^pop.culture.gouv.fr/')) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` })
       res.end();
@@ -34,7 +34,10 @@ app.prepare().then(() => {
       app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {
       const renderPath = "/search";
-      const renderParams = Object.assign({ view: pathname.replace(searchRegex, "$1") }, query);
+      const renderParams = Object.assign({ 
+        view: pathname.replace(searchRegex, "$2"),
+        mode: pathname.replace(searchRegex, "$1") === "search" ? "simple" : "advanced"
+      }, query);
       app.render(req, res, renderPath, renderParams);
     } else if (pathname.match(noticeRegex)) {
       const renderPath = "/notice/" + pathname.replace(noticeRegex, "$1");
