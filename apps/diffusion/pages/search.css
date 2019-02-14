@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
 }
-.search .search-container .switch-search > div {
+.search .search-container .switch-search > a {
   background-color: #377d87;
   border: 0;
   color: #fff;
