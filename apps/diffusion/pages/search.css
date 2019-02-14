@@ -19,6 +19,9 @@
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+}
+
+.search .search-container.search-container-simple {
   display: flex;
   justify-content: space-between;
 }
@@ -79,7 +82,7 @@
   margin-bottom: 10px;
 }
 
-.search .search-row{
+.search .search-row {
   justify-content: center;
 }
 
