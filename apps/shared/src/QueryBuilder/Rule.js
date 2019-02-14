@@ -225,19 +225,14 @@ class ValueEditor extends React.Component {
   }
 }
 
-const Combinator = props => {
+const Combinator = ({ value, onChange }) => {
   const choices = ["ET", "OU"].map(option => (
     <option key={option} value={option}>
       {option}
     </option>
   ));
   return (
-    <select
-      selected="ET"
-      value={props.value}
-      className="combinator"
-      onChange={props.onChange.bind(this)}
-    >
+    <select selected="ET" value={value} className="combinator" onChange={onChange}>
       {choices}
     </select>
   );
