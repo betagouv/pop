@@ -19,31 +19,22 @@ const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");
 import "./search.css";
 
 export default class extends React.Component {
-  state = {
-    mobile_menu: false,
-    search_mode: "normal"
-  };
+  state = { mobile_menu: false };
 
   static async getInitialProps({ asPath, query: { view, mode } }) {
-    return { asPath, view, mode };
+    return { asPath, view: view || "list", mode };
   }
 
   componentDidMount() {
-    // Router.prefetch("/search/map");
-    // Router.prefetch("/search/mosaic");
-  }
-
-  handleUrl() {
-    // console.log("this.props.asPath", this.props.asPath);
-  }
-
-  updateParam(param) {
-    console.log(param);
-    // Router.push()
+    // Prefetch non-active routes.
+    ["map", "mosaic", "list"]
+      .filter(v => v !== this.props.view)
+      .forEach(v => {
+        Router.prefetch(`/search/${v}`);
+      });
   }
 
   render = () => {
-    // this.handleUrl();*
     return (
       <Layout>
         <div className="search">
@@ -70,22 +61,14 @@ export default class extends React.Component {
                 )}
                 <div className="search-results">
                   <div className="search-container">
-                    <Search
-                      mode={this.props.mode}
-                      location={this.props.asPath}
-                      updateParam={this.updateParam.bind(this)}
-                    />
+                    <Search mode={this.props.mode} location={this.props.asPath} />
                     {this.props.mode === "simple" ? (
                       <MobileFilters mobile_menu={this.state.mobile_menu} />
                     ) : (
                       <div />
                     )}
                   </div>
-                  <Results
-                    view={this.props.view}
-                    location={this.props.asPath}
-                    updateParam={this.updateParam.bind(this)}
-                  />
+                  <Results view={this.props.view} location={this.props.asPath} />
                 </div>
               </Row>
             </ReactiveBase>
