@@ -27,9 +27,6 @@ const DEFAULT_FILTER = [
 ];
 
 class Results extends React.Component {
-  static async getInitialProps({ asPath, view }) {
-    return { asPath, view };
-  }
   renderTabs() {
     const view = this.props.view || "list";
     return (
@@ -66,12 +63,12 @@ class Results extends React.Component {
 
   renderResults() {
     const view = this.props.view || "list";
-    if (view === "mosaique") {
+    if (view === "mosaic") {
       return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
-    } else if (view === "carte") {
+    } else if (view === "map") {
       return <Map key="carte" filters={DEFAULT_FILTER} />;
     } else {
-      return <List key="liste" filters={DEFAULT_FILTER} />;
+      return <List key="list" filters={DEFAULT_FILTER} />;
     }
   }
 

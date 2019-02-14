@@ -24,7 +24,7 @@ export default class extends React.Component {
     search_mode: "normal"
   };
 
-  static async getInitialProps({ asPath, query: { view }  }) {
+  static async getInitialProps({ asPath, query: { view } }) {
     return { asPath, view };
   }
 
@@ -46,7 +46,7 @@ export default class extends React.Component {
     // this.handleUrl();*
 
     //@raph Pas fan de mon mode search_mode. mais quick win pour la demo.
-
+    console.log("view:", this.props.view);
     return (
       <Layout>
         <div className="search">
@@ -84,7 +84,11 @@ export default class extends React.Component {
                       <div />
                     )}
                   </div>
-                  <Results location={this.props.asPath} updateParam={this.updateParam.bind(this)} />
+                  <Results
+                    view={this.props.view.trim()}
+                    location={this.props.asPath}
+                    updateParam={this.updateParam.bind(this)}
+                  />
                 </div>
               </Row>
             </ReactiveBase>
