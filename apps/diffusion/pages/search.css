@@ -82,6 +82,16 @@
   margin-bottom: 10px;
 }
 
+.search .advanced-search select{
+}
+
+.search .advanced-search .advanced-search-title{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .search .search-row {
   justify-content: center;
 }

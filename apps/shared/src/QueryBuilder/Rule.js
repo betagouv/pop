@@ -1,6 +1,7 @@
 import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import { Row, Col } from "reactstrap";
 import ruleQuery from "./ruleQuery";
 import operators from "./operators";
 
@@ -78,64 +79,76 @@ class Rule extends React.Component {
 
   render() {
     return (
-      <div className="rule">
+      <Row className="rule">
         {!this.props.first ? (
-          <Combinator
-            value={this.state.combinator}
-            onChange={e =>
-              this.setState({ combinator: e.target.value }, () => {
-                this.update();
-              })
-            }
-          />
-        ) : (
-          <div />
-        )}
-        <ValueSelector
-          entity={this.props.entity}
-          value={this.state.valueSelected}
-          displayLabel={this.props.displayLabel}
-          onChange={e => {
-            this.setState(
-              {
-                valueSelected: e.target.value,
-                resultSelected: "",
-                actionSelected: "=="
-              },
-              () => {
-                this.update();
+          <Col md={1}>
+            <Combinator
+              value={this.state.combinator}
+              onChange={e =>
+                this.setState({ combinator: e.target.value }, () => {
+                  this.update();
+                })
               }
-            );
-          }}
-        />
-        <ActionElement
-          value={this.state.actionSelected}
-          onChange={e => {
-            this.setState({ actionSelected: e.target.value }, () => {
-              this.update();
-            });
-          }}
-        />
-        <ValueEditor
-          actionSelected={this.state.actionSelected}
-          value={this.state.resultSelected}
-          aggregations={this.props.aggregations}
-          autocomplete={this.props.autocomplete}
-          onChange={e => {
-            this.setState({ resultSelected: e.target.value.replace('"', "") }, () => {
-              this.update();
-            });
-          }}
-        />
-        <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
-        {!this.props.last ? (
-          <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
-            X
-          </button>
+            />
+          </Col>
         ) : (
           <div />
         )}
-      </div>
+        <Col md={4}>
+          <ValueSelector
+            entity={this.props.entity}
+            value={this.state.valueSelected}
+            displayLabel={this.props.displayLabel}
+            onChange={e => {
+              this.setState(
+                {
+                  valueSelected: e.target.value,
+                  resultSelected: "",
+                  actionSelected: "=="
+                },
+                () => {
+                  this.update();
+                }
+              );
+            }}
+          />
+        </Col>
+        <Col md={3}>
+          <ActionElement
+            value={this.state.actionSelected}
+            onChange={e => {
+              this.setState({ actionSelected: e.target.value }, () => {
+                this.update();
+              });
+            }}
+          />
+        </Col>
+        <Col md={3}>
+          <ValueEditor
+            actionSelected={this.state.actionSelected}
+            value={this.state.resultSelected}
+            aggregations={this.props.aggregations}
+            autocomplete={this.props.autocomplete}
+            onChange={e => {
+              this.setState({ resultSelected: e.target.value.replace('"', "") }, () => {
+                this.update();
+              });
+            }}
+          />
+        </Col>
+        <Col md={1}>
+          <div className="button-container">
+            <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
+            {!this.props.last ? (
+              <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
+                X
+              </button>
+            ) : (
+              <div />
+            )}
+          </div>
+        </Col>
+      </Row>
     );
   }
 }

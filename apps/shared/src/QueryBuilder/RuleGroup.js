@@ -1,6 +1,7 @@
 import React from "react";
 import Rule from "./Rule";
 import qs from "qs";
+import { Container } from "reactstrap";
 import ruleQuery from "./ruleQuery";
 import { Tooltip } from "reactstrap";
 // const imgInfo = require("../../../../assets/info.png");
@@ -177,7 +178,7 @@ export default class RuleGroup extends React.Component {
           </dl>
         </Tooltip>
         <span id="aboutSearch">?{/* <img src={imgInfo} className="imgInfo" /> */}</span>
-        {this.renderChildren()}
+        <Container>{this.renderChildren()}</Container>
       </div>
     );
   }

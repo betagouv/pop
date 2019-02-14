@@ -1,6 +1,7 @@
 import React from "react";
-import { QueryBuilder } from "pop-shared";
-
+// import { QueryBuilder } from "pop-shared";
+import { QueryBuilder } from "../../../../shared/dist";
+import { Row, Col } from "reactstrap";
 const bases = [];
 bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
 bases.push({ key: "mnr", base: "Oeuvres spoliées (MNR Rose-Valland)" });
@@ -18,18 +19,21 @@ class SearchAdvanced extends React.Component {
     return (
       <div className="advanced-search">
         <div className="collection">
-          <div>Dans la base</div>
-          <select
-            value={key}
-            onChange={e => {
-              this.setState({ base: e.target.value });
-            }}
-          >
-            {bases.map(e => {
-              return <option value={e.key}>{e.base}</option>;
-            })}
-          </select>
-          <div> je recherche :</div>
+          <Row className="advanced-search-title">
+            <div>Dans la base</div>
+
+            <select
+              value={key}
+              onChange={e => {
+                this.setState({ base: e.target.value });
+              }}
+            >
+              {bases.map(e => {
+                return <option value={e.key}>{e.base}</option>;
+              })}
+            </select>
+            <div>je recherche:</div>
+          </Row>
         </div>
         <QueryBuilder
           collection={key}
