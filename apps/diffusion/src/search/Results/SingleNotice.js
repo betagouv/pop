@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import shave from "shave";
+import { image } from "../../services/image";
+
 import "./SingleNotice.css";
-import { image } from "./image";
 
 const joinData = f => {
   return f

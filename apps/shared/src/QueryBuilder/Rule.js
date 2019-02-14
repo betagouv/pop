@@ -18,11 +18,14 @@ export default class RuleComponent extends React.Component {
   onUpdate(data) {
     const { combinator, key, operator, value } = data;
     if (key) {
-      const query = `{"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}}`;
-      this.setState({ query: JSON.parse(query) });
+      const suggestionQuery = `{"query": {"term": {"BASE.keyword": "${
+        this.props.base
+      }"}},"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}, "size":0}`;
+      this.setState({ query: JSON.parse(suggestionQuery) });
     } else {
       this.setState({ query: {} });
     }
+
     const query = ruleQuery(key, operator, value);
     if (query) {
       this.props.onUpdate({ id: this.props.id, query, combinator, data });
@@ -34,6 +37,7 @@ export default class RuleComponent extends React.Component {
       <ReactiveComponent componentId={`Rule${this.props.id}`} defaultQuery={() => this.state.query}>
         <Rule
           first={this.props.first}
+          last={this.props.last}
           id={this.props.id}
           data={this.props.data}
           onRuleAdd={this.props.onRuleAdd}
@@ -51,7 +55,6 @@ export default class RuleComponent extends React.Component {
 class Rule extends React.Component {
   constructor(props) {
     super(props);
-    console.log("PROPS RULE", this.props.data);
     this.state = {
       valueSelected: this.props.data.key || "REF",
       actionSelected: this.props.data.operator || "==",
@@ -76,7 +79,7 @@ class Rule extends React.Component {
   render() {
     return (
       <div className="rule">
-        {this.props.id > 0 ? (
+        {!this.props.first ? (
           <Combinator
             value={this.state.combinator}
             onChange={e =>
@@ -125,9 +128,13 @@ class Rule extends React.Component {
           }}
         />
         <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
-        <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
-          X
-        </button>
+        {!this.props.last ? (
+          <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
+            X
+          </button>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -218,19 +225,14 @@ class ValueEditor extends React.Component {
   }
 }
 
-const Combinator = props => {
+const Combinator = ({ value, onChange }) => {
   const choices = ["ET", "OU"].map(option => (
     <option key={option} value={option}>
       {option}
     </option>
   ));
   return (
-    <select
-      selected="ET"
-      value={props.value}
-      className="combinator"
-      onChange={props.onChange.bind(this)}
-    >
+    <select selected="ET" value={value} className="combinator" onChange={onChange}>
       {choices}
     </select>
   );

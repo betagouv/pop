@@ -2,7 +2,7 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import queryString from "query-string";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 
 import LinkedNotices from "./LinkedNotices";
 import SingleNotice from "./SingleNotice";
@@ -178,9 +178,9 @@ Area width x height
   render() {
     return (
       <ReactiveComponent
-        componentId={this.props.componentId || "map"} // a unique id we will refer to later
+        componentId="map" // a unique id we will refer to later
         URLParams={this.props.URLParams || true}
-        react={{ and: this.props.filter }}
+        react={{ and: this.props.filters }}
         defaultQuery={() => this.state.query}
       >
         <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
@@ -483,7 +483,7 @@ class Map extends React.Component {
     };
 
     return (
-      <div style={style} className="search-map">
+      <div style={style} className="search-map view">
         <Loader isOpen={!this.state.loaded} />
         <div id="map" ref={this.mapRef} style={style}>
           <div className={`drawer ${this.state.drawerContent ? "open" : ""}`}>
@@ -518,8 +518,6 @@ function toGeoJson(arr) {
     info: { type: "name", properties: { name: "POP" } },
     features: []
   };
-  console.log("FOUND", arr.length);
-
   for (var i = 0; i < arr.length; i++) {
     const item = arr[i];
     const ncoordinates = nGeoHash.decode(item.key);
