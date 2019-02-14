@@ -37,6 +37,7 @@ export default class RuleComponent extends React.Component {
       <ReactiveComponent componentId={`Rule${this.props.id}`} defaultQuery={() => this.state.query}>
         <Rule
           first={this.props.first}
+          last={this.props.last}
           id={this.props.id}
           data={this.props.data}
           onRuleAdd={this.props.onRuleAdd}
@@ -127,9 +128,13 @@ class Rule extends React.Component {
           }}
         />
         <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
-        <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
-          X
-        </button>
+        {!this.props.last ? (
+          <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
+            X
+          </button>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }

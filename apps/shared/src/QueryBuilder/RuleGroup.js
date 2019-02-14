@@ -121,6 +121,7 @@ export default class RuleGroup extends React.Component {
   }
 
   renderChildren() {
+    // console.log("this.state.queries", this.state.queries);
     return this.state.queries.map(({ id, data }, i) => {
       return (
         <Rule
@@ -129,6 +130,7 @@ export default class RuleGroup extends React.Component {
           key={`key_${id}`}
           id={id}
           first={!i}
+          last={this.state.queries.length === 1}
           data={data || {}}
           displayLabel={this.props.displayLabel}
           onRuleAdd={this.onRuleAdd.bind(this)}
