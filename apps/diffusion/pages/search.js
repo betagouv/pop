@@ -34,8 +34,6 @@ export default class extends React.Component {
       });
   }
 
-  isSimpleMode = () => this.props.mode === "simple";
-
   render = () => {
     return (
       <Layout>
@@ -52,7 +50,7 @@ export default class extends React.Component {
             <Header location={this.props.asPath} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row className="search-row">
-                {this.isSimpleMode() ? (
+                {this.props.mode === "simple" ? (
                   <Menu
                     location={this.props.asPath}
                     mobile_menu={this.state.mobile_menu}
@@ -64,7 +62,7 @@ export default class extends React.Component {
                 <div className="search-results">
                   <div className={`search-container search-container-${this.props.mode}`}>
                     <Search mode={this.props.mode} location={this.props.asPath} />
-                    {this.isSimpleMode() ? (
+                    {this.props.mode === "simple" ? (
                       <MobileFilters mobile_menu={this.state.mobile_menu} />
                     ) : (
                       <div />
