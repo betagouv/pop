@@ -6,19 +6,9 @@ import TextSearch from "./Search";
 import AdvancedSearch from "./SearchAdvanced";
 
 class Search extends React.Component {
-  state = {
-    mode: "normal"
-  };
-
-  switch(mode) {
-    if (this.props.onChangeMode) {
-      this.props.onChangeMode(mode);
-    }
-    this.setState({ mode });
-  }
 
   renderSearch() {
-    if (this.state.mode !== "advanced") {
+    if (this.props.mode !== "advanced") {
       return <TextSearch />;
     } else {
       return <AdvancedSearch />;
@@ -26,21 +16,22 @@ class Search extends React.Component {
   }
 
   renderLink() {
-    if (this.state.mode !== "advanced") {
+    if (this.props.mode !== "advanced") {
       return (
-        <div onClick={() => this.switch("advanced")}>
+        <Link href="/advanced-search">
           <a className="search-mode">Recherche avancée</a>
-        </div>
+        </Link>
       );
     }
     return (
-      <div onClick={() => this.switch("normal")}>
+      <Link href="/search">
         <a className="search-mode">Recherche simple</a>
-      </div>
+      </Link>
     );
   }
 
   render() {
+    console.log("this.props.mode",this.props.mode)
     return (
       <React.Fragment>
         {this.renderSearch()}

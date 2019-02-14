@@ -24,8 +24,8 @@ export default class extends React.Component {
     search_mode: "normal"
   };
 
-  static async getInitialProps({ asPath, query: { view } }) {
-    return { asPath, view };
+  static async getInitialProps({ asPath, query: { view, mode } }) {
+    return { asPath, view, mode };
   }
 
   componentDidMount() {
@@ -44,8 +44,6 @@ export default class extends React.Component {
 
   render = () => {
     // this.handleUrl();*
-
-    //@raph Pas fan de mon mode search_mode. mais quick win pour la demo.
     console.log("view:", this.props.view);
     return (
       <Layout>
@@ -62,7 +60,7 @@ export default class extends React.Component {
             <Header location={this.props.asPath} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row className="search-row">
-                {this.state.search_mode === "normal" ? (
+                {this.props.mode === "normal" ? (
                   <Menu
                     location={this.props.asPath}
                     mobile_menu={this.state.mobile_menu}
@@ -74,11 +72,11 @@ export default class extends React.Component {
                 <div className="search-results">
                   <div className="search-container">
                     <Search
-                      onChangeMode={search_mode => this.setState({ search_mode })}
+                      mode={this.props.mode}
                       location={this.props.asPath}
                       updateParam={this.updateParam.bind(this)}
                     />
-                    {this.state.search_mode === "normal" ? (
+                    {this.props.mode === "normal" ? (
                       <MobileFilters mobile_menu={this.state.mobile_menu} />
                     ) : (
                       <div />
