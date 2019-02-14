@@ -1,6 +1,5 @@
 import React from "react";
-// import { QueryBuilder } from "pop-shared";
-import { QueryBuilder } from "../../../../shared/dist";
+import { QueryBuilder } from "pop-shared";
 
 const bases = [];
 bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
