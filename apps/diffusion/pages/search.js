@@ -85,7 +85,7 @@ export default class extends React.Component {
                     )}
                   </div>
                   <Results
-                    view={this.props.view.trim()}
+                    view={this.props.view}
                     location={this.props.asPath}
                     updateParam={this.updateParam.bind(this)}
                   />
