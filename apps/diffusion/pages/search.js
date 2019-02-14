@@ -24,8 +24,8 @@ export default class extends React.Component {
     search_mode: "normal"
   };
 
-  static async getInitialProps({ asPath }) {
-    return { asPath };
+  static async getInitialProps({ asPath, query: { view }  }) {
+    return { asPath, view };
   }
 
   componentDidMount() {
