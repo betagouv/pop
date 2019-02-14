@@ -1,6 +1,4 @@
 import React from "react";
-import { Nav, NavItem, NavLink } from "reactstrap";
-import classnames from "classnames";
 import Link from "next/link";
 
 import Map from "./Map";
@@ -30,34 +28,23 @@ class Results extends React.Component {
   renderTabs() {
     const view = this.props.view || "list";
     return (
-      <Nav pills>
-        <NavItem>
-          <NavLink className={classnames({ active: view === "list" })}>
-            <Link href="/search/list">
-              <a>LISTE</a>
-            </Link>
-          </NavLink>
-        </NavItem>
-
-        <NavItem>
-          <NavLink className={classnames({ active: view === "map" })}>
-            <Link href='/search/map?geolocalisation=%5B"oui"%5D'>
-              <a>CARTE</a>
-            </Link>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({
-              active: view === "mosaic"
-            })}
-          >
-            <Link href='/search/mosaic?image=%5B"oui"%5D'>
-              <a>MOSAIQUE</a>
-            </Link>
-          </NavLink>
-        </NavItem>
-      </Nav>
+      <ul className="nav nav-pills">
+        <li className="nav-item">
+          <Link href="/search/list">
+            <a className={`${view === "list" ? "active " : ""} nav-link`}>LISTE</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href='/search/map?geolocalisation=%5B"oui"%5D'>
+            <a className={`${view === "map" ? "active " : ""} nav-link`}>CARTE</a>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link href='/search/mosaic?image=%5B"oui"%5D'>
+            <a className={`${view === "mosaic" ? "active " : ""} nav-link`}>MOSAIQUE</a>
+          </Link>
+        </li>
+      </ul>
     );
   }
 
