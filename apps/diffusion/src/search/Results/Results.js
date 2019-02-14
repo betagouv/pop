@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
-import { ReactiveList } from "@appbaseio/reactivesearch";
 import classnames from "classnames";
+import Link from "next/link";
 
 import Map from "./Map";
 import Mosaic from "./Mosaic";
@@ -27,65 +27,28 @@ const DEFAULT_FILTER = [
 ];
 
 class Results extends React.Component {
-  componentWillMount() {
-    this.setQuery(this.props.selectedValue);
-  }
-  setQuery(view) {
-    let query = { match_all: {} };
-    let value = "";
-
-    if (view === "mosaique") {
-      query = { match: { CONTIENT_IMAGE: "oui" } };
-      value = "mosaique";
-    } else if (view === "carte") {
-      query = { match: { POP_CONTIENT_GEOLOCALISATION: "oui" } };
-      value = "carte";
-    }
-
-    this.props.setQuery({
-      query,
-      value
-    });
-  }
-
   renderTabs() {
-    const view = this.props.selectedValue || "liste";
+    const view = this.props.view || "liste";
     return (
       <Nav pills>
         <NavItem>
-          <NavLink
-            className={classnames({ active: view === "liste" })}
-            onClick={() => {
-              this.setQuery("");
-            }}
-          >
-            LISTE
+          <NavLink className={classnames({ active: view === "liste" })}>
+            <Link href="/search/list"><a>LISTE</a></Link>
           </NavLink>
         </NavItem>
 
         <NavItem>
-          <NavLink
-            className={classnames({
-              active: view === "carte"
-            })}
-            onClick={() => {
-              this.setQuery("carte");
-            }}
-          >
-            CARTE
+          <NavLink className={classnames({ active: view === "carte" })}>
+            <Link href='/search/map?geolocalisation=%5B"oui"%5D'><a>CARTE</a></Link>
           </NavLink>
         </NavItem>
-
         <NavItem>
           <NavLink
             className={classnames({
               active: view === "mosaique"
             })}
-            onClick={() => {
-              this.setQuery("mosaique");
-            }}
           >
-            MOSAIQUE
+            <Link href='/search/mosaic?image=%5B"oui"%5D'><a>MOSAIQUE</a></Link>
           </NavLink>
         </NavItem>
       </Nav>
@@ -94,6 +57,7 @@ class Results extends React.Component {
 
   renderResults() {
     const view = this.props.selectedValue;
+    console.log("RENDER renderResults", view);
     if (view === "mosaique") {
       return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
     } else if (view === "carte") {

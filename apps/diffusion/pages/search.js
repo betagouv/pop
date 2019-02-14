@@ -2,7 +2,6 @@ import Router from "next/router";
 import Head from "next/head";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase } from "@appbaseio/reactivesearch";
-import Link from "next/link";
 
 import Layout from "../src/components/Layout";
 
