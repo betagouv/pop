@@ -47,4 +47,4 @@ export default class AdvancedSearch extends React.Component {
   }
 }
 
-AdvancedSearch.operator = operators;
+AdvancedSearch.operators = operators;
