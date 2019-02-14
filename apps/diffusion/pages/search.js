@@ -60,7 +60,7 @@ export default class extends React.Component {
             <Header location={this.props.asPath} />
             <ReactiveBase url={`${es_url}`} app={BASES}>
               <Row className="search-row">
-                {this.props.mode === "normal" ? (
+                {this.props.mode === "simple" ? (
                   <Menu
                     location={this.props.asPath}
                     mobile_menu={this.state.mobile_menu}
@@ -76,7 +76,7 @@ export default class extends React.Component {
                       location={this.props.asPath}
                       updateParam={this.updateParam.bind(this)}
                     />
-                    {this.props.mode === "normal" ? (
+                    {this.props.mode === "simple" ? (
                       <MobileFilters mobile_menu={this.state.mobile_menu} />
                     ) : (
                       <div />
