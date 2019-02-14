@@ -27,28 +27,37 @@ const DEFAULT_FILTER = [
 ];
 
 class Results extends React.Component {
+  static async getInitialProps({ asPath, view }) {
+    return { asPath, view };
+  }
   renderTabs() {
-    const view = this.props.view || "liste";
+    const view = this.props.view || "list";
     return (
       <Nav pills>
         <NavItem>
-          <NavLink className={classnames({ active: view === "liste" })}>
-            <Link href="/search/list"><a>LISTE</a></Link>
+          <NavLink className={classnames({ active: view === "list" })}>
+            <Link href="/search/list">
+              <a>LISTE</a>
+            </Link>
           </NavLink>
         </NavItem>
 
         <NavItem>
-          <NavLink className={classnames({ active: view === "carte" })}>
-            <Link href='/search/map?geolocalisation=%5B"oui"%5D'><a>CARTE</a></Link>
+          <NavLink className={classnames({ active: view === "map" })}>
+            <Link href='/search/map?geolocalisation=%5B"oui"%5D'>
+              <a>CARTE</a>
+            </Link>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink
             className={classnames({
-              active: view === "mosaique"
+              active: view === "mosaic"
             })}
           >
-            <Link href='/search/mosaic?image=%5B"oui"%5D'><a>MOSAIQUE</a></Link>
+            <Link href='/search/mosaic?image=%5B"oui"%5D'>
+              <a>MOSAIQUE</a>
+            </Link>
           </NavLink>
         </NavItem>
       </Nav>
@@ -56,8 +65,7 @@ class Results extends React.Component {
   }
 
   renderResults() {
-    const view = this.props.selectedValue;
-    console.log("RENDER renderResults", view);
+    const view = this.props.view || "list";
     if (view === "mosaique") {
       return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
     } else if (view === "carte") {
@@ -66,6 +74,7 @@ class Results extends React.Component {
       return <List key="liste" filters={DEFAULT_FILTER} />;
     }
   }
+
   render() {
     return (
       <div className="result-view">
