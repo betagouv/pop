@@ -38,6 +38,8 @@ export default class QueryBuilder extends React.Component {
       <div className="queryBuilder">
         <RuleGroup
           history={this.props.history}
+          router={this.props.router}
+          replaceRoute={this.props.replaceRoute}
           autocomplete={this.props.autocomplete}
           displayLabel={this.props.displayLabel}
           onUpdate={this.onUpdate.bind(this)}

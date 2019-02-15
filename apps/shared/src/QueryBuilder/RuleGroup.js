@@ -4,8 +4,6 @@ import qs from "qs";
 import { Container } from "reactstrap";
 import ruleQuery from "./ruleQuery";
 import { Tooltip } from "reactstrap";
-// const imgInfo = require("../../../../assets/info.png");
-// import { history } from "../../../../redux/store";
 
 // Merge unit queries
 function getMergedQueries(q) {
@@ -68,7 +66,18 @@ export default class RuleGroup extends React.Component {
   };
 
   updateUrlParams = q => {
-    const { history } = this.props;
+    const { history, router, replaceRoute } = this.props;
+    if (router) {
+      const lol = { ...router.query };
+      delete lol.view;
+      delete lol.mode;
+      const currentUrlParams = qs.stringify(lol, { addQueryPrefix: true });
+      const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
+      if (currentUrlParams !== targetUrlParams) {
+        replaceRoute(targetUrlParams);
+      }
+      return;
+    }
     if (history) {
       const currentUrlParams = history.location.search;
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
@@ -79,13 +88,16 @@ export default class RuleGroup extends React.Component {
   };
 
   componentDidMount() {
-    const { history } = this.props;
-    if (!history) {
+    const { history, router } = this.props;
+    let search;
+    if (router) {
+      search = qs.parse(router.asPath.split("?")[1], { ignoreQueryPrefix: true });
+    } else if (history) {
+      search = qs.parse(history.location.search, {ignoreQueryPrefix: true});
+    } else {
       return;
     }
-    const search = qs.parse(history.location.search, {
-      ignoreQueryPrefix: true
-    });
+    // alert(JSON.stringify(search));
 
     if (search && search.q) {
       let id = 0;
@@ -101,7 +113,7 @@ export default class RuleGroup extends React.Component {
     } else {
       //put default value when you run the page. But It should be done differently.
       //Actually, this component needs some optimisation
-      this.updateStateQueries([{ id: 0 }]);
+      // this.updateStateQueries([{ id: 0 }]);
     }
   }
 

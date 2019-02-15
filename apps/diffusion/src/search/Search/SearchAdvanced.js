@@ -1,7 +1,8 @@
 import React from "react";
-import { QueryBuilder } from "pop-shared";
-// import { QueryBuilder } from "../../../../shared/dist";
+// import { QueryBuilder } from "pop-shared";
+import { QueryBuilder } from "../../../../shared/dist";
 import { Row, Col } from "reactstrap";
+import { withRouter } from 'next/router'
 const bases = [];
 bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
 bases.push({ key: "mnr", base: "Oeuvres spoliées (MNR Rose-Valland)" });
@@ -15,13 +16,13 @@ class SearchAdvanced extends React.Component {
   };
 
   render() {
+    
     const { base, key } = bases.find(e => e.key === this.state.base);
     return (
       <div className="advanced-search">
         <div className="collection">
           <Row className="advanced-search-title">
             <div>Dans la base</div>
-
             <select
               value={key}
               onChange={e => {
@@ -39,7 +40,10 @@ class SearchAdvanced extends React.Component {
           collection={key}
           base={base}
           componentId="mainSearch"
-          history={null}
+          router={this.props.router}
+          replaceRoute={r => { 
+            this.props.router.replace("/advanced-search/list" + r)
+          }}
           displayLabel={true}
           autocomplete={true}
         />
@@ -48,4 +52,4 @@ class SearchAdvanced extends React.Component {
   }
 }
 
-export default SearchAdvanced;
+export default withRouter(SearchAdvanced);
