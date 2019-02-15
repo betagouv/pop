@@ -6,10 +6,7 @@ import "./MultiList.css";
 import { toFrenchRegex } from "./utils";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
-  state = {
-    collapse: null
-  };
-
+  state = { collapse: null };
   urlLocation = null;
 
   onListClicked = () => {
@@ -18,38 +15,18 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
 
   onCollapseChange = nextCollapseState => {
     this.setState({ collapse: nextCollapseState });
-    if (this.props.onCollapseChange) {
-      this.props.onCollapseChange(nextCollapseState, this.props.componentId);
-    }
   };
 
   componentWillMount() {
-    try {
-      if (location) {
-        this.urlLocation = location.search;
-      }
-    } catch (error) {
-      if (this.props.location) {
-        // If window.location not defined use props
-        this.urlLocation = this.props.location.search;
-      } else {
-        throw new Error("location is not defined");
-      }
+    if (this.props.location) {
+      this.urlLocation = this.props.location;
+    } else {
+      this.urlLocation = location.search;
     }
   }
 
   componentDidMount() {
     this.onCollapseChange(this.shouldCollapse());
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.defaultSelected !== this.props.defaultSelected) {
-      if (this.props.defaultSelected && this.props.defaultSelected.length > 0) {
-        this.onCollapseChange(false);
-      } else if (!this.state.collapse) {
-        this.onCollapseChange(true);
-      }
-    }
   }
 
   shouldCollapse = () => {
@@ -61,10 +38,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
 
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
-    const collapse =
-      this.state.collapse === null
-        ? this.shouldCollapse()
-        : this.state.collapse;
+    const collapse = this.state.collapse === null ? this.shouldCollapse() : this.state.collapse;
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
@@ -85,7 +59,6 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
                 displayCount={this.props.displayCount}
                 renderListItem={this.props.renderListItem}
                 filterListItem={this.props.filterListItem}
-                defaultSelected={this.props.defaultSelected}
                 dataField={this.props.dataField}
                 componentId={this.props.componentId}
                 sortByName={this.props.sortByName}
@@ -111,7 +84,7 @@ class MultiListUmbrella extends React.Component {
   }
 
   componentDidMount() {
-    const { location, componentId, defaultSelected } = this.props;
+    const { location, componentId } = this.props;
     this.updateInternalQuery("");
     const values = queryString.parse(location);
     const field = componentId;
@@ -121,30 +94,13 @@ class MultiListUmbrella extends React.Component {
         this.updateExternalQuery(selected);
         this.setState({ selected });
       } catch (e) {}
-    } else if (defaultSelected) {
-      const selected = defaultSelected;
-      this.updateExternalQuery(selected);
-      this.setState({ selected });
     }
   }
   componentWillReceiveProps(nextProps) {
     //get from url
-    if (
-      nextProps.selectedValue === null &&
-      this.props.selectedValue !== nextProps.selectedValue
-    ) {
+    if (nextProps.selectedValue === null && this.props.selectedValue !== nextProps.selectedValue) {
       const selected = [];
       this.setState({ selected });
-      this.updateExternalQuery(selected);
-    }
-
-    //default selected
-    if (
-      nextProps.defaultSelected &&
-      this.props.defaultSelected !== nextProps.defaultSelected
-    ) {
-      const selected = nextProps.defaultSelected;
-      // this.setState({ selected });
       this.updateExternalQuery(selected);
     }
   }
@@ -254,15 +210,10 @@ class MultiList extends React.Component {
         }
       }
     }
-    return this.props.displayCount
-      ? `${label} (${item.doc_count})`
-      : `${label} `;
+    return this.props.displayCount ? `${label} (${item.doc_count})` : `${label} `;
   }
   renderSuggestion() {
-    if (
-      this.props.aggregations &&
-      Object.keys(this.props.aggregations).length
-    ) {
+    if (this.props.aggregations && Object.keys(this.props.aggregations).length) {
       // Flat buckets (it may contain more than one aggregation)
       const aggs = this.props.aggregations;
       let buckets = [].concat.apply(

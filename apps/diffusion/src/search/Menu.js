@@ -1,7 +1,5 @@
 import React from "react";
-
 import { SelectedFilters } from "@appbaseio/reactivesearch";
-
 import { MultiList } from "pop-shared";
 
 const DEFAULT_FILTER = [
@@ -85,7 +83,6 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="image"
         placeholder="oui ou non"
         showSearch={false}
-        // defaultSelected={view === "mosaic" ? ["oui"] : []}
         location={location}
       />
       <MultiList
@@ -97,7 +94,6 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         className="filters"
         showSearch={false}
         URLParams={true}
-        // defaultSelected={view === "map" ? ["oui"] : []}
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
         location={location}
       />

@@ -2,17 +2,14 @@ import Router from "next/router";
 import Head from "next/head";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase } from "@appbaseio/reactivesearch";
-
 import Layout from "../src/components/Layout";
-
 import Header from "../src/search/Header";
 import Menu from "../src/search/Menu";
 import MobileFilters from "../src/search/MobileFilters";
-
 import Results from "../src/search/Results";
 import Search from "../src/search/Search";
-
 import { es_url } from "../src/config";
+import queryString from "query-string";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");
 
@@ -21,8 +18,13 @@ import "./search.css";
 export default class extends React.Component {
   state = { mobile_menu: false };
 
-  static async getInitialProps({ asPath, query: { view, mode } }) {
-    return { asPath, view: view || "list", mode };
+  static async getInitialProps({ asPath, query }) {
+    return {
+      asPath,
+      queryString: queryString.stringify(query),
+      view: query.view || "list",
+      mode: query.mode
+    };
   }
 
   componentDidMount() {
@@ -52,7 +54,7 @@ export default class extends React.Component {
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
                   <Menu
-                    location={this.props.asPath}
+                    location={this.props.queryString}
                     mobile_menu={this.state.mobile_menu}
                     closeMenu={() => this.setState({ mobile_menu: false })}
                     view={this.props.view}

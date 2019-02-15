@@ -24,7 +24,6 @@ export default class App extends Component {
             queryFormat="or"
             className="filters"
             URLParams={true}
-            defaultSelected={["oui"]}
             data={[
               { label: "oui", value: "oui" },
               { label: "non", value: "non" }
