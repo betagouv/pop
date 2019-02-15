@@ -1,6 +1,6 @@
 import React from "react";
-// import { QueryBuilder } from "pop-shared";
-import { QueryBuilder } from "../../../../shared/dist";
+import { QueryBuilder } from "pop-shared";
+// import { QueryBuilder } from "../../../../shared/dist";
 import { Row, Col } from "reactstrap";
 import { withRouter } from 'next/router'
 const bases = [];
