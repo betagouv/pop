@@ -157,10 +157,6 @@ router.put(
 
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
-        /*
-          person.friends.push(friend);
-          person.save(done);
-      */
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
