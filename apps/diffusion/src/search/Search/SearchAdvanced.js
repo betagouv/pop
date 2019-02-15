@@ -41,9 +41,6 @@ class SearchAdvanced extends React.Component {
           base={base}
           componentId="mainSearch"
           router={this.props.router}
-          replaceRoute={r => { 
-            this.props.router.replace("/advanced-search/list" + r)
-          }}
           displayLabel={true}
           autocomplete={true}
         />

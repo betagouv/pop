@@ -58,7 +58,6 @@ export default class RuleGroup extends React.Component {
   }
 
   updateStateQueries = queries => {
-    console.log("queries", queries);
     this.setState({ queries }, () => {
       this.updateUrlParams(queries);
       this.props.onUpdate(getMergedQueries(queries));
@@ -66,19 +65,15 @@ export default class RuleGroup extends React.Component {
   };
 
   updateUrlParams = q => {
-    const { history, router, replaceRoute } = this.props;
+    const { history, router } = this.props;
     if (router) {
-      const lol = { ...router.query };
-      delete lol.view;
-      delete lol.mode;
-      const currentUrlParams = qs.stringify(lol, { addQueryPrefix: true });
-      const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
+      const {view, mode, ...query} = router.query;
+      const currentUrlParams = qs.stringify(query);
+      const targetUrlParams = qs.stringify({ q: q.map(e => e.data) });
       if (currentUrlParams !== targetUrlParams) {
-        replaceRoute(targetUrlParams);
+        router.replace(`/advanced-search/${view}?${targetUrlParams}`)
       }
-      return;
-    }
-    if (history) {
+    } else if (history) {
       const currentUrlParams = history.location.search;
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
       if (currentUrlParams !== targetUrlParams) {
@@ -97,7 +92,6 @@ export default class RuleGroup extends React.Component {
     } else {
       return;
     }
-    // alert(JSON.stringify(search));
 
     if (search && search.q) {
       let id = 0;
@@ -113,7 +107,7 @@ export default class RuleGroup extends React.Component {
     } else {
       //put default value when you run the page. But It should be done differently.
       //Actually, this component needs some optimisation
-      // this.updateStateQueries([{ id: 0 }]);
+      this.updateStateQueries([{ id: 0 }]);
     }
   }
 
