@@ -53,6 +53,8 @@ router.put(
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
 
+    const arr = [];
+    
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
 
