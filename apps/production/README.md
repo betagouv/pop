@@ -35,3 +35,33 @@ mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e
 mongodump --host 127.0.0.1:27017 --db pop --collection "mnr"
 mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop 
 `
+
+
+How to restore image S3
+
+
+For windows : 
+
+install s3-pit-restore : pip3 install s3-pit-restore
+Go to local data , find the script and rename it with the ".py" extension
+Create a .bat file in the script folder and add this inside ( if you want to see logs) :  
+
+You can get the S3 sub folder at a specific time 
+
+`
+s3-pit-restore.py -b pop-phototeque -p mnr -d ./mnr -t "02-15-2019 14:55:00 +2"
+pause
+`
+
+Then edit the credentiel file if you have multiple projects. 
+
+Then run it
+
+The sync you local folder to the online server
+
+
+
+
+source : 
+https://github.com/madisoft/s3-pit-restore
+https://medium.com/@ManagedKube/s3-how-to-restore-an-entire-folders-version-74042cca0a9c
