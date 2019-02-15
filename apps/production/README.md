@@ -28,6 +28,8 @@ La branche _master_ est automatiquement livré sur la plateforme de _staging_ et
 
 ## How to backup
 
+### Database :
+
 Exemple avec la base MNR : 
 
 `
@@ -37,7 +39,7 @@ mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authe
 `
 
 
-How to restore image S3
+### How to restore image S3
 
 
 For windows : 
