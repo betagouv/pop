@@ -14,6 +14,9 @@ function getMergedQueries(q) {
     should_not: []
   };
   for (let i = 0; i < q.length; i++) {
+    if (!q[i].query) {
+      continue;
+    }
     // This algo could be better ;)
     let combinator = "ET";
     if (i === 0) {
@@ -67,11 +70,11 @@ export default class RuleGroup extends React.Component {
   updateUrlParams = q => {
     const { history, router } = this.props;
     if (router) {
-      const {view, mode, ...query} = router.query;
+      const { view, mode, ...query } = router.query;
       const currentUrlParams = qs.stringify(query);
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) });
       if (currentUrlParams !== targetUrlParams) {
-        router.replace(`/advanced-search/${view}?${targetUrlParams}`)
+        router.replace(`/advanced-search/${view}?${targetUrlParams}`);
       }
     } else if (history) {
       const currentUrlParams = history.location.search;
@@ -88,7 +91,7 @@ export default class RuleGroup extends React.Component {
     if (router) {
       search = qs.parse(router.asPath.split("?")[1], { ignoreQueryPrefix: true });
     } else if (history) {
-      search = qs.parse(history.location.search, {ignoreQueryPrefix: true});
+      search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
     } else {
       return;
     }
