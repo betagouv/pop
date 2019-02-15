@@ -28,7 +28,7 @@ export default class RuleComponent extends React.Component {
     }
 
     const query = ruleQuery(key, operator, value);
-    if (query) {
+    if (query) { // Remove this test to update when you empty the content of an input. Its not working now cause of the urlparam wrong redirection when you have no rule 
       this.props.onUpdate({ id: this.props.id, query, combinator, data });
     }
   }
