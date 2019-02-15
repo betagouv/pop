@@ -56,12 +56,18 @@ router.put(
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
 
-      const arr = [
-        ...(prevNotice.VIDEO || [])
-          .filter(x => !(notice.VIDEO || []).includes(x))
-          .map(f => deleteFile(f)),
-        ...req.files.map(f => uploadFile(`mnr/${notice.REF}/${f.originalname}`, f))
-      ];
+      if (notice.VIDEO !== undefined) {
+        for (let i = 0; i < prevNotice.VIDEO.length; i++) {
+          if (!(notice.VIDEO || []).includes(prevNotice.VIDEO[i])) {
+            arr.push(deleteFile(prevNotice.VIDEO[i]));
+          }
+        }
+      }
+
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        arr.push(uploadFile(`mnr/${notice.REF}/${f.originalname}`, f));
+      }
 
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
