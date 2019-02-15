@@ -1,7 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import queryString from "query-string";
-
 import TextSearch from "./Search";
 import AdvancedSearch from "./SearchAdvanced";
 
