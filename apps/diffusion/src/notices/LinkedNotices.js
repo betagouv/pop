@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { image } from "../search/image";
+import { image } from "../services/image";
 import "./LinkedNotices.css";
 class LinkedNotice extends React.Component {
   render() {

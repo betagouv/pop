@@ -1,22 +1,26 @@
 import React from "react";
+import queryString from "query-string";
 import API from "../services/api";
-import "./MuseoCard.css";
+import "./Header.css";
 
-class MuseoCard extends React.Component {
+class Header extends React.Component {
   state = {
     museo: null
   };
 
   async componentDidMount() {
-    try {
-      this.setState({
-        museo: await API.getMuseo(this.props.museo)
-      });
-    } catch (e) {}
+    const query = queryString.parseUrl(this.props.location).query;
+    if (query && query.museo && query.museo) {
+      const museos = JSON.parse(query.museo);
+      if (museos.length) {
+        const museo = await API.getMuseo(museos[0]);
+        this.setState({ museo });
+      }
+    }
   }
 
   render() {
-    const museo = this.state.museo;
+    const { museo } = this.state;
     if (!museo) {
       return <div />;
     }
@@ -35,4 +39,4 @@ class MuseoCard extends React.Component {
   }
 }
 
-export default MuseoCard;
+export default Header;
