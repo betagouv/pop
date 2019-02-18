@@ -135,7 +135,6 @@ export default class RuleGroup extends React.Component {
     return this.state.queries.map(({ id, data }, i) => {
       return (
         <Rule
-          base={this.props.base}
           autocomplete={this.props.autocomplete}
           key={`key_${id}`}
           id={id}
