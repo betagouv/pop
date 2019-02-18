@@ -1,6 +1,6 @@
 import React from "react";
 //import { QueryBuilder } from "pop-shared";
- import { QueryBuilder } from "../../../../shared/dist";
+import { QueryBuilder } from "../../../../shared/dist";
 import { Row, Col } from "reactstrap";
 import { withRouter } from "next/router";
 const bases = [];
@@ -12,6 +12,10 @@ bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
 
 class SearchAdvanced extends React.Component {
   render() {
+    console.log(
+      "bases.find(e => e.key === this.props.base);",
+      bases.find(e => e.key === this.props.base)
+    );
     const { base, key } = bases.find(e => e.key === this.props.base);
 
     return (
@@ -20,11 +24,9 @@ class SearchAdvanced extends React.Component {
           <Row className="advanced-search-title">
             <div>Dans la base</div>
             <select
-              value={this.props.value}
+              value={this.props.base}
               onChange={e => {
-
-                //redirect here
-                // this.props.onChangeBase(e.target.value);
+                console.log("ICI change lien to ", e.target.value);
               }}
             >
               {bases.map(e => {
