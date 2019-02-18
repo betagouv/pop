@@ -23,8 +23,9 @@ app.prepare().then(() => {
     const sitemapRegex = /^\/sitemap\/(.*?)$/;
     const searchRegex = /^\/(advanced-search|search)\/(.*?)$/;
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
+    const isNotSecure = req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http"
 
-    if (false && isProdDomain && (!req.secure || !req.headers.host.match(/^www/))) {
+    if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` })
       res.end();
     } else if (pathname.match(sitemapRegex)) {
