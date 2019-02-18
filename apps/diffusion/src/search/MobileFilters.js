@@ -3,8 +3,8 @@ import React from "react";
 import { Badge } from "reactstrap";
 import { SelectedFilters } from "@appbaseio/reactivesearch";
 
-const MobileFilters = ({ mobile_menu }) => (
-  <div className="filter_mobile_menu" onClick={() => this.setState({ mobile_menu: "mobile_open" })}>
+const MobileFilters = ({ openMenu }) => (
+  <div className="filter_mobile_menu" onClick={openMenu}>
     <SelectedFilters
       render={props => {
         let selectedValues = {};
