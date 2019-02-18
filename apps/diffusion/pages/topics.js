@@ -29,7 +29,7 @@ export default () => (
             <TopicCard
               img={memoireImg("2010/sap57_u031897vj_p.jpg")}
               txt="Studio Harcourt"
-              url={{
+              params={{
                 base: ["Photographies (Mémoire)"],
                 auteur: ["Harcourt (studio)"]
               }}
@@ -39,7 +39,7 @@ export default () => (
             <TopicCard
               img={memoireImg("/2709/sap56_72l002380_p.jpg")}
               txt="André Kertész"
-              url={{
+              params={{
                 base: ["Photographies (Mémoire)"],
                 auteur: [
                   "Kertész, André",
@@ -54,7 +54,7 @@ export default () => (
             <TopicCard
               img={memoireImg("1997/sap58_76l000305_p.jpg")}
               txt="Sam Lévin"
-              url={{
+              params={{
                 base: ["Photographies (Mémoire)"],
                 auteur: ["Lévin, Sam", "Studio Lévin"]
               }}
@@ -64,7 +64,7 @@ export default () => (
             <TopicCard
               img={memoireImg("0129/sap01_na23818917r_t.jpg")}
               txt="Atelier Nadar"
-              url={{
+              params={{
                 base: ["Photographies (Mémoire)"],
                 auteur: ["Nadar (atelier)"]
               }}
@@ -78,7 +78,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("000PE000824/88ee1903.jpg")}
               txt="Peinture à l'huile à la fin du XVIIIème siècle"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 tech: ["peinture à l'huile"],
                 periode: ["4e quart 18e siècle"]
@@ -89,7 +89,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("06650002010/0000670.jpg")}
               txt="Les dessins d'Eugène Delacroix"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 domn: ["dessin"],
                 auteur: ["DELACROIX Eugène"]
@@ -100,7 +100,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("50410000424/94-002348.jpg")}
               txt="Peinture sur bois de Gustave Moreau"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 tech: ["bois"],
                 auteur: ["MOREAU Gustave"]
@@ -112,7 +112,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("11040000242/24013-4.jpg")}
               txt="Esquisses et affiches - Alphonse Mucha"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 mainSearch: "mucha"
               }}
@@ -126,7 +126,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("M0759001165/e05073.jpg")}
               txt="Asie orientale"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
               }}
@@ -136,7 +136,7 @@ export default () => (
             <TopicCard
               img={jocondeImg("00000074608/rimg0445.jpg")}
               txt="Venise"
-              url={{
+              params={{
                 base: ["Collections des musées de France (Joconde)"],
                 mainSearch: "venise"
               }}

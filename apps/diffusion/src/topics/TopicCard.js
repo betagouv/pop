@@ -4,20 +4,24 @@ import { Card, CardImg, CardTitle, CardBody } from "reactstrap";
 import queryString from "query-string";
 import "./TopicCard.css";
 
-class TopicCard extends React.Component {
-  searchUrl = data => {
-    const jsonData = Object.assign(
-      ...Object.entries(data).map(([k, v]) => ({ [k]: JSON.stringify(v) }))
-    );
-    const qsData = queryString.stringify(jsonData);
-    return `/search/mosaic?${qsData}&image=["oui"]`;
-  };
+const toReactiveSearchParams = params => {
+  return Object.assign(...Object.entries(params).map(([k, v]) => ({ [k]: JSON.stringify(v) })));
+};
 
+class TopicCard extends React.Component {
   render() {
-    const { img, txt, url } = this.props;
+    const { img, txt } = this.props;
+    const params = { ...this.props.params, image: ["oui"] };
+    const href = `/search/mosaic?${queryString.stringify({
+      view: "mosaic",
+      mode: "simple",
+      ...toReactiveSearchParams(params)
+    })}`;
+    const alias = `/search/mosaic?${queryString.stringify(toReactiveSearchParams(params))}`;
+    
     return (
       <div className="topic-card">
-        <Link href={this.searchUrl(url)}>
+        <Link href={href} as={alias}>
           <a>
             <Card>
               <CardImg src={img} alt={txt} className="card-img" />
