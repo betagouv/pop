@@ -24,6 +24,7 @@ app.prepare().then(() => {
     const searchRegex = /^\/(advanced-search|search)\/(.*?)$/;
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
 
+    console.log(req.headers["x-forwarded-proto"]);
     if (false && isProdDomain && (!req.secure || !req.headers.host.match(/^www/))) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` })
       res.end();
