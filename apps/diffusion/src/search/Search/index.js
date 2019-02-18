@@ -4,12 +4,11 @@ import TextSearch from "./Search";
 import AdvancedSearch from "./SearchAdvanced";
 
 class Search extends React.Component {
-
   renderSearch() {
     if (this.props.mode !== "advanced") {
       return <TextSearch />;
     } else {
-      return <AdvancedSearch />;
+      return <AdvancedSearch base={this.props.base} />;
     }
   }
 

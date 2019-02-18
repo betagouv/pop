@@ -16,14 +16,17 @@ import "./search.css";
 import throw404 from "../src/services/throw404";
 
 export default class extends React.Component {
-  state = { mobile_menu: false };
+  state = {
+    mobile_menu: false
+  };
 
   static async getInitialProps({ asPath, query }) {
     return {
       asPath,
       queryString: queryString.stringify(query),
       view: query.view,
-      mode: query.mode
+      mode: query.mode,
+      base: "joconde"
     };
   }
 
@@ -31,6 +34,9 @@ export default class extends React.Component {
     if (!this.props.mode || !this.props.view) {
       return throw404();
     }
+
+    const queryScope = this.props.mode === "simple" ? BASES : this.props.base || "joconde";
+
     return (
       <Layout>
         <div className="search">
@@ -44,7 +50,7 @@ export default class extends React.Component {
           <Container fluid style={{ maxWidth: 1860 }}>
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
-            <ReactiveBase url={`${es_url}`} app={BASES}>
+            <ReactiveBase url={`${es_url}`} app={queryScope}>
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
                   <Menu
@@ -58,14 +64,24 @@ export default class extends React.Component {
                 )}
                 <div className="search-results">
                   <div className={`search-container search-container-${this.props.mode}`}>
-                    <Search mode={this.props.mode} location={this.props.asPath} />
+                    <Search
+                      mode={this.props.mode}
+                      location={this.props.asPath}
+                      base={this.props.base}
+                    />
                     {this.props.mode === "simple" ? (
-                      <MobileFilters openMenu={() => this.setState({ mobile_menu: "mobile_open" })} />
+                      <MobileFilters
+                        openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
+                      />
                     ) : (
                       <div />
                     )}
                   </div>
-                  <Results mode={this.props.mode} view={this.props.view} location={this.props.asPath} />
+                  <Results
+                    mode={this.props.mode}
+                    view={this.props.view}
+                    location={this.props.asPath}
+                  />
                 </div>
               </Row>
             </ReactiveBase>
