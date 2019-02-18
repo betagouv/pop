@@ -10,6 +10,7 @@ import generate from "./report";
 import controleThesaurus from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
+import utils from "../utils";
 
 import diff from "./diff";
 
@@ -46,6 +47,12 @@ class Importer extends Component {
 
       if (!importedNotices.length) {
         this.setState({ errors: "Aucune notice détectée à l'import", loading: false });
+        return;
+      }
+
+      const encodingIssueErrors = utils.checkEncodingIssue(importedNotices);
+      if (encodingIssueErrors) {
+        this.setState({ errors: encodingIssueErrors, loading: false });
         return;
       }
 
@@ -364,6 +371,19 @@ class Importer extends Component {
     );
   }
 
+  renderErrors() {
+    return (
+      <div className="working-area">
+        <h2>Impossible d'importer le fichier car des erreurs ont été détectées :</h2>
+        <div>
+          {this.state.errors.split("\n").map((e, i) => (
+            <div key={i}>{e}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     let currentStep = <div>Error</div>;
 
@@ -375,16 +395,7 @@ class Importer extends Component {
         </div>
       );
     } else if (this.state.errors) {
-      currentStep = (
-        <div className="working-area">
-          <h2>Impossible d'importer le fichier car des erreurs ont été détectées :</h2>
-          <div>
-            {this.state.errors.split("\n").map((e, i) => (
-              <div key={i}>{e}</div>
-            ))}
-          </div>
-        </div>
-      );
+      currentStep = this.renderErrors();
     } else if (this.state.done) {
       currentStep = (
         <div className="working-area">

@@ -60,6 +60,23 @@ function readXML(file, encoding) {
   });
 }
 
+function checkEncodingIssue(notices) {
+  const encodingCaracters = ["Ã¨", "�"];
+  for (let j = 0; j < notices.length; j++) {
+    for (let key in notices[j]) {
+      if (notices[j].hasOwnProperty(key)) {
+        const str = JSON.stringify(notices[j][key]);
+        for (let i = 0; str && i < encodingCaracters.length; i++) {
+          if (str.indexOf(encodingCaracters[i]) !== -1) {
+            return `Il semble que vous n'ayez pas selectionné le bon encodage.\nUn problème d'encodage a été détecté sur cette donnée : \n${str}`;
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
 function readCSV(file, delimiter, encoding, quote) {
   return new Promise(async (resolve, reject) => {
     if (!file) {
@@ -185,5 +202,6 @@ export default {
   readODS,
   parseAjoutPilote,
   renameFile,
-  formatDate
+  formatDate,
+  checkEncodingIssue
 };
