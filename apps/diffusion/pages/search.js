@@ -14,6 +14,7 @@ import queryString from "query-string";
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");
 
 import "./search.css";
+import throw404 from "../src/services/throw404";
 
 export default class extends React.Component {
   state = { mobile_menu: false };
@@ -22,12 +23,15 @@ export default class extends React.Component {
     return {
       asPath,
       queryString: queryString.stringify(query),
-      view: query.view || "list",
+      view: query.view,
       mode: query.mode
     };
   }
 
   render = () => {
+    if (!this.props.mode || !this.props.view) {
+      return throw404();
+    }
     return (
       <Layout>
         <div className="search">
