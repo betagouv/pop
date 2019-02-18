@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-
 import Field from "./Field";
 import Title from "./Title";
 import FieldImages from "./FieldImages";

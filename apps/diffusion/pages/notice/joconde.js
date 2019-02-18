@@ -1,7 +1,7 @@
 import API from "../../src/services/api";
-import Layout from "../../src/components/Layout"
-import Joconde from "../../src/notices/Joconde"
-import throw404 from "../../src/services/throw404"
+import Layout from "../../src/components/Layout";
+import Joconde from "../../src/notices/Joconde";
+import throw404 from "../../src/services/throw404";
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -25,7 +25,7 @@ export default class extends React.Component {
     }
     return (
       <Layout>
-        <Joconde notice={this.props.notice} museo={this.props.museo}></Joconde>
+        <Joconde notice={this.props.notice} museo={this.props.museo} />
       </Layout>
     );
   }

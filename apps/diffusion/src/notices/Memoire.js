@@ -7,7 +7,6 @@ import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import { toFieldImages } from "./utils";
 import Head from "next/head";
-import NotFound from "../components/NotFound";
 import "./Notice.css";
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
@@ -45,12 +44,6 @@ class Memoire extends React.Component {
 
   render() {
     const notice = this.props.notice;
-
-    console.log(this.props.links)
-
-    if (!notice) {
-      return <NotFound />;
-    }
 
     return (
       <div className="notice">
