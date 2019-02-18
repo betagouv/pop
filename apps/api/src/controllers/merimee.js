@@ -97,7 +97,6 @@ async function checkMerimee(notice) {
   return errors;
 }
 
-
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
     const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
