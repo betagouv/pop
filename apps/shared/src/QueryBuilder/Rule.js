@@ -19,16 +19,15 @@ export default class RuleComponent extends React.Component {
   onUpdate(data) {
     const { combinator, key, operator, value } = data;
     if (key) {
-      const suggestionQuery = `{"query": {"term": {"BASE.keyword": "${
-        this.props.base
-      }"}},"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}, "size":0}`;
+      const suggestionQuery = `{"query": {"match_all": {}},"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}, "size":0}`;
       this.setState({ query: JSON.parse(suggestionQuery) });
     } else {
       this.setState({ query: {} });
     }
 
     const query = ruleQuery(key, operator, value);
-    if (query) { // Remove this test to update when you empty the content of an input. Its not working now cause of the urlparam wrong redirection when you have no rule 
+    if (query) {
+      // Remove this test to update when you empty the content of an input. Its not working now cause of the urlparam wrong redirection when you have no rule
       this.props.onUpdate({ id: this.props.id, query, combinator, data });
     }
   }
