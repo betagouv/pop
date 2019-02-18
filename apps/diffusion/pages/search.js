@@ -66,7 +66,7 @@ export default class extends React.Component {
                       <div />
                     )}
                   </div>
-                  <Results view={this.props.view} location={this.props.asPath} />
+                  <Results mode={this.props.mode} view={this.props.view} location={this.props.asPath} />
                 </div>
               </Row>
             </ReactiveBase>
