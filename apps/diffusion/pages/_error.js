@@ -24,7 +24,7 @@ export default class Error extends React.Component {
 
   componentDidMount() {
     const { statusCode } = this.props;
-    if (statusCode && statusCode > 200) {
+    if (statusCode && statusCode > 200 && statusCode !== 404) {
       notifySentry(new BrowserException(statusCode));
     }
   }
