@@ -3,9 +3,9 @@ import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
-import Map from "./Map";
 import ContactUs from "./ContactUs";
 import FieldImages from "./FieldImages";
+import Map from "./Map";
 import "./Notice.css";
 import Head from "next/head";
 
