@@ -27,15 +27,6 @@ export default class extends React.Component {
     };
   }
 
-  componentDidMount() {
-    // Prefetch non-active routes.
-    ["map", "mosaic", "list"]
-      .filter(v => v !== this.props.view)
-      .forEach(v => {
-        Router.prefetch(`/search/${v}`);
-      });
-  }
-
   render = () => {
     return (
       <Layout>
