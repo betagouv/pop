@@ -21,19 +21,21 @@ export default class extends React.Component {
   };
 
   static async getInitialProps({ asPath, query }) {
-
-    console.log("query",query)
     return {
       asPath,
       queryString: queryString.stringify(query),
       view: query.view,
       mode: query.mode,
-      base: "merimee"
+      base: query.base
     };
   }
 
   render = () => {
-    if (!this.props.mode || !this.props.view) {
+    if (
+      !this.props.mode ||
+      !this.props.view ||
+      (this.props.mode === "advanced" && !this.props.base)
+    ) {
       return throw404();
     }
 

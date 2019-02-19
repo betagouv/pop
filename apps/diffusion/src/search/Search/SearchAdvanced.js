@@ -11,27 +11,27 @@ bases.push({ key: "memoire", base: "Photographies (Mémoire)" });
 bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
 
 class SearchAdvanced extends React.Component {
-  render() {
-    console.log(
-      "bases.find(e => e.key === this.props.base);",
-      bases.find(e => e.key === this.props.base)
-    );
-    const { base, key } = bases.find(e => e.key === this.props.base);
 
+  onBaseChange = e => {
+    this.props.router.push(
+      `/search?mode=advanced&view=list&base=${e.target.value}`,
+      `/advanced-search/list/${e.target.value}`
+    );
+  };
+  
+  render() {
+    const { base, key } = bases.find(e => e.key === this.props.base);
     return (
       <div className="advanced-search">
         <div className="collection">
           <Row className="advanced-search-title">
             <div>Dans la base</div>
-            <select
-              value={this.props.base}
-              onChange={e => {
-                console.log("ICI change lien to ", e.target.value);
-              }}
-            >
-              {bases.map(e => {
-                return <option value={e.key}>{e.base}</option>;
-              })}
+            <select value={this.props.base} onChange={this.onBaseChange}>
+              {bases.map(e => (
+                <option key={e.key} value={e.key}>
+                  {e.base}
+                </option>
+              ))}
             </select>
             <div>je recherche:</div>
           </Row>
