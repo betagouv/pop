@@ -21,26 +21,31 @@ app.prepare().then(() => {
     const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
     const museoRegex = /^\/museo\/(.*?)$/;
     const sitemapRegex = /^\/sitemap\/(.*?)$/;
-    const searchRegex = /^\/(advanced-search|search)\/(.*?)$/;
+    const searchRegex = /^\/(advanced-search|search)\/(list|map|mosaic)(?:\/(.+))?$/;
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
-    const isNotSecure = req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http"
+    const isNotSecure =
+      req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http";
 
     if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
-      res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` })
+      res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` });
       res.end();
     } else if (pathname.match(sitemapRegex)) {
       const url = req.url.replace("/sitemap/", "");
-      res.writeHead(301, { Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}` })
+      res.writeHead(301, { Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}` });
       res.end();
     } else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
       const path = join(__dirname, "../../static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {
       const renderPath = "/search";
-      const renderParams = Object.assign({ 
-        view: pathname.replace(searchRegex, "$2"),
-        mode: pathname.replace(searchRegex, "$1") === "search" ? "simple" : "advanced"
-      }, query);
+      const renderParams = Object.assign(
+        {
+          view: pathname.replace(searchRegex, "$2"),
+          mode: pathname.replace(searchRegex, "$1") === "search" ? "simple" : "advanced",
+          base: pathname.replace(searchRegex, "$3")
+        },
+        query
+      );
       app.render(req, res, renderPath, renderParams);
     } else if (pathname.match(noticeRegex)) {
       const renderPath = "/notice/" + pathname.replace(noticeRegex, "$1");

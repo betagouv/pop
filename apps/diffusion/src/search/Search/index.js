@@ -4,19 +4,18 @@ import TextSearch from "./Search";
 import AdvancedSearch from "./SearchAdvanced";
 
 class Search extends React.Component {
-
   renderSearch() {
     if (this.props.mode !== "advanced") {
       return <TextSearch />;
     } else {
-      return <AdvancedSearch />;
+      return <AdvancedSearch base={this.props.base} />;
     }
   }
 
   renderLink() {
     if (this.props.mode !== "advanced") {
       return (
-        <Link href={"/search?view=list&mode=advanced"} as="/advanced-search/list">
+        <Link href={"/search?view=list&mode=advanced&base=joconde"} as="/advanced-search/list/joconde">
           <a className="search-mode">Recherche avancée</a>
         </Link>
       );

@@ -70,11 +70,11 @@ export default class RuleGroup extends React.Component {
   updateUrlParams = q => {
     const { history, router } = this.props;
     if (router) {
-      const { view, mode, ...query } = router.query;
+      const { view, mode, base, ...query } = router.query;
       const currentUrlParams = qs.stringify(query);
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) });
       if (currentUrlParams !== targetUrlParams) {
-        router.replace(`/advanced-search/${view}?${targetUrlParams}`);
+        router.replace(`/advanced-search/${view}/${base}?${targetUrlParams}`);
       }
     } else if (history) {
       const currentUrlParams = history.location.search;
@@ -135,7 +135,6 @@ export default class RuleGroup extends React.Component {
     return this.state.queries.map(({ id, data }, i) => {
       return (
         <Rule
-          base={this.props.base}
           autocomplete={this.props.autocomplete}
           key={`key_${id}`}
           id={id}
