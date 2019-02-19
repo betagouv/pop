@@ -272,7 +272,17 @@ const SeeMore = ({ notice, museo }) => {
   const arr = [];
 
   if (notice.LVID) {
-    arr.push(<Field title="Lien Vidéo" content={notice.LVID} key="notice.LVID" />);
+    arr.push(
+      <Field
+        title="Lien Vidéo"
+        content={
+          <a target="_blank" href={notice.LVID}>
+            {notice.LVID}
+          </a>
+        }
+        key="notice.LVID"
+      />
+    );
   }
 
   if (notice.WWW) {
