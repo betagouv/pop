@@ -322,7 +322,7 @@ const SeeMore = ({ notice }) => {
       <Field
         title="Dossier PDF"
         content={<a href={postFixedLink(notice.DOSURLPDF)}>Télécharger</a>}
-        key="notice.LVID"
+        key="notice.DOSURLPDF"
       />
     );
   }
