@@ -188,15 +188,17 @@ class Notice extends React.Component {
               <CustomField name="LABEL" disabled={!this.state.editable} />
               <CustomField name="COPY" disabled={!this.state.editable} />
               <CustomField name="MSGCOM" disabled={!this.state.editable} />
+              <CustomField name="CONTACT" disabled={!this.state.editable} />  
             </Col>
             <Col sm={6}>
-              <CustomField name="CONTACT" disabled={!this.state.editable} />
               <CustomField name="WWW" disabled={!this.state.editable} />
               <CustomField name="LVID" disabled={!this.state.editable} />
               <CustomField name="MUSEO" disabled={!this.state.editable} />
               <CustomField name="COOR" disabled={!this.state.editable} />
               <CustomField name="DMAJ" disabled={!this.state.editable} />
               <CustomField name="DMIS" disabled={!this.state.editable} />
+              <CustomField name="LARC" disabled={!this.state.editable} />
+              <CustomField name="RETIF" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Map notice={this.state.notice} />
