@@ -2,10 +2,10 @@ import Joconde from "../../entities/Joconde";
 import utils from "../../scenes/import/utils";
 import fs from "fs";
 
-test("Create new Joconde entity without errors from file joconde-valid-ISO-8859-1.txt", () => {
+test("Create new Joconde entity without errors from file joconde-valid-UTF-8.txt", () => {
   const contents = fs.readFileSync(
-    __dirname + "/../__notices__/joconde-valid-ISO-8859-1.txt",
-    "latin1"
+    __dirname + "/../__notices__/joconde-valid-UTF-8.txt",
+    "utf-8"
   );
   const notices = utils
     .parseAjoutPilote(contents, Joconde)
