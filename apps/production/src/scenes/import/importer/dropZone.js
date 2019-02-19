@@ -84,9 +84,7 @@ export default class ImportDropComponent extends Component {
       <option key={o}>{o}</option>
     ));
 
-    const text =
-      this.props.text ||
-      "Glissez & déposez vos fichiers ou cliquez ici pour importer";
+    const text = this.props.text || "Glissez & déposez vos fichiers ou cliquez ici pour importer";
 
     if (this.state.progress !== -1) {
       return (
@@ -120,12 +118,12 @@ export default class ImportDropComponent extends Component {
         >
           {this.state.error ? <div>{this.state.error}</div> : <div />}
         </Row>
-        <select
-          onChange={e => this.updateEncoding(e.target.value)}
-          value={this.state.encoding}
-        >
-          {encodings}
-        </select>
+        <div style={{ display: "flex" }}>
+          <div style={{ paddingRight: "10px" }}>Encodage :</div>
+          <select onChange={e => this.updateEncoding(e.target.value)} value={this.state.encoding}>
+            {encodings}
+          </select>
+        </div>
       </div>
     );
   }
