@@ -39,7 +39,7 @@ export default class extends React.Component {
       return throw404();
     }
 
-    const queryScope = this.props.mode === "simple" ? BASES : this.props.base || "joconde";
+    const queryScope = this.props.mode === "simple" ? BASES : this.props.base;
 
     return (
       <Layout>
