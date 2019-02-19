@@ -21,13 +21,8 @@ export default class extends React.Component {
   };
 
   static async getInitialProps({ asPath, query }) {
-    return {
-      asPath,
-      queryString: queryString.stringify(query),
-      view: query.view,
-      mode: query.mode,
-      base: query.base
-    };
+    const { view, mode, ...rest } = query;
+    return { asPath, queryString: queryString.stringify(rest), view, mode, base: query.base };
   }
 
   render = () => {

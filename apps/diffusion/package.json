@@ -14,7 +14,7 @@
     "next": "^7.0.2",
     "next-nprogress": "^1.4.0",
     "ngeohash": "^0.6.3",
-    "pop-shared": "^0.13.0",
+    "pop-shared": "^0.14.0",
     "query-string": "^5.1.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

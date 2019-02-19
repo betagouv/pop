@@ -6,47 +6,42 @@ import "./MultiList.css";
 import { toFrenchRegex } from "./utils";
 
 export default class MultiListUmbrellaUmbrella extends React.Component {
-  state = { collapse: null };
+  state = { isOpen: null };
   urlLocation = null;
 
   onListClicked = () => {
-    this.onCollapseChange(!this.state.collapse);
+    this.setState({ isOpen: !this.state.isOpen });
   };
 
-  onCollapseChange = nextCollapseState => {
-    this.setState({ collapse: nextCollapseState });
-  };
-
-  componentWillMount() {
-    if (this.props.location) {
-      this.urlLocation = this.props.location;
-    } else {
+  isActive() {
+    try {
       this.urlLocation = location.search;
+    } catch (e) {
+      this.urlLocation = this.props.location;
     }
-  }
-
-  componentDidMount() {
-    this.onCollapseChange(this.shouldCollapse());
-  }
-
-  shouldCollapse = () => {
     const { componentId } = this.props;
     const values = queryString.parse(this.urlLocation);
     const field = componentId;
-    return Boolean(!values[field]);
+    return Boolean(values[field]);
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location !== this.props.location) {
+      this.setState({isOpen: null});
+    }
+  }
 
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
-    const collapse = this.state.collapse === null ? this.shouldCollapse() : this.state.collapse;
+    const isOpen = this.isActive() || this.state.isOpen;
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
           <div className="name">{this.props.title}</div>
           <div className="v">⌄</div>
         </div>
-        <Collapse isOpen={!collapse}>
-          {!collapse ? (
+        <Collapse isOpen={isOpen}>
+          {isOpen ? (
             <ReactiveComponent
               componentId={this.props.componentId} // a unique id we will refer to later
               URLParams={this.props.URLParams || true}
