@@ -59,11 +59,11 @@ class Results extends React.Component {
       // Add mode and view (because Next.js' router needs it)
       const searchFullParams = { mode: this.props.mode, view, ...searchParams };
       if (this.props.mode === "advanced") {
-        searchFullParams.base = "joconde";
+        searchFullParams.base = this.props.base;
       }
       Router.push(
         `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-        `/${this.modeToRoute()}/${view}${this.props.mode === "advanced" ? "/joconde" : ""}${
+        `/${this.modeToRoute()}/${view}${this.props.mode === "advanced" ? `/${this.props.base}` : ""}${
           searchParams ? "?" + queryString.stringify(searchParams) : ""
         }`
       );
