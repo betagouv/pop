@@ -4,7 +4,7 @@ import { Row, Col } from "reactstrap";
 import { withRouter } from "next/router";
 const bases = [];
 bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
-bases.push({ key: "mnr", base: "Oeuvres spoliées (MNR Rose-Valland)" });
+bases.push({ key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" });
 bases.push({ key: "merimee", base: "Patrimoine architectural (Mérimée)" });
 bases.push({ key: "memoire", base: "Photographies (Mémoire)" });
 bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
