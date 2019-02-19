@@ -93,7 +93,7 @@ const Palissy = ({ data }) => {
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
+  const loc = data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   const productorImage = p => {
     if (p === "Inventaire") {
