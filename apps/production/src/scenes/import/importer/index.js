@@ -90,6 +90,7 @@ class Importer extends Component {
         loading: false,
         loadingMessage: ""
       });
+
       amplitude.getInstance().logEvent("Import - Drop files", {
         "Files droped": files.length,
         Success: true
@@ -166,7 +167,7 @@ class Importer extends Component {
         await api.createNotice(collection, notice, created[i]._images);
       }
 
-      //Sending rapport
+      //Start Sending rapport
       this.setState({
         loading: true,
         loadingMessage: `Envoi du  rapport ... `,
@@ -180,7 +181,8 @@ class Importer extends Component {
         this.props.collection,
         this.props.email,
         this.props.institution,
-        importId
+        importId,
+        this.state.fileNames
       );
 
       this.props.destinataires.push("sandrine.della-bartolomea@culture.gouv.fr");
@@ -198,6 +200,8 @@ class Importer extends Component {
         step: 2,
         loadingMessage: `Import effectué avec succès`
       });
+
+      // End send report
 
       amplitude.getInstance().logEvent("Import - Done", {
         "Notices total": total,
@@ -353,7 +357,9 @@ class Importer extends Component {
                     this.state.importedNotices,
                     this.props.collection,
                     this.props.email,
-                    this.props.institution
+                    this.props.institution,
+                    this.state.importId,
+                    this.state.fileNames
                   );
                   api
                     .sendReport(`Rapport import ${this.props.collection}`, this.state.email, body)

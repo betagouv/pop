@@ -1,9 +1,13 @@
-
-
 import utils from "../utils";
 
-
-export default function generate(notices, collection, email, institution, importId) {
+export default function generate(
+  notices,
+  collection,
+  email,
+  institution,
+  importId,
+  fileNames = []
+) {
   const fieldToExport = [{ name: "Identifiant", key: "REF" }];
   const arr = [];
 
@@ -20,7 +24,7 @@ export default function generate(notices, collection, email, institution, import
   const fileUrl = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
     process.env.NODE_ENV === "production" ? "" : "-staging"
   }/import/${importId}/import.csv`;
-  
+
   const imagesNumber = notices.reduce((acc, val) => {
     if (val.status === "created" || val.status === "updated") {
       return acc + val.images.length;
@@ -40,23 +44,27 @@ export default function generate(notices, collection, email, institution, import
       contact = "anne.cook@culture.gouv.fr";
       break;
     case "inventaire":
-      contact =
-        "geraud.buffa@culture.gouv.fr et jean.davoigneau@culture.gouv.fr";
+      contact = "geraud.buffa@culture.gouv.fr et jean.davoigneau@culture.gouv.fr";
       break;
     case "joconde":
-      contact =
-        "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
+      contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
       break;
     default:
       break;
   }
 
-  arr.push(
-    `<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`
-  );
+  arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
   arr.push(`<h2>Établissement: ${institution}</h2>`);
   arr.push(`<h2>Producteur: ${email}</h2>`);
   arr.push(`<h2>Contact: ${contact}</h2>`);
+
+  if (fileNames.length) {
+    arr.push(`<h2>Fichiers importés :</h2>`);
+    arr.push(`<ul>`);
+    arr.push(...fileNames.map(e => `<li>${e}</li>`));
+    arr.push(`</ul>`);
+  }
+
   arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`);
   arr.push(`<ul>`);
   arr.push(`<li>${notices.length - rejected.length} notices valides</li>`);
@@ -136,9 +144,7 @@ function createHTMLTable(columns, objs) {
     return ["<div >Aucune</div>"];
   }
   const arr = [];
-  arr.push(
-    `<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`
-  );
+  arr.push(`<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">`);
   arr.push(`<tr>`);
   arr.push(
     ...columns.map(
@@ -166,4 +172,3 @@ function createHTMLTable(columns, objs) {
   arr.push(`</table > `);
   return arr;
 }
-

@@ -1,22 +1,54 @@
 import React from "react";
+import { Alert } from "reactstrap";
+
 import Loader from "./components/Loader";
 
 import { history } from "./redux/store";
 import PublicRoutes from "./router";
 import Actions from "./redux/auth/actions";
 const { signinByToken } = Actions;
+
 import { connect } from "react-redux";
 
 class App extends React.Component {
+  state = {
+    alert: process.env.NODE_ENV !== "production"
+  };
   componentWillMount() {
     this.props.signinByToken();
+  }
+
+  renderAlert() {
+    return (
+      <Alert
+        style={{ marginBottom: "0px" }}
+        color="danger"
+        isOpen={this.state.alert}
+        toggle={() => this.setState({ alert: false })}
+      >
+        Les notices que vous versez sur cette plateforme de test ne seront pas publiées en
+        diffusion. Si vous souhaitez publier vos données sur notre site pop.culture.gouv.fr,
+        connectez-vous sur la plateforme de production :&nbsp;
+        <a
+          href="http://pop-production.eu-west-3.elasticbeanstalk.com/auth/signin"
+          className="alert-link"
+        >
+          Lien vers la production
+        </a>
+      </Alert>
+    );
   }
 
   render() {
     if (this.props.user === undefined) {
       return <Loader />;
     }
-    return <PublicRoutes history={history} />;
+    return (
+      <div>
+        {this.renderAlert()}
+        <PublicRoutes history={history} />;
+      </div>
+    );
   }
 }
 
