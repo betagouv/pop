@@ -48,7 +48,7 @@ class Memoire extends React.Component {
     return (
       <div className="notice">
         <Container>
-        <Head>
+          <Head>
             <title>{this.pageTitle()}</title>
             <meta content={this.metaDescription()} name="description" />
           </Head>
@@ -302,14 +302,41 @@ class Memoire extends React.Component {
   }
 }
 
+function url(ref) {
+  switch (ref.substring(0, 2)) {
+    case "EA":
+    case "PA":
+    case "IA":
+      return `/notice/merimee/${ref}`;
+    case "IM":
+    case "PM":
+      return `/notice/palissy/${ref}`;
+  }
+}
+
+function link(data) {
+  return (
+    <ul>
+      {data.map(d => {
+        return (
+          <li>
+            <a href={url(d) || "#"}>{d}</a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 const SeeMore = ({ notice }) => {
-  if (!notice.LAUTP) {
+  if (!notice.LAUTP && !notice.LBASE) {
     return <div />;
   }
 
-  return (
-    <div className="sidebar-section info">
-      <h2>Voir aussi</h2>
+  const elements = [];
+
+  if (notice.LAUTP) {
+    elements.push(
       <Field
         title="Lien vers la base Autor"
         content={
@@ -319,6 +346,19 @@ const SeeMore = ({ notice }) => {
         }
         key="notice.LAUTP"
       />
+    );
+  }
+
+  if (notice.LBASE) {
+    elements.push(
+      <Field title="Notices associées" content={link(notice.LBASE)} key="notice.LBASE" />
+    );
+  }
+
+  return (
+    <div className="sidebar-section info">
+      <h2>Voir aussi</h2>
+      {elements}
     </div>
   );
 };
