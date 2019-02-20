@@ -137,7 +137,6 @@ export default () => (
               img={jocondeImg("00000074608/rimg0445.jpg")}
               txt="Venise"
               params={{
-                base: ["Collections des musées de France (Joconde)"],
                 mainSearch: "venise"
               }}
             />
