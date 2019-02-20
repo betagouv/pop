@@ -143,6 +143,58 @@ export default () => (
             />
           </Col>
         </Row>
+
+ <h3>Mode</h3>
+        <Row>     
+        <Col lg="3" md="6">
+                     <TopicCard
+                          img={memoireImg("1614/sap51_9126t0130_p.jpg")}
+                         txt="Karl Lagerfeld"
+                         params={{
+                         titre: ["Lagerfeld"],
+                         base: [
+                         "Collections des musées de France (Joconde)",
+                         "Photographies (Mémoire)"
+                         ]
+                         }}
+                     />
+                 </Col>
+          <Col lg="3" md="6">
+                     <TopicCard
+                         img={memoireImg("1287/sap53_71l01246_p.jpg")}
+                         txt="Coco Chanel"
+                         params={{
+                         legende: ["Chanel"],
+                         producteur: ["SAP"],
+                         base: ["Photographies (Mémoire)"]
+                           }}
+                           />
+                          </Col>
+
+                <Col lg="3" md="6">
+                     <TopicCard
+                         img={memoireImg("1286/sap53_71l00735_p.jpg")}
+                         txt="Pierre Balmain"
+                         params={{
+                         legende: ["Balmain"],
+                         serie: ["Balmain"],
+                         base: ["Photographies (Mémoire)"]
+                           }}
+                     />
+
+                <Col lg="3" md="6">
+                     <TopicCard
+                         img={memoireImg("1286/sap53_71l00735_p.jpg")}
+                         txt="Elsa Schiaparelli"
+                         params={{
+                         legende: ["Schiaparelli"],
+                         serie: ["Schiaparelli"],
+                         base: ["Photographies (Mémoire)"]
+                           }}
+                     />
+                 </Col>
+                 </Row>
+
       </Container>
     </div>
   </Layout>
