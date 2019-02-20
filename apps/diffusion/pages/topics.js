@@ -143,6 +143,38 @@ export default () => (
             />
           </Col>
         </Row>
+
+        <h3>Mode</h3>
+        <Row>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={memoireImg("1614/sap51_9126t0130_p.jpg")}
+              txt="Karl Lagerfeld"
+              params={{
+                mainSearch: "Lagerfeld"
+              }}
+            />
+          </Col>
+
+          <Col lg="3" md="6">
+            <TopicCard
+              img={memoireImg("1286/sap53_71l00735_p.jpg")}
+              txt="Pierre Balmain"
+              params={{
+                mainSearch: "Balmain"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={memoireImg("1288/sap53_71l02648_p.jpg")}
+              txt="Elsa Schiaparelli"
+              params={{
+                mainSearch: "Schiaparelli"
+              }}
+            />
+          </Col>
+        </Row>
       </Container>
     </div>
   </Layout>
