@@ -6,7 +6,7 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
-const { formattedNow, checkESIndex, updateNotice, lambertToWGS84 } = require("./utils");
+const { formattedNow, checkESIndex, updateNotice, lambertToWGS84, fixLink } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -17,9 +17,14 @@ function transformBeforeCreateOrUpdate(notice) {
   }
   notice.POP_CONTIENT_GEOLOCALISATION =
     notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat ? "oui" : "non";
-  // Fix DOSURL (remove code, extract real URL)
   if (notice.DOSURL) {
-    notice.DOSURL = notice.DOSURL.replace(/^.*AffUrl\('(.*?)'\).*$/, "$1");
+    notice.DOSURL = fixLink(notice.DOSURL);
+  }
+  if (notice.DOSURLPDF) {
+    notice.DOSURLPDF = fixLink(notice.DOSURLPDF);
+  }
+  if (notice.LIENS && Array.isArray(notice.LIENS)) {
+    notice.LIENS = notice.LIENS.map(fixLink);
   }
 }
 
