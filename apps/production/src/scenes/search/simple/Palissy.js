@@ -1,10 +1,9 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { Link } from "react-router-dom";
 import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
 import { MultiList } from "pop-shared";
-import { es_url, bucket_url } from "../../../config.js";
+import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/PalissyCard";
 import utils from "../components/utils";
@@ -46,7 +45,19 @@ export default class Search extends React.Component {
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
                 customQuery={value =>
-                  utils.customQuery(value, ["TICO", "DENO", "REF", "LOCA", "COM"])
+                  utils.customQuery(value, [
+                    "COM", 
+                    "TICO",
+                    "LOCA",
+                    "DPRO",
+                    "HIST",
+                    "DESC",
+                    "ADRS",
+                    "EDIF",
+                    "CATE",
+                    "VOLS",
+                    "MATR"
+                  ])
                 }
               />
               <ExportComponent FILTER={FILTER} collection="palissy" />
