@@ -59,7 +59,7 @@ export default function generate(
   arr.push(`<h2>Contact: ${contact}</h2>`);
 
   if (fileNames.length) {
-    arr.push(`<h2>Fichiers importés :</h2>`);
+    arr.push(`<h2>Fichier(s) importé(s) :</h2>`);
     arr.push(`<ul>`);
     arr.push(...fileNames.map(e => `<li>${e}</li>`));
     arr.push(`</ul>`);
