@@ -36,7 +36,7 @@ export default class Search extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col md={12}>
+              <Col md={12} className="mt-2">
                 <ExportComponent FILTER={["advancedSearch"]} collection={baseName} autocomplete />
               </Col>
             </Row>

@@ -137,10 +137,18 @@ class Rule extends React.Component {
         </Col>
         <Col md={1}>
           <div className="button-container">
-            <button onClick={() => this.props.onRuleAdd(this.props.id)}>+</button>
+            <button
+              className="btn btn-sm btn-info mr-2"
+              onClick={() => this.props.onRuleAdd(this.props.id)}
+            >
+              +
+            </button>
             {!this.props.last ? (
-              <button className="closeButton" onClick={() => this.props.onRemove(this.props.id)}>
-                X
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => this.props.onRemove(this.props.id)}
+              >
+                x
               </button>
             ) : (
               <div />

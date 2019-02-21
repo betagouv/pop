@@ -1,25 +1,8 @@
 .queryBuilder button {
-  color: #fff;
-  background-color: #1890ff;
-  border-color: #1890ff;
   outline: 0;
-  cursor: pointer;
+  font-weight: bold;
   border-radius: 5px;
-  margin: 10px;
-  border-style: none;
-}
-
-.queryBuilder #aboutSearch {
-}
-
-.queryBuilder .closeButton {
-  color: #fff;
-  background-color: red;
-  border-color: red;
-  outline: 0;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 10px;
+  min-width: 30px;
 }
 
 .queryBuilder select {
@@ -69,12 +52,6 @@
   border-radius: 10px;
   border-width: 1px;
   margin-top: 10px;
-}
-
-.queryBuilder .imgInfo {
-  width: 20px;
-  border-radius: 10px;
-  background-color: #1890ff;
 }
 
 .tooltipInfo > div {
