@@ -234,7 +234,7 @@ export default class extends React.Component {
             <title>POP - Plateforme Ouverte du Patrimoine - Ministère de la Culture</title>
             <meta
               name="description"
-              content="POP propose de faire des données patrimoniales un bien commun."
+              content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 3 millions de contenus numériques du patrimoine français."
             />
           </Head>
           {this.renderBanner()}
