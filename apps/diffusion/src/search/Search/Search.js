@@ -19,6 +19,39 @@ class Search extends React.Component {
               query: { match_all: {} }
             };
           }
+
+          const fields = [
+            "TICO^10",
+            "AUTR^10",
+            "TITRE^9",
+            "TITR^9",
+            "LEG^9",
+            "LOCA^9",
+            "DENO^8",
+            "DOMN^8",
+            "EDIF^8",
+            "OBJT^8",
+            "REPR^8",
+            "AUTP^7",
+            "SERIE^7",
+            "PDEN^5",
+            "PERS^4",
+            "PAYS^3",
+            "REG^3",
+            "DEP^3",
+            "COM^3",
+            "DATE^1",
+            "EPOQ^1",
+            "SCLE^1",
+            "SCLD^1"
+          ];
+
+          if (value.match(/"[^"]*"| -| \+/)) {
+            return {
+              query: { simple_query_string: { query: value, default_operator: "and", fields } }
+            };
+          }
+
           return {
             bool: {
               should: [
@@ -34,31 +67,7 @@ class Search extends React.Component {
                   multi_match: {
                     query: value,
                     type: "most_fields",
-                    fields: [
-                      "TICO^10",
-                      "AUTR^10",
-                      "TITRE^9",
-                      "TITR^9",
-                      "LEG^9",
-                      "LOCA^9",
-                      "DENO^8",
-                      "DOMN^8",
-                      "EDIF^8",
-                      "OBJT^8",
-                      "REPR^8",
-                      "AUTP^7",
-                      "SERIE^7",
-                      "PDEN^5",
-                      "PERS^4",
-                      "PAYS^3",
-                      "REG^3",
-                      "DEP^3",
-                      "COM^3",
-                      "DATE^1",
-                      "EPOQ^1",
-                      "SCLE^1",
-                      "SCLD^1"
-                    ]
+                    fields
                   }
                 }
               ]

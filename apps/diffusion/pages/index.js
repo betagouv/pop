@@ -107,7 +107,7 @@ export default class extends React.Component {
     } else {
       base = `base=${JSON.stringify(selected)}&`;
     }
-    Router.push(`/search/list?${base}mainSearch="${encodeURI(searchValue)}"`).then(() =>
+    Router.push(`/search/list?${base}mainSearch=${encodeURI(JSON.stringify(searchValue))}`).then(() =>
       window.scrollTo(0, 0)
     );
   }
