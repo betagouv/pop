@@ -329,7 +329,7 @@ function link(data) {
 }
 
 const SeeMore = ({ notice }) => {
-  if (!notice.LAUTP && !notice.LBASE) {
+  if (!notice.LAUTP && !(notice.LBASE && notice.LBASE.length)) {
     return <div />;
   }
 
@@ -349,7 +349,7 @@ const SeeMore = ({ notice }) => {
     );
   }
 
-  if (notice.LBASE) {
+  if (notice.LBASE && notice.LBASE.length) {
     elements.push(
       <Field title="Notices associées" content={link(notice.LBASE)} key="notice.LBASE" />
     );
