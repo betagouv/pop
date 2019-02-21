@@ -185,7 +185,7 @@ export default class RuleGroup extends React.Component {
             </dd>
           </dl>
         </Tooltip>
-        <span id="aboutSearch">?{/* <img src={imgInfo} className="imgInfo" /> */}</span>
+        <span id="aboutSearch" className="badge badge-info">?</span>
         <Container>{this.renderChildren()}</Container>
       </div>
     );
