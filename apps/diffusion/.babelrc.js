@@ -9,7 +9,7 @@ module.exports = {
           targets: {
             browsers: [">0.03%"]
           },
-          useBuiltIns: "usage"
+          useBuiltIns: "entry"
         }
       }
     ]
