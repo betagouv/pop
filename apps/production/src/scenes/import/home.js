@@ -9,7 +9,7 @@ class Import extends React.Component {
   renderTiles(tiles) {
     return tiles.map(({ url, name, image }, i) => {
       return (
-        <Col xl="2" lg="4" md="4" className="box text-center" key={i}>
+        <Col xl="4" lg="4" md="3" className="box text-center" key={i}>
           <Link style={{ textDecoration: "none" }} to={url}>
             <div className="tile">
               <img src={image} alt="dummy image" className="img-fluid" />
