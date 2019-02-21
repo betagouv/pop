@@ -231,7 +231,7 @@ class MultiList extends React.Component {
           {this.renderListItem(item)}
         </Label>
       ));
-      return <FormGroup check>{options}</FormGroup>;
+      return <FormGroup check>{options}{options.length === 20 ? <div>...</div>: ""}</FormGroup>;
     }
     return <div />;
   }
