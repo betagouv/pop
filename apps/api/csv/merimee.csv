@@ -88,7 +88,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "PSTA","String","non","Précisions sur le statut de la propriété","","","Précisions sur le statut de la propriété","",""
 "REFE","Array","non","Référence de l'édifice de conservation","","","Référence de l'édifice de conservation","",""
 "REFP","Array","non","Références des parties constituantes étudiées","","","Références des parties constituantes étudiées","",""
-"REFO","Array","non","REFO","","","REFO","",""
+"REFO","Array","non","REFO","","true","REFO correspond aux objets palissy contenus dans le monument historique. C'est une référence vers une notice palissy. Ce champ est généré sur la base des champs REFA de palissy","",""
 "REG","String","non","Région","","","Région","",""
 "REMA","String","non","Eléments remarquables","","","Eléments remarquables","",""
 "REMP","String","non","Remploi","","","Remploi","",""
