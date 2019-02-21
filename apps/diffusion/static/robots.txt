@@ -1,4 +1,5 @@
 User-Agent: * 
-Disallow: 
+Disallow: /search/*
+Disallow: /advanced-search/*
 
 Sitemap: https://www.pop.culture.gouv.fr/sitemap/sitemap.xml
