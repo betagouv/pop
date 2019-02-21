@@ -113,21 +113,10 @@ function checkIfMemoireImageExist(notice) {
 }
 
 function populateREFO(notice) {
-  return new Promise(async (resolve, reject) => {
-    const obj = await Palissy.findOne({ REFA: notice.REF });
-    if (!obj) {
-      resolve(notice.REFO);
-      return;
-    }
-    if (!Array.isArray(notice.REFO)) {
-      resolve([obj.REF]);
-      return;
-    }
-    if (notice.REFO.includes(obj.REF)) {
-      resolve(notice.REFO);
-      return;
-    }
-    resolve([...notice.REFO, obj.REF]);
+  return new Promise(async (resolve, _reject) => {
+    const objs = await Palissy.find({ REFA: notice.REF });
+    const REFO = objs.map(e => e.REF);
+    resolve(REFO);
   });
 }
 
