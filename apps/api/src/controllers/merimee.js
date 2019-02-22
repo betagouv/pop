@@ -6,17 +6,43 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
-const { formattedNow, checkESIndex, updateNotice, lambertToWGS84, fixLink } = require("./utils");
+const {
+  formattedNow,
+  checkESIndex,
+  updateNotice,
+  lambertToWGS84,
+  getPolygonCentroid,
+  convertCOORM,
+  fixLink
+} = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
+
+  if (notice.COORM && notice.ZONE) {
+    const { coordinates, message } = convertCOORM(notice.COORM, notice.ZONE);
+    notice["POP_COORDINATES_POLYGON"] = {
+      type: "Polygon",
+      coordinates
+    };
+    if (!notice.COOR && !notice.POP_COORDONNEES) {
+      const centroid = getPolygonCentroid(coordinates);
+      notice.POP_COORDONNEES = {
+        lat: centroid[0],
+        lon: centroid[1]
+      };
+    }
+  }
+
   if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
+
   notice.POP_CONTIENT_GEOLOCALISATION =
     notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat ? "oui" : "non";
+
   if (notice.DOSURL) {
     notice.DOSURL = fixLink(notice.DOSURL);
   }
