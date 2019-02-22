@@ -51,6 +51,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
         placeholder="Rechercher un auteur"
         location={location}
+        displayCount
       />
       <MultiList
         dataField="DOMN.keyword"
@@ -59,6 +60,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="domn"
         react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
         location={location}
+        displayCount
       />
       <MultiList
         dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -67,6 +69,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="ou"
         react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
         location={location}
+        displayCount
       />
       <MultiList
         dataField="PERI.keyword"
@@ -75,6 +78,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "periode") }}
         placeholder="Rechercher une période"
         location={location}
+        displayCount
       />
 
       <MultiList
@@ -84,6 +88,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         placeholder="oui ou non"
         showSearch={false}
         location={location}
+        displayCount
       />
       <MultiList
         componentId="geolocalisation"
@@ -96,6 +101,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         URLParams={true}
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
         location={location}
+        displayCount
       />
       <MultiList
         dataField="TECH.keyword"
@@ -104,13 +110,13 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
         placeholder="Rechercher une technique"
         location={location}
+        displayCount
       />
       <MultiList
         show={false}
         componentId="import"
         dataField="POP_IMPORT.keyword"
         title="Import"
-        displayCount
         URLParams={true}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
         location={location}
@@ -120,7 +126,6 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="museo"
         dataField="MUSEO.keyword"
         title="Museo"
-        displayCount
         URLParams={true}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
         location={location}
