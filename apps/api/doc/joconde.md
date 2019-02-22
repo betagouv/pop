@@ -560,7 +560,7 @@ N°Inventaire, autres numéros
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non||N°Inventaire|
+|String|oui|non|non|oui||N°Inventaire|
 
 ### LABEL
 Appellation musée de France
@@ -614,7 +614,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Localisation|
+|String|non|non|non|oui||Localisation|
 
 ### LOCA2
 Pays-region-ville
@@ -694,7 +694,7 @@ Numéro de site
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Numéro de site|
+|String|non|non|non|non||Numéro de site|
 
 ### ONOM
 Onomastique
@@ -800,7 +800,7 @@ Précisions sur le lieu de création/ d’exécution / d’utilisation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Précisions lieu création|
+|String|non|non|non|non||Précisions lieu création|
 
 ### PREP
 Précisions sur le sujet représenté 
@@ -924,7 +924,7 @@ Titre
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre|
+|String|non|non|non|oui||Titre|
 
 ### TOUT
 [Peut être déprécié : A vérifier. Non présent en production] 

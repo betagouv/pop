@@ -680,7 +680,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description:
-          "REFO correspond aux objets palissy contenus dans le monument historique. C'est une référence vers une notice palissy. Ce champ est généré sur la base des champs REFA de palissy",
+          "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
         label: "REFO",
         generated: true
       }

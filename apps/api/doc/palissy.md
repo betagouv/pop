@@ -1078,7 +1078,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T10
 |String|non|non|non|non||Nature de la protection MH|
 
 ### REFA
-Référence de l'édifice de conservation
+REFA contient une ou plusieurs références de notice Mérimée. C'est une référence d'architecture/monument historique qui contient les objets, présents dans la notice palissy associée
 
 
 

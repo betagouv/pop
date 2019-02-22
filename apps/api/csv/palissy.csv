@@ -98,7 +98,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "PPRO","String","non","Précisions sur la protection MH","","","Précisions sur la protection MH","",""
 "PREP","String","non","Précision sur la représentation","","","Précision sur la représentation","",""
 "PROT","String","non","Nature de la protection MH","","","Nature de la protection MH","","http://data.culture.fr/thesaurus/resource/ark:/67717/T10"
-"REFA","Array","non","Référence de l'édifice de conservation","","","Référence de l'édifice de conservation","",""
+"REFA","Array","non","Référence de l'édifice de conservation","","","REFA contient une ou plusieurs références de notice Mérimée. C'est une référence d'architecture/monument historique qui contient les objets, présents dans la notice palissy associée","",""
 "REFE","Array","non","Référence de l’ensemble ou de l'oeuvre","","","Référence de l’ensemble ou de l'oeuvre","",""
 "REFM","String","non","","","","[PAS AFFICHE]","",""
 "REFP","Array","non","Références des parties constituantes étudiées","","","Références des parties constituantes étudiées ","",""

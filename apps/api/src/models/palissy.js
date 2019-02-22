@@ -775,7 +775,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Référence de l'édifice de conservation",
+        description:
+          "REFA contient une ou plusieurs références de notice Mérimée. C'est une référence d'architecture/monument historique qui contient les objets, présents dans la notice palissy associée",
         label: "Référence de l'édifice de conservation"
       }
     },

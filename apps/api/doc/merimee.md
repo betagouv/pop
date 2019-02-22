@@ -1004,14 +1004,14 @@ Références des parties constituantes étudiées
 |Array|non|non|non|non||Références des parties constituantes étudiées|
 
 ### REFO
-REFO
+REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||REFO|
+|Array|non|oui|non|non||REFO|
 
 ### REG
 Région
