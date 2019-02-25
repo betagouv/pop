@@ -157,7 +157,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien contact musée",
-        generated: true,
+        generated: false,
         label: "Contact musée",
         validation: "Email"
       }
