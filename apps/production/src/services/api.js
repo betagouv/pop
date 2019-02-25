@@ -8,20 +8,12 @@ import request from "./request";
 class api {
   createUser(email, group, role, institution, prenom, nom, museofile) {
     const obj = { email, group, role, institution, prenom, nom, museofile };
-    return request.post(
-      `${api_url}/auth/signup`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/auth/signup`, JSON.stringify(obj), "application/json");
   }
 
   signin(email, password) {
     const obj = { email, password };
-    return request.post(
-      `${api_url}/auth/signin`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
   }
 
   getUser(token) {
@@ -34,29 +26,17 @@ class api {
 
   updatePassword(email, ppwd, pwd1, pwd2) {
     const obj = { email, ppwd, pwd1, pwd2 };
-    return request.post(
-      `${api_url}/auth/updatePassword`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), "application/json");
   }
 
   updateProfile(email, nom, prenom, institution, group, role, museofile) {
     const obj = { email, nom, prenom, institution, group, role, museofile };
-    return request.post(
-      `${api_url}/auth/updateProfile`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/auth/updateProfile`, JSON.stringify(obj), "application/json");
   }
 
   forgetPassword(email) {
     const obj = { email };
-    return request.post(
-      `${api_url}/auth/forgetPassword`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
   }
 
   getUsers(group) {
@@ -74,11 +54,7 @@ class api {
       obj.subject = "TEST " + obj.subject;
     }
 
-    return request.post(
-      `${api_url}/mail`,
-      JSON.stringify(obj),
-      "application/json"
-    );
+    return request.post(`${api_url}/mail`, JSON.stringify(obj), "application/json");
   }
 
   createImport(data, file) {
@@ -121,14 +97,11 @@ class api {
   }
 
   getNewId(collection, prefix, dpt) {
-    return request.get(
-      `${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`,
-      {
-        headers: {
-          Authorization: localStorage.getItem("token")
-        }
+    return request.get(`${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`, {
+      headers: {
+        Authorization: localStorage.getItem("token")
       }
-    );
+    });
   }
 
   // updateThesaurus(thesaurusId) {
@@ -136,9 +109,7 @@ class api {
   // }
 
   getTopConceptsByThesaurusId(thesaurusId) {
-    return request.get(
-      `${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`
-    );
+    return request.get(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
   }
   /*
     updateThesaurus(thesaurusId, str) {
@@ -150,19 +121,13 @@ class api {
   }*/
 
   getAllChildrenConcept(thesaurusId) {
-    return request.get(
-      `${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`
-    );
+    return request.get(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
   }
   getPreferredTermByConceptId(thesaurusId) {
-    return request.get(
-      `${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`
-    );
+    return request.get(`${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
   }
   deleteAllThesaurus(thesaurusId) {
-    return request.get(
-      `${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`
-    );
+    return request.get(`${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
   }
   createThesaurus(thesaurusId, terms) {
     return request.post(
@@ -173,15 +138,19 @@ class api {
   }
 
   getThesaurus(thesaurusId, str) {
-    return request.get(
-      `${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`
-    );
+    return request.get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
 
   validateWithThesaurus(thesaurusId, str) {
-    return request.get(
-      `${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`
-    );
+    return request.get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
+  }
+
+  getMuseo(ref) {
+    return request.get(`${api_url}/museo/${ref}`);
+  }
+
+  updateMuseo(ref, data) {
+    return request.put(`${api_url}/museo/${ref}`, JSON.stringify({museo: data}), "application/json");
   }
 }
 

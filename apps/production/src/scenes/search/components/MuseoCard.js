@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 
 export default ({ data }) => {
   return (
-    <a
+    <Link
       style={{ textDecoration: "none" }}
       className="card"
-      target="_blank"
-      href={`http://pop.culture.gouv.fr/museo/${data.REF}`}
+      to={`/notice/museo/${data.REF}`}
     >
       <div className="content">
         <div style={{ display: "flex" }}>
@@ -20,6 +19,6 @@ export default ({ data }) => {
           <p>{data.INV}</p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };

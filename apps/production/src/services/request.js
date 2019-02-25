@@ -50,7 +50,7 @@ class request {
             reject(this._errorTxt(response));
             return;
           }
-          resolve();
+          resolve(data);
         })
         .catch(err => {
           Raven.captureException(JSON.stringify(err));

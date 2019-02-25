@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import Avatar from "../../components/Avatar";
 
 import authAction from "./../../redux/auth/actions";
@@ -33,20 +28,28 @@ class User extends Component {
     return <Link to="/auth/signin">Se connecter</Link>;
   }
 
+  museofile(account) {
+    if (account.museo && this.props.group !== "admin") {
+      return (
+        <DropdownItem className="dropdown-item" onClick={() => history.push(`/notice/museo/${account.museo}`)}>
+          Modifier les données muséofile
+        </DropdownItem>
+      );
+    }
+  }
+
   renderPicto() {
     if (!this.props.account) {
       return <div />;
     }
     return (
-      <Dropdown isOpen={true} className="DropDownCont" toggle={() => {}}>
+      <Dropdown
+        toggle={() => this.setState({ dropdownOpen: !this.state.dropdownOpen })}
+        isOpen={this.state.dropdownOpen}
+        className="DropDownCont"
+      >
         <DropdownToggle className="UserImageContainer">
-          <Avatar
-            email={this.props.account.email}
-            toggle={() =>
-              this.setState({ dropdownOpen: !this.state.dropdownOpen })
-            }
-            isOpen={this.state.dropdownOpen}
-          />
+          <Avatar email={this.props.account.email} />
         </DropdownToggle>
         <DropdownMenu className="DropDown">
           <DropdownItem
@@ -55,16 +58,11 @@ class User extends Component {
           >
             Modifier mes informations
           </DropdownItem>
-          <DropdownItem
-            className="dropdown-item"
-            onClick={() => history.push("/thesaurus")}
-          >
+          {this.museofile(this.props.account)}
+          <DropdownItem className="dropdown-item" onClick={() => history.push("/thesaurus")}>
             Mettre à jour le thesaurus
           </DropdownItem>
-          <DropdownItem
-            className="dropdown-item"
-            onClick={this.logout.bind(this)}
-          >
+          <DropdownItem className="dropdown-item" onClick={this.logout.bind(this)}>
             Se déconnecter
           </DropdownItem>
         </DropdownMenu>
