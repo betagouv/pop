@@ -77,13 +77,6 @@ class PublicRoutes extends React.Component {
               isLoggedIn={this.props.isLoggedIn}
               hasResetPassword={this.props.hasResetPassword}
             />
-            <RestrictedRoute
-              exact
-              path={`/museo`}
-              component={Museo}
-              isLoggedIn={this.props.isLoggedIn}
-              hasResetPassword={this.props.hasResetPassword}
-            />
           </Switch>
         </div>
       </ConnectedRouter>
