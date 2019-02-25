@@ -23,6 +23,9 @@ class Import extends React.Component {
           if (!value.MUSEO && this.props.museofile) {
             value.MUSEO = this.props.museofile;
           }
+          if (!value.CONTACT) {
+            value.CONTACT = this.props.email || "";
+          }
           return value;
         })
         .map(value => new Joconde(value));
@@ -77,9 +80,10 @@ class Import extends React.Component {
 }
 
 const mapstatetoprops = ({ Auth }) => {
-  const { museofile } = Auth.user;
+  const { museofile, email } = Auth.user;
   return {
-    museofile
+    museofile,
+    email
   };
 };
 

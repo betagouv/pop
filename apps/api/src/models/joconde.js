@@ -157,7 +157,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien contact musée",
-        generated: true,
+        generated: false,
         label: "Contact musée",
         validation: "Email"
       }
@@ -748,7 +748,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien site associé",
-        label: "Lien site associé"
+        label: "Lien site associé",
+        validation: "url"
       }
     },
     LVID: {
@@ -756,7 +757,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien video",
-        label: "Lien Vidéo"
+        label: "Lien Vidéo",
+        validation: "url"
       }
     }
   },
