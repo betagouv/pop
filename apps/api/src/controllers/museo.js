@@ -21,7 +21,7 @@ router.get("/:ref", async (req, res) => {
 });
 
 router.put("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  const data = JSON.parse(req.body.museo);
+  const data = req.body.museo;
   if (!data || !data.REF) {
     return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
   }

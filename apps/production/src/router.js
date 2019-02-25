@@ -13,6 +13,7 @@ import Notice from "./scenes/notice";
 import Admin from "./scenes/admin";
 import Import from "./scenes/import";
 import Thesaurus from "./scenes/thesaurus";
+import Museo from "./scenes/museo";
 import Auth from "./scenes/auth";
 
 class PublicRoutes extends React.Component {
@@ -73,6 +74,13 @@ class PublicRoutes extends React.Component {
             <RestrictedRoute
               path={"/notice/:collection/:ref"}
               component={Notice}
+              isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
+            />
+            <RestrictedRoute
+              exact
+              path={`/museo`}
+              component={Museo}
               isLoggedIn={this.props.isLoggedIn}
               hasResetPassword={this.props.hasResetPassword}
             />
