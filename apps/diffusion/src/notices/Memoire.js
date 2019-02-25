@@ -123,7 +123,7 @@ class Memoire extends React.Component {
                 <Field title="Nom objet" content={notice.OBJT} />
                 <Field title="Titre du dossier" content={notice.TICO} />
 
-                <Field title="Légende" content={notice.LEG} />
+                <Field title="Légende" content={notice.LEG} separator="#" />
                 <Field title="Titre" content={notice.TITRE} />
                 <Field title="Nom de théâtre" content={notice.THEATRE} />
                 <Field title="Rôle joué" content={notice.ROLE} />
@@ -262,7 +262,7 @@ class Memoire extends React.Component {
                 <Field title="Description technique de l’original" content={notice.TECHOR} />
                 <Field title="Format de l'original" content={notice.FORMATOR} />
                 <Field title="Annotations présentes sur le négatif" content={notice.MENTIONS} />
-                <Field title="Mentions tirage" content={notice.MENTTI} />
+                <Field title="Mentions tirage" content={notice.MENTTI} separator="#" />
                 <Field title="Orientation du phototype" content={notice.SENS} />
                 <Title
                   content="Datation et événements liés à l’image"
@@ -273,7 +273,11 @@ class Memoire extends React.Component {
                 <Field title="Date prise vue" content={notice.DATPV} />
                 <Field title="Précision sur la date de prise de vue" content={notice.JDATPV} />
                 <Field title="Date de l'original" content={notice.DATOR} />
-                <Field title="Référence de publication de l’image" content={notice.PUBLI} />
+                <Field
+                  title="Référence de publication de l’image"
+                  content={notice.PUBLI}
+                  separator="#"
+                />
                 <Field title="Observations" content={notice.OBS} />
                 <Field title="Observations sur le tirage" content={notice.OBSTI} />
                 <Field title="Observations sur l’original" content={notice.OBSOR} />
