@@ -340,7 +340,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Dossier URL",
-        label: "Dossier URL"
+        label: "Dossier URL",
+        validation: "url"
       }
     },
     DOSURLPDF: {
@@ -349,7 +350,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
-        label: "Dossier PDF"
+        label: "Dossier PDF",
+        validation: "url"
       }
     },
     DPRO: {
@@ -535,7 +537,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Liens Divers",
-        label: "Liens Divers"
+        label: "Liens Divers",
+        validation: "url"
       }
     },
     LIEU: {
