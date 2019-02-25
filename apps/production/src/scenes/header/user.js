@@ -29,9 +29,9 @@ class User extends Component {
   }
 
   museofile(account) {
-    if (account.museo) {
+    if (account.museo && this.props.group !== "admin") {
       return (
-        <DropdownItem className="dropdown-item" onClick={() => history.push("/museo")}>
+        <DropdownItem className="dropdown-item" onClick={() => history.push(`/notice/museo/${account.museo}`)}>
           Modifier les données muséofile
         </DropdownItem>
       );

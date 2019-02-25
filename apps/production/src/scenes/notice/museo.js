@@ -36,9 +36,10 @@ class Museo extends React.Component {
     const notice = await API.getMuseo(ref);
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
+    console.log(notice.REF + " " + this.props.user.museofile);
     const editable =
       this.props.canUpdate &&
-      (this.props.user.role === "administrateur" || notice.MUSEO === this.props.user.museofile);
+      (this.props.user.role === "administrateur" || notice.REF === this.props.user.museofile);
 
     this.setState({ loading: false, notice, editable });
   }
@@ -67,7 +68,6 @@ class Museo extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
-          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="ACCES" disabled={!this.state.editable} />
@@ -128,6 +128,9 @@ class Museo extends React.Component {
               <CustomField name="ITI_M" disabled={!this.state.editable} />
               <CustomField name="JOCONDE" disabled={!this.state.editable} />
               <CustomField name="LABEL" disabled={!this.state.editable} />
+              <CustomField name="MEL" disabled={!this.state.editable} />
+              <CustomField name="MONOPLUR" disabled={!this.state.editable} />
+              <CustomField name="NB_AMI" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="NOMANC" disabled={!this.state.editable} />
@@ -175,9 +178,6 @@ class Museo extends React.Component {
               <CustomField name="LGN" disabled={!this.state.editable} />
               <CustomField name="LIEU_ADM" disabled={!this.state.editable} />
               <CustomField name="LIEU_M" disabled={!this.state.editable} />
-              <CustomField name="MEL" disabled={!this.state.editable} />
-              <CustomField name="MONOPLUR" disabled={!this.state.editable} />
-              <CustomField name="NB_AMI" disabled={!this.state.editable} />
             </Col>
           </Section>
           <div className="buttons">
@@ -194,8 +194,7 @@ class Museo extends React.Component {
 
 const CustomField = ({ name, disabled, ...rest }) => {
   if (!Mapping.museo[name]) {
-    console.log(name);
-    return "";
+    return null;
   }
   return (
     <Field
@@ -211,6 +210,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group, museofile } = Auth.user;
+  console.log(Auth.user);
   const canUpdate =
     (Auth.user && role === "administrateur" && (group === "joconde" || group === "admin")) ||
     (Auth.user && role === "producteur" && group === "joconde");
