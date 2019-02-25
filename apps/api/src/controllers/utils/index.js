@@ -1,4 +1,4 @@
-const { lambertToWGS84 } = require("./geoloc");
+const { lambertToWGS84, convertCOORM, getPolygonCentroid } = require("./geoloc");
 const { deleteFile, uploadFile } = require("./s3");
 const { getNewId, checkESIndex, updateNotice } = require("./notice");
 const { formattedNow } = require("./date");
@@ -12,5 +12,7 @@ module.exports = {
   checkESIndex,
   updateNotice,
   lambertToWGS84,
+  convertCOORM,
+  getPolygonCentroid,
   fixLink
 };

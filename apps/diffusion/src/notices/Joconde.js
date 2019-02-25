@@ -251,7 +251,6 @@ class Joconde extends React.Component {
                   <Field title="Crédits photographiques" content={notice.AUTP} />
                   <Field title="Auteur de l'oeuvre ou de l'original" content={notice.AUTOR} />
                   <Field title="Droits photographiques" content={notice.PHOT} separator="#" />
-                  <Field title="" content={notice.COPY} />
                 </div>
 
                 <ContactUs contact={notice.CONTACT} reference={notice.REF} />

@@ -115,4 +115,46 @@ function lambertToWGS84(xy, zone) {
   }
 }
 
-module.exports = { lambertToWGS84 };
+function convertCOORM(COORM, ZONE) {
+  if (COORM) {
+    let coords = COORM.split("/");
+    const arr = [];
+    for (let i = 0; i < coords.length; i++) {
+      const obj = lambertToWGS84(coords[i], ZONE);
+      if (obj.lat === 0) {
+        return { coordinates: null, message: obj.message };
+      }
+      arr.push([obj.lat, obj.lon]);
+    }
+    return { coordinates: arr, message: "" };
+  }
+  return { coordinates: null, message: "" };
+}
+
+function getPolygonCentroid(pts) {
+  if (!pts) {
+    return null;
+  }
+  var first = pts[0],
+    last = pts[pts.length - 1];
+  if (first[0] != last[0] || first[1] != last[1]) pts.push(first);
+  var twicearea = 0,
+    x = 0,
+    y = 0,
+    nPts = pts.length,
+    p1,
+    p2,
+    f;
+  for (var i = 0, j = nPts - 1; i < nPts; j = i++) {
+    p1 = pts[i];
+    p2 = pts[j];
+    f = p1[0] * p2[1] - p2[0] * p1[1];
+    twicearea += f;
+    x += (p1[0] + p2[0]) * f;
+    y += (p1[1] + p2[1]) * f;
+  }
+  f = twicearea * 3;
+  return [x / f, y / f];
+}
+
+module.exports = { lambertToWGS84, convertCOORM, getPolygonCentroid };

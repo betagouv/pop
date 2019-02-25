@@ -20,6 +20,22 @@ const passport = require("passport");
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
+
+  if (notice.COORM && notice.ZONE) {
+    const { coordinates, message } = convertCOORM(notice.COORM, notice.ZONE);
+    notice["POP_COORDINATES_POLYGON"] = {
+      type: "Polygon",
+      coordinates
+    };
+    if (!notice.COOR && !notice.POP_COORDONNEES) {
+      const centroid = getPolygonCentroid(coordinates);
+      notice.POP_COORDONNEES = {
+        lat: centroid[0],
+        lon: centroid[1]
+      };
+    }
+  }
+
   if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
