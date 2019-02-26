@@ -92,7 +92,7 @@ function parseFiles(files, encoding) {
             newNotice.IMG = "";
           } else {
             let fileName = String(obj.REFIMG);
-            filename = convertLongNameToShort(fileName);
+            fileName = convertLongNameToShort(fileName);
             let img = filesMap[fileName];
             if (img) {
               newNotice.IMG = `memoire/${newNotice.REF}/${fileName}`;
@@ -272,9 +272,7 @@ function readme() {
         - le champ REF contenant la Référence Mémoire à laquelle je veux attacher une image
         <br />
         - le champ LBASE contenant la Référence Mérimée ou Palissy MH que je veux illustrer
-        <br />- le champ IMG ou REFIMG contenant une image au format .jpeg (peu importe le nom du
-        champ, les deux passent à l'import. En revanche, une fois l'import effectué, le champ REFIMG
-        devient le champ IMG, seul champ affiché dans la notice développée)
+        <br />- le champ REFIMG contenant une image au format .jpeg
         <br /> <br />
         2) Directement depuis une notice Mémoire : je peux cliquer sur "Ajouter une nouvelle image"
         et importer une nouvelle image directement depuis mon ordinateur. La notice Mémoire reçoit
