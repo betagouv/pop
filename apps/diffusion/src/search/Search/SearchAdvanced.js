@@ -2,6 +2,9 @@ import React from "react";
 import { QueryBuilder } from "pop-shared";
 import { Row, Col } from "reactstrap";
 import { withRouter } from "next/router";
+
+import amplitudeService from "../../services/amplitude";
+
 const bases = [];
 bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
 bases.push({ key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" });
@@ -10,6 +13,9 @@ bases.push({ key: "memoire", base: "Photographies (Mémoire)" });
 bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
 
 class SearchAdvanced extends React.Component {
+  componentDidMount() {
+    amplitudeService.logEvent("advanced_search_open");
+  }
 
   onBaseChange = e => {
     this.props.router.push(
@@ -17,7 +23,7 @@ class SearchAdvanced extends React.Component {
       `/advanced-search/list/${e.target.value}`
     );
   };
-  
+
   render() {
     const { base, key } = bases.find(e => e.key === this.props.base);
     return (

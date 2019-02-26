@@ -1,7 +1,11 @@
 import React from "react";
 import { DataSearch } from "@appbaseio/reactivesearch";
+import amplitudeService from "../../services/amplitude";
 
 class Search extends React.Component {
+  componentDidMount() {
+    amplitudeService.logEvent("search_open");
+  }
   render() {
     return (
       <DataSearch

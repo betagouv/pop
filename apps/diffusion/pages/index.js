@@ -5,6 +5,7 @@ import React from "react";
 import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
 import Router from "next/router";
+import amplitudeService from "../src/services/amplitude";
 import "./index.css";
 
 const bases = [
@@ -88,6 +89,7 @@ const bases = [
 export default class extends React.Component {
   componentDidMount() {
     Router.prefetch("/search");
+    amplitudeService.logEvent("home_open");
   }
   constructor(props) {
     super(props);
@@ -107,8 +109,11 @@ export default class extends React.Component {
     } else {
       base = `base=${JSON.stringify(selected)}&`;
     }
-    Router.push(`/search/list?${base}mainSearch=${encodeURI(JSON.stringify(searchValue))}`).then(() =>
-      window.scrollTo(0, 0)
+
+    amplitudeService.logEvent("home_search", { value: searchValue, base: selected });
+
+    Router.push(`/search/list?${base}mainSearch=${encodeURI(JSON.stringify(searchValue))}`).then(
+      () => window.scrollTo(0, 0)
     );
   }
 

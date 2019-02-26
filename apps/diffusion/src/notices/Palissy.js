@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import amplitudeService from "../services/amplitude";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
@@ -11,6 +12,9 @@ import "./Notice.css";
 import { postFixedLink, schema, toFieldImages } from "./utils";
 
 class Palissy extends React.Component {
+  componentDidMount() {
+    amplitudeService.logEvent("notice_open", { base: "palissy", notice: this.props.notice.REF });
+  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const auteur = this.props.notice.AUTR ? this.props.notice.AUTR.join(" ") : "";
@@ -275,7 +279,7 @@ class Palissy extends React.Component {
                   <Field title="Crédits photographiques" content={notice.AUTP} />
                   <Field title="" content={notice.COPY} />
                 </div>
-                <ContactUs contact={notice.CONTACT} reference={notice.REF} />
+                <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" />
               </div>
               <SeeMore notice={notice} />
             </Col>

@@ -1,17 +1,23 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
+import Head from "next/head";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import { toFieldImages } from "./utils";
-import Head from "next/head";
+
+import amplitudeService from "../services/amplitude";
+
 import "./Notice.css";
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 class Memoire extends React.Component {
+  componentDidMount() {
+    amplitudeService.logEvent("notice_open", { base: "memoire", notice: this.props.notice.REF });
+  }
   rawTitle() {
     const notice = this.props.notice;
     return notice.TICO || notice.TITR || notice.EDIF || notice.LEG || "";
@@ -295,7 +301,7 @@ class Memoire extends React.Component {
                   <Field title="Auteur de l'oeuvre ou de l'original" content={notice.AUTOR} />
                   <Field title="" content={notice.COPY} />
                 </div>
-                <ContactUs contact={notice.CONTACT} reference={notice.REF} />
+                <ContactUs contact={notice.CONTACT} REF={notice.REF} base="memoire" />
               </div>
               <SeeMore notice={notice} />
             </Col>
