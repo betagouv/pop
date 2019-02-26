@@ -5,6 +5,7 @@ import amplitudeService from "../services/amplitude";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
+import Map from "./Map";
 import ContactUs from "./ContactUs";
 import FieldImages from "./FieldImages";
 import "./Notice.css";
@@ -282,6 +283,7 @@ class Palissy extends React.Component {
                 <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" />
               </div>
               <SeeMore notice={notice} />
+              <Map notice={notice} />
             </Col>
           </Row>
         </Container>
