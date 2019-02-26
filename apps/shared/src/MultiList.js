@@ -23,11 +23,11 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
     const values = queryString.parse(this.urlLocation);
     const field = componentId;
     return Boolean(values[field]);
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.location !== this.props.location) {
-      this.setState({isOpen: null});
+      this.setState({ isOpen: null });
     }
   }
 
@@ -59,6 +59,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
                 sortByName={this.props.sortByName}
                 limit={this.props.limit}
                 location={this.urlLocation}
+                onChange={this.props.onChange}
               />
             </ReactiveComponent>
           ) : null}
@@ -109,6 +110,10 @@ class MultiListUmbrella extends React.Component {
     } else {
       selected = [...this.state.selected, elt];
       this.setState({ selected });
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange(elt);
     }
     this.updateExternalQuery(selected);
   }
@@ -231,7 +236,12 @@ class MultiList extends React.Component {
           {this.renderListItem(item)}
         </Label>
       ));
-      return <FormGroup check>{options}{options.length === 20 ? <div>...</div>: ""}</FormGroup>;
+      return (
+        <FormGroup check>
+          {options}
+          {options.length === 20 ? <div>...</div> : ""}
+        </FormGroup>
+      );
     }
     return <div />;
   }

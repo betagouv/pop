@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
+import amplitudeService from "../services/amplitude";
 import Title from "./Title";
 import ContactUs from "./ContactUs";
 import FieldImages from "./FieldImages";
@@ -12,6 +13,9 @@ import Head from "next/head";
 import { postFixedLink, schema, toFieldImages, hasCoordinates } from "./utils";
 
 class Merimee extends React.Component {
+  componentWillMount() {
+    amplitudeService.logEvent("notice_open", { base: "merimee", notice: this.props.notice.REF });
+  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const datation = this.props.notice.SCLE ? this.props.notice.SCLE.join(" ") : "";
@@ -67,7 +71,7 @@ class Merimee extends React.Component {
     return (
       <div className="notice">
         <Container>
-        <Head>
+          <Head>
             <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
             <meta content={description} name="description" />
             <script type="application/ld+json">{schema(obj)}</script>
@@ -292,7 +296,7 @@ class Merimee extends React.Component {
                   <Field title="Crédits photographiques" content={notice.AUTP} />
                   <Field title="" content={notice.COPY} />
                 </div>
-                <ContactUs contact={notice.CONTACT} reference={notice.REF} />
+                <ContactUs contact={notice.CONTACT} REF={notice.REF} base="merimee" />
               </div>
               <SeeMore notice={notice} />
               {hasCoordinates(notice.POP_COORDONNEES) ? <Map notice={notice} /> : <div />}

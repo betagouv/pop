@@ -5,6 +5,8 @@ import Mosaic from "./Mosaic";
 import List from "./List";
 import queryString from "query-string";
 
+import amplitudeService from "../../services/amplitude";
+
 const DEFAULT_FILTER = [
   "mainSearch",
   "domn",
@@ -49,6 +51,7 @@ const JsonParseValues = values => {
 
 class Results extends React.Component {
   toggle(view, params) {
+    amplitudeService.logEvent("search_toggle_tab", { view });
     // If view change, we have to prepare all (updated) params and pass them the new route.
     if (this.props.display !== view) {
       // Get all search params displayed in current URL as real JS values (not stringified).
@@ -63,9 +66,9 @@ class Results extends React.Component {
       }
       Router.push(
         `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-        `/${this.modeToRoute()}/${view}${this.props.mode === "advanced" ? `/${this.props.base}` : ""}${
-          searchParams ? "?" + queryString.stringify(searchParams) : ""
-        }`
+        `/${this.modeToRoute()}/${view}${
+          this.props.mode === "advanced" ? `/${this.props.base}` : ""
+        }${searchParams ? "?" + queryString.stringify(searchParams) : ""}`
       );
     }
   }

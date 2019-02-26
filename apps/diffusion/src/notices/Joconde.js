@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import Title from "./Title";
+import amplitudeService from "../services/amplitude";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import Map from "./Map";
@@ -10,6 +11,9 @@ import Head from "next/head";
 import "./Notice.css";
 
 class Joconde extends React.Component {
+  componentWillMount() {
+    amplitudeService.logEvent("notice_open", { base: "joconde", notice: this.props.notice.REF });
+  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const auteur = this.props.notice.AUTR ? this.props.notice.AUTR : "";
@@ -253,7 +257,7 @@ class Joconde extends React.Component {
                   <Field title="Droits photographiques" content={notice.PHOT} separator="#" />
                 </div>
 
-                <ContactUs contact={notice.CONTACT} reference={notice.REF} />
+                <ContactUs contact={notice.CONTACT} REF={notice.REF} base="joconde" />
               </div>
 
               <SeeMore notice={notice} museo={this.props.museo} />

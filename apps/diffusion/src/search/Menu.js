@@ -2,6 +2,8 @@ import React from "react";
 import { SelectedFilters } from "@appbaseio/reactivesearch";
 import { MultiList } from "pop-shared";
 
+import amplitudeService from "../services/amplitude";
+
 const DEFAULT_FILTER = [
   "mainSearch",
   "domn",
@@ -42,6 +44,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
           bucket.key !== "Photographies (Mémoires)" &&
           bucket.key !== "Inventaire patrimoine mobilier (Palissy)"
         }
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "base", value });
+        }}
         location={location}
       />
       <MultiList
@@ -51,6 +56,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
         placeholder="Rechercher un auteur"
         location={location}
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "auteur", value });
+        }}
         displayCount
       />
       <MultiList
@@ -61,6 +69,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "domaine", value });
+        }}
       />
       <MultiList
         dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -70,6 +81,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "location", value });
+        }}
       />
       <MultiList
         dataField="PERI.keyword"
@@ -79,6 +93,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         placeholder="Rechercher une période"
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "periode", value });
+        }}
       />
 
       <MultiList
@@ -89,6 +106,9 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         showSearch={false}
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", { dataField: "contient_image", value });
+        }}
       />
       <MultiList
         componentId="geolocalisation"
@@ -102,6 +122,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", {
+            dataField: "contient_geolocalisation",
+            value
+          });
+        }}
       />
       <MultiList
         dataField="TECH.keyword"
@@ -111,6 +137,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         placeholder="Rechercher une technique"
         location={location}
         displayCount
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", {
+            dataField: "technique",
+            value
+          });
+        }}
       />
       <MultiList
         show={false}
@@ -120,6 +152,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         URLParams={true}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
         location={location}
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", {
+            dataField: "import",
+            value
+          });
+        }}
       />
       <MultiList
         show={false}
@@ -129,6 +167,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         URLParams={true}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
         location={location}
+        onChange={value => {
+          amplitudeService.logEvent("search_filter_change", {
+            dataField: "museo",
+            value
+          });
+        }}
       />
     </aside>
   </div>

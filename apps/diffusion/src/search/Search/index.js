@@ -15,7 +15,10 @@ class Search extends React.Component {
   renderLink() {
     if (this.props.mode !== "advanced") {
       return (
-        <Link href={"/search?view=list&mode=advanced&base=joconde"} as="/advanced-search/list/joconde">
+        <Link
+          href={"/search?view=list&mode=advanced&base=joconde"}
+          as="/advanced-search/list/joconde"
+        >
           <a className="search-mode">Recherche avancée</a>
         </Link>
       );
