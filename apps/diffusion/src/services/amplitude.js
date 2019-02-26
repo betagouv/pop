@@ -6,7 +6,7 @@ amplitudeService.init = function() {
 };
 
 amplitudeService.logEvent = function(eventName, properties = {}) {
-  console.log("TRACK", eventName, properties);
+  // console.log("TRACK", eventName, properties);
   if (process.env.NODE_ENV === "production") {
     amplitude.getInstance().logEvent(eventName, properties);
   }
