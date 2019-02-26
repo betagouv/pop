@@ -9,7 +9,7 @@ import { schema, toFieldImages } from "./utils";
 import "./Notice.css";
 
 class Mnr extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("notice_open", { base: "mnr", notice: this.props.notice.REF });
   }
   getMetaDescription = () => {

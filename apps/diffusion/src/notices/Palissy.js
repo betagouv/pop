@@ -12,7 +12,7 @@ import "./Notice.css";
 import { postFixedLink, schema, toFieldImages } from "./utils";
 
 class Palissy extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("notice_open", { base: "palissy", notice: this.props.notice.REF });
   }
   getMetaDescription = () => {

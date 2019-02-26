@@ -13,7 +13,7 @@ bases.push({ key: "memoire", base: "Photographies (Mémoire)" });
 bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
 
 class SearchAdvanced extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("advanced_search_open");
   }
 

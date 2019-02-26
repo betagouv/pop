@@ -15,7 +15,7 @@ import "./Notice.css";
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 class Memoire extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("notice_open", { base: "memoire", notice: this.props.notice.REF });
   }
   rawTitle() {

@@ -13,7 +13,7 @@ import Head from "next/head";
 import { postFixedLink, schema, toFieldImages, hasCoordinates } from "./utils";
 
 class Merimee extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("notice_open", { base: "merimee", notice: this.props.notice.REF });
   }
   getMetaDescription = () => {

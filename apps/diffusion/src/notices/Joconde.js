@@ -11,7 +11,7 @@ import Head from "next/head";
 import "./Notice.css";
 
 class Joconde extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("notice_open", { base: "joconde", notice: this.props.notice.REF });
   }
   getMetaDescription = () => {

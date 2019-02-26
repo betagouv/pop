@@ -3,7 +3,7 @@ import { DataSearch } from "@appbaseio/reactivesearch";
 import amplitudeService from "../../services/amplitude";
 
 class Search extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     amplitudeService.logEvent("search_open");
   }
   render() {
@@ -17,10 +17,6 @@ class Search extends React.Component {
         className="mainSearch"
         placeholder="Saisissez un titre, une dénomination ou une localisation"
         URLParams={true}
-        onValueChange={function(value) {
-          //smart search track ?
-          // console.log("current value: ", value);
-        }}
         customQuery={(value, props) => {
           if (!value) {
             return {
