@@ -107,7 +107,6 @@ function parseFiles(files, encoding) {
         return;
       }
 
-      console.log("newNotice", newNotice);
       const { DPT, INSEE, INSEE2 } = newNotice;
       if (newNotice._type !== "memoire") {
         if (!INSEE && !INSEE2) {
