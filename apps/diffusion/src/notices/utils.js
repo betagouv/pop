@@ -76,7 +76,3 @@ export function schema({
   obj["artMedium"] = artMedium;
   return JSON.stringify(obj);
 }
-
-export function hasCoordinates(point) {
-  return !!(point && point.lat && point.lon);
-}
