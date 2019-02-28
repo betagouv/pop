@@ -350,7 +350,12 @@ const SeeMore = ({ notice }) => {
       <Field
         title="Lien vers la base Autor"
         content={
-          <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/autor_cible.html">
+          <a
+            target="_blank"
+            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
+              notice.LAUTP
+            }`}
+          >
             {notice.LAUTP}
           </a>
         }
