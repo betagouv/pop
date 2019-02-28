@@ -10,7 +10,7 @@ import Map from "./Map";
 import "./Notice.css";
 import Head from "next/head";
 
-import { postFixedLink, schema, toFieldImages, hasCoordinates } from "./utils";
+import { postFixedLink, schema, toFieldImages } from "./utils";
 
 class Merimee extends React.Component {
   componentDidMount() {
@@ -299,7 +299,7 @@ class Merimee extends React.Component {
                 <ContactUs contact={notice.CONTACT} REF={notice.REF} base="merimee" />
               </div>
               <SeeMore notice={notice} />
-              {hasCoordinates(notice.POP_COORDONNEES) ? <Map notice={notice} /> : <div />}
+              <Map notice={notice} />
             </Col>
           </Row>
         </Container>

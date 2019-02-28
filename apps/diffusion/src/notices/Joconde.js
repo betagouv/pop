@@ -6,7 +6,7 @@ import amplitudeService from "../services/amplitude";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import Map from "./Map";
-import { schema, toFieldImages, hasCoordinates } from "./utils";
+import { schema, toFieldImages } from "./utils";
 import Head from "next/head";
 import "./Notice.css";
 
@@ -261,8 +261,7 @@ class Joconde extends React.Component {
               </div>
 
               <SeeMore notice={notice} museo={this.props.museo} />
-
-              {hasCoordinates(notice.POP_COORDONNEES) ? <Map notice={notice} /> : <div />}
+              <Map notice={notice} />
             </Col>
           </Row>
         </Container>
