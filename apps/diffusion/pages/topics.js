@@ -120,29 +120,6 @@ export default () => (
           </Col>
         </Row>
 
-        <h3>Voyages</h3>
-        <Row>
-          <Col lg="3" md="6">
-            <TopicCard
-              img={jocondeImg("M0759001165/e05073.jpg")}
-              txt="Asie orientale"
-              params={{
-                base: ["Collections des musées de France (Joconde)"],
-                domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
-              }}
-            />
-          </Col>
-          <Col lg="3" md="6">
-            <TopicCard
-              img={jocondeImg("00000074608/rimg0445.jpg")}
-              txt="Venise"
-              params={{
-                mainSearch: "venise"
-              }}
-            />
-          </Col>
-        </Row>
-
         <h3>Mode</h3>
         <Row>
           <Col lg="3" md="6">
@@ -170,6 +147,38 @@ export default () => (
               txt="Elsa Schiaparelli"
               params={{
                 mainSearch: "Schiaparelli"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={memoireImg("1287/sap53_71l01246_p.jpg")}
+              txt="Coco Chanel"
+              params={{
+                mainSearch: "\"Coco Chanel\""
+              }}
+            />
+          </Col>
+        </Row>
+
+        <h3>Voyages</h3>
+        <Row>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("M0759001165/e05073.jpg")}
+              txt="Asie orientale"
+              params={{
+                base: ["Collections des musées de France (Joconde)"],
+                domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("00000074608/rimg0445.jpg")}
+              txt="Venise"
+              params={{
+                mainSearch: "venise"
               }}
             />
           </Col>
