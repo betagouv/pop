@@ -1,4 +1,5 @@
 import React from "react";
+import amplitudeService from "../services/amplitude";
 
 export default class ContactUs extends React.Component {
   render() {
