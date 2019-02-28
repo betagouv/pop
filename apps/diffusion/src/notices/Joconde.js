@@ -181,7 +181,7 @@ class Joconde extends React.Component {
                 <Field title="Etat du bien" content={notice.ETAT} />
                 <Field title="Sujet représenté" content={notice.REPR} separator="#" />
                 <Field title="Précisions sur le sujet représenté" content={notice.PREP} />
-                <Field title="Date de la représentation" content={notice.DREP} />
+                <Field title="Date de la représentation" content={notice.DREP} separator="#" />
                 <Field title="Source de la représentation" content={notice.SREP} />
                 <Title
                   content="Contexte historique"
