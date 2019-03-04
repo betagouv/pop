@@ -6,7 +6,7 @@ import AdvancedSearch from "./SearchAdvanced";
 class Search extends React.Component {
   renderSearch() {
     if (this.props.mode !== "advanced") {
-      return <TextSearch />;
+      return <TextSearch mode={this.props.mode} view={this.props.view} mainSearch={this.props.mainSearch} />;
     } else {
       return <AdvancedSearch base={this.props.base} />;
     }

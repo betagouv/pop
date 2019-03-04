@@ -21,8 +21,8 @@ export default class extends React.Component {
   };
 
   static async getInitialProps({ asPath, query }) {
-    const { view, mode, ...rest } = query;
-    return { asPath, queryString: queryString.stringify(rest), view, mode, base: query.base };
+    const { view, mode, mainSearch, ...rest } = query;
+    return { asPath, queryString: queryString.stringify(rest), mainSearch, view, mode, base: query.base };
   }
 
   render = () => {
@@ -65,8 +65,10 @@ export default class extends React.Component {
                   <div className={`search-container search-container-${this.props.mode}`}>
                     <Search
                       mode={this.props.mode}
-                      location={this.props.asPath}
+                      view={this.props.view}
                       base={this.props.base}
+                      location={this.props.asPath}
+                      mainSearch={this.props.mainSearch}
                     />
                     {this.props.mode === "simple" ? (
                       <MobileFilters

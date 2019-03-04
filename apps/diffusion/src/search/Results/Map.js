@@ -179,7 +179,7 @@ Area width x height
     return (
       <ReactiveComponent
         componentId="map" // a unique id we will refer to later
-        URLParams={this.props.URLParams || true}
+        URLParams={this.props.URLParams !== false}
         react={{ and: this.props.filters }}
         defaultQuery={() => this.state.query}
       >

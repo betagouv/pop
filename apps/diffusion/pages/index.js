@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
 import Router from "next/router";
 import amplitudeService from "../src/services/amplitude";
+import { pushSearchRoute } from "../src/services/url";
 import "./index.css";
 
 const bases = [
@@ -100,7 +101,7 @@ export default class extends React.Component {
     this.gotoSearch = this.gotoSearch.bind(this);
   }
 
-  gotoSearch() {
+  async gotoSearch() {
     const searchValue = document.getElementById("main-search").value;
     const selected = this.state.selected;
     let base;
@@ -112,9 +113,12 @@ export default class extends React.Component {
 
     amplitudeService.logEvent("home_search", { value: searchValue, base: selected });
 
-    Router.push(`/search/list?${base}mainSearch=${encodeURI(JSON.stringify(searchValue))}`).then(
-      () => window.scrollTo(0, 0)
-    );
+    pushSearchRoute({
+      base,
+      mode: "simple",
+      view: "list",
+      params: { mainSearch: searchValue }
+    }).then(() => window.scrollTo(0, 0));
   }
 
   renderBanner() {

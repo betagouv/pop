@@ -1,7 +1,7 @@
 import React from "react";
 import { SelectedFilters } from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
-
+import { MultiList } from "../../../shared/dist";
+import { pushSearchRoute } from "../services/url";
 import amplitudeService from "../services/amplitude";
 
 const DEFAULT_FILTER = [
@@ -39,6 +39,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         title="Base"
         componentId="base"
         showSearch={false}
+        URLParams={false}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "base") }}
         filterListItem={bucket =>
           bucket.key !== "Photographies (Mémoires)" &&
@@ -46,6 +47,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         }
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "base", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
         location={location}
       />
@@ -56,8 +58,10 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "auteur") }}
         placeholder="Rechercher un auteur"
         location={location}
+        URLParams={false}
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "auteur", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
         displayCount
       />
@@ -68,9 +72,11 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="domn"
         react={{ and: DEFAULT_FILTER.filter(e => e !== "domn") }}
         location={location}
+        URLParams={false}
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "domaine", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
       <MultiList
@@ -80,9 +86,11 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="ou"
         react={{ and: DEFAULT_FILTER.filter(e => e !== "ou") }}
         location={location}
+        URLParams={false}
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "location", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
       <MultiList
@@ -92,9 +100,11 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "periode") }}
         placeholder="Rechercher une période"
         location={location}
+        URLParams={false}
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "periode", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
 
@@ -105,9 +115,11 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         placeholder="oui ou non"
         showSearch={false}
         location={location}
+        URLParams={false}
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "contient_image", value });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
       <MultiList
@@ -118,7 +130,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         queryFormat="or"
         className="filters"
         showSearch={false}
-        URLParams={true}
+        URLParams={false}
         data={[{ label: "oui", value: "oui" }, { label: "non", value: "non" }]}
         location={location}
         displayCount
@@ -127,6 +139,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
             dataField: "contient_geolocalisation",
             value
           });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
       <MultiList
@@ -136,12 +149,14 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         react={{ and: DEFAULT_FILTER.filter(e => e !== "tech") }}
         placeholder="Rechercher une technique"
         location={location}
+        URLParams={false}
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", {
             dataField: "technique",
             value
           });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
       <MultiList
@@ -149,7 +164,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="import"
         dataField="POP_IMPORT.keyword"
         title="Import"
-        URLParams={true}
+        URLParams={false}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "import") }}
         location={location}
         onChange={value => {
@@ -164,7 +179,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         componentId="museo"
         dataField="MUSEO.keyword"
         title="Museo"
-        URLParams={true}
+        URLParams={false}
         react={{ and: DEFAULT_FILTER.filter(e => e !== "museo") }}
         location={location}
         onChange={value => {
@@ -172,6 +187,7 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
             dataField: "museo",
             value
           });
+          pushSearchRoute({ mode: "simple", view, params: { base: value } });
         }}
       />
     </aside>

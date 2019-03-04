@@ -1,12 +1,17 @@
 import React from "react";
 import { DataSearch } from "@appbaseio/reactivesearch";
 import amplitudeService from "../../services/amplitude";
+import { pushSearchRoute } from "../../services/url";
 
 class Search extends React.Component {
   componentDidMount() {
     amplitudeService.logEvent("search_open");
   }
   render() {
+    let defaultSelected = "";
+    if (this.props.mainSearch) {
+      defaultSelected = JSON.parse(this.props.mainSearch)
+    }
     return (
       <DataSearch
         componentId="mainSearch"
@@ -16,7 +21,14 @@ class Search extends React.Component {
         iconPosition="left"
         className="mainSearch"
         placeholder="Saisissez un titre, une dénomination ou une localisation"
-        URLParams={true}
+        defaultSelected={defaultSelected}
+        onValueChange={v => {
+          pushSearchRoute({
+            mode: this.props.mode,
+            view: this.props.view,
+            params: { mainSearch: v }
+          });
+        }}
         customQuery={(value, props) => {
           if (!value) {
             return {

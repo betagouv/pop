@@ -1,9 +1,8 @@
 import React from "react";
-import Router from "next/router";
 import Map from "./Map";
 import Mosaic from "./Mosaic";
 import List from "./List";
-import queryString from "query-string";
+import { pushSearchRoute } from "../../services/url";
 
 import amplitudeService from "../../services/amplitude";
 
@@ -26,49 +25,13 @@ const DEFAULT_FILTER = [
   "vue"
 ];
 
-// Stringify an object in order to convert it to URL params
-// Ex: convert `{foo: ["bar"]}` to `{foo: "[\"bar\"]"}`
-const JsonStringifyValues = object => {
-  const entries = Object.entries(object)
-    .filter(([_k, v]) => (Array.isArray(v) ? v.length : v))
-    .map(([k, v]) => v && { [k]: JSON.stringify(v) });
-  return entries.length ? Object.assign(...entries) : null;
-};
-
-// Convert JSON stringified values to JS real values.
-// Ex: convert `{foo: "[\"bar\"]"}` to `{foo: ["bar"]}`
-const JsonParseValues = values => {
-  const entries =
-    values &&
-    Object.entries(values).map(([k, v]) => {
-      try {
-        v = JSON.parse(v);
-      } catch (e) {}
-      return { [k]: v };
-    });
-  return entries.length ? Object.assign(...entries) : {};
-};
-
 class Results extends React.Component {
   toggle(view, params) {
     amplitudeService.logEvent("search_toggle_tab", { view });
     // If view change, we have to prepare all (updated) params and pass them the new route.
-    if (this.props.display !== view) {
-      // Get all search params displayed in current URL as real JS values (not stringified).
-      const searchParams = JsonStringifyValues({
-        ...JsonParseValues(queryString.parse(window.location.search)),
-        ...params
-      });
-      // Add mode and view (because Next.js' router needs it)
-      const searchFullParams = { mode: this.props.mode, view, ...searchParams };
-      if (this.props.mode === "advanced") {
-        searchFullParams.base = this.props.base;
-      }
-      Router.push(
-        `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-        `/${this.modeToRoute()}/${view}${
-          this.props.mode === "advanced" ? `/${this.props.base}` : ""
-        }${searchParams ? "?" + queryString.stringify(searchParams) : ""}`
+    if (this.props.view !== view) {
+      pushSearchRoute({ base: this.props.base, mode: "simple", view, params }).then(() =>
+        window.scrollTo(0, 0)
       );
     }
   }

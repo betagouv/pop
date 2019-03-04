@@ -34,6 +34,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   render() {
     const style = this.props.show === false ? { display: "none" } : {};
     const isOpen = this.isActive() || this.state.isOpen;
+    console.log(this.props.URLParams !== false)
     return (
       <div className="multilist" style={style}>
         <div className="topBar" onClick={this.onListClicked}>
@@ -44,7 +45,7 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
           {isOpen ? (
             <ReactiveComponent
               componentId={this.props.componentId} // a unique id we will refer to later
-              URLParams={this.props.URLParams || true}
+              URLParams={false}
               react={this.props.react || {}}
               data={this.props.data || []}
             >
@@ -171,6 +172,7 @@ class MultiListUmbrella extends React.Component {
         componentId={`MultiList-${this.props.dataField}`}
         defaultQuery={() => this.state.query}
         react={this.props.react}
+        URLParams={false}
         data={this.props.data}
       >
         <MultiList
