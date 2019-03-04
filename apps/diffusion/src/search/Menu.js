@@ -1,7 +1,6 @@
 import React from "react";
 import { SelectedFilters } from "@appbaseio/reactivesearch";
-// import { MultiList } from "pop-shared";
-import { MultiList } from "../../../shared/dist";
+import { MultiList } from "pop-shared";
 
 import amplitudeService from "../services/amplitude";
 
