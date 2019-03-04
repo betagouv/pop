@@ -6,7 +6,7 @@ import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
-import { schema, toFieldImages } from "./utils";
+import { toFieldImages } from "./utils";
 
 import amplitudeService from "../services/amplitude";
 
