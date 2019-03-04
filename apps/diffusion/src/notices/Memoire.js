@@ -39,7 +39,7 @@ class Memoire extends React.Component {
   fieldImage(notice) {
     const images = toFieldImages([notice.IMG]);
     if (images.length) {
-      return <FieldImages images={images} disabled name={notice.TICO} external={true} />;
+      return <FieldImages images={images} disabled name={this.rawTitle()} external={true} />;
     }
   }
 
@@ -49,7 +49,7 @@ class Memoire extends React.Component {
   }
 
   render() {
-    const notice = this.props.notice;
+    const { notice } = this.props;
 
     return (
       <div className="notice">
