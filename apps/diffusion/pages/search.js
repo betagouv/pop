@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { ReactiveBase } from "@appbaseio/reactivesearch";
+import { ReactiveBase } from "rap2h-reactivesearch";
 import Layout from "../src/components/Layout";
 import Header from "../src/search/Header";
 import Menu from "../src/search/Menu";
@@ -49,7 +49,9 @@ export default class extends React.Component {
           <Container fluid style={{ maxWidth: 1860 }}>
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
-            <ReactiveBase url={`${es_url}`} app={queryScope}>
+            <ReactiveBase url={`${es_url}`} app={queryScope} setSearchParams={url => {
+              console.log(url)
+            }}>
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
                   <Menu
