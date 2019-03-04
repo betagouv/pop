@@ -58,7 +58,7 @@ class Memoire extends React.Component {
   }
 
   render() {
-    const notice = this.props.notice;
+    const { notice } = this.props;
 
     return (
       <div className="notice">
