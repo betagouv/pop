@@ -32,7 +32,14 @@ class Merimee extends React.Component {
     const images = toFieldImages(notice.MEMOIRE);
     if (images.length) {
       return (
-        <FieldImages images={images} disabled name={notice.TICO || notice.TITR} external={false} />
+        <FieldImages
+          reference={notice.REF}
+          base="merimee"
+          images={images}
+          disabled
+          name={notice.TICO || notice.TITR}
+          external={false}
+        />
       );
     }
   }

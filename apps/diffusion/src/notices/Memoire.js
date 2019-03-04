@@ -39,7 +39,16 @@ class Memoire extends React.Component {
   fieldImage(notice) {
     const images = toFieldImages([notice.IMG]);
     if (images.length) {
-      return <FieldImages images={images} disabled name={this.rawTitle()} external={true} />;
+      return (
+        <FieldImages
+          reference={notice.REF}
+          base="memoire"
+          images={images}
+          disabled
+          name={notice.TICO}
+          external={true}
+        />
+      );
     }
   }
 

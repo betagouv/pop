@@ -10,6 +10,12 @@ export default class MultiListUmbrellaUmbrella extends React.Component {
   urlLocation = null;
 
   onListClicked = () => {
+    if (this.state.isOpen && this.props.onClose) {
+      this.props.onClose(this.props.componentId);
+    }
+    if (!this.state.isOpen && this.props.onOpen) {
+      this.props.onOpen(this.props.componentId);
+    }
     this.setState({ isOpen: !this.state.isOpen });
   };
 

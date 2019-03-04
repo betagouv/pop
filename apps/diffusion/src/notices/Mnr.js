@@ -28,7 +28,14 @@ class Mnr extends React.Component {
     const images = toFieldImages(notice.VIDEO);
     if (images.length) {
       return (
-        <FieldImages images={images} disabled name={notice.TICO || notice.TITR} external={false} />
+        <FieldImages
+          reference={notice.REF}
+          base="mnr"
+          images={images}
+          disabled
+          name={notice.TICO || notice.TITR}
+          external={false}
+        />
       );
     }
   }
