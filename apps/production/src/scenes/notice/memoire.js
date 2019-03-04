@@ -134,12 +134,11 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <CustomField name="EDIF" disabled={!this.state.editable} />
-              <CustomField name="OBJT" disabled={!this.state.editable} />
+              <CustomField name="MARQ" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="LBASE" createUrl={getUrl} disabled={!this.state.editable} />
               <CustomField name="LBASE2" disabled={!this.state.editable} />
-              <CustomField name="MARQ" disabled={!this.state.editable} />
             </Col>
           </Section>
           <Section
@@ -214,6 +213,7 @@ class Notice extends React.Component {
               <CustomField name="DOM" disabled={!this.state.editable} />
               <CustomField name="SERIE" disabled={!this.state.editable} />
               <CustomField name="LEG" disabled={!this.state.editable} />
+              <CustomField name="OBJT" disabled={!this.state.editable} />
               <CustomField name="MCL" disabled={!this.state.editable} />
               <CustomField name="MCPER" disabled={!this.state.editable} />
               <CustomField name="ADPHOT" disabled={!this.state.editable} />

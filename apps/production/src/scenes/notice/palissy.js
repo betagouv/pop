@@ -191,21 +191,26 @@ class Notice extends React.Component {
               <CustomField name="REG" disabled={!this.state.editable} />
               <CustomField name="DPT" disabled={!this.state.editable} />
               <CustomField name="COM" disabled={!this.state.editable} />
+              <CustomField name="COM2" disabled={!this.state.editable} />
               <CustomField name="INSEE" disabled={!this.state.editable} />
+              <CustomField name="INSEE2" disabled={!this.state.editable} />
               <CustomField name="PLOC" disabled={!this.state.editable} />
               <CustomField name="AIRE" disabled={!this.state.editable} />
               <CustomField name="CANT" disabled={!this.state.editable} />
               <CustomField name="LIEU" disabled={!this.state.editable} />
               <CustomField name="ADRS" disabled={!this.state.editable} />
-              <CustomField name="EDIF" disabled={!this.state.editable} />
+              <CustomField name="ADRS2" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
+              <CustomField name="EDIF" disabled={!this.state.editable} />
+              <CustomField name="EDIF2" disabled={!this.state.editable} />
               <CustomField name="ZONE" disabled={!this.state.editable} />
               <CustomField name="COOR" disabled={!this.state.editable} />
               <CustomField name="COORM" disabled={!this.state.editable} />
               <CustomField name="IMPL" disabled={!this.state.editable} />
               <CustomField name="LOCA" disabled={!this.state.editable} />
               <CustomField name="EMPL" disabled={!this.state.editable} />
+              <CustomField name="EMPL2" disabled={!this.state.editable} />
               <CustomField name="VOLS" disabled={!this.state.editable} />
             </Col>
           </Section>
