@@ -1,6 +1,7 @@
 import React from "react";
 import { SelectedFilters } from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
+// import { MultiList } from "pop-shared";
+import { MultiList } from "../../../shared/dist";
 
 import amplitudeService from "../services/amplitude";
 
@@ -35,6 +36,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
       />
       <h4>Affiner par</h4>
       <MultiList
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "base" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "base" });
+        }}
         dataField="BASE.keyword"
         title="Base"
         componentId="base"
@@ -59,6 +66,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "auteur", value });
         }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "auteur" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "auteur" });
+        }}
         displayCount
       />
       <MultiList
@@ -72,6 +85,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "domaine", value });
         }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "domaine" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "domaine" });
+        }}
       />
       <MultiList
         dataField={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -83,6 +102,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "location", value });
+        }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "location" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "location" });
         }}
       />
       <MultiList
@@ -96,6 +121,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "periode", value });
         }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "periode" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "periode" });
+        }}
       />
 
       <MultiList
@@ -108,6 +139,12 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         displayCount
         onChange={value => {
           amplitudeService.logEvent("search_filter_change", { dataField: "contient_image", value });
+        }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", { dataField: "contient_image" });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", { dataField: "contient_image" });
         }}
       />
       <MultiList
@@ -128,6 +165,16 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
             value
           });
         }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", {
+            dataField: "contient_geolocalisation"
+          });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", {
+            dataField: "contient_geolocalisation"
+          });
+        }}
       />
       <MultiList
         dataField="TECH.keyword"
@@ -141,6 +188,16 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
           amplitudeService.logEvent("search_filter_change", {
             dataField: "technique",
             value
+          });
+        }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", {
+            dataField: "technique"
+          });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", {
+            dataField: "technique"
           });
         }}
       />
@@ -158,6 +215,16 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
             value
           });
         }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", {
+            dataField: "import"
+          });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", {
+            dataField: "import"
+          });
+        }}
       />
       <MultiList
         show={false}
@@ -171,6 +238,16 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
           amplitudeService.logEvent("search_filter_change", {
             dataField: "museo",
             value
+          });
+        }}
+        onOpen={() => {
+          amplitudeService.logEvent("search_filter_open", {
+            dataField: "museo"
+          });
+        }}
+        onClose={() => {
+          amplitudeService.logEvent("search_filter_close", {
+            dataField: "museo"
           });
         }}
       />

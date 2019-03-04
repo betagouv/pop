@@ -30,7 +30,14 @@ class Joconde extends React.Component {
     const images = toFieldImages(notice.IMG);
     if (images.length) {
       return (
-        <FieldImages images={images} disabled name={notice.TICO || notice.TITR} external={false} />
+        <FieldImages
+          reference={notice.REF}
+          base="joconde"
+          images={images}
+          disabled
+          name={notice.TICO || notice.TITR}
+          external={false}
+        />
       );
     }
   }

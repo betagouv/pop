@@ -32,7 +32,14 @@ class Palissy extends React.Component {
     const images = toFieldImages(notice.MEMOIRE);
     if (images.length) {
       return (
-        <FieldImages images={images} disabled name={notice.TICO || notice.TITR} external={true} />
+        <FieldImages
+          reference={notice.REF}
+          base="palissy"
+          images={images}
+          disabled
+          name={notice.TICO || notice.TITR}
+          external={true}
+        />
       );
     }
   }
