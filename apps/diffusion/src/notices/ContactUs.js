@@ -3,7 +3,7 @@ import amplitudeService from "../services/amplitude";
 
 export default class ContactUs extends React.Component {
   render() {
-    const subject = `subject=Demande à propos de la notice n°${this.props.reference}`;
+    const subject = `subject=Demande à propos de la notice n°${this.props.REF}`;
     let mailTo;
     if (this.props.contact) {
       mailTo = `mailto:${this.props.contact}?${subject}&cc=pop.reseaux@gmail.com`;
