@@ -306,6 +306,7 @@ class Map extends React.Component {
   };
 
   componentDidMount() {
+    const mapboxgl = require("mapbox-gl");
     mapboxgl.accessToken =
       "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
     this.map = new mapboxgl.Map({

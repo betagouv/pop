@@ -42,13 +42,10 @@ export default class Layout extends React.Component {
               type="text/css"
               href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
             />
-            <link
-              href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
-              rel="stylesheet"
-            />
+
             <link rel="manifest" href="/manifest.json" />
             <link rel="shortcut icon" href="/favicon.ico" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/0.50.0/mapbox-gl.js" />
+
             <script src="/static/driftt.js" />
             <script src="/static/amplitude.js" />
             <script src="/static/piwik.js" />

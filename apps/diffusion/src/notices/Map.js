@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import "./Map.css";
 class MapComponent extends React.Component {
   map = null;
@@ -6,23 +7,28 @@ class MapComponent extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
+    this.state = {
+      loading: true
+    };
   }
 
   componentDidMount() {
     const { center, geometry, layer } = getGeoJson(this.props.notice);
 
     if (center) {
+      const mapboxgl = require("mapbox-gl");
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
-      this.map = new mapboxgl.Map({
+
+      const map = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/streets-v9",
         zoom: 14,
         center
       });
 
-      this.map.on("load", e => {
-        this.map.addSource("pop", {
+      map.on("load", e => {
+        map.addSource("pop", {
           type: "geojson",
           data: {
             type: "FeatureCollection",
@@ -36,7 +42,7 @@ class MapComponent extends React.Component {
             ]
           }
         });
-        this.map.addLayer(layer);
+        map.addLayer(layer);
       });
     }
   }
@@ -47,6 +53,12 @@ class MapComponent extends React.Component {
 
     return (
       <div className="map-container">
+        <Head>
+          <link
+            href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
+            rel="stylesheet"
+          />
+        </Head>
         <div id="map" ref={this.mapRef} />
       </div>
     );
