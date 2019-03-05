@@ -9,3 +9,5 @@ router.get("/:ref", async (req, res) => {
   }
   return res.sendStatus(404);
 });
+
+module.exports = router;

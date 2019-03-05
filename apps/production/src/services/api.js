@@ -152,6 +152,10 @@ class api {
   updateMuseo(ref, data) {
     return request.put(`${api_url}/museo/${ref}`, JSON.stringify({museo: data}), "application/json");
   }
+
+  getEnluminures(ref) {
+    return request.get(`http://localhost:3000/enluminures/${ref}`);
+  }
 }
 
 const apiObject = new api();

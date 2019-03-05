@@ -557,7 +557,7 @@ Dossier URL
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Dossier URL|
+|String|non|non|non|non|url|Dossier URL|
 
 ### DOSURLPDF
 Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture
@@ -567,7 +567,7 @@ Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Dossier PDF|
+|String|non|non|non|non|url|Dossier PDF|
 
 ### DPRO
 Date protection
@@ -791,7 +791,7 @@ Liens Divers
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Liens Divers|
+|Array|non|non|non|non|url|Liens Divers|
 
 ### LIEU
 Lieu-dit 

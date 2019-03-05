@@ -35,6 +35,12 @@ class Search extends React.Component {
       image: require("../../../assets/memoire.jpg")
     });
 
+    tiles.push({
+      url: "/recherche/enluminures",
+      name: "Enluminures",
+      image: require("../../../assets/enluminures.jpg")
+    });
+
     if (this.props.group === "admin") {
       tiles.push({
         url: "/recherche/museo",
@@ -51,7 +57,7 @@ class Search extends React.Component {
   renderTiles() {
     return this.state.tiles.map(({ url, name, image }, i) => {
       return (
-        <Col xl="4" lg="4" md="3" className="box text-center" key={i}>
+        <Col lg="4" xl="3" md="6" className="box text-center" key={i}>
           <Link style={{ textDecoration: "none" }} to={url}>
             <div className="tile">
               <img src={image} alt="dummy image" className="img-fluid" />
@@ -67,7 +73,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <Container fluid>
+      <Container>
         <div className="home-search">
           <div className="subtitle">Je souhaite consulter la base</div>
           <Row>{this.renderTiles()}</Row>
