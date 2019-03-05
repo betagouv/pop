@@ -2,15 +2,15 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import queryString from "query-string";
-import Loader from "../../components/Loader";
+import Loader from "../../../components/Loader";
 
-import LinkedNotices from "./LinkedNotices";
-import SingleNotice from "./SingleNotice";
+import LinkedNotices from "../LinkedNotices";
+import SingleNotice from "../SingleNotice";
 
-import "./mapbox-gl.css";
 import "./Map.css";
 
 const MAX_PRECISION = 8;
+
 const getPrecision = zoom => {
   let correctedZoom = Math.round(zoom);
   if (correctedZoom < 2) {
@@ -34,7 +34,6 @@ const getPrecision = zoom => {
     14: 7,
     15: MAX_PRECISION
   };
-
   return obj[correctedZoom];
 };
 
@@ -193,7 +192,7 @@ class Map extends React.Component {
   state = {
     loaded: false,
     popup: null,
-    style: "streets",
+    style: "mapbox://styles/mapbox/streets-v9",
     drawerContent: null
   };
 
@@ -203,107 +202,12 @@ class Map extends React.Component {
   featureClicked = null;
   map = null;
 
-  styleChanged = false;
-
   constructor(props) {
     super(props);
 
     this.mapRef = React.createRef();
     this.onMoveEnd = this.onMoveEnd.bind(this);
-    this.onSwitchStyle = this.onSwitchStyle.bind(this);
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.loaded && this.props.aggregations && nextProps.aggregations) {
-      let should = this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets;
-      if (!should && this.state.popup !== nextState.popup) should = true;
-      if (!should && this.state.style !== nextState.style) should = true;
-      if (!should && this.state.drawerContent !== nextState.drawerContent) should = true;
-      if (!should && this.props.isNewSearch !== nextProps.isNewSearch) should = true;
-      return should;
-    }
-    return true;
-  }
-
-  addSourceAndLayers = () => {
-    this.map.addSource("pop", {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: []
-      }
-    });
-    this.map.addLayer({
-      id: "clusters",
-      type: "circle",
-      source: "pop",
-      filter: ["has", "count"],
-      paint: {
-        "circle-color": [
-          "case",
-          ["boolean", ["feature-state", "clicked"], false],
-          "#fff",
-          ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"]
-        ],
-        "circle-radius": ["step", ["get", "count"], 9, 2, 20, 100, 30, 750, 40],
-        "circle-stroke-width": [
-          "case",
-          ["boolean", ["feature-state", "clicked"], false],
-          2,
-          ["step", ["get", "count"], 2, 2, 0]
-        ],
-        "circle-stroke-color": [
-          "case",
-          ["boolean", ["feature-state", "clicked"], false],
-          ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"],
-          "#fff"
-        ]
-      }
-    });
-
-    this.map.addLayer({
-      id: "cluster-count",
-      type: "symbol",
-      source: "pop",
-      filter: ["has", "count"],
-      layout: {
-        "text-field": "{count}",
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-        "text-size": 12
-      },
-      paint: {
-        "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
-      }
-    });
-
-    this.map.addLayer({
-      id: "unclustered-point",
-      type: "circle",
-      source: "pop",
-      filter: ["!", ["has", "count"]],
-      paint: {
-        "circle-color": [
-          "case",
-          ["boolean", ["feature-state", "clicked"], false],
-          "#fff",
-          "#9C27B0"
-        ],
-        "circle-radius": 9,
-        "circle-stroke-width": 2,
-        "circle-stroke-color": [
-          "case",
-          ["boolean", ["feature-state", "clicked"], false],
-          "#9C27B0",
-          "#fff"
-        ]
-      }
-    });
-
-    setTimeout(() => {
-      this.setState({ loaded: true });
-      this.styleChanged = false;
-    }, 1000);
-  };
 
   componentDidMount() {
     const mapboxgl = require("mapbox-gl");
@@ -311,44 +215,50 @@ class Map extends React.Component {
       "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
     this.map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/streets-v9"
+      style: this.state.style
     });
 
-    this.map.on("styledata", e => {
-      if (this.styleChanged) {
-        setTimeout(() => {
-          if (this.map.getLayer("clusters")) {
-            this.map.removeLayer("clusters");
-          }
-          if (this.map.getLayer("cluster-count")) {
-            this.map.removeLayer("cluster-count");
-          }
-          if (this.map.getLayer("unclustered-point")) {
-            this.map.removeLayer("unclustered-point");
-          }
-          if (this.map.getSource("pop")) {
-            this.map.removeSource("pop");
-          }
-          this.addSourceAndLayers();
-          this.renderClusters();
-        }, 500);
-      }
-    });
+    // this.map.on("styledata", e => {
+    //   // if (this.map.getLayer("clusters")) {
+    //   //   this.map.removeLayer("clusters");
+    //   // }
+    //   if (this.map.getLayer("cluster-count")) {
+    //     this.map.removeLayer("cluster-count");
+    //   }
+    //   // if (this.map.getLayer("unclustered-point")) {
+    //   //   this.map.removeLayer("unclustered-point");
+    //   // }
+    //   // if (this.map.getSource("pop")) {
+    //   //   this.map.removeSource("pop");
+    //   // }
+    //   this.addSourceAndLayers();
+    //   this.renderClusters();
+    // });
 
     this.map.on("load", e => {
       this.mapInitialPosition(this.map);
       this.addSourceAndLayers();
+      this.setState({ loaded: true });
     });
 
     this.map.on("click", "clusters", e => {
       this.onPointClicked(e, "clusters");
     });
+    this.map.on("mouseenter", "clusters", e => {
+      console.log("mouseenter", e);
+      this.map.getCanvas().style.cursor = "pointer";
+    });
+    this.map.on("mouseleave", "clusters", () => {
+      console.log("mouseleave");
+      this.map.getCanvas().style.cursor = "";
+    });
 
+    //////////
     this.map.on("click", "unclustered-point", e => {
       this.onPointClicked(e, "unclustered-point");
     });
-
     this.map.on("mouseenter", "unclustered-point", () => {
+      console.log("mouseenter");
       this.map.getCanvas().style.cursor = "pointer";
     });
     this.map.on("mouseleave", "unclustered-point", () => {
@@ -359,6 +269,91 @@ class Map extends React.Component {
       this.onMoveEnd(this.map);
     });
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.loaded && this.props.aggregations && nextProps.aggregations) {
+  //     let should = this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets;
+  //     if (!should && this.state.popup !== nextState.popup) should = true;
+  //     if (!should && this.state.style !== nextState.style) should = true;
+  //     if (!should && this.state.drawerContent !== nextState.drawerContent) should = true;
+  //     if (!should && this.props.isNewSearch !== nextProps.isNewSearch) should = true;
+  //     return should;
+  //   }
+  //   return true;
+  // }
+
+  addSourceAndLayers = () => {
+    // this.map.addSource("pop", {
+    //   type: "geojson",
+    //   data: {
+    //     type: "FeatureCollection",
+    //     features: []
+    //   }
+    // });
+    // this.map.addLayer({
+    //   id: "clusters",
+    //   type: "circle",
+    //   source: "pop",
+    //   filter: ["has", "count"],
+    //   paint: {
+    //     "circle-color": [
+    //       "case",
+    //       ["boolean", ["feature-state", "clicked"], false],
+    //       "#fff",
+    //       ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"]
+    //     ],
+    //     "circle-radius": ["step", ["get", "count"], 9, 2, 20, 100, 30, 750, 40],
+    //     "circle-stroke-width": [
+    //       "case",
+    //       ["boolean", ["feature-state", "clicked"], false],
+    //       2,
+    //       ["step", ["get", "count"], 2, 2, 0]
+    //     ],
+    //     "circle-stroke-color": [
+    //       "case",
+    //       ["boolean", ["feature-state", "clicked"], false],
+    //       ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"],
+    //       "#fff"
+    //     ]
+    //   }
+    // });
+    // this.map.addLayer({
+    //   id: "cluster-count",
+    //   type: "symbol",
+    //   source: "pop",
+    //   filter: ["has", "count"],
+    //   layout: {
+    //     "text-field": "{count}",
+    //     "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    //     "text-size": 12
+    //   },
+    //   paint: {
+    //     "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
+    //   }
+    // });
+    // this.map.addLayer({
+    //   id: "unclustered-point",
+    //   type: "circle",
+    //   source: "pop",
+    //   filter: ["!", ["has", "count"]],
+    //   paint: {
+    //     "circle-color": [
+    //       "case",
+    //       ["boolean", ["feature-state", "clicked"], false],
+    //       "#fff",
+    //       "#9C27B0"
+    //     ],
+    //     "circle-radius": 9,
+    //     "circle-stroke-width": 2,
+    //     "circle-stroke-color": [
+    //       "case",
+    //       ["boolean", ["feature-state", "clicked"], false],
+    //       "#9C27B0",
+    //       "#fff"
+    //     ]
+    //   }
+    // });
+  };
 
   componentDidUpdate(prevProps) {
     if (this.props.isNewSearch && !prevProps.isNewSearch) {
@@ -392,34 +387,12 @@ class Map extends React.Component {
 
   renderClusters() {
     if (this.state.loaded && this.props.aggregations) {
-      //console.log("points", this.props.aggregations.france.buckets.length);
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
-      //console.log("add", geojson);
-      //const before = window.performance.now();
       if (this.map.getSource("pop")) {
+        console.log("geojson", geojson);
         this.map.getSource("pop").setData(geojson);
       }
-      //const timeExec = window.performance.now() - before;
-      //console.log(`setData ${timeExec} ms`);
     }
-  }
-
-  onSwitchStyle() {
-    this.setState({ loaded: false });
-    this.styleChanged = true;
-    let styleName = "";
-    let nextStyle = "";
-    if (this.state.style === "streets") {
-      nextStyle = "satellite";
-      styleName = "mapbox://styles/mapbox/satellite-streets-v9";
-    } else {
-      nextStyle = "streets";
-      styleName = "mapbox://styles/mapbox/streets-v9";
-    }
-    this.map.setStyle(styleName);
-    this.setState({
-      style: nextStyle
-    });
   }
 
   onPointClicked(e, layerType) {
@@ -478,30 +451,46 @@ class Map extends React.Component {
   };
 
   render() {
-    const style = {
-      width: "100%",
-      height: "600px"
-    };
-
     return (
-      <div style={style} className="search-map view">
+      <div style={{ width: "100%", height: "600px" }} className="search-map view">
         <Loader isOpen={!this.state.loaded} />
-        <div id="map" ref={this.mapRef} style={style}>
+        <div id="map" ref={this.mapRef} style={{ width: "100%", height: "600px" }}>
           <div className={`drawer ${this.state.drawerContent ? "open" : ""}`}>
             {this.state.drawerContent}
           </div>
-          <div className="switch-view" onClick={this.onSwitchStyle}>
-            {this.state.style === "streets" ? (
-              <img src="/static/satelite.png" className="thumbnailStyle" alt="style" />
-            ) : (
-              <img src="/static/street.png" className="thumbnailStyle" alt="style" />
-            )}
-          </div>
+          {/* <SwitchStyleButton
+            value={this.state.style}
+            onChange={style => {
+              this.setState({ style });
+              this.map.setStyle(style);
+            }}
+          /> */}
         </div>
       </div>
     );
   }
 }
+
+const SwitchStyleButton = ({ onChange, value }) => {
+  return (
+    <div
+      className="switch-view"
+      onClick={() =>
+        onChange(
+          value === "mapbox://styles/mapbox/streets-v9"
+            ? "mapbox://styles/mapbox/satellite-streets-v9"
+            : "mapbox://styles/mapbox/streets-v9"
+        )
+      }
+    >
+      {value === "mapbox://styles/mapbox/streets-v9" ? (
+        <img src="/static/satelite.png" className="thumbnailStyle" alt="style" />
+      ) : (
+        <img src="/static/street.png" className="thumbnailStyle" alt="style" />
+      )}
+    </div>
+  );
+};
 
 const mapGeoHashToUniqId = {};
 function getGeoHashUniqId(geoHash) {
