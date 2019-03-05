@@ -19,7 +19,8 @@ const DEFAULT_FILTER = [
   "auteur",
   "ou",
   "import",
-  "museo"
+  "museo",
+  "ref"
 ];
 
 const Menu = ({ location, mobile_menu, closeMenu, view }) => (
@@ -249,6 +250,15 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
             dataField: "museo"
           });
         }}
+      />
+      <MultiList
+        show={false}
+        componentId="ref"
+        dataField="REF.keyword"
+        title="Référence"
+        URLParams={true}
+        react={{ and: DEFAULT_FILTER.filter(e => e !== "ref") }}
+        location={location}
       />
     </aside>
   </div>
