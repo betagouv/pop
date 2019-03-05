@@ -30,6 +30,8 @@ export default ({ data }) => {
       return <Memoire data={data} />;
     case "museo":
       return <Museo data={data} />;
+    case "enluminures":
+      return <Enluminures data={data} />;
   }
 };
 
@@ -93,7 +95,8 @@ const Palissy = ({ data }) => {
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
+  const loc =
+    data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   const productorImage = p => {
     if (p === "Inventaire") {
@@ -183,7 +186,7 @@ const Merimee = ({ data }) => {
   );
 };
 
-const Mnr = ({ data, index }) => {
+const Mnr = ({ data }) => {
   const REF = data.REF;
   const INV = data.INV;
   const categories = data.DENO ? data.DENO.join(", ") : "";
@@ -231,7 +234,7 @@ const Mnr = ({ data, index }) => {
   );
 };
 
-const Joconde = ({ data, index }) => {
+const Joconde = ({ data }) => {
   const REF = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const title = data.TICO || data.TITR;
@@ -291,6 +294,42 @@ const Museo = ({ data }) => {
             </div>
             <div>
               <p>{data.ATOUT && data.ATOUT.replace(/#/g, " ; ")} - </p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </Link>
+  );
+};
+
+
+const Enluminures = ({ data }) => {
+  const REF = data.REF;
+  const title = data.TITR;
+  const img = image(data);
+
+  return (
+    <Link href={`/notice/enluminures/${REF}`} key={REF}>
+      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+        <div className="list-card-container ">
+          <div className="thumbnail">{img}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {capitalizeFirstLetter(title)}
+                <br />
+                <small>{data.SUJET}</small>
+              </h2>
+              <span>
+                <small className="base">Enluminures</small>
+                <br />
+                {REF}
+              </span>
+            </div>
+            <div>
+              <p>{data.ATTRIB}</p>
+              <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
+              <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
             </div>
           </div>
         </div>

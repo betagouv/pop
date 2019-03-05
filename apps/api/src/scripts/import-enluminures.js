@@ -17,9 +17,13 @@ async function run() {
   for (let i in r) {
     const e = r[i];
     e.REF = e.REF.trim();
-    e.VIDEO = e.VIDEO && e.VIDEO.split(";").map(e => e.trim());
+    e.VIDEO =
+      e.VIDEO &&
+      e.VIDEO.split(";").map(e => `http://www2.culture.gouv.fr/Wave/savimage/enlumine${e.trim()}`)
+    e.CONTIENT_IMAGE = e.VIDEO && e.VIDEO.length ? "oui" : "non";
     e.NOMENC = e.NOMENC && e.NOMENC.split(";").map(e => e.trim());
     e.POSS = e.POSS && e.POSS.split(";").map(e => e.trim());
+    e.BASE = "Enluminures (Enluminures)";
     await Enluminures.findOneAndUpdate({ REF: e.REF }, e, { upsert: true, new: true });
     if (i % 500 === 0) {
       console.log((i / total) * 100 + "%");

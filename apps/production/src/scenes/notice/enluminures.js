@@ -59,7 +59,7 @@ class Enluminures extends React.Component {
             name="VIDEO"
             createUrlFromName={e => `enluminures/${this.state.notice.REF}/${e}`}
             disabled={!this.state.editable}
-            getAbsoluteUrl={e => `http://www2.culture.gouv.fr/Wave/savimage/enlumine${e}`}
+            getAbsoluteUrl={e => e}
             updateFiles={imagesFiles => this.setState({ imagesFiles })}
           />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">

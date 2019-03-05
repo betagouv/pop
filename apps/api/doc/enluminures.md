@@ -1,6 +1,7 @@
 # POP SCHEMAS enluminures
 
 - [REF](/apps/api/doc/enluminures.md#REF)
+- [BASE](/apps/api/doc/enluminures.md#BASE)
 - [ATTRIB](/apps/api/doc/enluminures.md#ATTRIB)
 - [APPL](/apps/api/doc/enluminures.md#APPL)
 - [AUTR](/apps/api/doc/enluminures.md#AUTR)
@@ -56,6 +57,16 @@
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|oui|non|non|non||Référence|
+
+### BASE
+Nom de la base : Enluminures (Enluminures)
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Nom de la base|
 
 ### ATTRIB
 
@@ -235,7 +246,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|Array|non|non|non|non|||
 
 ### NOTES
 
@@ -325,7 +336,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|Array|non|non|non|non|||
 
 ### REFD
 
@@ -475,7 +486,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|Array|non|non|non|non|||
 
 ### TOUT
 

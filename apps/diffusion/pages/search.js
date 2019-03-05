@@ -10,7 +10,7 @@ import Search from "../src/search/Search";
 import { es_url } from "../src/config";
 import queryString from "query-string";
 
-const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr"].join(",");
+const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "enluminures"].join(",");
 
 import "./search.css";
 import throw404 from "../src/services/throw404";

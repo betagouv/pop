@@ -12,6 +12,15 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: { label: "Référence" }
     },
+    BASE: {
+      type: String,
+      default: "Enluminures (Enluminures)",
+      documentation: {
+        description: "Nom de la base : Enluminures (Enluminures)",
+        generated: true,
+        label: "Nom de la base"
+      }
+    },
     ATTRIB: { type: String, default: "" },
     APPL: { type: String, default: "" },
     AUTR: { type: String, default: "" },

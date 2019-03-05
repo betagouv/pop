@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default ({ data }) => {
   let img = null;
   if (data.VIDEO && Array.isArray(data.VIDEO) && data.VIDEO.length) {
-    img = <img src={"http://www2.culture.gouv.fr/Wave/savimage/enlumine" + data.VIDEO[0]} />;
+    img = <img src={data.VIDEO[0]} />;
   }
   return (
     <Link
@@ -22,7 +22,7 @@ export default ({ data }) => {
           <p><strong>{data.SUJET}</strong></p>
           <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
           <p>{data.ATTRIB}</p>
-          <p>{[data.CONTXT, data.NOMENC, data.REFD].filter(d => d).join(", ")}</p>
+          <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
         </div>
 
       </div>
