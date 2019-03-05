@@ -328,6 +328,7 @@ module.exports = {
         },
         SUJET: {
           type: "text",
+          analyzer: "french",
           fields: {
             keyword: {
               type: "keyword",
@@ -346,6 +347,7 @@ module.exports = {
         },
         TITR: {
           type: "text",
+          analyzer: "french",
           fields: {
             keyword: {
               type: "keyword",
@@ -382,6 +384,7 @@ module.exports = {
         },
         TYPE: {
           type: "text",
+          analyzer: "french",
           fields: {
             keyword: {
               type: "keyword",

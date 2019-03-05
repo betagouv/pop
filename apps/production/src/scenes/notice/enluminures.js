@@ -7,6 +7,7 @@ import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
 import Loader from "../../components/Loader";
+import FieldImages from "./components/fieldImages";
 import API from "../../services/api";
 
 import "./index.css";
@@ -54,6 +55,13 @@ class Enluminures extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+        <FieldImages
+            name="VIDEO"
+            createUrlFromName={e => `enluminures/${this.state.notice.REF}/${e}`}
+            disabled={!this.state.editable}
+            getAbsoluteUrl={e => `http://www2.culture.gouv.fr/Wave/savimage/enlumine${e}`}
+            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+          />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="REF" disabled={!this.state.editable} />

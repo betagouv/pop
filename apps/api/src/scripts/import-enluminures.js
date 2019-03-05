@@ -17,6 +17,9 @@ async function run() {
   for (let i in r) {
     const e = r[i];
     e.REF = e.REF.trim();
+    e.VIDEO = e.VIDEO && e.VIDEO.split(";").map(e => e.trim());
+    e.NOMENC = e.NOMENC && e.NOMENC.split(";").map(e => e.trim());
+    e.POSS = e.POSS && e.POSS.split(";").map(e => e.trim());
     await Enluminures.findOneAndUpdate({ REF: e.REF }, e, { upsert: true, new: true });
     if (i % 500 === 0) {
       console.log((i / total) * 100 + "%");

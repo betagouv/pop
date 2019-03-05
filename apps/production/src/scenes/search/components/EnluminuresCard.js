@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default ({ data }) => {
   let img = null;
-  if (data.VIDEO) {
-    img = <img src={"http://www2.culture.gouv.fr/Wave/savimage/enlumine" + data.VIDEO.split(";")[0]} />;
+  if (data.VIDEO && Array.isArray(data.VIDEO) && data.VIDEO.length) {
+    img = <img src={"http://www2.culture.gouv.fr/Wave/savimage/enlumine" + data.VIDEO[0]} />;
   }
   return (
     <Link
