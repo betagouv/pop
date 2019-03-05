@@ -5,7 +5,6 @@ import Title from "./Title";
 import amplitudeService from "../services/amplitude";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
-import Map from "./Map";
 import { schema, toFieldImages } from "./utils";
 import Head from "next/head";
 import "./Notice.css";
@@ -43,10 +42,10 @@ class Enluminures extends React.Component {
     const obj = {
       name: notice.TITR,
       created_at: notice.DATEDEB,
-      artform: notice.NOMENC.length ? notice.NOMENC[0] : "",
-      image: notice.VIDEO.length ? notice.VIDEO[0] : "",
+      artform: (Array.isArray(notice.NOMENC) && notice.NOMENC[0]) ? notice.NOMENC[0] : "",
+      image: (Array.isArray(notice.VIDEO) && notice.VIDEO[0]) ? notice.VIDEO[0] : "",
       description: notice.NOTES,
-      artMedium: notice.TYPE.join(", "),
+      artMedium: Array.isArray(notice.TYPE) ? notice.TYPE.join(", ") : (notice.TYPE || ""),
       creator: String(notice.ATTRIB).split(";"),
       comment: notice.NOTEDEC,
       contentLocation: notice.ORIGG
@@ -112,7 +111,6 @@ class Enluminures extends React.Component {
 
                 <ContactUs contact={notice.CONTACT} REF={notice.REF} base="enluminures" />
               </div>
-              <Map notice={notice} />
             </Col>
           </Row>
         </Container>
