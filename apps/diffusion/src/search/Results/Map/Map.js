@@ -54,7 +54,8 @@ const uniqueId = (prefix = "$lodash$") => {
 export default class Umbrella extends React.Component {
   state = {
     query: {},
-    isNewSearch: false
+    isNewSearch: false,
+    markers: []
   };
 
   prevPrecision = 1;
@@ -95,6 +96,8 @@ export default class Umbrella extends React.Component {
       this.setState({ isNewSearch: false });
     }
   }
+
+  updateMarkers() {}
 
   onMapChange(boxZoomBounds) {
     //console.log(boxZoomBounds.zoom)
@@ -218,51 +221,10 @@ class Map extends React.Component {
       style: this.state.style
     });
 
-    // this.map.on("styledata", e => {
-    //   // if (this.map.getLayer("clusters")) {
-    //   //   this.map.removeLayer("clusters");
-    //   // }
-    //   if (this.map.getLayer("cluster-count")) {
-    //     this.map.removeLayer("cluster-count");
-    //   }
-    //   // if (this.map.getLayer("unclustered-point")) {
-    //   //   this.map.removeLayer("unclustered-point");
-    //   // }
-    //   // if (this.map.getSource("pop")) {
-    //   //   this.map.removeSource("pop");
-    //   // }
-    //   this.addSourceAndLayers();
-    //   this.renderClusters();
-    // });
-
     this.map.on("load", e => {
       this.mapInitialPosition(this.map);
-      this.addSourceAndLayers();
       this.setState({ loaded: true });
-    });
-
-    this.map.on("click", "clusters", e => {
-      this.onPointClicked(e, "clusters");
-    });
-    this.map.on("mouseenter", "clusters", e => {
-      console.log("mouseenter", e);
-      this.map.getCanvas().style.cursor = "pointer";
-    });
-    this.map.on("mouseleave", "clusters", () => {
-      console.log("mouseleave");
-      this.map.getCanvas().style.cursor = "";
-    });
-
-    //////////
-    this.map.on("click", "unclustered-point", e => {
-      this.onPointClicked(e, "unclustered-point");
-    });
-    this.map.on("mouseenter", "unclustered-point", () => {
-      console.log("mouseenter");
-      this.map.getCanvas().style.cursor = "pointer";
-    });
-    this.map.on("mouseleave", "unclustered-point", () => {
-      this.map.getCanvas().style.cursor = "";
+      this.renderClusters();
     });
 
     this.map.on("moveend", () => {
@@ -270,109 +232,16 @@ class Map extends React.Component {
     });
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.loaded && this.props.aggregations && nextProps.aggregations) {
-  //     let should = this.props.aggregations.france.buckets !== nextProps.aggregations.france.buckets;
-  //     if (!should && this.state.popup !== nextState.popup) should = true;
-  //     if (!should && this.state.style !== nextState.style) should = true;
-  //     if (!should && this.state.drawerContent !== nextState.drawerContent) should = true;
-  //     if (!should && this.props.isNewSearch !== nextProps.isNewSearch) should = true;
-  //     return should;
-  //   }
-  //   return true;
-  // }
-
-  addSourceAndLayers = () => {
-    // this.map.addSource("pop", {
-    //   type: "geojson",
-    //   data: {
-    //     type: "FeatureCollection",
-    //     features: []
-    //   }
-    // });
-    // this.map.addLayer({
-    //   id: "clusters",
-    //   type: "circle",
-    //   source: "pop",
-    //   filter: ["has", "count"],
-    //   paint: {
-    //     "circle-color": [
-    //       "case",
-    //       ["boolean", ["feature-state", "clicked"], false],
-    //       "#fff",
-    //       ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"]
-    //     ],
-    //     "circle-radius": ["step", ["get", "count"], 9, 2, 20, 100, 30, 750, 40],
-    //     "circle-stroke-width": [
-    //       "case",
-    //       ["boolean", ["feature-state", "clicked"], false],
-    //       2,
-    //       ["step", ["get", "count"], 2, 2, 0]
-    //     ],
-    //     "circle-stroke-color": [
-    //       "case",
-    //       ["boolean", ["feature-state", "clicked"], false],
-    //       ["step", ["get", "count"], "#9C27B0", 2, "#51bbd6", 100, "#f1f075", 750, "#f28cb1"],
-    //       "#fff"
-    //     ]
-    //   }
-    // });
-    // this.map.addLayer({
-    //   id: "cluster-count",
-    //   type: "symbol",
-    //   source: "pop",
-    //   filter: ["has", "count"],
-    //   layout: {
-    //     "text-field": "{count}",
-    //     "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-    //     "text-size": 12
-    //   },
-    //   paint: {
-    //     "text-color": ["step", ["get", "count"], "#ffffff", 2, "#000000"]
-    //   }
-    // });
-    // this.map.addLayer({
-    //   id: "unclustered-point",
-    //   type: "circle",
-    //   source: "pop",
-    //   filter: ["!", ["has", "count"]],
-    //   paint: {
-    //     "circle-color": [
-    //       "case",
-    //       ["boolean", ["feature-state", "clicked"], false],
-    //       "#fff",
-    //       "#9C27B0"
-    //     ],
-    //     "circle-radius": 9,
-    //     "circle-stroke-width": 2,
-    //     "circle-stroke-color": [
-    //       "case",
-    //       ["boolean", ["feature-state", "clicked"], false],
-    //       "#9C27B0",
-    //       "#fff"
-    //     ]
-    //   }
-    // });
-  };
-
   componentDidUpdate(prevProps) {
     if (this.props.isNewSearch && !prevProps.isNewSearch) {
-      if (this.state.drawerContent) {
-        this.setState({ drawerContent: null });
-      }
       this.mapInitialPosition(this.map);
     }
-    this.renderClusters();
   }
 
   onMoveEnd(map) {
     if (this.state.loaded) {
       const mapBounds = map.getBounds();
       const currentZoom = map.getZoom();
-
-      this.setState({
-        popup: null
-      });
 
       this.props.onChange({
         zoom: currentZoom,
@@ -386,61 +255,28 @@ class Map extends React.Component {
   }
 
   renderClusters() {
+
+    console.log()
     if (this.state.loaded && this.props.aggregations) {
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
-      if (this.map.getSource("pop")) {
-        console.log("geojson", geojson);
-        this.map.getSource("pop").setData(geojson);
-      }
-    }
-  }
+      console.log("geojson", geojson);
+      geojson.features.forEach(marker => {
+        // create a DOM element for the marker
+        var el = document.createElement("div");
+        el.className = "marker";
+        el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
 
-  onPointClicked(e, layerType) {
-    if (layerType === "clusters") {
-      const precision = getPrecision(this.map.getZoom());
-      if (precision < MAX_PRECISION) {
-        return false;
-      }
-    }
+        el.addEventListener("click", () => {
+          window.alert([48.672181, 2.42421]);
+        });
 
-    const features = this.map.queryRenderedFeatures(e.point, { layers: [layerType] });
+        const mapboxgl = require("mapbox-gl");
 
-    if (features.length === 1) {
-      if (this.featureClicked) {
-        this.map.setFeatureState(this.featureClicked, { clicked: false });
-      }
-
-      this.featureClicked = features[0];
-      this.map.setFeatureState(features[0], { clicked: true });
-      this.map.flyTo({
-        center: features[0].geometry.coordinates,
-        offset: [130, 0]
+        new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(this.map);
       });
-
-      let drawerContent = null;
-      if (layerType === "clusters") {
-        const hits = JSON.parse(features[0].properties.hits).map(hit => ({
-          ...hit,
-          ...hit._source
-        }));
-        drawerContent = <LinkedNotices links={hits} onClose={this.closeDrawer} />;
-      } else if (layerType === "unclustered-point") {
-        const itemId = features[0].properties.id;
-        const hits = JSON.parse(features[0].properties.hits);
-        const item = { ...hits[0], ...hits[0]._source };
-        drawerContent = (
-          <SingleNotice className="" key={item.REF} data={item} onClose={this.closeDrawer} />
-        );
-      }
-
-      this.setState({ drawerContent });
+      //https://docs.mapbox.com/mapbox-gl-js/example/custom-marker-icons/
     }
   }
-
-  closeDrawer = () => {
-    console.log("close");
-    this.setState({ drawerContent: null });
-  };
 
   mapInitialPosition = map => {
     if (map) {
@@ -455,9 +291,6 @@ class Map extends React.Component {
       <div style={{ width: "100%", height: "600px" }} className="search-map view">
         <Loader isOpen={!this.state.loaded} />
         <div id="map" ref={this.mapRef} style={{ width: "100%", height: "600px" }}>
-          <div className={`drawer ${this.state.drawerContent ? "open" : ""}`}>
-            {this.state.drawerContent}
-          </div>
           {/* <SwitchStyleButton
             value={this.state.style}
             onChange={style => {

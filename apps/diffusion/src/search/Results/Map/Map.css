@@ -1,49 +1,79 @@
 .search-map .switch-view {
-    width: 60px;
-    height: 60px;
-    z-index: 3;
-    margin: 15px;
-    position: absolute;
-    right: 0;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
-    transition: 0.3s;
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+  margin: 15px;
+  position: absolute;
+  right: 0;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
+  transition: 0.3s;
+}
+
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  will-change: transform;
+  border: 3px white solid;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+}
+.marker:hover {
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  transition: 0.3s;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .search-map .thumbnailStyle {
-    width: 52px;
-    height: 52px;
-    margin: 4px;
+  width: 52px;
+  height: 52px;
+  margin: 4px;
 }
 
 .search-map .drawer {
-    margin-left: -300px;
-    width: 300px;
-    height: 100%;
-    z-index: 2;
-    position: absolute;
-    background: white;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
-    transition: 0.3s;
+  margin-left: -300px;
+  width: 300px;
+  height: 100%;
+  z-index: 2;
+  position: absolute;
+  background: white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
+  transition: 0.3s;
 }
 
 .search-map .drawer.open {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .search-map .loader-container {
-    position: absolute;
-    z-index: 5;
-    width: 98%;
-    height: 600px;
-    background: #00000082;
-    padding: 0;
+  position: absolute;
+  z-index: 5;
+  width: 98%;
+  height: 600px;
+  background: #00000082;
+  padding: 0;
 }
 
 .search-map .drawer .closeButton {
-    margin: 5px;
-    text-align: right;
+  margin: 5px;
+  text-align: right;
 }
