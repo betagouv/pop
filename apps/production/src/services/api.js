@@ -154,7 +154,7 @@ class api {
   }
 
   getEnluminures(ref) {
-    return request.get(`http://localhost:3000/enluminures/${ref}`);
+    return request.get(`${api_url}/enluminures/${ref}`);
   }
 }
 
