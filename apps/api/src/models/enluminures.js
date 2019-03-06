@@ -21,6 +21,16 @@ const Schema = new mongoose.Schema(
         label: "Nom de la base"
       }
     },
+    CONTIENT_IMAGE: {
+      type: String,
+      default: "",
+      documentation: {
+        description:
+          "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera 'oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
+        generated: true,
+        label: "Contient une image"
+      }
+    },
     ATTRIB: { type: String, default: "" },
     APPL: { type: String, default: "" },
     AUTR: { type: String, default: "" },
