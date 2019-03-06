@@ -2,6 +2,7 @@
 
 - [REF](/apps/api/doc/enluminures.md#REF)
 - [BASE](/apps/api/doc/enluminures.md#BASE)
+- [CONTIENT_IMAGE](/apps/api/doc/enluminures.md#CONTIENT_IMAGE)
 - [ATTRIB](/apps/api/doc/enluminures.md#ATTRIB)
 - [APPL](/apps/api/doc/enluminures.md#APPL)
 - [AUTR](/apps/api/doc/enluminures.md#AUTR)
@@ -67,6 +68,16 @@ Nom de la base : Enluminures (Enluminures)
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Nom de la base|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera 'oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Contient une image|
 
 ### ATTRIB
 

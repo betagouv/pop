@@ -20,6 +20,14 @@ module.exports = {
             }
           }
         },
+        BASE: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         ATTRIB: {
           type: "text",
           fields: {
