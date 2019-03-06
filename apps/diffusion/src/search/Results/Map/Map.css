@@ -23,7 +23,7 @@
   width: 40px;
   height: 40px;
   will-change: transform;
-  border: 3px white solid;
+  border: 2px white solid;
   box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
 }
 .marker:hover {
@@ -32,6 +32,18 @@
   width: 50px;
   height: 50px;
   transition: 0.3s;
+}
+
+.marker .count {
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    padding: 3px 5px 3px 4px;
+    line-height: 11px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 #map {

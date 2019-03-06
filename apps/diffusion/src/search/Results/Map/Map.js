@@ -2,6 +2,7 @@ import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import nGeoHash from "ngeohash";
 import queryString from "query-string";
+import Head from "next/head";
 import Loader from "../../../components/Loader";
 
 import LinkedNotices from "../LinkedNotices";
@@ -179,14 +180,23 @@ Area width x height
 
   render() {
     return (
-      <ReactiveComponent
-        componentId="map" // a unique id we will refer to later
-        URLParams={this.props.URLParams || true}
-        react={{ and: this.props.filters }}
-        defaultQuery={() => this.state.query}
-      >
-        <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
-      </ReactiveComponent>
+      <div>
+        <Head>
+          <link
+            href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
+            rel="stylesheet"
+          />
+        </Head>
+
+        <ReactiveComponent
+          componentId="map" // a unique id we will refer to later
+          URLParams={this.props.URLParams || true}
+          react={{ and: this.props.filters }}
+          defaultQuery={() => this.state.query}
+        >
+          <Map onChange={this.onMapChange} isNewSearch={this.state.isNewSearch} />
+        </ReactiveComponent>
+      </div>
     );
   }
 }
@@ -255,27 +265,36 @@ class Map extends React.Component {
   }
 
   renderClusters() {
-
-    console.log()
     if (this.state.loaded && this.props.aggregations) {
       const geojson = toGeoJson(this.props.aggregations.france.buckets);
       console.log("geojson", geojson);
       geojson.features.forEach(marker => {
-        // create a DOM element for the marker
-        var el = document.createElement("div");
-        el.className = "marker";
-        el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
-
-        el.addEventListener("click", () => {
-          window.alert([48.672181, 2.42421]);
-        });
-
         const mapboxgl = require("mapbox-gl");
-
+        const el = this.createMarker(marker.properties.count);
         new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(this.map);
       });
       //https://docs.mapbox.com/mapbox-gl-js/example/custom-marker-icons/
     }
+  }
+
+  createMarker(value) {
+    // create a DOM element for the marker
+    let el = document.createElement("div");
+    el.className = "marker";
+    el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
+
+    if (value > 1) {
+      let count = document.createElement("div");
+      count.className = "count";
+      let countText = document.createTextNode(value);
+      count.appendChild(countText);
+      el.appendChild(count);
+    }
+
+    el.addEventListener("click", () => {
+      window.alert("coucou");
+    });
+    return el;
   }
 
   mapInitialPosition = map => {
