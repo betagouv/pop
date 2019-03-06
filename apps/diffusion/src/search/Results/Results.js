@@ -23,6 +23,7 @@ const DEFAULT_FILTER = [
   "ou",
   "import",
   "museo",
+  "ref",
   "vue"
 ];
 
