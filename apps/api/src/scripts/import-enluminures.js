@@ -19,10 +19,12 @@ async function run() {
     e.REF = e.REF.trim();
     e.VIDEO =
       e.VIDEO &&
-      e.VIDEO.split(";").map(e => `http://www2.culture.gouv.fr/Wave/savimage/enlumine${e.trim()}`)
+      e.VIDEO.split(";")
+        .filter(f => !f.match(/-v\.jpg/))
+        .map(f => `http://www2.culture.gouv.fr/Wave/savimage/enlumine${f.trim()}`);
     e.CONTIENT_IMAGE = e.VIDEO && e.VIDEO.length ? "oui" : "non";
-    e.NOMENC = e.NOMENC && e.NOMENC.split(";").map(e => e.trim());
-    e.POSS = e.POSS && e.POSS.split(";").map(e => e.trim());
+    e.NOMENC = e.NOMENC && e.NOMENC.split(";").map(f => f.trim());
+    e.POSS = e.POSS && e.POSS.split(";").map(f => f.trim());
     e.BASE = "Enluminures (Enluminures)";
     await Enluminures.findOneAndUpdate({ REF: e.REF }, e, { upsert: true, new: true });
     if (i % 500 === 0) {
