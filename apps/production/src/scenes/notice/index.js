@@ -9,6 +9,7 @@ import Joconde from "./joconde";
 import Mnr from "./mnr";
 import Memoire from "./memoire";
 import Museo from "./museo";
+import Enluminures from "./enluminures";
 
 import "./index.css";
 
@@ -22,6 +23,7 @@ export default props => {
         <Route path={`/notice/joconde/:ref`} component={Joconde} />
         <Route path={`/notice/memoire/:ref`} component={Memoire} />
         <Route path={`/notice/museo/:ref`} component={Museo} />
+        <Route path={`/notice/enluminures/:ref`} component={Enluminures} />
       </Switch>
     </div>
   );

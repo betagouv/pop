@@ -268,7 +268,7 @@ Lien contact musée
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|Email|Contact musée|
+|String|non|non|non|non|Email|Contact musée|
 
 ### COOR
 Coordinateur
@@ -684,7 +684,7 @@ Lien MUSEOFILE
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Lien MUSEOFILE|
+|String|oui|non|non|oui||Lien MUSEOFILE|
 
 ### NSDA
 Numéro de site
@@ -964,7 +964,7 @@ Lien site associé
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien site associé|
+|String|non|non|non|non|url|Lien site associé|
 
 ### LVID
 Lien video
@@ -974,7 +974,7 @@ Lien video
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien Vidéo|
+|String|non|non|non|non|url|Lien Vidéo|
 
 ### _id
 

@@ -44,6 +44,8 @@ class Search extends React.Component {
             "REG^3",
             "DEP^3",
             "COM^3",
+            "SUJET^3",
+            "TYPE^1",
             "DATE^1",
             "EPOQ^1",
             "SCLE^1",

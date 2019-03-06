@@ -1,6 +1,7 @@
 # POP SCHEMAS
  
-  - [Import](/apps/api/doc/Import.md)
+  - [Enluminures](/apps/api/doc/enluminures.md)
+- [Import](/apps/api/doc/Import.md)
 - [Joconde](/apps/api/doc/joconde.md)
 - [Memoire](/apps/api/doc/memoire.md)
 - [Merimee](/apps/api/doc/merimee.md)

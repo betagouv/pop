@@ -83,6 +83,17 @@ const bases = [
     des collections publiques des musées de France et ces
     œuvres ne sont pas répertoriées dans la base Joconde des
     collections nationales.`
+  },
+  {
+    name: "enluminures",
+    title: "Enluminures (Enluminures)",
+    description: `Coproduite par le Service du livre et de la lecture 
+    et l'Institut de recherche et d'histoire des textes (CNRS), liés 
+    par un programme conjoint depuis 1979, la base Enluminures propose 
+    la consultation gratuite de plus de 120 000 images, sous forme de 
+    vignette et de plein écran, reproductions numériques des enluminures 
+    et éléments de décor de plus de 5 000 manuscrits médiévaux conservés 
+    dans une centaine de bibliothèques municipales françaises.`
   }
 ];
 
@@ -268,7 +279,7 @@ export default class extends React.Component {
                     <label>
                       <input
                         type="checkbox"
-                        checked={this.state.selected.length === 5}
+                        checked={this.state.selected.length === 6}
                         name="all"
                         onChange={this.toggle}
                       />

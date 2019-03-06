@@ -37,8 +37,7 @@ app.use("/joconde", require("./controllers/joconde"));
 app.use("/mnr", require("./controllers/mnr"));
 app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
-
-// Museo
+app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 
 // Proxy to GINCO API
