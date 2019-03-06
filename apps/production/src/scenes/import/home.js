@@ -9,7 +9,7 @@ class Import extends React.Component {
   renderTiles(tiles) {
     return tiles.map(({ url, name, image }, i) => {
       return (
-        <Col xl="4" lg="4" md="3" className="box text-center" key={i}>
+        <Col md="4" sm="6" className="box text-center" key={i}>
           <Link style={{ textDecoration: "none" }} to={url}>
             <div className="tile">
               <img src={image} alt="dummy image" className="img-fluid" />
@@ -26,7 +26,7 @@ class Import extends React.Component {
   render() {
     const image = require("../../assets/outbox.png");
     return (
-      <Container fluid>
+      <Container>
         <div className="home-import">
           <div className="subtitle">Je souhaite importer</div>
           <Row>
@@ -60,11 +60,11 @@ class Import extends React.Component {
           </Row>
           <Row>
             <Col className="m-4 text-center">
-            {this.props.group === "admin" ? (
-              <Link to="/import/list">Consultez les anciens imports</Link>
-            ) : (
-              <div />
-            )}
+              {this.props.group === "admin" ? (
+                <Link to="/import/list">Consultez les anciens imports</Link>
+              ) : (
+                <div />
+              )}
             </Col>
           </Row>
         </div>
