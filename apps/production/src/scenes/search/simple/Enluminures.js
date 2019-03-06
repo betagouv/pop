@@ -47,11 +47,11 @@ export default class Search extends React.Component {
             <div className="search-and-export-zone">
               <DataSearch
                 componentId="mainSearch"
-                dataField={["TITR"]}
+                dataField={["TITR", "SUJET"]}
                 queryFormat="and"
                 iconPosition="left"
                 className="mainSearch"
-                placeholder="Saisissez un titre"
+                placeholder="Saisissez un titre ou un sujet"
                 URLParams={true}
               />
               <ReactiveComponent
