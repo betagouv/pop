@@ -1,10 +1,3 @@
-import React, { Component } from "react";
-import Map from "./Map";
+import ReactiveMapWrapper from "./ReactiveMapWrapper";
 
-export default class MapWrapper extends Component {
-  render() {
-    return <Map />;
-  }
-}
-
-
+export default ReactiveMapWrapper;
