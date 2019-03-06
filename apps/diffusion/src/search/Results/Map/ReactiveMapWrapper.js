@@ -51,7 +51,6 @@ export default class ReactiveMapWrapper extends React.Component {
   }
 
   onUpdateQuery(top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon, precision) {
-    console.log(top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon);
     const query = getESQuery(
       top_left_lat,
       top_left_lon,
@@ -59,11 +58,11 @@ export default class ReactiveMapWrapper extends React.Component {
       bottom_right_lon,
       precision
     );
+
     this.setState({ query });
   }
 
   render() {
-    console.log("RENDER", this.state.query);
     return (
       <div>
         <ReactiveComponent

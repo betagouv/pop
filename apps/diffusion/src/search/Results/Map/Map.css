@@ -11,6 +11,89 @@
   transition: 0.3s;
 }
 
+.drawer {
+  background-color: white;
+  z-index: 3;
+  position: absolute;
+  right: 15px;
+  height: 600px;
+  width: 295px;
+  overflow-y: auto;
+}
+
+.drawer img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.drawer a {
+  background-color: #377d87;
+  border: 0;
+  color: #fff;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  border: 1px solid #d7d3d3;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.drawer .description{
+  font-family: "Open Sans", sans-serif;
+  margin: 10px;
+}
+
+.location {
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 -1px 0px rgba(0, 0, 0, 0.02);
+  border: none;
+  display: flex;
+  border-radius: 3px;
+  padding: 0px 4px 0px 18px;
+  background-size: contain;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  position: absolute;
+  margin: 7px;
+}
+
+.location .mapboxgl-ctrl-geocoder {
+  box-shadow: none;
+}
+.location input {
+  border: none;
+}
+.location input:focus {
+  outline: none;
+}
+
+.location .location-search-icon {
+  background-image: url(/static/Search-48.png);
+  float: left;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border-right: lightgray;
+  border-right-style: solid;
+  border-right-width: 1px;
+  padding-right: 42px;
+}
+
+.location .location-target-icon {
+  background-image: url(/static/Target-48.png);
+  float: left;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
 .marker {
   display: block;
   border: none;
@@ -26,12 +109,13 @@
   border: 2px white solid;
   box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
 }
+
 .marker:hover {
   top: 0;
   left: 0;
   width: 50px;
   height: 50px;
-  transition: 0.3s;
+  transition: width 0.25s, height 0.25s;
 }
 
 .marker .count {
@@ -46,27 +130,56 @@
   font-weight: 600;
 }
 
+.marker-alone {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  will-change: transform;
+  border: 2px white solid;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  background-position: center;
+  background-size: 60px;
+}
+
+.marker-alone .popup {
+  /* visibility: hidden; */
+  background-color: white;
+  top: -75px;
+  border-radius: 5px;
+  position: absolute;
+  right: -5px;
+  padding: 3px 5px 3px 4px;
+  line-height: 11px;
+  font-size: 13px;
+  height: 70px;
+  font-weight: 600;
+}
+
+.marker-alone:hover {
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100px;
+  height: 100px;
+  background-size: 100px;
+  transition: width 0.25s, height 0.25s;
+}
+
+.marker-alone:hover .popup {
+  visibility: visible;
+}
+
 .search-map .thumbnailStyle {
   width: 52px;
   height: 52px;
   margin: 4px;
-}
-
-.search-map .drawer {
-  margin-left: -300px;
-  width: 300px;
-  height: 100%;
-  z-index: 2;
-  position: absolute;
-  background: white;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
-  transition: 0.3s;
-}
-
-.search-map .drawer.open {
-  margin-left: auto;
 }
 
 .search-map .loader-container {
@@ -76,9 +189,4 @@
   height: 600px;
   background: #00000082;
   padding: 0;
-}
-
-.search-map .drawer .closeButton {
-  margin: 5px;
-  text-align: right;
 }

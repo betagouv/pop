@@ -1,21 +1,22 @@
 import React from "react";
 import Head from "next/head";
-import Loader from "../../../components/Loader";
-
 import { toGeoJson, getPrecision, getESQuery } from "./utils";
+import Location from "./Location";
+import Drawer from "./Drawer";
+import Marker from "./Marker";
+
+import Loader from "../../../components/Loader";
 
 export default class Map extends React.Component {
   state = {
     loaded: false,
     popup: null,
     style: "mapbox://styles/mapbox/streets-v9",
-    drawerContent: null
+    drawerContent: null,
+    selectedNotice: null
   };
 
   mapRef = null;
-  singleFeatureClicked = null;
-  clusterFeatureClicked = null;
-  featureClicked = null;
   map = null;
   cluster = {};
 
@@ -34,6 +35,7 @@ export default class Map extends React.Component {
     });
 
     this.map.on("load", e => {
+      this.setState({ loaded: true });
       this.mapInitialPosition(this.map);
       this.updateQuery();
     });
@@ -57,12 +59,9 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps", nextProps);
-
     if (!nextProps.aggregations) {
       return;
     }
-
     if (
       this.props.aggregations &&
       nextProps.aggregations.france.buckets.length === this.props.aggregations.france.buckets.length
@@ -73,12 +72,6 @@ export default class Map extends React.Component {
     this.renderClusters(nextProps);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isNewSearch && !prevProps.isNewSearch) {
-      this.mapInitialPosition(this.map);
-    }
-  }
-
   renderClusters(props, options = {}) {
     if (options.clean) {
       for (var key in this.cluster) {
@@ -86,22 +79,20 @@ export default class Map extends React.Component {
         delete this.cluster[key];
       }
     }
-
     if (props.aggregations) {
       const geojson = toGeoJson(props.aggregations.france.buckets);
       const toRemoveList = { ...this.cluster };
-      console.log(`Update ${geojson.features.length} features`);
       geojson.features.forEach(feature => {
         if (this.cluster[feature.properties.id]) {
           delete toRemoveList[feature.properties.id];
         } else {
-          const mapboxgl = require("mapbox-gl");
-          const el = this.createMarker(
-            feature.properties.id + "(" + feature.properties.count || "" + ")"
-          );
-          const marker = new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .addTo(this.map);
+          const marker = new Marker(feature);
+          marker.onClick((center, selectedNotice) => {
+            this.setState({ selectedNotice });
+            this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 13) });
+          });
+
+          marker.addTo(this.map);
           this.cluster[feature.properties.id] = marker;
         }
       });
@@ -110,31 +101,12 @@ export default class Map extends React.Component {
         this.cluster[key].remove();
         delete this.cluster[key];
       }
-      console.log("New cluster", this.cluster);
       //https://docs.mapbox.com/mapbox-gl-js/example/custom-marker-icons/
     }
     this.forceUpdate();
   }
 
-  createMarker(value) {
-    // create a DOM element for the marker
-    let el = document.createElement("div");
-    el.className = "marker";
-    el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
-
-    // if (value > 1) {
-    let count = document.createElement("div");
-    count.className = "count";
-    let countText = document.createTextNode(value);
-    count.appendChild(countText);
-    el.appendChild(count);
-    // }
-
-    el.addEventListener("click", () => {
-      window.alert("coucou");
-    });
-    return el;
-  }
+  flyTo(center, zoom) {}
 
   mapInitialPosition = map => {
     if (map) {
@@ -145,7 +117,6 @@ export default class Map extends React.Component {
   };
 
   render() {
-    console.log("render", this.props.aggregations, this.props.hits);
     return (
       <div style={{ width: "100%", height: "600px" }} className="search-map view">
         <Head>
@@ -153,8 +124,16 @@ export default class Map extends React.Component {
             href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
             rel="stylesheet"
           />
+          <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.min.js" />
+          <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.4/mapbox-gl-geocoder.css"
+            type="text/css"
+          />
         </Head>
-        {/* <Loader isOpen={!this.state.loaded} /> */}
+        <Location map={this.map} />
+        <Drawer notice={this.state.selectedNotice} />
+        <Loader isOpen={!this.state.loaded} />
         <div id="map" ref={this.mapRef} style={{ width: "100%", height: "600px" }}>
           {/* <SwitchStyleButton
             value={this.state.style}
