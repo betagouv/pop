@@ -10,14 +10,14 @@ export function getPrecision(zoom) {
   }
 
   const obj = {
-    2: 1,
+    2: 2,
     3: 2,
     4: 2,
     5: 3,
     6: 3,
     7: 4,
     8: 4,
-    9: 4,
+    9: 5,
     10: 5,
     11: 6,
     12: 6,
@@ -29,46 +29,6 @@ export function getPrecision(zoom) {
   return obj[correctedZoom];
 }
 
-const idCounter = {};
-const uniqueId = (prefix = "$lodash$") => {
-  if (!idCounter[prefix]) {
-    idCounter[prefix] = 0;
-  }
-
-  const id = ++idCounter[prefix];
-  if (prefix === "$lodash$") {
-    return `${id}`;
-  }
-
-  return `${prefix + id}`;
-};
-
-const mapGeoHashToUniqId = {};
-function getGeoHashUniqId(geoHash) {
-  // NOT NICE AT ALL, TODO CHECK THE PERF HERE
-  if (!mapGeoHashToUniqId.hasOwnProperty(geoHash)) {
-    mapGeoHashToUniqId[geoHash] = uniqueId();
-  }
-  return mapGeoHashToUniqId[geoHash];
-}
-
-/*
-GeoHash length
-Area width x height
-1-5,009.4km x 4,992.6km
-2-1,252.3km x 624.1km
-3-156.5km x 156km
-4-39.1km x 19.5km
-5-4.9km x 4.9km
-6-1.2km x 609.4m
-7-152.9m x 152.4m
-8-38.2m x 19m
-9-4.8m x 4.8m
-10-1.2m x 59.5cm
-11-14.9cm x 14.9cm
-12- 3.7cm x 1.9cm
-*/
-
 export function toGeoJson(arr) {
   //const before = window.performance.now();
   const geoJsonFormated = {
@@ -77,43 +37,59 @@ export function toGeoJson(arr) {
     features: []
   };
 
-  optimize(arr);
-  for (var i = 0; i < arr.length; i++) {
-    const item = arr[i];
+  var clusterMaker = require("./clusters");
+  clusterMaker.k(20);
+  clusterMaker.iterations(3);
+  const data = [];
+  for (let i = 0; i < arr.length; i++) {
+    const obj = {};
+    const ncoordinates = nGeoHash.decode(arr[i].key);
+    obj.coordinates = [ncoordinates.latitude, ncoordinates.longitude];
+    obj.count = arr[i].doc_count;
+    obj.hits = arr[i].top_hits.hits.hits[0];
+    obj.key = arr[i].key;
+    data.push(obj);
+  }
 
-    const ncoordinates = nGeoHash.decode(item.key);
+  if (!data.length) {
+    return geoJsonFormated;
+  }
+  clusterMaker.data(data);
+  const clusters = clusterMaker.clusters();
+  for (var i = 0; i < clusters.length; i++) {
+    const item = clusters[i];
+
+    if (!item.points.length) {
+      continue;
+    }
+
+    let coordinates = [item.centroid[1], item.centroid[0]];
+    if (item.points.length == 1 && item.points[0].meta().count == 1) {
+      coordinates = [
+        item.points[0].meta().hits._source.POP_COORDONNEES.lon,
+        item.points[0].meta().hits._source.POP_COORDONNEES.lat
+      ];
+    }
 
     let feature = {
       type: "Feature",
-      id: getGeoHashUniqId(item.key),
+      id: i,
       properties: {
-        id: item.key,
-        hits: item.top_hits.hits.hits
+        id: i,
+        hits: [item.points[0].meta().hits]
       },
       geometry: {
         type: "Point",
-        coordinates: [ncoordinates.longitude, ncoordinates.latitude]
+        coordinates: coordinates
       }
     };
-    if (item.doc_count > 1) {
-      feature.properties.count = item.doc_count;
-    } else {
-      feature.geometry.coordinates = [
-        feature.properties.hits[0]._source.POP_COORDONNEES.lon,
-        feature.properties.hits[0]._source.POP_COORDONNEES.lat
-      ];
-    }
+
+    feature.properties.count = item.points.reduce((acc, re) => acc + re.meta().count, 0);
+
     geoJsonFormated.features.push(feature);
   }
 
   return geoJsonFormated;
-}
-
-function optimize(arr) {
-  // console.log(arr);
-  // for (let i = 0; i < arr.length; i++) {
-  //   console.log(arr[i].key, nGeoHash.neighbors(arr[i].key));
-  // }
 }
 
 export function getESQuery(

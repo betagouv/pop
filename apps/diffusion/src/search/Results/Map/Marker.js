@@ -60,6 +60,15 @@ function createClusterMarkerElement(feature) {
   // el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
   el.style.backgroundColor = "#007bff";
   el.className = "marker-cluster";
+  if (value > 100000) {
+    el.style.width = el.style.height = "80px";
+  } else if (value > 50000) {
+    el.style.width = el.style.height = "70px";
+  } else if (value > 10000) {
+    el.style.width = el.style.height = "60px";
+  } else if (value > 5000) {
+    el.style.width = el.style.height = "55px";
+  }
   let count = document.createElement("div");
   count.className = "count";
   let countText = document.createTextNode(value);

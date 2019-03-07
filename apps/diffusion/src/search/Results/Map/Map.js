@@ -130,7 +130,7 @@ export default class Map extends React.Component {
         const marker = new Marker(feature);
         marker.onClick(marker => {
           const center = marker.getCoordinates();
-          this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 13) });
+          this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 15) });
           if (marker._type === "notice") {
             this.selectMarker(marker);
           }

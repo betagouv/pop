@@ -138,9 +138,9 @@
 .marker-cluster:hover {
   top: 0;
   left: 0;
-  width: 50px;
+  width: 90px !important;
+  height: 90px !important;
   z-index: 2;
-  height: 50px;
   transition: width 0.25s, height 0.25s;
 }
 
@@ -199,7 +199,7 @@
 }
 
 .marker-active {
-  border-color: #377D87;
+  border-color: #377d87;
   left: 0;
   top: 0;
   z-index: 2;
