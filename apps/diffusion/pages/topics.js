@@ -6,7 +6,7 @@ import Head from "next/head";
 import Layout from "../src/components/Layout";
 import "./topics.css";
 
-const cultureUrl = "http://www2.culture.gouv.fr/Wave/image/";
+const cultureUrl = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
 const memoireImg = uri => `${cultureUrl}memoire/${uri}`;
 const jocondeImg = uri => `${bucket_url}joconde/${uri}`;
 
@@ -27,7 +27,7 @@ export default () => (
         <Row>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("2010/sap57_u031897vj_p.jpg")}
+              img={memoireImg("APU031897VJ/sap57_u031897vj_p.jpg")}
               txt="Studio Harcourt"
               params={{
                 base: ["Photographies (Mémoire)"],
@@ -37,7 +37,7 @@ export default () => (
           </Col>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("/2709/sap56_72l002380_p.jpg")}
+              img={memoireImg("AP72L002380/sap56_72l002380_p.jpg")}
               txt="André Kertész"
               params={{
                 base: ["Photographies (Mémoire)"],
@@ -52,7 +52,7 @@ export default () => (
           </Col>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("1997/sap58_76l000305_p.jpg")}
+              img={memoireImg("AP76L000305/sap58_76l000305_p.jpg")}
               txt="Sam Lévin"
               params={{
                 base: ["Photographies (Mémoire)"],
@@ -62,7 +62,7 @@ export default () => (
           </Col>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("0129/sap01_na23818917r_t.jpg")}
+              img={memoireImg("APNADAR025736/sap01_na23702023g_t.jpg")}
               txt="Atelier Nadar"
               params={{
                 base: ["Photographies (Mémoire)"],
@@ -124,7 +124,7 @@ export default () => (
         <Row>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("1614/sap51_9126t0130_p.jpg")}
+              img={memoireImg("AP9126T0130/sap51_9126t0130_p.jpg")}
               txt="Karl Lagerfeld"
               params={{
                 mainSearch: "Lagerfeld"
@@ -134,7 +134,7 @@ export default () => (
 
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("1286/sap53_71l00735_p.jpg")}
+              img={memoireImg("AP71L00735/sap53_71l00735_p.jpg")}
               txt="Pierre Balmain"
               params={{
                 mainSearch: "Balmain"
@@ -143,7 +143,7 @@ export default () => (
           </Col>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("1288/sap53_71l02648_p.jpg")}
+              img={memoireImg("AP71L02648/sap53_71l02648_p.jpg")}
               txt="Elsa Schiaparelli"
               params={{
                 mainSearch: "Schiaparelli"
@@ -152,7 +152,7 @@ export default () => (
           </Col>
           <Col lg="3" md="6">
             <TopicCard
-              img={memoireImg("1287/sap53_71l01246_p.jpg")}
+              img={memoireImg("AP71L01246/sap53_71l01246_p.jpg")}
               txt="Coco Chanel"
               params={{
                 mainSearch: "\"Coco Chanel\""
