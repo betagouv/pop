@@ -46,7 +46,6 @@ export default class Marker {
   }
 
   _createMarkerElement(feature) {
-    console.log("feature", feature.properties.hits[0]);
     const notice = feature.properties.hits[0];
     let el = document.createElement("div");
     if (notice._type === "merimee") {

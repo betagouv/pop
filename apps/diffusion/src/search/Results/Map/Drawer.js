@@ -3,7 +3,6 @@ import Link from "next/link";
 
 class Drawer extends Component {
   render() {
-    console.log(this.props.notice);
     if (!this.props.notice) {
       return <div />;
     }
