@@ -12,6 +12,7 @@ const {
   checkESIndex,
   updateNotice,
   lambertToWGS84,
+  getPolygonCentroid,
   fixLink
 } = require("./utils");
 
@@ -29,10 +30,12 @@ function transformBeforeCreateOrUpdate(notice) {
     };
     if (!notice.COOR && !notice.POP_COORDONNEES) {
       const centroid = getPolygonCentroid(coordinates);
-      notice.POP_COORDONNEES = {
-        lat: centroid[0],
-        lon: centroid[1]
-      };
+      if (centroid.length == 2) {
+        notice.POP_COORDONNEES = {
+          lat: centroid[0],
+          lon: centroid[1]
+        };
+      }
     }
   }
 
