@@ -283,7 +283,7 @@ workflows:
             - test_diffusion
           filters:
             branches:
-              only: master
+              only: workmap
       - build_diffusion_prod:
           requires:
             - deploy_diffusion_staging
