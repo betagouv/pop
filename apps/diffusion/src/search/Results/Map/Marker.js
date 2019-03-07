@@ -21,7 +21,8 @@ export default class Marker {
       this._type = "notice";
       el = createMarkerElement(feature);
     }
-    el.addEventListener("click", () => {
+    el.addEventListener("click", e => {
+      e.stopPropagation();
       if (this._onClick) {
         this._onClick(this);
       }

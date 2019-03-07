@@ -45,6 +45,10 @@ export default class Map extends React.Component {
         this.updateQuery();
       }
     });
+
+    this.map.on("click", () => {
+      this.selectMarker(null);
+    });
   }
 
   updateQuery() {
