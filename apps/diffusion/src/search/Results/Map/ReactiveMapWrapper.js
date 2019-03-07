@@ -16,7 +16,7 @@ add give results to Map component in its props ( through reactive Component)
 
 export default class ReactiveMapWrapper extends React.Component {
   state = {
-    query: {},
+    query: { query: { match_all: {} } },
     isNewSearch: false,
     precision: 3
   };

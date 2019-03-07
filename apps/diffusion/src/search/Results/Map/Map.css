@@ -21,11 +21,33 @@
   overflow-y: auto;
 }
 
+.drawer-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #19414c;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
 .drawer img {
   object-fit: contain;
   width: 100%;
 }
+.drawer .service-icon {
+  width: 60px;
+}
 
+.drawer p {
+  font-size: 14px;
+}
+
+.drawer .drawer-back {
+  font-weight: 700;
+  padding-bottom: 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
 .drawer a {
   background-color: #377d87;
   border: 0;
@@ -40,9 +62,11 @@
   border: 1px solid #d7d3d3;
   border-radius: 5px;
   text-decoration: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
-.drawer .description{
+.drawer .description {
   font-family: "Open Sans", sans-serif;
   margin: 10px;
 }
@@ -91,10 +115,11 @@
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
 }
 
-.marker {
+.marker-cluster {
   display: block;
   border: none;
   border-radius: 50%;
@@ -110,15 +135,16 @@
   box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
 }
 
-.marker:hover {
+.marker-cluster:hover {
   top: 0;
   left: 0;
   width: 50px;
+  z-index: 2;
   height: 50px;
   transition: width 0.25s, height 0.25s;
 }
 
-.marker .count {
+.marker-cluster .count {
   background-color: white;
   border-radius: 5px;
   position: absolute;
@@ -130,7 +156,7 @@
   font-weight: 600;
 }
 
-.marker-alone {
+.marker-notice {
   display: block;
   border: none;
   border-radius: 50%;
@@ -148,7 +174,7 @@
   background-size: 60px;
 }
 
-.marker-alone .popup {
+.marker-notice .popup {
   /* visibility: hidden; */
   background-color: white;
   top: -75px;
@@ -162,7 +188,7 @@
   font-weight: 600;
 }
 
-.marker-alone:hover {
+.marker-notice:hover {
   left: 0;
   top: 0;
   z-index: 2;
@@ -172,8 +198,25 @@
   transition: width 0.25s, height 0.25s;
 }
 
-.marker-alone:hover .popup {
-  visibility: visible;
+.marker-active {
+  border-color: #377D87;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100px;
+  height: 100px;
+  background-size: 100px;
+  transition: width 0.25s, height 0.25s;
+}
+
+.marker-notice:hover {
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100px;
+  height: 100px;
+  background-size: 100px;
+  transition: width 0.25s, height 0.25s;
 }
 
 .search-map .thumbnailStyle {

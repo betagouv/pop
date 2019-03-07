@@ -26,7 +26,6 @@ export function getPrecision(zoom) {
     15: 8
   };
 
-  console.log("ZOOM MAP", correctedZoom, "ZOOM ES", obj[correctedZoom]);
   return obj[correctedZoom];
 }
 
@@ -111,11 +110,10 @@ export function toGeoJson(arr) {
 }
 
 function optimize(arr) {
-  console.log(arr);
-  const new
-  for (let i = 0; i < arr.length; i++) {
-    console.log(arr[i].key, nGeoHash.neighbors(arr[i].key));
-  }
+  // console.log(arr);
+  // for (let i = 0; i < arr.length; i++) {
+  //   console.log(arr[i].key, nGeoHash.neighbors(arr[i].key));
+  // }
 }
 
 export function getESQuery(

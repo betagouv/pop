@@ -1,25 +1,31 @@
 export default class Marker {
   constructor(feature) {
+    const mapboxgl = require("mapbox-gl");
+
     this._element = null;
     this._onClick = null;
+    this._type = null;
+    this._coordinates = null;
+    this._hit = null;
 
-    const mapboxgl = require("mapbox-gl");
     const value = feature.properties.count;
-
     let el = null;
 
-    if (value > 1) {
-      el = this._createClusterMarkerElement(feature);
-    } else {
-      el = this._createMarkerElement(feature);
-    }
+    this._hit = feature.properties.hits[0];
+    this._coordinates = feature.geometry.coordinates;
 
+    if (value > 1) {
+      this._type = "cluster";
+      el = createClusterMarkerElement(feature);
+    } else {
+      this._type = "notice";
+      el = createMarkerElement(feature);
+    }
     el.addEventListener("click", () => {
       if (this._onClick) {
-        this._onClick(feature.geometry.coordinates, feature.properties.hits[0]);
+        this._onClick(this);
       }
     });
-
     this._element = new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates);
   }
   onClick(cb) {
@@ -31,39 +37,49 @@ export default class Marker {
   remove() {
     this._element.remove();
   }
+  getHit() {
+    return this._hit;
+  }
+  getCoordinates() {
+    return this._coordinates;
+  }
+  select() {
+    this._element.getElement().className += " marker-active";
+  }
+  unselect() {
+    this._element.getElement().className = this._element
+      .getElement()
+      .className.replace(" marker-active", "");
+  }
+}
 
-  _createClusterMarkerElement(feature) {
-    const value = feature.properties.count;
-    let el = document.createElement("div");
+function createClusterMarkerElement(feature) {
+  const value = feature.properties.count;
+  let el = document.createElement("div");
+  // el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
+  el.style.backgroundColor = "#007bff";
+  el.className = "marker-cluster";
+  let count = document.createElement("div");
+  count.className = "count";
+  let countText = document.createTextNode(value);
+  count.appendChild(countText);
+  el.appendChild(count);
+  return el;
+}
+
+function createMarkerElement(feature) {
+  const notice = feature.properties.hits[0];
+  let el = document.createElement("div");
+  if (notice._type === "merimee") {
+    el.style.backgroundImage = `url("/static/merimee.jpg")`;
+  } else if (notice._type === "palissy") {
+    el.style.backgroundImage = `url("/static/palissy.jpg")`;
+  } else if (notice._type === "joconde") {
+    el.style.backgroundImage = `url("/static/joconde.jpg")`;
+  } else {
     el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
-    el.className = "marker";
-    let count = document.createElement("div");
-    count.className = "count";
-    let countText = document.createTextNode(value);
-    count.appendChild(countText);
-    el.appendChild(count);
-    return el;
   }
 
-  _createMarkerElement(feature) {
-    const notice = feature.properties.hits[0];
-    let el = document.createElement("div");
-    if (notice._type === "merimee") {
-      el.style.backgroundImage = `url("/static/merimee.jpg")`;
-    } else if (notice._type === "palissy") {
-      el.style.backgroundImage = `url("/static/palissy.jpg")`;
-    } else if (notice._type === "joconde") {
-      el.style.backgroundImage = `url("/static/joconde.jpg")`;
-    } else {
-      el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
-    }
-
-    el.className = "marker-alone";
-    // let count = document.createElement("div");
-    // count.className = "popup";
-    // let countText = document.createTextNode("OUVRE MOI");
-    // count.appendChild(countText);
-    // el.appendChild(count);
-    return el;
-  }
+  el.className = "marker-notice";
+  return el;
 }
