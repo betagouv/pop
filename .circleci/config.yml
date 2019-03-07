@@ -58,7 +58,7 @@ commands:
     parameters:
       env:
         type: string
-      app: 
+      app:
         type: string
     steps:
       - checkout
@@ -72,12 +72,12 @@ commands:
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
           paths:
-              - build
+            - build
   deploy:
     parameters:
       eb_deploy:
         type: string
-      app: 
+      app:
         type: string
     steps:
       - checkout
@@ -177,7 +177,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo/apps/diffusion
           paths:
-              - .next
+            - .next
   build_diffusion_prod:
     executor: docker_node
     steps:
@@ -192,7 +192,7 @@ jobs:
       - persist_to_workspace:
           root: ~/repo/apps/diffusion
           paths:
-              - .next
+            - .next
   build_production_staging:
     executor: docker_node
     steps:
@@ -283,7 +283,7 @@ workflows:
             - test_diffusion
           filters:
             branches:
-              only: master
+              only: workmap
       - build_diffusion_prod:
           requires:
             - deploy_diffusion_staging
@@ -313,7 +313,7 @@ workflows:
             - build_diffusion_staging
           filters:
             branches:
-              only: master
+              only: workmap
       - deploy_production_staging:
           requires:
             - build_production_staging
