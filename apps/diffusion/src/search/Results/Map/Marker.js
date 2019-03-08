@@ -80,12 +80,12 @@ function createClusterMarkerElement(feature) {
 function createMarkerElement(feature) {
   const notice = feature.properties.hits[0];
   let el = document.createElement("div");
-  if (notice._type === "merimee") {
-    el.style.backgroundImage = `url("/static/merimee.jpg")`;
-  } else if (notice._type === "palissy") {
-    el.style.backgroundImage = `url("/static/palissy.jpg")`;
-  } else if (notice._type === "joconde") {
-    el.style.backgroundImage = `url("/static/joconde.jpg")`;
+  if (notice._type === "joconde") {
+    el.style.backgroundImage = `url("/static/musee-de-france.png")`;
+  } else if (notice._source.PRODUCTEUR === "CRMH" || notice._source.PRODUCTEUR === "Monuments Historiques") {
+    el.style.backgroundImage = `url("/static/mh.jpg")`;
+  } else if (notice._source.PRODUCTEUR === "Inventaire") {
+    el.style.backgroundImage = `url("/static/inventaire.jpg")`;
   } else {
     el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
   }

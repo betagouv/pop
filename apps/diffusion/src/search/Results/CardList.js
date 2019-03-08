@@ -260,7 +260,7 @@ const Joconde = ({ data }) => {
                 {REF}
               </span>
             </div>
-            <img src="/static/musee-de-france.jpg" className="producteur" />
+            <img src="/static/musee-de-france.png" className="producteur" />
             <div>
               <p>{author}</p>
               <p>{peri}</p>
