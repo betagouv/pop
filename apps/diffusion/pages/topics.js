@@ -155,7 +155,7 @@ export default () => (
               img={memoireImg("AP71L01246/sap53_71l01246_p.jpg")}
               txt="Coco Chanel"
               params={{
-                mainSearch: "\"Coco Chanel\""
+                mainSearch: '"Coco Chanel"'
               }}
             />
           </Col>
@@ -179,6 +179,74 @@ export default () => (
               txt="Venise"
               params={{
                 mainSearch: "venise"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("5002E008037/atpico041160.jpg")}
+              txt="Japon"
+              params={{
+                mainSearch: "Japon",
+                image: "oui"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("07010003109/0001554.jpg")}
+              txt="Egypte"
+              params={{
+                mainSearch: "Egypte",
+                image: "oui"
+              }}
+            />
+          </Col>
+        </Row>
+
+        <h3>Artistes femme</h3>
+        <Row>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("000PE019139/99-002556.jpg")}
+              txt="Rosa Bonheur"
+              params={{
+                auteur: [
+                  "BONHEUR Marie Rosalie, BONHEUR Rosa (dite)",
+                  "BONHEUR Marie Rosalie ; BONHEUR Rosa (dite)",
+                  "BONHEUR Rosa (dessinateur)"
+                ],
+                image: "oui"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("06770000315/0001106.jpg")}
+              txt="Marguerite Gérard"
+              params={{
+                auteur: ["GERARD Marguerite (peintre)", "GERARD Marguerite"],
+                image: "oui"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("01720000823/0002031.jpg")}
+              txt="Marie Nicolas"
+              params={{
+                auteur: ["NICOLAS Marie"],
+                image: "oui"
+              }}
+            />
+          </Col>
+          <Col lg="3" md="6">
+            <TopicCard
+              img={jocondeImg("000PE002885/15-523297.jpg")}
+              txt="Élisabeth Vigée Le Brun"
+              params={{
+                auteur: ["VIGEE-LE BRUN Elisabeth Louise"],
+                image: "oui"
               }}
             />
           </Col>
