@@ -1,8 +1,9 @@
 .search-map .switch-view {
   width: 60px;
   height: 60px;
-  z-index: 3;
-  margin: 15px;
+  z-index: 1;
+  margin-right: 45px;
+  margin-top: 10px;
   position: absolute;
   right: 0;
   background: white;
@@ -111,7 +112,7 @@
   border: none;
   display: flex;
   border-radius: 3px;
-  padding: 0px 4px 0px 18px;
+  padding: 0px 4px 0px 0px;
   background-size: contain;
   align-items: center;
   justify-content: space-between;
@@ -122,6 +123,8 @@
 
 .location .mapboxgl-ctrl-geocoder {
   box-shadow: none;
+  font-size: 14px;
+  width: 300px;
 }
 .location input {
   border: none;
