@@ -13,7 +13,8 @@ export default class Map extends React.Component {
     popup: null,
     style: "mapbox://styles/mapbox/streets-v9",
     drawerContent: null,
-    selectedMarker: null
+    selectedMarker: null,
+    selectedPositionMarker: null
   };
 
   mapRef = null;
@@ -49,6 +50,8 @@ export default class Map extends React.Component {
     this.map.on("click", () => {
       this.selectMarker(null);
     });
+
+    this.map.addControl(new mapboxgl.NavigationControl());
   }
 
   updateQuery() {
@@ -99,6 +102,26 @@ export default class Map extends React.Component {
     this.renderMarkers(nextProps);
   }
 
+  setPosition(position, zoom = 13, showMarker = true) {
+    const mapboxgl = require("mapbox-gl");
+    if (this.state.selectedPositionMarker) {
+      this.state.selectedPositionMarker.remove();
+    }
+    if (position && showMarker) {
+      const marker = new mapboxgl.Marker();
+      marker.setLngLat(position);
+      this.setState({ selectedPositionMarker: marker });
+      marker.addTo(this.map);
+    }
+
+    if (position) {
+      this.map.flyTo({
+        center: position,
+        zoom
+      });
+    }
+  }
+
   selectMarker(marker) {
     if (this.state.selectedMarker && this.state.selectedMarker != marker) {
       this.state.selectedMarker.unselect();
@@ -116,7 +139,6 @@ export default class Map extends React.Component {
       const geojson = toGeoJson(props.aggregations.france.buckets);
       geojson.features.forEach(feature => {
         const key = feature.properties.id;
-
         //Si le marker est une notice unique, toujours la meme, alors on ne la reconstruit pas
         if (
           this.markers[key] &&
@@ -169,7 +191,11 @@ export default class Map extends React.Component {
             type="text/css"
           />
         </Head>
-        <Location ready={this.state.loaded} map={this.map} />
+        <Location
+          ready={this.state.loaded}
+          map={this.map}
+          setPosition={this.setPosition.bind(this)}
+        />
         <Drawer
           notice={this.state.selectedMarker ? this.state.selectedMarker.getHit() : null}
           onClose={() => {

@@ -14,6 +14,12 @@ class Location extends Component {
       placeholder: "Entrez une ville ou une adresse"
     });
     document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+    geocoder.on("result", ev => {
+      this.props.setPosition(ev.result.center);
+    });
+    geocoder.on("clear", () => {
+      this.props.setPosition(null);
+    });
   }
   render() {
     return (
@@ -24,11 +30,14 @@ class Location extends Component {
             className="location-target-icon"
             onClick={() => {
               navigator.geolocation.getCurrentPosition(location => {
-                this.props.map.flyTo({
-                  center: [location.coords.longitude, location.coords.latitude],
-                  zoom: 13
-                });
+                this.props.setPosition([location.coords.longitude, location.coords.latitude]);
               });
+            }}
+          />
+          <div
+            className="location-home-icon"
+            onClick={() => {
+              this.props.setPosition([2.515597, 46.856731], 5, false);
             }}
           />
         </div>

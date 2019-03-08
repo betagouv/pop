@@ -30,7 +30,15 @@ export default class Drawer extends Component {
         >
           {"< Retour"}
         </div>
-        {this.renderContent(this.props.notice)}
+        <div className="drawer-content">{this.renderContent(this.props.notice)}</div>
+        <div>
+          <Link
+            prefetch
+            href={`/notice/${this.props.notice._type}/${this.props.notice._source.REF}`}
+          >
+            <a target="_blank">Voir la notice complète</a>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -44,7 +52,6 @@ const joinData = f => {
 };
 
 const Joconde = ({ notice }) => {
-  const REF = notice.REF;
   const categories = notice.DENO ? notice.DENO.join(", ") : "";
   const title = notice.TICO || notice.TITR;
   const author = joinData([notice.AUTR, notice.ECOL, notice.EPOQ]);
@@ -61,17 +68,11 @@ const Joconde = ({ notice }) => {
         <p>{peri}</p>
         <p>{loc}</p>
       </div>
-      <div>
-        <Link prefetch href={`/notice/joconde/${REF}`}>
-          <a>Voir la notice complète</a>
-        </Link>
-      </div>
     </div>
   );
 };
 
 const Palissy = ({ notice }) => {
-  const REF = notice.REF;
   const title = notice.TICO || notice.TITR;
   const categories = notice.DENO ? notice.DENO.join(", ") : "";
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
@@ -90,18 +91,12 @@ const Palissy = ({ notice }) => {
         <p>{author}</p>
         <p>{siecle}</p>
         <p>{loc}</p>
-      </div>
-      <div>
-        <Link prefetch href={`/notice/palissy/${REF}`}>
-          <a>Voir la notice complète</a>
-        </Link>
       </div>
     </div>
   );
 };
 
 const Merimee = ({ notice }) => {
-  const REF = notice.REF;
   const title = notice.TICO || notice.TITR;
   const categories = notice.DENO ? notice.DENO.join(", ") : "";
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
@@ -120,11 +115,6 @@ const Merimee = ({ notice }) => {
         <p>{author}</p>
         <p>{siecle}</p>
         <p>{loc}</p>
-      </div>
-      <div>
-        <Link prefetch href={`/notice/merimee/${REF}`}>
-          <a>Voir la notice complète</a>
-        </Link>
       </div>
     </div>
   );

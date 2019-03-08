@@ -73,9 +73,9 @@ export function toGeoJson(arr) {
 
     let feature = {
       type: "Feature",
-      id: i,
+      id: item.points[0].meta().hits._source.REF,
       properties: {
-        id: i,
+        id: item.points[0].meta().hits._source.REF,
         hits: [item.points[0].meta().hits]
       },
       geometry: {
