@@ -21,6 +21,7 @@
   width: 295px;
   display: flex;
   flex-direction: column;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .drawer .drawer-content {
@@ -38,8 +39,8 @@
 }
 
 .drawer .mini {
-  margin-top: 10px;
-  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  margin: 10px;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.1);
   border: 1px solid #d7d3d3;
   border-radius: 5px;
   cursor: pointer;
@@ -58,8 +59,6 @@
 }
 
 .drawer .drawer-title-mini {
-  text-align: center;
-  font-weight: 700;
   font-size: 13px;
   color: #19414c;
   padding: 5px;
@@ -78,8 +77,9 @@
 }
 
 .drawer .drawer-back {
-  font-weight: 700;
-  padding-bottom: 12px;
+  margin-right: 5px;
+  text-align: right;
+  margin-bottom: 5px;
   cursor: pointer;
   font-size: 13px;
 }

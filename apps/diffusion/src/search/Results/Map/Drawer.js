@@ -53,7 +53,7 @@ export default class Drawer extends Component {
             this.props.onClose(null);
           }}
         >
-          {this.state.selectedNotice ? "< Retour" : "< Fermer"}
+          x
         </div>
         <div className="drawer-content">{this.renderNoticeContent(notice)}</div>
         <div>
@@ -68,7 +68,7 @@ export default class Drawer extends Component {
   renderNotices(notices) {
     let message = "";
     if (notices.length == 100) {
-      message = "Seul les 100 premières notices sont affichées ici";
+      message = "Seules les 100 premières notices sont affichées";
     }
 
     const arr = notices.map(notice => (
@@ -89,7 +89,7 @@ export default class Drawer extends Component {
             this.props.onClose(null);
           }}
         >
-          {"< Fermer"}
+          x
         </div>
         <p className="legend">{message}</p>
         <div className="drawer-content">{arr}</div>
