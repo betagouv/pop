@@ -18,6 +18,11 @@
   right: 15px;
   height: 600px;
   width: 295px;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer .drawer-content {
   overflow-y: auto;
 }
 
@@ -62,8 +67,8 @@
   border: 1px solid #d7d3d3;
   border-radius: 5px;
   text-decoration: none;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .drawer .description {
@@ -110,13 +115,24 @@
 }
 
 .location .location-target-icon {
-  background-image: url(/static/Target-48.png);
+  background-image: url(/static/Target-128.png);
   float: left;
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  background-size: contain;
+}
+
+.location .location-home-icon {
+  background-image: url(/static/House-128.png);
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  background-size: contain;
 }
 
 .marker-cluster {
