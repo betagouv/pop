@@ -53,7 +53,7 @@ export default class Drawer extends Component {
             this.props.onClose(null);
           }}
         >
-          {"< Retour"}
+          {this.state.selectedNotice ? "< Retour" : "< Fermer"}
         </div>
         <div className="drawer-content">{this.renderNoticeContent(notice)}</div>
         <div>
@@ -89,7 +89,7 @@ export default class Drawer extends Component {
             this.props.onClose(null);
           }}
         >
-          {"< Retour"}
+          {"< Fermer"}
         </div>
         <p className="legend">{message}</p>
         <div className="drawer-content">{arr}</div>

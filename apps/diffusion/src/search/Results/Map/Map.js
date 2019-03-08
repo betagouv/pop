@@ -134,14 +134,13 @@ export default class Map extends React.Component {
 
   renderMarkers(props) {
     const removeList = { ...this.markers };
+    const newMarkers = {};
 
     if (props.aggregations) {
       const geojson = toGeoJson(props.aggregations.france.buckets);
 
       geojson.features.forEach(feature => {
         const key = feature.properties.id;
-
-        console.log(feature.properties.hits.length);
         //Si le marker est une notice unique, toujours la meme, alors on ne la reconstruit pas
         if (
           this.markers[key] &&
@@ -160,14 +159,19 @@ export default class Map extends React.Component {
             this.selectMarker(marker);
           }
         });
-        marker.addTo(this.map);
-        this.markers[key] = marker;
+
+        newMarkers[key] = marker;
       });
     }
 
-    for (var key in removeList) {
-      removeList[key].remove();
-      delete removeList[key];
+    for (let key in removeList) {
+      this.markers[key].remove();
+      delete this.markers[key];
+    }
+
+    for (let key in newMarkers) {
+      newMarkers[key].addTo(this.map);
+      this.markers[key] = newMarkers[key];
     }
   }
 
@@ -207,13 +211,13 @@ export default class Map extends React.Component {
         />
         <Loader isOpen={!this.state.loaded} />
         <div id="map" ref={this.mapRef} style={{ width: "100%", height: "600px" }}>
-          {/* <SwitchStyleButton
+          <SwitchStyleButton
             value={this.state.style}
             onChange={style => {
               this.setState({ style });
               this.map.setStyle(style);
             }}
-          /> */}
+          />
         </div>
       </div>
     );

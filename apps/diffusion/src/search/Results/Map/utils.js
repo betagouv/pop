@@ -22,7 +22,7 @@ export function getPrecision(zoom) {
     11: 6,
     12: 6,
     13: 7,
-    14: 7,
+    14: 8,
     15: 8
   };
 
