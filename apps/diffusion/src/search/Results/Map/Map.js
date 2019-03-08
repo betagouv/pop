@@ -137,23 +137,26 @@ export default class Map extends React.Component {
 
     if (props.aggregations) {
       const geojson = toGeoJson(props.aggregations.france.buckets);
+
       geojson.features.forEach(feature => {
         const key = feature.properties.id;
+
+        console.log(feature.properties.hits.length);
         //Si le marker est une notice unique, toujours la meme, alors on ne la reconstruit pas
         if (
           this.markers[key] &&
           this.markers[key]._type === "notice" &&
-          this.markers[key].getHit()._source.REF === feature.properties.hits[0]._source.REF
+          this.markers[key].getHits()[0]._source.REF === feature.properties.hits[0]._source.REF
         ) {
           delete removeList[key];
           return;
         }
-
-        const marker = new Marker(feature);
+        const zoom = Math.min(this.map.getZoom() + 1, 15);
+        const marker = new Marker(feature, zoom >= 15 ? "#fc5e2a" : "#007bff");
         marker.onClick(marker => {
           const center = marker.getCoordinates();
-          this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 15) });
-          if (marker._type === "notice") {
+          this.map.flyTo({ center, zoom });
+          if (zoom === 15 || marker._type === "notice") {
             this.selectMarker(marker);
           }
         });
@@ -197,7 +200,7 @@ export default class Map extends React.Component {
           setPosition={this.setPosition.bind(this)}
         />
         <Drawer
-          notice={this.state.selectedMarker ? this.state.selectedMarker.getHit() : null}
+          notices={this.state.selectedMarker ? this.state.selectedMarker.getHits() : null}
           onClose={() => {
             this.selectMarker(null);
           }}

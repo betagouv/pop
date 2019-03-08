@@ -46,7 +46,7 @@ export function toGeoJson(arr) {
     const ncoordinates = nGeoHash.decode(arr[i].key);
     obj.coordinates = [ncoordinates.latitude, ncoordinates.longitude];
     obj.count = arr[i].doc_count;
-    obj.hits = arr[i].top_hits.hits.hits[0];
+    obj.hits = arr[i].top_hits.hits.hits;
     obj.key = arr[i].key;
     data.push(obj);
   }
@@ -66,17 +66,17 @@ export function toGeoJson(arr) {
     let coordinates = [item.centroid[1], item.centroid[0]];
     if (item.points.length == 1 && item.points[0].meta().count == 1) {
       coordinates = [
-        item.points[0].meta().hits._source.POP_COORDONNEES.lon,
-        item.points[0].meta().hits._source.POP_COORDONNEES.lat
+        item.points[0].meta().hits[0]._source.POP_COORDONNEES.lon,
+        item.points[0].meta().hits[0]._source.POP_COORDONNEES.lat
       ];
     }
 
     let feature = {
       type: "Feature",
-      id: item.points[0].meta().hits._source.REF,
+      id: item.points[0].meta().hits[0]._source.REF,
       properties: {
-        id: item.points[0].meta().hits._source.REF,
-        hits: [item.points[0].meta().hits]
+        id: item.points[0].meta().hits[0]._source.REF,
+        hits: item.points[0].meta().hits
       },
       geometry: {
         type: "Point",
