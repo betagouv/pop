@@ -274,7 +274,6 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  console.log("hey");
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
