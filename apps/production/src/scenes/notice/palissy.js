@@ -95,7 +95,7 @@ class Notice extends React.Component {
             disabled
             external={true}
             getAbsoluteUrl={e => {
-              if (e.url.indexOf("memoire/") === 0) {
+              if (e.url && e.url.indexOf("memoire/") === 0) {
                 return `${bucket_url}${e.url}`;
               } else {
                 return e.url;
