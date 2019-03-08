@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import { Col, Row } from "reactstrap";
 import { image } from "./../../../services/image";
 
 export default class Drawer extends Component {
-  renderContent(notice) {
+  state = {
+    selectedNotice: null
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps && this.props) {
+      this.setState({ selectedNotice: null });
+    }
+  }
+
+  renderNoticeContent(notice) {
     switch (notice._type) {
       case "joconde":
         return <Joconde notice={notice._source} />;
@@ -15,11 +26,61 @@ export default class Drawer extends Component {
         return <div />;
     }
   }
-  render() {
-    if (!this.props.notice) {
-      return <div />;
+
+  renderNoticeMini(notice) {
+    switch (notice._type) {
+      case "joconde":
+        return <JocondeMini notice={notice._source} />;
+      case "palissy":
+        return <PalissyMini notice={notice._source} />;
+      case "merimee":
+        return <MerimeeMini notice={notice._source} />;
+      default:
+        return <div />;
+    }
+  }
+
+  renderNotice(notice) {
+    return (
+      <div className="drawer">
+        <div
+          className="drawer-back"
+          onClick={() => {
+            if (this.state.selectedNotice) {
+              this.setState({ selectedNotice: null });
+              return;
+            }
+            this.props.onClose(null);
+          }}
+        >
+          {"< Retour"}
+        </div>
+        <div className="drawer-content">{this.renderNoticeContent(notice)}</div>
+        <div>
+          <Link prefetch href={`/notice/${notice._type}/${notice._source.REF}`}>
+            <a target="_blank">Voir la notice complète</a>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  renderNotices(notices) {
+    let message = "";
+    if (notices.length == 100) {
+      message = "Seul les 100 premières notices sont affichées ici";
     }
 
+    const arr = notices.map(notice => (
+      <div
+        className="mini"
+        onClick={() => {
+          this.setState({ selectedNotice: notice });
+        }}
+      >
+        {this.renderNoticeMini(notice)}
+      </div>
+    ));
     return (
       <div className="drawer">
         <div
@@ -30,17 +91,25 @@ export default class Drawer extends Component {
         >
           {"< Retour"}
         </div>
-        <div className="drawer-content">{this.renderContent(this.props.notice)}</div>
-        <div>
-          <Link
-            prefetch
-            href={`/notice/${this.props.notice._type}/${this.props.notice._source.REF}`}
-          >
-            <a target="_blank">Voir la notice complète</a>
-          </Link>
-        </div>
+        <p className="legend">{message}</p>
+        <div className="drawer-content">{arr}</div>
       </div>
     );
+  }
+  render() {
+    if (!this.props.notices) {
+      return <div />;
+    }
+
+    if (this.state.selectedNotice) {
+      return this.renderNotice(this.state.selectedNotice);
+    }
+
+    if (this.props.notices.length === 1) {
+      return this.renderNotice(this.props.notices[0]);
+    }
+
+    return this.renderNotices(this.props.notices);
   }
 }
 
@@ -72,6 +141,36 @@ const Joconde = ({ notice }) => {
   );
 };
 
+const JocondeMini = ({ notice }) => {
+  const title = notice.TICO || notice.TITR;
+  const img = image(notice);
+  return (
+    <Row>
+      <Col md={3} classname="img-col">
+        {img}
+      </Col>
+      <Col md={9}>
+        <div className="drawer-title-mini">{title}</div>
+      </Col>
+    </Row>
+  );
+};
+
+const PalissyMini = ({ notice }) => {
+  const title = notice.TICO || notice.TITR;
+  const img = image(notice);
+  return (
+    <Row>
+      <Col md={3} classname="img-col">
+        {img}
+      </Col>
+      <Col md={9}>
+        <div className="drawer-title-mini">{title}</div>
+      </Col>
+    </Row>
+  );
+};
+
 const Palissy = ({ notice }) => {
   const title = notice.TICO || notice.TITR;
   const categories = notice.DENO ? notice.DENO.join(", ") : "";
@@ -93,6 +192,21 @@ const Palissy = ({ notice }) => {
         <p>{loc}</p>
       </div>
     </div>
+  );
+};
+
+const MerimeeMini = ({ notice }) => {
+  const title = notice.TICO || notice.TITR;
+  const img = image(notice);
+  return (
+    <Row>
+      <Col md={3} classname="img-col">
+        {img}
+      </Col>
+      <Col md={9}>
+        <div className="drawer-title-mini">{title}</div>
+      </Col>
+    </Row>
   );
 };
 

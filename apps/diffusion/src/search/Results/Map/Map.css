@@ -24,6 +24,7 @@
 
 .drawer .drawer-content {
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .drawer-title {
@@ -32,6 +33,34 @@
   font-size: 13px;
   color: #19414c;
   margin-bottom: 20px;
+  padding: 5px;
+}
+
+.drawer .mini {
+  margin-top: 10px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  border: 1px solid #d7d3d3;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.drawer .legend {
+  padding: 2px;
+  text-align: center;
+  font-size: 12px;
+  padding-bottom: 0px;
+}
+.drawer .mini .img-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer .drawer-title-mini {
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #19414c;
   padding: 5px;
 }
 

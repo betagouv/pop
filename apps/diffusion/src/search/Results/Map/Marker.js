@@ -1,5 +1,5 @@
 export default class Marker {
-  constructor(feature) {
+  constructor(feature, color = "#007bff") {
     const mapboxgl = require("mapbox-gl");
 
     this._element = null;
@@ -11,12 +11,12 @@ export default class Marker {
     const value = feature.properties.count;
     let el = null;
 
-    this._hit = feature.properties.hits[0];
+    this._hits = feature.properties.hits;
     this._coordinates = feature.geometry.coordinates;
 
     if (value > 1) {
       this._type = "cluster";
-      el = createClusterMarkerElement(feature);
+      el = createClusterMarkerElement(feature, color);
     } else {
       this._type = "notice";
       el = createMarkerElement(feature);
@@ -38,8 +38,8 @@ export default class Marker {
   remove() {
     this._element.remove();
   }
-  getHit() {
-    return this._hit;
+  getHits() {
+    return this._hits;
   }
   getCoordinates() {
     return this._coordinates;
@@ -54,11 +54,11 @@ export default class Marker {
   }
 }
 
-function createClusterMarkerElement(feature) {
+function createClusterMarkerElement(feature, color) {
   const value = feature.properties.count;
   let el = document.createElement("div");
   // el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
-  el.style.backgroundColor = "#007bff";
+  el.style.backgroundColor = color;
   el.className = "marker-cluster";
   if (value > 100000) {
     el.style.width = el.style.height = "80px";
