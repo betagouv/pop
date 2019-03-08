@@ -242,7 +242,6 @@ const Joconde = ({ data }) => {
   const peri = data.PERI;
   const loc = data.LOCA;
   const img = image(data);
-
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -275,6 +274,7 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
+  console.log("hey");
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
