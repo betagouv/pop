@@ -86,7 +86,8 @@ class UpdateUser extends React.Component {
         "joconde",
         "mh",
         "inv",
-        "memoire"
+        "memoire",
+        "enluminures"
       ]);
     } else {
       groups.push(this.props.authUserGroup);
