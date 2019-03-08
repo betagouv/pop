@@ -1,4 +1,5 @@
 "use strict";
+// Source: https://github.com/NathanEpstein/clusters/blob/master/clusters.js
 
 // Le plus ce coeff est gros, moins on se rapproche des zones aillant le plus de notice
 const COEFF = 2000;
