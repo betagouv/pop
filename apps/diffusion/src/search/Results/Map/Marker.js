@@ -87,7 +87,6 @@ function createMarkerElement(feature) {
     notice._type === "merimee" ||
     (notice._type === "palissy" && notice._source.MEMOIRE.length && notice._source.MEMOIRE[0].url)
   ) {
-    console.log(notice._source.MEMOIRE[0].url)
     backgroundImage = notice._source.MEMOIRE[0].url;
   } else if (notice._type === "joconde") {
     backgroundImage = `/static/musee-de-france.png`;
