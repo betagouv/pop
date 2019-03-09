@@ -10,6 +10,9 @@ import Loader from "../../components/Loader";
 import FieldImages from "./components/fieldImages";
 import API from "../../services/api";
 
+import { bucket_url } from "../../config";
+
+
 import "./index.css";
 
 class Enluminures extends React.Component {
@@ -55,11 +58,11 @@ class Enluminures extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
-        <FieldImages
+          <FieldImages
             name="VIDEO"
             createUrlFromName={e => `enluminures/${this.state.notice.REF}/${e}`}
             disabled={!this.state.editable}
-            getAbsoluteUrl={e => e}
+            getAbsoluteUrl={e => `${bucket_url}${e}`}
             updateFiles={imagesFiles => this.setState({ imagesFiles })}
           />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
