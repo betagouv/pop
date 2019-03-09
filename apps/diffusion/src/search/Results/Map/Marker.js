@@ -80,16 +80,27 @@ function createClusterMarkerElement(feature, color) {
 function createMarkerElement(feature) {
   const notice = feature.properties.hits[0];
   let el = document.createElement("div");
-  if (notice._type === "joconde") {
-    el.style.backgroundImage = `url("/static/musee-de-france.png")`;
-  } else if (notice._source.PRODUCTEUR === "CRMH" || notice._source.PRODUCTEUR === "Monuments Historiques") {
-    el.style.backgroundImage = `url("/static/mh.jpg")`;
+
+  let backgroundImage = "https://placekitten.com/g/40/40/)";
+
+  if (
+    notice._type === "merimee" ||
+    (notice._type === "palissy" && notice._source.MEMOIRE.length && notice._source.MEMOIRE[0].url)
+  ) {
+    console.log(notice._source.MEMOIRE[0].url)
+    backgroundImage = notice._source.MEMOIRE[0].url;
+  } else if (notice._type === "joconde") {
+    backgroundImage = `/static/musee-de-france.png`;
+  } else if (
+    notice._source.PRODUCTEUR === "CRMH" ||
+    notice._source.PRODUCTEUR === "Monuments Historiques"
+  ) {
+    backgroundImage = `static/mh.jpg`;
   } else if (notice._source.PRODUCTEUR === "Inventaire") {
-    el.style.backgroundImage = `url("/static/inventaire.jpg")`;
-  } else {
-    el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
+    backgroundImage = `/static/inventaire.jpg`;
   }
 
+  el.style.backgroundImage = `url("${backgroundImage}")`;
   el.className = "marker-notice";
   return el;
 }
