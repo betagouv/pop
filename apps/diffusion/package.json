@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@appbaseio/reactivesearch": "^2.16.1",
+    "@appbaseio/reactivesearch": "^2.17.0",
     "@sentry/browser": "^4.6.3",
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.3.1",
