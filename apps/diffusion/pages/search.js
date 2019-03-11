@@ -9,6 +9,7 @@ import Results from "../src/search/Results";
 import Search from "../src/search/Search";
 import { es_url } from "../src/config";
 import queryString from "query-string";
+import { replaceSearchRouteWithUrl } from "../src/services/url";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "enluminures"].join(",");
 
@@ -49,7 +50,14 @@ export default class extends React.Component {
           <Container fluid style={{ maxWidth: 1860 }}>
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
-            <ReactiveBase url={`${es_url}`} app={queryScope}>
+            <ReactiveBase
+              url={`${es_url}`}
+              app={queryScope}
+              setSearchParams={url => {
+                const { mode, view, base } = this.props;
+                replaceSearchRouteWithUrl({ mode, view, base, url });
+              }}
+            >
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
                   <Menu
