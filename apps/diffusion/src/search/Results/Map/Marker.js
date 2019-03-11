@@ -84,8 +84,9 @@ function createMarkerElement(feature) {
   let backgroundImage = "https://placekitten.com/g/40/40/)";
 
   if (
-    notice._type === "merimee" ||
-    (notice._type === "palissy" && notice._source.MEMOIRE.length && notice._source.MEMOIRE[0].url)
+    (notice._type === "merimee" || notice._type === "palissy") &&
+    notice._source.MEMOIRE.length &&
+    notice._source.MEMOIRE[0].url
   ) {
     backgroundImage = notice._source.MEMOIRE[0].url;
   } else if (notice._type === "joconde") {
