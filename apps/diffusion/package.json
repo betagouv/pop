@@ -25,6 +25,7 @@
     "react-viewer": "^2.8.0",
     "reactstrap": "^7.1.0",
     "shave": "^2.5.2",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "unfetch": "^4.0.1"
   },
   "jest": {

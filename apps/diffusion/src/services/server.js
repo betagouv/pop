@@ -36,6 +36,9 @@ app.prepare().then(() => {
     } else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
       const path = join(__dirname, "../../static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
+    } else if (pathname === "/service-worker.js") {
+      const path = join(__dirname, "../../.next", parsedUrl.pathname);
+      app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {
       const renderPath = "/search";
       const renderParams = Object.assign(
