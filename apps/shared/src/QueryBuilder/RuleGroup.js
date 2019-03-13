@@ -74,7 +74,10 @@ export default class RuleGroup extends React.Component {
       const currentUrlParams = qs.stringify(query);
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) });
       if (currentUrlParams !== targetUrlParams) {
-        router.replace(`/advanced-search/${view}/${base}?${targetUrlParams}`);
+        router.replace(
+          `/search?base=${base}&view=${view}&mode=advanced&${targetUrlParams}`,
+          `/advanced-search/${view}/${base}?${targetUrlParams}`
+        );
       }
     } else if (history) {
       const currentUrlParams = history.location.search;
