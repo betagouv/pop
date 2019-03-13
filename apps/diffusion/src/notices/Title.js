@@ -9,7 +9,7 @@ class Title extends React.Component {
     if (hasVisibleFields) {
       return small ? <h2 className="small">{content}</h2> : <h2>{content}</h2>;
     }
-    return <div />;
+    return null;
   }
 }
 

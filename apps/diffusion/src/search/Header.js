@@ -22,7 +22,7 @@ class Header extends React.Component {
   render() {
     const { museo } = this.state;
     if (!museo) {
-      return <div />;
+      return null;
     }
     const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
     return (

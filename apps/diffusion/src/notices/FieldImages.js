@@ -20,7 +20,7 @@ class FieldImages extends React.Component {
 
   renderImages() {
     if (!this.state.images.length) {
-      return <div />;
+      return null;
     }
     const images = this.state.images.map((e, i) => {
       let obj = {
@@ -63,7 +63,7 @@ class FieldImages extends React.Component {
 
   renderModal() {
     if (this.state.selected === -1) {
-      return <div />;
+      return null;
     }
     const images = this.state.images.map(e => {
       return { src: e.source, alt: e.key };

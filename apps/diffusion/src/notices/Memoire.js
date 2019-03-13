@@ -359,7 +359,7 @@ function link(data) {
 
 const SeeMore = ({ notice }) => {
   if (!notice.LAUTP && !(notice.LBASE && notice.LBASE.length)) {
-    return <div />;
+    return null;
   }
 
   const elements = [];

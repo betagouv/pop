@@ -55,7 +55,7 @@ const Memoire = ({ data }) => {
     if (p === "CRMH") {
       return <img src="/static/mh.png" className="producteur mh" />;
     }
-    return <div />;
+    return null;
   };
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
@@ -104,7 +104,7 @@ const Palissy = ({ data }) => {
     } else if (p === "Monuments Historiques") {
       return <img src="/static/mh.png" className="producteur mh" />;
     }
-    return <div />;
+    return null;
   };
 
   return (
@@ -152,7 +152,7 @@ const Merimee = ({ data }) => {
     } else if (p === "Monuments Historiques") {
       return <img src="/static/mh.png" className="producteur mh" />;
     }
-    return <div />;
+    return null;
   };
 
   return (

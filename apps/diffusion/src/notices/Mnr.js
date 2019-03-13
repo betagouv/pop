@@ -43,7 +43,7 @@ class Mnr extends React.Component {
   domain() {
     const domain = this.props.notice.DOMN;
     if (!domain || !Array.isArray(domain)) {
-      return <div />;
+      return null;
     }
     const links = domain
       .map(d => (

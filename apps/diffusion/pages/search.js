@@ -66,9 +66,7 @@ export default class extends React.Component {
                     closeMenu={() => this.setState({ mobile_menu: false })}
                     view={this.props.view}
                   />
-                ) : (
-                  <div />
-                )}
+                ) : null}
                 <div className="search-results">
                   <div className={`search-container search-container-${this.props.mode}`}>
                     <Search
@@ -80,9 +78,7 @@ export default class extends React.Component {
                       <MobileFilters
                         openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
                       />
-                    ) : (
-                      <div />
-                    )}
+                    ) : null}
                   </div>
                   <Results
                     mode={this.props.mode}

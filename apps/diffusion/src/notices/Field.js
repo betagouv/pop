@@ -3,7 +3,7 @@ import "./Field.css";
 
 export default ({ content, title, separator, join = ", " }) => {
   if (!content || (Array.isArray(content) && content.length === 0)) {
-    return <div />;
+    return null;
   }
 
   let str = Array.isArray(content) ? content.join(join) : content;
