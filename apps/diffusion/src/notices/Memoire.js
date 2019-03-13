@@ -6,7 +6,7 @@ import LinkedNotices from "./LinkedNotices";
 import Title from "./Title";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
-import { toFieldImages } from "./utils";
+import { toFieldImages, schema } from "./utils";
 
 import amplitudeService from "../services/amplitude";
 
@@ -59,6 +59,15 @@ class Memoire extends React.Component {
 
   render() {
     const { notice } = this.props;
+    const obj = {
+      name: this.rawTitle(),
+      created_at: notice.DATPV || notice.DMIS,
+      artform: "Photograph",
+      image: notice.IMG ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG}` : "",
+      description: notice.LEG,
+      contentLocation: notice.LOCA,
+      creator: [notice.AUTP]
+    };
 
     return (
       <div className="notice">
@@ -66,6 +75,7 @@ class Memoire extends React.Component {
           <Head>
             <title>{this.pageTitle()}</title>
             <meta content={this.metaDescription()} name="description" />
+            <script type="application/ld+json">{schema(obj)}</script>
           </Head>
           <h1 className="heading">{this.rawTitle()}</h1>
           {this.fieldImage(notice)}
