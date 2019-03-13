@@ -90,7 +90,7 @@ export default class extends React.Component {
 
   renderMap(loc) {
     if (!loc) {
-      return <div />;
+      return null;
     }
     return <Map notice={{ POP_COORDONNEES: { lat: loc.lat, lon: loc.lon } }} />;
   }

@@ -46,7 +46,7 @@ class Joconde extends React.Component {
   author() {
     const author = this.props.notice.AUTR;
     if (!author) {
-      return <div />;
+      return null;
     }
     // Split authors and create links to both single author and all authors.
     if (author.match(/;/)) {
@@ -68,7 +68,7 @@ class Joconde extends React.Component {
   domain() {
     const domain = this.props.notice.DOMN;
     if (!domain || !Array.isArray(domain) || !domain.length) {
-      return <div />;
+      return null;
     }
     const links = domain
       .map(d => (
@@ -83,7 +83,7 @@ class Joconde extends React.Component {
   period() {
     const period = this.props.notice.PERI;
     if (!period || !Array.isArray(period) || !period.length) {
-      return <div />;
+      return null;
     }
     const links = period
       .map(p => (
@@ -322,7 +322,7 @@ const SeeMore = ({ notice, museo }) => {
   }
 
   if (!arr.length) {
-    return <div />;
+    return null;
   }
 
   return (

@@ -39,7 +39,7 @@ export default class LinkedNotices extends React.Component {
     }
 
     if (!this.props.links.length) {
-      return <div />;
+      return null;
     }
 
     if (this.state.singleNotice) {
