@@ -23,7 +23,7 @@ export default class Drawer extends Component {
       case "merimee":
         return <Merimee notice={notice._source} />;
       default:
-        return <div />;
+        return null;
     }
   }
 
@@ -36,7 +36,7 @@ export default class Drawer extends Component {
       case "merimee":
         return <MerimeeMini notice={notice._source} />;
       default:
-        return <div />;
+        return null;
     }
   }
 
@@ -98,7 +98,7 @@ export default class Drawer extends Component {
   }
   render() {
     if (!this.props.notices) {
-      return <div />;
+      return null;
     }
 
     if (this.state.selectedNotice) {

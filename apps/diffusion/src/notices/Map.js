@@ -48,7 +48,7 @@ class MapComponent extends React.Component {
   }
   render() {
     if (!this.props.notice.POP_COORDONNEES.lat) {
-      return <div />;
+      return null;
     }
 
     return (

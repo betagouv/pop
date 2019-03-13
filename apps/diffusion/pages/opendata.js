@@ -100,7 +100,6 @@ export default () => (
           , patrimoine architectural
         </li>
       </ul>
-      <div />
     </div>
   </Layout>
 );

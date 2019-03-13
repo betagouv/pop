@@ -48,7 +48,7 @@ class Palissy extends React.Component {
   authors() {
     const authors = this.props.notice.AUTR;
     if (!authors || !Array.isArray(authors) || !authors.length) {
-      return <div />;
+      return null;
     }
     const links = authors
       .map(a => a.trim())
@@ -349,7 +349,7 @@ const SeeMore = ({ notice }) => {
   }
 
   if (!arr.length) {
-    return <div />;
+    return null;
   }
 
   return (

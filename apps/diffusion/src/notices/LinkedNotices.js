@@ -5,7 +5,7 @@ import "./LinkedNotices.css";
 class LinkedNotice extends React.Component {
   render() {
     if (!this.props.links || !this.props.links.length) {
-      return <div />;
+      return null;
     }
     const notices = this.props.links.map(notice => (
       <SmallNotice notice={notice} key={notice.REF} />
