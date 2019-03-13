@@ -1,16 +1,18 @@
 import React from "react";
 import { QueryBuilder } from "pop-shared";
-import { Row, Col } from "reactstrap";
+import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 
 import amplitudeService from "../../services/amplitude";
 
-const bases = [];
-bases.push({ key: "joconde", base: "Collections des musées de France (Joconde)" });
-bases.push({ key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" });
-bases.push({ key: "merimee", base: "Patrimoine architectural (Mérimée)" });
-bases.push({ key: "memoire", base: "Photographies (Mémoire)" });
-bases.push({ key: "palissy", base: "Patrimoine mobilier (Palissy)" });
+const bases = [
+  { key: "joconde", base: "Collections des musées de France (Joconde)" },
+  { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" },
+  { key: "merimee", base: "Patrimoine architectural (Mérimée)" },
+  { key: "memoire", base: "Photographies (Mémoire)" },
+  { key: "palissy", base: "Patrimoine mobilier (Palissy)" },
+  { key: "enluminures", base: "Enluminures (Enluminures)" },
+];
 
 class SearchAdvanced extends React.Component {
   componentDidMount() {
