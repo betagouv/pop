@@ -42,8 +42,6 @@ const differsByOneCharInMainSearch = (previous, current) => {
 export function replaceSearchRouteWithUrl(options = {}) {
   const { mode, view, base, url } = options;
 
-  console.log(options);
-
   // Extract query string
   const qs = url.includes("?") ? url.replace(/.*?\?/, "") : "";
 
