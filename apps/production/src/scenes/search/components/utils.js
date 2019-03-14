@@ -115,6 +115,102 @@ function departmentText(v) {
   );
 }
 
+// Source: https://github.com/fergiemcdowall/stopword/blob/master/lib/stopwords_fr.js
+function isStopword(word) {
+  return [
+    "a",
+    "au",
+    "aux",
+    "avec",
+    "ce",
+    "ces",
+    "dans",
+    "de",
+    "des",
+    "du",
+    "elle",
+    "en",
+    "et",
+    "eux",
+    "il",
+    "je",
+    "la",
+    "le",
+    "leur",
+    "lui",
+    "ma",
+    "mais",
+    "me",
+    "même",
+    "mes",
+    "moi",
+    "mon",
+    "ne",
+    "nos",
+    "notre",
+    "nous",
+    "on",
+    "ou",
+    "où",
+    "par",
+    "pas",
+    "pour",
+    "qu",
+    "que",
+    "qui",
+    "sa",
+    "se",
+    "ses",
+    "son",
+    "sur",
+    "ta",
+    "te",
+    "tes",
+    "toi",
+    "ton",
+    "tu",
+    "un",
+    "une",
+    "vos",
+    "votre",
+    "vous",
+    "c",
+    "d",
+    "j",
+    "l",
+    "à",
+    "m",
+    "n",
+    "s",
+    "t",
+    "y",
+    "ceci",
+    "cela",
+    "cet",
+    "cette",
+    "ici",
+    "ils",
+    "les",
+    "leurs",
+    "quel",
+    "quels",
+    "quelle",
+    "quelles",
+    "sans",
+    "soi"
+  ].includes(word);
+}
+
+function mandatoryWords(p) {
+  return p.split(/\s+/)
+    // We have to remove stop words since there is a bug in elasticsearch. See:
+    // https://github.com/elastic/elasticsearch/issues/28855
+    // https://github.com/elastic/elasticsearch/issues/15634
+    .filter(v => v && !isStopword(v))
+    .map((v, k) => (k === 0 ? v : `+${v}`))
+    .join(" ");
+}
+
 function customQuery(query, primaryFields, secondaryFields = []) {
   const fields = [...primaryFields, ...secondaryFields];
 
@@ -144,7 +240,7 @@ function customQuery(query, primaryFields, secondaryFields = []) {
     }));
   // 4 - contains all words in fields (boost 1)
   const allWords = {
-    simple_query_string: { query: query.replace(/ +?/g, " +"), default_operator: "and", fields }
+    simple_query_string: { query: mandatoryWords(query), default_operator: "and", fields }
   };
   // 5 - return the whole query with all rules
   return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
