@@ -153,3 +153,11 @@
     height: 60px;
   }
 }
+@media print {
+  .footer, .header {
+    display: none;
+  }
+  .row, .notice {
+    display: block !important;
+  }
+}
