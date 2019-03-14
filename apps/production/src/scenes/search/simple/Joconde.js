@@ -54,19 +54,7 @@ export default class Search extends React.Component {
                   utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
                 }
               />
-
-              <ReactiveComponent
-                componentId="export"
-                react={{
-                  and: FILTER
-                }}
-                defaultQuery={() => ({
-                  size: 100,
-                  aggs: {}
-                })}
-              >
-                <ExportComponent FILTER={FILTER} collection="joconde" />
-              </ReactiveComponent>
+              <ExportComponent FILTER={FILTER} collection="joconde" />
             </div>
             <Row>
               <Col xs="3">

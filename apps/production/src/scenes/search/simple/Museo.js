@@ -40,18 +40,7 @@ export default class Search extends React.Component {
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
               />
-              <ReactiveComponent
-                componentId="export"
-                react={{
-                  and: FILTER
-                }}
-                defaultQuery={() => ({
-                  size: 100,
-                  aggs: {}
-                })}
-              >
-                <ExportComponent FILTER={FILTER} collection="museo" />
-              </ReactiveComponent>
+              <ExportComponent FILTER={FILTER} collection="museo" />
             </div>
             <Row>
               <Col xs="3">
