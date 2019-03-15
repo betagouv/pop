@@ -14,7 +14,8 @@ const {
   lambertToWGS84,
   getPolygonCentroid,
   fixLink,
-  convertCOORM
+  convertCOORM,
+  hasCorrectCoordinates
 } = require("./utils");
 
 const { capture } = require("./../sentry.js");
@@ -29,7 +30,7 @@ function transformBeforeCreateOrUpdate(notice) {
       type: "Polygon",
       coordinates
     };
-    if (!notice.COOR && (!notice.POP_COORDONNEES || notice.POP_COORDONNEES.lat === null)) {
+    if (!notice.COOR && !hasCorrectCoordinates(notice)) {
       const centroid = getPolygonCentroid(coordinates);
       if (centroid && centroid.length == 2) {
         notice.POP_COORDONNEES = {
@@ -40,11 +41,10 @@ function transformBeforeCreateOrUpdate(notice) {
     }
   }
 
-  if (notice.COOR && notice.ZONE && !notice.POP_COORDONNEES) {
+  if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-  notice.POP_CONTIENT_GEOLOCALISATION =
-    notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat ? "oui" : "non";
+  notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   if (notice.DOSURL) {
     notice.DOSURL = fixLink(notice.DOSURL);
   }

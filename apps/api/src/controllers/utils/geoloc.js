@@ -160,4 +160,23 @@ function getPolygonCentroid(pts) {
   return [x / f, y / f];
 }
 
-module.exports = { lambertToWGS84, convertCOORM, getPolygonCentroid };
+function isLatitude(lat) {
+  return isFinite(lat) && Math.abs(lat) <= 90;
+}
+
+function isLongitude(lng) {
+  return isFinite(lng) && Math.abs(lng) <= 180;
+}
+
+function hasCorrectCoordinates(notice) {
+  const c = notice.POP_COORDONNEES;
+  return (
+    c &&
+    Number(c.lat) === c.lat &&
+    Number(c.lon) === c.lon &&
+    isLatitude(c.lat) &&
+    isLongitude(c.lon)
+  );
+}
+
+module.exports = { lambertToWGS84, convertCOORM, getPolygonCentroid, hasCorrectCoordinates };
