@@ -172,6 +172,8 @@ function hasCorrectCoordinates(notice) {
   const c = notice.POP_COORDONNEES;
   return (
     c &&
+    c.lat &&
+    c.lon && 
     Number(c.lat) === c.lat &&
     Number(c.lon) === c.lon &&
     isLatitude(c.lat) &&

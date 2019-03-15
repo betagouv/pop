@@ -44,6 +44,9 @@ function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
+  if (notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
+    notice.POP_COORDONNEES = { lat: 0, lon: 0 };
+  }
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   if (notice.DOSURL) {
     notice.DOSURL = fixLink(notice.DOSURL);
