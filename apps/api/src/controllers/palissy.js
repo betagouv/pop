@@ -13,7 +13,8 @@ const {
   updateNotice,
   lambertToWGS84,
   getPolygonCentroid,
-  fixLink
+  fixLink,
+  convertCOORM
 } = require("./utils");
 
 const { capture } = require("./../sentry.js");

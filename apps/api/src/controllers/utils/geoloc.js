@@ -154,6 +154,9 @@ function getPolygonCentroid(pts) {
     y += (p1[1] + p2[1]) * f;
   }
   f = twicearea * 3;
+  if (f === 0) {
+    return [first[0], first[1]];
+  }
   return [x / f, y / f];
 }
 
