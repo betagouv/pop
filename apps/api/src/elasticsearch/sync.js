@@ -140,7 +140,8 @@ async function run() {
                     if (res.errors) {
                       observer.error({
                         message: "Error in bulk",
-                        sampleError: JSON.stringify(res.items[0])
+                        sampleError: JSON.stringify(res.items),
+                        errors: JSON.stringify(res.errors)
                       });
                       break;
                     }
