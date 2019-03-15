@@ -29,7 +29,7 @@ function transformBeforeCreateOrUpdate(notice) {
       type: "Polygon",
       coordinates
     };
-    if (!notice.COOR && !notice.POP_COORDONNEES) {
+    if (!notice.COOR && (!notice.POP_COORDONNEES || notice.POP_COORDONNEES.lat === null)) {
       const centroid = getPolygonCentroid(coordinates);
       if (centroid && centroid.length == 2) {
         notice.POP_COORDONNEES = {
