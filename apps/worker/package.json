@@ -1,0 +1,49 @@
+{
+  "name": "pop-worker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "start": "node ./src/index.js",
+    "deploy": "eb deploy worker-pop --profile pop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/betagouv/pop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/betagouv/pop/issues"
+  },
+  "engines": {
+    "node": "8.x",
+    "npm": "5.x"
+  },
+  "prettier": {
+    "printWidth": 120
+  },
+  "homepage": "https://github.com/betagouv/pop#readme",
+  "dependencies": {
+    "@sentry/node": "4.5.3",
+    "asyncawait": "^1.0.6",
+    "aws-sdk": "^2.339.0",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "stripe": "^6.13.0",
+    "striptags": "^3.1.1",
+    "through-batch": "^1.0.0",
+    "x2js": "^3.2.1",
+    "xmlbuilder": "^11.0.0"
+  },
+  "devDependencies": {
+    "commander": "^2.19.0",
+    "cross-env": "^5.1.6",
+    "dotenv": "^6.2.0",
+    "inquirer": "^6.2.1",
+    "listr": "^0.14.3"
+  }
+}
