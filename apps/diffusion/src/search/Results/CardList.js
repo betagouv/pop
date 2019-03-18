@@ -37,7 +37,7 @@ export default ({ data }) => {
 
 const Memoire = ({ data }) => {
   const content = {
-    title: data.TICO || data.LEG,
+    title:  data.TICO || data.LEG || (data.EDIF || data.OBJ ? `${data.EDIF || ""} ${data.OBJ || ""}` : ""),
     subtitle: joinData([
       data.OBJET,
       data.EDIF,
