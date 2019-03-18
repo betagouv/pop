@@ -21,7 +21,9 @@ class Memoire extends React.Component {
   rawTitle() {
     const notice = this.props.notice;
     return (
-      notice.TICO || notice.LEG || (notice.EDIF || notice.OBJ ? `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim() : "")
+      notice.TICO ||
+      notice.LEG ||
+      (notice.EDIF || notice.OBJ ? `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim() : "")
     );
   }
 
