@@ -82,10 +82,10 @@
   margin-bottom: 10px;
 }
 
-.search .advanced-search select{
+.search .advanced-search select {
 }
 
-.search .advanced-search .advanced-search-title{
+.search .advanced-search .advanced-search-title {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -344,6 +344,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .search .list-view .result-count {
+    visibility: hidden;
+  }
+
+  .search .search-row .switch-search {
+    display: none;
   }
 
   .search .filter_mobile_menu img {
