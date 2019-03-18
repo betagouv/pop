@@ -20,7 +20,7 @@ class Memoire extends React.Component {
   }
   rawTitle() {
     const notice = this.props.notice;
-    return notice.TICO || notice.TITR || notice.EDIF || notice.LEG || "";
+    return notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
   }
 
   pageTitle() {

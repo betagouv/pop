@@ -37,7 +37,7 @@ export default ({ data }) => {
 
 const Memoire = ({ data }) => {
   const content = {
-    title: data.TICO || data.LEG,
+    title: data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim(),
     subtitle: joinData([
       data.OBJET,
       data.EDIF,
@@ -301,10 +301,9 @@ const Museo = ({ data }) => {
   );
 };
 
-
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const title = data.TITR;
+  const title = `${data.TITR} - ${data.SUJET}`;
   const img = image(data);
 
   return (

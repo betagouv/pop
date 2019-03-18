@@ -38,7 +38,9 @@ export default ({ data }) => {
       <img src={image} alt="Lien cassé" />
       <div className="content">
         <div style={{ display: "flex" }}>
-          <h2>{data.TICO || data.TITR || data.EDIF || data.LEG}</h2>
+          <h2>
+            {data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim()}
+          </h2>
           <span>{data.REF}</span>
         </div>
         <div>
