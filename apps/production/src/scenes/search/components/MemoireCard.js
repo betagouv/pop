@@ -39,9 +39,7 @@ export default ({ data }) => {
       <div className="content">
         <div style={{ display: "flex" }}>
           <h2>
-            {data.TICO ||
-              data.LEG ||
-              (data.EDIF || data.OBJ ? `${data.EDIF || ""} ${data.OBJ || ""}`.trim() : "")}
+            {data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim()}
           </h2>
           <span>{data.REF}</span>
         </div>
