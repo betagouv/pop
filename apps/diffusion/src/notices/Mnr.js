@@ -51,7 +51,7 @@ class Mnr extends React.Component {
           {d}
         </a>
       ))
-      .reduce((p, c) => [p, ", ", c]);
+      .reduce((p, c) => [p, ", ", c], "");
     return <React.Fragment>{links}</React.Fragment>;
   }
 
