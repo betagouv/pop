@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { Row, Col, Container } from "reactstrap";
 import TextSearch from "./Search";
 import AdvancedSearch from "./SearchAdvanced";
 
@@ -33,8 +34,12 @@ class Search extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.renderSearch()}
-        <div className="switch-search">{this.renderLink()}</div>
+        <Row>
+          <Col md={8}>{this.renderSearch()}</Col>
+          <Col md={4}>
+            <div className="switch-search">{this.renderLink()}</div>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
