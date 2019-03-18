@@ -211,6 +211,7 @@ class Memoire extends React.Component {
                     "DATPV",
                     "JDATPV",
                     "DATOR",
+                    "EXPO",
                     "PUBLI",
                     "OBS",
                     "OBSTI",
@@ -293,11 +294,12 @@ class Memoire extends React.Component {
                   content="Datation et événements liés à l’image"
                   small={true}
                   notice={notice}
-                  fields={["DATPV", "JDATPV", "DATOR", "PUBLI", "OBS", "OBSTI", "OBSOR"]}
+                  fields={["DATPV", "JDATPV", "DATOR", "EXPO", "PUBLI", "OBS", "OBSTI", "OBSOR"]}
                 />
                 <Field title="Date prise vue" content={notice.DATPV} />
                 <Field title="Précision sur la date de prise de vue" content={notice.JDATPV} />
                 <Field title="Date de l'original" content={notice.DATOR} />
+                <Field title="Référence d’exposition de l’image" content={notice.EXPO} />
                 <Field
                   title="Référence de publication de l’image"
                   content={notice.PUBLI}
