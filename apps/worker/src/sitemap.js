@@ -1,7 +1,11 @@
+require("dotenv").config();
+
 const fs = require("fs");
 const sm = require("sitemap");
 const ObjectId = require("mongoose").Types.ObjectId;
-require("../mongo");
+require("../../api/src/mongo");
+
+const { uploadFile } = require("../../api/src/controllers/utils");
 
 async function run() {
   if (!fs.existsSync(`sitemap`)) {
@@ -14,6 +18,7 @@ async function run() {
   await generateSiteMapFile("mnr");
   await generateSiteMapFile("joconde");
   await generateSiteMapFile("memoire");
+  await generateSiteMapFile("enluminures");
 
   const files = fs.readdirSync(`sitemap`);
   const urls = files.map(e => `http://www.pop.culture.gouv.fr/sitemap/${e}`);
@@ -22,11 +27,26 @@ async function run() {
   });
 
   fs.writeFileSync(`./sitemap/sitemap.xml`, smi.toString());
+
+  await uploadFiles();
 }
 
 setTimeout(() => {
   run();
 }, 5000);
+
+function uploadFiles() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const files = fs.readdirSync(`sitemap`);
+      for (let i = 0; i < files.length; i++) {
+        await uploadFile(`${files[i]}`, { path: `sitemap/${files[i]}`, mimetype: "application/xml" }, "pop-sitemap");
+      }
+    } catch (e) {
+      console.log("eee", e);
+    }
+  });
+}
 
 function generateGeneral() {
   return new Promise((resolve, reject) => {
@@ -42,7 +62,7 @@ function generateGeneral() {
 }
 
 function generateSiteMapFile(index, chunkSize = 1000) {
-  const collection = require(`../models/${index}`);
+  const collection = require(`../../api/src/models/${index}`);
 
   return new Promise(async (resolve, reject) => {
     let lastId = null;
