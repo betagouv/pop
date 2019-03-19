@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import { Tooltip, Button, Input } from "reactstrap";
 import Router from "next/router";
 import { pushSearchRoute } from "../src/services/url";
+import logEvent from "../src/services/amplitude";
 import "./index.css";
 
 const bases = [
@@ -99,6 +100,7 @@ const bases = [
 
 export default class extends React.Component {
   componentDidMount() {
+    logEvent("home_open");
     Router.prefetch("/search");
   }
   constructor(props) {
@@ -113,6 +115,7 @@ export default class extends React.Component {
   gotoSearch() {
     const searchValue = document.getElementById("main-search").value;
     const selected = this.state.selected;
+    logEvent("home_search", { value: searchValue, base: selected });
 
     pushSearchRoute({
       mode: "simple",

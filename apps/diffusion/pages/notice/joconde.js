@@ -2,6 +2,7 @@ import API from "../../src/services/api";
 import Layout from "../../src/components/Layout";
 import Joconde from "../../src/notices/Joconde";
 import throw404 from "../../src/services/throw404";
+import logEvent from "../../src/services/amplitude";
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -17,6 +18,10 @@ export default class extends React.Component {
       notice,
       museo
     };
+  }
+
+  componentDidMount() {
+    logEvent("notice_open", { base: "joconde", notice: this.props.notice.REF });
   }
 
   render() {
