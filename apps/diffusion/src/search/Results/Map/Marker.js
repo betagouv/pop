@@ -1,3 +1,5 @@
+import { bucket_url } from "../../../config";
+
 export default class Marker {
   constructor(feature, color = "#007bff") {
     const mapboxgl = require("mapbox-gl");
@@ -88,7 +90,7 @@ function createMarkerElement(feature) {
     notice._source.MEMOIRE.length &&
     notice._source.MEMOIRE[0].url
   ) {
-    backgroundImage = notice._source.MEMOIRE[0].url;
+    backgroundImage = `${bucket_url}${notice._source.MEMOIRE[0].url}`;
   } else if (notice._type === "joconde") {
     backgroundImage = `/static/musee-de-france.png`;
   } else if (

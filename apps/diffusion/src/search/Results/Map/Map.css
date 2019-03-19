@@ -246,6 +246,11 @@
   transition: width 0.25s, height 0.25s;
 }
 
+.mapboxgl-marker {
+  background-repeat: repeat-x;
+  background-size: cover;
+}
+
 .marker-active {
   border-color: #377d87;
   left: 0;

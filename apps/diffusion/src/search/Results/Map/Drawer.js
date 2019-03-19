@@ -146,7 +146,7 @@ const JocondeMini = ({ notice }) => {
   const img = image(notice);
   return (
     <Row>
-      <Col md={3} classname="img-col">
+      <Col md={3} className="img-col">
         {img}
       </Col>
       <Col md={9}>
@@ -161,7 +161,7 @@ const PalissyMini = ({ notice }) => {
   const img = image(notice);
   return (
     <Row>
-      <Col md={3} classname="img-col">
+      <Col md={3} className="img-col">
         {img}
       </Col>
       <Col md={9}>
@@ -200,7 +200,7 @@ const MerimeeMini = ({ notice }) => {
   const img = image(notice);
   return (
     <Row>
-      <Col md={3} classname="img-col">
+      <Col md={3} className="img-col">
         {img}
       </Col>
       <Col md={9}>
