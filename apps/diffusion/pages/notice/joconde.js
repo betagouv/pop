@@ -1,17 +1,17 @@
-import API from "../../src/services/api";
-import Layout from "../../src/components/Layout";
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import Field from "./Field";
-import Title from "./Title";
-import FieldImages from "./FieldImages";
-import ContactUs from "./ContactUs";
-import Map from "./Map";
-import { schema, toFieldImages } from "./utils";
 import Head from "next/head";
+import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
-import "./Notice.css";
+import Layout from "../../src/components/Layout";
+import Field from "../../src/notices/Field";
+import Title from "../../src/notices/Title";
+import FieldImages from "../../src/notices/FieldImages";
+import ContactUs from "../../src/notices/ContactUs";
+import Map from "../../src/notices/Map";
+import { schema, toFieldImages } from "../../src/notices/utils";
+import "../../src/notices/Notice.css";
 
 export default class extends React.Component {
   static loadMuseo(m) {

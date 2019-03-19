@@ -1,16 +1,15 @@
-import API from "../../src/services/api";
-import Layout from "../../src/components/Layout";
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
-import Field from "./Field";
-import ContactUs from "./ContactUs";
-import FieldImages from "./FieldImages";
-import { schema, toFieldImages } from "./utils";
-
+import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
-import "./Notice.css";
+import Layout from "../../src/components/Layout";
+import Field from "../../src/notices/Field";
+import ContactUs from "../../src/notices/ContactUs";
+import FieldImages from "../../src/notices/FieldImages";
+import { schema, toFieldImages } from "../../src/notices/utils";
+import "../../src/notices/Notice.css";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
