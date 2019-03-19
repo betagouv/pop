@@ -1,5 +1,4 @@
 import React from "react";
-import amplitudeService from "../services/amplitude";
 
 export default class ContactUs extends React.Component {
   render() {
@@ -13,12 +12,6 @@ export default class ContactUs extends React.Component {
     return (
       <a href={mailTo} 
         className="notice-btn"
-        onClick={() => {
-          amplitudeService.logEvent("notice_contact_us", {
-            base: this.props.base || "",
-            notice: this.props.REF
-          });
-        }}
       >
         Contactez-nous
       </a>

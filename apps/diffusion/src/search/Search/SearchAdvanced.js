@@ -3,8 +3,6 @@ import { QueryBuilder } from "pop-shared";
 import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 
-import amplitudeService from "../../services/amplitude";
-
 const bases = [
   { key: "joconde", base: "Collections des musées de France (Joconde)" },
   { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" },
@@ -15,9 +13,6 @@ const bases = [
 ];
 
 class SearchAdvanced extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("advanced_search_open");
-  }
 
   onBaseChange = e => {
     this.props.router.push(

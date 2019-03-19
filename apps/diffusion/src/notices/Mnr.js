@@ -4,14 +4,10 @@ import Head from "next/head";
 import Field from "./Field";
 import ContactUs from "./ContactUs";
 import FieldImages from "./FieldImages";
-import amplitudeService from "../services/amplitude";
 import { schema, toFieldImages } from "./utils";
 import "./Notice.css";
 
 class Mnr extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("notice_open", { base: "mnr", notice: this.props.notice.REF });
-  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const auteur = this.props.notice.AUTR ? this.props.notice.AUTR.join(" ") : "";

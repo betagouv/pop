@@ -8,16 +8,11 @@ import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import { toFieldImages, schema } from "./utils";
 
-import amplitudeService from "../services/amplitude";
-
 import "./Notice.css";
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 class Memoire extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("notice_open", { base: "memoire", notice: this.props.notice.REF });
-  }
   rawTitle() {
     const notice = this.props.notice;
     return notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();

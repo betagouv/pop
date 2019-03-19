@@ -4,7 +4,6 @@ import Viewer from "react-viewer";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "react-viewer/dist/index.css";
-import amplitudeService from "../services/amplitude";
 import "./FieldImages.css";
 import Router from "next/router";
 
@@ -47,11 +46,6 @@ class FieldImages extends React.Component {
         defaultImage="/static/noimage.png"
         onClick={i => {
           if (i.target.src) {
-            amplitudeService.logEvent("notice_image_open", {
-              base: this.props.base || "base inconnue",
-              notice: this.props.reference || "référence inconnue",
-              value: i.target.src
-            });
             const selected = this.state.images.findIndex(e => e.source === i.target.src);
             this.setState({ selected });
           }
@@ -74,13 +68,6 @@ class FieldImages extends React.Component {
         onClose={() => {
           document.body.style.overflow = "auto";
           this.setState({ selected: -1 });
-        }}
-        onChange={e => {
-          amplitudeService.logEvent("notice_image_open", {
-            base: this.props.base || "base inconnue",
-            notice: this.props.reference || "référence inconnue",
-            value: e.src
-          });
         }}
         images={images}
         activeIndex={this.state.selected}

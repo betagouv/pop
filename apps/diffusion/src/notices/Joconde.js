@@ -2,7 +2,6 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import Title from "./Title";
-import amplitudeService from "../services/amplitude";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import Map from "./Map";
@@ -11,9 +10,6 @@ import Head from "next/head";
 import "./Notice.css";
 
 class Joconde extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("notice_open", { base: "joconde", notice: this.props.notice.REF });
-  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const auteur = this.props.notice.AUTR ? this.props.notice.AUTR : "";
