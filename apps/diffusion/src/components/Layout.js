@@ -3,13 +3,9 @@ import Link from "next/link";
 import Head from "next/head";
 import { Container } from "reactstrap";
 
-import amplitudeService from "../services/amplitude";
 import "./Layout.css";
 
 export default class Layout extends React.Component {
-  componentDidMount() {
-    amplitudeService.init();
-  }
 
   render() {
     const { children } = this.props;
@@ -46,7 +42,6 @@ export default class Layout extends React.Component {
             <link rel="shortcut icon" href="/favicon.ico" />
 
             <script src="/static/driftt.js" />
-            <script src="/static/amplitude.js" />
             <script src="/static/piwik.js" />
           </Head>
           <Container className="NavContainer">

@@ -4,7 +4,6 @@ import Mosaic from "./Mosaic";
 import List from "./List";
 import { pushSearchRoute } from "../../services/url";
 
-import amplitudeService from "../../services/amplitude";
 
 const DEFAULT_FILTER = [
   "mainSearch",
@@ -28,7 +27,6 @@ const DEFAULT_FILTER = [
 
 class Results extends React.Component {
   toggle(view, params) {
-    amplitudeService.logEvent("search_toggle_tab", { view });
     // If view change, we have to prepare all (updated) params and pass them the new route.
     if (this.props.display !== view) {
       pushSearchRoute({ base: this.props.base, mode: "simple", view, params }).then(() =>

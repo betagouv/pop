@@ -2,7 +2,6 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import LinkedNotices from "./LinkedNotices";
-import amplitudeService from "../services/amplitude";
 import Title from "./Title";
 import ContactUs from "./ContactUs";
 import FieldImages from "./FieldImages";
@@ -13,9 +12,6 @@ import Head from "next/head";
 import { postFixedLink, schema, toFieldImages } from "./utils";
 
 class Merimee extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("notice_open", { base: "merimee", notice: this.props.notice.REF });
-  }
   getMetaDescription = () => {
     const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const datation = this.props.notice.SCLE ? this.props.notice.SCLE.join(" ") : "";

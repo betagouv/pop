@@ -2,7 +2,6 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Field from "./Field";
 import Title from "./Title";
-import amplitudeService from "../services/amplitude";
 import FieldImages from "./FieldImages";
 import ContactUs from "./ContactUs";
 import { schema, toFieldImages } from "./utils";
@@ -10,9 +9,6 @@ import Head from "next/head";
 import "./Notice.css";
 
 class Enluminures extends React.Component {
-  componentDidMount() {
-    amplitudeService.logEvent("notice_open", { base: "enluminures", notice: this.props.notice.REF });
-  }
   getMetaDescription = () => {
     const titre = this.props.notice.SUJET || this.props.notice.TITR || "";
     const auteur = this.props.notice.ATTRIB || "";
