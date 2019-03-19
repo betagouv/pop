@@ -3,7 +3,7 @@ import Map from "./Map";
 import Mosaic from "./Mosaic";
 import List from "./List";
 import { pushSearchRoute } from "../../services/url";
-
+import logEvent from "../../services/amplitude";
 
 const DEFAULT_FILTER = [
   "mainSearch",
@@ -29,6 +29,7 @@ class Results extends React.Component {
   toggle(view, params) {
     // If view change, we have to prepare all (updated) params and pass them the new route.
     if (this.props.display !== view) {
+      logEvent("search_toggle_tab", { view });
       pushSearchRoute({ base: this.props.base, mode: "simple", view, params }).then(() =>
         window.scrollTo(0, 0)
       );
