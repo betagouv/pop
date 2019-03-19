@@ -43,6 +43,7 @@ export default class Layout extends React.Component {
 
             <script src="/static/driftt.js" />
             <script src="/static/piwik.js" />
+            <script src="/static/amplitude.js" />
           </Head>
           <Container className="NavContainer">
             <Link prefetch href="/">

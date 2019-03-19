@@ -3,6 +3,7 @@ import Layout from "../../src/components/Layout";
 import Palissy from "../../src/notices/Palissy";
 import { findCollection } from "../../src/notices/utils";
 import throw404 from "../../src/services/throw404";
+import logEvent from "../../src/services/amplitude";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -21,6 +22,10 @@ export default class extends React.Component {
 
     const links = (await Promise.all(arr)).filter(l => l);
     return { notice, links };
+  }
+
+  componentDidMount() {
+    logEvent("notice_open", { base: "palissy", notice: this.props.notice.REF });
   }
 
   render() {

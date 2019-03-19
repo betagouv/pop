@@ -2,6 +2,7 @@ import API from "../../src/services/api";
 import Layout from "../../src/components/Layout";
 import Merimee from "../../src/notices/Merimee";
 import throw404 from "../../src/services/throw404";
+import logEvent from "../../src/services/amplitude";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -25,6 +26,10 @@ export default class extends React.Component {
 
     const links = (await Promise.all(arr)).filter(l => l);
     return { notice, links };
+  }
+
+  componentDidMount() {
+    logEvent("notice_open", { base: "merimee", notice: this.props.notice.REF });
   }
 
   render() {
