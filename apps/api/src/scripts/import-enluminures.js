@@ -1,4 +1,4 @@
-const parse = require("csv-parse/lib/sync");
+const parse = require("csv-parse/lib/es5/sync");
 const fs = require("fs");
 const { mongoUrl } = require("../config.js");
 const mongoose = require("mongoose");
