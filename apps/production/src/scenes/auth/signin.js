@@ -27,12 +27,12 @@ class Signin extends Component {
         <div>
           <br />
           Pour obtenir des identifiants, veuillez adresser un{" "}
-          <a href="mailto:sandrine.della-bartolomea@culture.gouv.fr,sebastien.legoff@beta.gouv.fr">
+          <a href="mailto:sandrine.della-bartolomea@culture.gouv.fr,sebastien.legoff@beta.gouv.fr,jennifer.stephan@beta.gouv.fr">
             email
           </a>{" "}
           avec les informations suivantes : <br />
-          <br />- Institution <br />- Domaine (MNR, Inventaire, Monuments
-          Historiques, Joconde ou Base archives photo)
+          <br />- Institution <br />- Domaine (MNR, Inventaire, Monuments Historiques, Joconde ou
+          Base archives photo)
           <br />- Nom <br />- Prénom <br />
           <br />
         </div>
@@ -73,7 +73,9 @@ class Signin extends Component {
               </div>
             </Col>
             <Col>
-              <Link className="forget-password float-right" to="/auth/forget">Mot de passe oublié&nbsp;?</Link>
+              <Link className="forget-password float-right" to="/auth/forget">
+                Mot de passe oublié&nbsp;?
+              </Link>
             </Col>
           </Row>
 
