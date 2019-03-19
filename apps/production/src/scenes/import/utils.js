@@ -1,5 +1,5 @@
 import XLSX from "xlsx";
-import Parse from "csv-parse";
+import Parse from "csv-parse/lib/es5";
 
 function readFile(file, encoding, cb) {
   const reader = new FileReader();
