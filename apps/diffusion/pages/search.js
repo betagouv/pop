@@ -44,7 +44,7 @@ export default class extends React.Component {
             <title>Recherche - POP</title>
             <meta
               name="description"
-              content="Effectuer une recherche sur POP. Découvrez le moteur de cherche qui vous aidera à trouver facilement ce que vous recherchez sur POP."
+              content="Rechercher des œuvres, des monuments, ou tout autre bien culturel dans la base de donnée du ministère de la culture française."
             />
           </Head>
           <Container fluid style={{ maxWidth: 1860 }}>
