@@ -76,8 +76,7 @@ class UpdateProfile extends Component {
 
     if (group === "admin" && role !== "administrateur") {
       this.setState({
-        error:
-          "Les membres du groupe « admin » doivent avoir le rôle « administrateur »",
+        error: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »",
         loading: false,
         done: false
       });
@@ -86,22 +85,13 @@ class UpdateProfile extends Component {
 
     const hasChangedPassword = ppwd !== "" && ppwd1 !== "" && ppwd2 !== "";
     const hasChangedProfileInfo =
-      nom !== stateNom ||
-      prenom !== statePrenom ||
-      institution !== stateInstitution;
+      nom !== stateNom || prenom !== statePrenom || institution !== stateInstitution;
     let promise = Promise.resolve();
 
     if (hasChangedProfileInfo) {
       promise = promise
         .then(() => {
-          return api.updateProfile(
-            email,
-            stateNom,
-            statePrenom,
-            stateInstitution,
-            group,
-            role
-          );
+          return api.updateProfile(email, stateNom, statePrenom, stateInstitution, group, role);
         })
         .then(() => {
           return this.props.signinByToken();
@@ -162,14 +152,7 @@ class UpdateProfile extends Component {
 
   render() {
     const { email, location } = this.props;
-    const {
-      loading,
-      done,
-      error,
-      nom,
-      prenom,
-      institution
-    } = this.state;
+    const { loading, done, error, nom, prenom, institution } = this.state;
 
     if (loading) {
       return <Loader />;
