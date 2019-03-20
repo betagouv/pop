@@ -75,7 +75,9 @@ router.post("/signup", (req, res) => {
       "Compte POP créé avec succès",
       req.body.email,
       `Félicitations!<br /><br />
-          Votre compte ${req.body.role} POP a été créé avec succès.<br />
+          Votre compte ${req.body.role} POP a été créé avec succès.<br /><br />
+          Le lien vers la plateforme de production est le suivant : <a href="http://production.pop.culture.gouv.fr">http://production.pop.culture.gouv.fr</a><br />
+          Le lien vers la plateforme de diffusion est le suivant : <a href="https://www.pop.culture.gouv.fr/">https://pop.culture.gouv.fr/</a><br /><br />
           Votre identifiant de connexion est ${req.body.email}<br />
           Votre mot de passe provisoire est ${password}<br />
           Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
