@@ -51,7 +51,8 @@ class Notice extends React.Component {
       // As a "producteur", I can edit if "museofile" matches with notice.
       const editable =
         this.props.canUpdate &&
-        (this.props.user.role === "administrateur" || notice.MUSEO === this.props.user.museofile);
+        (this.props.user.role === "administrateur" ||
+          this.props.user.museofile.includes(notice.MUSEO));
 
       this.setState({ loading: false, notice, editable });
     });
@@ -188,7 +189,7 @@ class Notice extends React.Component {
               <CustomField name="LABEL" disabled={!this.state.editable} />
               <CustomField name="COPY" disabled={!this.state.editable} />
               <CustomField name="MSGCOM" disabled={!this.state.editable} />
-              <CustomField name="CONTACT" disabled={!this.state.editable} />  
+              <CustomField name="CONTACT" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
               <CustomField name="WWW" disabled={!this.state.editable} />
