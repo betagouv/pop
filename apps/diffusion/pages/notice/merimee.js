@@ -56,7 +56,7 @@ export default class extends React.Component {
 
   fieldImage(notice) {
     const images = toFieldImages(notice.MEMOIRE);
-    if (images.length) {
+    if (images && images.length) {
       return (
         <FieldImages
           reference={notice.REF}
@@ -98,9 +98,9 @@ export default class extends React.Component {
 
     const obj = {
       name: notice.TICO,
-      created_at: notice.SCLE.length ? notice.SCLE[0] : "",
+      created_at: notice.SCLE && notice.SCLE.length ? notice.SCLE[0] : "",
       artform: "Architecture",
-      image: notice.MEMOIRE.length ? notice.MEMOIRE[0].url : "",
+      image: notice.MEMOIRE && notice.MEMOIRE.length ? notice.MEMOIRE[0].url : "",
       description: notice.LEG,
       contentLocation: notice.LOCA,
       creator: notice.AUTR
