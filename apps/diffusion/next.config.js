@@ -1,7 +1,6 @@
-const withCSS = require("@zeit/next-css");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 
-module.exports = withCSS({
+module.exports = {
   webpack: config => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
@@ -29,4 +28,4 @@ module.exports = withCSS({
 
     return config;
   }
-});
+};

@@ -7,7 +7,6 @@
     "@appbaseio/reactivesearch": "^2.17.0",
     "@sentry/browser": "^4.6.3",
     "@sentry/node": "^4.6.4",
-    "@zeit/next-css": "^1.0.1",
     "acorn": "^6.1.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
@@ -42,8 +41,7 @@
       "./__tests__/__notices__/"
     ],
     "moduleNameMapper": {
-      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js",
-      "isomorphic-style-loader/lib/withStyles": "<rootDir>/__tests__/__mocks__/withStyles.js"
+      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js"
     }
   },
   "devDependencies": {
