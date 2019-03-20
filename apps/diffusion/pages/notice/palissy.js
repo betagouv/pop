@@ -11,7 +11,7 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { schema, toFieldImages, findCollection } from "../../src/notices/utils";
+import { schema, toFieldImages, findCollection, postFixedLink } from "../../src/notices/utils";
 import "../../src/notices/Notice.css";
 
 export default class extends React.Component {
