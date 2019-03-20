@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Head from "next/head";
 import { Container } from "reactstrap";
 
 import "./Layout.css";
@@ -10,41 +9,8 @@ export default class Layout extends React.Component {
   render() {
     const { children } = this.props;
     return (
-      <div>
+      <React.Fragment>
         <div className="header">
-          <Head>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-            />
-            <meta
-              name="google-site-verification"
-              content="AwpDhFkuFQsZzA8EKSQ6nI4OYbCkAvHKKFf4dYVdytU"
-            />
-            <link
-              rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
-            />
-            <link
-              rel="stylesheet"
-              type="text/css"
-              charSet="UTF-8"
-              href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-            />
-            <link
-              rel="stylesheet"
-              type="text/css"
-              href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-            />
-            <link rel="manifest" href="/manifest.json" />
-            <link rel="shortcut icon" href="/favicon.ico" />
-
-            <script src="/static/driftt.js" />
-            <script src="/static/piwik.js" />
-            <script src="/static/amplitude.js" />
-          </Head>
           <Container className="NavContainer">
             <Link prefetch href="/">
               <a className="logo">
@@ -96,7 +62,7 @@ export default class Layout extends React.Component {
             </li>
           </ul>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
