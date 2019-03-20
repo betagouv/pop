@@ -84,7 +84,6 @@ class User extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  console.log(Auth.user);
   return { account: Auth.user };
 };
 
