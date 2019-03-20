@@ -369,15 +369,16 @@ function url(ref) {
 
 function link(data) {
   return (
-    <ul>
+    <React.Fragment>
       {data.map(d => {
         return (
-          <li>
+          <React.Fragment key={d}>
             <a href={url(d) || "#"}>{d}</a>
-          </li>
+            <br />
+          </React.Fragment>
         );
       })}
-    </ul>
+    </React.Fragment>
   );
 }
 
