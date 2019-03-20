@@ -30,7 +30,7 @@ class Results extends React.Component {
     // If view change, we have to prepare all (updated) params and pass them the new route.
     if (this.props.display !== view) {
       logEvent("search_toggle_tab", { view });
-      pushSearchRoute({ base: this.props.base, mode: "simple", view, params }).then(() =>
+      pushSearchRoute({ base: this.props.base, mode: this.props.mode, view, params }).then(() =>
         window.scrollTo(0, 0)
       );
     }
