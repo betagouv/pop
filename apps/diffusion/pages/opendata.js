@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Layout from "../src/components/Layout";
-import "./opendata.css";
 
 export default () => (
   <Layout>
@@ -43,8 +42,8 @@ export default () => (
         <br />
          <br />
         Dans le cas où le ré-utilisateur souhaiterait faire usage d’informations soumises au droit
-        d’auteur, notamment disponibles sur l’interface de diffusion mais pas en téléchargement
-        au lien mentionné ci-dessus, le ré-utilisateur doit obtenir les autorisations nécessaires
+        d’auteur, notamment disponibles sur l’interface de diffusion mais pas en téléchargement au
+        lien mentionné ci-dessus, le ré-utilisateur doit obtenir les autorisations nécessaires
         auprès des auteurs et ayant-droits.
         <br />
          <br />
@@ -101,5 +100,16 @@ export default () => (
         </li>
       </ul>
     </div>
+    <style jsx>{`
+      .opendata-view {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        padding: 15px;
+        margin: 50px auto;
+        max-width: 800px;
+      }
+    `}</style>
   </Layout>
 );

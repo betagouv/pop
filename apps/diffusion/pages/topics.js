@@ -4,7 +4,6 @@ import { Row, Col, Container } from "reactstrap";
 import { bucket_url } from "../src/config";
 import Head from "next/head";
 import Layout from "../src/components/Layout";
-import "./topics.css";
 
 const cultureUrl = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
 const memoireImg = uri => `${cultureUrl}memoire/${uri}`;
@@ -253,5 +252,29 @@ export default () => (
         </Row>
       </Container>
     </div>
+    <style jsx>{`
+      .topics-view {
+        display: flex;
+        justify-content: start;
+        align-items: "center";
+        flex-direction: column;
+        padding-bottom: 60px;
+      }
+      .topics-view h2 {
+        color: #025d59;
+        font-size: 28px;
+        margin: 30px 15px 30px 15px;
+        text-align: center;
+      }
+
+      .topics-view h3 {
+        margin-top: 20px;
+        color: #19414c;
+        font-weight: 600;
+        font-size: 26px;
+        margin-bottom: 20px;
+        margin-bottom: 20px;
+      }
+    `}</style>
   </Layout>
 );

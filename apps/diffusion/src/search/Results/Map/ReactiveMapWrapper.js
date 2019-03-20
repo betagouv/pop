@@ -4,9 +4,7 @@ import queryString from "query-string";
 
 import Map from "./Map";
 
-import { getPrecision, getESQuery } from "./utils";
-
-import "./Map.css";
+import { getESQuery } from "./utils";
 
 /*
 This file contain the Map wrapper. 

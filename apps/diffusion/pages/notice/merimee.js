@@ -12,7 +12,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
 import { postFixedLink, schema, toFieldImages } from "../../src/notices/utils";
-import "../../src/notices/Notice.css";
+import NoticeStyle from "../../src/notices/NoticeStyle";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -345,6 +345,7 @@ export default class extends React.Component {
             </Row>
           </Container>
         </div>
+        <NoticeStyle />
       </Layout>
     );
   }

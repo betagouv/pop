@@ -6,7 +6,6 @@ import Layout from "../src/components/Layout";
 import Head from "next/head";
 import Link from "next/link";
 import throw404 from "../src/services/throw404";
-import "./museo.css";
 
 const hiddenFields = [
   "_id",
@@ -130,6 +129,62 @@ export default class extends React.Component {
             <div className="collection collection-bottom">{this.renderCta(museo)}</div>
           </div>
         </div>
+        <style jsx>{`
+          .museo {
+            display: flex;
+            justify-content: start;
+            align-items: "center";
+            flex-direction: column;
+            padding-bottom: 60px;
+          }
+
+          .museo .museo-card {
+            margin: 50px auto;
+            max-width: 800px;
+            padding: 30px 25px 30px 25px;
+          }
+
+          @media screen and (min-width: 800px) {
+            .museo {
+              background-color: #e5edef;
+            }
+            .museo .museo-card {
+              background-color: #fff;
+              border-radius: 5px;
+              box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
+            }
+          }
+
+          .museo h1 {
+            color: #025d59;
+            font-size: 24px;
+            margin-bottom: 20px;
+          }
+          .museo dl > dt {
+            color: #025d59;
+            margin-top: 15px;
+          }
+
+          .museo-map {
+            margin-top: 25px;
+          }
+          .museo .collection.collection-bottom {
+            text-align: center;
+            margin-top: 25px;
+          }
+
+          .museo .collection a {
+            color: #fff;
+            background-color: #377d87;
+            border-color: #377d87;
+          }
+
+          .museo .collection a:hover {
+            color: #fff;
+            background-color: #28565e;
+            border-color: #1e4147;
+          }
+        `}</style>
       </Layout>
     );
   }

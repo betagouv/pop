@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { image } from "../services/image";
-import "./LinkedNotices.css";
+
 class LinkedNotice extends React.Component {
   render() {
     if (!this.props.links || !this.props.links.length) {
@@ -34,6 +34,22 @@ class SmallNotice extends React.Component {
             </div>
           </div>
         </a>
+        <style jsx>{`
+          .links .linked-notice-container {
+            overflow-x: auto;
+            max-height: 600px;
+          }
+
+          .notice .sidebar-section .linked-notice-container h3 {
+            color: #025d59;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        `}</style>
       </Link>
     );
   }

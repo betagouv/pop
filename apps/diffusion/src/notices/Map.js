@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import "./Map.css";
+
 class MapComponent extends React.Component {
   map = null;
 
@@ -60,6 +60,29 @@ class MapComponent extends React.Component {
           />
         </Head>
         <div id="map" ref={this.mapRef} />
+        <style jsx>{`
+          .map-container {
+            background-color: #fff;
+            padding: 15px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+            height: 300px;
+            padding-top: 10px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+          }
+
+          #map {
+            width: 100%;
+            height: 100%;
+          }
+
+          .leaflet-container {
+            width: 100%;
+            height: 100%;
+          }
+        `}</style>
       </div>
     );
   }
