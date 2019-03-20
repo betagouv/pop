@@ -67,7 +67,7 @@ class Import extends React.Component {
   }
 
   renderMuseoFiles() {
-    const options = this.props.museofile.map(o => <option key={o}>{o}</option>);
+    const options = (this.props.museofile || []).map(o => <option key={o}>{o}</option>);
     return (
       <div style={{ alignSelf: "flex-start", display: "flex", padding: "15px 0px 15px 0px" }}>
         <div style={{ paddingRight: "10px" }}>Code MUSEO : </div>
