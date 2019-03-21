@@ -8,7 +8,7 @@ const port = 8081;
 
 console.log("START", new Date());
 
-app.use(forceDomain({ hostname: "production.pop.culture.gouv.fr", protocol: "https" }));
+// app.use(forceDomain({ hostname: "production.pop.culture.gouv.fr", protocol: "https" }));
 
 app.use(hsts({ maxAge: 31536000, includeSubDomains: true, preload: true }));
 
