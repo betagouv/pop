@@ -39,7 +39,7 @@ class SmallNotice extends React.Component {
               max-height: 600px;
             }
 
-            .notice .sidebar-section .linked-notice-container h3 {
+            .content h3 {
               color: #025d59;
               font-weight: 500;
               font-size: 14px;

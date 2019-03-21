@@ -2,8 +2,8 @@ import React from "react";
 import { Row } from "reactstrap";
 import Viewer from "react-viewer";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import "react-viewer/dist/index.css";
+import ImageGalleryStyle from "react-image-gallery/styles/css/image-gallery.css";
+import ViewerStyle from "react-viewer/dist/index.css";
 import Router from "next/router";
 
 class FieldImages extends React.Component {
@@ -79,6 +79,8 @@ class FieldImages extends React.Component {
       <div className="fieldImages">
         {this.renderModal()}
         <Row>{this.renderImages()}</Row>
+        <style jsx global>{ImageGalleryStyle}</style>
+        <style jsx global>{ViewerStyle}</style>
         <style jsx global>{`
           .fieldImages {
             width: 100%;

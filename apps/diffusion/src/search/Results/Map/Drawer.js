@@ -57,7 +57,7 @@ export default class Drawer extends Component {
         </div>
         <div className="drawer-content">{this.renderNoticeContent(notice)}</div>
         <div>
-          <Link prefetch href={`/notice/${notice._type}/${notice._source.REF}`}>
+          <Link href={`/notice/${notice._type}/${notice._source.REF}`}>
             <a target="_blank">Voir la notice complète</a>
           </Link>
         </div>

@@ -1,7 +1,7 @@
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 
 module.exports = {
-  webpack: config => {
+  webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
     const originalEntry = config.entry;
@@ -25,6 +25,20 @@ module.exports = {
         ]
       })
     );
+
+    // Source: https://github.com/zeit/styled-jsx#nextjs
+    config.module.rules.push({
+      test: /\.css$/,
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: require("styled-jsx/webpack").loader,
+          options: {
+            type: "global"
+          }
+        }
+      ]
+    });
 
     return config;
   }
