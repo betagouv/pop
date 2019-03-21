@@ -52,9 +52,7 @@ class TagsInput extends React.Component {
     if (!Array.isArray(this.props.input.value)) {
       return (
         <div>
-          {`${
-            this.props.input.name
-          } devrait être multiple mais est : ${JSON.stringify(
+          {`${this.props.input.name} devrait être multiple mais est : ${JSON.stringify(
             this.props.input.value
           )}`}{" "}
         </div>
@@ -71,7 +69,14 @@ class TagsInput extends React.Component {
               ? value.map(e => {
                   if (this.props.createUrl) {
                     const url = this.props.createUrl(e);
-                    return { id: e, text : <a href={url} target="_blank">{e}</a> };
+                    return {
+                      id: e,
+                      text: (
+                        <a href={url} target="_blank">
+                          {e}
+                        </a>
+                      )
+                    };
                   }
                   return { id: e, text: e };
                 })
@@ -105,19 +110,20 @@ class CustomInput extends React.Component {
     autosize(this.textarea);
   }
 
-  handleInputChange(str) {
+  async handleInputChange(str) {
     if (!this.props.thesaurus) {
       return;
     }
     if (str) {
-      api.getThesaurus(this.props.thesaurus, str).then(values => {
-        if (values) {
-          const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-          this.setState({ suggestions });
-        }
-      });
+      const values = await api.getThesaurus(this.props.thesaurus, str);
+      if (values) {
+        const suggestions = values.map(e => ({ id: e.value, text: e.value }));
+        this.setState({ suggestions });
+      }
     } else {
-      this.setState({ suggestions: [] });
+      if (this.state.suggestions.length) {
+        this.setState({ suggestions: [] });
+      }
     }
   }
 
@@ -135,11 +141,7 @@ class CustomInput extends React.Component {
 
   render() {
     if (Array.isArray(this.props.input.value)) {
-      return (
-        <div>
-          Cette donnée est multiple(array) et devrait etre simple(string)
-        </div>
-      );
+      return <div>Cette donnée est multiple(array) et devrait etre simple(string)</div>;
     }
     return (
       <div className="input">
@@ -175,11 +177,7 @@ export default class AbstractField extends React.Component {
     }
     return (
       <div className="field">
-        {(label || name) && (
-          <div id={`Tooltip_${name}`}>
-            {label ? `${label} (${name})` : name}
-          </div>
-        )}
+        {(label || name) && <div id={`Tooltip_${name}`}>{label ? `${label} (${name})` : name}</div>}
         <Tooltip
           placement="right"
           isOpen={this.state.tooltipOpen}
@@ -191,8 +189,22 @@ export default class AbstractField extends React.Component {
           }
         >
           {desc}
-          {generated ? <div><br />Ce champ est généré et n'est pas modifiable.</div>: ""}
-          {deprecated ? <div><br />Ce champ est déprécié.</div>: ""}
+          {generated ? (
+            <div>
+              <br />
+              Ce champ est généré et n'est pas modifiable.
+            </div>
+          ) : (
+            ""
+          )}
+          {deprecated ? (
+            <div>
+              <br />
+              Ce champ est déprécié.
+            </div>
+          ) : (
+            ""
+          )}
         </Tooltip>
         {Comp}
       </div>
