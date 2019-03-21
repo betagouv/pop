@@ -1,243 +1,34 @@
 import Head from "next/head";
 import Layout from "../src/components/Layout";
-import Link from "next/link";
 import React from "react";
-import Slider from "react-slick";
-import { Tooltip, Button, Input } from "reactstrap";
+import { Button, Input, Row, Col, Container } from "reactstrap";
 import Router from "next/router";
 import { pushSearchRoute } from "../src/services/url";
 import logEvent from "../src/services/amplitude";
+import TopicCard from "../src/topics/TopicCard";
+import { bucket_url } from "../src/config";
 
-const bases = [
-  {
-    name: "palissy",
-    title: "Patrimoine mobilier (Palissy)",
-    description: `Base de données du patrimoine mobilier français
-    (hors des collections des musées) de la Préhistoire
-    à nos jours. Cette base coproduite est mise à jour
-    régulièrement par l’Inventaire général du patrimoine
-    culturel (218 000 notices notices en 2018) à partir de
-    ses études et par la Médiathèque de l’architecture
-    et du patrimoine (167 000 notices) à partir des arrêtés
-    et décrets de classement et partiellement encore
-    de ceux d’inscription.`
-  },
-  {
-    name: "merimee",
-    title: "Patrimoine architectural (Mérimée)",
-    description: `Base de données du patrimoine monumental français
-    de la Préhistoire à nos jours.
-    Cette base coproduite est mise à jour régulièrement
-    par l’Inventaire général du patrimoine culturel
-    (215 000 notices en 2018) à partir de ses études et par la
-    Médiathèque de l’architecture et du patrimoine (45 000
-    notices) à partir des arrêtés et décrets de classement et
-    d’inscription.`
-  },
-  {
-    name: "memoire",
-    title: "Photographies (Mémoire)",
-    description: `Base de données des fonds graphiques et photographiques
-    illustrant le patrimoine français et des collections
-    photographiques.
-    Cette base coproduite est mise à jour régulièrement par
-    l’Inventaire général du patrimoine culturel (570000 notices
-    en 2018), la Médiathèque de l’architecture et du patrimoine
-    (790 000 notices), les conservations régionales des
-    Monuments historiques (160 000), les services territoriaux
-    de l’architecture et du patrimoine (2 500), les services de
-    l’Archéologie (122 000), les conservations des antiquités et
-    objets d’art (25 000).
-    Les images de la base Mémoire illustrent les notices des
-    bases Mérimée et Palissy.`
-  },
-  {
-    name: "joconde",
-    title: "Collections des musées de France (Joconde)",
-    description: `La base Joconde est le catalogue collectif des collections
-    des musées de France, fruit d’un partenariat entre le service
-    des musées de France et les musées participants. Riche de
-    près de 600 000 notices, pour la plupart illustrées, cette
-    base est le résultat d’une étude patiente, systématique et
-    approfondie des collections exposées ou en réserves par
-    les personnels scientifiques des musées qui permet de
-    rendre compte de la diversité des collections françaises
-    (archéologie, beaux-arts, ethnologie, histoire, sciences et
-    techniques…).`
-  },
-  {
-    name: "mnr",
-    title: "Récupération artistique (MNR Rose-Valland)",
-    description: `A la fin de la dernière guerre, de nombreuses œuvres
-    récupérées en Allemagne ont été renvoyées en France
-    parce que certains indices (archives, inscriptions, etc.)
-    laissaient penser qu’elles en provenaient. La plupart
-    d’entre elles ont été rapidement restituées à leurs
-    propriétaires spoliés par les Nazis. D’autres furent
-    vendues par les Domaines, tandis que d’autres étaient
-    confiées à la garde des musées nationaux. La base MNR-
-    Rose Valland répertorie les quelques 2000 œuvres d’art
-    dont les propriétaires légitimes n’ont pas encore pu être
-    identifiés. Ses œuvres n’appartiennent pas à l’État qui n’en
-    est que détenteur provisoire. Elles ne font donc pas partie
-    des collections publiques des musées de France et ces
-    œuvres ne sont pas répertoriées dans la base Joconde des
-    collections nationales.`
-  },
-  {
-    name: "enluminures",
-    title: "Enluminures (Enluminures)",
-    description: `Coproduite par le Service du livre et de la lecture 
-    et l'Institut de recherche et d'histoire des textes (CNRS), liés 
-    par un programme conjoint depuis 1979, la base Enluminures propose 
-    la consultation gratuite de plus de 120 000 images, sous forme de 
-    vignette et de plein écran, reproductions numériques des enluminures 
-    et éléments de décor de plus de 5 000 manuscrits médiévaux conservés 
-    dans une centaine de bibliothèques municipales françaises.`
-  }
-];
+const cultureUrl = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
+const memoireImg = uri => `${cultureUrl}memoire/${uri}`;
+const jocondeImg = uri => `${bucket_url}joconde/${uri}`;
 
 export default class extends React.Component {
   componentDidMount() {
     logEvent("home_open");
     Router.prefetch("/search");
   }
+
   constructor(props) {
     super(props);
-    this.state = {
-      selected: bases.map(b => b.title)
-    };
-    this.toggle = this.toggle.bind(this);
     this.gotoSearch = this.gotoSearch.bind(this);
   }
 
   gotoSearch() {
-    const searchValue = document.getElementById("main-search").value;
-    const selected = this.state.selected;
-    logEvent("home_search", { value: searchValue, base: selected });
-
-    pushSearchRoute({
-      mode: "simple",
-      view: "list",
-      params: {
-        mainSearch: searchValue,
-        base: selected.length === bases.length || selected.length === 0 ? "" : selected
-      }
-    }).then(() => window.scrollTo(0, 0));
-  }
-
-  renderBanner() {
-    const images = [
-      {
-        id: 1,
-        text: "Anthony Quinn et Gina Lollobrigida dans Notre-Dame de Paris de Jean Delannoy.",
-        author: "Voinquel, Raymond (photographe), 1956.",
-        source: "Médiathèque de l'architecture et du patrimoine."
-      },
-      {
-        id: 2,
-        text: "Couples de cinéma: Brigitte Bardot et Alain Delon.",
-        author: "Lévin, Sam (photographe), 1958.",
-        source: "Médiathèque de l'architecture et du patrimoine, base Mémoire."
-      },
-      {
-        id: 3,
-        text: 'Cathédrale Notre-Dame, "Les poules grégoriennes".',
-        author: "Abbé Thinot (photographe), avant 1914.",
-        source: "Médiathèque de l'architecture et du patrimoine, base Mémoire."
-      },
-      {
-        id: 5,
-        text: "Promenade de bord de mer.",
-        author: "Manuel de Rugy (photographe).",
-        source: "Inventaire général - région Normandie, base Mémoire."
-      },
-      {
-        id: 6,
-        text: "Biscuiterie Jeannette. Détail de la doseuse pondérale à pesées associative.",
-        author: "Manuel de Rugy (photographe).",
-        source: "Inventaire général - région Normandie, base Mémoire."
-      },
-      {
-        id: 7,
-        text: "Rue du Gros Horloge et la cathédrale.",
-        author: "Denis Couchaux (photographe).",
-        source: "Inventaire général - région Normandie, base Mémoire."
-      },
-      {
-        id: 8,
-        text: 'Masque "cara grande" de la population Tapirapé, XXe siècle.',
-        author: "Amérique du Sud.",
-        source: "Museum d'histoire naturelle de Toulouse."
-      }
-    ].map(e => (
-      <div key={e.id} className="img-item">
-        {" "}
-        <img
-          className="image-banner"
-          src={`/static/banner/${e.id}.jpg`}
-          alt={`${e.text} ${e.author} ${e.source}`}
-          title={`${e.text} ${e.author} ${e.source}`}
-        />
-      </div>
-    ));
-    const settings = {
-      dots: false,
-      infinite: true,
-      autoplaySpeed: 5000,
-      speed: 500,
-      autoplay: true,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    return <Slider {...settings}>{images}</Slider>;
-  }
-
-  toggle(event) {
-    const name = event.target.name;
-    const selected = this.state.selected;
-    if (name === "all" && selected.length === bases.length) {
-      this.setState({ selected: [] });
-    } else if (name === "all") {
-      this.setState({ selected: bases.map(b => b.title) });
-    } else if (selected.includes(name)) {
-      this.setState({ selected: selected.filter(item => item !== name) });
-    } else {
-      this.setState({ selected: [...selected, name] });
-    }
-  }
-  areas() {
-    return bases.map(({ name, title, description }) => {
-      return (
-        <li key={name}>
-          <label>
-            <input
-              type="checkbox"
-              name={title}
-              checked={this.state.selected.includes(title)}
-              onChange={this.toggle}
-            />
-            <strong />
-            {title}
-          </label>
-          <Tooltip
-            placement="top"
-            isOpen={this.state.tooltipOpen === name}
-            target={name}
-            toggle={() => {
-              this.setState({
-                tooltipOpen: this.state.tooltipOpen ? null : name
-              });
-            }}
-          >
-            {description}
-          </Tooltip>
-          <span id={name} className="info">
-            i
-          </span>
-        </li>
-      );
-    });
+    const mainSearch = document.getElementById("main-search").value;
+    logEvent("home_search", { value: mainSearch });
+    pushSearchRoute({ mode: "simple", view: "list", params: { mainSearch } }).then(() =>
+      window.scrollTo(0, 0)
+    );
   }
 
   render() {
@@ -251,7 +42,6 @@ export default class extends React.Component {
               content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 3 millions de contenus numériques du patrimoine français."
             />
           </Head>
-          {this.renderBanner()}
           <div className="home-search">
             <h1>
               La plateforme POP regroupe les contenus numériques du patrimoine français afin de les
@@ -259,65 +49,251 @@ export default class extends React.Component {
             </h1>
             <Input
               id="main-search"
-              placeholder="Recherchez sur tous les champs des bases indiquées ci-dessous"
+              placeholder="Recherchez dans plus de 3 millions de documents"
               onKeyPress={event => {
                 if (event.key === "Enter") {
                   this.gotoSearch();
                 }
               }}
             />
-            <Button onClick={this.gotoSearch} disabled={this.state.selected.length === 0}>
-              Rechercher
-            </Button>
-            <div className="search-areas">
-              <div>
-                <p>Sur quels domaines porte votre recherche ?</p>
-                <ul className="list-unstyled">
-                  <li>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={this.state.selected.length === 6}
-                        name="all"
-                        onChange={this.toggle}
-                      />
-                      <strong />
-                      Tous les domaines
-                    </label>
-                  </li>
-                  {this.areas()}
-                </ul>
-              </div>
-            </div>
-            <p>
-              Découvrir le patrimoine français à travers l'
-              <Link prefetch href="/topics">
-                <a>affichage thématique</a>
-              </Link>
-            </p>
+            <Button onClick={this.gotoSearch}>Rechercher</Button>
+          </div>
+          <div className="topics-view">
+            <Container>
+              <h3>Photographie</h3>
+              <Row>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("APU031897VJ/sap57_u031897vj_p.jpg")}
+                    txt="Studio Harcourt"
+                    params={{
+                      base: ["Photographies (Mémoire)"],
+                      auteur: ["Harcourt (studio)"]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP72L002380/sap56_72l002380_p.jpg")}
+                    txt="André Kertész"
+                    params={{
+                      base: ["Photographies (Mémoire)"],
+                      auteur: [
+                        "Kertész, André",
+                        "KERTESZ André (dit), KERTESZ Andor (patronyme)",
+                        "Kertész, André (photographe, 1894-1985)",
+                        "Kertész, André - Donation André Kertész, Ministère de la culture (France), Médiathèque de l'architecture et du patrimoine, diffusion restreinte"
+                      ]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP76L000305/sap58_76l000305_p.jpg")}
+                    txt="Sam Lévin"
+                    params={{
+                      base: ["Photographies (Mémoire)"],
+                      auteur: ["Lévin, Sam", "Studio Lévin"]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("APNADAR025736/sap01_na23702023g_t.jpg")}
+                    txt="Atelier Nadar"
+                    params={{
+                      base: ["Photographies (Mémoire)"],
+                      auteur: ["Nadar (atelier)"]
+                    }}
+                  />
+                </Col>
+              </Row>
+              <h3>Peinture et dessin</h3>
+              <Row>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("000PE000824/88ee1903.jpg")}
+                    txt="Peinture à l'huile à la fin du XVIIIème siècle"
+                    params={{
+                      base: ["Collections des musées de France (Joconde)"],
+                      tech: ["peinture à l'huile"],
+                      periode: ["4e quart 18e siècle"]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("06650002010/0000670.jpg")}
+                    txt="Les dessins d'Eugène Delacroix"
+                    params={{
+                      base: ["Collections des musées de France (Joconde)"],
+                      domn: ["dessin"],
+                      auteur: ["DELACROIX Eugène"]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("50410000424/94-002348.jpg")}
+                    txt="Peinture sur bois de Gustave Moreau"
+                    params={{
+                      base: ["Collections des musées de France (Joconde)"],
+                      tech: ["bois"],
+                      auteur: ["MOREAU Gustave"]
+                    }}
+                  />
+                </Col>
+
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("11040000242/24013-4.jpg")}
+                    txt="Esquisses et affiches - Alphonse Mucha"
+                    params={{
+                      base: ["Collections des musées de France (Joconde)"],
+                      mainSearch: "mucha"
+                    }}
+                  />
+                </Col>
+              </Row>
+
+              <h3>Mode</h3>
+              <Row>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP9126T0130/sap51_9126t0130_p.jpg")}
+                    txt="Karl Lagerfeld"
+                    params={{
+                      mainSearch: "Lagerfeld"
+                    }}
+                  />
+                </Col>
+
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP71L00735/sap53_71l00735_p.jpg")}
+                    txt="Pierre Balmain"
+                    params={{
+                      mainSearch: "Balmain"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP71L02648/sap53_71l02648_p.jpg")}
+                    txt="Elsa Schiaparelli"
+                    params={{
+                      mainSearch: "Schiaparelli"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={memoireImg("AP71L01246/sap53_71l01246_p.jpg")}
+                    txt="Coco Chanel"
+                    params={{
+                      mainSearch: '"Coco Chanel"'
+                    }}
+                  />
+                </Col>
+              </Row>
+
+              <h3>Voyages</h3>
+              <Row>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("M0759001165/e05073.jpg")}
+                    txt="Asie orientale"
+                    params={{
+                      base: ["Collections des musées de France (Joconde)"],
+                      domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("00000074608/rimg0445.jpg")}
+                    txt="Venise"
+                    params={{
+                      mainSearch: "venise"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("5002E008037/atpico041160.jpg")}
+                    txt="Japon"
+                    params={{
+                      mainSearch: "Japon",
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("07010003109/0001554.jpg")}
+                    txt="Egypte"
+                    params={{
+                      mainSearch: "Egypte",
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+              </Row>
+
+              <h3>Artistes femme</h3>
+              <Row>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("000PE019139/99-002556.jpg")}
+                    txt="Rosa Bonheur"
+                    params={{
+                      auteur: [
+                        "BONHEUR Marie Rosalie, BONHEUR Rosa (dite)",
+                        "BONHEUR Marie Rosalie ; BONHEUR Rosa (dite)",
+                        "BONHEUR Rosa (dessinateur)"
+                      ],
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("06770000315/0001106.jpg")}
+                    txt="Marguerite Gérard"
+                    params={{
+                      auteur: ["GERARD Marguerite (peintre)", "GERARD Marguerite"],
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("01720000823/0002031.jpg")}
+                    txt="Marie Nicolas"
+                    params={{
+                      auteur: ["NICOLAS Marie"],
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+                <Col lg="3" md="6">
+                  <TopicCard
+                    img={jocondeImg("000PE002885/15-523297.jpg")}
+                    txt="Élisabeth Vigée Le Brun"
+                    params={{
+                      auteur: ["VIGEE-LE BRUN Elisabeth Louise"],
+                      image: "oui"
+                    }}
+                  />
+                </Col>
+              </Row>
+            </Container>
           </div>
         </div>
         <style jsx global>{`
           .home {
             height: 100%;
           }
-          .home .slick-slider {
-            margin: 0;
-          }
-          .home .slick-slider img {
-            border: 0;
-          }
-          .home .title {
-            text-align: center;
-            margin-bottom: 80px;
-            font-size: 30px;
-            padding-top: 20px;
-          }
-
-          .home .image-banner {
-            width: 100%;
-          }
-
           .home .home-search {
             max-width: 880px;
             margin: 0 auto;
@@ -328,11 +304,12 @@ export default class extends React.Component {
             text-align: center;
             color: #19414c;
             margin-bottom: 24px;
+            margin-top: 30px;
             font-weight: 400;
             font-size: 20px;
           }
-          .home .home-search .css-c0lsh8 {
-            display: none;
+          .home .home-search input::placeholder {
+            color: #bbb;
           }
           .home .home-search #main-search {
             font-weight: 400;
@@ -347,139 +324,35 @@ export default class extends React.Component {
             background-size: 20px;
             color: #19414c;
           }
-          .home .home-search .css-u5onnz {
-            margin-top: 5px;
-            border-radius: 5px;
-            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-            max-height: 278px;
-          }
-          .home .home-search .css-u5onnz li a {
-            font-weight: 400;
-            font-size: 18px;
-            text-decoration: none;
-            color: #19414c;
-            padding: 3px 35px;
-            background-image: url(/static/search-black.png);
-            background-repeat: no-repeat;
-            background-position: left 5px center;
-            background-size: 20px;
-          }
-          .home .search-areas {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-          }
-          .home .search-areas p {
-            text-align: left;
-            font-weight: 400;
-            font-size: 22px;
-            color: #19414c;
-          }
-          .home .search-areas li {
-            display: flex;
-            align-items: center;
-            font-weight: 400;
-            font-size: 22px;
-            color: #19414c;
-          }
-          .home .search-areas input {
-            display: none;
-          }
-          .home .search-areas strong {
-            display: inline-block;
-            margin-right: 10px;
-            height: 20px;
-            width: 20px;
-            border-radius: 4px;
-            border: 2px solid #777;
-            position: relative;
-          }
-          .home .search-areas strong:before,
-          .home .search-areas strong:after {
-            content: "";
-            display: block;
-            position: absolute;
-            background-color: #fff;
-            transform-origin: bottom;
-            opacity: 0;
-            visibility: hidden;
-          }
-          .home .search-areas strong:before {
-            height: 2px;
-            width: 6px;
-            transform: rotate(45deg);
-            bottom: 8px;
-            left: 2px;
-          }
-          .home .search-areas strong:after {
-            height: 2px;
-            width: 12px;
-            transform: rotate(-45deg);
-            bottom: 10px;
-            left: 6px;
-          }
-          .home .search-areas input:checked + strong {
-            border: 0;
-            background-color: #377d87;
-          }
-          .home .search-areas input:checked + strong:before,
-          .home .search-areas input:checked + strong:after {
-            opacity: 1;
-            visibility: visible;
-          }
-          .home .search-areas label {
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-          }
-          .home .search-areas span.info {
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
-            margin-top: -5px;
-            margin-left: 10px;
-            font-size: 11px;
-            color: #fff;
-            text-align: center;
-            background-color: #9d9d9d;
-            line-height: 16px;
-            cursor: pointer;
-          }
-
           .home .home-search button {
             margin-top: 20px;
             background-color: #377d87;
             border-color: #377d87;
           }
-
           .home .home-search button:hover {
             margin-top: 20px;
             background-color: #28565e;
             border-color: #1e4147;
           }
-
-          .tooltip-inner {
-            min-width: 500px;
-          }
-
-          .slick-slider {
-            width: 100%;
-            max-height: 470px;
-            text-align: center;
-            overflow: hidden;
-          }
-
-          .home .home-search p {
-            font-size: 18px;
-            color: #19414c;
-          }
-
           @media screen and (max-width: 767px) {
             .home .home-search input::placeholder {
               font-size: 14px;
             }
+          }
+          .topics-view {
+            display: flex;
+            justify-content: start;
+            align-items: "center";
+            flex-direction: column;
+            padding-bottom: 60px;
+          }
+          .topics-view h3 {
+            margin-top: 20px;
+            color: #19414c;
+            font-weight: 600;
+            font-size: 26px;
+            margin-bottom: 20px;
+            margin-bottom: 20px;
           }
         `}</style>
       </Layout>
