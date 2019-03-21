@@ -2,13 +2,7 @@ const { capture } = require("./../../sentry.js");
 
 function getNewId(object, prefix, dpt) {
   return new Promise((resolve, reject) => {
-    var q = object
-      .findOne({
-        REF: { $regex: new RegExp("^" + prefix + dpt) }
-      })
-      .sort({
-        REF: -1
-      });
+    var q = object.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } }).sort({ REF: -1 });
     q.exec((error, doc) => {
       if (error) {
         reject(error);

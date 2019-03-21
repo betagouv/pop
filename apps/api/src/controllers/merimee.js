@@ -14,6 +14,7 @@ const {
   getPolygonCentroid,
   convertCOORM,
   fixLink,
+  getNewId,
   hasCorrectCoordinates
 } = require("./utils");
 const { capture } = require("./../sentry.js");
