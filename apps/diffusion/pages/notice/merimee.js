@@ -344,8 +344,8 @@ export default class extends React.Component {
               </Col>
             </Row>
           </Container>
+          <NoticeStyle />
         </div>
-        <NoticeStyle />
       </Layout>
     );
   }
