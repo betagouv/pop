@@ -436,6 +436,7 @@ class Importer extends Component {
               <Step title="Confirmation de l'import" />
             </Steps>
             {currentStep}
+            {this.props.children}
           </Col>
         </Row>
       </Container>

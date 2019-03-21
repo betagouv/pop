@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Modal, Input, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
+import ReactTags from "react-tag-input";
 import api from "../../services/api";
 import "./createUser.css";
+
+const Tags = ReactTags.WithContext;
 
 class CreateUser extends React.Component {
   state = {
@@ -15,35 +18,24 @@ class CreateUser extends React.Component {
     role: this.props.role,
     loading: false,
     error: "",
-    museofile: null
+    museofile: []
   };
 
-  createUser() {
-    this.setState({ loading: true });
-    const {
-      group,
-      email,
-      role,
-      institution,
-      prenom,
-      nom,
-      museofile
-    } = this.state;
-    if (group === "admin" && role !== "administrateur") {
-      this.setState({
-        error:
-          "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
-      });
-      return;
+  async createUser() {
+    try {
+      this.setState({ loading: true });
+      const { group, email, role, institution, prenom, nom, museofile } = this.state;
+      if (group === "admin" && role !== "administrateur") {
+        this.setState({
+          error: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
+        });
+        return;
+      }
+      await api.createUser(email, group, role, institution, prenom, nom, museofile);
+      this.setState({ modal: false });
+    } catch (error) {
+      this.setState({ error });
     }
-    api
-      .createUser(email, group, role, institution, prenom, nom, museofile)
-      .then(() => {
-        this.setState({ modal: false });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
   }
 
   museofile() {
@@ -56,10 +48,19 @@ class CreateUser extends React.Component {
         <div>
           Code Musée<em class="text-muted"> - MUSEOFILE</em>
         </div>
-        <Input
-          value={this.state.museofile}
+        <Tags
+          tags={this.state.museofile}
+          handleAddition={tag => {
+            this.setState({ museofile: [...this.state.museofile, tag] });
+          }}
+          handleDelete={i => {
+            this.setState({
+              museofile: this.state.museofile.filter((tag, index) => index !== i)
+            });
+          }}
           placeholder="Exemple : M5043"
-          onChange={e => this.setState({ museofile: e.target.value })}
+          autocomplete={0}
+          autofocus={false}
         />
       </div>
     );
@@ -69,15 +70,7 @@ class CreateUser extends React.Component {
     let groups = [];
 
     if (this.props.group === "admin") {
-      groups = groups.concat([
-        "admin",
-        "mnr",
-        "joconde",
-        "mh",
-        "inv",
-        "memoire",
-        "enluminures"
-      ]);
+      groups = groups.concat(["admin", "mnr", "joconde", "mh", "inv", "memoire", "enluminures"]);
     } else {
       groups.push(this.props.group);
     }
@@ -91,10 +84,7 @@ class CreateUser extends React.Component {
     roles = roles.map(e => <option key={e}>{e}</option>);
 
     return (
-      <Modal
-        isOpen={this.state.modal}
-        toggle={() => this.setState({ modal: !this.state.modal })}
-      >
+      <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
         <h3>Ajouter un nouvel utilisateur</h3>
         <div className="error">{this.state.error}</div>
         <div className="input-container">
@@ -172,11 +162,7 @@ class CreateUser extends React.Component {
     return (
       <div className="createUser">
         {this.renderModal()}
-        <Button
-          className="button"
-          color="primary"
-          onClick={() => this.setState({ modal: true })}
-        >
+        <Button className="button" color="primary" onClick={() => this.setState({ modal: true })}>
           Créer un nouvel utilisateur
         </Button>
       </div>

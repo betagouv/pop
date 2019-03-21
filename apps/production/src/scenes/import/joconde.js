@@ -8,6 +8,12 @@ import Joconde from "../../entities/Joconde";
 import utils from "./utils";
 
 class Import extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      museofile: this.props.museofile
+    };
+  }
   parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
       let file = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
@@ -20,8 +26,8 @@ class Import extends React.Component {
       const importedNotices = utils
         .parseAjoutPilote(res, Joconde)
         .map(value => {
-          if (!value.MUSEO && this.props.museofile) {
-            value.MUSEO = this.props.museofile;
+          if (!value.MUSEO && this.state.museofile) {
+            value.MUSEO = this.state.museofile;
           }
           if (!value.CONTACT) {
             value.CONTACT = this.props.email || "";
@@ -59,6 +65,21 @@ class Import extends React.Component {
       resolve({ importedNotices, fileNames: [file.name] });
     });
   }
+
+  renderMuseoFiles() {
+    const options = (this.props.museofile || []).map(o => <option key={o}>{o}</option>);
+    return (
+      <div style={{ alignSelf: "flex-start", display: "flex", padding: "15px 0px 15px 0px" }}>
+        <div style={{ paddingRight: "10px" }}>Code MUSEO : </div>
+        <select
+          onChange={e => this.setState({ museofile: e.target.value })}
+          value={this.state.museofile}
+        >
+          {options}
+        </select>
+      </div>
+    );
+  }
   render() {
     return (
       <Container className="import">
@@ -73,6 +94,7 @@ class Import extends React.Component {
             { name: "N° inventaire", key: "INV" }
           ]}
           dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt) et les images associées (au format .jpg) dans cette zone"
+          children={this.renderMuseoFiles()}
         />
       </Container>
     );
