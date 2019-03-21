@@ -3,12 +3,12 @@ const AWS = require("aws-sdk");
 const { s3Bucket } = require("../../config.js");
 
 // Surement pas besoin de l'écrire sur le disque ...
-function uploadFile(path, file) {
+function uploadFile(path, file, Bucket = s3Bucket) {
   const s3 = new AWS.S3();
   return new Promise((resolve, reject) => {
     const data = fs.readFileSync(file.path);
     const params = {
-      Bucket: s3Bucket,
+      Bucket: Bucket,
       Key: path,
       Body: data,
       ContentType: file.mimetype,
