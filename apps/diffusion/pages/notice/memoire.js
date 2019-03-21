@@ -12,7 +12,7 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { toFieldImages, schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
-import NoticeStyle from "../../src/notices/NoticeStyle";
+import noticeStyle from "../../src/notices/NoticeStyle";
 
 const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -350,7 +350,7 @@ export default class extends React.Component {
             </Row>
           </Container>
         </div>
-        <NoticeStyle />
+        <style jsx>{noticeStyle}</style>
       </Layout>
     );
   }

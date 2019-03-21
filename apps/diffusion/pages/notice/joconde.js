@@ -11,7 +11,7 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
 import { schema, toFieldImages } from "../../src/notices/utils";
-import NoticeStyle from "../../src/notices/NoticeStyle";
+import noticeStyle from "../../src/notices/NoticeStyle";
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -297,7 +297,7 @@ export default class extends React.Component {
             </Row>
           </Container>
         </div>
-        <NoticeStyle />
+        <style jsx>{noticeStyle}</style>
       </Layout>
     );
   }

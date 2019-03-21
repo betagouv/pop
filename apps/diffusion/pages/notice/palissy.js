@@ -12,7 +12,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
 import { schema, toFieldImages, findCollection, postFixedLink } from "../../src/notices/utils";
-import NoticeStyle from "../../src/notices/NoticeStyle";
+import noticeStyle from "../../src/notices/NoticeStyle";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -319,7 +319,7 @@ export default class extends React.Component {
             </Row>
           </Container>
         </div>
-        <NoticeStyle />
+        <style jsx>{noticeStyle}</style>
       </Layout>
     );
   }

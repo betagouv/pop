@@ -9,7 +9,7 @@ import Field from "../../src/notices/Field";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import { schema, toFieldImages } from "../../src/notices/utils";
-import NoticeStyle from "../../src/notices/NoticeStyle";
+import noticeStyle from "../../src/notices/NoticeStyle";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -218,7 +218,7 @@ export default class extends React.Component {
             </Row>
           </Container>
         </div>
-        <NoticeStyle />
+        <style jsx>{noticeStyle}</style>
       </Layout>
     );
   }

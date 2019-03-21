@@ -33,23 +33,23 @@ class SmallNotice extends React.Component {
               <p>{this.props.notice.AUTR}</p>
             </div>
           </div>
-        </a>
-        <style jsx>{`
-          .links .linked-notice-container {
-            overflow-x: auto;
-            max-height: 600px;
-          }
+          <style jsx>{`
+            .links .linked-notice-container {
+              overflow-x: auto;
+              max-height: 600px;
+            }
 
-          .notice .sidebar-section .linked-notice-container h3 {
-            color: #025d59;
-            font-weight: 500;
-            font-size: 14px;
-            margin-bottom: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            overflow: hidden;
-          }
-        `}</style>
+            .notice .sidebar-section .linked-notice-container h3 {
+              color: #025d59;
+              font-weight: 500;
+              font-size: 14px;
+              margin-bottom: 0;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+          `}</style>
+        </a>
       </Link>
     );
   }
