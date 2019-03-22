@@ -21,7 +21,7 @@ const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
 function transformBeforeCreateOrUpdate(notice) {
-  notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.length ? "oui" : "non";
+  notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
   if (notice.COORM && notice.ZONE) {
     const { coordinates, message } = convertCOORM(notice.COORM, notice.ZONE);
