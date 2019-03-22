@@ -80,6 +80,7 @@ export default class extends React.Component {
                       base: ["Photographies (Mémoire)"],
                       auteur: [
                         "Kertész, André",
+                        "Kertész, André (1894-1985)",
                         "KERTESZ André (dit), KERTESZ Andor (patronyme)",
                         "Kertész, André (photographe, 1894-1985)",
                         "Kertész, André - Donation André Kertész, Ministère de la culture (France), Médiathèque de l'architecture et du patrimoine, diffusion restreinte"
