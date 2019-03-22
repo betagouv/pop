@@ -149,12 +149,14 @@ export default class Map extends React.Component {
           delete removeList[key];
           return;
         }
-        const zoom = Math.min(this.map.getZoom() + 1, 15);
+        const zoom = Math.min(this.map.getZoom() + 1, 24);
+
         const marker = new Marker(feature, zoom >= 15 ? "#fc5e2a" : "#007bff");
         marker.onClick(marker => {
+          console.log("flyTo", zoom);
           const center = marker.getCoordinates();
-          this.map.flyTo({ center, zoom });
-          if (zoom === 15 || marker._type === "notice") {
+          this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 24) });
+          if (zoom >= 15 || marker._type === "notice") {
             this.selectMarker(marker);
           }
         });
