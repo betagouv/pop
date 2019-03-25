@@ -149,7 +149,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
           if (imageFile) {
             const shortname = convertLongNameToShort(imageFile.name);
             const newImage = utils.renameFile(imageFile, shortname);
-            memoireObj._images.push(newImage);
+            memoireObj._files.push(newImage);
             memoireObj.IMG = `memoire/${e.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(`Impossible de trouver l'image ${imagePath}`);
@@ -195,7 +195,7 @@ function ParseRenabl(files, xmlFiles, encoding) {
           if (imageFile) {
             const shortname = convertLongNameToShort(imageFile.name);
             const newImage = utils.renameFile(imageFile, shortname);
-            memoireObj._images.push(newImage);
+            memoireObj._files.push(newImage);
             memoireObj.IMG = `memoire/${obj.REF}/${shortname}`;
           } else {
             memoireObj._errors.push(`Impossible de trouver l'image ${image}`);

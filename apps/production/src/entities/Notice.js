@@ -6,7 +6,7 @@ export default class Notice {
     this._errors = [];
     this._messages = [];
     this._warnings = [];
-    this._images = [];
+    this._files = [];
     this._type = collection;
     this._mapping = Mapping[collection];
     this.POP_IMPORT = { value: [] };
@@ -96,6 +96,7 @@ export default class Notice {
     }
     return str;
   };
+
   extractUrls = function(str) {
     if (str === undefined) {
       return str;

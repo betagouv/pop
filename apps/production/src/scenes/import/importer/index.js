@@ -152,7 +152,7 @@ class Importer extends Component {
         });
         const notice = updated[i].makeItFlat();
         const collection = updated[i]._type;
-        await api.updateNotice(notice.REF, collection, notice, updated[i]._images);
+        await api.updateNotice(notice.REF, collection, notice, updated[i]._files);
       }
 
       //Create notice
@@ -164,7 +164,7 @@ class Importer extends Component {
         });
         const notice = created[i].makeItFlat();
         const collection = created[i]._type;
-        await api.createNotice(collection, notice, created[i]._images);
+        await api.createNotice(collection, notice, created[i]._files);
       }
 
       //Start Sending rapport
@@ -225,8 +225,9 @@ class Importer extends Component {
 
   renderSummary() {
     const noticesChargees = this.state.importedNotices.length;
+    console.log(this.state.importedNotices)
     const noticesCrees = this.state.importedNotices.filter(e => e._status === "created").length;
-    const noticesWithImages = this.state.importedNotices.filter(e => e._images.length).length;
+    const noticesWithImages = this.state.importedNotices.filter(e => e._files.length).length;
     const noticesModifiees = this.state.importedNotices.filter(e => e._status === "updated").length;
     const noticesRejetees = this.state.importedNotices.filter(e => e._status === "rejected").length;
     const noticesWarning = this.state.importedNotices.filter(

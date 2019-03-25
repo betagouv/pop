@@ -80,28 +80,13 @@ function parseFiles(files, encoding) {
       let newNotice;
       if (obj.REF.indexOf("PM") !== -1) {
         newNotice = new Palissy(obj);
+        addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
       } else if (obj.REF.indexOf("PA") !== -1) {
         newNotice = new Merimee(obj);
+        addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
       } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Memoire(obj);
-
-        // SI REFIMG nexiste pas, on ne met pas a jour le champ IMG
-        if (obj.REFIMG !== undefined) {
-          if (!obj.REFIMG) {
-            // SI REFIMG est vide, on suppr limage
-            newNotice.IMG = "";
-          } else {
-            let fileName = String(obj.REFIMG);
-            fileName = convertLongNameToShort(fileName);
-            let img = filesMap[fileName];
-            if (img) {
-              newNotice.IMG = `memoire/${newNotice.REF}/${fileName}`;
-              newNotice._images.push(img);
-            } else {
-              newNotice._errors.push(`Impossible de trouver l'image "${fileName}"`);
-            }
-          }
-        }
+        addFile("REFIMG", "IMG", obj, newNotice, filesMap);
       } else {
         reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`);
         return;
@@ -129,13 +114,28 @@ function parseFiles(files, encoding) {
   });
 }
 
+function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
+  // SI REFIMG nexiste pas, on ne met pas a jour le champ IMG
+  if (data[fromProperty] !== undefined) {
+    if (!data[fromProperty]) {
+      // SI REFIMG est vide, on suppr limage
+      newNotice[toProperty] = "";
+    } else {
+      let fileName = String(data[fromProperty]);
+      fileName = convertLongNameToShort(fileName);
+      const file = filesMap[fileName];
+      if (file) {
+        newNotice[toProperty] = `${newNotice._type}/${newNotice.REF}/${fileName}`;
+        newNotice._files.push(file);
+      } else {
+        newNotice._errors.push(`Impossible de trouver le fichier "${fileName}"`);
+      }
+    }
+  }
+}
+
 function convertLongNameToShort(str) {
-  return str
-    .substring(str.lastIndexOf("/") + 1)
-    .replace(/_[a-zA-Z0-9]\./g, ".")
-    .replace(/^.*[\\\/]/g, "")
-    .replace(/[a-zA-Z0-9]*_/g, "")
-    .toLowerCase();
+  return str.substring(str.lastIndexOf("/") + 1);
 }
 
 function readme() {

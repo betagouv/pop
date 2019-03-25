@@ -12,7 +12,10 @@ function uploadFile(path, file, Bucket = s3Bucket) {
       Key: path,
       Body: data,
       ContentType: file.mimetype,
-      ACL: "public-read"
+      ACL: "public-read",
+      Metadata: {
+        "Cache-Control": "max-age=31536000"
+      }
     };
 
     s3.putObject(params, err => {

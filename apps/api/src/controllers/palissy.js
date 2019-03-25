@@ -15,6 +15,7 @@ const {
   getPolygonCentroid,
   fixLink,
   convertCOORM,
+  uploadFile,
   hasCorrectCoordinates
 } = require("./utils");
 
@@ -165,21 +166,18 @@ function populateMerimeeREFO(notice) {
   });
 }
 
-router.get("/newId", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const prefix = req.query.prefix;
   const dpt = req.query.dpt;
-
-  if (!prefix || !dpt) {
-    return res.status(500).send({ error: "Missing dpt or prefix" });
+  try {
+    if (!prefix || !dpt) {
+      return res.status(500).send({ error: "Missing dpt or prefix" });
+    }
+    const id = await getNewId(Palissy, prefix, dpt);
+    return res.status(200).send({ id });
+  } catch (error) {
+    return res.status(500).send({ error });
   }
-
-  getNewId(Palissy, prefix, dpt)
-    .then(id => {
-      return res.status(200).send({ id });
-    })
-    .catch(error => {
-      return res.status(500).send({ error });
-    });
 });
 
 router.put(
@@ -190,8 +188,7 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-      const arr = await checkIfMemoireImageExist(notice);
-      notice.MEMOIRE = arr;
+      notice.MEMOIRE = await checkIfMemoireImageExist(notice);
 
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
@@ -203,9 +200,17 @@ router.put(
       //Add generate fields
       transformBeforeUpdate(notice);
 
-      await updateNotice(Palissy, ref, notice);
+      const arr = [];
 
-      await populateMerimeeREFO(notice);
+      for (let i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+      }
+
+      arr.push(updateNotice(Palissy, ref, notice));
+      arr.push(populateMerimeeREFO(notice));
+
+      await Promise.all(arr);
+
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -221,16 +226,22 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      const arr = await checkIfMemoireImageExist(notice);
+      notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       await populateMerimeeREFO(notice);
-      notice.MEMOIRE = arr;
-      //Add generate fields
+
       transformBeforeCreate(notice);
 
       const obj = new Palissy(notice);
-      //send error if obj is not well sync with ES
       checkESIndex(obj);
-      await obj.save();
+
+      const arr = [];
+      arr.push(obj.save());
+
+      for (let i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+      }
+
+      await Promise.all(arr);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);

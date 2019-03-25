@@ -57,7 +57,7 @@ class Import extends React.Component {
           } else {
             const shortname = Joconde.convertLongNameToShort(img.name);
             let newImage = utils.renameFile(img, shortname);
-            importedNotices[i]._images.push(newImage);
+            importedNotices[i]._files.push(newImage);
           }
         }
       }
