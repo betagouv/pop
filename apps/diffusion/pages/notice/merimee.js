@@ -305,8 +305,7 @@ export default class extends React.Component {
                       "REFIM",
                       "WEB",
                       "ARCHEO",
-                      "DOSADRS",
-                      "IMAGE"
+                      "DOSADRS"
                     ]}
                   />
                   <Field title="Date d'enquête" content={notice.DENQ} />
@@ -322,7 +321,6 @@ export default class extends React.Component {
                   <Field title="Visite guidé" content={notice.WEB} />
                   <Field title="Référence dans la base Patriarche" content={notice.ARCHEO} />
                   <Field title="Dossier adresse" content={notice.DOSADRS} separator="£" />
-                  <Field title="Autres liens" content={notice.IMAGE} />
                 </div>
               </Col>
               <Col sm="4">
