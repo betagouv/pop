@@ -32,7 +32,8 @@ class TopicCard extends React.Component {
         </Link>
         <style jsx>{`
           .topic-card {
-            color: red !important;
+            padding-left: 15px;
+            padding-right: 15px;
           }
           .topic-card :global(.card-img) {
             width: 100%;
