@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Card, CardImg, CardTitle, CardBody } from "reactstrap";
+import { Card, CardTitle, CardBody } from "reactstrap";
 import queryString from "query-string";
 
 const toReactiveSearchParams = params => {
@@ -23,7 +23,7 @@ class TopicCard extends React.Component {
         <Link href={href} as={alias}>
           <a>
             <Card>
-              <CardImg src={img} alt={txt} className="card-img" />
+              <img src={img} alt={txt} className="card-img" height="220" />
               <CardBody>
                 <CardTitle>{txt}</CardTitle>
               </CardBody>
