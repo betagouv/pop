@@ -110,7 +110,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|Array|non|non|non|non|||
 
 ### _id
 

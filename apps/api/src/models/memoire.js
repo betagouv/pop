@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
 var mongoosastic = require("mongoosastic");
 var getElasticInstance = require("../elasticsearch");
+
 const Schema = new mongoose.Schema(
   {
     PRODUCTEUR: {
@@ -9,12 +10,13 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: `Producteur de la donnée déterminé grâce à la référence : \n
-      IV=INV\n
-      OA=CAOA\n
-      MH=CRMH\n
-      AR=ARCH\n
-      AP=SDAP\n
-      Autre=SAP`,
+      Si la REF commence par IVN ou IVR ou IVD ou IVC, alors PRODUCTEUR=INV\n
+      Si la condition du dessus n'est pas respectée et la REF commence par OA, alors PRODUCTEUR = CAOA\n
+      Si les conditions du dessus ne sont pas respectées et la REF commence par MH, alors PRODUCTEUR = CRMH\n
+      Si les conditions du dessus ne sont pas respectées et la REF commence par AR, alors PRODUCTEUR = ARCH\n
+      Si les conditions du dessus ne sont pas respectées et la REF commence par AP et IDPROD commence par Service départemental, alors PRODUCTEUR = UDAP\n
+      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = SAP\n
+      Sinon PRODUCTEUR = AUTRE\n`,
         generated: true,
         label: "Producteur"
       }

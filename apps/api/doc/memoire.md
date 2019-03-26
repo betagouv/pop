@@ -128,17 +128,20 @@
 ### PRODUCTEUR
 Producteur de la donnée déterminé grâce à la référence : 
 
-      IV=INV
+      Si la REF commence par IVN ou IVR ou IVD ou IVC, alors PRODUCTEUR=INV
 
-      OA=CAOA
+      Si la condition du dessus n'est pas respectée et la REF commence par OA, alors PRODUCTEUR = CAOA
 
-      MH=CRMH
+      Si les conditions du dessus ne sont pas respectées et la REF commence par MH, alors PRODUCTEUR = CRMH
 
-      AR=ARCH
+      Si les conditions du dessus ne sont pas respectées et la REF commence par AR, alors PRODUCTEUR = ARCH
 
-      AP=SDAP
+      Si les conditions du dessus ne sont pas respectées et la REF commence par AP et IDPROD commence par Service départemental, alors PRODUCTEUR = UDAP
 
-      Autre=SAP
+      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = SAP
+
+      Sinon PRODUCTEUR = AUTRE
+
 
 
 
