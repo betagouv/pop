@@ -60,7 +60,7 @@ export default class extends React.Component {
             </h1>
             <Input
               id="main-search"
-              placeholder="Recherchez dans plus de 3 millions de documents"
+              placeholder="Recherchez parmi plus de 3 millions de documents"
               onKeyPress={event => {
                 if (event.key === "Enter") {
                   this.gotoSearch();
