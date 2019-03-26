@@ -2,9 +2,9 @@ const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
 const { join } = require("path");
-const Sentry = require('@sentry/node');
+const Sentry = require("@sentry/node");
 
-Sentry.init({ dsn: "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21"});
+Sentry.init({ dsn: "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21" });
 const dev = process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "staging";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -23,6 +23,7 @@ app.prepare().then(() => {
     const noticeRegex = /^\/notice\/(.*?)\/(.*)$/;
     const museoRegex = /^\/museo\/(.*?)$/;
     const sitemapRegex = /^\/sitemap\/(.*?)$/;
+    const galleryRegex = /^\/gallery\/(.*?)$/;
     const searchRegex = /^\/(advanced-search|search)\/(list|map|mosaic)(?:\/(.+))?$/;
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
     const isNotSecure =
@@ -42,7 +43,6 @@ app.prepare().then(() => {
       const path = join(__dirname, "../../.next", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {
-      const renderPath = "/search";
       const renderParams = Object.assign(
         {
           view: pathname.replace(searchRegex, "$2"),
@@ -51,15 +51,17 @@ app.prepare().then(() => {
         },
         query
       );
-      app.render(req, res, renderPath, renderParams);
+      app.render(req, res, "/search", renderParams);
     } else if (pathname.match(noticeRegex)) {
       const renderPath = "/notice/" + pathname.replace(noticeRegex, "$1");
       const renderParams = Object.assign({ id: pathname.replace(noticeRegex, "$2") }, query);
       app.render(req, res, renderPath, renderParams);
     } else if (pathname.match(museoRegex)) {
-      const renderPath = "/museo";
       const renderParams = Object.assign({ id: pathname.replace(museoRegex, "$1") }, query);
-      app.render(req, res, renderPath, renderParams);
+      app.render(req, res, "/museo", renderParams);
+    } else if (pathname.match(galleryRegex)) {
+      const renderParams = Object.assign({ id: pathname.replace(galleryRegex, "$1") }, query);
+      app.render(req, res, "/gallery", renderParams);
     } else {
       handle(req, res, parsedUrl);
     }

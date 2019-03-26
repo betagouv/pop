@@ -10,6 +10,8 @@ require("./mongo");
 
 const app = express();
 
+app.enable("trust proxy");
+
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Parse the ndjson as text for ES proxy
@@ -39,6 +41,8 @@ app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
 app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
+
+app.use("/gallery", require("./controllers/gallery"));
 
 // Proxy to GINCO API
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
