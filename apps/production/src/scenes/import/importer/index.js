@@ -225,7 +225,6 @@ class Importer extends Component {
 
   renderSummary() {
     const noticesChargees = this.state.importedNotices.length;
-    console.log(this.state.importedNotices)
     const noticesCrees = this.state.importedNotices.filter(e => e._status === "created").length;
     const noticesWithImages = this.state.importedNotices.filter(e => e._files.length).length;
     const noticesModifiees = this.state.importedNotices.filter(e => e._status === "updated").length;

@@ -115,10 +115,10 @@ function parseFiles(files, encoding) {
 }
 
 function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
-  // SI REFIMG nexiste pas, on ne met pas a jour le champ IMG
+  // IF fromProperty doesnt exist, we dont update toProperty
   if (data[fromProperty] !== undefined) {
     if (!data[fromProperty]) {
-      // SI REFIMG est vide, on suppr limage
+      // If fromProperty is empty, we delete toProperty
       newNotice[toProperty] = "";
     } else {
       let fileName = String(data[fromProperty]);

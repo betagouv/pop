@@ -65,7 +65,6 @@ class api {
   }
 
   updateNotice(ref, collection, data, files = []) {
-    console.log("files", files);
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
