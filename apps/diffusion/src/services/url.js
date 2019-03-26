@@ -39,6 +39,12 @@ const differsByOneCharInMainSearch = (previous, current) => {
   );
 };
 
+export function paramsToUrlAlias(mode, view, base, qs) {
+  return `/${modeToRoute(mode)}/${view}${mode === "advanced" ? `/${base}` : ""}${
+    qs ? "?" + qs : ""
+  }`;
+}
+
 export function replaceSearchRouteWithUrl(options = {}) {
   const { mode, view, base, url } = options;
 
@@ -54,7 +60,7 @@ export function replaceSearchRouteWithUrl(options = {}) {
   // Goto route
   return Router.replace(
     `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-    `/${modeToRoute(mode)}/${view}${mode === "advanced" ? `/${base}` : ""}${qs ? "?" + qs : ""}`
+    paramsToUrlAlias(mode, view, base, qs)
   );
 }
 
@@ -80,8 +86,6 @@ export function pushSearchRoute(options = {}) {
   }
   return method(
     `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-    `/${modeToRoute(mode)}/${view}${mode === "advanced" ? `/${base}` : ""}${
-      searchParams ? "?" + queryString.stringify(searchParams) : ""
-    }`
+    paramsToUrlAlias(mode, view, base, searchParams ? queryString.stringify(searchParams) : "")
   );
 }

@@ -2,7 +2,6 @@ const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
 const { join } = require("path");
-// const API = require("./api");
 const Sentry = require("@sentry/node");
 
 Sentry.init({ dsn: "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21" });
@@ -61,10 +60,16 @@ app.prepare().then(() => {
       const renderParams = Object.assign({ id: pathname.replace(museoRegex, "$1") }, query);
       app.render(req, res, "/museo", renderParams);
     } else if (pathname.match(galleryRegex)) {
+      console.log("POODSODKSOK");
+      const renderParams = Object.assign({ id: pathname.replace(galleryRegex, "$1") }, query);
+      app.render(req, res, "/gallery", renderParams);
       /*
       const id = pathname.replace(museoRegex, "$1");
       let params = {}
       try {
+        const result = (async () => {
+          fetch(url)
+        })
         const gallery = (async () => await API.getGallery(id))();
         params = gallery.params;
       } catch(e) {}
