@@ -60,26 +60,8 @@ app.prepare().then(() => {
       const renderParams = Object.assign({ id: pathname.replace(museoRegex, "$1") }, query);
       app.render(req, res, "/museo", renderParams);
     } else if (pathname.match(galleryRegex)) {
-      console.log("POODSODKSOK");
       const renderParams = Object.assign({ id: pathname.replace(galleryRegex, "$1") }, query);
       app.render(req, res, "/gallery", renderParams);
-      /*
-      const id = pathname.replace(museoRegex, "$1");
-      let params = {}
-      try {
-        const result = (async () => {
-          fetch(url)
-        })
-        const gallery = (async () => await API.getGallery(id))();
-        params = gallery.params;
-      } catch(e) {}
-      const renderParams = Object.assign({
-        view: "simple",
-        mode: "mosaic",
-        ...params
-      }, query);
-      app.render(req, res, "/gallery", renderParams);
-      */
     } else {
       handle(req, res, parsedUrl);
     }

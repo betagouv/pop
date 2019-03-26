@@ -2,6 +2,7 @@ const express = require("express");
 const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const router = express.Router();
+const { capture } = require("./../sentry.js");
 const Gallery = require("../models/gallery");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -27,10 +28,11 @@ router.post("/", limiter, async (req, res) => {
     return res.sendStatus(400);
   }
   try {
-    const gallery = new Gallery({params});
+    const gallery = new Gallery({ params });
     doc = await gallery.save();
   } catch (e) {
-    console.log(e)
+    console.log(e);
+    capture(e);
   }
   return doc ? res.status(200).send(doc) : res.sendStatus(400);
 });

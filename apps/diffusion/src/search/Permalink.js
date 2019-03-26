@@ -5,19 +5,24 @@ import API from "../services/api";
 class Permalink extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { modal: false, href: null };
+    this.state = { modal: false, link: null };
   }
 
   handleClick = async () => {
-    const result = await API.createGallery(this.props.query);
-    const data = await result.json();
-    this.setState({ href: "https://pop.culture.gouv.fr/gallery/" + data._id });
+    try {
+      const result = await API.createGallery(this.props.query);
+      const data = await result.json();
+      const {protocol, host} = window.location;
+      this.setState({  link: `${protocol}//${host}/gallery/${data._id}` });
+    } catch (e) {
+      this.setState({ link: "La génération du permalien a échoué." });
+    }
   };
 
   toggle = () => {
     this.setState(prevState => ({
       modal: !prevState.modal,
-      href: prevState.href && prevState.modal ? null : prevState.href
+      link: prevState.link && prevState.modal ? null : prevState.link
     }));
   };
 
@@ -41,13 +46,13 @@ class Permalink extends React.Component {
           <ModalHeader toggle={this.toggle}>Partager la recherche</ModalHeader>
           <ModalBody>
             <div className="modal-body-container">
-              {!this.state.href ? (
+              {!this.state.link ? (
                 <button className="btn btn-link" onClick={this.handleClick}>
                   Générer un permalien
                 </button>
               ) : (
                 <div className="text-center pt-2">
-                  <small>{this.state.href}</small>
+                  <small>{this.state.link}</small>
                 </div>
               )}
             </div>

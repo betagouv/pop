@@ -23,7 +23,6 @@ class api {
   }
 
   createGallery(params) {
-    console.log(JSON.stringify({ params }));
     return fetch(`${api_url}/gallery`, {
       method: "POST",
       headers: {
