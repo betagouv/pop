@@ -199,6 +199,7 @@ const Mnr = ({ data }) => {
                 {INV}
               </span>
             </div>
+            <img src="/static/mnr.png" className="producteur" />
             <div>
               <p>{domn}</p>
               <p>{loc}</p>
