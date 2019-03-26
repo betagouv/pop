@@ -15,6 +15,7 @@ const {
   convertCOORM,
   fixLink,
   getNewId,
+  uploadFile,
   hasCorrectCoordinates
 } = require("./utils");
 const { capture } = require("./../sentry.js");
@@ -151,21 +152,19 @@ function populateREFO(notice) {
   });
 }
 
-router.get("/newId", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const prefix = req.query.prefix;
-  const dpt = req.query.dpt;
+router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const prefix = req.query.prefix;
+    const dpt = req.query.dpt;
 
-  if (!prefix || !dpt) {
-    return res.status(500).send({ error: "Missing dpt or prefix" });
+    if (!prefix || !dpt) {
+      return res.status(500).send({ error: "Missing dpt or prefix" });
+    }
+    const id = await getNewId(Merimee, prefix, dpt);
+    return res.status(200).send({ id });
+  } catch (error) {
+    return res.status(500).send({ error });
   }
-
-  getNewId(Merimee, prefix, dpt)
-    .then(id => {
-      return res.status(200).send({ id });
-    })
-    .catch(error => {
-      return res.status(500).send({ error });
-    });
 });
 
 router.put(
@@ -176,9 +175,8 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-      const arr = await checkIfMemoireImageExist(notice);
+      notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
-      notice.MEMOIRE = arr;
 
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
@@ -187,10 +185,17 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
+      const arr = [];
+
+      for (let i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`merimee/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+      }
       //Add generate fields
       transformBeforeUpdate(notice);
 
-      await updateNotice(Merimee, ref, notice);
+      arr.push(updateNotice(Merimee, ref, notice));
+
+      await Promise.all(arr);
 
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -207,18 +212,21 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      const arr = await checkIfMemoireImageExist(notice);
+      notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
-      notice.MEMOIRE = arr;
-
-      //Add generate fields
       transformBeforeCreate(notice);
 
       const obj = new Merimee(notice);
-
-      //send error if obj is not well sync with ES
       checkESIndex(obj);
-      await obj.save();
+
+      const arr = [];
+      arr.push(obj.save());
+
+      for (let i = 0; i < req.files.length; i++) {
+        arr.push(uploadFile(`merimee/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+      }
+
+      await Promise.all(arr);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);

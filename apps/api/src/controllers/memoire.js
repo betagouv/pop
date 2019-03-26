@@ -37,7 +37,6 @@ function transformBeforeCreate(notice) {
   notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
 }
 
-
 async function checkMemoire(notice) {
   const errors = [];
   try {
@@ -61,9 +60,7 @@ async function checkMemoire(notice) {
       }
       const doc = await col.findOne({ REF: notice.LBASE[i] });
       if (!doc) {
-        errors.push(
-          `La notice ${notice.LBASE[i]} contenue dans LBASE n'existe pas`
-        );
+        errors.push(`La notice ${notice.LBASE[i]} contenue dans LBASE n'existe pas`);
       }
     }
 
@@ -83,7 +80,6 @@ async function checkMemoire(notice) {
   }
   return errors;
 }
-
 
 function findProducteur(REF, IDPROD, EMET) {
   if (
@@ -178,9 +174,6 @@ router.put("/:ref", passport.authenticate("jwt", { session: false }), upload.any
 
   const arr = [];
   for (let i = 0; i < req.files.length; i++) {
-    //TODO
-    //DELETE the current file IMAGE when update a new file
-
     arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
   }
 

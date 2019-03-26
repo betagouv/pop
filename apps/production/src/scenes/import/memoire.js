@@ -63,7 +63,7 @@ function parseFiles(files, encoding) {
             if (img) {
               // const newImage = utils.renameFile(img, shortName);
               notice.IMG = `memoire/${notice.REF}/${fileName}`;
-              notice._images.push(img);
+              notice._files.push(img);
             } else {
               notice._errors.push(`Impossible de trouver l'image "${fileName}"`);
             }

@@ -64,16 +64,16 @@ class api {
     return request.post(`${api_url}/import`, formData);
   }
 
-  updateNotice(ref, collection, data, images = []) {
+  updateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("file", images[i], images[i].name);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i].name);
     }
     return request.put(`${api_url}/${collection}/${ref}`, formData);
   }
 
-  createNotice(collection, data, images = []) {
+  createNotice(collection, data, files = []) {
     for (let propName in data) {
       // Clean object.
       if (!data[propName]) {
@@ -82,8 +82,8 @@ class api {
     }
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
-    for (let i = 0; i < images.length; i++) {
-      formData.append("file", images[i], images[i].name);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i].name);
     }
     return request.post(`${api_url}/${collection}`, formData);
   }
@@ -150,7 +150,11 @@ class api {
   }
 
   updateMuseo(ref, data) {
-    return request.put(`${api_url}/museo/${ref}`, JSON.stringify({museo: data}), "application/json");
+    return request.put(
+      `${api_url}/museo/${ref}`,
+      JSON.stringify({ museo: data }),
+      "application/json"
+    );
   }
 
   getEnluminures(ref) {
