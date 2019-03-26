@@ -4,6 +4,7 @@ import { ReactiveBase } from "@appbaseio/reactivesearch";
 import Layout from "../src/components/Layout";
 import Header from "../src/search/Header";
 import Menu from "../src/search/Menu";
+import Permalink from "../src/search/Permalink";
 import MobileFilters from "../src/search/MobileFilters";
 import Results from "../src/search/Results";
 import Search from "../src/search/Search";
@@ -21,8 +22,9 @@ export default class extends React.Component {
   };
 
   static async getInitialProps({ asPath, query }) {
-    const { view, mode, ...rest } = query;
-    return { asPath, queryString: queryString.stringify(rest), view, mode, base: query.base };
+    const { view, mode, base, ...rest } = query;
+    const qs = queryString.stringify(rest);
+    return { asPath, queryString: qs, view, mode, base, query };
   }
 
   render = () => {
@@ -47,6 +49,7 @@ export default class extends React.Component {
             />
           </Head>
           <Container fluid style={{ maxWidth: 1860 }}>
+            <Permalink query={this.props.query} />
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
             <ReactiveBase
@@ -59,12 +62,12 @@ export default class extends React.Component {
             >
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
-                  <Menu
-                    location={this.props.queryString}
-                    mobile_menu={this.state.mobile_menu}
-                    closeMenu={() => this.setState({ mobile_menu: false })}
-                    view={this.props.view}
-                  />
+                  <div className={`search-sidebar ${this.state.mobile_menu || ""}`}>
+                    <Menu
+                      location={this.props.queryString}
+                      closeMenu={() => this.setState({ mobile_menu: false })}
+                    />
+                  </div>
                 ) : null}
                 <div className="search-results">
                   <div className={`search-container search-container-${this.props.mode}`}>
@@ -200,7 +203,7 @@ export default class extends React.Component {
             padding-top: 10px;
           }
 
-          .search .search-sidebar {
+          .search .search-filters-sidebar {
             background-color: #fff;
             padding: 15px;
             border-radius: 5px;
@@ -244,15 +247,15 @@ export default class extends React.Component {
             margin-right: 20px;
           }
 
-          .search .search-sidebar h4,
-          .search .search-sidebar .selected-filters h2 {
+          .search .search-filters-sidebar h4,
+          .search .search-filters-sidebar .selected-filters h2 {
             color: #19414c;
             font-weight: 700;
             font-size: 20px;
             margin-bottom: 15px;
             text-align: center;
           }
-          .search .search-sidebar .selected-filters a {
+          .search .search-filters-sidebar .selected-filters a {
             color: #19414c;
             font-weight: 400;
             font-size: 16px;
@@ -264,7 +267,7 @@ export default class extends React.Component {
             border: 1px solid #d7d3d3;
             border-radius: 5px;
           }
-          .search .search-sidebar .selected-filters a:last-child {
+          .search .search-filters-sidebar .selected-filters a:last-child {
             background-color: #377d87;
             border: 0;
             color: #fff;
@@ -304,7 +307,7 @@ export default class extends React.Component {
             font-size: 18px;
           }
 
-          .search .search-filters {
+          .search .search-sidebar {
             flex: 0 0 25%;
             max-width: 25%;
             position: relative;
@@ -324,7 +327,7 @@ export default class extends React.Component {
             padding-left: 15px;
           }
 
-          .search .search-filters .close_mobile_menu,
+          .search .search-sidebar .close_mobile_menu,
           .search .filter_mobile_menu {
             display: none;
           }
@@ -419,7 +422,7 @@ export default class extends React.Component {
           }
 
           @media screen and (max-width: 767px) {
-            .search .search-filters {
+            .search .search-sidebar {
               position: fixed;
               left: 0;
               top: 0;
@@ -451,7 +454,7 @@ export default class extends React.Component {
               margin: 5px;
             }
 
-            .search .search-filters .close_mobile_menu {
+            .search .search-sidebar .close_mobile_menu {
               visibility: visible;
               display: flex;
               justify-content: flex-end;

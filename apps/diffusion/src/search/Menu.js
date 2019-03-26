@@ -21,9 +21,8 @@ const DEFAULT_FILTER = [
   "ref"
 ];
 
-const Menu = ({ location, mobile_menu, closeMenu, view }) => (
-  <div className={`search-filters ${mobile_menu}`}>
-    <aside className="search-sidebar">
+const Menu = ({ location, closeMenu }) => (
+    <aside className="search-filters-sidebar">
       <div className="close_mobile_menu" onClick={closeMenu}>
         x
       </div>
@@ -141,7 +140,6 @@ const Menu = ({ location, mobile_menu, closeMenu, view }) => (
         location={location}
       />
     </aside>
-  </div>
 );
 
 export default Menu;

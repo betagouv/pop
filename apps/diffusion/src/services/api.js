@@ -18,6 +18,28 @@ class api {
     return this._get(`${api_url}/museo/${ref}`);
   }
 
+  getGallery(id) {
+    return this._get(`${api_url}/gallery/${id}`);
+  }
+
+  createGallery(params) {
+    console.log(JSON.stringify({ params }));
+    return fetch(`${api_url}/gallery`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "POP Diffusion"
+      },
+      cache: "no-cache",
+      credentials: "same-origin",
+      mode: "cors",
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify({ params })
+    });
+  }
+
   _get(url) {
     return new Promise((resolve, reject) => {
       fetch(url)
