@@ -48,7 +48,7 @@ app.use("/gallery", require("./controllers/gallery"));
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 
 // Proxy to ES
-// app.use("/search", require("./controllers/search"));
+app.use("/search", require("./controllers/search"));
 
 app.post("/mail", passport.authenticate("jwt", { session: false }), (req, res) => {
   const { subject, to, body } = req.body;
