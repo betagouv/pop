@@ -73,10 +73,9 @@ export function toGeoJson(arr) {
 
     let feature = {
       type: "Feature",
-      id: item.points[0].meta().hits[0]._source.REF,
+      id: item.points[0].meta().key,
       properties: {
-        id: item.points[0].meta().hits[0]._source.REF,
-        hits: item.points[0].meta().hits
+        id: item.points[0].meta().key
       },
       geometry: {
         type: "Point",
@@ -85,6 +84,7 @@ export function toGeoJson(arr) {
     };
 
     feature.properties.count = item.points.reduce((acc, re) => acc + re.meta().count, 0);
+    feature.properties.hits = item.points.reduce((acc, re) => acc.concat(re.meta().hits), []);
 
     geoJsonFormated.features.push(feature);
   }
