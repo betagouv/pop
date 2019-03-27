@@ -153,9 +153,13 @@ export default class Map extends React.Component {
 
         const marker = new Marker(feature, zoom >= 15 ? "#fc5e2a" : "#007bff");
         marker.onClick(marker => {
-          console.log("flyTo", zoom);
+
+          let zoom = this.map.getZoom();
+          if(marker._type == "cluster"){
+            zoom++;
+          }
           const center = marker.getCoordinates();
-          this.map.flyTo({ center, zoom: Math.min(this.map.getZoom() + 1, 24) });
+          this.map.flyTo({ center, zoom: Math.min(zoom, 24) });
           if (zoom >= 15 || marker._type === "notice") {
             this.selectMarker(marker);
           }
@@ -166,8 +170,10 @@ export default class Map extends React.Component {
     }
 
     for (let key in removeList) {
-      this.markers[key].remove();
-      delete this.markers[key];
+      if (!this.markers[key]._isSelected) {
+        this.markers[key].remove();
+        delete this.markers[key];
+      }
     }
 
     for (let key in newMarkers) {
