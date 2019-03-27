@@ -223,7 +223,7 @@ router.post("/updateProfile", passport.authenticate("jwt", { session: false }), 
 router.post("/signin", (req, res) => {
   const failMessage = {
     success: false,
-    msg: `L'authentification à échoué. Email ou mot de passe incorrect.`
+    msg: `L'authentification a échoué. Email ou mot de passe incorrect.`
   };
   User.findOne(
     {
