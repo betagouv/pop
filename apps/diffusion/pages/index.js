@@ -153,114 +153,161 @@ export default class extends React.Component {
                     mainSearch: "mucha"
                   }}
                 />
-              </Slider>
-              
-                <h3>Mode</h3>
-                <Slider {...settings}>
-                  <TopicCard
-                    img="/static/topics/lagerfeld.jpg"
-                    txt="Karl Lagerfeld"
-                    params={{
-                      mainSearch: "Lagerfeld"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/balmain.jpg"
-                    txt="Pierre Balmain"
-                    params={{
-                      mainSearch: "Balmain"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/schiaparelli.jpg"
-                    txt="Elsa Schiaparelli"
-                    params={{
-                      mainSearch: "Schiaparelli"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/chanel.jpg"
-                    txt="Coco Chanel"
-                    params={{
-                      mainSearch: '"Coco Chanel"'
-                    }}
-                  />
-                </Slider>
+                <TopicCard
+                  img="/static/topics/maar.jpg"
+                  txt="Portraits de Dora Maar par Picasso"
+                  params={{
+                    mainSearch: '"dora maar"'
+                  }}
+                />
+<TopicCard
+                  img="/static/topics/toulouse-lautrec.jpg"
+                  txt="Peintures de Toulouse-Lautrec"
+                  params={{
+                    mainSearch: '"toulouse-lautrec"',
+                    domn: ["peinture"]
+                  }}
+                />
 
-                <h3>Voyages</h3>
-                <Slider {...settings}>
-                  <TopicCard
-                    img="/static/topics/asie.jpg"
-                    txt="Asie orientale"
-                    params={{
-                      base: ["Collections des musées de France (Joconde)"],
-                      domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/venise.jpg"
-                    txt="Venise"
-                    params={{
-                      mainSearch: "venise"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/japon.jpg"
-                    txt="Japon"
-                    params={{
-                      mainSearch: "Japon",
-                      image: "oui"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/egypte.jpg"
-                    txt="Egypte"
-                    params={{
-                      mainSearch: "Egypte",
-                      image: "oui"
-                    }}
-                  />
-                </Slider>
-                
-                <h3>Artistes femme</h3>
-                <Slider {...settings}>
-                  <TopicCard
-                    img="/static/topics/bonheur.jpg"
-                    txt="Rosa Bonheur"
-                    params={{
-                      auteur: [
-                        "BONHEUR Marie Rosalie, BONHEUR Rosa (dite)",
-                        "BONHEUR Marie Rosalie ; BONHEUR Rosa (dite)",
-                        "BONHEUR Rosa (dessinateur)"
-                      ],
-                      image: "oui"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/gerard.jpg"
-                    txt="Marguerite Gérard"
-                    params={{
-                      auteur: ["GERARD Marguerite (peintre)", "GERARD Marguerite"],
-                      image: "oui"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/nicolas.jpg"
-                    txt="Marie Nicolas"
-                    params={{
-                      auteur: ["NICOLAS Marie"],
-                      image: "oui"
-                    }}
-                  />
-                  <TopicCard
-                    img="/static/topics/vigee.jpg"
-                    txt="Élisabeth Vigée Le Brun"
-                    params={{
-                      auteur: ["VIGEE-LE BRUN Elisabeth Louise"],
-                      image: "oui"
-                    }}
-                  />
-                </Slider>
+              </Slider>
+
+              <h3>Mode</h3>
+              <Slider {...settings}>
+                <TopicCard
+                  img="/static/topics/lagerfeld.jpg"
+                  txt="Karl Lagerfeld"
+                  params={{
+                    mainSearch: "Lagerfeld"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/balmain.jpg"
+                  txt="Pierre Balmain"
+                  params={{
+                    mainSearch: "Balmain"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/schiaparelli.jpg"
+                  txt="Elsa Schiaparelli"
+                  params={{
+                    mainSearch: "Schiaparelli"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/chanel.jpg"
+                  txt="Coco Chanel"
+                  params={{
+                    mainSearch: '"Coco Chanel"'
+                  }}
+                />
+              </Slider>
+
+              <h3>Voyages</h3>
+              <Slider {...settings}>
+                <TopicCard
+                  img="/static/topics/asie.jpg"
+                  txt="Asie orientale"
+                  params={{
+                    base: ["Collections des musées de France (Joconde)"],
+                    domn: ["Asie orientale", "Asie du sud-est", "Asie Orientale"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/venise.jpg"
+                  txt="Venise"
+                  params={{
+                    mainSearch: "venise"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/japon.jpg"
+                  txt="Japon"
+                  params={{
+                    mainSearch: "Japon"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/egypte.jpg"
+                  txt="Egypte"
+                  params={{
+                    mainSearch: "Egypte"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/australie.jpg"
+                  txt="Australie"
+                  params={{
+                    mainSearch: "Australie"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/dakar.jpg"
+                  txt="Dakar"
+                  params={{
+                    mainSearch: "Dakar"
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/liban.jpg"
+                  txt="Liban"
+                  params={{
+                    mainSearch: "Liban",
+                    base: [
+                      "Photographies (Mémoire)",
+                      "Enluminures (Enluminures)",
+                      "Collections des musées de France (Joconde)"
+                    ]
+                  }}
+                />
+              </Slider>
+
+              <h3>Artistes femme</h3>
+              <Slider {...settings}>
+                <TopicCard
+                  img="/static/topics/bonheur.jpg"
+                  txt="Rosa Bonheur"
+                  params={{
+                    auteur: [
+                      "BONHEUR Marie Rosalie, BONHEUR Rosa (dite)",
+                      "BONHEUR Marie Rosalie ; BONHEUR Rosa (dite)",
+                      "BONHEUR Rosa (dessinateur)"
+                    ]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/gerard.jpg"
+                  txt="Marguerite Gérard"
+                  params={{
+                    auteur: ["GERARD Marguerite (peintre)", "GERARD Marguerite"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/nicolas.jpg"
+                  txt="Marie Nicolas"
+                  params={{
+                    auteur: ["NICOLAS Marie"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/vigee.jpg"
+                  txt="Élisabeth Vigée Le Brun"
+                  params={{
+                    auteur: ["VIGEE-LE BRUN Elisabeth Louise"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/morisot.jpg"
+                  txt="Berthe Morisot"
+                  params={{
+                    auteur: [
+                      "MANET Berthe, MORISOT Berthe (née)",
+                      "MORISOT Berthe",
+                      "MORISOT Berthe (dessinateur)"
+                    ]
+                  }}
+                />
+              </Slider>
             </Container>
           </div>
         </div>
