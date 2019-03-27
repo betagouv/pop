@@ -25,7 +25,11 @@ class CreateUser extends React.Component {
   async createUser() {
     try {
       this.setState({ loading: true });
-      const { group, email, role, institution, prenom, nom, museofile } = this.state;
+      let { group, email, role, institution, prenom, nom, museofile } = this.state;
+      if (this.state.taginput) {
+        museofile = [...museofile, this.state.taginput];
+      }
+
       if (group === "admin" && role !== "administrateur") {
         this.setState({
           error: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
@@ -52,7 +56,7 @@ class CreateUser extends React.Component {
         <Tags
           tags={this.state.museofile.map(e => ({ text: e, id: e }))}
           handleAddition={tag => {
-            this.setState({ museofile: [...this.state.museofile, tag.text] });
+            this.setState({ museofile: [...this.state.museofile, tag.text], taginput: "" });
           }}
           handleDelete={i => {
             this.setState({
@@ -62,11 +66,6 @@ class CreateUser extends React.Component {
           placeholder="Exemple : M5043"
           autocomplete={0}
           autofocus={false}
-          handleInputBlur={() => {
-            if (this.state.taginput) {
-              this.setState({ museofile: [...this.state.museofile, this.state.taginput] });
-            }
-          }}
           handleInputChange={taginput => {
             this.setState({ taginput });
           }}
