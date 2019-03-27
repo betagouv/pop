@@ -21,11 +21,11 @@
   margin: 20px;
 }
 
-.notice .image {
+/* .notice .image {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .notice .leaflet-parent-container {
   max-width: 400px;

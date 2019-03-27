@@ -16,7 +16,7 @@ class FieldImages extends React.Component {
 
   onDrop(files) {
     const imageFiles = [...this.state.imageFiles.concat(...files)];
-    this.props.updateFiles(imageFiles);
+    this.props.filesToUpload(imageFiles);
     this.setState({ imageFiles });
 
     const urls = files.map(e => this.props.createUrlFromName(e.name));
@@ -30,6 +30,7 @@ class FieldImages extends React.Component {
 
   getFile(e) {
     // If image file is the image
+
     const index = this.state.imageFiles.findIndex(f => e.indexOf(`/${f.name}`) !== -1);
 
     //if not file just uploaded
@@ -60,6 +61,38 @@ class FieldImages extends React.Component {
     });
   }
 
+  updateOrder(from, to) {
+    console.log(from, to);
+    const images = this.getImages();
+    array_move(images, from, to);
+    console.log(images);
+  }
+
+  deleteImage() {
+    const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
+    const toastrConfirmOptions = {
+      onOk: () => {
+        //If only One Image
+        if (!Array.isArray(this.props.input.value)) {
+          this.props.input.onChange("");
+          this.props.filesToUpload([]);
+          this.setState({ imageFiles: [] });
+          return;
+        }
+
+        // Update Image path
+        const arr = this.props.input.value.filter(e => e !== name);
+        this.props.input.onChange(arr);
+
+        // Update Image file if needed
+        const imageFiles = this.state.imageFiles.filter(e => e.name != name);
+        this.props.filesToUpload(imageFiles);
+        this.setState({ imageFiles });
+      }
+    };
+    toastr.confirm(confirmText, toastrConfirmOptions);
+  }
+
   renderImages() {
     const images = this.getImages();
     const arr = images.map(({ source, name }, i) => {
@@ -67,28 +100,7 @@ class FieldImages extends React.Component {
         <Button
           color="danger"
           onClick={() => {
-            const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
-            const toastrConfirmOptions = {
-              onOk: () => {
-                //If only One Image
-                if (!Array.isArray(this.props.input.value)) {
-                  this.props.input.onChange("");
-                  this.props.updateFiles([]);
-                  this.setState({ imageFiles: [] });
-                  return;
-                }
-
-                // Update Image path
-                const arr = this.props.input.value.filter(e => e !== name);
-                this.props.input.onChange(arr);
-
-                // Update Image file if needed
-                const imageFiles = this.state.imageFiles.filter(e => e.name != name);
-                this.props.updateFiles(imageFiles);
-                this.setState({ imageFiles });
-              }
-            };
-            toastr.confirm(confirmText, toastrConfirmOptions);
+            this.deleteImage(name);
           }}
         >
           Supprimer
@@ -99,18 +111,42 @@ class FieldImages extends React.Component {
 
       return (
         <Col className="image" key={name}>
-          {source ? (
+          {i != 0 ? (
             <img
-              onClick={() => this.setState({ selected: i })}
-              src={source}
-              alt={name}
-              className="img-fluid"
+              src={require("../../../assets/left.png")}
+              className="arrow"
+              onClick={() => {
+                this.updateOrder(i, i - 1);
+              }}
             />
           ) : (
-            <div className="no-image">Image absente</div>
+            <div />
           )}
-          {button}
-          {this.props.footer ? this.props.footer(name) : <div />}
+          <div className="image-container">
+            {source ? (
+              <img
+                onClick={() => this.setState({ selected: i })}
+                src={source}
+                alt={name}
+                className="img-fluid"
+              />
+            ) : (
+              <div className="no-image">Image absente</div>
+            )}
+            {button}
+            {this.props.footer ? this.props.footer(name) : <div />}
+          </div>
+          {i != images.length ? (
+            <img
+              src={require("../../../assets/right.png")}
+              className="arrow"
+              onClick={() => {
+                this.updateOrder(i, i + 1);
+              }}
+            />
+          ) : (
+            <div />
+          )}
         </Col>
       );
     });
@@ -159,6 +195,7 @@ class FieldImages extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="fieldImages">
         {this.renderModal()}
@@ -176,6 +213,17 @@ export default ({ title, ...rest }) => {
     </div>
   );
 };
+
+function array_move(arr, old_index, new_index) {
+  if (new_index >= arr.length) {
+    var k = new_index - arr.length + 1;
+    while (k--) {
+      arr.push(undefined);
+    }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  return arr; // for testing
+}
 
 const styles = {
   container: {

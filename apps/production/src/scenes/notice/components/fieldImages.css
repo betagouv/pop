@@ -30,8 +30,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 15px;
+}
+
+.fieldImages .arrow {
+  cursor: pointer;
+  min-width: 70px;
+  width: 70px;
+  height: 70px;
+  background-color: white;
+  padding: 0px;
+  object-fit: initial;
+}
+
+.fieldImages .image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .fieldImages .no-image {

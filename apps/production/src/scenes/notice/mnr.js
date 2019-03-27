@@ -92,7 +92,7 @@ class Notice extends React.Component {
             name="VIDEO"
             createUrlFromName={e => `mnr/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => `${bucket_url}${e}`}
-            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+            filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
           <Section
             title="IDENTIFICATION DU BIEN"
