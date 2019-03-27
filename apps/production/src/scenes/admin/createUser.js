@@ -18,7 +18,8 @@ class CreateUser extends React.Component {
     role: this.props.role,
     loading: false,
     error: "",
-    museofile: []
+    museofile: [],
+    taginput: ""
   };
 
   async createUser() {
@@ -49,9 +50,9 @@ class CreateUser extends React.Component {
           Code Musée<em class="text-muted"> - MUSEOFILE</em>
         </div>
         <Tags
-          tags={this.state.museofile}
+          tags={this.state.museofile.map(e => ({ text: e, id: e }))}
           handleAddition={tag => {
-            this.setState({ museofile: [...this.state.museofile, tag] });
+            this.setState({ museofile: [...this.state.museofile, tag.text] });
           }}
           handleDelete={i => {
             this.setState({
@@ -61,6 +62,14 @@ class CreateUser extends React.Component {
           placeholder="Exemple : M5043"
           autocomplete={0}
           autofocus={false}
+          handleInputBlur={() => {
+            if (this.state.taginput) {
+              this.setState({ museofile: [...this.state.museofile, this.state.taginput] });
+            }
+          }}
+          handleInputChange={taginput => {
+            this.setState({ taginput });
+          }}
         />
       </div>
     );

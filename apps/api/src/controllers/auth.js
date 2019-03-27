@@ -22,13 +22,14 @@ router.post("/signup", (req, res) => {
 
   // museofile is required
   const needMuseofile = req.body.role === "producteur" && req.body.group === "joconde";
+
   if (needMuseofile) {
-    if (!req.body.museofile) {
+    if (!req.body.museofile.length) {
       return res.status(400).json({
         success: false,
         msg: "Le champ muséofile est obligatoire pour les producteurs du groupe joconde."
       });
-    } else if (!req.body.museofile.match(/^M[0-9]+$/)) {
+    } else if (req.body.museofile.some(e => !e.match(/^M[0-9]+$/))) {
       return res.status(400).json({
         success: false,
         msg: "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)"
