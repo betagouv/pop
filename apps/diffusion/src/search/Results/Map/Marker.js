@@ -9,6 +9,7 @@ export default class Marker {
     this._type = null;
     this._coordinates = null;
     this._hit = null;
+    this._isSelected = false;
 
     const value = feature.properties.count;
     let el = null;
@@ -47,9 +48,11 @@ export default class Marker {
     return this._coordinates;
   }
   select() {
+    this._isSelected = true;
     this._element.getElement().className += " marker-active";
   }
   unselect() {
+    this._isSelected = false;
     this._element.getElement().className = this._element
       .getElement()
       .className.replace(" marker-active", "");
