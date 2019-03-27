@@ -11,6 +11,7 @@
     "dotenv": "^4.0.0",
     "es6-promise": "^4.2.4",
     "express": "^4.16.3",
+    "filenamify": "^3.0.0",
     "forcedomain": "^1.0.1",
     "history": "^4.7.2",
     "hsts": "^2.1.0",

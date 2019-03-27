@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const mongoose = require("mongoose");
+const filenamify = require("filenamify");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
@@ -174,7 +175,12 @@ router.put("/:ref", passport.authenticate("jwt", { session: false }), upload.any
 
   const arr = [];
   for (let i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+    arr.push(
+      uploadFile(
+        `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+        req.files[i]
+      )
+    );
   }
 
   //Update IMPORT ID
@@ -205,7 +211,12 @@ router.post("/", passport.authenticate("jwt", { session: false }), upload.any(),
   notice.DMIS = notice.DMAJ = formattedNow();
   const arr = [];
   for (var i = 0; i < req.files.length; i++) {
-    arr.push(uploadFile(`memoire/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+    arr.push(
+      uploadFile(
+        `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+        req.files[i]
+      )
+    );
   }
 
   arr.push(updateLinks(notice));
