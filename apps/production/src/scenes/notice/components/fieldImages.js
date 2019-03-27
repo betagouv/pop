@@ -1,7 +1,14 @@
 import React from "react";
 import { Field } from "redux-form";
 import Dropzone from "react-dropzone";
-import { Row, Col, Button } from "reactstrap";
+import {
+  Row,
+  Col,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 import Viewer from "react-viewer";
 import { toastr } from "react-redux-toastr";
 import "react-viewer/dist/index.css";
@@ -62,10 +69,9 @@ class FieldImages extends React.Component {
   }
 
   updateOrder(from, to) {
-    console.log(from, to);
-    const images = this.getImages();
-    array_move(images, from, to);
-    console.log(images);
+    const arr = [...this.props.input.value];
+    array_move(arr, from, to);
+    this.props.input.onChange(arr);
   }
 
   deleteImage() {
@@ -79,7 +85,6 @@ class FieldImages extends React.Component {
           this.setState({ imageFiles: [] });
           return;
         }
-
         // Update Image path
         const arr = this.props.input.value.filter(e => e !== name);
         this.props.input.onChange(arr);
@@ -96,32 +101,49 @@ class FieldImages extends React.Component {
   renderImages() {
     const images = this.getImages();
     const arr = images.map(({ source, name }, i) => {
-      const button = !this.props.disabled ? (
-        <Button
-          color="danger"
-          onClick={() => {
-            this.deleteImage(name);
-          }}
-        >
-          Supprimer
-        </Button>
-      ) : (
-        <div />
+      const options = (
+        <UncontrolledDropdown color="danger">
+          <DropdownToggle caret>Action</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              disabled={this.props.disabled}
+              onClick={() => {
+                this.deleteImage(name);
+              }}
+            >
+              Supprimer
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              disabled={this.props.disabled || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, 0);
+              }}
+            >
+              Mettre l'image en première position
+            </DropdownItem>
+            <DropdownItem
+              disabled={this.props.disabled || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, i - 1);
+              }}
+            >
+              Monter l'image
+            </DropdownItem>
+            <DropdownItem
+              disabled={this.props.disabled || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, i + 1);
+              }}
+            >
+              Descendre l'image
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       );
 
       return (
         <Col className="image" key={name}>
-          {i != 0 ? (
-            <img
-              src={require("../../../assets/left.png")}
-              className="arrow"
-              onClick={() => {
-                this.updateOrder(i, i - 1);
-              }}
-            />
-          ) : (
-            <div />
-          )}
           <div className="image-container">
             {source ? (
               <img
@@ -133,20 +155,9 @@ class FieldImages extends React.Component {
             ) : (
               <div className="no-image">Image absente</div>
             )}
-            {button}
+            {options}
             {this.props.footer ? this.props.footer(name) : <div />}
           </div>
-          {i != images.length ? (
-            <img
-              src={require("../../../assets/right.png")}
-              className="arrow"
-              onClick={() => {
-                this.updateOrder(i, i + 1);
-              }}
-            />
-          ) : (
-            <div />
-          )}
         </Col>
       );
     });
@@ -195,7 +206,6 @@ class FieldImages extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="fieldImages">
         {this.renderModal()}
