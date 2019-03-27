@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
@@ -203,7 +204,12 @@ router.put(
       const arr = [];
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+        arr.push(
+          uploadFile(
+            `palissy/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+            req.files[i]
+          )
+        );
       }
 
       arr.push(updateNotice(Palissy, ref, notice));

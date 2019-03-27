@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 const Merimee = require("../models/merimee");
@@ -188,7 +189,12 @@ router.put(
       const arr = [];
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`merimee/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+        arr.push(
+          uploadFile(
+            `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+            req.files[i]
+          )
+        );
       }
       //Add generate fields
       transformBeforeUpdate(notice);
@@ -223,7 +229,12 @@ router.post(
       arr.push(obj.save());
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`merimee/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+        arr.push(
+          uploadFile(
+            `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+            req.files[i]
+          )
+        );
       }
 
       await Promise.all(arr);

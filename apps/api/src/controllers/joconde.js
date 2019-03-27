@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
@@ -87,7 +88,7 @@ router.put(
 
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        arr.push(uploadFile(`joconde/${notice.REF}/${f.originalname}`, f));
+        arr.push(uploadFile(`joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
       }
 
       // Update IMPORT ID

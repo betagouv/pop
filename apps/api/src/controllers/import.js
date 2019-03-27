@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const multer = require("multer");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
-
 const Import = require("../models/import");
-
 const { uploadFile } = require("./utils");
 
 router.post(
@@ -19,8 +18,12 @@ router.post(
       const obj = new Import(body);
       const doc = await obj.save();
       for (var i = 0; i < req.files.length; i++) {
-        await uploadFile(`import/${doc._id}/${req.files[i].originalname}`, req.files[i]);
+        await uploadFile(
+          `import/${filenamify(doc._id)}/${filenamify(req.files[i].originalname)}`,
+          req.files[i]
+        );
       }
+      
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {
       capture(JSON.stringify(e));

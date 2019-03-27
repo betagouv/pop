@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Mnr = require("../models/mnr");
 const passport = require("passport");
@@ -54,7 +55,7 @@ router.put(
     const notice = JSON.parse(req.body.notice);
 
     const arr = [];
-    
+
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
 
@@ -68,7 +69,7 @@ router.put(
 
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        arr.push(uploadFile(`mnr/${notice.REF}/${f.originalname}`, f));
+        arr.push(uploadFile(`mnr/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
       }
 
       //Update IMPORT ID
