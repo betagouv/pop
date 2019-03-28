@@ -25,8 +25,10 @@ export default class Notice {
     // Validate data
     for (let key in this._mapping) {
       //Check required fields
-      if (this._mapping[key].required && !body[key]) {
-        this._errors.push(`Le champ ${key} ne doit pas être vide`);
+      if (this._mapping[key].required) {
+        if (!body[key] || (Array.isArray(body[key]) && !body[key].length)) {
+          this._errors.push(`Le champ ${key} ne doit pas être vide`);
+        }
       }
 
       //Check format
