@@ -1,32 +1,30 @@
 import React from "react";
+import qs from "qs";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
 import { QueryBuilder } from "pop-shared";
 import { history } from "../../../redux/store";
-
-import qs from "qs";
+import fetch from "isomorphic-fetch";
+import { es_url } from "../../../config";
 
 export default class ExportComponent extends React.Component {
-  state = {
-    page: 0,
-    run: false,
-    res: []
-  };
+  state = { run: false };
 
   renderButton() {
     if (this.state.run) {
       return <div />;
     }
     return (
-      <Button color="primary" onClick={this.run}>
+      <Button
+        color="primary"
+        onClick={() => {
+          this.setState({ run: true });
+        }}
+      >
         Exporter les résultats
       </Button>
     );
   }
-
-  run = () => {
-    this.setState({ res: [], page: 0, run: true });
-  };
 
   exec(res) {
     const d = new Date();
@@ -40,7 +38,27 @@ export default class ExportComponent extends React.Component {
       this.props.collection
     }_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
     exportData(fileName, res);
-    this.setState({ res: [], page: 0, run: false });
+    this.setState({ run: false });
+  }
+
+  async onChange(next) {
+    const { collection } = this.props;
+    const query = { ...next, size: 5000 };
+    const url = `${es_url}/${collection}/${collection}/_msearch`;
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-ndjson",
+          "User-Agent": "POP Prod"
+        },
+        body: `${JSON.stringify({ preference: "export" })}\n${JSON.stringify(query)}\n`
+      });
+      this.exec((await response.json()).responses[0].hits.hits.map(e => e._source));
+    } catch (e) {
+      this.setState({ run: false });
+    }
   }
 
   renderExporting() {
@@ -51,21 +69,9 @@ export default class ExportComponent extends React.Component {
       <ReactiveComponent
         componentId="export"
         react={{ and: this.props.FILTER }}
-        onAllData={(results, streamResults, loadMoreData) => {
-          const res = this.state.res.concat(results);
-          if (!results.length || res.length >= 9980) {
-            this.exec(res);
-          } else {
-            this.setState({ page: (this.state.page += 1), res });
-          }
-        }}
-        defaultQuery={() => ({
-          size: 20,
-          from: this.state.page * 20,
-          aggs: {}
-        })}
+        onQueryChange={async (_prev, next) => this.onChange(next)}
       >
-        <Exp len={this.state.res.length} />
+        <Loading />
       </ReactiveComponent>
     );
   }
@@ -80,13 +86,24 @@ export default class ExportComponent extends React.Component {
   }
 }
 
-const Exp = ({ len }) => {
+function Loading() {
+  const style = {
+    border: "2px solid transparent",
+    borderTop: "2px solid #720c32",
+    borderRadius: "50%",
+    width: "16px",
+    height: "16px",
+    animation: "spin 2s linear infinite",
+    display: "inline-block"
+  };
   return (
     <div>
-      <div>Récuperation des notices... {len}</div>
+      <div>
+        <span className="spin" style={style} /> Chargement en cours
+      </div>
     </div>
   );
-};
+}
 
 async function exportData(fileName, entities) {
   if (!entities.length) {
@@ -95,9 +112,11 @@ async function exportData(fileName, entities) {
 
   const columns = ["REF"];
   for (let property in entities[0]) {
+    // Nobody ask for "POP_" fields and I think there gonna be complains if
+    // I export something people dont understand
     if (
       property.indexOf("_") !== 0 &&
-      property.indexOf("POP_") !== 0 && //because nobody ask for those fields and I think there gonna be complains if I export something people dont understand
+      property.indexOf("POP_") !== 0 &&
       property.indexOf("highlight") !== 0 &&
       property !== "REF"
     ) {
@@ -134,6 +153,10 @@ async function exportData(fileName, entities) {
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
       if (Array.isArray(value)) {
+        // MEMOIRE is now a complex object, we just want refs
+        if (columns[i] === "MEMOIRE") {
+          value = value.map(e => e.ref);
+        }
         if (value.length && typeof value[0] === "object") {
           value = JSON.stringify(value);
         } else {
