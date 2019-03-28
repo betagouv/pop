@@ -17,15 +17,17 @@ router.post(
       const body = JSON.parse(req.body.import);
       const obj = new Import(body);
       const doc = await obj.save();
+
       for (var i = 0; i < req.files.length; i++) {
         await uploadFile(
-          `import/${filenamify(doc._id)}/${filenamify(req.files[i].originalname)}`,
+          `import/${filenamify(String(doc._id))}/${filenamify(req.files[i].originalname)}`,
           req.files[i]
         );
       }
-      
+
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {
+      console.log("e", e);
       capture(JSON.stringify(e));
       return res.status(500).send({ success: false, msg: JSON.stringify(e) });
     }
