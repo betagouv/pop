@@ -87,7 +87,6 @@ router.put(
 
       res.sendStatus(200);
     } catch (e) {
-      console.log("ERROR", e);
       capture(e);
       res.sendStatus(500);
     }
