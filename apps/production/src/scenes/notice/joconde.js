@@ -85,7 +85,8 @@ class Notice extends React.Component {
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <FieldImages
             name="IMG"
-            disabled={!this.state.editable}
+            canOrder={this.state.editable}
+            canEdit={this.state.editable}
             createUrlFromName={e => `joconde/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => `${bucket_url}${e}`}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}

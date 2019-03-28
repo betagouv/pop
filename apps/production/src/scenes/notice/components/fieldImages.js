@@ -106,7 +106,7 @@ class FieldImages extends React.Component {
           <DropdownToggle caret>Action</DropdownToggle>
           <DropdownMenu>
             <DropdownItem
-              disabled={this.props.disabled}
+              disabled={!this.props.canEdit}
               onClick={() => {
                 this.deleteImage(name);
               }}
@@ -115,7 +115,7 @@ class FieldImages extends React.Component {
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem
-              disabled={this.props.disabled || images.length < 2}
+              disabled={!this.props.canOrder || images.length < 2}
               onClick={() => {
                 this.updateOrder(i, 0);
               }}
@@ -123,7 +123,7 @@ class FieldImages extends React.Component {
               Mettre l'image en première position
             </DropdownItem>
             <DropdownItem
-              disabled={this.props.disabled || images.length < 2}
+              disabled={!this.props.canOrder || images.length < 2}
               onClick={() => {
                 this.updateOrder(i, i - 1);
               }}
@@ -131,7 +131,7 @@ class FieldImages extends React.Component {
               Monter l'image
             </DropdownItem>
             <DropdownItem
-              disabled={this.props.disabled || images.length < 2}
+              disabled={!this.props.canOrder || images.length < 2}
               onClick={() => {
                 this.updateOrder(i, i + 1);
               }}

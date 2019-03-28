@@ -92,7 +92,8 @@ class Notice extends React.Component {
 
           <FieldImages
             name="MEMOIRE"
-            disabled
+            canOrder={this.state.editable}
+            canEdit={false}
             external={true}
             getAbsoluteUrl={e => {
               if (e.url && e.url.indexOf("memoire/") === 0) {

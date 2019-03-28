@@ -161,6 +161,7 @@ async function updateLinks(notice) {
       const notice = await getMerimeeOrPalissyNotice(toAdd[i]);
       if (notice) {
         notice.MEMOIRE.push({ ref: REF, url: URL });
+        console.log("ADD", notice);
         await notice.save();
       }
     }

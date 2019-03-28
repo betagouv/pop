@@ -90,6 +90,8 @@ class Notice extends React.Component {
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <FieldImages
             name="VIDEO"
+            canOrder={this.props.canUpdate}
+            canEdit={this.props.canUpdate}
             createUrlFromName={e => `mnr/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => `${bucket_url}${e}`}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
