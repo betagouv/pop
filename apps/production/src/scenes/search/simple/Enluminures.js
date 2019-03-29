@@ -12,6 +12,7 @@ import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/EnluminuresCard";
+import SearchButton from "../components/SearchButton";
 
 const FILTER = ["mainSearch", "attrib", "contxt", "nomenc", "refd", "sujet"];
 
@@ -49,7 +50,8 @@ export default class Search extends React.Component {
                 componentId="mainSearch"
                 dataField={["TITR", "SUJET"]}
                 queryFormat="and"
-                iconPosition="left"
+                iconPosition="right"
+                icon={<SearchButton />}
                 className="mainSearch"
                 placeholder="Saisissez un titre ou un sujet"
                 URLParams={true}

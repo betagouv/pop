@@ -6,6 +6,7 @@ import { QueryBuilder } from "pop-shared";
 import fetch from "isomorphic-fetch";
 import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
+import excelIcon from "../../../assets/microsoftexcel.svg";
 
 export default class ExportComponent extends React.Component {
   state = { run: false };
@@ -16,12 +17,13 @@ export default class ExportComponent extends React.Component {
     }
     return (
       <Button
-        color="primary"
+        color="success"
         onClick={() => {
           this.setState({ run: true });
         }}
       >
-        Exporter les résultats
+        <img src={excelIcon} />
+        Exporter
       </Button>
     );
   }
