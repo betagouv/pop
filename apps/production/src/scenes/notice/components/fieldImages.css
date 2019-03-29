@@ -30,8 +30,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 15px;
+}
+
+.fieldImages .arrow {
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+}
+
+.fieldImages .arrow img{
+  cursor: pointer;
+  padding: 0px;
+  object-fit: initial;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.fieldImages .image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .fieldImages .no-image {

@@ -106,10 +106,11 @@ class Notice extends React.Component {
 
           <FieldImages
             name="IMG"
-            disabled={!this.state.editable}
+            canOrder={this.state.editable}
+            canEdit={this.state.editable}
             createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
-            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+            filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
 
           <Section title="Localisation" icon={require("../../assets/info.png")} color="#FF7676">

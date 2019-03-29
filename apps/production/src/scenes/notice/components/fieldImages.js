@@ -1,7 +1,14 @@
 import React from "react";
 import { Field } from "redux-form";
 import Dropzone from "react-dropzone";
-import { Row, Col, Button } from "reactstrap";
+import {
+  Row,
+  Col,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 import Viewer from "react-viewer";
 import { toastr } from "react-redux-toastr";
 import "react-viewer/dist/index.css";
@@ -16,7 +23,7 @@ class FieldImages extends React.Component {
 
   onDrop(files) {
     const imageFiles = [...this.state.imageFiles.concat(...files)];
-    this.props.updateFiles(imageFiles);
+    this.props.filesToUpload(imageFiles);
     this.setState({ imageFiles });
 
     const urls = files.map(e => this.props.createUrlFromName(e.name));
@@ -30,6 +37,7 @@ class FieldImages extends React.Component {
 
   getFile(e) {
     // If image file is the image
+
     const index = this.state.imageFiles.findIndex(f => e.indexOf(`/${f.name}`) !== -1);
 
     //if not file just uploaded
@@ -60,57 +68,96 @@ class FieldImages extends React.Component {
     });
   }
 
+  updateOrder(from, to) {
+    const arr = [...this.props.input.value];
+    arrayMove(arr, from, to);
+    this.props.input.onChange(arr);
+  }
+
+  deleteImage() {
+    const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
+    const toastrConfirmOptions = {
+      onOk: () => {
+        //If only One Image
+        if (!Array.isArray(this.props.input.value)) {
+          this.props.input.onChange("");
+          this.props.filesToUpload([]);
+          this.setState({ imageFiles: [] });
+          return;
+        }
+        // Update Image path
+        const arr = this.props.input.value.filter(e => e !== name);
+        this.props.input.onChange(arr);
+
+        // Update Image file if needed
+        const imageFiles = this.state.imageFiles.filter(e => e.name != name);
+        this.props.filesToUpload(imageFiles);
+        this.setState({ imageFiles });
+      }
+    };
+    toastr.confirm(confirmText, toastrConfirmOptions);
+  }
+
   renderImages() {
     const images = this.getImages();
     const arr = images.map(({ source, name }, i) => {
-      const button = !this.props.disabled ? (
-        <Button
-          color="danger"
-          onClick={() => {
-            const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
-            const toastrConfirmOptions = {
-              onOk: () => {
-                //If only One Image
-                if (!Array.isArray(this.props.input.value)) {
-                  this.props.input.onChange("");
-                  this.props.updateFiles([]);
-                  this.setState({ imageFiles: [] });
-                  return;
-                }
-
-                // Update Image path
-                const arr = this.props.input.value.filter(e => e !== name);
-                this.props.input.onChange(arr);
-
-                // Update Image file if needed
-                const imageFiles = this.state.imageFiles.filter(e => e.name != name);
-                this.props.updateFiles(imageFiles);
-                this.setState({ imageFiles });
-              }
-            };
-            toastr.confirm(confirmText, toastrConfirmOptions);
-          }}
-        >
-          Supprimer
-        </Button>
-      ) : (
-        <div />
+      const options = (
+        <UncontrolledDropdown color="danger">
+          <DropdownToggle caret>Action</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              disabled={!this.props.canEdit}
+              onClick={() => {
+                this.deleteImage(name);
+              }}
+            >
+              Supprimer
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem
+              disabled={!this.props.canOrder || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, 0);
+              }}
+            >
+              Mettre l'image en première position
+            </DropdownItem>
+            <DropdownItem
+              disabled={!this.props.canOrder || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, i - 1);
+              }}
+            >
+              Monter l'image
+            </DropdownItem>
+            <DropdownItem
+              disabled={!this.props.canOrder || images.length < 2}
+              onClick={() => {
+                this.updateOrder(i, i + 1);
+              }}
+            >
+              Descendre l'image
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
       );
 
       return (
         <Col className="image" key={name}>
-          {source ? (
-            <img
-              onClick={() => this.setState({ selected: i })}
-              src={source}
-              alt={name}
-              className="img-fluid"
-            />
-          ) : (
-            <div className="no-image">Image absente</div>
-          )}
-          {button}
-          {this.props.footer ? this.props.footer(name) : <div />}
+          <div className="image-container">
+            {source ? (
+              <img
+                onClick={() => this.setState({ selected: i })}
+                src={source}
+                alt={name}
+                className="img-fluid"
+              />
+            ) : (
+              <div className="no-image">Image absente</div>
+            )}
+            {options}
+            {this.props.footer ? this.props.footer(name) : <div />}
+          </div>
         </Col>
       );
     });
@@ -176,6 +223,17 @@ export default ({ title, ...rest }) => {
     </div>
   );
 };
+
+function arrayMove(arr, old_index, new_index) {
+  if (new_index >= arr.length) {
+    var k = new_index - arr.length + 1;
+    while (k--) {
+      arr.push(undefined);
+    }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  return arr; // for testing
+}
 
 const styles = {
   container: {

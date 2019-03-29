@@ -46,7 +46,6 @@ class Notice extends React.Component {
         });
         return;
       }
-      console.log("NOTICE", notice);
       this.props.initialize(notice);
       // As a "producteur", I can edit if "museofile" matches with notice.
       const editable =
@@ -86,10 +85,11 @@ class Notice extends React.Component {
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <FieldImages
             name="IMG"
-            disabled={!this.state.editable}
+            canOrder={this.state.editable}
+            canEdit={this.state.editable}
             createUrlFromName={e => `joconde/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => `${bucket_url}${e}`}
-            updateFiles={imagesFiles => this.setState({ imagesFiles })}
+            filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
           <Section
             title="IDENTIFICATION DU BIEN MUSEAL"

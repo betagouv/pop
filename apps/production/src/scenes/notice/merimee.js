@@ -85,28 +85,26 @@ class Notice extends React.Component {
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
 
-              <FieldImages
-                name="MEMOIRE"
-                disabled
-                external={true}
-                getAbsoluteUrl={e => {
-                  if (e.url.indexOf("memoire/") === 0) {
-                    return `${bucket_url}${e.url}`;
-                  } else {
-                    return e.url;
-                  }
-                }}
-                footer={e => {
-                  return (
-                    <Link to={`/notice/memoire/${e.ref}`} target="_blank">
-                      {e.ref}
-                    </Link>
-                  );
-                }}
-              />
-
-
-              
+          <FieldImages
+            name="MEMOIRE"
+            canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+            canEdit={false} // As image come from memoire, we can't delete or update an image from merimee
+            external={true}
+            getAbsoluteUrl={e => {
+              if (e.url.indexOf("memoire/") === 0) {
+                return `${bucket_url}${e.url}`;
+              } else {
+                return e.url;
+              }
+            }}
+            footer={e => {
+              return (
+                <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                  {e.ref}
+                </Link>
+              );
+            }}
+          />
 
           <Section
             title="REFERENCES ET GESTION DOCUMENTAIRES"
