@@ -7,6 +7,7 @@ import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/PalissyCard";
 import utils from "../components/utils";
+import SearchButton from "../components/SearchButton";
 
 const FILTER = [
   "mainSearch",
@@ -42,7 +43,8 @@ export default class Search extends React.Component {
                 componentId="mainSearch"
                 fuzziness={2}
                 dataField={[]}
-                iconPosition="left"
+                iconPosition="right"
+                icon={<SearchButton />}
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}

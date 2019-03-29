@@ -12,6 +12,7 @@ import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/MuseoCard";
+import SearchButton from "../components/SearchButton";
 
 const FILTER = ["mainSearch", "label", "dpt"];
 
@@ -35,7 +36,8 @@ export default class Search extends React.Component {
                 componentId="mainSearch"
                 dataField={["NOMOFF", "REF"]}
                 queryFormat="and"
-                iconPosition="left"
+                iconPosition="right"
+                icon={<SearchButton />}
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}

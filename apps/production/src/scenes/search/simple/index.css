@@ -82,8 +82,22 @@
 }
 
 .search .mainSearch {
-  padding: 20px 30px 20px 0;
+  padding: 20px 10px 20px 0;
   width: 100%;
+}
+
+.search .mainSearch input#mainSearch-downshift-input {
+  width: calc(100% - 40px);
+}
+
+.search .mainSearch button {
+  top: -11px;
+  position: absolute;
+  left: -20px;
+}
+
+.search .mainSearch button > img {
+  width: 14px;
 }
 
 .search .buttons {
@@ -208,7 +222,12 @@ img.producteur.mh {
 }
 
 .search .export-btn {
-  width: 230px;
+  width: 140px;
+}
+
+.search .export-btn img {
+  margin-right: 10px;
+  width: 16px;
 }
 
 /* QueryBuilder Override */
@@ -222,7 +241,7 @@ img.producteur.mh {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   background-color: white;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   position: relative;
   display: flex;
   flex-direction: column;

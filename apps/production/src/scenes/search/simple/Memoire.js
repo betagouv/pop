@@ -12,6 +12,7 @@ import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/MemoireCard";
 import utils from "../components/utils";
+import SearchButton from "../components/SearchButton";
 
 const FILTER = [
   "mainSearch",
@@ -46,7 +47,8 @@ export default class Search extends React.Component {
               <DataSearch
                 componentId="mainSearch"
                 dataField={[]}
-                iconPosition="left"
+                iconPosition="right"
+                icon={<SearchButton />}
                 className="mainSearch"
                 placeholder={`Recherchez dans les champs suivants : ${fields.join(", ")}`}
                 URLParams={true}
