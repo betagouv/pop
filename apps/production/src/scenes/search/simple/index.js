@@ -7,6 +7,7 @@ import Mnr from "./Mnr";
 import Memoire from "./Memoire";
 import Palissy from "./Palissy";
 import Museo from "./Museo";
+import Autor from "./Autor";
 import Enluminures from "./Enluminures";
 import Home from "./Home";
 
@@ -23,6 +24,7 @@ export default () => {
         <Route path={`/recherche/joconde`} component={() => <Joconde />} />
         <Route path={`/recherche/memoire`} component={() => <Memoire />} />
         <Route path={`/recherche/museo`} component={() => <Museo />} />
+        <Route path={`/recherche/autor`} component={() => <Autor />} />
         <Route path={`/recherche/enluminures`} component={() => <Enluminures />} />
       </Switch>
     </div>

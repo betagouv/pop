@@ -11,9 +11,9 @@ import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/MuseoCard";
+import Card from "../components/AutorCard";
 
-const FILTER = ["mainSearch", "label", "dpt"];
+const FILTER = ["mainSearch", "fonc", "typid"];
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -45,25 +45,25 @@ export default class Search extends React.Component {
             <Row>
               <Col xs="3">
                 <MultiList
-                  componentId="label"
-                  dataField="LABEL.keyword"
-                  title="Label"
+                  componentId="fonc"
+                  dataField="FONC.keyword"
+                  title="Fonctions"
                   className="filters"
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER.filter(e => e !== "label")
+                    and: FILTER.filter(e => e !== "fonc")
                   }}
                 />
                 <MultiList
-                  componentId="dpt"
-                  dataField="DPT.keyword"
-                  title="Département"
+                  componentId="typid"
+                  dataField="TYPID.keyword"
+                  title="Type"
                   className="filters"
                   displayCount
                   URLParams={true}
                   react={{
-                    and: FILTER.filter(e => e !== "dpt")
+                    and: FILTER.filter(e => e !== "typid")
                   }}
                 />
               </Col>

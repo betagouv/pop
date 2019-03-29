@@ -41,6 +41,8 @@ app.use("/palissy", require("./controllers/palissy"));
 app.use("/memoire", require("./controllers/memoire"));
 app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
+app.use("/autor", require("./controllers/autor"));
+
 
 app.use("/gallery", require("./controllers/gallery"));
 
