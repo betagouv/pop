@@ -142,7 +142,7 @@ function checkIfMemoireImageExist(notice) {
       return { ref: e.REF, url: e.IMG };
     });
 
-    //@raph -> I know you want to do only one loop with a reduce but it gives me headache
+    //@raph -> I know you want to do only one loop with a reduce but it gave me headache
     const newArr = notice.MEMOIRE.filter(e => arr.find(f => f.ref == e.ref));
     for (let i = 0; i < arr.length; i++) {
       if (!newArr.find(e => e.REF === arr[i].REF)) {
