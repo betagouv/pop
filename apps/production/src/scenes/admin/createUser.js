@@ -70,6 +70,7 @@ class CreateUser extends React.Component {
             this.setState({ taginput });
           }}
         />
+         <small className="text-muted">Appuyez sur « entrée » pour ajouter un nouveau code Muséo</small>
       </div>
     );
   }
