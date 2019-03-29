@@ -69,7 +69,8 @@ export default class ExportComponent extends React.Component {
       <ReactiveComponent
         componentId="export"
         react={{ and: this.props.FILTER }}
-        onQueryChange={async (_prev, next) => this.onChange(next)}
+        defaultQuery={() => ({ aggs: {} })}
+        onQueryChange={async (prev, next) => !prev && this.onChange(next)}
       >
         <Loading />
       </ReactiveComponent>
