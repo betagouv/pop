@@ -4,7 +4,15 @@ var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
   {
-    REF: { type: String, default: "", documentation: { label: "Référence" } },
+    REF: {
+      type: String,
+      default: "",
+      unique: true,
+      index: true,
+      trim: true,
+      required: true,
+      documentation: { label: "Référence" }
+    },
     TOUT: {
       type: String,
       default: "",
