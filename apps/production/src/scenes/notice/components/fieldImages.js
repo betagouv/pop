@@ -70,7 +70,7 @@ class FieldImages extends React.Component {
 
   updateOrder(from, to) {
     const arr = [...this.props.input.value];
-    array_move(arr, from, to);
+    arrayMove(arr, from, to);
     this.props.input.onChange(arr);
   }
 
@@ -224,7 +224,7 @@ export default ({ title, ...rest }) => {
   );
 };
 
-function array_move(arr, old_index, new_index) {
+function arrayMove(arr, old_index, new_index) {
   if (new_index >= arr.length) {
     var k = new_index - arr.length + 1;
     while (k--) {

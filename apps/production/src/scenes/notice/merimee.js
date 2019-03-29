@@ -54,8 +54,6 @@ class Notice extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-
-    console.log(values)
     await API.updateNotice(this.state.notice.REF, "merimee", values);
     toastr.success(
       "Modification enregistrée",
@@ -89,8 +87,8 @@ class Notice extends React.Component {
 
           <FieldImages
             name="MEMOIRE"
-            canOrder={this.state.editable}
-            canEdit={false}
+            canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+            canEdit={false} // As image come from memoire, we can't delete or update an image from merimee
             external={true}
             getAbsoluteUrl={e => {
               if (e.url.indexOf("memoire/") === 0) {

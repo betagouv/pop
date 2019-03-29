@@ -92,8 +92,8 @@ class Notice extends React.Component {
 
           <FieldImages
             name="MEMOIRE"
-            canOrder={this.state.editable}
-            canEdit={false}
+            canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+            canEdit={false} // As image come from memoire, we can't delete or update an image from palissy
             external={true}
             getAbsoluteUrl={e => {
               if (e.url && e.url.indexOf("memoire/") === 0) {
