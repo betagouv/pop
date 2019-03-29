@@ -3,8 +3,8 @@ import qs from "qs";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
 import { QueryBuilder } from "pop-shared";
-import { history } from "../../../redux/store";
 import fetch from "isomorphic-fetch";
+import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
 
 export default class ExportComponent extends React.Component {
