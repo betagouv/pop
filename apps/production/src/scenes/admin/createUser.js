@@ -51,7 +51,7 @@ class CreateUser extends React.Component {
     return (
       <div className="input-container">
         <div>
-          Code Musée<em class="text-muted"> - MUSEOFILE</em>
+          Code Musée<em className="text-muted"> - MUSEOFILE</em>
         </div>
         <Tags
           tags={this.state.museofile.map(e => ({ text: e, id: e }))}

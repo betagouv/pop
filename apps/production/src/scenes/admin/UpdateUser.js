@@ -52,7 +52,7 @@ class UpdateUser extends React.Component {
     return (
       <div className="input-container">
         <div>
-          Code Musée<em class="text-muted"> - MUSEOFILE</em>
+          Code Musée<em className="text-muted"> - MUSEOFILE</em>
         </div>
         <Tags
           onChange={museofile => this.setState({ museofile })}

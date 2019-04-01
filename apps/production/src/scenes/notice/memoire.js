@@ -100,7 +100,7 @@ class Notice extends React.Component {
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
-        <h2 class="main-title">Notice {this.state.notice.REF}</h2>
+        <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
 
