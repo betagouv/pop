@@ -1,5 +1,5 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
-"REF","String","non","Référence","","","","",""
+"REF","String","oui","Référence","","","","",""
 "TOUT","String","non","Index global","","","","",""
 "POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
 "ACCES","String","non","Accès","","","","",""

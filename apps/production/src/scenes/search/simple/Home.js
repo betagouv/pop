@@ -40,7 +40,11 @@ class Search extends React.Component {
       name: "Enluminures",
       image: require("../../../assets/enluminures.jpg")
     });
-
+    tiles.push({
+      url: "/recherche/autor",
+      name: "Autor",
+      image: require("../../../assets/autor.jpeg")
+    });
     if (
       this.props.group === "admin" ||
       (this.props.group === "joconde" && this.props.role === "administrateur")

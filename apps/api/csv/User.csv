@@ -8,6 +8,6 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "password","String","oui","","","","","",""
 "hasResetPassword","Boolean","non","","","","","",""
 "lastConnectedAt","Date","non","","","","","",""
-"museofile","String","non","","","","","",""
+"museofile","Array","non","","","","","",""
 "_id","ObjectID","non","","","","","",""
 "__v","Number","non","","","","","",""

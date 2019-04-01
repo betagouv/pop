@@ -1,6 +1,8 @@
 # POP SCHEMAS
  
-  - [Enluminures](/apps/api/doc/enluminures.md)
+  - [Autor](/apps/api/doc/autor.md)
+- [Enluminures](/apps/api/doc/enluminures.md)
+- [Gallery](/apps/api/doc/Gallery.md)
 - [Import](/apps/api/doc/Import.md)
 - [Joconde](/apps/api/doc/joconde.md)
 - [Memoire](/apps/api/doc/memoire.md)

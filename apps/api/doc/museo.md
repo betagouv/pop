@@ -85,7 +85,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence|
+|String|oui|non|non|non||Référence|
 
 ### TOUT
 

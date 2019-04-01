@@ -1,0 +1,4 @@
+path,type,required,label,opendata,generated,description,validation,thesaurus
+"params","Mixed","non","","","","","",""
+"_id","ObjectID","non","","","","","",""
+"__v","Number","non","","","","","",""
