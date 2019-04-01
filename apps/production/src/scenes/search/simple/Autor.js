@@ -1,17 +1,12 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  ReactiveComponent
-} from "@appbaseio/reactivesearch";
+import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
 import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/AutorCard";
+import SearchButton from "../components/SearchButton";
 
 const FILTER = ["mainSearch", "fonc", "typid"];
 
@@ -35,7 +30,8 @@ export default class Search extends React.Component {
                 componentId="mainSearch"
                 dataField={["NAME", "REF"]}
                 queryFormat="and"
-                iconPosition="left"
+                iconPosition="right"
+                icon={<SearchButton />}
                 className="mainSearch"
                 placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
                 URLParams={true}
