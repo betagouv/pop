@@ -1,13 +1,20 @@
 import * as React from "react";
 
 export default ({ content, title, separator, join = ", " }) => {
-  if (!content || (Array.isArray(content) && content.length === 0)) {
+  // Don't render empty elements.
+  const isEmptyArray = c => Array.isArray(c) && c.length === 0;
+  const isEmptyString = s => typeof s === "string" && !s.trim();
+  if (!content || isEmptyArray(content) || isEmptyString(content)) {
     return null;
   }
 
+  // Transform array to string, by joining with a character.
   let str = Array.isArray(content) ? content.join(join) : content;
+
+  // Don't apply transformations on React components
   if (!React.isValidElement(str)) {
-    str = str.replace(/\u0092/g, `'`);
+    // Fix simple quotes and capitalize first letter (only if it's a string)
+    str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
     if (separator) {
       str = replaceAll(str, separator, "\n");
     }
@@ -29,10 +36,6 @@ export default ({ content, title, separator, join = ", " }) => {
           white-space: pre-line;
           margin-bottom: 15px;
           text-align: justify;
-        }
-
-        .field p::first-letter {
-          text-transform: capitalize;
         }
 
         .field h3 {
