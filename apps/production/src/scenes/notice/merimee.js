@@ -45,7 +45,7 @@ class Notice extends React.Component {
         return;
       }
       console.log(notice);
-      this.props.initialize({ ...notice });
+      this.props.initialize(notice);
 
       const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
@@ -282,6 +282,7 @@ class Notice extends React.Component {
               <CustomField name="MFICH" disabled={!this.state.editable} />
               <CustomField name="VIDEO" disabled={!this.state.editable} />
               <CustomField name="IMAGE" disabled={!this.state.editable} />
+              <CustomField name="IMG" disabled={!this.state.editable} />
               <CustomField name="LBASE2" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
