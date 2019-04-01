@@ -14,6 +14,11 @@ const Schema = new mongoose.Schema(
       documentation: { label: "Référence" }
     },
     ISNI: { type: String, default: "", documentation: { label: "Référence ISNI (ajouté)" } },
+    ISNI_VERIFIEE: {
+      type: String,
+      default: "non",
+      documentation: { label: "Référence ISNI à t'elle été vérifiée" }
+    },
     ALIAS: { type: [String], default: [], documentation: { label: "Alias (ajouté)" } },
     BIBLIO: { type: [String], default: [], documentation: { label: "Bibliographie" } },
     BIO: { type: String, default: "", documentation: { label: "Biographie" } },
