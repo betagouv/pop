@@ -54,7 +54,7 @@ const Menu = ({ location, closeMenu }) => (
         displayCount
       />
       <MultiList
-        dataField="DOMN.keyword"
+        dataField={["DOMN.keyword", "CATE.keyword"]}
         title="Domaine"
         placeholder="Rechercher un domaine"
         componentId="domn"
