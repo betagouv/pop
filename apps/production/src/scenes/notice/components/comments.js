@@ -5,6 +5,6 @@ export default ({ POP_COMMENTAIRES }) => {
   if (!POP_COMMENTAIRES.length) {
     return <div />;
   }
-  const comments = POP_COMMENTAIRES.map(e => <div>{e}</div>);
-  return <Alert color="danger">La notice contient des avertissements : {comments}</Alert>;
+  const comments = POP_COMMENTAIRES.map(e => <li key={e}>{e}</li>);
+  return <Alert color="danger"><p>La notice contient des avertissements :</p><ul>{comments}</ul></Alert>;
 };
