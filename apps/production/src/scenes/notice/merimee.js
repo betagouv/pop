@@ -44,8 +44,9 @@ class Notice extends React.Component {
         this.setState({ loading: false, error: "Cette notice n'existe pas" });
         return;
       }
-      console.log(notice);
-      this.props.initialize({ ...notice, IMG: notice.IMG ? [notice.IMG] : [] });
+      // `IMG` can be either Array, String or empty, and has to be turned to Array.
+      let { IMG } = notice;
+      this.props.initialize({ ...notice, IMG: IMG ? (Array.isArray(IMG) ? IMG : [IMG]) : [] });
 
       const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
       this.setState({ loading: false, notice, editable });
