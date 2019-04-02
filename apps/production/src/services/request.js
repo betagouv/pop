@@ -35,116 +35,91 @@ class request {
   }
 
   put(url, data, contentType) {
-    return new Promise((resolve, reject) => {
-      fetch(
-        url,
-        this._init(
-          "PUT",
-          data,
-          contentType ? { "content-type": contentType } : {}
-        )
-      )
-        .then(response => {
-          if (response.status !== 200) {
-            Raven.captureException(JSON.stringify(response));
-            reject(this._errorTxt(response));
-            return;
-          }
-          resolve(data);
-        })
-        .catch(err => {
-          Raven.captureException(JSON.stringify(err));
-          reject("L'api est inaccessible", err);
-        });
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ct = contentType ? { "Content-Type": contentType } : {};
+        const response = await fetch(url, this._init("PUT", data, ct));
+
+        if (response.status !== 200) {
+          Raven.captureException(JSON.stringify(response));
+          reject(this._errorTxt(response));
+          return;
+        }
+        resolve(data);
+      } catch (err) {
+        Raven.captureException(JSON.stringify(err));
+        reject("L'api est inaccessible", err);
+      }
     });
   }
 
   post(url, data, contentType) {
-    return new Promise((resolve, reject) => {
-      fetch(
-        url,
-        this._init(
-          "POST",
-          data,
-          contentType ? { "Content-Type": contentType } : {}
-        )
-      )
-        .then(response => {
-          if (response.status === 500) {
-            Raven.captureException(JSON.stringify(response));
-            reject(this._errorTxt(response));
-            return;
-          }
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ct = contentType ? { "Content-Type": contentType } : {};
+        const response = await fetch(url, this._init("POST", data, ct));
 
-          response
-            .json()
-            .then(data => {
-              if (data.success) {
-                resolve(data);
-              } else {
-                reject(data.msg);
-              }
-            })
-            .catch(e => {
-              Raven.captureException(JSON.stringify(e));
-              reject("Probleme lors de la récupération de la donnée", e);
-            });
-        })
-        .catch(err => {
-          Raven.captureException(JSON.stringify(err));
-          reject("L'api est inaccessible", err);
-        });
+        if (response.status === 500) {
+          Raven.captureException(JSON.stringify(response));
+          reject(this._errorTxt(response));
+          return;
+        }
+
+        const res = await response.json();
+        if (res.success) {
+          resolve(res);
+          return;
+        }
+        reject(res.msg);
+      } catch (err) {
+        Raven.captureException(JSON.stringify(err));
+        reject("L'api est inaccessible", err);
+      }
     });
   }
 
   delete(url) {
-    return new Promise((resolve, reject) => {
-      fetch(url, this._init("DELETE", null))
-        .then(response => {
-          if (response.status !== 200) {
-            Raven.captureException(JSON.stringify(response));
-            reject(this._errorTxt(response));
-            return;
-          }
-          resolve();
-        })
-        .catch(err => {
-          Raven.captureException(JSON.stringify(err));
-          reject("L'api est inaccessible", err);
-        });
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(url, this._init("DELETE", null));
+
+        if (response.status !== 200) {
+          Raven.captureException(JSON.stringify(response));
+          reject(this._errorTxt(response));
+          return;
+        }
+
+        resolve();
+      } catch (err) {
+        Raven.captureException(JSON.stringify(err));
+        reject("L'api est inaccessible", err);
+      }
     });
   }
 
   get(url, init) {
-    return new Promise((resolve, reject) => {
-      fetch(url, init)
-        .then(response => {
-          if (response.status === 404) {
-            resolve(null);
-            return;
-          }
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(url, init);
 
-          if (response.status !== 200) {
-            Raven.captureException(JSON.stringify(response));
-            reject(this._errorTxt(response));
-            return;
-          }
-
-          response
-            .json()
-            .then(data => {
-              resolve(data);
-            })
-            .catch(e => {
-              Raven.captureException(JSON.stringify(e));
-              reject("Probleme lors de la récupération de la donnée", e);
-            });
+        if (response.status === 404) {
+          resolve(null);
           return;
-        })
-        .catch(err => {
-          Raven.captureException(JSON.stringify(err));
-          reject("L'api est inaccessible", err);
-        });
+        }
+
+        if (response.status !== 200) {
+          Raven.captureException(JSON.stringify(response));
+          reject(this._errorTxt(response));
+          return;
+        }
+
+        const data = await response.json();
+        resolve(data);
+        return;
+      } catch (err) {
+        Raven.captureException(JSON.stringify(err));
+        reject("L'api est inaccessible", err);
+      }
     });
   }
 }
