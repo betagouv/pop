@@ -70,6 +70,7 @@ class Permalink extends React.Component {
           .permalink {
             position: absolute;
             right: 30px;
+            margin-top: -2px;
           }
           .modal-body-container {
             height: 40px;

@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
 import { ReactiveBase } from "@appbaseio/reactivesearch";
+import Switch from "react-switch";
+import Router from "next/router";
 import Layout from "../src/components/Layout";
 import Header from "../src/search/Header";
 import Menu from "../src/search/Menu";
@@ -27,6 +29,14 @@ export default class extends React.Component {
     return { asPath, queryString: qs, view, mode, base: query.base, query };
   }
 
+  handleSwitchChange(checked) {
+    if (checked) {
+      Router.push("/search?view=list&mode=advanced&base=joconde", "/advanced-search/list/joconde");
+    } else {
+      Router.push("/search?view=list&mode=simple", "/search/list");
+    }
+  }
+
   render = () => {
     if (
       !this.props.mode ||
@@ -49,6 +59,10 @@ export default class extends React.Component {
             />
           </Head>
           <Container fluid style={{ maxWidth: 1860 }}>
+            <label className="react-switch">
+              <Switch onChange={this.handleSwitchChange} checked={this.props.mode !== "simple"} />
+              <span>Recherche avancée</span>
+            </label>
             <Permalink query={this.props.query} />
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
@@ -122,26 +136,6 @@ export default class extends React.Component {
             justify-content: space-between;
           }
 
-          .search .search-container .switch-search {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .search .search-container .switch-search > a {
-            background-color: #377d87;
-            border: 0;
-            color: #fff;
-            display: block;
-            width: 150px;
-            text-align: center;
-            font-size: 16px;
-            padding: 6px;
-            border-radius: 5px;
-            width: 200px;
-            cursor: pointer;
-            text-decoration: "none";
-          }
-
           .search .list-view {
             width: 100%;
           }
@@ -190,12 +184,6 @@ export default class extends React.Component {
 
           .search .search-row {
             justify-content: center;
-          }
-
-          .search .search-row .search-mode {
-            display: flex;
-            justify-content: center;
-            align-items: center;
           }
 
           .search .result-view {
@@ -421,6 +409,18 @@ export default class extends React.Component {
             box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
           }
 
+          .search .react-switch {
+            position: absolute;
+            right: 70px;
+          }
+
+          .search .react-switch > span {
+            display: inline-block;
+            position: relative;
+            top: -8px;
+            margin-left: 7px;
+          }
+
           @media screen and (max-width: 767px) {
             .search .search-sidebar {
               position: fixed;
@@ -443,10 +443,6 @@ export default class extends React.Component {
             }
             .search .list-view .result-count {
               visibility: hidden;
-            }
-
-            .search .search-row .switch-search {
-              display: none;
             }
 
             .search .filter_mobile_menu img {
@@ -477,6 +473,9 @@ export default class extends React.Component {
             .search .search-results {
               flex: 0 0 100%;
               max-width: 100%;
+            }
+            .search .react-switch {
+              display: none;
             }
           }
         `}</style>
