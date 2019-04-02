@@ -17,7 +17,7 @@ const Schema = new mongoose.Schema(
     ISNI_VERIFIEE: {
       type: String,
       default: "non",
-      documentation: { label: "Référence ISNI à t'elle été vérifiée" }
+      documentation: { label: "Référence ISNI a-t-elle été vérifiée" }
     },
     ALIAS: { type: [String], default: [], documentation: { label: "Alias (ajouté)" } },
     BIBLIO: { type: [String], default: [], documentation: { label: "Bibliographie" } },
