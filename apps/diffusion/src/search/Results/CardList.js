@@ -219,7 +219,7 @@ const Joconde = ({ data }) => {
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const title = data.TICO || data.TITR;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
-  const peri = data.PERI;
+  const peri = Array.isArray(data.PERI) ? joinData(data.PERI) : data.PERI;
   const loc = data.LOCA;
   const img = image(data);
   return (
