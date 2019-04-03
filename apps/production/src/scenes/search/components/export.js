@@ -45,19 +45,39 @@ export default class ExportComponent extends React.Component {
 
   async onChange(next) {
     const { collection } = this.props;
-    const query = { ...next, size: 5000 };
-    const url = `${es_url}/${collection}/${collection}/_msearch`;
+    let docs = [];
+    const headers = {
+      Accept: "application/json",
+      "User-Agent": "POP Prod",
+      "Content-Type": "application/x-ndjson"
+    };
+
     try {
-      const response = await fetch(url, {
+      // First "iteration", send parameters, and get results + scroll_id.
+      let rawResponse = await fetch(`${es_url}/scroll?index=${collection}`, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-ndjson",
-          "User-Agent": "POP Prod"
-        },
-        body: `${JSON.stringify({ preference: "export" })}\n${JSON.stringify(query)}\n`
+        headers,
+        body: `${JSON.stringify({ ...next, size: 1000 })}\n`
       });
-      this.exec((await response.json()).responses[0].hits.hits.map(e => e._source));
+      let response = await rawResponse.json();
+      const scrollId = response._scroll_id;
+      let hits = response.hits.hits.map(e => e._source);
+      docs = hits;
+
+      // Next iterations, send scroll_id, get results.
+      while (hits && hits.length) {
+        rawResponse = await fetch(`${es_url}/scroll?scroll_id=${scrollId}`, {
+          method: "POST",
+          headers
+        });
+        response = await rawResponse.json();
+        hits = response.hits.hits.map(e => e._source);
+        docs = [...docs, ...hits];
+      }
+
+      // We've got all docs, convert it now.
+      // TODO: stream the result to preserve client memory and not to crash the browser.
+      this.exec(docs);
     } catch (e) {
       this.setState({ run: false });
     }
