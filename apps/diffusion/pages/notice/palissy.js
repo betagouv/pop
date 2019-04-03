@@ -108,6 +108,11 @@ export default class extends React.Component {
               <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
+              {notice.MEMOIRE && notice.MEMOIRE.length ? (
+                <meta property="og:image" content={notice.MEMOIRE[0].url} />
+              ) : (
+                <meta />
+              )}
             </Head>
             <h1 className="heading">{notice.TICO}</h1>
             {this.fieldImage(notice)}

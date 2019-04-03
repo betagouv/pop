@@ -94,6 +94,14 @@ export default class extends React.Component {
               <title>{this.pageTitle()}</title>
               <meta content={this.metaDescription()} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
+              {notice.IMG ? (
+                <meta
+                  property="og:image"
+                  content={`https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG}`}
+                />
+              ) : (
+                <meta />
+              )}
             </Head>
             <h1 className="heading">{this.rawTitle()}</h1>
             {this.fieldImage(notice)}

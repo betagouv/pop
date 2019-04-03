@@ -93,6 +93,14 @@ export default class extends React.Component {
               } - POP`}</title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
+              {notice.VIDEO.length ? (
+                <meta
+                  property="og:image"
+                  content={`https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.VIDEO[0]}`}
+                />
+              ) : (
+                <meta />
+              )}
             </Head>
 
             <h1 className="heading">{notice.TICO || notice.TITR}</h1>
