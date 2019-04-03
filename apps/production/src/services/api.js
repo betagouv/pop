@@ -52,11 +52,9 @@ class api {
 
   sendReport(subject, to, body) {
     const obj = { subject, to, body };
-
     if (process.env.NODE_ENV !== "production") {
       obj.subject = "TEST " + obj.subject;
     }
-
     return request.post(`${api_url}/mail`, JSON.stringify(obj), "application/json");
   }
 
@@ -65,6 +63,45 @@ class api {
     formData.append("import", JSON.stringify(data));
     formData.append("file", file, "import.csv");
     return request.post(`${api_url}/import`, formData);
+  }
+
+  bulkUpdateAndCreate(arr, cb) {
+    return new Promise(async (resolve, reject) => {
+      const MAX_ATTEMPTS = 5;
+      const BULK_SIZE = 5;
+      const TIME_BEFORE_RETRY = 30000;
+      let attempts = 0;
+      const total = arr.length;
+
+      while (arr.length) {
+        const currentNotices = arr.splice(0, BULK_SIZE);
+        let currentQueries = currentNotices.map(e => {
+          if (e.action === "updated") {
+            return this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
+          } else {
+            return this.createNotice(e.collection, e.notice, e.files);
+          }
+        });
+        const progress = (100 * (total - arr.length)) / total;
+        try {
+          await Promise.all(currentQueries);
+          cb(progress, `Notices restantes  ${total - arr.length}/${total}`);
+        } catch (e) {
+          //I add the currents one back to the list. I put it at the beginning because if there is a server error on this one, I dont want to wait the end to know ( but maybe I should)
+          arr.splice(0, 0, ...currentNotices);
+          if (++attempts >= MAX_ATTEMPTS) {
+            reject("Import avorté. Trop d'erreurs ont été détectés");
+            return;
+          }
+          cb(
+            progress,
+            `Un problème de connection à été détecté. Tentative : ${attempts}/${MAX_ATTEMPTS}, ${e}`
+          );
+          await timeout(TIME_BEFORE_RETRY);
+        }
+      }
+      resolve();
+    });
   }
 
   updateNotice(ref, collection, data, files = []) {
@@ -137,3 +174,7 @@ class api {
 
 const apiObject = new api();
 export default apiObject;
+
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
