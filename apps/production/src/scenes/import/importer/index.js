@@ -115,8 +115,11 @@ class Importer extends Component {
     const rejected = this.state.importedNotices.filter(e => e._status === "rejected");
 
     ///////////////////////////////////////////////
-    const { collection, fieldsToExport } = this.props;
-    const file = generateCSVFile(this.state.importedNotices, collection, fieldsToExport);
+    const file = generateCSVFile(
+      this.state.importedNotices,
+      this.props.collection,
+      this.props.fieldsToExport
+    );
 
     const doc = await api.createImport(
       {
@@ -133,45 +136,30 @@ class Importer extends Component {
     );
 
     const importId = doc.doc._id;
-    this.setState({ importId });
-    for (let i = 0; i < created.length; i++) {
-      created[i].POP_IMPORT = [importId];
-    }
-    for (let i = 0; i < updated.length; i++) {
-      updated[i].POP_IMPORT = [importId];
-    }
-    //////////////////////////////////////////////
-    let count = 0;
+
     try {
-      //Update notice
-      for (var i = 0; i < updated.length; i++, count++) {
-        this.setState({
-          loading: true,
-          loadingMessage: `Mise à jour des notices ... `,
-          progress: Math.floor((count * 100) / total)
-        });
-        const notice = updated[i].makeItFlat();
-        const collection = updated[i]._type;
-        await api.updateNotice(notice.REF, collection, notice, updated[i]._files);
+      const arr = [];
+      for (let i = 0; i < this.state.importedNotices.length; i++) {
+        const notice = this.state.importedNotices[i];
+        if (notice._status === "created" || notice._status === "updated") {
+          notice.POP_IMPORT = [importId];
+          arr.push({
+            action: notice._status,
+            collection: notice._type,
+            notice: notice.makeItFlat(),
+            files: notice._files
+          });
+        }
       }
 
-      //Create notice
-      for (var i = 0; i < created.length; i++, count++) {
-        this.setState({
-          loading: true,
-          loadingMessage: `Création des notices ... `,
-          progress: Math.floor((count * 100) / total)
-        });
-        const notice = created[i].makeItFlat();
-        const collection = created[i]._type;
-        await api.createNotice(collection, notice, created[i]._files);
-      }
-
-      //Start Sending rapport
       this.setState({
+        importId,
         loading: true,
-        loadingMessage: `Envoi du  rapport ... `,
-        progress: Math.floor((count * 100) / total)
+        loadingMessage: "Mises à jour et création des notices"
+      });
+
+      await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
+        this.setState({ progress, loadingMessage });
       });
 
       const generateReport = this.props.report || generate;
