@@ -189,7 +189,6 @@ router.put(
   async (req, res) => {
     try {
       const ref = req.params.ref;
-      console.log("update", ref);
       const notice = JSON.parse(req.body.notice);
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
