@@ -64,13 +64,18 @@ class request {
           reject(this._errorTxt(response));
           return;
         }
-
-        const res = await response.json();
-        if (res.success) {
-          resolve(res);
-          return;
+        try {
+          const res = await response.json();
+          if (res.success) {
+            resolve(res);
+            return;
+          }
+          Raven.captureException(JSON.stringify(err));
+          reject("Problème lors de la récupération de la donnée", err);
+        } catch (err) {
+          Raven.captureException(JSON.stringify(err));
+          reject("Problème lors de la récupération de la donnée", err);
         }
-        reject(res.msg);
       } catch (err) {
         Raven.captureException(JSON.stringify(err));
         reject("L'api est inaccessible", err);
@@ -112,10 +117,13 @@ class request {
           reject(this._errorTxt(response));
           return;
         }
-
-        const data = await response.json();
-        resolve(data);
-        return;
+        try {
+          const data = await response.json();
+          resolve(data);
+        } catch (err) {
+          Raven.captureException(JSON.stringify(err));
+          reject("Problème lors de la récupération de la donnée", err);
+        }
       } catch (err) {
         Raven.captureException(JSON.stringify(err));
         reject("L'api est inaccessible", err);
