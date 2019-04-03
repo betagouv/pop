@@ -138,20 +138,25 @@ function transformBeforeCreate(notice) {
 
 function checkIfMemoireImageExist(notice) {
   return new Promise(async (resolve, reject) => {
-    // Here, we update the images and we keep the order ( !! important )
-    const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
-    const arr = NoticesMemoire.map(e => {
-      return { ref: e.REF, url: e.IMG };
-    });
+    try {
+      // Here, we update the images and we keep the order ( !! important )
+      const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
+      const arr = NoticesMemoire.map(e => {
+        return { ref: e.REF, url: e.IMG };
+      });
 
-    //@raph -> I know you want to do only one loop with a reduce but it gave me headache
-    const newArr = notice.MEMOIRE.filter(e => arr.find(f => f.ref == e.ref));
-    for (let i = 0; i < arr.length; i++) {
-      if (!newArr.find(e => e.REF === arr[i].REF)) {
-        newArr.push(arr[i]);
+      //@raph -> I know you want to do only one loop with a reduce but it gave me headache
+      const newArr = (notice.MEMOIRE || []).filter(e => arr.find(f => f.ref == e.ref));
+      for (let i = 0; i < arr.length; i++) {
+        if (!newArr.find(e => e.REF === arr[i].REF)) {
+          newArr.push(arr[i]);
+        }
       }
+      resolve(newArr);
+    } catch (e) {
+      capture(e);
+      reject(e);
     }
-    resolve(newArr);
   });
 }
 
@@ -194,8 +199,9 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-      notice.MEMOIRE = await checkIfMemoireImageExist(notice);
-
+      if (notice.MEMOIRE) {
+        notice.MEMOIRE = await checkIfMemoireImageExist(notice);
+      }
       //Update IMPORT ID
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];
