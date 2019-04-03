@@ -90,12 +90,12 @@ class api {
           //I add the currents one back to the list. I put it at the beginning because if there is a server error on this one, I dont want to wait the end to know ( but maybe I should)
           arr.splice(0, 0, ...currentNotices);
           if (++attempts >= MAX_ATTEMPTS) {
-            reject("Import avorté. Trop d'erreurs ont été détectés");
+            reject("Import échoué. Trop d'erreurs ont été détectées");
             return;
           }
           cb(
             progress,
-            `Un problème de connection à été détecté. Tentative : ${attempts}/${MAX_ATTEMPTS}, ${e}`
+            `Un problème de connexion à été détecté. Tentative : ${attempts}/${MAX_ATTEMPTS}, ${e}`
           );
           await timeout(TIME_BEFORE_RETRY);
         }
