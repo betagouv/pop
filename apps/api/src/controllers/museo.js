@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
 const { formattedNow } = require("./utils");
 
@@ -20,17 +22,22 @@ router.get("/:ref", async (req, res) => {
   return res.sendStatus(404);
 });
 
-router.put("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  const data = req.body.museo;
-  if (!data || !data.REF) {
-    return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+router.put(
+  "/:ref",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const data = JSON.parse(req.body.notice);
+    if (!data || !data.REF) {
+      return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+    }
+    transformBeforeCreateOrUpdate(data);
+    const doc = await Museo.findOneAndUpdate({ REF: data.REF }, data, { new: true });
+    if (!doc) {
+      return res.sendStatus(404);
+    }
+    return res.status(200).send(doc);
   }
-  transformBeforeCreateOrUpdate(data);
-  const doc = await Museo.findOneAndUpdate({ REF: data.REF }, data, { new: true });
-  if (!doc) {
-    return res.sendStatus(404);
-  }
-  return res.status(200).send(doc);
-});
+);
 
 module.exports = router;

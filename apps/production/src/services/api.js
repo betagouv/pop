@@ -6,6 +6,9 @@ import request from "./request";
  * Buisness level access to POP API.
  */
 class api {
+  constructor() {
+    this.bucket = [];
+  }
   createUser(email, group, role, institution, prenom, nom, museofile) {
     const obj = { email, group, role, institution, prenom, nom, museofile };
     return request.post(`${api_url}/auth/signup`, JSON.stringify(obj), "application/json");
@@ -103,23 +106,9 @@ class api {
       }
     });
   }
-
-  // updateThesaurus(thesaurusId) {
-  //   return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`);
-  // }
-
   getTopConceptsByThesaurusId(thesaurusId) {
     return request.get(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
   }
-  /*
-    updateThesaurus(thesaurusId, str) {
-    return request.get(`${api_url}/thesaurus/update?id=${thesaurusId}`, {
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    });
-  }*/
-
   getAllChildrenConcept(thesaurusId) {
     return request.get(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
   }
@@ -143,22 +132,6 @@ class api {
 
   validateWithThesaurus(thesaurusId, str) {
     return request.get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
-  }
-
-  getMuseo(ref) {
-    return request.get(`${api_url}/museo/${ref}`);
-  }
-
-  updateMuseo(ref, data) {
-    return request.put(
-      `${api_url}/museo/${ref}`,
-      JSON.stringify({ museo: data }),
-      "application/json"
-    );
-  }
-
-  getEnluminures(ref) {
-    return request.get(`${api_url}/enluminures/${ref}`);
   }
 }
 

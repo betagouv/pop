@@ -34,7 +34,7 @@ class Enluminures extends React.Component {
 
   async load(ref) {
     this.setState({ loading: true });
-    const notice = await API.getEnluminures(ref);
+    const notice = await API.getNotice("enluminures", ref);
     this.props.initialize(notice);
     const editable = false;
     this.setState({ loading: false, notice, editable });

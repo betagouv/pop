@@ -33,7 +33,7 @@ class Museo extends React.Component {
 
   async load(ref) {
     this.setState({ loading: true });
-    const notice = await API.getMuseo(ref);
+    const notice = await API.getNotice("museo", ref);
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
     console.log(notice.REF + " " + this.props.user.museofile);
@@ -46,7 +46,7 @@ class Museo extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    const notice = await API.updateMuseo(this.state.notice.REF, values);
+    const notice = await API.updateNotice(this.state.notice.REF, "museo", values);
     toastr.success(
       "Modification enregistrée",
       "La modification sera visible dans 1 à 5 min en diffusion"
