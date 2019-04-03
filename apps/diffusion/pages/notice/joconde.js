@@ -143,7 +143,6 @@ export default class extends React.Component {
               <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              <meta property="og:description" content={notice.PHOT} />
               {notice.IMG.length ? (
                 <meta
                   property="og:image"

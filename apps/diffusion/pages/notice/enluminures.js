@@ -73,6 +73,11 @@ export default class extends React.Component {
               </title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
+              {Array.isArray(notice.VIDEO) && notice.VIDEO[0] ? (
+                <meta property="og:image" content={notice.VIDEO[0]} />
+              ) : (
+                <meta />
+              )}
             </Head>
 
             <h1 className="heading">
