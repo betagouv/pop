@@ -110,6 +110,8 @@ router.post("/forgetPassword", (req, res) => {
           msg: "Successful created new user."
         });
 
+        console.log("password", password);
+
         mailer.send(
           "Réinitialisation du mot de passe",
           req.body.email.toLowerCase(),
