@@ -223,11 +223,11 @@ function convertGPS(e) {
 }
 
 function checkReference(notice) {
-  if (String(notice.REF).startsWith("IA000") || String(notice.REF).startsWith("IM000")) {
-    notice._errors.push(
-      "L'import de cette notice est impossible car l'identifiant ne contient pas de département"
-    );
-  }
+  // if (String(notice.REF).startsWith("IA000") || String(notice.REF).startsWith("IM000")) {
+  //   notice._errors.push(
+  //     "L'import de cette notice est impossible car l'identifiant ne contient pas de département"
+  //   );
+  // }
 }
 
 function convertLongNameToShort(str, delim = "/") {
