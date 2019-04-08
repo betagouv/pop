@@ -74,7 +74,7 @@ class FieldImages extends React.Component {
     this.props.input.onChange(arr);
   }
 
-  deleteImage() {
+  deleteImage(name) {
     const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
     const toastrConfirmOptions = {
       onOk: () => {
@@ -85,6 +85,7 @@ class FieldImages extends React.Component {
           this.setState({ imageFiles: [] });
           return;
         }
+
         // Update Image path
         const arr = this.props.input.value.filter(e => e !== name);
         this.props.input.onChange(arr);
