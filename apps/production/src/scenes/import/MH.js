@@ -78,10 +78,10 @@ function parseFiles(files, encoding) {
       }
 
       let newNotice;
-      if (obj.REF.indexOf("PM") !== -1) {
+      if (["PM", "EM", "IM"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Palissy(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
-      } else if (obj.REF.indexOf("PA") !== -1) {
+      } else if (["PA", "EA", "IA"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Merimee(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
       } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
