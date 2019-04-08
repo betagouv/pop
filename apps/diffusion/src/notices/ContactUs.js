@@ -10,8 +10,14 @@ export default class ContactUs extends React.Component {
       mailTo = `mailto:pop.reseaux@gmail.com?${subject}`;
     }
     return (
-      <a href={mailTo} 
+      <a
+        href={mailTo}
         className="notice-btn"
+        onClick={e =>
+          amplitude
+            .getInstance()
+            .logEvent("notice_contact_us", { base: this.props.base, notice: this.props.REF })
+        }
       >
         Contactez-nous
       </a>
