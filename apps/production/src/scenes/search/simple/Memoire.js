@@ -52,9 +52,7 @@ export default class Search extends React.Component {
                 className="mainSearch"
                 placeholder={`Recherchez dans les champs suivants : ${fields.join(", ")}`}
                 URLParams={true}
-                customQuery={value =>
-                  utils.customQuery(value, fields)
-                }
+                customQuery={value => utils.customQuery(value, fields)}
               />
               <ExportComponent FILTER={FILTER} collection="memoire" />
             </div>

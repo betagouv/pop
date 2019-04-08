@@ -5,7 +5,7 @@ import "./QueryBuilder.css";
 
 export default class QueryBuilder extends React.Component {
   componentWillMount() {
-    this.setQuery();
+    // this.setQuery();
   }
 
   onUpdate(q) {
@@ -13,12 +13,13 @@ export default class QueryBuilder extends React.Component {
   }
 
   setQuery(q) {
+    console.log("setQUezry", q);
     if (!q) {
       this.props.setQuery({ query: { match_all: {} }, value: "" });
       return;
     }
     const query = { bool: { ...q } };
-    this.props.setQuery({ query, value: "" });
+    // this.props.setQuery({ query, value: "" });
   }
 
   render() {

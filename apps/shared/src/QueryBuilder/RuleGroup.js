@@ -81,8 +81,17 @@ export default class RuleGroup extends React.Component {
       }
     } else if (history) {
       const currentUrlParams = history.location.search;
-      const targetUrlParams = qs.stringify({ q: q.map(e => e.data) }, { addQueryPrefix: true });
+
+      const search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
+      delete search.q;
+      let targetUrlParams = qs.stringify(
+        { ...search, q: q.map(e => e.data) },
+        { addQueryPrefix: true }
+      );
+
+      //get suffix for other filters
       if (currentUrlParams !== targetUrlParams) {
+        console.log("replace because", currentUrlParams, targetUrlParams);
         history.replace(targetUrlParams);
       }
     }
@@ -90,6 +99,7 @@ export default class RuleGroup extends React.Component {
 
   componentDidMount() {
     const { history, router } = this.props;
+
     let search;
     if (router) {
       search = qs.parse(router.asPath.split("?")[1], { ignoreQueryPrefix: true });
@@ -188,7 +198,9 @@ export default class RuleGroup extends React.Component {
             </dd>
           </dl>
         </Tooltip>
-        <span id="aboutSearch" className="badge badge-info">?</span>
+        <span id="aboutSearch" className="badge badge-info">
+          ?
+        </span>
         <Container>{this.renderChildren()}</Container>
       </div>
     );
