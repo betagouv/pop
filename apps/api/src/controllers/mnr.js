@@ -13,11 +13,14 @@ const router = express.Router();
 
 function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
-  notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  if (notice.VIDEO !== undefined) {
+    notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  }
 }
 
 async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
+
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
 }
 

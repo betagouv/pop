@@ -12,7 +12,9 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
 
 function transformBeforeUpdate(notice) {
-  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  if (notice.IMG !== undefined) {
+    notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  }
   notice.DMAJ = formattedNow();
 }
 

@@ -28,8 +28,11 @@ function findCollection(ref = "") {
 }
 
 function transformBeforeUpdate(notice) {
-  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  if (notice.IMG !== undefined) {
+    notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  }
   notice.DMAJ = formattedNow();
+  console.log("CONTIENT_IMAGE", notice);
 }
 
 function transformBeforeCreate(notice) {
