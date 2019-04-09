@@ -45,6 +45,24 @@ class UpdateUser extends React.Component {
     }
   }
 
+  async deleteUser() {
+    try {
+      this.setState({ loading: true });
+      await api.deleteUser(this.state.email);
+      const confirmText = `Vous êtes sur le point de supprimer cet utilisateur. Souhaitez-vous continuer ?`;
+      const toastrConfirmOptions = {
+        onOk: () => {
+          this.setState({ modal: false });
+          toastr.success("l'utilisateur a été supprimé");
+          this.props.callback();
+        }
+      };
+      toastr.confirm(confirmText, toastrConfirmOptions);
+    } catch (error) {
+      this.setState({ error });
+    }
+  }
+
   museofile() {
     if (this.state.group !== "joconde" || this.state.role !== "producteur") {
       return <div />;
@@ -145,6 +163,9 @@ class UpdateUser extends React.Component {
         <div className="button-container">
           <Button color="primary" onClick={this.updateUser.bind(this)}>
             Enregistrer les modifications
+          </Button>
+          <Button color="danger" onClick={this.deleteUser.bind(this)}>
+            Supprimer
           </Button>
         </div>
       </Modal>

@@ -37,6 +37,7 @@ class Search extends React.Component {
             "PDEN^5",
             "PERS^4",
             "PAYS^3",
+            "HIST^3",
             "REG^3",
             "DEP^3",
             "COM^3",

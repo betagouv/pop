@@ -27,6 +27,10 @@ class api {
     });
   }
 
+  deleteUser(email) {
+    return request.delete(`${api_url}/users/${email}`);
+  }
+
   updatePassword(email, ppwd, pwd1, pwd2) {
     const obj = { email, ppwd, pwd1, pwd2 };
     return request.post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), "application/json");

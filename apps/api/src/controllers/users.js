@@ -19,4 +19,15 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   res.status(200).send(users);
 });
 
+router.delete("/:email", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const email = req.params.email;
+    await User.findOneAndRemove({ email });
+    return res.status(200).send({});
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({ error });
+  }
+});
+
 module.exports = router;
