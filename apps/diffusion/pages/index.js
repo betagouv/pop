@@ -77,7 +77,7 @@ export default class extends React.Component {
                   img="/static/topics/dessins.jpg"
                   txt="Dessins"
                   params={{
-                    domn: ["Dessin"],
+                    domn: ["dessin"],
                     image: ["oui"]
                   }}
                 />
@@ -85,7 +85,7 @@ export default class extends React.Component {
                   img="/static/topics/archeo.jpg"
                   txt="Archéologie"
                   params={{
-                    domn: ["Archéologie"],
+                    domn: ["archéologie"],
                     image: ["oui"]
                   }}
                 />
