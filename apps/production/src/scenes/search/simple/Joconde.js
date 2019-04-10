@@ -15,7 +15,6 @@ import Card from "../components/JocondeCard";
 import utils from "../components/utils";
 import SearchButton from "../components/SearchButton";
 
-
 const FILTER = [
   "mainSearch",
   "domn",
@@ -26,7 +25,8 @@ const FILTER = [
   "loca",
   "autr",
   "util",
-  "epoq"
+  "epoq",
+  "appartenance"
 ];
 
 export default class Search extends React.Component {
@@ -151,6 +151,17 @@ export default class Search extends React.Component {
                   URLParams={true}
                   react={{
                     and: FILTER.filter(e => e !== "loca")
+                  }}
+                />
+                <MultiList
+                  componentId="appartenance"
+                  dataField="APTN.keyword"
+                  title="Ancienne appartenance"
+                  className="filters"
+                  displayCount
+                  URLParams={true}
+                  react={{
+                    and: FILTER.filter(e => e !== "appartenance")
                   }}
                 />
                 <MultiList
