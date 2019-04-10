@@ -1,0 +1,34 @@
+.list-import .row {
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+}
+
+.list-import .filter{
+  background-color: white;
+  padding: 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+
+.list-import .reactive-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.list-import .import-card {
+  padding: 5px;
+}
+
+.list-import .card > div {
+  margin: 20px;
+}
+
+.list-import .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
