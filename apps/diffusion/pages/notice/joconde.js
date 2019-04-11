@@ -54,7 +54,7 @@ export default class extends React.Component {
           base="joconde"
           images={images}
           disabled
-          name={notice.TICO || notice.TITR}
+          name={notice.TITR}
           external={false}
         />
       );
@@ -140,7 +140,7 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
+              <title>{`${notice.TITR || ""} `}</title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
               {notice.IMG.length ? (
@@ -152,8 +152,7 @@ export default class extends React.Component {
                 <meta />
               )}
             </Head>
-
-            <h1 className="heading">{notice.TICO}</h1>
+            <h1 className="heading">{notice.TITR}</h1>
 
             {this.fieldImage(notice)}
             <Row>
