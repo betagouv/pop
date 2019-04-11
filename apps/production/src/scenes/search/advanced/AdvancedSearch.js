@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col, Container, Button, Modal, Input } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
 import { QueryBuilder } from "pop-shared";
@@ -38,6 +38,7 @@ export default class Search extends React.Component {
             <Row>
               <Col md={12} className="mt-2">
                 <ExportComponent FILTER={["advancedSearch"]} collection={baseName} autocomplete />
+                <CreateGallery />
               </Col>
             </Row>
             <div className="text-center my-3">
@@ -77,6 +78,48 @@ export default class Search extends React.Component {
           </div>
         </ReactiveBase>
       </Container>
+    );
+  }
+}
+
+class CreateGallery extends React.Component {
+  state = {
+    modal: false
+  };
+
+  handleClick = async () => {
+    try {
+      const result = await API.createGallery(this.props.query);
+      const data = await result.json();
+      const { protocol, host } = window.location;
+      this.setState({ link: `${protocol}//${host}/gallery/${data._id}` });
+    } catch (e) {
+      this.setState({ link: "La génération du permalien a échoué." });
+    }
+  };
+  renderModal() {
+    return (
+      <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
+        <div className="input-container">
+          <div>
+            <div>Nom</div>
+            <Input
+              value={this.state.name}
+              onChange={e => this.setState({ name: e.target.value })}
+            />
+          </div>
+          <Button>Valider</Button>
+        </div>
+      </Modal>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderModal()}
+        <Button onClick={() => this.setState({ modal: true })}>Créer une galerie</Button>
+      </div>
     );
   }
 }

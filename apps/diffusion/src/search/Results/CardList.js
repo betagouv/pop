@@ -217,7 +217,7 @@ const Mnr = ({ data }) => {
 const Joconde = ({ data }) => {
   const REF = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
-  const title = data.TICO || data.TITR;
+  const title = data.TITR;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
   const peri = Array.isArray(data.PERI) ? joinData(data.PERI) : data.PERI;
   const loc = data.LOCA;
