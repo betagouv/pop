@@ -108,6 +108,9 @@ class api {
     });
   }
 
+  createGallery(obj) {
+    return request.post(`${api_url}/gallery`, JSON.stringify(obj), "application/json");
+  }
   updateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));

@@ -1,6 +1,13 @@
 import React from "react";
-import { ReactiveBase, DataSearch, ReactiveList } from "@appbaseio/reactivesearch/lib";
+import {
+  ReactiveBase,
+  DataSearch,
+  ReactiveList,
+  SelectedFilters,
+  MultiList
+} from "@appbaseio/reactivesearch/lib";
 import { Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import "./index.css";
 
@@ -11,10 +18,11 @@ const FILTER = ["mainSearch", "institution", "email", "notices"];
 export default class List extends React.Component {
   render() {
     return (
-      <div className="list-import">
+      <div className="list-gallery">
         <ReactiveBase url={`${es_url}/gallery`} app="gallery">
           <Row>
             <Col md="3">
+              <SelectedFilters clearAllLabel="Tout supprimer" />
               <DataSearch
                 className="filter"
                 componentId="mainSearch"
@@ -26,7 +34,7 @@ export default class List extends React.Component {
                 placeholder="Saisissez un nom ou un email"
                 URLParams={true}
               />
-              {/* <MultiList
+              <MultiList
                 className="filter"
                 componentId="institution"
                 dataField="institution.keyword"
@@ -37,19 +45,11 @@ export default class List extends React.Component {
               <MultiList
                 className="filter"
                 componentId="email"
-                dataField="email.keyword"
-                title="Email"
+                dataField="createdBy.keyword"
+                title="Créé par "
                 placeholder="Sélectionnez un email"
                 react={{ and: FILTER.filter(e => e !== "email") }}
               />
-              <MultiList
-                className="filter"
-                componentId="notices"
-                dataField="notices.keyword"
-                title="Notices"
-                placeholder="Sélectionnez une notice"
-                react={{ and: FILTER.filter(e => e !== "notices") }}
-              /> */}
             </Col>
             <Col md="9">
               {/* <SelectedFilters clearAllLabel="Tout supprimer" /> */}
@@ -85,8 +85,23 @@ export default class List extends React.Component {
 
 const Card = ({ data }) => {
   return (
-    <div className="import-card col-6">
-      <div className="card">{JSON.stringify(data)}</div>
+    <div className="gallery-card col-6">
+      <div className="card">
+        <img src={data.image} />
+        <div className="container" style={{ maxWidth: "475px" }}>
+          <h2>{data.name}</h2>
+          <p>{data.description}</p>
+          <div>{data.createdBy}</div>
+          <div className="institution">{data.institution}</div>
+          <div>
+            Permalien:
+            <a target="_blank" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
+              {`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
+            </a>
+          </div>
+          <div>{`Créé par ${data.createdBy} le ${new Date(data.createdAt).toLocaleString()}`}</div>
+        </div>
+      </div>
     </div>
   );
 };

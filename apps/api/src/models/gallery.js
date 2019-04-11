@@ -5,9 +5,12 @@ var getElasticInstance = require("../elasticsearch");
 const GallerySchema = new mongoose.Schema(
   {
     params: {},
-    createdBy: String,
-    createdAt: String,
-    name: String
+    createdBy: { type: String, default: "anonyme" },
+    institution: { type: String, default: "public" },
+    name: String,
+    description: String,
+    image: String,
+    createdAt: { type: Date, default: Date.now() }
   },
   { collection: "gallery" }
 );
