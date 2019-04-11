@@ -29,6 +29,9 @@
   object-fit: contain;
 }
 
+.list-gallery .container {
+  max-width: 60%!important;
+}
 .list-gallery h2 {
   font-size: 18px;
 }
