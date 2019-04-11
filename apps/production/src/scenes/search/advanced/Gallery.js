@@ -109,7 +109,7 @@ class Gallery extends Component {
                     } else if (this.props.base === "mnr") {
                       image = e.VIDEO.length && `${bucket_url}${e.VIDEO[0]}`;
                     } else if (this.props.base === "palissy" || this.props.base === "merimee") {
-                      image = e.MEMOIRE.length && `${e.MEMOIRE[0].url}`;
+                      image = e.MEMOIRE.length && `${bucket_url}${e.MEMOIRE[0].url}`;
                     } else if (this.props.base === "enluminures") {
                       image = e.VIDEO.length && `${e.VIDEO[0]}`;
                     }
