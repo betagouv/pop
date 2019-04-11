@@ -12,8 +12,8 @@ class Permalink extends React.Component {
     try {
       const result = await API.createGallery(this.props.query);
       const data = await result.json();
-      const {protocol, host} = window.location;
-      this.setState({  link: `${protocol}//${host}/gallery/${data._id}` });
+      const { protocol, host } = window.location;
+      this.setState({ link: `${protocol}//${host}/gallery/${data._id}` });
     } catch (e) {
       this.setState({ link: "La génération du permalien a échoué." });
     }

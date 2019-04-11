@@ -22,19 +22,23 @@ const limiter = rateLimit({
 });
 
 router.post("/", limiter, async (req, res) => {
-  const params = req.body.params;
   let doc;
-  if (!params) {
+  if (!req.body.params) {
+    console.log("err");
     return res.sendStatus(400);
   }
+
   try {
-    const gallery = new Gallery({ params });
+    const gallery = new Gallery(req.body);
     doc = await gallery.save();
   } catch (e) {
     console.log(e);
     capture(e);
   }
-  return doc ? res.status(200).send(doc) : res.sendStatus(400);
+  if (doc) {
+    return res.status(200).send({ success: true });
+  }
+  return res.sendStatus(400);
 });
 
 module.exports = router;

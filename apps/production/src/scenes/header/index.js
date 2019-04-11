@@ -22,6 +22,7 @@ class NavComponent extends React.Component {
           ) : (
             <div />
           )}
+          <Link to="/gallery">Galerie (beta)</Link>
           {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
           <User />
           <div id="beta">

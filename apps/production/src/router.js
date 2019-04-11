@@ -12,6 +12,7 @@ import AdvancedSearch from "./scenes/search/advanced";
 import Notice from "./scenes/notice";
 import Admin from "./scenes/admin";
 import Import from "./scenes/import";
+import Gallery from "./scenes/gallery";
 import Thesaurus from "./scenes/thesaurus";
 import Auth from "./scenes/auth";
 
@@ -67,6 +68,12 @@ class PublicRoutes extends React.Component {
             <RestrictedRoute
               path={"/import/"}
               component={Import}
+              isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
+            />
+            <RestrictedRoute
+              path={"/gallery/"}
+              component={Gallery}
               isLoggedIn={this.props.isLoggedIn}
               hasResetPassword={this.props.hasResetPassword}
             />

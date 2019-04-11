@@ -1,12 +1,14 @@
 import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col, Container, Button, Modal, Input } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
-import ExportComponent from "../components/export";
+
 import { QueryBuilder } from "pop-shared";
+import CreateGallery from "./Gallery";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Mapping from "../../../services/Mapping";
 import { history } from "../../../redux/store";
+import ExportComponent from "../components/export";
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -36,8 +38,9 @@ export default class Search extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col md={12} className="mt-2">
+              <Col md={12} className="mt-2" style={{ display: "flex" }}>
                 <ExportComponent FILTER={["advancedSearch"]} collection={baseName} autocomplete />
+                <CreateGallery base={baseName} />
               </Col>
             </Row>
             <div className="text-center my-3">
