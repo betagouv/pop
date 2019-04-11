@@ -77,7 +77,7 @@ export default class extends React.Component {
                   img="/static/topics/dessins.jpg"
                   txt="Dessins"
                   params={{
-                    domn: ["Dessin"],
+                    domn: ["dessin"],
                     image: ["oui"]
                   }}
                 />
@@ -85,7 +85,7 @@ export default class extends React.Component {
                   img="/static/topics/archeo.jpg"
                   txt="Archéologie"
                   params={{
-                    domn: ["Archéologie"],
+                    domn: ["archéologie"],
                     image: ["oui"]
                   }}
                 />
@@ -141,7 +141,7 @@ export default class extends React.Component {
                   img="/static/topics/estampes.jpg"
                   txt="Estampes"
                   params={{
-                    domn: ["estampes"],
+                    domn: ["estampe"],
                     image: ["oui"]
                   }}
                 />
@@ -173,7 +173,7 @@ export default class extends React.Component {
                   img="/static/topics/Museo_Correr_Enluminure_15ème_siècle_03032015.jpg"
                   txt="Enluminures"
                   params={{
-                    base: ["Enluminures (Enluminures) "],
+                    base: ["Enluminures (Enluminures)"],
                     image: ["oui"]
                   }}
                 />
