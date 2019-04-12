@@ -38,12 +38,11 @@ class Gallery extends Component {
       name,
       institution,
       createdBy: email,
-      image,
       description
     };
 
     try {
-      await api.createGallery(obj);
+      await api.createGallery(obj, image);
       this.setState({ modal: false });
       toastr.success(`Gallery ${this.state.name} créée`);
     } catch (e) {
@@ -82,17 +81,18 @@ class Gallery extends Component {
               <option value="map">Carte</option>
               <option value="mosaic">Mosaique</option>
             </select>
-            {/* <div>Illustrer la galerie</div>
-            <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-                  </div>
-                </section>
+            * <div>Illustrer la galerie</div>
+            <Dropzone
+              onDrop={acceptedFiles => {
+                this.setState({ image: acceptedFiles[0] });
+              }}
+            >
+              {this.state.image ? (
+                <img src={this.state.image.preview} style={{ width: "100%", height: "100%" }} />
+              ) : (
+                <div>Ajoutez ici une image</div>
               )}
-            </Dropzone> */}
+            </Dropzone>
           </div>
           <Button
             color="primary"

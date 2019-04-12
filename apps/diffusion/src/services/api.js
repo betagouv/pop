@@ -23,19 +23,17 @@ class api {
   }
 
   createGallery(params) {
+    let formData = new FormData();
+    formData.append("gallery", JSON.stringify({ params }));
+
     return fetch(`${api_url}/gallery`, {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "User-Agent": "POP Diffusion"
-      },
       cache: "no-cache",
       credentials: "same-origin",
       mode: "cors",
       redirect: "follow",
       referrer: "no-referrer",
-      body: JSON.stringify({ params })
+      body: formData
     });
   }
 

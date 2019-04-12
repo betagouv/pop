@@ -1,6 +1,7 @@
 import React from "react";
 import queryString from "query-string";
 import API from "../services/api";
+import { bucket_url } from "../config";
 
 class Header extends React.Component {
   state = {
@@ -27,7 +28,7 @@ class Header extends React.Component {
 
     if (museo) {
       return <MUSEO museo={museo} />;
-    } else if (gallery) {
+    } else if (gallery && gallery.name && gallery.description) {
       return <GALLERY gallery={gallery} />;
     }
 
@@ -39,7 +40,6 @@ export default Header;
 
 const GALLERY = ({ gallery }) => {
   const title = gallery.name;
-  gallery.image = "";
   const description = gallery.description;
   return (
     <div className="museo-card-sm">
@@ -81,7 +81,7 @@ const GALLERY = ({ gallery }) => {
           position: absolute;
           background-position: center;
           background-attachment: fixed;
-          background-image: url(${gallery.image});
+          background-image: url(${bucket_url}${gallery.image});
         }
         .museo-card-sm h2 {
           font-size: 22px;

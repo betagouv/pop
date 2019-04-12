@@ -7,11 +7,10 @@ import {
   MultiList
 } from "@appbaseio/reactivesearch/lib";
 import { Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
 
 import "./index.css";
 
-import { es_url } from "../../config.js";
+import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = ["mainSearch", "institution", "email", "notices"];
 
@@ -88,7 +87,7 @@ const Card = ({ data }) => {
   return (
     <div className="gallery-card col-6">
       <div className="card">
-        <img src={data.image} />
+        <img src={`${bucket_url}${data.image}`} />
         <div className="container" style={{ maxWidth: "475px" }}>
           <h2>{data.name}</h2>
           <p>{data.description}</p>
@@ -96,7 +95,7 @@ const Card = ({ data }) => {
           <div className="institution">{data.institution}</div>
           <div>
             Permalien:
-            <a target="_blank" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
+            <a target="_blank" href={`http://localhost:8081/gallery/${data._id}`}>
               {`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
             </a>
           </div>
