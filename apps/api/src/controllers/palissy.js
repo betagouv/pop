@@ -166,13 +166,29 @@ function populateMerimeeREFO(notice) {
       resolve();
       return;
     }
-    for (var i = 0; i < notice.REFA.length; i++) {
-      const obj = await Merimee.findOne({ REF: notice.REFA[i] });
-      if (obj && Array.isArray(obj.REFO) && !obj.REFO.includes(notice.REF)) {
-        obj.REFO.push(notice.REF);
-        await obj.save();
+
+    const arr = [];
+
+    const merimees = await Merimee.find({ REFO: notice.REF });
+
+    for (let i = 0; i < merimees.length; i++) {
+      // Si on a enlevé l'objet de la notice, alors on l'enleve de palissy
+      if (!notice.REFA.includes(merimees[i].REF)) {
+        merimees[i].REFO = merimees[i].REFO.filter(e => e !== notice.REF);
+        arr.push(merimees[i].save());
       }
     }
+
+    for (let i = 0; i < notice.REFA.length; i++) {
+      if (!merimees.find(e => e.REF === notice.REFA[i])) {
+        const obj = await Merimee.findOne({ REF: notice.REFA[i] });
+        if (obj && Array.isArray(obj.REFO) && !obj.REFO.includes(notice.REF)) {
+          obj.REFO.push(notice.REF);
+          arr.push(obj.save());
+        }
+      }
+    }
+    await Promise.all(arr);
     resolve();
   });
 }
