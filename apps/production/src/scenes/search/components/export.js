@@ -177,8 +177,9 @@ async function exportData(fileName, entities) {
       let value = entities[j][columns[i]];
       if (Array.isArray(value)) {
         // MEMOIRE is now a complex object, we just want refs
+
         if (columns[i] === "MEMOIRE") {
-          value = value.map(e => e.ref);
+          value = value.filter(e => e).map(e => e.ref);
         }
         if (value.length && typeof value[0] === "object") {
           value = JSON.stringify(value);
