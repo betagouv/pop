@@ -36,6 +36,12 @@
   font-size: 18px;
 }
 
+.list-gallery .gallery-card p {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .list-gallery .institution {
   position: absolute;
   top: 0px;
