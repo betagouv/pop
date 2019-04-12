@@ -31,6 +31,11 @@ function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
+
+  if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
+    notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+  }
+
   notice.DMAJ = formattedNow();
   console.log("CONTIENT_IMAGE", notice);
 }
