@@ -108,9 +108,16 @@ class api {
     });
   }
 
-  createGallery(obj) {
-    return request.post(`${api_url}/gallery`, JSON.stringify(obj), "application/json");
+  createGallery(obj, file) {
+    let formData = new FormData();
+    console.log("add file", file);
+    if (file) {
+      formData.append("files", file, file.name);
+    }
+    formData.append("gallery", JSON.stringify(obj));
+    return request.post(`${api_url}/gallery`, formData);
   }
+
   updateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));

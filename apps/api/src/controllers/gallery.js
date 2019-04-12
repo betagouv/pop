@@ -2,7 +2,10 @@ const express = require("express");
 const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const router = express.Router();
-const { capture } = require("./../sentry.js");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const { capture } = require("../sentry.js");
+const { uploadFile } = require("./utils");
 const Gallery = require("../models/gallery");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -21,24 +24,26 @@ const limiter = rateLimit({
   max: 30 // limit each IP to 30 requests per windowMs
 });
 
-router.post("/", limiter, async (req, res) => {
-  let doc;
-  if (!req.body.params) {
-    console.log("err");
-    return res.sendStatus(400);
-  }
-
+router.post("/", limiter, upload.any(), async (req, res) => {
   try {
-    const gallery = new Gallery(req.body);
-    doc = await gallery.save();
+    const data = JSON.parse(req.body.gallery);
+    if (!data) {
+      return res.sendStatus(400);
+    }
+    const gallery = new Gallery(data);
+    const doc = await gallery.save();
+    for (var i = 0; i < req.files.length; i++) {
+      await uploadFile(`gallery/${doc._id}/${req.files[i].originalname}`, req.files[i]);
+      doc.image = `gallery/${doc._id}/${req.files[i].originalname}`;
+      await doc.save();
+    }
+
+    return res.status(200).send({ success: true, doc });
   } catch (e) {
     console.log(e);
     capture(e);
+    return res.sendStatus(400);
   }
-  if (doc) {
-    return res.status(200).send({ success: true });
-  }
-  return res.sendStatus(400);
 });
 
 module.exports = router;
