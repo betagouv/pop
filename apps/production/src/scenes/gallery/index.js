@@ -58,6 +58,7 @@ export default class List extends React.Component {
                 //   { label: "Filtrer les plus récents", dataField: "importedAt", sortBy: "desc" },
                 //   { label: "Filtrer les plus anciens", dataField: "importedAt", sortBy: "asc" }
                 // ]}
+                sortOptions={[{ dataField: "createdAt", sortBy: "desc" }]}
                 componentId="results"
                 className="reactive-list"
                 react={{ and: FILTER }}

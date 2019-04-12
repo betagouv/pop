@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
 import { Button, Modal, Input, Row, Col } from "reactstrap";
+import Dropzone from "react-dropzone";
 import { toastr } from "react-redux-toastr";
 import { ReactiveList } from "@appbaseio/reactivesearch";
 
@@ -81,55 +82,17 @@ class Gallery extends Component {
               <option value="map">Carte</option>
               <option value="mosaic">Mosaique</option>
             </select>
-            <div>Illustrer la galerie avec la notice</div>
-            <Row>
-              <Col md={5}>
-                <img
-                  style={{ width: "100%", objectFit: "contain", maxHeight: "200px" }}
-                  src={this.state.image}
-                />
-              </Col>
-              <Col md={7}>
-                <ReactiveList
-                  componentId="results-gallerie"
-                  react={{ and: "advancedSearch" }}
-                  onResultStats={(total, took) => {
-                    return ``;
-                  }}
-                  onNoResults="Aucun résultat trouvé."
-                  dataField={`${this.state.sortKey}.keyword`}
-                  sortBy={this.state.sortOrder}
-                  URLParams={true}
-                  size={5}
-                  className="search"
-                  onData={e => {
-                    let image = "";
-                    if (this.props.base === "joconde") {
-                      image = e.IMG.length && `${bucket_url}${e.IMG[0]}`;
-                    } else if (this.props.base === "mnr") {
-                      image = e.VIDEO.length && `${bucket_url}${e.VIDEO[0]}`;
-                    } else if (this.props.base === "palissy" || this.props.base === "merimee") {
-                      image = e.MEMOIRE.length && `${bucket_url}${e.MEMOIRE[0].url}`;
-                    } else if (this.props.base === "enluminures") {
-                      image = e.VIDEO.length && `${e.VIDEO[0]}`;
-                    }
-                    const style = { cursor: "pointer" };
-                    if (this.state.image === image) {
-                      style["fontWeight"] = "bold";
-                    }
-
-                    console.log(e);
-
-                    return (
-                      <div style={style} onClick={() => this.setState({ image })}>
-                        {e.REF}
-                      </div>
-                    );
-                  }}
-                  pagination={true}
-                />
-              </Col>
-            </Row>
+            {/* <div>Illustrer la galerie</div>
+            <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+              {({ getRootProps, getInputProps }) => (
+                <section>
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                  </div>
+                </section>
+              )}
+            </Dropzone> */}
           </div>
           <Button
             color="primary"
