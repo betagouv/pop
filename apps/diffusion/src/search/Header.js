@@ -46,6 +46,14 @@ const GALLERY = ({ gallery }) => {
       <div className="description">
         <h2>{title}</h2>
         <p>{description}</p>
+        <div className="share">
+          <a
+            href={`mailto:?subject=${title}%20on%20POP&body=Venez découvrir la gallerie ${title} sur http://pop.culture.gouv.fr/gallery/${
+              gallery._id
+            }`}
+            className="icon mail"
+          />
+        </div>
       </div>
       <div className="background" />
 
@@ -59,6 +67,32 @@ const GALLERY = ({ gallery }) => {
           box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
           margin-bottom: 30px;
           position: relative;
+        }
+
+        .share {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+        }
+
+        .mail {
+          background-image: url("/static/send.svg");
+          background-size: auto;
+          background-repeat: no-repeat;
+          background-position: 50% 50%;
+        }
+
+        .icon {
+          height: 50px;
+          width: 50px;
+          background-color: white;
+          border-radius: 50%;
+          box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+          cursor: pointer;
+          color: black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .description {
