@@ -95,7 +95,7 @@ const Card = ({ data }) => {
           <div className="institution">{data.institution}</div>
           <div>
             Permalien:
-            <a target="_blank" href={`http://localhost:8081/gallery/${data._id}`}>
+            <a target="_blank" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
               {`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
             </a>
           </div>
