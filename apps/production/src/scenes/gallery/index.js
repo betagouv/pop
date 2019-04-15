@@ -51,13 +51,11 @@ export default class List extends React.Component {
               />
             </Col>
             <Col md="9">
-              {/* <SelectedFilters clearAllLabel="Tout supprimer" /> */}
               <ReactiveList
-                // sortOptions={[
-                //   { label: "Filtrer les plus récents", dataField: "importedAt", sortBy: "desc" },
-                //   { label: "Filtrer les plus anciens", dataField: "importedAt", sortBy: "asc" }
-                // ]}
-                sortOptions={[{ dataField: "createdAt", sortBy: "desc" }]}
+                sortOptions={[
+                  { label: "Les plus récents en premier", dataField: "createdAt", sortBy: "desc" },
+                  { label: "Les plus anciens en premier", dataField: "createdAt", sortBy: "asc" }
+                ]}
                 componentId="results"
                 className="reactive-list"
                 react={{ and: FILTER }}
@@ -73,7 +71,6 @@ export default class List extends React.Component {
                 dataField=""
                 size={20}
                 onData={data => <Card key={data._id} data={data} />}
-                // pagination={true}
               />
             </Col>
           </Row>
@@ -94,7 +91,6 @@ const Card = ({ data }) => {
           <div>{data.createdBy}</div>
           <div className="institution">{data.institution}</div>
           <div>
-            Permalien:
             <a target="_blank" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
               {`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
             </a>

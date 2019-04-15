@@ -20,7 +20,7 @@
 }
 
 .list-gallery .gallery-card {
-  margin-bottom: 10px;
+  padding: 5px;
 }
 
 .list-gallery img {
@@ -30,7 +30,7 @@
 }
 
 .list-gallery .container {
-  max-width: 60%!important;
+  word-break: break-word;
 }
 .list-gallery h2 {
   font-size: 18px;
@@ -50,7 +50,6 @@
 }
 
 .list-gallery .card {
-  margin: 10px;
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -58,19 +57,3 @@
   align-items: center;
   height: 100%;
 }
-
-/*
-
-.list-import .import-card {
-  padding: 5px;
-}
-
-.list-import .card > div {
-  margin: 20px;
-}
-
-.list-import .content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-} */
