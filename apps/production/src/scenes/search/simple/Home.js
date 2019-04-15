@@ -45,16 +45,12 @@ class Search extends React.Component {
       name: "Autor",
       image: require("../../../assets/autor.jpeg")
     });
-    if (
-      this.props.group === "admin" ||
-      (this.props.group === "joconde" && this.props.role === "administrateur")
-    ) {
-      tiles.push({
-        url: "/recherche/museo",
-        name: "Museo",
-        image: require("../../../assets/museo.jpg")
-      });
-    }
+
+    tiles.push({
+      url: "/recherche/museo",
+      name: "Museo",
+      image: require("../../../assets/museo.jpg")
+    });
 
     this.state = {
       tiles
