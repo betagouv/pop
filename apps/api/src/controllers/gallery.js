@@ -3,6 +3,7 @@ const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const router = express.Router();
 const multer = require("multer");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
 const { uploadFile } = require("./utils");
@@ -33,8 +34,9 @@ router.post("/", limiter, upload.any(), async (req, res) => {
     const gallery = new Gallery(data);
     const doc = await gallery.save();
     for (var i = 0; i < req.files.length; i++) {
-      await uploadFile(`gallery/${doc._id}/${req.files[i].originalname}`, req.files[i]);
-      doc.image = `gallery/${doc._id}/${req.files[i].originalname}`;
+      const filenamified = filenamify(req.files[i].originalname);
+      await uploadFile(`gallery/${doc._id}/${filenamified}`, req.files[i]);
+      doc.image = `gallery/${doc._id}/${filenamified}`;
       await doc.save();
     }
 
