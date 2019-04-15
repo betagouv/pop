@@ -48,12 +48,13 @@ class UpdateUser extends React.Component {
   async deleteUser() {
     try {
       this.setState({ loading: true });
-      await api.deleteUser(this.state.email);
-      const confirmText = `Vous êtes sur le point de supprimer cet utilisateur. Souhaitez-vous continuer ?`;
+      const confirmText =
+        "Vous êtes sur le point de supprimer cet utilisateur. Souhaitez-vous continuer ?";
       const toastrConfirmOptions = {
-        onOk: () => {
+        onOk: async () => {
+          await api.deleteUser(this.state.email);
           this.setState({ modal: false });
-          toastr.success("l'utilisateur a été supprimé");
+          toastr.success("L'utilisateur a été supprimé");
           this.props.callback();
         }
       };
