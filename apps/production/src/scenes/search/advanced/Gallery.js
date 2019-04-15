@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import { Button, Modal, Input, Row, Col } from "reactstrap";
+import { Button, Modal, Input } from "reactstrap";
 import Dropzone from "react-dropzone";
 import { toastr } from "react-redux-toastr";
-import { ReactiveList } from "@appbaseio/reactivesearch";
-
-import { bucket_url } from "../../../config.js";
 import api from "../../../services/api";
 
 class Gallery extends Component {
@@ -107,6 +104,10 @@ class Gallery extends Component {
   }
 
   render() {
+    // Only admin can create gallery.
+    if (!(this.props.role === "administrateur" && this.props.group === "admin")) {
+      return null;
+    }
     return (
       <div>
         {this.renderModal()}
@@ -119,8 +120,8 @@ class Gallery extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  const { institution, email } = Auth.user;
-  return { institution, email };
+  const { institution, email, role, group } = Auth.user;
+  return { institution, email, role, group };
 };
 
 export default connect(

@@ -6,6 +6,8 @@ import {
   SelectedFilters,
   MultiList
 } from "@appbaseio/reactivesearch/lib";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import "./index.css";
@@ -14,8 +16,12 @@ import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = ["mainSearch", "institution", "email", "notices"];
 
-export default class List extends React.Component {
+class Gallery extends React.Component {
   render() {
+    // Only admin can view galleries.
+    if (!(this.props.role === "administrateur" && this.props.group === "admin")) {
+      return <Redirect to="/recherche" />;
+    }
     return (
       <div className="list-gallery">
         <ReactiveBase url={`${es_url}/gallery`} app="gallery">
@@ -101,3 +107,13 @@ const Card = ({ data }) => {
     </div>
   );
 };
+
+const mapStateToProps = ({ Auth }) => {
+  const { role, group } = Auth.user;
+  return { role, group };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Gallery);
