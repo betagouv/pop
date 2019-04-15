@@ -7,7 +7,7 @@ import inv from "../../../assets/inventaire.jpg";
 import utils from "./utils";
 
 function getMemoireImage(memoire) {
-  if (!memoire.length || !memoire[0].url) {
+  if (!memoire || !memoire.length || !memoire[0].url) {
     return require("../../../assets/noimage.jpg");
   }
   let image = memoire[0].url;
