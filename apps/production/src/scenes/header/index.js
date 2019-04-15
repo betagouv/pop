@@ -10,21 +10,33 @@ import Logo from "./logo.js";
 import "./index.css";
 
 class NavComponent extends React.Component {
+  renderLinks() {
+    if (!this.props.connected) {
+      return;
+    }
+    return (
+      <React.Fragment>
+        <Link to="/">Accueil</Link>
+        <Link to="/recherche">Recherche</Link>
+        {this.props.role === "administrateur" || this.props.role === "producteur" ? (
+          <Link to="/import">Import</Link>
+        ) : (
+          <div />
+        )}
+        <Link to="/gallery">Galerie (beta)</Link>
+        {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
+        <User />
+      </React.Fragment>
+    );
+  }
+
   render() {
     return (
       <div className="header">
         <Container className="NavContainer">
           <Logo />
-          <Link to="/">Accueil</Link>
-          <Link to="/recherche">Recherche</Link>
-          {this.props.role === "administrateur" || this.props.role === "producteur" ? (
-            <Link to="/import">Import</Link>
-          ) : (
-            <div />
-          )}
-          <Link to="/gallery">Galerie (beta)</Link>
-          {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
-          <User />
+          {this.renderLinks()}
+          
           <div id="beta">
             <div>
               <span>BETA</span>
@@ -39,7 +51,8 @@ class NavComponent extends React.Component {
 const mapStateToProps = ({ Auth }) => {
   return {
     role: Auth.user ? Auth.user.role : "",
-    group: Auth.user ? Auth.user.group : ""
+    group: Auth.user ? Auth.user.group : "",
+    connected: !!Auth.user
   };
 };
 
