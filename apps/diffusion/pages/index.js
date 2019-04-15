@@ -7,11 +7,6 @@ import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import logEvent from "../src/services/amplitude";
 import TopicCard from "../src/topics/TopicCard";
-import { bucket_url } from "../src/config";
-
-const cultureUrl = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
-const memoireImg = uri => `${cultureUrl}memoire/${uri}`;
-const jocondeImg = uri => `${bucket_url}joconde/${uri}`;
 
 export default class extends React.Component {
   componentDidMount() {
@@ -74,6 +69,54 @@ export default class extends React.Component {
               <h3>Parcourir</h3>
               <Slider {...settings}>
                 <TopicCard
+                  img="/static/topics/mdf.jpg"
+                  txt="Musées de France"
+                  params={{
+                    base: ["Collections des musées de France (Joconde)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/enluminures.jpg"
+                  txt="Enluminures"
+                  params={{
+                    base: ["Enluminures (Enluminures)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/memoire.jpg"
+                  txt="Photographies"
+                  params={{
+                    base: ["Photographies (Mémoire)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/mobilier.jpg"
+                  txt="Patrimoine mobilier"
+                  params={{
+                    base: ["Patrimoine mobilier (Palissy)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/mnr.jpg"
+                  txt="Récupération artistique"
+                  params={{
+                    base: ["Récupération artistique (MNR Rose-Valland)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/mhr.jpg"
+                  txt="Patrimoine architectural"
+                  params={{
+                    base: ["Patrimoine architectural (Mérimée)"],
+                    image: ["oui"]
+                  }}
+                />
+                <TopicCard
                   img="/static/topics/dessins.jpg"
                   txt="Dessins"
                   params={{
@@ -97,30 +140,7 @@ export default class extends React.Component {
                     image: ["oui"]
                   }}
                 />
-                <TopicCard
-                  img="/static/topics/mnr_recuperation_artistique.jpg"
-                  txt="Récupération artistique"
-                  params={{
-                    base: ["Récupération artistique (MNR Rose-Valland)"],
-                    image: ["oui"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/image_1.jpg"
-                  txt="Musées de France"
-                  params={{
-                    base: ["Collections des musées de France (Joconde)"],
-                    image: ["oui"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/image_2.jpg"
-                  txt="Photographies Memoire"
-                  params={{
-                    base: ["Photographies (Mémoire)"],
-                    image: ["oui"]
-                  }}
-                />
+
                 <TopicCard
                   img="/static/topics/sculpture.jpg"
                   txt="Sculpture"
@@ -154,34 +174,10 @@ export default class extends React.Component {
                   }}
                 />
                 <TopicCard
-                  img="/static/topics/architecture-3363159_960_720.jpg"
+                  img="/static/topics/architecture.jpg"
                   txt="Architecture"
                   params={{
                     domn: ["architecture"],
-                    image: ["oui"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/Soultzmatt_StSebastien52.JPG"
-                  txt="Patrimoine mobilier"
-                  params={{
-                    base: ["Patrimoine mobilier (Palissy)"],
-                    image: ["oui"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/Museo_Correr_Enluminure_15ème_siècle_03032015.jpg"
-                  txt="Enluminures"
-                  params={{
-                    base: ["Enluminures (Enluminures)"],
-                    image: ["oui"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/mhr91_20103003086za_p.jpg"
-                  txt="Patrimoine architectural"
-                  params={{
-                    base: ["Patrimoine architectural (Mérimée)"],
                     image: ["oui"]
                   }}
                 />
