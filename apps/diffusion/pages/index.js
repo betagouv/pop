@@ -7,9 +7,6 @@ import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import logEvent from "../src/services/amplitude";
 import TopicCard from "../src/topics/TopicCard";
-import { bucket_url } from "../src/config";
-
-const cultureUrl = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
 
 export default class extends React.Component {
   componentDidMount() {
