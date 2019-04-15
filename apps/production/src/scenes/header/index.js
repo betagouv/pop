@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 
 import User from "./user.js";
 import Logo from "./logo.js";
@@ -14,17 +13,38 @@ class NavComponent extends React.Component {
     if (!this.props.connected) {
       return;
     }
+
+    const hasAdminRole = this.props.role === "administrateur";
+    const hasProductorRole = this.props.role === "producteur";
+    const hasAdmingroup = this.props.group === "admin";
+
+    const links = [
+      <Link to="/" key="home">
+        Accueil
+      </Link>,
+      <Link to="/recherche" key="search">
+        Recherche
+      </Link>,
+      hasAdminRole || hasProductorRole ? (
+        <Link to="/import" key="import">
+          Import
+        </Link>
+      ) : null,
+      hasAdminRole && hasAdmingroup ? (
+        <Link to="/gallery" key="gallery">
+          Galerie
+        </Link>
+      ) : null,
+      hasAdminRole ? (
+        <Link to="/admin" key="admin">
+          Administration
+        </Link>
+      ) : null
+    ].filter(Boolean);
+
     return (
       <React.Fragment>
-        <Link to="/">Accueil</Link>
-        <Link to="/recherche">Recherche</Link>
-        {this.props.role === "administrateur" || this.props.role === "producteur" ? (
-          <Link to="/import">Import</Link>
-        ) : (
-          <div />
-        )}
-        <Link to="/gallery">Galerie (beta)</Link>
-        {this.props.role === "administrateur" ? <Link to="/admin">Administration</Link> : <div />}
+        {links}
         <User />
       </React.Fragment>
     );
@@ -36,7 +56,7 @@ class NavComponent extends React.Component {
         <Container className="NavContainer">
           <Logo />
           {this.renderLinks()}
-          
+
           <div id="beta">
             <div>
               <span>BETA</span>
