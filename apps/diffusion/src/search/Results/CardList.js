@@ -217,9 +217,9 @@ const Mnr = ({ data }) => {
 const Joconde = ({ data }) => {
   const REF = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
-  const title = data.TITR || "";
+  const title = getJocondeTitle(data);
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
-  const peri = Array.isArray(data.PERI) ? joinData(data.PERI) : data.PERI;
+  const peri = data.MILL || data.PERI || data.EPOQ || "";
   const loc = data.LOCA;
   const img = image(data);
   return (
@@ -252,6 +252,17 @@ const Joconde = ({ data }) => {
     </Link>
   );
 };
+
+function getJocondeTitle(notice) {
+  if (notice.TITRE) {
+    return notice.TITRE;
+  }
+  if ((notice.DENO || []).length) {
+    return notice.DENO.join(", ");
+  }
+
+  return (notice.DOMN || []).join(", ");
+}
 
 const Museo = ({ data }) => {
   return (

@@ -36,6 +36,15 @@ export default class SingleNotice extends React.Component {
     const index = data._index.replace(/[0-9]+/, "");
     switch (index) {
       case "joconde":
+        content = {
+          title: getJocondeTitle(data),
+          ref: data.REF,
+          categories: data.DENO ? data.DENO.join(", ") : "",
+          author: joinData([data.AUTR, data.ECOL, data.EPOQ]),
+          data: data.MILL || data.PERI || data.EPOQ || "",
+          loc: data.LOCA
+        };
+        break;
       case "mnr":
         content = {
           title: data.TICO || data.TITR,
@@ -210,4 +219,15 @@ export default class SingleNotice extends React.Component {
       </div>
     );
   }
+}
+
+function getJocondeTitle(notice) {
+  if (notice.TITRE) {
+    return notice.TITRE;
+  }
+  if ((notice.DENO || []).length) {
+    return notice.DENO.join(", ");
+  }
+
+  return (notice.DOMN || []).join(", ");
 }
