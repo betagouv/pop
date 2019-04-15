@@ -23,12 +23,13 @@
   padding: 5px;
 }
 
-.list-import .card > div {
-  margin: 20px;
-}
-
 .list-import .content {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+select[name="sort-options"] {
+  margin-left: 15px;
+  margin-right: 5px;
 }

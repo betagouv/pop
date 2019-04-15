@@ -63,8 +63,8 @@ export default class List extends React.Component {
               <SelectedFilters clearAllLabel="Tout supprimer" />
               <ReactiveList
                 sortOptions={[
-                  { label: "Filtrer les plus récents", dataField: "importedAt", sortBy: "desc" },
-                  { label: "Filtrer les plus anciens", dataField: "importedAt", sortBy: "asc" }
+                  { label: "Les plus récents en premier", dataField: "importedAt", sortBy: "desc" },
+                  { label: "Les plus anciens en premier", dataField: "importedAt", sortBy: "asc" }
                 ]}
                 componentId="results"
                 className="reactive-list"
