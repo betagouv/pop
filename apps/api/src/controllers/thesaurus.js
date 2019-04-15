@@ -194,7 +194,6 @@ function getAllChildrenConcept(conceptId, arr) {
   } catch (e) {
     capture(e);
     resolve();
-    // res.status(500).send({ success: false, msg: JSON.stringify(e) });
   }
 }
 
@@ -247,7 +246,6 @@ function post(req, service) {
             reject(new Error("Response malformed"));
           }
         } else {
-          // console.log('Err', response, error)
           capture(error);
           reject(error);
         }
