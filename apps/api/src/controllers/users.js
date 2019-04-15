@@ -22,8 +22,22 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 router.delete("/:email", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const email = req.params.email;
-    await User.findOneAndRemove({ email });
-    return res.status(200).send({});
+    const authenticatedUser = req.user;
+
+    // Only admin can delete accounts.
+    if (authenticatedUser.role !== "administrateur") {
+      return res.sendStatus(403);
+    }
+
+    // User must be in same group (or in admin group) to delete an account.
+    groupQuery = {};
+    if (authenticatedUser.group !== "admin") {
+      groupQuery = { group: authenticatedUser.group };
+    }
+
+    // Actually delete the user.
+    await User.findOneAndRemove({ email, ...groupQuery });
+    return res.status(200).send({ success: true });
   } catch (error) {
     capture(error);
     return res.status(500).send({ error });
