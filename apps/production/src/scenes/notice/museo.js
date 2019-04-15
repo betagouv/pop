@@ -36,7 +36,6 @@ class Museo extends React.Component {
     const notice = await API.getNotice("museo", ref);
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
-    console.log(notice.REF + " " + this.props.user.museofile);
     const editable =
       this.props.canUpdate &&
       (this.props.user.role === "administrateur" || notice.REF === this.props.user.museofile);
