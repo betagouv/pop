@@ -91,6 +91,7 @@ function createMarkerElement(feature) {
   if (
     (notice._type === "merimee" || notice._type === "palissy") &&
     notice._source.MEMOIRE.length &&
+    notice._source.MEMOIRE[0] &&
     notice._source.MEMOIRE[0].url
   ) {
     backgroundImage = `${bucket_url}${notice._source.MEMOIRE[0].url}`;

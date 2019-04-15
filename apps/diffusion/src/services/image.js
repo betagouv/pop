@@ -5,7 +5,7 @@ export function image(data) {
   const alt = data.TICO || data.TITR || data.REF;
 
   if (data.MEMOIRE && data.MEMOIRE.length) {
-    const img = data.MEMOIRE[0].url;
+    const img = data.MEMOIRE[0] && data.MEMOIRE[0].url;
     if (img) {
       if (img.match(/^http/)) {
         return <img src={img} alt={alt} />;

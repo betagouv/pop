@@ -100,7 +100,7 @@ export default class extends React.Component {
       name: notice.TICO,
       created_at: notice.SCLE && notice.SCLE.length ? notice.SCLE[0] : "",
       artform: "Architecture",
-      image: notice.MEMOIRE && notice.MEMOIRE.length ? notice.MEMOIRE[0].url : "",
+      image: notice.MEMOIRE && notice.MEMOIRE.length && notice.MEMOIRE[0] ? notice.MEMOIRE[0].url : "",
       description: notice.LEG,
       contentLocation: notice.LOCA,
       creator: notice.AUTR
@@ -113,7 +113,7 @@ export default class extends React.Component {
               <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
               <meta content={description} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {notice.MEMOIRE && notice.MEMOIRE.length ? (
+              {notice.MEMOIRE && notice.MEMOIRE.length && notice.MEMOIRE[0] ? (
                 <meta property="og:image" content={notice.MEMOIRE[0].url} />
               ) : (
                 <meta />
