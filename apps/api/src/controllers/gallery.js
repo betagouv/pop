@@ -31,18 +31,20 @@ router.post("/", limiter, upload.any(), async (req, res) => {
     if (!data) {
       return res.sendStatus(400);
     }
+    // Create and save the gallery with its data.
     const gallery = new Gallery(data);
     const doc = await gallery.save();
-    for (var i = 0; i < req.files.length; i++) {
-      const filenamified = filenamify(req.files[i].originalname);
-      await uploadFile(`gallery/${doc._id}/${filenamified}`, req.files[i]);
-      doc.image = `gallery/${doc._id}/${filenamified}`;
+
+    // Save the associated image if present.
+    if (req.files && req.files.length && req.files[0].originalname) {
+      const imagePath = `gallery/${doc._id}/${filenamify(req.files[0].originalname)}`;
+      await uploadFile(imagePath, req.files[0]);
+      doc.image = imagePath;
       await doc.save();
     }
 
     return res.status(200).send({ success: true, doc });
   } catch (e) {
-    console.log(e);
     capture(e);
     return res.sendStatus(400);
   }
