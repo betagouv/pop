@@ -12,7 +12,8 @@ export default class extends React.Component {
       // Gallery should have params.
       if (gallery.params) {
         let { view, mode, ...params } = gallery.params;
-        params.gallery = id;
+        // Add gallery id to params
+        params.gallery = JSON.stringify(id);
         // "res" means server-side.
         if (res) {
           const location = paramsToUrlAlias(mode, view, params.base, queryString.stringify(params));

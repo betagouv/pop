@@ -18,7 +18,7 @@ class Header extends React.Component {
         this.setState({ museo });
       }
     } else if (query && query.gallery) {
-      const gallery = await API.getGallery(query.gallery);
+      const gallery = await API.getGallery(JSON.parse(query.gallery));
       this.setState({ gallery });
     }
   }
