@@ -222,8 +222,8 @@ export default class SingleNotice extends React.Component {
 }
 
 function getJocondeTitle(notice) {
-  if (notice.TITRE) {
-    return notice.TITRE;
+  if (notice.TITR) {
+    return notice.TITR;
   }
   if ((notice.DENO || []).length) {
     return notice.DENO.join(", ");

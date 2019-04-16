@@ -311,8 +311,8 @@ export default class extends React.Component {
 }
 
 function getTitle(notice) {
-  if (notice.TITRE) {
-    return notice.TITRE;
+  if (notice.TITR) {
+    return notice.TITR;
   }
   if ((notice.DENO || []).length) {
     return notice.DENO.join(", ");
