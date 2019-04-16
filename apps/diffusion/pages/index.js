@@ -69,75 +69,73 @@ export default class extends React.Component {
               <h3>Parcourir</h3>
               <Slider {...settings}>
                 <TopicCard
+                  img="/static/topics/notredame.jpg"
+                  txt="Notre-Dame de Paris"
+                  params={{
+                    mainSearch: '"Notre-Dame de Paris"'
+                  }}
+                />
+                <TopicCard
                   img="/static/topics/mdf.jpg"
                   txt="Musées de France"
                   params={{
-                    base: ["Collections des musées de France (Joconde)"],
-                    image: ["oui"]
+                    base: ["Collections des musées de France (Joconde)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/enluminures.jpg"
                   txt="Enluminures"
                   params={{
-                    base: ["Enluminures (Enluminures)"],
-                    image: ["oui"]
+                    base: ["Enluminures (Enluminures)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/memoire.jpg"
                   txt="Photographies"
                   params={{
-                    base: ["Photographies (Mémoire)"],
-                    image: ["oui"]
+                    base: ["Photographies (Mémoire)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mobilier.jpg"
                   txt="Patrimoine mobilier"
                   params={{
-                    base: ["Patrimoine mobilier (Palissy)"],
-                    image: ["oui"]
+                    base: ["Patrimoine mobilier (Palissy)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mnr.jpg"
                   txt="Récupération artistique"
                   params={{
-                    base: ["Récupération artistique (MNR Rose-Valland)"],
-                    image: ["oui"]
+                    base: ["Récupération artistique (MNR Rose-Valland)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mhr.jpg"
                   txt="Patrimoine architectural"
                   params={{
-                    base: ["Patrimoine architectural (Mérimée)"],
-                    image: ["oui"]
+                    base: ["Patrimoine architectural (Mérimée)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/dessins.jpg"
                   txt="Dessins"
                   params={{
-                    domn: ["dessin"],
-                    image: ["oui"]
+                    domn: ["dessin"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/archeo.jpg"
                   txt="Archéologie"
                   params={{
-                    domn: ["archéologie"],
-                    image: ["oui"]
+                    domn: ["archéologie"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/labelxx.jpg"
                   txt="Label Patrimoine du XXe"
                   params={{
-                    domn: ["Label XXe"],
-                    image: ["oui"]
+                    domn: ["Label XXe"]
                   }}
                 />
 
@@ -145,40 +143,35 @@ export default class extends React.Component {
                   img="/static/topics/sculpture.jpg"
                   txt="Sculpture"
                   params={{
-                    domn: ["sculpture"],
-                    image: ["oui"]
+                    domn: ["sculpture"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/viedomestique.jpg"
                   txt="Objets de vie domestique"
                   params={{
-                    domn: ["vie domestique"],
-                    image: ["oui"]
+                    domn: ["vie domestique"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/estampes.jpg"
                   txt="Estampes"
                   params={{
-                    domn: ["estampe"],
-                    image: ["oui"]
+                    domn: ["estampe"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/costumeetaccess.jpg"
                   txt="Costumes et accessoires"
                   params={{
-                    domn: ["costume - accessoires du costume"],
-                    image: ["oui"]
+                    domn: ["costume - accessoires du costume"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/architecture.jpg"
                   txt="Architecture"
                   params={{
-                    domn: ["architecture"],
-                    image: ["oui"]
+                    domn: ["architecture"]
                   }}
                 />
               </Slider>
