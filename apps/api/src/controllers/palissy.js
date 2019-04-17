@@ -19,7 +19,6 @@ const {
   uploadFile,
   hasCorrectCoordinates
 } = require("./utils");
-
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 
@@ -27,7 +26,7 @@ function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
   if (notice.COORM && notice.ZONE) {
-    const { coordinates, message } = convertCOORM(notice.COORM, notice.ZONE);
+    const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
     notice["POP_COORDINATES_POLYGON"] = {
       type: "Polygon",
       coordinates
@@ -110,7 +109,7 @@ async function checkPalissy(notice) {
       }
     }
   } catch (e) {
-    console.log(e);
+    capture(e);
   }
 
   return errors;
@@ -197,7 +196,7 @@ function populateMerimeeREFO(notice) {
       await Promise.all(arr);
       resolve();
     } catch (error) {
-      console.log(error);
+      capture(error);
       resolve();
     }
   });
@@ -213,6 +212,7 @@ router.get("/newId", passport.authenticate("jwt", { session: false }), async (re
     const id = await getNewId(Palissy, prefix, dpt);
     return res.status(200).send({ id });
   } catch (error) {
+    capture(error);
     return res.status(500).send({ error });
   }
 });

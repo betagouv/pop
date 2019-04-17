@@ -44,7 +44,7 @@ async function checkMnr(notice) {
       }
     }
   } catch (e) {
-    console.log(e);
+    capture(e);
   }
   return errors;
 }
