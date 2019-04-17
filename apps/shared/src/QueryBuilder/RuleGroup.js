@@ -70,7 +70,7 @@ export default class RuleGroup extends React.Component {
   updateUrlParams = q => {
     const { history, router } = this.props;
     if (router) {
-      const { view, mode, base, ...query } = router.query;
+      const { view, mode, base, gallery, ...query } = router.query;
       const currentUrlParams = qs.stringify(query);
       const targetUrlParams = qs.stringify({ q: q.map(e => e.data) });
       if (currentUrlParams !== targetUrlParams) {
