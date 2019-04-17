@@ -8,6 +8,7 @@ const mailer = require("../mailer");
 require("../passport")(passport);
 const User = require("../models/user");
 const config = require("../config.js");
+const { capture } = require("../sentry.js");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -211,6 +212,7 @@ router.post("/updateProfile", passport.authenticate("jwt", { session: false }), 
           });
         });
       } catch (e) {
+        capture(e);
         res.status(401).send({
           success: false,
           msg: `La mise à jour des informations a échoué`

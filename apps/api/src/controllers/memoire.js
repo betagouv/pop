@@ -85,7 +85,7 @@ async function checkMemoire(notice) {
       }
     }
   } catch (e) {
-    console.log(e);
+    capture(e);
   }
   return errors;
 }
@@ -288,11 +288,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     await Promise.all(arr);
     return res.status(200).send({});
   } catch (error) {
-    capture(JSON.stringify(error));
-    console.log("error", error);
-    return res.status(500).send({
-      error
-    });
+    capture(error);
+    return res.status(500).send({ error });
   }
 });
 

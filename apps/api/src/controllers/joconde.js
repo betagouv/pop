@@ -39,7 +39,7 @@ async function checkJoconde(notice) {
       }
     }
   } catch (e) {
-    console.log(e);
+    capture(e);
   }
 
   return errors;
@@ -62,6 +62,7 @@ function transformBeforeCreate(notice) {
       }
       resolve();
     } catch (e) {
+      capture(e);
       reject(e);
     }
   });

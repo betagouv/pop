@@ -129,7 +129,7 @@ async function checkMerimee(notice) {
       }
     }
   } catch (e) {
-    console.log(e);
+    capture(e);
   }
 
   return errors;
@@ -178,6 +178,7 @@ router.get("/newId", passport.authenticate("jwt", { session: false }), async (re
     const id = await getNewId(Merimee, prefix, dpt);
     return res.status(200).send({ id });
   } catch (error) {
+    capture(error);
     return res.status(500).send({ error });
   }
 });
