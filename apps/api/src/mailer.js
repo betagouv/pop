@@ -46,7 +46,7 @@ class Mailer {
         from: '"Support POP" <sebastien.legoff@beta.gouv.fr>', // sender address
         to, // list of receivers
         subject, // Subject line
-        text: "Impossible de lire l'email", // plain text body
+        text: html, // plain text body
         html // html body
       };
 
