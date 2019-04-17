@@ -27,9 +27,9 @@ class Header extends React.Component {
     const { museo, gallery } = this.state;
 
     if (museo) {
-      return <MUSEO museo={museo} />;
+      return <Museo museo={museo} />;
     } else if (gallery && gallery.name && gallery.description) {
-      return <GALLERY gallery={gallery} />;
+      return <Gallery gallery={gallery} />;
     }
 
     return <div />;
@@ -38,95 +38,53 @@ class Header extends React.Component {
 
 export default Header;
 
-const GALLERY = ({ gallery }) => {
+const Gallery = ({ gallery }) => {
   const title = gallery.name;
   const description = gallery.description;
   return (
-    <div className="museo-card-sm">
-      <div className="description">
+    <div className="gallery-card">
+      <div className="gallery-description">
         <h2>{title}</h2>
         <p>{description}</p>
-        <div className="share">
-          <a
-            href={`mailto:?subject=${title}%20on%20POP&body=Venez découvrir la gallerie ${title} sur http://pop.culture.gouv.fr/gallery/${
-              gallery._id
-            }`}
-            className="icon mail"
-          />
-        </div>
       </div>
-      <div className="background" />
-
       <style jsx>{`
-        .museo-card-sm {
-          background-color: #fff;
-          border-radius: 5px;
-          padding: 25px;
+        .gallery-card {
+          background-color: #000;
           padding-bottom: 15px;
-          min-height: 320px !important;
+          border-radius: 5px;
           box-shadow: 0 2px 4px 1px rgba(189, 189, 189, 0.7);
           margin-bottom: 30px;
+          display: grid;
+          color: white;
           position: relative;
         }
-
-        .share {
-          position: absolute;
-          top: 0px;
-          right: 0px;
-        }
-
-        .mail {
-          background-image: url("/static/send.svg");
-          background-size: auto;
-          background-repeat: no-repeat;
-          background-position: 50% 50%;
-        }
-
-        .icon {
-          height: 50px;
-          width: 50px;
-          background-color: white;
-          border-radius: 50%;
-          box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-          cursor: pointer;
-          color: black;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .description {
-          z-index: 2;
-          position: relative;
-          color: ${gallery.image ? "white" : "black"};
-        }
-
-        .background {
-          min-height: 320px !important;
-          overflow: hidden !important;
-          background-size: cover;
-          background-repeat: no-repeat;
-          filter: blur(0px) brightness(50%);
+        .gallery-card::before {
+          content: "";
+          top: 0;
+          left: 0;
           width: 100%;
-          border-radius: 5px;
-          z-index: 1;
-          top: 0px;
-          left: 0px;
+          height: 100%;
           position: absolute;
-          background-position: center;
-          background-attachment: fixed;
+          border-radius: 5px;
           background-image: url(${bucket_url}${gallery.image});
+          background-size: cover;
+          filter: blur(0px) brightness(50%);
         }
-        .museo-card-sm h2 {
+        .gallery-description {
+          white-space: pre-wrap;
+          padding: 25px;
+          position: relative;
+        }
+        .gallery-card h2 {
+          padding-bottom: 25px;
           font-size: 22px;
-          color: "white";
         }
       `}</style>
     </div>
   );
 };
 
-const MUSEO = ({ museo }) => {
+const Museo = ({ museo }) => {
   const title = museo.NOMUSAGE || museo.NOMOFF || museo.ANC;
   return (
     <div className="museo-card-sm">
