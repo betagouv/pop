@@ -41,7 +41,7 @@ module.exports = env => {
 
   return {
     mode: "production",
-    entry: ["babel-polyfill", "./src/index.js"],
+    entry: ["@babel/polyfill", "./src/index.js"],
     devtool: false,
     bail: true,
     output: {
@@ -70,20 +70,21 @@ module.exports = env => {
             compact: false,
             presets: [
               [
-                "env",
+                "@babel/env",
                 {
                   loose: true,
                   modules: false,
                   targets: {
                     browsers: [">0.03%"]
                   },
-                  useBuiltIns: true
+                  useBuiltIns: "entry",
+                  corejs: 3
                 }
               ]
             ],
             plugins: [
-              "transform-class-properties",
-              "transform-object-rest-spread"
+              "@babel/plugin-proposal-class-properties",
+              "@babel/plugin-proposal-object-rest-spread"
             ]
           }
         },
