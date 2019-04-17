@@ -9,6 +9,8 @@ export default ({ data }) => {
       return data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim();
     } else if (index === "enluminures") {
       return `${data.TITR} - ${data.SUJET}`;
+    } else if (index === "joconde") {
+      return getJocondeTitle(data);
     }
     return data.TICO || data.TITR;
   };
@@ -98,3 +100,14 @@ export default ({ data }) => {
     </Col>
   );
 };
+
+function getJocondeTitle(notice) {
+  if (notice.TITR) {
+    return notice.TITR;
+  }
+  if ((notice.DENO || []).length) {
+    return notice.DENO.join(", ");
+  }
+
+  return (notice.DOMN || []).join(", ");
+}
