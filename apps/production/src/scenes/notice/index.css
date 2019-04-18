@@ -10,6 +10,12 @@
   padding: 35px;
 }
 
+.notice .subtitle {
+  font-weight: bold;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
 .notice .buttons {
   display: flex;
   flex-direction: row;

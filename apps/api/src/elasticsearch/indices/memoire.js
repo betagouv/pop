@@ -1089,6 +1089,69 @@ module.exports = {
               ignore_above: 256
             }
           }
+        },
+        TRL: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        DENO: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        AUT: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        AUTR: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        DOC: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        NUMG: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        NOMSN: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
         }
       }
     }

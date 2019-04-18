@@ -123,6 +123,13 @@
 - [WCOM](/apps/api/doc/memoire.md#WCOM)
 - [LIENS](/apps/api/doc/memoire.md#LIENS)
 - [LAUTP](/apps/api/doc/memoire.md#LAUTP)
+- [TRL](/apps/api/doc/memoire.md#TRL)
+- [DENO](/apps/api/doc/memoire.md#DENO)
+- [AUT](/apps/api/doc/memoire.md#AUT)
+- [AUTR](/apps/api/doc/memoire.md#AUTR)
+- [DOC](/apps/api/doc/memoire.md#DOC)
+- [NUMG](/apps/api/doc/memoire.md#NUMG)
+- [NOMSN](/apps/api/doc/memoire.md#NOMSN)
 - [_id](/apps/api/doc/memoire.md#_id)
 - [__v](/apps/api/doc/memoire.md#__v)
 ### PRODUCTEUR
@@ -1369,6 +1376,76 @@ Ville [Quelle difference avec COM ?]
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Notice biographique|
+
+### TRL
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Technique de relevé du graphique|
+
+### DENO
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Dénomination de l'œuvre|
+
+### AUT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Auteur du phototype ou du document graphique|
+
+### AUTR
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Auteur de l'œuvre étudiée|
+
+### DOC
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Technique, support, dimensions et date du document reproduit|
+
+### NUMG
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Numéro de la gravure|
+
+### NOMSN
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Nom de l'image numérisée|
 
 ### _id
 

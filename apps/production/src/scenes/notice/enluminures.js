@@ -66,55 +66,57 @@ class Enluminures extends React.Component {
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
-            <Col sm={6}>
-              <CustomField name="REF" disabled={!this.state.editable} />
-              <CustomField name="ATTRIB" disabled={!this.state.editable} />
-              <CustomField name="APPL" disabled={!this.state.editable} />
-              <CustomField name="AUTR" disabled={!this.state.editable} />
-              <CustomField name="AUTS" disabled={!this.state.editable} />
-              <CustomField name="CONSERV" disabled={!this.state.editable} />
-              <CustomField name="CONTXT" disabled={!this.state.editable} />
-              <CustomField name="COTE" disabled={!this.state.editable} />
-              <CustomField name="DATE" disabled={!this.state.editable} />
-              <CustomField name="DATDEB" disabled={!this.state.editable} />
-              <CustomField name="DATFIN" disabled={!this.state.editable} />
-              <CustomField name="DIMS" disabled={!this.state.editable} />
-              <CustomField name="ETAB" disabled={!this.state.editable} />
-              <CustomField name="FOPG" disabled={!this.state.editable} />
-              <CustomField name="FOLIOS" disabled={!this.state.editable} />
-              <CustomField name="LANGOUV" disabled={!this.state.editable} />
-              <CustomField name="NFICH" disabled={!this.state.editable} />
-              <CustomField name="NVUE" disabled={!this.state.editable} />
-              <CustomField name="NOMENC" disabled={!this.state.editable} />
-              <CustomField name="NOTES" disabled={!this.state.editable} />
-              <CustomField name="NOTDEC" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="OPHOT" disabled={!this.state.editable} />
-              <CustomField name="ORIGG" disabled={!this.state.editable} />
-              <CustomField name="ORIGH" disabled={!this.state.editable} />
-              <CustomField name="ORIGP" disabled={!this.state.editable} />
-              <CustomField name="DOMN" disabled={!this.state.editable} />
-              <CustomField name="TYPE" disabled={!this.state.editable} />
-              <CustomField name="POSS" disabled={!this.state.editable} />
-              <CustomField name="REFD" disabled={!this.state.editable} />
-              <CustomField name="REFIM" disabled={!this.state.editable} />
-              <CustomField name="ENRGFP" disabled={!this.state.editable} />
-              <CustomField name="ENRGMS" disabled={!this.state.editable} />
-              <CustomField name="DROIT" disabled={!this.state.editable} />
-              <CustomField name="COPY" disabled={!this.state.editable} />
-              <CustomField name="SUJET" disabled={!this.state.editable} />
-              <CustomField name="SUPP" disabled={!this.state.editable} />
-              <CustomField name="TITR" disabled={!this.state.editable} />
-              <CustomField name="TYPDEC" disabled={!this.state.editable} />
-              <CustomField name="TYPCOD" disabled={!this.state.editable} />
-              <CustomField name="LOCA" disabled={!this.state.editable} />
-              <CustomField name="LOCA2" disabled={!this.state.editable} />
-              <CustomField name="VISITE" disabled={!this.state.editable} />
-              <CustomField name="VIDEO" disabled={!this.state.editable} />
-              <CustomField name="TOUT" disabled={!this.state.editable} />
-              <CustomField name="IMG" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="REF" disabled={!this.state.editable} />
+                <CustomField name="ATTRIB" disabled={!this.state.editable} />
+                <CustomField name="APPL" disabled={!this.state.editable} />
+                <CustomField name="AUTR" disabled={!this.state.editable} />
+                <CustomField name="AUTS" disabled={!this.state.editable} />
+                <CustomField name="CONSERV" disabled={!this.state.editable} />
+                <CustomField name="CONTXT" disabled={!this.state.editable} />
+                <CustomField name="COTE" disabled={!this.state.editable} />
+                <CustomField name="DATE" disabled={!this.state.editable} />
+                <CustomField name="DATDEB" disabled={!this.state.editable} />
+                <CustomField name="DATFIN" disabled={!this.state.editable} />
+                <CustomField name="DIMS" disabled={!this.state.editable} />
+                <CustomField name="ETAB" disabled={!this.state.editable} />
+                <CustomField name="FOPG" disabled={!this.state.editable} />
+                <CustomField name="FOLIOS" disabled={!this.state.editable} />
+                <CustomField name="LANGOUV" disabled={!this.state.editable} />
+                <CustomField name="NFICH" disabled={!this.state.editable} />
+                <CustomField name="NVUE" disabled={!this.state.editable} />
+                <CustomField name="NOMENC" disabled={!this.state.editable} />
+                <CustomField name="NOTES" disabled={!this.state.editable} />
+                <CustomField name="NOTDEC" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="OPHOT" disabled={!this.state.editable} />
+                <CustomField name="ORIGG" disabled={!this.state.editable} />
+                <CustomField name="ORIGH" disabled={!this.state.editable} />
+                <CustomField name="ORIGP" disabled={!this.state.editable} />
+                <CustomField name="DOMN" disabled={!this.state.editable} />
+                <CustomField name="TYPE" disabled={!this.state.editable} />
+                <CustomField name="POSS" disabled={!this.state.editable} />
+                <CustomField name="REFD" disabled={!this.state.editable} />
+                <CustomField name="REFIM" disabled={!this.state.editable} />
+                <CustomField name="ENRGFP" disabled={!this.state.editable} />
+                <CustomField name="ENRGMS" disabled={!this.state.editable} />
+                <CustomField name="DROIT" disabled={!this.state.editable} />
+                <CustomField name="COPY" disabled={!this.state.editable} />
+                <CustomField name="SUJET" disabled={!this.state.editable} />
+                <CustomField name="SUPP" disabled={!this.state.editable} />
+                <CustomField name="TITR" disabled={!this.state.editable} />
+                <CustomField name="TYPDEC" disabled={!this.state.editable} />
+                <CustomField name="TYPCOD" disabled={!this.state.editable} />
+                <CustomField name="LOCA" disabled={!this.state.editable} />
+                <CustomField name="LOCA2" disabled={!this.state.editable} />
+                <CustomField name="VISITE" disabled={!this.state.editable} />
+                <CustomField name="VIDEO" disabled={!this.state.editable} />
+                <CustomField name="TOUT" disabled={!this.state.editable} />
+                <CustomField name="IMG" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

@@ -101,54 +101,56 @@ class Notice extends React.Component {
             icon={require("../../assets/info.png")}
             color="#FF7676"
           >
-            <Col sm={6}>
-              <CustomField title="REF (REF) :" name="REF" disabled />
-              <CustomField name="INV" />
-              <CustomField name="DOMN" />
-              <CustomField name="DENO" />
-              <CustomField name="AUTR" />
-              <CustomField name="PAUT" />
-              <CustomField name="ATTR" />
-              <CustomField name="ECOL" />
-              <CustomField name="GENE" />
-              <CustomField name="TITR" />
-              <CustomField name="ATIT" />
-              <CustomField name="PTIT" />
-              <CustomField name="SCLE" />
-              <CustomField name="STYL" />
-              <CustomField name="MILL" />
-              <CustomField name="TECH" />
-              <CustomField name="DIMS" />
-              <CustomField name="DESC" />
-              <CustomField name="INSC" />
-              <CustomField name="HIST" />
-              <CustomField name="PROV" />
-              <CustomField name="EXPO" />
-              <CustomField name="LOCA" />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="BIBL" />
-              <CustomField name="OBSE" />
-              <CustomField name="REFIM" />
-              <CustomField name="AATT" />
-              <CustomField name="AUTI" />
-              <CustomField name="DMAJ" />
-              <CustomField name="ETAT" />
-              <CustomField name="RESUME" />
-              <CustomField name="NOTE" />
-              <CustomField name="PREP" />
-              <CustomField name="SUITE" />
-              <CustomField name="SREP" />
-              <CustomField name="REPR" />
-              <CustomField name="REDC" />
-              <CustomField name="PHOT" />
-              <CustomField name="NUMS" />
-              <CustomField name="MARQ" />
-              <CustomField name="DREP" />
-              <CustomField name="CATE" />
-              <CustomField name="COMM" />
-              <CustomField name="AFFE" />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField title="REF (REF) :" name="REF" disabled />
+                <CustomField name="INV" />
+                <CustomField name="DOMN" />
+                <CustomField name="DENO" />
+                <CustomField name="AUTR" />
+                <CustomField name="PAUT" />
+                <CustomField name="ATTR" />
+                <CustomField name="ECOL" />
+                <CustomField name="GENE" />
+                <CustomField name="TITR" />
+                <CustomField name="ATIT" />
+                <CustomField name="PTIT" />
+                <CustomField name="SCLE" />
+                <CustomField name="STYL" />
+                <CustomField name="MILL" />
+                <CustomField name="TECH" />
+                <CustomField name="DIMS" />
+                <CustomField name="DESC" />
+                <CustomField name="INSC" />
+                <CustomField name="HIST" />
+                <CustomField name="PROV" />
+                <CustomField name="EXPO" />
+                <CustomField name="LOCA" />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="BIBL" />
+                <CustomField name="OBSE" />
+                <CustomField name="REFIM" />
+                <CustomField name="AATT" />
+                <CustomField name="AUTI" />
+                <CustomField name="DMAJ" />
+                <CustomField name="ETAT" />
+                <CustomField name="RESUME" />
+                <CustomField name="NOTE" />
+                <CustomField name="PREP" />
+                <CustomField name="SUITE" />
+                <CustomField name="SREP" />
+                <CustomField name="REPR" />
+                <CustomField name="REDC" />
+                <CustomField name="PHOT" />
+                <CustomField name="NUMS" />
+                <CustomField name="MARQ" />
+                <CustomField name="DREP" />
+                <CustomField name="CATE" />
+                <CustomField name="COMM" />
+                <CustomField name="AFFE" />
+              </Col>
+            </Row>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

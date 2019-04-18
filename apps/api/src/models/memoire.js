@@ -1012,6 +1012,62 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Notice biographique"
       }
+    }, /////////////////////
+    TRL: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Technique de relevé du graphique"
+      }
+    },
+    DENO: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Dénomination de l'œuvre"
+      }
+    },
+    AUT: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Auteur du phototype ou du document graphique"
+      }
+    },
+    AUTR: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Auteur de l'œuvre étudiée"
+      }
+    },
+    DOC: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Technique, support, dimensions et date du document reproduit"
+      }
+    },
+    NUMG: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Numéro de la gravure"
+      }
+    },
+    NOMSN: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Nom de l'image numérisée"
+      }
     }
   },
   { collection: "memoire" }
