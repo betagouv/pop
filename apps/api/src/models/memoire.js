@@ -35,7 +35,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
-        generated: true
+        generated: true,
+        label: "Contient une image"
       }
     },
     POP_COMMENTAIRES: {
@@ -71,60 +72,61 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Adresse",
-        label: "Adresse"
+        description:
+          "Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
+        label: "Adresse et/ou lieu-dit"
       }
     },
     AUTOEU: {
       type: String,
       default: "",
       documentation: {
-        description: "Auteur oeuvre représentée",
-        label: "Auteur oeuvre représentée"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Auteur de l'oeuvre représentée"
       }
     },
     AUTG: {
       type: String,
       default: "",
       documentation: {
-        description: "Auteur gravure",
-        label: "Auteur gravure"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Auteur de la gravure"
       }
     },
     AUTP: {
       type: String,
       default: "",
       documentation: {
-        description: "Auteur photo",
-        label: "Auteur photo"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Photographe"
       }
     },
     AUTOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Auteur original",
-        label: "Auteur original"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Auteur du document reproduit / auteur de l'original"
       }
     },
     AUTTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Auteur tirage",
-        label: "Auteur tirage"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Auteur du tirage"
       }
     },
     COM: {
       type: String,
       default: "",
-      documentation: { description: "Commune", label: "Commune" }
+      documentation: { description: "", label: "Commune" }
     },
     DOM: {
       type: String,
       default: "",
       documentation: {
-        description: "Domaine",
+        description: "Architecture, Objet, Portrait, Reportage",
         label: "Domaine"
       }
     },
@@ -132,15 +134,15 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Nom édifice",
-        label: "Nom édifice"
+        description: "",
+        label: "Édifice"
       }
     },
     EXPO: {
       type: String,
       default: "",
       documentation: {
-        description: "Référence d’exposition de l’image ",
+        description: "",
         label: "Référence d’exposition de l’image "
       }
     },
@@ -148,63 +150,63 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Justif date pv",
-        label: "Justif date pv"
+        description: "",
+        label: "Précision sur la date de prise de vue"
       }
     },
     LIEUCOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Lieu cons orig.",
-        label: "Lieu cons orig."
+        description: "Forme REG ; DPT ; COM ; EDIF",
+        label: "Lieu de conservation du document reproduit"
       }
     },
     COTECOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Cote cons orig. ",
-        label: "Cote cons orig."
+        description: "",
+        label: "Cote de conservation du document reproduit"
       }
     },
     LIEUCTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Lieu cons tir. ",
-        label: "Lieu cons tir."
+        description: "Forme REG ; DPT ; COM ; EDIF",
+        label: "Lieu de conservation du tirage"
       }
     },
     COTECTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Cote conservation du tirage ",
-        label: "Cote conservation du tirage"
+        description: "",
+        label: "Cote de conservation du tirage"
       }
     },
     LIEUCP: {
       type: String,
       default: "",
       documentation: {
-        description: "Lieu cons pho.",
-        label: "Lieu cons pho."
+        description: "",
+        label: "Lieu de conservation de la photo"
       }
     },
     COTECP: {
       type: String,
       default: "",
       documentation: {
-        description: "Cote conservation du phototype",
-        label: "COTECP"
+        description: "",
+        label: "Cote conservation du phototype"
       }
     },
     LEG: {
       type: String,
       default: "",
       documentation: {
-        description: "Légende ",
+        description: "Texte libre, toutes ponctuations admises",
         label: "Légende"
       }
     },
@@ -212,53 +214,58 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Nom objet",
-        label: "Nom objet"
+        description: "Saisir le nom de l'objet et sa description dans le même champ",
+        label: "Objet"
       }
     },
     OBS: {
       type: String,
       default: "",
       documentation: {
-        description: "Obs phototype",
-        label: "Obs phototype"
+        description:
+          "Concerne tout phototype, négatif ou tirage. Commentaires de l'auteur de la notice ne trouvant pas place dans d'autres champs",
+        label: "Observations"
       }
     },
     OBSOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Obs original",
-        label: "Obs original"
+        description: "Porte sur l'état ou l'histoire du phototype",
+        label: "Observations sur l'original"
       }
     },
     OBSTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Obs tirage",
-        label: "Obs tirage"
+        description: "Porte sur l'état ou l'histoire du tirage",
+        label: "Observations sur le tirage"
       }
     },
     PAYS: {
       type: String,
       default: "",
-      documentation: { description: "Pays", label: "Pays" }
+      documentation: {
+        description:
+          "Si plusieurs noms successifs, les citer tous en utilisant le point-virgule comme séparateur",
+        label: "Pays"
+      }
     },
     PUBLI: {
       type: String,
       default: "",
       documentation: {
-        description: "Publication ",
-        label: "Publication"
+        description: "Auteur, titre, lieu, éditeur, date",
+        label: "Référence de publication de l'image"
       }
     },
     TIREDE: {
       type: String,
       default: "",
       documentation: {
-        description: "Pub. photograph.",
-        label: "Pub. photograph."
+        description: "",
+        label: "Référence bibliographique ou documentaire"
       }
     },
     ROLE: {
@@ -266,8 +273,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         documentation: {
-          description: "Rôle joué ",
-          label: "Rôle joué"
+          description: "Nom de l'acteur : nom du personnage joué",
+          label: "Rôle interprété"
         }
       }
     },
@@ -275,15 +282,15 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Préc original",
-        label: "Préc original"
+        description: "",
+        label: "Précisions sur la conservation de l'original"
       }
     },
     SERIE: {
       type: String,
       default: "",
       documentation: {
-        description: "Titre série",
+        description: "",
         label: "Titre série"
       }
     },
@@ -291,14 +298,14 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Nom de théâtre",
-        label: "Nom de théâtre"
+        description: "",
+        label: "Producteur de la pièce de théâtre ou du film"
       }
     },
     TITRE: {
       type: String,
       default: "",
-      documentation: { description: "Titre", label: "Titre" }
+      documentation: { description: "", label: "Titre de la pièce de théâtre ou du film" }
     },
     DMAJ: {
       type: String,
@@ -306,7 +313,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de la dernière mise à jour",
         generated: true,
-        label: "Date mise à jour "
+        label: "Date de mise à jour"
       }
     },
     DMIS: {
@@ -315,80 +322,83 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Date de la création POP/Mistral",
         generated: true,
-        label: "Date Mistral"
+        label: "Date de création"
       }
     },
     IDPROD: {
       type: String,
       default: "",
       documentation: {
-        description: "Emetteur (nom) ",
-        label: "Emetteur (nom)"
+        description: "",
+        label: "Nom du producteur"
       }
     },
     NUMCD: {
       type: String,
       default: "",
       documentation: {
-        description: "Numéro CD",
-        label: "Numéro CD"
+        description: "Référence du CD ayant servi au chargement des images",
+        label: "Numéro de CD",
+        deprecated: true
       }
     },
     NUMF: {
       type: String,
       default: "",
       documentation: {
-        description: "No de fond",
-        label: "No de fond"
+        description: "",
+        label: "Numero de fond"
       }
     },
     INSEE: {
       type: String,
       default: "",
       documentation: {
-        description: "Code INSEE",
-        label: "Code INSEE"
+        description: "",
+        label: "Code INSEE de la commune"
       }
     },
     NVD: {
       type: String,
-      default: " ",
+      default: "",
       documentation: {
-        description: "vidéodisque",
-        label: "vidéodisque"
+        description: "",
+        label: "Référence sur le vidéodisque"
       }
     },
     MARQ: {
       type: String,
       default: "",
       documentation: {
-        description: "Ordre images",
-        label: "Ordre images"
+        description:
+          "Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Palisssy correspondante",
+        label: "Rang d'affichage de l'image"
       }
     },
     ACC: {
       type: String,
       default: "",
       documentation: {
-        description: "Accessoire pose",
-        label: "Accessoire pose",
+        description: "",
+        label: "Accessoire de pose",
         deprecated: true
       }
     },
     ACQU: {
       type: String,
-      default: " ",
+      default: "",
       documentation: {
-        description: "Acquisition",
-        label: "Acquisition"
+        description: "Don, legs, dation, achat, dépôt",
+        label: "Modalité d'entrée"
       }
     },
     ADPHOT: {
       type: String,
       default: "",
       documentation: {
-        description: "Adresse personne ",
-        label: "Adresse personne"
+        description: "",
+        label: "Adresse de la personne photographiée",
+        deprecated: true
       }
     },
     AIRE: {
@@ -403,16 +413,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Ancien numéro (ancienne cote du phototype)",
-        label: "Ancien numéro (ancienne cote du phototype)"
+        description: "",
+        label: "Ancien numéro du négatif"
       }
     },
     COPY: {
       type: String,
       default: "",
       documentation: {
-        description: "Crédit photo ",
-        label: "Crédit photo"
+        description: "",
+        label: "Crédit photographique"
       }
     },
     COULEUR: {
@@ -428,7 +438,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Costume de la personne représentée",
+        description: "",
         label: "Costume de la personne représentée",
         deprecated: true
       }
@@ -437,40 +447,41 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date immatricul",
-        label: "Date immatricul"
+        description: "Date d'entrée dans les collections ou date de traitement intellectuel",
+        label: "Date d'immatriculation"
       }
     },
     DATOEU: {
       type: String,
       default: "",
       documentation: {
-        description: "Date oeuv année",
-        label: "Date oeuv année"
+        description:
+          "Date de l'œuvre représentée (édifice, objet, pièce de théâtre, film), en année",
+        label: "Date de l'oeuvre"
       }
     },
     DATPV: {
       type: String,
       default: "",
       documentation: {
-        description: "Date prise vue ",
-        label: "Date prise vue"
+        description: "AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA",
+        label: "Date de prise de vue"
       }
     },
     DATOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Date original",
-        label: "Date original"
+        description: "Date de l'original",
+        label: "Date de l'original"
       }
     },
     DATTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Date tirage",
-        label: "Date tirage "
+        description: "AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA",
+        label: "Date du tirage "
       }
     },
     DATG: {
@@ -478,7 +489,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date gravure",
-        label: "Date gravure"
+        label: "Date gravure",
+        deprecated: true
       }
     },
     DATD: {
@@ -501,7 +513,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Département ",
+        description: "",
         label: "Département"
       }
     },
@@ -517,32 +529,32 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Echelle ",
-        label: "Echelle"
+        description: "",
+        label: "Échelle du graphique"
       }
     },
     FORMAT: {
       type: String,
       default: "",
       documentation: {
-        description: "Format phototype",
-        label: "Format phototype"
+        description: "",
+        label: "Format du négatif"
       }
     },
     FORMATOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Format original",
-        label: "Format original"
+        description: "",
+        label: "Format de l'original"
       }
     },
     FORMATTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Format tirage",
-        label: "Format tirage"
+        description: "",
+        label: "Format du tirage"
       }
     },
     LBASE: {
@@ -551,15 +563,15 @@ const Schema = new mongoose.Schema(
       index: true,
       documentation: {
         description:
-          "LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image",
-        label: "LBASE"
+          "Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté",
+        label: "Référence de la notice Mérimée ou Palissy"
       }
     },
     WEB: {
       type: String,
       default: "",
       documentation: {
-        description: "Accès Mémoire",
+        description: "",
         label: "Accès Mémoire"
       }
     },
@@ -567,15 +579,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Mots candidats",
-        label: "Mots candidats"
+        description: "",
+        label: "Mots candidats",
+        deprecated: true
       }
     },
     LOCA: {
       type: String,
       default: "",
       documentation: {
-        description: "Localisation ",
+        description: "Concaténation des champs PAYS ; REG ; DPT ; COM",
         label: "Localisation"
       }
     },
@@ -591,48 +604,49 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Nom géographique",
-        label: "Nom géographique"
+        description:
+          "Régions non administratives, parcs naturels, fleuves, massifs montagneux, îles…",
+        label: "Mots-clés géographiques"
       }
     },
     MCL: {
       type: String,
       default: "",
       documentation: {
-        description: "Mots clés",
-        label: "Mots clés"
+        description: "",
+        label: "Mots-clés"
       }
     },
     MENTIONS: {
       type: String,
       default: "",
       documentation: {
-        description: "Mentions photo",
-        label: "Mentions photo"
+        description: "",
+        label: "Annotations présentes sur le négatif"
       }
     },
     MENTOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Mentions orig",
-        label: "Mentions orig"
+        description: "",
+        label: "Annotations présentes sur l'original"
       }
     },
     MENTTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Mentions tirage",
-        label: "Mentions tirage"
+        description: "",
+        label: "Annotations présentes sur le tirage"
       }
     },
     MCPER: {
       type: String,
       default: "",
       documentation: {
-        description: "Nom personne",
-        label: "Nom personne"
+        description: "Nom, Prénom (profession ou titre et/ou dates)",
+        label: "Identité de la personne photographiée"
       }
     },
     VUECD: {
@@ -640,55 +654,57 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No vue CD",
-        label: "No vue CD"
+        label: "No vue CD",
+        deprecated: true
       }
     },
     NUMAUTP: {
       type: String,
       default: "",
       documentation: {
-        description: "Cote photographe",
-        label: "Cote photographe"
+        description: "",
+        label: "Numéro donné par le photographe"
       }
     },
     NUMCAF: {
       type: String,
       default: "",
       documentation: {
-        description: "No carte fenêtre",
-        label: "No carte fenêtre"
+        description: "",
+        label: "Numéro de carte à fenêtre",
+        deprecated: true
       }
     },
     ANUMOR: {
       type: String,
       default: "",
       documentation: {
-        description: "No original(anc)",
-        label: "No original(anc)"
+        description: "",
+        label: "Ancien numéro de l'original"
       }
     },
     NUMOR: {
       type: String,
       default: "",
       documentation: {
-        description: "No original",
-        label: "No original"
+        description: "",
+        label: "Numéro de l'original"
       }
     },
     NUMP: {
       type: String,
       default: "",
       documentation: {
-        description: "No phototype",
+        description: "",
         validation: "Alphanumeric",
-        label: "No phototype"
+        label: "Numéro du négatif"
       }
     },
     ANUMTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Ancien numéro du tirage",
+        description: "",
         label: "Ancien numéro du tirage"
       }
     },
@@ -696,42 +712,42 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "No tirage",
+        description: "",
         validation: "Alphanumeric",
-        label: "No tirage"
+        label: "Numéro du tirage"
       }
     },
     RENV: {
       type: String,
       default: "",
-      documentation: { description: "Renvoi ", label: "Renvoi" }
+      documentation: { description: "", label: "Phototype(s) en relation" }
     },
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région", label: "Région" }
+      documentation: { description: "", label: "Région" }
     },
     SENS: {
       type: String,
       default: "",
       documentation: {
-        description: "Sens ",
-        label: "Sens"
+        description: "V, H, C, O",
+        label: "Orientation du phototype"
       }
     },
     SCLE: {
       type: String,
       default: "",
       documentation: {
-        description: "Date oeuv siècle",
-        label: "Date oeuv siècle"
+        description: "12e ; 18e (fin)",
+        label: "Siècle de l'œuvre"
       }
     },
     SUP: {
       type: String,
       default: "",
       documentation: {
-        description: "Support ",
+        description: "",
         label: "Support"
       }
     },
@@ -739,31 +755,31 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Technique photo",
-        label: "Technique photo"
+        description: "",
+        label: "Description technique du négatif"
       }
     },
     TECHOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Technique orig",
-        label: "Technique orig"
+        description: "",
+        label: "Description technique de l'original"
       }
     },
     TECHTI: {
       type: String,
       default: "",
       documentation: {
-        description: "Technique tirage",
-        label: "Technique tirage"
+        description: "",
+        label: "Description technique du tirage"
       }
     },
     TOILE: {
       type: String,
       default: "",
       documentation: {
-        description: "Toile de fond ",
+        description: "",
         label: "Toile de fond",
         deprecated: true
       }
@@ -780,7 +796,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Catégorie de phototype",
+        description:
+          "Négatif, Positif original, Image numérique, Tirage photographique, Reproduction",
         label: "Catégorie de phototype"
       }
     },
@@ -788,16 +805,17 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Type image num",
-        label: "Type image num"
+        description: "Forme : oui ou non selon qu'on charge ou non une image",
+        label: "Type d'image numérique",
+        deprecated: true
       }
     },
     TYPSUPP: {
       type: String,
       default: "",
       documentation: {
-        description: "Type support num ",
-        label: "Type support num "
+        description: "Doublon de TYPSN utilisé dans les versements plus récents ; valeur : DS1",
+        label: "Type de support numérique"
       }
     },
     VIDEO: {
@@ -805,15 +823,16 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Vidéo [Semble être doublon avec IMG]",
-        label: "VIDEO"
+        label: "Vidéo"
       }
     },
     LBASE2: {
       type: String,
       default: "",
       documentation: {
-        description: "Liens base  [Quelle différence avec LBASE?]",
-        label: "Liens base ",
+        description:
+          "Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",
+        label: "Liens base",
         deprecated: true
       }
     },
@@ -821,7 +840,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Légende thes. ",
+        description: "",
         label: "Légende thes."
       }
     },
@@ -829,8 +848,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Ref Image",
-        label: "Ref Image",
+        description: "",
+        label: "Référence de l'image",
         deprecated: true
       }
     },
@@ -848,20 +867,20 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Mosaïques ",
+        description: "",
         label: "Mosaïques"
       }
     },
     SITE: {
       type: String,
       default: "",
-      documentation: { description: "SITE", label: "SITE" }
+      documentation: { description: "", label: "Site" }
     },
     NUMSITE: {
       type: String,
       default: "",
       documentation: {
-        description: "N° du site ",
+        description: "N° du site",
         label: "N° du site"
       }
     },
@@ -877,7 +896,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Chronologie ",
+        description: "",
         label: "Chronologie"
       }
     },
@@ -886,44 +905,47 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Contient le numéro du fichier numérique",
-        label: "Cote de reproduction"
+        label: "Numéro de reproduction"
       }
     },
     STRUCT: {
       type: String,
       default: "",
       documentation: {
-        description: "Structure ",
+        description: "",
         label: "Structure"
       }
     },
     SUJET: {
       type: String,
       default: "",
-      documentation: { description: "Sujet ", label: "Sujet" }
+      documentation: {
+        description: "",
+        label: "Sujet représenté par la photographie ou le document graphique"
+      }
     },
     TICO: {
       type: String,
       default: "",
       documentation: {
-        description: "Titre du dossier",
-        label: "Titre du dossier"
+        description: "",
+        label: "Titre courant de l'œuvre"
       }
     },
     NUMI: {
       type: String,
       default: "",
       documentation: {
-        description: "Ident. support",
-        label: "Ident. support"
+        description: "",
+        label: "Numéro du phototype"
       }
     },
     LIEU: {
       type: String,
       default: "",
       documentation: {
-        description: "Lieu-dit ",
-        label: "Lieu-dit"
+        description: "",
+        label: "Adresse et/ou lieu-dit"
       }
     },
     ADRS: {
@@ -938,24 +960,24 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Contact",
+        description: "",
         validation: "Email",
-        label: "CONTACT"
+        label: "Lien vers le service producteur"
       }
     },
     EMET: {
       type: String,
       default: "",
       documentation: {
-        description: "Emetteur (code) ",
-        label: "Emetteur (code)"
+        description: "",
+        label: "Code du producteur"
       }
     },
     NUM: {
       type: String,
       default: "",
       documentation: {
-        description: "N° support ",
+        description: "",
         label: "N° support"
       }
     },
@@ -963,8 +985,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Images",
-        label: "Images"
+        description: "",
+        label: "Lien vers l'image"
       }
     },
     WCOM: {
@@ -979,7 +1001,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Liens divers",
+        description: "",
         label: "Liens divers"
       }
     },
@@ -987,8 +1009,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Notice biblio",
-        label: "Notice biblio"
+        description: "",
+        label: "Notice biographique"
       }
     }
   },
