@@ -338,7 +338,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence du CD ayant servi au chargement des images",
-        label: "Numéro de CD"
+        label: "Numéro de CD",
+        deprecated: true
       }
     },
     NUMF: {
@@ -396,7 +397,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse de la personne photographiée"
+        label: "Adresse de la personne photographiée",
+        deprecated: true
       }
     },
     AIRE: {
@@ -487,7 +489,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Date gravure",
-        label: "Date gravure"
+        label: "Date gravure",
+        deprecated: true
       }
     },
     DATD: {
@@ -577,7 +580,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Mots candidats"
+        label: "Mots candidats",
+        deprecated: true
       }
     },
     LOCA: {
@@ -650,7 +654,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No vue CD",
-        label: "No vue CD"
+        label: "No vue CD",
+        deprecated: true
       }
     },
     NUMAUTP: {
@@ -666,7 +671,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numéro de carte à fenêtre"
+        label: "Numéro de carte à fenêtre",
+        deprecated: true
       }
     },
     ANUMOR: {
@@ -790,7 +796,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Négatif, Positif original, Image numérique, Tirage photographique, Reproduction",
+        description:
+          "Négatif, Positif original, Image numérique, Tirage photographique, Reproduction",
         label: "Catégorie de phototype"
       }
     },
@@ -799,7 +806,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Forme : oui ou non selon qu'on charge ou non une image",
-        label: "Type d'image numérique"
+        label: "Type d'image numérique",
+        deprecated: true
       }
     },
     TYPSUPP: {
@@ -911,7 +919,10 @@ const Schema = new mongoose.Schema(
     SUJET: {
       type: String,
       default: "",
-      documentation: { description: "", label: "Sujet représenté par la photographie ou le document graphique" }
+      documentation: {
+        description: "",
+        label: "Sujet représenté par la photographie ou le document graphique"
+      }
     },
     TICO: {
       type: String,
