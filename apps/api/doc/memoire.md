@@ -168,7 +168,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|||
+|String|non|oui|non|non||Contient une image|
 
 ### POP_COMMENTAIRES
 Commentaires technique
@@ -211,67 +211,67 @@ Index global [Peut etre déprécié]
 |String|non|non|non|non||Index global|
 
 ### ADRESSE
-Adresse
+Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse|
+|String|non|non|non|non||Adresse et/ou lieu-dit|
 
 ### AUTOEU
-Auteur oeuvre représentée
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur oeuvre représentée|
+|String|non|non|non|non||Auteur de l'oeuvre représentée|
 
 ### AUTG
-Auteur gravure
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur gravure|
+|String|non|non|non|non||Auteur de la gravure|
 
 ### AUTP
-Auteur photo
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur photo|
+|String|non|non|non|non||Photographe|
 
 ### AUTOR
-Auteur original
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur original|
+|String|non|non|non|non||Auteur du document reproduit / auteur de l'original|
 
 ### AUTTI
-Auteur tirage
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur tirage|
+|String|non|non|non|non||Auteur du tirage|
 
 ### COM
-Commune
+
 
 
 
@@ -281,7 +281,7 @@ Commune
 |String|non|non|non|non||Commune|
 
 ### DOM
-Domaine
+Architecture, Objet, Portrait, Reportage
 
 
 
@@ -291,17 +291,17 @@ Domaine
 |String|non|non|non|non||Domaine|
 
 ### EDIF
-Nom édifice
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom édifice|
+|String|non|non|non|non||Édifice|
 
 ### EXPO
-Référence d’exposition de l’image 
+
 
 
 
@@ -311,77 +311,77 @@ Référence d’exposition de l’image
 |String|non|non|non|non||Référence d’exposition de l’image |
 
 ### JDATPV
-Justif date pv
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Justif date pv|
+|String|non|non|non|non||Précision sur la date de prise de vue|
 
 ### LIEUCOR
-Lieu cons orig.
+Forme REG ; DPT ; COM ; EDIF
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu cons orig.|
+|String|non|non|non|non||Lieu de conservation du document reproduit|
 
 ### COTECOR
-Cote cons orig. 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote cons orig.|
+|String|non|non|non|non||Cote de conservation du document reproduit|
 
 ### LIEUCTI
-Lieu cons tir. 
+Forme REG ; DPT ; COM ; EDIF
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu cons tir.|
+|String|non|non|non|non||Lieu de conservation du tirage|
 
 ### COTECTI
-Cote conservation du tirage 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote conservation du tirage|
+|String|non|non|non|non||Cote de conservation du tirage|
 
 ### LIEUCP
-Lieu cons pho.
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu cons pho.|
+|String|non|non|non|non||Lieu de conservation de la photo|
 
 ### COTECP
-Cote conservation du phototype
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||COTECP|
+|String|non|non|non|non||Cote conservation du phototype|
 
 ### LEG
-Légende 
+Texte libre, toutes ponctuations admises
 
 
 
@@ -391,47 +391,47 @@ Légende
 |String|non|non|non|non||Légende|
 
 ### OBJT
-Nom objet
+Saisir le nom de l'objet et sa description dans le même champ
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom objet|
+|String|non|non|non|non||Objet|
 
 ### OBS
-Obs phototype
+Concerne tout phototype, négatif ou tirage. Commentaires de l'auteur de la notice ne trouvant pas place dans d'autres champs
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Obs phototype|
+|String|non|non|non|non||Observations|
 
 ### OBSOR
-Obs original
+Porte sur l'état ou l'histoire du phototype
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Obs original|
+|String|non|non|non|non||Observations sur l'original|
 
 ### OBSTI
-Obs tirage
+Porte sur l'état ou l'histoire du tirage
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Obs tirage|
+|String|non|non|non|non||Observations sur le tirage|
 
 ### PAYS
-Pays
+Si plusieurs noms successifs, les citer tous en utilisant le point-virgule comme séparateur
 
 
 
@@ -441,24 +441,24 @@ Pays
 |String|non|non|non|non||Pays|
 
 ### PUBLI
-Publication 
+Auteur, titre, lieu, éditeur, date
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Publication|
+|String|non|non|non|non||Référence de publication de l'image|
 
 ### TIREDE
-Pub. photograph.
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Pub. photograph.|
+|String|non|non|non|non||Référence bibliographique ou documentaire|
 
 ### ROLE
 
@@ -471,17 +471,17 @@ Pub. photograph.
 |String|non|non|non|non|||
 
 ### PRECOR
-Préc original
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Préc original|
+|String|non|non|non|non||Précisions sur la conservation de l'original|
 
 ### SERIE
-Titre série
+
 
 
 
@@ -491,24 +491,24 @@ Titre série
 |String|non|non|non|non||Titre série|
 
 ### THEATRE
-Nom de théâtre
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom de théâtre|
+|String|non|non|non|non||Producteur de la pièce de théâtre ou du film|
 
 ### TITRE
-Titre
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre|
+|String|non|non|non|non||Titre de la pièce de théâtre ou du film|
 
 ### DMAJ
 Date de la dernière mise à jour
@@ -518,7 +518,7 @@ Date de la dernière mise à jour
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date mise à jour |
+|String|non|oui|non|non||Date de mise à jour|
 
 ### DMIS
 Date de la création POP/Mistral
@@ -528,97 +528,97 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date Mistral|
+|String|non|oui|non|non||Date de création|
 
 ### IDPROD
-Emetteur (nom) 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Emetteur (nom)|
+|String|non|non|non|non||Nom du producteur|
 
 ### NUMCD
-Numéro CD
+Référence du CD ayant servi au chargement des images
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numéro CD|
+|String|non|non|oui|non||Numéro de CD|
 
 ### NUMF
-No de fond
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||No de fond|
+|String|non|non|non|non||Numero de fond|
 
 ### INSEE
-Code INSEE
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Code INSEE|
+|String|non|non|non|non||Code INSEE de la commune|
 
 ### NVD
-vidéodisque
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||vidéodisque|
+|String|non|non|non|non||Référence sur le vidéodisque|
 
 ### MARQ
-Ordre images
+Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Palisssy correspondante
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ordre images|
+|String|non|non|non|non||Rang d'affichage de l'image|
 
 ### ACC
-Accessoire pose
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Accessoire pose|
+|String|non|non|oui|non||Accessoire de pose|
 
 ### ACQU
-Acquisition
+Don, legs, dation, achat, dépôt
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Acquisition|
+|String|non|non|non|non||Modalité d'entrée|
 
 ### ADPHOT
-Adresse personne 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse personne|
+|String|non|non|oui|non||Adresse de la personne photographiée|
 
 ### AIRE
 Aire d'étude
@@ -631,24 +631,24 @@ Aire d'étude
 |String|non|non|non|non||Aire d'étude|
 
 ### ANUMP
-Ancien numéro (ancienne cote du phototype)
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ancien numéro (ancienne cote du phototype)|
+|String|non|non|non|non||Ancien numéro du négatif|
 
 ### COPY
-Crédit photo 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Crédit photo|
+|String|non|non|non|non||Crédit photographique|
 
 ### COULEUR
 Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoyer]
@@ -661,7 +661,7 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 |String|non|non|non|non||Couleur|
 
 ### COSTUME
-Costume de la personne représentée
+
 
 
 
@@ -671,54 +671,54 @@ Costume de la personne représentée
 |String|non|non|oui|non||Costume de la personne représentée|
 
 ### DATIMM
-Date immatricul
+Date d'entrée dans les collections ou date de traitement intellectuel
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date immatricul|
+|String|non|non|non|non||Date d'immatriculation|
 
 ### DATOEU
-Date oeuv année
+Date de l'œuvre représentée (édifice, objet, pièce de théâtre, film), en année
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date oeuv année|
+|String|non|non|non|non||Date de l'oeuvre|
 
 ### DATPV
-Date prise vue 
+AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date prise vue|
+|String|non|non|non|non||Date de prise de vue|
 
 ### DATOR
-Date original
+Date de l'original
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date original|
+|String|non|non|non|non||Date de l'original|
 
 ### DATTI
-Date tirage
+AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date tirage |
+|String|non|non|non|non||Date du tirage |
 
 ### DATG
 Date gravure
@@ -728,7 +728,7 @@ Date gravure
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date gravure|
+|String|non|non|oui|non||Date gravure|
 
 ### DATD
 Date dessin
@@ -751,7 +751,7 @@ Droits diffusion
 |String|non|non|non|non||Droits diffusion|
 
 ### DPT
-Département 
+
 
 
 
@@ -771,57 +771,57 @@ Interprétation
 |String|non|non|non|non||Interprétation|
 
 ### ECH
-Echelle 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Echelle|
+|String|non|non|non|non||Échelle du graphique|
 
 ### FORMAT
-Format phototype
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Format phototype|
+|String|non|non|non|non||Format du négatif|
 
 ### FORMATOR
-Format original
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Format original|
+|String|non|non|non|non||Format de l'original|
 
 ### FORMATTI
-Format tirage
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Format tirage|
+|String|non|non|non|non||Format du tirage|
 
 ### LBASE
-LBASE contient la référence vers la notice Palissy ou Mérimée contenant l'image
+Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||LBASE|
+|Array|non|non|non|non||Référence de la notice Mérimée ou Palissy|
 
 ### WEB
-Accès Mémoire
+
 
 
 
@@ -831,17 +831,17 @@ Accès Mémoire
 |String|non|non|non|non||Accès Mémoire|
 
 ### LIB
-Mots candidats
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mots candidats|
+|String|non|non|oui|non||Mots candidats|
 
 ### LOCA
-Localisation 
+Concaténation des champs PAYS ; REG ; DPT ; COM
 
 
 
@@ -861,64 +861,64 @@ Lieu de dépôt
 |String|non|non|non|non||Lieu de dépôt|
 
 ### MCGEO
-Nom géographique
+Régions non administratives, parcs naturels, fleuves, massifs montagneux, îles…
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom géographique|
+|String|non|non|non|non||Mots-clés géographiques|
 
 ### MCL
-Mots clés
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mots clés|
+|String|non|non|non|non||Mots-clés|
 
 ### MENTIONS
-Mentions photo
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mentions photo|
+|String|non|non|non|non||Annotations présentes sur le négatif|
 
 ### MENTOR
-Mentions orig
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mentions orig|
+|String|non|non|non|non||Annotations présentes sur l'original|
 
 ### MENTTI
-Mentions tirage
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mentions tirage|
+|String|non|non|non|non||Annotations présentes sur le tirage|
 
 ### MCPER
-Nom personne
+Nom, Prénom (profession ou titre et/ou dates)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom personne|
+|String|non|non|non|non||Identité de la personne photographiée|
 
 ### VUECD
 No vue CD
@@ -928,60 +928,60 @@ No vue CD
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||No vue CD|
+|String|non|non|oui|non||No vue CD|
 
 ### NUMAUTP
-Cote photographe
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote photographe|
+|String|non|non|non|non||Numéro donné par le photographe|
 
 ### NUMCAF
-No carte fenêtre
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||No carte fenêtre|
+|String|non|non|oui|non||Numéro de carte à fenêtre|
 
 ### ANUMOR
-No original(anc)
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||No original(anc)|
+|String|non|non|non|non||Ancien numéro de l'original|
 
 ### NUMOR
-No original
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||No original|
+|String|non|non|non|non||Numéro de l'original|
 
 ### NUMP
-No phototype
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|No phototype|
+|String|non|non|non|non|Alphanumeric|Numéro du négatif|
 
 ### ANUMTI
-Ancien numéro du tirage
+
 
 
 
@@ -991,27 +991,27 @@ Ancien numéro du tirage
 |String|non|non|non|non||Ancien numéro du tirage|
 
 ### NUMTI
-No tirage
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|No tirage|
+|String|non|non|non|non|Alphanumeric|Numéro du tirage|
 
 ### RENV
-Renvoi 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Renvoi|
+|String|non|non|non|non||Phototype(s) en relation|
 
 ### REG
-Région
+
 
 
 
@@ -1021,27 +1021,27 @@ Région
 |String|non|non|non|non||Région|
 
 ### SENS
-Sens 
+V, H, C, O
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Sens|
+|String|non|non|non|non||Orientation du phototype|
 
 ### SCLE
-Date oeuv siècle
+12e ; 18e (fin)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date oeuv siècle|
+|String|non|non|non|non||Siècle de l'œuvre|
 
 ### SUP
-Support 
+
 
 
 
@@ -1051,37 +1051,37 @@ Support
 |String|non|non|non|non||Support|
 
 ### TECH
-Technique photo
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Technique photo|
+|String|non|non|non|non||Description technique du négatif|
 
 ### TECHOR
-Technique orig
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Technique orig|
+|String|non|non|non|non||Description technique de l'original|
 
 ### TECHTI
-Technique tirage
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Technique tirage|
+|String|non|non|non|non||Description technique du tirage|
 
 ### TOILE
-Toile de fond 
+
 
 
 
@@ -1101,7 +1101,7 @@ Type  [Qu'est ce que c'est ?]
 |String|non|non|non|non||Type|
 
 ### TYPDOC
-Catégorie de phototype
+Négatif, Positif original, Image numérique, Tirage photographique, Reproduction
 
 
 
@@ -1111,24 +1111,24 @@ Catégorie de phototype
 |String|non|non|non|non||Catégorie de phototype|
 
 ### TYPEIMG
-Type image num
+Forme : oui ou non selon qu'on charge ou non une image
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Type image num|
+|String|non|non|oui|non||Type d'image numérique|
 
 ### TYPSUPP
-Type support num 
+Doublon de TYPSN utilisé dans les versements plus récents ; valeur : DS1
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Type support num |
+|String|non|non|non|non||Type de support numérique|
 
 ### VIDEO
 Vidéo [Semble être doublon avec IMG]
@@ -1138,20 +1138,20 @@ Vidéo [Semble être doublon avec IMG]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||VIDEO|
+|String|non|non|non|non||Vidéo|
 
 ### LBASE2
-Liens base  [Quelle différence avec LBASE?]
+Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Liens base |
+|String|non|non|oui|non||Liens base|
 
 ### LEG2
-Légende thes. 
+
 
 
 
@@ -1161,14 +1161,14 @@ Légende thes.
 |String|non|non|non|non||Légende thes.|
 
 ### REFIM
-Ref Image
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Ref Image|
+|String|non|non|oui|non||Référence de l'image|
 
 ### REFIMG
 Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )
@@ -1181,7 +1181,7 @@ Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH 
 |String|non|non|oui|non||Nom Image|
 
 ### MOSA
-Mosaïques 
+
 
 
 
@@ -1191,17 +1191,17 @@ Mosaïques
 |String|non|non|non|non||Mosaïques|
 
 ### SITE
-SITE
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||SITE|
+|String|non|non|non|non||Site|
 
 ### NUMSITE
-N° du site 
+N° du site
 
 
 
@@ -1221,7 +1221,7 @@ N° d'opération
 |String|non|non|non|non||N° d'opération|
 
 ### CHRONO
-Chronologie 
+
 
 
 
@@ -1238,10 +1238,10 @@ Contient le numéro du fichier numérique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote de reproduction|
+|String|non|non|non|non||Numéro de reproduction|
 
 ### STRUCT
-Structure 
+
 
 
 
@@ -1251,44 +1251,44 @@ Structure
 |String|non|non|non|non||Structure|
 
 ### SUJET
-Sujet 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Sujet|
+|String|non|non|non|non||Sujet représenté par la photographie ou le document graphique|
 
 ### TICO
-Titre du dossier
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre du dossier|
+|String|non|non|non|non||Titre courant de l'œuvre|
 
 ### NUMI
-Ident. support
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ident. support|
+|String|non|non|non|non||Numéro du phototype|
 
 ### LIEU
-Lieu-dit 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu-dit|
+|String|non|non|non|non||Adresse et/ou lieu-dit|
 
 ### ADRS
 Adresse saisie
@@ -1301,27 +1301,27 @@ Adresse saisie
 |String|non|non|non|non||Adresse saisie|
 
 ### CONTACT
-Contact
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|CONTACT|
+|String|non|non|non|non|Email|Lien vers le service producteur|
 
 ### EMET
-Emetteur (code) 
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Emetteur (code)|
+|String|non|non|non|non||Code du producteur|
 
 ### NUM
-N° support 
+
 
 
 
@@ -1331,14 +1331,14 @@ N° support
 |String|non|non|non|non||N° support|
 
 ### IMG
-Images
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Images|
+|String|non|non|non|non||Lien vers l'image|
 
 ### WCOM
 Ville [Quelle difference avec COM ?]
@@ -1351,7 +1351,7 @@ Ville [Quelle difference avec COM ?]
 |String|non|non|non|non||Ville|
 
 ### LIENS
-Liens divers
+
 
 
 
@@ -1361,14 +1361,14 @@ Liens divers
 |String|non|non|non|non||Liens divers|
 
 ### LAUTP
-Notice biblio
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Notice biblio|
+|String|non|non|non|non||Notice biographique|
 
 ### _id
 

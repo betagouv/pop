@@ -1,4 +1,10 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
 "params","Mixed","non","","","","","",""
+"createdBy","String","non","","","","","",""
+"institution","String","non","","","","","",""
+"name","String","non","","","","","",""
+"description","String","non","","","","","",""
+"image","String","non","","","","","",""
+"createdAt","Date","non","","","","","",""
 "_id","ObjectID","non","","","","","",""
 "__v","Number","non","","","","","",""

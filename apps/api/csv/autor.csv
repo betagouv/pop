@@ -1,6 +1,7 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
 "REF","String","oui","Référence","","","","",""
 "ISNI","String","non","Référence ISNI (ajouté)","","","","",""
+"ISNI_VERIFIEE","String","non","Référence ISNI a-t-elle été vérifiée","","","","",""
 "ALIAS","Array","non","Alias (ajouté)","","","","",""
 "BIBLIO","Array","non","Bibliographie","","","","",""
 "BIO","String","non","Biographie","","","","",""

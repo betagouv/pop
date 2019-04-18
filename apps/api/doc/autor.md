@@ -2,6 +2,7 @@
 
 - [REF](/apps/api/doc/autor.md#REF)
 - [ISNI](/apps/api/doc/autor.md#ISNI)
+- [ISNI_VERIFIEE](/apps/api/doc/autor.md#ISNI_VERIFIEE)
 - [ALIAS](/apps/api/doc/autor.md#ALIAS)
 - [BIBLIO](/apps/api/doc/autor.md#BIBLIO)
 - [BIO](/apps/api/doc/autor.md#BIO)
@@ -62,6 +63,16 @@
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Référence ISNI (ajouté)|
+
+### ISNI_VERIFIEE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Référence ISNI a-t-elle été vérifiée|
 
 ### ALIAS
 
