@@ -112,8 +112,40 @@ class Notice extends React.Component {
             getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
+          <Section
+            title="1. Sujet de la photographie ou du document graphique"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
+            <Col sm={6} />
+          </Section>
+          <Section
+            title="2. Auteur"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
+            <Col sm={6} />
+          </Section>
+          <Section
+            title="3. Description de la photographie ou du document graphique"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
+            <Col sm={6} />
+          </Section>
+          <Section
+            title="4. Gestion de la base de données"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
+            <Col sm={6} />
+          </Section>
 
-          <Section title="Localisation" icon={require("../../assets/info.png")} color="#FF7676">
+          <Section
+            title="1. Sujet de la photographie ou du document graphique"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
             <Col sm={6}>
               <CustomField name="LOCA" disabled={!this.state.editable} />
               <CustomField name="PAYS" disabled={!this.state.editable} />
@@ -128,11 +160,7 @@ class Notice extends React.Component {
             </Col>
           </Section>
 
-          <Section
-            title="Identification MH"
-            icon={require("../../assets/info.png")}
-            color="#FF7676"
-          >
+          <Section title="2. Auteur" icon={require("../../assets/info.png")} color="#FF7676">
             <Col sm={6}>
               <CustomField name="EDIF" disabled={!this.state.editable} />
               <CustomField name="MARQ" disabled={!this.state.editable} />
