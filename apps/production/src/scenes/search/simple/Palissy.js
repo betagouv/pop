@@ -142,30 +142,6 @@ export default class Search extends React.Component {
                     and: FILTER.filter(e => e !== "commune")
                   }}
                 />
-                <MultiList
-                  componentId="dateteprotection"
-                  dataField="DPRO.keyword"
-                  title="Date protection"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher une date de protection"
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "dateteprotection")
-                  }}
-                />
-                <MultiList
-                  componentId="partiedeplacee"
-                  dataField="DEPL.keyword"
-                  title="Partie déplacée"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher une partie déplacée"
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "partiedeplacee")
-                  }}
-                />
                 <hr />
                 <MultiList
                   componentId="image"
