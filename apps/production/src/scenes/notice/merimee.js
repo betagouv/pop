@@ -111,188 +111,203 @@ class Notice extends React.Component {
             icon={require("../../assets/info.png")}
             color="#FF7676"
           >
-            <Col sm={6}>
-              <CustomField name="REF" disabled={true} />
-              <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
-              <CustomField
-                title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
-                name="RENV"
-                createUrl={e => `/notice/merimee/${e}`}
-                disabled={!this.state.editable}
-              />
-              <CustomField name="DOSURL" disabled={!this.state.editable} />
-              <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
-              <CustomField name="ARCHEO" disabled={!this.state.editable} />
-              <CustomField name="DENQ" disabled={!this.state.editable} />
-              <CustomField name="COPY" disabled={!this.state.editable} />
-              <CustomField name="RFPA" disabled={!this.state.editable} />
-              <CustomField name="DMAJ" disabled={!this.state.editable} />
-              <CustomField name="DOMN" disabled={!this.state.editable} />
-              <CustomField name="AUTP" disabled={!this.state.editable} />
-              <CustomField name="DOSADRS" disabled={!this.state.editable} />
-              <CustomField name="CONTACT" disabled={!this.state.editable} />
-              <CustomField name="THEM" disabled={!this.state.editable} />
-              <CustomField
-                name="REFO"
-                createUrl={e => `/notice/palissy/${e}`}
-                disabled={!this.state.editable}
-              />
-              <CustomField name="WEB" disabled={!this.state.editable} />
-              <CustomField name="NBOR" disabled={!this.state.editable} />
-              <CustomField name="MOSA" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="LIENS" disabled={!this.state.editable} />
-              <CustomField name="DBOR" disabled={!this.state.editable} />
-              <CustomField name="NOMS" disabled={!this.state.editable} />
-              <CustomField name="ETUD" disabled={!this.state.editable} />
-              <CustomField name="DOSS" disabled={!this.state.editable} />
-              <CustomField name="DMIS" disabled={!this.state.editable} />
-              <CustomField name="MICR" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="REF" disabled={true} />
+                <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
+                <CustomField
+                  title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
+                  name="RENV"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField name="DOSURL" disabled={!this.state.editable} />
+                <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
+                <CustomField name="ARCHEO" disabled={!this.state.editable} />
+                <CustomField name="DENQ" disabled={!this.state.editable} />
+                <CustomField name="COPY" disabled={!this.state.editable} />
+                <CustomField name="RFPA" disabled={!this.state.editable} />
+                <CustomField name="DMAJ" disabled={!this.state.editable} />
+                <CustomField name="DOMN" disabled={!this.state.editable} />
+                <CustomField name="AUTP" disabled={!this.state.editable} />
+                <CustomField name="DOSADRS" disabled={!this.state.editable} />
+                <CustomField name="CONTACT" disabled={!this.state.editable} />
+                <CustomField name="THEM" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFO"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField name="WEB" disabled={!this.state.editable} />
+                <CustomField name="NBOR" disabled={!this.state.editable} />
+                <CustomField name="MOSA" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="LIENS" disabled={!this.state.editable} />
+                <CustomField name="DBOR" disabled={!this.state.editable} />
+                <CustomField name="NOMS" disabled={!this.state.editable} />
+                <CustomField name="ETUD" disabled={!this.state.editable} />
+                <CustomField name="DOSS" disabled={!this.state.editable} />
+                <CustomField name="DMIS" disabled={!this.state.editable} />
+                <CustomField name="MICR" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="DESIGNATION" icon={require("../../assets/law.png")} color="#FE997B">
-            <Col sm={6}>
-              <CustomField name="DENO" disabled={!this.state.editable} />
-              <CustomField name="GENR" disabled={!this.state.editable} />
-              <CustomField name="PDEN" disabled={!this.state.editable} />
-              <CustomField name="VOCA" disabled={!this.state.editable} />
-              <CustomField name="APPL" disabled={!this.state.editable} />
-              <CustomField name="ACTU" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="TICO" disabled={!this.state.editable} />
-              <CustomField name="PART" disabled={!this.state.editable} />
-              <CustomField
-                name="REFP"
-                createUrl={e => `/notice/merimee/${e}`}
-                disabled={!this.state.editable}
-              />
-              <CustomField name="COLL" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="DENO" disabled={!this.state.editable} />
+                <CustomField name="GENR" disabled={!this.state.editable} />
+                <CustomField name="PDEN" disabled={!this.state.editable} />
+                <CustomField name="VOCA" disabled={!this.state.editable} />
+                <CustomField name="APPL" disabled={!this.state.editable} />
+                <CustomField name="ACTU" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="TICO" disabled={!this.state.editable} />
+                <CustomField name="PART" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFP"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField name="COLL" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
-
           <Section title="LOCALISATION" icon={require("../../assets/map.png")} color="#FFC070">
-            <Col sm={6}>
-              <CustomField name="REG" disabled={!this.state.editable} />
-              <CustomField name="DPT" disabled={!this.state.editable} />
-              <CustomField name="COM" disabled={!this.state.editable} />
-              <CustomField name="INSEE" disabled={!this.state.editable} />
-              <CustomField name="PLOC" disabled={!this.state.editable} />
-              <CustomField name="AIRE" disabled={!this.state.editable} />
-              <CustomField name="CANT" disabled={!this.state.editable} />
-              <CustomField name="LIEU" disabled={!this.state.editable} />
-              <CustomField name="ADRS" disabled={!this.state.editable} />
-              <CustomField name="EDIF" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField
-                name="REFE"
-                createUrl={e => `/notice/merimee/${e}`}
-                disabled={!this.state.editable}
-                footer={key => {
-                  <Link to={`/notice/memoire/${key}`} target="_blank">
-                    {key}
-                  </Link>;
-                }}
-              />
-              <CustomField name="CADA" disabled={!this.state.editable} />
-              <CustomField name="ZONE" disabled={!this.state.editable} />
-              <CustomField name="COOR" disabled={!this.state.editable} />
-              <CustomField name="COORM" disabled={!this.state.editable} />
-              <CustomField name="IMPL" disabled={!this.state.editable} />
-              <CustomField name="HYDR" disabled={!this.state.editable} />
-              <CustomField name="LOCA" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="REG" disabled={!this.state.editable} />
+                <CustomField name="DPT" disabled={!this.state.editable} />
+                <CustomField name="COM" disabled={!this.state.editable} />
+                <CustomField name="INSEE" disabled={!this.state.editable} />
+                <CustomField name="PLOC" disabled={!this.state.editable} />
+                <CustomField name="AIRE" disabled={!this.state.editable} />
+                <CustomField name="CANT" disabled={!this.state.editable} />
+                <CustomField name="LIEU" disabled={!this.state.editable} />
+                <CustomField name="ADRS" disabled={!this.state.editable} />
+                <CustomField name="EDIF" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField
+                  name="REFE"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                  footer={key => {
+                    <Link to={`/notice/memoire/${key}`} target="_blank">
+                      {key}
+                    </Link>;
+                  }}
+                />
+                <CustomField name="CADA" disabled={!this.state.editable} />
+                <CustomField name="ZONE" disabled={!this.state.editable} />
+                <CustomField name="COOR" disabled={!this.state.editable} />
+                <CustomField name="COORM" disabled={!this.state.editable} />
+                <CustomField name="IMPL" disabled={!this.state.editable} />
+                <CustomField name="HYDR" disabled={!this.state.editable} />
+                <CustomField name="LOCA" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="HISTORIQUE" icon={require("../../assets/date.png")} color="#668796">
-            <Col sm={6}>
-              <CustomField name="SCLE" disabled={!this.state.editable} />
-              <CustomField name="DATE" disabled={!this.state.editable} />
-              <CustomField name="JDAT" disabled={!this.state.editable} />
-              <CustomField name="AUTR" disabled={!this.state.editable} />
-              <CustomField name="JATT" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="PERS" disabled={!this.state.editable} />
-              <CustomField name="REMP" disabled={!this.state.editable} />
-              <CustomField name="DEPL" disabled={!this.state.editable} />
-              <CustomField name="HIST" disabled={!this.state.editable} />
-              <CustomField name="SCLD" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="SCLE" disabled={!this.state.editable} />
+                <CustomField name="DATE" disabled={!this.state.editable} />
+                <CustomField name="JDAT" disabled={!this.state.editable} />
+                <CustomField name="AUTR" disabled={!this.state.editable} />
+                <CustomField name="JATT" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="PERS" disabled={!this.state.editable} />
+                <CustomField name="REMP" disabled={!this.state.editable} />
+                <CustomField name="DEPL" disabled={!this.state.editable} />
+                <CustomField name="HIST" disabled={!this.state.editable} />
+                <CustomField name="SCLD" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="DESCRIPTION" icon={require("../../assets/tool.png")} color="#FBE367">
-            <Col sm={6}>
-              <CustomField name="MURS" disabled={!this.state.editable} />
-              <CustomField name="TOIT" disabled={!this.state.editable} />
-              <CustomField name="PLAN" disabled={!this.state.editable} />
-              <CustomField name="ETAG" disabled={!this.state.editable} />
-              <CustomField name="VOUT" disabled={!this.state.editable} />
-              <CustomField name="ELEV" disabled={!this.state.editable} />
-              <CustomField name="COUV" disabled={!this.state.editable} />
-              <CustomField name="ESCA" disabled={!this.state.editable} />
-              <CustomField name="ENER" disabled={!this.state.editable} />
-              <CustomField name="VERT" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="TECH" disabled={!this.state.editable} />
-              <CustomField name="REPR" disabled={!this.state.editable} />
-              <CustomField name="PREP" disabled={!this.state.editable} />
-              <CustomField name="DIMS" disabled={!this.state.editable} />
-              <CustomField name="TYPO" disabled={!this.state.editable} />
-              <CustomField name="ETAT" disabled={!this.state.editable} />
-              <CustomField name="DESC" disabled={!this.state.editable} />
-              <CustomField name="PARN" disabled={!this.state.editable} />
-              <CustomField name="PINT" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="MURS" disabled={!this.state.editable} />
+                <CustomField name="TOIT" disabled={!this.state.editable} />
+                <CustomField name="PLAN" disabled={!this.state.editable} />
+                <CustomField name="ETAG" disabled={!this.state.editable} />
+                <CustomField name="VOUT" disabled={!this.state.editable} />
+                <CustomField name="ELEV" disabled={!this.state.editable} />
+                <CustomField name="COUV" disabled={!this.state.editable} />
+                <CustomField name="ESCA" disabled={!this.state.editable} />
+                <CustomField name="ENER" disabled={!this.state.editable} />
+                <CustomField name="VERT" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="TECH" disabled={!this.state.editable} />
+                <CustomField name="REPR" disabled={!this.state.editable} />
+                <CustomField name="PREP" disabled={!this.state.editable} />
+                <CustomField name="DIMS" disabled={!this.state.editable} />
+                <CustomField name="TYPO" disabled={!this.state.editable} />
+                <CustomField name="ETAT" disabled={!this.state.editable} />
+                <CustomField name="DESC" disabled={!this.state.editable} />
+                <CustomField name="PARN" disabled={!this.state.editable} />
+                <CustomField name="PINT" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section
             title="INTERET ET PROTECTION"
             icon={require("../../assets/law.png")}
             color="#FE997B"
           >
-            <Col sm={6}>
-              <CustomField name="PROT" disabled={!this.state.editable} />
-              <CustomField name="DPRO" disabled={!this.state.editable} />
-              <CustomField name="PPRO" disabled={!this.state.editable} />
-              <CustomField name="APRO" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="MHPP" disabled={!this.state.editable} />
-              <CustomField name="SITE" disabled={!this.state.editable} />
-              <CustomField name="INTE" disabled={!this.state.editable} />
-              <CustomField name="REMA" disabled={!this.state.editable} />
-              <CustomField name="OBS" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="PROT" disabled={!this.state.editable} />
+                <CustomField name="DPRO" disabled={!this.state.editable} />
+                <CustomField name="PPRO" disabled={!this.state.editable} />
+                <CustomField name="APRO" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="MHPP" disabled={!this.state.editable} />
+                <CustomField name="SITE" disabled={!this.state.editable} />
+                <CustomField name="INTE" disabled={!this.state.editable} />
+                <CustomField name="REMA" disabled={!this.state.editable} />
+                <CustomField name="OBS" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="STATUT JURIDIQUE" icon={require("../../assets/time.png")} color="#00BEB2">
-            <Col sm={6}>
-              <CustomField name="STAT" disabled={!this.state.editable} />
-              <CustomField name="PSTA" disabled={!this.state.editable} />
-              <CustomField name="AFFE" disabled={!this.state.editable} />
-              <CustomField name="DLAB" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="PAFF" disabled={!this.state.editable} />
-              <CustomField name="VISI" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="STAT" disabled={!this.state.editable} />
+                <CustomField name="PSTA" disabled={!this.state.editable} />
+                <CustomField name="AFFE" disabled={!this.state.editable} />
+                <CustomField name="DLAB" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="PAFF" disabled={!this.state.editable} />
+                <CustomField name="VISI" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="AUTRE" icon={require("../../assets/law.png")} color="#FE997B">
-            <Col sm={6}>
-              <CustomField name="MFICH" disabled={!this.state.editable} />
-              <CustomField name="VIDEO" disabled={!this.state.editable} />
-              <CustomField name="IMAGE" disabled={!this.state.editable} />
-              <CustomField name="IMG" disabled={!this.state.editable} />
-              <CustomField name="LBASE2" disabled={!this.state.editable} />
-            </Col>
-            <Col sm={6}>
-              <CustomField name="WCOM" disabled={!this.state.editable} />
-              <CustomField name="WADRS" disabled={!this.state.editable} />
-              <CustomField name="WRENV" disabled={!this.state.editable} />
-              <CustomField name="ACMH" disabled={!this.state.editable} />
-              <CustomField name="ACURL" disabled={!this.state.editable} />
-              <CustomField name="LMDP" disabled={!this.state.editable} />
-            </Col>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="MFICH" disabled={!this.state.editable} />
+                <CustomField name="VIDEO" disabled={!this.state.editable} />
+                <CustomField name="IMAGE" disabled={!this.state.editable} />
+                <CustomField name="IMG" disabled={!this.state.editable} />
+                <CustomField name="LBASE2" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="WCOM" disabled={!this.state.editable} />
+                <CustomField name="WADRS" disabled={!this.state.editable} />
+                <CustomField name="WRENV" disabled={!this.state.editable} />
+                <CustomField name="ACMH" disabled={!this.state.editable} />
+                <CustomField name="ACURL" disabled={!this.state.editable} />
+                <CustomField name="LMDP" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Map notice={this.state.notice} />
           {this.props.canUpdate ? (
