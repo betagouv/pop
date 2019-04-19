@@ -30,9 +30,11 @@ const Memoire = ({ data }) => {
     data: joinData([data.DATPV, data.DATOR]),
     loc: data.LOCA
   };
-  const productorImage = p => {
-    if (p === "CRMH") {
+  const productorImage = notice => {
+    if (notice.PRODUCTEUR === "CRMH") {
       return <img src="/static/mh.png" className="producteur mh" />;
+    } else if (notice.PRODUCTEUR === "SAP") {
+      return <img src="/static/map.png" className="producteur mh" />;
     }
     return null;
   };
@@ -55,7 +57,7 @@ const Memoire = ({ data }) => {
               </span>
             </div>
             <p>{content.subtitle}</p>
-            {productorImage(data.PRODUCTEUR)}
+            {productorImage(data)}
             <div>
               <p>{content.author}</p>
               <p>{content.data}</p>
