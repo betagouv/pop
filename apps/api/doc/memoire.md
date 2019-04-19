@@ -468,14 +468,14 @@ Auteur, titre, lieu, éditeur, date
 |String|non|non|non|non||Référence bibliographique ou documentaire|
 
 ### ROLE
-
+Nom de l'acteur : nom du personnage joué
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Rôle interprété|
 
 ### PRECOR
 

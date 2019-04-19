@@ -46,7 +46,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "PAYS","String","non","Pays","","","Si plusieurs noms successifs, les citer tous en utilisant le point-virgule comme séparateur","",""
 "PUBLI","String","non","Référence de publication de l'image","","","Auteur, titre, lieu, éditeur, date","",""
 "TIREDE","String","non","Référence bibliographique ou documentaire","","","","",""
-"ROLE","String","non","","","","","",""
+"ROLE","String","non","Rôle interprété","","","Nom de l'acteur : nom du personnage joué","",""
 "PRECOR","String","non","Précisions sur la conservation de l'original","","","","",""
 "SERIE","String","non","Titre série","","","","",""
 "THEATRE","String","non","Producteur de la pièce de théâtre ou du film","","","","",""

@@ -272,10 +272,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        documentation: {
-          description: "Nom de l'acteur : nom du personnage joué",
-          label: "Rôle interprété"
-        }
+        description: "Nom de l'acteur : nom du personnage joué",
+        label: "Rôle interprété"
       }
     },
     PRECOR: {
