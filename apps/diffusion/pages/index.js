@@ -66,6 +66,10 @@ export default class extends React.Component {
               />
               <Button onClick={this.gotoSearch}>Rechercher</Button>
             </div>
+            <p className="legend">
+              Raymond Voinquel : Anthony Quinn (Quasimodo) et Gina Lollobrigida (Esmeralda) dans
+              Notre-Dame de Paris de Jean Delannoy (1956).
+            </p>
           </div>
           <div className="topics-view">
             <Container>
@@ -446,6 +450,7 @@ export default class extends React.Component {
             background-size: cover;
             padding-top: 70px;
             padding-bottom: 70px;
+            position: relative;
           }
           .home .home-search {
             max-width: 880px;
@@ -462,6 +467,18 @@ export default class extends React.Component {
             margin-top: 30px;
             font-weight: 400;
             font-size: 20px;
+          }
+
+          .home .home-search-background .legend {
+            position: absolute;
+            right: 0px;
+            font-size: 11px;
+            bottom: 0px;
+            margin-bottom: 0px;
+            font-style: italic;
+            padding-right: 10px;
+            background-color: azure;
+            padding-left: 10px;
           }
           .home .home-search input::placeholder {
             color: #bbb;
