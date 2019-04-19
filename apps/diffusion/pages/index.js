@@ -70,7 +70,7 @@ export default class extends React.Component {
           <div className="topics-view">
             <Container>
               <h2>Les bases actuellement dans POP</h2>
-              <Slider {...settings} slidesToShow={5}>
+              <Slider {...settings} slidesToShow={5} className="bases">
                 <TopicCard
                   img="/static/topics/mdf.jpg"
                   txt={
@@ -493,6 +493,10 @@ export default class extends React.Component {
             .home .home-search input::placeholder {
               font-size: 14px;
             }
+          }
+
+          .bases .card-img {
+            height: 150px !important;
           }
           .topics-view {
             display: flex;
