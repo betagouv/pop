@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Slider from "react-slick";
 import React from "react";
-import { Button, Input, Container } from "reactstrap";
+import Link from "next/link";
+import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody } from "reactstrap";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
@@ -48,33 +49,28 @@ export default class extends React.Component {
               content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 3 millions de contenus numériques du patrimoine français."
             />
           </Head>
-          <div className="home-search">
-            <h1>
-              La plateforme POP regroupe les contenus numériques du patrimoine français afin de les
-              rendre accessibles et consultables au plus grand nombre
-            </h1>
-            <Input
-              id="main-search"
-              placeholder="Recherchez parmi plus de 3 millions de documents"
-              onKeyPress={event => {
-                if (event.key === "Enter") {
-                  this.gotoSearch();
-                }
-              }}
-            />
-            <Button onClick={this.gotoSearch}>Rechercher</Button>
+          <div className="home-search-background">
+            <div className="home-search">
+              <h1>
+                La plateforme POP regroupe les contenus numériques du patrimoine français afin de
+                les rendre accessibles et consultables au plus grand nombre
+              </h1>
+              <Input
+                id="main-search"
+                placeholder="Recherchez parmi plus de 3 millions de documents"
+                onKeyPress={event => {
+                  if (event.key === "Enter") {
+                    this.gotoSearch();
+                  }
+                }}
+              />
+              <Button onClick={this.gotoSearch}>Rechercher</Button>
+            </div>
           </div>
           <div className="topics-view">
             <Container>
-              <h3>Parcourir</h3>
+              <h2>Les bases actuellement dans POP</h2>
               <Slider {...settings}>
-                <TopicCard
-                  img="/static/topics/notredame.jpg"
-                  txt="Notre-Dame de Paris"
-                  params={{
-                    mainSearch: '"Notre-Dame de Paris"'
-                  }}
-                />
                 <TopicCard
                   img="/static/topics/mdf.jpg"
                   txt="Musées de France"
@@ -83,10 +79,10 @@ export default class extends React.Component {
                   }}
                 />
                 <TopicCard
-                  img="/static/topics/enluminures.jpg"
-                  txt="Enluminures"
+                  img="/static/topics/mhr.jpg"
+                  txt="Patrimoine architectural"
                   params={{
-                    base: ["Enluminures (Enluminures)"]
+                    base: ["Patrimoine architectural (Mérimée)"]
                   }}
                 />
                 <TopicCard
@@ -111,70 +107,55 @@ export default class extends React.Component {
                   }}
                 />
                 <TopicCard
-                  img="/static/topics/mhr.jpg"
-                  txt="Patrimoine architectural"
+                  img="/static/topics/enluminures.jpg"
+                  txt="Enluminures"
                   params={{
-                    base: ["Patrimoine architectural (Mérimée)"]
+                    base: ["Enluminures (Enluminures)"]
                   }}
                 />
-                <TopicCard
-                  img="/static/topics/dessins.jpg"
-                  txt="Dessins"
-                  params={{
-                    domn: ["dessin"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/archeo.jpg"
-                  txt="Archéologie"
-                  params={{
-                    domn: ["archéologie"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/labelxx.jpg"
-                  txt="Label Patrimoine du XXe"
-                  params={{
-                    domn: ["Label XXe"]
-                  }}
-                />
-
-                <TopicCard
-                  img="/static/topics/sculpture.jpg"
-                  txt="Sculpture"
-                  params={{
-                    domn: ["sculpture"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/viedomestique.jpg"
-                  txt="Objets de vie domestique"
-                  params={{
-                    domn: ["vie domestique"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/estampes.jpg"
-                  txt="Estampes"
-                  params={{
-                    domn: ["estampe"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/costumeetaccess.jpg"
-                  txt="Costumes et accessoires"
-                  params={{
-                    domn: ["costume - accessoires du costume"]
-                  }}
-                />
-                <TopicCard
-                  img="/static/topics/architecture.jpg"
-                  txt="Architecture"
-                  params={{
-                    domn: ["architecture"]
-                  }}
                 />
               </Slider>
+              <h2>Focus</h2>
+              <Row className="focus">
+                <Col md={6}>
+                  <Link href={"/notice/merimee/PA00086250"} as={"/notice/merimee/PA00086250"}>
+                    <a style={{ textDecoration: "none" }}>
+                      <Card>
+                        <img
+                          src={"/static/topics/notredame.jpg"}
+                          alt="Notre-Dame de Paris"
+                          className="card-img"
+                          height="220"
+                        />
+                        <CardBody>
+                          <CardTitle>Notre-Dame de Paris</CardTitle>
+                        </CardBody>
+                      </Card>
+                    </a>
+                  </Link>
+                </Col>
+                <Col md={6}>
+                  L'île de la Cité est occupée depuis le 4ème siècle par un ensemble épiscopal (deux
+                  basiliques, un baptistère, et la résidence de l'évêque). Au 12ème siècle, l'évêque
+                  Maurice de Sully recompose l'ensemble et construit une cathédrale plus grande avec
+                  dégagement d'un parvis à l'ouest. Les travaux commencent en 1160 par le choeur. La
+                  cathédrale mesure 127 mètres de long, 40 mètres de large et 33 mètres de haut.
+                  Elle se compose d'une nef de cinq vaisseaux, d'un transept non saillant et d'un
+                  choeur à double déambulatoire. L'agrandissement des fenêtres hautes fait
+                  disparaître les rosaces des combles des tribunes. Début de la construction des
+                  tours en 1210. Construction des chapelles du milieu du 13e au début du 14ème
+                  siècle. Au 18ème siècle, Soufflot fait détruire le trumeau et une partie du tympan
+                  de la porte centrale de la façade occidentale pour faciliter les processions. Au
+                  19ème siècle Viollet-le-Duc et Lassus entâment les travaux de restauration.
+                  <br />
+                  <Link
+                    href={`/search/mosaic?image=%5B%22oui%22%5D&mainSearch=%22%5C%22cath%C3%A9drale%20Notre-Dame%5C%22%20Paris%22`}
+                  >
+                    <a className="">Voir l'ensemble des ressources POP sur Notre-Dame</a>
+                  </Link>
+                </Col>
+              </Row>
+              <h2>Accès thématiques</h2>
               <h3>Photographie</h3>
               <Slider {...settings}>
                 <TopicCard
@@ -418,11 +399,18 @@ export default class extends React.Component {
           .home {
             height: 100%;
           }
+          .home .home-search-background {
+            background: rgba(0, 0, 0, 0.65) url("/static/background.png");
+            padding-top: 70px;
+            padding-bottom: 70px;
+          }
           .home .home-search {
             max-width: 880px;
             margin: 0 auto;
-            padding: 25px 15px;
+            padding: 10px 15px;
             text-align: center;
+            background-color: #e5edef;
+            border-radius: 5px;
           }
           .home .home-search h1 {
             text-align: center;
@@ -476,11 +464,49 @@ export default class extends React.Component {
               margin-right: 20px;
             }
           }
+          .focus {
+            border-style: solid;
+            border-width: 1px;
+            padding: 20px;
+            margin: 0px;
+            border-color: #377d87;
+            border-radius: 5px;
+          }
+
+          .focus .card-title {
+            font-weight: 700;
+            padding-top: 10px;
+            text-align: center;
+            font-size: 18px;
+            color: #025d59;
+          }
+
+          .focus .card {
+            transition: 0.3s;
+            padding: 20px;
+          }
+
+          .focus .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+          }
+
+          .focus .card-img {
+            height: 400px !important;
+            object-fit: contain;
+          }
+          .topics-view h2 {
+            margin-top: 20px;
+            color: #19414c;
+            font-weight: 600;
+            font-size: 21px;
+            margin-bottom: 20px;
+            margin-bottom: 20px;
+          }
           .topics-view h3 {
             margin-top: 20px;
             color: #19414c;
             font-weight: 600;
-            font-size: 26px;
+            font-size: 17px;
             margin-bottom: 20px;
             margin-bottom: 20px;
           }
