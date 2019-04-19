@@ -37,7 +37,7 @@ class TopicCard extends React.Component {
           }
           .topic-card :global(.card-img) {
             width: 100%;
-            height: 220px;
+            height: 150px;
             object-fit: cover;
           }
 
@@ -47,6 +47,21 @@ class TopicCard extends React.Component {
             text-align: center;
             font-size: 16px;
             color: #025d59;
+            height: 75px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 0px;
+            align-items: center;
+            padding: 5px;
+          }
+
+          .topic-card :global(.card-body) {
+            padding: 0px;
+          }
+
+          .topic-card :global(.card-title p) {
+            font-weight: 500 !important;
           }
 
           .topic-card :global(a:hover) {

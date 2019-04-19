@@ -70,52 +70,81 @@ export default class extends React.Component {
           <div className="topics-view">
             <Container>
               <h2>Les bases actuellement dans POP</h2>
-              <Slider {...settings}>
+              <Slider {...settings} slidesToShow={5}>
                 <TopicCard
                   img="/static/topics/mdf.jpg"
-                  txt="Musées de France"
+                  txt={
+                    <div>
+                      Musées de France
+                      <p>Base Joconde</p>
+                    </div>
+                  }
                   params={{
                     base: ["Collections des musées de France (Joconde)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mhr.jpg"
-                  txt="Patrimoine architectural"
+                  txt={
+                    <div>
+                      Patrimoine architectural
+                      <p>Base Mérimée</p>
+                    </div>
+                  }
                   params={{
                     base: ["Patrimoine architectural (Mérimée)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/memoire.jpg"
-                  txt="Photographies"
+                  txt={
+                    <div>
+                      Photographies
+                      <p>Base Mémoire</p>
+                    </div>
+                  }
                   params={{
                     base: ["Photographies (Mémoire)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mobilier.jpg"
-                  txt="Patrimoine mobilier"
+                  txt={
+                    <div>
+                      Patrimoine mobilier
+                      <p>Base Palissy</p>
+                    </div>
+                  }
                   params={{
                     base: ["Patrimoine mobilier (Palissy)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/mnr.jpg"
-                  txt="Récupération artistique"
+                  txt={
+                    <div>
+                      Récupération artistique
+                      <p>Base MNR Rose-Valland</p>
+                    </div>
+                  }
                   params={{
                     base: ["Récupération artistique (MNR Rose-Valland)"]
                   }}
                 />
                 <TopicCard
                   img="/static/topics/enluminures.jpg"
-                  txt="Enluminures"
+                  txt={
+                    <div>
+                      Enluminures
+                      <p>Base Enluminures</p>
+                    </div>
+                  }
                   params={{
                     base: ["Enluminures (Enluminures)"]
                   }}
                 />
-                />
               </Slider>
-              <h2>Focus</h2>
+              <h2>A la une</h2>
               <Row className="focus">
                 <Col md={6}>
                   <Link href={"/notice/merimee/PA00086250"} as={"/notice/merimee/PA00086250"}>
@@ -148,6 +177,18 @@ export default class extends React.Component {
                   de la porte centrale de la façade occidentale pour faciliter les processions. Au
                   19ème siècle Viollet-le-Duc et Lassus entâment les travaux de restauration.
                   <br />
+                  <br />
+                  <div
+                    style={{
+                      textAlign: "right"
+                    }}
+                  >
+                    Source : Mérimée, notice{" "}
+                    <Link href={`/notice/merimee/PA00086250`}>
+                      <a className="">PA00086250</a>
+                    </Link>
+                  </div>
+                  <br /> <br />
                   <Link
                     href={`/search/mosaic?image=%5B%22oui%22%5D&mainSearch=%22%5C%22cath%C3%A9drale%20Notre-Dame%5C%22%20Paris%22`}
                   >
@@ -401,6 +442,8 @@ export default class extends React.Component {
           }
           .home .home-search-background {
             background: rgba(0, 0, 0, 0.65) url("/static/background.png");
+            background-repeat: no-repeat;
+            background-size: cover;
             padding-top: 70px;
             padding-bottom: 70px;
           }
@@ -409,7 +452,7 @@ export default class extends React.Component {
             margin: 0 auto;
             padding: 10px 15px;
             text-align: center;
-            background-color: #e5edef;
+            background-color: #e5edefcf;
             border-radius: 5px;
           }
           .home .home-search h1 {
@@ -434,7 +477,7 @@ export default class extends React.Component {
             background-position: 1% center;
             padding-left: 40px;
             background-size: 20px;
-            color: #19414c;
+            color: #e5edef;
           }
           .home .home-search button {
             margin-top: 20px;
