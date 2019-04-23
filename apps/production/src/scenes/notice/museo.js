@@ -38,7 +38,7 @@ class Museo extends React.Component {
     // As a "producteur", I can edit if "museofile" matches with notice.
     const editable =
       this.props.canUpdate &&
-      (this.props.user.role === "administrateur" || notice.REF === this.props.user.museofile);
+      (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
 
     this.setState({ loading: false, notice, editable });
   }
@@ -211,10 +211,10 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group, museofile } = Auth.user;
-  console.log(Auth.user);
   const canUpdate =
     (Auth.user && role === "administrateur" && (group === "joconde" || group === "admin")) ||
     (Auth.user && role === "producteur" && group === "joconde");
+
   return {
     canUpdate,
     user: { museofile, role, group }
