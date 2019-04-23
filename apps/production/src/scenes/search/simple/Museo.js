@@ -14,7 +14,7 @@ import Header from "../components/Header";
 import Card from "../components/MuseoCard";
 import SearchButton from "../components/SearchButton";
 
-const FILTER = ["mainSearch", "label", "dpt"];
+const FILTER = ["mainSearch", "label", "dpt", "museo"];
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -55,6 +55,16 @@ export default class Search extends React.Component {
                   URLParams={true}
                   react={{
                     and: FILTER.filter(e => e !== "label")
+                  }}
+                />
+                <MultiList
+                  componentId="museo"
+                  dataField="REF.keyword"
+                  title="Code museo"
+                  className="filters"
+                  URLParams={true}
+                  react={{
+                    and: FILTER.filter(e => e !== "museo")
                   }}
                 />
                 <MultiList

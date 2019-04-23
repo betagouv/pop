@@ -148,7 +148,8 @@ export default class extends React.Component {
                   }}
                 />
               </Slider>
-              {/* <h2>A la une</h2>
+              {/*
+              <h2>A la une</h2>
               <Row className="focus">
                 <Col md={6}>
                   <Link href={"/notice/merimee/PA00086250"} as={"/notice/merimee/PA00086250"}>
@@ -199,7 +200,8 @@ export default class extends React.Component {
                     <a className="">Voir l'ensemble des ressources POP sur Notre-Dame</a>
                   </Link>
                 </Col>
-              </Row> */}
+              </Row> 
+              */}
               <h2>Accès thématiques</h2>
               <h3>Photographie</h3>
               <Slider {...settings}>
