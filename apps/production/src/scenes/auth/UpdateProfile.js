@@ -150,6 +150,19 @@ class UpdateProfile extends Component {
     });
   };
 
+  renderMuseo() {
+    if (this.props.user.museofile && this.props.user.museofile.length) {
+      return (
+        <div>
+          <h4>Mes informations Museo</h4>
+          <br />
+          Code(s) : {this.props.user.museofile.join(", ")}
+          <hr />
+        </div>
+      );
+    }
+    return <div />;
+  }
   render() {
     const { email, location } = this.props;
     const { loading, done, error, nom, prenom, institution } = this.state;
@@ -205,6 +218,7 @@ class UpdateProfile extends Component {
             />
           </div>
           <hr />
+          {this.renderMuseo()}
           <div className="sub-block">
             <h4>Mon mot de passe</h4>
             <input

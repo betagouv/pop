@@ -28,19 +28,6 @@ class User extends Component {
     return <Link to="/auth/signin">Se connecter</Link>;
   }
 
-  museofile(account) {
-    if (account.museofile && account.museofile.length && account.group === "joconde") {
-      return (
-        <DropdownItem
-          className="dropdown-item"
-          onClick={() => history.push(`/notice/museo/${account.museofile[0]}`)}
-        >
-          Modifier les données muséofile
-        </DropdownItem>
-      );
-    }
-  }
-
   renderPicto() {
     if (!this.props.account) {
       return <div />;
@@ -61,7 +48,7 @@ class User extends Component {
           >
             Modifier mes informations
           </DropdownItem>
-          {this.museofile(this.props.account)}
+
           <DropdownItem className="dropdown-item" onClick={() => history.push("/thesaurus")}>
             Mettre à jour le thesaurus
           </DropdownItem>
