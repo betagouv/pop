@@ -86,7 +86,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence de la notice",
         validation: "Alphanumeric",
-        label: "Référence notice"
+        label: "Référence de la notice"
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
@@ -103,16 +103,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Adresse ",
-        label: "Adresse"
+        description: "",
+        label: "Adresse de l'édifice"
       }
     },
     ADRS2: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Adresse de l'édifice contenant masqué",
         deprecated: true
       }
     },
@@ -120,32 +120,32 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Auteur(s) de la source figurée",
-        label: "Auteur(s) de la source figurée"
+        description: "",
+        label: "Auteur du projet"
       }
     },
     AIRE: {
       type: String,
       default: "",
       documentation: {
-        description: "Aire d'étude",
-        label: "Aire d'étude"
+        description: "",
+        label: "Aire d'étude pour le domaine Inventaire"
       }
     },
     APPL: {
       type: String,
       default: "",
       documentation: {
-        description: "Appellation et titre",
-        label: "Appellation et titre"
+        description: "",
+        label: "Appelation d'usage"
       }
     },
     ATEL: {
       type: String,
       default: "",
       documentation: {
-        description: "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école ",
-        label: "Nom de l’atelier, de la manufacture, de la fabrique ou de l’école"
+        description: "",
+        label: "Personne morale créatrice de l'objet"
       }
     },
     AUTP: {
@@ -160,8 +160,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Auteurs de l'oeuvre",
-        label: "Auteurs de l'oeuvre"
+        description: "",
+        label: "Auteur de l'œuvre ou créateur de l'objet"
       }
     },
     BIBL: {
@@ -176,13 +176,13 @@ const Schema = new mongoose.Schema(
     CANT: {
       type: String,
       default: "",
-      documentation: { description: "Canton ", label: "Canton" }
+      documentation: { description: "", label: "Canton" }
     },
     CATE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Catégorie technique",
+        description: "",
         label: "Catégorie technique"
       }
     },
@@ -190,7 +190,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Commune ",
+        description: "",
         label: "Commune"
       }
     },
@@ -198,57 +198,56 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Commune masquée"
       }
     },
     CONTACT: {
       type: String,
       default: "",
       documentation: {
-        description: "Contact ",
+        description: "",
         validation: "Email",
-        label: "Contact"
+        label: "Adresse courriel de contact"
       }
     },
     COOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Coordonnées Lambert (ou autres) d'un point ",
-        label: "Coordonnées Lambert (ou autres) d'un points"
+        description: "",
+        label: "Coordonnées géographiques d'un point"
       }
     },
     COORM: {
       type: String,
       default: "",
       documentation: {
-        description: "Coordonnées Lambert (ou autres) multiples ",
-        label: "Coordonnées Lambert (ou autres) multiples"
+        description: "",
+        label: "Coordonnées géographiques multiples"
       }
     },
     COPY: {
       type: String,
       default: "",
       documentation: {
-        description: "CopyRight",
-        label: "CopyRight"
+        description: "",
+        label: "Copyright de la notice "
       }
     },
     DATE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Datation en années",
-        label: "Datation en années"
+        description: "",
+        label: "Année de création"
       }
     },
     DBOR: {
       type: [String],
       default: [],
       documentation: {
-        description: "Date de rédaction de la notice",
+        description: "",
         label: "Date de rédaction de la notice"
       }
     },
@@ -256,16 +255,16 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Dénomination ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
-        label: "Dénomination"
+        label: "Dénomination de l'objet"
       }
     },
     DENQ: {
       type: [String],
       default: [],
       documentation: {
-        description: "Date d'enquête",
+        description: "",
         label: "Date de l'enquête ou du dernier récolement"
       }
     },
@@ -273,31 +272,31 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Partie déplacée",
-        label: "Partie déplacée"
+        description: "",
+        label: "Lieu de déplacement de l'objet"
       }
     },
     DESC: {
       type: String,
       default: "",
       documentation: {
-        description: "Commentaire description",
-        label: "Commentaire description "
+        description: "",
+        label: "Description matérielle"
       }
     },
     DIMS: {
       type: String,
       default: "",
       documentation: {
-        description: "Dimensions ",
-        label: "Dimensions"
+        description: "",
+        label: "Dimensions normalisées"
       }
     },
     DMAJ: {
       type: String,
       default: "",
       documentation: {
-        description: "Date de la dernière mise à jour",
+        description: "",
         label: "Date de la dernière modification de la notice",
         generated: true
       }
@@ -306,8 +305,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de la création POP/Mistral",
-        label: "Date de création de la notice",
+        description: "",
+        label: "Date de versement de la notice",
         generated: true
       }
     },
@@ -316,7 +315,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Domaine",
-        label: "Domaine"
+        label: "Domaine",
+        deprecated: true
       }
     },
     DOSADRS: {
@@ -331,8 +331,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Dossier ",
-        label: "Dossier"
+        description: "",
+        label: "Dénomination du dossier"
       }
     },
     DOSURL: {
@@ -358,15 +358,15 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date protection",
-        label: "Date protection"
+        description: "",
+        label: "Date et typologie de la protection"
       }
     },
     DPT: {
       type: String,
       default: "",
       documentation: {
-        description: "Département ",
+        description: "",
         label: "Département"
       }
     },
@@ -374,16 +374,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Edifice de conservation",
-        label: "Edifice de conservation"
+        description: "",
+        label: "Nom de l'édifice"
       }
     },
     EDIF2: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Edifice contenant masqué",
         deprecated: true
       }
     },
@@ -391,7 +391,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Emplacement de l’œuvre dans l’édifice",
+        description: "",
         label: "Emplacement de l’œuvre dans l’édifice"
       }
     },
@@ -399,8 +399,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Emplacement dans l'édifice masqué",
         deprecated: true
       }
     },
@@ -408,15 +408,15 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Etat de conservation",
-        label: "Etat de conservation"
+        description: "",
+        label: "État de conservation (normalisé)"
       }
     },
     ETUD: {
       type: String,
       default: "",
       documentation: {
-        description: "Cadre de l'étude ",
+        description: "",
         label: "Cadre de l'étude "
       }
     },
@@ -424,8 +424,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Nom actuel ou historique du lieu d’exécution ",
-        label: "Nom actuel ou historique du lieu d’exécution"
+        description: "",
+        label: "Lieu de création"
       }
     },
     EXPO: {
@@ -441,8 +441,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Commentaire historique",
-        label: "Commentaire historique"
+        description: "",
+        label: "Description historique"
       }
     },
     IDAGR: {
@@ -476,24 +476,24 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Milieu d'implantation",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
-        label: "Milieu d'implantation"
+        label: "Milieu d'implantation pour le domaine Inventaire"
       }
     },
     INSC: {
       type: [String],
       default: [],
       documentation: {
-        description: "Inscriptions, marques, emblématique et poinçons",
-        label: "Inscriptions, marques, emblématique et poinçons"
+        description: "",
+        label: "Inscription"
       }
     },
     INSEE: {
       type: String,
       default: [],
       documentation: {
-        description: "Numéro INSEE de la commune",
+        description: "",
         label: "Numéro INSEE de la commune"
       }
     },
@@ -501,8 +501,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Code INSEE masqué",
         deprecated: true
       }
     },
@@ -510,9 +510,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Intérêt de l'oeuvre",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
-        label: "Intérêt de l'oeuvre"
+        label: "Intérêt de l'objet"
       }
     },
     JDAT: {
@@ -545,7 +545,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lieu-dit ",
+        description: "Lieu-dit",
         label: "Lieu-dit"
       }
     },
@@ -562,16 +562,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Localisation ",
-        label: "Localisation"
+        description: "",
+        label: "Localisation complète"
       }
     },
     MATR: {
       type: [String],
       default: [],
       documentation: {
-        description: "Matériaux ",
-        label: "Matériaux"
+        description: "",
+        label: "Matériaux et techniques d'interventions"
       }
     },
     MFICH: {
@@ -595,7 +595,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Mosaïques ",
+        description: "Mosaïques",
         label: "Mosaïques"
       }
     },
@@ -603,16 +603,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Numérotation artificielle",
-        label: "Numérotation artificielle"
+        description: "",
+        label: "Numéro artificiel de différenciation de l'objet"
       }
     },
     NINV: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Numéro d'inventaire affecté à l'objet",
         deprecated: true
       }
     },
@@ -620,7 +620,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Noms des rédacteurs de la notice et du dossier ",
+        description: "",
         label: "Nom du rédacteur"
       }
     },
@@ -628,8 +628,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Numéro de l'arrêté de protection",
         deprecated: true
       }
     },
@@ -646,7 +646,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Observations ",
+        description: "",
         label: "Observations"
       }
     },
@@ -654,65 +654,66 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Origine de l’œuvre (lieu de provenance ou de destination)",
-        label: "Origine de l’œuvre (lieu de provenance ou de destination)"
+        description: "",
+        label: "Lieu de provenance"
       }
     },
     PAPP: {
       type: String,
       default: "",
       documentation: {
-        description: "Préc. appart",
-        label: "Préc. appart"
+        description: "",
+        label: "Intitulé de l'ensemble"
       }
     },
     PARN: {
       type: [String],
       default: [],
       documentation: {
-        description: "Parties non étud",
-        label: "Parties non étud"
+        description: "",
+        label: "Partie constituante non étudiée"
       }
     },
     PART: {
       type: [String],
       default: [],
       documentation: {
-        description: "Parties constituantes",
-        label: "Parties constituantes"
+        description: "",
+        label: "Partie constituante"
       }
     },
     PDEN: {
       type: [String],
       default: [],
       documentation: {
-        description: "Précision sur la dénomination",
-        label: "Précision sur la dénomination"
+        description: "",
+        label: "Précision sur la typologie de l'objet - hors lexique"
       }
     },
     PDIM: {
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur les dimensions",
-        label: "Précisions sur les dimensions"
+        description: "",
+        label: "Précisions sur les dimensions",
+        deprecated: true
       }
     },
     PERS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Personnalitées ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
-        label: "Personnalitées"
+        label: "Personnalités liées à l'histoire de l'objet"
       }
     },
     PETA: {
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur l’état de conservation",
-        label: "Précisions sur l’état de conservation"
+        description: "",
+        label: "Précisions sur l'état de conservation"
       }
     },
     PHOTO: {
@@ -728,8 +729,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur les inscriptions, marques, emblématique et poinçons ",
-        label: "Précisions sur les inscriptions, marques, emblématique et poinçons"
+        description: "",
+        label: "Précisions sur l'inscription"
       }
     },
     PINT: {
@@ -744,7 +745,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Précision sur la localisation",
+        description: "",
         label: "Précision sur la localisation"
       }
     },
@@ -752,25 +753,25 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur la protection MH",
-        label: "Précisions sur la protection MH"
+        description: "",
+        label: "Précisions sur la protection"
       }
     },
     PREP: {
       type: String,
       default: "",
       documentation: {
-        description: "Précision sur la représentation",
-        label: "Précision sur la représentation"
+        description: "",
+        label: "Description littéraire de l'iconographie"
       }
     },
     PROT: {
       type: String,
       default: "",
       documentation: {
-        description: "Nature de la protection MH",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
-        label: "Nature de la protection MH"
+        label: "Typologie de la protection"
       }
     },
     REFA: {
@@ -780,15 +781,15 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "REFA contient une ou plusieurs références de notice Mérimée. C'est une référence d'architecture/monument historique qui contient les objets, présents dans la notice palissy associée",
-        label: "Référence de l'édifice de conservation"
+        label: "Référence Mérimée de l'édifice"
       }
     },
     REFE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Référence de l’ensemble ou de l'oeuvre",
-        label: "Référence de l’ensemble ou de l'oeuvre"
+        description: "",
+        label: "Référence de l'ensemble"
       }
     },
     REFM: {
@@ -804,14 +805,14 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références des parties constituantes étudiées ",
+        description: "",
         label: "Références des parties constituantes étudiées"
       }
     },
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région ", label: "Région" }
+      documentation: { description: "", label: "Région" }
     },
     RENP: {
       type: [String],
@@ -826,7 +827,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
+        description: "",
         label: "Numéro de renvoi vers un autre domaine"
       }
     },
@@ -834,8 +835,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Représentation ",
-        label: "Représentation"
+        description: "",
+        label: "Indexation iconographique normalisée"
       }
     },
     SCLD: {
@@ -851,16 +852,16 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Datation des campagnes principales de construction ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
-        label: "Datation des campagnes principales de construction"
+        label: "Siècle de création"
       }
     },
     SCLX: {
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS AFFICHE]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -878,36 +879,36 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Stade de la création",
-        label: "Stade de la création"
+        description: "",
+        label: "Etape de création"
       }
     },
     STAT: {
       type: [String],
       default: [],
       documentation: {
-        description: "Statut de la propriété",
-        label: ""
+        description: "",
+        label: "Statut juridique du propriétaire"
       }
     },
     STRU: {
       type: [String],
       default: [],
       documentation: {
-        description: "Structure et typologie",
+        description: "",
         label: "Structure et typologie"
       }
     },
     THEM: {
       type: String,
       default: "",
-      documentation: { description: "Thème ", label: "Thème de l'étude" }
+      documentation: { description: "", label: "Thème de l'étude" }
     },
     TICO: {
       type: String,
       default: "",
       documentation: {
-        description: "Titre courant",
+        description: "",
         label: "Titre courant"
       }
     },
@@ -915,9 +916,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Titre iconographique"
       }
     },
     TOUT: {
@@ -942,16 +942,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Objet(s) volé(s)",
-        label: "Objet(s) volé(s)"
+        description: "",
+        label: "Informations relatives aux vols"
       }
     },
     WADRS: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Adresse pour l'affichage",
         deprecated: true
       }
     },
@@ -959,8 +959,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Commune pour l'affichage",
         deprecated: true
       }
     },
@@ -968,7 +968,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Visite guidé ",
+        description: "Visite guidé",
         label: "Visite guidé",
         deprecated: true
       }
@@ -986,8 +986,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Zone Lambert ou autre",
-        label: "Zone Lambert ou autre"
+        description: "",
+        label: "Typologie de la coordonnée géographique de l'édifice"
       }
     }
   },
