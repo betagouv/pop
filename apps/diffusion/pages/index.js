@@ -148,7 +148,7 @@ export default class extends React.Component {
                   }}
                 />
               </Slider>
-              {/* <h2>A la une</h2>
+              <h2>A la une</h2>
               <Row className="focus">
                 <Col md={6}>
                   <Link href={"/notice/merimee/PA00086250"} as={"/notice/merimee/PA00086250"}>
@@ -167,31 +167,73 @@ export default class extends React.Component {
                     </a>
                   </Link>
                 </Col>
-                <Col md={6}>
-                  L'île de la Cité est occupée depuis le 4ème siècle par un ensemble épiscopal (deux
-                  basiliques, un baptistère, et la résidence de l'évêque). Au 12ème siècle, l'évêque
-                  Maurice de Sully recompose l'ensemble et construit une cathédrale plus grande avec
-                  dégagement d'un parvis à l'ouest. Les travaux commencent en 1160 par le choeur. La
-                  cathédrale mesure 127 mètres de long, 40 mètres de large et 33 mètres de haut.
-                  Elle se compose d'une nef de cinq vaisseaux, d'un transept non saillant et d'un
-                  choeur à double déambulatoire. L'agrandissement des fenêtres hautes fait
-                  disparaître les rosaces des combles des tribunes. Début de la construction des
-                  tours en 1210. Construction des chapelles du milieu du 13e au début du 14ème
-                  siècle. Au 18ème siècle, Soufflot fait détruire le trumeau et une partie du tympan
-                  de la porte centrale de la façade occidentale pour faciliter les processions. Au
-                  19ème siècle Viollet-le-Duc et Lassus entâment les travaux de restauration.
+                <Col md={6} style={{ overflowY: "auto", overflowX: "hidden", height: "500px" }}>
+                  La cathédrale Notre-Dame de Paris est bâtie sur l’île de la Cité, berceau antique
+                  de Paris. Elle succède à d’autres édifices élevés sur le même lieu à partir du IVe
+                  siècle. Sa construction est due à l’évêque de Paris Maurice de Sully, qui pose la
+                  première pierre en 1163, en présence du pape Alexandre III. Plusieurs campagnes de
+                  travaux se succèdent : construction du chœur et de son déambulatoire, de la nef et
+                  des bas-côtés entre 1163 et 1225 ; construction des galeries hautes, de la flèche
+                  et des deux tours entre 1225 et 1250. Le chantier se poursuit tout au long du
+                  Moyen Âge : bras du transept, rosaces, aménagement des chapelles du chœur et du
+                  chevet, jubé.
+                  <br /> <br />
+                  L’évêché de Paris est érigé en archevêché en 1622. Au début du XVIIIe siècle, le
+                  chœur est redécoré sous la direction de l’architecte Robert de Cotte. Le
+                  maître-autel comportant un bas-relief du vœu de Louis XIII est surmonté d’une
+                  Pietà commandée à Nicolas Coustou. Il est entouré des statues de Louis XIII et
+                  Louis XIV, par Guillaume Coustou et Antoine Coysevox. Les travaux se poursuivent
+                  au long du siècle ; des vitraux médiévaux sont remplacés par des grisailles
+                  blanches, tandis que l’architecte Jacques-Germain Soufflot aménage la sacristie et
+                  modifie les portails d’entrée.
+                  <br /> <br />
+                  Sous la Révolution, la cathédrale devient propriété de l’État, comme tous les
+                  édifices religieux, et subit de nombreux dommages : une partie du trésor est
+                  fondue, la flèche est abattue, les statues de la galerie des rois d’Israël, sur la
+                  façade, sont déposées. En 1793, l’église est transformée en temple de la Raison,
+                  puis en entrepôt, et laissée dans un grand état d’abandon.
+                  <br /> <br />
+                  Rendue au culte catholique en 1802 à la suite du Concordat, Notre-Dame retrouve un
+                  rôle officiel à l’instigation de Napoléon, qui choisit de s’y faire sacrer
+                  empereur le 2 décembre 1804. Elle est prise de nouveau pour cible et pillée lors
+                  des émeutes de 1830 et 1831, et continue de se dégrader. La publication du roman
+                  Notre-Dame de Paris de Victor Hugo sensibilise le public et le pouvoir à son état.
+                  Décidée en 1844, la restauration générale de la cathédrale est confiée à deux
+                  architectes lauréats du concours ouvert pour la circonstance, Eugène
+                  Viollet-le-Duc et Jean-Baptiste Lassus.
+                  <br /> <br />
+                  Viollet-le-Duc reconstitue une partie du trésor et du mobilier, rétablit la flèche
+                  abattue en 1792, imagine les chimères de la galerie des tours et réinvente les
+                  statues des portails et de la galerie des rois. Il élève une nouvelle sacristie,
+                  met en place une nouvelle vitrerie, intervient sur le portail central et dans
+                  l’aménagement intérieur. La cathédrale est notamment décorée pour le baptême du
+                  Prince impérial, fils de Napoléon III, célébré en juin 1856 ; le chantier se
+                  termine officiellement le 3 janvier 1865. Notre-Dame subit des dégâts mineurs en
+                  1870-1871, mais, contrairement à de nombreuses autres cathédrales françaises, elle
+                  est épargnée par les deux guerres mondiales. Un projet de vitraux contemporains
+                  dans les fenêtres hautes de l’édifice est élaboré à partir de 1935, mais n’aboutit
+                  que dans les années 1960.
+                  <br /> <br />
+                  Le chœur de l’église est remanié plusieurs fois pour s’adapter aux directives du
+                  concile de Vatican II. Le grand-orgue du XVe siècle, qui compte encore quelques
+                  tuyaux de l’époque médiévale, subit deux campagnes de travaux en 1990-1992 et
+                  2013-2014. En l’an 2000 s’achève une grande campagne de nettoyage de la façade
+                  occidentale qui a duré plus de dix ans. De nombreuses manifestations, en 2013,
+                  marquent le 850e anniversaire de l’édifice.
+                  <br /> <br />
+                  Pour de plus amples informations, on consultera notamment le portail des Archives
+                  de France :{" "}
+                  <Link href={`https://francearchives.fr/fr/article/163529389`}>
+                    https://francearchives.fr/fr/article/163529389
+                  </Link>
+                  , et le portail Gallica de la Bibliothèque nationale de France,{" "}
+                  <Link href={`https://gallica.bnf.fr/conseils/content/cath%C3%A9drale-notre-dame`}>
+                    https://gallica.bnf.fr/conseils/content/cath%C3%A9drale-notre-dame
+                  </Link>{" "}
+                  . <br />
+                  La liste des objets du trésor est consultable sur la base Palissy ; de nombreuses
+                  photographies des XIXe et XXe siècles sont visibles sur la base Mémoire
                   <br />
-                  <br />
-                  <div
-                    style={{
-                      textAlign: "right"
-                    }}
-                  >
-                    Source : Mérimée, notice{" "}
-                    <Link href={`/notice/merimee/PA00086250`}>
-                      <a className="">PA00086250</a>
-                    </Link>
-                  </div>
                   <br /> <br />
                   <Link
                     href={`/search/mosaic?image=%5B%22oui%22%5D&mainSearch=%22%5C%22cath%C3%A9drale%20Notre-Dame%5C%22%20Paris%22`}
@@ -199,7 +241,7 @@ export default class extends React.Component {
                     <a className="">Voir l'ensemble des ressources POP sur Notre-Dame</a>
                   </Link>
                 </Col>
-              </Row> */}
+              </Row>
               <h2>Accès thématiques</h2>
               <h3>Photographie</h3>
               <Slider {...settings}>
