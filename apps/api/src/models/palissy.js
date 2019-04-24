@@ -152,8 +152,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Auteurs phototype",
-        label: "Auteurs phototype"
+        description: "",
+        label: "Auteur de la photographie (Mémoire)"
       }
     },
     AUTR: {
@@ -168,8 +168,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Référence(s) de publication(s)",
         deprecated: true
       }
     },
@@ -339,8 +339,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier URL",
-        label: "Dossier URL",
+        description: "",
+        label: "URL du dossier Inventaire",
         validation: "url"
       }
     },
@@ -432,8 +432,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "Référence(s) d'exposition(s)",
+        label: "Référence(s) d'exposition(s)",
         deprecated: true
       }
     },
@@ -449,8 +449,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Référence informatique SIMH",
         deprecated: true
       }
     },
@@ -458,8 +458,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Emplacement de l'image sur le serveur",
         deprecated: true
       }
     },
@@ -527,17 +527,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Référence de la notice cible Palissy pour Mémoire"
       }
     },
     LIENS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Liens Divers",
-        label: "Liens Divers",
+        description: "",
+        label: "Liens externes éventuels",
         validation: "url"
       }
     },
@@ -578,8 +577,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Accès microfiche ",
         deprecated: true
       }
     },
@@ -587,16 +586,18 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Numéro de microfiche",
-        label: "Numéro de microfiche"
+        description: "",
+        label: "Numéro de microfiche",
+        deprecated: true
       }
     },
     MOSA: {
       type: String,
       default: "",
       documentation: {
-        description: "Mosaïques",
-        label: "Mosaïques"
+        description: "",
+        label: "Edition d'une mosaïque d'image",
+        deprecated: true
       }
     },
     NART: {
@@ -637,9 +638,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Cote de la photographie (Mémoire)"
       }
     },
     OBS: {
@@ -720,9 +720,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Photographies liées au dossier de protection"
       }
     },
     PINS: {
@@ -818,8 +817,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Renvoi vers dossier 'peinture'",
         deprecated: true
       }
     },
@@ -870,8 +869,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Sources d'archives et bases de données de référence",
         deprecated: true
       }
     },
@@ -933,9 +932,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Url de liaison avec Mémoire"
       }
     },
     VOLS: {
@@ -968,9 +966,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Visite guidé",
-        label: "Visite guidé",
-        deprecated: true
+        description: "",
+        label: "Accès Mémoire"
       }
     },
     WRENV: {
