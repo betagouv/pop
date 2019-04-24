@@ -100,7 +100,8 @@ export default class extends React.Component {
       name: notice.TICO,
       created_at: notice.SCLE && notice.SCLE.length ? notice.SCLE[0] : "",
       artform: "Architecture",
-      image: notice.MEMOIRE && notice.MEMOIRE.length && notice.MEMOIRE[0] ? notice.MEMOIRE[0].url : "",
+      image:
+        notice.MEMOIRE && notice.MEMOIRE.length && notice.MEMOIRE[0] ? notice.MEMOIRE[0].url : "",
       description: notice.LEG,
       contentLocation: notice.LOCA,
       creator: notice.AUTR
@@ -334,6 +335,7 @@ export default class extends React.Component {
                   <h2>À propos de la notice</h2>
                   <div>
                     <Field title="Référence" content={notice.REF} />
+                    <Field title="Base" content={notice.BASE} />
                     <Field title="Date de création" content={notice.DMIS} />
                     <Field title="Dernière mise à jour" content={notice.DMAJ} />
                     <Field title="Rédacteur" content={notice.NOMS} />
