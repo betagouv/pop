@@ -167,16 +167,17 @@ async function updateLinks(notice) {
 
     //Ajout
     for (let i = 0; i < toAdd.length; i++) {
-      const notice = await getMerimeeOrPalissyNotice(toAdd[i]);
-      if (notice) {
-        notice.MEMOIRE.push({ ref: REF, url: URL });
-        await notice.save();
+      const n = await getMerimeeOrPalissyNotice(toAdd[i]);
+      if (n) {
+        n.MEMOIRE.push({ ref: REF, url: URL });
+        await n.save();
       }
     }
   } catch (error) {
     capture(error);
   }
 }
+
 router.put("/:ref", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
   const ref = req.params.ref;
   const notice = JSON.parse(req.body.notice);
