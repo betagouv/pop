@@ -18,7 +18,8 @@ const DEFAULT_FILTER = [
   "ou",
   "import",
   "museo",
-  "ref"
+  "ref",
+  "producteur"
 ];
 
 const Menu = ({ location, closeMenu }) => (
@@ -47,6 +48,24 @@ const Menu = ({ location, closeMenu }) => (
       onClose={() => amplitude.getInstance().logEvent("search_filter_close", { dataField: "base" })}
       onChange={value =>
         amplitude.getInstance().logEvent("search_filter_change", { dataField: "base", value })
+      }
+    />
+    <MultiList
+      dataField={["PRODUCTEUR.keyword"]}
+      title="Producteur"
+      componentId="producteur"
+      react={{ and: DEFAULT_FILTER.filter(e => e !== "producteur") }}
+      placeholder="Rechercher un producteur"
+      location={location}
+      displayCount
+      onOpen={() =>
+        amplitude.getInstance().logEvent("search_filter_open", { dataField: "producteur" })
+      }
+      onClose={() =>
+        amplitude.getInstance().logEvent("search_filter_close", { dataField: "producteur" })
+      }
+      onChange={value =>
+        amplitude.getInstance().logEvent("search_filter_change", { dataField: "producteur", value })
       }
     />
     <MultiList
