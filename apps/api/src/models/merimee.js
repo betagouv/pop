@@ -12,9 +12,9 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence unique de la notice",
+        description: "",
         validation: "Alphanumeric",
-        label: "Référence notice"
+        label: "Référence de la notice"
       }
     },
     PRODUCTEUR: {
@@ -112,8 +112,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Destinations successives et actuelle ",
-        label: "Destinations successives et actuelle"
+        description: "",
+        label: "Destination actuelle de l'édifice"
       }
     },
     ADRS: {
@@ -142,8 +142,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Appellation et titre",
-        label: "Appellation et titre"
+        description: "",
+        label: "Appelation d'usage"
       }
     },
     APRO: {
@@ -196,8 +196,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Décompte des oeuvres recensées",
-        label: "Décompte des oeuvres recensées"
+        description: "",
+        label: "Nombre d'édifices concernés par l'étude"
       }
     },
     COM: {
@@ -225,9 +225,9 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "CopyRight",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T21",
-        label: "CopyRight"
+        label: "Copyright de la notice"
       }
     },
     COUV: {
@@ -251,7 +251,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de rédaction de la notice",
+        description: "",
         label: "Date de rédaction de la notice"
       }
     },
@@ -259,25 +259,25 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Domaines",
-        label: "Domaines"
+        description: "",
+        label: "Domaine"
       }
     },
     DENO: {
       type: [String],
       default: [],
       documentation: {
-        description: "Dénomination ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
-        label: "Dénomination"
+        label: "Dénomination de l'édifice"
       }
     },
     DENQ: {
       type: String,
       default: "",
       documentation: {
-        description: "Date d'enquête",
-        label: "Date d'enquête"
+        description: "",
+        label: "Date de l'enquête ou du dernier récolement"
       }
     },
     DEPL: {
@@ -310,8 +310,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de la dernière mise à jour",
-        label: "Date de la dernière mise à jour",
+        description: "",
+        label: "Date de la dernière modification de la notice",
         generated: true
       }
     },
@@ -319,8 +319,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date de la création POP/Mistral",
-        label: "Date de chargement dans la base ",
+        description: "",
+        label: "Date de versement de la notice",
         generated: true
       }
     },
@@ -328,9 +328,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T13",
-        label: "Dossier"
+        label: "Typologie du dossier"
       }
     },
     DPRO: {
@@ -406,7 +406,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Cadre de l'étude",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68",
         label: "Cadre de l'étude"
       }
@@ -415,9 +415,9 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Destinataire",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T197",
-        label: "Destinataire"
+        label: "Genre du destinataire"
       }
     },
     HIST: {
@@ -557,8 +557,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Noms des rédacteurs de la notice et du dossier",
-        label: "Noms des rédacteurs de la notice et du dossier"
+        description: "",
+        label: "Nom du rédacteur"
       }
     },
     OBS: {
@@ -581,24 +581,24 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Parties constituantes",
-        label: "Parties constituantes"
+        description: "",
+        label: "Partie constituante"
       }
     },
     PARN: {
       type: [String],
       default: [],
       documentation: {
-        description: "Parties non étud",
-        label: "Parties non étud"
+        description: "",
+        label: "Partie constituante non étudiée"
       }
     },
     PDEN: {
       type: String,
       default: "",
       documentation: {
-        description: "Précision sur la dénomination",
-        label: "Précision sur la dénomination"
+        description: "",
+        label: "Précision sur la dénomination de l'édifice - hors lexique"
       }
     },
     PERS: {
@@ -671,7 +671,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références des parties constituantes étudiées",
+        description: "",
         label: "Références des parties constituantes étudiées"
       }
     },
@@ -681,7 +681,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
-        label: "REFO",
+        label: "Référence objets contenus étudiés",
         generated: true
       }
     },
@@ -707,8 +707,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "N° de renvoi au domaine MH ou au domaine INVENTAIRE",
-        label: "N° de renvoi au domaine MH ou au domaine INVENTAIRE"
+        description: "",
+        label: "Numéro de renvoi vers un autre domaine"
       }
     },
     REPR: {
@@ -781,7 +781,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Titre courant",
+        description: "",
         label: "Titre courant"
       }
     },
@@ -893,8 +893,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Vocable ",
-        label: "Vocable"
+        description: " ",
+        label: "Vocable - pour les édifices cultuels"
       }
     },
     VOUT: {
@@ -924,7 +924,7 @@ const Schema = new mongoose.Schema(
     THEM: {
       type: String,
       default: "",
-      documentation: { description: "Thème ", label: "Thème" }
+      documentation: { description: " ", label: "Thème de l'étude", deprecated: true }
     },
     ACMH: {
       type: String,
@@ -984,9 +984,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Contact ",
+        description: " ",
         validation: "Email",
-        label: "Contact"
+        label: "Adresse courriel de contact"
       }
     },
     IDAGR: {
