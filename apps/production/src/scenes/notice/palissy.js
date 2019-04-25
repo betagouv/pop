@@ -205,6 +205,8 @@ class Notice extends React.Component {
                 <CustomField name="ZONE" disabled={!this.state.editable} />
                 <CustomField name="COOR" disabled={!this.state.editable} />
                 <CustomField name="COORM" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lat" disabled={true} />
+                <CustomField name="POP_COORDONNEES.lon" disabled={true} />
                 <CustomField name="IMPL" disabled={!this.state.editable} />
                 <CustomField name="EMPL" disabled={!this.state.editable} />
                 <CustomField name="DEPL" disabled={!this.state.editable} />
