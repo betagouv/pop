@@ -323,8 +323,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier adresse",
-        label: "Dossier adresse"
+        description: "Adresse du dossier Inventaire",
+        label: "Adresse du dossier Inventaire"
       }
     },
     DOSS: {
@@ -348,9 +348,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
-        label: "Dossier PDF",
+        description: "",
+        label: "Précisions sur l'URL du dossier Inventaire",
         validation: "url"
       }
     },

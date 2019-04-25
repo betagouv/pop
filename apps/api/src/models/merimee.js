@@ -119,23 +119,23 @@ const Schema = new mongoose.Schema(
     ADRS: {
       type: String,
       default: "",
-      documentation: { description: "Adresse", label: "Adresse" }
+      documentation: { description: "", label: "Adresse de l'édifice" }
     },
     AFFE: {
       type: String,
       default: "",
       documentation: {
-        description: "Affectataire",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T97",
-        label: "Affectataire"
+        label: "Affectataire de l'édifice"
       }
     },
     AIRE: {
       type: String,
       default: "",
       documentation: {
-        description: "Aire d'étude",
-        label: "Aire d'étude"
+        description: "",
+        label: "Aire d'étude pour le domaine Inventaire"
       }
     },
     APPL: {
@@ -150,47 +150,49 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Nature de l'acte de protection MH ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T98",
-        label: "Nature de l'acte de protection MH "
+        label: "Nature de l'acte de protection"
       }
     },
     ARCHEO: {
       type: String,
       default: "",
       documentation: {
-        description: "Référence dans la base Patriarche",
-        label: "Référence dans la base Patriarche"
+        description: "",
+        label: "Référence dans la base Patriarche",
+        deprecated: true
       }
     },
     AUTP: {
       type: [String],
       default: [],
       documentation: {
-        description: "Auteurs phototype",
-        label: "Auteurs phototype"
+        description: "",
+        label: "Auteur de la photographie (Mémoire)",
+        deprecated: true
       }
     },
     AUTR: {
       type: [String],
       default: [],
       documentation: {
-        description: "Auteurs de l'oeuvre",
-        label: "Auteurs de l'oeuvre"
+        description: "",
+        label: "Auteur de l'édifice"
       }
     },
     CADA: {
       type: [String],
       default: [],
       documentation: {
-        description: "Référence cadastrale",
-        label: "Référence cadastrale"
+        description: "",
+        label: "Références cadastrales"
       }
     },
     CANT: {
       type: String,
       default: "",
-      documentation: { description: "Canton", label: "Canton" }
+      documentation: { description: "", label: "Canton" }
     },
     COLL: {
       type: [String],
@@ -203,22 +205,22 @@ const Schema = new mongoose.Schema(
     COM: {
       type: String,
       default: "",
-      documentation: { description: "Commune", label: "Commune" }
+      documentation: { description: "", label: "Commune normalisée" }
     },
     COOR: {
       type: String,
       default: "",
       documentation: {
-        description: "Coordonnées Lambert (ou autres) d'un point",
-        label: "Coordonnées Lambert (ou autres) d'un point"
+        description: "",
+        label: "Coordonnées géographiques d'un point"
       }
     },
     COORM: {
       type: String,
       default: "",
       documentation: {
-        description: "Coordonnées Lambert (ou autres) multiples",
-        label: "Coordonnées Lambert (ou autres) multiples"
+        description: "",
+        label: "Coordonnées géographiques multiples"
       }
     },
     COPY: {
@@ -234,17 +236,17 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Type de la couverture",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T26",
-        label: "Type de la couverture"
+        label: "Typologie de couverture"
       }
     },
     DATE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Date protection",
-        label: "Datation en années "
+        description: "",
+        label: "Année(s) de(s) campagne(s) de construction"
       }
     },
     DBOR: {
@@ -284,26 +286,26 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Partie déplacée",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T14",
-        label: "Partie déplacée"
+        label: "Lieu de conservation d'un élément architectural déplacé"
       }
     },
     DESC: {
       type: String,
       default: "",
       documentation: {
-        description: "Commentaire description",
-        label: "Commentaire description"
+        description: "",
+        label: "Commentaire descriptif de l'édifice"
       }
     },
     DIMS: {
       type: String,
       default: "",
       documentation: {
-        description: "Dimensions",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T11",
-        label: "Dimensions"
+        label: "Dimensions normalisées des édicules uniquement"
       }
     },
     DMAJ: {
@@ -337,15 +339,15 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date protection",
-        label: "Date protection"
+        description: "",
+        label: "Date et niveau de protection de l'édifice"
       }
     },
     DPT: {
       type: String,
       default: "",
       documentation: {
-        description: "Département",
+        description: "",
         label: "Département"
       }
     },
@@ -353,53 +355,53 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Edifice de conservation",
-        label: "Edifice de conservation"
+        description: "",
+        label: "Nom de l'édifice"
       }
     },
     ELEV: {
       type: [String],
       default: [],
       documentation: {
-        description: "Parti d’élévation extérieure",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T25",
-        label: "Parti d’élévation extérieure"
+        label: "Partie d'élévation extérieure"
       }
     },
     ENER: {
       type: [String],
       default: [],
       documentation: {
-        description: "Source de l'énergie",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T27",
-        label: "Source de l'énergie"
+        label: "Source de l'énergie utilisée par l'édifice"
       }
     },
     ESCA: {
       type: [String],
       default: [],
       documentation: {
-        description: "Emplacement, forme et structure de l’escalier ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T29",
-        label: "Emplacement, forme et structure de l’escalier"
+        label: "Emplacement, forme et structure de l'escalier"
       }
     },
     ETAG: {
       type: [String],
       default: [],
       documentation: {
-        description: "Vaisseau et étage",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T23",
-        label: "Vaisseau et étage"
+        label: "Description de l'élévation intérieure"
       }
     },
     ETAT: {
       type: [String],
       default: [],
       documentation: {
-        description: "Etat de conservation",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T30",
-        label: "ETAT"
+        label: "État de conservation (normalisé)"
       }
     },
     ETUD: {
@@ -424,32 +426,32 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Commentaire historique",
-        label: "Commentaire historique"
+        description: "",
+        label: "Description historique"
       }
     },
     HYDR: {
       type: String,
       default: "",
       documentation: {
-        description: "Cours d'eau",
-        label: "Cours d'eau"
+        description: "",
+        label: "Nom du cours d'eau traversant ou bordant l'édifice"
       }
     },
     IMPL: {
       type: [String],
       default: [],
       documentation: {
-        description: "Milieu d'implantation",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T12",
-        label: "Milieu d'implantation"
+        label: "Milieu d'implantation pour le domaine Inventaire"
       }
     },
     INSEE: {
       type: String,
       default: "",
       documentation: {
-        description: "Numéro INSEE de la commune",
+        description: "",
         label: "Numéro INSEE de la commune"
       }
     },
@@ -457,33 +459,33 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Intérêt de l'oeuvre",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T33",
-        label: "Intérêt de l'oeuvre"
+        label: "Intérêt de l'édifice"
       }
     },
     JATT: {
       type: [String],
       default: [],
       documentation: {
-        description: "Justification de l'attribution",
-        label: "Justification de l'attribution"
+        description: "",
+        label: "Commentaires concernant l'attribution de l'édifice"
       }
     },
     JDAT: {
       type: [String],
       default: [],
       documentation: {
-        description: "Justification de la datation",
-        label: "Justification de la datation"
+        description: "",
+        label: "Commentaires concernant la datation"
       }
     },
     LBASE2: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Référence de la notice cible Mérimée pour Mémoire",
         deprecated: true
       }
     },
@@ -491,7 +493,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lieu-dit",
+        description: "",
         label: "Lieu-dit"
       }
     },
@@ -499,16 +501,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Localisation ",
-        label: "Localisation"
+        description: "",
+        label: "Localisation complète"
       }
     },
     MFICH: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Accès microfiche",
         deprecated: true
       }
     },
@@ -516,41 +518,44 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Mosaïques",
-        label: "Mosaïques"
+        description: "",
+        label: "Edition d'une mosaïque d'image",
+        deprecated: true
       }
     },
     MHPP: {
       type: String,
       default: "",
       documentation: {
-        description: "Eléments protégés MH",
-        label: "Eléments protégés MH"
+        description: "",
+        label: "Précisions sur les élements protégés"
       }
     },
     MICR: {
       type: String,
       default: "",
       documentation: {
-        description: "Numéro de microfiche",
-        label: "Numéro de microfiche"
+        description: "",
+        label: "Numéro de microfiche",
+        deprecated: true
       }
     },
     MURS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Matériau du gros-oeuvre et mise en oeuvre ",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
-        label: "Matériau du gros-oeuvre et mise en oeuvre"
+        label: "Matériaux du gros-œuvre"
       }
     },
     NBOR: {
       type: String,
       default: "",
       documentation: {
-        description: "no Bordereaus",
-        label: "no Bordereaus"
+        description: "",
+        label: "",
+        deprecated: true
       }
     },
     NOMS: {
@@ -565,16 +570,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Observations",
-        label: "Observations"
+        description: "",
+        label: "Observations concernant la protection de l'édifice"
       }
     },
     PAFF: {
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur l'affectataire ",
-        label: "Précisions sur l'affectataire "
+        description: "",
+        label: "Précisions concernant l'affectataire de l'édifice"
       }
     },
     PART: {
@@ -605,24 +610,24 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Personnalitées",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T6",
-        label: "Personnalitées"
+        label: "Personnalités liées à l'histoire de l'édifice"
       }
     },
     PLAN: {
       type: String,
       default: "",
       documentation: {
-        description: "Parti de plan",
-        label: "Parti de plan"
+        description: "",
+        label: "Typologie de plan"
       }
     },
     PLOC: {
       type: String,
       default: "",
       documentation: {
-        description: "Précision sur la localisation",
+        description: "",
         label: "Précision sur la localisation"
       }
     },
@@ -630,40 +635,40 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur la protection MH",
-        label: "Précisions sur la protection MH"
+        description: "",
+        label: "Précision sur la protection de l'édifice"
       }
     },
     PREP: {
       type: [String],
       default: [],
       documentation: {
-        description: "Précision sur la représentation",
-        label: "Précision sur la représentation"
+        description: "",
+        label: "Description littéraire de l'iconographie"
       }
     },
     PROT: {
       type: [String],
       default: [],
       documentation: {
-        description: "Nature de la protection MH",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
-        label: "Nature de la protection MH"
+        label: "Nature de la protection de l'édifice"
       }
     },
     PSTA: {
       type: String,
       default: "",
       documentation: {
-        description: "Précisions sur le statut de la propriété",
-        label: "Précisions sur le statut de la propriété"
+        description: "",
+        label: "Précisions sur le statut juridique du propriétaire"
       }
     },
     REFE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Référence de l'édifice de conservation",
+        description: "",
         label: "Référence de l'édifice de conservation"
       }
     },
@@ -688,20 +693,20 @@ const Schema = new mongoose.Schema(
     REG: {
       type: String,
       default: "",
-      documentation: { description: "Région", label: "Région" }
+      documentation: { description: "", label: "Région" }
     },
     REMA: {
       type: String,
       default: "",
       documentation: {
-        description: "Eléments remarquables",
-        label: "Eléments remarquables"
+        description: "",
+        label: "Eléments remarquables dans l'édifice"
       }
     },
     REMP: {
       type: String,
       default: "",
-      documentation: { description: "Remploi", label: "Remploi" }
+      documentation: { description: "", label: "Remploi" }
     },
     RENV: {
       type: [String],
@@ -715,40 +720,40 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Représentation ",
-        label: "Représentation"
+        description: "",
+        label: "Indexation iconographique normalisée"
       }
     },
     RFPA: {
       type: String,
       default: "",
       documentation: {
-        description: "Identifiant Patrimoine",
-        label: "Identifiant Patrimoine"
+        description: "",
+        label: "Identifiant de la base TrouveTout"
       }
     },
     SCLD: {
       type: [String],
       default: [],
       documentation: {
-        description: "Datation des campagnes secondaires de construction",
-        label: "Datation des campagnes secondaires de construction"
+        description: "",
+        label: "Siècle de campagne secondaire de consctruction"
       }
     },
     SCLE: {
       type: [String],
       default: [],
       documentation: {
-        description: "Datation des campagnes principales de construction",
+        description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17",
-        label: "Datation des campagnes principales de construction"
+        label: "Siècle de la campagne principale de construction"
       }
     },
     SCLX: {
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS affiché]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -757,24 +762,24 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Site, secteur ou zone de protection",
-        label: "Site, secteur ou zone de protection "
+        description: "",
+        label: "Typologie de la zone de protection"
       }
     },
     STAT: {
       type: String,
       default: "",
       documentation: {
-        description: "Statut de la propriété",
-        label: "Statut de la propriété"
+        description: "",
+        label: "Statut juridique du propriétaire"
       }
     },
     TECH: {
       type: [String],
       default: [],
       documentation: {
-        description: "Technique du décor des immeubles par nature ",
-        label: "Technique du décor des immeubles par nature"
+        description: "",
+        label: "Technique du décor porté de l'édifice"
       }
     },
     TICO: {
@@ -789,31 +794,31 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Matériau de la couverture ",
-        label: "Matériau de la couverture"
+        description: "",
+        label: "Matériaux de la couverture "
       }
     },
     TYPO: {
       type: String,
       default: "",
       documentation: {
-        description: "Typologie ",
-        label: "Typologie"
+        description: "",
+        label: "Commentaires d'usage régional"
       }
     },
     VERT: {
       type: String,
       default: "",
       documentation: {
-        description: "Couvert et découvert de jardin ",
-        label: "Couvert et découvert de jardin"
+        description: "",
+        label: "Couverts ou découverts du jardin de l'édifice"
       }
     },
     REFIM: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -822,8 +827,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Autre forme de l'emplacement de l'image sur le serveur",
         deprecated: true
       }
     },
@@ -831,8 +836,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Url de liaison avec Mémoire",
         deprecated: true
       }
     },
@@ -840,8 +845,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier URL",
-        label: "Dossier URL",
+        description: "",
+        label: "URL du dossier Inventaire",
         validation: "url"
       }
     },
@@ -849,9 +854,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Dossier PDF. Le champ est maintenant fermé. Il n'est plus éditable, seulement disponible en lecture",
-        label: "Dossier PDF",
+        description: "",
+        label: "Lien vers le dossier PDF",
         validation: "url"
       }
     },
@@ -859,16 +863,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Dossier adresse",
-        label: "Dossier adresse"
+        description: "",
+        label: "Adresse du dossier Inventaire"
       }
     },
     LIENS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Liens Divers",
-        label: "Liens Divers",
+        description: "",
+        label: "Liens externes éventuels",
         validation: "url"
       }
     },
@@ -876,8 +880,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Emplacement de l'image sur le serveur",
         deprecated: true
       }
     },
@@ -885,8 +889,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Ouverture au public",
-        label: "Ouverture au public"
+        description: "",
+        label: "Conditions d'ouverture au public"
       }
     },
     VOCA: {
@@ -901,24 +905,25 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Type et nature du couvrement ",
-        label: "Type et nature du couvrement"
+        description: "",
+        label: "Typologie du couvrement"
       }
     },
     WEB: {
       type: String,
       default: "",
       documentation: {
-        description: "Visite guidé",
-        label: "Visite guidé"
+        description: "",
+        label: "Accès Mémoire",
+        deprecated: true
       }
     },
     ZONE: {
       type: String,
       default: "",
       documentation: {
-        description: "Zone Lambert ou autres",
-        label: "Zone Lambert ou autres"
+        description: "",
+        label: "Typologie de la coordonnée géographique de l'édifice"
       }
     },
     THEM: {
@@ -930,7 +935,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -939,7 +944,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -948,8 +953,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Adresse pour l'affichage",
         deprecated: true
       }
     },
@@ -957,8 +962,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Commune pour l'affichage",
         deprecated: true
       }
     },
@@ -966,8 +971,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Autre forme du renvoi (éditorial)",
         deprecated: true
       }
     },
@@ -975,7 +980,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
+        description: "",
         label: "",
         deprecated: true
       }
@@ -993,17 +998,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
-        deprecated: true
+        description: "",
+        label: "Référence informatique SIMH"
       }
     },
     LMDP: {
       type: String,
       default: "",
       documentation: {
-        description: "[PAS affiché]",
-        label: "",
+        description: "",
+        label: "Référence vers la base Médiathèque",
         deprecated: true
       }
     },
@@ -1019,8 +1023,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Date du label",
-        label: "Date du label"
+        description: "",
+        label: "Date de label"
       }
     }
   },
