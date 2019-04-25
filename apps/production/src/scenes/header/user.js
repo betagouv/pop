@@ -28,6 +28,17 @@ class User extends Component {
     return <Link to="/auth/signin">Se connecter</Link>;
   }
 
+  renderImportList() {
+    if (this.props.account.role !== "administrateur") {
+      return <div />;
+    }
+    return (
+      <DropdownItem className="dropdown-item" onClick={() => history.push("/import/list")}>
+        Accéder à l'historique des imports
+      </DropdownItem>
+    );
+  }
+
   renderPicto() {
     if (!this.props.account) {
       return <div />;
@@ -48,7 +59,7 @@ class User extends Component {
           >
             Modifier mes informations
           </DropdownItem>
-
+          {this.renderImportList()}
           <DropdownItem className="dropdown-item" onClick={() => history.push("/thesaurus")}>
             Mettre à jour le thesaurus
           </DropdownItem>
@@ -71,6 +82,7 @@ class User extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
+  console.log("Auth", Auth);
   return { account: Auth.user };
 };
 
