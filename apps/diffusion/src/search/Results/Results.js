@@ -22,7 +22,8 @@ const DEFAULT_FILTER = [
   "import",
   "museo",
   "ref",
-  "vue"
+  "vue",
+  "producteur"
 ];
 
 class Results extends React.Component {
