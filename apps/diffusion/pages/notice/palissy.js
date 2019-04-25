@@ -310,6 +310,7 @@ export default class extends React.Component {
                   <h2>À propos de la notice</h2>
                   <div>
                     <Field title="Référence" content={notice.REF} />
+                    <Field title="Base" content={notice.BASE} />
                     <Field title="Date de création" content={notice.DMIS} />
                     <Field title="Dernière mise à jour" content={notice.DMAJ} />
                     <Field title="Rédacteur" content={notice.NOMS} />

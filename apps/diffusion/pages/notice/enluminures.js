@@ -127,6 +127,7 @@ export default class extends React.Component {
                   <h2>À propos de la notice</h2>
                   <div>
                     <Field title="Référence" content={notice.REF} />
+                    <Field title="Base" content={notice.BASE} />
                     <Field title="Crédits photographiques" content={notice.DROIT} />
                     <Field title="Auteur de l'oeuvre ou de l'original" content={notice.ATTRIB} />
                     <Field title="Copyright notice" content={notice.COPY} separator=";" />
