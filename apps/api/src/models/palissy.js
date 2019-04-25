@@ -94,8 +94,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[PAS AFFICHE]",
-        label: "",
+        description: "",
+        label: "Contexte d'acquisition",
         deprecated: true
       }
     },

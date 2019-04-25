@@ -262,7 +262,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Domaine"
+        label: "Domaine",
+        deprecated: true
       }
     },
     DENO: {
