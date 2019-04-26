@@ -185,15 +185,12 @@ async function exportData(fileName, entities) {
     const arr = [];
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
-
-      console.log("value", value);
       if (Array.isArray(value)) {
         // MEMOIRE is now a complex object, we just want refs
         if (columns[i] === "MEMOIRE") {
           value = value.filter(e => e).map(e => e.ref);
         }
         if (value.length && typeof value[0] === "object") {
-          console.log("value", value);
           value = JSON.stringify(value);
         } else {
           value = value.join(";");
