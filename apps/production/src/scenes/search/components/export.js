@@ -137,14 +137,17 @@ async function exportData(fileName, entities) {
   for (let property in entities[0]) {
     // Nobody ask for "POP_" fields and I think there gonna be complains if
     // I export something people dont understand
-    if (
-      property.indexOf("_") !== 0 &&
-      property.indexOf("POP_") !== 0 &&
-      property.indexOf("highlight") !== 0 &&
-      property !== "REF"
-    ) {
-      columns.push(property);
+    if (property.indexOf("_") === 0) {
+      continue;
     }
+    if (property.indexOf("highlight") === 0) {
+      continue;
+    }
+    //keep REF at the beginning
+    if (property === "REF") {
+      continue;
+    }
+    columns.push(property);
   }
 
   const csv = [];
@@ -182,19 +185,22 @@ async function exportData(fileName, entities) {
     const arr = [];
     for (let i = 0; i < columns.length; i++) {
       let value = entities[j][columns[i]];
+
+      console.log("value", value);
       if (Array.isArray(value)) {
         // MEMOIRE is now a complex object, we just want refs
-
         if (columns[i] === "MEMOIRE") {
           value = value.filter(e => e).map(e => e.ref);
         }
         if (value.length && typeof value[0] === "object") {
+          console.log("value", value);
           value = JSON.stringify(value);
         } else {
           value = value.join(";");
         }
       }
       if (!value) value = "";
+      value = JSON.stringify(value);
       value = ("" + value).replace(/"/g, '""');
       arr.push('"' + value + '"');
     }
