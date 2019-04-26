@@ -187,9 +187,9 @@ function readme() {
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
         million de notices sans images). <br /> <br />
-        Exemple de fichier importé merimee : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_merimee.zip">mh_merimee</a>
-        Exemple de fichier importé palissy : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_palissy.zip">mh_palissy</a>
-        Exemple de fichier importé memoire : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_memoire.zip">mh_memoire</a>
+        Exemple de fichier importé merimee : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_merimee.zip">mh_merimee</a><br />
+        Exemple de fichier importé palissy : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_palissy.zip">mh_palissy</a><br />
+        Exemple de fichier importé memoire : <a href="https://s3.eu-west-3.amazonaws.com/pop-general/import_examples/mh_memoire.zip">mh_memoire</a><br />
         <br /><br />
         <h6>Champs obligatoires et contrôles de vocabulaire </h6>
         Les champs suivants doivent obligatoirement être renseignés : <br />
