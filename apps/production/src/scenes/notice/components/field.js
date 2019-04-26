@@ -170,18 +170,22 @@ export default class AbstractField extends React.Component {
     let desc = description || "En attente de description";
 
     let Comp = <div />;
-    if (type === "String") {
+    if (type === "String" || type === "Number") {
       Comp = <Field component={CustomInput} name={name} {...rest} />;
     } else if (type === "Array") {
       Comp = <Field component={TagsInput} name={name} {...rest} />;
+    } else {
+      Comp = <div />;
     }
     return (
       <div className="field">
-        {(label || name) && <div id={`Tooltip_${name}`}>{label ? `${label} (${name})` : name}</div>}
+        {(label || name) && (
+          <div id={`Tooltip_${name.replace(".", "")}`}>{label ? `${label} (${name})` : name}</div>
+        )}
         <Tooltip
           placement="right"
           isOpen={this.state.tooltipOpen}
-          target={`Tooltip_${name}`}
+          target={`Tooltip_${name.replace(".", "")}`}
           toggle={() =>
             this.setState({
               tooltipOpen: !this.state.tooltipOpen
