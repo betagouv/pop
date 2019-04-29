@@ -319,7 +319,7 @@ workflows:
             - build_production_staging
           filters:
             branches:
-              only: master
+              only: change-update-way-of-thing
       - deploy_api_prod:
           requires:
             - deploy_api_staging
