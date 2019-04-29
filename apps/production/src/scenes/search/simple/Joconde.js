@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Container } from "reactstrap";
 import {
   ReactiveBase,
@@ -14,23 +14,44 @@ import Header from "../components/Header";
 import Card from "../components/JocondeCard";
 import utils from "../components/utils";
 import SearchButton from "../components/SearchButton";
+import { history } from "../../../redux/store";
 
 // import { Elasticsearch } from "../../../../../../../react-elasticsearch-lib/dist/main.js";
-import { Elasticsearch, SearchBox, Results, Facet } from "react-elasticsearch";
+import {
+  Elasticsearch,
+  SearchBox,
+  Results,
+  Facet,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
 
-const FILTER = [
-  "mainSearch",
-  "domn",
-  "deno",
-  "peri",
-  "image",
-  "tech",
-  "loca",
-  "autr",
-  "util",
-  "epoq",
-  "appartenance"
-];
+function CollapsableFacet({ initialCollapsed, title, ...rest }) {
+  const [collapsed, setCollapsed] = useState(true);
+
+  function FacetWrapper() {
+    if (!collapsed) {
+      return <Facet {...rest} />;
+    }
+    return <div />;
+  }
+  return (
+    <div style={{ backgroundColor: "pink" }}>
+      <div>
+        {title}
+        <button
+          onClick={() => {
+            setCollapsed(!collapsed);
+          }}
+        >
+          open
+        </button>
+      </div>
+      {FacetWrapper()}
+    </div>
+  );
+}
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -42,15 +63,25 @@ export default class Search extends React.Component {
   }
 
   render() {
+    const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
     return (
       <Container className="search">
         <Header base="joconde" normalMode={true} />
-        <Elasticsearch url={`${es_url}/joconde`}>
+        <Elasticsearch
+          url={`${es_url}/joconde`}
+          onChange={params => {
+            const q = toUrlQueryString(params);
+            if (q) {
+              window.history.replaceState("page2", "Title", `?${q}`);
+            }
+          }}
+        >
           <div>
             <div className="search-and-export-zone">
               Recherche
               <SearchBox
                 id="main"
+                initialValue={initialValues.get("main")}
                 customQuery={value =>
                   utils.customQuery2(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
                 }
@@ -60,10 +91,55 @@ export default class Search extends React.Component {
           </div>
           <Row>
             <Col xs="3">
-              <Facet id="domn" fields={["DOMN.keyword"]} />
+              <CollapsableFacet
+                id="domn"
+                initialValue={initialValues.get("domn")}
+                fields={["DOMN.keyword"]}
+                title="Domaine"
+              />
+              <CollapsableFacet
+                id="deno"
+                initialValue={initialValues.get("deno")}
+                fields={["DENO.keyword"]}
+              />
+              <CollapsableFacet
+                id="autr"
+                initialValue={initialValues.get("autr")}
+                fields={["AUTR.keyword"]}
+              />
+              <CollapsableFacet
+                id="peri"
+                initialValue={initialValues.get("peri")}
+                fields={["PERI.keyword"]}
+              />
+              <CollapsableFacet
+                id="epoq"
+                initialValue={initialValues.get("epoq")}
+                fields={["EPOQ.keyword"]}
+              />
+              <CollapsableFacet
+                id="util"
+                initialValue={initialValues.get("util")}
+                fields={["UTIL.keyword"]}
+              />
+              <CollapsableFacet
+                id="tech"
+                initialValue={initialValues.get("tech")}
+                fields={["TECH.keyword"]}
+              />
+              <CollapsableFacet
+                id="aptn"
+                initialValue={initialValues.get("aptn")}
+                fields={["APTN.keyword"]}
+              />
+              <CollapsableFacet id="img" fields={["CONTIENT_IMAGE.keyword"]} />
             </Col>
             <Col xs="9">
-              <Results id="res" item={(x, y, z) => <div>{`${[x.TICO, y, z].join(" - ")}`}</div>} />
+              <ActiveFilters id="af" />
+              <Results
+                id="res"
+                item={(x, y, z) => <Card data={x} />}
+              />
             </Col>
           </Row>
         </Elasticsearch>
@@ -71,24 +147,3 @@ export default class Search extends React.Component {
     );
   }
 }
-
-/*
-
-<Elasticsearch url={url}>
-        <SearchBox id="main" customQuery={customQuery} />
-        <div style={{ display: "inline-block" }}>
-          <Facet id="author" fields={["AUTR.keyword"]} />
-        </div>
-        <div style={{ display: "inline-block" }}>
-          <Facet id="domn" fields={["DOMN.keyword"]} />
-        </div>
-        <Results
-          id="result" 
-          item={(source, score, id) => (
-            <div key={id}>
-              <b>{source.TICO}</b> - score: {score}
-            </div>
-          )}
-        />
-      </Elasticsearch>
-      */
