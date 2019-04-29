@@ -45,6 +45,7 @@ class Notice extends React.Component {
           error: `Impossible de charger la notice ${ref}`
         });
         console.error(`Impossible de charger la notice ${ref}`);
+        
         return;
       }
       console.log("NOTICE", notice);
