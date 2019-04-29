@@ -1,13 +1,5 @@
 import React, { useState } from "react";
 import { Row, Col, Container } from "reactstrap";
-import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  ReactiveComponent
-} from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
@@ -28,7 +20,9 @@ import {
 } from "react-elasticsearch";
 
 function CollapsableFacet({ initialCollapsed, title, ...rest }) {
-  const [collapsed, setCollapsed] = useState(true);
+  initialCollapsed = initialCollapsed !== undefined ? initialCollapsed : true;
+  initialCollapsed = !(rest.initialValue && rest.initialValue.length);
+  const [collapsed, setCollapsed] = useState(initialCollapsed);
 
   function FacetWrapper() {
     if (!collapsed) {
@@ -132,14 +126,15 @@ export default class Search extends React.Component {
                 initialValue={initialValues.get("aptn")}
                 fields={["APTN.keyword"]}
               />
-              <CollapsableFacet id="img" fields={["CONTIENT_IMAGE.keyword"]} />
+              <CollapsableFacet
+                id="img"
+                fields={["CONTIENT_IMAGE.keyword"]}
+                initialValue={initialValues.get("img")}
+              />
             </Col>
             <Col xs="9">
               <ActiveFilters id="af" />
-              <Results
-                id="res"
-                item={(x, y, z) => <Card data={x} />}
-              />
+              <Results id="res" item={(x, y, z) => <Card data={x} />} />
             </Col>
           </Row>
         </Elasticsearch>
