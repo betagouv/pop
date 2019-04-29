@@ -10,6 +10,7 @@ import "./index.css";
 
 dotenv.load();
 
+
 if (process.env.NODE_ENV === "production") {
   Raven.config("https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21", {
     release: "pop-production-" + require("../package.json").version
