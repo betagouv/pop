@@ -295,7 +295,7 @@ workflows:
             - test_production
           filters:
             branches:
-              only: only: change-update-way-of-thing
+              only: change-update-way-of-thing
       - build_production_prod:
           requires:
             - deploy_production_staging
