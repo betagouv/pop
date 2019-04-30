@@ -61,6 +61,7 @@ class Notice extends React.Component {
         ["Monuments Historiques", "Etat"].includes(notice.PRODUCTEUR)
       );
     }
+    return false;
   }
 
   onSubmit(values) {
