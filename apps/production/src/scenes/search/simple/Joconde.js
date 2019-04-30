@@ -26,7 +26,8 @@ const FILTER = [
   "autr",
   "util",
   "epoq",
-  "appartenance"
+  "appartenance",
+  "repr"
 ];
 
 export default class Search extends React.Component {
@@ -162,6 +163,17 @@ export default class Search extends React.Component {
                   URLParams={true}
                   react={{
                     and: FILTER.filter(e => e !== "appartenance")
+                  }}
+                />
+                <MultiList
+                  componentId="repr"
+                  dataField="REPR.keyword"
+                  title="Sujet représenté"
+                  className="filters"
+                  displayCount
+                  URLParams={true}
+                  react={{
+                    and: FILTER.filter(e => e !== "repr")
                   }}
                 />
                 <MultiList
