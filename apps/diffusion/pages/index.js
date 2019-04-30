@@ -151,95 +151,52 @@ export default class extends React.Component {
               <h2>A la une</h2>
               <Row className="focus">
                 <Col md={6}>
-                  <Link href={"/notice/merimee/PA00086250"} as={"/notice/merimee/PA00086250"}>
+                  <Link href={"/notice/joconde/000PE025600"} as={"/notice/joconde/000PE025600"}>
                     <a style={{ textDecoration: "none" }}>
                       <Card>
                         <img
-                          src={"/static/topics/notredame.jpg"}
-                          alt="Notre-Dame de Paris"
+                          src={"/static/focus.jpg"}
+                          alt="Léonard de Vinci"
                           className="card-img"
                           height="220"
                         />
                         <CardBody>
-                          <CardTitle>Notre-Dame de Paris</CardTitle>
+                          <CardTitle>Léonard de Vinci</CardTitle>
                         </CardBody>
                       </Card>
                     </a>
                   </Link>
                 </Col>
                 <Col md={6} style={{ overflowY: "auto", overflowX: "hidden", height: "500px" }}>
-                  La cathédrale Notre-Dame de Paris est bâtie sur l’île de la Cité, berceau antique
-                  de Paris. Elle succède à d’autres édifices élevés sur le même lieu à partir du IVe
-                  siècle. Sa construction est due à l’évêque de Paris Maurice de Sully, qui pose la
-                  première pierre en 1163, en présence du pape Alexandre III. Plusieurs campagnes de
-                  travaux se succèdent : construction du chœur et de son déambulatoire, de la nef et
-                  des bas-côtés entre 1163 et 1225 ; construction des galeries hautes, de la flèche
-                  et des deux tours entre 1225 et 1250. Le chantier se poursuit tout au long du
-                  Moyen Âge : bras du transept, rosaces, aménagement des chapelles du chœur et du
-                  chevet, jubé.
+                  Du 24 octobre 2019 au 24 février 2020, le musée du Louvre rendra hommage à Léonard
+                  de Vinci. L’année 2019, cinquième centenaire de la mort de Léonard de Vinci en
+                  France, revêt en effet une signification particulière pour le Louvre qui possède
+                  la plus importante collection au monde de peintures de Léonard ainsi que 22
+                  dessins. <br /> <br />
+                  Le musée trouve en cette année de commémoration l’occasion de rassembler autour
+                  des cinq tableaux essentiels qu’il conserve, à savoir la Vierge aux rochers, la
+                  Belle Ferronnière, la Joconde — qui restera dans la salle où elle est
+                  habituellement exposée —, le Saint Jean Baptiste et la Sainte Anne, la plus grande
+                  part possible des peintures de l’artiste, afin de les confronter à un large choix
+                  de dessins ainsi qu’à un ensemble, restreint mais significatif, de tableaux et de
+                  sculptures de l’environnement du maître. <br /> <br />
+                  Cette rétrospective inédite de la carrière de peintre de Léonard permettra de
+                  montrer combien il a mis la peinture au-dessus de tout et comment son enquête sur
+                  le monde, qu’il appelait « la science de la peinture », fut l’instrument de son
+                  art, dont l’ambition n’était rien moins que d’apporter la vie à ses tableaux.
                   <br /> <br />
-                  L’évêché de Paris est érigé en archevêché en 1622. Au début du XVIIIe siècle, le
-                  chœur est redécoré sous la direction de l’architecte Robert de Cotte. Le
-                  maître-autel comportant un bas-relief du vœu de Louis XIII est surmonté d’une
-                  Pietà commandée à Nicolas Coustou. Il est entouré des statues de Louis XIII et
-                  Louis XIV, par Guillaume Coustou et Antoine Coysevox. Les travaux se poursuivent
-                  au long du siècle ; des vitraux médiévaux sont remplacés par des grisailles
-                  blanches, tandis que l’architecte Jacques-Germain Soufflot aménage la sacristie et
-                  modifie les portails d’entrée.
+                  Aboutissement de plus de dix années de travail, qui ont vu notamment l'examen
+                  scientifique renouvelé des tableaux du Louvre et la restauration de trois d’entre
+                  eux, permettant de mieux comprendre sa pratique artistique et sa technique
+                  picturale, l’exposition clarifiera également la biographie de Léonard en reprenant
+                  tous les documents d’archives. <br />
+                  Elle dressera le portrait d’un homme et d’un artiste d’une extraordinaire
+                  liberté."
                   <br /> <br />
-                  Sous la Révolution, la cathédrale devient propriété de l’État, comme tous les
-                  édifices religieux, et subit de nombreux dommages : une partie du trésor est
-                  fondue, la flèche est abattue, les statues de la galerie des rois d’Israël, sur la
-                  façade, sont déposées. En 1793, l’église est transformée en temple de la Raison,
-                  puis en entrepôt, et laissée dans un grand état d’abandon.
-                  <br /> <br />
-                  Rendue au culte catholique en 1802 à la suite du Concordat, Notre-Dame retrouve un
-                  rôle officiel à l’instigation de Napoléon, qui choisit de s’y faire sacrer
-                  empereur le 2 décembre 1804. Elle est prise de nouveau pour cible et pillée lors
-                  des émeutes de 1830 et 1831, et continue de se dégrader. La publication du roman
-                  Notre-Dame de Paris de Victor Hugo sensibilise le public et le pouvoir à son état.
-                  Décidée en 1844, la restauration générale de la cathédrale est confiée à deux
-                  architectes lauréats du concours ouvert pour la circonstance, Eugène
-                  Viollet-le-Duc et Jean-Baptiste Lassus.
-                  <br /> <br />
-                  Viollet-le-Duc reconstitue une partie du trésor et du mobilier, rétablit la flèche
-                  abattue en 1792, imagine les chimères de la galerie des tours et réinvente les
-                  statues des portails et de la galerie des rois. Il élève une nouvelle sacristie,
-                  met en place une nouvelle vitrerie, intervient sur le portail central et dans
-                  l’aménagement intérieur. La cathédrale est notamment décorée pour le baptême du
-                  Prince impérial, fils de Napoléon III, célébré en juin 1856 ; le chantier se
-                  termine officiellement le 3 janvier 1865. Notre-Dame subit des dégâts mineurs en
-                  1870-1871, mais, contrairement à de nombreuses autres cathédrales françaises, elle
-                  est épargnée par les deux guerres mondiales. Un projet de vitraux contemporains
-                  dans les fenêtres hautes de l’édifice est élaboré à partir de 1935, mais n’aboutit
-                  que dans les années 1960.
-                  <br /> <br />
-                  Le chœur de l’église est remanié plusieurs fois pour s’adapter aux directives du
-                  concile de Vatican II. Le grand-orgue du XVe siècle, qui compte encore quelques
-                  tuyaux de l’époque médiévale, subit deux campagnes de travaux en 1990-1992 et
-                  2013-2014. En l’an 2000 s’achève une grande campagne de nettoyage de la façade
-                  occidentale qui a duré plus de dix ans. De nombreuses manifestations, en 2013,
-                  marquent le 850e anniversaire de l’édifice.
-                  <br /> <br />
-                  Pour de plus amples informations, on consultera notamment le portail des Archives
-                  de France :{" "}
-                  <Link href={`https://francearchives.fr/fr/article/163529389`}>
-                    https://francearchives.fr/fr/article/163529389
-                  </Link>
-                  , et le portail Gallica de la Bibliothèque nationale de France,{" "}
-                  <Link href={`https://gallica.bnf.fr/conseils/content/cath%C3%A9drale-notre-dame`}>
-                    https://gallica.bnf.fr/conseils/content/cath%C3%A9drale-notre-dame
-                  </Link>{" "}
-                  . <br />
-                  La liste des objets du trésor est consultable sur la base Palissy ; de nombreuses
-                  photographies des XIXe et XXe siècles sont visibles sur la base Mémoire
-                  <br />
-                  <br /> <br />
-                  <Link
-                    href={`/search/mosaic?image=%5B%22oui%22%5D&mainSearch=%22%5C%22cath%C3%A9drale%20Notre-Dame%5C%22%20Paris%22`}
-                  >
-                    <a className="">Voir l'ensemble des ressources POP sur Notre-Dame</a>
-                  </Link>
+                  <i>
+                    Droits photographique : © Réunion des musées nationaux - utilisation soumise à
+                    autorisation ; © Franck Raux
+                  </i>
                 </Col>
               </Row>
               <h2>Accès thématiques</h2>
