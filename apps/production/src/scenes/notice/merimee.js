@@ -37,19 +37,31 @@ class Notice extends React.Component {
     }
   }
 
-  load(ref) {
+  async load(ref) {
     this.setState({ loading: true });
-    API.getNotice("merimee", ref).then(notice => {
-      if (!notice) {
-        this.setState({ loading: false, error: "Cette notice n'existe pas" });
-        return;
-      }
-      console.log(notice);
-      this.props.initialize(notice);
+    const notice = await API.getNotice("merimee", ref);
+    if (!notice) {
+      this.setState({ loading: false, error: "Cette notice n'existe pas" });
+      return;
+    }
+    console.log(notice);
+    this.props.initialize(notice);
+    const editable = this.canEdit(notice);
+    this.setState({ loading: false, notice, editable });
+  }
 
-      const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
-      this.setState({ loading: false, notice, editable });
-    });
+  //fonction dedicated to role
+  canEdit(notice) {
+    if (this.props.group === "admin") {
+      return true;
+    }
+
+    if (this.props.group === "mh") {
+      return (
+        ["producteur", "administrateur"].includes(this.props.role) &&
+        ["Monuments Historiques"].includes(notice.PRODUCTEUR)
+      );
+    }
   }
 
   async onSubmit(values) {
@@ -341,11 +353,11 @@ class Notice extends React.Component {
           </Section>
 
           <Map notice={this.state.notice} />
-          {this.props.canUpdate ? (
+          {this.state.editable ? (
             <div className="buttons">
               <BackButton history={this.props.history} />
               <DeleteButton noticeType="merimee" noticeRef={this.state.notice.REF} />
-              <Button disabled={!this.state.editable} color="primary" type="submit">
+              <Button color="primary" type="submit">
                 Sauvegarder
               </Button>
             </div>
@@ -374,12 +386,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
-  return {
-    canUpdate: Auth.user
-      ? (role === "producteur" || role === "administrateur") &&
-        (group === "mh" || group === "admin")
-      : false
-  };
+  return { role, group };
 };
 
 export default connect(
