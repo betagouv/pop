@@ -66,7 +66,7 @@ export default class Search extends React.Component {
           onChange={params => {
             const q = toUrlQueryString(params);
             if (q) {
-              window.history.replaceState("page2", "Title", `?${q}`);
+              window.history.replaceState("x", "y", `?${q}`);
             }
           }}
         >
@@ -134,7 +134,7 @@ export default class Search extends React.Component {
             </Col>
             <Col xs="9">
               <ActiveFilters id="af" />
-              <Results id="res" item={(x, y, z) => <Card data={x} />} />
+              <Results initialPage={initialValues.get("resPage")} id="res" item={(x, y, z) => <Card data={x} />} />
             </Col>
           </Row>
         </Elasticsearch>
