@@ -5,10 +5,7 @@ import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/JocondeCard";
 import utils from "../components/utils";
-import SearchButton from "../components/SearchButton";
-import { history } from "../../../redux/store";
 
-// import { Elasticsearch } from "../../../../../../../react-elasticsearch-lib/dist/main.js";
 import {
   Elasticsearch,
   SearchBox,
@@ -135,6 +132,7 @@ export default class Search extends React.Component {
             <Col xs="9">
               <ActiveFilters id="af" />
               <Results initialPage={initialValues.get("resPage")} id="res" item={(x, y, z) => <Card data={x} />} />
+              <ExportComponent collection="joconde" target="main" />
             </Col>
           </Row>
         </Elasticsearch>

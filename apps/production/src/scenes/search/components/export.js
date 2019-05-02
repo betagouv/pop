@@ -1,115 +1,86 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import qs from "qs";
-import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import { Button } from "reactstrap";
 import { QueryBuilder } from "pop-shared";
 import fetch from "isomorphic-fetch";
 import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
 import excelIcon from "../../../assets/microsoftexcel.svg";
+import { CustomWidget } from "react-elasticsearch";
 
-export default class ExportComponent extends React.Component {
-  state = { run: false };
+export default function ExportComponent({ collection, target }) {
+  const [exporting, setExporting] = useState(false);
 
-  renderButton() {
-    if (this.state.run) {
-      return <div />;
-    }
+  if (exporting) {
     return (
-      <Button
-        color="success"
-        onClick={() => {
-          this.setState({ run: true });
-        }}
-      >
-        <img src={excelIcon} />
-        Exporter
-      </Button>
+      <CustomWidget>
+        <Loading collection={collection} onFinish={() => setExporting(false)} target={target} />
+      </CustomWidget>
     );
   }
 
-  exec(res) {
-    const d = new Date();
-    const date = ("0" + d.getDate()).slice(-2);
-    const month = ("0" + (d.getMonth() + 1)).slice(-2);
-    const year = d.getFullYear();
-    const minutes = ("0" + d.getMinutes()).slice(-2);
-    const hours = ("0" + d.getHours()).slice(-2);
-    const secondes = ("0" + d.getSeconds()).slice(-2);
-    const fileName = `${
-      this.props.collection
-    }_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
-    exportData(fileName, res);
-    this.setState({ run: false });
-  }
-
-  async onChange(next) {
-    const { collection } = this.props;
-    let docs = [];
-    const headers = {
-      Accept: "application/json",
-      "User-Agent": "POP Prod",
-      "Content-Type": "application/x-ndjson"
-    };
-
-    try {
-      // First "iteration", send parameters, and get results + scroll_id.
-      let rawResponse = await fetch(`${es_url}/scroll?index=${collection}`, {
-        method: "POST",
-        headers,
-        body: `${JSON.stringify({ ...next, size: 1000 })}\n`
-      });
-      let response = await rawResponse.json();
-      const scrollId = response._scroll_id;
-      let hits = response.hits.hits.map(e => e._source);
-      docs = hits;
-
-      // Next iterations, send scroll_id, get results.
-      while (hits && hits.length) {
-        rawResponse = await fetch(`${es_url}/scroll?scroll_id=${scrollId}`, {
-          method: "POST",
-          headers
-        });
-        response = await rawResponse.json();
-        hits = response.hits.hits.map(e => e._source);
-        docs = [...docs, ...hits];
-      }
-
-      // We've got all docs, convert it now.
-      // TODO: stream the result to preserve client memory and not to crash the browser.
-      this.exec(docs);
-    } catch (e) {
-      this.setState({ run: false });
-    }
-  }
-
-  renderExporting() {
-    if (!this.state.run) {
-      return <div />;
-    }
-    return (
-      <ReactiveComponent
-        componentId="export"
-        react={{ and: this.props.FILTER }}
-        defaultQuery={() => ({ aggs: {} })}
-        onQueryChange={async (prev, next) => !prev && this.onChange(next)}
-      >
-        <Loading />
-      </ReactiveComponent>
-    );
-  }
-
-  render() {
-    return (
-      <div className="export-btn text-center">
-        {this.renderButton()}
-        {this.renderExporting()}
-      </div>
-    );
-  }
+  return (
+    <Button color="success" onClick={() => setExporting(true)}>
+      <img src={excelIcon} />
+      Exporter
+    </Button>
+  );
 }
 
-function Loading() {
+function Loading({ onFinish, collection, ctx, target }) {
+  useEffect(() => {
+    async function exportAndDownload(query) {
+      let docs = [];
+      const headers = {
+        Accept: "application/json",
+        "User-Agent": "POP Prod",
+        "Content-Type": "application/x-ndjson"
+      };
+
+      try {
+        // First "iteration", send parameters, and get results + scroll_id.
+        let rawResponse = await fetch(`${es_url}/scroll?index=${collection}`, {
+          method: "POST",
+          headers,
+          body: `${JSON.stringify({ query, size: 1000 })}\n`
+        });
+        let response = await rawResponse.json();
+        const scrollId = response._scroll_id;
+        let hits = response.hits.hits.map(e => e._source);
+        docs = hits;
+
+        // Next iterations, send scroll_id, get results.
+        while (hits && hits.length) {
+          rawResponse = await fetch(`${es_url}/scroll?scroll_id=${scrollId}`, {
+            method: "POST",
+            headers
+          });
+          response = await rawResponse.json();
+          hits = response.hits.hits.map(e => e._source);
+          docs = [...docs, ...hits];
+        }
+        // TODO: stream the result to preserve client memory and not to crash the browser.
+        const d = new Date();
+        const date = ("0" + d.getDate()).slice(-2);
+        const month = ("0" + (d.getMonth() + 1)).slice(-2);
+        const year = d.getFullYear();
+        const minutes = ("0" + d.getMinutes()).slice(-2);
+        const hours = ("0" + d.getHours()).slice(-2);
+        const secondes = ("0" + d.getSeconds()).slice(-2);
+        const fileName = `${collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
+        console.log(docs);
+        exportData(fileName, docs);
+        onFinish();
+      } catch (e) {
+        console.log(e);
+        onFinish();
+      }
+    }
+    const queries = new Map([...ctx.widgets].filter(([, v]) => v.query).map(([k, v]) => [k, v.query]));
+    const query = { bool: { must: queries.size === 0 ? { match_all: {} } : Array.from(queries.values()) } };
+    exportAndDownload(query);
+  }, []);
+
   const style = {
     border: "2px solid transparent",
     borderTop: "2px solid #720c32",
