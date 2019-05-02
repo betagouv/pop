@@ -124,6 +124,11 @@ export default class Search extends React.Component {
                 fields={["APTN.keyword"]}
               />
               <CollapsableFacet
+                id="repr"
+                fields={["REPR.keyword"]}
+                initialValue={initialValues.get("repr")}
+              />
+              <CollapsableFacet
                 id="img"
                 fields={["CONTIENT_IMAGE.keyword"]}
                 initialValue={initialValues.get("img")}
@@ -131,7 +136,11 @@ export default class Search extends React.Component {
             </Col>
             <Col xs="9">
               <ActiveFilters id="af" />
-              <Results initialPage={initialValues.get("resPage")} id="res" item={(x, y, z) => <Card data={x} />} />
+              <Results
+                initialPage={initialValues.get("resPage")}
+                id="res"
+                item={(x, y, z) => <Card data={x} />}
+              />
               <ExportComponent collection="joconde" target="main" />
             </Col>
           </Row>

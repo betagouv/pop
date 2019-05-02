@@ -112,23 +112,6 @@ function findProducteur(REF, IDPROD, EMET) {
   return "AUTRE";
 }
 
-function getMerimeeOrPalissyNotice(LBASE) {
-  return new Promise(async (resolve, reject) => {
-    if (!LBASE) {
-      resolve();
-      return;
-    }
-    const collection = findCollection(LBASE);
-    if (!collection) {
-      console.log(`No collection ${LBASE}`);
-      reject();
-      return;
-    }
-    const notice = await collection.findOne({ REF: LBASE });
-    resolve(notice);
-  });
-}
-
 async function updateLinks(notice) {
   try {
     const REF = notice.REF;
@@ -167,10 +150,9 @@ async function updateLinks(notice) {
 
     //Ajout
     for (let i = 0; i < toAdd.length; i++) {
-      const n = await getMerimeeOrPalissyNotice(toAdd[i]);
-      if (n) {
-        n.MEMOIRE.push({ ref: REF, url: URL });
-        await n.save();
+      const collection = await findCollection(toAdd[i]);
+      if (collection) {
+        await collection.update({ REF: toAdd[i] }, { $push: { MEMOIRE: { ref: REF, url: URL } } });
       }
     }
   } catch (error) {

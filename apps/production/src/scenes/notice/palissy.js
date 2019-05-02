@@ -36,22 +36,32 @@ class Notice extends React.Component {
     }
   }
 
-  load(ref) {
+  async load(ref) {
     this.setState({ loading: true });
-    API.getNotice("palissy", ref).then(notice => {
-      if (!notice) {
-        this.setState({
-          loading: false,
-          error: `Impossible de charger la notice ${ref}`
-        });
-        console.error(`Impossible de charger la notice ${ref}`);
-        return;
-      }
-      console.log("NOTICE", notice);
-      this.props.initialize(notice);
-      const editable = notice.PRODUCTEUR === "Monuments Historiques" && this.props.canUpdate;
-      this.setState({ loading: false, notice, editable });
-    });
+    const notice = await API.getNotice("palissy", ref);
+    if (!notice) {
+      this.setState({ loading: false, error: "Cette notice n'existe pas" });
+      return;
+    }
+
+    console.log("NOTICE", notice);
+    this.props.initialize(notice);
+    const editable = this.canEdit(notice);
+    this.setState({ loading: false, notice, editable });
+  }
+
+  //fonction dedicated to role
+  canEdit(notice) {
+    if (this.props.group === "admin") {
+      return true;
+    }
+    if (this.props.group === "mh") {
+      return (
+        ["producteur", "administrateur"].includes(this.props.role) &&
+        ["Monuments Historiques", "Etat"].includes(notice.PRODUCTEUR)
+      );
+    }
+    return false;
   }
 
   onSubmit(values) {
@@ -86,7 +96,7 @@ class Notice extends React.Component {
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
-        <h2 className="main-title">Notice {this.state.notice.REF}</h2>
+        <h2 className="main-title">{`${this.state.notice.TICO} (${this.state.notice.REF})`}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
 
@@ -340,7 +350,7 @@ class Notice extends React.Component {
           <Map notice={this.state.notice} />
           <div className="buttons">
             <BackButton history={this.props.history} />
-            {this.props.canUpdate ? (
+            {this.state.editable ? (
               <React.Fragment>
                 <DeleteButton noticeType="palissy" noticeRef={this.state.notice.REF} />
                 <Button disabled={!this.state.editable} color="primary" type="submit">
@@ -378,12 +388,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
-  return {
-    canUpdate: Auth.user
-      ? (role === "producteur" || role === "administrateur") &&
-        (group === "mh" || group === "admin")
-      : false
-  };
+  return { role, group };
 };
 
 export default connect(
