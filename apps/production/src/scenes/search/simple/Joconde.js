@@ -1,48 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/JocondeCard";
+import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
-
 import {
   Elasticsearch,
   SearchBox,
   Results,
-  Facet,
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
 } from "react-elasticsearch";
-
-function CollapsableFacet({ initialCollapsed, title, ...rest }) {
-  initialCollapsed = initialCollapsed !== undefined ? initialCollapsed : true;
-  initialCollapsed = !(rest.initialValue && rest.initialValue.length);
-  const [collapsed, setCollapsed] = useState(initialCollapsed);
-
-  function FacetWrapper() {
-    if (!collapsed) {
-      return <Facet {...rest} />;
-    }
-    return <div />;
-  }
-  return (
-    <div style={{ backgroundColor: "pink" }}>
-      <div>
-        {title}
-        <button
-          onClick={() => {
-            setCollapsed(!collapsed);
-          }}
-        >
-          open
-        </button>
-      </div>
-      {FacetWrapper()}
-    </div>
-  );
-}
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -68,17 +39,14 @@ export default class Search extends React.Component {
           }}
         >
           <div>
-            <div className="search-and-export-zone">
-              Recherche
-              <SearchBox
-                id="main"
-                initialValue={initialValues.get("main")}
-                customQuery={value =>
-                  utils.customQuery2(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
-                }
-              />
-              <br />
-            </div>
+            <SearchBox
+              id="main"
+              placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+              initialValue={initialValues.get("main")}
+              customQuery={value =>
+                utils.customQuery2(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
+              }
+            />
           </div>
           <Row>
             <Col xs="3">
