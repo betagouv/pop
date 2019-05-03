@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col, Container, Alert } from "reactstrap";
 import ExportComponent from "../components/export";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
@@ -12,7 +12,8 @@ import {
   Results,
   toUrlQueryString,
   fromUrlQueryString,
-  ActiveFilters
+  ActiveFilters,
+  Pagination
 } from "react-elasticsearch";
 
 export default class Search extends React.Component {
@@ -60,56 +61,89 @@ export default class Search extends React.Component {
                 id="deno"
                 initialValue={initialValues.get("deno")}
                 fields={["DENO.keyword"]}
+                title="Dénomination"
               />
               <CollapsableFacet
                 id="autr"
                 initialValue={initialValues.get("autr")}
                 fields={["AUTR.keyword"]}
+                title="Auteurs"
               />
               <CollapsableFacet
                 id="peri"
                 initialValue={initialValues.get("peri")}
                 fields={["PERI.keyword"]}
+                title="Période"
               />
               <CollapsableFacet
                 id="epoq"
                 initialValue={initialValues.get("epoq")}
                 fields={["EPOQ.keyword"]}
+                title="Époque"
               />
               <CollapsableFacet
                 id="util"
                 initialValue={initialValues.get("util")}
                 fields={["UTIL.keyword"]}
+                title="Utilisation"
               />
               <CollapsableFacet
                 id="tech"
                 initialValue={initialValues.get("tech")}
                 fields={["TECH.keyword"]}
+                title="Techniques"
               />
               <CollapsableFacet
                 id="aptn"
                 initialValue={initialValues.get("aptn")}
                 fields={["APTN.keyword"]}
+                title="Ancienne appartenance"
               />
               <CollapsableFacet
-                id="repr"
-                fields={["REPR.keyword"]}
-                initialValue={initialValues.get("repr")}
+                id="loca"
+                fields={["LOCA.keyword"]}
+                title="Localisation"
+                initialValue={initialValues.get("loca")}
               />
               <CollapsableFacet
                 id="img"
+                showFilter={false}
                 fields={["CONTIENT_IMAGE.keyword"]}
+                title="Contient une image"
                 initialValue={initialValues.get("img")}
               />
+              <ExportComponent collection="joconde" target="main" />
             </Col>
             <Col xs="9">
               <ActiveFilters id="af" />
               <Results
                 initialPage={initialValues.get("resPage")}
                 id="res"
-                item={(x, y, z) => <Card data={x} />}
+                item={(source, score, id) => <Card key={id} data={source} />}
+                pagination={(total, itemsPerPage, page, setPage) => {
+                  const pagination = (
+                    <Pagination
+                      onChange={p => setPage(p)}
+                      total={total}
+                      itemsPerPage={itemsPerPage}
+                      page={page}
+                    />
+                  );
+                  if (page === 1000) {
+                    return (
+                      <>
+                        <Alert color="warning">
+                          Afin de garantir une navigation fluide pour l'ensemble des utilisateurs,
+                          seules les 10.000 premières notices sont affichées. Cliquez sur 
+                          « Exporter » pour obtenir la liste complète ou affinez votre recherche.
+                        </Alert>
+                        {pagination}
+                      </>
+                    );
+                  }
+                  return pagination;
+                }}
               />
-              <ExportComponent collection="joconde" target="main" />
             </Col>
           </Row>
         </Elasticsearch>

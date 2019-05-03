@@ -21,13 +21,16 @@ ul.react-es-pagination > li > button {
   font-weight: bold;
 }
 
+.collapsable-facet-title > button:focus {
+  outline: none;
+}
+
 ul.react-es-pagination > li.react-es-pagination-active-page {
   background: #0062cc;
 }
 ul.react-es-pagination > li.react-es-pagination-active-page > button {
   color: white;
 }
-
 
 .collapsable-facet-title > button {
   float: right;
@@ -79,6 +82,9 @@ ul.react-es-pagination {
   list-style: none;
   padding: 0;
 }
+ul.react-es-pagination {
+  margin-top: 15px;
+}
 .react-es-active-filters > ul > li,
 ul.react-es-pagination > li {
   display: inline;
@@ -98,3 +104,53 @@ ul.react-es-pagination > li {
   padding-left: 15px;
   color: #19414c;
 }
+.export-collection {
+  float: right;
+  width: 120px;
+  background-color: #008000;
+  color: white;
+  margin: 0;
+  padding: 3px 7px;
+  border-radius: 2px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+.export-collection > img {
+  width: 16px;
+  margin-right: 10px;
+}
+.react-es-query-builder {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: white;
+  border-radius: 0.25rem;
+  position: relative;
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+}
+.react-es-rule {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.react-es-rule > select {
+  margin-right: 5px;
+}
+.react-es-rule button {
+  margin-left: 5px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: none;
+  width: 30px;
+}
+.react-es-rule button:focus {
+  outline: none;
+}
+.react-es-rule button.react-es-rule-add {
+  background-color: #008000;
+  color: white;
+}
+
+.react-es-rule button.react-es-rule-delete {
+  background-color: #c43a2f;
+  color: white;
+} 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import qs from "qs";
-import { Button } from "reactstrap";
 import { QueryBuilder } from "pop-shared";
 import fetch from "isomorphic-fetch";
 import { history } from "../../../redux/store";
@@ -20,10 +19,10 @@ export default function ExportComponent({ collection, target }) {
   }
 
   return (
-    <Button color="success" onClick={() => setExporting(true)}>
+    <button className="export-collection" onClick={() => setExporting(true)}>
       <img src={excelIcon} />
       Exporter
-    </Button>
+    </button>
   );
 }
 
