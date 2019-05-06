@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
-import ExportComponent from "../components/export";
+import ExportComponent from "../components/ExportComponent";
 import { MultiList } from "pop-shared";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";

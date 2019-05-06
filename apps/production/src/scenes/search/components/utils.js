@@ -1,3 +1,7 @@
+import React from "react";
+import { Pagination } from "react-elasticsearch";
+import { Alert } from "reactstrap";
+
 function generateLoca(notice) {
   const arr = [];
   if (notice.REG) arr.push(notice.REG);
@@ -202,52 +206,19 @@ function isStopword(word) {
 }
 
 function mandatoryWords(p) {
-  return p.split(/\s+/)
-    // We have to remove stop words since there is a bug in elasticsearch. See:
-    // https://github.com/elastic/elasticsearch/issues/28855
-    // https://github.com/elastic/elasticsearch/issues/15634
-    .filter(v => v && !isStopword(v))
-    .map((v, k) => (k === 0 ? v : `+${v}`))
-    .join(" ");
+  return (
+    p
+      .split(/\s+/)
+      // We have to remove stop words since there is a bug in elasticsearch. See:
+      // https://github.com/elastic/elasticsearch/issues/28855
+      // https://github.com/elastic/elasticsearch/issues/15634
+      .filter(v => v && !isStopword(v))
+      .map((v, k) => (k === 0 ? v : `+${v}`))
+      .join(" ")
+  );
 }
 
 function customQuery(query, primaryFields, secondaryFields = []) {
-  const fields = [...primaryFields, ...secondaryFields];
-
-  // No value, return all documents.
-  if (!query) {
-    return { query: { match_all: {} } };
-  }
-
-  // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
-  // treat it as a query_string (they will love that).
-  if (query.match(/"[^"]*"| -| \+/)) {
-    return { query: { simple_query_string: { query, default_operator: "and", fields } } };
-  }
-
-  // Otherwise build a complex query with these rules (by boost order):
-  // 1 - exact ref (boost 5)
-  const exactRef = { term: { "REF.keyword": { value: query, boost: 5 } } };
-  // 2 - exact term in fields (boost 5)
-  const exactTerm = primaryFields.map(f => ({
-    term: { [`${f}.keyword`]: { value: query, boost: 5 } }
-  }));
-  // 3 - fuzzy term in fields (boost 2)
-  const fuzzyTerm = primaryFields
-    .filter(a => a !== "REF" && a !== "INV")
-    .map(f => ({
-      fuzzy: { [`${f}.keyword`]: { value: query, boost: 5 } }
-    }));
-  // 4 - contains all words in fields (boost 1)
-  const allWords = {
-    simple_query_string: { query: mandatoryWords(query), default_operator: "and", fields }
-  };
-  // 5 - return the whole query with all rules
-  return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
-}
-
-
-function customQuery2(query, primaryFields, secondaryFields = []) {
   const fields = [...primaryFields, ...secondaryFields];
 
   // No value, return all documents.
@@ -282,8 +253,27 @@ function customQuery2(query, primaryFields, secondaryFields = []) {
   return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
 }
 
+function pagination(total, itemsPerPage, page, setPage) {
+  const pagination = (
+    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
+  );
+  if (page === 1000) {
+    return (
+      <>
+        <Alert color="warning">
+          Afin de garantir une navigation fluide pour l'ensemble des utilisateurs, seules les 10.000
+          premières notices sont affichées. Cliquez sur « Exporter » pour obtenir la liste complète
+          ou affinez votre recherche.
+        </Alert>
+        {pagination}
+      </>
+    );
+  }
+  return pagination;
+}
+
 export default {
+  pagination,
   generateLoca,
-  customQuery,
-  customQuery2
+  customQuery
 };

@@ -10,7 +10,7 @@ import Mapping from "../../../services/Mapping";
 import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import ExportComponent from "../components/export";
+import ExportComponent from "../components/ExportComponent";
 
 const operators = [
   { value: "==", text: "égal à", useInput: true },

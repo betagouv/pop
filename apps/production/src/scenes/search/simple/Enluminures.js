@@ -1,108 +1,88 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  ReactiveComponent
-} from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
-import ExportComponent from "../components/export";
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
+import ExportComponent from "../components/ExportComponent";
+import Card from "../components/EnluminuresCard";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/EnluminuresCard";
-import SearchButton from "../components/SearchButton";
+import CollapsableFacet from "../components/CollapsableFacet";
+import utils from "../components/utils";
 
-const FILTER = ["mainSearch", "attrib", "contxt", "nomenc", "refd", "sujet"];
+export default function render() {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  return (
+    <Container className="search">
+      <Header base="enluminures" normalMode={true} />
+      <Elasticsearch
+        url={`${es_url}/enluminures`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <div>
+          <SearchBox
+            id="main"
+            placeholder="Saisissez un nom ou une référence"
+            initialValue={initialValues.get("main")}
+            customQuery={value => utils.customQuery(value, ["NAME", "REF"])}
+          />
+        </div>
+        <Row>
+          <Col xs="3">
+            <CollapsableFacet
+              id="nomenc"
+              initialValue={initialValues.get("nomenc")}
+              fields={["NOMENC.keyword"]}
+              title="Domaine"
+            />
+            <CollapsableFacet
+              id="attrib"
+              initialValue={initialValues.get("attrib")}
+              fields={["ATTRIB.keyword"]}
+              title="Attribution"
+            />
+            <CollapsableFacet
+              id="contxt"
+              initialValue={initialValues.get("contxt")}
+              fields={["CONTXT.keyword"]}
+              title="Contexte"
+            />
+            <CollapsableFacet
+              id="refd"
+              initialValue={initialValues.get("refd")}
+              fields={["REFD.keyword"]}
+              title="Cote"
+            />
+            <CollapsableFacet
+              id="sujet"
+              initialValue={initialValues.get("sujet")}
+              fields={["SUJET.keyword"]}
+              title="Sujet"
+            />
 
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortOrder: "asc",
-      sortKey: "REF"
-    };
-  }
-
-  multiList(id, title) {
-    return (
-      <MultiList
-        componentId={id}
-        dataField={`${id.toUpperCase()}.keyword`}
-        title={title}
-        className="filters"
-        displayCount
-        URLParams={true}
-        react={{ and: FILTER.filter(e => e !== id) }}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <Container className="search">
-        <Header base="enluminures" normalMode={true} />
-        <ReactiveBase url={`${es_url}/enluminures`} app="enluminures">
-          <div>
-            <div className="search-and-export-zone">
-              <DataSearch
-                componentId="mainSearch"
-                dataField={["TITR", "SUJET"]}
-                queryFormat="and"
-                iconPosition="right"
-                icon={<SearchButton />}
-                className="mainSearch"
-                placeholder="Saisissez un titre ou un sujet"
-                URLParams={true}
-              />
-              <ReactiveComponent
-                componentId="export"
-                react={{
-                  and: FILTER
-                }}
-                defaultQuery={() => ({
-                  size: 100,
-                  aggs: {}
-                })}
-              >
-                <ExportComponent FILTER={FILTER} collection="enluminures" />
-              </ReactiveComponent>
-            </div>
-            <Row>
-              <Col xs="3">
-                {this.multiList("nomenc", "Domaine")}
-                {this.multiList("attrib", "Attribution")}
-                {this.multiList("contxt", "Contexte")}
-                {this.multiList("refd", "Cote")}
-                {this.multiList("sujet", "Sujet")}
-              </Col>
-              <Col xs="9">
-                <SelectedFilters clearAllLabel="Tout supprimer" />
-                <ReactiveList
-                  componentId="results"
-                  react={{
-                    and: FILTER
-                  }}
-                  onResultStats={(total, took) => {
-                    if (total === 1) {
-                      return `1 résultat`;
-                    }
-                    return `${total} résultats`;
-                  }}
-                  onNoResults="Aucun résultat trouvé."
-                  loader="Préparation de l'affichage des résultats..."
-                  dataField=""
-                  URLParams={true}
-                  size={20}
-                  onData={data => <Card key={data.REF} data={data} />}
-                  pagination={true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </ReactiveBase>
-      </Container>
-    );
-  }
+            <ExportComponent collection="enluminures" target="main" />
+          </Col>
+          <Col xs="9">
+            <ActiveFilters id="af" />
+            <Results
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              pagination={utils.pagination}
+            />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </Container>
+  );
 }

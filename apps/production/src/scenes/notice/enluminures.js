@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Button, Form } from "reactstrap";
+import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";

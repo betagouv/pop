@@ -8,7 +8,7 @@ import {
   ReactiveComponent
 } from "@appbaseio/reactivesearch";
 import { MultiList } from "pop-shared";
-import ExportComponent from "../components/export";
+import ExportComponent from "../components/ExportComponent";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/MuseoCard";
