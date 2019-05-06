@@ -33,9 +33,10 @@ export default function Joconde() {
       <Elasticsearch
         url={`${es_url}/joconde`}
         onChange={values => {
-          values.set("sortKey", sortKey);
-          values.set("sortOrder", sortOrder);
-          console.log(values);
+          if (values.size) {
+            values.set("sortKey", sortKey);
+            values.set("sortOrder", sortOrder);
+          }
           const q = toUrlQueryString(values);
           if (q) {
             window.history.replaceState("x", "y", `?${q}`);

@@ -13,7 +13,8 @@
   font-weight: 700;
 }
 .collapsable-facet-title > button,
-ul.react-es-pagination > li > button {
+ul.react-es-pagination > li > button,
+.react-es-active-filters > ul > li > button {
   border: none;
   background: transparent;
   outline: none;
@@ -153,4 +154,4 @@ ul.react-es-pagination > li {
 .react-es-rule button.react-es-rule-delete {
   background-color: #c43a2f;
   color: white;
-} 
+}
