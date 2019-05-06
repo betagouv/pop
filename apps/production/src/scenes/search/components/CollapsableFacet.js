@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Facet } from "react-elasticsearch";
+import utils from "../components/utils";
 
 export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {
   initialCollapsed = initialCollapsed !== undefined ? initialCollapsed : true;
@@ -8,7 +9,13 @@ export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {
 
   function FacetWrapper() {
     if (!collapsed) {
-      return <Facet {...rest} seeMore="Voir plus…" />;
+      return (
+        <Facet
+          {...rest}
+          seeMore="Voir plus…"
+          filterValueModifier={v => `.*${utils.toFrenchRegex(v)}.*`}
+        />
+      );
     }
     return <div />;
   }

@@ -253,6 +253,26 @@ function customQuery(query, primaryFields, secondaryFields = []) {
   return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
 }
 
+// This function transforms a text to a french compatible regex.
+// So this:
+// "Voilà un château éloigné"
+// Turns to that:
+// "[Vv][oôöOÔÖ][iïîIÏÎ]l[àâäaÀÂÄA] [uùûüUÙÛÜ]n [cçÇC]h[àâäaÀÂÄA]t[éèêëeÉÈÊËE][àâäaÀÂÄA][uùûüUÙÛÜ] [éèêëeÉÈÊËE]l[oôöOÔÖ][iïîIÏÎ]gn[éèêëeÉÈÊËE]"
+// It works (TM).
+function toFrenchRegex(text) {
+  return text
+    .replace(/[éèêëeÉÈÊËE]/g, "[éèêëeÉÈÊËE]")
+    .replace(/[àâäaÀÂÄA]/g, "[àâäaÀÂÄA]")
+    .replace(/[cçÇC]/g, "[cçÇC]")
+    .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
+    .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
+    .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
+    .replace(
+      /([bdfghjklmnpqrstvwxz])/gi,
+      (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`
+    );
+}
+
 function pagination(total, itemsPerPage, page, setPage) {
   const pagination = (
     <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
@@ -275,5 +295,6 @@ function pagination(total, itemsPerPage, page, setPage) {
 export default {
   pagination,
   generateLoca,
-  customQuery
+  customQuery,
+  toFrenchRegex
 };
