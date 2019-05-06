@@ -34,7 +34,18 @@ export default function render() {
             id="main"
             placeholder="Saisissez un nom ou une référence"
             initialValue={initialValues.get("main")}
-            customQuery={value => utils.customQuery(value, ["NAME", "REF"])}
+            customQuery={value =>
+              utils.customQuery(value, [
+                "COM",
+                "TICO",
+                "DENO",
+                "LOCA",
+                "LEG",
+                "AUTP",
+                "OBJT",
+                "EDIF"
+              ])
+            }
           />
         </div>
         <Row>

@@ -54,7 +54,6 @@ export default function render() {
               fields={["TYPID.keyword"]}
               title="Type"
             />
-            
             <ExportComponent collection="autor" target="main" />
           </Col>
           <Col xs="9">

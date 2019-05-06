@@ -1,110 +1,75 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  ReactiveComponent
-} from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
 import ExportComponent from "../components/ExportComponent";
+import Card from "../components/MuseoCard";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/MuseoCard";
-import SearchButton from "../components/SearchButton";
+import CollapsableFacet from "../components/CollapsableFacet";
+import utils from "../components/utils";
 
-const FILTER = ["mainSearch", "label", "dpt", "museo"];
-
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortOrder: "asc",
-      sortKey: "REF"
-    };
-  }
-
-  render() {
-    return (
-      <Container className="search">
-        <Header base="museo" normalMode={true} />
-        <ReactiveBase url={`${es_url}/museo`} app="museo">
-          <div>
-            <div className="search-and-export-zone">
-              <DataSearch
-                componentId="mainSearch"
-                dataField={["NOMOFF", "REF"]}
-                queryFormat="and"
-                iconPosition="right"
-                icon={<SearchButton />}
-                className="mainSearch"
-                placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
-                URLParams={true}
-              />
-              <ExportComponent FILTER={FILTER} collection="museo" />
-            </div>
-            <Row>
-              <Col xs="3">
-                <MultiList
-                  componentId="label"
-                  dataField="LABEL.keyword"
-                  title="Label"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "label")
-                  }}
-                />
-                <MultiList
-                  componentId="museo"
-                  dataField="REF.keyword"
-                  title="Code museo"
-                  className="filters"
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "museo")
-                  }}
-                />
-                <MultiList
-                  componentId="dpt"
-                  dataField="DPT.keyword"
-                  title="Département"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "dpt")
-                  }}
-                />
-              </Col>
-              <Col xs="9">
-                <SelectedFilters clearAllLabel="Tout supprimer" />
-                <ReactiveList
-                  componentId="results"
-                  react={{
-                    and: FILTER
-                  }}
-                  onResultStats={(total, took) => {
-                    if (total === 1) {
-                      return `1 résultat`;
-                    }
-                    return `${total} résultats`;
-                  }}
-                  onNoResults="Aucun résultat trouvé."
-                  loader="Préparation de l'affichage des résultats..."
-                  dataField=""
-                  URLParams={true}
-                  size={20}
-                  onData={data => <Card key={data.REF} data={data} />}
-                  pagination={true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </ReactiveBase>
-      </Container>
-    );
-  }
+export default function render() {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  return (
+    <Container className="search">
+      <Header base="museo" normalMode={true} />
+      <Elasticsearch
+        url={`${es_url}/museo`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <div>
+          <SearchBox
+            id="main"
+            placeholder="Saisissez un nom ou une référence"
+            initialValue={initialValues.get("main")}
+            customQuery={value => utils.customQuery(value, ["NOMOFF", "REF"])}
+          />
+        </div>
+        <Row>
+          <Col xs="3">
+            <CollapsableFacet
+              id="label"
+              initialValue={initialValues.get("label")}
+              fields={["LABEL.keyword"]}
+              title="Label"
+            />
+            <CollapsableFacet
+              id="museo"
+              initialValue={initialValues.get("museo")}
+              fields={["REF.keyword"]}
+              title="Code museo"
+            />
+            <CollapsableFacet
+              id="dpt"
+              initialValue={initialValues.get("dpt")}
+              fields={["DPT.keyword"]}
+              title="Département"
+            />
+            <ExportComponent collection="museo" target="main" />
+          </Col>
+          <Col xs="9">
+            <ActiveFilters id="af" />
+            <Results
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              pagination={utils.pagination}
+            />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </Container>
+  );
 }

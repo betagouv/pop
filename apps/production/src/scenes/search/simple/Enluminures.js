@@ -69,7 +69,6 @@ export default function render() {
               fields={["SUJET.keyword"]}
               title="Sujet"
             />
-
             <ExportComponent collection="enluminures" target="main" />
           </Col>
           <Col xs="9">

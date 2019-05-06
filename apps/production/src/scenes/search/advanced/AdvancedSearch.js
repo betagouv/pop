@@ -11,6 +11,7 @@ import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import ExportComponent from "../components/ExportComponent";
+import utils from "../components/utils";
 
 const operators = [
   { value: "==", text: "égal à", useInput: true },
@@ -82,6 +83,7 @@ export default function AdvancedSearch({ collection, card }) {
           id="result"
           initialPage={initialValues.get("resultPage")}
           item={card}
+          pagination={utils.pagination}
         />
         <ExportComponent collection={collection} target="qb" />
       </Elasticsearch>
