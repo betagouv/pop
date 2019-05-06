@@ -1,85 +1,90 @@
-import React from "react";
-import { Row, Col, Container, Button, Modal, Input } from "reactstrap";
-import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
-
-import { QueryBuilder } from "pop-shared";
-import CreateGallery from "./Gallery";
+import React, { useState, useEffect } from "react";
+import {
+  Elasticsearch,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  QueryBuilder
+} from "react-elasticsearch";
+import Mapping from "../../../services/Mapping";
+import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Mapping from "../../../services/Mapping";
-import { history } from "../../../redux/store";
 import ExportComponent from "../components/export";
 
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortOrder: "asc",
-      sortKey: "REF"
-    };
-  }
+const operators = [
+  { value: "==", text: "égal à", useInput: true },
+  { value: "!=", text: "différent de", useInput: true },
+  { value: ">=", text: "supérieur ou égal à", useInput: true },
+  { value: "<=", text: "inférieur ou égal à", useInput: true },
+  { value: ">", text: "strictement supérieur à", useInput: true },
+  { value: "<", text: "strictement inférieur à", useInput: true },
+  { value: "∃", text: "existe", useInput: false },
+  { value: "!∃", text: "n'existe pas", useInput: false },
+  { value: "*", text: "contient", useInput: true },
+  { value: "^", text: "commence par", useInput: true }
+];
 
-  render() {
-    const { baseName, onData } = this.props;
-    return (
-      <Container className="search">
-        <Header base={baseName} normalMode={false} />
-        <ReactiveBase url={`${es_url}/${baseName}`} app={baseName}>
-          <div>
-            <Row>
-              <Col md={12}>
-                <QueryBuilder
-                  collection={baseName}
-                  componentId="advancedSearch"
-                  history={history}
-                  displayLabel={this.props.displayLabel || false}
-                  autocomplete={this.props.autocomplete || false}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12} className="mt-2" style={{ display: "flex" }}>
-                <ExportComponent FILTER={["advancedSearch"]} collection={baseName} autocomplete />
-                <CreateGallery base={baseName} />
-              </Col>
-            </Row>
-            <div className="text-center my-3">
-              Trier par :
-              <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-                {Object.keys(Mapping[baseName])
-                  .filter(e => !["TICO", "TITR"].includes(e))
-                  .map(e => (
-                    <option key={e} value={e}>
-                      {e}
-                    </option>
-                  ))}
-              </select>
-              <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
-                <option value="asc">Ascendant</option>
-                <option value="desc">Descendant</option>
-              </select>
-            </div>
-            <ReactiveList
-              componentId="results"
-              react={{ and: "advancedSearch" }}
-              onResultStats={(total, took) => {
-                if (total === 1) {
-                  return `1 résultat`;
-                }
-                return `${total} résultats`;
-              }}
-              onNoResults="Aucun résultat trouvé."
-              loader="Préparation de l'affichage des résultats..."
-              dataField={`${this.state.sortKey}.keyword`}
-              sortBy={this.state.sortOrder}
-              URLParams={true}
-              size={20}
-              onData={onData}
-              pagination={true}
-            />
-          </div>
-        </ReactiveBase>
-      </Container>
-    );
-  }
+export default function AdvancedSearch({ collection, card }) {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  const fields = Object.entries(Mapping[collection]).map(([k, v]) => {
+    return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
+  });
+
+  const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.keyword");
+  const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
+  const [sortQuery, setSortQuery] = useState([{ [sortKey]: { order: sortOrder } }]);
+
+  useEffect(() => {
+    setSortQuery([{ [sortKey]: { order: sortOrder } }]);
+  }, [sortKey, sortOrder]);
+
+  return (
+    <Container className="search">
+      <Header base={collection} normalMode={false} />
+      <Elasticsearch
+        url={`${es_url}/${collection}`}
+        onChange={values => {
+          if (values.size) {
+            values.set("sortKey", sortKey);
+            values.set("sortOrder", sortOrder);
+          }
+          const q = toUrlQueryString(values);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <QueryBuilder
+          initialValue={initialValues.get("qb")}
+          id="qb"
+          fields={fields}
+          operators={operators}
+        />
+        <div className="text-center my-3">
+          Trier par:{" "}
+          <select className="ml-2" onChange={e => setSortKey(e.target.value)} value={sortKey}>
+            {Object.keys(Mapping[collection])
+              .filter(e => !["TICO", "TITR", "__v", "__id"].includes(e))
+              .map(e => (
+                <option key={e} value={`${e}.keyword`}>
+                  {e}
+                </option>
+              ))}
+          </select>
+          <select className="ml-2" onChange={e => setSortOrder(e.target.value)} value={sortOrder}>
+            <option value="asc">Ascendant</option>
+            <option value="desc">Descendant</option>
+          </select>
+        </div>
+        <Results
+          sort={sortQuery}
+          id="result"
+          initialPage={initialValues.get("resultPage")}
+          item={card}
+        />
+        <ExportComponent collection={collection} target="qb" />
+      </Elasticsearch>
+    </Container>
+  );
 }
