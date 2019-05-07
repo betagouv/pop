@@ -18,6 +18,10 @@ class api {
     return this._get(`${api_url}/museo/${ref}`);
   }
 
+  getImportCount(ref) {
+    return this._get(`${api_url}/import/count`);
+  }
+
   getGallery(id) {
     return this._get(`${api_url}/gallery/${id}`);
   }
