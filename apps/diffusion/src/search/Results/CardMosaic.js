@@ -6,11 +6,17 @@ import { image } from "./../../services/image";
 export default ({ data }) => {
   const title = index => {
     if (index === "memoire") {
-      return data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim();
+      const subtitle = data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim();
+      if (data.AUTP) {
+        return `${data.AUTP} - ${subtitle}`;
+      }
+      return subtitle;
     } else if (index === "enluminures") {
       return `${data.TITR} - ${data.SUJET}`;
     } else if (index === "joconde") {
       return getJocondeTitle(data);
+    } else if ((index === "merimee" || index === "palissy") && data.AUTR && data.AUTR.length) {
+      return `${data.AUTR.filter(e => e).join(" ; ")} - ${data.TICO || data.TITR}`;
     }
     return data.TICO || data.TITR;
   };
