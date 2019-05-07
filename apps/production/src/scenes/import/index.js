@@ -14,6 +14,7 @@ import List from "./list";
 class Import extends React.Component {
   render() {
     if (
+      this.props.location.pathname !== `/import/list` &&
       this.props.group &&
       this.props.group !== "admin" &&
       this.props.location.pathname !== `/import/${this.props.group}`
