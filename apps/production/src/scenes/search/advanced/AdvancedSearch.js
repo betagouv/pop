@@ -61,6 +61,7 @@ export default function AdvancedSearch({ collection, card }) {
           id="qb"
           fields={fields}
           operators={operators}
+          autoComplete={true}
         />
         <div className="text-center my-3">
           Trier par:{" "}
