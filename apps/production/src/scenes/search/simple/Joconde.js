@@ -102,7 +102,7 @@ export default function render() {
               title="Contient une image"
               initialValue={initialValues.get("img")}
             />
-            <ExportComponent collection="joconde" target="main" />
+            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
@@ -112,6 +112,7 @@ export default function render() {
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
             />
+            <ExportComponent collection="joconde" target="main" />
           </Col>
         </Row>
       </Elasticsearch>

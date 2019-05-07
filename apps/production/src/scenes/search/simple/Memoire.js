@@ -98,7 +98,7 @@ export default function render() {
               fields={["COM.keyword"]}
               title="Commune"
             />
-            <ExportComponent collection="memoire" target="main" />
+            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
@@ -108,6 +108,7 @@ export default function render() {
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
             />
+            <ExportComponent collection="memoire" target="main" />
           </Col>
         </Row>
       </Elasticsearch>

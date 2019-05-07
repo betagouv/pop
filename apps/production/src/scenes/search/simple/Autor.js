@@ -54,7 +54,7 @@ export default function render() {
               fields={["TYPID.keyword"]}
               title="Type"
             />
-            <ExportComponent collection="autor" target="main" />
+            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
@@ -64,6 +64,7 @@ export default function render() {
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
             />
+            <ExportComponent collection="autor" target="main" />
           </Col>
         </Row>
       </Elasticsearch>
