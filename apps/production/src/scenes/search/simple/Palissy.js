@@ -109,6 +109,7 @@ export default function render() {
               id="res"
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
+              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
             />
             <ExportComponent collection="palissy" target="main" />
           </Col>

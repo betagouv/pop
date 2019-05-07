@@ -86,6 +86,7 @@ export default function AdvancedSearch({ collection, card }) {
           initialPage={initialValues.get("resultPage")}
           item={card}
           pagination={utils.pagination}
+          stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
         />
         <ExportComponent collection={collection} target="qb" />
       </Elasticsearch>
