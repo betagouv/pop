@@ -222,15 +222,13 @@ const Joconde = ({ data }) => {
   const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
-  let peri = data.MILL.join(", ");
-  peri = peri || data.PERI.join(", ");
-  peri = peri || data.EPOQ.join(", ");
+  let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
+  peri = peri || (Array.isArray(data.PERI) ? data.PERI.join(", ") : "");
+  peri = peri || (Array.isArray(data.EPOQ) ? data.EPOQ.join(", ") : "");
 
   const loc = data.LOCA;
   const img = image(data);
 
-  console.log("categories", categories);
-  console.log("data", data);
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
