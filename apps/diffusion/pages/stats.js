@@ -54,7 +54,7 @@ export default class extends React.Component {
                 <div class="card mt-4 mb-4">
                   <div class="card-body text-center">
                     <p />
-                    <h3>6</h3>
+                    <h3>8</h3>
                     <p>bases indexées</p>
                   </div>
                 </div>
