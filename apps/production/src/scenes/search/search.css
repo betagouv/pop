@@ -198,3 +198,9 @@ ul.react-es-pagination > li {
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
 }
+.react-es-rule > .react-es-rule-combinator {
+  width: 55px;
+}
+.react-es-rule:first-of-type > .react-es-rule-field {
+  margin-left: 60px;
+}

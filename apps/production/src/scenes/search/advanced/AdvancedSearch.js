@@ -62,6 +62,7 @@ export default function AdvancedSearch({ collection, card }) {
           fields={fields}
           operators={operators}
           autoComplete={true}
+          combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
         />
         <div className="text-center my-3">
           Trier par:{" "}
