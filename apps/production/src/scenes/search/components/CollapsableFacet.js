@@ -23,9 +23,9 @@ export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {
   }
   return (
     <div className="collapsable-facet">
-      <div className="collapsable-facet-title">
+      <div className="collapsable-facet-title" onClick={() => setCollapsed(!collapsed)}>
         {title}
-        <button onClick={() => setCollapsed(!collapsed)}>⌄</button>
+        <button>⌄</button>
       </div>
       {FacetWrapper()}
     </div>
