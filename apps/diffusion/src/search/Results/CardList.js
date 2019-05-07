@@ -218,12 +218,19 @@ const Mnr = ({ data }) => {
 
 const Joconde = ({ data }) => {
   const REF = data.REF;
-  const categories = !data.TITR && data.DENO ? data.DENO.join(", ") : "";
   const title = getJocondeTitle(data);
+  const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
-  const peri = data.MILL || data.PERI || data.EPOQ || "";
+
+  let peri = data.MILL.join(", ");
+  peri = peri || data.PERI.join(", ");
+  peri = peri || data.EPOQ.join(", ");
+
   const loc = data.LOCA;
   const img = image(data);
+
+  console.log("categories", categories);
+  console.log("data", data);
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -372,8 +379,8 @@ const withStyle = component => {
 
         .list-card img {
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          height: 200px;
+          object-fit: contain;
         }
 
         .list-card img.no-img {
