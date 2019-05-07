@@ -4,13 +4,14 @@
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
   margin-bottom: 20px;
   padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   color: black;
 }
 
 .collapsable-facet-title {
   font-weight: 700;
+  font-size: 16px;
 }
 .collapsable-facet-title > button,
 ul.react-es-pagination > li > button,
@@ -92,6 +93,9 @@ ul.react-es-pagination > li {
 }
 .react-es-active-filters > ul > li > button {
   margin-left: 5px;
+}
+.react-es-active-filters {
+  font-size:14px;
 }
 
 .react-es-searchbox input {

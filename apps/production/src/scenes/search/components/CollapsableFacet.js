@@ -15,6 +15,7 @@ export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {
           seeMore="Voir plus…"
           filterValueModifier={v => `.*${utils.toFrenchRegex(v)}.*`}
           placeholder={"Filtrer…"}
+          itemsPerBlock={10}
         />
       );
     }
