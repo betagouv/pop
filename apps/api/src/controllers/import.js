@@ -44,4 +44,15 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 });
 
+router.get("/count", async (req, res) => {
+  let imports = null;
+  try {
+    imports = await Import.collection.estimatedDocumentCount({});
+    res.status(200).send(String(imports));
+  } catch (e) {
+    capture(JSON.stringify(e));
+    return res.status(500).send({ e });
+  }
+});
+
 module.exports = router;
