@@ -12,6 +12,7 @@ import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import ExportComponent from "../components/ExportComponent";
 import utils from "../components/utils";
+import Tooltip from "./Tooltip";
 
 const operators = [
   { value: "==", text: "égal à", useInput: true },
@@ -56,14 +57,18 @@ export default function AdvancedSearch({ collection, card }) {
           }
         }}
       >
-        <QueryBuilder
-          initialValue={initialValues.get("qb")}
-          id="qb"
-          fields={fields}
-          operators={operators}
-          autoComplete={true}
-          combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
-        />
+        <div style={{position: "relative"}}>
+          <QueryBuilder
+            initialValue={initialValues.get("qb")}
+            id="qb"
+            fields={fields}
+            operators={operators}
+            autoComplete={true}
+            combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
+          />
+          <Tooltip />
+        </div>
+
         <div className="text-center my-3">
           Trier par:{" "}
           <select className="ml-2" onChange={e => setSortKey(e.target.value)} value={sortKey}>
@@ -86,7 +91,11 @@ export default function AdvancedSearch({ collection, card }) {
           initialPage={initialValues.get("resultPage")}
           item={card}
           pagination={utils.pagination}
-          stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+          stats={total => (
+            <div>
+              {total} résultat{total === 1 ? "" : "s"}
+            </div>
+          )}
         />
         <ExportComponent collection={collection} target="qb" />
       </Elasticsearch>
