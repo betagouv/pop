@@ -68,7 +68,6 @@ export default function List() {
               id="res"
               itemsPerPage={20}
               item={(source, _score, id) => <Card key={id} data={source} />}
-              pagination={utils.pagination}
               stats={total => (
                 <div>
                   {total} résultat{total === 1 ? "" : "s"}
