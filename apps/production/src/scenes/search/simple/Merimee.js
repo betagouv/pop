@@ -1,181 +1,124 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { ReactiveBase, DataSearch, ReactiveList, SelectedFilters } from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
-import ExportComponent from "../components/export";
+import {
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
+import ExportComponent from "../components/ExportComponent";
+import Card from "../components/MerimeeCard";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/MerimeeCard";
+import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
-import SearchButton from "../components/SearchButton";
 
-const FILTER = [
-  "mainSearch",
-  "region",
-  "auteurs",
-  "denomination",
-  "producteur",
-  "departement",
-  "commune",
-  "image",
-  "location",
-  "date",
-  "zone",
-  "domain"
-];
-
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sortOrder: "asc",
-      sortKey: "REF"
-    };
-  }
-
-  render() {
-    return (
-      <Container className="search">
-        <Header base="merimee" normalMode={true} />
-        <ReactiveBase url={`${es_url}/merimee`} app="merimee">
-          <div>
-            <div className="search-and-export-zone">
-              <DataSearch
-                componentId="mainSearch"
-                dataField={[]}
-                iconPosition="right"
-                icon={<SearchButton />}
-                className="mainSearch"
-                placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
-                URLParams={true}
-                customQuery={value =>
-                  utils.customQuery(value, ["COM", "TICO", "LOCA", "DPRO", "HIST", "DESC", "ADRS", "EDIF"])
-                }
-                debounce={0}
-              />
-              <ExportComponent FILTER={FILTER} collection="merimee" />
-            </div>
-            <Row>
-              <Col xs="3">
-                <MultiList
-                  componentId="denomination"
-                  dataField="DENO.keyword"
-                  title="Dénominations"
-                  className="filters"
-                  displayCount
-                  placeholder="Rechercher une dénomination"
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "denomination") }}
-                />
-                <MultiList
-                  componentId="producteur"
-                  dataField="PRODUCTEUR.keyword"
-                  title="Producteur"
-                  className="filters"
-                  displayCount
-                  showSearch={false}
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "producteur") }}
-                />
-                <MultiList
-                  componentId="domain"
-                  dataField="DOMN.keyword"
-                  title="Domaines"
-                  className="filters"
-                  displayCount
-                  showSearch={false}
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "domain") }}
-                />
-                <MultiList
-                  componentId="auteurs"
-                  dataField="AUTR.keyword"
-                  title="Auteurs"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher un auteur"
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "auteurs") }}
-                />
-                <hr />
-                <MultiList
-                  componentId="region"
-                  dataField="REG.keyword"
-                  title="Régions"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher une région"
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "region") }}
-                />
-                <MultiList
-                  componentId="departement"
-                  dataField="DPT.keyword"
-                  title="Départements"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher un département"
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "departement") }}
-                />
-
-                <MultiList
-                  componentId="commune"
-                  dataField="COM.keyword"
-                  title="Communes"
-                  displayCount
-                  className="filters"
-                  placeholder="Rechercher une commune"
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "commune") }}
-                />
-                <hr />
-                <MultiList
-                  componentId="image"
-                  dataField="CONTIENT_IMAGE.keyword"
-                  title="Contient une image"
-                  className="filters"
-                  showSearch={false}
-                  displayCount
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "image") }}
-                />
-                <MultiList
-                  componentId="location"
-                  dataField="POP_CONTIENT_GEOLOCALISATION.keyword"
-                  title="Contient une localisation"
-                  className="filters"
-                  displayCount
-                  showSearch={false}
-                  URLParams={true}
-                  react={{ and: FILTER.filter(e => e !== "location") }}
-                />
-              </Col>
-              <Col xs="9">
-                <SelectedFilters clearAllLabel="Tout supprimer" />
-                <ReactiveList
-                  componentId="results"
-                  react={{ and: FILTER }}
-                  onResultStats={(total, took) => {
-                    if (total === 1) {
-                      return `1 résultat`;
-                    }
-                    return `${total} résultats`;
-                  }}
-                  onNoResults="Aucun résultat trouvé."
-                  loader="Préparation de l'affichage des résultats..."
-                  dataField=""
-                  URLParams={true}
-                  size={20}
-                  onData={data => <Card key={data.REF} data={data} />}
-                  pagination={true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </ReactiveBase>
-      </Container>
-    );
-  }
+export default function render() {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  return (
+    <Container className="search">
+      <Header base="merimee" normalMode={true} />
+      <Elasticsearch
+        url={`${es_url}/merimee`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <div>
+          <SearchBox
+            id="main"
+            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+            initialValue={initialValues.get("main")}
+            customQuery={value =>
+              utils.customQuery(value, [
+                "COM",
+                "TICO",
+                "LOCA",
+                "DPRO",
+                "HIST",
+                "DESC",
+                "ADRS",
+                "EDIF"
+              ])
+            }
+          />
+        </div>
+        <Row>
+          <Col xs="3">
+            <CollapsableFacet
+              id="denomination"
+              initialValue={initialValues.get("denomination")}
+              fields={["DENO.keyword"]}
+              title="Dénominations"
+            />
+            <CollapsableFacet
+              id="producteur"
+              initialValue={initialValues.get("producteur")}
+              fields={["PRODUCTEUR.keyword"]}
+              title="Producteur"
+            />
+            <CollapsableFacet
+              id="domain"
+              initialValue={initialValues.get("domain")}
+              fields={["DOMN.keyword"]}
+              title="Domaines"
+            />
+            <CollapsableFacet
+              id="auteurs"
+              initialValue={initialValues.get("auteurs")}
+              fields={["AUTR.keyword"]}
+              title="Auteurs"
+            />
+            <CollapsableFacet
+              id="region"
+              initialValue={initialValues.get("region")}
+              fields={["REG.keyword"]}
+              title="Régions"
+            />
+            <CollapsableFacet
+              id="departement"
+              initialValue={initialValues.get("departement")}
+              fields={["DPT.keyword"]}
+              title="Départements"
+            />
+            <CollapsableFacet
+              id="commune"
+              initialValue={initialValues.get("commune")}
+              fields={["COM.keyword"]}
+              title="Communes"
+            />
+            <CollapsableFacet
+              id="image"
+              initialValue={initialValues.get("image")}
+              fields={["CONTIENT_IMAGE.keyword"]}
+              title="Contient une image"
+            />
+            <CollapsableFacet
+              id="location"
+              initialValue={initialValues.get("location")}
+              fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
+              title="Contient une localisation"
+            />
+            
+          </Col>
+          <Col xs="9">
+            <ActiveFilters id="af" />
+            <Results
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              pagination={utils.pagination}
+              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+            />
+            <ExportComponent collection="merimee" target="main" />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </Container>
+  );
 }

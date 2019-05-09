@@ -1,3 +1,7 @@
+import React from "react";
+import { Pagination } from "react-elasticsearch";
+import { Alert } from "reactstrap";
+
 function generateLoca(notice) {
   const arr = [];
   if (notice.REG) arr.push(notice.REG);
@@ -202,13 +206,16 @@ function isStopword(word) {
 }
 
 function mandatoryWords(p) {
-  return p.split(/\s+/)
-    // We have to remove stop words since there is a bug in elasticsearch. See:
-    // https://github.com/elastic/elasticsearch/issues/28855
-    // https://github.com/elastic/elasticsearch/issues/15634
-    .filter(v => v && !isStopword(v))
-    .map((v, k) => (k === 0 ? v : `+${v}`))
-    .join(" ");
+  return (
+    p
+      .split(/\s+/)
+      // We have to remove stop words since there is a bug in elasticsearch. See:
+      // https://github.com/elastic/elasticsearch/issues/28855
+      // https://github.com/elastic/elasticsearch/issues/15634
+      .filter(v => v && !isStopword(v))
+      .map((v, k) => (k === 0 ? v : `+${v}`))
+      .join(" ")
+  );
 }
 
 function customQuery(query, primaryFields, secondaryFields = []) {
@@ -216,7 +223,7 @@ function customQuery(query, primaryFields, secondaryFields = []) {
 
   // No value, return all documents.
   if (!query) {
-    return { query: { match_all: {} } };
+    return { match_all: {} };
   }
 
   // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
@@ -246,7 +253,48 @@ function customQuery(query, primaryFields, secondaryFields = []) {
   return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
 }
 
+// This function transforms a text to a french compatible regex.
+// So this:
+// "Voilà un château éloigné"
+// Turns to that:
+// "[Vv][oôöOÔÖ][iïîIÏÎ]l[àâäaÀÂÄA] [uùûüUÙÛÜ]n [cçÇC]h[àâäaÀÂÄA]t[éèêëeÉÈÊËE][àâäaÀÂÄA][uùûüUÙÛÜ] [éèêëeÉÈÊËE]l[oôöOÔÖ][iïîIÏÎ]gn[éèêëeÉÈÊËE]"
+// It works (TM).
+function toFrenchRegex(text) {
+  return text
+    .replace(/[éèêëeÉÈÊËE]/g, "[éèêëeÉÈÊËE]")
+    .replace(/[àâäaÀÂÄA]/g, "[àâäaÀÂÄA]")
+    .replace(/[cçÇC]/g, "[cçÇC]")
+    .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
+    .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
+    .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
+    .replace(
+      /([bdfghjklmnpqrstvwxz])/gi,
+      (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`
+    );
+}
+
+function pagination(total, itemsPerPage, page, setPage) {
+  const pagination = (
+    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
+  );
+  if (page === 1000) {
+    return (
+      <>
+        <Alert color="warning">
+          Afin de garantir une navigation fluide pour l'ensemble des utilisateurs, seules les 10.000
+          premières notices sont affichées. Cliquez sur « Exporter » pour obtenir la liste complète
+          ou affinez votre recherche.
+        </Alert>
+        {pagination}
+      </>
+    );
+  }
+  return pagination;
+}
+
 export default {
+  pagination,
   generateLoca,
-  customQuery
+  customQuery,
+  toFrenchRegex
 };

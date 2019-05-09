@@ -12,6 +12,7 @@ import Enluminures from "./Enluminures";
 import Home from "./Home";
 
 import "./index.css";
+import "../search.css";
 
 export default () => {
   return (

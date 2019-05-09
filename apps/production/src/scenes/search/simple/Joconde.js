@@ -1,219 +1,122 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  ReactiveComponent
-} from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
-import ExportComponent from "../components/export";
+import ExportComponent from "../components/ExportComponent";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import Card from "../components/JocondeCard";
+import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
-import SearchButton from "../components/SearchButton";
+import {
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
 
-const FILTER = [
-  "mainSearch",
-  "domn",
-  "deno",
-  "peri",
-  "image",
-  "tech",
-  "loca",
-  "autr",
-  "util",
-  "epoq",
-  "appartenance",
-  "repr"
-];
-
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortOrder: "asc",
-      sortKey: "REF"
-    };
-  }
-
-  render() {
-    return (
-      <Container className="search">
-        <Header base="joconde" normalMode={true} />
-        <ReactiveBase url={`${es_url}/joconde`} app="joconde">
-          <div>
-            <div className="search-and-export-zone">
-              <DataSearch
-                componentId="mainSearch"
-                dataField={[]}
-                iconPosition="right"
-                icon={<SearchButton />}
-                className="mainSearch"
-                placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
-                URLParams={true}
-                customQuery={value =>
-                  utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
-                }
-              />
-              <ExportComponent FILTER={FILTER} collection="joconde" />
-            </div>
-            <Row>
-              <Col xs="3">
-                <MultiList
-                  componentId="domn"
-                  dataField="DOMN.keyword"
-                  title="Domaine"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "domn")
-                  }}
-                />
-
-                <MultiList
-                  componentId="deno"
-                  dataField="DENO.keyword"
-                  title="Dénomination"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "deno")
-                  }}
-                />
-
-                <MultiList
-                  componentId="autr"
-                  dataField="AUTR.keyword"
-                  title="Auteurs"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "autr")
-                  }}
-                />
-                <MultiList
-                  componentId="peri"
-                  dataField="PERI.keyword"
-                  title="Période"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "peri")
-                  }}
-                />
-                <MultiList
-                  componentId="epoq"
-                  dataField="EPOQ.keyword"
-                  title="Epoque"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "epoq")
-                  }}
-                />
-                <MultiList
-                  componentId="util"
-                  dataField="UTIL.keyword"
-                  title="Utilisation"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "util")
-                  }}
-                />
-
-                <MultiList
-                  componentId="tech"
-                  dataField="TECH.keyword"
-                  title="Techniques"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "tech")
-                  }}
-                />
-
-                <MultiList
-                  componentId="loca"
-                  dataField="LOCA.keyword"
-                  title="Localisation"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "loca")
-                  }}
-                />
-                <MultiList
-                  componentId="appartenance"
-                  dataField="APTN.keyword"
-                  title="Ancienne appartenance"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "appartenance")
-                  }}
-                />
-                <MultiList
-                  componentId="repr"
-                  dataField="REPR.keyword"
-                  title="Sujet représenté"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "repr")
-                  }}
-                />
-                <MultiList
-                  componentId="image"
-                  dataField="CONTIENT_IMAGE.keyword"
-                  title="Contient une image"
-                  className="filters"
-                  displayCount
-                  URLParams={true}
-                  react={{
-                    and: FILTER.filter(e => e !== "image")
-                  }}
-                />
-              </Col>
-              <Col xs="9">
-                <SelectedFilters clearAllLabel="Tout supprimer" />
-                <ReactiveList
-                  componentId="results"
-                  react={{
-                    and: FILTER
-                  }}
-                  onResultStats={(total, took) => {
-                    if (total === 1) {
-                      return `1 résultat`;
-                    }
-                    return `${total} résultats`;
-                  }}
-                  onNoResults="Aucun résultat trouvé."
-                  loader="Préparation de l'affichage des résultats..."
-                  dataField=""
-                  URLParams={true}
-                  size={20}
-                  onData={data => <Card key={data.REF} data={data} />}
-                  pagination={true}
-                />
-              </Col>
-            </Row>
-          </div>
-        </ReactiveBase>
-      </Container>
-    );
-  }
+export default function render() {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  return (
+    <Container className="search">
+      <Header base="joconde" normalMode={true} />
+      <Elasticsearch
+        url={`${es_url}/joconde`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <div>
+          <SearchBox
+            id="main"
+            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+            initialValue={initialValues.get("main")}
+            customQuery={value =>
+              utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
+            }
+          />
+        </div>
+        <Row>
+          <Col xs="3">
+            <CollapsableFacet
+              id="domn"
+              initialValue={initialValues.get("domn")}
+              fields={["DOMN.keyword"]}
+              title="Domaine"
+            />
+            <CollapsableFacet
+              id="deno"
+              initialValue={initialValues.get("deno")}
+              fields={["DENO.keyword"]}
+              title="Dénomination"
+            />
+            <CollapsableFacet
+              id="autr"
+              initialValue={initialValues.get("autr")}
+              fields={["AUTR.keyword"]}
+              title="Auteurs"
+            />
+            <CollapsableFacet
+              id="peri"
+              initialValue={initialValues.get("peri")}
+              fields={["PERI.keyword"]}
+              title="Période"
+            />
+            <CollapsableFacet
+              id="epoq"
+              initialValue={initialValues.get("epoq")}
+              fields={["EPOQ.keyword"]}
+              title="Époque"
+            />
+            <CollapsableFacet
+              id="util"
+              initialValue={initialValues.get("util")}
+              fields={["UTIL.keyword"]}
+              title="Utilisation"
+            />
+            <CollapsableFacet
+              id="tech"
+              initialValue={initialValues.get("tech")}
+              fields={["TECH.keyword"]}
+              title="Techniques"
+            />
+            <CollapsableFacet
+              id="aptn"
+              initialValue={initialValues.get("aptn")}
+              fields={["APTN.keyword"]}
+              title="Ancienne appartenance"
+            />
+            <CollapsableFacet
+              id="loca"
+              fields={["LOCA.keyword"]}
+              title="Localisation"
+              initialValue={initialValues.get("loca")}
+            />
+            <CollapsableFacet
+              id="img"
+              showFilter={false}
+              fields={["CONTIENT_IMAGE.keyword"]}
+              title="Contient une image"
+              initialValue={initialValues.get("img")}
+            />
+            
+          </Col>
+          <Col xs="9">
+            <ActiveFilters id="af" />
+            <Results
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              pagination={utils.pagination}
+              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+            />
+            <ExportComponent collection="joconde" target="main" />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </Container>
+  );
 }

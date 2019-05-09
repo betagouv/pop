@@ -295,7 +295,9 @@ workflows:
             - test_production
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - react-elasticsearch
       - build_production_prod:
           requires:
             - deploy_production_staging
@@ -319,7 +321,9 @@ workflows:
             - build_production_staging
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - react-elasticsearch
       - deploy_api_prod:
           requires:
             - deploy_api_staging

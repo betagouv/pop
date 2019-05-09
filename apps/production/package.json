@@ -26,6 +26,8 @@
     "react-autocomplete": "^1.8.1",
     "react-dom": "^16.8.6",
     "react-dropzone": "^4.2.10",
+    "react-elasticsearch": "^1.16.1",
+    "react-elasticsearch-poc": "^1.1.0",
     "react-leaflet": "^1.9.1",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.4.8",

@@ -1,0 +1,210 @@
+.collapsable-facet {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  color: black;
+}
+
+.collapsable-facet-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+.collapsable-facet-title > button,
+ul.react-es-pagination > li > button,
+.react-es-active-filters > ul > li > button {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.collapsable-facet-title > button:focus {
+  outline: none;
+}
+
+ul.react-es-pagination > li.react-es-pagination-active-page {
+  background: #0062cc;
+}
+ul.react-es-pagination > li.react-es-pagination-active-page > button {
+  color: white;
+}
+
+.collapsable-facet-title > button {
+  float: right;
+  color: #8999ae;
+  transform: scale(1.5, 1);
+}
+
+.react-es-facet {
+  border-top: 1px solid rgb(203, 203, 203);
+  margin-top: 10px;
+}
+
+.react-es-facet > input[type="text"] {
+  margin-top: 10px;
+  padding: 5px;
+  height: 30px;
+  margin-bottom: 5px;
+  border: 1px solid #d7d3d3;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.react-es-facet > label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.react-es-facet > label > input[type="checkbox"] {
+  margin-right: 5px;
+}
+.react-es-facet > button {
+  border: none;
+  background: transparent;
+  text-align: center;
+  width: 100%;
+}
+
+.react-es-active-filters > ul > li,
+ul.react-es-pagination > li {
+  background-color: #fafafa;
+  margin: 5px 7px 5px 0;
+  padding: 5px 7px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+.react-es-active-filters > ul,
+ul.react-es-pagination {
+  list-style: none;
+  padding: 0;
+}
+ul.react-es-pagination {
+  margin-top: 15px;
+}
+.react-es-active-filters > ul > li,
+ul.react-es-pagination > li {
+  display: inline;
+}
+.react-es-active-filters > ul > li > button {
+  margin-left: 5px;
+}
+.react-es-active-filters {
+  font-size:14px;
+}
+
+.react-es-searchbox input {
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+  background-size: 22px;
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 7px;
+  padding-left: 15px;
+  color: #19414c;
+}
+.export-collection {
+  width: 120px;
+  background-color: #008000;
+  color: white;
+  margin: 0;
+  padding: 3px 7px;
+  border-radius: 2px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+.export-collection > img {
+  width: 16px;
+  margin-right: 10px;
+}
+.react-es-query-builder {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: white;
+  border-radius: 0.25rem;
+  position: relative;
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+}
+.react-es-rule {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.react-es-rule > select {
+  margin-right: 5px;
+}
+.react-es-rule button {
+  margin-left: 5px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: none;
+  width: 30px;
+}
+.react-es-rule button:focus {
+  outline: none;
+}
+.react-es-rule button.react-es-rule-add {
+  background-color: #008000;
+  color: white;
+}
+
+.react-es-rule button.react-es-rule-delete {
+  background-color: #c43a2f;
+  color: white;
+}
+
+.react-autosuggest__container {
+  position: relative;
+  display: inline-block;
+}
+.react-es-rule-value {
+  width: 200px;
+}
+.react-es-rule-value:focus {
+  outline: none;
+}
+
+.react-autosuggest__suggestions-container {
+  display: none;
+}
+
+.react-autosuggest__suggestions-container--open {
+  display: block;
+  position: absolute;
+  width: 200px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-size: 14px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+}
+
+.react-autosuggest__suggestions-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 5px 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #ddd;
+}
+.react-es-rule > .react-es-rule-combinator {
+  width: 55px;
+}
+.react-es-rule:first-of-type > .react-es-rule-field {
+  margin-left: 60px;
+}
