@@ -75,8 +75,13 @@ function Loading({ onFinish, collection, ctx, target }) {
         onFinish();
       }
     }
-    const queries = new Map([...ctx.widgets].filter(([, v]) => v.query).map(([k, v]) => [k, v.query]));
-    const query = { bool: { must: queries.size === 0 ? { match_all: {} } : Array.from(queries.values()) } };
+    const queries = [];
+    for (let w of ctx.widgets.values()) {
+      if (w && w.query) {
+        queries.push(w.query);
+      }
+    }
+    const query = { bool: { must: queries.length === 0 ? { match_all: {} } : queries } };
     exportAndDownload(query);
   }, []);
 
