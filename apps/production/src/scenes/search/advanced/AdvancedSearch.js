@@ -24,6 +24,7 @@ const operators = [
   { value: "∃", text: "existe", useInput: false },
   { value: "!∃", text: "n'existe pas", useInput: false },
   { value: "*", text: "contient", useInput: true },
+  { value: "!*", text: "ne contient pas", useInput: true },
   { value: "^", text: "commence par", useInput: true }
 ];
 
