@@ -63,12 +63,6 @@ export default function render() {
               title="Producteur"
             />
             <CollapsableFacet
-              id="domain"
-              initialValue={initialValues.get("domain")}
-              fields={["DOMN.keyword"]}
-              title="Domaines"
-            />
-            <CollapsableFacet
               id="auteurs"
               initialValue={initialValues.get("auteurs")}
               fields={["AUTR.keyword"]}
@@ -104,7 +98,6 @@ export default function render() {
               fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
               title="Contient une localisation"
             />
-            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
@@ -113,7 +106,11 @@ export default function render() {
               id="res"
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
-              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                </div>
+              )}
             />
             <ExportComponent collection="merimee" target="main" />
           </Col>
