@@ -47,7 +47,12 @@ class Museo extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    const notice = await API.updateNotice(this.state.notice.REF, "museo", values);
+    const notice = await API.updateNotice(
+      this.state.notice.REF,
+      "museo",
+      values,
+      this.state.imagesFiles
+    );
     toastr.success(
       "Modification enregistrée",
       "La modification sera visible dans 1 à 5 min en diffusion"
@@ -69,7 +74,6 @@ class Museo extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
-          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
           <FieldImages
             name="PHOTO"
             canOrder={this.state.editable}
