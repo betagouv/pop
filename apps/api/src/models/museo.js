@@ -100,7 +100,13 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: { label: "Adresse complementaire" }
     },
-    MEL: { type: String, default: "", documentation: { label: "Courriel" } },
+    MEL: { type: String, default: "", documentation: { label: "Contact générique du musée" } },
+    CONTACT: { type: String, default: "", documentation: { label: "Contact coordinateur museo" } },
+    CONTACT_MUSEE: {
+      type: String,
+      default: "",
+      documentation: { label: "Contact producteur joconde" }
+    },
     NOMANC: {
       type: String,
       default: "",

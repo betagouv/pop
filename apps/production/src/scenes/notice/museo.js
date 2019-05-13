@@ -111,6 +111,8 @@ class Museo extends React.Component {
               <Col sm={6}>
                 <CustomField name="TEL_M" disabled={!this.state.editable} />
                 <CustomField name="MEL" disabled={!this.state.editable} />
+                <CustomField name="CONTACT" disabled={!this.state.editable} />
+                <CustomField name="CONTACT_MUSEE" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="URL_M" disabled={!this.state.editable} />
