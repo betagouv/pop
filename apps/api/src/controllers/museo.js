@@ -3,9 +3,10 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const multer = require("multer");
+const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
-const { formattedNow } = require("./utils");
+const { formattedNow, uploadFile } = require("./utils");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -27,16 +28,33 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-    const data = JSON.parse(req.body.notice);
-    if (!data || !data.REF) {
-      return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+    try {
+      const notice = JSON.parse(req.body.notice);
+      if (!notice || !notice.REF) {
+        return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+      }
+      const arr = [];
+      for (let i = 0; i < req.files.length; i++) {
+        arr.push(
+          uploadFile(
+            `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
+            req.files[i]
+          )
+        );
+      }
+      transformBeforeCreateOrUpdate(notice);
+      arr.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
+      try {
+        await Promise.all(arr);
+        return res.sendStatus(200);
+      } catch (e) {
+        console.log("e", e);
+        capture(e);
+        res.sendStatus(500);
+      }
+    } catch (e) {
+      console.log("err", e);
     }
-    transformBeforeCreateOrUpdate(data);
-    const doc = await Museo.findOneAndUpdate({ REF: data.REF }, data, { new: true });
-    if (!doc) {
-      return res.sendStatus(404);
-    }
-    return res.status(200).send(doc);
   }
 );
 
