@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import qs from "qs";
-import utils from "./utils"
+import utils from "./utils";
 import fetch from "isomorphic-fetch";
 import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
@@ -137,7 +137,9 @@ async function exportData(fileName, entities) {
       const queries = JSON.parse(search.qb).map(s => {
         const operatorAsText = utils.operators.filter(o => s.operator === o.value)[0].text;
         const combinatorAsText = s.combinator.toLowerCase() === "and" ? "et" : "ou";
-        return `${combinatorAsText} ${s.field.replace(".keyword", "")} ${operatorAsText} ${s.value}`;
+        return `${combinatorAsText} ${s.field.replace(".keyword", "")} ${operatorAsText} ${
+          s.value
+        }`;
       });
 
       // Transform the whole queries into readable text.
@@ -172,9 +174,12 @@ async function exportData(fileName, entities) {
         }
       }
       if (!value) value = "";
-      value = JSON.stringify(value);
+
+      if (typeof value === "object") {
+        value = JSON.stringify(value);
+      }
       value = ("" + value).replace(/"/g, '""');
-      arr.push('"' + value + '"');
+      arr.push(`"${value}"`);
     }
     csv.push(arr.join(";"));
   }
