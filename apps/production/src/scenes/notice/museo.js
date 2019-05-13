@@ -6,10 +6,12 @@ import { connect } from "react-redux";
 import Mapping from "../../services/Mapping";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
+import FieldImages from "./components/fieldImages.js";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import { bucket_url } from "../../config";
 
 import "./index.css";
 
@@ -67,6 +69,15 @@ class Museo extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
+          <FieldImages
+            name="PHOTO"
+            canOrder={this.state.editable}
+            canEdit={this.state.editable}
+            createUrlFromName={e => `museo/${this.state.notice.REF}/${e}`}
+            getAbsoluteUrl={e => `${bucket_url}${e}`}
+            filesToUpload={imagesFiles => this.setState({ imagesFiles })}
+          />
           <Section title="Nom du musée" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>
