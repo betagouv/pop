@@ -248,14 +248,14 @@ Référence de la notice
 |Array|non|non|non|non|||
 
 ### ACQU
-[PAS AFFICHE]
+
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non||Contexte d'acquisition|
 
 ### ADRS
 

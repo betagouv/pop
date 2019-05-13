@@ -16,7 +16,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "MEMOIRE","Array","non","","","","","",""
 "REF","String","oui","Référence de la notice","","","Référence de la notice","Alphanumeric",""
 "POP_IMPORT","Array","non","","","","","",""
-"ACQU","String","non","","","","[PAS AFFICHE]","",""
+"ACQU","String","non","Contexte d'acquisition","","","","",""
 "ADRS","String","non","Adresse de l'édifice","","","","",""
 "ADRS2","String","non","Adresse de l'édifice contenant masqué","","","","",""
 "AFIG","Array","non","Auteur du projet","","","","",""

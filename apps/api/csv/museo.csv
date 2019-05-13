@@ -1,63 +1,92 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
-"REF","String","oui","Référence","","","","",""
-"TOUT","String","non","Index global","","","","",""
+"REF","String","oui","Identifiant du musée","","true","","",""
 "POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
-"ACCES","String","non","Accès","","","","",""
+"ACCES","String","non","Signalement de la fermeture du musée","","","","",""
+"ADRL1_M","String","non","Adresse","","","","",""
+"ARTISTE","String","non","Artistes","","","","",""
+"ATOUT","String","non","Atouts majeurs","","","","",""
+"CATEG","String","non","Catégorie de musée","","","
+            Ecomusée
+            Musée de plein air
+            Musée de site
+            Maison d'artiste
+            Musée littéraire
+            Musée d'art sacré    ","",""
+"COPY","String","non","Copyright photo","","","","",""
+"CP_M","String","non","Code postal","","","","",""
+"DOMPAL","String","non","Thématiques principales","","","
+        Archéologie
+      Art moderne et contemporain
+      Arts décoratifs
+      Beaux  arts
+      Civilisations extra-européennes
+      Ethnologie
+      Histoire
+      Photographie (collections photographiques  non documentaires)
+      Sciences de la nature
+      Sciences fondamentales
+      Technique et industrie
+      ","",""
+"DPT","String","non","Département","","","","",""
+"DT_MODIF","String","non","Date de modification","","","","",""
+"HIST","String","non","Historique","","","","",""
+"INTERET","String","non","Intérêt architectural","","","","",""
+"LABEL","String","non","Label","","","","",""
+"LIEU_M","String","non","Adresse complementaire","","","","",""
+"MEL","String","non","Courriel","","","","",""
+"NOMANC","String","non","Ancien nom","","","","",""
+"NOMOFF","String","non","Dénomination officielle du musée","","","","",""
+"NOMUSAGE","String","non","Nom usuel","","","","",""
+"PHARE","String","non","Personnages phares","","","","",""
+"PROT-BAT","String","non","Protection bâtiment","","","
+        Classé au titre des Monuments Historiques
+        Inscrit à l'Inventaire Supplémentaire des Monuments Historiques
+      ","",""
+"PROT-ESP","String","non","Protection espace","","","
+      Aux abords d'un monument historique
+      Dans un site patrimonial remarquable (ex AVAP, ZPPAUP)
+      Dans un site classé
+      Dans un site inscrit
+      Dans un parc naturel (régional/national)
+","",""
+"REGION","String","non","Région","","","","",""
+"TEL_M","String","non","Téléphone","","","","",""
+"THEMES","String","non","Thèmes","","","","",""
+"URL_M","String","non","Site web","","","","",""
+"VILLE_M","String","non","Ville","","","","",""
+"PHOTO","String","non","Image","","","","",""
+"TOUT","String","non","Index global","","","","",""
 "ACTIV","String","non","Activités culturelles","","","","",""
 "ADRESSE","String","non","Adresse complète","","","","",""
-"ADRL1_M","String","non","Adresse","","","","",""
 "AMIS","String","non","Amis du musée","","","","",""
 "AN_CREAT","String","non","Année de création","","","","",""
 "ANNEE_FE","String","non","Musée fermé","","","","",""
 "ANNEXE","String","non","Annexe","","","","",""
 "ANTARIF","String","non","Année tarifs","","","","",""
-"ARTISTE","String","non","Artistes","","","","",""
-"ATOUT","String","non","Atouts majeurs","","","","",""
 "CEDEX_AD","String","non","ADM-Cédex","","","","",""
-"COPY","String","non","Copyright photo","","","","",""
-"CP_M","String","non","Code postal","","","","",""
 "CTRLTECH","String","non","Ctrl tech.","","","","",""
-"DOMPAL","String","non","Thématiques principales","","","","",""
-"DPT","String","non","Département","","","","",""
 "DT_CREAT","String","non","Date de création","","","","",""
-"DT_MODIF","String","non","Date de modification","","","","",""
 "DT_SAISI","String","non","Date d'entrée base","","","","",""
 "GESTION","String","non","Gestion musée","","","","",""
-"HIST","String","non","Historique","","","","",""
-"INTERET","String","non","Intérêt arch","","","","",""
 "ITI2_M","String","non","Plan Mappy","","","","",""
 "ITI_M","String","non","Itinéraire Mappy","","","","",""
 "JOCONDE","String","non","Base Joconde","","","","",""
-"LABEL","String","non","Label","","","","",""
 "LEGS","String","non","Legs","","","","",""
-"LIEU_M","String","non","Adresse compl.","","","","",""
-"MEL","String","non","Mél","","","","",""
 "MONOPLUR","String","non","Disciplines","","","","",""
 "NB_AMI","String","non","Nombre amis","","","","",""
 "NOM_AMI","String","non","Association","","","","",""
-"NOMANC","String","non","Ancien nom","","","","",""
-"NOMOFF","String","non","Nom officiel","","","","",""
-"NOMUSAGE","String","non","Nom du musée","","","","",""
 "OBS_AMI","String","non","Ass. Amis Obs.","","","","",""
 "OBS_TOUR","String","non","Itinéraire touristique","","","","",""
-"PHARE","String","non","Phare","","","","",""
 "PROPBAT","String","non","Propr. bat.","","","","",""
 "PROPCOLL","String","non","Propr. coll.","","","","",""
-"PROT-BAT","String","non","Protect bat.","","","","",""
-"PROT-ESP","String","non","Protect esp.","","","","",""
 "PUBLI","String","non","Publications","","","","",""
-"REGION","String","non","Région","","","","",""
 "REPCOLL","String","non","Distr. coll","","","","",""
 "SERVICES","String","non","Services","","","","",""
 "SIGLE_M","String","non","Sigle musée","","","","",""
 "STATUT","String","non","Statut musée","","","","",""
 "SURFACES","String","non","Surfaces","","","","",""
-"TEL_M","String","non","Téléphone","","","","",""
-"THEMES","String","non","Thèmes","","","","",""
 "URL_M2","String","non","Site web 2","","","","",""
-"URL_M","String","non","Site web","","","","",""
 "VIDEO","String","non","Image","","","","",""
-"VILLE_M","String","non","Ville","","","","",""
 "RESP","String","non","Resp. scient.","","","","",""
 "GRESP","String","non","Resp. scient. HF","","","","",""
 "PSC","String","non","Projet SC","","","","",""

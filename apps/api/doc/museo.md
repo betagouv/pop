@@ -1,64 +1,66 @@
 # POP SCHEMAS museo
 
 - [REF](/apps/api/doc/museo.md#REF)
-- [TOUT](/apps/api/doc/museo.md#TOUT)
 - [POP_COMMENTAIRES](/apps/api/doc/museo.md#POP_COMMENTAIRES)
 - [ACCES](/apps/api/doc/museo.md#ACCES)
+- [ADRL1_M](/apps/api/doc/museo.md#ADRL1_M)
+- [ARTISTE](/apps/api/doc/museo.md#ARTISTE)
+- [ATOUT](/apps/api/doc/museo.md#ATOUT)
+- [CATEG](/apps/api/doc/museo.md#CATEG)
+- [COPY](/apps/api/doc/museo.md#COPY)
+- [CP_M](/apps/api/doc/museo.md#CP_M)
+- [DOMPAL](/apps/api/doc/museo.md#DOMPAL)
+- [DPT](/apps/api/doc/museo.md#DPT)
+- [DT_MODIF](/apps/api/doc/museo.md#DT_MODIF)
+- [HIST](/apps/api/doc/museo.md#HIST)
+- [INTERET](/apps/api/doc/museo.md#INTERET)
+- [LABEL](/apps/api/doc/museo.md#LABEL)
+- [LIEU_M](/apps/api/doc/museo.md#LIEU_M)
+- [MEL](/apps/api/doc/museo.md#MEL)
+- [NOMANC](/apps/api/doc/museo.md#NOMANC)
+- [NOMOFF](/apps/api/doc/museo.md#NOMOFF)
+- [NOMUSAGE](/apps/api/doc/museo.md#NOMUSAGE)
+- [PHARE](/apps/api/doc/museo.md#PHARE)
+- [PROT-BAT](/apps/api/doc/museo.md#PROT-BAT)
+- [PROT-ESP](/apps/api/doc/museo.md#PROT-ESP)
+- [REGION](/apps/api/doc/museo.md#REGION)
+- [TEL_M](/apps/api/doc/museo.md#TEL_M)
+- [THEMES](/apps/api/doc/museo.md#THEMES)
+- [URL_M](/apps/api/doc/museo.md#URL_M)
+- [VILLE_M](/apps/api/doc/museo.md#VILLE_M)
+- [PHOTO](/apps/api/doc/museo.md#PHOTO)
+- [TOUT](/apps/api/doc/museo.md#TOUT)
 - [ACTIV](/apps/api/doc/museo.md#ACTIV)
 - [ADRESSE](/apps/api/doc/museo.md#ADRESSE)
-- [ADRL1_M](/apps/api/doc/museo.md#ADRL1_M)
 - [AMIS](/apps/api/doc/museo.md#AMIS)
 - [AN_CREAT](/apps/api/doc/museo.md#AN_CREAT)
 - [ANNEE_FE](/apps/api/doc/museo.md#ANNEE_FE)
 - [ANNEXE](/apps/api/doc/museo.md#ANNEXE)
 - [ANTARIF](/apps/api/doc/museo.md#ANTARIF)
-- [ARTISTE](/apps/api/doc/museo.md#ARTISTE)
-- [ATOUT](/apps/api/doc/museo.md#ATOUT)
 - [CEDEX_AD](/apps/api/doc/museo.md#CEDEX_AD)
-- [COPY](/apps/api/doc/museo.md#COPY)
-- [CP_M](/apps/api/doc/museo.md#CP_M)
 - [CTRLTECH](/apps/api/doc/museo.md#CTRLTECH)
-- [DOMPAL](/apps/api/doc/museo.md#DOMPAL)
-- [DPT](/apps/api/doc/museo.md#DPT)
 - [DT_CREAT](/apps/api/doc/museo.md#DT_CREAT)
-- [DT_MODIF](/apps/api/doc/museo.md#DT_MODIF)
 - [DT_SAISI](/apps/api/doc/museo.md#DT_SAISI)
 - [GESTION](/apps/api/doc/museo.md#GESTION)
-- [HIST](/apps/api/doc/museo.md#HIST)
-- [INTERET](/apps/api/doc/museo.md#INTERET)
 - [ITI2_M](/apps/api/doc/museo.md#ITI2_M)
 - [ITI_M](/apps/api/doc/museo.md#ITI_M)
 - [JOCONDE](/apps/api/doc/museo.md#JOCONDE)
-- [LABEL](/apps/api/doc/museo.md#LABEL)
 - [LEGS](/apps/api/doc/museo.md#LEGS)
-- [LIEU_M](/apps/api/doc/museo.md#LIEU_M)
-- [MEL](/apps/api/doc/museo.md#MEL)
 - [MONOPLUR](/apps/api/doc/museo.md#MONOPLUR)
 - [NB_AMI](/apps/api/doc/museo.md#NB_AMI)
 - [NOM_AMI](/apps/api/doc/museo.md#NOM_AMI)
-- [NOMANC](/apps/api/doc/museo.md#NOMANC)
-- [NOMOFF](/apps/api/doc/museo.md#NOMOFF)
-- [NOMUSAGE](/apps/api/doc/museo.md#NOMUSAGE)
 - [OBS_AMI](/apps/api/doc/museo.md#OBS_AMI)
 - [OBS_TOUR](/apps/api/doc/museo.md#OBS_TOUR)
-- [PHARE](/apps/api/doc/museo.md#PHARE)
 - [PROPBAT](/apps/api/doc/museo.md#PROPBAT)
 - [PROPCOLL](/apps/api/doc/museo.md#PROPCOLL)
-- [PROT-BAT](/apps/api/doc/museo.md#PROT-BAT)
-- [PROT-ESP](/apps/api/doc/museo.md#PROT-ESP)
 - [PUBLI](/apps/api/doc/museo.md#PUBLI)
-- [REGION](/apps/api/doc/museo.md#REGION)
 - [REPCOLL](/apps/api/doc/museo.md#REPCOLL)
 - [SERVICES](/apps/api/doc/museo.md#SERVICES)
 - [SIGLE_M](/apps/api/doc/museo.md#SIGLE_M)
 - [STATUT](/apps/api/doc/museo.md#STATUT)
 - [SURFACES](/apps/api/doc/museo.md#SURFACES)
-- [TEL_M](/apps/api/doc/museo.md#TEL_M)
-- [THEMES](/apps/api/doc/museo.md#THEMES)
 - [URL_M2](/apps/api/doc/museo.md#URL_M2)
-- [URL_M](/apps/api/doc/museo.md#URL_M)
 - [VIDEO](/apps/api/doc/museo.md#VIDEO)
-- [VILLE_M](/apps/api/doc/museo.md#VILLE_M)
 - [RESP](/apps/api/doc/museo.md#RESP)
 - [GRESP](/apps/api/doc/museo.md#GRESP)
 - [PSC](/apps/api/doc/museo.md#PSC)
@@ -85,17 +87,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non||Référence|
-
-### TOUT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Index global|
+|String|oui|oui|non|non||Identifiant du musée|
 
 ### POP_COMMENTAIRES
 Commentaires technique
@@ -115,27 +107,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Accès|
-
-### ACTIV
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Activités culturelles|
-
-### ADRESSE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse complète|
+|String|non|non|non|non||Signalement de la fermeture du musée|
 
 ### ADRL1_M
 
@@ -146,56 +118,6 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Adresse|
-
-### AMIS
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Amis du musée|
-
-### AN_CREAT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Année de création|
-
-### ANNEE_FE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Musée fermé|
-
-### ANNEXE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Annexe|
-
-### ANTARIF
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Année tarifs|
 
 ### ARTISTE
 
@@ -217,15 +139,21 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Atouts majeurs|
 
-### CEDEX_AD
+### CATEG
 
+            Ecomusée
+            Musée de plein air
+            Musée de site
+            Maison d'artiste
+            Musée littéraire
+            Musée d'art sacré    
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||ADM-Cédex|
+|String|non|non|non|non||Catégorie de musée|
 
 ### COPY
 
@@ -247,18 +175,20 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Code postal|
 
-### CTRLTECH
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ctrl tech.|
-
 ### DOMPAL
 
+        Archéologie
+      Art moderne et contemporain
+      Arts décoratifs
+      Beaux  arts
+      Civilisations extra-européennes
+      Ethnologie
+      Histoire
+      Photographie (collections photographiques  non documentaires)
+      Sciences de la nature
+      Sciences fondamentales
+      Technique et industrie
+      
 
 
 
@@ -277,16 +207,6 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Département|
 
-### DT_CREAT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date de création|
-
 ### DT_MODIF
 
 
@@ -296,26 +216,6 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Date de modification|
-
-### DT_SAISI
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date d'entrée base|
-
-### GESTION
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Gestion musée|
 
 ### HIST
 
@@ -335,37 +235,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Intérêt arch|
-
-### ITI2_M
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Plan Mappy|
-
-### ITI_M
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Itinéraire Mappy|
-
-### JOCONDE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Base Joconde|
+|String|non|non|non|non||Intérêt architectural|
 
 ### LABEL
 
@@ -377,16 +247,6 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Label|
 
-### LEGS
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Legs|
-
 ### LIEU_M
 
 
@@ -395,7 +255,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse compl.|
+|String|non|non|non|non||Adresse complementaire|
 
 ### MEL
 
@@ -405,37 +265,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mél|
-
-### MONOPLUR
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Disciplines|
-
-### NB_AMI
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nombre amis|
-
-### NOM_AMI
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Association|
+|String|non|non|non|non||Courriel|
 
 ### NOMANC
 
@@ -455,7 +285,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom officiel|
+|String|non|non|non|non||Dénomination officielle du musée|
 
 ### NOMUSAGE
 
@@ -465,27 +295,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom du musée|
-
-### OBS_AMI
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ass. Amis Obs.|
-
-### OBS_TOUR
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Itinéraire touristique|
+|String|non|non|non|non||Nom usuel|
 
 ### PHARE
 
@@ -495,49 +305,28 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Phare|
-
-### PROPBAT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Propr. bat.|
-
-### PROPCOLL
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Propr. coll.|
+|String|non|non|non|non||Personnages phares|
 
 ### PROT-BAT
 
+        Classé au titre des Monuments Historiques
+        Inscrit à l'Inventaire Supplémentaire des Monuments Historiques
+      
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Protect bat.|
+|String|non|non|non|non||Protection bâtiment|
 
 ### PROT-ESP
 
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Protect esp.|
-
-### PUBLI
+      Aux abords d'un monument historique
+      Dans un site patrimonial remarquable (ex AVAP, ZPPAUP)
+      Dans un site classé
+      Dans un site inscrit
+      Dans un parc naturel (régional/national)
 
 
 
@@ -545,7 +334,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Publications|
+|String|non|non|non|non||Protection espace|
 
 ### REGION
 
@@ -556,56 +345,6 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Région|
-
-### REPCOLL
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Distr. coll|
-
-### SERVICES
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Services|
-
-### SIGLE_M
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Sigle musée|
-
-### STATUT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Statut musée|
-
-### SURFACES
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Surfaces|
 
 ### TEL_M
 
@@ -627,16 +366,6 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Thèmes|
 
-### URL_M2
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Site web 2|
-
 ### URL_M
 
 
@@ -646,16 +375,6 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Site web|
-
-### VIDEO
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Image|
 
 ### VILLE_M
 
@@ -667,6 +386,336 @@ Commentaires technique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Ville|
 
+### PHOTO
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Image|
+
+### TOUT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Index global|
+
+### ACTIV
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Activités culturelles|
+
+### ADRESSE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Adresse complète|
+
+### AMIS
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Amis du musée|
+
+### AN_CREAT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Année de création|
+
+### ANNEE_FE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Musée fermé|
+
+### ANNEXE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Annexe|
+
+### ANTARIF
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Année tarifs|
+
+### CEDEX_AD
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||ADM-Cédex|
+
+### CTRLTECH
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Ctrl tech.|
+
+### DT_CREAT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Date de création|
+
+### DT_SAISI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Date d'entrée base|
+
+### GESTION
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Gestion musée|
+
+### ITI2_M
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Plan Mappy|
+
+### ITI_M
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Itinéraire Mappy|
+
+### JOCONDE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Base Joconde|
+
+### LEGS
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Legs|
+
+### MONOPLUR
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Disciplines|
+
+### NB_AMI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Nombre amis|
+
+### NOM_AMI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Association|
+
+### OBS_AMI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Ass. Amis Obs.|
+
+### OBS_TOUR
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Itinéraire touristique|
+
+### PROPBAT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Propr. bat.|
+
+### PROPCOLL
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Propr. coll.|
+
+### PUBLI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Publications|
+
+### REPCOLL
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Distr. coll|
+
+### SERVICES
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Services|
+
+### SIGLE_M
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Sigle musée|
+
+### STATUT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Statut musée|
+
+### SURFACES
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Surfaces|
+
+### URL_M2
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Site web 2|
+
+### VIDEO
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|oui|non||Image|
+
 ### RESP
 
 
@@ -675,7 +724,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Resp. scient.|
+|String|non|non|oui|non||Resp. scient.|
 
 ### GRESP
 
@@ -685,7 +734,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Resp. scient. HF|
+|String|non|non|oui|non||Resp. scient. HF|
 
 ### PSC
 
@@ -695,7 +744,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Projet SC|
+|String|non|non|oui|non||Projet SC|
 
 ### DPSC-D
 
@@ -705,7 +754,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||date PSC DRAC|
+|String|non|non|oui|non||date PSC DRAC|
 
 ### DPSC-S
 
@@ -715,7 +764,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||date PSC SMF|
+|String|non|non|oui|non||date PSC SMF|
 
 ### DMDF
 
@@ -725,7 +774,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||an appel. MDF|
+|String|non|non|oui|non||an appel. MDF|
 
 ### SPUB
 
@@ -735,7 +784,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Service publics|
+|String|non|non|oui|non||Service publics|
 
 ### SPUB-P
 
@@ -745,7 +794,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||S. publics préc.|
+|String|non|non|oui|non||S. publics préc.|
 
 ### INVR
 
@@ -755,7 +804,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Inventaire regl.|
+|String|non|non|oui|non||Inventaire regl.|
 
 ### NUMER
 
@@ -765,7 +814,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numérisation|
+|String|non|non|oui|non||Numérisation|
 
 ### LGN
 
@@ -775,7 +824,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Coll. en ligne|
+|String|non|non|oui|non||Coll. en ligne|
 
 ### REST
 
