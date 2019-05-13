@@ -14,20 +14,6 @@ import ExportComponent from "../components/ExportComponent";
 import utils from "../components/utils";
 import Tooltip from "./Tooltip";
 
-const operators = [
-  { value: "==", text: "égal à", useInput: true },
-  { value: "!=", text: "différent de", useInput: true },
-  { value: ">=", text: "supérieur ou égal à", useInput: true },
-  { value: "<=", text: "inférieur ou égal à", useInput: true },
-  { value: ">", text: "strictement supérieur à", useInput: true },
-  { value: "<", text: "strictement inférieur à", useInput: true },
-  { value: "∃", text: "existe", useInput: false },
-  { value: "!∃", text: "n'existe pas", useInput: false },
-  { value: "*", text: "contient", useInput: true },
-  { value: "!*", text: "ne contient pas", useInput: true },
-  { value: "^", text: "commence par", useInput: true }
-];
-
 export default function AdvancedSearch({ collection, card }) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   const fields = Object.entries(Mapping[collection]).map(([k, v]) => {
@@ -63,7 +49,7 @@ export default function AdvancedSearch({ collection, card }) {
             initialValue={initialValues.get("qb")}
             id="qb"
             fields={fields}
-            operators={operators}
+            operators={utils.operators}
             autoComplete={true}
             combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
           />
