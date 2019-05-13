@@ -1,94 +1,92 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  MultiList
-} from "@appbaseio/reactivesearch/lib";
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
 import { Row, Col } from "reactstrap";
-
+import CollapsableFacet from "../search/components/CollapsableFacet";
 import utils from "./utils.js";
-
 import "./list.css";
-
 import { es_url } from "../../config.js";
 
-const FILTER = ["mainSearch", "institution", "email", "notices"];
+export default function List() {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  const sortKey = "importedAt";
+  const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
+  const [sortQuery, setSortQuery] = useState([{ [sortKey]: { order: sortOrder } }]);
 
-export default class List extends React.Component {
-  render() {
-    return (
-      <div className="list-import">
-        <ReactiveBase url={`${es_url}/import`} app="import">
-          <Row>
-            <Col md="3">
-              <DataSearch
-                className="filter"
-                componentId="mainSearch"
-                dataField={["institution", "email", "notices"]}
-                queryFormat="and"
-                iconPosition="left"
-                title="Recherche"
-                className="mainSearch"
-                placeholder="Saisissez une notice, une adresse email ou une institution"
-                URLParams={true}
-              />
-              <MultiList
-                className="filter"
-                componentId="institution"
-                dataField="institution.keyword"
-                title="Institutions"
-                placeholder="Sélectionnez une institution"
-                react={{ and: FILTER.filter(e => e !== "institution") }}
-              />
-              <MultiList
-                className="filter"
-                componentId="email"
-                dataField="email.keyword"
-                title="Email"
-                placeholder="Sélectionnez un email"
-                react={{ and: FILTER.filter(e => e !== "email") }}
-              />
-              <MultiList
-                className="filter"
-                componentId="notices"
-                dataField="notices.keyword"
-                title="Notices"
-                placeholder="Sélectionnez une notice"
-                react={{ and: FILTER.filter(e => e !== "notices") }}
-              />
-            </Col>
-            <Col md="9">
-              <SelectedFilters clearAllLabel="Tout supprimer" />
-              <ReactiveList
-                sortOptions={[
-                  { label: "Les plus récents en premier", dataField: "importedAt", sortBy: "desc" },
-                  { label: "Les plus anciens en premier", dataField: "importedAt", sortBy: "asc" }
-                ]}
-                componentId="results"
-                className="reactive-list"
-                react={{ and: FILTER }}
-                onResultStats={(total, took) => {
-                  if (total === 1) {
-                    return `1 résultat`;
-                  }
-                  return `${total} résultats`;
-                }}
-                onNoResults="Aucun résultat trouvé."
-                loader="Préparation de l'affichage des résultats..."
-                dataField="yo"
-                URLParams={true}
-                size={20}
-                onData={data => <Card key={data.REF} data={data} />}
-                pagination={true}
-              />
-            </Col>
-          </Row>
-        </ReactiveBase>
-      </div>
-    );
-  }
+  useEffect(() => {
+    setSortQuery([{ [sortKey]: { order: sortOrder } }]);
+  }, [sortKey, sortOrder]);
+  return (
+    <div className="list-import">
+      <Elasticsearch
+        url={`${es_url}/import`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <Row>
+          <Col md="3">
+            <SearchBox
+              id="main"
+              placeholder="Saisissez une notice, une adresse email ou une institution"
+              initialValue={initialValues.get("main")}
+              fields={["institution", "email", "notices"]}
+            />
+            <ActiveFilters id="af" />
+            <CollapsableFacet
+              id="institution"
+              initialValue={initialValues.get("institution")}
+              fields={["institution.keyword"]}
+              title="Institutions"
+            />
+            <CollapsableFacet
+              id="email"
+              initialValue={initialValues.get("email")}
+              fields={["email.keyword"]}
+              title="Email"
+            />
+            <CollapsableFacet
+              id="notices"
+              initialValue={initialValues.get("notices")}
+              fields={["notices.keyword"]}
+              title="Notices"
+            />
+          </Col>
+          <Col md="9">
+            <Results
+              sort={sortQuery}
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              itemsPerPage={20}
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                  <select
+                    className="ml-2"
+                    onChange={e => setSortOrder(e.target.value)}
+                    value={sortOrder}
+                  >
+                    <option value="desc">Les plus récents en premier</option>
+                    <option value="asc">Les plus anciens en premier</option>
+                  </select>
+                </div>
+              )}
+            />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </div>
+  );
 }
 
 const Card = ({ data }) => {

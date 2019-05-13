@@ -12,11 +12,15 @@
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
 }
 
-.list-gallery .reactive-list > div {
+.list-gallery  .react-es-results {
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+}
+.list-gallery .react-es-results > div:nth-child(1),
+.list-gallery .react-es-pagination {
+  flex: 0 0 100%;
 }
 
 .list-gallery .gallery-card {

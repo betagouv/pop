@@ -1,89 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  ReactiveBase,
-  DataSearch,
-  ReactiveList,
-  SelectedFilters,
-  MultiList
-} from "@appbaseio/reactivesearch/lib";
+  Elasticsearch,
+  SearchBox,
+  Results,
+  toUrlQueryString,
+  fromUrlQueryString,
+  ActiveFilters
+} from "react-elasticsearch";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
-
+import CollapsableFacet from "../search/components/CollapsableFacet";
+import { es_url, bucket_url } from "../../config.js";
 import "./index.css";
 
-import { es_url, bucket_url } from "../../config.js";
+function Gallery({ role, group }) {
+  const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
+  const sortKey = "createdAt";
+  const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
+  const [sortQuery, setSortQuery] = useState([{ [sortKey]: { order: sortOrder } }]);
 
-const FILTER = ["mainSearch", "institution", "email", "notices"];
-
-class Gallery extends React.Component {
-  render() {
-    // Only admin can view galleries.
-    if (!(this.props.role === "administrateur" && this.props.group === "admin")) {
-      return <Redirect to="/recherche" />;
-    }
-    return (
-      <div className="list-gallery">
-        <ReactiveBase url={`${es_url}/gallery`} app="gallery">
-          <Row>
-            <Col md="3">
-              <SelectedFilters clearAllLabel="Tout supprimer" />
-              <DataSearch
-                className="filter"
-                componentId="mainSearch"
-                dataField={["name", "email"]}
-                queryFormat="and"
-                iconPosition="left"
-                title="Recherche"
-                className="mainSearch"
-                placeholder="Saisissez un nom ou un email"
-                URLParams={true}
-              />
-              <MultiList
-                className="filter"
-                componentId="institution"
-                dataField="institution.keyword"
-                title="Institutions"
-                placeholder="Sélectionnez une institution"
-                react={{ and: FILTER.filter(e => e !== "institution") }}
-              />
-              <MultiList
-                className="filter"
-                componentId="email"
-                dataField="createdBy.keyword"
-                title="Créé par "
-                placeholder="Sélectionnez un email"
-                react={{ and: FILTER.filter(e => e !== "email") }}
-              />
-            </Col>
-            <Col md="9">
-              <ReactiveList
-                sortOptions={[
-                  { label: "Les plus récents en premier", dataField: "createdAt", sortBy: "desc" },
-                  { label: "Les plus anciens en premier", dataField: "createdAt", sortBy: "asc" }
-                ]}
-                componentId="results"
-                className="reactive-list"
-                react={{ and: FILTER }}
-                onResultStats={(total, took) => {
-                  if (total === 1) {
-                    return `1 résultat`;
-                  }
-                  return `${total} résultats`;
-                }}
-                onNoResults="Aucun résultat trouvé."
-                loader="Préparation de l'affichage des résultats..."
-                URLParams={true}
-                dataField=""
-                size={20}
-                onData={data => <Card key={data._id} data={data} />}
-              />
-            </Col>
-          </Row>
-        </ReactiveBase>
-      </div>
-    );
+  useEffect(() => {
+    setSortQuery([{ [sortKey]: { order: sortOrder } }]);
+  }, [sortKey, sortOrder]);
+  // Only admin can view galleries.
+  if (!(role === "administrateur" && group === "admin")) {
+    return <Redirect to="/recherche" />;
   }
+  return (
+    <div className="list-gallery">
+      <Elasticsearch
+        url={`${es_url}/gallery`}
+        onChange={params => {
+          const q = toUrlQueryString(params);
+          if (q) {
+            window.history.replaceState("x", "y", `?${q}`);
+          }
+        }}
+      >
+        <Row>
+          <Col md="3">
+            <SearchBox
+              id="main"
+              placeholder="Saisissez un nom ou un email"
+              initialValue={initialValues.get("main")}
+              fields={["name", "email", "notices"]}
+            />
+            <ActiveFilters id="af" />
+            <CollapsableFacet
+              id="institution"
+              initialValue={initialValues.get("institution")}
+              fields={["institution.keyword"]}
+              title="Institutions"
+            />
+            <CollapsableFacet
+              id="createdBy"
+              initialValue={initialValues.get("createdBy")}
+              fields={["createdBy.keyword"]}
+              title="Créé par"
+            />
+          </Col>
+          <Col md="9">
+            <Results
+              sort={sortQuery}
+              initialPage={initialValues.get("resPage")}
+              id="res"
+              itemsPerPage={20}
+              item={(source, _score, id) => <Card key={id} data={source} />}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                  <select
+                    className="ml-2"
+                    onChange={e => setSortOrder(e.target.value)}
+                    value={sortOrder}
+                  >
+                    <option value="desc">Les plus récents en premier</option>
+                    <option value="asc">Les plus anciens en premier</option>
+                  </select>
+                </div>
+              )}
+            />
+          </Col>
+        </Row>
+      </Elasticsearch>
+    </div>
+  );
 }
 
 const Card = ({ data }) => {
