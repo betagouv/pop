@@ -47,7 +47,6 @@ router.put(
       await Promise.all(arr);
       return res.sendStatus(200);
     } catch (e) {
-      console.log("e", e);
       capture(e);
       res.sendStatus(500);
     }
