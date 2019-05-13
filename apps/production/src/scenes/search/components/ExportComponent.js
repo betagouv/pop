@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import qs from "qs";
-import { QueryBuilder } from "pop-shared";
+import utils from "./utils"
 import fetch from "isomorphic-fetch";
 import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
@@ -131,13 +131,13 @@ async function exportData(fileName, entities) {
   const search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
 
   if (search) {
-    if (search.q) {
+    if (search.qb) {
       // Get an array of queries with rules as text.
 
-      const queries = search.q.map(s => {
-        const operatorAsText = QueryBuilder.operators.filter(o => s.operator === o.value)[0].text;
-        const combinatorAsText = s.combinator.toLowerCase();
-        return `${combinatorAsText} ${s.key} ${operatorAsText} ${s.value}`;
+      const queries = JSON.parse(search.qb).map(s => {
+        const operatorAsText = utils.operators.filter(o => s.operator === o.value)[0].text;
+        const combinatorAsText = s.combinator.toLowerCase() === "and" ? "et" : "ou";
+        return `${combinatorAsText} ${s.field.replace(".keyword", "")} ${operatorAsText} ${s.value}`;
       });
 
       // Transform the whole queries into readable text.

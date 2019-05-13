@@ -292,9 +292,24 @@ function pagination(total, itemsPerPage, page, setPage) {
   return pagination;
 }
 
+const operators = [
+  { value: "==", text: "égal à", useInput: true },
+  { value: "!=", text: "différent de", useInput: true },
+  { value: ">=", text: "supérieur ou égal à", useInput: true },
+  { value: "<=", text: "inférieur ou égal à", useInput: true },
+  { value: ">", text: "strictement supérieur à", useInput: true },
+  { value: "<", text: "strictement inférieur à", useInput: true },
+  { value: "∃", text: "existe", useInput: false },
+  { value: "!∃", text: "n'existe pas", useInput: false },
+  { value: "*", text: "contient", useInput: true },
+  { value: "!*", text: "ne contient pas", useInput: true },
+  { value: "^", text: "commence par", useInput: true }
+];
+
 export default {
   pagination,
   generateLoca,
   customQuery,
-  toFrenchRegex
+  toFrenchRegex,
+  operators
 };
