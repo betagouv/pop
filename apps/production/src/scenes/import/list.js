@@ -67,7 +67,7 @@ export default function List() {
               initialPage={initialValues.get("resPage")}
               id="res"
               itemsPerPage={20}
-              item={(source, _score, id) => <Card key={id} data={source} />}
+              item={(source, _score, id) => <Card key={id} id={id} data={source} />}
               stats={total => (
                 <div>
                   {total} résultat{total === 1 ? "" : "s"}
@@ -89,14 +89,14 @@ export default function List() {
   );
 }
 
-const Card = ({ data }) => {
+const Card = ({ data, id }) => {
   const preview_url = `http://pop${
     process.env.NODE_ENV === "production" ? "" : "-staging"
-  }.culture.gouv.fr/search/list?import=["${data._id}"]`;
+  }.culture.gouv.fr/search/list?import=["${id}"]`;
 
   const details_url = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
     process.env.NODE_ENV === "production" ? "" : "-staging"
-  }/import/${data._id}/import.csv`;
+  }/import/${id}/import.csv`;
 
   return (
     <div className="import-card col-6">
