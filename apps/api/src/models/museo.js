@@ -63,7 +63,7 @@ const Schema = new mongoose.Schema(
       documentation: { label: "Code postal" }
     },
     DOMPAL: {
-      type: String,
+      type: [String],
       default: "",
       documentation: {
         label: "Thématiques principales",
