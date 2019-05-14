@@ -57,6 +57,24 @@ export default function render() {
               fields={["DPT.keyword"]}
               title="Département"
             />
+            <CollapsableFacet
+              id="ville"
+              initialValue={initialValues.get("ville")}
+              fields={["VILLE_M.keyword"]}
+              title="Ville"
+            />
+            <CollapsableFacet
+              id="dompal"
+              initialValue={initialValues.get("dompal")}
+              fields={["DOMPAL.keyword"]}
+              title="Thématiques principales"
+            />
+            <CollapsableFacet
+              id="cate"
+              initialValue={initialValues.get("cate")}
+              fields={["CATEG.keyword"]}
+              title="Catégorie de musée "
+            />
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
@@ -65,7 +83,11 @@ export default function render() {
               id="res"
               item={(source, _score, id) => <Card key={id} data={source} />}
               pagination={utils.pagination}
-              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                </div>
+              )}
             />
             <ExportComponent collection="museo" target="main" />
           </Col>
