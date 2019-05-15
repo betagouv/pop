@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import qs from "qs";
 import utils from "./utils";
 import fetch from "isomorphic-fetch";
-import { history } from "../../../redux/store";
 import { es_url } from "../../../config";
 import excelIcon from "../../../assets/microsoftexcel.svg";
 import { CustomWidget } from "react-elasticsearch";
@@ -67,7 +66,6 @@ function Loading({ onFinish, collection, ctx, target }) {
         const hours = ("0" + d.getHours()).slice(-2);
         const secondes = ("0" + d.getSeconds()).slice(-2);
         const fileName = `${collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
-        console.log(docs);
         exportData(fileName, docs);
         onFinish();
       } catch (e) {
@@ -128,12 +126,11 @@ async function exportData(fileName, entities) {
   const csv = [];
 
   // Add a first line with query parameters.
-  const search = qs.parse(history.location.search, { ignoreQueryPrefix: true });
+  const search = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   if (search) {
     if (search.qb) {
       // Get an array of queries with rules as text.
-
       const queries = JSON.parse(search.qb).map(s => {
         const operatorAsText = utils.operators.filter(o => s.operator === o.value)[0].text;
         const combinatorAsText = s.combinator.toLowerCase() === "and" ? "et" : "ou";
