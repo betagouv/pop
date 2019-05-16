@@ -56,7 +56,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              ignore_above: 32766
             }
           }
         },
@@ -162,7 +163,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              ignore_above: 32766
             }
           }
         },
