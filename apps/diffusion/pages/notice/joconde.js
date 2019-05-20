@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import { getInformations } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -33,18 +34,6 @@ export default class extends React.Component {
   componentDidMount() {
     logEvent("notice_open", { base: "joconde", notice: this.props.notice.REF });
   }
-
-  getMetaDescription = () => {
-    const titre = this.props.notice.TICO || this.props.notice.TITR || "";
-    const auteur = this.props.notice.AUTR ? this.props.notice.AUTR : "";
-    if (this.props.notice.DOMN && this.props.notice.DOMN.length === 1) {
-      const category = this.props.notice.DOMN[0];
-      if (category.toLowerCase() === "peinture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}.`;
-      }
-    }
-    return `Découvrez ${titre}, par ${auteur}.`;
-  };
 
   fieldImage(notice) {
     const images = toFieldImages(notice.IMG);
@@ -119,17 +108,14 @@ export default class extends React.Component {
     if (!this.props.notice) {
       return throw404();
     }
-
+    const { title, image, metadescription } = getInformations(this.props.notice);
     const notice = this.props.notice;
-    const description = this.getMetaDescription();
     const obj = {
-      name: notice.TITR,
+      name: title,
       created_at: notice.PERI.length ? notice.PERI[0] : "",
       artform: notice.DOMN.length ? notice.DOMN[0] : "",
-      image: notice.IMG.length
-        ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG[0]}`
-        : "",
-      description: notice.DESC,
+      image: image,
+      description: metadescription,
       artMedium: notice.TECH.join(", "),
       creator: String(notice.AUTR).split(";"),
       comment: notice.COMM,
@@ -141,19 +127,12 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>{getTitle(notice)}</title>
-              <meta content={description} name="description" />
+              <title>{title}</title>
+              <meta content={metadescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {notice.IMG.length ? (
-                <meta
-                  property="og:image"
-                  content={`https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG[0]}`}
-                />
-              ) : (
-                <meta />
-              )}
+              {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{getTitle(notice)}</h1>
+            <h1 className="heading">{title}</h1>
 
             {this.fieldImage(notice)}
             <Row>
@@ -292,17 +271,6 @@ export default class extends React.Component {
       </Layout>
     );
   }
-}
-
-function getTitle(notice) {
-  if (notice.TITR) {
-    return notice.TITR;
-  }
-  if ((notice.DENO || []).length) {
-    return notice.DENO.join(", ");
-  }
-
-  return (notice.DOMN || []).join(", ");
 }
 
 const SeeMore = ({ notice, museo }) => {

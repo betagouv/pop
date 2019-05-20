@@ -5,10 +5,10 @@ On a du faire cette fonction "utils.getInformations" pour gérer les principales
 */
 
 export function getInformations(notice) {
-  const type = notice._type;
-
-  switch (type) {
-    case "joconde": {
+  const base = notice.BASE;
+  console.log(notice);
+  switch (base) {
+    case "Collections des musées de France (Joconde)": {
       let title = "";
       if (notice.TITR) {
         title = notice.TITR;
@@ -21,10 +21,15 @@ export function getInformations(notice) {
 
       const subtitle = !notice.TITR && notice.DENO ? "" : notice.DENO.join(", ");
 
+      let metadescription = "";
+      if (notice.REPR) {
+        metadescription = notice.REPR;
+      }
+
       const image = getImageUrl(notice);
-      return { title, subtitle, image };
+      return { title, subtitle, metadescription, image };
     }
-    case "memoire": {
+    case "Photographies (Mémoire)": {
       let title = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
       title = capitalizeFirstLetter(title);
 
@@ -37,35 +42,64 @@ export function getInformations(notice) {
 
       const subtitle = notice.TECH;
 
+      let metadescription = "";
+      if (notice.LEG) {
+        metadescription = notice.LEG;
+      }
+
       const image = getImageUrl(notice);
-      return { title, subtitle, logo, image };
+      return { title, subtitle, metadescription, logo, image };
     }
-    case "museo": {
+    case "Musées de france (MUSEO)": {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 
+      let metadescription = "";
+
       const image = getImageUrl(notice);
-      return { title, image };
+      return { title, metadescription, image };
     }
-    case "enluminures": {
+    case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;
       title = capitalizeFirstLetter(title);
 
       const subtitle = notice.SUJET;
 
+      let metadescription = "";
+
       const image = getImageUrl(notice);
-      return { title, subtitle, image };
+      return { title, subtitle, metadescription, image };
     }
-    case "mnr": {
+    case "Récupération artistique (MNR Rose-Valland)": {
       let title = notice.TICO || notice.TITR;
       title = capitalizeFirstLetter(title);
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
+      let metadescription = "";
+
       const image = getImageUrl(notice);
-      return { title, subtitle, image };
+      return { title, subtitle, metadescription, image };
     }
-    case "palissy": {
+    case "Patrimoine mobilier (Palissy)": {
+      let title = notice.TICO || notice.TITR;
+      title = capitalizeFirstLetter(title);
+
+      let logo = "";
+      if (notice.PRODUCTEUR === "Inventaire") {
+        logo = "/static/inventaire.jpg";
+      } else if (notice.PRODUCTEUR === "Monuments Historiques") {
+        logo = "/static/mh.png";
+      }
+
+      let metadescription = "";
+
+      const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
+
+      const image = getImageUrl(notice);
+      return { title, subtitle, metadescription, logo, image };
+    }
+    case "Patrimoine architectural (Mérimée)": {
       let title = notice.TICO || notice.TITR;
       title = capitalizeFirstLetter(title);
 
@@ -78,24 +112,21 @@ export function getInformations(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, logo, image };
-    }
-    case "merimee": {
-      let title = notice.TICO || notice.TITR;
-      title = capitalizeFirstLetter(title);
-
-      let logo = "";
-      if (notice.PRODUCTEUR === "Inventaire") {
-        logo = "/static/inventaire.jpg";
-      } else if (notice.PRODUCTEUR === "Monuments Historiques") {
-        logo = "/static/mh.png";
+      let metadescription = "";
+      /*
+          const titre = this.props.notice.TICO || this.props.notice.TITR || "";
+    const datation = this.props.notice.SCLE ? this.props.notice.SCLE.join(" ") : "";
+    if (this.props.notice.DENO && this.props.notice.DENO.length === 1) {
+      const category = this.props.notice.DENO[0];
+      if (category.toLowerCase() === "église") {
+        return `Découvrez ${titre}, cette ${category} du ${datation}.`;
       }
-
-      const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
+    }
+    return `Découvrez ${titre}, du ${datation}.`;
+    */
 
       const image = getImageUrl(notice);
-      return { title, subtitle, logo, image };
+      return { title, subtitle, metadescription, logo, image };
     }
     default:
       return {};
