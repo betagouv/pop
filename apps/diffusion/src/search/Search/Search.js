@@ -30,12 +30,12 @@ const fields = [
   "SCLD^1"
 ];
 
-export default function Search() {
+export default function Search({ initialValues }) {
   return (
     <SearchBox
       id="mainSearch"
       placeholder="Saisissez un titre, une dénomination ou une localisation"
-      /* initialValue={initialValues.get("mainSearch")} */
+      initialValue={initialValues.get("mainSearch")}
       customQuery={value => {
         if (!value) {
           return { match_all: {} };

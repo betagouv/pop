@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { ReactiveBase } from "@appbaseio/reactivesearch";
-import { Elasticsearch } from "react-elasticsearch";
+import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
@@ -48,6 +47,8 @@ export default class extends React.Component {
     }
 
     const queryScope = this.props.mode === "simple" ? BASES : this.props.base;
+    const initialValues = fromUrlQueryString(this.props.queryString);
+    
 
     return (
       <Layout>
@@ -68,19 +69,21 @@ export default class extends React.Component {
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
             <Elasticsearch
-              url={`${es_url}${this.props.base || "merimee,palissy,memoire,joconde,mnr,enluminures"}`}
-              setSearchParams={url => {
-                // TODSO
+              url={`${es_url}${queryScope}`}
+              onChange={params => {
                 const { mode, view, base } = this.props;
-                replaceSearchRouteWithUrl({ mode, view, base, url });
+                replaceSearchRouteWithUrl({
+                  mode,
+                  view,
+                  base,
+                  url: `?${toUrlQueryString(params)}`
+                });
               }}
             >
               <Row className="search-row">
-                {this.props.mode === "simple"? (
+                {this.props.mode === "simple" ? (
                   <div className={`search-sidebar ${this.state.mobile_menu || ""}`}>
-                    <Menu
-                      closeMenu={() => this.setState({ mobile_menu: false })}
-                    />
+                    <Menu closeMenu={() => this.setState({ mobile_menu: false })} initialValues={initialValues} />
                   </div>
                 ) : null}
                 <div className="search-results">
@@ -89,8 +92,9 @@ export default class extends React.Component {
                       mode={this.props.mode}
                       location={this.props.asPath}
                       base={this.props.base}
+                      initialValues={initialValues}
                     />
-                    {this.props.mode === "simple"  ? (
+                    {this.props.mode === "simple" ? (
                       <MobileFilters
                         openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
                       />

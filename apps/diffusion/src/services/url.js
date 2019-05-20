@@ -58,10 +58,13 @@ export function replaceSearchRouteWithUrl(options = {}) {
   }
 
   // Goto route
-  return Router.replace(
-    `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
-    paramsToUrlAlias(mode, view, base, qs)
-  );
+  const urlAlias = paramsToUrlAlias(mode, view, base, qs);
+  if (urlAlias !== `${window.location.pathname}${window.location.search}`) {
+    return Router.replace(
+      `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
+      urlAlias
+    );
+  }
 }
 
 export function pushSearchRoute(options = {}) {

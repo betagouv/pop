@@ -2,9 +2,7 @@ import React from "react";
 import { ActiveFilters, Facet } from "react-elasticsearch";
 import { CollapsableFacet } from "./utils";
 
-const initialValues = new Map();
-
-const Menu = ({ closeMenu }) => (
+const Menu = ({ closeMenu, initialValues }) => (
   <aside className="search-filters-sidebar">
     <div className="close_mobile_menu" onClick={closeMenu}>
       x
@@ -107,7 +105,7 @@ const Menu = ({ closeMenu }) => (
           fields={["POP_IMPORT.keyword"]}
         />
       ) : null}
-      {initialValues.get(" : null}") ? (
+      {initialValues.get("museo") ? (
         <Facet id="museo" initialValue={initialValues.get("museo")} fields={["MUSEO.keyword"]} />
       ) : null}
       {initialValues.get("ref") ? (
