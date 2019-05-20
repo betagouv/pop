@@ -67,7 +67,7 @@ export default function List() {
               initialPage={initialValues.get("resPage")}
               id="res"
               itemsPerPage={20}
-              item={(source, _score, id) => <Card key={id} id={id} data={source} />}
+              items={data => data.map(({_source, _id}) =>  <Card key={_id} id={_id} data={_source} />)}
               stats={total => (
                 <div>
                   {total} résultat{total === 1 ? "" : "s"}

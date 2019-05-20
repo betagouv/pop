@@ -34,7 +34,7 @@ export default function render() {
             id="main"
             placeholder="Saisissez un nom ou une référence"
             initialValue={initialValues.get("main")}
-            customQuery={value => utils.customQuery(value, ["NAME", "REF"])}
+            customQuery={value => utils.customQuery(value, ["TITR", "REF", "SUJET"])}
           />
         </div>
         <Row>
@@ -76,7 +76,7 @@ export default function render() {
             <Results
               initialPage={initialValues.get("resPage")}
               id="res"
-              item={(source, _score, id) => <Card key={id} data={source} />}
+              items={data => data.map(({_source, _id}) =>  <Card key={_id} data={_source} />)}
               pagination={utils.pagination}
               stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
             />
