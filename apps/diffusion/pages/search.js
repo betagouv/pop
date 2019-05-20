@@ -29,13 +29,13 @@ export default class extends React.Component {
     return { asPath, queryString: qs, view, mode, base: query.base, query };
   }
 
-  handleSwitchChange(checked) {
+  handleSwitchChange = checked => {
     if (checked) {
       Router.push("/search?view=list&mode=advanced&base=joconde", "/advanced-search/list/joconde");
     } else {
       Router.push("/search?view=list&mode=simple", "/search/list");
     }
-  }
+  };
 
   render = () => {
     if (
@@ -48,7 +48,6 @@ export default class extends React.Component {
 
     const queryScope = this.props.mode === "simple" ? BASES : this.props.base;
     const initialValues = fromUrlQueryString(this.props.queryString);
-    
 
     return (
       <Layout>
@@ -83,14 +82,16 @@ export default class extends React.Component {
               <Row className="search-row">
                 {this.props.mode === "simple" ? (
                   <div className={`search-sidebar ${this.state.mobile_menu || ""}`}>
-                    <Menu closeMenu={() => this.setState({ mobile_menu: false })} initialValues={initialValues} />
+                    <Menu
+                      closeMenu={() => this.setState({ mobile_menu: false })}
+                      initialValues={initialValues}
+                    />
                   </div>
                 ) : null}
                 <div className="search-results">
                   <div className={`search-container search-container-${this.props.mode}`}>
                     <Search
                       mode={this.props.mode}
-                      location={this.props.asPath}
                       base={this.props.base}
                       initialValues={initialValues}
                     />
