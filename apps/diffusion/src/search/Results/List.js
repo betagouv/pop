@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactiveList } from "@appbaseio/reactivesearch";
 import { Results } from "react-elasticsearch";
 import { pagination } from "../utils"
 

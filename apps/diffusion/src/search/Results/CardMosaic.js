@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Col } from "reactstrap";
 import { image } from "./../../services/image";
 
-export default ({ data }) => {
+export default ({ index, data }) => {
   const title = index => {
     if (index === "memoire") {
       const subtitle = data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim();
@@ -22,11 +22,11 @@ export default ({ data }) => {
   };
   return (
     <Col>
-      <Link href={`/notice/${data._index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
+      <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
         <a style={{ textDecoration: "none" }} target="_blank" className="mosaique-card">
           <div className="thumbnail">{image(data)}</div>
           <div className="content">
-            <span>{title(data._index.replace(/[0-9]+/, ""))}</span>
+            <span>{title(index.replace(/[0-9]+/, ""))}</span>
           </div>
         </a>
       </Link>

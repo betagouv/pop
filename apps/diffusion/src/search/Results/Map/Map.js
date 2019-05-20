@@ -58,7 +58,7 @@ export default class Map extends React.Component {
     const currentZoom = this.map.getZoom();
     const precision = getPrecision(currentZoom);
 
-    this.props.onUpdateQuery(
+    this.props.onChange(
       mapBounds._ne.lat,
       mapBounds._sw.lng,
       mapBounds._sw.lat,

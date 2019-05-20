@@ -1,77 +1,82 @@
-import React from "react";
-import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import React, { useEffect, useState } from "react";
+import { CustomWidget, msearch } from "react-elasticsearch";
 import queryString from "query-string";
-
 import Map from "./Map";
+import { es_url } from "../../../config";
 
-import { getESQuery } from "./utils";
-
-/*
-This file contain the Map wrapper. 
-It does all links with elastic search -> Query the database and manage query
-add give results to Map component in its props ( through reactive Component)
-*/
-
-export default class ReactiveMapWrapper extends React.Component {
-  state = {
-    query: { query: { match_all: {} } },
-    isNewSearch: false,
-    precision: 3
+function esQuery(
+  queries,
+  top_left_lat = "51.176170858351554",
+  top_left_lon = "-8.899197921908097",
+  bottom_right_lat = "42.15965270115598",
+  bottom_right_lon = "13.93039192184051",
+  precision = 3
+) {
+  return {
+    size: 1,
+    query: {
+      bool: {
+        must: [...queries, { match: { POP_CONTIENT_GEOLOCALISATION: "oui" } }],
+        filter: {
+          geo_bounding_box: {
+            POP_COORDONNEES: {
+              top_left: { lat: top_left_lat, lon: top_left_lon },
+              bottom_right: { lat: bottom_right_lat, lon: bottom_right_lon }
+            }
+          }
+        }
+      }
+    },
+    aggs: {
+      france: {
+        geohash_grid: { field: "POP_COORDONNEES", precision },
+        aggs: { top_hits: { top_hits: { size: `${precision === 8 ? 100 : 1}` } } }
+      }
+    }
   };
+}
 
-  prevBounds = null;
-  currentSearch = null;
-
-  urlLocation = null;
-
-  componentDidUpdate(prevProps) {
-    try {
-      if (location) {
-        this.urlLocation = location.search;
-      }
-    } catch (error) {
-      if (this.props.location) {
-        // If window.location not defined use props
-        this.urlLocation = this.props.location.search;
-      } else {
-        throw new Error("location is not defined");
-      }
+function MyComponent({ ctx }) {
+  const actualQuery = esQuery(
+    [...ctx.widgets].filter(([_k, v]) => v.query).map(([_k, v]) => v.query)
+  );
+  const [query, setQuery] = useState(actualQuery);
+  const [aggregations, setAggregations] = useState(null);
+  useEffect(() => {
+    setQuery(actualQuery);
+  }, [JSON.stringify(actualQuery)]);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await msearch(`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures`, [
+        { id: "map", query }
+      ]);
+      setAggregations(res.responses[0].aggregations);
     }
-    const parsed = queryString.parse(this.urlLocation);
-    const nextSearch = JSON.stringify(parsed);
-    if (this.currentSearch !== nextSearch) {
-      // New Search
-      this.currentSearch = nextSearch;
-      this.setState({ isNewSearch: true });
-    } else if (this.state.isNewSearch) {
-      this.setState({ isNewSearch: false });
-    }
-  }
-
-  onUpdateQuery(top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon, precision) {
-    const query = getESQuery(
-      top_left_lat,
-      top_left_lon,
-      bottom_right_lat,
-      bottom_right_lon,
-      precision
-    );
-
-    this.setState({ query });
-  }
-
-  render() {
-    return (
-      <div>
-        <ReactiveComponent
-          componentId="map" // a unique id we will refer to later
-          URLParams={this.props.URLParams || true}
-          react={{ and: this.props.filters }}
-          defaultQuery={() => this.state.query}
-        >
-          <Map isNewSearch={this.state.isNewSearch} onUpdateQuery={this.onUpdateQuery.bind(this)} />
-        </ReactiveComponent>
-      </div>
+    fetchData();
+  }, [JSON.stringify(query)]);
+  function onChange(top_left_lat, top_left_lon, bottom_right_lat, bottom_right_lon, precision) {
+    setQuery(
+      esQuery(
+        [...ctx.widgets].filter(([_k, v]) => v.query).map(([_k, v]) => v.query),
+        top_left_lat,
+        top_left_lon,
+        bottom_right_lat,
+        bottom_right_lon,
+        precision
+      )
     );
   }
+  return (
+    <>
+      <Map onChange={onChange} aggregations={aggregations} />
+    </>
+  );
+}
+
+export default function ReactiveMapWrapper() {
+  return (
+    <CustomWidget>
+      <MyComponent />
+    </CustomWidget>
+  );
 }

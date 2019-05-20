@@ -100,13 +100,19 @@ const Menu = ({ closeMenu }) => (
       title="Est géolocalisée"
     />
     <div style={{ display: "none" }}>
-      <Facet
-        id="import"
-        initialValue={initialValues.get("import")}
-        fields={["POP_IMPORT.keyword"]}
-      />
-      <Facet id="museo" initialValue={initialValues.get("museo")} fields={["MUSEO.keyword"]} />
-      <Facet id="ref" initialValue={initialValues.get("ref")} fields={["REF.keyword"]} />
+      {initialValues.get("import") ? (
+        <Facet
+          id="import"
+          initialValue={initialValues.get("import")}
+          fields={["POP_IMPORT.keyword"]}
+        />
+      ) : null}
+      {initialValues.get(" : null}") ? (
+        <Facet id="museo" initialValue={initialValues.get("museo")} fields={["MUSEO.keyword"]} />
+      ) : null}
+      {initialValues.get("ref") ? (
+        <Facet id="ref" initialValue={initialValues.get("ref")} fields={["REF.keyword"]} />
+      ) : null}
     </div>
   </aside>
 );
