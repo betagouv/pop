@@ -464,18 +464,18 @@ export default ({ data }) => {
   const index = data._index.replace(/[0-9]+/, "");
   switch (index) {
     case "joconde":
-      return withStyle(<Joconde data={data} />);
+      return withStyle(<Joconde data={data._source} />);
     case "mnr":
-      return withStyle(<Mnr data={data} />);
+      return withStyle(<Mnr data={data._source} />);
     case "merimee":
-      return withStyle(<Merimee data={data} />);
+      return withStyle(<Merimee data={data._source} />);
     case "palissy":
-      return withStyle(<Palissy data={data} />);
+      return withStyle(<Palissy data={data._source} />);
     case "memoire":
-      return withStyle(<Memoire data={data} />);
+      return withStyle(<Memoire data={data._source} />);
     case "museo":
-      return withStyle(<Museo data={data} />);
+      return withStyle(<Museo data={data._source} />);
     case "enluminures":
-      return withStyle(<Enluminures data={data} />);
+      return withStyle(<Enluminures data={data._source} />);
   }
 };

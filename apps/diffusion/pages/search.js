@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
 import { ReactiveBase } from "@appbaseio/reactivesearch";
+import { Elasticsearch } from "react-elasticsearch";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
@@ -66,19 +67,18 @@ export default class extends React.Component {
             <Permalink query={this.props.query} />
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
-            <ReactiveBase
-              url={`${es_url}`}
-              app={queryScope}
+            <Elasticsearch
+              url={`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures`}
               setSearchParams={url => {
+                // TODSO
                 const { mode, view, base } = this.props;
                 replaceSearchRouteWithUrl({ mode, view, base, url });
               }}
             >
               <Row className="search-row">
-                {this.props.mode === "simple" ? (
+                {this.props.mode === "simple"? (
                   <div className={`search-sidebar ${this.state.mobile_menu || ""}`}>
                     <Menu
-                      location={this.props.queryString}
                       closeMenu={() => this.setState({ mobile_menu: false })}
                     />
                   </div>
@@ -90,7 +90,7 @@ export default class extends React.Component {
                       location={this.props.asPath}
                       base={this.props.base}
                     />
-                    {this.props.mode === "simple" ? (
+                    {this.props.mode === "simple" && "TODO" !== "TODO"  ? (
                       <MobileFilters
                         openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
                       />
@@ -104,7 +104,7 @@ export default class extends React.Component {
                   />
                 </div>
               </Row>
-            </ReactiveBase>
+            </Elasticsearch>
           </Container>
         </div>
         <style jsx global>{`

@@ -1,9 +1,23 @@
 import React from "react";
 import { ReactiveList } from "@appbaseio/reactivesearch";
+import { Results } from "react-elasticsearch";
+import { pagination } from "../utils"
 
 import CardList from "./CardList";
 
 export default ({ filters }) => (
+  <Results
+    /* initialPage={TODO} */
+    id="res"
+    items={ data => data.map(({_id, ...rest}) => <CardList key={_id} data={rest} />)}
+    pagination={pagination}
+    stats={total => (
+      <div>
+        {total} résultat{total === 1 ? "" : "s"}
+      </div>
+    )}
+  />
+  /*
   <ReactiveList
     componentId="lists"
     react={{ and: filters }}
@@ -20,4 +34,5 @@ export default ({ filters }) => (
     className="list-view view"
     onData={data => <CardList className="" key={data.REF} data={data} />}
   />
+  */
 );
