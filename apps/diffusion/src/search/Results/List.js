@@ -4,9 +4,9 @@ import { pagination } from "../utils"
 
 import CardList from "./CardList";
 
-export default ({ filters }) => (
+export default ({ initialValues }) => (
   <Results
-    /* initialPage={TODO} */
+    initialPage={initialValues.get("resPage")}
     id="res"
     items={ data => data.map(({_id, ...rest}) => <CardList key={_id} data={rest} />)}
     pagination={pagination}

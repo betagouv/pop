@@ -105,7 +105,7 @@ export default class extends React.Component {
                     mode={this.props.mode}
                     view={this.props.view}
                     base={this.props.base}
-                    location={this.props.asPath}
+                    initialValues={initialValues}
                   />
                 </div>
               </Row>

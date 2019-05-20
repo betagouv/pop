@@ -80,11 +80,11 @@ class Results extends React.Component {
   renderResults() {
     const view = this.props.view || "list";
     if (view === "mosaic") {
-      return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
+      return <Mosaic key="mosaique" initialValues={this.props.initialValues} />;
     } else if (view === "map") {
-      return <Map key="carte" filters={DEFAULT_FILTER} />;
+      return <Map key="carte" />;
     } else {
-      return <List key="list" filters={DEFAULT_FILTER} />;
+      return <List key="list" initialValues={this.props.initialValues} />;
     }
   }
 
