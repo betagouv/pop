@@ -11,7 +11,10 @@ const joinData = f => {
 };
 
 const Memoire = ({ data }) => {
-  const { title } = getInformations(data);
+  const { title, logo, image } = getInformations(data);
+
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+  const ImageComponent = <img src={image} alt={title} />;
 
   const subtitle = joinData([
     data.OBJET,
@@ -20,24 +23,17 @@ const Memoire = ({ data }) => {
     data.DATOEU,
     data.DATOEU ? "" : data.SCLE
   ]);
+
   const categories = data.TECH;
   const author = data.AUTP;
-  const data = joinData([data.DATPV, data.DATOR]);
+  const date = joinData([data.DATPV, data.DATOR]);
   const loc = data.LOCA;
-  const productorImage = notice => {
-    if (notice.PRODUCTEUR === "CRMH") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    } else if (notice.PRODUCTEUR === "SAP") {
-      return <img src="/static/map.png" className="producteur mh" />;
-    }
-    return null;
-  };
 
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
@@ -52,10 +48,10 @@ const Memoire = ({ data }) => {
               </span>
             </div>
             <p>{subtitle}</p>
-            {productorImage(data)}
+            {LogoComponent}
             <div>
               <p>{author}</p>
-              <p>{data}</p>
+              <p>{date}</p>
               <p>{loc}</p>
             </div>
           </div>
@@ -66,7 +62,11 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title } = getInformations(data);
+  const { title, logo, image } = getInformations(data);
+  const ImageComponent = <img src={image} alt={title} />;
+
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+
   const ref = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
@@ -74,24 +74,15 @@ const Palissy = ({ data }) => {
   const loc =
     data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
-  const productorImage = p => {
-    if (p === "Inventaire") {
-      return <img src="/static/inventaire.jpg" className="producteur" />;
-    } else if (p === "Monuments Historiques") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    }
-    return null;
-  };
-
   return (
     <Link href={`/notice/palissy/${ref}`} key={ref}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
                 <small>{categories}</small>
               </h2>
@@ -101,7 +92,7 @@ const Palissy = ({ data }) => {
                 {ref}
               </span>
             </div>
-            {productorImage(data.PRODUCTEUR)}
+            {LogoComponent}
             <div>
               <p>{author}</p>
               <p>{siecle}</p>
@@ -115,41 +106,34 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title } = getInformations(data);
-  const ref = data.REF;
+  const { title, logo, image } = getInformations(data);
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+  const ImageComponent = <img src={image} alt={title} />;
+
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
   const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
-  const productorImage = p => {
-    if (p === "Inventaire") {
-      return <img src="/static/inventaire.jpg" className="producteur" />;
-    } else if (p === "Monuments Historiques") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    }
-    return null;
-  };
-
   return (
-    <Link href={`/notice/merimee/${ref}`} key={ref}>
+    <Link href={`/notice/merimee/${data.ref}`} key={data.ref}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
                 <small>{categories}</small>
               </h2>
               <span>
                 <small className="base">Mérimée</small>
                 <br />
-                {ref}
+                {data.ref}
               </span>
             </div>
-            {productorImage(data.PRODUCTEUR)}
+            {LogoComponent}
             <div>
               <p>{author}</p>
               <p>{siecle}</p>
@@ -163,10 +147,9 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const REF = data.REF;
-  const INV = data.INV;
+  const { title, image } = getInformations(data);
+  const ImageComponent = <img src={image} alt={title} />;
   const categories = data.DENO ? data.DENO.join(", ") : "";
-  const { title } = getInformations(data);
   // const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
@@ -175,13 +158,11 @@ const Mnr = ({ data }) => {
   const cate = data.CATE;
   const phot = data.PHOT;
 
-  const img = image(data);
-
   return (
-    <Link href={`/notice/mnr/${REF}`} key={REF}>
+    <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <p>{author}</p>
             <div style={{ display: "flex" }}>
@@ -193,7 +174,7 @@ const Mnr = ({ data }) => {
               <span>
                 <small className="base">Mnr</small>
                 <br />
-                {INV}
+                {data.INV}
               </span>
             </div>
             <img src="/static/mnr.png" className="producteur" />
@@ -212,8 +193,8 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const REF = data.REF;
-  const { title } = getInformations(data);
+  const { title, image } = getInformations(data);
+  const ImageComponent = <img src={image} alt={title} />;
   const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
@@ -222,13 +203,12 @@ const Joconde = ({ data }) => {
   peri = peri || (Array.isArray(data.EPOQ) ? data.EPOQ.join(", ") : "");
 
   const loc = data.LOCA;
-  const img = image(data);
 
   return (
-    <Link href={`/notice/joconde/${REF}`} key={REF}>
+    <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
@@ -239,7 +219,7 @@ const Joconde = ({ data }) => {
               <span>
                 <small className="base">Joconde</small>
                 <br />
-                {REF}
+                {data.REF}
               </span>
             </div>
             <img src="/static/musee-de-france.png" className="producteur" />
@@ -256,7 +236,7 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title } = getInformations(data);
+  const { title, image } = getInformations(data);
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -286,14 +266,14 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const { title } = getInformations(data);
-  const img = image(data);
+  const { title, image } = getInformations(data);
+  const ImageComponent = <img src={image} alt={title} />;
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>

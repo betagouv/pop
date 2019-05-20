@@ -26,6 +26,5 @@ export function image(data) {
       }
     }
   }
-
   return <img src="/static/noimage.png" className="no-img" alt={alt} />;
 }
