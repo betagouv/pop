@@ -11,12 +11,12 @@ const joinData = f => {
 };
 
 const Memoire = ({ data }) => {
-  const { title, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getInformations(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
 
-  const subtitle = joinData([
+  const content = joinData([
     data.OBJET,
     data.EDIF,
     data.LEG,
@@ -24,7 +24,6 @@ const Memoire = ({ data }) => {
     data.DATOEU ? "" : data.SCLE
   ]);
 
-  const categories = data.TECH;
   const author = data.AUTP;
   const date = joinData([data.DATPV, data.DATOR]);
   const loc = data.LOCA;
@@ -39,7 +38,7 @@ const Memoire = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mémoire</small>
@@ -47,7 +46,7 @@ const Memoire = ({ data }) => {
                 {data.REF}
               </span>
             </div>
-            <p>{subtitle}</p>
+            <p>{content}</p>
             {LogoComponent}
             <div>
               <p>{author}</p>
@@ -62,20 +61,18 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getInformations(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
-  const ref = data.REF;
-  const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
   const loc =
     data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   return (
-    <Link href={`/notice/palissy/${ref}`} key={ref}>
+    <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
@@ -84,12 +81,12 @@ const Palissy = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Palissy</small>
                 <br />
-                {ref}
+                {data.REF}
               </span>
             </div>
             {LogoComponent}
@@ -106,11 +103,10 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getInformations(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
 
-  const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
   const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
@@ -125,7 +121,7 @@ const Merimee = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mérimée</small>
@@ -147,16 +143,11 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const { title, image } = getInformations(data);
+  const { title, subtitle, image } = getInformations(data);
   const ImageComponent = <img src={image} alt={title} />;
-  const categories = data.DENO ? data.DENO.join(", ") : "";
-  // const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
-  const loc = data.LOCA;
-  const affe = data.AFFE;
-  const cate = data.CATE;
-  const phot = data.PHOT;
 
   return (
     <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
@@ -169,7 +160,7 @@ const Mnr = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mnr</small>
@@ -180,10 +171,10 @@ const Mnr = ({ data }) => {
             <img src="/static/mnr.png" className="producteur" />
             <div>
               <p>{domn}</p>
-              <p>{loc}</p>
-              <p>{affe}</p>
-              <p>{cate}</p>
-              <p>{phot}</p>
+              <p>{data.LOCA}</p>
+              <p>{data.AFFE}</p>
+              <p>{data.CATE}</p>
+              <p>{data.PHOT}</p>
             </div>
           </div>
         </div>
@@ -193,16 +184,13 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const { title, image } = getInformations(data);
+  const { title, subtitle, image } = getInformations(data);
   const ImageComponent = <img src={image} alt={title} />;
-  const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
   let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
   peri = peri || (Array.isArray(data.PERI) ? data.PERI.join(", ") : "");
   peri = peri || (Array.isArray(data.EPOQ) ? data.EPOQ.join(", ") : "");
-
-  const loc = data.LOCA;
 
   return (
     <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
@@ -214,7 +202,7 @@ const Joconde = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Joconde</small>
@@ -226,7 +214,7 @@ const Joconde = ({ data }) => {
             <div>
               <p>{author}</p>
               <p>{peri}</p>
-              <p>{loc}</p>
+              <p>{data.LOCA}</p>
             </div>
           </div>
         </div>
@@ -266,7 +254,7 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const { title, image } = getInformations(data);
+  const { title, subtitle, image } = getInformations(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   return (
@@ -279,7 +267,7 @@ const Enluminures = ({ data }) => {
               <h2>
                 {title}
                 <br />
-                <small>{data.SUJET}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Enluminures</small>

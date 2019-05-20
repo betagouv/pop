@@ -1,5 +1,9 @@
 import { bucket_url } from "./config";
 
+/*
+On a du faire cette fonction "utils.getInformations" pour gérer les principales informations des notices dissiminées dans l'app et qui nécessitait du traitement "fastidieux"
+*/
+
 export function getInformations(notice) {
   const type = notice._type;
 
@@ -15,8 +19,10 @@ export function getInformations(notice) {
       }
       title = capitalizeFirstLetter(title);
 
+      const subtitle = !notice.TITR && notice.DENO ? "" : notice.DENO.join(", ");
+
       const image = getImageUrl(notice);
-      return { title, image };
+      return { title, subtitle, image };
     }
     case "memoire": {
       let title = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
@@ -29,8 +35,10 @@ export function getInformations(notice) {
         logo = "/static/map.png";
       }
 
+      const subtitle = notice.TECH;
+
       const image = getImageUrl(notice);
-      return { title, logo, image };
+      return { title, subtitle, logo, image };
     }
     case "museo": {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
@@ -43,15 +51,19 @@ export function getInformations(notice) {
       let title = `${notice.TITR} - ${notice.SUJET}`;
       title = capitalizeFirstLetter(title);
 
+      const subtitle = notice.SUJET;
+
       const image = getImageUrl(notice);
-      return { title, image };
+      return { title, subtitle, image };
     }
     case "mnr": {
       let title = notice.TICO || notice.TITR;
       title = capitalizeFirstLetter(title);
 
+      const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
+
       const image = getImageUrl(notice);
-      return { title, image };
+      return { title, subtitle, image };
     }
     case "palissy": {
       let title = notice.TICO || notice.TITR;
@@ -64,8 +76,10 @@ export function getInformations(notice) {
         logo = "/static/mh.png";
       }
 
+      const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
+
       const image = getImageUrl(notice);
-      return { title, logo, image };
+      return { title, subtitle, logo, image };
     }
     case "merimee": {
       let title = notice.TICO || notice.TITR;
@@ -78,8 +92,10 @@ export function getInformations(notice) {
         logo = "/static/mh.png";
       }
 
+      const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
+
       const image = getImageUrl(notice);
-      return { title, logo, image };
+      return { title, subtitle, logo, image };
     }
     default:
       return {};
