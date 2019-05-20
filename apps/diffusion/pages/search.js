@@ -68,7 +68,7 @@ export default class extends React.Component {
             <h1 className="title">Votre recherche</h1>
             <Header location={this.props.asPath} />
             <Elasticsearch
-              url={`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures`}
+              url={`${es_url}${this.props.base || "merimee,palissy,memoire,joconde,mnr,enluminures"}`}
               setSearchParams={url => {
                 // TODSO
                 const { mode, view, base } = this.props;
@@ -90,7 +90,7 @@ export default class extends React.Component {
                       location={this.props.asPath}
                       base={this.props.base}
                     />
-                    {this.props.mode === "simple" && "TODO" !== "TODO"  ? (
+                    {this.props.mode === "simple"  ? (
                       <MobileFilters
                         openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
                       />
