@@ -44,7 +44,7 @@ export default function AdvancedSearch({ collection, card }) {
           }
         }}
       >
-        <div style={{position: "relative"}}>
+        <div style={{ position: "relative" }}>
           <QueryBuilder
             initialValue={initialValues.get("qb")}
             id="qb"
@@ -76,7 +76,7 @@ export default function AdvancedSearch({ collection, card }) {
           sort={sortQuery}
           id="result"
           initialPage={initialValues.get("resultPage")}
-          item={card}
+          items={data => data.map(({ _source, _score, _id }) => card(_source, _score, _id))}
           pagination={utils.pagination}
           stats={total => (
             <div>

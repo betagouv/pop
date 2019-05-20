@@ -81,7 +81,7 @@ export default function render() {
             <Results
               initialPage={initialValues.get("resPage")}
               id="res"
-              item={(source, _score, id) => <Card key={id} data={source} />}
+              items={data => data.map(({_source, _id}) =>  <Card key={_id} data={_source} />)}
               pagination={utils.pagination}
               stats={total => (
                 <div>
