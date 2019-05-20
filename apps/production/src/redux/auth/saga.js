@@ -1,5 +1,5 @@
 import { all, takeEvery, put } from "redux-saga/effects";
-import { push } from "react-router-redux";
+import { push } from "connected-react-router";
 import actions from "./actions";
 
 import api from "../../services/api";

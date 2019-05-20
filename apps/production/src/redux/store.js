@@ -1,21 +1,28 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import createHistory from "history/createBrowserHistory";
-import { routerReducer, routerMiddleware } from "react-router-redux";
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from "connected-react-router";
+import createRootReducer from "./reducers";
 import createSagaMiddleware from "redux-saga";
-import reducers from "../redux/reducers";
 import rootSaga from "../redux/sagas";
 
-const history = createHistory();
-const sagaMiddleware = createSagaMiddleware();
-const routeMiddleware = routerMiddleware(history);
-const middlewares = [sagaMiddleware, routeMiddleware];
+export const history = createBrowserHistory();
 
-const store = createStore(
-  combineReducers({
-    ...reducers,
-    router: routerReducer
-  }),
-  compose(applyMiddleware(...middlewares))
-);
-sagaMiddleware.run(rootSaga);
-export { store, history };
+const sagaMiddleware = createSagaMiddleware();
+
+const routeMiddleware = routerMiddleware(history);
+
+export default function configureStore(preloadedState) {
+  const store = createStore(
+    createRootReducer(history), // root reducer with router state
+    preloadedState,
+    compose(
+      applyMiddleware(
+        routerMiddleware(history), // for dispatching history actions
+        sagaMiddleware,
+        routeMiddleware
+      )
+    )
+  );
+  sagaMiddleware.run(rootSaga);
+  return store;
+}

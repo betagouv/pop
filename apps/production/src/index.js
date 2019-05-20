@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import dotenv from "dotenv";
 import App from "./app";
 import registerServiceWorker from "./registerServiceWorker";
-import { store } from "./redux/store";
+import configureStore from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
   amplitude.getInstance().init("e67834238a49cf416bacf47c3d8055c4");
 }
+const store = configureStore(/* provide initial state if any */);
 
 ReactDOM.render(
   <Provider store={store}>
