@@ -6,7 +6,7 @@ import {
   fromUrlQueryString,
   QueryBuilder
 } from "react-elasticsearch";
-import Mapping from "../../../services/Mapping";
+import Mapping from "../../../services/mapping";
 import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";

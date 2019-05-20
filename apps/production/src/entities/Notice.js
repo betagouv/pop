@@ -1,4 +1,4 @@
-import Mapping from "../services/Mapping";
+import Mapping from "../services/mapping";
 import validator from "validator";
 
 export default class Notice {
