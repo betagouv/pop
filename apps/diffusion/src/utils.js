@@ -6,7 +6,6 @@ On a du faire cette fonction "utils.getInformations" pour gérer les principales
 
 export function getInformations(notice) {
   const base = notice.BASE;
-  console.log(notice);
   switch (base) {
     case "Collections des musées de France (Joconde)": {
       let title = "";

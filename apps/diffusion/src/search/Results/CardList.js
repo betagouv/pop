@@ -112,7 +112,7 @@ const Merimee = ({ data }) => {
   const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
   return (
-    <Link href={`/notice/merimee/${data.ref}`} key={data.ref}>
+    <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
@@ -126,7 +126,7 @@ const Merimee = ({ data }) => {
               <span>
                 <small className="base">Mérimée</small>
                 <br />
-                {data.ref}
+                {data.REF}
               </span>
             </div>
             {LogoComponent}
