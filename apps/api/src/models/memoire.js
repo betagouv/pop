@@ -26,7 +26,8 @@ const Schema = new mongoose.Schema(
       default: "Photographies (Mémoire)",
       documentation: {
         description: "Nom de la base : Photographies (Mémoire)",
-        generated: true
+        generated: true,
+        label: "Nom de la base"
       }
     },
     CONTIENT_IMAGE: {

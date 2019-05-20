@@ -4,6 +4,7 @@ import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
+import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import LinkedNotices from "../../src/notices/LinkedNotices";
@@ -144,10 +145,10 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["LOCA", "INSEE", "ADRESSE", "MCGEO"]}
                   />
-                  <Field title="Localisation" content={notice.LOCA} />
-                  <Field title="Code INSEE" content={notice.INSEE} />
-                  <Field title="Adresse:" content={notice.ADRESSE} />
-                  <Field title="Nom géographique" content={notice.MCGEO} />
+                  <Field title={mapping.memoire.LOCA.label} content={notice.LOCA} />
+                  <Field title={mapping.memoire.INSEE.label} content={notice.INSEE} />
+                  <Field title={mapping.memoire.ADRESSE.label} content={notice.ADRESSE} />
+                  <Field title={mapping.memoire.MCGEO.label} content={notice.MCGEO} />
                   <Title
                     content="Identification"
                     small={true}
@@ -170,40 +171,37 @@ export default class extends React.Component {
                       "MCPER"
                     ]}
                   />
-                  <Field title="Nom édifice" content={notice.EDIF} />
-                  <Field title="Nom objet" content={notice.OBJT} />
-                  <Field title="Titre du dossier" content={notice.TICO} />
+                  <Field title={mapping.memoire.EDIF.label} content={notice.EDIF} />
+                  <Field title={mapping.memoire.OBJT.label} content={notice.OBJT} />
+                  <Field title={mapping.memoire.TICO.label} content={notice.TICO} />
 
-                  <Field title="Légende" content={notice.LEG} separator="#" />
-                  <Field title="Titre" content={notice.TITRE} />
-                  <Field title="Nom de théâtre" content={notice.THEATRE} />
-                  <Field title="Rôle joué" content={notice.ROLE} />
-                  <Field title="Auteur de l’œuvre" content={notice.AUTOEU} />
-                  <Field title="Siècle de l’œuvre" content={notice.SCLE} />
-                  <Field title="Date de l’œuvre" content={notice.DATOEU} />
-                  <Field title="Lieu d’origine de l’élément réemployé" content={notice.LIEUORIG} />
-                  <Field title="Titre de la série" content={notice.SERIE} />
-                  <Field title="Mots-clés" content={notice.MCL + " " + notice.SUJET} />
-                  <Field title="Identité de la personne photographiée" content={notice.MCPER} />
+                  <Field title={mapping.memoire.LEG.label} content={notice.LEG} separator="#" />
+                  <Field title={mapping.memoire.TITRE.label} content={notice.TITRE} />
+                  <Field title={mapping.memoire.THEATRE.label} content={notice.THEATRE} />
+                  <Field title={mapping.memoire.ROLE.label} content={notice.ROLE} />
+                  <Field title={mapping.memoire.AUTOEU.label} content={notice.AUTOEU} />
+                  <Field title={mapping.memoire.SCLE.label} content={notice.SCLE} />
+                  <Field title={mapping.memoire.DATOEU.label} content={notice.DATOEU} />
+                  <Field title={mapping.memoire.LIEUORIG.label} content={notice.LIEUORIG} />
+                  <Field title={mapping.memoire.SERIE.label} content={notice.SERIE} />
+                  <Field title={"Mots-clés"} content={notice.MCL + " " + notice.SUJET} />
+                  <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} />
                   <Title
                     content="Références des documents reproduits"
                     small={true}
                     notice={notice}
                     fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
                   />
-                  <Field title="Auteur du document original" content={notice.AUTOR} />
-                  <Field
-                    title="Référence bibliographique ou documentaire"
-                    content={notice.TIREDE}
-                  />
-                  <Field title="Lieu de conservation" content={notice.LIEUCOR} />
-                  <Field title="Cote de conservation" content={notice.COTECOR} />
-                  <Field title="Auteur de la gravure" content={notice.AUTG} />
+                  <Field title={mapping.memoire.AUTOR.label} content={notice.AUTOR} />
+                  <Field title={mapping.memoire.TIREDE.label} content={notice.TIREDE} />
+                  <Field title={mapping.memoire.LIEUCOR.label} content={notice.LIEUCOR} />
+                  <Field title={mapping.memoire.COTECOR.label} content={notice.COTECOR} />
+                  <Field title={mapping.memoire.AUTG.label} content={notice.AUTG} />
                 </div>
                 <div className="notice-details">
                   <Title content="2. Auteur" notice={notice} fields={["AUTP", "AUTTI"]} />
-                  <Field title="Photographe ou dessinateur" content={this.photographer()} />
-                  <Field title="Auteur du tirage" content={notice.AUTTI} />
+                  <Field title={"Photographe ou dessinateur"} content={this.photographer()} />
+                  <Field title={mapping.memoire.AUTTI.label} content={notice.AUTTI} />
                 </div>
                 <div className="notice-details">
                   <Title
@@ -272,28 +270,25 @@ export default class extends React.Component {
                       "ECH"
                     ]}
                   />
-                  <Field title="Catégorie de phototype" content={notice.TYPDOC} />
+                  <Field title={mapping.memoire.TYPDOC.label} content={notice.TYPDOC} />
+                  <Field title={mapping.memoire.NUMI.label} content={notice.NUMI} />
+                  <Field title={mapping.memoire.NUMP.label} content={notice.NUMP} />
+                  <Field title={mapping.memoire.ANUMP.label} content={notice.ANUMP} />
+                  <Field title={mapping.memoire.NUMAUTP.label} content={notice.NUMAUTP} />
+                  <Field title={mapping.memoire.NUMTI.label} content={notice.NUMTI} />
+                  <Field title={mapping.memoire.ANUMTI.label} content={notice.ANUMTI} />
+                  <Field title={mapping.memoire.REPRO.label} content={notice.REPRO} />
+                  <Field title={mapping.memoire.NUMG.label} content={notice.NUMG} />
+                  <Field title={mapping.memoire.NUMOR.label} content={notice.NUMOR} />
+                  <Field title={mapping.memoire.ANUMOR.label} content={notice.ANUMOR} />
+                  <Field title={mapping.memoire.RENV.label} content={notice.RENV} />
+                  <Field title={mapping.memoire.LIEUCTI.label} content={notice.LIEUCTI} />
+                  <Field title={mapping.memoire.COTECTI.label} content={notice.COTECTI} />
+                  <Field title={mapping.memoire.PRECOR.label} content={notice.PRECOR} />
+                  <Field title={mapping.memoire.ACQU.label} content={notice.ACQU} />
+                  <Field title={mapping.memoire.DIFF.label} content={notice.DIFF} />
+                  <Field title={mapping.memoire.ECH.label} content={notice.ECH} />
 
-                  <Field title="Numéro du phototype" content={notice.NUMI} />
-                  <Field title="Numéro du négatif" content={notice.NUMP} />
-                  <Field title="Ancien numéro du négatif" content={notice.ANUMP} />
-                  <Field title="Numéro donné par le photographe" content={notice.NUMAUTP} />
-                  <Field title="Numéro du tirage" content={notice.NUMTI} />
-                  <Field title="Ancien numéro du tirage" content={notice.ANUMTI} />
-                  <Field title="Numéro de reproduction" content={notice.REPRO} />
-                  <Field title="Numéro de la gravure" content={notice.NUMG} />
-                  <Field title="Numéro de l’original" content={notice.NUMOR} />
-                  <Field title="Ancien numéro de l’original" content={notice.ANUMOR} />
-                  <Field title="Phototype(s) en relation" content={notice.RENV} />
-                  <Field title="Lieu de conservation du tirage" content={notice.LIEUCTI} />
-                  <Field title="Cote de conservation du tirage" content={notice.COTECTI} />
-                  <Field
-                    title="Précisions sur la conservation de l’original"
-                    content={notice.PRECOR}
-                  />
-                  <Field title="Modalité d’entrée" content={notice.ACQU} />
-                  <Field title="Droits de diffusion" content={notice.DIFF} />
-                  <Field title="Échelle du graphique" content={notice.ECH} />
                   <Title
                     content="Description technique du phototype"
                     small={true}
@@ -310,33 +305,33 @@ export default class extends React.Component {
                       "SENS"
                     ]}
                   />
-                  <Field title="Description technique du négatif" content={notice.TECH} />
-                  <Field title="Format du négatif" content={notice.FORMAT} />
-                  <Field title="Description technique du tirage" content={notice.TECHTI} />
-                  <Field title="Format du tirage" content={notice.FORMATTI} />
-                  <Field title="Description technique de l’original" content={notice.TECHOR} />
-                  <Field title="Format de l'original" content={notice.FORMATOR} />
-                  <Field title="Annotations présentes sur le négatif" content={notice.MENTIONS} />
-                  <Field title="Mentions tirage" content={notice.MENTTI} separator="#" />
-                  <Field title="Orientation du phototype" content={notice.SENS} />
+                  <Field title={mapping.memoire.TECH.label} content={notice.TECH} />
+                  <Field title={mapping.memoire.FORMAT.label} content={notice.FORMAT} />
+                  <Field title={mapping.memoire.TECHTI.label} content={notice.TECHTI} />
+                  <Field title={mapping.memoire.FORMATTI.label} content={notice.FORMATTI} />
+                  <Field title={mapping.memoire.TECHOR.label} content={notice.TECHOR} />
+                  <Field title={mapping.memoire.FORMATOR.label} content={notice.FORMATOR} />
+                  <Field title={mapping.memoire.MENTIONS.label} content={notice.MENTIONS} />
+                  <Field
+                    title={mapping.memoire.MENTTI.label}
+                    content={notice.MENTTI}
+                    separator="#"
+                  />
+                  <Field title={mapping.memoire.SENS.label} content={notice.SENS} />
                   <Title
                     content="Datation et événements liés à l’image"
                     small={true}
                     notice={notice}
                     fields={["DATPV", "JDATPV", "DATOR", "EXPO", "PUBLI", "OBS", "OBSTI", "OBSOR"]}
                   />
-                  <Field title="Date prise vue" content={notice.DATPV} />
-                  <Field title="Précision sur la date de prise de vue" content={notice.JDATPV} />
-                  <Field title="Date de l'original" content={notice.DATOR} />
-                  <Field title="Référence d’exposition de l’image" content={notice.EXPO} />
-                  <Field
-                    title="Référence de publication de l’image"
-                    content={notice.PUBLI}
-                    separator="#"
-                  />
-                  <Field title="Observations" content={notice.OBS} />
-                  <Field title="Observations sur le tirage" content={notice.OBSTI} />
-                  <Field title="Observations sur l’original" content={notice.OBSOR} />
+                  <Field title={mapping.memoire.DATPV.label} content={notice.DATPV} />
+                  <Field title={mapping.memoire.JDATPV.label} content={notice.JDATPV} />
+                  <Field title={mapping.memoire.DATOR.label} content={notice.DATOR} />
+                  <Field title={mapping.memoire.EXPO.label} content={notice.EXPO} />
+                  <Field title={mapping.memoire.PUBLI.label} content={notice.PUBLI} separator="#" />
+                  <Field title={mapping.memoire.OBS.label} content={notice.OBS} />
+                  <Field title={mapping.memoire.OBSTI.label} content={notice.OBSTI} />
+                  <Field title={mapping.memoire.OBSOR.label} content={notice.OBSOR} />
                 </div>
               </Col>
               <Col md="4">
@@ -344,13 +339,13 @@ export default class extends React.Component {
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title="Référence" content={notice.REF} />
-                    <Field title="Base" content={notice.BASE} />
-                    <Field title="Date de création" content={notice.DMIS} />
-                    <Field title="Date de modification" content={notice.DMAJ} />
-                    <Field title="Crédits photographiques" content={this.photographer()} />
-                    <Field title="Auteur de l'oeuvre ou de l'original" content={notice.AUTOR} />
-                    <Field title="" content={notice.COPY} />
+                    <Field title={mapping.memoire.REF.label} content={notice.REF} />
+                    <Field title={mapping.memoire.BASE.label} content={notice.BASE} />
+                    <Field title={mapping.memoire.DMIS.label} content={notice.DMIS} />
+                    <Field title={mapping.memoire.DMAJ.label} content={notice.DMAJ} />
+                    <Field title={mapping.memoire.AUTP.label} content={this.photographer()} />
+                    <Field title={mapping.memoire.AUTOR.label} content={notice.AUTOR} />
+                    <Field title={mapping.memoire.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="memoire" />
                 </div>
@@ -402,7 +397,7 @@ const SeeMore = ({ notice }) => {
   if (notice.LAUTP) {
     elements.push(
       <Field
-        title="Lien vers la base Autor"
+        title={mapping.memoire.LAUTP.label}
         content={
           <a
             target="_blank"
@@ -420,7 +415,7 @@ const SeeMore = ({ notice }) => {
 
   if (notice.LBASE && notice.LBASE.length) {
     elements.push(
-      <Field title="Notices associées" content={link(notice.LBASE)} key="notice.LBASE" />
+      <Field title={mapping.memoire.LBASE.label} content={link(notice.LBASE)} key="notice.LBASE" />
     );
   }
 

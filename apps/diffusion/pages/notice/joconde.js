@@ -4,6 +4,7 @@ import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
+import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
@@ -189,38 +190,31 @@ export default class extends React.Component {
                     ]}
                   />
 
-                  <Field
-                    title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
-                    content={notice.INV}
-                  />
-                  <Field title="Domaine (catégorie du bien)" content={this.domain()} />
-                  <Field title="Dénomination du bien" content={notice.DENO} />
-                  <Field title="Appellation" content={notice.APPL} />
-                  <Field title="Titre" content={notice.TITR} />
-                  <Field title="Auteur / exécutant / collecteur" content={this.author()} />
-                  <Field
-                    title="Précisions / auteur / exécutant / collecteur"
-                    content={notice.PAUT}
-                    separator="#"
-                  />
-                  <Field title="Ecole" content={notice.ECOL} />
-                  <Field title="Anciennes attributions" content={notice.ATTR} />
-                  <Field title="Période de création / exécution" content={this.period()} />
-                  <Field title="Millésime de création / exécution" content={notice.MILL} />
+                  <Field title={mapping.joconde.INV.label} content={notice.INV} />
+                  <Field title={mapping.joconde.DOMN.label} content={this.domain()} />
+                  <Field title={mapping.joconde.DENO.label} content={notice.DENO} />
+                  <Field title={mapping.joconde.APPL.label} content={notice.APPL} />
+                  <Field title={mapping.joconde.TITR.label} content={notice.TITR} />
+                  <Field title={mapping.joconde.AUTR.label} content={this.author()} />
+                  <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
+                  <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} />
+                  <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} />
+                  <Field title={mapping.joconde.PERI.label} content={this.period()} />
+                  <Field title={mapping.joconde.MILL.label} content={notice.MILL} />
 
-                  <Field title="Epoque / style / mouvement" content={notice.EPOQ} />
-                  <Field title="Période de l’original copié" content={notice.PEOC} />
-                  <Field title="Matériaux et techniques" content={notice.TECH} />
-                  <Field title="Mesures" content={notice.DIMS} />
-                  <Field title="Inscriptions" content={notice.INSC} />
-                  <Field title="Précisions sur les inscriptions" content={notice.PINS} />
-                  <Field title="Onomastique" content={notice.ONOM} />
-                  <Field title="Description" content={notice.DESC} />
-                  <Field title="Etat du bien" content={notice.ETAT} />
-                  <Field title="Sujet représenté" content={notice.REPR} separator="#" />
-                  <Field title="Précisions sur le sujet représenté" content={notice.PREP} />
-                  <Field title="Date de la représentation" content={notice.DREP} separator="#" />
-                  <Field title="Source de la représentation" content={notice.SREP} />
+                  <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} />
+                  <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} />
+                  <Field title={mapping.joconde.TECH.label} content={notice.TECH} />
+                  <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} />
+                  <Field title={mapping.joconde.INSC.label} content={notice.INSC} />
+                  <Field title={mapping.joconde.PINS.label} content={notice.PINS} />
+                  <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} />
+                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} />
+                  <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} />
+                  <Field title={mapping.joconde.REPR.label} content={notice.REPR} separator="#" />
+                  <Field title={mapping.joconde.PREP.label} content={notice.PREP} />
+                  <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" />
+                  <Field title={mapping.joconde.SREP.label} content={notice.SREP} />
                   <Title
                     content="Contexte historique"
                     notice={notice}
@@ -239,61 +233,50 @@ export default class extends React.Component {
                       "NSDA"
                     ]}
                   />
-                  <Field title="Genèse" content={notice.GENE} />
-                  <Field title="Historique – Objets associés" content={notice.HIST} />
-                  <Field
-                    title="Lieu de création / d’exécution / d’utilisation"
-                    content={notice.LIEUX}
-                  />
-                  <Field
-                    title="Précisions sur le lieu de création / d’exécution / d’utilisation"
-                    content={notice.PLIEUX}
-                  />
-                  <Field title="Géographie historique" content={notice.GEOHI} />
-                  <Field title="Utilisation / Destination" content={notice.UTIL} />
-                  <Field title="Précisions sur l’utilisation" content={notice.PUTI} />
-                  <Field title="Période d’utilisation" content={notice.PERU} />
-                  <Field title="Millésime d’utilisation" content={notice.MILU} />
-                  <Field title="Découverte / collecte" content={notice.DECV} />
-                  <Field
-                    title="Précisions sur la découverte / collecte / récolte"
-                    content={notice.PDEC}
-                  />
-                  <Field title="Numéro de site" content={notice.NSDA} />
+                  <Field title={mapping.joconde.GENE.label} content={notice.GENE} />
+                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} />
+                  <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} />
+                  <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} />
+                  <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} />
+                  <Field title={mapping.joconde.UTIL.label} content={notice.UTIL} />
+                  <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} />
+                  <Field title={mapping.joconde.PERU.label} content={notice.PERU} />
+                  <Field title={mapping.joconde.MILU.label} content={notice.MILU} />
+                  <Field title={mapping.joconde.DECV.label} content={notice.DECV} />
+                  <Field title={mapping.joconde.PDEC.label} content={notice.PDEC} />
+                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} />
                   <Title
                     content="Informations juridiques"
                     notice={notice}
                     fields={["STAT", "DACQ", "APTN", "DEPO", "DDPT", "ADPT", "LOCA"]}
                   />
-                  <Field title="Statut juridique" content={notice.STAT} />
-                  <Field title="Date d’acquisition" content={notice.DACQ} />
-                  <Field title="Ancienne appartenance" content={notice.APTN} separator="#" />
-                  <Field title="Dépôt / établissement dépositaire" content={notice.DEPO} />
-                  <Field title="Date de dépôt / changement d’affectation" content={notice.DDPT} />
+                  <Field title={mapping.joconde.STAT.label} content={notice.STAT} />
+                  <Field title={mapping.joconde.DACQ.label} content={notice.DACQ} />
+                  <Field title={mapping.joconde.APTN.label} content={notice.APTN} separator="#" />
+                  <Field title={mapping.joconde.DEPO.label} content={notice.DEPO} />
+                  <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} />
 
-                  <Field title="Ancien dépôt / changement d’affectation" content={notice.ADPT} />
-                  <Field title="Localisation" content={notice.LOCA} />
+                  <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} />
+                  <Field title={mapping.joconde.LOCA.label} content={notice.LOCA} />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
                     fields={["COMM", "EXPO", "BIBL"]}
                   />
-                  <Field title="Commentaires" content={notice.COMM} separator="#" />
-                  <Field title="Exposition" content={notice.EXPO} />
-                  <Field title="Bibliographie" content={notice.BIBL} separator="#" />
+                  <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" />
+                  <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} />
+                  <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" />
                 </div>
               </Col>
               <Col md="4">
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title="Référence" content={notice.REF} />
-                    <Field title="Base" content={notice.BASE} />
-                    <Field title="Date de création" content={notice.DMIS} />
-                    <Field title="Dernière mise à jour" content={notice.DMAJ} />
-                    <Field title="Crédits photographiques" content={notice.AUTP} />
-                    <Field title="Auteur de l'oeuvre ou de l'original" content={notice.AUTOR} />
-                    <Field title="Droits photographiques" content={notice.PHOT} separator="#" />
+                    <Field title={mapping.joconde.REF.label} content={notice.REF} />
+                    <Field title={mapping.joconde.BASE.label} content={notice.BASE} />
+                    <Field title={mapping.joconde.DMIS.label} content={notice.DMIS} />
+                    <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} />
+                    <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" />
                   </div>
 
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="joconde" />
@@ -328,7 +311,7 @@ const SeeMore = ({ notice, museo }) => {
   if (notice.LVID) {
     arr.push(
       <Field
-        title="Lien Vidéo"
+        title={mapping.joconde.LVID.label}
         content={
           <a target="_blank" href={notice.LVID}>
             {notice.LVID}
@@ -342,7 +325,7 @@ const SeeMore = ({ notice, museo }) => {
   if (notice.WWW) {
     arr.push(
       <Field
-        title="Site complémentaire"
+        title={mapping.joconde.WWW.label}
         content={<a href={notice.WWW}>{notice.WWW}</a>}
         key="notice.WWW"
       />
@@ -359,7 +342,7 @@ const SeeMore = ({ notice, museo }) => {
       : notice.MUSEO;
     arr.push(
       <Field
-        title="Fiche musée"
+        title={mapping.joconde.MUSEO.label}
         content={<a href={`/museo/${notice.MUSEO}`}>{text}</a>}
         key="notice.MUSEO"
       />

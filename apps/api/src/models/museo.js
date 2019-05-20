@@ -26,6 +26,15 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
+    BASE: {
+      type: String,
+      default: "Musées de france (MUSEO)",
+      documentation: {
+        description: "Nom de la base : Musées de france (MUSEO)",
+        generated: true,
+        label: "Nom de la base"
+      }
+    },
     ACCES: {
       type: String,
       default: "",

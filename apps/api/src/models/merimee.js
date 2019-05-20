@@ -37,7 +37,8 @@ const Schema = new mongoose.Schema(
       default: "Patrimoine architectural (Mérimée)",
       documentation: {
         description: "Nom de la base : Patrimoine architectural (Mérimée)",
-        generated: true
+        generated: true,
+        label: "Nom de la base"
       }
     },
     CONTIENT_IMAGE: {
