@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { image } from "./../../services/image";
+import { getInformations } from "../../utils";
 
 const joinData = f => {
   return f
@@ -9,27 +10,20 @@ const joinData = f => {
     .join(" ; ");
 };
 
-const capitalizeFirstLetter = s => {
-  if (!s) return "";
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
-
 const Memoire = ({ data }) => {
-  const content = {
-    title: data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim(),
-    subtitle: joinData([
-      data.OBJET,
-      data.EDIF,
-      data.LEG,
-      data.DATOEU,
-      data.DATOEU ? "" : data.SCLE
-    ]),
-    ref: data.REF,
-    categories: data.TECH,
-    author: data.AUTP,
-    data: joinData([data.DATPV, data.DATOR]),
-    loc: data.LOCA
-  };
+  const { title } = getInformations(data);
+
+  const subtitle = joinData([
+    data.OBJET,
+    data.EDIF,
+    data.LEG,
+    data.DATOEU,
+    data.DATOEU ? "" : data.SCLE
+  ]);
+  const categories = data.TECH;
+  const author = data.AUTP;
+  const data = joinData([data.DATPV, data.DATOR]);
+  const loc = data.LOCA;
   const productorImage = notice => {
     if (notice.PRODUCTEUR === "CRMH") {
       return <img src="/static/mh.png" className="producteur mh" />;
@@ -38,6 +32,7 @@ const Memoire = ({ data }) => {
     }
     return null;
   };
+
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -46,9 +41,9 @@ const Memoire = ({ data }) => {
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(content.title)}
+                {title}
                 <br />
-                <small>{content.categories}</small>
+                <small>{categories}</small>
               </h2>
               <span>
                 <small className="base">Mémoire</small>
@@ -56,12 +51,12 @@ const Memoire = ({ data }) => {
                 {data.REF}
               </span>
             </div>
-            <p>{content.subtitle}</p>
+            <p>{subtitle}</p>
             {productorImage(data)}
             <div>
-              <p>{content.author}</p>
-              <p>{content.data}</p>
-              <p>{content.loc}</p>
+              <p>{author}</p>
+              <p>{data}</p>
+              <p>{loc}</p>
             </div>
           </div>
         </div>
@@ -71,7 +66,7 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const title = data.TICO || data.TITR;
+  const { title } = getInformations(data);
   const ref = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
@@ -120,7 +115,7 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const title = data.TICO || data.TITR;
+  const { title } = getInformations(data);
   const ref = data.REF;
   const categories = data.DENO ? data.DENO.join(", ") : "";
   const author = data.AUTR ? data.AUTR.join(", ") : "";
@@ -171,7 +166,7 @@ const Mnr = ({ data }) => {
   const REF = data.REF;
   const INV = data.INV;
   const categories = data.DENO ? data.DENO.join(", ") : "";
-  const title = data.TICO || data.TITR;
+  const { title } = getInformations(data);
   // const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
@@ -191,7 +186,7 @@ const Mnr = ({ data }) => {
             <p>{author}</p>
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
                 <small>{categories}</small>
               </h2>
@@ -218,7 +213,7 @@ const Mnr = ({ data }) => {
 
 const Joconde = ({ data }) => {
   const REF = data.REF;
-  const title = getJocondeTitle(data);
+  const { title } = getInformations(data);
   const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
@@ -237,7 +232,7 @@ const Joconde = ({ data }) => {
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
                 <small>{categories}</small>
               </h2>
@@ -260,18 +255,8 @@ const Joconde = ({ data }) => {
   );
 };
 
-function getJocondeTitle(notice) {
-  if (notice.TITR) {
-    return notice.TITR;
-  }
-  if ((notice.DENO || []).length) {
-    return notice.DENO.join(", ");
-  }
-
-  return (notice.DOMN || []).join(", ");
-}
-
 const Museo = ({ data }) => {
+  const { title } = getInformations(data);
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -279,7 +264,7 @@ const Museo = ({ data }) => {
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
+                {title}
                 <br />
                 {data.VILLE_M}
               </h2>
@@ -301,7 +286,7 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const title = `${data.TITR} - ${data.SUJET}`;
+  const { title } = getInformations(data);
   const img = image(data);
 
   return (
@@ -312,7 +297,7 @@ const Enluminures = ({ data }) => {
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
                 <small>{data.SUJET}</small>
               </h2>
