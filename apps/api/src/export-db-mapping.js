@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
-const mappingPath = "../../shared/src/Mapping.js";
-const mappingProductionPath = "../../production/src/services/Mapping.js";
+const mappingProductionPath = "../../production/src/services/mapping.js";
+const mappingDiffusionPath = "../../diffusion/src/services/mapping.js";
 
 // 1. Load models
 const models = fs
@@ -46,5 +46,5 @@ const content = `${models
   `;
 
 //Write
-fs.writeFileSync(path.join(__dirname, mappingPath), content);
 fs.writeFileSync(path.join(__dirname, mappingProductionPath), content);
+fs.writeFileSync(path.join(__dirname, mappingDiffusionPath), content);

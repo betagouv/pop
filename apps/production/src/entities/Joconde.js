@@ -1,4 +1,4 @@
-import Mapping from "../services/Mapping";
+import Mapping from "../services/mapping";
 import Notice from "./Notice";
 
 export default class Joconde extends Notice {

@@ -34,7 +34,7 @@ export default ({ content, title, separator, join = ", " }) => {
           font-size: 1rem;
           word-wrap: break-word;
           white-space: pre-line;
-          margin-bottom: 15px;
+          margin-bottom: 0px;
           text-align: justify;
         }
 

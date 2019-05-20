@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-import Mapping from "../../services/Mapping";
+import Mapping from "../../services/mapping";
 import Importer from "./importer";
 import Merimee from "../../entities/Merimee";
 import Memoire from "../../entities/Memoire";

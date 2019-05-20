@@ -73,7 +73,8 @@ const Schema = new mongoose.Schema(
       default: "Patrimoine mobilier (Palissy)",
       documentation: {
         description: "Nom de la base : Patrimoine mobilier (Palissy)",
-        generated: true
+        generated: true,
+        label: "Nom de la base"
       }
     },
     MEMOIRE: [{ ref: { type: String, index: true }, url: String }],

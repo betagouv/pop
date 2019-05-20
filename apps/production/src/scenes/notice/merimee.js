@@ -3,7 +3,7 @@ import { Row, Col, Input, Container, Button, Form } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import Mapping from "../../services/Mapping";
+import Mapping from "../../services/mapping";
 import { Link } from "react-router-dom";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";

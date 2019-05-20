@@ -4,6 +4,7 @@ import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
+import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import LinkedNotices from "../../src/notices/LinkedNotices";
@@ -124,11 +125,11 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["DENO", "PDEN", "NART", "APPL", "TICO"]}
                   />
-                  <Field title="Dénomination" content={notice.DENO} />
-                  <Field title="Précision sur la dénomination" content={notice.PDEN} />
-                  <Field title="Numéro" content={notice.NART} />
-                  <Field title="Appellation et titre" content={notice.APPL} />
-                  <Field title="Titre courant" content={notice.TICO} />
+                  <Field title={mapping.palissy.DENO.label} content={notice.DENO} />
+                  <Field title={mapping.palissy.PDEN.label} content={notice.PDEN} />
+                  <Field title={mapping.palissy.NART.label} content={notice.NART} />
+                  <Field title={mapping.palissy.APPL.label} content={notice.APPL} />
+                  <Field title={mapping.palissy.TICO.label} content={notice.TICO} />
                   <Title
                     content="Localisation"
                     notice={notice}
@@ -150,21 +151,21 @@ export default class extends React.Component {
                       "VOLS"
                     ]}
                   />
-                  <Field title="Région" content={notice.REG} />
-                  <Field title="Département" content={notice.DPT} />
-                  <Field title="Commune" content={notice.COM} />
-                  <Field title="Numéro INSEE de la commune" content={notice.INSEE} />
-                  <Field title="Précision sur la localisation" content={notice.PLOC} />
-                  <Field title="Aire d'étude" content={notice.AIRE} />
-                  <Field title="Canton" content={notice.CANT} />
-                  <Field title="Lieu-dit " content={notice.LIEU} />
-                  <Field title="Adresse" content={notice.ADRS} />
-                  <Field title="Edifice de conservation" content={notice.EDIF} />
-                  <Field title="Référence de l'édifice de conservation" content={notice.REFA} />
-                  <Field title="Milieu d'implantation" content={notice.IMPL} />
-                  <Field title="Emplacement de l’œuvre dans l’édifice" content={notice.EMPL} />
-                  <Field title="Partie déplacée" content={notice.DEPL} />
-                  <Field title="Vols" content={notice.VOLS} />
+                  <Field title={mapping.palissy.REG.label} content={notice.REG} />
+                  <Field title={mapping.palissy.DPT.label} content={notice.DPT} />
+                  <Field title={mapping.palissy.COM.label} content={notice.COM} />
+                  <Field title={mapping.palissy.INSEE.label} content={notice.INSEE} />
+                  <Field title={mapping.palissy.PLOC.label} content={notice.PLOC} />
+                  <Field title={mapping.palissy.AIRE.label} content={notice.AIRE} />
+                  <Field title={mapping.palissy.CANT.label} content={notice.CANT} />
+                  <Field title={mapping.palissy.LIEU.label} content={notice.LIEU} />
+                  <Field title={mapping.palissy.ADRS.label} content={notice.ADRS} />
+                  <Field title={mapping.palissy.EDIF.label} content={notice.EDIF} />
+                  <Field title={mapping.palissy.REFA.label} content={notice.REFA} />
+                  <Field title={mapping.palissy.IMPL.label} content={notice.IMPL} />
+                  <Field title={mapping.palissy.EMPL.label} content={notice.EMPL} />
+                  <Field title={mapping.palissy.DEPL.label} content={notice.DEPL} />
+                  <Field title={mapping.palissy.VOLS.label} content={notice.VOLS} />
 
                   <Title
                     content="Description"
@@ -184,18 +185,18 @@ export default class extends React.Component {
                       "PINS"
                     ]}
                   />
-                  <Field title="Catégorie technique" content={notice.CATE} />
-                  <Field title="Structure et typologie" content={notice.STRU} />
-                  <Field title="Matériaux et techniques" content={notice.MATR} />
-                  <Field title="Commentaire description" content={notice.DESC} separator="£" />
-                  <Field title="Représentation" content={notice.REPR} separator="£" />
-                  <Field title="Précision sur la représentation" content={notice.PREP} />
-                  <Field title="Dimensions" content={notice.DIMS} separator="£" />
-                  <Field title="Précisions sur les dimensions" content={notice.PDIM} />
-                  <Field title="Etat de conservation" content={notice.ETAT} />
-                  <Field title="Précisions sur l’état de conservation" content={notice.PETA} />
-                  <Field title="Inscriptions" content={notice.INSC} />
-                  <Field title="Précisions sur l’inscription" content={notice.PINS} />
+                  <Field title={mapping.palissy.CATE.label} content={notice.CATE} />
+                  <Field title={mapping.palissy.STRU.label} content={notice.STRU} />
+                  <Field title={mapping.palissy.MATR.label} content={notice.MATR} />
+                  <Field title={mapping.palissy.DESC.label} content={notice.DESC} separator="£" />
+                  <Field title={mapping.palissy.REPR.label} content={notice.REPR} separator="£" />
+                  <Field title={mapping.palissy.PREP.label} content={notice.PREP} />
+                  <Field title={mapping.palissy.DIMS.label} content={notice.DIMS} separator="£" />
+                  <Field title={mapping.palissy.PDIM.label} content={notice.PDIM} />
+                  <Field title={mapping.palissy.ETAT.label} content={notice.ETAT} />
+                  <Field title={mapping.palissy.PETA.label} content={notice.PETA} />
+                  <Field title={mapping.palissy.INSC.label} content={notice.INSC} />
+                  <Field title={mapping.palissy.PINS.label} content={notice.PINS} />
                   <Title
                     content="Historique"
                     notice={notice}
@@ -214,22 +215,19 @@ export default class extends React.Component {
                       "HIST"
                     ]}
                   />
-                  <Field title="Auteurs de l'oeuvre" content={this.authors()} />
-                  <Field title="Auteur de la source figurée" content={notice.AFIG} />
-                  <Field title="Atelier" content={notice.ATEL} />
-                  <Field title="Référence auteur" content={notice.REFM} />
-                  <Field title="Personnalitées" content={notice.PERS} separator="£" />
-                  <Field title="Lieu d’exécution" content={notice.EXEC} />
-                  <Field title="Lieu de provenance" content={notice.ORIG} />
-                  <Field title="Stade de création" content={notice.STAD} />
+                  <Field title={mapping.palissy.AUTR.label} content={this.authors()} />
+                  <Field title={mapping.palissy.AFIG.label} content={notice.AFIG} />
+                  <Field title={mapping.palissy.ATEL.label} content={notice.ATEL} />
+                  <Field title={mapping.palissy.REFM.label} content={notice.REFM} />
+                  <Field title={mapping.palissy.PERS.label} content={notice.PERS} separator="£" />
+                  <Field title={mapping.palissy.EXEC.label} content={notice.EXEC} />
+                  <Field title={mapping.palissy.ORIG.label} content={notice.ORIG} />
+                  <Field title={mapping.palissy.STAD.label} content={notice.STAD} />
 
-                  <Field
-                    title="Datation des campagnes principales de construction"
-                    content={notice.SCLE}
-                  />
-                  <Field title="Datation en années" content={notice.DATE} />
-                  <Field title="Justification de la datation" content={notice.JDAT} />
-                  <Field title="Commentaire historique" content={notice.HIST} separator="£" />
+                  <Field title={mapping.palissy.SCLE.label} content={notice.SCLE} />
+                  <Field title={mapping.palissy.DATE.label} content={notice.DATE} />
+                  <Field title={mapping.palissy.JDAT.label} content={notice.JDAT} />
+                  <Field title={mapping.palissy.HIST.label} content={notice.HIST} separator="£" />
                   <Title
                     content="Statut juridique et protection"
                     notice={notice}
@@ -250,21 +248,21 @@ export default class extends React.Component {
                       "PHOTO"
                     ]}
                   />
-                  <Field title="Statut de la propriété" content={notice.STAT} />
-                  <Field title="Nature de la protection MH" content={notice.PROT} />
-                  <Field title="Date de protection" content={notice.DPRO} />
-                  <Field title="Précisions sur la protection MH" content={notice.PPRO} />
-                  <Field title="Numéro de l’arrêté" content={notice.NUMA} />
-                  <Field title="Numéro d’inventaire" content={notice.NINV} />
+                  <Field title={mapping.palissy.STAT.label} content={notice.STAT} />
+                  <Field title={mapping.palissy.PROT.label} content={notice.PROT} />
+                  <Field title={mapping.palissy.DPRO.label} content={notice.DPRO} />
+                  <Field title={mapping.palissy.PPRO.label} content={notice.PPRO} />
+                  <Field title={mapping.palissy.NUMA.label} content={notice.NUMA} />
+                  <Field title={mapping.palissy.NINV.label} content={notice.NINV} />
 
-                  <Field title="Observations" content={notice.OBS} />
-                  <Field title="Intérêt de l'oeuvre" content={notice.INTE} />
-                  <Field title="Intérêt oeuvre" content={notice.PINT} />
-                  <Field title="Acquisition" content={notice.ACQU} />
-                  <Field title="Exposition" content={notice.EXPO} />
-                  <Field title="Bibliographie" content={notice.BIBL} />
-                  <Field title="Sources" content={notice.SOUR} />
-                  <Field title="Photographies" content={notice.PHOTO} />
+                  <Field title={mapping.palissy.OBS.label} content={notice.OBS} />
+                  <Field title={mapping.palissy.INTE.label} content={notice.INTE} />
+                  <Field title={mapping.palissy.PINT.label} content={notice.PINT} />
+                  <Field title={mapping.palissy.ACQU.label} content={notice.ACQU} />
+                  <Field title={mapping.palissy.EXPO.label} content={notice.EXPO} />
+                  <Field title={mapping.palissy.BIBL.label} content={notice.BIBL} />
+                  <Field title={mapping.palissy.SOUR.label} content={notice.SOUR} />
+                  <Field title={mapping.palissy.PHOTO.label} content={notice.PHOTO} />
 
                   <Title
                     content="Références documentaires"
@@ -285,23 +283,24 @@ export default class extends React.Component {
                       "WEB"
                     ]}
                   />
-                  <Field title="Cadre de l'étude" content={notice.ETUD} />
-                  <Field title="Dossier" content={notice.DOSS} />
-                  <Field title="Parties constituantes" content={notice.PART} />
-                  <Field
-                    title="Références des parties constituantes étudiées"
-                    content={notice.REFP}
-                  />
-                  <Field title="Parties non étud" content={notice.PARN} />
-                  <Field title="Préc. appart." content={notice.PAPP} />
-                  <Field title="Référence de l'édifice de conservation" content={notice.REFE} />
-                  <Field title="Date d'enquête" content={notice.DENQ} />
-                  <Field title="Date de rédaction de la notice" content={notice.DBOR} />
-                  <Field title="Lexique noms propres" content={notice.RENP} />
+                  <Field title={mapping.palissy.ETUD.label} content={notice.ETUD} />
+                  <Field title={mapping.palissy.DOSS.label} content={notice.DOSS} />
+                  <Field title={mapping.palissy.PART.label} content={notice.PART} />
+                  <Field title={mapping.palissy.REFP.label} content={notice.REFP} />
+                  <Field title={mapping.palissy.PARN.label} content={notice.PARN} />
+                  <Field title={mapping.palissy.PAPP.label} content={notice.PAPP} />
+                  <Field title={mapping.palissy.REFE.label} content={notice.REFE} />
+                  <Field title={mapping.palissy.DENQ.label} content={notice.DENQ} />
+                  <Field title={mapping.palissy.DBOR.label} content={notice.DBOR} />
+                  <Field title={mapping.palissy.RENP.label} content={notice.RENP} />
 
-                  <Field title="Dossier adresse" content={notice.DOSADRS} separator="£" />
-                  <Field title="Autres liens" content={notice.IMAGE} />
-                  <Field title="Visite guidé" content={notice.WEB} />
+                  <Field
+                    title={mapping.palissy.DOSADRS.label}
+                    content={notice.DOSADRS}
+                    separator="£"
+                  />
+                  <Field title={mapping.palissy.IMAGE.label} content={notice.IMAGE} />
+                  <Field title={mapping.palissy.WEB.label} content={notice.WEB} />
                 </div>
               </Col>
               <Col md="4">
@@ -309,13 +308,13 @@ export default class extends React.Component {
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title="Référence" content={notice.REF} />
-                    <Field title="Base" content={notice.BASE} />
-                    <Field title="Date de création" content={notice.DMIS} />
-                    <Field title="Dernière mise à jour" content={notice.DMAJ} />
-                    <Field title="Rédacteur" content={notice.NOMS} />
-                    <Field title="Crédits photographiques" content={notice.AUTP} />
-                    <Field title="" content={notice.COPY} />
+                    <Field title={mapping.palissy.REF.label} content={notice.REF} />
+                    <Field title={mapping.palissy.BASE.label} content={notice.BASE} />
+                    <Field title={mapping.palissy.DMIS.label} content={notice.DMIS} />
+                    <Field title={mapping.palissy.DMAJ.label} content={notice.DMAJ} />
+                    <Field title={mapping.palissy.NOMS.label} content={notice.NOMS} />
+                    <Field title={mapping.palissy.AUTP.label} content={notice.AUTP} />
+                    <Field title={mapping.palissy.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" />
                 </div>
@@ -337,7 +336,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSURL) {
     arr.push(
       <Field
-        title="Dossier électronique"
+        title={mapping.palissy.DOSURL.label}
         content={<a href={notice.DOSURL}>Télécharger</a>}
         key="notice.DOSURL"
       />
@@ -347,7 +346,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSURLPDF) {
     arr.push(
       <Field
-        title="Dossier PDF"
+        title={mapping.palissy.DOSURLPDF.label}
         content={<a href={postFixedLink(notice.DOSURLPDF)}>Télécharger</a>}
         key="notice.DOSURLPDF"
       />
@@ -358,7 +357,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.LIENS.length; i++) {
       arr.push(
         <Field
-          title="Liens"
+          title={mapping.palissy.LIENS.label}
           content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
           key={`notice.LIENS${i}`}
         />
@@ -369,7 +368,7 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <Field
-        title="Lien vers les archives MH"
+        title={mapping.palissy.LMDP.label}
         content={
           <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
             Base Mediathek

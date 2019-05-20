@@ -4,6 +4,7 @@ import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
+import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import LinkedNotices from "../../src/notices/LinkedNotices";
@@ -131,13 +132,13 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["DENO", "GENR", "PDEN", "VOCA", "APPL", "ACTU", "TICO"]}
                   />
-                  <Field title="Dénomination" content={notice.DENO} />
-                  <Field title="Destinataire" content={notice.GENR} />
-                  <Field title="Précision sur la dénomination" content={notice.PDEN} />
-                  <Field title="Vocable" content={notice.VOCA} />
-                  <Field title="Appellation et titre" content={notice.APPL} />
-                  <Field title="Destinations successives et actuelle" content={notice.ACTU} />
-                  <Field title="Titre courant" content={notice.TICO} />
+                  <Field title={mapping.merimee.DENO.label} content={notice.DENO} />
+                  <Field title={mapping.merimee.GENR.label} content={notice.GENR} />
+                  <Field title={mapping.merimee.PDEN.label} content={notice.PDEN} />
+                  <Field title={mapping.merimee.VOCA.label} content={notice.VOCA} />
+                  <Field title={mapping.merimee.APPL.label} content={notice.APPL} />
+                  <Field title={mapping.merimee.ACTU.label} content={notice.ACTU} />
+                  <Field title={mapping.merimee.TICO.label} content={notice.TICO} />
                   <Title
                     content="Localisation"
                     notice={notice}
@@ -163,18 +164,18 @@ export default class extends React.Component {
                     title="Localisation"
                     content={notice.REG + " " + notice.DPT + " " + notice.COM}
                   />
-                  <Field title="Précision sur la localisation" content={notice.PLOC} />
-                  <Field title="Aire d'étude" content={notice.AIRE} />
-                  <Field title="Canton" content={notice.CANT} />
-                  <Field title="Lieu-dit" content={notice.LIEU} />
-                  <Field title="Adresse" content={notice.ADRS} />
-                  <Field title="Référence cadastrale" content={notice.CADA} />
-                  <Field title="Milieu d'implantation" content={notice.IMPL} />
-                  <Field title="Cours d'eau" content={notice.HYDR} />
-                  <Field title="Parties non étud" content={notice.PARN} />
-                  <Field title="Edifice de conservation" content={notice.EDIF} />
-                  <Field title="Référence de l'édifice de conservation" content={notice.REFE} />
-                  <Field title="Décompte des oeuvres recensées" content={notice.COLL} />
+                  <Field title={mapping.merimee.PLOC.label} content={notice.PLOC} />
+                  <Field title={mapping.merimee.AIRE.label} content={notice.AIRE} />
+                  <Field title={mapping.merimee.CANT.label} content={notice.CANT} />
+                  <Field title={mapping.merimee.LIEU.label} content={notice.LIEU} />
+                  <Field title={mapping.merimee.ADRS.label} content={notice.ADRS} />
+                  <Field title={mapping.merimee.CADA.label} content={notice.CADA} />
+                  <Field title={mapping.merimee.IMPL.label} content={notice.IMPL} />
+                  <Field title={mapping.merimee.HYDR.label} content={notice.HYDR} />
+                  <Field title={mapping.merimee.PARN.label} content={notice.PARN} />
+                  <Field title={mapping.merimee.EDIF.label} content={notice.EDIF} />
+                  <Field title={mapping.merimee.REFE.label} content={notice.REFE} />
+                  <Field title={mapping.merimee.COLL.label} content={notice.COLL} />
                   <Title
                     content="Historique"
                     notice={notice}
@@ -192,23 +193,17 @@ export default class extends React.Component {
                       "HIST"
                     ]}
                   />
-                  <Field
-                    title="Datation des campagnes principales de construction"
-                    content={notice.SCLE}
-                  />
-                  <Field
-                    title="Datation des campagnes secondaires de construction"
-                    content={notice.SCLD}
-                  />
-                  <Field title="Datation en années" content={notice.DATE} />
-                  <Field title="Justification de la datation" content={notice.JDAT} />
-                  <Field title="Auteurs de l'oeuvre" content={this.authors()} />
-                  <Field title="Référence auteur" content={notice.REFM} />
-                  <Field title="Justification de l'attribution" content={notice.JATT} />
-                  <Field title="Personnalitées" content={notice.PERS} separator="£" />
-                  <Field title="Remploi" content={notice.REMP} />
-                  <Field title="Partie déplacée" content={notice.DEPL} />
-                  <Field title="Commentaire historique" content={notice.HIST} separator="£" />
+                  <Field title={mapping.merimee.SCLE.label} content={notice.SCLE} />
+                  <Field title={mapping.merimee.SCLD.label} content={notice.SCLD} />
+                  <Field title={mapping.merimee.DATE.label} content={notice.DATE} />
+                  <Field title={mapping.merimee.JDAT.label} content={notice.JDAT} />
+                  <Field title={mapping.merimee.AUTR.label} content={this.authors()} />
+                  <Field title={mapping.merimee.REFM.label} content={notice.REFM} />
+                  <Field title={mapping.merimee.JATT.label} content={notice.JATT} />
+                  <Field title={mapping.merimee.PERS.label} content={notice.PERS} separator="£" />
+                  <Field title={mapping.merimee.REMP.label} content={notice.REMP} />
+                  <Field title={mapping.merimee.DEPL.label} content={notice.DEPL} />
+                  <Field title={mapping.merimee.HIST.label} content={notice.HIST} separator="£" />
                   <Title
                     content="Description"
                     notice={notice}
@@ -232,29 +227,29 @@ export default class extends React.Component {
                       "ETAT"
                     ]}
                   />
-                  <Field title="Matériau du gros-oeuvre et mise en oeuvre" content={notice.MURS} />
-                  <Field title="Matériau de la couverture" content={notice.TOIT} />
-                  <Field title="Parti de plan" content={notice.PLAN} />
-                  <Field title="Vaisseau et étage" content={notice.ETAG} />
-                  <Field title="Type et nature du couvrement" content={notice.VOUT} />
-                  <Field title="Parti d’élévation extérieure" content={notice.ELEV} />
-                  <Field title="Type de la couverture" content={notice.COUV} />
+                  <Field title={mapping.merimee.MURS.label} content={notice.MURS} />
+                  <Field title={mapping.merimee.TOIT.label} content={notice.TOIT} />
+                  <Field title={mapping.merimee.PLAN.label} content={notice.PLAN} />
+                  <Field title={mapping.merimee.ETAG.label} content={notice.ETAG} />
+                  <Field title={mapping.merimee.VOUT.label} content={notice.VOUT} />
+                  <Field title={mapping.merimee.ELEV.label} content={notice.ELEV} />
+                  <Field title={mapping.merimee.COUV.label} content={notice.COUV} />
                   <Field
                     title="Emplacement, forme et structure de l’escalier"
                     content={notice.ESCA}
                   />
-                  <Field title="Source de l'énergie" content={notice.ENER} />
-                  <Field title="Couvert et découvert de jardin" content={notice.VERT} />
-                  <Field title="Commentaire description" content={notice.DESC} separator="£" />
+                  <Field title={mapping.merimee.ENER.label} content={notice.ENER} />
+                  <Field title={mapping.merimee.VERT.label} content={notice.VERT} />
+                  <Field title={mapping.merimee.DESC.label} content={notice.DESC} separator="£" />
                   <Field
                     title="Technique du décor des immeubles par nature"
                     content={notice.TECH}
                   />
-                  <Field title="Représentation" content={notice.REPR} />
-                  <Field title="Précision sur la représentation" content={notice.PREP} />
-                  <Field title="Dimensions" content={notice.DIMS} />
-                  <Field title="Typologie" content={notice.TYPO} />
-                  <Field title="Etat de conservation" content={notice.ETAT} />
+                  <Field title={mapping.merimee.REPR.label} content={notice.REPR} />
+                  <Field title={mapping.merimee.PREP.label} content={notice.PREP} />
+                  <Field title={mapping.merimee.DIMS.label} content={notice.DIMS} />
+                  <Field title={mapping.merimee.TYPO.label} content={notice.TYPO} />
+                  <Field title={mapping.merimee.ETAT.label} content={notice.ETAT} />
                   <Title
                     content="Protection"
                     notice={notice}
@@ -273,31 +268,31 @@ export default class extends React.Component {
                       "OBS"
                     ]}
                   />
-                  <Field title="Nature de la protection MH" content={notice.PROT} />
-                  <Field title="Date protection" content={notice.DPRO} />
-                  <Field title="Précisions sur la protection MH" content={notice.PPRO} />
-                  <Field title="Nature de l'acte de protection MH" content={notice.APRO} />
-                  <Field title="Eléments protégés MH" content={notice.MHPP} />
+                  <Field title={mapping.merimee.PROT.label} content={notice.PROT} />
+                  <Field title={mapping.merimee.DPRO.label} content={notice.DPRO} />
+                  <Field title={mapping.merimee.PPRO.label} content={notice.PPRO} />
+                  <Field title={mapping.merimee.APRO.label} content={notice.APRO} />
+                  <Field title={mapping.merimee.MHPP.label} content={notice.MHPP} />
                   <Field
                     title="Référence aux objects conservés dans l'édifice"
                     content={notice.REFO}
                   />
-                  <Field title="Site, secteur ou zone de protection" content={notice.SITE} />
-                  <Field title="Intérêt de l'oeuvre" content={notice.INTE} />
-                  <Field title="intérêt oeuvre" content={notice.PINT} />
-                  <Field title="Eléments remarquables" content={notice.REMA} />
-                  <Field title="Date du label" content={notice.DLAB} />
-                  <Field title="Observations" content={notice.OBS} />
+                  <Field title={mapping.merimee.SITE.label} content={notice.SITE} />
+                  <Field title={mapping.merimee.INTE.label} content={notice.INTE} />
+                  <Field title={mapping.merimee.PINT.label} content={notice.PINT} />
+                  <Field title={mapping.merimee.REMA.label} content={notice.REMA} />
+                  <Field title={mapping.merimee.DLAB.label} content={notice.DLAB} />
+                  <Field title={mapping.merimee.OBS.label} content={notice.OBS} />
                   <Title
                     content="Statut juridique"
                     notice={notice}
                     fields={["STAT", "PSTA", "AFFE", "PAFF", "VISI"]}
                   />
-                  <Field title="Statut de la propriété" content={notice.STAT} />
-                  <Field title="Précisions sur le statut de la propriété: " content={notice.PSTA} />
-                  <Field title="Affectataire" content={notice.AFFE} />
-                  <Field title="Précisions sur l'affectataire" content={notice.PAFF} />
-                  <Field title="Ouverture au public" content={notice.VISI} />
+                  <Field title={mapping.merimee.STAT.label} content={notice.STAT} />
+                  <Field title={mapping.merimee.PSTA.label} content={notice.PSTA} />
+                  <Field title={mapping.merimee.AFFE.label} content={notice.AFFE} />
+                  <Field title={mapping.merimee.PAFF.label} content={notice.PAFF} />
+                  <Field title={mapping.merimee.VISI.label} content={notice.VISI} />
                   <Title
                     content="Références documentaires"
                     notice={notice}
@@ -314,19 +309,23 @@ export default class extends React.Component {
                       "DOSADRS"
                     ]}
                   />
-                  <Field title="Date d'enquête" content={notice.DENQ} />
-                  <Field title="Crédits" content={notice.COPY} />
-                  <Field title="Date de rédaction de la notice" content={notice.DBOR} />
+                  <Field title={mapping.merimee.DENQ.label} content={notice.DENQ} />
+                  <Field title={mapping.merimee.COPY.label} content={notice.COPY} />
+                  <Field title={mapping.merimee.DBOR.label} content={notice.DBOR} />
                   <Field
                     title="Noms des rédacteurs de la notice et du dossier"
                     content={notice.NOMS}
                   />
-                  <Field title="Cadre de l'étude" content={notice.ETUD} />
-                  <Field title="Dossier" content={notice.DOSS} />
-                  <Field title="Référence images" content={notice.REFIM} />
-                  <Field title="Visite guidé" content={notice.WEB} />
-                  <Field title="Référence dans la base Patriarche" content={notice.ARCHEO} />
-                  <Field title="Dossier adresse" content={notice.DOSADRS} separator="£" />
+                  <Field title={mapping.merimee.ETUD.label} content={notice.ETUD} />
+                  <Field title={mapping.merimee.DOSS.label} content={notice.DOSS} />
+                  <Field title={mapping.merimee.REFIM.label} content={notice.REFIM} />
+                  <Field title={mapping.merimee.WEB.label} content={notice.WEB} />
+                  <Field title={mapping.merimee.ARCHEO.label} content={notice.ARCHEO} />
+                  <Field
+                    title={mapping.merimee.DOSADRS.label}
+                    content={notice.DOSADRS}
+                    separator="£"
+                  />
                 </div>
               </Col>
               <Col sm="4">
@@ -334,13 +333,13 @@ export default class extends React.Component {
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title="Référence" content={notice.REF} />
-                    <Field title="Base" content={notice.BASE} />
-                    <Field title="Date de création" content={notice.DMIS} />
-                    <Field title="Dernière mise à jour" content={notice.DMAJ} />
-                    <Field title="Rédacteur" content={notice.NOMS} />
-                    <Field title="Crédits photographiques" content={notice.AUTP} />
-                    <Field title="" content={notice.COPY} />
+                    <Field title={mapping.merimee.REF.label} content={notice.REF} />
+                    <Field title={mapping.merimee.BASE.label} content={notice.BASE} />
+                    <Field title={mapping.merimee.DMIS.label} content={notice.DMIS} />
+                    <Field title={mapping.merimee.DMAJ.label} content={notice.DMAJ} />
+                    <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} />
+                    <Field title={mapping.merimee.AUTP.label} content={notice.AUTP} />
+                    <Field title={mapping.merimee.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="merimee" />
                 </div>
@@ -362,7 +361,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSURL) {
     arr.push(
       <Field
-        title="Dossier électronique"
+        title={mapping.merimee.DOSURL.label}
         content={<a href={notice.DOSURL}>Télécharger</a>}
         key="notice.DOSURL"
       />
@@ -372,7 +371,7 @@ const SeeMore = ({ notice }) => {
   if (notice.DOSURLPDF) {
     arr.push(
       <Field
-        title="Dossier PDF"
+        title={mapping.merimee.DOSURLPDF.label}
         content={<a href={postFixedLink(notice.DOSURLPDF)}>Télécharger</a>}
         key="notice.DOSURLPDF"
       />
@@ -383,7 +382,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.LIENS.length; i++) {
       arr.push(
         <Field
-          title="Liens"
+          title={mapping.merimee.LIENS.label}
           content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
           key={`notice.LIENS${i}`}
         />
@@ -394,7 +393,7 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <Field
-        title="Lien vers les archives MH"
+        title={mapping.merimee.LMDP.label}
         content={
           <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
             Base Mediathek
