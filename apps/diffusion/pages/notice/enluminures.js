@@ -3,6 +3,7 @@ import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
+import mapping from "../../src/services/mapping";
 import logEvent from "../../src/services/amplitude";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
@@ -107,30 +108,38 @@ export default class extends React.Component {
                       "TYPDEC"
                     ]}
                   />
-                  <Field title="Attribution" content={notice.ATTRIB} />
-                  <Field title="Contexte" content={notice.CONTXT} />
-                  <Field title="Datation" content={notice.DATE} />
-                  <Field title="Domaine" content={notice.NOMENC} />
-                  <Field title="Notes manuscrit" content={notice.NOTES} />
-                  <Field title="Remarques sur le décors" content={notice.NOTDEC} />
-                  <Field title="Origine géographique" content={notice.ORIGG} />
-                  <Field title="Origine historique" content={notice.ORIGH} />
-                  <Field title="Possesseur" content={notice.POSS} />
-                  <Field title="Cote" content={notice.REFD} />
-                  <Field title="Titre de l'enluminure / Sujet" content={notice.SUJET} />
-                  <Field title="Titre de l'ouvrage" content={notice.TITR} />
-                  <Field title="Typologie du décors" content={notice.TYPDEC} separator="/" />
+                  <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
+                  <Field title={mapping.enluminures.CONTXT.label} content={notice.CONTXT} />
+                  <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
+                  <Field title={mapping.enluminures.NOMENC.label} content={notice.NOMENC} />
+                  <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
+                  <Field title={mapping.enluminures.NOTDEC.label} content={notice.NOTDEC} />
+                  <Field title={mapping.enluminures.ORIGG.label} content={notice.ORIGG} />
+                  <Field title={mapping.enluminures.ORIGH.label} content={notice.ORIGH} />
+                  <Field title={mapping.enluminures.POSS.label} content={notice.POSS} />
+                  <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
+                  <Field title={mapping.enluminures.SUJET.label} content={notice.SUJET} />
+                  <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
+                  <Field
+                    title={mapping.enluminures.TYPDEC.label}
+                    content={notice.TYPDEC}
+                    separator="/"
+                  />
                 </div>
               </Col>
               <Col md="4">
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title="Référence" content={notice.REF} />
-                    <Field title="Base" content={notice.BASE} />
-                    <Field title="Crédits photographiques" content={notice.DROIT} />
-                    <Field title="Auteur de l'oeuvre ou de l'original" content={notice.ATTRIB} />
-                    <Field title="Copyright notice" content={notice.COPY} separator=";" />
+                    <Field title={mapping.enluminures.REF.label} content={notice.REF} />
+                    <Field title={mapping.enluminures.BASE.label} content={notice.BASE} />
+                    <Field title={mapping.enluminures.DROIT.label} content={notice.DROIT} />
+                    <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
+                    <Field
+                      title={mapping.enluminures.COPY.label}
+                      content={notice.COPY}
+                      separator=";"
+                    />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="enluminures" />
                 </div>
