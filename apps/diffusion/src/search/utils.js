@@ -18,6 +18,9 @@ export function pagination(total, itemsPerPage, page, setPage) {
       </>
     );
   }
+  if (total <= itemsPerPage) {
+    return null;
+  }
   return pagination;
 }
 

@@ -40,7 +40,7 @@ const Memoire = ({ data }) => {
   };
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{image(data)}</div>
           <div className="content">
@@ -90,7 +90,7 @@ const Palissy = ({ data }) => {
 
   return (
     <Link href={`/notice/palissy/${ref}`} key={ref}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{image(data)}</div>
           <div className="content">
@@ -138,7 +138,7 @@ const Merimee = ({ data }) => {
 
   return (
     <Link href={`/notice/merimee/${ref}`} key={ref}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{image(data)}</div>
           <div className="content">
@@ -184,7 +184,7 @@ const Mnr = ({ data }) => {
 
   return (
     <Link href={`/notice/mnr/${REF}`} key={REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{img}</div>
           <div className="content">
@@ -231,7 +231,7 @@ const Joconde = ({ data }) => {
 
   return (
     <Link href={`/notice/joconde/${REF}`} key={REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{img}</div>
           <div className="content">
@@ -274,7 +274,7 @@ function getJocondeTitle(notice) {
 const Museo = ({ data }) => {
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container">
           <div className="content">
             <div style={{ display: "flex" }}>
@@ -306,7 +306,7 @@ const Enluminures = ({ data }) => {
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{img}</div>
           <div className="content">

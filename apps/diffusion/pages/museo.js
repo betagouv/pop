@@ -1,6 +1,6 @@
 import React from "react";
 import API from "../src/services/api";
-import { Mapping } from "pop-shared";
+import mapping from "../../src/services/mapping";
 import Map from "../src/notices/Map";
 import Layout from "../src/components/Layout";
 import Head from "next/head";
@@ -33,8 +33,8 @@ export default class extends React.Component {
 
   // Display property label.
   label = k => {
-    if (Mapping.museo[k]) {
-      return Mapping.museo[k].label || Mapping.museo[k].description || k;
+    if (mapping.museo[k]) {
+      return mapping.museo[k].label || mapping.museo[k].description || k;
     }
     return k;
   };
@@ -74,7 +74,7 @@ export default class extends React.Component {
   renderProperties = museo => {
     const dl = Object.entries(museo)
       .filter(([_key, val]) => val)
-      .filter(([key, _val]) => Mapping.museo[key])
+      .filter(([key, _val]) => mapping.museo[key])
       .filter(([key, _val]) => !hiddenFields.includes(key))
       .map(([key, val]) => {
         return (

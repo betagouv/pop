@@ -251,6 +251,7 @@ export default class extends React.Component {
             font-size: 14px;
             font-weight: normal;
             color: black;
+            cursor: pointer;
           }
 
           .collapsable-facet-title {

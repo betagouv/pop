@@ -23,7 +23,7 @@ export default ({ index, data }) => {
   return (
     <Col>
       <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
-        <a style={{ textDecoration: "none" }} target="_blank" className="mosaique-card">
+        <a style={{ textDecoration: "none" }} className="mosaique-card">
           <div className="thumbnail">{image(data)}</div>
           <div className="content">
             <span>{title(index.replace(/[0-9]+/, ""))}</span>
