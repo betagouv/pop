@@ -6,13 +6,18 @@ import { es_url } from "../../../config";
 import excelIcon from "../../../assets/microsoftexcel.svg";
 import { CustomWidget } from "react-elasticsearch";
 
-export default function ExportComponent({ collection, target }) {
+export default function ExportComponent({ collection, target, header }) {
   const [exporting, setExporting] = useState(false);
 
   if (exporting) {
     return (
       <CustomWidget>
-        <Loading collection={collection} onFinish={() => setExporting(false)} target={target} />
+        <Loading
+          collection={collection}
+          header={header}
+          onFinish={() => setExporting(false)}
+          target={target}
+        />
       </CustomWidget>
     );
   }
@@ -25,7 +30,7 @@ export default function ExportComponent({ collection, target }) {
   );
 }
 
-function Loading({ onFinish, collection, ctx, target }) {
+function Loading({ onFinish, collection, ctx, target, header }) {
   useEffect(() => {
     async function exportAndDownload(query) {
       let docs = [];
@@ -66,13 +71,14 @@ function Loading({ onFinish, collection, ctx, target }) {
         const hours = ("0" + d.getHours()).slice(-2);
         const secondes = ("0" + d.getSeconds()).slice(-2);
         const fileName = `${collection}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
-        exportData(fileName, docs);
+        exportData(fileName, docs, header);
         onFinish();
       } catch (e) {
         console.log(e);
         onFinish();
       }
     }
+
     const queries = [];
     for (let w of ctx.widgets.values()) {
       if (w && w.query) {
@@ -101,7 +107,7 @@ function Loading({ onFinish, collection, ctx, target }) {
   );
 }
 
-async function exportData(fileName, entities) {
+async function exportData(fileName, entities, header) {
   if (!entities.length) {
     return;
   }
@@ -128,7 +134,7 @@ async function exportData(fileName, entities) {
   // Add a first line with query parameters.
   const search = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  if (search) {
+  if (search && header) {
     if (search.qb) {
       // Get an array of queries with rules as text.
       const queries = JSON.parse(search.qb).map(s => {

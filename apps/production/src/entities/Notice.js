@@ -60,6 +60,7 @@ export default class Notice {
         this.hasOwnProperty(property) &&
         property.indexOf("_") !== 0 &&
         typeof this[property] !== "function" &&
+        this._mapping[property] &&
         !this._mapping[property].generated
       ) {
         flat[property] = this[property];

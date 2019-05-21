@@ -81,7 +81,7 @@ export default function render() {
             <Results
               initialPage={initialValues.get("resPage")}
               id="res"
-              items={data => data.map(({_source, _id}) =>  <Card key={_id} data={_source} />)}
+              items={data => data.map(({ _source, _id }) => <Card key={_id} data={_source} />)}
               pagination={utils.pagination}
               stats={total => (
                 <div>
@@ -89,7 +89,7 @@ export default function render() {
                 </div>
               )}
             />
-            <ExportComponent collection="museo" target="main" />
+            <ExportComponent collection="museo" target="main" header={false} />
           </Col>
         </Row>
       </Elasticsearch>
