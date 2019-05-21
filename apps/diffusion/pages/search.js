@@ -136,179 +136,15 @@ export default class extends React.Component {
             box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
           }
 
-          .search .search-container.search-container-simple {
-            display: flex;
-            justify-content: space-between;
-          }
-
-          .search .list-view {
-            width: 100%;
-          }
-          .search .mosaique-view > div {
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-right: -15px;
-            margin-left: -15px;
-            padding-top: 4px;
-          }
-          .search .list-view .result-count {
-            padding-left: 5px;
-            padding-bottom: 0px;
-          }
-
-          .search .mosaique-view .result-count {
-            padding-left: 15px;
-            padding-bottom: 0px;
-          }
-
           .search .view {
             padding-top: 25px;
           }
 
-          .search .search-map {
-            padding-top: 50px !important;
-          }
-
-          .search .advanced {
+          .search .search-container.search-container-simple {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-          }
-
-          .search .advanced-search select {
-          }
-
-          .search .advanced-search .advanced-search-title {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
-          .search .search-row {
-            justify-content: center;
-          }
-
-          .search .result-view {
-            width: 100%;
-            padding-top: 10px;
-          }
-
-          .search .search-filters-sidebar {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-          }
-
-          .search .advanced-search {
-          }
-
-          .search .advanced-search .collection {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 600;
-            font-size: 18px;
-            color: #2a282b;
-          }
-
-          .search .advanced-search select,
-          .search .advanced-search input {
-            background-color: #f8f8f8;
-            border-radius: 5px;
-            box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
-            max-height: 325px;
-            margin: 10p;
-            height: 40px;
-            font-size: 16px;
-            border-style: none;
-            font-weight: normal;
-            color: black;
-            font-weight: 600;
-            font-size: 15px;
-          }
-
-          .search .advanced-search .ruleGroup {
-            margin-left: 0px;
-          }
-
-          .search .advanced-search .collection select {
-            margin-left: 20px;
-            margin-right: 20px;
-          }
-
-          .search .search-filters-sidebar h4,
-          .search .search-filters-sidebar .selected-filters h2 {
-            color: #19414c;
-            font-weight: 700;
-            font-size: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-          }
-          .search .search-filters-sidebar .selected-filters a {
-            color: #19414c;
-            font-weight: 400;
-            font-size: 16px;
-            width: 100%;
-            margin-bottom: 5px;
             justify-content: space-between;
-            background-color: transparent;
-            box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
-            border: 1px solid #d7d3d3;
-            border-radius: 5px;
           }
-          .search .search-filters-sidebar .selected-filters a:last-child {
-            background-color: #377d87;
-            border: 0;
-            color: #fff;
-            margin: 5px auto 25px;
-            padding: 5px 3px 1px;
-            display: block;
-            width: 150px;
-            text-align: center;
-            font-size: 14px;
-          }
-          .search .filters + label {
-            font-weight: 400;
-            font-size: 20px;
-            color: #19414c;
-          }
-
-          .search .mainSearch {
-            width: 100%;
-            margin-right: 20px;
-          }
-          .search .mainSearch input {
-            font-weight: 400;
-            font-size: 18px;
-            border: 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-            background-image: url(/static/search.png);
-            background-repeat: no-repeat;
-            background-position: 1% center;
-            padding-left: 40px;
-            background-size: 22px;
-            color: #19414c;
-          }
-          .search .mainSearch input::placeholder {
-            color: #777;
-            font-weight: 400;
-            font-size: 18px;
-          }
-
-          .search .search-sidebar {
-            flex: 0 0 25%;
-            max-width: 25%;
-            position: relative;
-            width: 100%;
-            min-height: 1px;
-            padding-right: 15px;
-            padding-left: 15px;
-          }
+          
 
           .search .search-results {
             flex: 0 0 75%;
@@ -328,92 +164,6 @@ export default class extends React.Component {
           .search .search-icon {
             display: none;
           }
-
-          .search #mainSearch-downshift-input {
-            height: 50px;
-          }
-
-          .search .buttons {
-            display: flex;
-            justify-content: center;
-            padding-bottom: 20px;
-          }
-
-          .search .search-and-export-zone {
-            display: flex;
-          }
-
-          .search .search-and-export-zone .button {
-            width: 235px;
-          }
-
-          .search .nav-pills {
-            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-            position: absolute;
-            right: 15px;
-          }
-          .search .nav-pills .nav-link {
-            background-color: #fff;
-            color: #777;
-            border-radius: 0;
-            cursor: pointer;
-            font-weight: 400;
-            font-size: 20px;
-            height: 42px;
-            padding-top: 7px;
-          }
-
-          .search .nav-pills .nav-item {
-            flex-grow: 1;
-            text-align: center;
-          }
-          .search .nav-pills .nav-item .active {
-            background-color: #377d87;
-            color: #fff;
-          }
-          .search .nav-pills .nav-item:first-child .nav-link {
-            border-radius: 0.25rem;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-          .search .nav-pills .nav-item:last-child .nav-link {
-            border-radius: 0.25rem;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-          .search .nav-pills .nav-link.active:hover {
-            color: #fff;
-          }
-
-          .search label::before {
-            border-radius: 0px !important;
-            min-width: 16px !important;
-          }
-
-          .search .active input:checked + label::after {
-            border-color: #377d87 !important;
-          }
-
-          .search #aboutSearch {
-            display: none;
-          }
-
-          .search .active input:checked + label::before,
-          .search .active input:hover + label::before,
-          .css-yljddh:hover + label::before {
-            border-color: #377d87 !important;
-          }
-
-          .search .map {
-            margin-top: 10px;
-            border-radius: 5px;
-          }
-
-          .search .mapboxgl-map {
-            border-radius: 5px;
-            box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
-          }
-
           .search .react-switch {
             position: absolute;
             right: 70px;
@@ -425,7 +175,18 @@ export default class extends React.Component {
             top: -8px;
             margin-left: 7px;
           }
+          .search .search-map {
+            padding-top: 50px !important;
+          }
 
+          .search .result-view {
+            width: 100%;
+            padding-top: 10px;
+          }
+
+          .search .search-row {
+            justify-content: center;
+          }
           @media screen and (max-width: 767px) {
             .search .search-sidebar {
               position: fixed;
@@ -445,9 +206,6 @@ export default class extends React.Component {
               display: flex;
               justify-content: center;
               align-items: center;
-            }
-            .search .list-view .result-count {
-              visibility: hidden;
             }
 
             .search .filter_mobile_menu img {
@@ -472,7 +230,7 @@ export default class extends React.Component {
             .search .mobile_open {
               transform: translateX(0);
             }
-            .search .mainSearch input::placeholder {
+            .react-es-searchbox input::placeholder {
               font-size: 14px;
             }
             .search .search-results {
@@ -482,6 +240,115 @@ export default class extends React.Component {
             .search .react-switch {
               display: none;
             }
+          }
+
+          .collapsable-facet {
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: normal;
+            color: black;
+          }
+
+          .collapsable-facet-title {
+            font-weight: 700;
+            font-size: 16px;
+          }
+          .collapsable-facet-title > button,
+          ul.react-es-pagination > li > button {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 16px;
+            font-weight: bold;
+          }
+
+          .collapsable-facet-title > button:focus {
+            outline: none;
+          }
+
+          ul.react-es-pagination > li.react-es-pagination-active-page {
+            background: #0062cc;
+          }
+          ul.react-es-pagination > li.react-es-pagination-active-page > button {
+            color: white;
+          }
+
+          .collapsable-facet-title > button {
+            float: right;
+            color: #8999ae;
+            transform: scale(1.5, 1);
+          }
+
+          .react-es-facet {
+            border-top: 1px solid rgb(203, 203, 203);
+            margin-top: 10px;
+          }
+
+          .react-es-facet > input[type="text"] {
+            margin-top: 10px;
+            padding: 5px;
+            height: 30px;
+            margin-bottom: 5px;
+            border: 1px solid #d7d3d3;
+            width: 100%;
+            border-radius: 5px;
+          }
+
+          .react-es-facet > label {
+            display: block;
+            margin-bottom: 5px;
+          }
+
+          .react-es-facet > label > input[type="checkbox"] {
+            margin-right: 5px;
+          }
+          .react-es-facet > button {
+            border: none;
+            background: transparent;
+            text-align: center;
+            width: 100%;
+          }
+
+          ul.react-es-pagination > li {
+            background-color: #fafafa;
+            margin: 5px 7px 5px 0;
+            padding: 5px 7px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+          }
+          ul.react-es-pagination {
+            list-style: none;
+            padding: 0;
+          }
+          ul.react-es-pagination {
+            margin-top: 15px;
+          }
+          ul.react-es-pagination > li {
+            display: inline;
+          }
+          .react-es-searchbox input {
+            border: 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+            background-size: 22px;
+            width: 100%;
+            padding: 7px;
+            color: #19414c;
+            background-image: url(/static/search.png);
+            background-repeat: no-repeat;
+            background-position: 1% center;
+            padding-left: 40px;
+            background-color: #fafafa;
+            color: #19414c;
+          }
+          .react-es-searchbox {
+            width: 100%;
+            margin-right: 20px;
           }
         `}</style>
       </Layout>
