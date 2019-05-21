@@ -191,16 +191,14 @@ export function CollapsableFacet({ initialCollapsed, title, ...rest }) {
   initialCollapsed = !(rest.initialValue && rest.initialValue.length);
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
-  /**
-   * TODO : 
-   *  onOpen={() => amplitude.getInstance().logEvent("search_filter_open", { dataField: "base" })}
-      onClose={() => amplitude.getInstance().logEvent("search_filter_close", { dataField: "base" })}
-      onChange={value =>
-        amplitude.getInstance().logEvent("search_filter_change", { dataField: "base", value })
-      }
-   * 
-   * 
-   */
+  function handleToggle(collapsed) {
+    if (amplitude) {
+      amplitude
+        .getInstance()
+        .logEvent(`search_filter_${collapsed ? "open" : "close"}`, { dataField: rest.id });
+      setCollapsed(!collapsed);
+    }
+  }
 
   function FacetWrapper() {
     if (!collapsed) {
@@ -218,7 +216,7 @@ export function CollapsableFacet({ initialCollapsed, title, ...rest }) {
   }
   return (
     <div className="collapsable-facet">
-      <div className="collapsable-facet-title" onClick={() => setCollapsed(!collapsed)}>
+      <div className="collapsable-facet-title" onClick={() => handleToggle(collapsed)}>
         {title}
         <button>⌄</button>
       </div>
