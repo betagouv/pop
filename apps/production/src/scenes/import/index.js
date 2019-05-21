@@ -10,6 +10,7 @@ import Mnr from "./mnr";
 import Inv from "./inv";
 import Memoire from "./memoire";
 import List from "./list";
+import Museo from "./museo";
 
 class Import extends React.Component {
   render() {
@@ -31,6 +32,7 @@ class Import extends React.Component {
           <Route path={`/import/mh`} component={Mh} />
           <Route path={`/import/inv`} component={Inv} />
           <Route path={`/import/list`} component={List} />
+          <Route path={`/import/museo`} component={Museo} />
         </Switch>
       </div>
     );

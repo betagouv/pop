@@ -98,18 +98,21 @@ export default function render() {
               fields={["COM.keyword"]}
               title="Commune"
             />
-            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
             <Results
               initialPage={initialValues.get("resPage")}
               id="res"
-              items={data => data.map(({_source, _id}) =>  <Card key={_id} data={_source} />)}
+              items={data => data.map(({ _source, _id }) => <Card key={_id} data={_source} />)}
               pagination={utils.pagination}
-              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                </div>
+              )}
             />
-            <ExportComponent collection="memoire" target="main" />
+            <ExportComponent collection="memoire" target="main" header={true} />
           </Col>
         </Row>
       </Elasticsearch>

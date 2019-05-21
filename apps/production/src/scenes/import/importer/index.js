@@ -158,6 +158,7 @@ class Importer extends Component {
         loadingMessage: "Mises à jour et création des notices"
       });
 
+      console.log("arr", arr);
       await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
         this.setState({ progress, loadingMessage });
       });
@@ -366,11 +367,17 @@ class Importer extends Component {
   }
 
   renderErrors() {
+    let errors = this.state.errors;
+    if (typeof this.state.errors !== "string") {
+      console.error(this.state.errors);
+      errors = "Erreur ! Merci de contacter l'équipe technique";
+    }
+
     return (
       <div className="working-area">
         <h2>Impossible d'importer le fichier car des erreurs ont été détectées :</h2>
         <div>
-          {this.state.errors.split("\n").map((e, i) => (
+          {errors.split("\n").map((e, i) => (
             <div key={i}>{e}</div>
           ))}
         </div>
