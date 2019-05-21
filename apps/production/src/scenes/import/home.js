@@ -55,6 +55,11 @@ class Import extends React.Component {
                 url: "/import/memoire",
                 name: "MAP (Service Archives Photos)",
                 image
+              },
+              {
+                url: "/import/museo",
+                name: "Museo",
+                image
               }
             ])}
           </Row>

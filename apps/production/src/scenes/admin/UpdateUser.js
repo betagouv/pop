@@ -86,7 +86,16 @@ class UpdateUser extends React.Component {
     let groups = [];
 
     if (this.props.authUserGroup === "admin") {
-      groups = groups.concat(["admin", "mnr", "joconde", "mh", "inv", "memoire", "enluminures"]);
+      groups = groups.concat([
+        "admin",
+        "mnr",
+        "museo",
+        "joconde",
+        "mh",
+        "inv",
+        "memoire",
+        "enluminures"
+      ]);
     } else {
       groups.push(this.props.authUserGroup);
     }

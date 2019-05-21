@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { image } from "./../../services/image";
+import { getNoticeInfo } from "../../utils";
 
 const joinData = f => {
   return f
@@ -9,46 +10,35 @@ const joinData = f => {
     .join(" ; ");
 };
 
-const capitalizeFirstLetter = s => {
-  if (!s) return "";
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
-
 const Memoire = ({ data }) => {
-  const content = {
-    title: data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim(),
-    subtitle: joinData([
-      data.OBJET,
-      data.EDIF,
-      data.LEG,
-      data.DATOEU,
-      data.DATOEU ? "" : data.SCLE
-    ]),
-    ref: data.REF,
-    categories: data.TECH,
-    author: data.AUTP,
-    data: joinData([data.DATPV, data.DATOR]),
-    loc: data.LOCA
-  };
-  const productorImage = notice => {
-    if (notice.PRODUCTEUR === "CRMH") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    } else if (notice.PRODUCTEUR === "SAP") {
-      return <img src="/static/map.png" className="producteur mh" />;
-    }
-    return null;
-  };
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
+
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+  const ImageComponent = <img src={image} alt={title} />;
+
+  const content = joinData([
+    data.OBJET,
+    data.EDIF,
+    data.LEG,
+    data.DATOEU,
+    data.DATOEU ? "" : data.SCLE
+  ]);
+
+  const author = data.AUTP;
+  const date = joinData([data.DATPV, data.DATOR]);
+  const loc = data.LOCA;
+
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(content.title)}
+                {title}
                 <br />
-                <small>{content.categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mémoire</small>
@@ -56,12 +46,12 @@ const Memoire = ({ data }) => {
                 {data.REF}
               </span>
             </div>
-            <p>{content.subtitle}</p>
-            {productorImage(data)}
+            <p>{content}</p>
+            {LogoComponent}
             <div>
-              <p>{content.author}</p>
-              <p>{content.data}</p>
-              <p>{content.loc}</p>
+              <p>{author}</p>
+              <p>{date}</p>
+              <p>{loc}</p>
             </div>
           </div>
         </div>
@@ -71,42 +61,35 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const title = data.TICO || data.TITR;
-  const ref = data.REF;
-  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const ImageComponent = <img src={image} alt={title} />;
+
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
   const loc =
     data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
-  const productorImage = p => {
-    if (p === "Inventaire") {
-      return <img src="/static/inventaire.jpg" className="producteur" />;
-    } else if (p === "Monuments Historiques") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    }
-    return null;
-  };
-
   return (
-    <Link href={`/notice/palissy/${ref}`} key={ref}>
+    <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Palissy</small>
                 <br />
-                {ref}
+                {data.REF}
               </span>
             </div>
-            {productorImage(data.PRODUCTEUR)}
+            {LogoComponent}
             <div>
               <p>{author}</p>
               <p>{siecle}</p>
@@ -120,41 +103,33 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const title = data.TICO || data.TITR;
-  const ref = data.REF;
-  const categories = data.DENO ? data.DENO.join(", ") : "";
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+  const ImageComponent = <img src={image} alt={title} />;
+
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
   const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
 
-  const productorImage = p => {
-    if (p === "Inventaire") {
-      return <img src="/static/inventaire.jpg" className="producteur" />;
-    } else if (p === "Monuments Historiques") {
-      return <img src="/static/mh.png" className="producteur mh" />;
-    }
-    return null;
-  };
-
   return (
-    <Link href={`/notice/merimee/${ref}`} key={ref}>
+    <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mérimée</small>
                 <br />
-                {ref}
+                {data.REF}
               </span>
             </div>
-            {productorImage(data.PRODUCTEUR)}
+            {LogoComponent}
             <div>
               <p>{author}</p>
               <p>{siecle}</p>
@@ -168,46 +143,38 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const REF = data.REF;
-  const INV = data.INV;
-  const categories = data.DENO ? data.DENO.join(", ") : "";
-  const title = data.TICO || data.TITR;
-  // const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
+  const { title, subtitle, image } = getNoticeInfo(data);
+  const ImageComponent = <img src={image} alt={title} />;
+
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
-  const loc = data.LOCA;
-  const affe = data.AFFE;
-  const cate = data.CATE;
-  const phot = data.PHOT;
-
-  const img = image(data);
 
   return (
-    <Link href={`/notice/mnr/${REF}`} key={REF}>
+    <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <p>{author}</p>
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Mnr</small>
                 <br />
-                {INV}
+                {data.INV}
               </span>
             </div>
             <img src="/static/mnr.png" className="producteur" />
             <div>
               <p>{domn}</p>
-              <p>{loc}</p>
-              <p>{affe}</p>
-              <p>{cate}</p>
-              <p>{phot}</p>
+              <p>{data.LOCA}</p>
+              <p>{data.AFFE}</p>
+              <p>{data.CATE}</p>
+              <p>{data.PHOT}</p>
             </div>
           </div>
         </div>
@@ -217,41 +184,37 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const REF = data.REF;
-  const title = getJocondeTitle(data);
-  const categories = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
+  const { title, subtitle, image } = getNoticeInfo(data);
+  const ImageComponent = <img src={image} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
   let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
   peri = peri || (Array.isArray(data.PERI) ? data.PERI.join(", ") : "");
   peri = peri || (Array.isArray(data.EPOQ) ? data.EPOQ.join(", ") : "");
 
-  const loc = data.LOCA;
-  const img = image(data);
-
   return (
-    <Link href={`/notice/joconde/${REF}`} key={REF}>
+    <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
-                <small>{categories}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Joconde</small>
                 <br />
-                {REF}
+                {data.REF}
               </span>
             </div>
             <img src="/static/musee-de-france.png" className="producteur" />
             <div>
               <p>{author}</p>
               <p>{peri}</p>
-              <p>{loc}</p>
+              <p>{data.LOCA}</p>
             </div>
           </div>
         </div>
@@ -260,18 +223,8 @@ const Joconde = ({ data }) => {
   );
 };
 
-function getJocondeTitle(notice) {
-  if (notice.TITR) {
-    return notice.TITR;
-  }
-  if ((notice.DENO || []).length) {
-    return notice.DENO.join(", ");
-  }
-
-  return (notice.DOMN || []).join(", ");
-}
-
 const Museo = ({ data }) => {
+  const { title, image } = getNoticeInfo(data);
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
@@ -279,7 +232,7 @@ const Museo = ({ data }) => {
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(data.NOMOFF || data.NOMANC || data.NOMUSAGE)}
+                {title}
                 <br />
                 {data.VILLE_M}
               </h2>
@@ -301,20 +254,20 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const title = `${data.TITR} - ${data.SUJET}`;
-  const img = image(data);
+  const { title, subtitle, image } = getNoticeInfo(data);
+  const ImageComponent = <img src={image} alt={title} />;
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{img}</div>
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
-                {capitalizeFirstLetter(title)}
+                {title}
                 <br />
-                <small>{data.SUJET}</small>
+                <small>{subtitle}</small>
               </h2>
               <span>
                 <small className="base">Enluminures</small>

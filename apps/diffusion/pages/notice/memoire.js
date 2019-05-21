@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -14,8 +15,6 @@ import ContactUs from "../../src/notices/ContactUs";
 import { toFieldImages, schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-
-const capitalizeFirstLetter = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -32,24 +31,6 @@ export default class extends React.Component {
   componentDidMount() {
     logEvent("notice_open", { base: "memoire", notice: this.props.notice.REF });
   }
-
-  rawTitle() {
-    const notice = this.props.notice;
-    return notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
-  }
-
-  pageTitle() {
-    const title = `${this.rawTitle()} - POP`;
-    return capitalizeFirstLetter(title);
-  }
-
-  metaDescription = () => {
-    const author = this.props.notice.AUTP;
-    if (author) {
-      return capitalizeFirstLetter(`${this.rawTitle()}, par ${author}`);
-    }
-    return capitalizeFirstLetter(this.rawTitle());
-  };
 
   fieldImage(notice) {
     const images = toFieldImages([notice.IMG]);
@@ -77,12 +58,14 @@ export default class extends React.Component {
       return throw404();
     }
     const { notice } = this.props;
+
+    const { title, image, metaDescription } = getNoticeInfo(notice);
     const obj = {
-      name: this.rawTitle(),
+      name: title,
       created_at: notice.DATPV || notice.DMIS,
       artform: "Photograph",
-      image: notice.IMG ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG}` : "",
-      description: notice.LEG,
+      image: image,
+      description: metaDescription,
       contentLocation: notice.LOCA,
       creator: [notice.AUTP]
     };
@@ -92,19 +75,12 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>{this.pageTitle()}</title>
-              <meta content={this.metaDescription()} name="description" />
+              <title>{title}</title>
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {notice.IMG ? (
-                <meta
-                  property="og:image"
-                  content={`https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.IMG}`}
-                />
-              ) : (
-                <meta />
-              )}
+              {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{this.rawTitle()}</h1>
+            <h1 className="heading">{title}</h1>
             {this.fieldImage(notice)}
             <Row>
               <Col md="8">

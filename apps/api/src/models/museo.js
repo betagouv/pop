@@ -13,8 +13,7 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         label: "Identifiant du musée",
-        description: "",
-        generated: true
+        description: ""
       }
     },
     POP_COMMENTAIRES: {

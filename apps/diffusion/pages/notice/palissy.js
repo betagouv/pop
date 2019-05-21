@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -37,18 +38,6 @@ export default class extends React.Component {
   componentDidMount() {
     logEvent("notice_open", { base: "palissy", notice: this.props.notice.REF });
   }
-
-  getMetaDescription = () => {
-    const titre = this.props.notice.TICO || this.props.notice.TITR || "";
-    const auteur = this.props.notice.AUTR ? this.props.notice.AUTR.join(" ") : "";
-    if (this.props.notice.CATE && this.props.notice.CATE.length === 1) {
-      const category = this.props.notice.CATE[0];
-      if (category.toLowerCase() === "sculpture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}.`;
-      }
-    }
-    return `Découvrez ${titre}, par ${auteur}.`;
-  };
 
   fieldImage(notice) {
     const images = toFieldImages(notice.MEMOIRE);
@@ -88,15 +77,14 @@ export default class extends React.Component {
       return throw404();
     }
     const notice = this.props.notice;
-
-    const description = this.getMetaDescription();
+    const { title, metaDescription, image } = getNoticeInfo(notice);
 
     const obj = {
-      name: notice.TICO,
+      name: title,
       created_at: notice.SCLE.length ? notice.SCLE[0] : "",
       artform: "Architecture",
-      image: notice.MEMOIRE.length && notice.MEMOIRE[0] ? notice.MEMOIRE[0].url : "",
-      description: notice.LEG,
+      image: image,
+      description: metaDescription,
       contentLocation: notice.LOCA,
       creator: notice.AUTR,
       artMedium: notice.MATR.join(", ")
@@ -106,14 +94,10 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>{`${notice.TICO || notice.TITR || ""} - POP`}</title>
-              <meta content={description} name="description" />
+              <title>{title}</title>
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {notice.MEMOIRE && notice.MEMOIRE.length && notice.MEMOIRE[0] ? (
-                <meta property="og:image" content={notice.MEMOIRE[0].url} />
-              ) : (
-                <meta />
-              )}
+              {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
             <h1 className="heading">{notice.TICO}</h1>
             {this.fieldImage(notice)}
