@@ -1,10 +1,10 @@
 import { bucket_url } from "./config";
 
 /*
-On a du faire cette fonction "utils.getInformations" pour gérer les principales informations des notices dissiminées dans l'app et qui nécessitait du traitement "fastidieux"
+On a du faire cette fonction "utils.getNoticeInfo" pour gérer les principales informations des notices dissiminées dans l'app et qui nécessitait du traitement "fastidieux"
 */
 
-export function getInformations(notice) {
+export function getNoticeInfo(notice) {
   const base = notice.BASE;
   switch (base) {
     case "Collections des musées de France (Joconde)": {
@@ -20,13 +20,13 @@ export function getInformations(notice) {
 
       const subtitle = !notice.TITR && notice.DENO ? "" : notice.DENO.join(", ");
 
-      let metadescription = "";
+      let metaDescription = "";
       if (notice.REPR) {
-        metadescription = notice.REPR;
+        metaDescription = notice.REPR;
       }
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, image };
+      return { title, subtitle, metaDescription, image };
     }
     case "Photographies (Mémoire)": {
       let title = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
@@ -41,22 +41,22 @@ export function getInformations(notice) {
 
       const subtitle = notice.TECH;
 
-      let metadescription = "";
+      let metaDescription = "";
       if (notice.LEG) {
-        metadescription = notice.LEG;
+        metaDescription = notice.LEG;
       }
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, logo, image };
+      return { title, subtitle, metaDescription, logo, image };
     }
     case "Musées de france (MUSEO)": {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 
-      let metadescription = "";
+      let metaDescription = "";
 
       const image = getImageUrl(notice);
-      return { title, metadescription, image };
+      return { title, metaDescription, image };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;
@@ -64,10 +64,10 @@ export function getInformations(notice) {
 
       const subtitle = notice.SUJET;
 
-      let metadescription = "";
+      let metaDescription = "";
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, image };
+      return { title, subtitle, metaDescription, image };
     }
     case "Récupération artistique (MNR Rose-Valland)": {
       let title = notice.TICO || notice.TITR;
@@ -75,10 +75,10 @@ export function getInformations(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
-      let metadescription = "";
+      let metaDescription = "";
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, image };
+      return { title, subtitle, metaDescription, image };
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
@@ -91,12 +91,12 @@ export function getInformations(notice) {
         logo = "/static/mh.png";
       }
 
-      let metadescription = "";
+      let metaDescription = "";
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, logo, image };
+      return { title, subtitle, metaDescription, logo, image };
     }
     case "Patrimoine architectural (Mérimée)": {
       let title = notice.TICO || notice.TITR;
@@ -111,7 +111,7 @@ export function getInformations(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
-      let metadescription = "";
+      let metaDescription = "";
       /*
           const titre = this.props.notice.TICO || this.props.notice.TITR || "";
     const datation = this.props.notice.SCLE ? this.props.notice.SCLE.join(" ") : "";
@@ -125,7 +125,7 @@ export function getInformations(notice) {
     */
 
       const image = getImageUrl(notice);
-      return { title, subtitle, metadescription, logo, image };
+      return { title, subtitle, metaDescription, logo, image };
     }
     default:
       return {};

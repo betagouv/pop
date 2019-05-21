@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { image } from "./../../services/image";
-import { getInformations } from "../../utils";
+import { getNoticeInfo } from "../../utils";
 
 const joinData = f => {
   return f
@@ -11,7 +11,7 @@ const joinData = f => {
 };
 
 const Memoire = ({ data }) => {
-  const { title, subtitle, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
@@ -61,7 +61,7 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title, subtitle, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
@@ -103,7 +103,7 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, subtitle, logo, image } = getInformations(data);
+  const { title, subtitle, logo, image } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
 
@@ -143,7 +143,7 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const { title, subtitle, image } = getInformations(data);
+  const { title, subtitle, image } = getNoticeInfo(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
@@ -184,7 +184,7 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const { title, subtitle, image } = getInformations(data);
+  const { title, subtitle, image } = getNoticeInfo(data);
   const ImageComponent = <img src={image} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
@@ -224,7 +224,7 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title, image } = getInformations(data);
+  const { title, image } = getNoticeInfo(data);
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
@@ -254,7 +254,7 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const { title, subtitle, image } = getInformations(data);
+  const { title, subtitle, image } = getNoticeInfo(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   return (

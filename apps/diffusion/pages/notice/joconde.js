@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
-import { getInformations } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -108,14 +108,14 @@ export default class extends React.Component {
     if (!this.props.notice) {
       return throw404();
     }
-    const { title, image, metadescription } = getInformations(this.props.notice);
+    const { title, image, metaDescription } = getNoticeInfo(this.props.notice);
     const notice = this.props.notice;
     const obj = {
       name: title,
       created_at: notice.PERI.length ? notice.PERI[0] : "",
       artform: notice.DOMN.length ? notice.DOMN[0] : "",
       image: image,
-      description: metadescription,
+      description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: String(notice.AUTR).split(";"),
       comment: notice.COMM,
@@ -128,7 +128,7 @@ export default class extends React.Component {
           <Container>
             <Head>
               <title>{title}</title>
-              <meta content={metadescription} name="description" />
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>

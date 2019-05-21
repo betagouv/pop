@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
-import { getInformations } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -66,14 +66,14 @@ export default class extends React.Component {
     }
     const notice = this.props.notice;
 
-    const { title, image, metadescription } = getInformations(notice);
+    const { title, image, metaDescription } = getNoticeInfo(notice);
 
     const obj = {
       name: notice.TITR,
       created_at: notice.SCLE.length ? notice.SCLE[0] : "",
       artform: notice.DOM,
       image: image,
-      description: metadescription,
+      description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: notice.AUTR,
       comment: notice.HIST,
@@ -87,7 +87,7 @@ export default class extends React.Component {
           <Container>
             <Head>
               <title>{title}</title>
-              <meta content={metadescription} name="description" />
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
