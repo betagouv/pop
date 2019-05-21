@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import logEvent from "../../src/services/amplitude";
@@ -21,17 +22,6 @@ export default class extends React.Component {
   componentDidMount() {
     logEvent("notice_open", { base: "mnr", notice: this.props.notice.REF });
   }
-  getMetaDescription = () => {
-    const titre = this.props.notice.TICO || this.props.notice.TITR || "";
-    const auteur = this.props.notice.AUTR ? this.props.notice.AUTR.join(" ") : "";
-    if (this.props.notice.DOMN && this.props.notice.DOMN.length === 1) {
-      const category = this.props.notice.DOMN[0];
-      if (category.toLowerCase() === "peinture") {
-        return `Découvrez ${titre}, cette ${category}, réalisée par ${auteur}.`;
-      }
-    }
-    return `Découvrez ${titre}, par ${auteur}.`;
-  };
 
   fieldImage(notice) {
     const images = toFieldImages(notice.VIDEO);
@@ -76,15 +66,14 @@ export default class extends React.Component {
     }
     const notice = this.props.notice;
 
-    const description = this.getMetaDescription();
+    const { title, image, metaDescription } = getNoticeInfo(notice);
+
     const obj = {
       name: notice.TITR,
       created_at: notice.SCLE.length ? notice.SCLE[0] : "",
       artform: notice.DOM,
-      image: notice.VIDEO.length
-        ? `https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.VIDEO[0]}`
-        : "",
-      description: notice.DESC,
+      image: image,
+      description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: notice.AUTR,
       comment: notice.HIST,
@@ -97,21 +86,11 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>{`${notice.TICO || notice.TITR || ""} - ${
-                notice.AUTR ? notice.AUTR.join(" ") : ""
-              } - POP`}</title>
-              <meta content={description} name="description" />
+              <title>{title}</title>
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {notice.VIDEO.length ? (
-                <meta
-                  property="og:image"
-                  content={`https://s3.eu-west-3.amazonaws.com/pop-phototeque/${notice.VIDEO[0]}`}
-                />
-              ) : (
-                <meta />
-              )}
+              {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-
             <h1 className="heading">{notice.TICO || notice.TITR}</h1>
             {this.fieldImage(notice)}
             <Row>
