@@ -117,8 +117,8 @@ function readme() {
         Aucun besoin de les renseigner lors d'un import.
         <br />
         <br />
-        <a href="https://github.com/betagouv/pop/tree/master/apps/api/doc/mnr.md" target="_blank">
-          Lien vers le modèle de donnée Mnr
+        <a href="https://github.com/betagouv/pop/tree/master/apps/api/doc/museo.md" target="_blank">
+          Lien vers le modèle de donnée museo
         </a>
         <br />
       </div>

@@ -158,7 +158,6 @@ class Importer extends Component {
         loadingMessage: "Mises à jour et création des notices"
       });
 
-      console.log("arr", arr);
       await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
         this.setState({ progress, loadingMessage });
       });
