@@ -16,53 +16,27 @@ class Import extends React.Component {
   }
   parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
-      let file = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
-      if (!file) {
-        reject("Fichier .txt absent");
+      let rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
+      if (rootFile) {
+        const res = await utils.asyncReadFile(rootFile, encoding);
+        const importedNotices = await importAjoutPiloté(
+          res,
+          files,
+          this.props.email,
+          this.state.museofile
+        );
+        resolve({ importedNotices, fileNames: [rootFile.name] });
         return;
       }
-      const res = await utils.asyncReadFile(file, encoding);
-
-      const importedNotices = utils
-        .parseAjoutPilote(res, Joconde)
-        .map(value => {
-          if (!value.MUSEO && this.state.museofile) {
-            value.MUSEO = this.state.museofile;
-          }
-          if (!value.CONTACT) {
-            value.CONTACT = this.props.email || "";
-          }
-          return value;
-        })
-        .map(value => new Joconde(value));
-
-      const filesMap = {};
-      for (var i = 0; i < files.length; i++) {
-        //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-        filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+      rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
+      if (rootFile) {
+        const res = await utils.readCSV(rootFile, ";", encoding, '"');
+        const importedNotices = await importCSV(res, files, this.props.email, this.state.museofile);
+        resolve({ importedNotices, fileNames: [rootFile.name] });
+        return;
       }
-
-      //ADD IMAGES
-      for (var i = 0; i < importedNotices.length; i++) {
-        const names = importedNotices[i].IMG;
-        if (!names) {
-          continue;
-        }
-        for (var j = 0; j < names.length; j++) {
-          let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-          if (!img) {
-            importedNotices[i]._errors.push(
-              `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
-            );
-          } else {
-            const shortname = Joconde.convertLongNameToShort(img.name);
-            let newImage = utils.renameFile(img, shortname);
-            importedNotices[i]._files.push(newImage);
-          }
-        }
-      }
-
-      resolve({ importedNotices, fileNames: [file.name] });
+      reject("Fichier .csv ou .txt absent");
+      return;
     });
   }
 
@@ -113,6 +87,85 @@ export default connect(
   mapstatetoprops,
   {}
 )(Import);
+
+function importCSV(res, files, email, museofile) {
+  return new Promise(async (resolve, reject) => {
+    const importedNotices = res
+      .map(value => {
+        value.MUSEO = value.MUSEO || museofile || "";
+        value.CONTACT = value.CONTACT || email || "";
+        return value;
+      })
+      .map(value => new Joconde(value));
+
+    // const filesMap = {};
+    // for (var i = 0; i < files.length; i++) {
+    //   //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+    //   filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+    // }
+
+    // //ADD IMAGES
+    // for (var i = 0; i < importedNotices.length; i++) {
+    //   const names = importedNotices[i].IMG;
+    //   if (!names) {
+    //     continue;
+    //   }
+    //   for (var j = 0; j < names.length; j++) {
+    //     let img = filesMap[Joconde.convertLongNameToShort(names[j])];
+    //     if (!img) {
+    //       importedNotices[i]._errors.push(
+    //         `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+    //       );
+    //     } else {
+    //       const shortname = Joconde.convertLongNameToShort(img.name);
+    //       let newImage = utils.renameFile(img, shortname);
+    //       importedNotices[i]._files.push(newImage);
+    //     }
+    //   }
+    // }
+    resolve(importedNotices);
+  });
+}
+
+function importAjoutPiloté(res, files, email, museofile) {
+  return new Promise(async (resolve, reject) => {
+    const importedNotices = utils
+      .parseAjoutPilote(res, Joconde)
+      .map(value => {
+        value.MUSEO = value.MUSEO || museofile || "";
+        value.CONTACT = value.CONTACT || email || "";
+        return value;
+      })
+      .map(value => new Joconde(value));
+
+    const filesMap = {};
+    for (var i = 0; i < files.length; i++) {
+      //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+      filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+    }
+
+    //ADD IMAGES
+    for (var i = 0; i < importedNotices.length; i++) {
+      const names = importedNotices[i].IMG;
+      if (!names) {
+        continue;
+      }
+      for (var j = 0; j < names.length; j++) {
+        let img = filesMap[Joconde.convertLongNameToShort(names[j])];
+        if (!img) {
+          importedNotices[i]._errors.push(
+            `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+          );
+        } else {
+          const shortname = Joconde.convertLongNameToShort(img.name);
+          let newImage = utils.renameFile(img, shortname);
+          importedNotices[i]._files.push(newImage);
+        }
+      }
+    }
+    resolve(importedNotices);
+  });
+}
 
 function report(notices, collection, email, institution, importId) {
   const arr = [];
