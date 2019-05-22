@@ -1,6 +1,6 @@
 import React from "react";
 import API from "../src/services/api";
-import mapping from "../../src/services/mapping";
+import mapping from "../src/services/mapping";
 import Map from "../src/notices/Map";
 import Layout from "../src/components/Layout";
 import Head from "next/head";
