@@ -34,11 +34,11 @@ test("import 3 Jocondes notices without required images", async () => {
   expect(importTester.summaryNewDocsCount()).toBe(0);
 });
 
-test("import invalid file", async () => {
-  const component = importTester.mount(<Joconde />);
-  await importTester.dropFiles(["mnr-valid-UTF-8.csv"], "latin1");
-  expect(component.text()).toMatch("Fichier .txt absent");
-});
+// test("import invalid file", async () => {
+//   const component = importTester.mount(<Joconde />);
+//   await importTester.dropFiles(["mnr-valid-UTF-8.csv"], "latin1");
+//   expect(component.text()).toMatch("Fichier .txt absent");
+// });
 
 test("import file with not all required fields (only REF)", async () => {
   importTester.mount(<Joconde />);

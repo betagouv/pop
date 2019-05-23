@@ -91,6 +91,10 @@ router.put(
 
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
+        console.log(
+          "uploadFile",
+          `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`
+        );
         arr.push(uploadFile(`joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
       }
 
