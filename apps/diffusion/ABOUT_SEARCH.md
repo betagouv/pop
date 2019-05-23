@@ -8,7 +8,8 @@ La recherche libre est privilégiée dans l'outil de diffusion, avec possibilit�
 
 La recherche et l'autocomplétion sont faites sur les mêmes règles. Un score est appliqué sur chaque résultat en fonction de différent critères, ce qui déterminera son ordre d'apparition dans les résultats.
  - Si le champ est vide, l'**ensemble des données** de la base sont retournées dans un **ordre arbitraire**.
- - Si l'un des champs `TICO`, `TITRE`, `TITR` et `LEG` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop/blob/master/apps/diffusion/src/search/Search.js#L261-L266).
+ - Si un caractère `"`, `+` ou `-` est présent dans le champ, la recherche passe en mode [query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html)
+ - Si l'un des champs `TICO`, `TITRE`, `TITR` et `LEG` d'une notice correspond exactement au terme de recherche (majuscules et accents compris), le score de cette notice est augmenté de **15**. Pour plus d'infos, voir [la documentation d'elasticsearch (Match phrase query)](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html) et [le code source concerné](https://github.com/betagouv/pop/blob/master/apps/diffusion/src/search/Search.js).
 
 Les champs suivants augmentent également le score, si une correspondance floue est trouvée avec ces champs. Le poids de chaque champ dans le score du résultat de recherche est précisé en deuxième colonne :
 
@@ -30,9 +31,12 @@ Les champs suivants augmentent également le score, si une correspondance floue 
 | PDEN | 5 |
 | PERS | 4 |
 | PAYS | 3 |
+| HIST | 3 |
 | REG | 3 |
 | DEP | 3 |
 | COM | 3 |
+| SUJET | 3 |
+| TYPE | 1 |
 | DATE | 1 |
 | EPOQ | 1 |
 | SCLE | 1 |
@@ -67,8 +71,9 @@ Un filtre à facette est composée de deux parties :
 | Filtre | Champs | Réagit à | Valeurs | 
 | ------ | ------ | -------- | -------- |
 | Base | BASE | tout sauf lui-même | | 
+| Producteur | PRODUCTEUR | tout sauf lui-même | |
 | Auteur | AUTP, AUTR | tout sauf lui-même | |
-| Domaine | DOMN | tout sauf lui-même | |
+| Domaine | DOMN, CATE | tout sauf lui-même | |
 | Où voir l'oeuvre | REG, COM, LOCA | tout sauf lui-même | |
 | Période | PERI | tout sauf lui-même | |
 | Contient une image<sup>[1](#myfootnote1)</sup> | CONTIENT_IMAGE | rien | oui, non |
