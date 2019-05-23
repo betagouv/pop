@@ -229,7 +229,7 @@ function customQuery(query, primaryFields, secondaryFields = []) {
   // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
   // treat it as a query_string (they will love that).
   if (query.match(/"[^"]*"| -| \+/)) {
-    return { query: { simple_query_string: { query, default_operator: "and", fields } } };
+    return { simple_query_string: { query, default_operator: "and", fields } };
   }
 
   // Otherwise build a complex query with these rules (by boost order):
