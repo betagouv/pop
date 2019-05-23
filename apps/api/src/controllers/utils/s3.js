@@ -2,6 +2,8 @@ const fs = require("fs");
 const AWS = require("aws-sdk");
 const { s3Bucket } = require("../../config.js");
 
+console.log('s3Bucket',s3Bucket)
+
 // Surement pas besoin de l'écrire sur le disque ...
 function uploadFile(path, file, Bucket = s3Bucket) {
   const s3 = new AWS.S3();

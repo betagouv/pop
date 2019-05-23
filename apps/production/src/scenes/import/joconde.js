@@ -98,31 +98,36 @@ function importCSV(res, files, email, museofile) {
       })
       .map(value => new Joconde(value));
 
-    // const filesMap = {};
-    // for (var i = 0; i < files.length; i++) {
-    //   //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
-    //   filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
-    // }
+    const filesMap = {};
+    for (var i = 0; i < files.length; i++) {
+      //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+      filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
+    }
 
-    // //ADD IMAGES
-    // for (var i = 0; i < importedNotices.length; i++) {
-    //   const names = importedNotices[i].IMG;
-    //   if (!names) {
-    //     continue;
-    //   }
-    //   for (var j = 0; j < names.length; j++) {
-    //     let img = filesMap[Joconde.convertLongNameToShort(names[j])];
-    //     if (!img) {
-    //       importedNotices[i]._errors.push(
-    //         `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
-    //       );
-    //     } else {
-    //       const shortname = Joconde.convertLongNameToShort(img.name);
-    //       let newImage = utils.renameFile(img, shortname);
-    //       importedNotices[i]._files.push(newImage);
-    //     }
-    //   }
-    // }
+    //ADD IMAGES
+    for (var i = 0; i < importedNotices.length; i++) {
+      const names = importedNotices[i].IMG;
+
+      if (!names) {
+        continue;
+      }
+      for (var j = 0; j < names.length; j++) {
+        let img = filesMap[Joconde.convertLongNameToShort(names[j])];
+        if (!img) {
+          importedNotices[i]._errors.push(
+            `Image ${Joconde.convertLongNameToShort(names[j])} introuvable`
+          );
+        } else {
+          const shortname = Joconde.convertLongNameToShort(img.name);
+          let newImage = utils.renameFile(img, shortname);
+          importedNotices[i]._files.push(newImage);
+          importedNotices[i].IMG = `joconde/${importedNotices[i].REF}/${importedNotices[i].IMG}`;
+        }
+      }
+    }
+
+    console.log(importedNotices);
+
     resolve(importedNotices);
   });
 }
