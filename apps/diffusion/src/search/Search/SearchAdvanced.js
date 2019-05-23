@@ -40,7 +40,7 @@ class SearchAdvanced extends React.Component {
                 </option>
               ))}
             </select>
-            <div>je recherche:</div>
+            <div>je recherche</div>
           </Row>
         </div>
         <QueryBuilder
