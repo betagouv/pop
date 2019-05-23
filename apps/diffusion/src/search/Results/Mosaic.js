@@ -1,33 +1,51 @@
 import React from "react";
-import { ReactiveList } from "@appbaseio/reactivesearch";
+import { Results } from "react-elasticsearch";
+import { pagination } from "../utils";
 import CardMosaique from "./CardMosaic";
 
-export default ({ filters }) => (
-  <ReactiveList
-    componentId="mosaic"
-    react={{
-      and: filters
-    }}
-    onResultStats={(total, took) => {
-      const info = "La mosaïque n'affiche par défaut que les notices avec image.";
-      if (total === 1) {
-        return (
-          <div className="result-count">
-            1 résultat <i className="text-muted">{info}</i>
-          </div>
-        );
-      }
-      return (
-        <div className="result-count">
-          {total} résultats. <i className="text-muted">{info}</i>
-        </div>
-      );
-    }}
-    onNoResults="Aucun résultat trouvé."
-    loader="Préparation de l'affichage des résultats..."
-    dataField=""
-    size={18}
-    className="mosaique-view view"
-    onData={data => <CardMosaique key={data.REF} data={data} />}
-  />
-);
+export default function({ initialValues }) {
+  return (
+    <div className="mosaic-view">
+      <Results
+        initialPage={initialValues.get("resPage")}
+        id="mosaic"
+        items={data =>
+          data.map(({ _id, ...rest }) => (
+            <CardMosaique key={_id} index={rest._index} data={rest._source} />
+          ))
+        }
+        itemsPerPage={20}
+        pagination={pagination}
+        stats={total => {
+          const info = "La mosaïque n'affiche par défaut que les notices avec image.";
+          return (
+            <div className="result-count">
+              {total} résultat{total === 1 ? "" : "s"} <i className="text-muted">{info}</i>
+            </div>
+          );
+        }}
+      />
+      <style jsx global>{`
+        .mosaic-view > div {
+          display: flex;
+          -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+          margin-right: -15px;
+          margin-left: -15px;
+        }
+        .mosaic-view > .react-es-results {
+          padding-top: 25px;
+        }
+        .mosaic-view .result-count {
+          margin-left: 15px;
+          padding-bottom: 5px;
+          width: 100%;
+        }
+        .mosaic-view .react-es-pagination {
+          width: 100%;
+          margin-left: 15px;
+        }
+      `}</style>
+    </div>
+  );
+}

@@ -55,9 +55,7 @@ class Results extends React.Component {
         </li>
         <li className="nav-item">
           <a
-            onClick={() => {
-              this.toggle("map", { geolocalisation: ["oui"], image: [] });
-            }}
+            onClick={() => this.toggle("map", { geolocalisation: ["oui"], image: [] })}
             className={`${view === "map" ? "active " : ""} nav-link`}
           >
             CARTE
@@ -65,9 +63,7 @@ class Results extends React.Component {
         </li>
         <li className="nav-item">
           <a
-            onClick={() => {
-              this.toggle("mosaic", { image: ["oui"], geolocalisation: [] });
-            }}
+            onClick={() => this.toggle("mosaic", { image: ["oui"], geolocalisation: [] })}
             className={`${view === "mosaic" ? "active " : ""} nav-link`}
           >
             MOSAIQUE
@@ -80,11 +76,11 @@ class Results extends React.Component {
   renderResults() {
     const view = this.props.view || "list";
     if (view === "mosaic") {
-      return <Mosaic key="mosaique" filters={DEFAULT_FILTER} />;
+      return <Mosaic key="mosaique" initialValues={this.props.initialValues} />;
     } else if (view === "map") {
-      return <Map key="carte" filters={DEFAULT_FILTER} />;
+      return <Map key="carte" />;
     } else {
-      return <List key="list" filters={DEFAULT_FILTER} />;
+      return <List key="list" initialValues={this.props.initialValues} />;
     }
   }
 
@@ -93,6 +89,45 @@ class Results extends React.Component {
       <div className="result-view">
         {this.renderTabs()}
         {this.renderResults()}
+        <style jsx global>{`
+          .search .nav-pills {
+            box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
+            position: absolute;
+            right: 15px;
+          }
+          .search .nav-pills .nav-link {
+            background-color: #fff;
+            color: #777;
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 20px;
+            height: 42px;
+            padding-top: 7px;
+          }
+
+          .search .nav-pills .nav-item {
+            flex-grow: 1;
+            text-align: center;
+          }
+          .search .nav-pills .nav-item .active {
+            background-color: #377d87;
+            color: #fff;
+          }
+          .search .nav-pills .nav-item:first-child .nav-link {
+            border-radius: 0.25rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+          .search .nav-pills .nav-item:last-child .nav-link {
+            border-radius: 0.25rem;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+          .search .nav-pills .nav-link.active:hover {
+            color: #fff;
+          }
+        `}</style>
       </div>
     );
   }

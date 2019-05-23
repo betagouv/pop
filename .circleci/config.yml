@@ -131,8 +131,6 @@ jobs:
       - prepare:
           app: production
       - prepare:
-          app: shared
-      - prepare:
           app: diffusion
   ##############
   # TEST JOBS #
@@ -155,11 +153,6 @@ jobs:
     steps:
       - test:
           app: production
-  test_shared:
-    executor: docker_node
-    steps:
-      - test:
-          app: shared
   ##############
   # BUILD JOBS #
   ##############
@@ -275,15 +268,14 @@ workflows:
       - test_diffusion:
           requires:
             - prepare_all
-      - test_shared:
-          requires:
-            - prepare_all
       - build_diffusion_staging:
           requires:
             - test_diffusion
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - new-search-system
       - build_diffusion_prod:
           requires:
             - deploy_diffusion_staging
@@ -313,7 +305,9 @@ workflows:
             - build_diffusion_staging
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - new-search-system
       - deploy_production_staging:
           requires:
             - build_production_staging

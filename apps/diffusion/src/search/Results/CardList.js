@@ -30,7 +30,7 @@ const Memoire = ({ data }) => {
 
   return (
     <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -73,7 +73,7 @@ const Palissy = ({ data }) => {
 
   return (
     <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -113,7 +113,7 @@ const Merimee = ({ data }) => {
 
   return (
     <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -151,7 +151,7 @@ const Mnr = ({ data }) => {
 
   return (
     <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -194,7 +194,7 @@ const Joconde = ({ data }) => {
 
   return (
     <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -227,7 +227,7 @@ const Museo = ({ data }) => {
   const { title, image } = getNoticeInfo(data);
   return (
     <Link href={`/museo/${data.REF}`} key={data.REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container">
           <div className="content">
             <div style={{ display: "flex" }}>
@@ -259,7 +259,7 @@ const Enluminures = ({ data }) => {
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>
-      <a className="list-card" target="_blank" style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
@@ -417,18 +417,18 @@ export default ({ data }) => {
   const index = data._index.replace(/[0-9]+/, "");
   switch (index) {
     case "joconde":
-      return withStyle(<Joconde data={data} />);
+      return withStyle(<Joconde data={data._source} />);
     case "mnr":
-      return withStyle(<Mnr data={data} />);
+      return withStyle(<Mnr data={data._source} />);
     case "merimee":
-      return withStyle(<Merimee data={data} />);
+      return withStyle(<Merimee data={data._source} />);
     case "palissy":
-      return withStyle(<Palissy data={data} />);
+      return withStyle(<Palissy data={data._source} />);
     case "memoire":
-      return withStyle(<Memoire data={data} />);
+      return withStyle(<Memoire data={data._source} />);
     case "museo":
-      return withStyle(<Museo data={data} />);
+      return withStyle(<Museo data={data._source} />);
     case "enluminures":
-      return withStyle(<Enluminures data={data} />);
+      return withStyle(<Enluminures data={data._source} />);
   }
 };
