@@ -38,20 +38,17 @@ export default ({ data }) => {
       <img src={image} alt="Lien cassé" />
       <div className="content">
         <div style={{ display: "flex" }}>
-          <h2>
-            {data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim()}
-          </h2>
+          <h2>{data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim()}</h2>
           <span>{data.REF}</span>
         </div>
         <div>
           <p>{data.LOCA}</p>
-          <p>{data.EDIF}</p>
           <p>{data.LEG}</p>
-          <p>{data.OBJT}</p>
-          <p>{data.DATPV}</p>
           <p>{data.AUTP}</p>
+          <p>{data.DATPV}</p>
           <p>{data.SERIE}</p>
           <p>{data.TITRE}</p>
+          <p>{data.COPY}</p>
           {productorImage(data.PRODUCTEUR)}
         </div>
       </div>
