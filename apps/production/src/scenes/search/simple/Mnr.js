@@ -68,7 +68,7 @@ export default function render() {
             <CollapsableFacet
               id="peri"
               initialValue={initialValues.get("peri")}
-              fields={["PERI.keyword"]}
+              fields={["SCLE.keyword"]}
               title="Période"
             />
             <CollapsableFacet
@@ -87,7 +87,7 @@ export default function render() {
               id="affe"
               initialValue={initialValues.get("affe")}
               fields={["AFFE.keyword"]}
-              title="affectataire"
+              title="Affectataire"
             />
             <CollapsableFacet
               id="dmaj"
