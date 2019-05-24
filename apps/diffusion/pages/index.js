@@ -493,7 +493,7 @@ export default class extends React.Component {
             background-position: 1% center;
             padding-left: 40px;
             background-size: 20px;
-            color: #e5edef;
+            color: #19414c;
           }
           .home .home-search button {
             margin-top: 20px;
