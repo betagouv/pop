@@ -112,23 +112,31 @@ async function exportData(fileName, entities, header) {
     return;
   }
 
-  const columns = ["REF"];
-  for (let property in entities[0]) {
-    // Nobody ask for "POP_" fields and I think there gonna be complains if
-    // I export something people dont understand
-    if (property.indexOf("_") === 0) {
-      continue;
+  console.log(entities[0]);
+  const columns = Object.keys(entities[0]).filter(e => {
+    if (e.startsWith("_")) {
+      return false;
     }
-    if (property.indexOf("highlight") === 0) {
-      continue;
+    if (e.startsWith("highlight")) {
+      return false;
     }
-    //keep REF at the beginning
-    if (property === "REF") {
-      continue;
-    }
-    columns.push(property);
-  }
+    return true;
+  });
 
+  columns.sort((a, b) => {
+    if (a === "REF") {
+      return -1;
+    }
+    if (a.startsWith("POP_") && !b.startsWith("POP_")) {
+      return -1;
+    }
+    if (b.startsWith("POP_") && !a.startsWith("POP_")) {
+      return 1;
+    }
+    return a.localeCompare(b);
+  });
+
+  console.log("columns", columns);
   const csv = [];
 
   // Add a first line with query parameters.
