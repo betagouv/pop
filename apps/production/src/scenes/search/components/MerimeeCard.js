@@ -42,10 +42,13 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.DOMN}</p>
-          <p>{data.DENO.join(", ")}</p>
           <p>{utils.generateLoca(data)}</p>
-          <p>{data.AUTR.join(", ")}</p>
+          <p>
+            {data.AUTR.join(", ")},{data.SCLE.join(", ")}
+          </p>
+          <p>
+            {data.STAT},{data.DPRO}
+          </p>
           {productorImage(data.PRODUCTEUR)}
         </div>
       </div>
