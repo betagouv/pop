@@ -14,6 +14,9 @@ export default class Notice {
     // Create entity
     for (let key in this._mapping) {
       if (body[key] !== undefined) {
+        if (this._mapping[key].deprecated) {
+          continue;
+        }
         if (this._mapping[key].type === "Array") {
           this[key] = this.extractArray(body[key]);
         } else {
