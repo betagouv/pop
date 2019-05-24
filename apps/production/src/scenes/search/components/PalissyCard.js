@@ -7,7 +7,8 @@ import inv from "../../../assets/inventaire.jpg";
 import utils from "./utils";
 
 function getMemoireImage(memoire) {
-  if (!memoire.length || !memoire[0].url) {
+  console.log(memoire);
+  if (!memoire.length || !memoire[0] || !memoire[0].url) {
     return require("../../../assets/noimage.jpg");
   }
   let image = memoire[0].url;
@@ -27,7 +28,7 @@ export default ({ data }) => {
     return <div />;
   };
 
-  if (data.REF.startsWith("PA") || data.REF.startsWith("PM")) {
+  if (data.PRODUCTEUR === "Monuments Historiques") {
     return (
       <Link
         style={{ textDecoration: "none" }}
@@ -42,16 +43,18 @@ export default ({ data }) => {
             <span>{data.REF}</span>
           </div>
           <div>
-            <p>{utils.generateLoca(data)}</p>
-            <p>{data.EDIF}</p>
-            <p>{data.AUTR.join(" ; ")}</p>
-            <p>{data.CATE.join(" ; ")}</p>
-            <p>{data.MATR.join(" ; ")}</p>
-            <p>{data.SCLE.join(" ; ")}</p>
-            <p>{data.DEPL}</p>
-            <p>{data.STAT.join(" ; ")}</p>
-            <p>{data.DPRO}</p>
-            <p>{data.DOMN}</p>
+            <p>
+              {utils.generateLoca(data)} {data.EDIF}
+            </p>
+            <p>
+              {data.CATE.join(", ")} {data.MATR.join(", ")}
+            </p>
+            <p>
+              {data.AUTR.join(", ")} {data.SCLE.join(", ")}
+            </p>
+            <p>
+              {data.STAT.join(", ")} {data.DPRO}
+            </p>
             {productorImage(data.PRODUCTEUR)}
           </div>
         </div>
