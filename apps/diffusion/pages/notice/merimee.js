@@ -256,10 +256,7 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.PPRO.label} content={notice.PPRO} />
                   <Field title={mapping.merimee.APRO.label} content={notice.APRO} />
                   <Field title={mapping.merimee.MHPP.label} content={notice.MHPP} />
-                  <Field
-                    title="Référence aux objects conservés dans l'édifice"
-                    content={notice.REFO}
-                  />
+                  <Field title={mapping.merimee.REFO.label} content={notice.REFO} />
                   <Field title={mapping.merimee.SITE.label} content={notice.SITE} />
                   <Field title={mapping.merimee.INTE.label} content={notice.INTE} />
                   <Field title={mapping.merimee.PINT.label} content={notice.PINT} />

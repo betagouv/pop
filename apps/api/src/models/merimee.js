@@ -530,7 +530,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Précisions sur les élements protégés"
+        label: "Précisions sur les éléments protégés"
       }
     },
     MICR: {
@@ -688,7 +688,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
-        label: "Référence objets contenus étudiés",
+        label: "Référence aux objets conservés",
         generated: true
       }
     },
