@@ -112,7 +112,6 @@ async function exportData(fileName, entities, header) {
     return;
   }
 
-  console.log(entities[0]);
   const columns = Object.keys(entities[0]).filter(e => {
     if (e.startsWith("_")) {
       return false;
@@ -136,7 +135,6 @@ async function exportData(fileName, entities, header) {
     return a.localeCompare(b);
   });
 
-  console.log("columns", columns);
   const csv = [];
 
   // Add a first line with query parameters.
