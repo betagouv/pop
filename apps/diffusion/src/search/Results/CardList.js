@@ -94,6 +94,9 @@ const Palissy = ({ data }) => {
               <p>{author}</p>
               <p>{siecle}</p>
               <p>{loc}</p>
+              <p>{data.DPRO}</p>
+              <p>{data.CATE}</p>
+              <p>{data.EDIF}</p>
             </div>
           </div>
         </div>
@@ -131,6 +134,7 @@ const Merimee = ({ data }) => {
             </div>
             {LogoComponent}
             <div>
+              <p>{data.DPRO}</p>
               <p>{author}</p>
               <p>{siecle}</p>
               <p>{loc}</p>
