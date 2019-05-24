@@ -103,6 +103,7 @@ class Museo extends React.Component {
               <Col sm={6}>
                 <CustomField name="VILLE_M" disabled={!this.state.editable} />
                 <CustomField name="DPT" disabled={!this.state.editable} />
+                <CustomField name="REGION" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>
