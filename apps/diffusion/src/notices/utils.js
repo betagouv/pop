@@ -35,7 +35,7 @@ export function toFieldImages(images) {
       let link = "";
 
       if (e instanceof Object) {
-        source = e.url;
+        source = e.url || "";
         key = e.ref;
         link = `/notice/memoire/${e.ref}`;
       }
