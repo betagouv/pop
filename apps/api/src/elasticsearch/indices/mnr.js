@@ -33,7 +33,7 @@ module.exports = {
         },
         french_strict: {
           tokenizer: "icu_tokenizer",
-          filter: ["icu_folding"]
+          filter: ["french_elision", "icu_folding"]
         }
       }
     }
