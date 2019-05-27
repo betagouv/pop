@@ -77,7 +77,7 @@ const Schema = new mongoose.Schema(
         label: "Nom de la base"
       }
     },
-    MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
+    MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
     REF: {
       type: String,
       unique: true,

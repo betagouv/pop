@@ -50,7 +50,7 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
-    MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
+    MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
     POP_COORDONNEES: {
       lat: {
         type: Number,
