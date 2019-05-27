@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { Col, Row } from "reactstrap";
-import { image } from "./../../../services/image";
 import { getNoticeInfo } from "../../../utils";
 
 export default class Drawer extends Component {
