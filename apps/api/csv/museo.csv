@@ -1,6 +1,7 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
-"REF","String","oui","Identifiant du musée","","true","","",""
+"REF","String","oui","Identifiant du musée","","","","",""
 "POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
+"BASE","String","non","Nom de la base","","true","Nom de la base : Musées de france (MUSEO)","",""
 "ACCES","String","non","Signalement de la fermeture du musée","","","","",""
 "ADRL1_M","String","non","Adresse","","","","",""
 "ARTISTE","String","non","Artistes","","","","",""
@@ -14,7 +15,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
             Musée d'art sacré    ","",""
 "COPY","String","non","Copyright photo","","","","",""
 "CP_M","String","non","Code postal","","","","",""
-"DOMPAL","String","non","Thématiques principales","","","
+"DOMPAL","Array","non","Thématiques principales","","","
         Archéologie
       Art moderne et contemporain
       Arts décoratifs

@@ -215,7 +215,7 @@ Nom de la base : Patrimoine mobilier (Palissy)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|||
+|String|non|oui|non|non||Nom de la base|
 
 ### MEMOIRE
 
@@ -255,7 +255,7 @@ Référence de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Contexte d'acquisition|
+|String|non|non|non|non||Contexte d'acquisition|
 
 ### ADRS
 
@@ -275,7 +275,7 @@ Référence de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Adresse de l'édifice contenant masqué|
+|String|non|non|non|non||Adresse de l'édifice contenant masqué|
 
 ### AFIG
 
@@ -345,7 +345,7 @@ Référence de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Référence(s) de publication(s)|
+|String|non|non|non|non||Référence(s) de publication(s)|
 
 ### CANT
 
@@ -607,7 +607,7 @@ Adresse du dossier Inventaire
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Edifice contenant masqué|
+|String|non|non|non|non||Edifice contenant masqué|
 
 ### EMPL
 
@@ -627,7 +627,7 @@ Adresse du dossier Inventaire
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Emplacement dans l'édifice masqué|
+|String|non|non|non|non||Emplacement dans l'édifice masqué|
 
 ### ETAT
 
@@ -667,7 +667,7 @@ Référence(s) d'exposition(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Référence(s) d'exposition(s)|
+|String|non|non|non|non||Référence(s) d'exposition(s)|
 
 ### HIST
 
@@ -687,7 +687,7 @@ Référence(s) d'exposition(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|oui|non||Référence informatique SIMH|
+|Array|non|non|non|non||Référence informatique SIMH|
 
 ### IMAGE
 
@@ -749,7 +749,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T12
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Code INSEE masqué|
+|String|non|non|non|non||Code INSEE masqué|
 
 ### INTE
 
@@ -881,7 +881,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Numéro d'inventaire affecté à l'objet|
+|String|non|non|non|non||Numéro d'inventaire affecté à l'objet|
 
 ### NOMS
 
@@ -1135,7 +1135,7 @@ REFA contient une ou plusieurs références de notice Mérimée. C'est une réf�
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|oui|non||Renvoi vers dossier 'peinture'|
+|Array|non|non|non|non||Renvoi vers dossier 'peinture'|
 
 ### RENV
 
@@ -1197,7 +1197,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Sources d'archives et bases de données de référence|
+|String|non|non|non|non||Sources d'archives et bases de données de référence|
 
 ### STAD
 
@@ -1297,7 +1297,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Adresse pour l'affichage|
+|String|non|non|non|non||Adresse pour l'affichage|
 
 ### WCOM
 
@@ -1307,7 +1307,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Commune pour l'affichage|
+|String|non|non|non|non||Commune pour l'affichage|
 
 ### WEB
 

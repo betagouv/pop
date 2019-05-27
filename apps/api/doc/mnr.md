@@ -72,14 +72,14 @@ Producteur de la donnée : Valeur MNR
 |String|non|oui|non|non|||
 
 ### BASE
-Nom de la base : Valeur Récupération artistique (MNR Rose-Valland)
+Valeur Récupération artistique (MNR Rose-Valland)
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|||
+|String|non|oui|non|non||Nom de la base|
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES

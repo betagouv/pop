@@ -12,7 +12,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "POP_CONTIENT_GEOLOCALISATION","String","non","","","true","Champs généré pour savoir si une géolocalisation existe","",""
 "POP_COORDINATES_POLYGON.type","String","non","","","","","",""
 "POP_COORDINATES_POLYGON.coordinates","Array","non","","","","","",""
-"BASE","String","non","","","true","Nom de la base : Patrimoine mobilier (Palissy)","",""
+"BASE","String","non","Nom de la base","","true","Nom de la base : Patrimoine mobilier (Palissy)","",""
 "MEMOIRE","Array","non","","","","","",""
 "REF","String","oui","Référence de la notice","","","Référence de la notice","Alphanumeric",""
 "POP_IMPORT","Array","non","","","","","",""

@@ -2,6 +2,7 @@
 
 - [REF](/apps/api/doc/museo.md#REF)
 - [POP_COMMENTAIRES](/apps/api/doc/museo.md#POP_COMMENTAIRES)
+- [BASE](/apps/api/doc/museo.md#BASE)
 - [ACCES](/apps/api/doc/museo.md#ACCES)
 - [ADRL1_M](/apps/api/doc/museo.md#ADRL1_M)
 - [ARTISTE](/apps/api/doc/museo.md#ARTISTE)
@@ -17,6 +18,8 @@
 - [LABEL](/apps/api/doc/museo.md#LABEL)
 - [LIEU_M](/apps/api/doc/museo.md#LIEU_M)
 - [MEL](/apps/api/doc/museo.md#MEL)
+- [CONTACT](/apps/api/doc/museo.md#CONTACT)
+- [CONTACT_MUSEE](/apps/api/doc/museo.md#CONTACT_MUSEE)
 - [NOMANC](/apps/api/doc/museo.md#NOMANC)
 - [NOMOFF](/apps/api/doc/museo.md#NOMOFF)
 - [NOMUSAGE](/apps/api/doc/museo.md#NOMUSAGE)
@@ -87,7 +90,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|oui|non|non||Identifiant du musée|
+|String|oui|non|non|non||Identifiant du musée|
 
 ### POP_COMMENTAIRES
 Commentaires technique
@@ -98,6 +101,16 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |Array|non|oui|non|non||Commentaires POP|
+
+### BASE
+Nom de la base : Musées de france (MUSEO)
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Nom de la base|
 
 ### ACCES
 
@@ -195,7 +208,7 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Thématiques principales|
+|Array|non|non|non|non||Thématiques principales|
 
 ### DPT
 
@@ -265,7 +278,27 @@ Commentaires technique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Courriel|
+|String|non|non|non|non||Contact générique du musée|
+
+### CONTACT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Contact coordinateur museo|
+
+### CONTACT_MUSEE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Contact producteur joconde|
 
 ### NOMANC
 

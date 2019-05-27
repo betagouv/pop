@@ -161,7 +161,7 @@ Nom de la base : Patrimoine architectural (Mérimée)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|||
+|String|non|oui|non|non||Nom de la base|
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -355,7 +355,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T98
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|oui|non||Auteur de la photographie (Mémoire)|
+|Array|non|non|non|non||Auteur de la photographie (Mémoire)|
 
 ### AUTR
 
@@ -815,7 +815,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T33
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions sur les élements protégés|
+|String|non|non|non|non||Précisions sur les éléments protégés|
 
 ### MICR
 
@@ -1011,7 +1011,7 @@ REFO contient une ou plusieurs références de notice Palissy. C'est une référ
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Référence objets contenus étudiés|
+|Array|non|oui|non|non||Référence aux objets conservés|
 
 ### REG
 
@@ -1293,7 +1293,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Accès Mémoire|
+|String|non|non|non|non||Accès Mémoire|
 
 ### ZONE
 
@@ -1343,7 +1343,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Adresse pour l'affichage|
+|String|non|non|non|non||Adresse pour l'affichage|
 
 ### WCOM
 
@@ -1353,7 +1353,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Commune pour l'affichage|
+|String|non|non|non|non||Commune pour l'affichage|
 
 ### WRENV
 

@@ -87,7 +87,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Auteur de l'oeuvre ou de l'original|
 
 ### APPL
 
@@ -137,7 +137,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Contexte|
 
 ### COTE
 
@@ -157,7 +157,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Datation|
 
 ### DATDEB
 
@@ -257,7 +257,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|||
+|Array|non|non|non|non||Domaine|
 
 ### NOTES
 
@@ -267,7 +267,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Notes manuscrit|
 
 ### NOTDEC
 
@@ -277,7 +277,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Remarques sur le décors|
 
 ### OPHOT
 
@@ -297,7 +297,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Origine géographique|
 
 ### ORIGH
 
@@ -307,7 +307,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Origine historique|
 
 ### ORIGP
 
@@ -347,7 +347,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|||
+|Array|non|non|non|non||Possesseur|
 
 ### REFD
 
@@ -357,7 +357,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Cote|
 
 ### REFIM
 
@@ -397,7 +397,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Crédits photographiques|
 
 ### COPY
 
@@ -407,7 +407,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Copyright notice|
 
 ### SUJET
 
@@ -417,7 +417,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Titre de l'enluminure / Sujet|
 
 ### SUPP
 
@@ -437,7 +437,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Titre de l'ouvrage|
 
 ### TYPDEC
 
@@ -447,7 +447,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Typologie du décors|
 
 ### TYPCOD
 

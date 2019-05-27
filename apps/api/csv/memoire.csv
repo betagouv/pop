@@ -15,7 +15,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 
       Sinon PRODUCTEUR = AUTRE
 ","",""
-"BASE","String","non","","","true","Nom de la base : Photographies (Mémoire)","",""
+"BASE","String","non","Nom de la base","","true","Nom de la base : Photographies (Mémoire)","",""
 "CONTIENT_IMAGE","String","non","Contient une image","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
 "POP_IMPORT","Array","non","","","","","",""
