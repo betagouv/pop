@@ -77,7 +77,7 @@ export default class extends React.Component {
       return throw404();
     }
     const notice = this.props.notice;
-    const { title, metaDescription, image } = getNoticeInfo(notice);
+    const { title, metaDescription, image, localisation } = getNoticeInfo(notice);
 
     const obj = {
       name: title,
@@ -85,7 +85,7 @@ export default class extends React.Component {
       artform: "Architecture",
       image: image,
       description: metaDescription,
-      contentLocation: notice.LOCA,
+      contentLocation: localisation,
       creator: notice.AUTR,
       artMedium: notice.MATR.join(", ")
     };

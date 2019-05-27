@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { Col, Row } from "reactstrap";
-import { image } from "./../../../services/image";
+import { getNoticeInfo } from "../../../utils";
 
 export default class Drawer extends Component {
   state = {
@@ -28,16 +28,17 @@ export default class Drawer extends Component {
   }
 
   renderNoticeMini(notice) {
-    switch (notice._type) {
-      case "joconde":
-        return <JocondeMini notice={notice._source} />;
-      case "palissy":
-        return <PalissyMini notice={notice._source} />;
-      case "merimee":
-        return <MerimeeMini notice={notice._source} />;
-      default:
-        return null;
-    }
+    const { title, image } = getNoticeInfo(notice);
+    return (
+      <Row>
+        <Col md={3} className="img-col">
+          <img src={image} alt={title} />;
+        </Col>
+        <Col md={9}>
+          <div className="drawer-title-mini">{title}</div>
+        </Col>
+      </Row>
+    );
   }
 
   renderNotice(notice) {
@@ -121,18 +122,16 @@ const joinData = f => {
 };
 
 const Joconde = ({ notice }) => {
-  const categories = notice.DENO ? notice.DENO.join(", ") : "";
-  const title = notice.TICO || notice.TITR;
+  const { title, subtitle, image } = getNoticeInfo(notice);
   const author = joinData([notice.AUTR, notice.ECOL, notice.EPOQ]);
   const peri = notice.PERI;
   const loc = notice.LOCA;
-  const img = image(notice);
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      {img}
+      <img src={image} alt={title} />
       <div className="description">
-        <p>{categories}</p>
+        <p>{subtitle}</p>
         <p>{author}</p>
         <p>{peri}</p>
         <p>{loc}</p>
@@ -141,94 +140,40 @@ const Joconde = ({ notice }) => {
   );
 };
 
-const JocondeMini = ({ notice }) => {
-  const title = notice.TICO || notice.TITR;
-  const img = image(notice);
-  return (
-    <Row>
-      <Col md={3} className="img-col">
-        {img}
-      </Col>
-      <Col md={9}>
-        <div className="drawer-title-mini">{title}</div>
-      </Col>
-    </Row>
-  );
-};
-
-const PalissyMini = ({ notice }) => {
-  const title = notice.TICO || notice.TITR;
-  const img = image(notice);
-  return (
-    <Row>
-      <Col md={3} className="img-col">
-        {img}
-      </Col>
-      <Col md={9}>
-        <div className="drawer-title-mini">{title}</div>
-      </Col>
-    </Row>
-  );
-};
-
 const Palissy = ({ notice }) => {
-  const title = notice.TICO || notice.TITR;
-  const categories = notice.DENO ? notice.DENO.join(", ") : "";
+  const { title, subtitle, localisation, image } = getNoticeInfo(notice);
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
   const siecle = notice.SCLE ? notice.SCLE.join(", ") : "";
-  const loc =
-    notice.LOCA && !notice.INSEE2
-      ? joinData([notice.LOCA])
-      : joinData([notice.REG, notice.DPT, notice.COM]);
-  const img = image(notice);
+
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      {img}
+      <img src={image} alt={title} />;
       <div className="description">
-        <p>{categories}</p>
+        <p>{subtitle}</p>
         <p>{author}</p>
         <p>{siecle}</p>
-        <p>{loc}</p>
+        <p>{localisation}</p>
       </div>
     </div>
   );
 };
 
-const MerimeeMini = ({ notice }) => {
-  const title = notice.TICO || notice.TITR;
-  const img = image(notice);
-  return (
-    <Row>
-      <Col md={3} className="img-col">
-        {img}
-      </Col>
-      <Col md={9}>
-        <div className="drawer-title-mini">{title}</div>
-      </Col>
-    </Row>
-  );
-};
-
 const Merimee = ({ notice }) => {
-  const title = notice.TICO || notice.TITR;
-  const categories = notice.DENO ? notice.DENO.join(", ") : "";
+  const { title, subtitle, localisation, image } = getNoticeInfo(notice);
+
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
   const siecle = notice.SCLE ? notice.SCLE.join(", ") : "";
-  const loc =
-    notice.LOCA && !notice.INSEE2
-      ? joinData([notice.LOCA])
-      : joinData([notice.REG, notice.DPT, notice.COM]);
-  const img = image(notice);
+
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      {img}
+      <img src={image} alt={title} />;
       <div className="description">
-        <p>{categories}</p>
+        <p>{subtitle}</p>
         <p>{author}</p>
         <p>{siecle}</p>
-        <p>{loc}</p>
+        <p>{localisation}</p>
       </div>
     </div>
   );
