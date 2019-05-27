@@ -141,7 +141,7 @@ function checkIfMemoireImageExist(notice) {
       // Here, we update the images and we keep the order ( !! important )
       const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
       const arr = NoticesMemoire.map(e => {
-        return { ref: e.REF, url: e.IMG };
+        return { ref: e.REF, url: e.IMG, copy: e.COPY, name: e.TICO };
       });
 
       //@raph -> I know you want to do only one loop with a reduce but it gave me headache
