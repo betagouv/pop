@@ -1,34 +1,37 @@
 import React from "react";
 import { SearchBox } from "react-elasticsearch";
 
-const fields = [
-  "TICO^10",
-  "AUTR^10",
-  "TITRE^9",
-  "TITR^9",
-  "LEG^9",
-  "LOCA^9",
-  "DENO^8",
-  "DOMN^8",
-  "EDIF^8",
-  "OBJT^8",
-  "REPR^8",
-  "AUTP^7",
-  "SERIE^7",
-  "PDEN^5",
-  "PERS^4",
-  "PAYS^3",
-  "HIST^3",
-  "REG^3",
-  "DEP^3",
-  "COM^3",
-  "SUJET^3",
-  "TYPE^1",
-  "DATE^1",
-  "EPOQ^1",
-  "SCLE^1",
-  "SCLD^1"
-];
+function customQuery(query, fields) {
+  // No value, return all documents.
+  if (!query) {
+    return { match_all: {} };
+  }
+
+  // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
+  // treat it as a query_string (they will love that).
+  if (query.match(/"[^"]*"| -| \+/)) {
+    return { simple_query_string: { query, default_operator: "and", fields } };
+  }
+
+  // Otherwise build a complex query with these rules (by boost order):
+  // 1 - strict term in fields (boost 5)
+  const strict = {
+    multi_match: {
+      query,
+      operator: "and",
+      fields: fields.map(f => f.replace("^", ".strict^")),
+      boost: 5
+    }
+  };
+
+  // 2 - fuzzy (all terms must be present)
+  const fuzzy = {
+    multi_match: { query, operator: "and", fields, type: "cross_fields" }
+  };
+
+  // Return the whole query with all rules
+  return { bool: { should: [strict, fuzzy] } };
+}
 
 export default function Search({ initialValues }) {
   return (
@@ -36,37 +39,36 @@ export default function Search({ initialValues }) {
       id="mainSearch"
       placeholder="Saisissez un titre, une dénomination ou une localisation"
       initialValue={initialValues.get("mainSearch")}
-      customQuery={value => {
-        if (!value) {
-          return { match_all: {} };
-        }
-
-        if (value.match(/"[^"]*"| -| \+/)) {
-          return { simple_query_string: { query: value, default_operator: "and", fields } };
-        }
-
-        return {
-          bool: {
-            should: [
-              {
-                multi_match: {
-                  query: value,
-                  type: "phrase",
-                  fields: ["TICO", "TITRE", "TITR", "LEG"],
-                  boost: 15
-                }
-              },
-              {
-                multi_match: {
-                  query: value,
-                  type: "most_fields",
-                  fields
-                }
-              }
-            ]
-          }
-        };
-      }}
+      customQuery={value =>
+        customQuery(value, [
+          "TICO^10",
+          "AUTR^10",
+          "TITRE^9",
+          "TITR^9",
+          "LEG^9",
+          "LOCA^9",
+          "DENO^8",
+          "DOMN^8",
+          "EDIF^8",
+          "OBJT^8",
+          "REPR^8",
+          "AUTP^7",
+          "SERIE^7",
+          "PDEN^5",
+          "PERS^4",
+          "PAYS^3",
+          "HIST^3",
+          "REG^3",
+          "DEP^3",
+          "COM^3",
+          "SUJET^3",
+          "TYPE^1",
+          "DATE^1",
+          "EPOQ^1",
+          "SCLE^1",
+          "SCLD^1"
+        ])
+      }
     />
   );
 }

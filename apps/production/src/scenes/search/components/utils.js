@@ -119,105 +119,6 @@ function departmentText(v) {
   );
 }
 
-// Source: https://github.com/fergiemcdowall/stopword/blob/master/lib/stopwords_fr.js
-function isStopword(word) {
-  return [
-    "a",
-    "au",
-    "aux",
-    "avec",
-    "ce",
-    "ces",
-    "dans",
-    "de",
-    "des",
-    "du",
-    "elle",
-    "en",
-    "et",
-    "eux",
-    "il",
-    "je",
-    "la",
-    "le",
-    "leur",
-    "lui",
-    "ma",
-    "mais",
-    "me",
-    "même",
-    "mes",
-    "moi",
-    "mon",
-    "ne",
-    "nos",
-    "notre",
-    "nous",
-    "on",
-    "ou",
-    "où",
-    "par",
-    "pas",
-    "pour",
-    "qu",
-    "que",
-    "qui",
-    "sa",
-    "se",
-    "ses",
-    "son",
-    "sur",
-    "ta",
-    "te",
-    "tes",
-    "toi",
-    "ton",
-    "tu",
-    "un",
-    "une",
-    "vos",
-    "votre",
-    "vous",
-    "c",
-    "d",
-    "j",
-    "l",
-    "à",
-    "m",
-    "n",
-    "s",
-    "t",
-    "y",
-    "ceci",
-    "cela",
-    "cet",
-    "cette",
-    "ici",
-    "ils",
-    "les",
-    "leurs",
-    "quel",
-    "quels",
-    "quelle",
-    "quelles",
-    "sans",
-    "soi"
-  ].includes(word);
-}
-
-function mandatoryWords(p) {
-  return (
-    p
-      .split(/\s+/)
-      // We have to remove stop words since there is a bug in elasticsearch. See:
-      // https://github.com/elastic/elasticsearch/issues/28855
-      // https://github.com/elastic/elasticsearch/issues/15634
-      .filter(v => v && !isStopword(v))
-      .map((v, k) => (k === 0 ? v : `+${v}`))
-      .join(" ")
-  );
-}
-
 function customQuery(query, primaryFields, secondaryFields = []) {
   const fields = [...primaryFields, ...secondaryFields];
 
@@ -233,24 +134,26 @@ function customQuery(query, primaryFields, secondaryFields = []) {
   }
 
   // Otherwise build a complex query with these rules (by boost order):
-  // 1 - exact ref (boost 5)
-  const exactRef = { term: { "REF.keyword": { value: query, boost: 5 } } };
-  // 2 - exact term in fields (boost 5)
-  const exactTerm = primaryFields.map(f => ({
-    term: { [`${f}.keyword`]: { value: query, boost: 5 } }
+  // 1 - exact ref (boost 10)
+  const exactRef = { term: { "REF.keyword": { value: query, boost: 10 } } };
+
+  // 2 - exact term in fields (boost 10)
+  const exactTerm = fields.map(f => ({
+    term: { [`${f}.keyword`]: { value: query, boost: 10 } }
   }));
-  // 3 - fuzzy term in fields (boost 2)
-  const fuzzyTerm = primaryFields
-    .filter(a => a !== "REF" && a !== "INV")
-    .map(f => ({
-      fuzzy: { [`${f}.keyword`]: { value: query, boost: 5 } }
-    }));
-  // 4 - contains all words in fields (boost 1)
-  const allWords = {
-    simple_query_string: { query: mandatoryWords(query), default_operator: "and", fields }
+
+  // 3 - strict term in fields (boost 5)
+  const strict = {
+    multi_match: { query, operator: "and", fields: fields.map(f => `${f}.strict`), boost: 5 }
   };
+
+  // 4 - fuzzy (all terms must be present)
+  const fuzzy = {
+    multi_match: { query, operator: "and", fields, type: "cross_fields" }
+  };
+
   // 5 - return the whole query with all rules
-  return { bool: { should: [exactRef, ...exactTerm, ...fuzzyTerm, allWords] } };
+  return { bool: { should: [exactRef, ...exactTerm, strict, fuzzy] } };
 }
 
 // This function transforms a text to a french compatible regex.
@@ -366,7 +269,7 @@ const operators = [
     useInput: true,
     query: (key, value) =>
       value ? { bool: { must_not: { regexp: { [key]: `.*${notStrict(value)}.*` } } } } : null,
-      suggestionQuery: (key, value) => suggestionQuery(key, `.*${notStrict(value)}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${notStrict(value)}.*`)
   },
   {
     value: "^",

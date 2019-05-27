@@ -1,4 +1,43 @@
 module.exports = {
+  settings: {
+    analysis: {
+      filter: {
+        french_elision: {
+          type: "elision",
+          articles_case: true,
+          articles: [
+            "l",
+            "m",
+            "t",
+            "qu",
+            "n",
+            "s",
+            "j",
+            "d",
+            "c",
+            "jusqu",
+            "quoiqu",
+            "lorsqu",
+            "puisqu"
+          ]
+        },
+        french_stemmer: {
+          type: "stemmer",
+          language: "light_french"
+        }
+      },
+      analyzer: {
+        french_fuzzy: {
+          tokenizer: "icu_tokenizer",
+          filter: ["french_elision", "icu_folding", "french_stemmer"]
+        },
+        french_strict: {
+          tokenizer: "icu_tokenizer",
+          filter: ["french_elision", "icu_folding"]
+        }
+      }
+    }
+  },
   mappings: {
     memoire: {
       properties: {
@@ -112,11 +151,15 @@ module.exports = {
         },
         AUTP: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -149,11 +192,15 @@ module.exports = {
         },
         COM: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -555,11 +602,15 @@ module.exports = {
         },
         LOCA: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -622,7 +673,7 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 32766
+              ignore_above: 8000
             }
           }
         },
@@ -781,11 +832,15 @@ module.exports = {
         },
         PAYS: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -845,11 +900,15 @@ module.exports = {
         },
         REG: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -873,11 +932,15 @@ module.exports = {
         },
         SCLE: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -973,11 +1036,15 @@ module.exports = {
         },
         TICO: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -992,11 +1059,15 @@ module.exports = {
         },
         TITRE: {
           type: "text",
-          analyzer: "french",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },

@@ -1,4 +1,43 @@
 module.exports = {
+  settings: {
+    analysis: {
+      filter: {
+        french_elision: {
+          type: "elision",
+          articles_case: true,
+          articles: [
+            "l",
+            "m",
+            "t",
+            "qu",
+            "n",
+            "s",
+            "j",
+            "d",
+            "c",
+            "jusqu",
+            "quoiqu",
+            "lorsqu",
+            "puisqu"
+          ]
+        },
+        french_stemmer: {
+          type: "stemmer",
+          language: "light_french"
+        }
+      },
+      analyzer: {
+        french_fuzzy: {
+          tokenizer: "icu_tokenizer",
+          filter: ["french_elision", "icu_folding", "french_stemmer"]
+        },
+        french_strict: {
+          tokenizer: "icu_tokenizer",
+          filter: ["french_elision", "icu_folding"]
+        }
+      }
+    }
+  },
   mappings: {
     museo: {
       properties: {
