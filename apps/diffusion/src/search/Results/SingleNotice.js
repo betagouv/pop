@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import shave from "shave";
 import { image } from "../../services/image";
+import { getNoticeInfo } from "../../utils";
 
 const joinData = f => {
   return f
@@ -32,6 +33,7 @@ export default class SingleNotice extends React.Component {
 
   render() {
     const { data } = this.props;
+
     let content = {};
     const index = data._index.replace(/[0-9]+/, "");
     switch (index) {

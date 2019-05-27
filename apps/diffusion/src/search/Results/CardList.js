@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { image } from "./../../services/image";
 import { getNoticeInfo } from "../../utils";
 
 const joinData = f => {
@@ -61,15 +60,14 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const { title, subtitle, logo, image, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc =
-    data.LOCA && !data.INSEE2 ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
+  const loc = localisation;
 
   return (
     <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
@@ -106,13 +104,13 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const { title, subtitle, logo, image, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
 
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = data.LOCA ? joinData([data.LOCA]) : joinData([data.REG, data.DPT, data.COM]);
+  const loc = localisation;
 
   return (
     <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>

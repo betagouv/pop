@@ -1,32 +1,20 @@
 import React from "react";
 import Link from "next/link";
 import { Col } from "reactstrap";
-import { image } from "./../../services/image";
+import { getNoticeInfo } from "../../utils";
 
 export default ({ index, data }) => {
-  const title = index => {
-    if (index === "memoire") {
-      const subtitle = data.TICO || data.LEG || `${data.EDIF || ""} ${data.OBJ || ""}`.trim();
-      if (data.AUTP) {
-        return `${data.AUTP} - ${subtitle}`;
-      }
-      return subtitle;
-    } else if (index === "enluminures") {
-      return `${data.TITR} - ${data.SUJET}`;
-    } else if (index === "joconde") {
-      return getJocondeTitle(data);
-    } else if ((index === "merimee" || index === "palissy") && data.AUTR && data.AUTR.length) {
-      return `${data.AUTR.filter(e => e).join(" ; ")} - ${data.TICO || data.TITR}`;
-    }
-    return data.TICO || data.TITR;
-  };
+  const { title, image } = getNoticeInfo(data);
+
   return (
     <Col>
       <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
         <a style={{ textDecoration: "none" }} className="mosaique-card">
-          <div className="thumbnail">{image(data)}</div>
+          <div className="thumbnail">
+            <img src={image} alt={title} />
+          </div>
           <div className="content">
-            <span>{title(index.replace(/[0-9]+/, ""))}</span>
+            <span>{title}</span>
           </div>
         </a>
       </Link>
@@ -106,14 +94,3 @@ export default ({ index, data }) => {
     </Col>
   );
 };
-
-function getJocondeTitle(notice) {
-  if (notice.TITR) {
-    return notice.TITR;
-  }
-  if ((notice.DENO || []).length) {
-    return notice.DENO.join(", ");
-  }
-
-  return (notice.DOMN || []).join(", ");
-}
