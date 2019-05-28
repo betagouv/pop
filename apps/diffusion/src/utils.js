@@ -95,7 +95,18 @@ export function getNoticeInfo(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
-      const localisation = notice.REG + ", " + departmentText(notice.DPT) + ", " + notice.COM;
+      let localisation = [];
+      if (notice.REG) {
+        localisation.push(notice.REG);
+      }
+      if (notice.DPT) {
+        localisation.push(departmentText(notice.DPT));
+      }
+      if (notice.WCOM) {
+        localisation.push(notice.WCOM);
+      }
+
+      localisation = localisation.join(" ; ");
 
       const image = getImageUrl(notice);
 
@@ -114,8 +125,20 @@ export function getNoticeInfo(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
-      const localisation = notice.REG + ", " + departmentText(notice.DPT) + ", " + notice.COM;
-
+      let localisation = [];
+      if (notice.REG) {
+        localisation.push(notice.REG);
+      }
+      if (notice.DPT) {
+        localisation.push(departmentText(notice.DPT));
+      }
+      if (notice.WCOM) {
+        localisation.push(notice.WCOM);
+      }
+      if (notice.WADRS) {
+        localisation.push(notice.WADRS);
+      }
+      localisation = localisation.join(" ; ");
       let metaDescription = "";
       /*
           const titre = this.props.notice.TICO || this.props.notice.TITR || "";
