@@ -521,10 +521,15 @@ module.exports = {
         },
         LEG: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
