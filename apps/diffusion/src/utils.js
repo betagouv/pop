@@ -293,7 +293,9 @@ function departmentText(v) {
       "971": "Guadeloupe",
       "972": "Martinique",
       "973": "Guyane",
-      "974": "La Réunion"
+      "974": "La Réunion",
+      "975": "Saint-Pierre-et-Miquelon",
+      "976": "Mayotte"
     }[v] || v
   );
 }
