@@ -20,7 +20,7 @@ function customQuery(query, fields) {
       query,
       operator: "and",
       fields: fields.map(f => f.replace("^", ".strict^")),
-      boost: 5
+      boost: 4
     }
   };
 
@@ -57,11 +57,11 @@ export default function Search({ initialValues }) {
           "PDEN^5",
           "PERS^4",
           "PAYS^3",
-          "HIST^3",
           "REG^3",
           "DEP^3",
           "COM^3",
           "SUJET^3",
+          "HIST^2",
           "TYPE^1",
           "DATE^1",
           "EPOQ^1",
