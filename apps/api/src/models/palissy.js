@@ -77,7 +77,7 @@ const Schema = new mongoose.Schema(
         label: "Nom de la base"
       }
     },
-    MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
+    MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
     REF: {
       type: String,
       unique: true,
@@ -96,8 +96,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Contexte d'acquisition",
-        deprecated: true
+        label: "Contexte d'acquisition"
       }
     },
     ADRS: {
@@ -113,8 +112,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse de l'édifice contenant masqué",
-        deprecated: true
+        label: "Adresse de l'édifice contenant masqué"
       }
     },
     AFIG: {
@@ -170,8 +168,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Référence(s) de publication(s)",
-        deprecated: true
+        label: "Référence(s) de publication(s)"
       }
     },
     CANT: {
@@ -383,8 +380,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Edifice contenant masqué",
-        deprecated: true
+        label: "Edifice contenant masqué"
       }
     },
     EMPL: {
@@ -400,8 +396,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Emplacement dans l'édifice masqué",
-        deprecated: true
+        label: "Emplacement dans l'édifice masqué"
       }
     },
     ETAT: {
@@ -433,8 +428,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Référence(s) d'exposition(s)",
-        label: "Référence(s) d'exposition(s)",
-        deprecated: true
+        label: "Référence(s) d'exposition(s)"
       }
     },
     HIST: {
@@ -450,8 +444,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Référence informatique SIMH",
-        deprecated: true
+        label: "Référence informatique SIMH"
       }
     },
     IMAGE: {
@@ -502,8 +495,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Code INSEE masqué",
-        deprecated: true
+        label: "Code INSEE masqué"
       }
     },
     INTE: {
@@ -613,8 +605,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numéro d'inventaire affecté à l'objet",
-        deprecated: true
+        label: "Numéro d'inventaire affecté à l'objet"
       }
     },
     NOMS: {
@@ -818,8 +809,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Renvoi vers dossier 'peinture'",
-        deprecated: true
+        label: "Renvoi vers dossier 'peinture'"
       }
     },
     RENV: {
@@ -870,8 +860,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Sources d'archives et bases de données de référence",
-        deprecated: true
+        label: "Sources d'archives et bases de données de référence"
       }
     },
     STAD: {
@@ -949,8 +938,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse pour l'affichage",
-        deprecated: true
+        label: "Adresse pour l'affichage"
       }
     },
     WCOM: {
@@ -958,8 +946,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Commune pour l'affichage",
-        deprecated: true
+        label: "Commune pour l'affichage"
       }
     },
     WEB: {

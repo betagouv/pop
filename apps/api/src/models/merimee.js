@@ -50,7 +50,7 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
-    MEMOIRE: [{ ref: { type: String, index: true }, url: String }],
+    MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
     POP_COORDONNEES: {
       lat: {
         type: Number,
@@ -170,8 +170,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Auteur de la photographie (Mémoire)",
-        deprecated: true
+        label: "Auteur de la photographie (Mémoire)"
       }
     },
     AUTR: {
@@ -916,8 +915,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Accès Mémoire",
-        deprecated: true
+        label: "Accès Mémoire"
       }
     },
     ZONE: {
@@ -956,8 +954,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse pour l'affichage",
-        deprecated: true
+        label: "Adresse pour l'affichage"
       }
     },
     WCOM: {
@@ -965,8 +962,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Commune pour l'affichage",
-        deprecated: true
+        label: "Commune pour l'affichage"
       }
     },
     WRENV: {

@@ -7,7 +7,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
         EA = Architecture
         Autre = Autre
         ","",""
-"BASE","String","non","","","true","Nom de la base : Patrimoine architectural (Mérimée)","",""
+"BASE","String","non","Nom de la base","","true","Nom de la base : Patrimoine architectural (Mérimée)","",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
 "MEMOIRE","Array","non","","","","","",""
 "POP_COORDONNEES.lat","Number","non","","","true","Latitude de la notice en WGS84","",""
@@ -69,7 +69,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "LOCA","String","non","Localisation complète","","","","",""
 "MFICH","String","non","Accès microfiche","","","","",""
 "MOSA","String","non","Edition d'une mosaïque d'image","","","","",""
-"MHPP","String","non","Précisions sur les élements protégés","","","","",""
+"MHPP","String","non","Précisions sur les éléments protégés","","","","",""
 "MICR","String","non","Numéro de microfiche","","","","",""
 "MURS","Array","non","Matériaux du gros-œuvre","","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T57"
 "NBOR","String","non","","","","","",""
@@ -88,7 +88,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "PSTA","String","non","Précisions sur le statut juridique du propriétaire","","","","",""
 "REFE","Array","non","Référence de l'édifice de conservation","","","","",""
 "REFP","Array","non","Références des parties constituantes étudiées","","","","",""
-"REFO","Array","non","Référence objets contenus étudiés","","true","REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée","",""
+"REFO","Array","non","Référence aux objets conservés","","true","REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée","",""
 "REG","String","non","Région","","","","",""
 "REMA","String","non","Eléments remarquables dans l'édifice","","","","",""
 "REMP","String","non","Remploi","","","","",""

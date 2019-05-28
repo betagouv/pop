@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { image } from "../services/image";
+import { getNoticeInfo } from "../utils";
 
 class LinkedNotice extends React.Component {
   render() {
@@ -21,12 +21,13 @@ class LinkedNotice extends React.Component {
 
 class SmallNotice extends React.Component {
   render() {
+    const { title, image } = getNoticeInfo(this.props.notice);
     return (
       <Link href={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}>
         <a style={{ textDecoration: "none" }} className="card">
-          {image(this.props.notice)}
+          <img src={image} alt={title} />
           <div className="content">
-            <h3>{this.props.notice.TICO}</h3>
+            <h3>{title}</h3>
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>
             <div>
               <p>{this.props.notice.DOMN}</p>
