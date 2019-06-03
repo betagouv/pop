@@ -208,3 +208,7 @@ ul.react-es-pagination > li {
 .react-es-rule:first-of-type > .react-es-rule-field {
   margin-left: 60px;
 }
+
+.react-es-rule-field {
+  max-width: 400px;
+}
