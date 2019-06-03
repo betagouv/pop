@@ -42,6 +42,9 @@ export default function render() {
                 "LOCA",
                 "LEG",
                 "AUTP",
+                "AUTOR",
+                "AUTG",
+                "AUTOEU",
                 "OBJT",
                 "EDIF"
               ])
