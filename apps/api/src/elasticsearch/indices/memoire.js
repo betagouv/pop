@@ -124,28 +124,43 @@ module.exports = {
         },
         AUTG: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
         AUTOEU: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
         AUTOR: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -404,10 +419,15 @@ module.exports = {
         },
         EDIF: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -801,10 +821,15 @@ module.exports = {
         },
         OBJT: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -960,10 +985,15 @@ module.exports = {
         },
         SERIE: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -987,10 +1017,15 @@ module.exports = {
         },
         SUJET: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -1177,10 +1212,15 @@ module.exports = {
         },
         DENO: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -1195,10 +1235,15 @@ module.exports = {
         },
         AUTR: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
