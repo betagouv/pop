@@ -1,5 +1,7 @@
 # À propos de la recherche
 
+_CETTE DOCUMENTATION EST EN COURS DE RÉÉCRITURE._
+
 La recherche libre est privilégiée dans l'outil de diffusion, avec possibilité d'utiliser une auto-complétion et de filtrer grâce à des filtres à facettes.
 
 ## Barre de recherche
