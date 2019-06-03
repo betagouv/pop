@@ -80,7 +80,7 @@ export default class extends React.Component {
         return (
           <React.Fragment key={key}>
             <dt>{this.label(key)}</dt>
-            <dd>{this.text(key, val)}</dd>
+            <dd>{this.text(key, Array.isArray(val) ? val.join("#") : val )}</dd>
           </React.Fragment>
         );
       });
