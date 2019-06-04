@@ -61,7 +61,6 @@ export default function Search({ initialValues }) {
           "PERS^4",
           "PAYS^3",
           "REG^3",
-          "DEP^3",
           "COM^3",
           "SUJET^3",
           "HIST^2",

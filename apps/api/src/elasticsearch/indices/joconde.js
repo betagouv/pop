@@ -257,9 +257,15 @@ module.exports = {
         },
         DOMN: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
@@ -327,9 +333,15 @@ module.exports = {
         },
         HIST: {
           type: "text",
+          analyzer: "french_fuzzy",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              ignore_above: 256
+            },
+            strict: {
+              type: "text",
+              analyzer: "french_strict"
             }
           }
         },
