@@ -47,6 +47,8 @@
 - [VIDEO](/apps/api/doc/enluminures.md#VIDEO)
 - [TOUT](/apps/api/doc/enluminures.md#TOUT)
 - [IMG](/apps/api/doc/enluminures.md#IMG)
+- [DMAJ](/apps/api/doc/enluminures.md#DMAJ)
+- [DMIS](/apps/api/doc/enluminures.md#DMIS)
 - [_id](/apps/api/doc/enluminures.md#_id)
 - [__v](/apps/api/doc/enluminures.md#__v)
 ### REF
@@ -518,6 +520,26 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non|||
+
+### DMAJ
+Date de mise à jour (format AAAA-MM-JJ)
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Date de mise à jour|
+
+### DMIS
+Date de la création (format AAAA-MM-JJ)
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Date de création|
 
 ### _id
 

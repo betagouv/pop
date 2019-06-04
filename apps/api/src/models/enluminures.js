@@ -78,7 +78,25 @@ const Schema = new mongoose.Schema(
     VISITE: { type: String, default: "", documentation: { label: "" } },
     VIDEO: { type: [String], default: [], documentation: { label: "" } },
     TOUT: { type: String, default: "", documentation: { label: "" } },
-    IMG: { type: String, default: "" }
+    IMG: { type: String, default: "" },
+    DMAJ: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de mise à jour (format AAAA-MM-JJ)",
+        generated: true,
+        label: "Date de mise à jour"
+      }
+    },
+    DMIS: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la création (format AAAA-MM-JJ)",
+        generated: true,
+        label: "Date de création"
+      }
+    }
   },
   { collection: "enluminures" }
 );
