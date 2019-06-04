@@ -94,6 +94,12 @@ function importCSV(res, files, email, museofile) {
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
         value.CONTACT = value.CONTACT || email || "";
+
+        //I add 0 in front of REF when we import csv file
+        if (value.REF.length < 11) {
+          value.REF = addZeros(value.REF, 11);
+        }
+
         return value;
       })
       .map(value => new Joconde(value));
@@ -408,4 +414,11 @@ function readme() {
       </div>
     </div>
   );
+}
+
+function addZeros(v, zeros) {
+  return new Array(zeros)
+    .concat([v])
+    .join("0")
+    .slice(-zeros);
 }
