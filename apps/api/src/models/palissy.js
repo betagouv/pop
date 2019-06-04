@@ -484,7 +484,7 @@ const Schema = new mongoose.Schema(
     },
     INSEE: {
       type: String,
-      default: [],
+      default: "",
       documentation: {
         description: "",
         label: "Numéro INSEE de la commune"
