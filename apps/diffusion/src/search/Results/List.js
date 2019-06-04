@@ -7,6 +7,7 @@ import CardList from "./CardList";
 export default ({ initialValues }) => (
   <div className="list-view">
     <Results
+      itemsPerPage={25}
       initialPage={initialValues.get("resPage")}
       id="res"
       items={data => data.map(({ _id, ...rest }) => <CardList key={_id} data={rest} />)}
