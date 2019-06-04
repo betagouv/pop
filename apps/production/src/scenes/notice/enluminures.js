@@ -55,7 +55,16 @@ class Enluminures extends React.Component {
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
-        <h2 className="main-title">Notice {this.state.notice.REF}</h2>
+        <h2 className="main-title">
+          Notice {this.state.notice.REF}{" "}
+          <a
+            style={{ fontSize: "small" }}
+            target="_blank"
+            href={`http://pop.culture.gouv.fr/notice/enluminures/${this.state.notice.REF}`}
+          >
+            voir en diffusion
+          </a>
+        </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
           <FieldImages
             name="VIDEO"
