@@ -87,6 +87,11 @@ export function pushSearchRoute(options = {}) {
   if (mode === "advanced") {
     searchFullParams.base = base;
   }
+  if (options.refresh) {
+    return method(
+      paramsToUrlAlias(mode, view, base, searchParams ? queryString.stringify(searchParams) : "")
+    );
+  }
   return method(
     `/search${searchFullParams ? "?" + queryString.stringify(searchFullParams) : ""}`,
     paramsToUrlAlias(mode, view, base, searchParams ? queryString.stringify(searchParams) : "")
