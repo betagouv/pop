@@ -1,5 +1,0 @@
-version: 1
-cron:
-  - name: "sitemap"
-    url: "/sitemap"
-    schedule: "0 0,12 * * *"
