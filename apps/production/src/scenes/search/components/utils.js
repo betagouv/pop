@@ -6,9 +6,9 @@ function generateLoca(notice) {
   const arr = [];
   if (notice.REG) arr.push(notice.REG);
   if (notice.DPT) arr.push(departmentText(notice.DPT));
-  if (notice.COM) arr.push(notice.COM);
+  if (notice.WCOM) arr.push(notice.WCOM);
   if (notice.EDIF) arr.push(notice.EDIF);
-  if (notice.ADRS) arr.push(notice.ADRS);
+  if (notice.WADRS) arr.push(notice.WADRS);
   return arr.join(", ");
 }
 

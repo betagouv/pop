@@ -28,38 +28,28 @@ export default ({ data }) => {
     return <div />;
   };
 
-  if (data.PRODUCTEUR === "Monuments Historiques") {
-    return (
-      <Link
-        style={{ textDecoration: "none" }}
-        to={`/notice/palissy/${data.REF}`}
-        className="card"
-        key={data.REF}
-      >
-        <img src={image} alt="Lien cassé" />
-        <div className="content">
-          <div style={{ display: "flex" }}>
-            <h2>{data.TICO}</h2>
-            <span>{data.REF}</span>
-          </div>
-          <div>
-            <p>
-              {utils.generateLoca(data)} {data.EDIF}
-            </p>
-            <p>
-              {data.CATE.join(", ")} {data.MATR.join(", ")}
-            </p>
-            <p>
-              {data.AUTR.join(", ")} {data.SCLE.join(", ")}
-            </p>
-            <p>
-              {data.STAT.join(", ")} {data.DPRO}
-            </p>
-            {productorImage(data.PRODUCTEUR)}
-          </div>
-        </div>
-      </Link>
-    );
+  const line3 = [];
+  if (data.CATE && data.CATE.length) {
+    line3.push(data.CATE.join(", "));
+  }
+  if (data.MATR && data.MATR.length) {
+    line3.push(data.MATR.join(", "));
+  }
+
+  const line4 = [];
+  if (data.AUTR && data.AUTR.length) {
+    line4.push(data.AUTR.join(", "));
+  }
+  if (data.SCLE && data.SCLE.length) {
+    line4.push(data.SCLE.join(", "));
+  }
+
+  const line5 = [];
+  if (data.STAT && data.STAT.length) {
+    line5.push(data.STAT.join(", "));
+  }
+  if (data.DPRO) {
+    line5.push(data.DPRO);
   }
 
   return (
@@ -72,14 +62,17 @@ export default ({ data }) => {
       <img src={image} alt="Lien cassé" />
       <div className="content">
         <div style={{ display: "flex" }}>
-          <h2>{data.TICO}</h2>
+          <h2>{data.TICO || data.TITR}</h2>
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.DOMN}</p>
-          <p>{data.DENO.join(" ; ")}</p>
-          <p>{utils.generateLoca(data)}</p>
-          <p>{data.AUTR.join(" ; ")}</p>
+          <p>
+            {utils.generateLoca(data)} {data.EDIF}
+          </p>
+          <p>{data.DENO.join(", ")}</p>
+          <p>{line3.join(" ; ")}</p>
+          <p>{line4.join(" ; ")}</p>
+          <p>{line5.join(" ; ")}</p>
           {productorImage(data.PRODUCTEUR)}
         </div>
       </div>

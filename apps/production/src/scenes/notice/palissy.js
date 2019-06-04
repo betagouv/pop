@@ -201,7 +201,6 @@ class Notice extends React.Component {
           >
             <Row>
               <Col sm={6}>
-                <CustomField name="LOCA" disabled={true} />
                 <CustomField name="REG" disabled={!this.state.editable} />
                 <CustomField name="DPT" disabled={!this.state.editable} />
                 <CustomField name="COM" disabled={!this.state.editable} />

@@ -105,6 +105,9 @@ export function getNoticeInfo(notice) {
       if (notice.WCOM) {
         localisation.push(notice.WCOM);
       }
+      if (notice.EDIF) {
+        localisation.push(notice.EDIF);
+      }
 
       localisation = localisation.join(" ; ");
 
@@ -113,7 +116,7 @@ export function getNoticeInfo(notice) {
       return { title, subtitle, metaDescription, logo, localisation, image };
     }
     case "Patrimoine architectural (Mérimée)": {
-      let title = notice.TICO || notice.TITR;
+      let title = notice.TICO || "";
       title = capitalizeFirstLetter(title);
 
       let logo = "";
