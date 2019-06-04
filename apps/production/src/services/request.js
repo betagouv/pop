@@ -70,8 +70,17 @@ class request {
             resolve(res);
             return;
           }
-          Raven.captureException(JSON.stringify(err));
-          reject("Problème lors de la récupération de la donnée", err);
+          // Special case: we don't want to track unsuccessful login, 
+          // nor anything about "unauthorized". So there is a `reject`
+          // operation, but no Raven.capture.
+          // See: https://sentry.data.gouv.fr/betagouvfr/pop-culture/issues/644727/
+          if (res.success === false && res.msg && response.status === 401) {
+            reject(res.msg);
+            return;
+          }
+          // Stringify response and send it to Sentry.
+          Raven.captureException(JSON.stringify(res));
+          reject("Problème lors de la récupération de la donnée", res);
         } catch (err) {
           Raven.captureException(JSON.stringify(err));
           reject("Problème lors de la récupération de la donnée", err);
