@@ -24,13 +24,24 @@ function customQuery(query, fields) {
     }
   };
 
-  // 2 - fuzzy (all terms must be present)
+  // 2 - strict term in fields, cross_fields
+  const strictCross = {
+    multi_match: {
+      query,
+      operator: "and",
+      fields: fields.map(f => f.replace("^", ".strict^")),
+      type: "cross_fields",
+      boost: 2
+    }
+  };
+
+  // 3 - fuzzy (all terms must be present)
   const fuzzy = {
     multi_match: { query, operator: "and", fields, type: "cross_fields" }
   };
 
   // Return the whole query with all rules
-  return { bool: { should: [strict, fuzzy] } };
+  return { bool: { should: [strict, strictCross, fuzzy] } };
 }
 
 export default function Search({ initialValues }) {

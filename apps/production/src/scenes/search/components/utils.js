@@ -147,13 +147,24 @@ function customQuery(query, primaryFields, secondaryFields = []) {
     multi_match: { query, operator: "and", fields: fields.map(f => `${f}.strict`), boost: 5 }
   };
 
-  // 4 - fuzzy (all terms must be present)
+   // 4 - strict term in fields, cross_fields
+   const strictCross = {
+    multi_match: {
+      query,
+      operator: "and",
+      fields: fields.map(f => `${f}.strict`),
+      type: "cross_fields",
+      boost: 2
+    }
+  };
+
+  // 5 - fuzzy (all terms must be present)
   const fuzzy = {
     multi_match: { query, operator: "and", fields, type: "cross_fields" }
   };
 
-  // 5 - return the whole query with all rules
-  return { bool: { should: [exactRef, ...exactTerm, strict, fuzzy] } };
+  // Return the whole query with all rules
+  return { bool: { should: [exactRef, ...exactTerm, strict, strictCross, fuzzy] } };
 }
 
 // This function transforms a text to a french compatible regex.
