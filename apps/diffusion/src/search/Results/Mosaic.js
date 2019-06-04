@@ -14,7 +14,7 @@ export default function({ initialValues }) {
             <CardMosaique key={_id} index={rest._index} data={rest._source} />
           ))
         }
-        itemsPerPage={20}
+        itemsPerPage={25}
         pagination={pagination}
         stats={total => {
           const info = "La mosaïque n'affiche par défaut que les notices avec image.";
