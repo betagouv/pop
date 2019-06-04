@@ -17,7 +17,7 @@ export default ({ data }) => {
             {data.VILLE_M} ({data.DPT}, {data.REGION})
           </p>
           <p>{data.CATEG}</p>
-          <p>{data.DOMPAL}</p>
+          <p>{Array.isArray(data.DOMPAL) ? data.DOMPAL.join(" ; ") : data.DOMPAL}</p>
         </div>
       </div>
     </Link>
