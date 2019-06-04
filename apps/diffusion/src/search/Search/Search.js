@@ -7,7 +7,7 @@ function customQuery(query, fields) {
     return { match_all: {} };
   }
 
-  // If it "seems" to be to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
+  // If it "seems" to be a query_string (contains `"foo"`, ` +bar` or ` -baz`)
   // treat it as a query_string (they will love that).
   if (query.match(/"[^"]*"| -| \+/)) {
     return { simple_query_string: { query, default_operator: "and", fields } };
@@ -47,6 +47,9 @@ export default function Search({ initialValues }) {
           "TITR^9",
           "LEG^9",
           "LOCA^9",
+          "AUTOEU^9",
+          "AUTOR^9",
+          "AUTG^9",
           "DENO^8",
           "DOMN^8",
           "EDIF^8",
