@@ -48,11 +48,11 @@ export default class extends React.Component {
           {val}
         </a>
       );
-    } else if (val.match(/#/)) {
-      const list = val
-        .split("#")
-        .filter(v => v)
-        .map((v, i) => <li key={i}>{this.removeUglyChars(v)}</li>);
+    } else if (val.match(/#/) || Array.isArray(val)) {
+      if (!Array.isArray(val)) {
+        val = val.split("#");
+      }
+      const list = val.filter(v => v).map((v, i) => <li key={i}>{this.removeUglyChars(v)}</li>);
       return <ul>{list}</ul>;
     }
     return this.removeUglyChars(val);
