@@ -1,6 +1,6 @@
 # POP diffusion
 
-Outil de diffusion public de la [Plateforme Ouverte du Patrimoine](http://pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop/tree/master/apps/api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est construite avec [React](https://reactjs.org/). [NextJS](https://nextjs.org/) est utilisé, principalement pour faciliter le SSR.
+Outil de diffusion public de la [Plateforme Ouverte du Patrimoine](https://www.pop.culture.gouv.fr/). Cette application utilise l'[API POP](https://github.com/betagouv/pop/tree/master/apps/api) ainsi qu'une instance d'[Elasticsearch](https://www.elastic.co/fr/products/elasticsearch) pour la recherche libre de notices. Elle est développée en Javascript et est construite avec [React](https://reactjs.org/). [NextJS](https://nextjs.org/) est utilisé, principalement pour faciliter le SSR.
 
 ## Installation
 

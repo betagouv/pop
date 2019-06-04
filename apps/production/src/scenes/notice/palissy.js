@@ -101,7 +101,7 @@ class Notice extends React.Component {
           <a
             style={{ fontSize: "small" }}
             target="_blank"
-            href={`http://pop.culture.gouv.fr/notice/palissy/${this.state.notice.REF}`}
+            href={`https://www.pop.culture.gouv.fr/notice/palissy/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>

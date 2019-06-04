@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/betagouv/pop.svg?style=svg)](https://circleci.com/gh/betagouv/pop)
 
-Code source de la [Plateforme Ouverte du Patrimoine](https://pop.culture.gouv.fr/), organisé en plusieurs services : 
+Code source de la [Plateforme Ouverte du Patrimoine](https://www.pop.culture.gouv.fr/), organisé en plusieurs services : 
  - [Interface de diffusion](https://github.com/betagouv/pop/tree/master/apps/diffusion)
  - [Interface de production](https://github.com/betagouv/pop/tree/master/apps/production)
  - [API](https://github.com/betagouv/pop/tree/master/apps/api) 
