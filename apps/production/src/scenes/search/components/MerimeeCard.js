@@ -28,6 +28,22 @@ export default ({ data }) => {
     return <div />;
   };
 
+  const line3 = [];
+  if (data.AUTR && data.AUTR.length) {
+    line3.push(data.AUTR.join(", "));
+  }
+  if (data.SCLE && data.SCLE.length) {
+    line3.push(data.SCLE.join(", "));
+  }
+
+  const line4 = [];
+  if (data.STAT) {
+    line4.push(data.STAT);
+  }
+  if (data.DPRO) {
+    line4.push(data.DPRO);
+  }
+
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -43,12 +59,8 @@ export default ({ data }) => {
         </div>
         <div>
           <p>{utils.generateLoca(data)}</p>
-          <p>
-            {data.AUTR.join(", ")},{data.SCLE.join(", ")}
-          </p>
-          <p>
-            {data.STAT},{data.DPRO}
-          </p>
+          <p>{line3.join(" ; ")}</p>
+          <p>{line4.join(" ; ")}</p>
           {productorImage(data.PRODUCTEUR)}
         </div>
       </div>

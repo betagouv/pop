@@ -37,8 +37,8 @@ export default function render() {
             customQuery={value =>
               utils.customQuery(value, [
                 "COM",
+                "REG",
                 "TICO",
-                "LOCA",
                 "DPRO",
                 "HIST",
                 "DESC",

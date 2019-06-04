@@ -376,7 +376,7 @@ const SeeMore = ({ notice }) => {
         title={mapping.merimee.LMDP.label}
         content={
           <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
-            Base Mediathek
+            Voir les archives conservées à la Médiathèque de l'architecture et du patrimoine
           </a>
         }
         key="mediathek_cible"

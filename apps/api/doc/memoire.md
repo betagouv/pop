@@ -825,7 +825,7 @@ Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou d
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Référence de la notice Mérimée ou Palissy|
+|Array|non|non|non|non||Références liées|
 
 ### WEB
 

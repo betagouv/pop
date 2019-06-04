@@ -65,9 +65,29 @@ const Palissy = ({ data }) => {
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
-  const author = data.AUTR ? data.AUTR.join(", ") : "";
-  const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = localisation;
+  const line3 = [];
+  if (data.CATE && data.CATE.length) {
+    line3.push(data.CATE.join(", "));
+  }
+  if (data.MATR && data.MATR.length) {
+    line3.push(data.MATR.join(", "));
+  }
+
+  const line4 = [];
+  if (data.AUTR && data.AUTR.length) {
+    line4.push(data.AUTR.join(", "));
+  }
+  if (data.SCLE && data.SCLE.length) {
+    line4.push(data.SCLE.join(", "));
+  }
+
+  const line5 = [];
+  if (data.STAT && data.STAT.length) {
+    line5.push(data.STAT.join(", "));
+  }
+  if (data.DPRO) {
+    line5.push(data.DPRO);
+  }
 
   return (
     <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
@@ -89,12 +109,10 @@ const Palissy = ({ data }) => {
             </div>
             {LogoComponent}
             <div>
-              <p>{author}</p>
-              <p>{siecle}</p>
-              <p>{loc}</p>
-              <p>{data.DPRO}</p>
-              <p>{data.CATE}</p>
-              <p>{data.EDIF}</p>
+              <p>{localisation}</p>
+              <p>{line3.join(" ; ")}</p>
+              <p>{line4.join(" ; ")}</p>
+              <p>{line5.join(" ; ")}</p>
             </div>
           </div>
         </div>
@@ -104,13 +122,28 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, subtitle, logo, image, localisation } = getNoticeInfo(data);
+  const { title, logo, image, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image} alt={title} />;
 
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-  const loc = localisation;
+
+  const line3 = [];
+  if (author) {
+    line3.push(author);
+  }
+  if (siecle) {
+    line3.push(siecle);
+  }
+
+  const line4 = [];
+  if (data.STAT) {
+    line4.push(data.STAT);
+  }
+  if (data.DPRO) {
+    line4.push(data.DPRO);
+  }
 
   return (
     <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
@@ -119,11 +152,7 @@ const Merimee = ({ data }) => {
           <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
+              <h2>{title}</h2>
               <span>
                 <small className="base">Mérimée</small>
                 <br />
@@ -132,10 +161,9 @@ const Merimee = ({ data }) => {
             </div>
             {LogoComponent}
             <div>
-              <p>{data.DPRO}</p>
-              <p>{author}</p>
-              <p>{siecle}</p>
-              <p>{loc}</p>
+              <p>{localisation}</p>
+              <p>{line3.join(" ; ")}</p>
+              <p>{line4.join(" ; ")}</p>
             </div>
           </div>
         </div>

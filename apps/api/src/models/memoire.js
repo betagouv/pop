@@ -563,7 +563,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté",
-        label: "Référence de la notice Mérimée ou Palissy"
+        label: "Références liées"
       }
     },
     WEB: {
