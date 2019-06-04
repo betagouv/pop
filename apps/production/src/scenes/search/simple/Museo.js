@@ -40,10 +40,10 @@ export default function render() {
         <Row>
           <Col xs="3">
             <CollapsableFacet
-              id="label"
-              initialValue={initialValues.get("label")}
-              fields={["LABEL.keyword"]}
-              title="Label"
+              id="nom"
+              initialValue={initialValues.get("nom")}
+              fields={["NOMOFF.keyword", "NOMUSAGE.keyword"]}
+              title="Nom du musée"
             />
             <CollapsableFacet
               id="museo"
