@@ -193,7 +193,11 @@ function pagination(total, itemsPerPage, page, setPage) {
 }
 
 function notStrict(value) {
-  return toFrenchRegex(value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"));
+  return toFrenchRegex(escapeRegex(value));
+}
+
+function escapeRegex(value) {
+  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
 function suggestionQuery(key, value) {
@@ -210,21 +214,21 @@ const operators = [
     text: "égal à (recherche stricte)",
     useInput: true,
     query: (key, value) => (value ? { term: { [key]: value } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: "!==",
     text: "différent de (recherche stricte)",
     useInput: true,
     query: (key, value) => (value ? { bool: { must_not: { term: { [key]: value } } } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: "===*",
     text: "contient (recherche stricte)",
     useInput: true,
     query: (key, value) => (value ? { wildcard: { [key]: `*${value}*` } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `.*${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
   },
   {
     value: "!==*",
@@ -232,14 +236,14 @@ const operators = [
     useInput: true,
     query: (key, value) =>
       value ? { bool: { must_not: { wildcard: { [key]: `*${value}*` } } } } : null,
-    suggestionQuery: (key, value) => suggestionQuery(key, `.*${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
   },
   {
     value: "===^",
     text: "commence par (recherche stricte)",
     useInput: true,
     query: (key, value) => (value ? { wildcard: { [key]: `${value}*` } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: "==",
@@ -290,21 +294,21 @@ const operators = [
     text: "inférieur ou égal à",
     useInput: true,
     query: (key, value) => (value ? { range: { [key]: { lte: value } } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: ">",
     text: "strictement supérieur à",
     useInput: true,
     query: (key, value) => (value ? { range: { [key]: { gt: value } } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: "<",
     text: "strictement inférieur à",
     useInput: true,
     query: (key, value) => (value ? { range: { [key]: { lt: value } } } : null),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${value}.*`)
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: "∃",
