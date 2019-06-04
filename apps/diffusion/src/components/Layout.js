@@ -53,7 +53,7 @@ export default class Layout extends React.Component {
               </Link>
             </li>
             <li className="list-inline-item">
-              <a href={`mailto:pop.reseaux@gmail.com`} target="_blank">
+              <a href={`mailto:pop@culture.gouv.fr`} target="_blank">
                 Nous contacter
               </a>
             </li>

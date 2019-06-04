@@ -5,9 +5,9 @@ export default class ContactUs extends React.Component {
     const subject = `subject=Demande à propos de la notice n°${this.props.REF}`;
     let mailTo;
     if (this.props.contact) {
-      mailTo = `mailto:${this.props.contact}?${subject}&cc=pop.reseaux@gmail.com`;
+      mailTo = `mailto:${this.props.contact}?${subject}&cc=pop@culture.gouv.fr`;
     } else {
-      mailTo = `mailto:pop.reseaux@gmail.com?${subject}`;
+      mailTo = `mailto:pop@culture.gouv.fr?${subject}`;
     }
     return (
       <a
