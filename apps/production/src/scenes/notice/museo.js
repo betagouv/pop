@@ -120,9 +120,8 @@ class Museo extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="TEL_M" disabled={!this.state.editable} />
-                <CustomField name="MEL" disabled={!this.state.editable} />
-                <CustomField name="CONTACT" disabled={!this.state.editable} />
-                <CustomField name="CONTACT_MUSEE" disabled={!this.state.editable} />
+                <CustomField name="CONTACT_GENERIQUE" disabled={!this.state.editable} />
+                <CustomField name="CONTACT_MUSEO" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="URL_M" disabled={!this.state.editable} />
@@ -137,11 +136,13 @@ class Museo extends React.Component {
                 <CustomField name="DOMPAL" disabled={!this.state.editable} />
                 <CustomField name="HIST" disabled={!this.state.editable} />
                 <CustomField name="ATOUT" disabled={!this.state.editable} />
+                <CustomField name="THEMES" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
-                <CustomField name="THEMES" disabled={!this.state.editable} />
                 <CustomField name="ARTISTE" disabled={!this.state.editable} />
                 <CustomField name="PHARE" disabled={!this.state.editable} />
+                <CustomField name="AN_CREAT" disabled={!this.state.editable} />
+                <CustomField name="INTERET" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>
