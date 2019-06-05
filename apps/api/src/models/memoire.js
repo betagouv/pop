@@ -160,7 +160,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Forme REG ; DPT ; COM ; EDIF",
-        label: "Lieu de conservation du document reproduit"
+        label: "Lieu de conservation du document reproduit ou de l'objet"
       }
     },
     COTECOR: {
@@ -290,7 +290,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Titre série"
+        label: "Titre de la série"
       }
     },
     THEATRE: {
