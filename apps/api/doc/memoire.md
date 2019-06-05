@@ -335,7 +335,7 @@ Forme REG ; DPT ; COM ; EDIF
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu de conservation du document reproduit|
+|String|non|non|non|non||Lieu de conservation du document reproduit ou de l'objet|
 
 ### COTECOR
 
@@ -495,7 +495,7 @@ Nom de l'acteur : nom du personnage joué
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre série|
+|String|non|non|non|non||Titre de la série|
 
 ### THEATRE
 
