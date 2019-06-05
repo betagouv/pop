@@ -37,6 +37,8 @@ export function getNoticeInfo(notice) {
         logo = "/static/mh.png";
       } else if (notice.PRODUCTEUR === "SAP") {
         logo = "/static/map.png";
+      } else if (notice.PRODUCTEUR === "INV") {
+        logo = "/static/inventaire.jpg";
       }
 
       const subtitle = notice.TECH;
