@@ -172,6 +172,12 @@ class Museo extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={true} />
+                <CustomField name="DMIS" disabled={true} />
+                <CustomField name="DMAJ" disabled={true} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="DT_SAISI" disabled={!this.state.editable} />
+                <CustomField name="COPY" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>

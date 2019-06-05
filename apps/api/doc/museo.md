@@ -54,6 +54,8 @@
 - [MONOPLUR](/apps/api/doc/museo.md#MONOPLUR)
 - [NB_AMI](/apps/api/doc/museo.md#NB_AMI)
 - [NOM_AMI](/apps/api/doc/museo.md#NOM_AMI)
+- [DMAJ](/apps/api/doc/museo.md#DMAJ)
+- [DMIS](/apps/api/doc/museo.md#DMIS)
 - [OBS_AMI](/apps/api/doc/museo.md#OBS_AMI)
 - [OBS_TOUR](/apps/api/doc/museo.md#OBS_TOUR)
 - [PROPBAT](/apps/api/doc/museo.md#PROPBAT)
@@ -660,6 +662,26 @@ Date de création de la notice
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|oui|non||Association|
+
+### DMAJ
+Date de la dernière mise à jour
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Date de la dernière mise à jour|
+
+### DMIS
+Date de la création POP/Mistral
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Date de la création POP/Mistral|
 
 ### OBS_AMI
 

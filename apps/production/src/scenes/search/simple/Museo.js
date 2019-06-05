@@ -45,12 +45,7 @@ export default function render() {
               fields={["NOMOFF.keyword", "NOMUSAGE.keyword"]}
               title="Nom du musée"
             />
-            <CollapsableFacet
-              id="museo"
-              initialValue={initialValues.get("museo")}
-              fields={["REF.keyword"]}
-              title="Code museo"
-            />
+
             <CollapsableFacet
               id="dpt"
               initialValue={initialValues.get("dpt")}

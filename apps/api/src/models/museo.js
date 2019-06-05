@@ -372,7 +372,24 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: { label: "Association", deprecated: true }
     },
-
+    DMAJ: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la dernière mise à jour",
+        label: "Date de la dernière mise à jour",
+        generated: true
+      }
+    },
+    DMIS: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Date de la création POP/Mistral",
+        label: "Date de la création POP/Mistral",
+        generated: true
+      }
+    },
     OBS_AMI: {
       type: String,
       default: "",
