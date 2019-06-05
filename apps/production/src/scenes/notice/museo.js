@@ -161,14 +161,11 @@ class Museo extends React.Component {
               </Col>
             </Row>
           </Section>
-          <Section title="Bâtiment" icon={require("../../assets/info.png")} color="#FF7676">
-            <Row>
-              <Col sm={6}>
-                <CustomField name="INTERET" disabled={!this.state.editable} />
-              </Col>
-            </Row>
-          </Section>
-          <Section title="Identifiant" icon={require("../../assets/info.png")} color="#FF7676">
+          <Section
+            title="A propos de la notice"
+            icon={require("../../assets/info.png")}
+            color="#FF7676"
+          >
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={true} />
