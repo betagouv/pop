@@ -151,13 +151,6 @@ const Schema = new mongoose.Schema(
         description: "Précision(s) sur le lieu"
       }
     },
-    MEL: { type: String, default: "", documentation: { label: "Contact générique du musée" } },
-    CONTACT: { type: String, default: "", documentation: { label: "Contact coordinateur museo" } },
-    CONTACT_MUSEE: {
-      type: String,
-      default: "",
-      documentation: { label: "Contact producteur joconde" }
-    },
     NOMANC: {
       type: String,
       default: "",

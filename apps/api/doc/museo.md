@@ -17,9 +17,6 @@
 - [INTERET](/apps/api/doc/museo.md#INTERET)
 - [LABEL](/apps/api/doc/museo.md#LABEL)
 - [LIEU_M](/apps/api/doc/museo.md#LIEU_M)
-- [MEL](/apps/api/doc/museo.md#MEL)
-- [CONTACT](/apps/api/doc/museo.md#CONTACT)
-- [CONTACT_MUSEE](/apps/api/doc/museo.md#CONTACT_MUSEE)
 - [NOMANC](/apps/api/doc/museo.md#NOMANC)
 - [NOMOFF](/apps/api/doc/museo.md#NOMOFF)
 - [NOMUSAGE](/apps/api/doc/museo.md#NOMUSAGE)
@@ -278,36 +275,6 @@ Précision(s) sur le lieu
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Adresse complementaire|
-
-### MEL
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Contact générique du musée|
-
-### CONTACT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Contact coordinateur museo|
-
-### CONTACT_MUSEE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Contact producteur joconde|
 
 ### NOMANC
 Ancien nom
