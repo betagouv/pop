@@ -126,6 +126,9 @@ async function exportData(fileName, entities, header) {
     if (a === "REF") {
       return -1;
     }
+    if (b === "REF") {
+      return 1;
+    }
     if (a.startsWith("POP_") && !b.startsWith("POP_")) {
       return -1;
     }
