@@ -398,7 +398,7 @@ Domaines thématiques de la collection
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Thèmes des collections (détail)|
+|Array|non|non|non|non||Thèmes des collections (détail)|
 
 ### URL_M
 Adresse du site ou de la page du site internet du musée

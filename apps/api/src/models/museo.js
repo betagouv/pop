@@ -241,8 +241,8 @@ const Schema = new mongoose.Schema(
       }
     },
     THEMES: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         label: "Thèmes des collections (détail)",
         description: "Domaines thématiques de la collection"
