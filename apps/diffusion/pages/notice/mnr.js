@@ -92,7 +92,6 @@ export default class extends React.Component {
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
             <h1 className="heading">{notice.TICO || notice.TITR}</h1>
-            {this.fieldImage(notice)}
             <Row>
               <Col className="image" md="8">
                 <div className="notice-details">
@@ -341,6 +340,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
+                {this.fieldImage(notice)}
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

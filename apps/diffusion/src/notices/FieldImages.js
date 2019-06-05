@@ -79,8 +79,12 @@ class FieldImages extends React.Component {
       <div className="fieldImages">
         {this.renderModal()}
         <Row>{this.renderImages()}</Row>
-        <style jsx global>{ImageGalleryStyle}</style>
-        <style jsx global>{ViewerStyle}</style>
+        <style jsx global>
+          {ImageGalleryStyle}
+        </style>
+        <style jsx global>
+          {ViewerStyle}
+        </style>
         <style jsx global>{`
           .fieldImages {
             width: 100%;
@@ -114,7 +118,7 @@ class FieldImages extends React.Component {
           }
 
           .fieldImages img {
-            max-height: 380px;
+            max-height: 220px;
             background-color: transparent;
           }
 
@@ -139,13 +143,20 @@ class FieldImages extends React.Component {
             border-radius: 5px;
           }
 
+          .image-gallery-thumbnail-inner > img {
+            max-height: 120px;
+          }
+
           .image-gallery-image {
-            height: 360px;
+            height: 220px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
 
           .image-gallery-slide .image-gallery-image > img {
-            width: auto;
+            object-fit: contain;
             max-width: 100%;
           }
 

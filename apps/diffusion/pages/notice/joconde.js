@@ -134,7 +134,6 @@ export default class extends React.Component {
             </Head>
             <h1 className="heading">{title}</h1>
 
-            {this.fieldImage(notice)}
             <Row>
               <Col md="8">
                 <div className="notice-details">
@@ -248,6 +247,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
+                {this.fieldImage(notice)}
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
