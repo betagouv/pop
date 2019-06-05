@@ -11,8 +11,8 @@ const { formattedNow, uploadFile } = require("./utils");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-function transformBeforeCreateOrUpdate(museo) {
-  museo.DT_MODIF = formattedNow();
+function transformBeforeCreateOrUpdate(notice) {
+  notice.DMAJ = notice.DMIS = formattedNow();
 }
 
 router.get("/:ref", async (req, res) => {
