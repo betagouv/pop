@@ -13,7 +13,7 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         label: "Identifiant du musée",
-        description: ""
+        description: "N° de référence dans la base Muséofile"
       }
     },
     POP_COMMENTAIRES: {
@@ -37,21 +37,37 @@ const Schema = new mongoose.Schema(
     ACCES: {
       type: String,
       default: "",
-      documentation: { label: "Signalement de la fermeture du musée" }
+      documentation: {
+        label: "Musée ouvert (Oui/Non)",
+        description: `Indiquer "Non" en cas de fermeture au public.`
+      }
     },
-    ADRL1_M: { type: String, default: "", documentation: { label: "Adresse" } },
+    ADRL1_M: {
+      type: String,
+      default: "",
+      documentation: { label: "Adresse", description: "Adresse (n°, voie)" }
+    },
     ARTISTE: {
       type: String,
       default: "",
-      documentation: { label: "Artistes" }
+      documentation: { label: "Artistes phares", description: "Artistes de la collection" }
     },
-    ATOUT: { type: String, default: "", documentation: { label: "Atouts majeurs" } },
+    ATOUT: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Atouts majeurs",
+        description: "Principaux atouts des collections (3500 caractères maximum)"
+      }
+    },
     CATEG: {
       type: String,
       default: "",
       documentation: {
         label: "Catégorie de musée",
         description: `
+        Catégorie particulière de musée :
+
             Ecomusée
             Musée de plein air
             Musée de site
@@ -63,12 +79,12 @@ const Schema = new mongoose.Schema(
     COPY: {
       type: String,
       default: "",
-      documentation: { label: "Copyright photo" }
+      documentation: { label: "Copyright photo", description: "Copyright de la photo du musée" }
     },
     CP_M: {
       type: String,
       default: "",
-      documentation: { label: "Code postal" }
+      documentation: { label: "Code postal", description: "Code postal" }
     },
     DOMPAL: {
       type: [String],
@@ -76,6 +92,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         label: "Thématiques principales",
         description: `
+
+        Principaux domaines thématiques couverts par les collections
+
         Archéologie
       Art moderne et contemporain
       Arts décoratifs
@@ -90,23 +109,47 @@ const Schema = new mongoose.Schema(
       `
       }
     },
-    DPT: { type: String, default: "", documentation: { label: "Département" } },
+    DPT: {
+      type: String,
+      default: "",
+      documentation: { label: "Département", description: "Département en toutes lettres" }
+    },
     DT_MODIF: {
       type: String,
       default: "",
       documentation: { label: "Date de modification" }
     },
-    HIST: { type: String, default: "", documentation: { label: "Historique" } },
+    HIST: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Historique",
+        description: "Historique des collections du musée (7000 caractères maximum)"
+      }
+    },
     INTERET: {
       type: String,
       default: "",
-      documentation: { label: "Intérêt architectural" }
+      documentation: {
+        label: "Intérêt architectural",
+        description: "Caractéristique architecturale du bâtiment (3500 caractères maximum)"
+      }
     },
-    LABEL: { type: String, default: "", documentation: { label: "Label" } },
+    LABEL: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Appellation musée de France",
+        description: "Musée de France, au sens de la loi n°2002-5 du 4 janvier 2002"
+      }
+    },
     LIEU_M: {
       type: String,
       default: "",
-      documentation: { label: "Adresse complementaire" }
+      documentation: {
+        label: "Adresse complementaire",
+        description: "Précision(s) sur le lieu"
+      }
     },
     MEL: { type: String, default: "", documentation: { label: "Contact générique du musée" } },
     CONTACT: { type: String, default: "", documentation: { label: "Contact coordinateur museo" } },
@@ -118,25 +161,43 @@ const Schema = new mongoose.Schema(
     NOMANC: {
       type: String,
       default: "",
-      documentation: { label: "Ancien nom" }
+      documentation: {
+        label: "Ancien nom",
+        description: "Ancien nom"
+      }
     },
     NOMOFF: {
       type: String,
       default: "",
-      documentation: { label: "Dénomination officielle du musée" }
+      documentation: {
+        label: "Dénomination officielle du musée",
+        description: "Dénomination officielle du musée selon l’arrêté publié au JO"
+      }
     },
     NOMUSAGE: {
       type: String,
       default: "",
-      documentation: { label: "Nom usuel" }
+      documentation: {
+        label: "Nom usuel",
+        description: "Nom d'usage du musée"
+      }
     },
-    PHARE: { type: String, default: "", documentation: { label: "Personnages phares" } },
+    PHARE: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Personnages phares",
+        description: "Personnages phares de la collection (3500 caractères maximum)"
+      }
+    },
     "PROT-BAT": {
       type: String,
       default: "",
       documentation: {
         label: "Protection bâtiment",
         description: `
+        Type de protection bâtiment :
+
         Classé au titre des Monuments Historiques
         Inscrit à l'Inventaire Supplémentaire des Monuments Historiques
       `
@@ -148,6 +209,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         label: "Protection espace",
         description: `
+        Type de protection espace : 
+
+
       Aux abords d'un monument historique
       Dans un site patrimonial remarquable (ex AVAP, ZPPAUP)
       Dans un site classé
@@ -156,11 +220,54 @@ const Schema = new mongoose.Schema(
 `
       }
     },
-    REGION: { type: String, default: "", documentation: { label: "Région" } },
-    TEL_M: { type: String, default: "", documentation: { label: "Téléphone" } },
-    THEMES: { type: String, default: "", documentation: { label: "Thèmes" } },
-    URL_M: { type: String, default: "", documentation: { label: "Site web" } },
-    VILLE_M: { type: String, default: "", documentation: { label: "Ville" } },
+    REGION: {
+      type: String,
+      default: "",
+      documentation: { label: "Région", description: "Région en toutes lettres" }
+    },
+    TEL_M: {
+      type: String,
+      default: "",
+      documentation: { label: "Téléphone", description: "Téléphone principal du musée" }
+    },
+    CONTACT_GENERIQUE: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Contact générique du musée",
+        description: "Adresse courriel générique du musée"
+      }
+    },
+    CONTACT_MUSEO: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Contact coordinateur museo",
+        description:
+          "Adresse courriel de la personne qui coordonne la collecte d'informations dans le musée"
+      }
+    },
+    THEMES: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Thèmes des collections (détail)",
+        description: "Domaines thématiques de la collection"
+      }
+    },
+    URL_M: {
+      type: String,
+      default: "",
+      documentation: {
+        label: "Site web",
+        description: "Adresse du site ou de la page du site internet du musée"
+      }
+    },
+    VILLE_M: {
+      type: String,
+      default: "",
+      documentation: { label: "Ville", description: "Nom de la commune, agglomération…" }
+    },
     PHOTO: { type: String, default: "", documentation: { label: "Image" } },
 
     /*deprecated bellow*/
@@ -189,7 +296,7 @@ const Schema = new mongoose.Schema(
     AN_CREAT: {
       type: String,
       default: "",
-      documentation: { label: "Année de création", deprecated: true }
+      documentation: { label: "Année de création du musée", description: "Format AAAA" }
     },
     ANNEE_FE: {
       type: String,
@@ -224,7 +331,7 @@ const Schema = new mongoose.Schema(
     DT_SAISI: {
       type: String,
       default: "",
-      documentation: { label: "Date d'entrée base", deprecated: true }
+      documentation: { label: "Date de création", description: "Date de création de la notice" }
     },
     GESTION: {
       type: String,

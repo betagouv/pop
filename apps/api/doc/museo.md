@@ -28,6 +28,8 @@
 - [PROT-ESP](/apps/api/doc/museo.md#PROT-ESP)
 - [REGION](/apps/api/doc/museo.md#REGION)
 - [TEL_M](/apps/api/doc/museo.md#TEL_M)
+- [CONTACT_GENERIQUE](/apps/api/doc/museo.md#CONTACT_GENERIQUE)
+- [CONTACT_MUSEO](/apps/api/doc/museo.md#CONTACT_MUSEO)
 - [THEMES](/apps/api/doc/museo.md#THEMES)
 - [URL_M](/apps/api/doc/museo.md#URL_M)
 - [VILLE_M](/apps/api/doc/museo.md#VILLE_M)
@@ -83,7 +85,7 @@
 - [_id](/apps/api/doc/museo.md#_id)
 - [__v](/apps/api/doc/museo.md#__v)
 ### REF
-
+N° de référence dans la base Muséofile
 
 
 
@@ -113,17 +115,17 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|oui|non|non||Nom de la base|
 
 ### ACCES
-
+Indiquer "Non" en cas de fermeture au public.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Signalement de la fermeture du musée|
+|String|non|non|non|non||Musée ouvert (Oui/Non)|
 
 ### ADRL1_M
-
+Adresse (n°, voie)
 
 
 
@@ -133,17 +135,17 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Adresse|
 
 ### ARTISTE
-
+Artistes de la collection
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Artistes|
+|String|non|non|non|non||Artistes phares|
 
 ### ATOUT
-
+Principaux atouts des collections (3500 caractères maximum)
 
 
 
@@ -153,6 +155,8 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Atouts majeurs|
 
 ### CATEG
+
+        Catégorie particulière de musée :
 
             Ecomusée
             Musée de plein air
@@ -169,7 +173,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Catégorie de musée|
 
 ### COPY
-
+Copyright de la photo du musée
 
 
 
@@ -179,7 +183,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Copyright photo|
 
 ### CP_M
-
+Code postal
 
 
 
@@ -189,6 +193,9 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Code postal|
 
 ### DOMPAL
+
+
+        Principaux domaines thématiques couverts par les collections
 
         Archéologie
       Art moderne et contemporain
@@ -211,7 +218,7 @@ Nom de la base : Musées de france (MUSEO)
 |Array|non|non|non|non||Thématiques principales|
 
 ### DPT
-
+Département en toutes lettres
 
 
 
@@ -231,7 +238,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Date de modification|
 
 ### HIST
-
+Historique des collections du musée (7000 caractères maximum)
 
 
 
@@ -241,7 +248,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Historique|
 
 ### INTERET
-
+Caractéristique architecturale du bâtiment (3500 caractères maximum)
 
 
 
@@ -251,17 +258,17 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Intérêt architectural|
 
 ### LABEL
-
+Musée de France, au sens de la loi n°2002-5 du 4 janvier 2002
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Label|
+|String|non|non|non|non||Appellation musée de France|
 
 ### LIEU_M
-
+Précision(s) sur le lieu
 
 
 
@@ -301,7 +308,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Contact producteur joconde|
 
 ### NOMANC
-
+Ancien nom
 
 
 
@@ -311,7 +318,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Ancien nom|
 
 ### NOMOFF
-
+Dénomination officielle du musée selon l’arrêté publié au JO
 
 
 
@@ -321,7 +328,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Dénomination officielle du musée|
 
 ### NOMUSAGE
-
+Nom d'usage du musée
 
 
 
@@ -331,7 +338,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Nom usuel|
 
 ### PHARE
-
+Personnages phares de la collection (3500 caractères maximum)
 
 
 
@@ -341,6 +348,8 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Personnages phares|
 
 ### PROT-BAT
+
+        Type de protection bâtiment :
 
         Classé au titre des Monuments Historiques
         Inscrit à l'Inventaire Supplémentaire des Monuments Historiques
@@ -354,6 +363,9 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Protection bâtiment|
 
 ### PROT-ESP
+
+        Type de protection espace : 
+
 
       Aux abords d'un monument historique
       Dans un site patrimonial remarquable (ex AVAP, ZPPAUP)
@@ -370,7 +382,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Protection espace|
 
 ### REGION
-
+Région en toutes lettres
 
 
 
@@ -380,7 +392,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Région|
 
 ### TEL_M
-
+Téléphone principal du musée
 
 
 
@@ -389,18 +401,38 @@ Nom de la base : Musées de france (MUSEO)
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Téléphone|
 
-### THEMES
-
+### CONTACT_GENERIQUE
+Adresse courriel générique du musée
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Thèmes|
+|String|non|non|non|non||Contact générique du musée|
+
+### CONTACT_MUSEO
+Adresse courriel de la personne qui coordonne la collecte d'informations dans le musée
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Contact coordinateur museo|
+
+### THEMES
+Domaines thématiques de la collection
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Thèmes des collections (détail)|
 
 ### URL_M
-
+Adresse du site ou de la page du site internet du musée
 
 
 
@@ -410,7 +442,7 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|non|non||Site web|
 
 ### VILLE_M
-
+Nom de la commune, agglomération…
 
 
 
@@ -470,14 +502,14 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|oui|non||Amis du musée|
 
 ### AN_CREAT
-
+Format AAAA
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Année de création|
+|String|non|non|non|non||Année de création du musée|
 
 ### ANNEE_FE
 
@@ -540,14 +572,14 @@ Nom de la base : Musées de france (MUSEO)
 |String|non|non|oui|non||Date de création|
 
 ### DT_SAISI
-
+Date de création de la notice
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Date d'entrée base|
+|String|non|non|non|non||Date de création|
 
 ### GESTION
 
