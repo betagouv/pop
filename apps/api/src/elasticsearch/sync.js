@@ -13,6 +13,7 @@ const Memoire = require("../models/memoire");
 const Mnr = require("../models/mnr");
 const Import = require("../models/import");
 const Museo = require("../models/museo");
+const Enluminures = require("../models/enluminures");
 const es = require("../elasticsearch")();
 const chalk = require("chalk");
 const { pingElasticsearchTask } = require("./utils");
@@ -74,7 +75,8 @@ async function run() {
       memoire: Memoire,
       import: Import,
       mnr: Mnr,
-      museo: Museo
+      museo: Museo,
+      enluminures: Enluminures
     }[db];
     tasks.add({
       title: `Processing ${db}`,
