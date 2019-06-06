@@ -26,6 +26,19 @@ const Menu = ({ closeMenu, initialValues }) => (
       )}
     />
     <h4>Affiner par</h4>
+
+    <CollapsableFacet
+      id="auteur"
+      initialValue={initialValues.get("auteur")}
+      fields={["AUTP.keyword", "AUTR.keyword"]}
+      title="Auteur"
+    />
+    <CollapsableFacet
+      id="domn"
+      initialValue={initialValues.get("domn")}
+      fields={["DOMN.keyword", "CATE.keyword"]}
+      title="Domaine"
+    />
     <CollapsableFacet
       id="base"
       initialValue={initialValues.get("base")}
@@ -58,25 +71,6 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Base"
     />
     <CollapsableFacet
-      id="producteur"
-      initialValue={initialValues.get("producteur")}
-      fields={["PRODUCTEUR.keyword"]}
-      title="Producteur"
-    />
-    <CollapsableFacet
-      id="auteur"
-      initialValue={initialValues.get("auteur")}
-      fields={["AUTP.keyword", "AUTR.keyword"]}
-      title="Auteur"
-    />
-    <CollapsableFacet
-      id="domn"
-      initialValue={initialValues.get("domn")}
-      fields={["DOMN.keyword", "CATE.keyword"]}
-      title="Domaine"
-    />
-
-    <CollapsableFacet
       id="ou"
       initialValue={initialValues.get("ou")}
       fields={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
@@ -87,6 +81,12 @@ const Menu = ({ closeMenu, initialValues }) => (
       initialValue={initialValues.get("periode")}
       fields={["PERI.keyword"]}
       title="Période"
+    />
+    <CollapsableFacet
+      id="producteur"
+      initialValue={initialValues.get("producteur")}
+      fields={["PRODUCTEUR.keyword"]}
+      title="Producteur"
     />
     <CollapsableFacet
       id="image"
