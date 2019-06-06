@@ -88,6 +88,18 @@ export default class extends React.Component {
                   }}
                 />
                 <TopicCard
+                  img="/static/topics/mobilier.jpg"
+                  txt={
+                    <div>
+                      Patrimoine mobilier
+                      <p>Base Palissy</p>
+                    </div>
+                  }
+                  params={{
+                    base: ["Patrimoine mobilier (Palissy)"]
+                  }}
+                />
+                <TopicCard
                   img="/static/topics/mhr.jpg"
                   txt={
                     <div>
@@ -112,18 +124,6 @@ export default class extends React.Component {
                   }}
                 />
                 <TopicCard
-                  img="/static/topics/mobilier.jpg"
-                  txt={
-                    <div>
-                      Patrimoine mobilier
-                      <p>Base Palissy</p>
-                    </div>
-                  }
-                  params={{
-                    base: ["Patrimoine mobilier (Palissy)"]
-                  }}
-                />
-                <TopicCard
                   img="/static/topics/mnr.jpg"
                   txt={
                     <div>
@@ -145,6 +145,18 @@ export default class extends React.Component {
                   }
                   params={{
                     base: ["Enluminures (Enluminures)"]
+                  }}
+                />
+                <TopicCard
+                  img="/static/topics/museo.jpg"
+                  txt={
+                    <div>
+                      Musées de france
+                      <p>Base MUSEO</p>
+                    </div>
+                  }
+                  params={{
+                    base: ["Musées de france (MUSEO)"]
                   }}
                 />
               </Slider>

@@ -14,7 +14,7 @@ import { es_url } from "../src/config";
 import queryString from "query-string";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 
-const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "enluminures"].join(",");
+const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures"].join(",");
 
 import throw404 from "../src/services/throw404";
 
@@ -144,7 +144,6 @@ export default class extends React.Component {
             display: flex;
             justify-content: space-between;
           }
-          
 
           .search .search-results {
             flex: 0 0 75%;

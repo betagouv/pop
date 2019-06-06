@@ -13,6 +13,7 @@ router.use(bodyParser.json());
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
+  notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
 }
 
 router.get("/:ref", async (req, res) => {

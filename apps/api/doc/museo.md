@@ -28,6 +28,7 @@
 - [CONTACT_GENERIQUE](/apps/api/doc/museo.md#CONTACT_GENERIQUE)
 - [CONTACT_MUSEO](/apps/api/doc/museo.md#CONTACT_MUSEO)
 - [THEMES](/apps/api/doc/museo.md#THEMES)
+- [CONTIENT_IMAGE](/apps/api/doc/museo.md#CONTIENT_IMAGE)
 - [URL_M](/apps/api/doc/museo.md#URL_M)
 - [VILLE_M](/apps/api/doc/museo.md#VILLE_M)
 - [PHOTO](/apps/api/doc/museo.md#PHOTO)
@@ -399,6 +400,16 @@ Domaines thématiques de la collection
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |Array|non|non|non|non||Thèmes des collections (détail)|
+
+### CONTIENT_IMAGE
+Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non|||
 
 ### URL_M
 Adresse du site ou de la page du site internet du musée

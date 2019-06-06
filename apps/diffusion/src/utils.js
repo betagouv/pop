@@ -57,7 +57,8 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = getImageUrl(notice);
+      const image = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "";
+
       return { title, metaDescription, image };
     }
     case "Enluminures (Enluminures)": {

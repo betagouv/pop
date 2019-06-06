@@ -20,7 +20,6 @@ function transformBeforeUpdate(notice) {
 
 async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
-
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
 }
 
