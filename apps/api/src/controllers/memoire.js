@@ -107,7 +107,7 @@ function findProducteur(REF, IDPROD, EMET) {
   } else if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
     return "UDAP";
   } else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
-    return "SAP";
+    return "MAP";
   }
   return "AUTRE";
 }
