@@ -1,21 +1,26 @@
 path,type,required,label,opendata,generated,description,validation,thesaurus
-"REF","String","oui","Identifiant du musée","","","","",""
+"REF","String","oui","Identifiant du musée","","","N° de référence dans la base Muséofile","",""
 "POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
 "BASE","String","non","Nom de la base","","true","Nom de la base : Musées de france (MUSEO)","",""
-"ACCES","String","non","Signalement de la fermeture du musée","","","","",""
-"ADRL1_M","String","non","Adresse","","","","",""
-"ARTISTE","String","non","Artistes","","","","",""
-"ATOUT","String","non","Atouts majeurs","","","","",""
+"ACCES","String","non","Musée ouvert (Oui/Non)","","","Indiquer "Non" en cas de fermeture au public.","",""
+"ADRL1_M","String","non","Adresse","","","Adresse (n°, voie)","",""
+"ARTISTE","String","non","Artistes phares","","","Artistes de la collection","",""
+"ATOUT","String","non","Atouts majeurs","","","Principaux atouts des collections (3500 caractères maximum)","",""
 "CATEG","String","non","Catégorie de musée","","","
+        Catégorie particulière de musée :
+
             Ecomusée
             Musée de plein air
             Musée de site
             Maison d'artiste
             Musée littéraire
             Musée d'art sacré    ","",""
-"COPY","String","non","Copyright photo","","","","",""
-"CP_M","String","non","Code postal","","","","",""
+"COPY","String","non","Copyright photo","","","Copyright de la photo du musée","",""
+"CP_M","String","non","Code postal","","","Code postal","",""
 "DOMPAL","Array","non","Thématiques principales","","","
+
+        Principaux domaines thématiques couverts par les collections
+
         Archéologie
       Art moderne et contemporain
       Arts décoratifs
@@ -28,48 +33,53 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
       Sciences fondamentales
       Technique et industrie
       ","",""
-"DPT","String","non","Département","","","","",""
+"DPT","String","non","Département","","","Département en toutes lettres","",""
 "DT_MODIF","String","non","Date de modification","","","","",""
-"HIST","String","non","Historique","","","","",""
-"INTERET","String","non","Intérêt architectural","","","","",""
-"LABEL","String","non","Label","","","","",""
-"LIEU_M","String","non","Adresse complementaire","","","","",""
-"MEL","String","non","Contact générique du musée","","","","",""
-"CONTACT","String","non","Contact coordinateur museo","","","","",""
-"CONTACT_MUSEE","String","non","Contact producteur joconde","","","","",""
-"NOMANC","String","non","Ancien nom","","","","",""
-"NOMOFF","String","non","Dénomination officielle du musée","","","","",""
-"NOMUSAGE","String","non","Nom usuel","","","","",""
-"PHARE","String","non","Personnages phares","","","","",""
+"HIST","String","non","Historique","","","Historique des collections du musée (7000 caractères maximum)","",""
+"INTERET","String","non","Intérêt architectural","","","Caractéristique architecturale du bâtiment (3500 caractères maximum)","",""
+"LABEL","String","non","Appellation musée de France","","","Musée de France, au sens de la loi n°2002-5 du 4 janvier 2002","",""
+"LIEU_M","String","non","Adresse complementaire","","","Précision(s) sur le lieu","",""
+"NOMANC","String","non","Ancien nom","","","Ancien nom","",""
+"NOMOFF","String","non","Dénomination officielle du musée","","","Dénomination officielle du musée selon l’arrêté publié au JO","",""
+"NOMUSAGE","String","non","Nom usuel","","","Nom d'usage du musée","",""
+"PHARE","String","non","Personnages phares","","","Personnages phares de la collection (3500 caractères maximum)","",""
 "PROT-BAT","String","non","Protection bâtiment","","","
+        Type de protection bâtiment :
+
         Classé au titre des Monuments Historiques
         Inscrit à l'Inventaire Supplémentaire des Monuments Historiques
       ","",""
 "PROT-ESP","String","non","Protection espace","","","
+        Type de protection espace : 
+
+
       Aux abords d'un monument historique
       Dans un site patrimonial remarquable (ex AVAP, ZPPAUP)
       Dans un site classé
       Dans un site inscrit
       Dans un parc naturel (régional/national)
 ","",""
-"REGION","String","non","Région","","","","",""
-"TEL_M","String","non","Téléphone","","","","",""
-"THEMES","String","non","Thèmes","","","","",""
-"URL_M","String","non","Site web","","","","",""
-"VILLE_M","String","non","Ville","","","","",""
+"REGION","String","non","Région","","","Région en toutes lettres","",""
+"TEL_M","String","non","Téléphone","","","Téléphone principal du musée","",""
+"CONTACT_GENERIQUE","String","non","Contact générique du musée","","","Adresse courriel générique du musée","",""
+"CONTACT_MUSEO","String","non","Contact coordinateur museo","","","Adresse courriel de la personne qui coordonne la collecte d'informations dans le musée","",""
+"THEMES","Array","non","Thèmes des collections (détail)","","","Domaines thématiques de la collection","",""
+"CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES","",""
+"URL_M","String","non","Site web","","","Adresse du site ou de la page du site internet du musée","",""
+"VILLE_M","String","non","Ville","","","Nom de la commune, agglomération…","",""
 "PHOTO","String","non","Image","","","","",""
 "TOUT","String","non","Index global","","","","",""
 "ACTIV","String","non","Activités culturelles","","","","",""
 "ADRESSE","String","non","Adresse complète","","","","",""
 "AMIS","String","non","Amis du musée","","","","",""
-"AN_CREAT","String","non","Année de création","","","","",""
+"AN_CREAT","String","non","Année de création du musée","","","Format AAAA","",""
 "ANNEE_FE","String","non","Musée fermé","","","","",""
 "ANNEXE","String","non","Annexe","","","","",""
 "ANTARIF","String","non","Année tarifs","","","","",""
 "CEDEX_AD","String","non","ADM-Cédex","","","","",""
 "CTRLTECH","String","non","Ctrl tech.","","","","",""
 "DT_CREAT","String","non","Date de création","","","","",""
-"DT_SAISI","String","non","Date d'entrée base","","","","",""
+"DT_SAISI","String","non","Date de création","","","Date de création de la notice","",""
 "GESTION","String","non","Gestion musée","","","","",""
 "ITI2_M","String","non","Plan Mappy","","","","",""
 "ITI_M","String","non","Itinéraire Mappy","","","","",""
@@ -78,6 +88,8 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "MONOPLUR","String","non","Disciplines","","","","",""
 "NB_AMI","String","non","Nombre amis","","","","",""
 "NOM_AMI","String","non","Association","","","","",""
+"DMAJ","String","non","Date de la dernière mise à jour","","true","Date de la dernière mise à jour","",""
+"DMIS","String","non","Date de la création POP/Mistral","","true","Date de la création POP/Mistral","",""
 "OBS_AMI","String","non","Ass. Amis Obs.","","","","",""
 "OBS_TOUR","String","non","Itinéraire touristique","","","","",""
 "PROPBAT","String","non","Propr. bat.","","","","",""

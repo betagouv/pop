@@ -11,7 +11,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 
       Si les conditions du dessus ne sont pas respectées et la REF commence par AP et IDPROD commence par Service départemental, alors PRODUCTEUR = UDAP
 
-      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = SAP
+      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = MAP
 
       Sinon PRODUCTEUR = AUTRE
 ","",""
@@ -32,7 +32,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "EDIF","String","non","Édifice","","","","",""
 "EXPO","String","non","Référence d’exposition de l’image ","","","","",""
 "JDATPV","String","non","Précision sur la date de prise de vue","","","","",""
-"LIEUCOR","String","non","Lieu de conservation du document reproduit","","","Forme REG ; DPT ; COM ; EDIF","",""
+"LIEUCOR","String","non","Lieu de conservation du document reproduit ou de l'objet","","","Forme REG ; DPT ; COM ; EDIF","",""
 "COTECOR","String","non","Cote de conservation du document reproduit","","","","",""
 "LIEUCTI","String","non","Lieu de conservation du tirage","","","Forme REG ; DPT ; COM ; EDIF","",""
 "COTECTI","String","non","Cote de conservation du tirage","","","","",""
@@ -48,7 +48,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "TIREDE","String","non","Référence bibliographique ou documentaire","","","","",""
 "ROLE","String","non","Rôle interprété","","","Nom de l'acteur : nom du personnage joué","",""
 "PRECOR","String","non","Précisions sur la conservation de l'original","","","","",""
-"SERIE","String","non","Titre série","","","","",""
+"SERIE","String","non","Titre de la série","","","","",""
 "THEATRE","String","non","Producteur de la pièce de théâtre ou du film","","","","",""
 "TITRE","String","non","Titre de la pièce de théâtre ou du film","","","","",""
 "DMAJ","String","non","Date de mise à jour","","true","Date de la dernière mise à jour","",""
@@ -81,7 +81,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "FORMAT","String","non","Format du négatif","","","","",""
 "FORMATOR","String","non","Format de l'original","","","","",""
 "FORMATTI","String","non","Format du tirage","","","","",""
-"LBASE","Array","non","Référence de la notice Mérimée ou Palissy","","","Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté","",""
+"LBASE","Array","non","Références liées","","","Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté","",""
 "WEB","String","non","Accès Mémoire","","","","",""
 "LIB","String","non","Mots candidats","","","","",""
 "LOCA","String","non","Localisation","","","Concaténation des champs PAYS ; REG ; DPT ; COM","",""

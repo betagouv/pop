@@ -46,5 +46,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "VIDEO","Array","non","","","","","",""
 "TOUT","String","non","","","","","",""
 "IMG","String","non","","","","","",""
+"DMAJ","String","non","Date de mise à jour","","true","Date de mise à jour (format AAAA-MM-JJ)","",""
+"DMIS","String","non","Date de création","","true","Date de la création (format AAAA-MM-JJ)","",""
 "_id","ObjectID","non","","","","","",""
 "__v","Number","non","","","","","",""

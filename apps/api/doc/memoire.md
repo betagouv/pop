@@ -145,7 +145,7 @@ Producteur de la donnée déterminé grâce à la référence :
 
       Si les conditions du dessus ne sont pas respectées et la REF commence par AP et IDPROD commence par Service départemental, alors PRODUCTEUR = UDAP
 
-      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = SAP
+      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = MAP
 
       Sinon PRODUCTEUR = AUTRE
 

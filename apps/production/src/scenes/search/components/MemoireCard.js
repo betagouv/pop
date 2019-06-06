@@ -19,7 +19,7 @@ export default ({ data }) => {
       case "CAOA":
       case "CRMH":
         return <img src={mh} className="producteur mh" />;
-      case "SAP":
+      case "MAP":
         return <img src={map} className="producteur mh" />;
       case "INV":
         return <img src={inv} className="producteur mh" />;

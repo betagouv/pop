@@ -35,7 +35,7 @@ export function getNoticeInfo(notice) {
       let logo = "";
       if (notice.PRODUCTEUR === "CRMH") {
         logo = "/static/mh.png";
-      } else if (notice.PRODUCTEUR === "SAP") {
+      } else if (notice.PRODUCTEUR === "MAP") {
         logo = "/static/map.png";
       } else if (notice.PRODUCTEUR === "INV") {
         logo = "/static/inventaire.jpg";

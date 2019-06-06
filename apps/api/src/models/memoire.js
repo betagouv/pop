@@ -15,7 +15,7 @@ const Schema = new mongoose.Schema(
       Si les conditions du dessus ne sont pas respectées et la REF commence par MH, alors PRODUCTEUR = CRMH\n
       Si les conditions du dessus ne sont pas respectées et la REF commence par AR, alors PRODUCTEUR = ARCH\n
       Si les conditions du dessus ne sont pas respectées et la REF commence par AP et IDPROD commence par Service départemental, alors PRODUCTEUR = UDAP\n
-      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = SAP\n
+      Si les conditions du dessus ne sont pas respectées et la IDPROD commence par SAP ou EMET commence par SAP, alors PRODUCTEUR = MAP\n
       Sinon PRODUCTEUR = AUTRE\n`,
         generated: true,
         label: "Producteur"

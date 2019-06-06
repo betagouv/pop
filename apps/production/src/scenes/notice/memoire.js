@@ -41,14 +41,14 @@ class Notice extends React.Component {
     const roles = ["producteur", "administrateur"];
     if (group === "mh") {
       return (
-        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "SAP"].includes(PRODUCTEUR) &&
+        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(PRODUCTEUR) &&
         roles.includes(role)
       );
     } else if (group === "memoire") {
-      return ["SAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
+      return ["MAP", "AUTRE"].includes(PRODUCTEUR) && roles.includes(role);
     } else if (group === "admin") {
       return (
-        ["CRMH", "CAOA", "UDAP", "INV", "ETAT", "AUTRE", "SAP", "SDAP", ""].includes(PRODUCTEUR) &&
+        ["CRMH", "CAOA", "UDAP", "INV", "ETAT", "AUTRE", "MAP", "SDAP", ""].includes(PRODUCTEUR) &&
         roles.includes(role)
       );
     }

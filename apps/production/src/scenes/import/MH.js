@@ -279,7 +279,7 @@ function readme() {
           ATTENTION : 2 cas de figures suivant si l'ajout se fait par import (1) ou par ajout d'une
           nouvelle image sur une notice Mémoire.
           <br />
-          Dans les 2 cas, l'image est stockée uniquement dans la base Mémoire/SAP dans le champ IMG,
+          Dans les 2 cas, l'image est stockée uniquement dans la base Mémoire/MAP dans le champ IMG,
           seul champ image affiché dans la notice développée.
         </b>{" "}
         <br /> <br />
