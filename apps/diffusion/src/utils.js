@@ -57,7 +57,7 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "";
+      const image = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
 
       return { title, metaDescription, image };
     }

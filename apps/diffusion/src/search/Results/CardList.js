@@ -254,26 +254,32 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title, image } = getNoticeInfo(data);
+  const { title, subtitle, image } = getNoticeInfo(data);
+  const ImageComponent = <img src={image} alt={title} />;
+
   return (
-    <Link href={`/museo/${data.REF}`} key={data.REF}>
+    <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
-        <div className="list-card-container">
+        <div className="list-card-container ">
+          <div className="thumbnail">{ImageComponent}</div>
           <div className="content">
             <div style={{ display: "flex" }}>
               <h2>
                 {title}
                 <br />
-                {data.VILLE_M}
+                <small>{subtitle}</small>
               </h2>
               <span>
-                <small className="base">MuseoFile</small>
+                <small className="base">Museo</small>
                 <br />
                 {data.REF}
               </span>
             </div>
+            <img src="/static/musee-de-france.png" className="producteur" />
             <div>
-              <p>{data.ATOUT && data.ATOUT.replace(/#/g, " ; ")} - </p>
+              <p>{data.NOMOFF}</p>
+              <p>{data.NOMUSAGE}</p>
+              <p>{data.VILLE_M}</p>
             </div>
           </div>
         </div>

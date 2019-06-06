@@ -56,9 +56,6 @@ app.prepare().then(() => {
       const renderPath = "/notice/" + pathname.replace(noticeRegex, "$1");
       const renderParams = Object.assign({ id: pathname.replace(noticeRegex, "$2") }, query);
       app.render(req, res, renderPath, renderParams);
-    } else if (pathname.match(museoRegex)) {
-      const renderParams = Object.assign({ id: pathname.replace(museoRegex, "$1") }, query);
-      app.render(req, res, "/museo", renderParams);
     } else if (pathname.match(galleryRegex)) {
       const renderParams = Object.assign({ id: pathname.replace(galleryRegex, "$1") }, query);
       app.render(req, res, "/gallery", renderParams);
