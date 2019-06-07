@@ -445,6 +445,42 @@ const Schema = new mongoose.Schema(
         opendata: true
       }
     },
+    REG: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Région syncronisée sur la valeur de REG de la fiche MUSEO",
+        label: "Région",
+        generated: true
+      }
+    },
+    DPT: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Département syncronisée sur la valeur de DPT de la fiche MUSEO",
+        label: "Département",
+        generated: true
+      }
+    },
+    VILLE_M: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "VILLE syncronisée sur la valeur de VILLE_M de la fiche MUSEO",
+        label: "Ville",
+        generated: true
+      }
+    },
+    NOMOFF: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "NOMOFF syncronisée sur la valeur de NOMOFF de la fiche MUSEO",
+        label: "Nom du musée",
+        generated: true
+      }
+    },
     LOCA: {
       type: String,
       default: "",

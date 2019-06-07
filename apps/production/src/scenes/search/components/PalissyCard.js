@@ -66,9 +66,7 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>
-            {utils.generateLoca(data)} {data.EDIF}
-          </p>
+          <p>{utils.generateLoca(data)}</p>
           <p>{data.DENO.join(", ")}</p>
           <p>{line3.join(" ; ")}</p>
           <p>{line4.join(" ; ")}</p>
