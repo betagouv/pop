@@ -3,6 +3,8 @@ import { Col, Row, Container, Button, Form } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import Mapping from "../../services/mapping";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
@@ -36,6 +38,11 @@ class Museo extends React.Component {
   async load(ref) {
     this.setState({ loading: true });
     const notice = await API.getNotice("museo", ref);
+
+    if (!notice) {
+      this.setState({ error: `Fiche museo ${ref} introuvable`, loading: false });
+      return;
+    }
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
     const editable =
@@ -66,7 +73,19 @@ class Museo extends React.Component {
     }
 
     if (this.state.error) {
-      return <div className="error">{this.state.error}</div>;
+      return (
+        <div
+          className="error"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "50px"
+          }}
+        >
+          {this.state.error}
+        </div>
+      );
     }
 
     return (
@@ -91,6 +110,13 @@ class Museo extends React.Component {
             getAbsoluteUrl={e => `${bucket_url}${e}`}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
+          <Link
+            to={`/recherche-avancee/joconde?qb=%5B%7B%22field%22%3A%22MUSEO.keyword%22%2C%22operator%22%3A%22%3D%3D%3D%22%2C%22value%22%3A%22${
+              this.state.notice.REF
+            }%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`}
+          >
+            Voir les oeuvres dans la base joconde
+          </Link>
           <Section title="Nom du musée" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>

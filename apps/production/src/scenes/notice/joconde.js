@@ -3,6 +3,7 @@ import { Row, Col, Container, Button, Form, Tooltip } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Mapping from "../../services/mapping";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
@@ -100,6 +101,7 @@ class Notice extends React.Component {
             getAbsoluteUrl={e => `${bucket_url}${e}`}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
+          <Link to={`/notice/museo/${this.state.notice.MUSEO}`}>Voir la fiche museo</Link>
           <Section
             title="IDENTIFICATION DU BIEN MUSEAL"
             icon={require("../../assets/info.png")}
