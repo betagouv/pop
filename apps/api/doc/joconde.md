@@ -50,7 +50,7 @@
 - [LABO](/apps/api/doc/joconde.md#LABO)
 - [LARC](/apps/api/doc/joconde.md#LARC)
 - [LIEUX](/apps/api/doc/joconde.md#LIEUX)
-- [REG](/apps/api/doc/joconde.md#REG)
+- [REGION](/apps/api/doc/joconde.md#REGION)
 - [DPT](/apps/api/doc/joconde.md#DPT)
 - [VILLE_M](/apps/api/doc/joconde.md#VILLE_M)
 - [NOMOFF](/apps/api/doc/joconde.md#NOMOFF)
@@ -608,8 +608,8 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|oui||Lieu de création/utilisation|
 
-### REG
-Région syncronisée sur la valeur de REG de la fiche MUSEO
+### REGION
+Région syncronisée sur la valeur de REGION de la fiche MUSEO
 
 
 

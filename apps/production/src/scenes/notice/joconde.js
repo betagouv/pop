@@ -244,6 +244,10 @@ class Notice extends React.Component {
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
+  if (!Mapping.joconde[name]) {
+    console.log("cant find ", name);
+    return <div />;
+  }
   return (
     <Field
       {...Mapping.joconde[name]}
