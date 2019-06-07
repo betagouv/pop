@@ -50,6 +50,10 @@
 - [LABO](/apps/api/doc/joconde.md#LABO)
 - [LARC](/apps/api/doc/joconde.md#LARC)
 - [LIEUX](/apps/api/doc/joconde.md#LIEUX)
+- [REG](/apps/api/doc/joconde.md#REG)
+- [DPT](/apps/api/doc/joconde.md#DPT)
+- [VILLE_M](/apps/api/doc/joconde.md#VILLE_M)
+- [NOMOFF](/apps/api/doc/joconde.md#NOMOFF)
 - [LOCA](/apps/api/doc/joconde.md#LOCA)
 - [LOCA2](/apps/api/doc/joconde.md#LOCA2)
 - [LOCA3](/apps/api/doc/joconde.md#LOCA3)
@@ -603,6 +607,46 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|oui||Lieu de création/utilisation|
+
+### REG
+Région syncronisée sur la valeur de REG de la fiche MUSEO
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Région|
+
+### DPT
+Département syncronisée sur la valeur de DPT de la fiche MUSEO
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Département|
+
+### VILLE_M
+VILLE syncronisée sur la valeur de VILLE_M de la fiche MUSEO
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Ville|
+
+### NOMOFF
+NOMOFF syncronisée sur la valeur de NOMOFF de la fiche MUSEO
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Nom du musée|
 
 ### LOCA
 Localisation
