@@ -124,7 +124,7 @@ class Notice extends React.Component {
               </Col>
               <Col sm={6}>
                 <CustomField name="LOCA" disabled={!this.state.editable} />
-                <CustomField name="REG" disabled={true} />
+                <CustomField name="REGION" disabled={true} />
                 <CustomField name="DPT" disabled={true} />
                 <CustomField name="VILLE_M" disabled={true} />
                 <CustomField name="NOMOFF" disabled={true} />

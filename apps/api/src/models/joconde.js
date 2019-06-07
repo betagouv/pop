@@ -445,11 +445,11 @@ const Schema = new mongoose.Schema(
         opendata: true
       }
     },
-    REG: {
+    REGION: {
       type: String,
       default: "",
       documentation: {
-        description: "Région syncronisée sur la valeur de REG de la fiche MUSEO",
+        description: "Région syncronisée sur la valeur de REGION de la fiche MUSEO",
         label: "Région",
         generated: true
       }

@@ -6,6 +6,7 @@ const multer = require("multer");
 const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
+const Joconde = require("../models/joconde");
 const { formattedNow, uploadFile } = require("./utils");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -14,6 +15,27 @@ router.use(bodyParser.json());
 function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
+}
+
+async function updateJocondeNotices(notice) {
+  const { CONTACT_GENERIQUE, REGION, DPT, VILLE_M, NOMOFF } = notice;
+  const obj = {};
+  if (CONTACT_GENERIQUE !== undefined) {
+    obj.CONTACT = CONTACT_GENERIQUE;
+  }
+  if (REGION !== undefined) {
+    obj.REGION = REGION;
+  }
+  if (DPT !== undefined) {
+    obj.DPT = DPT;
+  }
+  if (VILLE_M !== undefined) {
+    obj.VILLE_M = VILLE_M;
+  }
+  if (NOMOFF !== undefined) {
+    obj.NOMOFF = NOMOFF;
+  }
+  await Joconde.update({ MUSEO: notice.REF }, obj);
 }
 
 router.get("/:ref", async (req, res) => {
@@ -43,6 +65,10 @@ router.put(
       );
     }
     transformBeforeCreateOrUpdate(notice);
+
+    //update joconde
+    arr.push(updateJocondeNotices(notice));
+
     arr.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
       await Promise.all(arr);
