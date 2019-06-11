@@ -1,6 +1,6 @@
 # À propos de la recherche
 
-_CETTE DOCUMENTATION EST EN COURS DE RÉÉCRITURE._
+_Suite à une décision de priorisation côté ministère, cette documentation ne sera plus mise à jour. Elle est donc déjà obsolète et ne reflète pas l'état actuel de la recherche._
 
 La recherche libre est privilégiée dans l'outil de diffusion, avec possibilité d'utiliser une auto-complétion et de filtrer grâce à des filtres à facettes.
 
