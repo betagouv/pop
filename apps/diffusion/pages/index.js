@@ -6,12 +6,10 @@ import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody } from "r
 import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
-import logEvent from "../src/services/amplitude";
 import TopicCard from "../src/topics/TopicCard";
 
 export default class extends React.Component {
   componentDidMount() {
-    logEvent("home_open");
     Router.prefetch("/search");
   }
 
@@ -22,7 +20,6 @@ export default class extends React.Component {
 
   gotoSearch() {
     const mainSearch = document.getElementById("main-search").value;
-    logEvent("home_search", { value: mainSearch });
     pushSearchRoute({ mode: "simple", view: "list", params: { mainSearch } }).then(() =>
       window.scrollTo(0, 0)
     );

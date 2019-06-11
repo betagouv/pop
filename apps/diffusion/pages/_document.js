@@ -39,7 +39,6 @@ class MyDocument extends Document {
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
           <script src="/static/piwik.js" />
-          <script src="/static/amplitude.js" />
         </Head>
         <body>
           <Main />

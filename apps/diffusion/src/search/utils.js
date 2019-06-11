@@ -196,12 +196,7 @@ export function CollapsableFacet({ initialCollapsed, title, ...rest }) {
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
   function handleToggle(collapsed) {
-    if (amplitude) {
-      amplitude
-        .getInstance()
-        .logEvent(`search_filter_${collapsed ? "open" : "close"}`, { dataField: rest.id });
-      setCollapsed(!collapsed);
-    }
+    setCollapsed(!collapsed);
   }
 
   function FacetWrapper() {

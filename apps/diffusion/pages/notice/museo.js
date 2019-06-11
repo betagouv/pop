@@ -4,7 +4,6 @@ import Head from "next/head";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
-import logEvent from "../../src/services/amplitude";
 import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
@@ -19,10 +18,6 @@ export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("museo", id);
     return { notice };
-  }
-
-  componentDidMount() {
-    logEvent("notice_open", { base: "museo", notice: this.props.notice.REF });
   }
 
   render() {

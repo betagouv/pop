@@ -4,7 +4,6 @@ import Head from "next/head";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
-import logEvent from "../../src/services/amplitude";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
@@ -17,10 +16,6 @@ export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("enluminures", id);
     return { notice };
-  }
-
-  componentDidMount() {
-    logEvent("notice_open", { base: "enluminures", notice: this.props.notice.REF });
   }
 
   getMetaDescription = () => {
