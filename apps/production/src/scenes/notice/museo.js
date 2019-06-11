@@ -235,8 +235,10 @@ const CustomField = ({ name, disabled, ...rest }) => {
 const mapStateToProps = ({ Auth }) => {
   const { role, group, museofile } = Auth.user;
   const canUpdate =
-    (Auth.user && role === "administrateur" && (group === "joconde" || group === "museo" || group === "admin")) ||
-    (Auth.user && role === "producteur" && group === "joconde");
+    (Auth.user &&
+      role === "administrateur" &&
+      (group === "joconde" || group === "museo" || group === "admin")) ||
+    (Auth.user && role === "producteur" && (group === "joconde" || group === "museo"));
 
   return {
     canUpdate,

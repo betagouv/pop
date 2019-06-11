@@ -44,7 +44,8 @@ class CreateUser extends React.Component {
   }
 
   museofile() {
-    if (this.state.group !== "joconde" || this.state.role !== "producteur") {
+    const { group, role } = this.state;
+    if (!((group === "joconde" || group === "museo") && role === "producteur")) {
       return <div />;
     }
 
@@ -70,7 +71,9 @@ class CreateUser extends React.Component {
             this.setState({ taginput });
           }}
         />
-         <small className="text-muted">Appuyez sur « entrée » pour ajouter un nouveau code Muséo</small>
+        <small className="text-muted">
+          Appuyez sur « entrée » pour ajouter un nouveau code Muséo
+        </small>
       </div>
     );
   }
@@ -79,7 +82,16 @@ class CreateUser extends React.Component {
     let groups = [];
 
     if (this.props.group === "admin") {
-      groups = groups.concat(["admin", "mnr", "joconde", "mh", "inv", "memoire", "enluminures"]);
+      groups = groups.concat([
+        "admin",
+        "mnr",
+        "joconde",
+        "mh",
+        "inv",
+        "memoire",
+        "enluminures",
+        "museo"
+      ]);
     } else {
       groups.push(this.props.group);
     }

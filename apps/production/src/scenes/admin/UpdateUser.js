@@ -65,7 +65,8 @@ class UpdateUser extends React.Component {
   }
 
   museofile() {
-    if (this.state.group !== "joconde" || this.state.role !== "producteur") {
+    const { group, role } = this.state;
+    if (!((group === "joconde" || group === "museo") && role === "producteur")) {
       return <div />;
     }
     return (
