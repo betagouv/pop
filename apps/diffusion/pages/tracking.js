@@ -27,7 +27,6 @@ export default class extends React.Component {
               quelles sont les pages les plus consultées.
             </p>
             <iframe
-              class="optout ui raised segment"
               src="https://stats.data.gouv.fr/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=fr"
               style={{ borderWidth: "0px", overflow: "hidden", width: "100%" }}
             />
