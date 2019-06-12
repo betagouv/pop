@@ -16,41 +16,48 @@ const bases = [
 
 class SearchAdvanced extends React.Component {
   onBaseChange = e => {
+    const value = e.target.value;
     this.props.router.push(
-      /* `/search?mode=advanced&view=list&base=${this.state.base}`, */
-      `/advanced-search/list/${e.target.value}`
+      value ? `/advanced-search/list/${value}` : "/advanced-search/list"
     );
   };
 
   render() {
-    const { key } = bases.find(e => e.key === this.props.base);
-    const fields = Object.entries(Mapping[key]).map(([k, v]) => {
-      return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
-    });
+    const hasBase = Boolean(this.props.base);
+    let key, fields;
+    if (hasBase) {
+      key = bases.find(e => e.key === this.props.base).key;
+      fields = Object.entries(Mapping[key]).map(([k, v]) => {
+        return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
+      });
+    }
 
     return (
       <div className="advanced-search">
         <div className="collection">
           <Row className="advanced-search-title">
-            <div>Dans la base</div>
+            {hasBase ? <div>Dans la base</div> : ""}
             <select value={this.props.base} onChange={this.onBaseChange}>
+              <option value="">{ !hasBase ? "Sélectionnez une base" : null}</option>
               {bases.map(e => (
                 <option key={e.key} value={e.key}>
                   {e.base}
                 </option>
               ))}
             </select>
-            <div>je recherche</div>
+            {hasBase ? <div>je recherche</div> : null}
           </Row>
         </div>
-        <QueryBuilder
-          initialValue={this.props.initialValues.get("qb")}
-          id="qb"
-          fields={fields}
-          operators={operators}
-          autoComplete={true}
-          combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
-        />
+        {hasBase ? (
+          <QueryBuilder
+            initialValue={this.props.initialValues.get("qb")}
+            id="qb"
+            fields={fields}
+            operators={operators}
+            autoComplete={true}
+            combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
+          />
+        ) : null}
         <style jsx global>{`
           .search .advanced-search .advanced-search-title {
             width: 100%;
@@ -141,7 +148,7 @@ class SearchAdvanced extends React.Component {
           .react-autosuggest__suggestions-container--open {
             display: block;
             position: absolute;
-            width:  100%;
+            width: 100%;
             border: 1px solid #aaa;
             background-color: #fff;
             font-size: 14px;

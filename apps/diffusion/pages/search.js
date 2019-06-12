@@ -31,7 +31,7 @@ export default class extends React.Component {
 
   handleSwitchChange = checked => {
     if (checked) {
-      Router.push("/search?view=list&mode=advanced&base=joconde", "/advanced-search/list/joconde");
+      Router.push("/search?view=list&mode=advanced", "/advanced-search/list");
     } else {
       Router.push("/search?view=list&mode=simple", "/search/list");
     }
@@ -40,8 +40,7 @@ export default class extends React.Component {
   render = () => {
     if (
       !this.props.mode ||
-      !this.props.view ||
-      (this.props.mode === "advanced" && !this.props.base)
+      !this.props.view
     ) {
       return throw404();
     }
@@ -112,6 +111,7 @@ export default class extends React.Component {
             <Header location={this.props.asPath} />
             <Elasticsearch
               url={`${es_url}${queryScope}`}
+              key={`${this.props.mode}-${this.props.view}`}
               onChange={params => {
                 const { mode, view, base } = this.props;
                 replaceSearchRouteWithUrl({
@@ -144,12 +144,12 @@ export default class extends React.Component {
                       />
                     ) : null}
                   </div>
-                  <Results
+                  {!(this.props.mode === "advanced" && !this.props.base) ? (<Results
                     mode={this.props.mode}
                     view={this.props.view}
                     base={this.props.base}
                     initialValues={initialValues}
-                  />
+                  />) : null }
                 </div>
               </Row>
             </Elasticsearch>
