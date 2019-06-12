@@ -101,19 +101,22 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Est géolocalisée"
     />
     <div style={{ display: "none" }}>
-      {initialValues.get("import") ? (
-        <Facet
-          id="import"
-          initialValue={initialValues.get("import")}
-          fields={["POP_IMPORT.keyword"]}
-        />
-      ) : null}
-      {initialValues.get("museo") ? (
-        <Facet id="museo" initialValue={initialValues.get("museo")} fields={["MUSEO.keyword"]} />
-      ) : null}
-      {initialValues.get("ref") ? (
-        <Facet id="ref" initialValue={initialValues.get("ref")} fields={["REF.keyword"]} />
-      ) : null}
+      {[
+        ["import", "POP_IMPORT.keyword"],
+        ["museo", "MUSEO.keyword"],
+        ["ref", "REF.keyword"],
+        ["publi", "PUBLI.keyword"],
+        ["expo", "EXPO.keyword"],
+        ["deno", "DENO.keyword"],
+        ["serie", "SERIE.keyword"],
+        ["tech", "TECH.keyword"],
+        ["repr", "REPR.keyword"],
+        ["util", "UTIL.keyword"]
+      ].map(([value, field]) => {
+        if (initialValues.get(value)) {
+          return <Facet id={value} initialValue={initialValues.get(value)} fields={[field]} />;
+        }
+      })}
     </div>
     <style jsx global>{`
       .search-filters-sidebar {

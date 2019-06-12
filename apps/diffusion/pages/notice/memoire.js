@@ -48,6 +48,21 @@ export default class extends React.Component {
     return autp && <a href={`/search/list?auteur=["${autp}"]`}>{autp}</a>;
   }
 
+  serie() {
+    const serie = this.props.notice.SERIE;
+    return serie && <a href={`/search/list?serie=["${serie}"]`}>{serie}</a>;
+  }
+
+  publi() {
+    const publi = this.props.notice.PUBLI;
+    return publi && <a href={`/search/list?publi=["${publi}"]`}>{publi}</a>;
+  }
+
+  expo() {
+    const expo = this.props.notice.EXPO;
+    return expo && <a href={`/search/list?expo=["${expo}"]`}>{expo}</a>;
+  }
+
   render() {
     if (!this.props.notice) {
       return throw404();
@@ -153,7 +168,7 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.SCLE.label} content={notice.SCLE} />
                   <Field title={mapping.memoire.DATOEU.label} content={notice.DATOEU} />
                   <Field title={mapping.memoire.LIEUORIG.label} content={notice.LIEUORIG} />
-                  <Field title={mapping.memoire.SERIE.label} content={notice.SERIE} />
+                  <Field title={mapping.memoire.SERIE.label} content={this.serie()} />
                   <Field title={"Mots-clés"} content={notice.MCL + " " + notice.SUJET} />
                   <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} />
                   <Title
@@ -297,8 +312,8 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.DATPV.label} content={notice.DATPV} />
                   <Field title={mapping.memoire.JDATPV.label} content={notice.JDATPV} />
                   <Field title={mapping.memoire.DATOR.label} content={notice.DATOR} />
-                  <Field title={mapping.memoire.EXPO.label} content={notice.EXPO} />
-                  <Field title={mapping.memoire.PUBLI.label} content={notice.PUBLI} separator="#" />
+                  <Field title={mapping.memoire.EXPO.label} content={this.expo()} />
+                  <Field title={mapping.memoire.PUBLI.label} content={this.publi()} separator="#" />
                   <Field title={mapping.memoire.OBS.label} content={notice.OBS} />
                   <Field title={mapping.memoire.OBSTI.label} content={notice.OBSTI} />
                   <Field title={mapping.memoire.OBSOR.label} content={notice.OBSOR} />
