@@ -57,6 +57,11 @@ export default class Layout extends React.Component {
                 Nous contacter
               </a>
             </li>
+            <li className="list-inline-item">
+              <Link href="/tracking" prefetch>
+                <a>Suivi d'audience et vie privée</a>
+              </Link>
+            </li>
           </ul>
         </div>
         <style jsx>{`
@@ -185,13 +190,15 @@ export default class Layout extends React.Component {
             box-shadow: 0 -2px 6px 0 rgba(189, 189, 189, 0.2);
           }
 
-          .footer a:hover,
+          .footer a:hover {
+            text-decoration: underline;
+          }
           .footer a {
             text-decoration: none;
             padding-left: 20px;
             color: #003f48;
             font-weight: 300;
-            font-size: 18px;
+            font-size: 14px;
           }
 
           #betagouv {
@@ -200,7 +207,7 @@ export default class Layout extends React.Component {
             border-radius: 5px;
           }
 
-          @media screen and (max-width: 500px) {
+          @media screen and (max-width: 590px) {
             .footer a,
             .footer a:hover {
               line-height: 20px;
@@ -208,7 +215,7 @@ export default class Layout extends React.Component {
             }
           }
 
-          @media screen and (min-width: 499px) {
+          @media screen and (min-width: 589px) {
             .footer {
               position: absolute;
               bottom: 0;
