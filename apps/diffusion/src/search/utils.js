@@ -6,7 +6,7 @@ export function pagination(total, itemsPerPage, page, setPage) {
   const pagination = (
     <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
   );
-  if (page === 1000) {
+  if (page === 400) {
     return (
       <>
         <Alert color="warning">
