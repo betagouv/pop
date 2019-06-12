@@ -51,6 +51,23 @@ export default class extends React.Component {
     }
   }
 
+  links(value, name) {
+    if (!value || !Array.isArray(value) || !value.length) {
+      if (String(value) === value) {
+        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>
+      }
+      return null;
+    }
+    const links = value
+      .map(d => (
+        <a href={`/search/list?${name}=["${d}"]`} key={d}>
+          {d}
+        </a>
+      ))
+      .reduce((p, c) => [p, ", ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
+  }
+
   // Display a list of links to authors
   author() {
     const author = this.props.notice.AUTR;
@@ -71,37 +88,6 @@ export default class extends React.Component {
       return <React.Fragment>{links}</React.Fragment>;
     }
     return <a href={`/search/list?auteur=["${author}"]`}>{author}</a>;
-  }
-
-  // Display a list of links to domains
-  domain() {
-    const domain = this.props.notice.DOMN;
-    if (!domain || !Array.isArray(domain) || !domain.length) {
-      return null;
-    }
-    const links = domain
-      .map(d => (
-        <a href={`/search/list?domn=["${d}"]`} key={d}>
-          {d}
-        </a>
-      ))
-      .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
-  }
-
-  period() {
-    const period = this.props.notice.PERI;
-    if (!period || !Array.isArray(period) || !period.length) {
-      return null;
-    }
-    const links = period
-      .map(p => (
-        <a href={`/search/list?periode=["${p}"]`} key={p}>
-          {p}
-        </a>
-      ))
-      .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
   }
 
   render() {
@@ -169,27 +155,36 @@ export default class extends React.Component {
                   />
 
                   <Field title={mapping.joconde.INV.label} content={notice.INV} />
-                  <Field title={mapping.joconde.DOMN.label} content={this.domain()} />
-                  <Field title={mapping.joconde.DENO.label} content={notice.DENO} />
+                  <Field
+                    title={mapping.joconde.DOMN.label}
+                    content={this.links(this.props.notice.DOMN, "domn")}
+                  />
+                  <Field
+                    title={mapping.joconde.DENO.label}
+                    content={this.links(this.props.notice.DENO, "deno")}
+                  />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} />
                   <Field title={mapping.joconde.AUTR.label} content={this.author()} />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} />
                   <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} />
-                  <Field title={mapping.joconde.PERI.label} content={this.period()} />
+                  <Field
+                    title={mapping.joconde.PERI.label}
+                    content={this.links(this.props.notice.PERI, "periode")}
+                  />
                   <Field title={mapping.joconde.MILL.label} content={notice.MILL} />
 
                   <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} />
                   <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} />
-                  <Field title={mapping.joconde.TECH.label} content={notice.TECH} />
+                  <Field title={mapping.joconde.TECH.label} content={this.links(this.props.notice.TECH, "tech")} />
                   <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} />
                   <Field title={mapping.joconde.INSC.label} content={notice.INSC} />
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} />
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} />
                   <Field title={mapping.joconde.DESC.label} content={notice.DESC} />
                   <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} />
-                  <Field title={mapping.joconde.REPR.label} content={notice.REPR} separator="#" />
+                  <Field title={mapping.joconde.REPR.label} content={this.links(this.props.notice.REPR, "repr")} separator="#" />
                   <Field title={mapping.joconde.PREP.label} content={notice.PREP} />
                   <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" />
                   <Field title={mapping.joconde.SREP.label} content={notice.SREP} />
@@ -216,7 +211,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} />
                   <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} />
                   <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} />
-                  <Field title={mapping.joconde.UTIL.label} content={notice.UTIL} />
+                  <Field title={mapping.joconde.UTIL.label} content={this.links(this.props.notice.UTIL, "util")} />
                   <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} />
                   <Field title={mapping.joconde.PERU.label} content={notice.PERU} />
                   <Field title={mapping.joconde.MILU.label} content={notice.MILU} />
@@ -235,7 +230,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} />
 
                   <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} />
-                  <Field title={mapping.joconde.LOCA.label} content={notice.LOCA} />
+                  <Field title={mapping.joconde.LOCA.label} content={this.links(this.props.notice.LOCA, "ou")} />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
