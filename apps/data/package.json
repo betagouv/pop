@@ -33,8 +33,7 @@
   "devDependencies": {
     "csv-split-stream": "^1.0.2",
     "dotenv": "^6.0.0",
-    "js2xmlparser": "^3.0.0",
-    "standard": "^11.0.1"
+    "js2xmlparser": "^3.0.0"
   },
   "dependencies": {
     "aws-sdk": "^2.280.1",
