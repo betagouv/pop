@@ -13,7 +13,7 @@ class Results extends React.Component {
         mode: this.props.mode,
         view,
         params,
-        refresh: view === "mosaic"
+        refresh: false
       }).then(() => window.scrollTo(0, 0));
     }
   }

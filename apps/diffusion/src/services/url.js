@@ -40,7 +40,7 @@ const differsByOneCharInMainSearch = (previous, current) => {
 };
 
 export function paramsToUrlAlias(mode, view, base, qs) {
-  return `/${modeToRoute(mode)}/${view}${mode === "advanced" ? `/${base}` : ""}${
+  return `/${modeToRoute(mode)}/${view}${mode === "advanced" && base ? `/${base}` : ""}${
     qs ? "?" + qs : ""
   }`;
 }
