@@ -98,11 +98,27 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Producteur"
     />
     <CollapsableFacet
+      id="type"
+      initialValue={initialValues.get("type")}
+      fields={[
+        "EDIF.keyword",
+        "OBJT.keyword",
+        "DENO.keyword",
+        "PDEN.keyword",
+        "APPL.keyword",
+        "ACTU.keyword",
+        "PARN.keyword",
+        "UTIL.keyword"
+      ]}
+      title="Type de bien ou édifice"
+    />
+    <CollapsableFacet
       id="image"
       initialValue={initialValues.get("image")}
       fields={["CONTIENT_IMAGE.keyword"]}
       title="Contient une image"
     />
+
     <CollapsableFacet
       id="geolocalisation"
       initialValue={initialValues.get("geolocalisation")}
