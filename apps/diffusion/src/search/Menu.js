@@ -105,7 +105,6 @@ const Menu = ({ closeMenu, initialValues }) => (
         ["import", "POP_IMPORT.keyword"],
         ["museo", "MUSEO.keyword"],
         ["ref", "REF.keyword"],
-        ["publi", "PUBLI.keyword"],
         ["expo", "EXPO.keyword"],
         ["deno", "DENO.keyword"],
         ["serie", "SERIE.keyword"],

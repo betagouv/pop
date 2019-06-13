@@ -53,11 +53,6 @@ export default class extends React.Component {
     return serie && <a href={`/search/list?serie=["${serie}"]`}>{serie}</a>;
   }
 
-  publi() {
-    const publi = this.props.notice.PUBLI;
-    return publi && <a href={`/search/list?publi=["${publi}"]`}>{publi}</a>;
-  }
-
   expo() {
     const expo = this.props.notice.EXPO;
     return expo && <a href={`/search/list?expo=["${expo}"]`}>{expo}</a>;
@@ -313,7 +308,7 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.JDATPV.label} content={notice.JDATPV} />
                   <Field title={mapping.memoire.DATOR.label} content={notice.DATOR} />
                   <Field title={mapping.memoire.EXPO.label} content={this.expo()} />
-                  <Field title={mapping.memoire.PUBLI.label} content={this.publi()} separator="#" />
+                  <Field title={mapping.memoire.PUBLI.label} content={notice.PUBLI} separator="#" />
                   <Field title={mapping.memoire.OBS.label} content={notice.OBS} />
                   <Field title={mapping.memoire.OBSTI.label} content={notice.OBSTI} />
                   <Field title={mapping.memoire.OBSOR.label} content={notice.OBSOR} />
