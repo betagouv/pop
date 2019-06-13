@@ -73,8 +73,17 @@ const Menu = ({ closeMenu, initialValues }) => (
     <CollapsableFacet
       id="ou"
       initialValue={initialValues.get("ou")}
-      fields={["REG.keyword", "COM.keyword", "LOCA.keyword"]}
-      title="Où voir l'oeuvre ?"
+      fields={[
+        "REG.keyword",
+        "COM.keyword",
+        "DPT.keyword",
+        "PAYS.keyword",
+        "NOMOFF.keyword",
+        "VILLE_M.keyword",
+        "REGION.keyword",
+        "NOMUSAGE.keyword"
+      ]}
+      title="Localisation"
     />
     <CollapsableFacet
       id="periode"

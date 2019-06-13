@@ -91,7 +91,7 @@ export default function render() {
             />
             <CollapsableFacet
               id="loca"
-              fields={["LOCA.keyword"]}
+              fields={["VILLE_M.keyword", "REGION.keyword", "DPT.keyword", "NOMOFF.keyword"]}
               title="Localisation"
               initialValue={initialValues.get("loca")}
             />
