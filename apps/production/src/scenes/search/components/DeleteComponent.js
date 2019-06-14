@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CustomWidget } from "react-elasticsearch";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import API from "../../../services/api";
 
 // The main component. It can display nothing, a button or a loader according to its state.
 function DeleteComponent({ role, group, collection }) {
