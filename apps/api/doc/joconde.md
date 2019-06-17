@@ -265,14 +265,14 @@ Commentaires
 |String|non|non|non|non||Commentaires|
 
 ### CONTACT
-Lien contact musée
+Lien contact musée. Cette information vient de la notice MUSEO
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Contact musée|
+|String|non|oui|non|non|Email|Contact musée|
 
 ### COOR
 Coordinateur
