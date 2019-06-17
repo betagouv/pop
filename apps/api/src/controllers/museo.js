@@ -84,12 +84,10 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
 
-    console.log("DELETE");
-
     const doc = await Museo.findOne({ REF: ref });
     if (!doc) {
       return res.status(500).send({
-        error: `Je ne trouve pas la notice museo ${ref} à supprimer`
+        error: `Impossible de trouver la notice museo ${ref} à supprimer`
       });
     }
     if (doc.PHOTO) {
