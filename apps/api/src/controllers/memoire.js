@@ -1,16 +1,18 @@
+// TODO: control authorization (can use create, update or delete based on role, group and PRODUCTEUR?).
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const mongoose = require("mongoose");
 const filenamify = require("filenamify");
+const passport = require("passport");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const { uploadFile, formattedNow, checkESIndex, updateNotice, deleteFile } = require("./utils");
 const { capture } = require("./../sentry.js");
-const passport = require("passport");
 
+// Get collection by ref prefix.
 function findCollection(ref = "") {
   const prefix = ref.substring(0, 2);
   switch (prefix) {
@@ -31,13 +33,10 @@ function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
-
   if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
     notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
   }
-
   notice.DMAJ = formattedNow();
-  console.log("CONTIENT_IMAGE", notice);
 }
 
 function transformBeforeCreate(notice) {
@@ -122,12 +121,13 @@ async function updateLinks(notice) {
     const palissyNotices = await Palissy.find({ "MEMOIRE.ref": REF });
     const merimeeNotices = await Merimee.find({ "MEMOIRE.ref": REF });
 
-    //Suppression palissy
+    // Check palissy for deletion and addition.
     for (let i = 0; i < palissyNotices.length; i++) {
       if (!LBASE.includes(palissyNotices[i].REF)) {
+        // Delete palissy links.
         await palissyNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
-        console.log("DELETED", palissyNotices[i].REF);
       } else {
+        // Adds to list of addition for palissy.
         const index = toAdd.indexOf(palissyNotices[i].REF);
         if (index > -1) {
           toAdd.splice(index, 1);
@@ -135,12 +135,13 @@ async function updateLinks(notice) {
       }
     }
 
-    //Supression Merimee
+    // Check merimee for deletion and addition.
     for (let i = 0; i < merimeeNotices.length; i++) {
       if (!LBASE.includes(merimeeNotices[i].REF)) {
+        // Delete merimee links.
         await merimeeNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
-        console.log("DELETED", merimeeNotices[i].REF);
       } else {
+        // Adds to list of addition for merimee.
         const index = toAdd.indexOf(merimeeNotices[i].REF);
         if (index > -1) {
           toAdd.splice(index, 1);
@@ -148,7 +149,7 @@ async function updateLinks(notice) {
       }
     }
 
-    //Ajout
+    // Add new links to palissy and merimee.
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
       if (collection) {
@@ -160,76 +161,77 @@ async function updateLinks(notice) {
   }
 }
 
-router.put("/:ref", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
-  const ref = req.params.ref;
-  const notice = JSON.parse(req.body.notice);
+// Update a notice.
+router.put(
+  "/:ref",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const ref = req.params.ref;
+    const notice = JSON.parse(req.body.notice);
+    const arr = [];
 
-  const arr = [];
-  for (let i = 0; i < req.files.length; i++) {
-    arr.push(
-      uploadFile(
-        `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-        req.files[i]
-      )
-    );
-  }
+    // Upload files.
+    for (let i = 0; i < req.files.length; i++) {
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+      arr.push(uploadFile(path, req.files[i]));
+    }
 
-  //Update IMPORT ID
-  if (notice.POP_IMPORT.length) {
-    const id = notice.POP_IMPORT[0];
-    delete notice.POP_IMPORT;
-    notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
-  }
+    // Update IMPORT ID.
+    if (notice.POP_IMPORT.length) {
+      const id = notice.POP_IMPORT[0];
+      delete notice.POP_IMPORT;
+      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
 
-  transformBeforeUpdate(notice);
+    transformBeforeUpdate(notice);
+    arr.push(updateLinks(notice));
+    arr.push(updateNotice(Memoire, ref, notice));
 
-  arr.push(updateLinks(notice));
-  arr.push(updateNotice(Memoire, ref, notice));
-
-  Promise.all(arr)
-    .then(() => {
+    try {
+      await Promise.all(arr);
       res.sendStatus(200);
-    })
-    .catch(e => {
+    } catch (e) {
       capture(e);
       res.sendStatus(500);
-    });
-});
-
-router.post("/", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
-  const notice = JSON.parse(req.body.notice);
-
-  notice.DMIS = notice.DMAJ = formattedNow();
-  const arr = [];
-  for (var i = 0; i < req.files.length; i++) {
-    arr.push(
-      uploadFile(
-        `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-        req.files[i]
-      )
-    );
+    }
   }
+);
 
-  arr.push(updateLinks(notice));
+// Create a new notice.
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+    notice.DMIS = notice.DMAJ = formattedNow();
+    const arr = [];
 
-  transformBeforeCreate(notice);
+    // Upload images.
+    for (let i = 0; i < req.files.length; i++) {
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+      arr.push(uploadFile(path, req.files[i]));
+    }
 
-  const obj = new Memoire(notice);
-
-  //send error if obj is not well sync with ES
-  checkESIndex(obj);
-
-  arr.push(obj.save());
-  Promise.all(arr)
-    .then(() => {
+    // Update and save.
+    arr.push(updateLinks(notice));
+    transformBeforeCreate(notice);
+    const obj = new Memoire(notice);
+    checkESIndex(obj);
+    arr.push(obj.save());
+    try {
+      await Promise.all(arr);
       res.send({ success: true, msg: "OK" });
-    })
-    .catch(error => {
-      capture(error);
+    } catch (e) {
+      capture(e);
       res.sendStatus(500);
-    });
-});
+    }
+  }
+);
 
+// Get notices by offset limit. Not sure it's still in use.
+// TODO: check if it's in use.
 router.get("/", (req, res) => {
   const offset = parseInt(req.query.offset) || 0;
   const limit = parseInt(req.query.limit) || 20;
@@ -238,6 +240,7 @@ router.get("/", (req, res) => {
   });
 });
 
+// Get one notice by ref.
 router.get("/:ref", (req, res) => {
   const ref = req.params.ref;
   Memoire.findOne({ REF: ref }, (err, notice) => {
@@ -260,14 +263,17 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     const doc = await Memoire.findOne({ REF: ref });
     if (!doc) {
       return res.status(500).send({
-        error: `Je ne trouve pas la notice memoire ${ref} à supprimer`
+        error: `Impossible de trouver la notice memoire ${ref} à supprimer`
       });
     }
 
-    //DELETE LBASE
+    // Empty LBASE before updating links then remove documents and remove image.
     doc.LBASE = [];
     await updateLinks(doc);
-    const arr = [deleteFile(doc.IMG), doc.remove()];
+    const arr = [doc.remove()];
+    if (doc.IMG) {
+      arr.push(deleteFile(doc.IMG));
+    }
     await Promise.all(arr);
     return res.status(200).send({});
   } catch (error) {
