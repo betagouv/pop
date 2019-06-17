@@ -48,10 +48,8 @@ function transformBeforeCreateAndUpdate(notice) {
       }
       notice.DMAJ = formattedNow();
 
-      console.log("notice.MUSEO", notice.MUSEO);
       if (notice.MUSEO) {
         const museo = await Museo.findOne({ REF: notice.MUSEO });
-        console.log("FIND", museo);
         if (museo) {
           notice.REGION = museo.REGION || "";
           notice.DPT = museo.DPT || "";
@@ -67,8 +65,6 @@ function transformBeforeCreateAndUpdate(notice) {
           }
         }
       }
-
-      console.log(notice);
 
       resolve();
     } catch (e) {
