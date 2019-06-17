@@ -155,7 +155,7 @@ async function updateLinks(notice) {
         if (URL) {
           obj.CONTIENT_IMAGE = "oui";
         }
-        // Ca ne fonctionne pas si la notice memoire n'est pas ajoutée mais modifiée .. Mais c'est deja mieux comme ca
+        // It doesnt work  if memoire is update instead of added. 
         await collection.update({ REF: toAdd[i] }, obj);
       }
     }
