@@ -37,7 +37,6 @@ function transformBeforeUpdate(notice) {
   }
 
   notice.DMAJ = formattedNow();
-  console.log("CONTIENT_IMAGE", notice);
 }
 
 function transformBeforeCreate(notice) {
@@ -152,7 +151,12 @@ async function updateLinks(notice) {
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
       if (collection) {
-        await collection.update({ REF: toAdd[i] }, { $push: { MEMOIRE: { ref: REF, url: URL } } });
+        const obj = { $push: { MEMOIRE: { ref: REF, url: URL } } };
+        if (URL) {
+          obj.CONTIENT_IMAGE = "oui";
+        }
+        // Ca ne fonctionne pas si la notice memoire n'est pas ajoutée mais modifiée .. Mais c'est deja mieux comme ca
+        await collection.update({ REF: toAdd[i] }, obj);
       }
     }
   } catch (error) {
