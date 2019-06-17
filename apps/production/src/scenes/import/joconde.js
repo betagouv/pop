@@ -5,6 +5,8 @@ import Mapping from "../../services/mapping";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 
+import api from "../../services/api";
+
 import utils from "./utils";
 
 class Import extends React.Component {
@@ -16,25 +18,24 @@ class Import extends React.Component {
   }
   parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
+      // Test ajout piloté format
       let rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
       if (rootFile) {
         const res = await utils.asyncReadFile(rootFile, encoding);
-        const importedNotices = await importAjoutPiloté(
-          res,
-          files,
-          this.props.email,
-          this.state.museofile
-        );
+        const importedNotices = await importAjoutPiloté(res, files, this.state.museofile);
         resolve({ importedNotices, fileNames: [rootFile.name] });
         return;
       }
+
+      // Test Excel format
       rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
       if (rootFile) {
         const res = await utils.readCSV(rootFile, ";", encoding, '"');
-        const importedNotices = await importCSV(res, files, this.props.email, this.state.museofile);
+        const importedNotices = await importCSV(res, files, this.state.museofile);
         resolve({ importedNotices, fileNames: [rootFile.name] });
         return;
       }
+
       reject("Fichier .csv ou .txt absent");
       return;
     });
@@ -88,12 +89,11 @@ export default connect(
   {}
 )(Import);
 
-function importCSV(res, files, email, museofile) {
+function importCSV(res, files, museofile) {
   return new Promise(async (resolve, reject) => {
     const importedNotices = res
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
-        value.CONTACT = value.CONTACT || email || "";
 
         //I add 0 in front of REF when we import csv file
         if (value.REF.length < 11) {
@@ -132,19 +132,16 @@ function importCSV(res, files, email, museofile) {
       }
     }
 
-    console.log(importedNotices);
-
     resolve(importedNotices);
   });
 }
 
-function importAjoutPiloté(res, files, email, museofile) {
+function importAjoutPiloté(res, files, museofile) {
   return new Promise(async (resolve, reject) => {
     const importedNotices = utils
       .parseAjoutPilote(res, Joconde)
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
-        value.CONTACT = value.CONTACT || email || "";
         return value;
       })
       .map(value => new Joconde(value));

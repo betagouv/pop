@@ -156,8 +156,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien contact musée",
-        generated: false,
+        description: "Lien contact musée. Cette information vient de la notice MUSEO",
+        generated: true,
         label: "Contact musée",
         validation: "Email"
       }
