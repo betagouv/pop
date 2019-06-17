@@ -109,14 +109,21 @@ ul.react-es-pagination > li {
   padding-left: 15px;
   color: #19414c;
 }
-.export-collection {
+.export-collection,
+.delete-collection {
   width: 120px;
-  background-color: #008000;
   color: white;
   margin: 0;
   padding: 3px 7px;
   border-radius: 2px;
   box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+.export-collection {
+  background-color: #008000;
+}
+.delete-collection {
+  margin-left: 15px;
+  background-color: #DD3311;
 }
 .export-collection > img {
   width: 16px;

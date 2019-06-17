@@ -11,6 +11,7 @@ import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import ExportComponent from "../components/ExportComponent";
+import DeleteComponent from "../components/DeleteComponent";
 import utils from "../components/utils";
 import Tooltip from "./Tooltip";
 
@@ -84,7 +85,10 @@ export default function AdvancedSearch({ collection, card }) {
             </div>
           )}
         />
-        <ExportComponent collection={collection} target="qb" />
+        <div>
+          <ExportComponent collection={collection} />
+          <DeleteComponent collection={collection} />
+        </div>
       </Elasticsearch>
     </Container>
   );
