@@ -90,10 +90,16 @@ export default function render() {
               title="Ancienne appartenance"
             />
             <CollapsableFacet
-              id="loca"
-              fields={["VILLE_M.keyword", "REGION.keyword", "DPT.keyword", "NOMOFF.keyword"]}
-              title="Localisation"
-              initialValue={initialValues.get("loca")}
+              id="ville"
+              fields={["VILLE_M.keyword"]}
+              title="Ville"
+              initialValue={initialValues.get("ville")}
+            />
+            <CollapsableFacet
+              id="musee"
+              fields={["NOMOFF.keyword"]}
+              title="Musée"
+              initialValue={initialValues.get("musee")}
             />
             <CollapsableFacet
               id="img"
