@@ -24,7 +24,7 @@ export default class DeleteButton extends React.Component {
 
   render() {
     return (
-      <Button color="danger" onClick={() => this.delete()}>
+      <Button disabled={this.props.disabled} color="danger" onClick={() => this.delete()}>
         Supprimer
       </Button>
     );

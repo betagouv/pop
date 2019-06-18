@@ -114,6 +114,9 @@ class Notice extends React.Component {
             canEdit={false} // As image come from memoire, we can't delete or update an image from merimee
             external={true}
             getAbsoluteUrl={e => {
+              if (!e.url) {
+                return "";
+              }
               if (e.url.indexOf("memoire/") === 0) {
                 return `${bucket_url}${e.url}`;
               } else {

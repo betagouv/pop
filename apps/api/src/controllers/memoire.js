@@ -153,7 +153,12 @@ async function updateLinks(notice) {
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
       if (collection) {
-        await collection.update({ REF: toAdd[i] }, { $push: { MEMOIRE: { ref: REF, url: URL } } });
+        const obj = { $push: { MEMOIRE: { ref: REF, url: URL } } };
+        if (URL) {
+          obj.CONTIENT_IMAGE = "oui";
+        }
+        // It doesnt work  if memoire is update instead of added. 
+        await collection.update({ REF: toAdd[i] }, obj);
       }
     }
   } catch (error) {

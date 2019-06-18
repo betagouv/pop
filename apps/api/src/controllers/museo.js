@@ -7,7 +7,7 @@ const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
-const { formattedNow, uploadFile } = require("./utils");
+const { formattedNow, deleteFile, uploadFile } = require("./utils");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -74,5 +74,28 @@ router.put(
     }
   }
 );
+
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+
+    const doc = await Museo.findOne({ REF: ref });
+    if (!doc) {
+      return res.status(500).send({
+        error: `Impossible de trouver la notice museo ${ref} à supprimer`
+      });
+    }
+    if (doc.PHOTO) {
+      deleteFile(doc.PHOTO);
+    }
+    await doc.remove();
+    return res.status(200).send({});
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({
+      error
+    });
+  }
+});
 
 module.exports = router;

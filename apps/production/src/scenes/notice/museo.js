@@ -9,6 +9,7 @@ import Mapping from "../../services/mapping";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages.js";
+import DeleteButton from "./components/DeleteButton";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
@@ -206,6 +207,11 @@ class Museo extends React.Component {
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />
+            <DeleteButton
+              disabled={!this.state.editable}
+              noticeType="museo"
+              noticeRef={this.state.notice.REF}
+            />
             <Button disabled={!this.state.editable} color="primary" type="submit">
               Sauvegarder
             </Button>

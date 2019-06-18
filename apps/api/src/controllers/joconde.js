@@ -33,28 +33,37 @@ async function checkJoconde(notice) {
   return errors;
 }
 
-function transformBeforeUpdate(notice) {
-  if (notice.IMG !== undefined) {
-    notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
-  }
-  notice.DMAJ = formattedNow();
+function transformBeforeCreate(notice) {
+  notice.DMIS = formattedNow();
+  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
 }
 
-function transformBeforeCreate(notice) {
+function transformBeforeCreateAndUpdate(notice) {
   return new Promise(async (resolve, reject) => {
     try {
-      notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
-      notice.DMAJ = notice.DMIS = formattedNow();
+      if (notice.IMG !== undefined) {
+        notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+      }
+      notice.DMAJ = formattedNow();
 
       if (notice.MUSEO) {
         const museo = await Museo.findOne({ REF: notice.MUSEO });
-        if (museo && museo.location && museo.location.lat) {
-          notice.POP_COORDONNEES = museo.location;
-          notice.POP_CONTIENT_GEOLOCALISATION = "oui";
-        } else {
-          notice.POP_CONTIENT_GEOLOCALISATION = "non";
+        if (museo) {
+          notice.REGION = museo.REGION || "";
+          notice.DPT = museo.DPT || "";
+          notice.VILLE_M = museo.VILLE_M || "";
+          notice.NOMOFF = museo.NOMOFF || "";
+          notice.CONTACT = museo.CONTACT_GENERIQUE || "";
+
+          if (museo.location && museo.location.lat) {
+            notice.POP_COORDONNEES = museo.location;
+            notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+          } else {
+            notice.POP_CONTIENT_GEOLOCALISATION = "non";
+          }
         }
       }
+
       resolve();
     } catch (e) {
       capture(e);
@@ -109,8 +118,8 @@ router.put(
       }
 
       // Prepare and update notice.
-      transformBeforeUpdate(notice);
-      promises.push(updateNotice(Joconde, ref, notice));
+      await transformBeforeCreateAndUpdate(notice);
+      arr.push(updateNotice(Joconde, ref, notice));
 
       // Consume promises and send sucessful result.
       await Promise.all(promises);
@@ -144,7 +153,8 @@ router.post(
       }
 
       // Transform and create.
-      await transformBeforeCreate(notice);
+      transformBeforeCreate(notice);
+      arr.push(transformBeforeCreateAndUpdate(notice));
       const obj = new Joconde(notice);
       checkESIndex(obj);
       promises.push(obj.save());
