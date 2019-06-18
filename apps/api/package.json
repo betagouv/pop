@@ -26,7 +26,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "setupTestFrameworkScriptFile": "./src/__tests__/setup/setup.js",
+    "setupFilesAfterEnv": ["./src/__tests__/setup/setup.js"],
     "testPathIgnorePatterns": [
       "./src/__tests__/setup/",
       "./src/__tests__/__notices__/"

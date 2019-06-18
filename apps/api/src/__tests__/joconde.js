@@ -23,21 +23,35 @@ beforeEach(() => {
   removeJocondeNotices();
 });
 
-describe("Joconde", () => {
-  test(`GET /joconde - It should return joconde`, async () => {
-    await request(app)
-      .get("/joconde")
-      .set("Accept", "application/json")
-      .expect(200); //
-  });
-
-  test(`POST /joconde - It should create a notice`, async () => {
+describe("POST /joconde", () => {
+  async function createNotice(user, expectedStatus = 200) {
     const response = await request(app)
       .post("/joconde")
       .field("notice", JSON.stringify(sampleNotice))
       .set("Accept", "application/json")
       .set("Content-Type", "multipart/form-data")
-      .set("Authorization", await getJwtToken(app, await createUser()))
-      .expect(200);
+      .set("Authorization", await getJwtToken(app, user))
+      .expect(expectedStatus);
+    return response.body;
+  }
+
+  test(`It should create a notice for "administrateur" (group: "admin")`, async () => {
+    const res = await createNotice(await createUser(), 200);
+    expect(res.success).toBe(true);
+  });
+  const jocondeUserOk = { group: "joconde", role: "producteur", museofile: "M5031" };
+  test(`It should create a notice for user ${JSON.stringify(jocondeUserOk)}`, async () => {
+    const res = await createNotice(await createUser(jocondeUserOk), 200);
+    expect(res.success).toBe(true);
+  });
+  const jocondeUserNotOk = { group: "joconde", role: "producteur", museofile: "M9999" };
+  test(`It should not authorize user ${JSON.stringify(jocondeUserNotOk)}`, async () => {
+    const res = await createNotice(await createUser(jocondeUserNotOk), 401);
+    expect(res.success).toBe(false);
+  });
+  const memoireUser = { group: "memoire", role: "utilisateur" };
+  test(`It should not authorize user ${JSON.stringify(memoireUser)}`, async () => {
+    const res = await createNotice(await createUser(memoireUser), 401);
+    expect(res.success).toBe(false);
   });
 });

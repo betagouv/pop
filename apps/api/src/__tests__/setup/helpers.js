@@ -2,16 +2,16 @@ const request = require("supertest");
 const User = require("../../models/user");
 const Joconde = require("../../models/joconde");
 
-async function createUser() {
-  const email = "a@example.com";
-  const password = "secret";
+async function createUser(props = {}) {
   const user = {
     institution: "random",
-    email,
+    email: "a@example.com",
     group: "admin",
-    role: "admin",
-    password
+    role: "administrateur",
+    password: "secret",
+    ...props
   };
+  await User.deleteOne({ email: user.email });
   await new User(user).save();
   return user;
 }
@@ -25,11 +25,11 @@ async function getJwtToken(app, user) {
 }
 
 async function removeAllUsers() {
-  await User.remove({});
+  await User.deleteMany();
 }
 
 async function removeJocondeNotices() {
-  await Joconde.remove({});
+  await Joconde.deleteMany();
 }
 
 module.exports = {
