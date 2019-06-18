@@ -9,7 +9,9 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function capture(err) {
-  console.log("New Error : ", err);
+  if (process.env.NODE_ENV !== "test") {
+    console.log("New Error : ", err);
+  }
   if (Sentry) {
     Sentry.captureException(JSON.stringify(err));
   }

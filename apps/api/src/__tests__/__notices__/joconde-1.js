@@ -67,8 +67,7 @@ module.exports = {
   PEOC: [],
   PERI: ["2e quart 19e siècle"],
   PERU: [],
-  PHOT:
-    "© Gérard Blot#Réunion des musées nationaux - utilisation soumise à autorisation",
+  PHOT: "© Gérard Blot#Réunion des musées nationaux - utilisation soumise à autorisation",
   PINS: "N. Diaz 39 (S.D.b.d.)",
   PLIEUX: "",
   PREP: [],
@@ -79,11 +78,7 @@ module.exports = {
   REPR: "scène (femme, conversation, putti, arcade)",
   RETIF: "",
   SREP: [],
-  STAT: [
-    "propriété de l'Etat",
-    "legs",
-    "musée du Louvre département des Peintures"
-  ],
+  STAT: ["propriété de l'Etat", "legs", "musée du Louvre département des Peintures"],
   TECH: ["peinture à l'huile, toile"],
   TICO: "DIAZ DE LA PENA Narcisse : N'ENTREZ PAS",
   TITR: "N'ENTREZ PAS",
@@ -92,7 +87,5 @@ module.exports = {
   VIDEO: ["/0002/m503604_96de11977_p.jpg;/0002/m503604_96de11977_v.jpg"],
   WWW: "",
   LVID: "",
-  _id: "5ba4f4feb0be2c41ccbeccfc",
-  REF: "000PE001028",
-  __v: 0
+  REF: "000PE001028"
 };

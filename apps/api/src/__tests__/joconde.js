@@ -54,4 +54,11 @@ describe("POST /joconde", () => {
     const res = await createNotice(await createUser(memoireUser), 401);
     expect(res.success).toBe(false);
   });
+  test(`It should not create a notice twice with same REF`, async () => {
+    const user = await createUser()
+    let res = await createNotice(user, 200);
+    expect(res.success).toBe(true);
+    res = await createNotice(user, 500);
+    expect(res.success).toBe(false);
+  });
 });
