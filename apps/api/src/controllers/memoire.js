@@ -158,6 +158,8 @@ async function updateLinks(notice) {
           obj.CONTIENT_IMAGE = "oui";
         }
         // It doesnt work  if memoire is update instead of added. 
+
+        /// Its not indexed through ES
         await collection.update({ REF: toAdd[i] }, obj);
       }
     }
