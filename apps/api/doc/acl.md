@@ -17,8 +17,13 @@
 ## Liste des roles 
 
 - administrateur
+Un administrateur peux importer et modifier/supprimer une notice. Il peut aussi creer des producteurs et des utilisateurs de son groupe
+
 - producteur
+Un producteur peux importer et modifier/supprimer une notice
+
 - utilisateur
+Un utilisateur ne peux pas importer ni modifier une notice. Il peut par contre faire des recherche et visualiser la notice developée.
 
 
 ## Comportement à l'import
@@ -29,6 +34,7 @@ Exemple : Les utilisateurs du groupe joconde ne voient que l'import joconde qui 
 Seule les utilisateurs du groupe admin voient tous les imports
 
 
+
 ## ACL
 
 A noter : le groupe ADMIN a tous les droits CRUD sur toutes les notices
@@ -37,7 +43,7 @@ A noter : le groupe ADMIN a tous les droits CRUD sur toutes les notices
 |   |Read|Create|Update|Delete|
 |---|---|---|---|---|
 |administrateur du groupe Joconde|X|X|X|X|
-|producteur du groupe Joconde|X|X|X|X|
+|producteur du groupe Joconde|X|X (seulement les notices de ses codes museo)|X (seulement les notices de ses codes museo)|X (seulement les notices de ses codes museo)|
 |utilisateur du groupe Joconde|X|   |   |   |
 |autres|X|   |   |   |
 
@@ -61,7 +67,7 @@ A noter : le groupe ADMIN a tous les droits CRUD sur toutes les notices
 |   |Read|Create|Update|Delete|
 |---|---|---|---|---|
 |administrateur du groupe museo|X|X|X|X|
-|producteur du groupe museo|X|X|X|X|
+|producteur du groupe museo|X|X (seulement les notices de son code museo)|X (seulement les notices de son code museo)|X (seulement les notices de son code museo)|
 |utilisateur du groupe museo|X|   |   |   |
 |autres|X|   |   |   |
 
