@@ -17,12 +17,15 @@
 ## Liste des roles 
 
 - administrateur
+
 Un administrateur peux importer et modifier/supprimer une notice. Il peut aussi creer des producteurs et des utilisateurs de son groupe
 
 - producteur
+
 Un producteur peux importer et modifier/supprimer une notice
 
 - utilisateur
+
 Un utilisateur ne peux pas importer ni modifier une notice. Il peut par contre faire des recherche et visualiser la notice developée.
 
 
