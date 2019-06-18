@@ -182,16 +182,16 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Joconde.findOne({ REF: ref });
-    if (!canDeleteJoconde(req.user, doc)) {
-      return res
-        .status(401)
-        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
-    }
     if (!doc) {
       return res.status(404).send({
         success: false,
         msg: `Impossible de trouver la notice joconde ${ref} à supprimer.`
       });
+    }
+    if (!canDeleteJoconde(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     // remove all images and the document itself.
     await Promise.all([doc.IMG.filter(i => i).map(f => deleteFile(f)), doc.remove()]);
