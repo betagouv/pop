@@ -90,7 +90,7 @@ A noter : le groupe ADMIN a tous les droits CRUD sur toutes les notices
 |utilisateur du groupe mh|X|   |   |   |
 |autres|X|   |   |   |
 
-### Périmètre : notices Palissy et Merimee dont le producteur est Monuments Historiques,Etat,Autre
+### Périmètre : notices Palissy et Merimee dont le producteur est Monuments Historiques,Architecture, Etat,Autre
 |   |Read|Create|Update|Delete|
 |---|---|---|---|---|
 |administrateur du groupe mh|X|X|X|X|
