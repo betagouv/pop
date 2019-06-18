@@ -11,7 +11,8 @@ const bases = [
   { key: "merimee", base: "Patrimoine architectural (Mérimée)" },
   { key: "memoire", base: "Photographies (Mémoire)" },
   { key: "palissy", base: "Patrimoine mobilier (Palissy)" },
-  { key: "enluminures", base: "Enluminures (Enluminures)" }
+  { key: "enluminures", base: "Enluminures (Enluminures)" },
+  { key: "museo", base: "Musées de france (MUSEO)" }
 ];
 
 class SearchAdvanced extends React.Component {
