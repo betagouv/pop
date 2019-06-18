@@ -190,10 +190,10 @@ router.put(
 
     try {
       await Promise.all(arr);
-      res.sendStatus(200);
+      res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e});
     }
   }
 );
@@ -225,20 +225,10 @@ router.post(
       res.send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
-
-// Get notices by offset limit. Not sure it's still in use.
-// TODO: check if it's in use.
-router.get("/", (req, res) => {
-  const offset = parseInt(req.query.offset) || 0;
-  const limit = parseInt(req.query.limit) || 20;
-  Memoire.paginate({}, { offset, limit }).then(results => {
-    res.status(200).send(results.docs);
-  });
-});
 
 // Get one notice by ref.
 router.get("/:ref", (req, res) => {
@@ -252,7 +242,7 @@ router.get("/:ref", (req, res) => {
     if (notice) {
       res.status(200).send(notice);
     } else {
-      res.sendStatus(404);
+      res.status(404).send({ success: false, msg: "Notice introuvable." });
     }
   });
 });
@@ -275,10 +265,10 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
       arr.push(deleteFile(doc.IMG));
     }
     await Promise.all(arr);
-    return res.status(200).send({});
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ error });
+    return res.status(500).send({ success: false, error });
   }
 });
 

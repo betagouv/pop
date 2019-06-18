@@ -43,7 +43,7 @@ router.get("/:ref", async (req, res) => {
   if (museo) {
     return res.status(200).send(museo);
   }
-  return res.sendStatus(404);
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
 router.put(
@@ -57,25 +57,20 @@ router.put(
     }
     const arr = [];
     for (let i = 0; i < req.files.length; i++) {
-      arr.push(
-        uploadFile(
-          `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-          req.files[i]
-        )
-      );
+      const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+      arr.push(uploadFile(path, req.files[i]));
     }
+    
     transformBeforeCreateOrUpdate(notice);
-
     //update joconde
     arr.push(updateJocondeNotices(notice));
-
     arr.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
       await Promise.all(arr);
-      return res.sendStatus(200);
+      res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );

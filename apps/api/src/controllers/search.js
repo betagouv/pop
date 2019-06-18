@@ -16,7 +16,7 @@ router.post("/scroll", (req, res) => {
     path = `/${req.query.index}/_search?scroll=1m`;
     body = req.body;
   } else {
-    return res.sendStatus(400);
+    return res.status(400).send({ success: false, msg: "Impossible de parser la requête."});
   }
   const headers = { "Content-Type": "Application/json" };
   const opts = { host: esUrl, path, body, method: "POST", headers };

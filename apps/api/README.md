@@ -48,3 +48,11 @@ AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y ES_ENDPOINT=z DB_ENDPOINT=m node src
 ```
 AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y ES_ENDPOINT=z node src/elasticsearch/delete.js myindex1
 ```
+
+### Développement de l'API
+
+ - Essayer de s'approcher au maximum d'une API REST.
+ - Utiliser les bons statuts (400, 401, 404, 200) dans les réponses et les vérifier dans les appels côté client.
+ - Au minimum, renvoyer un objet JSON avec `{ success: true }` et à défault d'autre chose on envoie un texte explicatif dans `msg`, par exemple : `{ success: true, msg: "Le doc a été créé."}`. Exception : dans le cas d'un appel `GET` sur un document : on peut renvoyer directement le document en cas de succès.
+ - Renvoyer le document concerné dans les requêtes PUT, POST et DELETE si possible.
+ - Capturer les erreurs (sentry) en cas de 500.

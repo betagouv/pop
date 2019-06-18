@@ -1,3 +1,4 @@
+// TODO: control authorization (can use create, update or delete based on role, group and PRODUCTEUR?).
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
@@ -26,7 +27,7 @@ function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
   if (notice.COORM && notice.ZONE) {
-    const { coordinates, message } = convertCOORM(notice.COORM, notice.ZONE);
+    const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
     notice["POP_COORDINATES_POLYGON"] = {
       type: "Polygon",
       coordinates
@@ -144,7 +145,7 @@ function checkIfMemoireImageExist(notice) {
         return { ref: e.REF, url: e.IMG, copy: e.COPY, name: e.TICO };
       });
 
-      //@raph -> I know you want to do only one loop with a reduce but it gave me headache
+      // @raph -> I know you want to do only one loop with a reduce but it gave me headache
       const newArr = (notice.MEMOIRE || []).filter(e => arr.find(f => f.ref == e.ref));
       for (let i = 0; i < arr.length; i++) {
         if (!newArr.find(e => e.REF === arr[i].REF)) {
@@ -167,22 +168,24 @@ function populateREFO(notice) {
   });
 }
 
+// Generate new ID from notice information (department + prefix)
 router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const prefix = req.query.prefix;
     const dpt = req.query.dpt;
 
     if (!prefix || !dpt) {
-      return res.status(500).send({ error: "Missing dpt or prefix" });
+      return res.status(500).send({ error: "dpt ou prefix manquants" });
     }
     const id = await getNewId(Merimee, prefix, dpt);
-    return res.status(200).send({ id });
+    return res.status(200).send({ success: true, id });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ error });
+    return res.status(500).send({ success: false, error });
   }
 });
 
+// Update a notice by ref.
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
@@ -191,11 +194,13 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
+
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
       notice.REFO = await populateREFO(notice);
-      //Update IMPORT ID
+
+      // Update IMPORT ID (this code is unclear…)
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
@@ -203,22 +208,15 @@ router.put(
       }
 
       const arr = [];
-
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(
-          uploadFile(
-            `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-            req.files[i]
-          )
-        );
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+        arr.push(uploadFile(path, req.files[i]));
       }
-      //Add generate fields
+
+      // Prepare and update notice.
       transformBeforeUpdate(notice);
-
       arr.push(updateNotice(Merimee, ref, notice));
-
       await Promise.all(arr);
-
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -227,6 +225,7 @@ router.put(
   }
 );
 
+// Create a new notice.
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -238,19 +237,14 @@ router.post(
       notice.REFO = await populateREFO(notice);
       transformBeforeCreate(notice);
 
-      const obj = new Merimee(notice);
-      checkESIndex(obj);
-
       const arr = [];
-      arr.push(obj.save());
+      const doc = new Merimee(notice);
+      checkESIndex(doc);
+      arr.push(doc.save());
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(
-          uploadFile(
-            `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-            req.files[i]
-          )
-        );
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+        arr.push(uploadFile(path, req.files[i]));
       }
 
       await Promise.all(arr);
@@ -262,6 +256,7 @@ router.post(
   }
 );
 
+// Get one notice by ref.
 router.get("/:ref", (req, res) => {
   const ref = req.params.ref;
   Merimee.findOne({ REF: ref }, (err, notice) => {
@@ -273,27 +268,22 @@ router.get("/:ref", (req, res) => {
     if (notice) {
       res.status(200).send(notice);
     } else {
-      res.sendStatus(404);
+      res.status(404).send({ success: false, msg: "Notice introuvable." });
     }
   });
 });
 
-router.get("/", (req, res) => {
-  const offset = parseInt(req.query.offset) || 0;
-  const limit = parseInt(req.query.limit) || 20;
-  Merimee.paginate({}, { offset, limit }).then(results => {
-    res.status(200).send(results.docs);
-  });
-});
-
+// Delete one notice.
+// TODO: check if we need to clean things in MEMOIRE or something like that.
+// TODO: async/await
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), (req, res) => {
   const ref = req.params.ref;
   Merimee.findOneAndRemove({ REF: ref }, error => {
     if (error) {
       capture(error);
-      return res.status(500).send({ error });
+      return res.status(500).send({ success: false, error });
     }
-    return res.status(200).send({});
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   });
 });
 

@@ -1,3 +1,4 @@
+// Todo: check rights + log user deletion.
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -5,6 +6,7 @@ const { capture } = require("./../sentry.js");
 require("../passport")(passport);
 const User = require("../models/user");
 
+// Get all users.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const query = {};
   if (req.query.group && req.query.group !== "admin") {
@@ -12,13 +14,14 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
   try {
     users = await User.find(query);
-  } catch (e) {
-    capture(e);
-    return res.status(500).send({ e });
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({ success: false, error });
   }
   res.status(200).send(users);
 });
 
+// Delete one user by her email.
 router.delete("/:email", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const email = req.params.email;

@@ -207,13 +207,13 @@ router.get("/newId", passport.authenticate("jwt", { session: false }), async (re
   const dpt = req.query.dpt;
   try {
     if (!prefix || !dpt) {
-      return res.status(500).send({ error: "Missing dpt or prefix" });
+      return res.status(500).send({ success: false, error: "Missing dpt or prefix" });
     }
     const id = await getNewId(Palissy, prefix, dpt);
-    return res.status(200).send({ id });
+    return res.status(200).send({ success: true, id });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ error });
+    return res.status(500).send({ success: false, error });
   }
 });
 
@@ -301,7 +301,7 @@ router.get("/:ref", (req, res) => {
       return res.status(500).send(err);
     }
     if (!notice) {
-      return res.sendStatus(404);
+      return res.status(404).send({ success: false, msg: "Notice introuvable." });
     }
     res.status(200).send(notice);
   });
@@ -322,7 +322,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), (req, r
       capture(error);
       return res.status(500).send({ error });
     }
-    return res.status(200).send({});
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   });
 });
 
