@@ -9,7 +9,7 @@
     "start": "node ./src/index.js  ",
     "deploy:prod": "npm install && eb deploy pop-api --profil POP",
     "deploy:staging": "npm install && eb deploy pop-api-staging --profil POP",
-    "test": "jest",
+    "test": "jest -i",
     "sitemap": "nodemon -r dotenv/config src/sitemap/sitemap.js",
     "export:schemas": "node src/export-db-schemas",
     "export:csv": "node src/export-db-csv",

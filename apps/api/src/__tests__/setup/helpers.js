@@ -1,6 +1,7 @@
 const request = require("supertest");
 const User = require("../../models/user");
 const Joconde = require("../../models/joconde");
+const Mnr = require("../../models/mnr");
 
 async function createUser(props = {}) {
   const user = {
@@ -31,10 +32,14 @@ async function removeAllUsers() {
 async function removeJocondeNotices() {
   await Joconde.deleteMany();
 }
+async function removeMnrNotices() {
+  await Mnr.deleteMany();
+}
 
 module.exports = {
   getJwtToken,
   removeAllUsers,
   removeJocondeNotices,
+  removeMnrNotices,
   createUser
 };

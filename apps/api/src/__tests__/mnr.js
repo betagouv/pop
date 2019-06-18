@@ -5,9 +5,9 @@ const {
   createUser,
   getJwtToken,
   removeAllUsers,
-  removeJocondeNotices
+  removeMnrNotices
 } = require("./setup/helpers");
-const sampleNotice = require("./__notices__/joconde-1");
+const sampleNotice = require("./__notices__/mnr-1");
 
 jest.mock("../elasticsearch");
 const es = require("../elasticsearch");
@@ -20,12 +20,12 @@ checkESIndex.mockImplementation(() => ({}));
 afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
-  removeJocondeNotices();
+  removeMnrNotices();
 });
 
 async function createNotice(user, expectedStatus = 200) {
   const response = await request(app)
-    .post("/joconde")
+    .post("/mnr")
     .field("notice", JSON.stringify(sampleNotice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
@@ -36,7 +36,7 @@ async function createNotice(user, expectedStatus = 200) {
 
 async function updateNotice(user, expectedStatus = 200, notice = sampleNotice) {
   const response = await request(app)
-    .put(`/joconde/${notice.REF}`)
+    .put(`/mnr/${notice.REF}`)
     .field("notice", JSON.stringify(notice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
@@ -47,29 +47,29 @@ async function updateNotice(user, expectedStatus = 200, notice = sampleNotice) {
 
 async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
   const response = await request(app)
-    .delete(`/joconde/${notice.REF}`)
+    .delete(`/mnr/${notice.REF}`)
     .set("Accept", "application/json")
     .set("Authorization", await getJwtToken(app, user))
     .expect(expectedStatus);
   return response.body;
 }
 
-describe("POST /joconde", () => {
+describe("POST /mnr", () => {
   test(`It should create a notice for "administrateur" (group: "admin")`, async () => {
     const res = await createNotice(await createUser(), 200);
     expect(res.success).toBe(true);
   });
-  const jocondeUserOk = { group: "joconde", role: "producteur", museofile: ["M5031"] };
-  test(`It should create a notice for user ${JSON.stringify(jocondeUserOk)}`, async () => {
-    const res = await createNotice(await createUser(jocondeUserOk), 200);
+  const mnrUserOk = { group: "mnr", role: "producteur" };
+  test(`It should create a notice for user ${JSON.stringify(mnrUserOk)}`, async () => {
+    const res = await createNotice(await createUser(mnrUserOk), 200);
     expect(res.success).toBe(true);
   });
-  const jocondeUserNotOk = { group: "joconde", role: "producteur", museofile: ["M9999"] };
-  test(`It should not authorize user ${JSON.stringify(jocondeUserNotOk)}`, async () => {
-    const res = await createNotice(await createUser(jocondeUserNotOk), 401);
+  const mnrUserNotOk = { group: "mnr", role: "utilisateur" };
+  test(`It should not authorize user ${JSON.stringify(mnrUserNotOk)}`, async () => {
+    const res = await createNotice(await createUser(mnrUserNotOk), 401);
     expect(res.success).toBe(false);
   });
-  const memoireUser = { group: "memoire", role: "utilisateur" };
+  const memoireUser = { group: "memoire", role: "producteur" };
   test(`It should not authorize user ${JSON.stringify(memoireUser)}`, async () => {
     const res = await createNotice(await createUser(memoireUser), 401);
     expect(res.success).toBe(false);
@@ -83,24 +83,17 @@ describe("POST /joconde", () => {
   });
 });
 
-describe("PUT /joconde/:ref", () => {
-  const jocondeUserOk = { group: "joconde", role: "producteur", museofile: ["M5031"] };
-  test(`It should update a notice for ${JSON.stringify(jocondeUserOk)}`, async () => {
-    const user = await createUser(jocondeUserOk);
+describe("PUT /mnr/:ref", () => {
+  const mnrUserOk = { group: "mnr", role: "producteur" };
+  test(`It should update a notice for ${JSON.stringify(mnrUserOk)}`, async () => {
+    const user = await createUser(mnrUserOk);
     let res = await createNotice(user, 200);
     res = await updateNotice(user, 200);
     expect(res.success).toBe(true);
   });
-  test(`It should not authorize ${JSON.stringify(jocondeUserOk)} to change MUSEO`, async () => {
-    const user = await createUser(jocondeUserOk);
-    let res = await createNotice(user, 200);
-    // Fail on museo changed
-    res = await updateNotice(user, 401, { ...sampleNotice, MUSEO: "M9999" });
-    expect(res.success).toBe(false);
-  });
 });
 
-describe("DELETE /joconde/:ref", () => {
+describe("DELETE /mnr/:ref", () => {
   test(`It should delete an existing notice`, async () => {
     const user = await createUser();
     let res = await createNotice(user, 200);
@@ -111,7 +104,7 @@ describe("DELETE /joconde/:ref", () => {
     const res = await deleteNotice(await createUser(), 404);
     expect(res.success).toBe(false);
   });
-  const memoireUser = { group: "memoire", role: "utilisateur" };
+  const memoireUser = { group: "memoire", role: "producteur" };
   test(`It should not authorize user ${JSON.stringify(memoireUser)}`, async () => {
     const user = await createUser(memoireUser);
     let res = await createNotice(await createUser({ email: "lol@example.com" }), 200);
@@ -120,18 +113,18 @@ describe("DELETE /joconde/:ref", () => {
   });
 });
 
-describe("GET /joconde/:ref", () => {
+describe("GET /mnr/:ref", () => {
   test(`It should return a notice by for everyone`, async () => {
     let res = await createNotice(await createUser(), 200);
     res = await request(app)
-      .get(`/joconde/${sampleNotice.REF}`)
+      .get(`/mnr/${sampleNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-    expect(res.body.AUTR).toBe(sampleNotice.AUTR);
+    expect(res.body.TITR).toBe(sampleNotice.TITR);
   });
   test(`It should return 404 for non-existant notice`, async () => {
     const res = await request(app)
-      .get("/joconde/LOL")
+      .get("/mnr/LOL")
       .set("Accept", "application/json")
       .expect(404);
     expect(res.body.success).toBe(false);

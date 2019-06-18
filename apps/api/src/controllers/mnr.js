@@ -7,6 +7,7 @@ const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
 
@@ -55,22 +56,28 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-    const arr = [];
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
+      if (!canUpdateMnr(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
+      const promises = [];
 
       if (notice.VIDEO !== undefined) {
         for (let i = 0; i < prevNotice.VIDEO.length; i++) {
           if (!(notice.VIDEO || []).includes(prevNotice.VIDEO[i])) {
-            arr.push(deleteFile(prevNotice.VIDEO[i]));
+            promises.push(deleteFile(prevNotice.VIDEO[i]));
           }
         }
       }
 
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        arr.push(uploadFile(`mnr/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
+        promises.push(uploadFile(`mnr/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
       }
 
       // Update IMPORT ID
@@ -81,54 +88,70 @@ router.put(
       }
 
       transformBeforeUpdate(notice);
-      arr.push(updateNotice(Mnr, ref, notice));
-      await Promise.all(arr);
+      promises.push(updateNotice(Mnr, ref, notice));
+      await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
-      res.status(500).send({ success: false, error: e});
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
 
 // Create a new notice.
-router.post("/", passport.authenticate("jwt", { session: false }), upload.any(), (req, res) => {
-  const notice = JSON.parse(req.body.notice);
-  transformBeforeCreate(notice);
-
-  const doc = new Mnr(notice);
-  checkESIndex(doc);
-  doc.save().then(e => {
-    res.send({ success: true, msg: "OK" });
-  });
-});
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+    transformBeforeCreate(notice);
+    if (!canCreateMnr(req.user, notice)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+    }
+    try {
+      const doc = new Mnr(notice);
+      checkESIndex(doc);
+      await doc.save();
+      res.send({ success: true, msg: "OK" });
+    } catch (error) {
+      capture(error);
+      res.status(500).send({ success: false, error });
+    }
+  }
+);
 
 // Get one notice by ref.
-router.get("/:ref", (req, res) => {
+router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
-  Mnr.findOne({ REF: ref }, (err, notice) => {
-    if (err || !notice) {
-      res.status(404).send({ success: false, msg: "Notice introuvable." });
-    } else {
-      res.send(notice);
-    }
-  });
+  const notice = await Mnr.findOne({ REF: ref });
+  if (notice) {
+    return res.status(200).send(notice);
+  }
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
-// Delete 
+// Delete
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const ref = req.params.ref;
     const doc = await Mnr.findOne({ REF: ref });
     if (!doc) {
-      return res.status(500).send({
-        error: `Impossible de trouver la notice mnr ${ref} à supprimer`
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice mnr ${ref} à supprimer.`
       });
     }
-
-    const arr = doc.VIDEO.map(f => deleteFile(f));
-    arr.push(doc.remove());
-    await Promise.all(arr);
+    if (!canDeleteMnr(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+    }
+    const promises = doc.VIDEO.map(f => deleteFile(f));
+    promises.push(doc.remove());
+    await Promise.all(promises);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
