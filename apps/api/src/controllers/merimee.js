@@ -1,4 +1,3 @@
-// TODO: control authorization (can use create, update or delete based on role, group and PRODUCTEUR?).
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
