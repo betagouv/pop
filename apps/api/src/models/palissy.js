@@ -200,6 +200,14 @@ const Schema = new mongoose.Schema(
         label: "Commune masquée"
       }
     },
+    PRECISION_JURIDIQUE: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Précision juridique"
+      }
+    },
     CONTACT: {
       type: String,
       default: "",

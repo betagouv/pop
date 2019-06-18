@@ -26,6 +26,7 @@
 - [CATE](/apps/api/doc/palissy.md#CATE)
 - [COM](/apps/api/doc/palissy.md#COM)
 - [COM2](/apps/api/doc/palissy.md#COM2)
+- [PRECISION_JURIDIQUE](/apps/api/doc/palissy.md#PRECISION_JURIDIQUE)
 - [CONTACT](/apps/api/doc/palissy.md#CONTACT)
 - [COOR](/apps/api/doc/palissy.md#COOR)
 - [COORM](/apps/api/doc/palissy.md#COORM)
@@ -386,6 +387,16 @@ Référence de la notice
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Commune masquée|
+
+### PRECISION_JURIDIQUE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Précision juridique|
 
 ### CONTACT
 

@@ -198,7 +198,7 @@ class Notice extends React.Component {
           </Section>
 
           <Section
-            title="Désignation de l'objet"
+            title="Localisation de l'objet"
             icon={require("../../assets/info.png")}
             color="#FF7676"
           >
@@ -302,12 +302,13 @@ class Notice extends React.Component {
                 <CustomField name="PROT" disabled={!this.state.editable} />
                 <CustomField name="DPRO" disabled={!this.state.editable} />
                 <CustomField name="PPRO" disabled={!this.state.editable} />
+                <CustomField name="INTE" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
-                <CustomField name="INTE" disabled={!this.state.editable} />
                 <CustomField name="NINV" disabled={!this.state.editable} />
                 <CustomField name="NUMA" disabled={!this.state.editable} />
                 <CustomField name="OBS" disabled={!this.state.editable} />
+                <CustomField name="PRECISION_JURIDIQUE" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>

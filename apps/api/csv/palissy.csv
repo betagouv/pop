@@ -30,6 +30,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "CATE","Array","non","Catégorie technique","","","","",""
 "COM","String","non","Commune","","","","",""
 "COM2","String","non","Commune masquée","","","","",""
+"PRECISION_JURIDIQUE","String","non","Précision juridique","","","","",""
 "CONTACT","String","non","Adresse courriel de contact","","","","Email",""
 "COOR","String","non","Coordonnées géographiques d'un point","","","","",""
 "COORM","String","non","Coordonnées géographiques multiples","","","","",""
