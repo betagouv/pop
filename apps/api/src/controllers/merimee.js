@@ -18,10 +18,16 @@ const {
   fixLink,
   getNewId,
   uploadFile,
-  hasCorrectCoordinates
+  hasCorrectCoordinates,
+  findMerimeeProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
+const {
+  canUpdateMerimee,
+  canCreateMerimee,
+  canDeleteMerimee
+} = require("./utils/authorization");
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
@@ -60,6 +66,7 @@ function transformBeforeCreateOrUpdate(notice) {
   if (notice.LIENS && Array.isArray(notice.LIENS)) {
     notice.LIENS = notice.LIENS.map(fixLink);
   }
+  notice.DISCIPLINE = notice.PRODUCTEUR = findMerimeeProducteur(notice);
 }
 
 function transformBeforeUpdate(notice) {
@@ -70,20 +77,6 @@ function transformBeforeUpdate(notice) {
 function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   transformBeforeCreateOrUpdate(notice);
-  switch (notice.REF.substring(0, 2)) {
-    case "IA":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Inventaire";
-      break;
-    case "PA":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Monuments Historiques";
-      break;
-    case "EA":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Architecture";
-      break;
-    default:
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
-      break;
-  }
 }
 
 async function checkMerimee(notice) {
@@ -195,6 +188,14 @@ router.put(
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
 
+      const prevNotice = await Merimee.findOne({ REF: ref });
+      if (!canUpdateMerimee(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
+
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
@@ -207,16 +208,16 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      const arr = [];
+      const promises = [];
       for (let i = 0; i < req.files.length; i++) {
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        arr.push(uploadFile(path, req.files[i]));
+        promises.push(uploadFile(path, req.files[i]));
       }
 
       // Prepare and update notice.
       transformBeforeUpdate(notice);
-      arr.push(updateNotice(Merimee, ref, notice));
-      await Promise.all(arr);
+      promises.push(updateNotice(Merimee, ref, notice));
+      await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -233,21 +234,26 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
+      if (!canCreateMerimee(req.user, notice)) {
+        return res
+          .status(401)
+          .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+      }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       transformBeforeCreate(notice);
 
-      const arr = [];
+      const promises = [];
       const doc = new Merimee(notice);
       checkESIndex(doc);
-      arr.push(doc.save());
+      promises.push(doc.save());
 
       for (let i = 0; i < req.files.length; i++) {
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        arr.push(uploadFile(path, req.files[i]));
+        promises.push(uploadFile(path, req.files[i]));
       }
 
-      await Promise.all(arr);
+      await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -257,34 +263,36 @@ router.post(
 );
 
 // Get one notice by ref.
-router.get("/:ref", (req, res) => {
+router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
-  Merimee.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      capture(err);
-      res.status(500).send(err);
-      return;
-    }
-    if (notice) {
-      res.status(200).send(notice);
-    } else {
-      res.status(404).send({ success: false, msg: "Notice introuvable." });
-    }
-  });
+  const notice = await Merimee.findOne({ REF: ref });
+  if (notice) {
+    return res.status(200).send(notice);
+  }
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
 // Delete one notice.
-// TODO: check if we need to clean things in MEMOIRE or something like that.
-// TODO: async/await
-router.delete("/:ref", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const ref = req.params.ref;
-  Merimee.findOneAndRemove({ REF: ref }, error => {
-    if (error) {
-      capture(error);
-      return res.status(500).send({ success: false, error });
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+    const doc = await Merimee.findOne({ REF: ref });
+    if (!doc) {
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice merimee ${ref} à supprimer.`
+      });
+    }
+    if (!canDeleteMerimee(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
-  });
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({ success: false, error });
+  }
 });
 
 module.exports = router;

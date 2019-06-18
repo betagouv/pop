@@ -17,10 +17,16 @@ const {
   fixLink,
   convertCOORM,
   uploadFile,
-  hasCorrectCoordinates
+  hasCorrectCoordinates,
+  findPalissyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
+const {
+  canUpdatePalissy,
+  canCreatePalissy,
+  canDeletePalissy
+} = require("./utils/authorization");
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
@@ -58,6 +64,7 @@ function transformBeforeCreateOrUpdate(notice) {
   if (notice.LIENS && Array.isArray(notice.LIENS)) {
     notice.LIENS = notice.LIENS.map(fixLink);
   }
+  notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
 }
 
 function transformBeforeUpdate(notice) {
@@ -119,20 +126,6 @@ function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   transformBeforeCreateOrUpdate(notice);
 
-  switch (notice.REF.substring(0, 2)) {
-    case "IM":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Inventaire";
-      break;
-    case "PM":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Monuments Historiques";
-      break;
-    case "EM":
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Etat";
-      break;
-    default:
-      notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
-      break;
-  }
 }
 
 function checkIfMemoireImageExist(notice) {
@@ -225,23 +218,32 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
+
+      const prevNotice = await Palissy.findOne({ REF: ref });
+      if (!canUpdatePalissy(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
+
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
-      //Update IMPORT ID
+      // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      //Add generate fields
+      // Add generate fields
       transformBeforeUpdate(notice);
 
-      const arr = [];
+      const promises = [];
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(
+        promises.push(
           uploadFile(
             `palissy/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
             req.files[i]
@@ -249,10 +251,10 @@ router.put(
         );
       }
 
-      arr.push(updateNotice(Palissy, ref, notice));
-      arr.push(populateMerimeeREFO(notice));
+      promises.push(updateNotice(Palissy, ref, notice));
+      promises.push(populateMerimeeREFO(notice));
 
-      await Promise.all(arr);
+      await Promise.all(promises);
 
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -269,6 +271,11 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
+      if (!canCreatePalissy(req.user, notice)) {
+        return res
+          .status(401)
+          .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+      }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       await populateMerimeeREFO(notice);
 
@@ -277,14 +284,14 @@ router.post(
       const obj = new Palissy(notice);
       checkESIndex(obj);
 
-      const arr = [];
-      arr.push(obj.save());
+      const promises = [];
+      promises.push(obj.save());
 
       for (let i = 0; i < req.files.length; i++) {
-        arr.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+        promises.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
       }
 
-      await Promise.all(arr);
+      await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
@@ -293,37 +300,37 @@ router.post(
   }
 );
 
-router.get("/:ref", (req, res) => {
+// Get one notice by ref.
+router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
-  Palissy.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      capture(err);
-      return res.status(500).send(err);
-    }
-    if (!notice) {
-      return res.status(404).send({ success: false, msg: "Notice introuvable." });
-    }
-    res.status(200).send(notice);
-  });
+  const notice = await Palissy.findOne({ REF: ref });
+  if (notice) {
+    return res.status(200).send(notice);
+  }
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
-router.get("/", (req, res) => {
-  const offset = parseInt(req.query.offset) || 0;
-  const limit = parseInt(req.query.limit) || 20;
-  Palissy.paginate({}, { offset, limit }).then(results => {
-    res.status(200).send(results.docs);
-  });
-});
-
-router.delete("/:ref", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const ref = req.params.ref;
-  Palissy.findOneAndRemove({ REF: ref }, error => {
-    if (error) {
-      capture(error);
-      return res.status(500).send({ error });
+// Delete one notice.
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+    const doc = await Palissy.findOne({ REF: ref });
+    if (!doc) {
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice palissy ${ref} à supprimer.`
+      });
+    }
+    if (!canDeletePalissy(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
-  });
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({ success: false, error });
+  }
 });
 
 module.exports = router;
