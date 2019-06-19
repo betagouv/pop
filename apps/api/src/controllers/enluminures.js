@@ -7,7 +7,7 @@ router.get("/:ref", async (req, res) => {
   if (doc) {
     return res.status(200).send(doc);
   }
-  return res.sendStatus(404);
+  return res.status(404).send({ success: false, msg: "Document introuvable" });
 });
 
 module.exports = router;

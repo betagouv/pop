@@ -1,4 +1,3 @@
-// TODO: control authorization (can use create, update or delete based on role, group and PRODUCTEUR?).
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
@@ -9,7 +8,8 @@ const passport = require("passport");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { uploadFile, formattedNow, checkESIndex, updateNotice, deleteFile } = require("./utils");
+const { uploadFile, formattedNow, checkESIndex, updateNotice, deleteFile, findMemoireProducteur } = require("./utils");
+const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
 
 // Get collection by ref prefix.
@@ -90,25 +90,7 @@ async function checkMemoire(notice) {
 }
 
 function findProducteur(REF, IDPROD, EMET) {
-  if (
-    String(REF).startsWith("IVN") ||
-    String(REF).startsWith("IVR") ||
-    String(REF).startsWith("IVD") ||
-    String(REF).startsWith("IVC")
-  ) {
-    return "INV";
-  } else if (String(REF).startsWith("OA")) {
-    return "CAOA";
-  } else if (String(REF).startsWith("MH")) {
-    return "CRMH";
-  } else if (String(REF).startsWith("AR")) {
-    return "ARCH";
-  } else if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
-    return "UDAP";
-  } else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
-    return "MAP";
-  }
-  return "AUTRE";
+  return findMemoireProducteur(REF, IDPROD, EMET);
 }
 
 async function updateLinks(notice) {
@@ -157,7 +139,7 @@ async function updateLinks(notice) {
         if (URL) {
           obj.CONTIENT_IMAGE = "oui";
         }
-        // It doesnt work  if memoire is update instead of added. 
+        // It doesnt work  if memoire is update instead of added.
 
         /// Its not indexed through ES
         await collection.update({ REF: toAdd[i] }, obj);
@@ -176,12 +158,20 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-    const arr = [];
+
+    if (!canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
+      return res.status(401).send({
+        success: false,
+        msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+      });
+    }
+
+    const promises = [];
 
     // Upload files.
     for (let i = 0; i < req.files.length; i++) {
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      arr.push(uploadFile(path, req.files[i]));
+      promises.push(uploadFile(path, req.files[i]));
     }
 
     // Update IMPORT ID.
@@ -192,15 +182,15 @@ router.put(
     }
 
     transformBeforeUpdate(notice);
-    arr.push(updateLinks(notice));
-    arr.push(updateNotice(Memoire, ref, notice));
+    promises.push(updateLinks(notice));
+    promises.push(updateNotice(Memoire, ref, notice));
 
     try {
-      await Promise.all(arr);
-      res.sendStatus(200);
+      await Promise.all(promises);
+      res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
@@ -213,79 +203,73 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
-    const arr = [];
+    if (!canCreateMemoire(req.user, notice)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+    }
+    const promises = [];
 
     // Upload images.
     for (let i = 0; i < req.files.length; i++) {
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      arr.push(uploadFile(path, req.files[i]));
+      promises.push(uploadFile(path, req.files[i]));
     }
 
     // Update and save.
-    arr.push(updateLinks(notice));
+    promises.push(updateLinks(notice));
     transformBeforeCreate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
-    arr.push(obj.save());
+    promises.push(obj.save());
     try {
-      await Promise.all(arr);
+      await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
 
-// Get notices by offset limit. Not sure it's still in use.
-// TODO: check if it's in use.
-router.get("/", (req, res) => {
-  const offset = parseInt(req.query.offset) || 0;
-  const limit = parseInt(req.query.limit) || 20;
-  Memoire.paginate({}, { offset, limit }).then(results => {
-    res.status(200).send(results.docs);
-  });
-});
-
 // Get one notice by ref.
-router.get("/:ref", (req, res) => {
+router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
-  Memoire.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      capture(err);
-      res.status(500).send(err);
-      return;
-    }
-    if (notice) {
-      res.status(200).send(notice);
-    } else {
-      res.sendStatus(404);
-    }
-  });
+  const notice = await Memoire.findOne({ REF: ref });
+  if (notice) {
+    return res.status(200).send(notice);
+  }
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
+// Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const ref = req.params.ref;
     const doc = await Memoire.findOne({ REF: ref });
     if (!doc) {
-      return res.status(500).send({
-        error: `Impossible de trouver la notice memoire ${ref} à supprimer`
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice memoire ${ref} à supprimer.`
       });
     }
-
+    if (!canDeleteMemoire(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+    }
     // Empty LBASE before updating links then remove documents and remove image.
     doc.LBASE = [];
     await updateLinks(doc);
-    const arr = [doc.remove()];
+    const promises = [doc.remove()];
     if (doc.IMG) {
-      arr.push(deleteFile(doc.IMG));
+      promises.push(deleteFile(doc.IMG));
     }
-    await Promise.all(arr);
-    return res.status(200).send({});
+    await Promise.all(promises);
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ error });
+    return res.status(500).send({ success: false, error });
   }
 });
 

@@ -224,7 +224,7 @@ router.post("/updateProfile", passport.authenticate("jwt", { session: false }), 
 });
 
 router.post("/signin", (req, res) => {
-  const failMessage = {
+  const failureObject = {
     success: false,
     msg: `L'authentification a échoué. Email ou mot de passe incorrect.`
   };
@@ -236,7 +236,7 @@ router.post("/signin", (req, res) => {
       if (err) throw err;
 
       if (!user) {
-        res.status(401).send(failMessage);
+        res.status(401).send(failureObject);
       } else {
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (isMatch && !err) {
@@ -251,7 +251,7 @@ router.post("/signin", (req, res) => {
               user
             });
           } else {
-            res.status(401).send(failMessage);
+            res.status(401).send(failureObject);
           }
         });
       }

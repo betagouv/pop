@@ -54,8 +54,59 @@ function addZeros(v, zeros) {
     .slice(-zeros);
 }
 
+function findMemoireProducteur(REF, IDPROD, EMET) {
+  if (
+    String(REF).startsWith("IVN") ||
+    String(REF).startsWith("IVR") ||
+    String(REF).startsWith("IVD") ||
+    String(REF).startsWith("IVC")
+  ) {
+    return "INV";
+  } else if (String(REF).startsWith("OA")) {
+    return "CAOA";
+  } else if (String(REF).startsWith("MH")) {
+    return "CRMH";
+  } else if (String(REF).startsWith("AR")) {
+    return "ARCH";
+  } else if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
+    return "UDAP";
+  } else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
+    return "MAP";
+  }
+  return "AUTRE";
+}
+
+function findMerimeeProducteur(notice) {
+  switch (notice.REF.substring(0, 2)) {
+    case "IA":
+      return "Inventaire";
+    case "PA":
+      return "Monuments Historiques";
+    case "EA":
+      return "Architecture";
+    default:
+      return "Autre";
+  }
+}
+
+function findPalissyProducteur(notice) {
+  switch (notice.REF.substring(0, 2)) {
+    case "IM":
+      return "Inventaire";
+    case "PM":
+      return "Monuments Historiques";
+    case "EM":
+      return "Architecture";
+    default:
+      return "Autre";
+  }
+}
+
 module.exports = {
   getNewId,
   checkESIndex,
-  updateNotice
+  updateNotice,
+  findMemoireProducteur,
+  findMerimeeProducteur,
+  findPalissyProducteur
 };

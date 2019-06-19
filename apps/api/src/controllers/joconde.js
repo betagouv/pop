@@ -1,4 +1,3 @@
-// TODO: control authorization (can use create, update or delete based on role, group and museo?).
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
@@ -10,15 +9,14 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 
 async function checkJoconde(notice) {
   const errors = [];
   try {
-    // Check contact
     if (!notice.CONTACT) {
       errors.push("Le champ CONTACT ne doit pas être vide");
     }
-    // Joconde
     if (!notice.TICO && !notice.TITR) {
       errors.push("Cette notice devrait avoir un TICO ou un TITR");
     }
@@ -85,7 +83,13 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      const arr = [];
+      if (!canUpdateJoconde(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
+      const promises = [];
 
       // Delete previous images if not present anymore (only if the actually is an IMG field).
       if (notice.IMG !== undefined) {
@@ -93,7 +97,7 @@ router.put(
           if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
             // Security: no need to escape filename, it comes from database.
             if (prevNotice.IMG[i]) {
-              arr.push(deleteFile(prevNotice.IMG[i]));
+              promises.push(deleteFile(prevNotice.IMG[i]));
             }
           }
         }
@@ -103,7 +107,7 @@ router.put(
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
-        arr.push(uploadFile(path, f));
+        promises.push(uploadFile(path, f));
       }
 
       // Update IMPORT ID (this code is unclear…)
@@ -115,15 +119,14 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
-
-      arr.push(updateNotice(Joconde, ref, notice));
+      promises.push(updateNotice(Joconde, ref, notice));
 
       // Consume promises and send sucessful result.
-      await Promise.all(arr);
-      res.sendStatus(200);
+      await Promise.all(promises);
+      res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
@@ -136,12 +139,17 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      const arr = [];
+      if (!canCreateJoconde(req.user, notice)) {
+        return res
+          .status(401)
+          .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+      }
+      const promises = [];
 
       // Upload all files (should this be done after creating notice?)
       for (let i = 0; i < req.files.length; i++) {
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        arr.push(uploadFile(path, req.files[i]));
+        promises.push(uploadFile(path, req.files[i]));
       }
 
       // Transform and create.
@@ -149,40 +157,24 @@ router.post(
       await transformBeforeCreateAndUpdate(notice);
       const obj = new Joconde(notice);
       checkESIndex(obj);
-      arr.push(obj.save());
-      await Promise.all(arr);
+      promises.push(obj.save());
+      await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
-      res.sendStatus(500);
+      res.status(500).send({ success: false, error: e });
     }
   }
 );
 
-// Get notices by offset limit. Not sure it's still in use.
-// TODO: check if it's in use.
-router.get("/", (req, res) => {
-  const offset = parseInt(req.query.offset) || 0;
-  const limit = parseInt(req.query.limit) || 20;
-  Joconde.paginate({}, { offset, limit }).then(results => {
-    res.status(200).send(results.docs);
-  });
-});
-
 // Get one notice by ref.
-router.get("/:ref", (req, res) => {
+router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
-  Joconde.findOne({ REF: ref }, (err, notice) => {
-    if (err) {
-      res.status(500).send(err);
-      return;
-    }
-    if (notice) {
-      res.status(200).send(notice);
-    } else {
-      res.sendStatus(404);
-    }
-  });
+  const notice = await Joconde.findOne({ REF: ref });
+  if (notice) {
+    return res.status(200).send(notice);
+  }
+  return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
 // Delete one notice.
@@ -191,18 +183,22 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     const ref = req.params.ref;
     const doc = await Joconde.findOne({ REF: ref });
     if (!doc) {
-      return res.status(500).send({
-        error: `Impossible de trouver la notice joconde ${ref} à supprimer.`
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice joconde ${ref} à supprimer.`
       });
     }
+    if (!canDeleteJoconde(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+    }
     // remove all images and the document itself.
-    const arr = doc.IMG.filter(i => i).map(f => deleteFile(f));
-    arr.push(doc.remove());
-    await Promise.all(arr);
-    return res.status(200).send({});
+    await Promise.all([doc.IMG.filter(i => i).map(f => deleteFile(f)), doc.remove()]);
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ error });
+    return res.status(500).send({ success: false, error });
   }
 });
 

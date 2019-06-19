@@ -1,3 +1,4 @@
+// TODO: control authorization
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -18,7 +19,7 @@ router.post(
       const obj = new Import(body);
       const doc = await obj.save();
 
-      for (var i = 0; i < req.files.length; i++) {
+      for (let i = 0; i < req.files.length; i++) {
         await uploadFile(
           `import/${filenamify(String(doc._id))}/${filenamify(req.files[i].originalname)}`,
           req.files[i]
@@ -40,7 +41,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
     res.status(200).send(imports);
   } catch (e) {
     capture(JSON.stringify(e));
-    return res.status(500).send({ e });
+    return res.status(500).send({ sucess: false, error: e });
   }
 });
 
@@ -51,7 +52,7 @@ router.get("/count", async (req, res) => {
     res.status(200).send(String(imports));
   } catch (e) {
     capture(JSON.stringify(e));
-    return res.status(500).send({ e });
+    return res.status(500).send({ sucess: false, error: e });
   }
 });
 

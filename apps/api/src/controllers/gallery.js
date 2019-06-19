@@ -17,7 +17,9 @@ router.get("/:id", async (req, res) => {
   try {
     doc = await Gallery.findById(req.params.id);
   } catch (e) {}
-  return doc ? res.status(200).send(doc) : res.sendStatus(404);
+  return doc
+    ? res.status(200).send(doc)
+    : res.status(404).send({ success: false, msg: "Document introuvable" });
 });
 
 const limiter = rateLimit({
@@ -29,7 +31,7 @@ router.post("/", limiter, upload.any(), async (req, res) => {
   try {
     const data = JSON.parse(req.body.gallery);
     if (!data) {
-      return res.sendStatus(400);
+      return res.status(400).send({ success: false, msg: "Données manquantes" });
     }
     // Create and save the gallery with its data.
     const gallery = new Gallery(data);
@@ -37,7 +39,7 @@ router.post("/", limiter, upload.any(), async (req, res) => {
 
     // Save the associated image if present.
     if (req.files && req.files.length && req.files[0].originalname) {
-      const imagePath = `gallery/${doc._id}/${filenamify(req.files[0].originalname)}`;
+      const imagePath = `gallery/${filenamify(doc._id)}/${filenamify(req.files[0].originalname)}`;
       await uploadFile(imagePath, req.files[0]);
       doc.image = imagePath;
       await doc.save();
@@ -46,7 +48,7 @@ router.post("/", limiter, upload.any(), async (req, res) => {
     return res.status(200).send({ success: true, doc });
   } catch (e) {
     capture(e);
-    return res.sendStatus(400);
+    return res.status(500).send({ success: false, msg: "Impossible de traiter les données." });
   }
 });
 
