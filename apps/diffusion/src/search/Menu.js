@@ -137,9 +137,15 @@ const Menu = ({ closeMenu, initialValues }) => (
         ["repr", "REPR.keyword"],
         ["util", "UTIL.keyword"]
       ].map(([value, field]) => {
-        if (initialValues.get(value)) {
-          return <Facet id={value} initialValue={initialValues.get(value)} fields={[field]} />;
-        }
+        return (
+          <CollapsableFacet
+            key={value}
+            id={value}
+            initialValue={initialValues.get(value)}
+            fields={[field]}
+            title={value}
+          />
+        );
       })}
     </div>
     <style jsx global>{`
