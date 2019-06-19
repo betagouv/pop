@@ -79,12 +79,15 @@ function parseFiles(files, encoding) {
 }
 
 function convertLongNameToShort(str) {
-  return str
-    .substring(str.lastIndexOf("/") + 1)
-    .replace(/_[a-zA-Z0-9]\./g, ".")
-    .replace(/^.*[\\\/]/g, "")
-    .replace(/[a-zA-Z0-9]*_/g, "")
-    .toLowerCase();
+  return str;
+
+  // I keep this comment because I may need to put it back later. Im not sure about it.
+  // return str
+  //   .substring(str.lastIndexOf("/") + 1)
+  //   .replace(/_[a-zA-Z0-9]\./g, ".")
+  //   .replace(/^.*[\\\/]/g, "")
+  //   .replace(/[a-zA-Z0-9]*_/g, "")
+  //   .toLowerCase();
 }
 
 function readme() {
