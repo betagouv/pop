@@ -116,7 +116,7 @@ async function removeMemoireImageForNotice(notice, REF) {
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
 }
 
-async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", TICO = "") {
+async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAME = "") {
   const MEMOIRE = notice.MEMOIRE;
   let index = MEMOIRE.findIndex(e => e.ref === REF);
   if (index !== -1) {
@@ -124,15 +124,15 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", TIC
     if (
       MEMOIRE[index].url === IMG &&
       MEMOIRE[index].copy === COPY &&
-      MEMOIRE[index].name === TICO
+      MEMOIRE[index].name === NAME
     ) {
       return;
     }
     console.log("update", REF);
-    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: TICO };
+    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME };
   } else {
     //create
-    MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: TICO });
+    MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
   const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
@@ -145,7 +145,9 @@ async function updateLinks(notice) {
       return;
     }
 
-    const { REF, IMG, COPY, TICO } = notice;
+    const { REF, IMG, COPY } = notice;
+
+    const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
 
     const linkedNotices = [];
@@ -165,14 +167,14 @@ async function updateLinks(notice) {
           toAdd.splice(index, 1);
         }
         //existing notices
-        promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, TICO));
+        promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, NAME));
       }
     }
 
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
       const doc = await collection.findOne({ REF: toAdd[i] });
-      promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, TICO));
+      promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME));
     }
 
     await Promise.all(promises);
