@@ -1,5 +1,5 @@
 # POP SCHEMAS
- 
+
 - [Autor](/apps/api/doc/autor.md)
 - [Enluminures](/apps/api/doc/enluminures.md)
 - [Gallery](/apps/api/doc/Gallery.md)
@@ -12,9 +12,6 @@
 - [Palissy](/apps/api/doc/palissy.md)
 - [Thesaurus](/apps/api/doc/thesaurus.md)
 - [User](/apps/api/doc/User.md)
-
-
-
 
 # ACLs
 
