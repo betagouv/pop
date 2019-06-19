@@ -60,7 +60,14 @@ router.put(
       const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
       arr.push(uploadFile(path, req.files[i]));
     }
-    
+
+    // Update IMPORT ID (this code is unclear…)
+    if (notice.POP_IMPORT.length) {
+      const id = notice.POP_IMPORT[0];
+      delete notice.POP_IMPORT;
+      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
     transformBeforeCreateOrUpdate(notice);
     //update joconde
     arr.push(updateJocondeNotices(notice));

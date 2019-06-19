@@ -25,6 +25,7 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
+    POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     BASE: {
       type: String,
       default: "Musées de france (MUSEO)",
