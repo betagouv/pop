@@ -8,7 +8,14 @@ const passport = require("passport");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { uploadFile, formattedNow, checkESIndex, updateNotice, deleteFile, findMemoireProducteur } = require("./utils");
+const {
+  uploadFile,
+  formattedNow,
+  checkESIndex,
+  updateNotice,
+  deleteFile,
+  findMemoireProducteur
+} = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
 
@@ -93,58 +100,84 @@ function findProducteur(REF, IDPROD, EMET) {
   return findMemoireProducteur(REF, IDPROD, EMET);
 }
 
+/* Complicated function to update linked notice
+Uses cases : 
+- You can remove a link by removing the reference in LBASE
+- You can create a link by adding a reference in LBASE
+- You need to update information ( copy, name, url ) if memoire has been updated
+
+
+
+*/
+
+async function removeMemoireImageForNotice(notice, REF) {
+  const MEMOIRE = notice.MEMOIRE.filter(e => e.ref !== REF);
+  const CONTIENT_IMAGE = notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
+  await notice.update({ MEMOIRE, CONTIENT_IMAGE });
+}
+
+async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAME = "") {
+  const MEMOIRE = notice.MEMOIRE;
+  let index = MEMOIRE.findIndex(e => e.ref === REF);
+  if (index !== -1) {
+    //update if needed only
+    if (
+      MEMOIRE[index].url === IMG &&
+      MEMOIRE[index].copy === COPY &&
+      MEMOIRE[index].name === NAME
+    ) {
+      return;
+    }
+    console.log("update", REF);
+    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME };
+  } else {
+    //create
+    MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
+  }
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
+  await notice.update({ MEMOIRE, CONTIENT_IMAGE });
+}
+
 async function updateLinks(notice) {
   try {
-    const REF = notice.REF;
-    const URL = notice.IMG;
+    // if we update only a partial notice, no need to check link stuff
+    if (notice.LBASE === undefined) {
+      return;
+    }
+
+    const { REF, IMG, COPY } = notice;
+
+    const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
-    const toAdd = [...LBASE];
 
-    const palissyNotices = await Palissy.find({ "MEMOIRE.ref": REF });
-    const merimeeNotices = await Merimee.find({ "MEMOIRE.ref": REF });
+    const linkedNotices = [];
+    linkedNotices.push(...(await Palissy.find({ "MEMOIRE.ref": REF })));
+    linkedNotices.push(...(await Merimee.find({ "MEMOIRE.ref": REF })));
 
-    // Check palissy for deletion and addition.
-    for (let i = 0; i < palissyNotices.length; i++) {
-      if (!LBASE.includes(palissyNotices[i].REF)) {
-        // Delete palissy links.
-        await palissyNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
+    const toAdd = [...notice.LBASE];
+
+    // Check  for deletion, addition and update.
+    const promises = [];
+    for (let i = 0; i < linkedNotices.length; i++) {
+      if (!LBASE.includes(linkedNotices[i].REF)) {
+        promises.push(removeMemoireImageForNotice(linkedNotices[i], REF)); // Delete  links.
       } else {
-        // Adds to list of addition for palissy.
-        const index = toAdd.indexOf(palissyNotices[i].REF);
+        const index = toAdd.indexOf(linkedNotices[i].REF);
         if (index > -1) {
           toAdd.splice(index, 1);
         }
+        //existing notices
+        promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, NAME));
       }
     }
 
-    // Check merimee for deletion and addition.
-    for (let i = 0; i < merimeeNotices.length; i++) {
-      if (!LBASE.includes(merimeeNotices[i].REF)) {
-        // Delete merimee links.
-        await merimeeNotices[i].update({ $pull: { MEMOIRE: { ref: REF } } });
-      } else {
-        // Adds to list of addition for merimee.
-        const index = toAdd.indexOf(merimeeNotices[i].REF);
-        if (index > -1) {
-          toAdd.splice(index, 1);
-        }
-      }
-    }
-
-    // Add new links to palissy and merimee.
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
-      if (collection) {
-        const obj = { $push: { MEMOIRE: { ref: REF, url: URL } } };
-        if (URL) {
-          obj.CONTIENT_IMAGE = "oui";
-        }
-        // It doesnt work  if memoire is update instead of added.
-
-        /// Its not indexed through ES
-        await collection.update({ REF: toAdd[i] }, obj);
-      }
+      const doc = await collection.findOne({ REF: toAdd[i] });
+      promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME));
     }
+
+    await Promise.all(promises);
   } catch (error) {
     capture(error);
   }

@@ -22,11 +22,7 @@ const {
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
-const {
-  canUpdatePalissy,
-  canCreatePalissy,
-  canDeletePalissy
-} = require("./utils/authorization");
+const { canUpdatePalissy, canCreatePalissy, canDeletePalissy } = require("./utils/authorization");
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
@@ -125,7 +121,6 @@ async function checkPalissy(notice) {
 function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   transformBeforeCreateOrUpdate(notice);
-
 }
 
 function checkIfMemoireImageExist(notice) {
@@ -134,7 +129,8 @@ function checkIfMemoireImageExist(notice) {
       // Here, we update the images and we keep the order ( !! important )
       const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
       const arr = NoticesMemoire.map(e => {
-        return { ref: e.REF, url: e.IMG, copy: e.COPY, name: e.TICO };
+        const NAME = e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
+        return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME };
       });
 
       //@raph -> I know you want to do only one loop with a reduce but it gave me headache
@@ -288,7 +284,9 @@ router.post(
       promises.push(obj.save());
 
       for (let i = 0; i < req.files.length; i++) {
-        promises.push(uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i]));
+        promises.push(
+          uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i])
+        );
       }
 
       await Promise.all(promises);
