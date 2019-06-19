@@ -115,6 +115,7 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
+
       arr.push(updateNotice(Joconde, ref, notice));
 
       // Consume promises and send sucessful result.
@@ -145,7 +146,7 @@ router.post(
 
       // Transform and create.
       transformBeforeCreate(notice);
-      arr.push(transformBeforeCreateAndUpdate(notice));
+      await transformBeforeCreateAndUpdate(notice);
       const obj = new Joconde(notice);
       checkESIndex(obj);
       arr.push(obj.save());
