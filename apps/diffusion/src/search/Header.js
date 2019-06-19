@@ -93,7 +93,7 @@ const Museo = ({ museo }) => {
       </h2>
       <p>
         {museo.ATOUT && museo.ATOUT.replace(/#/g, " ; ")} -{" "}
-        <a href={`/museo/${museo.REF}`}>En savoir plus...</a>
+        <a href={`/notice/museo/${museo.REF}`}>En savoir plus...</a>
       </p>
       <style jsx>{`
         .museo-card-sm {
