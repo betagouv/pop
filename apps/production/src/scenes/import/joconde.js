@@ -13,7 +13,7 @@ class Import extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      museofile: this.props.museofile.length ? this.props.museofile[0] : ""
+      museofile: this.props.museofile && this.props.museofile.length ? this.props.museofile[0] : ""
     };
   }
   parseFiles(files, encoding) {
