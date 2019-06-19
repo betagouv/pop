@@ -13,7 +13,7 @@ class Import extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      museofile: this.props.museofile
+      museofile: this.props.museofile.length ? this.props.museofile[0] : ""
     };
   }
   parseFiles(files, encoding) {
@@ -31,6 +31,7 @@ class Import extends React.Component {
       rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
       if (rootFile) {
         const res = await utils.readCSV(rootFile, ";", encoding, '"');
+
         const importedNotices = await importCSV(res, files, this.state.museofile);
         resolve({ importedNotices, fileNames: [rootFile.name] });
         return;
@@ -68,7 +69,7 @@ class Import extends React.Component {
             { name: "Identifiant", key: "REF" },
             { name: "N° inventaire", key: "INV" }
           ]}
-          dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt ou .csv) et les images associées (au format .jpg) dans cette zone"
           children={this.renderMuseoFiles()}
         />
       </Container>
