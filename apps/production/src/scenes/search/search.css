@@ -124,6 +124,8 @@ ul.react-es-pagination > li {
 .delete-collection {
   margin-left: 15px;
   background-color: #DD3311;
+  float: right;
+
 }
 .export-collection > img {
   width: 16px;
