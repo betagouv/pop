@@ -301,7 +301,7 @@ const SeeMore = ({ notice, museo }) => {
     arr.push(
       <Field
         title={mapping.joconde.MUSEO.label}
-        content={<a href={`/museo/${notice.MUSEO}`}>{text}</a>}
+        content={<a href={`/notice/museo/${notice.MUSEO}`}>{text}</a>}
         key="notice.MUSEO"
       />
     );

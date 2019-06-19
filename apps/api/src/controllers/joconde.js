@@ -154,7 +154,7 @@ router.post(
 
       // Transform and create.
       transformBeforeCreate(notice);
-      promises.push(transformBeforeCreateAndUpdate(notice));
+      await transformBeforeCreateAndUpdate(notice);
       const obj = new Joconde(notice);
       checkESIndex(obj);
       promises.push(obj.save());
