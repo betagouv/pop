@@ -23,23 +23,16 @@ class CreateUser extends React.Component {
   };
 
   async createUser() {
+    this.setState({ loading: true });
+    let { group, email, role, institution, prenom, nom, museofile } = this.state;
+    if (this.state.taginput) {
+      museofile = [...museofile, this.state.taginput];
+    }
     try {
-      this.setState({ loading: true });
-      let { group, email, role, institution, prenom, nom, museofile } = this.state;
-      if (this.state.taginput) {
-        museofile = [...museofile, this.state.taginput];
-      }
-
-      if (group === "admin" && role !== "administrateur") {
-        this.setState({
-          error: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
-        });
-        return;
-      }
-      await api.createUser(email, group, role, institution, prenom, nom, museofile);
+      await api.createUser({ email, group, role, institution, prenom, nom, museofile });
       this.setState({ modal: false });
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: error.msg });
     }
   }
 
