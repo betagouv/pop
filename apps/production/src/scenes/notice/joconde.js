@@ -82,7 +82,7 @@ class Notice extends React.Component {
       <Container className="notice">
         <BackButton left history={this.props.history} />
         <h2 className="main-title">
-          Notice {this.state.notice.REF}
+          Notice {this.state.notice.REF}{" "}
           <a
             style={{ fontSize: "small" }}
             target="_blank"
