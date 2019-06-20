@@ -113,6 +113,12 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Type de bien ou d'édifice"
     />
     <CollapsableFacet
+      id="tech"
+      initialValue={initialValues.get("tech")}
+      fields={["TECH.keyword", "TYPDOC.keyword"]}
+      title="Techniques"
+    />
+    <CollapsableFacet
       id="image"
       initialValue={initialValues.get("image")}
       fields={["CONTIENT_IMAGE.keyword"]}
@@ -133,7 +139,6 @@ const Menu = ({ closeMenu, initialValues }) => (
         ["expo", "EXPO.keyword"],
         ["deno", "DENO.keyword"],
         ["serie", "SERIE.keyword"],
-        ["tech", "TECH.keyword"],
         ["repr", "REPR.keyword"],
         ["util", "UTIL.keyword"]
       ].map(([value, field]) => {
