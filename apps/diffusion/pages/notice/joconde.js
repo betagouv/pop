@@ -17,7 +17,7 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 export default class extends React.Component {
   static loadMuseo(m) {
     try {
-      return API.getMuseo(m);
+      return API.getNotice("museo", m);
     } catch (e) {}
     return null;
   }

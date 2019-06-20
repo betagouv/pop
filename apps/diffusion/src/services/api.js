@@ -14,10 +14,6 @@ class api {
     });
   }
 
-  getMuseo(ref) {
-    return this._get(`${api_url}/museo/${ref}`);
-  }
-
   getImportCount(ref) {
     return this._get(`${api_url}/import/count`);
   }

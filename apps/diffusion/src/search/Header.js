@@ -14,7 +14,7 @@ class Header extends React.Component {
     if (query && query.museo) {
       const museos = JSON.parse(query.museo);
       if (museos.length) {
-        const museo = await API.getMuseo(museos[0]);
+        const museo = await API.getNotice("museo", museos[0]);
         this.setState({ museo });
       }
     } else if (query && query.gallery) {
