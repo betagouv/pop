@@ -6,7 +6,6 @@ Code source de la [Plateforme Ouverte du Patrimoine](https://www.pop.culture.gou
  - [Interface de diffusion](https://github.com/betagouv/pop/tree/master/apps/diffusion)
  - [Interface de production](https://github.com/betagouv/pop/tree/master/apps/production)
  - [API](https://github.com/betagouv/pop/tree/master/apps/api) 
- - [Composants partagés](https://github.com/betagouv/pop/tree/master/apps/shared)
  - [Outils data](https://github.com/betagouv/pop/tree/master/apps/shared) 
 
 Il est conseillé de lire le fichier `README.md` de chacun de ces services.
@@ -25,7 +24,6 @@ La branche _master_ de chaque service (API, diffusion et production) est livrée
  - [Interface de diffusion](https://github.com/betagouv/pop/tree/master/apps/diffusion/README.md)
  - [Interface de production](https://github.com/betagouv/pop/tree/master/apps/production/README.md)
  - [API](https://github.com/betagouv/pop/tree/master/apps/api/README.md) 
- - [Composants partagés](https://github.com/betagouv/pop/tree/master/apps/shared/README.md)
  - [Outils data](https://github.com/betagouv/pop/tree/master/apps/shared/README.md) 
  - [Fonctionnement de la recherche](https://github.com/betagouv/pop/blob/master/apps/diffusion/ABOUT_SEARCH.md)
  - [Base de données](https://github.com/betagouv/pop/blob/master/apps/api/doc/README.md)
