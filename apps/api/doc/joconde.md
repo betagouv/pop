@@ -10,6 +10,8 @@
 - [REF](/apps/api/doc/joconde.md#REF)
 - [POP_IMPORT](/apps/api/doc/joconde.md#POP_IMPORT)
 - [REFMIS](/apps/api/doc/joconde.md#REFMIS)
+- [MANQUANT](/apps/api/doc/joconde.md#MANQUANT)
+- [MANQUANT_COM](/apps/api/doc/joconde.md#MANQUANT_COM)
 - [ADPT](/apps/api/doc/joconde.md#ADPT)
 - [APPL](/apps/api/doc/joconde.md#APPL)
 - [APTN](/apps/api/doc/joconde.md#APTN)
@@ -191,6 +193,26 @@ Référence de mise à jour
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Référence MAJ|
+
+### MANQUANT
+Un bien manquant est un bien inscrit à l’inventaire d’un musée de France qui, à l’issue du récolement décennal et de recherches répétées et infructueuses, n’a pas pu être retrouvé. Depuis 2016, le signalement des biens constatés manquants et volés est une obligation pour permettre d’élargir les recherches.
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Bien manquant|
+
+### MANQUANT_COM
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Bien manquant commentaire|
 
 ### ADPT
 Ancien dépôt / changement d’affectation
