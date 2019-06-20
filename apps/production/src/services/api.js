@@ -81,7 +81,7 @@ class api {
         const currentNotices = arr.splice(0, BULK_SIZE);
         let currentQueries = currentNotices.map(e => {
           if (e.action === "updated") {
-            return this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
+            return this.legacyUpdateNotice(e.notice.REF, e.collection, e.notice, e.files);
           } else {
             return this.createNotice(e.collection, e.notice, e.files);
           }
@@ -118,13 +118,38 @@ class api {
     return request.post(`${api_url}/gallery`, formData);
   }
 
-  updateNotice(ref, collection, data, files = []) {
+  legacyUpdateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
     return request.put(`${api_url}/${collection}/${ref}`, formData);
+  }
+
+  // Update one notice.
+  updateNotice(ref, collection, data, files = []) {
+    return new Promise(async (resolve, reject) => {
+      let formData = new FormData();
+      formData.append("notice", JSON.stringify(data));
+      for (let i = 0; i < files.length; i++) {
+        formData.append("file", files[i], files[i].name);
+      }
+      try {
+        const response = await fetch(
+          `${api_url}/${collection}/${ref}`,
+          request._init("PUT", formData)
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
+      }
+    });
   }
 
   createNotice(collection, data, files = []) {
