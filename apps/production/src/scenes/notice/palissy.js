@@ -64,17 +64,18 @@ class Notice extends React.Component {
     return false;
   }
 
-  onSubmit(values) {
+  async onSubmit(values) {
     this.setState({ saving: true });
-
-    console.log("VALUES", values);
-    API.updateNotice(this.state.notice.REF, "palissy", values).then(e => {
+    try {
+      await API.updateNotice(this.state.notice.REF, "palissy", values);
       toastr.success(
         "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
+        "La modification sera visible dans 1 à 5 min en diffusion."
       );
-      this.setState({ saving: false });
-    });
+    } catch (e) {
+      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
+    }
+    this.setState({ saving: false });
   }
 
   render() {

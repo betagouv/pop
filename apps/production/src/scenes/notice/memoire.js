@@ -73,11 +73,15 @@ class Notice extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles);
-    toastr.success(
-      "Modification enregistrée",
-      "La modification sera visible dans 1 à 5 min en diffusion"
-    );
+    try {
+      await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles);
+      toastr.success(
+        "Modification enregistrée",
+        "La modification sera visible dans 1 à 5 min en diffusion."
+      );
+    } catch (e) {
+      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
+    }
     this.setState({ saving: false });
   }
 

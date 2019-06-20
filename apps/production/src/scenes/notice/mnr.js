@@ -63,13 +63,12 @@ class Notice extends React.Component {
       await API.updateNotice(this.state.notice.REF, "mnr", values, this.state.imagesFiles);
       toastr.success(
         "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion"
+        "La modification sera visible dans 1 à 5 min en diffusion."
       );
-      this.setState({ saving: false });
     } catch (e) {
-      toastr.error("Impossible d'enregistrer la modification. Error", JSON.stringify(e));
-      this.setState({ saving: false });
+      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
     }
+    this.setState({ saving: false });
   }
 
   render() {

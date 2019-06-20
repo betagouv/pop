@@ -38,19 +38,12 @@ class Autor extends React.Component {
       return;
     }
     this.props.initialize(notice);
-    const editable = this.props.canUpdate && this.props.user.role === "administrateur";
+    const editable = false;
     this.setState({ loading: false, notice, editable });
   }
 
-  async onSubmit(values) {
-    this.setState({ saving: true });
-    const notice = await API.updateNotice(this.state.notice.REF, "autor", values);
-    toastr.success(
-      "Modification enregistrée",
-      "La modification sera visible dans 1 à 5 min en diffusion"
-    );
-    this.setState({ saving: false, notice });
-  }
+  // Not implemented yet (not editable)
+  async onSubmit() {}
 
   render() {
     if (this.state.loading) {
@@ -147,9 +140,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
-  const canUpdate = false;
   return {
-    canUpdate,
     user: { role, group }
   };
 };
