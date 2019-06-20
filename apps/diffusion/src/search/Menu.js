@@ -110,7 +110,7 @@ const Menu = ({ closeMenu, initialValues }) => (
         "PARN.keyword",
         "UTIL.keyword"
       ]}
-      title="Type de bien ou édifice"
+      title="Type de bien ou d'édifice"
     />
     <CollapsableFacet
       id="image"
