@@ -6,12 +6,28 @@ import request from "./request";
  * Buisness level access to POP API.
  */
 class api {
-  constructor() {
-    this.bucket = [];
-  }
-  createUser(email, group, role, institution, prenom, nom, museofile) {
-    const obj = { email, group, role, institution, prenom, nom, museofile };
-    return request.post(`${api_url}/auth/signup`, JSON.stringify(obj), "application/json");
+  async createUser(props) {
+    return new Promise(async (resolve, reject) => {
+      const { email, group, role, institution, prenom, nom, museofile } = props;
+      try {
+        const response = await fetch(
+          `${api_url}/auth/signup`,
+          request._init(
+            "POST",
+            JSON.stringify({ email, group, role, institution, prenom, nom, museofile }),
+            { "Content-Type": "application/json" }
+          )
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
+      }
+    });
   }
 
   signin(email, password) {

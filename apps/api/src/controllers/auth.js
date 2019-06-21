@@ -21,6 +21,13 @@ router.post("/signup", (req, res) => {
     });
   }
 
+  if (req.body.group === "admin" && req.body.role !== "administrateur") {
+    return res.status(400).json({
+      success: false,
+      msg: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
+    });
+  }
+
   // museofile is required
   const needMuseofile =
     req.body.role === "producteur" && (req.body.group === "joconde" || req.body.group === "museo");
