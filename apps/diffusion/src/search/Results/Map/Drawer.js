@@ -150,7 +150,7 @@ const Palissy = ({ notice }) => {
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      <img src={image_preview} alt={title} />;
+      <img src={image_preview} alt={title} />
       <div className="description">
         <p>{subtitle}</p>
         <p>{author}</p>
@@ -170,7 +170,7 @@ const Merimee = ({ notice }) => {
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      <img src={image_preview} alt={title} />;
+      <img src={image_preview} alt={title} />
       <div className="description">
         <p>{subtitle}</p>
         <p>{author}</p>

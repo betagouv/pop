@@ -21,11 +21,11 @@ class LinkedNotice extends React.Component {
 
 class SmallNotice extends React.Component {
   render() {
-    const { title, image } = getNoticeInfo(this.props.notice);
+    const { title, image_preview } = getNoticeInfo(this.props.notice);
     return (
       <Link href={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}>
         <a style={{ textDecoration: "none" }} className="card">
-          <img src={image} alt={title} />
+          <img src={image_preview} alt={title} />
           <div className="content">
             <h3>{title}</h3>
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>

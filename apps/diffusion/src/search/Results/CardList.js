@@ -10,10 +10,10 @@ const joinData = f => {
 };
 
 const Memoire = ({ data }) => {
-  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image} alt={title} />;
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const content = joinData([
     data.OBJET,
@@ -60,8 +60,8 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title, subtitle, logo, image, localisation } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
@@ -122,9 +122,9 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, logo, image, localisation } = getNoticeInfo(data);
+  const { title, logo, image_preview, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image} alt={title} />;
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";

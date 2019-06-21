@@ -36,8 +36,9 @@ export default class extends React.Component {
   }
 
   fieldImage(notice) {
-    const images = notice.MEMOIRE.map(e => ({
-      src: `${bucket_url}${e.url}`,
+    const { images } = getNoticeInfo(notice);
+    const imageComponents = images.map(e => ({
+      src: e.src,
       alt: e.name,
       footer: (
         <div style={{ marginTop: "5px" }}>
@@ -61,8 +62,8 @@ export default class extends React.Component {
       )
     }));
 
-    if (images && images.length) {
-      return <FieldImages images={images} />;
+    if (imageComponents.length) {
+      return <FieldImages images={imageComponents} />;
     }
   }
 

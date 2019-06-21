@@ -37,7 +37,8 @@ class FieldImages extends React.Component {
 
     var settings = {
       lazyLoad: true,
-      slidesToShow: 1
+      slidesToShow: 1,
+      speed: 0
     };
     return (
       <div>
