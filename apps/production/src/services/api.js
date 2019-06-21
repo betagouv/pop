@@ -2,74 +2,57 @@ const { api_url } = require("../config.js");
 import "isomorphic-fetch";
 import request from "./request";
 
-/**
- * Buisness level access to POP API.
- */
+// Buisness level access to POP API.
 class api {
-  async createUser(props) {
-    return new Promise(async (resolve, reject) => {
-      const { email, group, role, institution, prenom, nom, museofile } = props;
-      try {
-        const response = await fetch(
-          `${api_url}/auth/signup`,
-          request._init(
-            "POST",
-            JSON.stringify({ email, group, role, institution, prenom, nom, museofile }),
-            { "Content-Type": "application/json" }
-          )
-        );
-        const jsonData = await response.json();
-        if (response.status !== 200 || jsonData.success !== true) {
-          return reject(jsonData);
-        }
-        resolve(jsonData);
-      } catch (err) {
-        Raven.captureException(err);
-        reject({ success: false, msg: "L'api est inaccessible." });
-      }
-    });
-  }
-
+  // Authentication
+  // TODO
   signin(email, password) {
     const obj = { email, password };
     return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
   }
 
-  getUser(token) {
-    return request.get(`${api_url}/auth/user`, {
-      headers: {
-        Authorization: token
-      }
-    });
+  // Get auth user by her token.
+  // TODO
+  getAuthUser(token) {
+    return request.get(`${api_url}/auth/user`, { headers: { Authorization: token } });
   }
 
-  deleteUser(email) {
-    return request.delete(`${api_url}/users/${email}`);
+  // Update password for one user (RPC style).
+  updatePassword({ email, pwd, pwd1, pwd2 }) {
+    return request.fetchJSON("POST", "/auth/updatePassword", { email, pwd, pwd1, pwd2 });
   }
 
-  updatePassword(email, ppwd, pwd1, pwd2) {
-    const obj = { email, ppwd, pwd1, pwd2 };
-    return request.post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), "application/json");
-  }
-
-  updateProfile(email, nom, prenom, institution, group, role, museofile) {
-    const obj = { email, nom, prenom, institution, group, role, museofile };
-    return request.post(`${api_url}/auth/updateProfile`, JSON.stringify(obj), "application/json");
-  }
-
+  // Ask for new password.
+  // TODO
   forgetPassword(email) {
     const obj = { email };
     return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
   }
 
-  getUsers(group) {
-    return request.get(`${api_url}/users?group=${group}`, {
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    });
+  // Create a user.
+  async createUser({ email, group, role, institution, prenom, nom, museofile }) {
+    const props = { email, group, role, institution, prenom, nom, museofile };
+    return request.fetchJSON("POST", "/users", props);
   }
 
+  // Update a user.
+  async updateUser({ email, group, role, institution, prenom, nom, museofile }) {
+    const props = { email, group, role, institution, prenom, nom, museofile };
+    return request.fetchJSON("PUT", `/users/${email}`, props);
+  }
+
+  // TODO
+  deleteUser(email) {
+    return request.delete(`${api_url}/users/${email}`);
+  }
+
+  // TODO
+  getUsers() {
+    const token = localStorage.getItem("token");
+    return request.get(`${api_url}/users`, { headers: { Authorization: token } });
+  }
+
+  // TODO
   sendReport(subject, to, body) {
     const obj = { subject, to, body };
     if (process.env.NODE_ENV !== "production") {
@@ -78,6 +61,7 @@ class api {
     return request.post(`${api_url}/mail`, JSON.stringify(obj), "application/json");
   }
 
+  // TODO
   createImport(data, file) {
     let formData = new FormData();
     formData.append("import", JSON.stringify(data));
@@ -85,6 +69,7 @@ class api {
     return request.post(`${api_url}/import`, formData);
   }
 
+  // TODO
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
       const MAX_ATTEMPTS = 5;
@@ -124,6 +109,7 @@ class api {
     });
   }
 
+  // TODO
   createGallery(obj, file) {
     let formData = new FormData();
     console.log("add file", file);
@@ -134,6 +120,7 @@ class api {
     return request.post(`${api_url}/gallery`, formData);
   }
 
+  // TODO
   legacyUpdateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
@@ -145,29 +132,15 @@ class api {
 
   // Update one notice.
   updateNotice(ref, collection, data, files = []) {
-    return new Promise(async (resolve, reject) => {
-      let formData = new FormData();
-      formData.append("notice", JSON.stringify(data));
-      for (let i = 0; i < files.length; i++) {
-        formData.append("file", files[i], files[i].name);
-      }
-      try {
-        const response = await fetch(
-          `${api_url}/${collection}/${ref}`,
-          request._init("PUT", formData)
-        );
-        const jsonData = await response.json();
-        if (response.status !== 200 || jsonData.success !== true) {
-          return reject(jsonData);
-        }
-        resolve(jsonData);
-      } catch (err) {
-        Raven.captureException(err);
-        reject({ success: false, msg: "L'api est inaccessible." });
-      }
-    });
+    let formData = new FormData();
+    formData.append("notice", JSON.stringify(data));
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i].name);
+    }
+    return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 
+  // TODO
   createNotice(collection, data, files = []) {
     for (let propName in data) {
       // Clean object.
@@ -183,14 +156,16 @@ class api {
     return request.post(`${api_url}/${collection}`, formData);
   }
 
+  // TODO
   getNotice(collection, ref) {
     return request.get(`${api_url}/${collection}/${ref}`);
   }
 
+  // TODO
   deleteNotice(collection, ref) {
     return request.delete(`${api_url}/${collection}/${ref}`);
   }
-
+  // TODO
   getNewId(collection, prefix, dpt) {
     return request.get(`${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`, {
       headers: {
@@ -198,18 +173,23 @@ class api {
       }
     });
   }
+  // TODO
   getTopConceptsByThesaurusId(thesaurusId) {
     return request.get(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
   }
+  // TODO
   getAllChildrenConcept(thesaurusId) {
     return request.get(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
   }
+  // TODO
   getPreferredTermByConceptId(thesaurusId) {
     return request.get(`${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
   }
+  // TODO
   deleteAllThesaurus(thesaurusId) {
     return request.get(`${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
   }
+  // TODO
   createThesaurus(thesaurusId, terms) {
     return request.post(
       `${api_url}/thesaurus/createThesaurus?id=${thesaurusId}`,
@@ -217,11 +197,11 @@ class api {
       "application/json"
     );
   }
-
+  // TODO
   getThesaurus(thesaurusId, str) {
     return request.get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
-
+  // TODO
   validateWithThesaurus(thesaurusId, str) {
     return request.get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
   }

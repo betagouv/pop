@@ -11,19 +11,20 @@ const { logout } = authAction;
 
 class UpdatePassword extends Component {
   state = {
-    ppwd: "",
-    ppwd1: "",
-    ppwd2: "",
+    pwd: "",
+    pwd1: "",
+    pwd2: "",
     loading: false,
     done: false,
     error: ""
   };
 
   updatePassword() {
-    const { ppwd, ppwd1, ppwd2 } = this.state;
+    const { pwd, pwd1, pwd2 } = this.state;
     this.setState({ loading: true });
     api
-      .updatePassword(this.props.email, ppwd, ppwd1, ppwd2)
+    
+      .updatePassword({ email: this.props.email, pwd, pwd1, pwd2 })
       .then(() => {
         this.setState({ loading: false, done: true });
         setTimeout(() => {
@@ -99,22 +100,22 @@ class UpdatePassword extends Component {
             className="input-field"
             placeholder="Mot de passe actuel"
             type="password"
-            value={this.state.ppwd}
-            onChange={e => this.setState({ ppwd: e.target.value })}
+            value={this.state.pwd}
+            onChange={e => this.setState({ pwd: e.target.value })}
           />
           <input
             className="input-field"
             placeholder="Nouveau Mot de passe"
             type="password"
-            value={this.state.ppwd1}
-            onChange={e => this.setState({ ppwd1: e.target.value })}
+            value={this.state.pwd1}
+            onChange={e => this.setState({ pwd1: e.target.value })}
           />
           <input
             className="input-field"
             placeholder="Nouveau Mot de passe (confirmation)"
             type="password"
-            value={this.state.ppwd2}
-            onChange={e => this.setState({ ppwd2: e.target.value })}
+            value={this.state.pwd2}
+            onChange={e => this.setState({ pwd2: e.target.value })}
           />
           <Button
             className="submit-button"

@@ -8,95 +8,56 @@ const mailer = require("../mailer");
 require("../passport")(passport);
 const User = require("../models/user");
 const config = require("../config.js");
-const { capture } = require("../sentry.js");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-router.post("/signup", (req, res) => {
-  if (!req.body.email || !req.body.group || !req.body.role || !req.body.institution) {
-    return res.status(400).json({
-      success: false,
-      msg: "Email, group, institution ou role absent"
-    });
-  }
-
-  if (req.body.group === "admin" && req.body.role !== "administrateur") {
-    return res.status(400).json({
-      success: false,
-      msg: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »"
-    });
-  }
-
-  // museofile is required
-  const needMuseofile =
-    req.body.role === "producteur" && (req.body.group === "joconde" || req.body.group === "museo");
-
-  if (needMuseofile) {
-    if (!req.body.museofile.length) {
-      return res.status(400).json({
-        success: false,
-        msg: "Le champ muséofile est obligatoire pour les producteurs du groupe joconde ou museo."
-      });
-    } else if (req.body.museofile.some(e => !e.match(/^M[0-9]+$/))) {
-      return res.status(400).json({
-        success: false,
-        msg: "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)"
-      });
-    }
-  }
-
-  const password = generator.generate({
-    length: 12,
-    numbers: true,
-    symbols: true
-  });
-
-  const userData = {
-    nom: req.body.nom,
-    prenom: req.body.prenom,
-    email: req.body.email.toLowerCase(),
-    group: req.body.group,
-    role: req.body.role,
-    institution: req.body.institution,
-    password,
-    hasResetPassword: false
+// Sign in.
+router.post("/signin", (req, res) => {
+  const failureObject = {
+    success: false,
+    msg: `L'authentification a échoué. Email ou mot de passe incorrect.`
   };
-  if (needMuseofile) {
-    userData.museofile = req.body.museofile;
-  }
-  const newUser = new User(userData);
+  User.findOne(
+    {
+      email: req.body.email.toLowerCase()
+    },
+    function(err, user) {
+      if (err) throw err;
 
-  newUser.save(function(err) {
-    if (err) {
-      console.log("signup", err);
-      return res.status(400).json({
-        success: false,
-        msg: `L'utilisateur ${req.body.email} existe déja`
-      });
+      if (!user) {
+        res.status(401).send(failureObject);
+      } else {
+        user.comparePassword(req.body.password, function(err, isMatch) {
+          if (isMatch && !err) {
+            const token = jwt.sign({ _id: user._id }, config.secret, {
+              expiresIn: "1d"
+            });
+            user.set({ lastConnectedAt: Date.now() });
+            user.save();
+            res.status(200).send({
+              success: true,
+              token: "JWT " + token,
+              user
+            });
+          } else {
+            res.status(401).send(failureObject);
+          }
+        });
+      }
     }
+  );
+});
 
-    res.status(200).json({
-      success: true,
-      msg: "Successful created new user."
-    });
-
-    mailer.send(
-      "Compte POP créé avec succès",
-      req.body.email,
-      `Félicitations!<br /><br />
-          Votre compte ${req.body.role} POP a été créé avec succès.<br /><br />
-          Le lien vers la plateforme de production est le suivant : <a href="http://production.pop.culture.gouv.fr">http://production.pop.culture.gouv.fr</a><br />
-          Le lien vers la plateforme de diffusion est le suivant : <a href="https://www.pop.culture.gouv.fr/">https://www.pop.culture.gouv.fr/</a><br /><br />
-          Votre identifiant de connexion est ${req.body.email}<br />
-          Votre mot de passe provisoire est ${password}<br />
-          Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
-          L'équipe POP<br />
-          Et en cas de problème, vous pouvez contacter jennifer.stephan@beta.gouv.fr<br />`
-    );
+// Get current user.
+router.get("/user", passport.authenticate("jwt", { session: false }), (req, res) => {
+  res.send({
+    success: true,
+    user: req.user
   });
 });
 
+// Password lost.
 router.post("/forgetPassword", (req, res) => {
   const { email } = req.body;
 
@@ -134,159 +95,57 @@ router.post("/forgetPassword", (req, res) => {
   });
 });
 
-router.post("/updatePassword", (req, res) => {
-  const { email, ppwd, pwd1, pwd2 } = req.body;
+// Update password.
+router.post(
+  "/updatePassword",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { email, pwd, pwd1, pwd2 } = req.body;
 
-  if (!pwd1) {
-    return res.status(401).send({
-      success: false,
-      msg: `Le nouveau mot de passe ne peut être vide`
-    });
-  }
+    if (!pwd1) {
+      return res
+        .status(400)
+        .send({ success: false, msg: `Le nouveau mot de passe ne peut être vide` });
+    }
 
-  if (pwd1 !== pwd2) {
-    return res.status(401).send({
-      success: false,
-      msg: `Les mots de passe ne sont pas identiques`
-    });
-  }
+    if (pwd1 !== pwd2) {
+      return res
+        .status(400)
+        .send({ success: false, msg: `Les mots de passe ne sont pas identiques` });
+    }
 
-  User.findOne({ email: email.toLowerCase() }, function(err, user) {
-    if (err) throw err;
-
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      res.status(401).send({
+      res.status(404).send({
         success: false,
         msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
-    } else {
-      user.comparePassword(ppwd, function(err, isMatch) {
-        if (isMatch && !err) {
-          user.set({ password: pwd1 });
-          user.set({ hasResetPassword: true });
-          user.save(function(err) {
-            if (err) throw err;
-            return res.status(200).send({
-              success: true,
-              msg: `La mise à jour du mot de passe a été effectuée avec succès`
-            });
-          });
-        } else {
-          res.status(401).send({
+    }
+
+    user.comparePassword(pwd, async function(err, isMatch) {
+      if (isMatch && !err) {
+        user.set({ password: pwd1 });
+        user.set({ hasResetPassword: true });
+        try {
+          await user.save();
+        } catch (e) {
+          return res.status(500).send({
             success: false,
-            msg: `La mise à jour du mot de passe à échoué. Utilisateur introuvable`
+            msg: `La mise à jour du mot de passe à échoué.`
           });
         }
-      });
-    }
-  });
-});
-
-router.post("/updateProfile", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const { email, nom, prenom, institution, group, role } = req.body;
-
-  if (!nom || !prenom || !institution || !group || !role) {
-    return res.status(401).send({
-      success: false,
-      msg: `Les informations ne peuvent pas être vides`
-    });
-  }
-
-  User.findOne({ email: email.toLowerCase() }, function(err, user) {
-    if (err) throw err;
-
-    if (!user) {
-      res.status(401).send({
-        success: false,
-        msg: `La mise à jour des informations à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
-      });
-    } else {
-      try {
-        if (req.body.museofile) {
-          user.set({ museofile: req.body.museofile });
-        }
-        user.set({
-          institution,
-          nom,
-          prenom,
-          group,
-          role
+        return res.status(200).send({
+          success: true,
+          msg: `La mise à jour du mot de passe a été effectuée avec succès`
         });
-        user.save(function(err) {
-          if (err) throw err;
-          return res.status(200).send({
-            success: true,
-            msg: `La mise à jour des informations a été effectuée avec succès`
-          });
-        });
-      } catch (e) {
-        capture(e);
-        res.status(401).send({
-          success: false,
-          msg: `La mise à jour des informations a échoué`
-        });
-      }
-    }
-  });
-});
-
-router.post("/signin", (req, res) => {
-  const failureObject = {
-    success: false,
-    msg: `L'authentification a échoué. Email ou mot de passe incorrect.`
-  };
-  User.findOne(
-    {
-      email: req.body.email.toLowerCase()
-    },
-    function(err, user) {
-      if (err) throw err;
-
-      if (!user) {
-        res.status(401).send(failureObject);
       } else {
-        user.comparePassword(req.body.password, function(err, isMatch) {
-          if (isMatch && !err) {
-            const token = jwt.sign({ _id: user._id }, config.secret, {
-              expiresIn: "1d"
-            });
-            user.set({ lastConnectedAt: Date.now() });
-            user.save();
-            res.status(200).send({
-              success: true,
-              token: "JWT " + token,
-              user
-            });
-          } else {
-            res.status(401).send(failureObject);
-          }
+        return res.status(401).send({
+          success: false,
+          msg: `La mise à jour du mot de passe à échoué. Le mot de passe original n'est pas bon.`
         });
       }
-    }
-  );
-});
-
-router.get("/user", passport.authenticate("jwt", { session: false }), (req, res) => {
-  res.send({
-    success: true,
-    user: req.user
-  });
-});
-
-router.put("/user", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  const { fname, lname } = req.body;
-  if (!fname || !lname) {
-    return res.status(400).send({
-      success: false,
-      msg: "Le nom et le prénom ne doivent pas être vide."
     });
   }
-  const user = await User.findOneAndUpdate(
-    { _id: req.user._id },
-    { $set: { nom: fname, prenom: lname } },
-    { new: true }
-  );
-  res.send({ success: true, user });
-});
+);
 
 module.exports = router;

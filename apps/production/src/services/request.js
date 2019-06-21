@@ -1,8 +1,9 @@
 import "isomorphic-fetch";
+const { api_url } = require("../config.js");
 
 /**
  * This class provides ~low level access to POP API.
- * Use it via `request.post`, `request.put`, etc.
+ * Use it via `request.fetchJSON`, `request.fetchFormData`, etc.
  */
 class request {
   _init(verb, data, headers) {
@@ -26,6 +27,44 @@ class request {
     return initData;
   }
 
+  async fetchJSON(verb, url, data) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          `${api_url}/${url.replace(/^\//, "")}`,
+          this._init(verb, JSON.stringify(data), { "Content-Type": "application/json" })
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
+      }
+    });
+  }
+
+  async fetchFormData(verb, url, data) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          `${api_url}/${url.replace(/^\//, "")}`,
+          this._init(verb, data)
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
+      }
+    });
+  }
+
   _errorTxt(response) {
     return [
       `Un probleme a été detecté lors de l'enregistrement via l'API.`,
@@ -34,6 +73,7 @@ class request {
     ].join(" ");
   }
 
+  // LEGACY
   put(url, data, contentType) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -70,7 +110,7 @@ class request {
             resolve(res);
             return;
           }
-          // Special case: we don't want to track unsuccessful login, 
+          // Special case: we don't want to track unsuccessful login,
           // nor anything about "unauthorized". So there is a `reject`
           // operation, but no Raven.capture.
           // See: https://sentry.data.gouv.fr/betagouvfr/pop-culture/issues/644727/
