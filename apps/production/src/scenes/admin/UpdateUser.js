@@ -31,7 +31,7 @@ class UpdateUser extends React.Component {
       this.setState({ loading: true });
       const { group, email, role, institution, prenom, nom, museofile } = this.state;
       await api.updateUser({ email, nom, prenom, institution, group, role, museofile });
-      this.setState({ modal: false });
+      this.setState({ modal: false, error: ""  });
       toastr.success("Les informations ont été enregistrées.");
       this.props.callback();
     } catch (error) {
@@ -47,7 +47,7 @@ class UpdateUser extends React.Component {
       const toastrConfirmOptions = {
         onOk: async () => {
           await api.deleteUser(this.state.email);
-          this.setState({ modal: false });
+          this.setState({ modal: false, error: "" });
           toastr.success("L'utilisateur a été supprimé");
           this.props.callback();
         }
@@ -169,7 +169,7 @@ class UpdateUser extends React.Component {
           <Button color="primary" onClick={this.updateUser.bind(this)}>
             Enregistrer les modifications
           </Button>
-          <Button color="danger" onClick={this.deleteUser.bind(this)}>
+          <Button color="danger" className="ml-3" onClick={this.deleteUser.bind(this)}>
             Supprimer
           </Button>
         </div>
