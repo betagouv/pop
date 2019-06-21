@@ -1,5 +1,7 @@
 import { bucket_url } from "../../../config";
 
+import { getNoticeInfo } from "../../../utils";
+
 export default class Marker {
   constructor(feature, color = "#007bff") {
     const mapboxgl = require("mapbox-gl");
@@ -62,7 +64,6 @@ export default class Marker {
 function createClusterMarkerElement(feature, color) {
   const value = feature.properties.count;
   let el = document.createElement("div");
-  // el.style.backgroundImage = "url(https://placekitten.com/g/40/40/)";
   el.style.backgroundColor = color;
   el.className = "marker-cluster";
   if (value > 100000) {
@@ -86,24 +87,13 @@ function createMarkerElement(feature) {
   const notice = feature.properties.hits[0];
   let el = document.createElement("div");
 
-  let backgroundImage = "https://placekitten.com/g/40/40/)";
+  const { image_preview, logo } = getNoticeInfo(notice._source);
 
-  if (
-    (notice._type === "merimee" || notice._type === "palissy") &&
-    notice._source.MEMOIRE.length &&
-    notice._source.MEMOIRE[0] &&
-    notice._source.MEMOIRE[0].url
-  ) {
-    backgroundImage = `${bucket_url}${notice._source.MEMOIRE[0].url}`;
-  } else if (notice._type === "joconde") {
-    backgroundImage = `/static/musee-de-france.png`;
-  } else if (
-    notice._source.PRODUCTEUR === "CRMH" ||
-    notice._source.PRODUCTEUR === "Monuments Historiques"
-  ) {
-    backgroundImage = `static/mh.jpg`;
-  } else if (notice._source.PRODUCTEUR === "Inventaire") {
-    backgroundImage = `/static/inventaire.jpg`;
+  let backgroundImage = "";
+  if (image_preview === "/static/noimage.png") {
+    backgroundImage = logo;
+  } else {
+    backgroundImage = image_preview;
   }
 
   el.style.backgroundImage = `url("${backgroundImage}")`;

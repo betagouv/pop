@@ -27,22 +27,6 @@ export default class extends React.Component {
     return { notice, links };
   }
 
-  fieldImage(notice) {
-    const images = toFieldImages([notice.IMG]);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="memoire"
-          images={images}
-          disabled
-          name={notice.TICO}
-          external={true}
-        />
-      );
-    }
-  }
-
   photographer() {
     const autp = this.props.notice.AUTP;
     return autp && <a href={`/search/list?auteur=["${autp}"]`}>{autp}</a>;
@@ -64,12 +48,12 @@ export default class extends React.Component {
     }
     const { notice } = this.props;
 
-    const { title, image, metaDescription } = getNoticeInfo(notice);
+    const { title, images, image_preview, metaDescription } = getNoticeInfo(notice);
     const obj = {
       name: title,
       created_at: notice.DATPV || notice.DMIS,
       artform: "Photograph",
-      image: image,
+      image: image_preview,
       description: metaDescription,
       contentLocation: notice.LOCA,
       creator: [notice.AUTP]
@@ -83,7 +67,7 @@ export default class extends React.Component {
               <title>{title}</title>
               <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {image ? <meta property="og:image" content={image} /> : <meta />}
+              {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
             <Row>
@@ -315,7 +299,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                {this.fieldImage(notice)}
+                <FieldImages images={images} />
                 <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>

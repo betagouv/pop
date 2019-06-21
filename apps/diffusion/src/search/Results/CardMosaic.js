@@ -4,14 +4,14 @@ import { Col } from "reactstrap";
 import { getNoticeInfo } from "../../utils";
 
 export default ({ index, data }) => {
-  const { title, image } = getNoticeInfo(data);
+  const { title, image_preview } = getNoticeInfo(data);
 
   return (
     <Col>
       <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
         <a style={{ textDecoration: "none" }} className="mosaique-card">
           <div className="thumbnail">
-            <img src={image} alt={title} />
+            <img src={image_preview} alt={title} />
           </div>
           <div className="content">
             <span>{title}</span>

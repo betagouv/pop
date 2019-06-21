@@ -28,11 +28,11 @@ export default class Drawer extends Component {
   }
 
   renderNoticeMini(notice) {
-    const { title, image } = getNoticeInfo(notice);
+    const { title, image_preview } = getNoticeInfo(notice._source);
     return (
       <Row>
         <Col md={3} className="img-col">
-          <img src={image} alt={title} />;
+          <img src={image_preview} alt={title} />
         </Col>
         <Col md={9}>
           <div className="drawer-title-mini">{title}</div>
@@ -122,14 +122,16 @@ const joinData = f => {
 };
 
 const Joconde = ({ notice }) => {
-  const { title, subtitle, image } = getNoticeInfo(notice);
+  const { title, subtitle, image_preview } = getNoticeInfo(notice);
+
+  console.log("image_preview", image_preview);
   const author = joinData([notice.AUTR, notice.ECOL, notice.EPOQ]);
   const peri = notice.PERI;
   const loc = notice.LOCA;
   return (
-    <div>
+    <div key={notice.REF}>
       <div className="drawer-title">{title}</div>
-      <img src={image} alt={title} />
+      <img src={image_preview} alt={title} />
       <div className="description">
         <p>{subtitle}</p>
         <p>{author}</p>
@@ -141,14 +143,14 @@ const Joconde = ({ notice }) => {
 };
 
 const Palissy = ({ notice }) => {
-  const { title, subtitle, localisation, image } = getNoticeInfo(notice);
+  const { title, subtitle, localisation, image_preview } = getNoticeInfo(notice);
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
   const siecle = notice.SCLE ? notice.SCLE.join(", ") : "";
 
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      <img src={image} alt={title} />;
+      <img src={image_preview} alt={title} />
       <div className="description">
         <p>{subtitle}</p>
         <p>{author}</p>
@@ -160,7 +162,7 @@ const Palissy = ({ notice }) => {
 };
 
 const Merimee = ({ notice }) => {
-  const { title, subtitle, localisation, image } = getNoticeInfo(notice);
+  const { title, subtitle, localisation, image_preview } = getNoticeInfo(notice);
 
   const author = notice.AUTR ? notice.AUTR.join(", ") : "";
   const siecle = notice.SCLE ? notice.SCLE.join(", ") : "";
@@ -168,7 +170,7 @@ const Merimee = ({ notice }) => {
   return (
     <div>
       <div className="drawer-title">{title}</div>
-      <img src={image} alt={title} />;
+      <img src={image_preview} alt={title} />
       <div className="description">
         <p>{subtitle}</p>
         <p>{author}</p>

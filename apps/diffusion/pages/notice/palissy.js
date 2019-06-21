@@ -12,8 +12,9 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { schema, toFieldImages, findCollection, postFixedLink } from "../../src/notices/utils";
+import { schema, findCollection, postFixedLink } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import { bucket_url } from "../../src/config";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -35,18 +36,34 @@ export default class extends React.Component {
   }
 
   fieldImage(notice) {
-    const images = toFieldImages(notice.MEMOIRE);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="palissy"
-          images={images}
-          disabled
-          name={notice.TICO || notice.TITR}
-          external={true}
-        />
-      );
+    const { images } = getNoticeInfo(notice);
+    const imageComponents = images.map(e => ({
+      src: e.src,
+      alt: e.name,
+      footer: (
+        <div style={{ marginTop: "5px" }}>
+          <div style={{ textAlign: "center", fontWeight: "bold" }}>{e.name}</div>
+          <div
+            style={{
+              fontSize: "13px"
+            }}
+          >
+            © {e.copy}
+          </div>
+          <a
+            style={{
+              fontSize: "13px"
+            }}
+            href={`/notice/memoire/${e.ref}`}
+          >
+            Voir la notice image
+          </a>
+        </div>
+      )
+    }));
+
+    if (imageComponents.length) {
+      return <FieldImages images={imageComponents} />;
     }
   }
 

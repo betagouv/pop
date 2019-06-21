@@ -10,10 +10,10 @@ const joinData = f => {
 };
 
 const Memoire = ({ data }) => {
-  const { title, subtitle, logo, image } = getNoticeInfo(data);
+  const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image} alt={title} />;
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const content = joinData([
     data.OBJET,
@@ -60,8 +60,8 @@ const Memoire = ({ data }) => {
 };
 
 const Palissy = ({ data }) => {
-  const { title, subtitle, logo, image, localisation } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
@@ -122,9 +122,9 @@ const Palissy = ({ data }) => {
 };
 
 const Merimee = ({ data }) => {
-  const { title, logo, image, localisation } = getNoticeInfo(data);
+  const { title, logo, image_preview, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image} alt={title} />;
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const author = data.AUTR ? data.AUTR.join(", ") : "";
   const siecle = data.SCLE ? data.SCLE.join(", ") : "";
@@ -173,8 +173,8 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
@@ -214,8 +214,8 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
   let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
@@ -254,8 +254,8 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
     <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
@@ -290,8 +290,8 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>

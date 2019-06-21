@@ -1,66 +1,70 @@
 import React from "react";
-import { Row } from "reactstrap";
 import Viewer from "react-viewer";
-import ImageGallery from "react-image-gallery";
 import ImageGalleryStyle from "react-image-gallery/styles/css/image-gallery.css";
 import ViewerStyle from "react-viewer/dist/index.css";
-import Router from "next/router";
+import Slider from "react-slick";
 
 class FieldImages extends React.Component {
   state = {
-    images: [],
-    selected: -1
+    selected: -1,
+    current: 0
   };
 
-  componentWillMount() {
-    this.setState({ images: this.props.images });
-  }
-
   renderImages() {
-    if (!this.state.images.length) {
-      return null;
+    if (!this.props.images.length) {
+      return <div />;
     }
-    const images = this.state.images.map((e, i) => {
-      let obj = {
-        original: e.source,
-        thumbnail: e.source,
-        originalAlt: `${this.props.name}`,
-        thumbnailAlt: `${this.props.name} vignette `
-      };
-      if (e.link) {
-        obj.thumbnailLabel = (
-          <span onClick={() => Router.push(e.link)} href={e.link}>
-            LIEN
-          </span>
+    const arr = this.props.images
+      .map((e, i) => {
+        return (
+          <div key={i}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "400px"
+              }}
+            >
+              <img src={e.src} alt={e.alt} onClick={() => this.setState({ selected: i })} />
+              {e.footer ? e.footer : <div />}
+            </div>
+          </div>
         );
-      }
-      return obj;
-    });
+      })
+      .filter((e, i) => (i < 20 ? true : false));
 
+    var settings = {
+      lazyLoad: true,
+      slidesToShow: 1,
+      speed: 0
+    };
     return (
-      <ImageGallery
-        showFullscreenButton={false}
-        showPlayButton={false}
-        showThumbnails={images.length > 1}
-        defaultImage="/static/noimage.png"
-        onClick={i => {
-          if (i.target.src) {
-            const selected = this.state.images.findIndex(e => e.source === i.target.src);
-            this.setState({ selected });
-          }
-        }}
-        items={images}
-      />
+      <div>
+        {this.props.images.length > 1 ? (
+          <div style={{ width: "100%", textAlign: "end", fontSize: "11px" }}>{`${this.state
+            .current + 1}/${this.props.images.length}`}</div>
+        ) : (
+          <span />
+        )}
+        <Slider
+          {...settings}
+          beforeChange={(c, n) => {
+            this.setState({ current: n });
+          }}
+        >
+          {arr}
+        </Slider>
+      </div>
     );
   }
 
   renderModal() {
     if (this.state.selected === -1) {
-      return null;
+      return <div />;
     }
-    const images = this.state.images.map(e => {
-      return { src: e.source, alt: e.key };
-    });
+
     return (
       <Viewer
         visible
@@ -68,7 +72,7 @@ class FieldImages extends React.Component {
           document.body.style.overflow = "auto";
           this.setState({ selected: -1 });
         }}
-        images={images}
+        images={this.props.images}
         activeIndex={this.state.selected}
       />
     );
@@ -78,7 +82,7 @@ class FieldImages extends React.Component {
     return (
       <div className="fieldImages">
         {this.renderModal()}
-        <Row>{this.renderImages()}</Row>
+        {this.renderImages()}
         <style jsx global>
           {ImageGalleryStyle}
         </style>
@@ -109,59 +113,10 @@ class FieldImages extends React.Component {
             padding: 20px;
             text-align: center;
           }
-
-          .fieldImages .image-gallery span {
-            font-size: 10px;
-            color: #808d9e;
-            font-weight: 500;
-            margin-bottom: 5px;
-          }
-
           .fieldImages img {
             max-height: 220px;
             background-color: transparent;
-          }
-
-          .fieldImages .image-gallery {
-            width: 100%;
-          }
-
-          .fieldImages .image-gallery-thumbnail-label {
-            position: relative;
-            padding: 0px;
-            transform: none;
-            text-shadow: none;
-          }
-
-          .fieldImages .image-gallery-thumbnail-label a {
-            font-size: 12px;
-            color: grey;
-          }
-
-          .image-gallery {
-            padding: 15px 10px;
-            border-radius: 5px;
-          }
-
-          .image-gallery-thumbnail-inner > img {
-            max-height: 120px;
-          }
-
-          .image-gallery-image {
-            height: 220px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          .image-gallery-slide .image-gallery-image > img {
-            object-fit: contain;
-            max-width: 100%;
-          }
-
-          .image-gallery-slide {
-            background-color: transparent;
+            cursor: pointer;
           }
         `}</style>
       </div>

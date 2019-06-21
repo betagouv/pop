@@ -33,22 +33,6 @@ export default class extends React.Component {
     };
   }
 
-  fieldImage(notice) {
-    const images = toFieldImages(notice.IMG);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="joconde"
-          images={images}
-          disabled
-          name={notice.TITR}
-          external={false}
-        />
-      );
-    }
-  }
-
   links(value, name) {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value) {
@@ -92,13 +76,13 @@ export default class extends React.Component {
     if (!this.props.notice) {
       return throw404();
     }
-    const { title, image, metaDescription } = getNoticeInfo(this.props.notice);
+    const { title, image_preview, metaDescription, images } = getNoticeInfo(this.props.notice);
     const notice = this.props.notice;
     const obj = {
       name: title,
       created_at: notice.PERI.length ? notice.PERI[0] : "",
       artform: notice.DOMN.length ? notice.DOMN[0] : "",
-      image: image,
+      image: image_preview,
       description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: String(notice.AUTR).split(";"),
@@ -114,7 +98,7 @@ export default class extends React.Component {
               <title>{title}</title>
               <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {image ? <meta property="og:image" content={image} /> : <meta />}
+              {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
 
@@ -253,7 +237,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                {this.fieldImage(notice)}
+                <FieldImages images={images} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

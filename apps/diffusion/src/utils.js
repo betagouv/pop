@@ -24,10 +24,16 @@ export function getNoticeInfo(notice) {
       if (notice.REPR) {
         metaDescription = notice.REPR;
       }
+      const images = notice.IMG.map((e, i) => {
+        const src = e ? `${bucket_url}${e}` : "/static/noimage.png";
+        return { src, alt: `${title}_${i}` };
+      });
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      const image_preview = images.length ? images[0].src : "/static/noimage.png";
+
+      return { title, subtitle, metaDescription, image_preview, images };
     }
+
     case "Photographies (Mémoire)": {
       let title = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
       title = capitalizeFirstLetter(title);
@@ -48,8 +54,10 @@ export function getNoticeInfo(notice) {
         metaDescription = notice.LEG;
       }
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, logo, image };
+      const image_preview = notice.IMG ? `${bucket_url}${notice.IMG}` : "/static/noimage.png";
+      const images = notice.IMG ? [{ src: `${bucket_url}${notice.IMG}`, alt: title }] : [];
+
+      return { title, subtitle, metaDescription, logo, image_preview, images };
     }
     case "Musées de france (MUSEO)": {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
@@ -57,9 +65,10 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
+      const image_preview = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
+      const images = notice.PHOTO ? [{ src: `${bucket_url}${notice.PHOTO}`, alt: title }] : [];
 
-      return { title, metaDescription, image };
+      return { title, metaDescription, image_preview, images };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;
@@ -69,8 +78,16 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      const image_preview = notice.VIDEO.length
+        ? `${bucket_url}${notice.VIDEO[0]}`
+        : "/static/noimage.png";
+
+      const images = notice.VIDEO.map((e, i) => ({
+        src: `${bucket_url}${e}`,
+        alt: `${title}_${i}`
+      }));
+
+      return { title, subtitle, metaDescription, images, image_preview };
     }
     case "Récupération artistique (MNR Rose-Valland)": {
       let title = notice.TICO || notice.TITR;
@@ -80,8 +97,16 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      const image_preview = notice.VIDEO.length
+        ? `${bucket_url}${notice.VIDEO[0]}`
+        : "/static/noimage.png";
+
+      const images = notice.VIDEO.map((e, i) => ({
+        src: `${bucket_url}${e}`,
+        alt: `${title}_${i}`
+      }));
+
+      return { title, subtitle, image_preview, metaDescription, images };
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
@@ -114,9 +139,16 @@ export function getNoticeInfo(notice) {
 
       localisation = localisation.join(" ; ");
 
-      const image = getImageUrl(notice);
+      const images = notice.MEMOIRE.map((e, i) => {
+        const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
+        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+      });
 
-      return { title, subtitle, metaDescription, logo, localisation, image };
+      const image_preview = notice.MEMOIRE.filter(e => e.url).length
+        ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
+        : "/static/noimage.png";
+
+      return { title, subtitle, metaDescription, logo, localisation, images, image_preview };
     }
     case "Patrimoine architectural (Mérimée)": {
       let title = notice.TICO || "";
@@ -146,50 +178,21 @@ export function getNoticeInfo(notice) {
       }
       localisation = localisation.join(" ; ");
       let metaDescription = "";
-      /*
-          const titre = this.props.notice.TICO || this.props.notice.TITR || "";
-    const datation = this.props.notice.SCLE ? this.props.notice.SCLE.join(" ") : "";
-    if (this.props.notice.DENO && this.props.notice.DENO.length === 1) {
-      const category = this.props.notice.DENO[0];
-      if (category.toLowerCase() === "église") {
-        return `Découvrez ${titre}, cette ${category} du ${datation}.`;
-      }
-    }
-    return `Découvrez ${titre}, du ${datation}.`;
-    */
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, logo, image, localisation };
+      const images = notice.MEMOIRE.map((e, i) => {
+        const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
+        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+      });
+
+      const image_preview = notice.MEMOIRE.filter(e => e.url).length
+        ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
+        : "/static/noimage.png";
+
+      return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
     default:
       return {};
   }
-}
-
-export function getImageUrl(notice) {
-  if (notice.MEMOIRE && notice.MEMOIRE.length) {
-    const img = notice.MEMOIRE[0] && notice.MEMOIRE[0].url;
-    if (img) {
-      if (img.match(/^http/)) {
-        return img;
-      } else {
-        return `${bucket_url}${img}`;
-      }
-    }
-  } else {
-    const imgProp = notice.IMG || notice.VIDEO;
-    if (imgProp && imgProp.length) {
-      const img = typeof imgProp === "string" ? imgProp : imgProp[0];
-      if (img) {
-        if (img.match(/^http/)) {
-          return img;
-        } else {
-          return `${bucket_url}${img}`;
-        }
-      }
-    }
-  }
-  return "/static/noimage.png";
 }
 
 const capitalizeFirstLetter = s => {

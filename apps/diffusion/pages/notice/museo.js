@@ -11,7 +11,7 @@ import Title from "../../src/notices/Title";
 import Link from "next/link";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { schema, toFieldImages } from "../../src/notices/utils";
+import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 
 export default class extends React.Component {
@@ -26,11 +26,11 @@ export default class extends React.Component {
       return throw404();
     }
 
-    const { title, image, metaDescription } = getNoticeInfo(notice);
+    const { title, images, image_preview, metaDescription } = getNoticeInfo(notice);
 
     const obj = {
       name: title,
-      image,
+      image: image_preview,
       description: metaDescription
     };
     return (
@@ -41,7 +41,7 @@ export default class extends React.Component {
               <title>{title}</title>
               <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {image ? <meta property="og:image" content={image} /> : <meta />}
+              {images.length ? <meta property="og:image" content={images[0].src} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
             <Row>
@@ -95,14 +95,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                <FieldImages
-                  reference={notice.REF}
-                  base="museo"
-                  images={[{ source: image }]}
-                  disabled
-                  name={title}
-                  external={false}
-                />
+                <FieldImages images={images} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
