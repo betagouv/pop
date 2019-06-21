@@ -79,7 +79,6 @@ class FieldImages extends React.Component {
   }
 
   render() {
-    console.log(this.props.images.length);
     return (
       <div className="fieldImages">
         {this.renderModal()}
