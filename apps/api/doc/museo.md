@@ -2,6 +2,7 @@
 
 - [REF](/apps/api/doc/museo.md#REF)
 - [POP_COMMENTAIRES](/apps/api/doc/museo.md#POP_COMMENTAIRES)
+- [POP_IMPORT](/apps/api/doc/museo.md#POP_IMPORT)
 - [BASE](/apps/api/doc/museo.md#BASE)
 - [ACCES](/apps/api/doc/museo.md#ACCES)
 - [ADRL1_M](/apps/api/doc/museo.md#ADRL1_M)
@@ -103,6 +104,16 @@ Commentaires technique
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |Array|non|oui|non|non||Commentaires POP|
+
+### POP_IMPORT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non|||
 
 ### BASE
 Nom de la base : Musées de france (MUSEO)
