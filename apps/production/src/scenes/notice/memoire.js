@@ -235,7 +235,6 @@ class Notice extends React.Component {
                 <CustomField name="ACQU" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
                 <CustomField name="DIFF" disabled={!this.state.editable} />
-                <CustomField name="ACQU" disabled={!this.state.editable} />
               </Col>
             </Row>
             <div className="subtitle">
