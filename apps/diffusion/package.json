@@ -26,7 +26,8 @@
     "reactstrap": "^7.1.0",
     "shave": "^2.5.3",
     "sw-precache-webpack-plugin": "^0.11.5",
-    "unfetch": "^4.1.0"
+    "unfetch": "^4.1.0",
+    "validator": "^11.0.0"
   },
   "jest": {
     "setupFilesAfterEnv": [
