@@ -1,6 +1,9 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import isURL from "validator/lib/isURL";
+import isEmail from "validator/lib/isEmail";
+
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -49,7 +52,7 @@ export default class extends React.Component {
   links(value, name) {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value) {
-        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>
+        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>;
       }
       return null;
     }
@@ -172,14 +175,21 @@ export default class extends React.Component {
 
                   <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} />
                   <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} />
-                  <Field title={mapping.joconde.TECH.label} content={this.links(this.props.notice.TECH, "tech")} />
+                  <Field
+                    title={mapping.joconde.TECH.label}
+                    content={this.links(this.props.notice.TECH, "tech")}
+                  />
                   <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} />
                   <Field title={mapping.joconde.INSC.label} content={notice.INSC} />
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} />
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} />
                   <Field title={mapping.joconde.DESC.label} content={notice.DESC} />
                   <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} />
-                  <Field title={mapping.joconde.REPR.label} content={this.links(this.props.notice.REPR, "repr")} separator="#" />
+                  <Field
+                    title={mapping.joconde.REPR.label}
+                    content={this.links(this.props.notice.REPR, "repr")}
+                    separator="#"
+                  />
                   <Field title={mapping.joconde.PREP.label} content={notice.PREP} />
                   <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" />
                   <Field title={mapping.joconde.SREP.label} content={notice.SREP} />
@@ -206,7 +216,10 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} />
                   <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} />
                   <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} />
-                  <Field title={mapping.joconde.UTIL.label} content={this.links(this.props.notice.UTIL, "util")} />
+                  <Field
+                    title={mapping.joconde.UTIL.label}
+                    content={this.links(this.props.notice.UTIL, "util")}
+                  />
                   <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} />
                   <Field title={mapping.joconde.PERU.label} content={notice.PERU} />
                   <Field title={mapping.joconde.MILU.label} content={notice.MILU} />
@@ -225,7 +238,10 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} />
 
                   <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} />
-                  <Field title={mapping.joconde.LOCA.label} content={this.links(this.props.notice.LOCA, "ou")} />
+                  <Field
+                    title={mapping.joconde.LOCA.label}
+                    content={this.links(this.props.notice.LOCA, "ou")}
+                  />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
@@ -303,6 +319,28 @@ const SeeMore = ({ notice, museo }) => {
         title={mapping.joconde.MUSEO.label}
         content={<a href={`/notice/museo/${notice.MUSEO}`}>{text}</a>}
         key="notice.MUSEO"
+      />
+    );
+  }
+
+  if (isURL(notice.RETIF)) {
+    arr.push(
+      <Field
+        title={mapping.joconde.RETIF.label}
+        content={<a href={notice.RETIF}>INHA</a>}
+        key="notice.RETIF"
+      />
+    );
+  }
+
+  if (isEmail(notice.MSGCOM)) {
+    arr.push(
+      <Field
+        title={mapping.joconde.MSGCOM.label}
+        content={
+          <a href={notice.MSGCOM}>Demande de photographie et/ou de conditions d'utilisation</a>
+        }
+        key="notice.MSGCOM"
       />
     );
   }
