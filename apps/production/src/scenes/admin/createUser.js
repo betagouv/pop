@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal, Input, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
+import { toastr } from "react-redux-toastr";
 import ReactTags from "react-tag-input";
 import api from "../../services/api";
 import "./createUser.css";
@@ -31,6 +32,8 @@ class CreateUser extends React.Component {
     try {
       await api.createUser({ email, group, role, institution, prenom, nom, museofile });
       this.setState({ modal: false });
+      toastr.success("L'utilisateur a été ajouté.");
+      this.props.callback();
     } catch (error) {
       this.setState({ error: error.msg });
     }

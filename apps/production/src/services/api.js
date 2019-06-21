@@ -2,16 +2,54 @@ const { api_url } = require("../config.js");
 import "isomorphic-fetch";
 import request from "./request";
 
-/**
- * Buisness level access to POP API.
- */
+// Buisness level access to POP API.
 class api {
+  // Authentication
+  signin(email, password) {
+    const obj = { email, password };
+    return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
+  }
+
+  // Get auth user by her token.
+  getAuthUser(token) {
+    return request.get(`${api_url}/auth/user`, { headers: { Authorization: token } });
+  }
+
+  // Update password for one user (RPC style).
+  updatePassword({ email, pwd, pwd1, pwd2 }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          `${api_url}/auth/updatePassword`,
+          request._init("POST", JSON.stringify({ email, pwd, pwd1, pwd2 }), {
+            "Content-Type": "application/json"
+          })
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
+      }
+    });
+  }
+
+  // Ask for new password.
+  forgetPassword(email) {
+    const obj = { email };
+    return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
+  }
+
+  // Create a user.
   async createUser(props) {
     return new Promise(async (resolve, reject) => {
       const { email, group, role, institution, prenom, nom, museofile } = props;
       try {
         const response = await fetch(
-          `${api_url}/auth/signup`,
+          `${api_url}/users`,
           request._init(
             "POST",
             JSON.stringify({ email, group, role, institution, prenom, nom, museofile }),
@@ -30,15 +68,27 @@ class api {
     });
   }
 
-  signin(email, password) {
-    const obj = { email, password };
-    return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
-  }
-
-  getUser(token) {
-    return request.get(`${api_url}/auth/user`, {
-      headers: {
-        Authorization: token
+  // Update a user.
+  async updateUser(props) {
+    return new Promise(async (resolve, reject) => {
+      const { email, group, role, institution, prenom, nom, museofile } = props;
+      try {
+        const response = await fetch(
+          `${api_url}/users/${email}`,
+          request._init(
+            "PUT",
+            JSON.stringify({ email, group, role, institution, prenom, nom, museofile }),
+            { "Content-Type": "application/json" }
+          )
+        );
+        const jsonData = await response.json();
+        if (response.status !== 200 || jsonData.success !== true) {
+          return reject(jsonData);
+        }
+        resolve(jsonData);
+      } catch (err) {
+        Raven.captureException(err);
+        reject({ success: false, msg: "L'api est inaccessible." });
       }
     });
   }
@@ -47,27 +97,9 @@ class api {
     return request.delete(`${api_url}/users/${email}`);
   }
 
-  updatePassword(email, ppwd, pwd1, pwd2) {
-    const obj = { email, ppwd, pwd1, pwd2 };
-    return request.post(`${api_url}/auth/updatePassword`, JSON.stringify(obj), "application/json");
-  }
-
-  updateProfile(email, nom, prenom, institution, group, role, museofile) {
-    const obj = { email, nom, prenom, institution, group, role, museofile };
-    return request.post(`${api_url}/auth/updateProfile`, JSON.stringify(obj), "application/json");
-  }
-
-  forgetPassword(email) {
-    const obj = { email };
-    return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
-  }
-
-  getUsers(group) {
-    return request.get(`${api_url}/users?group=${group}`, {
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    });
+  getUsers() {
+    const token = localStorage.getItem("token");
+    return request.get(`${api_url}/users`, { headers: { Authorization: token } });
   }
 
   sendReport(subject, to, body) {

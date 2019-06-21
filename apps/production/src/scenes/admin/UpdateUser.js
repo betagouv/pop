@@ -30,18 +30,12 @@ class UpdateUser extends React.Component {
     try {
       this.setState({ loading: true });
       const { group, email, role, institution, prenom, nom, museofile } = this.state;
-      if (group === "admin" && role !== "administrateur") {
-        const errorText =
-          "Les membres du groupe « admin » doivent avoir le rôle « administrateur »";
-        this.setState({ error: errorText });
-        return;
-      }
-      await api.updateProfile(email, nom, prenom, institution, group, role, museofile);
+      await api.updateUser({ email, nom, prenom, institution, group, role, museofile });
       this.setState({ modal: false });
       toastr.success("Les informations ont été enregistrées.");
       this.props.callback();
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: error.msg });
     }
   }
 
@@ -60,7 +54,7 @@ class UpdateUser extends React.Component {
       };
       toastr.confirm(confirmText, toastrConfirmOptions);
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: error.msg });
     }
   }
 

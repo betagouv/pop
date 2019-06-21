@@ -14,11 +14,10 @@ class Admin extends React.Component {
     loading: true
   };
 
-  fetchUsers = () => {
+  fetchUsers = async () => {
     this.setState({ loading: true });
-    api.getUsers(this.props.group).then(users => {
-      this.setState({ users: users || [], loading: false });
-    });
+    const users = await api.getUsers();
+    this.setState({ users: users || [], loading: false });
   };
 
   componentWillMount() {
@@ -61,11 +60,7 @@ class Admin extends React.Component {
                 <td>{nom}</td>
                 <td>{prenom}</td>
                 <td className="admin-email">{email}</td>
-                <td>
-                  {group === "joconde" && museofile
-                    ? `${group} ${museofile}`
-                    : group}
-                </td>
+                <td>{group === "joconde" && museofile ? `${group} ${museofile}` : group}</td>
                 <td>{institution}</td>
                 <td>{role}</td>
                 <td>{lastCo}</td>
@@ -86,7 +81,7 @@ class Admin extends React.Component {
     }
     return (
       <div className="admin">
-        <CreateUser />
+        <CreateUser callback={this.fetchUsers} />
         <div className="usersList">{this.renderUsers()}</div>
       </div>
     );
@@ -95,7 +90,6 @@ class Admin extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
   return {
-    group: Auth.user ? Auth.user.group : "",
     role: Auth.user ? Auth.user.role : ""
   };
 };

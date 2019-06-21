@@ -11,9 +11,9 @@ const { logout, signinByToken } = authAction;
 
 class UpdateProfile extends Component {
   state = {
-    ppwd: "",
-    ppwd1: "",
-    ppwd2: "",
+    pwd: "",
+    pwd1: "",
+    pwd2: "",
     loading: false,
     done: false,
     error: "",
@@ -62,72 +62,54 @@ class UpdateProfile extends Component {
     );
   }
 
-  updateProfile = () => {
+  updateProfile = async () => {
     const { email, logout, user } = this.props;
-    const { nom, prenom, institution, group, role } = user;
-    const {
-      ppwd,
-      ppwd1,
-      ppwd2,
-      nom: stateNom,
-      prenom: statePrenom,
-      institution: stateInstitution
-    } = this.state;
-
-    if (group === "admin" && role !== "administrateur") {
-      this.setState({
-        error: "Les membres du groupe « admin » doivent avoir le rôle « administrateur »",
-        loading: false,
-        done: false
-      });
-      return;
-    }
-
-    const hasChangedPassword = ppwd !== "" && ppwd1 !== "" && ppwd2 !== "";
+    const { nom, prenom, institution, group, role, museofile } = user;
+    const { nom: stateNom, prenom: statePrenom, institution: stateInstitution } = this.state;
+    const { pwd, pwd1, pwd2 } = this.state;
+    const hasChangedPassword = pwd !== "" && pwd1 !== "" && pwd2 !== "";
     const hasChangedProfileInfo =
       nom !== stateNom || prenom !== statePrenom || institution !== stateInstitution;
-    let promise = Promise.resolve();
+
+    this.setState({ loading: true });
 
     if (hasChangedProfileInfo) {
-      promise = promise
-        .then(() => {
-          return api.updateProfile(email, stateNom, statePrenom, stateInstitution, group, role);
-        })
-        .then(() => {
-          return this.props.signinByToken();
+      try {
+        await api.updateUser({
+          email,
+          nom: stateNom,
+          prenom: statePrenom,
+          institution: stateInstitution,
+          group,
+          role,
+          museofile
         });
+        await this.props.signinByToken();
+      } catch (e) {
+        this.setState({ error: e.msg, loading: false, done: false });
+        return;
+      }
     }
 
     if (hasChangedPassword) {
-      promise = promise.then(() => {
-        return api.updatePassword(email, ppwd, ppwd1, ppwd2);
-      });
+      try {
+        await api.updatePassword({ email, pwd, pwd1, pwd2 });
+      } catch (e) {
+        this.setState({ error: e.msg, loading: false, done: false });
+        return;
+      }
     }
 
-    this.setState({ loading: true });
-    promise = promise.then(() => {
-      this.setState({
-        loading: false,
-        done: true,
-        hasChangedPassword: !!hasChangedPassword
-      });
-
-      if (hasChangedPassword) {
-        toastr.success(
-          "Votre mot de passe à été changé.",
-          "Vous allez être deconnecté dans 5 secondes…"
-        );
-        setTimeout(() => logout(), 5000);
-      } else {
-        toastr.success("Vos informations ont été enregistrées.");
-      }
-      this.setState({ loading: false, done: true });
-      return Promise.resolve();
-    });
-
-    return promise.catch(e => {
-      this.setState({ error: e, loading: false, done: false });
-    });
+    if (hasChangedPassword) {
+      toastr.success(
+        "Votre mot de passe à été changé.",
+        "Vous allez être deconnecté dans 5 secondes…"
+      );
+      setTimeout(() => logout(), 5000);
+    } else if (hasChangedProfileInfo) {
+      toastr.success("Vos informations ont été enregistrées.");
+    }
+    this.setState({ loading: false, done: true, hasChangedPassword: !!hasChangedPassword });
   };
 
   lastConnectedAt() {
@@ -225,22 +207,22 @@ class UpdateProfile extends Component {
               className="input-field"
               placeholder="Mot de passe actuel"
               type="password"
-              value={this.state.ppwd}
-              onChange={e => this.setState({ ppwd: e.target.value })}
+              value={this.state.pwd}
+              onChange={e => this.setState({ pwd: e.target.value })}
             />
             <input
               className="input-field"
               placeholder="Nouveau Mot de passe"
               type="password"
-              value={this.state.ppwd1}
-              onChange={e => this.setState({ ppwd1: e.target.value })}
+              value={this.state.pwd1}
+              onChange={e => this.setState({ pwd1: e.target.value })}
             />
             <input
               className="input-field"
               placeholder="Nouveau Mot de passe (confirmation)"
               type="password"
-              value={this.state.ppwd2}
-              onChange={e => this.setState({ ppwd2: e.target.value })}
+              value={this.state.pwd2}
+              onChange={e => this.setState({ pwd2: e.target.value })}
             />
           </div>
           <hr />
