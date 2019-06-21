@@ -25,7 +25,6 @@ class api {
         resolve(jsonData);
       } catch (err) {
         Raven.captureException(err);
-        console.log(err);
         reject({ success: false, msg: "L'api est inaccessible." });
       }
     });
