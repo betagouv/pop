@@ -5,10 +5,8 @@ import request from "./request";
 // Buisness level access to POP API.
 class api {
   // Authentication
-  // TODO
   signin(email, password) {
-    const obj = { email, password };
-    return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
+    return request.fetchJSON("POST", "/auth/signin", { email, password });
   }
 
   // Get auth user by her token.
@@ -23,10 +21,8 @@ class api {
   }
 
   // Ask for new password.
-  // TODO
   forgetPassword(email) {
-    const obj = { email };
-    return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
+    return request.fetchJSON("POST", `/auth/forgetPassword`, { email });
   }
 
   // Create a user.

@@ -27,7 +27,7 @@ export function* signin({ email, password }) {
 
     yield put(push("/"));
   } catch (e) {
-    yield put({ type: actions.SIGNIN_ERROR, error: e });
+    yield put({ type: actions.SIGNIN_ERROR, error: e.msg });
   }
 }
 
