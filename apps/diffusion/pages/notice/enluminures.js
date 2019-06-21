@@ -9,35 +9,14 @@ import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
-import { schema, toFieldImages } from "../../src/notices/utils";
+import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import { getNoticeInfo } from "../../src/utils";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("enluminures", id);
     return { notice };
-  }
-
-  getMetaDescription = () => {
-    const titre = this.props.notice.SUJET || this.props.notice.TITR || "";
-    const auteur = this.props.notice.ATTRIB || "";
-    return `Découvrez ${titre}, par ${auteur}.`;
-  };
-
-  fieldImage(notice) {
-    const images = toFieldImages(notice.VIDEO);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="enluminures"
-          images={images}
-          disabled
-          name={notice.TITR}
-          external={true}
-        />
-      );
-    }
   }
 
   render() {
@@ -47,12 +26,13 @@ export default class extends React.Component {
       return throw404();
     }
 
-    const description = this.getMetaDescription();
+    const { title, images, image_preview, metaDescription } = getNoticeInfo(notice);
+
     const obj = {
-      name: notice.TITR,
+      name: title,
       created_at: notice.DATEDEB,
       artform: Array.isArray(notice.NOMENC) && notice.NOMENC[0] ? notice.NOMENC[0] : "",
-      image: Array.isArray(notice.VIDEO) && notice.VIDEO[0] ? notice.VIDEO[0] : "",
+      image: image_preview,
       description: notice.NOTES,
       artMedium: Array.isArray(notice.TYPE) ? notice.TYPE.join(", ") : notice.TYPE || "",
       creator: String(notice.ATTRIB).split(";"),
@@ -64,16 +44,10 @@ export default class extends React.Component {
         <div className="notice">
           <Container>
             <Head>
-              <title>
-                {notice.TITR} - {notice.SUJET} - POP`}
-              </title>
-              <meta content={description} name="description" />
+              <title>{title}</title>
+              <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {Array.isArray(notice.VIDEO) && notice.VIDEO[0] ? (
-                <meta property="og:image" content={notice.VIDEO[0]} />
-              ) : (
-                <meta />
-              )}
+              {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
 
             <h1 className="heading">
@@ -121,7 +95,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                {this.fieldImage(notice)}
+                <FieldImages images={images} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

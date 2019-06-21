@@ -25,29 +25,6 @@ export function postFixedLink(link) {
     .replace(/^<a href=([^ ]+)?.*$/i, "$1");
 }
 
-export function toFieldImages(images) {
-  return images
-    .filter(i => i)
-    .slice(0, 200)
-    .map(e => {
-      let source = e;
-      let key = e;
-      let link = "";
-
-      if (e instanceof Object) {
-        source = e.url || "";
-        key = e.ref;
-        link = `/notice/memoire/${e.ref}`;
-      }
-
-      if (!source.match(/^http/)) {
-        source = `${bucket_url}${source}`;
-      }
-      return { source, key, link };
-    })
-    .filter(e => e.source);
-}
-
 // https://schema.org/VisualArtwork
 export function schema({
   name,

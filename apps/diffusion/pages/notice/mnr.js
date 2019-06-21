@@ -9,8 +9,9 @@ import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { schema, toFieldImages } from "../../src/notices/utils";
+import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import { bucket_url } from "../../src/config";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -19,18 +20,15 @@ export default class extends React.Component {
   }
 
   fieldImage(notice) {
-    const images = toFieldImages(notice.VIDEO);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="mnr"
-          images={images}
-          disabled
-          name={notice.TICO || notice.TITR}
-          external={false}
-        />
-      );
+    const { title } = getNoticeInfo(notice);
+
+    const images = notice.VIDEO.map((e, i) => ({
+      src: `${bucket_url}${e}`,
+      alt: `${title}_${i}`
+    }));
+
+    if (images && images.length) {
+      return;
     }
   }
 
@@ -61,13 +59,13 @@ export default class extends React.Component {
     }
     const notice = this.props.notice;
 
-    const { title, image, metaDescription } = getNoticeInfo(notice);
+    const { title, images, metaDescription, image_preview } = getNoticeInfo(notice);
 
     const obj = {
       name: notice.TITR,
       created_at: notice.SCLE.length ? notice.SCLE[0] : "",
       artform: notice.DOM,
-      image: image,
+      image: image_preview,
       description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: notice.AUTR,
@@ -75,7 +73,6 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
-    console.log("noti", notice.DOMN);
     return (
       <Layout>
         <div className="notice">
@@ -84,7 +81,7 @@ export default class extends React.Component {
               <title>{title}</title>
               <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {image ? <meta property="og:image" content={image} /> : <meta />}
+              {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
             <h1 className="heading">{notice.TICO || notice.TITR}</h1>
             <Row>
@@ -335,7 +332,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                {this.fieldImage(notice)}
+                <FieldImages images={images} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

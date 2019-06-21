@@ -24,10 +24,15 @@ export function getNoticeInfo(notice) {
       if (notice.REPR) {
         metaDescription = notice.REPR;
       }
+      const images = notice.IMG.map((e, i) => {
+        const src = e ? `${bucket_url}${e}` : "/static/noimage.png";
+        return { src, alt: `${title}_${i}` };
+      });
+      const image_preview = images.length ? images[0].src : "/static/noimage.png";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      return { title, subtitle, metaDescription, image_preview, images };
     }
+
     case "Photographies (Mémoire)": {
       let title = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
       title = capitalizeFirstLetter(title);
@@ -57,9 +62,10 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
+      const image_preview = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
+      const images = notice.PHOTO ? [{ src: `${bucket_url}${notice.PHOTO}`, alt: title }] : [];
 
-      return { title, metaDescription, image };
+      return { title, metaDescription, image_preview, images };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;
@@ -69,8 +75,16 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      const image_preview = notice.VIDEO.length
+        ? `${bucket_url}${notice.VIDEO[0]}`
+        : "/static/noimage.png";
+
+      const images = notice.VIDEO.map((e, i) => ({
+        src: `${bucket_url}${e}`,
+        alt: `${title}_${i}`
+      }));
+
+      return { title, subtitle, metaDescription, images, image_preview };
     }
     case "Récupération artistique (MNR Rose-Valland)": {
       let title = notice.TICO || notice.TITR;
@@ -80,8 +94,15 @@ export function getNoticeInfo(notice) {
 
       let metaDescription = "";
 
-      const image = getImageUrl(notice);
-      return { title, subtitle, metaDescription, image };
+      const image_preview = notice.VIDEO.length
+        ? `${bucket_url}${notice.VIDEO[0]}`
+        : "/static/noimage.png";
+      const images = notice.VIDEO.map((e, i) => ({
+        src: `${bucket_url}${e}`,
+        alt: `${title}_${i}`
+      }));
+
+      return { title, subtitle, image_preview, metaDescription, images };
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
@@ -189,7 +210,7 @@ export function getImageUrl(notice) {
       }
     }
   }
-  return "/static/noimage.png";
+  return;
 }
 
 const capitalizeFirstLetter = s => {

@@ -12,8 +12,10 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { postFixedLink, schema, toFieldImages } from "../../src/notices/utils";
+import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+
+import { bucket_url } from "../../src/config";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -40,18 +42,33 @@ export default class extends React.Component {
   }
 
   fieldImage(notice) {
-    const images = toFieldImages(notice.MEMOIRE);
+    const images = notice.MEMOIRE.map(e => ({
+      src: `${bucket_url}${e.url}`,
+      alt: e.name,
+      footer: (
+        <div style={{ marginTop: "5px" }}>
+          <div style={{ textAlign: "center", fontWeight: "bold" }}>{e.name}</div>
+          <div
+            style={{
+              fontSize: "13px"
+            }}
+          >
+            © {e.copy}
+          </div>
+          <a
+            style={{
+              fontSize: "13px"
+            }}
+            href={`/notice/memoire/${e.ref}`}
+          >
+            Voir la notice image
+          </a>
+        </div>
+      )
+    }));
+
     if (images && images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="merimee"
-          images={images}
-          disabled
-          name={notice.TICO || notice.TITR}
-          external={false}
-        />
-      );
+      return <FieldImages images={images} />;
     }
   }
 

@@ -173,8 +173,8 @@ const Merimee = ({ data }) => {
 };
 
 const Mnr = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
   const author = String(data.AUTR).replace("#", " ");
@@ -214,8 +214,8 @@ const Mnr = ({ data }) => {
 };
 
 const Joconde = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
 
   let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
@@ -254,8 +254,8 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
     <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
@@ -290,8 +290,8 @@ const Museo = ({ data }) => {
 
 const Enluminures = ({ data }) => {
   const REF = data.REF;
-  const { title, subtitle, image } = getNoticeInfo(data);
-  const ImageComponent = <img src={image} alt={title} />;
+  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
     <Link href={`/notice/enluminures/${REF}`} key={REF}>

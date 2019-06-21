@@ -28,18 +28,13 @@ export default class extends React.Component {
   }
 
   fieldImage(notice) {
-    const images = toFieldImages([notice.IMG]);
+    const { image, title } = getNoticeInfo(notice);
+    const images = [image].map(e => ({
+      src: `${e}`,
+      alt: title
+    }));
     if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="memoire"
-          images={images}
-          disabled
-          name={notice.TICO}
-          external={true}
-        />
-      );
+      return <FieldImages images={images} />;
     }
   }
 

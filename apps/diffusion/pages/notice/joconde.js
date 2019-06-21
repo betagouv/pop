@@ -30,26 +30,10 @@ export default class extends React.Component {
     };
   }
 
-  fieldImage(notice) {
-    const images = toFieldImages(notice.IMG);
-    if (images.length) {
-      return (
-        <FieldImages
-          reference={notice.REF}
-          base="joconde"
-          images={images}
-          disabled
-          name={notice.TITR}
-          external={false}
-        />
-      );
-    }
-  }
-
   links(value, name) {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value) {
-        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>
+        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>;
       }
       return null;
     }
@@ -89,13 +73,13 @@ export default class extends React.Component {
     if (!this.props.notice) {
       return throw404();
     }
-    const { title, image, metaDescription } = getNoticeInfo(this.props.notice);
+    const { title, image_preview, metaDescription, images } = getNoticeInfo(this.props.notice);
     const notice = this.props.notice;
     const obj = {
       name: title,
       created_at: notice.PERI.length ? notice.PERI[0] : "",
       artform: notice.DOMN.length ? notice.DOMN[0] : "",
-      image: image,
+      image: image_preview,
       description: metaDescription,
       artMedium: notice.TECH.join(", "),
       creator: String(notice.AUTR).split(";"),
@@ -111,7 +95,7 @@ export default class extends React.Component {
               <title>{title}</title>
               <meta content={metaDescription} name="description" />
               <script type="application/ld+json">{schema(obj)}</script>
-              {image ? <meta property="og:image" content={image} /> : <meta />}
+              {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
 
@@ -172,14 +156,21 @@ export default class extends React.Component {
 
                   <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} />
                   <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} />
-                  <Field title={mapping.joconde.TECH.label} content={this.links(this.props.notice.TECH, "tech")} />
+                  <Field
+                    title={mapping.joconde.TECH.label}
+                    content={this.links(this.props.notice.TECH, "tech")}
+                  />
                   <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} />
                   <Field title={mapping.joconde.INSC.label} content={notice.INSC} />
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} />
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} />
                   <Field title={mapping.joconde.DESC.label} content={notice.DESC} />
                   <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} />
-                  <Field title={mapping.joconde.REPR.label} content={this.links(this.props.notice.REPR, "repr")} separator="#" />
+                  <Field
+                    title={mapping.joconde.REPR.label}
+                    content={this.links(this.props.notice.REPR, "repr")}
+                    separator="#"
+                  />
                   <Field title={mapping.joconde.PREP.label} content={notice.PREP} />
                   <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" />
                   <Field title={mapping.joconde.SREP.label} content={notice.SREP} />
@@ -206,7 +197,10 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} />
                   <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} />
                   <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} />
-                  <Field title={mapping.joconde.UTIL.label} content={this.links(this.props.notice.UTIL, "util")} />
+                  <Field
+                    title={mapping.joconde.UTIL.label}
+                    content={this.links(this.props.notice.UTIL, "util")}
+                  />
                   <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} />
                   <Field title={mapping.joconde.PERU.label} content={notice.PERU} />
                   <Field title={mapping.joconde.MILU.label} content={notice.MILU} />
@@ -225,7 +219,10 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} />
 
                   <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} />
-                  <Field title={mapping.joconde.LOCA.label} content={this.links(this.props.notice.LOCA, "ou")} />
+                  <Field
+                    title={mapping.joconde.LOCA.label}
+                    content={this.links(this.props.notice.LOCA, "ou")}
+                  />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
@@ -237,7 +234,7 @@ export default class extends React.Component {
                 </div>
               </Col>
               <Col md="4">
-                {this.fieldImage(notice)}
+                <FieldImages images={images} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
