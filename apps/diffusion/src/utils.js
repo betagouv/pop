@@ -63,12 +63,14 @@ export function getNoticeInfo(notice) {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 
+      const subtitle = notice.DOMPAL || "";
+
       let metaDescription = "";
 
       const image_preview = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
       const images = notice.PHOTO ? [{ src: `${bucket_url}${notice.PHOTO}`, alt: title }] : [];
 
-      return { title, metaDescription, image_preview, images };
+      return { title, subtitle, metaDescription, image_preview, images };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;

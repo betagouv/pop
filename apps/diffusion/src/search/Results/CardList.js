@@ -277,7 +277,6 @@ const Museo = ({ data }) => {
             </div>
             <img src="/static/musee-de-france.png" className="producteur" />
             <div>
-              <p>{data.NOMOFF}</p>
               <p>{data.NOMUSAGE}</p>
               <p>{data.VILLE_M}</p>
             </div>

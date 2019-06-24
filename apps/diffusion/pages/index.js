@@ -148,7 +148,7 @@ export default class extends React.Component {
                   img="/static/topics/museo.jpg"
                   txt={
                     <div>
-                      Musées de france
+                      Collections des musées de france
                       <p>Base MUSEO</p>
                     </div>
                   }

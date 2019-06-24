@@ -55,6 +55,8 @@ export default class extends React.Component {
                   <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} />
                   <Field title={mapping.museo.NOMUSAGE.label} content={notice.NOMUSAGE} />
                   <Field title={mapping.museo.NOMANC.label} content={notice.NOMANC} />
+                  <Field title={mapping.museo["PROT-BAT"].label} content={notice["PROT-BAT"]} />
+                  <Field title={mapping.museo["PROT-ESP"].label} content={notice["PROT-ESP"]} />
                   <Title
                     content="Adresse"
                     notice={notice}
