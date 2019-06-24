@@ -3,8 +3,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const Mailer = require("./mailer");
-const { capture } = require("./sentry.js");
 require("./passport")(passport);
 require("./mongo");
 
@@ -43,30 +41,16 @@ app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 app.use("/autor", require("./controllers/autor"));
 
-
+// Gallery
 app.use("/gallery", require("./controllers/gallery"));
+
+// Reporting.
+app.use("/reporting", require("./controllers/reporting"))
 
 // Proxy to GINCO API
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 
 // Proxy to ES
 app.use("/search", require("./controllers/search"));
-
-app.post("/mail", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const { subject, to, body } = req.body;
-  if (!subject || !to || !body) {
-    capture("Mail information incomplete");
-    res.status(500).send("Information incomplete");
-    return;
-  }
-  Mailer.send(subject, to, body)
-    .then(e => {
-      return res.status(200).send({ success: true, msg: "OK" });
-    })
-    .catch(e => {
-      console.log("ERROR", e);
-      return res.status(200);
-    });
-});
 
 module.exports = app;

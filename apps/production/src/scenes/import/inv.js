@@ -17,7 +17,7 @@ export default class Import extends React.Component {
           collection="inventaire"
           readme={readme}
           parseFiles={parseFiles}
-          destinataires={["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr"]}
+          recipient="inv"
           dropzoneText="Glissez & déposez vos fichiers au format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
           defaultEncoding="UTF-8"
         />
