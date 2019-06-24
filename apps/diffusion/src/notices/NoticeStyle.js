@@ -81,6 +81,7 @@ export default css`
   }
   :global(.notice .sidebar-section.links .card img) {
     width: 120px;
+    object-fit: cover;
     margin-right: 15px;
   }
   :global(.notice .sidebar-section.links .card .content .categories) {

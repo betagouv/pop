@@ -54,7 +54,7 @@ export default class extends React.Component {
               fontSize: "13px"
             }}
           >
-            © {e.copy}
+           {e.copy}
           </div>
           <a
             style={{

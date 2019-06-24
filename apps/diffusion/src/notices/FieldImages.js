@@ -23,8 +23,7 @@ class FieldImages extends React.Component {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                alignItems: "center",
-                height: "400px"
+                alignItems: "center"
               }}
             >
               <img src={e.src} alt={e.alt} onClick={() => this.setState({ selected: i })} />
@@ -114,9 +113,12 @@ class FieldImages extends React.Component {
             text-align: center;
           }
           .fieldImages img {
-            max-height: 220px;
             background-color: transparent;
             cursor: pointer;
+            height: 100%;
+            min-height: 200px;
+            width: 100%;
+            object-fit: contain;
           }
         `}</style>
       </div>
