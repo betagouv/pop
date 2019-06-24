@@ -10,9 +10,8 @@ class api {
   }
 
   // Get auth user by her token.
-  // TODO
-  getAuthUser(token) {
-    return request.get(`${api_url}/auth/user`, { headers: { Authorization: token } });
+  getAuthUser() {
+    return request.fetchJSON("GET", "/auth/user");
   }
 
   // Update password for one user (RPC style).
@@ -37,15 +36,14 @@ class api {
     return request.fetchJSON("PUT", `/users/${email}`, props);
   }
 
-  // TODO
+  // Delete one user by her email.
   deleteUser(email) {
-    return request.delete(`${api_url}/users/${email}`);
+    return request.fetchJSON("DELETE", `/users/${email}`);
   }
 
-  // TODO
+  // Get all users.
   getUsers() {
-    const token = localStorage.getItem("token");
-    return request.get(`${api_url}/users`, { headers: { Authorization: token } });
+    return request.fetchJSON("GET", `/users`);
   }
 
   // TODO

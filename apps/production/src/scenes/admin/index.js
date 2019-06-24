@@ -9,15 +9,14 @@ import api from "../../services/api";
 import "./index.css";
 
 class Admin extends React.Component {
-  state = {
-    users: [],
-    loading: true
-  };
+  state = { users: [], loading: true };
 
   fetchUsers = async () => {
     this.setState({ loading: true });
-    const users = await api.getUsers();
-    this.setState({ users: users || [], loading: false });
+    try {
+      const response = await api.getUsers();
+      this.setState({ users: response.users || [], loading: false });
+    } catch (e) {}
   };
 
   componentWillMount() {
@@ -89,9 +88,7 @@ class Admin extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return {
-    role: Auth.user ? Auth.user.role : ""
-  };
+  return { role: Auth.user ? Auth.user.role : "" };
 };
 
 export default connect(

@@ -36,7 +36,7 @@ export function* signinByToken() {
   if (token) {
     let response = null;
     try {
-      response = yield api.getAuthUser(token);
+      response = yield api.getAuthUser();
     } catch (e) {}
     if (response && response.user) {
       if (
