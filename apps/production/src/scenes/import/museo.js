@@ -14,7 +14,7 @@ export default class Import extends React.Component {
           collection="museo"
           parseFiles={parseFiles}
           readme={readme}
-          destinataires={["natacha.villeroy@culture.gouv.fr"]}
+          recipient="museo"
           defaultEncoding="UTF-8"
         />
       </Container>
