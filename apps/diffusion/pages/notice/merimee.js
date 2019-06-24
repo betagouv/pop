@@ -15,8 +15,6 @@ import Map from "../../src/notices/Map";
 import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 
-import { bucket_url } from "../../src/config";
-
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
     a.push(API.getNotice(base, d[i]));
@@ -54,12 +52,13 @@ export default class extends React.Component {
               fontSize: "13px"
             }}
           >
-           {e.copy}
+            {e.copy}
           </div>
           <a
             style={{
               fontSize: "13px"
             }}
+            target="_blank"
             href={`/notice/memoire/${e.ref}`}
           >
             Voir la notice image

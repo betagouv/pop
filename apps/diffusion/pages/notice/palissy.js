@@ -54,6 +54,7 @@ export default class extends React.Component {
             style={{
               fontSize: "13px"
             }}
+            target="_blank"
             href={`/notice/memoire/${e.ref}`}
           >
             Voir la notice image

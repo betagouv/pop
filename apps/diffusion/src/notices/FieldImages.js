@@ -120,6 +120,11 @@ class FieldImages extends React.Component {
             width: 100%;
             object-fit: contain;
           }
+
+          .slick-next:before,
+          .slick-prev:before {
+            color: #785d59;
+          }
         `}</style>
       </div>
     );
