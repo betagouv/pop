@@ -24,7 +24,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
   try {
     const users = await User.find(query);
-    return res.status(200).send(users);
+    return res.status(200).send({ success: true, users });
   } catch (error) {
     capture(error);
     return res.status(500).send({ success: false, error });

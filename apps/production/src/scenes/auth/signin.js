@@ -12,7 +12,7 @@ class Signin extends Component {
       email: "",
       password: "",
       error: "",
-      cgu: localStorage.getItem("cgu") || false
+      cgu: Boolean(localStorage.getItem("cgu"))
     };
   }
 

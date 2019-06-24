@@ -12,7 +12,7 @@ export default function reducer(state = initState, action) {
     case actions.SIGNIN_FAILED:
       return { ...state, user: null };
     case actions.SIGNIN_SUCCESS:
-      return { ...state, user: action.user, token: action.token };
+      return { ...state, user: action.user, token: action.token, error: "" };
     case actions.SIGNIN_ERROR:
       return { ...state, error: action.error, user: null, token: null };
     case actions.LOGOUT:

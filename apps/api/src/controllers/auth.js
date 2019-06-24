@@ -13,86 +13,71 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // Sign in.
-router.post("/signin", (req, res) => {
-  const failureObject = {
-    success: false,
-    msg: `L'authentification a échoué. Email ou mot de passe incorrect.`
-  };
-  User.findOne(
-    {
-      email: req.body.email.toLowerCase()
-    },
-    function(err, user) {
-      if (err) throw err;
-
-      if (!user) {
-        res.status(401).send(failureObject);
-      } else {
-        user.comparePassword(req.body.password, function(err, isMatch) {
-          if (isMatch && !err) {
-            const token = jwt.sign({ _id: user._id }, config.secret, {
-              expiresIn: "1d"
-            });
-            user.set({ lastConnectedAt: Date.now() });
-            user.save();
-            res.status(200).send({
-              success: true,
-              token: "JWT " + token,
-              user
-            });
-          } else {
-            res.status(401).send(failureObject);
-          }
-        });
-      }
+router.post("/signin", async (req, res) => {
+  const email = req.body.email.toLowerCase();
+  const password = req.body.password;
+  if (!email || !password) {
+    return res.status(400).send({ success: false, msg: `Mot de passe et email requis.` });
+  }
+  let user;
+  try {
+    user = await User.findOne({ email });
+  } catch (e) {
+    return res.status(500).send({ success: false, msg: `L'authentification a échoué.` });
+  }
+  if (!user) {
+    return res.status(401).send({ success: false, msg: `Email ou mot de passe incorrect.` });
+  }
+  user.comparePassword(req.body.password, async function(err, isMatch) {
+    if (isMatch && !err) {
+      const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: "1d" });
+      user.set({ lastConnectedAt: Date.now() });
+      await user.save();
+      res.status(200).send({ success: true, token: "JWT " + token, user });
+    } else {
+      res.status(401).send({ success: false, msg: `Email ou mot de passe incorrect.` });
     }
-  );
+  });
 });
 
 // Get current user.
 router.get("/user", passport.authenticate("jwt", { session: false }), (req, res) => {
-  res.send({
-    success: true,
-    user: req.user
-  });
+  res.send({ success: true, user: req.user });
 });
 
 // Password lost.
-router.post("/forgetPassword", (req, res) => {
-  const { email } = req.body;
+router.post("/forgetPassword", async (req, res) => {
+  const email = req.body.email.toLowerCase();
+  if (!email) {
+    return res.status(400).send({ success: false, msg: `Email requis.` });
+  }
 
-  User.findOne({ email: email }, function(err, user) {
-    if (err) throw err;
+  let user;
+  try {
+    user = await User.findOne({ email });
+  } catch (e) {
+    return res.status(500).send({ success: false, msg: `L'opération a échouée.` });
+  }
+  if (!user) {
+    const msg = `Utilisateur ${email.toLowerCase()} introuvable`;
+    return res.status(404).send({ success: false, msg });
+  }
 
-    if (!user) {
-      res.status(401).send({
-        success: false,
-        msg: `Utilisateur ${email.toLowerCase()} introuvable`
-      });
-    } else {
-      var password = generator.generate({ length: 10, numbers: true });
-      user.set({ password });
+  var password = generator.generate({ length: 10, numbers: true });
+  user.set({ password });
+  await user.save();
+  res.status(200).json({ success: true, msg: "Mot de passe mis à jour" });
 
-      user.save(function(err) {
-        if (err) throw err;
-        res.status(200).json({
-          success: true,
-          msg: "Successful created new user."
-        });
-
-        mailer.send(
-          "Réinitialisation du mot de passe",
-          req.body.email.toLowerCase(),
-          `Bonjour!<br /><br />
-              Votre nouveau mot de passe provisoire est ${password}<br />
-              Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
-              L'équipe POP<br />
-              Et en cas de problème, vous pouvez toujours nous contacter à jennifer.stephan@beta.gouv.fr<br />
-          `
-        );
-      });
-    }
-  });
+  mailer.send(
+    "Réinitialisation du mot de passe",
+    email,
+    `Bonjour!<br /><br />
+    Votre nouveau mot de passe provisoire est ${password}<br />
+    Nous vous recommandons de modifier votre mot de passe le plus rapidement 
+    possible en cliquant en haut à droite lors de votre connexion<br /><br />
+    L'équipe POP<br />
+    Et en cas de problème, vous pouvez toujours nous contacter à jennifer.stephan@beta.gouv.fr<br />`
+  );
 });
 
 // Update password.

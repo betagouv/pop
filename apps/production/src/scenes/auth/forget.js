@@ -6,17 +6,15 @@ import api from "../../services/api";
 export default class ForgotPassword extends Component {
   state = { mail: "", error: "", done: false };
 
-  forgetPassword() {
+  async forgetPassword() {
     const { mail } = this.state;
     this.setState({ loading: true });
-    api
-      .forgetPassword(mail)
-      .then(() => {
-        this.setState({ loading: false, done: true });
-      })
-      .catch(e => {
-        this.setState({ error: e, loading: false, done: false });
-      });
+    try {
+      await api.forgetPassword(mail);
+      this.setState({ loading: false, done: true, error: "" });
+    } catch (e) {
+      this.setState({ error: e.msg, loading: false, done: false });
+    }
   }
 
   render() {
@@ -24,9 +22,7 @@ export default class ForgotPassword extends Component {
       return (
         <Container className="forgot">
           <div className="block">
-            <p className="message">{`Un email vous a été envoyé sur ${
-              this.state.mail
-            }`}</p>
+            <p className="message">{`Un email vous a été envoyé sur ${this.state.mail}`}</p>
           </div>
         </Container>
       );
@@ -35,10 +31,9 @@ export default class ForgotPassword extends Component {
     return (
       <Container className="forgot">
         <div className="block">
-          <span>{this.state.error}</span>
+          <div className="error text-center">{this.state.error}</div>
           <p className="forgot-text">
-            Entrez votre email. Nous allons vous renvoyer un mot de passe
-            temporaire.
+            Entrez votre email. Nous allons vous renvoyer un mot de passe temporaire.
           </p>
           <input
             className="input-field"
@@ -46,10 +41,7 @@ export default class ForgotPassword extends Component {
             value={this.state.mail}
             onChange={e => this.setState({ mail: e.target.value })}
           />
-          <Button
-            onClick={this.forgetPassword.bind(this)}
-            className="submit-button"
-          >
+          <Button onClick={this.forgetPassword.bind(this)} className="submit-button">
             Réinitialiser le mot de passe
           </Button>
         </div>

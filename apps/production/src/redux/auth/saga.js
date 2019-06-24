@@ -27,7 +27,7 @@ export function* signin({ email, password }) {
 
     yield put(push("/"));
   } catch (e) {
-    yield put({ type: actions.SIGNIN_ERROR, error: e });
+    yield put({ type: actions.SIGNIN_ERROR, error: e.msg });
   }
 }
 
@@ -36,7 +36,7 @@ export function* signinByToken() {
   if (token) {
     let response = null;
     try {
-      response = yield api.getAuthUser(token);
+      response = yield api.getAuthUser();
     } catch (e) {}
     if (response && response.user) {
       if (

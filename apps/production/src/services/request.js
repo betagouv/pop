@@ -32,7 +32,7 @@ class request {
       try {
         const response = await fetch(
           `${api_url}/${url.replace(/^\//, "")}`,
-          this._init(verb, JSON.stringify(data), { "Content-Type": "application/json" })
+          this._init(verb, data && JSON.stringify(data), { "Content-Type": "application/json" })
         );
         const jsonData = await response.json();
         if (response.status !== 200 || jsonData.success !== true) {

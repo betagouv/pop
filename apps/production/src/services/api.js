@@ -5,16 +5,13 @@ import request from "./request";
 // Buisness level access to POP API.
 class api {
   // Authentication
-  // TODO
   signin(email, password) {
-    const obj = { email, password };
-    return request.post(`${api_url}/auth/signin`, JSON.stringify(obj), "application/json");
+    return request.fetchJSON("POST", "/auth/signin", { email, password });
   }
 
   // Get auth user by her token.
-  // TODO
-  getAuthUser(token) {
-    return request.get(`${api_url}/auth/user`, { headers: { Authorization: token } });
+  getAuthUser() {
+    return request.fetchJSON("GET", "/auth/user");
   }
 
   // Update password for one user (RPC style).
@@ -23,10 +20,8 @@ class api {
   }
 
   // Ask for new password.
-  // TODO
   forgetPassword(email) {
-    const obj = { email };
-    return request.post(`${api_url}/auth/forgetPassword`, JSON.stringify(obj), "application/json");
+    return request.fetchJSON("POST", `/auth/forgetPassword`, { email });
   }
 
   // Create a user.
@@ -41,15 +36,14 @@ class api {
     return request.fetchJSON("PUT", `/users/${email}`, props);
   }
 
-  // TODO
+  // Delete one user by her email.
   deleteUser(email) {
-    return request.delete(`${api_url}/users/${email}`);
+    return request.fetchJSON("DELETE", `/users/${email}`);
   }
 
-  // TODO
+  // Get all users.
   getUsers() {
-    const token = localStorage.getItem("token");
-    return request.get(`${api_url}/users`, { headers: { Authorization: token } });
+    return request.fetchJSON("GET", `/users`);
   }
 
   // TODO
