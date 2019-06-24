@@ -322,7 +322,9 @@ const SeeMore = ({ notice, museo }) => {
       <Field
         title={mapping.joconde.MSGCOM.label}
         content={
-          <a href={notice.MSGCOM}>Demande de photographie et/ou de conditions d'utilisation</a>
+          <a href={`mailto:${notice.MSGCOM}`}>
+            Demande de photographie et/ou de conditions d'utilisation
+          </a>
         }
         key="notice.MSGCOM"
       />
