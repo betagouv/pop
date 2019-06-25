@@ -14,25 +14,23 @@ class FieldImages extends React.Component {
     if (!this.props.images.length) {
       return <div />;
     }
-    const arr = this.props.images
-      .map((e, i) => {
-        return (
-          <div key={i}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center"
-              }}
-            >
-              <img src={e.src} alt={e.alt} onClick={() => this.setState({ selected: i })} />
-              {e.footer ? e.footer : <div />}
-            </div>
+    const arr = this.props.images.map((e, i) => {
+      return (
+        <div key={i}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <img src={e.src} alt={e.alt} onClick={() => this.setState({ selected: i })} />
+            {e.footer ? e.footer : <div />}
           </div>
-        );
-      })
-      .filter((e, i) => (i < 20 ? true : false));
+        </div>
+      );
+    });
 
     var settings = {
       lazyLoad: true,
