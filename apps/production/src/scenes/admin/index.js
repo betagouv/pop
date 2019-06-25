@@ -59,7 +59,7 @@ class Admin extends React.Component {
                 <td>{nom}</td>
                 <td>{prenom}</td>
                 <td className="admin-email">{email}</td>
-                <td>{group === "joconde" && museofile ? `${group} ${museofile}` : group}</td>
+                <td>{group === "joconde" && museofile ? `${group} ${museofile.join(", ")}` : group}</td>
                 <td>{institution}</td>
                 <td>{role}</td>
                 <td>{lastCo}</td>
