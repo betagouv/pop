@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import Avatar from "../../components/Avatar";
-
 import authAction from "./../../redux/auth/actions";
 const { logout } = authAction;
-
 import { history } from "../../redux/store";
-
 import "./user.css";
 
 class User extends Component {
-  state = {
-    dropdownOpen: false
-  };
+  state = { dropdownOpen: false };
 
   logout() {
     this.props.logout();

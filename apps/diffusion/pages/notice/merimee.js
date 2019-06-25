@@ -47,20 +47,8 @@ export default class extends React.Component {
       footer: (
         <div style={{ marginTop: "5px" }}>
           <div style={{ textAlign: "center", fontWeight: "bold" }}>{e.name}</div>
-          <div
-            style={{
-              fontSize: "13px"
-            }}
-          >
-            {e.copy}
-          </div>
-          <a
-            style={{
-              fontSize: "13px"
-            }}
-            target="_blank"
-            href={`/notice/memoire/${e.ref}`}
-          >
+          <div style={{ fontSize: "13px" }}>{e.copy}</div>
+          <a style={{ fontSize: "13px" }} target="_blank" href={`/notice/memoire/${e.ref}`}>
             Voir la notice image
           </a>
         </div>

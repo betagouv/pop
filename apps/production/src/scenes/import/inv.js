@@ -47,7 +47,6 @@ function parseFiles(files, encoding) {
       const MerimeeFile = files.find(file =>
         file.name.includes("GERTRUDE_xmlToMERIMEE_lexicovide.txt")
       );
-      // const RenameFile = files.find(file => file.name.includes('GERTRUDE_xmlToRenommeIllustrations_Toutes.txt'));
 
       const otherFiles = files.filter(file => file.name.indexOf(".xml") === -1);
       const importedNotices = await ParseGertrude(
@@ -115,7 +114,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
 
     notices.push(
       ...values[2].map(e => {
-        //changement du modèle de donnée gertrude -> pop
+        // Change data model from gertrude to pop
         if (e.AUT !== undefined) {
           e.AUTP = e.AUT;
         }
@@ -201,8 +200,6 @@ function ParseRenabl(files, xmlFiles, encoding) {
             memoireObj._errors.push(`Impossible de trouver l'image ${image}`);
           }
           notices.push(memoireObj);
-        } else {
-          // console.log(tags[i].nodeName);
         }
       }
     }
@@ -222,13 +219,7 @@ function convertGPS(e) {
   }
 }
 
-function checkReference(notice) {
-  // if (String(notice.REF).startsWith("IA000") || String(notice.REF).startsWith("IM000")) {
-  //   notice._errors.push(
-  //     "L'import de cette notice est impossible car l'identifiant ne contient pas de département"
-  //   );
-  // }
-}
+function checkReference(notice) {}
 
 function convertLongNameToShort(str, delim = "/") {
   let name = str.substring(str.lastIndexOf(delim) + 1);

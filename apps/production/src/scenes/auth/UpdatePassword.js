@@ -23,7 +23,7 @@ class UpdatePassword extends Component {
     const { pwd, pwd1, pwd2 } = this.state;
     this.setState({ loading: true });
     api
-    
+
       .updatePassword({ email: this.props.email, pwd, pwd1, pwd2 })
       .then(() => {
         this.setState({ loading: false, done: true });
@@ -42,8 +42,8 @@ class UpdatePassword extends Component {
     }
     return (
       <p>
-        Vous n'avez pas encore changé votre mot de passe. Pour votre sécurité,
-        vous devez le changer avant de continuer.
+        Vous n'avez pas encore changé votre mot de passe. Pour votre sécurité, vous devez le changer
+        avant de continuer.
       </p>
     );
   }
@@ -72,22 +72,16 @@ class UpdatePassword extends Component {
         <Container className="signin">
           <div>
             Votre mot de passe à été changé. <br />
-            Vous allez être deconnecté dans 5 secondes ...{" "}
+            Vous allez être deconnecté·e dans 5 secondes ...{" "}
           </div>
         </Container>
       );
     }
 
-    //If the user is not login, he shouldnt have access to the page. Its a restricted page
+    // If the user is not logged in, she should not have access to the page.
+    // It's a restricted page.
     if (!this.props.email) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/auth/signin",
-            state: { from: this.props.location }
-          }}
-        />
-      );
+      return <Redirect to={{ pathname: "/auth/signin", state: { from: this.props.location } }} />;
     }
 
     return (
@@ -117,10 +111,7 @@ class UpdatePassword extends Component {
             value={this.state.pwd2}
             onChange={e => this.setState({ pwd2: e.target.value })}
           />
-          <Button
-            className="submit-button"
-            onClick={this.updatePassword.bind(this)}
-          >
+          <Button className="submit-button" onClick={this.updatePassword.bind(this)}>
             Mettre à jour mon mot de passe
           </Button>
           {this.lastConnectedAt()}

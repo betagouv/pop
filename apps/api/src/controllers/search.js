@@ -4,7 +4,7 @@ const { esUrl } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 
-// Scroll API
+// Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
 router.post("/scroll", (req, res) => {
   let path, body;

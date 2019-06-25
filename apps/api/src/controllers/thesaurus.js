@@ -1,8 +1,10 @@
 const express = require("express");
 const request = require("request");
+const passport = require("passport");
 const X2JS = require("x2js");
-const Thesaurus = require("./../models/thesaurus");
-const { capture } = require("./../sentry.js");
+require("../passport")(passport);
+const Thesaurus = require("../models/thesaurus");
+const { capture } = require("../sentry.js");
 const x2js = new X2JS();
 const router = express.Router();
 
@@ -10,80 +12,85 @@ function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 
-router.get("/search", (req, res) => {
-  var id = req.query.id;
-  var value = escapeRegExp(req.query.value);
-  var q = Thesaurus.find({
-    arc: id,
-    value: { $regex: new RegExp("^" + value) }
-  }).limit(10);
+router.get("/search", passport.authenticate("jwt", { session: false }), (req, res) => {
+  let id = req.query.id;
+  let value = escapeRegExp(req.query.value);
+  let q = Thesaurus.find({ arc: id, value: { $regex: new RegExp("^" + value) } }).limit(10);
   q.exec((e, values) => {
     res.send(values);
   });
 });
 
-router.get("/validate", (req, res) => {
-  var id = req.query.id;
-  var value = escapeRegExp(req.query.value);
+router.get("/validate", passport.authenticate("jwt", { session: false }), (req, res) => {
+  let id = req.query.id;
+  let value = escapeRegExp(req.query.value);
   const query = {
     arc: id,
-    $text: {
-      $search: `"${value}"`,
-      $caseSensitive: false,
-      $diacriticSensitive: false
-    }
+    $text: { $search: `"${value}"`, $caseSensitive: false, $diacriticSensitive: false }
   };
-  var q = Thesaurus.find(query).limit(1);
+  let q = Thesaurus.find(query).limit(1);
   q.exec((e, values) => {
     const exist = !!values.length;
     res.send(exist);
   });
 });
 
-router.get("/getTopConceptsByThesaurusId", (req, res) => {
-  try {
-    const thesaurusId = req.query.id;
-    getTopConceptsByThesaurusId(thesaurusId).then(arr => {
-      res.status(200).send(arr);
-    });
-  } catch (e) {
-    capture(e);
-    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+router.get(
+  "/getTopConceptsByThesaurusId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    try {
+      const thesaurusId = req.query.id;
+      getTopConceptsByThesaurusId(thesaurusId).then(arr => {
+        res.status(200).send(arr);
+      });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-});
+);
 
-router.get("/getAllChildrenConcept", (req, res) => {
-  try {
-    const topconcepts = req.query.id;
-    const arr = [];
-    getAllChildrenConcept(topconcepts, arr).then(() => {
-      res.status(200).send(arr);
-    });
-  } catch (e) {
-    capture(e);
-    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+router.get(
+  "/getAllChildrenConcept",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    try {
+      const topconcepts = req.query.id;
+      const arr = [];
+      getAllChildrenConcept(topconcepts, arr).then(() => {
+        res.status(200).send(arr);
+      });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-});
+);
 
-router.get("/getPreferredTermByConceptId", (req, res) => {
-  try {
-    const conceptId = req.query.id;
-    const allTerms = [];
-    getPreferredTermByConceptId(conceptId).then(r => {
-      for (let j = 0; j < r.length; j++) {
-        if (r[j].languageId === "fr-FR") {
-          allTerms.push(r[j].lexicalValue);
+router.get(
+  "/getPreferredTermByConceptId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    try {
+      const conceptId = req.query.id;
+      const allTerms = [];
+      getPreferredTermByConceptId(conceptId).then(r => {
+        for (let j = 0; j < r.length; j++) {
+          if (r[j].languageId === "fr-FR") {
+            allTerms.push(r[j].lexicalValue);
+          }
         }
-      }
-      res.status(200).send(allTerms);
-    });
-  } catch (e) {
-    capture(e);
-    res.status(500).send({ success: false, msg: JSON.stringify(e) });
+        res.status(200).send(allTerms);
+      });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, msg: JSON.stringify(e) });
+    }
   }
-});
+);
 
-router.get("/deleteAllThesaurus", (req, res) => {
+router.get("/deleteAllThesaurus", passport.authenticate("jwt", { session: false }), (req, res) => {
   try {
     const thesaurusId = req.query.id;
     Thesaurus.remove({ arc: thesaurusId }, function() {
@@ -95,11 +102,11 @@ router.get("/deleteAllThesaurus", (req, res) => {
   }
 });
 
-router.post("/createThesaurus", (req, res) => {
+router.post("/createThesaurus", passport.authenticate("jwt", { session: false }), (req, res) => {
   try {
     const thesaurusId = req.query.id;
     const terms = req.body.terms;
-    // je créé tous les terms qui existent
+    // Create all existing terms.
     const arr = terms.map(e => new Thesaurus({ arc: thesaurusId, value: e }));
     Thesaurus.insertMany(arr, (err, docs) => {
       if (err) {
@@ -121,7 +128,7 @@ function getAllChildrenConcept(conceptId, arr) {
       const childs = await getChildrenByConceptId(conceptId);
       const ArrP = [];
       if (childs) {
-        for (var i = 0; i < childs.length; i++) {
+        for (let i = 0; i < childs.length; i++) {
           ArrP.push(getAllChildrenConcept(childs[i], arr));
         }
       }

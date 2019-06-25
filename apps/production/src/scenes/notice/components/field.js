@@ -1,9 +1,8 @@
 import React from "react";
 import { Field } from "redux-form";
 import ReactTags from "react-tag-input";
-import { Input, Tooltip } from "reactstrap";
+import { Tooltip } from "reactstrap";
 import autosize from "autosize";
-
 import api from "../../../services/api";
 import "./field.css";
 
@@ -12,9 +11,7 @@ const Tags = ReactTags.WithContext;
 class TagsInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      suggestions: []
-    };
+    this.state = { suggestions: [] };
   }
 
   handleDelete(i) {

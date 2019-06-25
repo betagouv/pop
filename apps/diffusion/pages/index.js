@@ -157,57 +157,6 @@ export default class extends React.Component {
                   }}
                 />
               </Slider>
-              {/* <h2>A la une</h2>
-              <Row className="focus">
-                <Col md={6}>
-                  <Link href={"/notice/joconde/000PE025600"} as={"/notice/joconde/000PE025600"}>
-                    <a style={{ textDecoration: "none" }}>
-                      <Card>
-                        <img
-                          src={"/static/focus.jpg"}
-                          alt="Léonard de Vinci"
-                          className="card-img"
-                          height="220"
-                        />
-                        <CardBody>
-                          <CardTitle>Léonard de Vinci</CardTitle>
-                        </CardBody>
-                      </Card>
-                    </a>
-                  </Link>
-                </Col>
-                <Col md={6} style={{ overflowY: "auto", overflowX: "hidden", height: "500px" }}>
-                  Du 24 octobre 2019 au 24 février 2020, le musée du Louvre rendra hommage à Léonard
-                  de Vinci. L’année 2019, cinquième centenaire de la mort de Léonard de Vinci en
-                  France, revêt en effet une signification particulière pour le Louvre qui possède
-                  la plus importante collection au monde de peintures de Léonard ainsi que 22
-                  dessins. <br /> <br />
-                  Le musée trouve en cette année de commémoration l’occasion de rassembler autour
-                  des cinq tableaux essentiels qu’il conserve, à savoir la Vierge aux rochers, la
-                  Belle Ferronnière, la Joconde — qui restera dans la salle où elle est
-                  habituellement exposée —, le Saint Jean Baptiste et la Sainte Anne, la plus grande
-                  part possible des peintures de l’artiste, afin de les confronter à un large choix
-                  de dessins ainsi qu’à un ensemble, restreint mais significatif, de tableaux et de
-                  sculptures de l’environnement du maître. <br /> <br />
-                  Cette rétrospective inédite de la carrière de peintre de Léonard permettra de
-                  montrer combien il a mis la peinture au-dessus de tout et comment son enquête sur
-                  le monde, qu’il appelait « la science de la peinture », fut l’instrument de son
-                  art, dont l’ambition n’était rien moins que d’apporter la vie à ses tableaux.
-                  <br /> <br />
-                  Aboutissement de plus de dix années de travail, qui ont vu notamment l'examen
-                  scientifique renouvelé des tableaux du Louvre et la restauration de trois d’entre
-                  eux, permettant de mieux comprendre sa pratique artistique et sa technique
-                  picturale, l’exposition clarifiera également la biographie de Léonard en reprenant
-                  tous les documents d’archives. <br />
-                  Elle dressera le portrait d’un homme et d’un artiste d’une extraordinaire
-                  liberté."
-                  <br /> <br />
-                  <i>
-                    Droits photographique : © Réunion des musées nationaux - utilisation soumise à
-                    autorisation ; © Franck Raux
-                  </i>
-                </Col>
-              </Row> */}
               <h2>Accès thématiques</h2>
               <h3>Photographie</h3>
               <Slider {...settings}>

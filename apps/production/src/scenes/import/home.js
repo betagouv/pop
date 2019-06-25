@@ -31,36 +31,12 @@ class Import extends React.Component {
           <div className="subtitle">Je souhaite importer</div>
           <Row>
             {this.renderTiles([
-              {
-                url: "/import/joconde",
-                name: "Joconde",
-                image
-              },
-              {
-                url: "/import/mnr",
-                name: "MNR",
-                image
-              },
-              {
-                url: "/import/inv",
-                name: "Inventaire",
-                image
-              },
-              {
-                url: "/import/mh",
-                name: "Monuments historiques",
-                image
-              },
-              {
-                url: "/import/memoire",
-                name: "MAP (Service Archives Photos)",
-                image
-              },
-              {
-                url: "/import/museo",
-                name: "Museo",
-                image
-              }
+              { url: "/import/joconde", name: "Joconde", image },
+              { url: "/import/mnr", name: "MNR", image },
+              { url: "/import/inv", name: "Inventaire", image },
+              { url: "/import/mh", name: "Monuments historiques", image },
+              { url: "/import/memoire", name: "MAP (Service Archives Photos)", image },
+              { url: "/import/museo", name: "Museo", image }
             ])}
           </Row>
           <Row>

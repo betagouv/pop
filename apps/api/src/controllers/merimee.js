@@ -78,7 +78,7 @@ async function checkMerimee(notice) {
   const errors = [];
   try {
     if (!notice.CONTACT) {
-      //Check contact
+      // Check contact.
       errors.push("Le champ CONTACT ne doit pas être vide");
     }
 
@@ -88,7 +88,7 @@ async function checkMerimee(notice) {
     }
 
     if (!notice.TICO && !notice.TITR) {
-      // check Title
+      // Check Title
       errors.push("Cette notice devrait avoir un TICO ou un TITR");
     }
 
@@ -134,7 +134,6 @@ function checkIfMemoireImageExist(notice) {
         return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME };
       });
 
-      // @raph -> I know you want to do only one loop with a reduce but it gave me headache
       const newArr = (notice.MEMOIRE || []).filter(e => arr.find(f => f.ref == e.ref));
       for (let i = 0; i < arr.length; i++) {
         if (!newArr.find(e => e.REF === arr[i].REF)) {

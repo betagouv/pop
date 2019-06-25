@@ -135,6 +135,31 @@ function canDeleteMerimee(user, notice) {
   return canManageMerimee(user, notice);
 }
 
+function canManageMuseo(user, notice) {
+  return (
+    user &&
+    notice &&
+    user.role &&
+    user.group &&
+    ((user.role === "administrateur" && (user.group === "museo" || user.group === "admin")) ||
+      (user.role === "producteur" &&
+        user.group === "museo" &&
+        user.museofile.includes(notice.MUSEO)))
+  );
+}
+
+function canCreateMuseo(user, notice) {
+  return canManageMuseo(user, notice);
+}
+
+function canUpdateMuseo(user, prevNotice, newNotice) {
+  return canManageMuseo(user, prevNotice) && canManageMuseo(user, newNotice);
+}
+
+function canDeleteMuseo(user, notice) {
+  return canManageMuseo(user, notice);
+}
+
 module.exports = {
   canUpdateJoconde,
   canCreateJoconde,
@@ -150,5 +175,8 @@ module.exports = {
   canDeletePalissy,
   canCreateMerimee,
   canUpdateMerimee,
-  canDeleteMerimee
+  canDeleteMerimee,
+  canUpdateMuseo,
+  canCreateMuseo,
+  canDeleteMuseo
 };

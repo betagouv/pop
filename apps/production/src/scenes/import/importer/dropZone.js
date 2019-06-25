@@ -21,8 +21,6 @@ export default class ImportDropComponent extends Component {
     };
   }
 
-  componentWillMount() {}
-
   updateEncoding(encoding) {
     localStorage.setItem("encoding", encoding);
     this.setState({ encoding });

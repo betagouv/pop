@@ -392,7 +392,6 @@ const CustomField = ({ name, disabled, ...rest }) => {
       {...Mapping.merimee[name]}
       disabled={
         Mapping.merimee[name].generated == true ||
-        // Mapping.merimee[name].deprecated == true ||
         disabled
       }
       name={name}

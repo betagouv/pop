@@ -40,7 +40,7 @@ class FieldImages extends React.Component {
 
     const index = this.state.imageFiles.findIndex(f => e.indexOf(`/${f.name}`) !== -1);
 
-    //if not file just uploaded
+    // If not file just uploaded.
     if (index == -1) {
       return {
         source: this.props.getAbsoluteUrl ? this.props.getAbsoluteUrl(e) : e,
@@ -55,14 +55,14 @@ class FieldImages extends React.Component {
   }
 
   getImages() {
-    //if not an array
+    // If not an array
     if (!Array.isArray(this.props.input.value)) {
       if (!this.props.input.value) {
         return [];
       }
       return [this.getFile(this.props.input.value)];
     }
-    //convert FILE to local url
+    // Convert FILE to local url
     return this.props.input.value.map(e => {
       return this.getFile(e);
     });
@@ -78,7 +78,7 @@ class FieldImages extends React.Component {
     const confirmText = `Vous êtes sur le point de supprimer une image. La suppression sera effective après avoir cliqué sur "sauvegarder" en bas de la page. Souhaitez-vous continuer ?`;
     const toastrConfirmOptions = {
       onOk: () => {
-        //If only One Image
+        // If only One Image.
         if (!Array.isArray(this.props.input.value)) {
           this.props.input.onChange("");
           this.props.filesToUpload([]);

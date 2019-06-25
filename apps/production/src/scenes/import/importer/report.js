@@ -54,9 +54,9 @@ export default function generate(
   }
 
   arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
-  arr.push(`<h2>Établissement: ${institution}</h2>`);
-  arr.push(`<h2>Producteur: ${email}</h2>`);
-  arr.push(`<h2>Contact: ${contact}</h2>`);
+  arr.push(`<h2>Établissement : ${institution}</h2>`);
+  arr.push(`<h2>Producteur : ${email}</h2>`);
+  arr.push(`<h2>Contact : ${contact}</h2>`);
 
   if (fileNames.length) {
     arr.push(`<h2>Fichier(s) importé(s) :</h2>`);
@@ -65,7 +65,7 @@ export default function generate(
     arr.push(`</ul>`);
   }
 
-  arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`);
+  arr.push(`<p>Nombre de notices chargées : ${notices.length}</p>`);
   arr.push(`<ul>`);
   arr.push(`<li>${notices.length - rejected.length} notices valides</li>`);
   arr.push(`<li style="list-style-type:none">`);
@@ -82,7 +82,7 @@ export default function generate(
   arr.push(`</li >`);
   arr.push(`<li>${rejected.length} notices rejetées</li>`);
   arr.push(`</ul>`);
-  arr.push(`<p>Nombre d'images chargées: ${imagesNumber}</p>`);
+  arr.push(`<p>Nombre d'images chargées : ${imagesNumber}</p>`);
 
   arr.push(`<h1>Notices créées</h1>`);
   {

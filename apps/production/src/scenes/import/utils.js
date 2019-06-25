@@ -29,14 +29,10 @@ function readODS(file, encoding) {
         type: "binary"
       });
       workbook.SheetNames.forEach(function(sheetName) {
-        // Here is your object
         var XL_row_object = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
           raw: true,
           defval: ""
         });
-
-        console.log("XL_row_object", XL_row_object);
-        // var json_object = JSON.stringify(XL_row_object);
         resolve(XL_row_object);
       });
     };
@@ -97,7 +93,7 @@ function readCSV(file, delimiter, encoding, quote) {
 
     parser.on("readable", () => {
       while ((record = parser.read())) {
-        // on suppr les lignes vides
+        // Delete empty lines.
         if (!record.join("").trim()) {
           continue;
         }
@@ -130,7 +126,7 @@ function readCSV(file, delimiter, encoding, quote) {
 }
 
 function parseAjoutPilote(res, object) {
-  let str = res.replace(/\-\r\n/g, ""); // Parsing du fichier en ajout piloté
+  let str = res.replace(/\-\r\n/g, "");
   var lines = str.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
   const notices = [];
   let obj = {};

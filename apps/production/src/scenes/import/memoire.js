@@ -46,17 +46,16 @@ function parseFiles(files, encoding) {
         const obj = data[i];
         const notice = new Memoire(obj);
 
-        // SI NOMSN nexiste pas, on ne met pas a jour le champ IMG
+        // If NOMSN does not exists, don't update IMG.
         if (obj.NOMSN !== undefined) {
           if (!obj.NOMSN) {
-            // SI REFIMG est vide, on suppr limage
+            // If REFIMG is empty, delete IMG
             notice.IMG = "";
           } else {
             let fileName = String(obj.NOMSN);
             fileName = convertLongNameToShort(fileName);
             let img = filesMap[fileName];
             if (img) {
-              // const newImage = utils.renameFile(img, shortName);
               notice.IMG = `memoire/${notice.REF}/${fileName}`;
               notice._files.push(img);
             } else {
@@ -64,10 +63,8 @@ function parseFiles(files, encoding) {
             }
           }
         }
-
         notices.push(notice);
       }
-
       resolve({ importedNotices: notices, fileNames: [objectFile.name] });
     });
   });
@@ -75,7 +72,6 @@ function parseFiles(files, encoding) {
 
 function convertLongNameToShort(str) {
   return str;
-
   // I keep this comment because I may need to put it back later. Im not sure about it.
   // return str
   //   .substring(str.lastIndexOf("/") + 1)

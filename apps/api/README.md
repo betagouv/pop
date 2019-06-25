@@ -58,18 +58,18 @@ AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=y ES_ENDPOINT=z node src/elasticsearch
  - Capturer les erreurs (sentry) en cas de 500.
 
 
-### Scripts utils
+### Scripts
 ```
 npm run export:schemas
 ```
-Genere la documentation du modèle de donnée en markdown dans /api/doc
+Genere la documentation du modèle de donnée en markdown dans `/api/doc`
 
 ```
 npm run export:mapping
 ```
-Genere le fichier de mapping du modèle de donnée utilisé par la production et la diff. Ce fichier est en quelque sorte la clef de voute des donnée du projet POP
+Genere le fichier de mapping du modèle de donnée utilisé par la production et la diff. Ce fichier est en quelque sorte la clef de voute des donnée du projet POP.
 
 ```
 npm run export:csv
 ```
-Permet de généré le modèle de donnée en csv
+Permet de généré le modèle de donnée en csv.

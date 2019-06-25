@@ -4,9 +4,6 @@ import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
-
-import api from "../../services/api";
-
 import utils from "./utils";
 
 class Import extends React.Component {
@@ -18,7 +15,7 @@ class Import extends React.Component {
   }
   parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
-      // Test ajout piloté format
+      // Test "ajout piloté" format
       let rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "txt");
       if (rootFile) {
         const res = await utils.asyncReadFile(rootFile, encoding);
@@ -31,7 +28,6 @@ class Import extends React.Component {
       rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
       if (rootFile) {
         const res = await utils.readCSV(rootFile, ";", encoding, '"');
-
         const importedNotices = await importCSV(res, files, this.state.museofile);
         resolve({ importedNotices, fileNames: [rootFile.name] });
         return;
@@ -96,7 +92,7 @@ function importCSV(res, files, museofile) {
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
 
-        //I add 0 in front of REF when we import csv file
+        // Add 0 in front of REF when we import csv file
         if (value.REF.length < 11) {
           value.REF = addZeros(value.REF, 11);
         }
@@ -107,11 +103,12 @@ function importCSV(res, files, museofile) {
 
     const filesMap = {};
     for (var i = 0; i < files.length; i++) {
-      //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+      // Sometimes, name is the long name with museum code, sometimes its not... 
+      // The easiest way I found was to transform long name to short name each time I get a file name.
       filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
     }
 
-    //ADD IMAGES
+    // ADD IMAGES
     for (var i = 0; i < importedNotices.length; i++) {
       const names = importedNotices[i].IMG;
 
@@ -149,11 +146,12 @@ function importAjoutPiloté(res, files, museofile) {
 
     const filesMap = {};
     for (var i = 0; i < files.length; i++) {
-      //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
+      // Sometimes, name is the long name with museum code, sometimes its not... 
+      // The easiest way I found was to transform long name to short name each time I get a file name
       filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
     }
 
-    //ADD IMAGES
+    // ADD IMAGES
     for (var i = 0; i < importedNotices.length; i++) {
       const names = importedNotices[i].IMG;
       if (!names) {
@@ -203,9 +201,9 @@ function report(notices, collection, email, institution, importId) {
   let contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
 
   arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
-  arr.push(`<h2>Établissement: ${institution}</h2>`);
-  arr.push(`<h2>Producteur: ${email}</h2>`);
-  arr.push(`<h2>Contact: ${contact}</h2>`);
+  arr.push(`<h2>Établissement : ${institution}</h2>`);
+  arr.push(`<h2>Producteur : ${email}</h2>`);
+  arr.push(`<h2>Contact : ${contact}</h2>`);
   arr.push(`<p>Nombre de notices chargées: ${notices.length}</p>`);
   arr.push(`<ul>`);
   arr.push(`<li>${notices.length - rejected.length} notice(s) valide(s)</li>`);
