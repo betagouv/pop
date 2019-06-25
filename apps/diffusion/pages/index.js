@@ -402,7 +402,7 @@ export default class extends React.Component {
             height: 100%;
           }
           .home .home-search-background {
-            background: rgba(0, 0, 0, 0.65) url("/static/background.png");
+            background: rgba(0, 0, 0, 0.65) url("/static/banner/1.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             padding-top: 70px;
