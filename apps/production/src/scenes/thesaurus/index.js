@@ -48,7 +48,7 @@ export default class ImportComponent extends Component {
       this.addMessage(`Récupération des concepts enfants`);
       let allconcepts = [];
       for (let i = 0; i < topconctps.length; i++) {
-        const childs = await api.getAllChildrenConcept(topconctps[i]);
+        const childs = await api.getAllChildrenConcept(topconctps[i].identifier);
         allconcepts.push(...childs);
         this.addMessage(
           `Récupération de ${allconcepts.length} concepts enfants...`,

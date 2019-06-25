@@ -56,7 +56,7 @@ function parseFiles(files, encoding) {
         return;
       }
 
-      //Create New notices
+      // Create new notices.
       if (obj.REF === "PM") {
         if (!obj.DPT) {
           reject("DPT est vide. Impossible de générer un id");

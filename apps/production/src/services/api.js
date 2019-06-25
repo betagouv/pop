@@ -1,4 +1,3 @@
-const { api_url } = require("../config.js");
 import "isomorphic-fetch";
 import request from "./request";
 
@@ -46,7 +45,7 @@ class api {
     return request.fetchJSON("GET", `/users`);
   }
 
-  // TODO
+  // Send a report.
   sendReport(subject, to, body) {
     const data = { subject, to, body };
     if (process.env.NODE_ENV !== "production") {
@@ -94,8 +93,8 @@ class api {
           }
           cb(
             progress,
-            `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` + 
-            `Tentative : ${attempts}/${MAX_ATTEMPTS}`
+            `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
+              `Tentative : ${attempts}/${MAX_ATTEMPTS}`
           );
           await timeout(TIME_BEFORE_RETRY);
         }
@@ -104,15 +103,14 @@ class api {
     });
   }
 
-  // TODO
+  // Create a gallery.
   createGallery(obj, file) {
     let formData = new FormData();
-    console.log("add file", file);
     if (file) {
       formData.append("files", file, file.name);
     }
     formData.append("gallery", JSON.stringify(obj));
-    return request.post(`${api_url}/gallery`, formData);
+    return request.fetchFormData("POST", `/gallery`, formData);
   }
 
   // Update one notice.
@@ -141,54 +139,46 @@ class api {
     return request.fetchFormData("POST", `/${collection}`, formData);
   }
 
-  // TODO
+  // Get one notice.
   getNotice(collection, ref) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/${collection}/${ref}`);
+    return request.getJSON(`/${collection}/${ref}`);
   }
 
   // Delete one notice
   deleteNotice(collection, ref) {
     return request.fetchJSON("DELETE", `/${collection}/${ref}`);
   }
-  // TODO
+  // Get a new ID for some notices.
   getNewId(collection, prefix, dpt) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`, {
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
-    });
+    return request.fetchJSON("GET", `/${collection}/newId?prefix=${prefix}&dpt=${dpt}`);
   }
-  // TODO
+  // Get Top Concepts By Thesaurus Id.
   getTopConceptsByThesaurusId(thesaurusId) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
+    return request.getJSON(`/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
   }
-  // TODO
+  // Get All Children Concept.
   getAllChildrenConcept(thesaurusId) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
+    return request.getJSON(`/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
   }
-  // TODO
+  // Get Preferred Term By Concept Id.
   getPreferredTermByConceptId(thesaurusId) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
+    return request.getJSON(`/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
   }
-  // TODO
+  // Delete All Thesaurus.
   deleteAllThesaurus(thesaurusId) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
+    return request.getJSON(`/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
   }
-  // TODO
+  // Create Thesaurus.
   createThesaurus(thesaurusId, terms) {
-    return request.post(
-      `${api_url}/thesaurus/createThesaurus?id=${thesaurusId}`,
-      JSON.stringify(terms),
-      "application/json"
-    );
+    return request.fetchJSON("POST", `/thesaurus/createThesaurus?id=${thesaurusId}`, terms);
   }
-  // TODO
+  // Get Thesaurus.
   getThesaurus(thesaurusId, str) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`);
+    return request.getJSON(`/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
-  // TODO
+  // Validate with thesaurus
   validateWithThesaurus(thesaurusId, str) {
-    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
+    return request.getJSON(`/thesaurus/validate?id=${thesaurusId}&value=${str}`);
   }
 }
 
