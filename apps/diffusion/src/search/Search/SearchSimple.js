@@ -44,7 +44,7 @@ function customQuery(query, fields) {
   return { bool: { should: [strict, strictCross, fuzzy] } };
 }
 
-export default function Search({ initialValues }) {
+export default function SearchSimple({ initialValues }) {
   return (
     <SearchBox
       id="mainSearch"
