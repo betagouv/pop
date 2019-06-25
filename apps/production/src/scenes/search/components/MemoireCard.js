@@ -28,6 +28,21 @@ export default ({ data }) => {
     }
   };
 
+  const joinData = f => {
+    return f
+      .map(x => x && String(x).trim())
+      .filter(x => x)
+      .join(" ; ");
+  };
+
+  const content = joinData([
+    data.OBJET,
+    data.EDIF,
+    data.LEG,
+    data.DATOEU,
+    data.DATOEU ? "" : data.SCLE
+  ]);
+
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -43,7 +58,7 @@ export default ({ data }) => {
         </div>
         <div>
           <p>{data.LOCA}</p>
-          <p>{data.LEG}</p>
+          <p>{content}</p>
           <p>{data.AUTP}</p>
           <p>{data.DATPV}</p>
           <p>{data.SERIE}</p>
