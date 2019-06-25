@@ -82,7 +82,10 @@ export default class Notice {
     if (Array.isArray(str)) {
       return str;
     }
-    const arr = str.split(delim).map(e => e.trim());
+
+    const arr = String(str)
+      .split(delim)
+      .map(e => e.trim());
 
     // Remove duplicates
     return arr.filter((obj, key, array) => array.map(obj2 => obj !== obj2));
