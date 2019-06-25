@@ -55,15 +55,15 @@ class api {
     return request.post(`${api_url}/mail`, JSON.stringify(obj), "application/json");
   }
 
-  // TODO
+  // Create an import.
   createImport(data, file) {
     let formData = new FormData();
     formData.append("import", JSON.stringify(data));
     formData.append("file", file, "import.csv");
-    return request.post(`${api_url}/import`, formData);
+    return request.fetchFormData("POST", `/import`, formData);
   }
 
-  // TODO
+  // Update and create N notices (via import).
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
       const MAX_ATTEMPTS = 5;
@@ -76,7 +76,7 @@ class api {
         const currentNotices = arr.splice(0, BULK_SIZE);
         let currentQueries = currentNotices.map(e => {
           if (e.action === "updated") {
-            return this.legacyUpdateNotice(e.notice.REF, e.collection, e.notice, e.files);
+            return this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
           } else {
             return this.createNotice(e.collection, e.notice, e.files);
           }
@@ -94,7 +94,8 @@ class api {
           }
           cb(
             progress,
-            `Un problème de connexion à été détecté. Tentative : ${attempts}/${MAX_ATTEMPTS}, ${e}`
+            `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` + 
+            `Tentative : ${attempts}/${MAX_ATTEMPTS}`
           );
           await timeout(TIME_BEFORE_RETRY);
         }
@@ -114,16 +115,6 @@ class api {
     return request.post(`${api_url}/gallery`, formData);
   }
 
-  // TODO
-  legacyUpdateNotice(ref, collection, data, files = []) {
-    let formData = new FormData();
-    formData.append("notice", JSON.stringify(data));
-    for (let i = 0; i < files.length; i++) {
-      formData.append("file", files[i], files[i].name);
-    }
-    return request.put(`${api_url}/${collection}/${ref}`, formData);
-  }
-
   // Update one notice.
   updateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
@@ -134,10 +125,10 @@ class api {
     return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 
-  // TODO
+  // Create a new notice.
   createNotice(collection, data, files = []) {
+    // Clean object.
     for (let propName in data) {
-      // Clean object.
       if (!data[propName]) {
         delete data[propName];
       }
@@ -147,21 +138,21 @@ class api {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
-    return request.post(`${api_url}/${collection}`, formData);
+    return request.fetchFormData("POST", `/${collection}`, formData);
   }
 
   // TODO
   getNotice(collection, ref) {
-    return request.get(`${api_url}/${collection}/${ref}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/${collection}/${ref}`);
   }
 
-  // TODO
+  // Delete one notice
   deleteNotice(collection, ref) {
-    return request.delete(`${api_url}/${collection}/${ref}`);
+    return request.fetchJSON("DELETE", `/${collection}/${ref}`);
   }
   // TODO
   getNewId(collection, prefix, dpt) {
-    return request.get(`${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`, {
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/${collection}/newId?prefix=${prefix}&dpt=${dpt}`, {
       headers: {
         Authorization: localStorage.getItem("token")
       }
@@ -169,19 +160,19 @@ class api {
   }
   // TODO
   getTopConceptsByThesaurusId(thesaurusId) {
-    return request.get(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getTopConceptsByThesaurusId?id=${thesaurusId}`);
   }
   // TODO
   getAllChildrenConcept(thesaurusId) {
-    return request.get(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getAllChildrenConcept?id=${thesaurusId}`);
   }
   // TODO
   getPreferredTermByConceptId(thesaurusId) {
-    return request.get(`${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/getPreferredTermByConceptId?id=${thesaurusId}`);
   }
   // TODO
   deleteAllThesaurus(thesaurusId) {
-    return request.get(`${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/deleteAllThesaurus?id=${thesaurusId}`);
   }
   // TODO
   createThesaurus(thesaurusId, terms) {
@@ -193,11 +184,11 @@ class api {
   }
   // TODO
   getThesaurus(thesaurusId, str) {
-    return request.get(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
   // TODO
   validateWithThesaurus(thesaurusId, str) {
-    return request.get(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
+    return request.getJSON_IgnoreSuccessStatusAndNotFound(`${api_url}/thesaurus/validate?id=${thesaurusId}&value=${str}`);
   }
 }
 

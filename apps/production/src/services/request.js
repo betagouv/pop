@@ -74,25 +74,6 @@ class request {
   }
 
   // LEGACY
-  put(url, data, contentType) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const ct = contentType ? { "Content-Type": contentType } : {};
-        const response = await fetch(url, this._init("PUT", data, ct));
-
-        if (response.status !== 200) {
-          Raven.captureException(JSON.stringify(response));
-          reject(this._errorTxt(response));
-          return;
-        }
-        resolve(data);
-      } catch (err) {
-        Raven.captureException(JSON.stringify(err));
-        reject("L'api est inaccessible", err);
-      }
-    });
-  }
-
   post(url, data, contentType) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -132,36 +113,14 @@ class request {
     });
   }
 
-  delete(url) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch(url, this._init("DELETE", null));
-
-        if (response.status !== 200) {
-          Raven.captureException(JSON.stringify(response));
-          reject(this._errorTxt(response));
-          return;
-        }
-
-        resolve();
-      } catch (err) {
-        Raven.captureException(JSON.stringify(err));
-        reject("L'api est inaccessible", err);
-      }
-    });
-  }
-
-  get(url, init) {
+  getJSON_IgnoreSuccessStatusAndNotFound(url, init) {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(url, init);
-
         if (response.status === 404) {
           resolve(null);
           return;
-        }
-
-        if (response.status !== 200) {
+        } else if (response.status !== 200) {
           Raven.captureException(JSON.stringify(response));
           reject(this._errorTxt(response));
           return;

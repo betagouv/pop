@@ -1,8 +1,8 @@
 const express = require("express");
 const request = require("request");
 const X2JS = require("x2js");
-const Thesaurus = require("./../models/thesaurus");
-const { capture } = require("./../sentry.js");
+const Thesaurus = require("../models/thesaurus");
+const { capture } = require("../sentry.js");
 const x2js = new X2JS();
 const router = express.Router();
 
