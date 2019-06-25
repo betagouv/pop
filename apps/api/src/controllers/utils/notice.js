@@ -2,7 +2,7 @@ const { capture } = require("./../../sentry.js");
 
 function getNewId(object, prefix, dpt) {
   return new Promise((resolve, reject) => {
-    var q = object.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } }).sort({ REF: -1 });
+    let q = object.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } }).sort({ REF: -1 });
     q.exec((error, doc) => {
       if (error) {
         reject(error);
@@ -28,22 +28,14 @@ function checkESIndex(doc) {
 
 function updateNotice(collection, REF, notice) {
   return new Promise((resolve, reject) => {
-    collection.findOneAndUpdate(
-      { REF },
-      notice,
-      {
-        upsert: true,
-        new: true
-      },
-      (err, doc) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        checkESIndex(doc);
-        resolve(doc);
+    collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true }, (err, doc) => {
+      if (err) {
+        reject(err);
+        return;
       }
-    );
+      checkESIndex(doc);
+      resolve(doc);
+    });
   });
 }
 

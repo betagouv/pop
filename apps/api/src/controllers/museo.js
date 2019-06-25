@@ -8,6 +8,7 @@ const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
 const { formattedNow, deleteFile, uploadFile } = require("./utils");
+const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -38,6 +39,7 @@ async function updateJocondeNotices(notice) {
   await Joconde.update({ MUSEO: notice.REF }, obj);
 }
 
+// Get one notice.
 router.get("/:ref", async (req, res) => {
   const museo = await Museo.findOne({ REF: req.params.ref });
   if (museo) {
@@ -46,6 +48,7 @@ router.get("/:ref", async (req, res) => {
   return res.status(404).send({ success: false, msg: "Notice introuvable." });
 });
 
+// Update a notice.
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
@@ -55,10 +58,21 @@ router.put(
     if (!notice || !notice.REF) {
       return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
     }
-    const arr = [];
+
+    // Check authorisation.
+    const prevNotice = await Museo.findOne({ REF: notice.REF });
+    if (!canUpdateMuseo(req.user, prevNotice, notice)) {
+      return res.status(401).send({
+        success: false,
+        msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+      });
+    }
+    const promises = [];
+
+    // Upload images.
     for (let i = 0; i < req.files.length; i++) {
       const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      arr.push(uploadFile(path, req.files[i]));
+      promises.push(uploadFile(path, req.files[i]));
     }
 
     // Update IMPORT ID (this code is unclear…)
@@ -69,11 +83,10 @@ router.put(
     }
 
     transformBeforeCreateOrUpdate(notice);
-    //update joconde
-    arr.push(updateJocondeNotices(notice));
-    arr.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
+    promises.push(updateJocondeNotices(notice));
+    promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
-      await Promise.all(arr);
+      await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
@@ -82,26 +95,30 @@ router.put(
   }
 );
 
+// Delete a notice by its ref.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const ref = req.params.ref;
-
     const doc = await Museo.findOne({ REF: ref });
     if (!doc) {
-      return res.status(500).send({
-        error: `Impossible de trouver la notice museo ${ref} à supprimer`
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice museo ${ref} à supprimer.`
       });
+    }
+    if (!canDeleteMuseo(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     if (doc.PHOTO) {
       deleteFile(doc.PHOTO);
     }
     await doc.remove();
-    return res.status(200).send({});
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
-    return res.status(500).send({
-      error
-    });
+    return res.status(500).send({ success: false, error });
   }
 });
 

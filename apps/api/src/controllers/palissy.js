@@ -71,17 +71,17 @@ function transformBeforeUpdate(notice) {
 async function checkPalissy(notice) {
   const errors = [];
   try {
-    //Check contact
+    // Check contact.
     if (!notice.CONTACT) {
       errors.push("Le champ CONTACT ne doit pas être vide");
     }
 
-    //Check coor
+    // Check coor.
     const { message } = lambertToWGS84(notice.COOR, notice.ZONE);
     if (message) {
       errors.push(message);
     }
-    //Palissy
+    // Palissy
     if (!notice.TICO && !notice.TITR) {
       errors.push("Cette notice devrait avoir un TICO ou un TITR");
     }
@@ -133,7 +133,6 @@ function checkIfMemoireImageExist(notice) {
         return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME };
       });
 
-      //@raph -> I know you want to do only one loop with a reduce but it gave me headache
       const newArr = (notice.MEMOIRE || []).filter(e => arr.find(f => f.ref == e.ref));
       for (let i = 0; i < arr.length; i++) {
         if (!newArr.find(e => e.REF === arr[i].REF)) {
@@ -155,34 +154,27 @@ function populateMerimeeREFO(notice) {
         resolve();
         return;
       }
-
-      const arr = [];
-
+      const promises = [];
       const merimees = await Merimee.find({ REFO: notice.REF });
-      // console.log(merimees);
 
       for (let i = 0; i < merimees.length; i++) {
-        // Si on a enlevé l'objet de la notice, alors on l'enleve de palissy
+        // If the object is removed from notice, then remove it from palissy
         if (!notice.REFA.includes(merimees[i].REF)) {
-          // console.log(merimees[i]);
           merimees[i].REFO = merimees[i].REFO.filter(e => e !== notice.REF);
-          // console.log(merimees[i].REFO);
-          arr.push(merimees[i].save());
+          promises.push(merimees[i].save());
         }
       }
 
       for (let i = 0; i < notice.REFA.length; i++) {
         if (!merimees.find(e => e.REF === notice.REFA[i])) {
           const obj = await Merimee.findOne({ REF: notice.REFA[i] });
-          // console.log("add REFO for ", obj.REF);
           if (obj && Array.isArray(obj.REFO) && !obj.REFO.includes(notice.REF)) {
             obj.REFO.push(notice.REF);
-            // console.log("add REFO for ", obj.REFO);
-            arr.push(obj.save());
+            promises.push(obj.save());
           }
         }
       }
-      await Promise.all(arr);
+      await Promise.all(promises);
       resolve();
     } catch (error) {
       capture(error);

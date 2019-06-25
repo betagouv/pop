@@ -1,9 +1,5 @@
 import { bucket_url } from "./config";
 
-/*
-On a du faire cette fonction "utils.getNoticeInfo" pour gérer les principales informations des notices dissiminées dans l'app et qui nécessitait du traitement "fastidieux"
-*/
-
 export function getNoticeInfo(notice) {
   const base = notice.BASE;
   switch (base) {

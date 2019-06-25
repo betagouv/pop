@@ -100,16 +100,11 @@ function findProducteur(REF, IDPROD, EMET) {
   return findMemoireProducteur(REF, IDPROD, EMET);
 }
 
-/* Complicated function to update linked notice
-Uses cases : 
-- You can remove a link by removing the reference in LBASE
-- You can create a link by adding a reference in LBASE
-- You need to update information ( copy, name, url ) if memoire has been updated
-
-
-
-*/
-
+// Complicated function to update linked notice
+// Uses cases :
+// - You can remove a link by removing the reference in LBASE
+// - You can create a link by adding a reference in LBASE
+// - You need to update information ( copy, name, url ) if memoire has been updated
 async function removeMemoireImageForNotice(notice, REF) {
   const MEMOIRE = notice.MEMOIRE.filter(e => e.ref !== REF);
   const CONTIENT_IMAGE = notice.MEMOIRE.some(e => e.url) ? "oui" : "non";

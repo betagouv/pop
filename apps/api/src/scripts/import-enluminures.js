@@ -9,7 +9,7 @@ async function run() {
   await mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
   const r = parse(
-    fs.readFileSync("/Users/raphael/Downloads/baseEnluminures/enlumine-DECOR-valid.csv.utf.csv"),
+    fs.readFileSync("path/to/enlumine-DECOR-valid.csv.utf.csv"),
     { columns: true, skip_empty_lines: true, delimiter: "|", quote: false }
   );
 

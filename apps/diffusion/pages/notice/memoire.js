@@ -11,7 +11,7 @@ import LinkedNotices from "../../src/notices/LinkedNotices";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
-import { toFieldImages, schema } from "../../src/notices/utils";
+import { schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 

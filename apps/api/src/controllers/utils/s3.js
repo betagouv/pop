@@ -2,7 +2,7 @@ const fs = require("fs");
 const AWS = require("aws-sdk");
 const { s3Bucket } = require("../../config.js");
 
-// Surement pas besoin de l'écrire sur le disque ...
+// Maybe we should not write to disk.
 function uploadFile(path, file, Bucket = s3Bucket) {
   const s3 = new AWS.S3();
   return new Promise((resolve, reject) => {
@@ -33,20 +33,14 @@ function uploadFile(path, file, Bucket = s3Bucket) {
 function deleteFile(path) {
   return new Promise((resolve, reject) => {
     const s3 = new AWS.S3();
-    s3.deleteObject(
-      {
-        Bucket: s3Bucket,
-        Key: path
-      },
-      err => {
-        if (err) {
-          console.log(err);
-          reject(new Error());
-        } else {
-          resolve();
-        }
+    s3.deleteObject({ Bucket: s3Bucket, Key: path }, err => {
+      if (err) {
+        console.log(err);
+        reject(new Error());
+      } else {
+        resolve();
       }
-    );
+    });
   });
 }
 

@@ -1,10 +1,9 @@
 require("dotenv").config();
 const program = require("commander");
-const Listr = require("listr");
 const es = require("../elasticsearch")();
-const { pingElasticsearchTask } = require("./utils");
 const chalk = require("chalk");
 
+// Get one doc from elastic search by its ID.
 async function run() {
   program
     .version("0.1.0")

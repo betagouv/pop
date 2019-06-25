@@ -1,4 +1,3 @@
-// TODO: control authorization
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -9,6 +8,7 @@ const { capture } = require("../sentry.js");
 const Import = require("../models/import");
 const { uploadFile } = require("./utils");
 
+// Store import data (list of created, updated notices)
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -20,12 +20,10 @@ router.post(
       const doc = await obj.save();
 
       for (let i = 0; i < req.files.length; i++) {
-        await uploadFile(
-          `import/${filenamify(String(doc._id))}/${filenamify(req.files[i].originalname)}`,
-          req.files[i]
-        );
+        const id = String(doc._id);
+        const path = `import/${filenamify(id)}/${filenamify(req.files[i].originalname)}`;
+        await uploadFile(path, req.files[i]);
       }
-
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {
       capture(JSON.stringify(e));
@@ -34,17 +32,7 @@ router.post(
   }
 );
 
-router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  let imports = null;
-  try {
-    imports = await Import.find({});
-    res.status(200).send(imports);
-  } catch (e) {
-    capture(JSON.stringify(e));
-    return res.status(500).send({ sucess: false, error: e });
-  }
-});
-
+// Get imports count (for diffusion stats).
 router.get("/count", async (req, res) => {
   let imports = null;
   try {
