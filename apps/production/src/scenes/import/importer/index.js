@@ -42,7 +42,7 @@ class Importer extends Component {
     }
 
     try {
-      //PARSE FILES
+      // Parse files.
       let { importedNotices, fileNames } = await this.props.parseFiles(files, encoding);
 
       if (!importedNotices.length) {
@@ -56,7 +56,7 @@ class Importer extends Component {
         return;
       }
 
-      //RECUPERATION DES NOTICES EXISTANTES
+      // Get existing notices.
       const existingNotices = [];
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({
@@ -71,7 +71,7 @@ class Importer extends Component {
         }
       }
 
-      //CALCUL DE LA DIFF
+      // Compute diff.
       this.setState({ loadingMessage: "Calcul des différences...." });
       importedNotices = diff(importedNotices, existingNotices);
 
@@ -97,7 +97,6 @@ class Importer extends Component {
       });
     } catch (e) {
       const errors = e || "Erreur detectée";
-      // Raven.captureException(errors);
       amplitude.getInstance().logEvent("Import - Drop files", {
         "Files droped": files.length,
         Success: false,
@@ -114,7 +113,6 @@ class Importer extends Component {
     const updated = this.state.importedNotices.filter(e => e._status === "updated");
     const rejected = this.state.importedNotices.filter(e => e._status === "rejected");
 
-    ///////////////////////////////////////////////
     const file = generateCSVFile(
       this.state.importedNotices,
       this.props.collection,
@@ -173,11 +171,7 @@ class Importer extends Component {
         this.state.fileNames
       );
 
-      await api.sendReport(
-        `Rapport import ${this.props.collection}`,
-        this.props.recipient,
-        body
-      );
+      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body);
 
       this.setState({
         loading: false,
@@ -310,7 +304,7 @@ class Importer extends Component {
           <div className="feedback">Vous avez importé avec succès {noticesupdated} notices.</div>
           <div className="feedback">Merci pour votre contribution !</div>
           <div>
-            Vous pouvez consulter les notices modifiées lors de cet import ici:{" "}
+            Vous pouvez consulter les notices modifiées lors de cet import ici&nbsp;:{" "}
             <a href={URL} target="_blanck">
               Consulter vos notices importées
             </a>
@@ -365,7 +359,7 @@ class Importer extends Component {
     let errors = this.state.errors;
     if (typeof this.state.errors !== "string") {
       console.error(this.state.errors);
-      errors = "Erreur ! Merci de contacter l'équipe technique";
+      errors = "Erreur ! Merci de contacter l'équipe technique.";
     }
 
     return (

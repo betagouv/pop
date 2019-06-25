@@ -20,7 +20,6 @@ export default class ImportComponent extends Component {
   }
 
   addMessage(message, edit = false) {
-    console.log("MESSAGE", message);
     if (edit) {
       const messages = [...this.state.messages];
       messages[messages.length - 1] = message;
@@ -42,18 +41,13 @@ export default class ImportComponent extends Component {
       this.addMessage("Ne fermez pas cette page");
       this.addMessage(`Récupération des "top" concepts`);
       const topconctps = await api.getTopConceptsByThesaurusId(this.state.arc);
-      this.addMessage(
-        `Récupération de  ${topconctps.length} "top" concepts...`
-      );
+      this.addMessage(`Récupération de  ${topconctps.length} "top" concepts...`);
       this.addMessage(`Récupération des concepts enfants`);
       let allconcepts = [];
       for (let i = 0; i < topconctps.length; i++) {
         const childs = await api.getAllChildrenConcept(topconctps[i].identifier);
         allconcepts.push(...childs);
-        this.addMessage(
-          `Récupération de ${allconcepts.length} concepts enfants...`,
-          true
-        );
+        this.addMessage(`Récupération de ${allconcepts.length} concepts enfants...`, true);
       }
       this.addMessage(`Récupération des termes préférés...`);
       const terms = [];
@@ -69,10 +63,7 @@ export default class ImportComponent extends Component {
       while (terms.length) {
         const tmp = terms.splice(0, 100);
         await api.createThesaurus(this.state.arc, { terms: tmp });
-        this.addMessage(
-          `${terms.length} Thésaurus restant à ajouter dans la base`,
-          true
-        );
+        this.addMessage(`${terms.length} Thésaurus restant à ajouter dans la base`, true);
       }
       this.setState({ loading: false, done: true });
       this.addMessage(`FIN ! `, true);

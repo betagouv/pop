@@ -1,12 +1,13 @@
 const diff = require("deep-diff").diff;
 
 function compare(importedObject, existed) {
-  //make the imported object flat
+  // Make the imported object flat
 
   let imported = importedObject.makeItFlat();
   delete imported["POP_IMPORT"];
 
-  // I had to do this because sometimes, on IE 11, some fields are not compared well. The origin of the issue could be somewhere else but I couldnt find it
+  // I had to do this because sometimes, on IE 11, some fields are not compared well. 
+  // The origin of the issue could be somewhere else but I couldnt find it
   let importedObj = JSON.parse(JSON.stringify(imported));
   let existedObj = JSON.parse(JSON.stringify(existed));
 
@@ -27,7 +28,8 @@ function compare(importedObject, existed) {
 */
 
   d = d.filter(e => {
-    //j'enleve quand la notice existante possède des info sumplémentaires. Cad que le fichier ne contient pas toutes les modifications
+    // Remove if the actual notice has more info that the new one.
+    // I.e: the current file does not contains all the modified values.
     if (e.kind === "N" && e.hasOwnProperty("rhs")) {
       return false;
     }
@@ -46,7 +48,7 @@ export default function checkDiff(importedNotices, existingNotices) {
       if (importedNotices[i].REF === existingNotice.REF) {
         let differences = compare(importedNotices[i], existingNotice);
 
-        //remove differences based on generated fields
+        // Remove differences based on generated fields
         // differences = differences.filter(key => !fieldToNotCheck.includes(key));
 
         importedNotices[i]._messages = differences.map(e => {

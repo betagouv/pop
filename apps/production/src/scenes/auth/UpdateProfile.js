@@ -157,16 +157,10 @@ class UpdateProfile extends Component {
       return <Redirect to="/recherche" />;
     }
 
-    //If the user is not login, he shouldnt have access to the page. Its a restricted page
+    // If the user is not logged in, she should not have access to the page.
+    // It's a restricted page.
     if (!email) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/auth/signin",
-            state: { from: location }
-          }}
-        />
-      );
+      return <Redirect to={{ pathname: "/auth/signin", state: { from: location } }} />;
     }
 
     return (

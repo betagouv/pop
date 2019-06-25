@@ -390,7 +390,6 @@ const CustomField = ({ name, disabled, ...rest }) => {
       {...Mapping.palissy[name]}
       disabled={
         Mapping.palissy[name].generated == true ||
-        // Mapping.palissy[name].deprecated == true ||
         disabled
       }
       name={name}

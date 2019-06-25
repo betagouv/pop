@@ -9,7 +9,7 @@ export default class Home extends React.Component {
       <div>
         <Container className="home">
           <div className="title">
-            Bienvenue dans l'outil d'administration des bases du Ministère de la Culture !
+            Bienvenue dans l'outil d'administration des bases du Ministère de la Culture&nbsp;!
           </div>
           <div className="subtitle">
             <p>

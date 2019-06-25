@@ -112,9 +112,6 @@ class Autor extends React.Component {
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />
-            {/* <Button disabled={!this.state.editable} color="primary" type="submit">
-              Sauvegarder
-            </Button> */}
           </div>
         </Form>
       </Container>

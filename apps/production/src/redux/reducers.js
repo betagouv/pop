@@ -4,10 +4,4 @@ import Auth from "./auth/reducer";
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-export default history =>
-  combineReducers({
-    router: connectRouter(history),
-    form,
-    toastr,
-    Auth
-  });
+export default history => combineReducers({ router: connectRouter(history), form, toastr, Auth });

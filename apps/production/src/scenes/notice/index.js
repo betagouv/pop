@@ -1,8 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-
-// import HeaderBase from '../headerBase'
-
 import Merimee from "./merimee";
 import Palissy from "./palissy";
 import Joconde from "./joconde";
@@ -14,7 +11,7 @@ import Enluminures from "./enluminures";
 
 import "./index.css";
 
-export default props => {
+export default () => {
   return (
     <div>
       <Switch>

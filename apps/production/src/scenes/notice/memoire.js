@@ -290,11 +290,9 @@ class Notice extends React.Component {
                 <CustomField name="IDPROD" disabled={!this.state.editable} />
                 <CustomField name="EMET" disabled={!this.state.editable} />
                 <CustomField name="REFIMG" disabled={!this.state.editable} />
-                {/* <CustomField name="TYPSN" disabled={!this.state.editable} /> */}
                 <CustomField name="TYPSUPP" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
-                {/* <CustomField name="NOMSN" disabled={!this.state.editable} /> */}
                 <CustomField name="TYPEIMG" disabled={!this.state.editable} />
                 <CustomField name="REFIM" disabled={!this.state.editable} />
                 <CustomField name="VIDEO" disabled={!this.state.editable} />
@@ -322,25 +320,6 @@ class Notice extends React.Component {
       </Container>
     );
   }
-}
-
-function getUrl(ref = "") {
-  const prefix = ref.substring(0, 2);
-  let url = "";
-  switch (prefix) {
-    case "EA":
-    case "PA":
-    case "IA":
-      url = `/notice/merimee/${ref}`;
-      break;
-    case "IM":
-    case "PM":
-      url = `/notice/palissy/${ref}`;
-      break;
-    default:
-      url = "";
-  }
-  return url;
 }
 
 const CustomField = ({ name, disabled, ...rest }) => {
