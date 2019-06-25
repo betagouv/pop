@@ -48,11 +48,11 @@ class api {
 
   // TODO
   sendReport(subject, to, body) {
-    const obj = { subject, to, body };
+    const data = { subject, to, body };
     if (process.env.NODE_ENV !== "production") {
-      obj.subject = "TEST " + obj.subject;
+      data.subject = "TEST " + data.subject;
     }
-    return request.post(`${api_url}/mail`, JSON.stringify(obj), "application/json");
+    return request.fetchJSON("POST", `/reporting/email`, data);
   }
 
   // Create an import.
