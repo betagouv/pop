@@ -17,9 +17,25 @@ import Tooltip from "./Tooltip";
 
 export default function AdvancedSearch({ collection, card }) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
-  const fields = Object.entries(Mapping[collection]).map(([k, v]) => {
-    return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
-  });
+  const fields = Object.entries(Mapping[collection])
+    .sort((a, b) => {
+      if (a[0] === "REF") {
+        return -1;
+      }
+      if (b[0] === "REF") {
+        return 1;
+      }
+      if (a[0].startsWith("POP") && !b[0].startsWith("POP")) {
+        return -1;
+      }
+      if (b[0].startsWith("POP") && !a[0].startsWith("POP")) {
+        return 1;
+      }
+      return a[0].localeCompare(b[0]);
+    })
+    .map(([k, v]) => {
+      return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
+    });
 
   const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.keyword");
   const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
