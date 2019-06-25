@@ -48,7 +48,7 @@ export default class Layout extends React.Component {
               </a>
             </li>
             <li className="list-inline-item">
-              <Link href="/opendata" prefetch>
+              <Link href="/opendata">
                 <a>Télécharger les bases</a>
               </Link>
             </li>
@@ -58,7 +58,7 @@ export default class Layout extends React.Component {
               </a>
             </li>
             <li className="list-inline-item">
-              <Link href="/tracking" prefetch>
+              <Link href="/tracking">
                 <a>Suivi d'audience et vie privée</a>
               </Link>
             </li>
