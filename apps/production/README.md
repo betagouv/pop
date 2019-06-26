@@ -25,32 +25,34 @@ Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb
 Utiliser `npm run deploy:staging` ou `npm run deploy:production` en fonction de l'environnement souhaité.
 La branche _master_ est automatiquement livré sur la plateforme de _staging_ et de _prod_ à chaque _push_ grâce à CircleCI. Il est donc recommandé de passer par des _Pull Request_ validées par un tiers.
 
-## How to backup
+## Backup
 
 ### Database :
 
 Exemple avec la base MNR :
 
-`mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e mongodump --host 127.0.0.1:27017 --db pop --collection "mnr" mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop`
+```bash
+mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e mongodump --host 127.0.0.1:27017 --db pop --collection "mnr" mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop
+```
 
 ### How to restore image S3
 
-For windows :
+#### Windows
 
-install s3-pit-restore : pip3 install s3-pit-restore
-Go to local data , find the script and rename it with the ".py" extension
-Create a .bat file in the script folder and add this inside ( if you want to see logs) :
+ - Install s3-pit-restore : `pip3 install s3-pit-restore`
+ - Go to local data, find the script and rename it with the `.py` extension
+ - Create a `.bat` file in the script folder and add this inside (if you want to see logs) : 
 
 You can get the S3 sub folder at a specific time
 
-`s3-pit-restore.py -b pop-phototeque -p mnr -d ./mnr -t "02-15-2019 14:55:00 +2" pause`
+```
+s3-pit-restore.py -b pop-phototeque -p mnr -d ./mnr -t "02-15-2019 14:55:00 +2" pause
+```
 
-Then edit the credentiel file if you have multiple projects.
+ - Then edit the credentiel file if you have multiple projects.
+ - Then run it
+ - The sync you local folder to the online server
 
-Then run it
-
-The sync you local folder to the online server
-
-source :
+Source :
 https://github.com/madisoft/s3-pit-restore
 https://medium.com/@ManagedKube/s3-how-to-restore-an-entire-folders-version-74042cca0a9c
