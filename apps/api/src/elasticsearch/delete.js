@@ -6,6 +6,8 @@ const es = require("../elasticsearch")();
 const { pingElasticsearchTask } = require("./utils");
 const chalk = require("chalk");
 
+// Delete one index in ES (i.e. an obsolete indice)
+// Usage: `node delete.js mnr1234`
 async function run() {
   program.version("0.1.0").parse(process.argv);
 

@@ -18,6 +18,7 @@ const es = require("../elasticsearch")();
 const chalk = require("chalk");
 const { pingElasticsearchTask } = require("./utils");
 
+// Sync all data from mongo to ES. Rebuild indices. It works without breaking off service.
 async function run() {
   program
     .version("0.1.0")

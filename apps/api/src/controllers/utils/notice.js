@@ -1,8 +1,11 @@
 const { capture } = require("./../../sentry.js");
 
-function getNewId(object, prefix, dpt) {
+// Creates a new ID for a notice of type "collection".
+function getNewId(collection, prefix, dpt) {
   return new Promise((resolve, reject) => {
-    let q = object.findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } }).sort({ REF: -1 });
+    let q = collection
+      .findOne({ REF: { $regex: new RegExp("^" + prefix + dpt) } })
+      .sort({ REF: -1 });
     q.exec((error, doc) => {
       if (error) {
         reject(error);
@@ -20,12 +23,14 @@ function getNewId(object, prefix, dpt) {
   });
 }
 
+// Check if ES indexion is OK, capture error otherwise.
 function checkESIndex(doc) {
-  doc.on("es-indexed", (err, res) => {
+  doc.on("es-indexed", (err, _res) => {
     if (err) capture(err);
   });
 }
 
+// Update a notice.
 function updateNotice(collection, REF, notice) {
   return new Promise((resolve, reject) => {
     collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true }, (err, doc) => {
@@ -39,6 +44,7 @@ function updateNotice(collection, REF, notice) {
   });
 }
 
+// Add "zeros" zeros to "v".
 function addZeros(v, zeros) {
   return new Array(zeros)
     .concat([v])
@@ -46,6 +52,7 @@ function addZeros(v, zeros) {
     .slice(-zeros);
 }
 
+// Get "producteur" for memoire notices.
 function findMemoireProducteur(REF, IDPROD, EMET) {
   if (
     String(REF).startsWith("IVN") ||
@@ -68,6 +75,7 @@ function findMemoireProducteur(REF, IDPROD, EMET) {
   return "AUTRE";
 }
 
+// Get "producteur" for merimee notices.
 function findMerimeeProducteur(notice) {
   switch (notice.REF.substring(0, 2)) {
     case "IA":
@@ -81,6 +89,7 @@ function findMerimeeProducteur(notice) {
   }
 }
 
+// Get "producteur" for palissy notices.
 function findPalissyProducteur(notice) {
   switch (notice.REF.substring(0, 2)) {
     case "IM":
