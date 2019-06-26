@@ -97,7 +97,7 @@ router.put(
           if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
             // Security: no need to escape filename, it comes from database.
             if (prevNotice.IMG[i]) {
-              promises.push(deleteFile(prevNotice.IMG[i]));
+              promises.push(deleteFile(prevNotice.IMG[i], "joconde"));
             }
           }
         }
@@ -194,7 +194,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     // remove all images and the document itself.
-    await Promise.all([doc.IMG.filter(i => i).map(f => deleteFile(f)), doc.remove()]);
+    await Promise.all([doc.IMG.filter(i => i).map(f => deleteFile(f, "joconde")), doc.remove()]);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

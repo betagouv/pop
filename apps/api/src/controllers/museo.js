@@ -112,7 +112,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     if (doc.PHOTO) {
-      deleteFile(doc.PHOTO);
+      deleteFile(doc.PHOTO, "museo");
     }
     await doc.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
