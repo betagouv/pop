@@ -70,7 +70,7 @@ router.put(
       if (notice.VIDEO !== undefined) {
         for (let i = 0; i < prevNotice.VIDEO.length; i++) {
           if (!(notice.VIDEO || []).includes(prevNotice.VIDEO[i])) {
-            promises.push(deleteFile(prevNotice.VIDEO[i]));
+            promises.push(deleteFile(prevNotice.VIDEO[i], "mnr"));
           }
         }
       }
@@ -149,7 +149,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
-    const promises = doc.VIDEO.map(f => deleteFile(f));
+    const promises = doc.VIDEO.map(f => deleteFile(f, "mnr"));
     promises.push(doc.remove());
     await Promise.all(promises);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
