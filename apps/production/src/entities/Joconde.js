@@ -15,7 +15,7 @@ export default class Joconde extends Notice {
       this.MANQUANT_COM = MANQUANT_COM;
     }
 
-    //ADD Boring stuff in order to split text to check for the thesaurus
+    // ADD Boring stuff in order to split text to check for the thesaurus
     const obj = {};
     obj["AUTR"] = /[(,);#]/g;
     obj["DECV"] = /[(,);#]/g;

@@ -55,7 +55,7 @@ function transformBeforeCreate(notice) {
 async function checkMemoire(notice) {
   const errors = [];
   try {
-    //Check contact
+    // Check contact
     if (!notice.CONTACT) {
       errors.push("Le champ CONTACT ne doit pas être vide");
     }
@@ -115,7 +115,7 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
   const MEMOIRE = notice.MEMOIRE;
   let index = MEMOIRE.findIndex(e => e.ref === REF);
   if (index !== -1) {
-    //update if needed only
+    // update if needed only
     if (
       MEMOIRE[index].url === IMG &&
       MEMOIRE[index].copy === COPY &&
@@ -126,7 +126,7 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
     console.log("update", REF);
     MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME };
   } else {
-    //create
+    // create
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
   const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
@@ -151,7 +151,7 @@ async function updateLinks(notice) {
 
     const toAdd = [...notice.LBASE];
 
-    // Check  for deletion, addition and update.
+    // Check for deletion, addition and update.
     const promises = [];
     for (let i = 0; i < linkedNotices.length; i++) {
       if (!LBASE.includes(linkedNotices[i].REF)) {
@@ -161,7 +161,7 @@ async function updateLinks(notice) {
         if (index > -1) {
           toAdd.splice(index, 1);
         }
-        //existing notices
+        // existing notices
         promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, NAME));
       }
     }

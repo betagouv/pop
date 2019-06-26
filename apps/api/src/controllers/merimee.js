@@ -82,7 +82,7 @@ async function checkMerimee(notice) {
       errors.push("Le champ CONTACT ne doit pas être vide");
     }
 
-    const { message } = lambertToWGS84(notice.COOR, notice.ZONE); //Check coor
+    const { message } = lambertToWGS84(notice.COOR, notice.ZONE); // Check coor
     if (message) {
       errors.push(message);
     }

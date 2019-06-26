@@ -161,7 +161,7 @@ function readme() {
     return Mapping.merimee[e].required;
   });
 
-  //spécifique MH
+  // MH specific.
   requiredMerimeeFields.push("DPT");
   requiredMerimeeFields.push("INSEE");
   requiredPalissyFields.push("DPT");

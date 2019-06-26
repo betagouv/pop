@@ -47,10 +47,10 @@ for (let i = 0; i < models.length; i++) {
   const model = models[i];
   const arr = [];
 
-  //TITRE
+  // TITLE
   arr.push(`# POP SCHEMAS ${model.name}\n`);
 
-  //SUMMARY
+  // SUMMARY
   for (let j = 0; j < model.paths.length; j++) {
     arr.push(`- [${model.paths[j].name}](/apps/api/doc/${model.name}.md#${model.paths[j].name})`);
   }

@@ -28,7 +28,7 @@ export default class Import extends React.Component {
 
 function parseFiles(files, encoding) {
   return new Promise(async (resolve, reject) => {
-    //GERTRUDE
+    // GERTRUDE
     const gertrude = files.some(e => {
       return [
         "GERTRUDE_xmlToPALISSY_lexicovide.txt",
@@ -72,7 +72,7 @@ function parseFiles(files, encoding) {
       return;
     }
 
-    //RENABL
+    // RENABL
     const xmlFiles = files.filter(file => file.name.indexOf(".xml") !== -1);
     const otherFiles = files.filter(file => file.name.indexOf(".xml") === -1);
     if (xmlFiles.length) {
@@ -110,7 +110,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
     notices.push(...values[0].map(e => new Palissy(e)));
     notices.push(...values[1].map(e => new Merimee(e)));
 
-    //COORWGS84
+    // COORWGS84
 
     notices.push(
       ...values[2].map(e => {

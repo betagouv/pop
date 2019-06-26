@@ -30,7 +30,6 @@ export function getPrecision(zoom) {
 }
 
 export function toGeoJson(arr) {
-  //const before = window.performance.now();
   const geoJsonFormated = {
     type: "FeatureCollection",
     info: { type: "name", properties: { name: "POP" } },

@@ -1,7 +1,7 @@
 "use strict";
 // Source: https://github.com/NathanEpstein/clusters/blob/master/clusters.js
 
-// Le plus ce coeff est gros, moins on se rapproche des zones aillant le plus de notice
+// The more this coeff is big, the closer we get to the areas with the most notice
 const COEFF = 2000;
 
 module.exports = {

@@ -50,7 +50,6 @@ class Notice extends React.Component {
     this.setState({ loading: false, notice, editable });
   }
 
-  //fonction dedicated to role
   canEdit(notice) {
     if (this.props.group === "admin") {
       return true;

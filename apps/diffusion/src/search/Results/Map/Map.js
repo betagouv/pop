@@ -77,7 +77,7 @@ export default class Map extends React.Component {
       return;
     }
 
-    //This is call 6 times per changement
+    // This is call 6 times per changement
     const nextBuckets = nextProps.aggregations.france.buckets;
     const prevBuckets = this.props.aggregations.france.buckets;
 
@@ -140,7 +140,7 @@ export default class Map extends React.Component {
 
       geojson.features.forEach(feature => {
         const key = feature.properties.id;
-        //Si le marker est une notice unique, toujours la meme, alors on ne la reconstruit pas
+        // If the marker is a single notice, always the same, then we do not rebuild it
         if (
           this.markers[key] &&
           this.markers[key]._type === "notice" &&

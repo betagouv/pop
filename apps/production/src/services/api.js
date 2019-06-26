@@ -85,7 +85,9 @@ class api {
           await Promise.all(currentQueries);
           cb(progress, `Notices restantes  ${total - arr.length}/${total}`);
         } catch (e) {
-          //I add the currents one back to the list. I put it at the beginning because if there is a server error on this one, I dont want to wait the end to know ( but maybe I should)
+          // I add the currents one back to the list. 
+          // I put it at the beginning because if there is a server error on this one, 
+          // I dont want to wait the end to know (but maybe I should)
           arr.splice(0, 0, ...currentNotices);
           if (++attempts >= MAX_ATTEMPTS) {
             reject("Import échoué. Trop d'erreurs ont été détectées");

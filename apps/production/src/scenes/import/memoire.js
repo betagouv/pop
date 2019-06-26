@@ -40,7 +40,7 @@ function parseFiles(files, encoding) {
     utils.readODS(objectFile).then(data => {
       const notices = [];
 
-      //Create image map
+      // Create image map
 
       for (let i = 0; i < data.length; i++) {
         const obj = data[i];
