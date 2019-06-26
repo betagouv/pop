@@ -27,10 +27,16 @@ class Import extends React.Component {
       // Test Excel format
       rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
       if (rootFile) {
-        const res = await utils.readCSV(rootFile, ";", encoding, '"');
-        const importedNotices = await importCSV(res, files, this.state.museofile);
-        resolve({ importedNotices, fileNames: [rootFile.name] });
-        return;
+        try {
+          const res = await utils.readCSV(rootFile, ";", encoding, '"');
+          const importedNotices = await importCSV(res, files, this.state.museofile);
+          resolve({ importedNotices, fileNames: [rootFile.name] });
+          return;
+        } catch (e) {
+          console.log("error", e);
+          reject("Fichier .csv mal formaté ( vérifiez que le séparateur est ';' ) ");
+          return;
+        }
       }
 
       reject("Fichier .csv ou .txt absent");
@@ -103,7 +109,7 @@ function importCSV(res, files, museofile) {
 
     const filesMap = {};
     for (var i = 0; i < files.length; i++) {
-      // Sometimes, name is the long name with museum code, sometimes its not... 
+      // Sometimes, name is the long name with museum code, sometimes its not...
       // The easiest way I found was to transform long name to short name each time I get a file name.
       filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
     }
@@ -146,7 +152,7 @@ function importAjoutPiloté(res, files, museofile) {
 
     const filesMap = {};
     for (var i = 0; i < files.length; i++) {
-      // Sometimes, name is the long name with museum code, sometimes its not... 
+      // Sometimes, name is the long name with museum code, sometimes its not...
       // The easiest way I found was to transform long name to short name each time I get a file name
       filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
     }
