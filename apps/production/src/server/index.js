@@ -8,7 +8,7 @@ const app = express();
 const port = 8081;
 
 function forceHttps(res, req, next) {
-  const isProdDomain = (req.get("host") || "").match(/production\.pop\.culture\.gouv\.fr/);
+  const isProdDomain = (req.hostname || "").match(/production\.pop\.culture\.gouv\.fr/);
   if (!req.secure && req.get("x-forwarded-proto") !== "https" && isProdDomain) {
     return res.redirect(302, "https://production.pop.culture.gouv.fr" + req.url);
   }
