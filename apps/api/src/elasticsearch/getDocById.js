@@ -12,9 +12,7 @@ async function run() {
     .parse(process.argv);
 
   if (!program.id || !program.db) {
-    console.error(
-      chalk.red("You need to add doc id AND db (i.e. --db and --id)")
-    );
+    console.error(chalk.red("You need to add doc id AND db (i.e. --db and --id)"));
     return;
   }
 

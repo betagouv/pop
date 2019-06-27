@@ -47,7 +47,9 @@ class index extends Component {
           autocomplete={0}
           autofocus={false}
         />
-        <small className="text-muted">Appuyez sur « entrée » pour ajouter un nouveau code Muséo</small>
+        <small className="text-muted">
+          Appuyez sur « entrée » pour ajouter un nouveau code Muséo
+        </small>
       </div>
     );
   }

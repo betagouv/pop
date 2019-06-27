@@ -73,7 +73,7 @@ class Notice extends React.Component {
         "La modification sera visible dans 1 à 5 min en diffusion."
       );
     } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
+      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
     }
     this.setState({ saving: false });
   }
@@ -388,10 +388,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.merimee[name]}
-      disabled={
-        Mapping.merimee[name].generated == true ||
-        disabled
-      }
+      disabled={Mapping.merimee[name].generated == true || disabled}
       name={name}
       {...rest}
     />

@@ -11,5 +11,5 @@ test("import 13 Merimee notice", async () => {
   await importTester.dropFiles(["GERTRUDE_xmlToMERIMEE_lexicovide.txt"], "utf-8");
   expect(importTester.summaryInvalidDocsCount()).toBe(0);
   expect(importTester.summaryNewDocsCount()).toBe(13);
-  expect(importTester.notices.map(e => e._errors.length).reduce((a,b) => a + b)).toBe(0);
+  expect(importTester.notices.map(e => e._errors.length).reduce((a, b) => a + b)).toBe(0);
 });
