@@ -106,7 +106,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Informations concernant le bien manquant"
+        label: "Situation particulière"
       }
     },
     ADPT: {
