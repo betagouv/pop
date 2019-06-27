@@ -145,7 +145,6 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-                  {/*LA */}
                   <Field title={mapping.joconde.INV.label} content={notice.INV} />
                   <Field
                     title={mapping.joconde.DOMN.label}
@@ -157,7 +156,6 @@ export default class extends React.Component {
                   />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} />
-                  {/* JUSUELA */}
                   <Field title={mapping.joconde.AUTR.label} content={this.author()} />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} />
