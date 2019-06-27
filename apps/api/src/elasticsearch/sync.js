@@ -59,10 +59,7 @@ async function run() {
       title: "Mongoose connect",
       task: async () => {
         mongoose.set("useCreateIndex", true);
-        await mongoose.connect(
-          mongoUrl,
-          { useNewUrlParser: true }
-        );
+        await mongoose.connect(mongoUrl, { useNewUrlParser: true });
         return;
       }
     }

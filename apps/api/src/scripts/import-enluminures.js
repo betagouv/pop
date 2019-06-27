@@ -8,10 +8,12 @@ async function run() {
   mongoose.set("useCreateIndex", true);
   await mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
-  const r = parse(
-    fs.readFileSync("path/to/enlumine-DECOR-valid.csv.utf.csv"),
-    { columns: true, skip_empty_lines: true, delimiter: "|", quote: false }
-  );
+  const r = parse(fs.readFileSync("path/to/enlumine-DECOR-valid.csv.utf.csv"), {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: "|",
+    quote: false
+  });
 
   const total = r.length;
   for (let i in r) {

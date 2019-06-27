@@ -109,7 +109,7 @@ describe("POST /memoire", () => {
 
 describe("PUT /memoire/:ref", () => {
   const memoireUserOk = { group: "memoire", role: "producteur", email: "lol@example.com" };
-  const mhUserOk = { group: "mh", role: "producteur", email: "lol@example.com"  };
+  const mhUserOk = { group: "mh", role: "producteur", email: "lol@example.com" };
   const caoaNotice = { ...sampleNotice, REF: "OAXXX" };
 
   test(`It should update a notice for ${JSON.stringify(memoireUserOk)}`, async () => {
@@ -124,7 +124,9 @@ describe("PUT /memoire/:ref", () => {
     res = await updateNotice(user, 200, caoaNotice);
     expect(res.success).toBe(true);
   });
-  test(`It should not update a notice { PRODUCTEUR: "CAOA" } for ${JSON.stringify(memoireUserOk)}`, async () => {
+  test(`It should not update a notice { PRODUCTEUR: "CAOA" } for ${JSON.stringify(
+    memoireUserOk
+  )}`, async () => {
     const user = await createUser(memoireUserOk);
     let res = await createNotice(await createUser(), 200, caoaNotice);
     res = await updateNotice(user, 401, caoaNotice);

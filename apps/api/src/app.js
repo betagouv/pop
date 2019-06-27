@@ -45,7 +45,7 @@ app.use("/autor", require("./controllers/autor"));
 app.use("/gallery", require("./controllers/gallery"));
 
 // Reporting.
-app.use("/reporting", require("./controllers/reporting"))
+app.use("/reporting", require("./controllers/reporting"));
 
 // Proxy to GINCO API
 app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
