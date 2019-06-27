@@ -3,7 +3,7 @@ import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
-
+import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -36,16 +36,20 @@ export default class extends React.Component {
   links(value, name) {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value) {
-        return <a href={`/search/list?${name}=["${value}"]`}>{value}</a>;
+        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
+        return <a href={url}>{value}</a>;
       }
       return null;
     }
     const links = value
-      .map(d => (
-        <a href={`/search/list?${name}=["${d}"]`} key={d}>
-          {d}
-        </a>
-      ))
+      .map(d => {
+        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([d]) })}`;
+        return (
+          <a href={url} key={d}>
+            {d}
+          </a>
+        );
+      })
       .reduce((p, c) => [p, ", ", c]);
     return <React.Fragment>{links}</React.Fragment>;
   }
@@ -61,15 +65,21 @@ export default class extends React.Component {
       const links = author
         .split(";")
         .map(a => a.trim())
-        .map(a => (
-          <a href={`/search/list?auteur=${JSON.stringify([a, author])}`} key={a}>
-            {a}
-          </a>
-        ))
+        .map(a => {
+          const url = `/search/list?${queryString.stringify({
+            auteur: JSON.stringify([a, author])
+          })}`;
+          return (
+            <a href={url} key={a}>
+              {a}
+            </a>
+          );
+        })
         .reduce((p, c) => [p, " ; ", c]);
       return <React.Fragment>{links}</React.Fragment>;
     }
-    return <a href={`/search/list?auteur=["${author}"]`}>{author}</a>;
+    const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([author]) })}`;
+    return <a href={url}>{author}</a>;
   }
 
   render() {
@@ -135,7 +145,7 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-
+                  {/*LA */}
                   <Field title={mapping.joconde.INV.label} content={notice.INV} />
                   <Field
                     title={mapping.joconde.DOMN.label}
@@ -147,6 +157,7 @@ export default class extends React.Component {
                   />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} />
+                  {/* JUSUELA */}
                   <Field title={mapping.joconde.AUTR.label} content={this.author()} />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} />
@@ -224,7 +235,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} />
                   <Field
                     title={mapping.joconde.LOCA.label}
-                    content={this.links(this.props.notice.LOCA, "ou")}
+                    content={this.links(this.props.notice.LOCA.split(" ; "), "ou")}
                   />
                   <Title
                     content="Informations complémentaires"
