@@ -62,6 +62,7 @@
 - [LBASE2](/apps/api/doc/merimee.md#LBASE2)
 - [LIEU](/apps/api/doc/merimee.md#LIEU)
 - [LOCA](/apps/api/doc/merimee.md#LOCA)
+- [MANQUANT](/apps/api/doc/merimee.md#MANQUANT)
 - [MFICH](/apps/api/doc/merimee.md#MFICH)
 - [MOSA](/apps/api/doc/merimee.md#MOSA)
 - [MHPP](/apps/api/doc/merimee.md#MHPP)
@@ -184,24 +185,24 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |Array|non|non|non|non|||
 
 ### POP_COORDONNEES.lat
-Latitude de la notice en WGS84
+Latitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|non|non|non|||
 
 ### POP_COORDONNEES.lon
-Longitude de la notice en WGS84
+Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|non|non|non|||
 
 ### POP_COMMENTAIRES
 Commentaires technique
@@ -786,6 +787,16 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T33
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Localisation complète|
+
+### MANQUANT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Manquant|
 
 ### MFICH
 

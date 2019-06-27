@@ -67,6 +67,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "LBASE2","String","non","Référence de la notice cible Mérimée pour Mémoire","","","","",""
 "LIEU","String","non","Lieu-dit","","","","",""
 "LOCA","String","non","Localisation complète","","","","",""
+"MANQUANT","String","non","Manquant","","","","",""
 "MFICH","String","non","Accès microfiche","","","","",""
 "MOSA","String","non","Edition d'une mosaïque d'image","","","","",""
 "MHPP","String","non","Précisions sur les éléments protégés","","","","",""

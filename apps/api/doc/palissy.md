@@ -70,6 +70,7 @@
 - [LIEU](/apps/api/doc/palissy.md#LIEU)
 - [LMDP](/apps/api/doc/palissy.md#LMDP)
 - [LOCA](/apps/api/doc/palissy.md#LOCA)
+- [MANQUANT](/apps/api/doc/palissy.md#MANQUANT)
 - [MATR](/apps/api/doc/palissy.md#MATR)
 - [MFICH](/apps/api/doc/palissy.md#MFICH)
 - [MICR](/apps/api/doc/palissy.md#MICR)
@@ -159,24 +160,24 @@ Commentaires technique
 |Array|non|oui|non|non||Commentaires POP|
 
 ### POP_COORDONNEES.lat
-Latitude de la notice en WGS84
+Latitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|non|non|non|||
 
 ### POP_COORDONNEES.lon
-Longitude de la notice en WGS84
+Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|non|non|non|||
 
 ### POP_CONTIENT_GEOLOCALISATION
 Champs généré pour savoir si une géolocalisation existe
@@ -833,6 +834,16 @@ Lieu-dit
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Localisation complète|
+
+### MANQUANT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Manquant|
 
 ### MATR
 
