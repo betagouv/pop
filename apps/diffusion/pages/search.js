@@ -38,10 +38,7 @@ export default class extends React.Component {
   };
 
   render = () => {
-    if (
-      !this.props.mode ||
-      !this.props.view
-    ) {
+    if (!this.props.mode || !this.props.view) {
       return throw404();
     }
 
@@ -144,12 +141,14 @@ export default class extends React.Component {
                       />
                     ) : null}
                   </div>
-                  {!(this.props.mode === "advanced" && !this.props.base) ? (<Results
-                    mode={this.props.mode}
-                    view={this.props.view}
-                    base={this.props.base}
-                    initialValues={initialValues}
-                  />) : null }
+                  {!(this.props.mode === "advanced" && !this.props.base) ? (
+                    <Results
+                      mode={this.props.mode}
+                      view={this.props.view}
+                      base={this.props.base}
+                      initialValues={initialValues}
+                    />
+                  ) : null}
                 </div>
               </Row>
             </Elasticsearch>

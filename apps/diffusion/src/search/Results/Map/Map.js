@@ -153,9 +153,8 @@ export default class Map extends React.Component {
 
         const marker = new Marker(feature, zoom >= 15 ? "#fc5e2a" : "#007bff");
         marker.onClick(marker => {
-
           let zoom = this.map.getZoom();
-          if(marker._type == "cluster"){
+          if (marker._type == "cluster") {
             zoom++;
           }
           const center = marker.getCoordinates();
