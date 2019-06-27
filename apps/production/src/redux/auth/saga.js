@@ -16,10 +16,7 @@ export function* signin({ email, password }) {
     localStorage.setItem("token", token);
     localStorage.setItem("cgu", true);
 
-    if (
-      process.env.NODE_ENV === "production" ||
-      process.env.NODE_ENV === "staging"
-    ) {
+    if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
       Raven.setUserContext({ email });
     }
 
@@ -39,10 +36,7 @@ export function* signinByToken() {
       response = yield api.getAuthUser();
     } catch (e) {}
     if (response && response.user) {
-      if (
-        process.env.NODE_ENV === "production" ||
-        process.env.NODE_ENV === "staging"
-      ) {
+      if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
         Raven.setUserContext({ email: response.user.email });
       }
 

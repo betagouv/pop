@@ -5,7 +5,7 @@ export function generateCSVFile(
 ) {
   let csv = "";
   // Add columns ETAT(create, updated, rejected) and informations about warning or errors
-  const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"]; 
+  const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"];
   csv += columns.join(",") + "\n";
 
   const created = notices.filter(e => e._status === "created");

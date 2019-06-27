@@ -4,10 +4,7 @@ import fs from "fs";
 
 test("Create new Palissy entity without errors from file palissy-mh-valid-UTF-8.csv", async () => {
   const contents = new Blob([
-    fs.readFileSync(
-      __dirname + "/../__notices__/palissy-mh-valid-UTF-8.csv",
-      "utf-8"
-    )
+    fs.readFileSync(__dirname + "/../__notices__/palissy-mh-valid-UTF-8.csv", "utf-8")
   ]);
   const csv = await utils.readCSV(contents, "|", "UTF-8");
   const notices = csv.map(notice => {

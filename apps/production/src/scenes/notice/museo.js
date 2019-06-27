@@ -62,7 +62,7 @@ class Museo extends React.Component {
         "La modification sera visible dans 1 à 5 min en diffusion."
       );
     } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
+      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
     }
     this.setState({ saving: false });
   }
@@ -111,9 +111,7 @@ class Museo extends React.Component {
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
           />
           <Link
-            to={`/recherche-avancee/joconde?qb=%5B%7B%22field%22%3A%22MUSEO.keyword%22%2C%22operator%22%3A%22%3D%3D%3D%22%2C%22value%22%3A%22${
-              this.state.notice.REF
-            }%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`}
+            to={`/recherche-avancee/joconde?qb=%5B%7B%22field%22%3A%22MUSEO.keyword%22%2C%22operator%22%3A%22%3D%3D%3D%22%2C%22value%22%3A%22${this.state.notice.REF}%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`}
           >
             Voir les oeuvres dans la base joconde
           </Link>

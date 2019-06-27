@@ -216,9 +216,7 @@ class Importer extends Component {
       <div className="working-area">
         <h4 className="subtitle">Contrôle et validation de l'import</h4>
         <div className="summary">
-          <div>{`Vous vous appretez à verser dans la base ${
-            this.props.collection
-          } les fichiers suivants: `}</div>
+          <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
           <div className="filename">{filesnames}</div>
           <div>
             Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont
@@ -232,9 +230,7 @@ class Importer extends Component {
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#F9B234" }} />
-              {`${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${
-                this.props.collection
-              })`}
+              {`${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${this.props.collection})`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#E32634" }} />
@@ -411,9 +407,7 @@ class Importer extends Component {
             {this.props.readme()}
           </Col>
           <Col md={7} className="right-col">
-            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${
-              this.props.collection
-            }, selon les trois étapes suivantes`}</p>
+            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${this.props.collection}, selon les trois étapes suivantes`}</p>
             <Steps labelPlacement="vertical" current={this.state.step} size="big">
               <Step title="Sélection et dépot des contenus à importer" />
               <Step title="Contrôle et validation de l'import" />

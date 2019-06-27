@@ -27,10 +27,7 @@ class Signin extends Component {
         <div>
           <br />
           Pour obtenir des identifiants, veuillez adresser un{" "}
-          <a href="mailto:pop@culture.gouv.fr">
-            email
-          </a>{" "}
-          avec les informations suivantes : <br />
+          <a href="mailto:pop@culture.gouv.fr">email</a> avec les informations suivantes : <br />
           <br />- Institution <br />- Domaine (MNR, Inventaire, Monuments Historiques, Joconde ou
           Base archives photo)
           <br />- Nom <br />- Prénom <br />

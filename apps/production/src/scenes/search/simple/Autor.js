@@ -15,7 +15,6 @@ import Card from "../components/AutorCard";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
 
-
 export default function render() {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
@@ -35,9 +34,7 @@ export default function render() {
             id="main"
             placeholder="Saisissez un nom ou une référence"
             initialValue={initialValues.get("main")}
-            customQuery={value =>
-              utils.customQuery(value, ["NAME", "REF"])
-            }
+            customQuery={value => utils.customQuery(value, ["NAME", "REF"])}
           />
         </div>
         <Row>
@@ -54,16 +51,19 @@ export default function render() {
               fields={["TYPID.keyword"]}
               title="Type"
             />
-            
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />
             <Results
               initialPage={initialValues.get("resPage")}
               id="res"
-              items={data => data.map(({_source, _id}) =>  <Card key={_id} data={_source} />)}
+              items={data => data.map(({ _source, _id }) => <Card key={_id} data={_source} />)}
               pagination={utils.pagination}
-              stats={total => <div>{total} résultat{total === 1 ? "" : "s"}</div>}
+              stats={total => (
+                <div>
+                  {total} résultat{total === 1 ? "" : "s"}
+                </div>
+              )}
             />
             <ExportComponent collection="autor" target="main" />
           </Col>
