@@ -370,6 +370,7 @@ const SeeMore = ({ notice }) => {
         content={
           <a
             target="_blank"
+            rel="noopener"
             href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
               notice.LAUTP
             }`}

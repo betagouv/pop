@@ -101,6 +101,7 @@ class Notice extends React.Component {
           <a
             style={{ fontSize: "small" }}
             target="_blank"
+            rel="noopener"
             href={`https://www.pop.culture.gouv.fr/notice/palissy/${this.state.notice.REF}`}
           >
             voir en diffusion
@@ -126,7 +127,7 @@ class Notice extends React.Component {
             }}
             footer={e => {
               return (
-                <Link to={`/notice/memoire/${e.ref}`} target="_blank">
+                <Link to={`/notice/memoire/${e.ref}`} target="_blank" rel="noopener">
                   {e.ref}
                 </Link>
               );

@@ -62,6 +62,7 @@ class Signin extends Component {
                   J'accepte les{" "}
                   <a
                     target="_blank"
+                    rel="noopener"
                     href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf"
                   >
                     CGU

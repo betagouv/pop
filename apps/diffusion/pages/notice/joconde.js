@@ -280,7 +280,7 @@ const SeeMore = ({ notice, museo }) => {
       <Field
         title={mapping.joconde.LVID.label}
         content={
-          <a target="_blank" href={notice.LVID}>
+          <a target="_blank" rel="noopener" href={notice.LVID}>
             {notice.LVID}
           </a>
         }

@@ -69,7 +69,7 @@ class TagsInput extends React.Component {
                     return {
                       id: e,
                       text: (
-                        <a href={url} target="_blank">
+                        <a href={url} target="_blank" rel="noopener">
                           {e}
                         </a>
                       )

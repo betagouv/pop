@@ -21,6 +21,7 @@ export default class Layout extends React.Component {
                   href="https://fier2.typeform.com/to/Qyz3xv"
                   className="btn btn-outline-danger d-none d-sm-block"
                   target="_blank"
+                  rel="noopener"
                 >
                   Votre avis est utile
                 </a>
@@ -43,7 +44,7 @@ export default class Layout extends React.Component {
         <div className="footer">
           <ul className="list-inline">
             <li className="list-inline-item">
-              <a href="https://beta.gouv.fr/startup/pop.html" target="_blank">
+              <a href="https://beta.gouv.fr/startup/pop.html" target="_blank" rel="noopener"> 
                 À propos
               </a>
             </li>
@@ -53,7 +54,7 @@ export default class Layout extends React.Component {
               </Link>
             </li>
             <li className="list-inline-item">
-              <a href={`mailto:pop@culture.gouv.fr`} target="_blank">
+              <a href={`mailto:pop@culture.gouv.fr`} target="_blank" rel="noopener">
                 Nous contacter
               </a>
             </li>

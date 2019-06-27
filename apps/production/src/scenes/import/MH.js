@@ -318,6 +318,7 @@ function readme() {
         <a
           href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
           target="_blank"
+          rel="noopener"
         >
           Lien vers le modèle de donnée Mémoire
         </a>
@@ -325,6 +326,7 @@ function readme() {
         <a
           href="https://github.com/betagouv/pop/tree/master/apps/api/doc/palissy.md"
           target="_blank"
+          rel="noopener"
         >
           Lien vers le modèle de donnée Palissy
         </a>
@@ -332,6 +334,7 @@ function readme() {
         <a
           href="https://github.com/betagouv/pop/tree/master/apps/api/doc/merimee.md"
           target="_blank"
+          rel="noopener"
         >
           Lien vers le modèle de donnée Mérimée
         </a>

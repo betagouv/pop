@@ -180,6 +180,7 @@ function readme() {
         <a
           href="https://github.com/betagouv/pop/tree/master/apps/api/doc/memoire.md"
           target="_blank"
+          rel="noopener"
         >
           Lien vers le modèle de donnée Mémoire
         </a>

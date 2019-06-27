@@ -99,7 +99,7 @@ const Card = ({ data }) => {
           <div>{data.createdBy}</div>
           <div className="institution">{data.institution}</div>
           <div>
-            <a target="_blank" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
+            <a target="_blank" rel="noopener" href={`https://www.pop.culture.gouv.fr/gallery/${data._id}`}>
               {`https://www.pop.culture.gouv.fr/gallery/${data._id}`}
             </a>
           </div>
