@@ -2,12 +2,9 @@ const express = require("express");
 const path = require("path");
 const hsts = require("hsts");
 
-console.log("START", new Date());
-
-const app = express();
-const port = 8081;
-
 function forceHttps(res, req, next) {
+  console.log(req);
+  console.log(req.hostname);
   const isProdDomain = (req.hostname || "").match(/production\.pop\.culture\.gouv\.fr/);
   if (!req.secure && req.get("x-forwarded-proto") !== "https" && isProdDomain) {
     return res.redirect(302, "https://production.pop.culture.gouv.fr" + req.url);
@@ -15,6 +12,11 @@ function forceHttps(res, req, next) {
   next();
 }
 
+console.log("START", new Date());
+
+const app = express();
+app.set('trust proxy', true);
+const port = 8081;
 app.use(forceHttps);
 app.use(hsts({ maxAge: 31536000, includeSubDomains: true, preload: true }));
 app.use(express.static(path.join(__dirname, "/../../build")));
