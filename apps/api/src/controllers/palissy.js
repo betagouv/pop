@@ -18,6 +18,7 @@ const {
   convertCOORM,
   uploadFile,
   hasCorrectCoordinates,
+  hasCorrectPolygon,
   findPalissyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
@@ -27,30 +28,33 @@ const { canUpdatePalissy, canCreatePalissy, canDeletePalissy } = require("./util
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
+  // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
   if (notice.COORM && notice.ZONE) {
+    // Convert it to a proper format in WGS84
     const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
-    notice["POP_COORDINATES_POLYGON"] = {
-      type: "Polygon",
-      coordinates
-    };
-    if (!notice.COOR && !hasCorrectCoordinates(notice)) {
-      const centroid = getPolygonCentroid(coordinates);
-      if (centroid && centroid.length == 2) {
-        notice.POP_COORDONNEES = {
-          lat: centroid[0],
-          lon: centroid[1]
-        };
-      }
-    }
+    notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
 
+  //If COOR in Lambert and not correct coordinates, convert this to WGS84.
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-  if (notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
+
+  //If no correct coordinates, get polygon centroid.
+  if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
+    const centroid = getPolygonCentroid(coordinates);
+    if (centroid && centroid.length == 2) {
+      notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
+    }
+  }
+
+  // To prevent crash on ES
+  if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
+
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
+
   if (notice.DOSURL) {
     notice.DOSURL = fixLink(notice.DOSURL);
   }

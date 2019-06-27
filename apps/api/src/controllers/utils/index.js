@@ -2,7 +2,8 @@ const {
   lambertToWGS84,
   convertCOORM,
   getPolygonCentroid,
-  hasCorrectCoordinates
+  hasCorrectCoordinates,
+  hasCorrectPolygon
 } = require("./geoloc");
 const { deleteFile, uploadFile } = require("./s3");
 const {
@@ -28,6 +29,7 @@ module.exports = {
   getPolygonCentroid,
   fixLink,
   hasCorrectCoordinates,
+  hasCorrectPolygon,
   findMemoireProducteur,
   findMerimeeProducteur,
   findPalissyProducteur

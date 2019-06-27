@@ -33,17 +33,17 @@ function uploadFile(path, file, Bucket = s3Bucket) {
 // Delete one file in a collection.
 function deleteFile(path, collection) {
   return new Promise((resolve, reject) => {
-    if (!path.startWith(collection)) {
+    if (!path.startsWith(collection)) {
       reject(new Error(`${collection} does not match ${path}`));
+      return;
     }
     const s3 = new AWS.S3();
     s3.deleteObject({ Bucket: s3Bucket, Key: path }, err => {
       if (err) {
-        console.log(err);
         reject(new Error(JSON.stringify(err)));
-      } else {
-        resolve();
+        return;
       }
+      resolve();
     });
   });
 }
