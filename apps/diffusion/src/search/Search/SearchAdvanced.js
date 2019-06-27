@@ -18,9 +18,7 @@ const bases = [
 class SearchAdvanced extends React.Component {
   onBaseChange = e => {
     const value = e.target.value;
-    this.props.router.push(
-      value ? `/advanced-search/list/${value}` : "/advanced-search/list"
-    );
+    this.props.router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
   };
 
   render() {
@@ -39,7 +37,7 @@ class SearchAdvanced extends React.Component {
           <Row className="advanced-search-title">
             {hasBase ? <div>Dans la base</div> : ""}
             <select value={this.props.base} onChange={this.onBaseChange}>
-              <option value="">{ !hasBase ? "Sélectionnez une base" : null}</option>
+              <option value="">{!hasBase ? "Sélectionnez une base" : null}</option>
               {bases.map(e => (
                 <option key={e.key} value={e.key}>
                   {e.base}

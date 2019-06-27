@@ -147,8 +147,8 @@ function customQuery(query, primaryFields, secondaryFields = []) {
     multi_match: { query, operator: "and", fields: fields.map(f => `${f}.strict`), boost: 5 }
   };
 
-   // 4 - strict term in fields, cross_fields
-   const strictCross = {
+  // 4 - strict term in fields, cross_fields
+  const strictCross = {
     multi_match: {
       query,
       operator: "and",

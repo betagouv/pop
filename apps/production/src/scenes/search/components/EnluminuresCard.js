@@ -19,12 +19,13 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p><strong>{data.SUJET}</strong></p>
+          <p>
+            <strong>{data.SUJET}</strong>
+          </p>
           <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
           <p>{data.ATTRIB}</p>
           <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
         </div>
-
       </div>
     </Link>
   );

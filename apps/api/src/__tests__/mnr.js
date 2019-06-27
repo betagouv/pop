@@ -1,12 +1,7 @@
 const app = require("../app");
 const request = require("supertest");
 const mongoose = require("mongoose");
-const {
-  createUser,
-  getJwtToken,
-  removeAllUsers,
-  removeMnrNotices
-} = require("./setup/helpers");
+const { createUser, getJwtToken, removeAllUsers, removeMnrNotices } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/mnr-1");
 
 jest.mock("../elasticsearch");

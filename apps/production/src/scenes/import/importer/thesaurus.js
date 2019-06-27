@@ -14,7 +14,7 @@ export default function checkThesaurus(importedNotices) {
 
         const thesaurus =
           importedNotices[i]._mapping[field] && importedNotices[i]._mapping[field].thesaurus;
-          
+
         const thesaurus_separator =
           importedNotices[i]._mapping[field] &&
           importedNotices[i]._mapping[field].thesaurus_separator;

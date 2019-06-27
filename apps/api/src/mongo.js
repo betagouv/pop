@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 const { mongoUrl } = require("./config.js");
 
-mongoose.connect(
-  mongoUrl,
-  { useNewUrlParser: true, useCreateIndex: true }
-); // Get Mongoose to use the global promise library
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true }); // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise; // Get the default connection
 let db = mongoose.connection;
 
