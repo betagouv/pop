@@ -123,14 +123,15 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
     ) {
       return;
     }
-    console.log("update", REF);
-    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME };
+    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME }; // create
   } else {
-    // create
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
   const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
+  notice.index((err, res) => {
+    console.log("I've been indexed!");
+  });
 }
 
 async function updateLinks(notice) {
