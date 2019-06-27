@@ -3,9 +3,9 @@ const path = require("path");
 const hsts = require("hsts");
 
 function forceHttps(res, req, next) {
-  console.log(req);
-  console.log(req.hostname);
-  const isProdDomain = (req.hostname || "").match(/production\.pop\.culture\.gouv\.fr/);
+  console.log(req.get("Host"));
+  console.log(req.get("host"));
+  const isProdDomain = (req.get("Host") || "").match(/production\.pop\.culture\.gouv\.fr/);
   if (!req.secure && req.get("x-forwarded-proto") !== "https" && isProdDomain) {
     return res.redirect(302, "https://production.pop.culture.gouv.fr" + req.url);
   }
