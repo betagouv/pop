@@ -42,16 +42,16 @@ const Schema = new mongoose.Schema(
         type: Number,
         default: 0,
         documentation: {
-          description: "Latitude de la notice en WGS84",
-          generated: true
+          description:
+            "Latitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ"
         }
       },
       lon: {
         type: Number,
         default: 0,
         documentation: {
-          description: "Longitude de la notice en WGS84",
-          generated: true
+          description:
+            "Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ"
         }
       }
     },

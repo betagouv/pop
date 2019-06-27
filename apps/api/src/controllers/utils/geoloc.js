@@ -173,12 +173,29 @@ function hasCorrectCoordinates(notice) {
   return (
     c &&
     c.lat &&
-    c.lon && 
+    c.lon &&
     Number(c.lat) === c.lat &&
     Number(c.lon) === c.lon &&
     isLatitude(c.lat) &&
-    isLongitude(c.lon)
+    isLongitude(c.lon) &&
+    c.lat !== 0 &&
+    c.lon !== 0
   );
 }
 
-module.exports = { lambertToWGS84, convertCOORM, getPolygonCentroid, hasCorrectCoordinates };
+function hasCorrectPolygon(notice) {
+  const c = notice.POP_COORDINATES_POLYGON;
+  if (!c) return false;
+  if (c.type !== "Polygon") return false;
+  if (!Array.isArray(c.coordinates)) return false;
+  if (!c.coordinates.length) return false;
+  return true;
+}
+
+module.exports = {
+  lambertToWGS84,
+  convertCOORM,
+  getPolygonCentroid,
+  hasCorrectCoordinates,
+  hasCorrectPolygon
+};

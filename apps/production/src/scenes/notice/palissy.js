@@ -72,7 +72,7 @@ class Notice extends React.Component {
         "La modification sera visible dans 1 à 5 min en diffusion."
       );
     } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", (e.msg || ""));
+      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
     }
     this.setState({ saving: false });
   }
@@ -226,8 +226,8 @@ class Notice extends React.Component {
                 <CustomField name="ZONE" disabled={!this.state.editable} />
                 <CustomField name="COOR" disabled={!this.state.editable} />
                 <CustomField name="COORM" disabled={!this.state.editable} />
-                <CustomField name="POP_COORDONNEES.lat" disabled={true} />
-                <CustomField name="POP_COORDONNEES.lon" disabled={true} />
+                <CustomField name="POP_COORDONNEES.lat" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lon" disabled={!this.state.editable} />
                 <CustomField name="IMPL" disabled={!this.state.editable} />
                 <CustomField name="EMPL" disabled={!this.state.editable} />
                 <CustomField name="DEPL" disabled={!this.state.editable} />
@@ -387,10 +387,7 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       {...Mapping.palissy[name]}
-      disabled={
-        Mapping.palissy[name].generated == true ||
-        disabled
-      }
+      disabled={Mapping.palissy[name].generated == true || disabled}
       name={name}
       {...rest}
     />
