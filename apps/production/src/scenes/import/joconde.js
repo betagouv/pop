@@ -323,6 +323,7 @@ function readme() {
         <a
           href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Joconde_engagements_VD.pdf"
           target="_blank"
+          rel="noopener"
         >
           Charte d'engagement
         </a>{" "}
@@ -413,6 +414,7 @@ function readme() {
         <a
           href="https://github.com/betagouv/pop/tree/master/apps/api/doc/joconde.md"
           target="_blank"
+          rel="noopener"
         >
           Lien vers le modèle de donnée Joconde
         </a>
