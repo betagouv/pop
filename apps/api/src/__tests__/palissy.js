@@ -80,7 +80,7 @@ describe("POST /palissy", () => {
     expect(res.success).toBe(true);
   });
   // PRODUCTEUR: "Inventaire"
-  const invNotice = { ...sampleNotice, REF: "IM97600007"};
+  const invNotice = { ...sampleNotice, REF: "IM97600007" };
   test(`It should create a notice { PRODUCTEUR: "Inventaire" } for user ${JSON.stringify(
     invUserOk
   )}`, async () => {
@@ -109,7 +109,7 @@ describe("POST /palissy", () => {
 });
 
 describe("PUT /palissy/:ref", () => {
-  const invNotice = { ...sampleNotice, REF: "IM97600007"};
+  const invNotice = { ...sampleNotice, REF: "IM97600007" };
   const invUserOk = { group: "inv", role: "producteur" };
   test(`It should update a notice for ${JSON.stringify(invUserOk)}`, async () => {
     const user = await createUser(invUserOk);
