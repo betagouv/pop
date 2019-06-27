@@ -177,9 +177,7 @@ function hasCorrectCoordinates(notice) {
     Number(c.lat) === c.lat &&
     Number(c.lon) === c.lon &&
     isLatitude(c.lat) &&
-    isLongitude(c.lon) &&
-    c.lat !== 0 &&
-    c.lon !== 0
+    isLongitude(c.lon)
   );
 }
 

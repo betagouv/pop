@@ -30,17 +30,17 @@ function transformBeforeCreateOrUpdate(notice) {
 
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
   if (notice.COORM && notice.ZONE) {
-    // We convert it to a proper format in WGS84
+    // Convert it to a proper format in WGS84
     const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
 
-  //IF COOR in Lambert and not correct coordinates we convert this to WGS84
+  //If COOR in Lambert and not correct coordinates, convert this to WGS84.
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
 
-  //IF NO coordinnates, bug polygon
+  //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
     if (centroid && centroid.length == 2) {
