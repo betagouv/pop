@@ -30,13 +30,13 @@ export default class extends React.Component {
 
   photographer() {
     const autp = this.props.notice.AUTP;
-    const qs = queryString.stringify({ auteur: JSON.stringify([value]) });
+    const qs = queryString.stringify({ auteur: JSON.stringify([autp]) });
     return autp && <a href={`/search/list?${qs}`}>{autp}</a>;
   }
 
   serie() {
     const serie = this.props.notice.SERIE;
-    const qs = queryString.stringify({ serie: JSON.stringify([value]) });
+    const qs = queryString.stringify({ serie: JSON.stringify([serie]) });
     return serie && <a href={`/search/list?${qs}`}>{serie}</a>;
   }
 
