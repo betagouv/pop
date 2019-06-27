@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -29,17 +30,20 @@ export default class extends React.Component {
 
   photographer() {
     const autp = this.props.notice.AUTP;
-    return autp && <a href={`/search/list?auteur=["${autp}"]`}>{autp}</a>;
+    const qs = queryString.stringify({ auteur: JSON.stringify([value]) });
+    return autp && <a href={`/search/list?${qs}`}>{autp}</a>;
   }
 
   serie() {
     const serie = this.props.notice.SERIE;
-    return serie && <a href={`/search/list?serie=["${serie}"]`}>{serie}</a>;
+    const qs = queryString.stringify({ serie: JSON.stringify([value]) });
+    return serie && <a href={`/search/list?${qs}`}>{serie}</a>;
   }
 
   expo() {
     const expo = this.props.notice.EXPO;
-    return expo && <a href={`/search/list?expo=["${expo}"]`}>{expo}</a>;
+    const qs = queryString.stringify({ expo: JSON.stringify([expo]) });
+    return expo && <a href={`/search/list?${qs}`}>{expo}</a>;
   }
 
   render() {
@@ -366,7 +370,9 @@ const SeeMore = ({ notice }) => {
         content={
           <a
             target="_blank"
-            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
+            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
+              notice.LAUTP
+            }`}
           >
             {notice.LAUTP}
           </a>

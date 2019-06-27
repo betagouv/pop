@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -108,7 +109,11 @@ export default class extends React.Component {
                   <ContactUs contact={notice.CONTACT_GENERIQUE} REF={notice.REF} base="museo" />
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                  <Link href={`/search/list?museo=["${notice.REF}"]`}>
+                  <Link
+                    href={`/search/list?${queryString.stringify({
+                      museo: JSON.stringify([notice.REF])
+                    })}`}
+                  >
                     <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }}>
                       Voir les collections du musée
                     </a>

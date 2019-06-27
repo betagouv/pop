@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -68,11 +69,14 @@ export default class extends React.Component {
     }
     const links = authors
       .map(a => a.trim())
-      .map(a => (
-        <a href={`/search/list?auteur=["${a}"]`} key={a}>
-          {a}
-        </a>
-      ))
+      .map(a => {
+        const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
+        return (
+          <a href={url} key={a}>
+            {a}
+          </a>
+        );
+      })
       .reduce((p, c) => [p, " ; ", c]);
     return <React.Fragment>{links}</React.Fragment>;
   }

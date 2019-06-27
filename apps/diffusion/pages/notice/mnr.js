@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
@@ -37,12 +38,16 @@ export default class extends React.Component {
     if (!domain || !Array.isArray(domain)) {
       return null;
     }
+
     const links = domain
-      .map(d => (
-        <a href={`/search/list?domn=["${d}"]`} key={d}>
-          {d}
-        </a>
-      ))
+      .map(d => {
+        const url = `/search/list?${queryString.stringify({ domn: JSON.stringify([d]) })}`;
+        return (
+          <a href={url} key={d}>
+            {d}
+          </a>
+        );
+      })
       .reduce((p, c) => {
         if (!p) {
           return [c];
