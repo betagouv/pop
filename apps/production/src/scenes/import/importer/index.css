@@ -15,6 +15,7 @@
 .importer-container .left-col {
   background-color: #f4e2cc;
   min-height: 730px;
+  padding-bottom: 20px;
   overflow-y: auto;
   height: 730px;
   display: -webkit-box;
