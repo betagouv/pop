@@ -16,10 +16,7 @@ export function getNoticeInfo(notice) {
 
       const subtitle = !notice.TITR && notice.DENO ? "" : notice.DENO.join(", ");
 
-      let metaDescription = "";
-      if (notice.REPR) {
-        metaDescription = notice.REPR;
-      }
+      const metaDescription = jocondeMetaDescription(notice);
       const images = notice.IMG.map((e, i) => {
         const src = e ? `${bucket_url}${e}` : "/static/noimage.png";
         return { src, alt: `${title}_${i}` };
@@ -191,6 +188,36 @@ export function getNoticeInfo(notice) {
     default:
       return {};
   }
+}
+
+function jocondeMetaDescription(n) {
+  const museum = n.NOMOFF || n.LOCA;
+  const cleanAutor =
+    n.AUTR &&
+    String(n.AUTR)
+      .split(/[;.]/)[0]
+      .replace(/\(.*\)/, "")
+      .replace("anonyme", "")
+      .trim();
+  const cleanRepr = n.REPR && String(n.REPR).replace(/\(.*\)/, "");
+  if (n.DESC && cleanAutor && n.DESC.length < 100) {
+    return `${n.DESC} par ${cleanAutor}`;
+  } else if (cleanRepr && museum && n.TECH && n.TECH.length) {
+    if (cleanAutor) {
+      return `${cleanRepr} par ${cleanAutor} (${n.TECH[0]}) - ${museum}`;
+    } else {
+      return `${cleanRepr} (${n.TECH[0]}) - ${museum}`;
+    }
+  } else if (n.TITR && cleanAutor && museum) {
+    return `${cleanAutor} : ${n.TITR} - ${museum}`;
+  } else if (n.DESC.length >= 100 && cleanAutor) {
+    return `${cleanAutor} : ${String(n.DESC).split(/[;.]/)[0]}`;
+  } else if (n.DESC.length < 150 && cleanAutor) {
+    return n.DESC;
+  } else if (n.TICO) {
+    return museum ? `${n.TICO} - ${museum}` : n.TICO;
+  }
+  return "";
 }
 
 const capitalizeFirstLetter = s => {
