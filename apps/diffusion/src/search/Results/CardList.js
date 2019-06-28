@@ -2,12 +2,22 @@ import React from "react";
 import Link from "next/link";
 import { getNoticeInfo } from "../../utils";
 
-const joinData = f => {
-  return f
-    .map(x => x && String(x).trim())
-    .filter(x => x)
-    .join(" ; ");
-};
+// These 3 helpers functions helps to build strings with data
+// (witch can be strings, array, array in arrays, etc.)
+function withoutEmptyStrings(data) {
+  return data
+    .map(x => x && (Array.isArray(x) ? x.join(", ").trim() : String(x).trim()))
+    .filter(x => x);
+}
+// Takes `[["foo", "bar"], ["foo"], "bar"]`, returns "foo, bar ; foo ; bar"
+function joinData(data) {
+  return withoutEmptyStrings(data).join(" ; ");
+}
+// Takes `[["foo", "bar"], ["foo"], "bar"]`, returns "foo, bar"
+function pickFirst(data) {
+  let [first] = withoutEmptyStrings(data);
+  return first;
+}
 
 const Memoire = ({ data }) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
@@ -65,29 +75,9 @@ const Palissy = ({ data }) => {
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
-  const line3 = [];
-  if (data.CATE && data.CATE.length) {
-    line3.push(data.CATE.join(", "));
-  }
-  if (data.MATR && data.MATR.length) {
-    line3.push(data.MATR.join(", "));
-  }
-
-  const line4 = [];
-  if (data.AUTR && data.AUTR.length) {
-    line4.push(data.AUTR.join(", "));
-  }
-  if (data.SCLE && data.SCLE.length) {
-    line4.push(data.SCLE.join(", "));
-  }
-
-  const line5 = [];
-  if (data.STAT && data.STAT.length) {
-    line5.push(data.STAT.join(", "));
-  }
-  if (data.DPRO) {
-    line5.push(data.DPRO);
-  }
+  const line3 = joinData([data.CATE, data.MATR]);
+  const line4 = joinData([data.AUTR, data.SCLE]);
+  const line5 = joinData([data.STAT, data.DPRO]);
 
   return (
     <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
@@ -110,9 +100,9 @@ const Palissy = ({ data }) => {
             {LogoComponent}
             <div>
               <p>{localisation}</p>
-              <p>{line3.join(" ; ")}</p>
-              <p>{line4.join(" ; ")}</p>
-              <p>{line5.join(" ; ")}</p>
+              <p>{line3}</p>
+              <p>{line4}</p>
+              <p>{line5}</p>
             </div>
           </div>
         </div>
@@ -126,24 +116,8 @@ const Merimee = ({ data }) => {
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image_preview} alt={title} />;
 
-  const author = data.AUTR ? data.AUTR.join(", ") : "";
-  const siecle = data.SCLE ? data.SCLE.join(", ") : "";
-
-  const line3 = [];
-  if (author) {
-    line3.push(author);
-  }
-  if (siecle) {
-    line3.push(siecle);
-  }
-
-  const line4 = [];
-  if (data.STAT) {
-    line4.push(data.STAT);
-  }
-  if (data.DPRO) {
-    line4.push(data.DPRO);
-  }
+  const line3 = joinData([data.AUTR, data.SCLE]);
+  const line4 = joinData([data.STAT, data.DPRO]);
 
   return (
     <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
@@ -162,8 +136,8 @@ const Merimee = ({ data }) => {
             {LogoComponent}
             <div>
               <p>{localisation}</p>
-              <p>{line3.join(" ; ")}</p>
-              <p>{line4.join(" ; ")}</p>
+              <p>{line3}</p>
+              <p>{line4}</p>
             </div>
           </div>
         </div>
@@ -217,10 +191,10 @@ const Joconde = ({ data }) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
-
-  let peri = Array.isArray(data.MILL) ? data.MILL.join(", ") : "";
-  peri = peri || (Array.isArray(data.PERI) ? data.PERI.join(", ") : "");
-  peri = peri || (Array.isArray(data.EPOQ) ? data.EPOQ.join(", ") : "");
+  let peri = pickFirst([data.MILL, data.PERI, data.EPOQ]);
+  if (peri === author) {
+    peri = "";
+  }
 
   return (
     <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
