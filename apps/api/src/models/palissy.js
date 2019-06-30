@@ -565,6 +565,14 @@ const Schema = new mongoose.Schema(
         label: "Localisation complète"
       }
     },
+    MANQUANT: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "Manquant"
+      }
+    },
     MATR: {
       type: [String],
       default: [],
