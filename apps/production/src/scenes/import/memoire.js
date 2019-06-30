@@ -44,6 +44,12 @@ function parseFiles(files, encoding) {
 
       for (let i = 0; i < data.length; i++) {
         const obj = data[i];
+
+        if (!obj.REF) {
+          reject(`La notice ligne ${i + 1} n'a pas de reference valide`);
+          return;
+        }
+
         const notice = new Memoire(obj);
 
         // If NOMSN does not exists, don't update IMG.
