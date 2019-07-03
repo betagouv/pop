@@ -355,6 +355,9 @@ class Notice extends React.Component {
                 <CustomField name="DOSURL" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
+                <FileUpload name="POP_DOSSIER_VERT" disabled={!this.state.editable} />
+                <CustomField name="POP_ARRETE_PROTECTION" disabled={!this.state.editable} />
+                <CustomField name="POP_DOSSIER_PROTECTION" disabled={!this.state.editable} />
                 <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
                 <CustomField name="LIENS" disabled={!this.state.editable} />
                 <CustomField name="MOSA" disabled={!this.state.editable} />
@@ -395,6 +398,10 @@ const CustomField = ({ name, disabled, ...rest }) => {
       {...rest}
     />
   );
+};
+
+const FileUpload = ({ name, disabled, ...rest }) => {
+  return <input key={name} type="file" name="fileToUpload" id="fileToUpload" />;
 };
 
 const mapStateToProps = ({ Auth }) => {
