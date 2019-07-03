@@ -30,7 +30,7 @@ function withFlags(notice) {
   if (notice.LBASE) {
     // LBASE must be 11 chars.
     if (notice.LBASE.filter(lb => lb.length !== 11).length > 0) {
-      notice.POP_FLAGS.push("LBASE_LENGHT_11");
+      notice.POP_FLAGS.push("LBASE_LENGTH_EXACT_11");
     }
     // LBASE must start with EA, PA, etc.
     if (
