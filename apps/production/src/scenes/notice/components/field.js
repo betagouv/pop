@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "redux-form";
 import ReactTags from "react-tag-input";
-import { Tooltip } from "reactstrap";
+import { UncontrolledTooltip } from "reactstrap";
 import autosize from "autosize";
 import api from "../../../services/api";
 import "./field.css";
@@ -93,7 +93,7 @@ class TagsInput extends React.Component {
   }
 }
 
-class CustomInput extends React.Component {
+class TextInput extends React.Component {
   state = {
     suggestions: []
   };
@@ -138,7 +138,7 @@ class CustomInput extends React.Component {
 
   render() {
     if (Array.isArray(this.props.input.value)) {
-      return <div>Cette donnée est multiple(array) et devrait etre simple(string)</div>;
+      return <div>Cette donnée est multiple(array) et devrait être simple(string)</div>;
     }
     return (
       <div className="input">
@@ -158,56 +158,53 @@ class CustomInput extends React.Component {
   }
 }
 
+const TooltipComp = ({ deprecated, generated, description, name }) => {
+  const content = [];
+  if (description) {
+    content.push(<div>{description}</div>);
+  } else {
+    content.push(<div>En attente de description</div>);
+  }
+
+  if (generated) {
+    content.push(<div>Ce champ est généré et n'est pas modifiable.</div>);
+  }
+  if (deprecated) {
+    content.push(<div>Ce champ est déprécié.</div>);
+  }
+
+  return (
+    <UncontrolledTooltip placement="top" target={`Tooltip_${name.replace(".", "")}`}>
+      {content}
+    </UncontrolledTooltip>
+  );
+};
+
 export default class AbstractField extends React.Component {
-  state = {
-    tooltipOpen: false
-  };
   render() {
     const { label, type, name, description, generated, deprecated, ...rest } = this.props;
-    let desc = description || "En attente de description";
 
-    let Comp = <div />;
+    let Child = <div />;
     if (type === "String" || type === "Number") {
-      Comp = <Field component={CustomInput} name={name} {...rest} />;
+      Child = <Field component={TextInput} name={name} {...rest} />;
     } else if (type === "Array") {
-      Comp = <Field component={TagsInput} name={name} {...rest} />;
+      Child = <Field component={TagsInput} name={name} {...rest} />;
     } else {
-      Comp = <div />;
+      Child = <div />;
     }
+
+    const title = label ? `${label} (${name})` : name;
+
     return (
       <div className="field">
-        {(label || name) && (
-          <div id={`Tooltip_${name.replace(".", "")}`}>{label ? `${label} (${name})` : name}</div>
-        )}
-        <Tooltip
-          placement="right"
-          isOpen={this.state.tooltipOpen}
-          target={`Tooltip_${name.replace(".", "")}`}
-          toggle={() =>
-            this.setState({
-              tooltipOpen: !this.state.tooltipOpen
-            })
-          }
-        >
-          {desc}
-          {generated ? (
-            <div>
-              <br />
-              Ce champ est généré et n'est pas modifiable.
-            </div>
-          ) : (
-            ""
-          )}
-          {deprecated ? (
-            <div>
-              <br />
-              Ce champ est déprécié.
-            </div>
-          ) : (
-            ""
-          )}
-        </Tooltip>
-        {Comp}
+        {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
+        <TooltipComp
+          deprecated={deprecated}
+          description={description}
+          generated={generated}
+          name={name}
+        />
+        {Child}
       </div>
     );
   }
