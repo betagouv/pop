@@ -144,7 +144,7 @@ function canManageMuseo(user, notice) {
     ((user.role === "administrateur" && (user.group === "museo" || user.group === "admin")) ||
       (user.role === "producteur" &&
         user.group === "museo" &&
-        user.museofile.includes(notice.MUSEO)))
+        user.museofile.includes(notice.REF)))
   );
 }
 
