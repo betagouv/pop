@@ -67,10 +67,19 @@ class Notice extends React.Component {
   }
 
   async onSubmit(values) {
-    console.log("values", values);
+    const files = [];
+
+    for (let i = 0; i < values["POP_ARRETE_PROTECTION"].length; i++) {
+      if (typeof values["POP_ARRETE_PROTECTION"][i] === "object") {
+        const file = values["POP_ARRETE_PROTECTION"][i];
+        files.push(file);
+        values["POP_ARRETE_PROTECTION"][i] = `merimee/${values.REF}/${file.name}`;
+      }
+    }
+
     this.setState({ saving: true });
     try {
-      await API.updateNotice(this.state.notice.REF, "merimee", values);
+      await API.updateNotice(this.state.notice.REF, "merimee", values, files);
       toastr.success(
         "Modification enregistrée",
         "La modification sera visible dans 1 à 5 min en diffusion."
