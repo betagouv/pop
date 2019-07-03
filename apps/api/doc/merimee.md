@@ -104,6 +104,9 @@
 - [REFIM](/apps/api/doc/merimee.md#REFIM)
 - [IMG](/apps/api/doc/merimee.md#IMG)
 - [VIDEO](/apps/api/doc/merimee.md#VIDEO)
+- [POP_DOSSIER_VERT](/apps/api/doc/merimee.md#POP_DOSSIER_VERT)
+- [POP_ARRETE_PROTECTION](/apps/api/doc/merimee.md#POP_ARRETE_PROTECTION)
+- [POP_DOSSIER_PROTECTION](/apps/api/doc/merimee.md#POP_DOSSIER_PROTECTION)
 - [DOSURL](/apps/api/doc/merimee.md#DOSURL)
 - [DOSURLPDF](/apps/api/doc/merimee.md#DOSURLPDF)
 - [DOSADRS](/apps/api/doc/merimee.md#DOSADRS)
@@ -1215,6 +1218,36 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|oui|non||Url de liaison avec Mémoire|
+
+### POP_DOSSIER_VERT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||PDF Inventaire (dossier verts)|
+
+### POP_ARRETE_PROTECTION
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Arrêté de protection MH|
+
+### POP_DOSSIER_PROTECTION
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Dossier de protection MH|
 
 ### DOSURL
 
