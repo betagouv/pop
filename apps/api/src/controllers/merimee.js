@@ -25,6 +25,57 @@ const { capture } = require("./../sentry.js");
 const passport = require("passport");
 const { canUpdateMerimee, canCreateMerimee, canDeleteMerimee } = require("./utils/authorization");
 
+// Control properties document, flag each error.
+function withFlags(notice) {
+  notice.POP_FLAGS = [];
+  // Required properties.
+  ["DOSS", "ETUD", "COPY", "TICO", "CONTACT", "REF"]
+    .filter(prop => !notice[prop])
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
+  // If "existingProp" exists then "requiredProp" must not be empty.
+  [["PROT", "DPRO"], ["COM", "WCOM"], ["ADRS", "WADRS"]]
+    .filter(([existingProp, requiredProp]) => existingProp && !requiredProp)
+    .forEach(([existingProp, requiredProp]) =>
+      notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
+    );
+  // DPT must be 2 char or more.
+  if (notice.DPT && notice.DPT.length < 2) {
+    notice.POP_FLAGS.push("DPT_LENGTH_2");
+  }
+  // INSEE must be 5 char or more.
+  if (notice.INSEE && notice.INSEE.length < 5) {
+    notice.POP_FLAGS.push("INSEE_LENGTH_5");
+  }
+  // INSEE & DPT must start with the same first 2 letters.
+  if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
+    notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+  }
+  // Reference not found (RENV, REFP, REFE, REFO)
+  async function referenceExists(ref, model) {
+    try {
+      return Boolean(await model.exists({ REF: ref }));
+    } catch (e) {
+      return false;
+    }
+  }
+  // Reference not found RENV
+  if (notice.RENV && notice.RENV.filter(r => !referenceExists(r, Merimee)).length > 0) {
+    notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
+  }
+  // Reference not found REFP
+  if (notice.REFP && notice.REFP.filter(r => !referenceExists(r, Merimee)).length > 0) {
+    notice.POP_FLAGS.push("REFP_REF_NOT_FOUND");
+  }
+  // Reference not found REFE
+  if (notice.REFE && notice.REFE.filter(r => !referenceExists(r, Merimee)).length > 0) {
+    notice.POP_FLAGS.push("REFE_REF_NOT_FOUND");
+  }
+  // Reference not found REFO
+  if (notice.REFO && notice.REFO.filter(r => !referenceExists(r, Palissy)).length > 0) {
+    notice.POP_FLAGS.push("REFO_REF_NOT_FOUND");
+  }
+  return notice;
+}
 function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
@@ -65,6 +116,7 @@ function transformBeforeCreateOrUpdate(notice) {
     notice.LIENS = notice.LIENS.map(fixLink);
   }
   notice.DISCIPLINE = notice.PRODUCTEUR = findMerimeeProducteur(notice);
+  notice = withFlags(notice);
 }
 
 function transformBeforeUpdate(notice) {
@@ -75,56 +127,6 @@ function transformBeforeUpdate(notice) {
 function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   transformBeforeCreateOrUpdate(notice);
-}
-
-async function checkMerimee(notice) {
-  const errors = [];
-  try {
-    if (!notice.CONTACT) {
-      // Check contact.
-      errors.push("Le champ CONTACT ne doit pas être vide");
-    }
-
-    const { message } = lambertToWGS84(notice.COOR, notice.ZONE); // Check coor
-    if (message) {
-      errors.push(message);
-    }
-
-    if (!notice.TICO && !notice.TITR) {
-      // Check Title
-      errors.push("Cette notice devrait avoir un TICO ou un TITR");
-    }
-
-    const { RENV, REFP, REFE, REFO } = notice; // check Links
-    if (RENV && RENV.length) {
-      const doc = await Merimee.findOne({ REF: RENV[0] });
-      if (!doc) {
-        errors.push(`Le champ RENV ${RENV[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFP && REFP.length) {
-      const doc = await Merimee.findOne({ REF: REFP[0] });
-      if (!doc) {
-        errors.push(`Le champ REFP ${REFP[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFE && REFE.length) {
-      const doc = await Merimee.findOne({ REF: REFE[0] });
-      if (!doc) {
-        errors.push(`Le champ REFE ${REFE[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFO && REFO.length) {
-      const doc = await Palissy.findOne({ REF: REFO[0] });
-      if (!doc) {
-        errors.push(`Le champ REFO ${REFO[0]} pointe vers une notice absente`);
-      }
-    }
-  } catch (e) {
-    capture(e);
-  }
-
-  return errors;
 }
 
 function checkIfMemoireImageExist(notice) {

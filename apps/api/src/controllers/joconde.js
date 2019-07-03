@@ -11,26 +11,18 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 
-async function checkJoconde(notice) {
-  const errors = [];
-  try {
-    if (!notice.CONTACT) {
-      errors.push("Le champ CONTACT ne doit pas être vide");
-    }
-    if (!notice.TICO && !notice.TITR) {
-      errors.push("Cette notice devrait avoir un TICO ou un TITR");
-    }
-    for (let i = 0; i < IMG.length; i++) {
-      try {
-        await rp.get(PREFIX_IMAGE + IMG[i]);
-      } catch (e) {
-        errors.push(`Image est inaccessible`);
-      }
-    }
-  } catch (e) {
-    capture(e);
+// Control properties document, flag each error.
+function withFlags(notice) {
+  notice.POP_FLAGS = [];
+  // Required properties.
+  ["CONTACT", "TICO", "TITR", "MUSEO", "REF"]
+    .filter(prop => !notice[prop])
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
+  // REF must be 11 chars.
+  if (notice.REF && notice.REF.length !== 11) {
+    notice.POP_FLAGS.push("REF_LENGHT_11");
   }
-  return errors;
+  return notice;
 }
 
 function transformBeforeCreate(notice) {
@@ -63,7 +55,7 @@ function transformBeforeCreateAndUpdate(notice) {
           }
         }
       }
-
+      notice = withFlags(notice);
       resolve();
     } catch (e) {
       capture(e);

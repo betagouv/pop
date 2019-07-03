@@ -40,12 +40,12 @@ const Schema = new mongoose.Schema(
         label: "Contient une image"
       }
     },
-    POP_COMMENTAIRES: {
+    POP_FLAGS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Commentaires technique",
-        label: "Commentaires POP",
+        description: "Informations et avertissements techniques",
+        label: "Alertes POP",
         generated: true
       }
     },
