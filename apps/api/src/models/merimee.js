@@ -850,6 +850,30 @@ const Schema = new mongoose.Schema(
         deprecated: true
       }
     },
+    POP_DOSSIER_VERT: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "",
+        label: "PDF Inventaire (dossier verts)"
+      }
+    },
+    POP_ARRETE_PROTECTION: {
+      type: [String],
+      default: "",
+      documentation: {
+        description: "",
+        label: "Arrêté de protection MH"
+      }
+    },
+    POP_DOSSIER_PROTECTION: {
+      type: [String],
+      default: "",
+      documentation: {
+        description: "",
+        label: "Dossier de protection MH"
+      }
+    },
     DOSURL: {
       type: String,
       default: "",
