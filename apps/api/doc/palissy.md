@@ -43,6 +43,9 @@
 - [DOMN](/apps/api/doc/palissy.md#DOMN)
 - [DOSADRS](/apps/api/doc/palissy.md#DOSADRS)
 - [DOSS](/apps/api/doc/palissy.md#DOSS)
+- [POP_DOSSIER_VERT](/apps/api/doc/palissy.md#POP_DOSSIER_VERT)
+- [POP_ARRETE_PROTECTION](/apps/api/doc/palissy.md#POP_ARRETE_PROTECTION)
+- [POP_DOSSIER_PROTECTION](/apps/api/doc/palissy.md#POP_DOSSIER_PROTECTION)
 - [DOSURL](/apps/api/doc/palissy.md#DOSURL)
 - [DOSURLPDF](/apps/api/doc/palissy.md#DOSURLPDF)
 - [DPRO](/apps/api/doc/palissy.md#DPRO)
@@ -560,6 +563,36 @@ Adresse du dossier Inventaire
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |Array|non|non|non|non||Dénomination du dossier|
+
+### POP_DOSSIER_VERT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||PDF Inventaire (dossier verts)|
+
+### POP_ARRETE_PROTECTION
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Arrêté de protection MH|
+
+### POP_DOSSIER_PROTECTION
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Dossier de protection MH|
 
 ### DOSURL
 
