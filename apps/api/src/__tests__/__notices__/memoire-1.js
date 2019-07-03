@@ -1,7 +1,7 @@
 module.exports = {
   BASE: "Photographies (Mémoire)",
   CONTIENT_IMAGE: "oui",
-  POP_COMMENTAIRES: ["Le champ CONTACT ne doit pas être vide", "Lien LBASE corrompu 2008"],
+  POP_FLAGS: [],
   POP_IMPORT: [],
   TOUT: "",
   ADRESSE: "Guet (le)",

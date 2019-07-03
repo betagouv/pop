@@ -2,7 +2,7 @@ module.exports = {
   PRODUCTEUR: "MNR",
   BASE: "Récupération artistique (MNR Rose-Valland)",
   CONTIENT_IMAGE: "oui",
-  POP_COMMENTAIRES: [],
+  POP_FLAGS: [],
   POP_IMPORT: [],
   TOUT: "",
   AUTR: ["Anonyme"],

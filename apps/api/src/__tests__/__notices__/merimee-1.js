@@ -3,7 +3,7 @@ module.exports = {
   POP_COORDINATES_POLYGON: { type: "Polygon", coordinates: [] },
   BASE: "Patrimoine architectural (Mérimée)",
   CONTIENT_IMAGE: "non",
-  POP_COMMENTAIRES: [],
+  POP_FLAGS: [],
   POP_CONTIENT_GEOLOCALISATION: "non",
   POP_DATE: [],
   POP_IMPORT: ["5cb19026bf7f212b8a6881de"],
