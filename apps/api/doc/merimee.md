@@ -7,7 +7,7 @@
 - [MEMOIRE](/apps/api/doc/merimee.md#MEMOIRE)
 - [POP_COORDONNEES.lat](/apps/api/doc/merimee.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/merimee.md#POP_COORDONNEES.lon)
-- [POP_COMMENTAIRES](/apps/api/doc/merimee.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/merimee.md#POP_FLAGS)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/merimee.md#POP_CONTIENT_GEOLOCALISATION)
 - [POP_COORDINATES_POLYGON.type](/apps/api/doc/merimee.md#POP_COORDINATES_POLYGON.type)
 - [POP_COORDINATES_POLYGON.coordinates](/apps/api/doc/merimee.md#POP_COORDINATES_POLYGON.coordinates)
@@ -207,15 +207,15 @@ Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoi
 |----|------|------|------|--------|----------|-----|
 |Number|non|non|non|non|||
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_CONTIENT_GEOLOCALISATION
 Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'

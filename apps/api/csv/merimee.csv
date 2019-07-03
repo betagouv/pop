@@ -12,7 +12,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "MEMOIRE","Array","non","","","","","",""
 "POP_COORDONNEES.lat","Number","non","","","","Latitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ","",""
 "POP_COORDONNEES.lon","Number","non","","","","Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ","",""
-"POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
+"POP_FLAGS","Array","non","Alertes POP","","true","Informations et avertissements techniques","",""
 "POP_CONTIENT_GEOLOCALISATION","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'","",""
 "POP_COORDINATES_POLYGON.type","String","non","","","","","",""
 "POP_COORDINATES_POLYGON.coordinates","Array","non","","","","","",""

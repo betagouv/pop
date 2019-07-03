@@ -6,7 +6,7 @@
 - [POP_COORDONNEES.lat](/apps/api/doc/joconde.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/joconde.md#POP_COORDONNEES.lon)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/joconde.md#POP_CONTIENT_GEOLOCALISATION)
-- [POP_COMMENTAIRES](/apps/api/doc/joconde.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/joconde.md#POP_FLAGS)
 - [REF](/apps/api/doc/joconde.md#REF)
 - [POP_IMPORT](/apps/api/doc/joconde.md#POP_IMPORT)
 - [REFMIS](/apps/api/doc/joconde.md#REFMIS)
@@ -154,15 +154,15 @@ Champ qui permet de savoir si la geolocalisation est disponible ou non
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Contient une position|
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### REF
 Référence (numéro système de la notice)

@@ -2,7 +2,7 @@
 
 - [PRODUCTEUR](/apps/api/doc/palissy.md#PRODUCTEUR)
 - [CONTIENT_IMAGE](/apps/api/doc/palissy.md#CONTIENT_IMAGE)
-- [POP_COMMENTAIRES](/apps/api/doc/palissy.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/palissy.md#POP_FLAGS)
 - [POP_COORDONNEES.lat](/apps/api/doc/palissy.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/palissy.md#POP_COORDONNEES.lon)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/palissy.md#POP_CONTIENT_GEOLOCALISATION)
@@ -152,15 +152,15 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non|||
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_COORDONNEES.lat
 Latitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoir éditer ce champ

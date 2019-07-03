@@ -3,7 +3,7 @@
 - [PRODUCTEUR](/apps/api/doc/memoire.md#PRODUCTEUR)
 - [BASE](/apps/api/doc/memoire.md#BASE)
 - [CONTIENT_IMAGE](/apps/api/doc/memoire.md#CONTIENT_IMAGE)
-- [POP_COMMENTAIRES](/apps/api/doc/memoire.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/memoire.md#POP_FLAGS)
 - [POP_IMPORT](/apps/api/doc/memoire.md#POP_IMPORT)
 - [REF](/apps/api/doc/memoire.md#REF)
 - [TOUT](/apps/api/doc/memoire.md#TOUT)
@@ -177,15 +177,15 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Contient une image|
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_IMPORT
 

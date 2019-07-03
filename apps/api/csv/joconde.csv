@@ -5,7 +5,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "POP_COORDONNEES.lat","Number","non","","","true","Latitude de la notice en WGS84","",""
 "POP_COORDONNEES.lon","Number","non","","","true","Longitude de la notice en WGS84","",""
 "POP_CONTIENT_GEOLOCALISATION","String","non","Contient une position","","true","Champ qui permet de savoir si la geolocalisation est disponible ou non","",""
-"POP_COMMENTAIRES","Array","non","Commentaires POP","","true","Commentaires technique","",""
+"POP_FLAGS","Array","non","Alertes POP","","true","Informations et avertissements techniques","",""
 "REF","String","oui","Référence","true","","Référence (numéro système de la notice)","Alphanumeric",""
 "POP_IMPORT","Array","non","","","","","",""
 "REFMIS","String","non","Référence MAJ","","","Référence de mise à jour","",""
