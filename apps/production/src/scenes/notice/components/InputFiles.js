@@ -7,14 +7,35 @@ const InputFiles = ({ input, type }) => {
   const arr = showValues(input.value);
   return (
     <div className="field">
-      <div>
+      <div style={{ minWidth: "50%" }}>
         {arr.map(e => (
-          <div key={e}>{e}</div>
+          <div key={e} style={{ display: "flex", justifyContent: "space-between" }}>
+            {e.value}
+            <button
+              type="button"
+              onClick={() => {
+                const n = input.value.filter(f => {
+                  if (typeof f === "object") {
+                    return f.name !== e.key;
+                  } else {
+                    return f !== e.key;
+                  }
+                });
+                input.onChange(n);
+              }}
+            >
+              supprimer
+            </button>
+          </div>
         ))}
       </div>
       <input
         onChange={e => {
-          input.onChange([...input.value, ...Array.from(e.target.files)]);
+          if (type === "Array") {
+            input.onChange([...input.value, ...Array.from(e.target.files)]);
+          } else {
+            input.onChange(e.target.files[0]);
+          }
         }}
         type="file"
         multiple={type === "Array"}
@@ -33,19 +54,21 @@ function showValues(value) {
   }
 
   if (typeof value === "object") {
-    return [value.name];
+    return [{ key: value.name, value: value.name }];
   }
 
   if (value) {
-    return [<a href={`${bucket_url}${value}`}>{value.replace(/^.*[\\\/]/, "")}</a>];
+    return [
+      { key: value, value: <a href={`${bucket_url}${value}`}>{value.replace(/^.*[\\\/]/, "")}</a> }
+    ];
   }
 
   return [];
 }
 
-export default ({ name, ...rest }) => (
-  <React.Fragment>
-    <div>{name}</div>
+export default ({ name, label, ...rest }) => (
+  <div className="field">
+    <div>{label ? `${label} (${name})` : name}</div>
     <Field component={InputFiles} name={name} {...rest} />
-  </React.Fragment>
+  </div>
 );

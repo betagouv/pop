@@ -208,7 +208,6 @@ router.put(
 
       const promises = [];
       for (let i = 0; i < req.files.length; i++) {
-        console.log("files", req.files);
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
       }

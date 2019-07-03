@@ -77,6 +77,20 @@ class Notice extends React.Component {
       }
     }
 
+    for (let i = 0; i < values["POP_DOSSIER_PROTECTION"].length; i++) {
+      if (typeof values["POP_DOSSIER_PROTECTION"][i] === "object") {
+        const file = values["POP_DOSSIER_PROTECTION"][i];
+        files.push(file);
+        values["POP_DOSSIER_PROTECTION"][i] = `merimee/${values.REF}/${file.name}`;
+      }
+    }
+
+    if (typeof values["POP_DOSSIER_VERT"] === "object") {
+      const file = values["POP_DOSSIER_VERT"];
+      files.push(file);
+      values["POP_DOSSIER_VERT"] = `merimee/${values.REF}/${file.name}`;
+    }
+
     this.setState({ saving: true });
     try {
       await API.updateNotice(this.state.notice.REF, "merimee", values, files);
@@ -154,22 +168,6 @@ class Notice extends React.Component {
           >
             <Row>
               <Col sm={6}>
-                <InputFiles
-                  name="POP_ARRETE_PROTECTION"
-                  disabled={!this.state.editable}
-                  {...Mapping.merimee["POP_ARRETE_PROTECTION"]}
-                />
-                <InputFiles
-                  name="POP_DOSSIER_VERT"
-                  disabled={!this.state.editable}
-                  {...Mapping.merimee["POP_DOSSIER_VERT"]}
-                />
-                <InputFiles
-                  name="POP_DOSSIER_PROTECTION"
-                  disabled={!this.state.editable}
-                  {...Mapping.merimee["POP_DOSSIER_PROTECTION"]}
-                />
-
                 <CustomField name="REF" disabled={true} />
                 <CustomField name="DOMN" disabled={true} />
                 <CustomField
@@ -380,9 +378,24 @@ class Notice extends React.Component {
                 <CustomField name="LBASE2" disabled={!this.state.editable} />
                 <CustomField name="WEB" disabled={!this.state.editable} />
                 <CustomField name="DOSADRS" disabled={!this.state.editable} />
-                <CustomField name="DOSURL" disabled={!this.state.editable} />
+                <InputFiles
+                  name="POP_ARRETE_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_ARRETE_PROTECTION"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_VERT"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_DOSSIER_VERT"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_DOSSIER_PROTECTION"]}
+                />
               </Col>
               <Col sm={6}>
+                <CustomField name="DOSURL" disabled={!this.state.editable} />
                 <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
                 <CustomField name="LIENS" disabled={!this.state.editable} />
                 <CustomField name="MOSA" disabled={!this.state.editable} />
