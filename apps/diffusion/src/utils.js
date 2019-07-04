@@ -16,7 +16,7 @@ export function getNoticeInfo(notice) {
 
       const subtitle = !notice.TITR && notice.DENO ? "" : notice.DENO.join(", ");
 
-      const metaDescription = jocondeMetaDescription(notice);
+      const metaDescription = capitalizeFirstLetter(jocondeMetaDescription(notice));
       const images = notice.IMG.map((e, i) => {
         const src = e ? `${bucket_url}${e}` : "/static/noimage.png";
         return { src, alt: `${title}_${i}` };
@@ -42,10 +42,7 @@ export function getNoticeInfo(notice) {
 
       const subtitle = notice.TECH;
 
-      let metaDescription = "";
-      if (notice.LEG) {
-        metaDescription = notice.LEG;
-      }
+      const metaDescription = capitalizeFirstLetter(memoireMetaDescription(notice));
 
       const image_preview = notice.IMG ? `${bucket_url}${notice.IMG}` : "/static/noimage.png";
       const images = notice.IMG ? [{ src: `${bucket_url}${notice.IMG}`, alt: title }] : [];
@@ -216,6 +213,25 @@ function jocondeMetaDescription(n) {
     return n.DESC;
   } else if (n.TICO) {
     return museum ? `${n.TICO} - ${museum}` : n.TICO;
+  }
+  return "";
+}
+
+function memoireMetaDescription(n) {
+  const cleanAutor =
+    n.AUTP &&
+    String(n.AUTP)
+      .split(/[;.]/)[0]
+      .replace(/\(.*\)/, "")
+      .trim();
+  if (n.EDIF && n.LEG && n.COM) {
+    return `${n.EDIF} à ${n.COM} - ${n.LEG}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
+  } else if (n.LEG && n.LIEUCOR) {
+    return `${n.LEG} - ${n.LIEUCOR}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
+  } else if (n.LEG) {
+    return `${n.LEG}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
+  } else if (n.OBJT) {
+    return `${n.OBJT}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;
   }
   return "";
 }
