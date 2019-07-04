@@ -62,7 +62,6 @@
 - [LBASE2](/apps/api/doc/merimee.md#LBASE2)
 - [LIEU](/apps/api/doc/merimee.md#LIEU)
 - [LOCA](/apps/api/doc/merimee.md#LOCA)
-- [MANQUANT](/apps/api/doc/merimee.md#MANQUANT)
 - [MFICH](/apps/api/doc/merimee.md#MFICH)
 - [MOSA](/apps/api/doc/merimee.md#MOSA)
 - [MHPP](/apps/api/doc/merimee.md#MHPP)
@@ -790,16 +789,6 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T33
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Localisation complète|
-
-### MANQUANT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Manquant|
 
 ### MFICH
 

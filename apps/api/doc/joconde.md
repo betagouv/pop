@@ -202,7 +202,7 @@ Un bien manquant est un bien inscrit à l’inventaire d’un musée de France q
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Bien manquant|
+|Array|non|non|non|non||Bien manquant|
 
 ### MANQUANT_COM
 

@@ -215,7 +215,7 @@ Index global [Peut etre déprécié]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Index global|
+|String|non|non|oui|non||Index global|
 
 ### ADRESSE
 Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##
@@ -565,7 +565,7 @@ Référence du CD ayant servi au chargement des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numero de fond|
+|String|non|non|oui|non||Numero de fond|
 
 ### INSEE
 
@@ -585,7 +585,7 @@ Référence du CD ayant servi au chargement des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence sur le vidéodisque|
+|String|non|non|oui|non||Référence sur le vidéodisque|
 
 ### MARQ
 Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Palisssy correspondante
@@ -725,7 +725,7 @@ AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date du tirage |
+|String|non|non|oui|non||Date du tirage |
 
 ### DATG
 Date gravure
@@ -1165,7 +1165,7 @@ Liens base [Quelle différence avec LBASE?] requête système permettant d'activ
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Légende thes.|
+|String|non|non|oui|non||Légende thes.|
 
 ### REFIM
 
@@ -1225,7 +1225,7 @@ N° d'opération
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||N° d'opération|
+|String|non|non|oui|non||N° d'opération|
 
 ### CHRONO
 

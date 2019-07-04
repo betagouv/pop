@@ -876,7 +876,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Manquant|
+|Array|non|non|non|non||Manquant|
 
 ### MATR
 
