@@ -14,6 +14,7 @@ import Comments from "./components/comments.js";
 import Map from "./components/map.js";
 import { bucket_url } from "../../config.js";
 import Loader from "../../components/Loader";
+import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
 
 import "./index.css";
@@ -64,9 +65,33 @@ class Notice extends React.Component {
   }
 
   async onSubmit(values) {
+    const files = [];
+
+    for (let i = 0; i < values["POP_ARRETE_PROTECTION"].length; i++) {
+      if (typeof values["POP_ARRETE_PROTECTION"][i] === "object") {
+        const file = values["POP_ARRETE_PROTECTION"][i];
+        files.push(file);
+        values["POP_ARRETE_PROTECTION"][i] = `palissy/${values.REF}/${file.name}`;
+      }
+    }
+
+    for (let i = 0; i < values["POP_DOSSIER_PROTECTION"].length; i++) {
+      if (typeof values["POP_DOSSIER_PROTECTION"][i] === "object") {
+        const file = values["POP_DOSSIER_PROTECTION"][i];
+        files.push(file);
+        values["POP_DOSSIER_PROTECTION"][i] = `palissy/${values.REF}/${file.name}`;
+      }
+    }
+
+    if (typeof values["POP_DOSSIER_VERT"] === "object") {
+      const file = values["POP_DOSSIER_VERT"];
+      files.push(file);
+      values["POP_DOSSIER_VERT"] = `palissy/${values.REF}/${file.name}`;
+    }
+
     this.setState({ saving: true });
     try {
-      await API.updateNotice(this.state.notice.REF, "palissy", values);
+      await API.updateNotice(this.state.notice.REF, "palissy", values, files);
       toastr.success(
         "Modification enregistrée",
         "La modification sera visible dans 1 à 5 min en diffusion."
@@ -348,6 +373,21 @@ class Notice extends React.Component {
                 <CustomField name="AUTP" disabled={!this.state.editable} />
                 <CustomField name="DIFF" disabled={!this.state.editable} />
                 <CustomField name="IMAGE" disabled={!this.state.editable} />
+                <InputFiles
+                  name="POP_ARRETE_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.palissy["POP_ARRETE_PROTECTION"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_VERT"
+                  disabled={!this.state.editable}
+                  {...Mapping.palissy["POP_DOSSIER_VERT"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.palissy["POP_DOSSIER_PROTECTION"]}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="LBASE2" disabled={!this.state.editable} />
