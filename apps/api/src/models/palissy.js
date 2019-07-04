@@ -591,7 +591,7 @@ const Schema = new mongoose.Schema(
     },
     MANQUANT: {
       type: [String],
-      default: "",
+      default: [],
       documentation: {
         description: "",
         label: "Manquant"
