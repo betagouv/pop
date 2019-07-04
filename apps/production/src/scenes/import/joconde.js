@@ -134,7 +134,6 @@ function importCSV(res, files, museofile) {
           const shortname = Joconde.convertLongNameToShort(img.name);
           let newImage = utils.renameFile(img, shortname);
           importedNotices[i]._files.push(newImage);
-          importedNotices[i].IMG = `joconde/${importedNotices[i].REF}/${importedNotices[i].IMG}`;
         }
       }
     }
