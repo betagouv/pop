@@ -77,7 +77,7 @@ path,type,required,label,opendata,generated,description,validation,thesaurus
 "LIEU","String","non","Lieu-dit","","","Lieu-dit","",""
 "LMDP","String","non","","","","[PAS AFFICHE]","",""
 "LOCA","String","non","Localisation complète","","","","",""
-"MANQUANT","Array","non","Manquant","","","","",""
+"MANQUANT","Array","non","Statut juridique de l'objet","","","","",""
 "MATR","Array","non","Matériaux et techniques d'interventions","","","","",""
 "MFICH","Array","non","Accès microfiche ","","","","",""
 "MICR","String","non","Numéro de microfiche","","","","",""
