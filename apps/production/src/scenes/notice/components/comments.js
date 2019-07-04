@@ -29,8 +29,15 @@ function flagAsText(flag) {
       `Le champ REF doit uniquement contenir ` +
       `des lettres majuscules (A-Z), des chiffres (0-9) et le caractère tiret bas (_)`
     );
-  } else if (flag === "IDPROD_INVALID") {
-    return "IDPROD doit commencer par les caractères SAP"
+  } else if (flag.match(/_INVALID_ALNUM$/)) {
+    const prop = flag.replace(/_INVALID_ALNUM$/);
+    return `Le champ ${prop} doit être alphanumérique`;
+  } else if (flag.match(/_INVALID_EMAIL$/)) {
+    const prop = flag.replace(/_INVALID_EMAIL$/);
+    return `Le champ ${prop} doit être un email valide`;
+  } else if (flag.match(/_INVALID_URL$/)) {
+    const prop = flag.replace(/_INVALID_URL$/);
+    return `Le champ ${prop} doit être un lien valide`;
   }
 }
 
@@ -38,7 +45,11 @@ export default ({ POP_FLAGS }) => {
   if (!(POP_FLAGS && POP_FLAGS.length)) {
     return <div />;
   }
-  const comments = POP_FLAGS.map(e => <li key={e}><b>{e}</b> - {flagAsText(e)}</li>);
+  const comments = POP_FLAGS.map(e => (
+    <li key={e}>
+      <b>{e}</b> - {flagAsText(e)}
+    </li>
+  ));
   return (
     <Alert color="danger">
       <p>La notice contient des avertissements :</p>

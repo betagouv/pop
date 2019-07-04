@@ -24,11 +24,6 @@ export default class Notice {
       }
     }
     // Validate data.
-    this.validate(body);
-  }
-
-  // Validate data
-  validate(body) {
     for (let key in this._mapping) {
       // Check required fields
       if (this._mapping[key].required) {

@@ -50,17 +50,13 @@ function withFlags(notice) {
   if (notice.REF && !notice.REF.match(/^[A-Z0-9_]$/)) {
     notice.POP_FLAGS.push("REF_INVALID");
   }
-  // IDPROD must start with SAP
-  if (notice.IDPROD && !notice.IDPROD.match(/^SAP/)) {
-    notice.POP_FLAGS.push("IDPROD_INVALID");
-  }
   // CONTACT must be an email.
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
   // NUMTI and NUMP must be valid Alphanumeric.
   ["NUMTI", "NUMP"]
-    .filter(prop => !validator.isAlphanumeric(prop))
+    .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
   return notice;
 }

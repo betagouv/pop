@@ -13,7 +13,7 @@ import Section from "./components/section.js";
 import Map from "./components/map.js";
 import Comments from "./components/comments.js";
 import { bucket_url } from "../../config.js";
-
+import Merimee from "../../entities/Merimee";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 
@@ -66,14 +66,27 @@ class Notice extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    try {
-      await API.updateNotice(this.state.notice.REF, "merimee", values);
-      toastr.success(
-        "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion."
-      );
-    } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+    const notice = new Merimee(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "merimee", values);
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
     }
     this.setState({ saving: false });
   }

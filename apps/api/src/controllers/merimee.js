@@ -57,7 +57,7 @@ function withFlags(notice) {
   }
   // DOSURL, DOSURLPDF and LIENS must be valid URLs.
   ["DOSURL", "DOSURLPDF", "LIENS"]
-    .filter(prop => !validator.isURL(prop))
+    .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
   // CONTACT must be an email.
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {

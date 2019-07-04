@@ -76,7 +76,6 @@ class Notice extends React.Component {
     const notice = new Memoire(values);
     if (notice._errors.length) {
       toastr.error("La modification n'a pas été enregistrée", "", {
-        timeOut: 5000 * notice._errors.length,
         component: () => (
           <div>
             {notice._errors.map(e => (

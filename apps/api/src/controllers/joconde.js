@@ -16,7 +16,7 @@ const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./util
 function withFlags(notice) {
   notice.POP_FLAGS = [];
   // Required properties.
-  ["CONTACT", "TICO", "TITR", "MUSEO", "REF"]
+  ["CONTACT", "MUSEO", "REF", "DOMN", "INV", "STAT"]
     .filter(prop => !notice[prop])
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
   // REF must be 11 chars.
@@ -29,7 +29,7 @@ function withFlags(notice) {
   }
   // WWW and LVID must be valid URLs.
   ["WWW", "LVID"]
-    .filter(prop => !validator.isURL(prop))
+    .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
   return notice;
 }
