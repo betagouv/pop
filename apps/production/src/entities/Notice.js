@@ -1,5 +1,4 @@
 import Mapping from "../services/mapping";
-import validator from "validator";
 
 export default class Notice {
   constructor(body, collection) {
@@ -35,32 +34,6 @@ export default class Notice {
       if (this._mapping[key].required) {
         if (!body[key] || (Array.isArray(body[key]) && !body[key].length)) {
           this._errors.push(`Le champ ${key} ne doit pas être vide`);
-        }
-      }
-
-      // Check format
-      if (this._mapping[key].validation && this[key]) {
-        let validate = true;
-        switch (this._mapping[key].validation) {
-          case "Alphanumeric":
-            validate = validator.isAlphanumeric(this[key], "fr-FR");
-            break;
-          case "url":
-            validate = validator.isURL(this[key]);
-            break;
-          case "Email":
-            validate = validator.isEmail(this[key]);
-            break;
-          default:
-            console.log("Validation not implemented yet", this._mapping[key].validation);
-            break;
-        }
-        if (!validate) {
-          this._errors.push(
-            `Le champ ${key} avec la valeur "${this[key]}" n'est pas de type ${
-              this._mapping[key].validation
-            }`
-          );
         }
       }
     }
