@@ -109,7 +109,7 @@ Référence unique de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non|Alphanumeric|Référence|
+|String|oui|non|non|non||Référence|
 
 ### POP_IMPORT
 

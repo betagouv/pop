@@ -100,12 +100,10 @@ function importCSV(res, files, museofile) {
     const importedNotices = res
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
-
         // Add 0 in front of REF when we import csv file
         if (value.REF.length < 11) {
           value.REF = addZeros(value.REF, 11);
         }
-
         return value;
       })
       .map(value => new Joconde(value));

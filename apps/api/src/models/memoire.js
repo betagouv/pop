@@ -695,7 +695,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        validation: "Alphanumeric",
         label: "Numéro du négatif"
       }
     },
@@ -712,7 +711,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        validation: "Alphanumeric",
         label: "Numéro du tirage"
       }
     },
@@ -960,7 +958,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        validation: "Email",
         label: "Lien vers le service producteur"
       }
     },

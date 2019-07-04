@@ -23,7 +23,6 @@ const models = fs
         generated: documentation ? documentation.generated || "" : "",
         deprecated: documentation ? documentation.deprecated || "" : "",
         description: documentation ? documentation.description || "" : "",
-        validation: documentation ? documentation.validation || "" : "",
         thesaurus: documentation ? documentation.thesaurus || "" : ""
       };
       return obj;

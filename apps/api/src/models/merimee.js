@@ -13,7 +13,6 @@ const Schema = new mongoose.Schema(
       required: true,
       documentation: {
         description: "",
-        validation: "Alphanumeric",
         label: "Référence de la notice"
       }
     },
@@ -880,7 +879,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "URL du dossier Inventaire",
-        validation: "url"
       }
     },
     DOSURLPDF: {
@@ -889,7 +887,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Lien vers le dossier PDF",
-        validation: "url"
       }
     },
     DOSADRS: {
@@ -905,8 +902,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Liens externes éventuels",
-        validation: "url"
+        label: "Liens externes éventuels"
       }
     },
     IMAGE: {
@@ -1020,7 +1016,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: " ",
-        validation: "Email",
         label: "Adresse courriel de contact"
       }
     },

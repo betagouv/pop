@@ -26,7 +26,6 @@ const models = fs
         v.options.documentation && v.options.documentation.label
           ? v.options.documentation.label
           : "",
-      validation: v.options.documentation ? v.options.documentation.validation : "",
       thesaurus: v.options.documentation ? v.options.documentation.thesaurus : ""
     }))
   }));

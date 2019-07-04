@@ -139,7 +139,7 @@
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non|Alphanumeric|Référence de la notice|
+|String|oui|non|non|non||Référence de la notice|
 
 ### PRODUCTEUR
 
@@ -1257,7 +1257,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|URL du dossier Inventaire|
+|String|non|non|non|non||URL du dossier Inventaire|
 
 ### DOSURLPDF
 
@@ -1267,7 +1267,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien vers le dossier PDF|
+|String|non|non|non|non||Lien vers le dossier PDF|
 
 ### DOSADRS
 
@@ -1287,7 +1287,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|url|Liens externes éventuels|
+|Array|non|non|non|non||Liens externes éventuels|
 
 ### IMAGE
 
@@ -1427,7 +1427,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Adresse courriel de contact|
+|String|non|non|non|non||Adresse courriel de contact|
 
 ### IDAGR
 

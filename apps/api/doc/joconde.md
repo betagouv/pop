@@ -172,7 +172,7 @@ Référence (numéro système de la notice)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|oui|Alphanumeric|Référence|
+|String|oui|non|non|oui||Référence|
 
 ### POP_IMPORT
 
@@ -294,7 +294,7 @@ Lien contact musée. Cette information vient de la notice MUSEO
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|Email|Contact musée|
+|String|non|oui|non|non||Contact musée|
 
 ### COOR
 Coordinateur
@@ -1030,7 +1030,7 @@ Lien site associé
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien site associé|
+|String|non|non|non|non||Lien site associé|
 
 ### LVID
 Lien video
@@ -1040,7 +1040,7 @@ Lien video
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien Vidéo|
+|String|non|non|non|non||Lien Vidéo|
 
 ### _id
 

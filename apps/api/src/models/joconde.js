@@ -79,7 +79,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Référence (numéro système de la notice)",
         label: "Référence",
-        validation: "Alphanumeric",
         opendata: true
       }
     },
@@ -176,7 +175,6 @@ const Schema = new mongoose.Schema(
         description: "Lien contact musée. Cette information vient de la notice MUSEO",
         generated: true,
         label: "Contact musée",
-        validation: "Email"
       }
     },
     COOR: {
@@ -802,8 +800,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien site associé",
-        label: "Lien site associé",
-        validation: "url"
+        label: "Lien site associé"
       }
     },
     LVID: {
@@ -811,8 +808,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Lien video",
-        label: "Lien Vidéo",
-        validation: "url"
+        label: "Lien Vidéo"
       }
     }
   },

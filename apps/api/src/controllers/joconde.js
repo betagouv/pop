@@ -4,6 +4,7 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const filenamify = require("filenamify");
+const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
@@ -22,6 +23,14 @@ function withFlags(notice) {
   if (notice.REF && notice.REF.length !== 11) {
     notice.POP_FLAGS.push("REF_LENGTH_EXACT_11");
   }
+  // CONTACT must be an email.
+  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
+    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
+  }
+  // WWW and LVID must be valid URLs.
+  ["WWW", "LVID"]
+    .filter(prop => !validator.isURL(prop))
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
   return notice;
 }
 

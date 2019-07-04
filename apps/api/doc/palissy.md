@@ -240,7 +240,7 @@ Référence de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non|Alphanumeric|Référence de la notice|
+|String|oui|non|non|non||Référence de la notice|
 
 ### POP_IMPORT
 
@@ -410,7 +410,7 @@ Référence de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Adresse courriel de contact|
+|String|non|non|non|non||Adresse courriel de contact|
 
 ### COOR
 
@@ -602,7 +602,7 @@ Adresse du dossier Inventaire
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|URL du dossier Inventaire|
+|String|non|non|non|non||URL du dossier Inventaire|
 
 ### DOSURLPDF
 
@@ -612,7 +612,7 @@ Adresse du dossier Inventaire
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Précisions sur l'URL du dossier Inventaire|
+|String|non|non|non|non||Précisions sur l'URL du dossier Inventaire|
 
 ### DPRO
 
@@ -836,7 +836,7 @@ Justification de la datation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|url|Liens externes éventuels|
+|Array|non|non|non|non||Liens externes éventuels|
 
 ### LIEU
 Lieu-dit

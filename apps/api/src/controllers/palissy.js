@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
 const filenamify = require("filenamify");
+const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
@@ -49,6 +50,18 @@ function withFlags(notice) {
   // INSEE & DPT must start with the same first 2 letters.
   if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
     notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+  }
+  // REF must be an Alphanumeric.
+  if (!validator.isAlphanumeric(notice.REF)) {
+    notice.POP_FLAGS.push("REF_INVALID_ALNUM");
+  }
+  // DOSURL, DOSURLPDF and LIENS must be valid URLs.
+  ["DOSURL", "DOSURLPDF", "LIENS"]
+    .filter(prop => !validator.isURL(prop))
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
+  // CONTACT must be an email.
+  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
+    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
   // Reference not found (RENV, REFP, REFE, REFO)
   async function referenceExists(ref, model) {

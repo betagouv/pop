@@ -985,7 +985,7 @@ No vue CD
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|Numéro du négatif|
+|String|non|non|non|non||Numéro du négatif|
 
 ### ANUMTI
 
@@ -1005,7 +1005,7 @@ No vue CD
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|Numéro du tirage|
+|String|non|non|non|non||Numéro du tirage|
 
 ### RENV
 
@@ -1315,7 +1315,7 @@ Adresse saisie
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Lien vers le service producteur|
+|String|non|non|non|non||Lien vers le service producteur|
 
 ### EMET
 

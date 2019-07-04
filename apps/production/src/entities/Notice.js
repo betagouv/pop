@@ -24,8 +24,12 @@ export default class Notice {
         }
       }
     }
+    // Validate data.
+    this.validate(body);
+  }
 
-    // Validate data
+  // Validate data
+  validate(body) {
     for (let key in this._mapping) {
       // Check required fields
       if (this._mapping[key].required) {
@@ -35,25 +39,33 @@ export default class Notice {
       }
 
       // Check format
-      if (this._mapping[key].validation && this[key] && this[key].value) {
+      if (this._mapping[key].validation && this[key]) {
         let validate = true;
         switch (this._mapping[key].validation) {
           case "Alphanumeric":
-            validate = validator.isAlphanumeric(this[key].value, "fr-FR");
+            validate = validator.isAlphanumeric(this[key], "fr-FR");
+            break;
+          case "url":
+            validate = validator.isURL(this[key]);
+            break;
+          case "Email":
+            validate = validator.isEmail(this[key]);
             break;
           default:
-            console.log("TODO", this._mapping[key].validation);
+            console.log("Validation not implemented yet", this._mapping[key].validation);
             break;
         }
-
         if (!validate) {
           this._errors.push(
-            `Le champ ${key} avec la valeur "${this[key].value}" n'est pas de type ${this._mapping[key].validation}`
+            `Le champ ${key} avec la valeur "${this[key]}" n'est pas de type ${
+              this._mapping[key].validation
+            }`
           );
         }
       }
     }
   }
+
   makeItFlat = function() {
     let flat = {};
     for (var property in this) {

@@ -5,6 +5,7 @@ const upload = multer({ dest: "uploads/" });
 const mongoose = require("mongoose");
 const filenamify = require("filenamify");
 const passport = require("passport");
+const validator = require("validator");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
@@ -53,6 +54,14 @@ function withFlags(notice) {
   if (notice.IDPROD && !notice.IDPROD.match(/^SAP/)) {
     notice.POP_FLAGS.push("IDPROD_INVALID");
   }
+  // CONTACT must be an email.
+  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
+    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
+  }
+  // NUMTI and NUMP must be valid Alphanumeric.
+  ["NUMTI", "NUMP"]
+    .filter(prop => !validator.isAlphanumeric(prop))
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
   return notice;
 }
 
@@ -90,7 +99,6 @@ function transformBeforeCreate(notice) {
   notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
   notice = withFlags(notice);
 }
-
 
 function findProducteur(REF, IDPROD, EMET) {
   return findMemoireProducteur(REF, IDPROD, EMET);

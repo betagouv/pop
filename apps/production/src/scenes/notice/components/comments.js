@@ -35,7 +35,7 @@ function flagAsText(flag) {
 }
 
 export default ({ POP_FLAGS }) => {
-  if (!POP_FLAGS.length) {
+  if (!(POP_FLAGS && POP_FLAGS.length)) {
     return <div />;
   }
   const comments = POP_FLAGS.map(e => <li key={e}><b>{e}</b> - {flagAsText(e)}</li>);
