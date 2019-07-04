@@ -590,7 +590,7 @@ const Schema = new mongoose.Schema(
       }
     },
     MANQUANT: {
-      type: String,
+      type: [String],
       default: "",
       documentation: {
         description: "",
