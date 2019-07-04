@@ -327,6 +327,10 @@ function readme() {
           Charte d'engagement
         </a>{" "}
         relative au versement des données dans la base Joconde <br /> <br />
+        <h6>Exemple de fichier d'import csv</h6>
+        <a href="https://pop-general.s3.eu-west-3.amazonaws.com/import_examples/joconde.zip">
+          joconde csv
+        </a><br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
