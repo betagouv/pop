@@ -119,6 +119,12 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Techniques"
     />
     <CollapsableFacet
+      id="manquant"
+      initialValue={initialValues.get("manquant")}
+      fields={["MANQUANT.keyword"]}
+      title="Bien manquant"
+    />
+    <CollapsableFacet
       id="image"
       initialValue={initialValues.get("image")}
       fields={["CONTIENT_IMAGE.keyword"]}
