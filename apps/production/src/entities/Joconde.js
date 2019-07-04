@@ -41,10 +41,10 @@ export default class Joconde extends Notice {
   }
 
   extractManquant = function(str) {
-    const MANQUANT = "manquant";
+    const MANQUANT = ["manquant"];
 
     if (["détruit", "détruite", "detruit", "detruite"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT: "", MANQUANT_COM: "détruit" };
+      return { MANQUANT: [], MANQUANT_COM: "détruit" };
     }
     if (["localisation inconnue"].some(e => str.indexOf(e) !== -1)) {
       return { MANQUANT, MANQUANT_COM: "" };
@@ -56,12 +56,13 @@ export default class Joconde extends Notice {
       return { MANQUANT, MANQUANT_COM: "pillé" };
     }
     if (["volé", "volée", "volés", "volées"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT, MANQUANT_COM: "volé" };
+      MANQUANT.push("volé");
+      return { MANQUANT, MANQUANT_COM: "" };
     }
     if (["manquant", "manquants", "manquante", "manquantes"].some(e => str.indexOf(e) !== -1)) {
       return { MANQUANT, MANQUANT_COM: "" };
     }
-    return { MANQUANT: "", MANQUANT_COM: "" };
+    return { MANQUANT: [], MANQUANT_COM: "" };
   };
 
   extractIMGNames = function(str) {
