@@ -594,7 +594,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Manquant"
+        label: "Statut juridique de l'objet"
       }
     },
     MATR: {
