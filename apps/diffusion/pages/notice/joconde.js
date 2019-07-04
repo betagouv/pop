@@ -235,6 +235,8 @@ export default class extends React.Component {
                     title={mapping.joconde.LOCA.label}
                     content={this.links(this.props.notice.LOCA.split(" ; "), "ou")}
                   />
+                  <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} />
+                  <Field title={mapping.joconde.MANQUANT_COM.label} content={notice.MANQUANT_COM} />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
