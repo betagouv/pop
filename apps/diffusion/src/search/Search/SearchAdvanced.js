@@ -26,9 +26,11 @@ class SearchAdvanced extends React.Component {
     let key, fields;
     if (hasBase) {
       key = bases.find(e => e.key === this.props.base).key;
-      fields = Object.entries(Mapping[key]).map(([k, v]) => {
-        return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
-      });
+      fields = Object.entries(Mapping[key])
+        .filter(e => e[1].deprecated !== true)
+        .map(([k, v]) => {
+          return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
+        });
     }
 
     return (

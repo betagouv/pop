@@ -202,7 +202,7 @@ Un bien manquant est un bien inscrit à l’inventaire d’un musée de France q
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Bien manquant|
+|Array|non|non|non|non||Situation particulière|
 
 ### MANQUANT_COM
 
@@ -304,7 +304,7 @@ Coordinateur
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Coordinateur|
+|String|non|non|oui|non||Coordinateur|
 
 ### COPY
 Copyright notice
@@ -760,7 +760,7 @@ Numéro de site
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numéro de site|
+|String|non|non|oui|non||Numéro de site|
 
 ### ONOM
 Onomastique

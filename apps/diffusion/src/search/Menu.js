@@ -118,18 +118,24 @@ const Menu = ({ closeMenu, initialValues }) => (
       fields={["TECH.keyword", "TYPDOC.keyword"]}
       title="Techniques"
     />
+
     <CollapsableFacet
       id="image"
       initialValue={initialValues.get("image")}
       fields={["CONTIENT_IMAGE.keyword"]}
       title="Contient une image"
     />
-
     <CollapsableFacet
       id="geolocalisation"
       initialValue={initialValues.get("geolocalisation")}
       fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
       title="Est géolocalisée"
+    />
+    <CollapsableFacet
+      id="manquant"
+      initialValue={initialValues.get("manquant")}
+      fields={["MANQUANT.keyword"]}
+      title="Situations particulières"
     />
     <div style={{ display: "none" }}>
       {[

@@ -101,6 +101,12 @@ export default function render() {
               fields={["POP_CONTIENT_GEOLOCALISATION.keyword"]}
               title="Contient une localisation"
             />
+            <CollapsableFacet
+              id="manquant"
+              initialValue={initialValues.get("manquant")}
+              fields={["MANQUANT.keyword"]}
+              title="Objets volés"
+            />
           </Col>
           <Col xs="9">
             <ActiveFilters id="af" />

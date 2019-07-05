@@ -76,7 +76,9 @@ function parseFiles(files, encoding) {
       let newNotice;
       if (["PM", "EM", "IM"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Palissy(obj);
-        addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
+        addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
+        addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
+        addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
       } else if (["PA", "EA", "IA"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Merimee(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
@@ -109,20 +111,36 @@ function parseFiles(files, encoding) {
 }
 
 function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
+  const type = Mapping[newNotice._type][toProperty].type;
+
   // IF fromProperty doesnt exist, we dont update toProperty
   if (data[fromProperty] !== undefined) {
     if (!data[fromProperty]) {
-      // If fromProperty is empty, we delete toProperty
-      newNotice[toProperty] = "";
-    } else {
-      let fileName = String(data[fromProperty]);
-      fileName = convertLongNameToShort(fileName);
-      const file = filesMap[fileName];
-      if (file) {
-        newNotice[toProperty] = `${newNotice._type}/${newNotice.REF}/${fileName}`;
-        newNotice._files.push(file);
+      // If fromProperty is empty, we empty toProperty
+      if (type === "Array") {
+        newNotice[toProperty] = [];
       } else {
-        newNotice._errors.push(`Impossible de trouver le fichier "${fileName}"`);
+        newNotice[toProperty] = "";
+      }
+    } else {
+      const filenames = String(data[fromProperty]).split(";");
+      newNotice[toProperty] = type === "Array" ? [] : "";
+
+      for (let i = 0; i < filenames.length; i++) {
+        let fileName = filenames[i];
+        fileName = convertLongNameToShort(fileName);
+        const file = filesMap[fileName];
+        if (file) {
+          if (type === "Array") {
+            newNotice[toProperty].push(`${newNotice._type}/${newNotice.REF}/${fileName}`);
+          } else {
+            newNotice[toProperty] = `${newNotice._type}/${newNotice.REF}/${fileName}`;
+          }
+
+          newNotice._files.push(file);
+        } else {
+          newNotice._errors.push(`Impossible de trouver le fichier "${fileName}"`);
+        }
       }
     }
   }

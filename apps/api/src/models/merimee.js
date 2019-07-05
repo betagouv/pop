@@ -512,14 +512,6 @@ const Schema = new mongoose.Schema(
         label: "Localisation complète"
       }
     },
-    MANQUANT: {
-      type: String,
-      default: "",
-      documentation: {
-        description: "",
-        label: "Manquant"
-      }
-    },
     MFICH: {
       type: String,
       default: "",
@@ -873,7 +865,7 @@ const Schema = new mongoose.Schema(
     },
     POP_ARRETE_PROTECTION: {
       type: [String],
-      default: "",
+      default: [],
       documentation: {
         description: "",
         label: "Arrêté de protection MH"
@@ -881,7 +873,7 @@ const Schema = new mongoose.Schema(
     },
     POP_DOSSIER_PROTECTION: {
       type: [String],
-      default: "",
+      default: [],
       documentation: {
         description: "",
         label: "Dossier de protection MH"

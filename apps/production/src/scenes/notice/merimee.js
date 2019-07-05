@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Input, Container, Button, Form } from "reactstrap";
+import { Row, Col, Container, Button, Form } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
@@ -9,6 +9,7 @@ import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
+import InputFiles from "./components/InputFiles";
 import Section from "./components/section.js";
 import Map from "./components/map.js";
 import Comments from "./components/comments.js";
@@ -24,7 +25,8 @@ class Notice extends React.Component {
     notice: null,
     error: "",
     loading: true,
-    editable: true
+    editable: true,
+    files: []
   };
 
   componentWillMount() {
@@ -65,6 +67,30 @@ class Notice extends React.Component {
   }
 
   async onSubmit(values) {
+    const files = [];
+
+    for (let i = 0; i < values["POP_ARRETE_PROTECTION"].length; i++) {
+      if (typeof values["POP_ARRETE_PROTECTION"][i] === "object") {
+        const file = values["POP_ARRETE_PROTECTION"][i];
+        files.push(file);
+        values["POP_ARRETE_PROTECTION"][i] = `merimee/${values.REF}/${file.name}`;
+      }
+    }
+
+    for (let i = 0; i < values["POP_DOSSIER_PROTECTION"].length; i++) {
+      if (typeof values["POP_DOSSIER_PROTECTION"][i] === "object") {
+        const file = values["POP_DOSSIER_PROTECTION"][i];
+        files.push(file);
+        values["POP_DOSSIER_PROTECTION"][i] = `merimee/${values.REF}/${file.name}`;
+      }
+    }
+
+    if (typeof values["POP_DOSSIER_VERT"] === "object") {
+      const file = values["POP_DOSSIER_VERT"];
+      files.push(file);
+      values["POP_DOSSIER_VERT"] = `merimee/${values.REF}/${file.name}`;
+    }
+
     this.setState({ saving: true });
     const notice = new Merimee(values);
     if (notice._errors.length) {
@@ -79,7 +105,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "merimee", values);
+        await API.updateNotice(this.state.notice.REF, "merimee", values, files);
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -365,9 +391,24 @@ class Notice extends React.Component {
                 <CustomField name="LBASE2" disabled={!this.state.editable} />
                 <CustomField name="WEB" disabled={!this.state.editable} />
                 <CustomField name="DOSADRS" disabled={!this.state.editable} />
-                <CustomField name="DOSURL" disabled={!this.state.editable} />
+                <InputFiles
+                  name="POP_ARRETE_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_ARRETE_PROTECTION"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_VERT"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_DOSSIER_VERT"]}
+                />
+                <InputFiles
+                  name="POP_DOSSIER_PROTECTION"
+                  disabled={!this.state.editable}
+                  {...Mapping.merimee["POP_DOSSIER_PROTECTION"]}
+                />
               </Col>
               <Col sm={6}>
+                <CustomField name="DOSURL" disabled={!this.state.editable} />
                 <CustomField name="DOSURLPDF" disabled={!this.state.editable} />
                 <CustomField name="LIENS" disabled={!this.state.editable} />
                 <CustomField name="MOSA" disabled={!this.state.editable} />
@@ -402,9 +443,9 @@ const CustomField = ({ name, disabled, ...rest }) => {
   return (
     <Field
       key={name}
-      {...Mapping.merimee[name]}
-      disabled={Mapping.merimee[name].generated == true || disabled}
       name={name}
+      disabled={Mapping.merimee[name].generated == true || disabled}
+      {...Mapping.merimee[name]}
       {...rest}
     />
   );

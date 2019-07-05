@@ -68,7 +68,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Index global [Peut etre déprécié]",
-        label: "Index global"
+        label: "Index global",
+        deprecated: true
       }
     },
     ADRESSE: {
@@ -348,7 +349,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numero de fond"
+        label: "Numero de fond",
+        deprecated: true
       }
     },
     INSEE: {
@@ -364,7 +366,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Référence sur le vidéodisque"
+        label: "Référence sur le vidéodisque",
+        deprecated: true
       }
     },
     MARQ: {
@@ -482,7 +485,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA",
-        label: "Date du tirage "
+        label: "Date du tirage ",
+        deprecated: true
       }
     },
     DATG: {
@@ -842,7 +846,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Légende thes."
+        label: "Légende thes.",
+        deprecated: true
       }
     },
     REFIM: {
@@ -890,7 +895,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "N° d'opération",
-        label: "N° d'opération"
+        label: "N° d'opération",
+        deprecated: true
       }
     },
     CHRONO: {

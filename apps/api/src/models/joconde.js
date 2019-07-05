@@ -92,12 +92,12 @@ const Schema = new mongoose.Schema(
       }
     },
     MANQUANT: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description:
           "Un bien manquant est un bien inscrit à l’inventaire d’un musée de France qui, à l’issue du récolement décennal et de recherches répétées et infructueuses, n’a pas pu être retrouvé. Depuis 2016, le signalement des biens constatés manquants et volés est une obligation pour permettre d’élargir les recherches.",
-        label: "Bien manquant"
+        label: "Situation particulière"
       }
     },
     MANQUANT_COM: {
@@ -182,7 +182,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordinateur",
-        label: "Coordinateur"
+        label: "Coordinateur",
+        deprecated: true
       }
     },
     COPY: {
@@ -572,7 +573,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Numéro de site",
-        label: "Numéro de site"
+        label: "Numéro de site",
+        deprecated: true
       }
     },
     ONOM: {
