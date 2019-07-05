@@ -87,9 +87,10 @@ describe("POST /joconde", () => {
     // Create notice with errors.
     const flagNotice = {
       ...sampleNotice,
-      REF: "123456789", // 1
-      WWW: "a", // 2
-      LVID: "htp://f", // 3
+      CONTACT: "a", // 1
+      REF: "123456789", // 2
+      WWW: "a", // 3
+      LVID: "htp://f", // 4
     };
     res = await createNotice(await createUser(), 200, flagNotice);
     res = await request(app)
