@@ -105,6 +105,29 @@ describe("POST /memoire", () => {
     res = await createNotice(user, 500);
     expect(res.success).toBe(false);
   });
+  test(`It should raise flags on errors`, async () => {
+    // Create a valid notice for reference.
+    let res = await createNotice(await createUser(), 200);
+    // Create notice with errors.
+    const flagNotice = {
+      ...sampleNotice,
+      IDPROD: "", // 1
+      LEG: "", // 2
+      LBASE: ["123456789"], // 3, 4 (two errors in a row)
+      INSEE: "2", // 5
+      CONTACT: "o", // 6
+      NUMTI: "à", // 7
+      NUMP: "à", // 8
+      REF: "978601295ZB"
+    };
+    res = await createNotice(await createUser(), 200, flagNotice);
+    console.log(res);
+    res = await request(app)
+      .get(`/memoire/${flagNotice.REF}`)
+      .set("Accept", "application/json")
+      .expect(200);
+    expect(res.body.POP_FLAGS).toHaveLength(8);
+  });
 });
 
 describe("PUT /memoire/:ref", () => {

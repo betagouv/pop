@@ -47,7 +47,7 @@ function withFlags(notice) {
     notice.POP_FLAGS.push("INSEE_LENGTH_5");
   }
   // REF must only be alphanum + "_"
-  if (notice.REF && !notice.REF.match(/^[A-Z0-9_]$/)) {
+  if (notice.REF && !notice.REF.match(/^[A-Z0-9_]+$/)) {
     notice.POP_FLAGS.push("REF_INVALID");
   }
   // CONTACT must be an email.
