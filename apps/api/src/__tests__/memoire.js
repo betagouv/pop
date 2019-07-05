@@ -121,7 +121,6 @@ describe("POST /memoire", () => {
       REF: "978601295ZB"
     };
     res = await createNotice(await createUser(), 200, flagNotice);
-    console.log(res);
     res = await request(app)
       .get(`/memoire/${flagNotice.REF}`)
       .set("Accept", "application/json")
