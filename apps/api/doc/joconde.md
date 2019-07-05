@@ -165,7 +165,7 @@ Informations et avertissements techniques
 |Array|non|oui|non|non||Alertes POP|
 
 ### REF
-Référence (numéro système de la notice)
+Référence (numéro système de la notice). Doit contenir exactement 11 caractères.
 
 
 
@@ -287,7 +287,7 @@ Commentaires
 |String|non|non|non|non||Commentaires|
 
 ### CONTACT
-Lien contact musée. Cette information vient de la notice MUSEO
+Lien contact musée. Cette information vient de la notice MUSEO et doit être un email valide.
 
 
 
@@ -1023,7 +1023,7 @@ Affichage image
 |Array|non|non|oui|non||Affichage image|
 
 ### WWW
-Lien site associé
+Lien site associé. Doit être une URL valide.
 
 
 
@@ -1033,7 +1033,7 @@ Lien site associé
 |String|non|non|non|non||Lien site associé|
 
 ### LVID
-Lien video
+Lien vidéo. Doit être une URL valide.
 
 
 

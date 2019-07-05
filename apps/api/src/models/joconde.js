@@ -77,7 +77,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence (numéro système de la notice)",
+        description: "Référence (numéro système de la notice). Doit contenir exactement 11 caractères.",
         label: "Référence",
         opendata: true
       }
@@ -172,7 +172,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien contact musée. Cette information vient de la notice MUSEO",
+        description: "Lien contact musée. Cette information vient de la notice MUSEO et doit être un email valide.",
         generated: true,
         label: "Contact musée",
       }
@@ -799,7 +799,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien site associé",
+        description: "Lien site associé. Doit être une URL valide.",
         label: "Lien site associé"
       }
     },
@@ -807,7 +807,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien video",
+        description: "Lien vidéo. Doit être une URL valide.",
         label: "Lien Vidéo"
       }
     }

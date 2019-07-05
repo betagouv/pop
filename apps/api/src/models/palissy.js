@@ -85,7 +85,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence de la notice",
+        description: "Référence de la notice. Obligatoire, doit être alphanumérique.",
         label: "Référence de la notice"
       }
     },
@@ -102,7 +102,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Adresse de l'édifice. Ne peut pas être vide si WADRS est renseigné.",
         label: "Adresse de l'édifice"
       }
     },
@@ -187,7 +187,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Commune. Ne peut pas être vide si WCOM est renseigné.",
         label: "Commune"
       }
     },
@@ -211,7 +211,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Doit contenir une adresse email valide. Affiche un avertissement si vide.",
         label: "Adresse courriel de contact"
       }
     },
@@ -235,7 +235,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Copyright de la notice. Affiche un avertissement si vide.",
         label: "Copyright de la notice "
       }
     },
@@ -335,7 +335,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Dénomination du dossier. Affiche un avertissement si vide.",
         label: "Dénomination du dossier"
       }
     },
@@ -367,7 +367,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "URL du dossier Inventaire. Doit être une URL valide.",
         label: "URL du dossier Inventaire"
       }
     },
@@ -375,7 +375,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Lien vers le dossier PDF. Doit être une URL valide.",
         label: "Précisions sur l'URL du dossier Inventaire"
       }
     },
@@ -391,7 +391,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Département. Doit contenir 2 caractères ou plus et commencer comme DPT.",
         label: "Département"
       }
     },
@@ -439,7 +439,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Cadre de l'étude. Affiche un avertissement si vide.",
         label: "Cadre de l'étude "
       }
     },
@@ -514,7 +514,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description:
+          "Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.",
         label: "Numéro INSEE de la commune"
       }
     },
@@ -794,7 +795,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Typologie de la protection. Ne peut pas être vide si DPRO est renseigné.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Typologie de la protection"
       }
@@ -813,8 +814,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
-        label: "Référence de l'ensemble"
+        description: "Références de l'ensemble. Doit être une référence valide vers une notice Mérimée.",
+        label: "Référence des l'ensemble"
       }
     },
     REFM: {
@@ -830,14 +831,19 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
         label: "Références des parties constituantes étudiées"
       }
     },
     REG: {
       type: String,
       default: "",
-      documentation: { description: "", label: "Région" }
+      documentation: {
+        description:
+          "Région. Doit être une des valeurs suivantes : " +
+          require("../controllers/utils/regions").join(", "),
+        label: "Région"
+      }
     },
     RENP: {
       type: [String],
@@ -851,7 +857,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description:
+          "Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Mérimée.",
         label: "Numéro de renvoi vers un autre domaine"
       }
     },
@@ -931,7 +938,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Titre courant. Affiche un avertissement si vide.",
         label: "Titre courant"
       }
     },

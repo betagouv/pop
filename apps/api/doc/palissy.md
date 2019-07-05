@@ -233,7 +233,7 @@ Nom de la base : Patrimoine mobilier (Palissy)
 |Array|non|non|non|non|||
 
 ### REF
-Référence de la notice
+Référence de la notice. Obligatoire, doit être alphanumérique.
 
 
 
@@ -263,7 +263,7 @@ Référence de la notice
 |String|non|non|non|non||Contexte d'acquisition|
 
 ### ADRS
-
+Adresse de l'édifice. Ne peut pas être vide si WADRS est renseigné.
 
 
 
@@ -373,7 +373,7 @@ Référence de la notice
 |Array|non|non|non|non||Catégorie technique|
 
 ### COM
-
+Commune. Ne peut pas être vide si WCOM est renseigné.
 
 
 
@@ -403,7 +403,7 @@ Référence de la notice
 |String|non|non|non|non||Précision juridique|
 
 ### CONTACT
-
+Doit contenir une adresse email valide. Affiche un avertissement si vide.
 
 
 
@@ -433,7 +433,7 @@ Référence de la notice
 |String|non|non|non|non||Coordonnées géographiques multiples|
 
 ### COPY
-
+Copyright de la notice. Affiche un avertissement si vide.
 
 
 
@@ -555,7 +555,7 @@ Adresse du dossier Inventaire
 |String|non|non|non|non||Adresse du dossier Inventaire|
 
 ### DOSS
-
+Dénomination du dossier. Affiche un avertissement si vide.
 
 
 
@@ -595,7 +595,7 @@ Adresse du dossier Inventaire
 |Array|non|non|non|non||Dossier de protection MH|
 
 ### DOSURL
-
+URL du dossier Inventaire. Doit être une URL valide.
 
 
 
@@ -605,7 +605,7 @@ Adresse du dossier Inventaire
 |String|non|non|non|non||URL du dossier Inventaire|
 
 ### DOSURLPDF
-
+Lien vers le dossier PDF. Doit être une URL valide.
 
 
 
@@ -625,7 +625,7 @@ Adresse du dossier Inventaire
 |String|non|non|non|non||Date et typologie de la protection|
 
 ### DPT
-
+Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 
 
 
@@ -685,7 +685,7 @@ Adresse du dossier Inventaire
 |Array|non|non|non|non||État de conservation (normalisé)|
 
 ### ETUD
-
+Cadre de l'étude. Affiche un avertissement si vide.
 
 
 
@@ -777,7 +777,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T12
 |Array|non|non|non|non||Inscription|
 
 ### INSEE
-
+Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.
 
 
 
@@ -1121,7 +1121,7 @@ Intérêt oeuvre
 |String|non|non|non|non||Description littéraire de l'iconographie|
 
 ### PROT
-
+Typologie de la protection. Ne peut pas être vide si DPRO est renseigné.
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T10 
@@ -1143,14 +1143,14 @@ REFA contient une ou plusieurs références de notice Mérimée. C'est une réf�
 |Array|non|non|non|non||Référence Mérimée de l'édifice|
 
 ### REFE
-
+Références de l'ensemble. Doit être une référence valide vers une notice Mérimée.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Référence de l'ensemble|
+|Array|non|non|non|non||Référence des l'ensemble|
 
 ### REFM
 [PAS AFFICHE]
@@ -1163,7 +1163,7 @@ REFA contient une ou plusieurs références de notice Mérimée. C'est une réf�
 |String|non|non|oui|non|||
 
 ### REFP
-
+Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.
 
 
 
@@ -1173,7 +1173,7 @@ REFA contient une ou plusieurs références de notice Mérimée. C'est une réf�
 |Array|non|non|non|non||Références des parties constituantes étudiées|
 
 ### REG
-
+Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne-Franche-Comté, Bretagne, Centre-Val de Loire, Corse, Grand Est, Guadeloupe, Guyane, Hauts-de-France, Île-de-France, La Réunion, Martinique, Mayotte, Normandie, Nouvelle-Aquitaine, Occitanie, Pays de la Loire, Provence-Alpes-Côte d'Azur, Rhône-Alpes, Alsace, Aquitaine, Auvergne, Basse-Normandie, Bourgogne, Centre, Champagne-Ardenne, Franche-Comté, Haute-Normandie, Languedoc-Roussillon, Limousin, Lorraine, Midi-Pyrénées, Nord-Pas-de-Calais, Picardie, Poitou-Charente
 
 
 
@@ -1193,7 +1193,7 @@ REFA contient une ou plusieurs références de notice Mérimée. C'est une réf�
 |Array|non|non|non|non||Renvoi vers dossier 'peinture'|
 
 ### RENV
-
+Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Mérimée.
 
 
 
@@ -1295,7 +1295,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 |String|non|non|non|non||Thème de l'étude|
 
 ### TICO
-
+Titre courant. Affiche un avertissement si vide.
 
 
 

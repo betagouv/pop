@@ -57,7 +57,9 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence unique de la notice",
+        description:
+          "Référence unique de la notice. " +
+          "Doit contenir uniquement des lettres majuscules de A à Z, des chiffres de 0 à 9 et le tiret bas.",
         label: "Référence"
       }
     },
@@ -127,7 +129,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Architecture, Objet, Portrait, Reportage",
+        description: "Architecture, Objet, Portrait, Reportage. Affiche un avertissement si vide.",
         label: "Domaine"
       }
     },
@@ -207,7 +209,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Texte libre, toutes ponctuations admises",
+        description: "Texte libre, toutes ponctuations admises. Affiche un avertissement si vide.",
         label: "Légende"
       }
     },
@@ -328,7 +330,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Nom du producteur. Affiche un avertissement si vide.",
         label: "Nom du producteur"
       }
     },
@@ -353,7 +355,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Code INSEE de la commune. Doit faire 5 caractères ou plus.",
         label: "Code INSEE de la commune"
       }
     },
@@ -420,7 +422,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Affiche un avertissement si vide.",
         label: "Crédit photographique"
       }
     },
@@ -562,7 +564,8 @@ const Schema = new mongoose.Schema(
       index: true,
       documentation: {
         description:
-          "Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté",
+          "Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté. " +
+          `Doit contenir exactement 11 caractères et commencer par "EA", "PA", "IA", "IM", "PM", "EM"`,
         label: "Références liées"
       }
     },
@@ -587,7 +590,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Concaténation des champs PAYS ; REG ; DPT ; COM",
+        description:
+          "Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.",
         label: "Localisation"
       }
     },
@@ -694,7 +698,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Numéro du négatif. Doit contenir uniquement des caractères alphanumériques.",
         label: "Numéro du négatif"
       }
     },
@@ -710,7 +714,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Numéro du tirage. Doit contenir uniquement des caractères alphanumériques.",
         label: "Numéro du tirage"
       }
     },
@@ -794,7 +798,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description:
-          "Négatif, Positif original, Image numérique, Tirage photographique, Reproduction",
+          "Négatif, Positif original, Image numérique, Tirage photographique, Reproduction. Affiche un avertissement si vide.",
         label: "Catégorie de phototype"
       }
     },
@@ -957,7 +961,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Doit contenir une adresse email valide. Affiche un avertissement si vide.",
         label: "Lien vers le service producteur"
       }
     },
