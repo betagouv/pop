@@ -17,7 +17,7 @@ export default class Merimee extends Notice {
       .forEach(prop => this._warnings.push(`Le champ ${prop} ne doit pas être vide`));
     // If "existingProp" exists then "requiredProp" must not be empty.
     [["PROT", "DPRO"], ["COM", "WCOM"], ["ADRS", "WADRS"]]
-      .filter(([existingProp, requiredProp]) => existingProp && !requiredProp)
+      .filter(([existingProp, requiredProp]) => notice[existingProp] && !notice[requiredProp])
       .forEach(([existingProp, requiredProp]) =>
         this._warnings.push(
           `Le champ ${requiredProp} ne doit pas être vide quand ${existingProp} est renseigné`

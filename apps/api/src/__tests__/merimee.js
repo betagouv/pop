@@ -106,6 +106,31 @@ describe("POST /merimee", () => {
     res = await createNotice(user, 500);
     expect(res.success).toBe(false);
   });
+  test(`It should raise flags on errors`, async () => {
+    // Create a valid notice for reference.
+    let res = await createNotice(await createUser(), 200);
+    // Create notice with errors.
+    const flagNotice = {
+      ...sampleNotice,
+      REG: "x", // 1
+      ETUD: "", // 2
+      PROT: "x", // 3
+      DPRO: "", // 3 too.
+      DPT: "1", // 4,
+      INSEE: "2", // 5 and 6
+      REF: "à", // 7
+      DOSURL: "htd://_.com", // 8
+      RENV: ["x"], // 9
+      REFP: ["PA97600007"], // This one is valid!
+      REFE: ["x"] // 10
+    };
+    res = await createNotice(await createUser(), 200, flagNotice);
+    res = await request(app)
+      .get(`/merimee/${flagNotice.REF}`)
+      .set("Accept", "application/json")
+      .expect(200);
+    expect(res.body.POP_FLAGS).toHaveLength(10);
+  });
 });
 
 describe("PUT /merimee/:ref", () => {
@@ -155,4 +180,5 @@ describe("GET /merimee/:ref", () => {
       .expect(404);
     expect(res.body.success).toBe(false);
   });
+  
 });

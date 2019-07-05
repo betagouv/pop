@@ -15,7 +15,6 @@ const {
   updateNotice,
   lambertToWGS84,
   getPolygonCentroid,
-  fixLink,
   convertCOORM,
   uploadFile,
   hasCorrectCoordinates,
@@ -28,7 +27,7 @@ const { canUpdatePalissy, canCreatePalissy, canDeletePalissy } = require("./util
 const regions = require("./utils/regions");
 
 // Control properties document, flag each error.
-function withFlags(notice) {
+async function withFlags(notice) {
   notice.POP_FLAGS = [];
   // Required properties.
   ["DOSS", "ETUD", "COPY", "TICO", "CONTACT", "REF"]
@@ -36,7 +35,7 @@ function withFlags(notice) {
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
   // If "existingProp" exists then "requiredProp" must not be empty.
   [["PROT", "DPRO"], ["COM", "WCOM"], ["ADRS", "WADRS"]]
-    .filter(([existingProp, requiredProp]) => existingProp && !requiredProp)
+    .filter(([existingProp, requiredProp]) => notice[existingProp] && !notice[requiredProp])
     .forEach(([existingProp, requiredProp]) =>
       notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
     );
@@ -68,34 +67,43 @@ function withFlags(notice) {
   if (notice.REG && !regions.includes(notice.REG)) {
     notice.POP_FLAGS.push("REG_INVALID");
   }
-  // Reference not found (RENV, REFP, REFE, REFO)
-  async function referenceExists(ref, model) {
-    try {
-      return Boolean(await model.exists({ REF: ref }));
-    } catch (e) {
-      return false;
+  // Reference not found (RENV, REFP, REFE, REFA)
+  // Reference not found RENV
+  if (notice.RENV) {
+    for (let i in notice.RENV) {
+      if (!(await Merimee.exists({ REF: notice.RENV[i] }))) {
+        notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
+      }
     }
   }
-  // Reference not found RENV
-  if (notice.RENV && notice.RENV.filter(r => !referenceExists(r, Merimee)).length > 0) {
-    notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
-  }
   // Reference not found REFP
-  if (notice.REFP && notice.REFP.filter(r => !referenceExists(r, Merimee)).length > 0) {
-    notice.POP_FLAGS.push("REFP_REF_NOT_FOUND");
+  if (notice.REFP) {
+    for (let i in notice.REFP) {
+      if (!(await Merimee.exists({ REF: notice.REFP[i] }))) {
+        notice.POP_FLAGS.push("REFP_REF_NOT_FOUND");
+      }
+    }
   }
   // Reference not found REFE
-  if (notice.REFE && notice.REFE.filter(r => !referenceExists(r, Merimee)).length > 0) {
-    notice.POP_FLAGS.push("REFE_REF_NOT_FOUND");
+  if (notice.REFE) {
+    for (let i in notice.REFE) {
+      if (!(await Merimee.exists({ REF: notice.REFE[i] }))) {
+        notice.POP_FLAGS.push("REFE_REF_NOT_FOUND");
+      }
+    }
   }
-  // Reference not found REFO
-  if (notice.REFA && notice.REFA.filter(r => !referenceExists(r, Merimee)).length > 0) {
-    notice.POP_FLAGS.push("REFA_REF_NOT_FOUND");
+  // Reference not found REFA
+  if (notice.REFA) {
+    for (let i in notice.REFA) {
+      if (!(await Merimee.exists({ REF: notice.REFA[i] }))) {
+        notice.POP_FLAGS.push("REFA_REF_NOT_FOUND");
+      }
+    }
   }
   return notice;
 }
 
-function transformBeforeCreateOrUpdate(notice) {
+async function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
@@ -124,29 +132,19 @@ function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-
-  if (notice.DOSURL) {
-    notice.DOSURL = fixLink(notice.DOSURL);
-  }
-  if (notice.DOSURLPDF) {
-    notice.DOSURLPDF = fixLink(notice.DOSURLPDF);
-  }
-  if (notice.LIENS && Array.isArray(notice.LIENS)) {
-    notice.LIENS = notice.LIENS.map(fixLink);
-  }
   notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
 
-  notice = withFlags(notice)
+  notice = await withFlags(notice);
 }
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
-  transformBeforeCreateOrUpdate(notice);
+  await transformBeforeCreateOrUpdate(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
-  transformBeforeCreateOrUpdate(notice);
+  await transformBeforeCreateOrUpdate(notice);
 }
 
 function checkIfMemoireImageExist(notice) {
@@ -252,7 +250,7 @@ router.put(
       }
 
       // Add generate fields
-      transformBeforeUpdate(notice);
+      await transformBeforeUpdate(notice);
 
       const promises = [];
 
@@ -293,7 +291,7 @@ router.post(
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       await populateMerimeeREFO(notice);
 
-      transformBeforeCreate(notice);
+      await transformBeforeCreate(notice);
 
       const obj = new Palissy(notice);
       checkESIndex(obj);

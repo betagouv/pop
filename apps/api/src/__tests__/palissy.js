@@ -5,9 +5,11 @@ const {
   createUser,
   getJwtToken,
   removeAllUsers,
-  removePalissyNotices
+  removePalissyNotices,
+  removeMerimeeNotices
 } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/palissy-1");
+const sampleMerimeeNotice = require("./__notices__/merimee-1");
 
 jest.mock("../elasticsearch");
 const es = require("../elasticsearch");
@@ -25,11 +27,23 @@ afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
   removePalissyNotices();
+  removeMerimeeNotices();
 });
 
 async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
   const response = await request(app)
     .post("/palissy")
+    .field("notice", JSON.stringify(notice))
+    .set("Accept", "application/json")
+    .set("Content-Type", "multipart/form-data")
+    .set("Authorization", await getJwtToken(app, user))
+    .expect(expectedStatus);
+  return response.body;
+}
+
+async function createMerimeeNotice(user, expectedStatus = 200, notice = sampleMerimeeNotice) {
+  const response = await request(app)
+    .post("/merimee")
     .field("notice", JSON.stringify(notice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
@@ -105,6 +119,33 @@ describe("POST /palissy", () => {
     expect(res.success).toBe(true);
     res = await createNotice(user, 500);
     expect(res.success).toBe(false);
+  });
+  test(`It should raise flags on errors`, async () => {
+    // Create a valid merimee for reference.
+    let res = await createMerimeeNotice(await createUser(), 200);
+    // Create notice with errors.
+    const flagNotice = {
+      ...sampleNotice,
+      REG: "x", // 1
+      ETUD: "", // 2
+      PROT: "x", // 3
+      DPRO: "", // 3 too.
+      DPT: "1", // 4,
+      INSEE: "2", // 5 and 6
+      REF: "à", // 7
+      DOSURL: "htd://_.com", // 8
+      RENV: ["x"], // 9
+      REFP: ["x"], // 10
+      REFE: [sampleMerimeeNotice.REF] , // This one should work!
+      REFA: ["x"] ,// 11
+    };
+    res = await createNotice(await createUser(), 200, flagNotice);
+    res = await request(app)
+      .get(`/palissy/${flagNotice.REF}`)
+      .set("Accept", "application/json")
+      .expect(200);
+      console.log(res.body.POP_FLAGS)
+    expect(res.body.POP_FLAGS).toHaveLength(12);
   });
 });
 
