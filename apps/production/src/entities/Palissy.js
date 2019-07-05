@@ -1,5 +1,6 @@
 import Notice from "./Notice";
 import regions from "../services/regions";
+import validator from "validator";
 
 export default class Palissy extends Notice {
   constructor(body) {

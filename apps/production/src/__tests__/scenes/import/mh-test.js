@@ -19,7 +19,7 @@ test("import 3 Palissy notice", async () => {
   expect(importTester.summaryInvalidDocsCount()).toBe(1);
   expect(importTester.summaryNewDocsCount()).toBe(2);
   const errors = importTester.notices[2]._errors;
-  expect(errors[0]).toMatch("INSEE et Département ne coincident pas");
+  expect(errors[0]).toMatch("INSEE et DPT doivent commencer par les deux même lettres");
 });
 
 test("import invalid file", async () => {
