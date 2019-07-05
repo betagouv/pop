@@ -144,8 +144,7 @@ describe("POST /palissy", () => {
       .get(`/palissy/${flagNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-      console.log(res.body.POP_FLAGS)
-    expect(res.body.POP_FLAGS).toHaveLength(12);
+    expect(res.body.POP_FLAGS).toHaveLength(11);
   });
 });
 
