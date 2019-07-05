@@ -25,6 +25,7 @@ const {
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 const { canUpdatePalissy, canCreatePalissy, canDeletePalissy } = require("./utils/authorization");
+const regions = require("./utils/regions");
 
 // Control properties document, flag each error.
 function withFlags(notice) {
@@ -55,13 +56,17 @@ function withFlags(notice) {
   if (!validator.isAlphanumeric(notice.REF)) {
     notice.POP_FLAGS.push("REF_INVALID_ALNUM");
   }
-  // DOSURL, DOSURLPDF and LIENS must be valid URLs.
-  ["DOSURL", "DOSURLPDF", "LIENS"]
+  // DOSURL and DOSURLPDF must be valid URLs.
+  ["DOSURL", "DOSURLPDF"]
     .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
   // CONTACT must be an email.
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
+  }
+  // Region should exist.
+  if (notice.REG && !regions.includes(notice.REG)) {
+    notice.POP_FLAGS.push("REG_INVALID");
   }
   // Reference not found (RENV, REFP, REFE, REFO)
   async function referenceExists(ref, model) {

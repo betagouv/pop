@@ -1,5 +1,6 @@
 import Notice from "./Notice";
 import validator from "validator";
+import regions from "../services/regions";
 
 export default class Merimee extends Notice {
   constructor(body) {
@@ -18,7 +19,9 @@ export default class Merimee extends Notice {
     [["PROT", "DPRO"], ["COM", "WCOM"], ["ADRS", "WADRS"]]
       .filter(([existingProp, requiredProp]) => existingProp && !requiredProp)
       .forEach(([existingProp, requiredProp]) =>
-        this._warnings.push(`Le champ ${requiredProp} ne doit pas être vide quand ${existingProp} est renseigné`)
+        this._warnings.push(
+          `Le champ ${requiredProp} ne doit pas être vide quand ${existingProp} est renseigné`
+        )
       );
     // DPT must be 2 char or more.
     if (notice.DPT && notice.DPT.length < 2) {
@@ -36,13 +39,17 @@ export default class Merimee extends Notice {
     if (!validator.isAlphanumeric(notice.REF)) {
       this._warnings.push("Le champ REF doit être alphanumérique");
     }
-    // DOSURL, DOSURLPDF and LIENS must be valid URLs.
-    ["DOSURL", "DOSURLPDF", "LIENS"]
+    // DOSURL and DOSURLPDF must be valid URLs.
+    ["DOSURL", "DOSURLPDF"]
       .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être un lien valide`));
     // CONTACT must be an email.
     if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
       this._warnings.push("Le champ CONTACT doit être un email valide");
+    }
+    // Region should exist.
+    if (notice.REG && !regions.includes(notice.REG)) {
+      this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
     }
   }
 }

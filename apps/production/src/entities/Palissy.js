@@ -1,4 +1,5 @@
 import Notice from "./Notice";
+import regions from "../services/regions";
 
 export default class Palissy extends Notice {
   constructor(body) {
@@ -33,13 +34,17 @@ export default class Palissy extends Notice {
     if (!validator.isAlphanumeric(notice.REF)) {
       this._warnings.push("Le champ REF doit être alphanumérique");
     }
-    // DOSURL, DOSURLPDF and LIENS must be valid URLs.
-    ["DOSURL", "DOSURLPDF", "LIENS"]
+    // DOSURL and DOSURLPDF must be valid URLs.
+    ["DOSURL", "DOSURLPDF"]
       .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être un lien valide`));
     // CONTACT must be an email.
     if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
       this._warnings.push("Le champ CONTACT doit être un email valide");
+    }
+    // Region should exist.
+    if (notice.REG && !regions.includes(notice.REG)) {
+      this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
     }
   }
 }

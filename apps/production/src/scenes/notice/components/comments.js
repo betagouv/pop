@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert } from "reactstrap";
+import regions from "../../../services/regions";
 
 // Transform flag as displayable text.
 function flagAsText(flag) {
@@ -38,6 +39,8 @@ function flagAsText(flag) {
   } else if (flag.match(/_INVALID_URL$/)) {
     const prop = flag.replace(/_INVALID_URL$/);
     return `Le champ ${prop} doit être un lien valide`;
+  } else if (flag === "REG_INVALID") {
+    return `Le champ REG doit être une région valide : ${regions.join(", ")}`;
   }
 }
 
