@@ -9,7 +9,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "REF","String","oui","Référence","true","","Référence (numéro système de la notice). Doit contenir exactement 11 caractères.",""
 "POP_IMPORT","Array","non","","","","",""
 "REFMIS","String","non","Référence MAJ","","","Référence de mise à jour",""
-"MANQUANT","String","non","Bien manquant","","","Un bien manquant est un bien inscrit à l’inventaire d’un musée de France qui, à l’issue du récolement décennal et de recherches répétées et infructueuses, n’a pas pu être retrouvé. Depuis 2016, le signalement des biens constatés manquants et volés est une obligation pour permettre d’élargir les recherches.",""
+"MANQUANT","Array","non","Situation particulière","","","Un bien manquant est un bien inscrit à l’inventaire d’un musée de France qui, à l’issue du récolement décennal et de recherches répétées et infructueuses, n’a pas pu être retrouvé. Depuis 2016, le signalement des biens constatés manquants et volés est une obligation pour permettre d’élargir les recherches.",""
 "MANQUANT_COM","String","non","Situation particulière","","","",""
 "ADPT","Array","non","Ancien dépôt","true","","Ancien dépôt / changement d’affectation",""
 "APPL","String","non","Appellation","true","","Appellation",""
