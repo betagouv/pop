@@ -1,0 +1,63 @@
+REF
+123456789
+COOR
+Anonyme Anonyme
+MUSEO
+M0017
+LABEL
+Musée de France#au sens de la loi n°2002-5 du 4 janvier 2002
+DOMN
+archéologie ; céramique ; gallo-romain
+DENO
+fragment
+AUTR
+anonymesss (céramiste, artisan)
+TECH
+céramique, sigillée
+DIMS
+Hauteur en cm 1.64 ; Longueur en cm 6.6 ; Epaisseur en cm
+DECV
+France, Saône-et-Loire, Autun (lieu de découverte) ; (19e siècle, date de découverte) ; (GAUTHIER, découvreur)
+PDEC
+Rue de la Croix-Verte, dans les terrassements des H.L.M. de la Croix-Verte ; Anonyme Anonyme -
+(inventeur) ; 1980 (invention du site)
+INSC
+estampille
+PINS
+estampille, sur la face : OFFRMO
+LOCA
+Autun ; musée Rolin
+STAT
+propriété de la commune ; don ; Autun ; musée Rolin
+DACQ
+1955 acquis ; 1954 entrée matérielle
+INV
+A1973.2.1
+APTN
+Société Eduenne
+BIBL
+Inventaire B. Archéo, fiches inventaire, Bulliot#Autun Augustodunum - Capitale -
+des Eduens, musée Rolin - Hôtel de Ville - Autun, 16 mars- 27 octobre 1985 (p. -
+159-162)
+PHOT
+Cliché Anonyme
+EPOQ
+gallo-romain
+REFIM
+M016183_0016630_P.JPG,DS1,,0016630.JPG;M016183_0016631_P.JPG,DS1,,0016631.JPG
+COPY
+© Autun, musée Rolin, © Service des musées de France, 2018
+DESC
+Fond de vaisselle en sigillée, type coupelle, -
+à pied annulaire rapporté, estampille au centre dans cartouche cerclé : OFFRMO
+IMAGE
+Oui
+LIEUX
+France, Saône-et-Loire, Autun (lieu de création)
+NSDA
+80-7 (N° de site) (coordonnées du site)
+WWW
+a
+LVID
+htp://ds.de
+//

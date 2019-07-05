@@ -45,3 +45,11 @@ test("import file with not all required fields (only REF)", async () => {
     expect(e).toMatch(/Le champ [A-Z]+ ne doit pas être vide/);
   });
 });
+
+test("import file with some warnings", async () => {
+  importTester.mount(<Joconde />);
+  await importTester.dropFiles(["joconde-valid-UTF-8-warnings.txt"]);
+  expect(importTester.summaryInvalidDocsCount()).toBe(1);
+  const warnings = importTester.notices[0]._warnings.filter(f => !f.match(/thesaurus/));
+  expect(warnings).toHaveLength(2);
+});
