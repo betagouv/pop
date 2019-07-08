@@ -221,8 +221,14 @@ class Importer extends Component {
           } les fichiers suivants: `}</div>
           <div className="filename">{filesnames}</div>
           <div>
-            Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont
-            illustrées.
+            Ces fichiers{" "}
+            {noticesChargees === 1
+              ? `totalisent 1 notice`
+              : `totalisent ${noticesChargees} notices`}
+            , dont{" "}
+            {noticesWithImages === 1
+              ? `1 est illustrée.`
+              : `${noticesWithImages} sont illustrées.`}
           </div>
           <div>Parmi ces {noticesChargees} notices:</div>
           <div className="lines">
