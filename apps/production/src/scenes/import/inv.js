@@ -18,7 +18,13 @@ export default class Import extends React.Component {
           readme={readme}
           parseFiles={parseFiles}
           recipient="inv"
-          dropzoneText="Glissez & déposez vos fichiers au format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText={
+            <span>
+              Glissez & déposez vos fichiers au format <b>Renabl</b> (<code>.xml</code>) ou{" "}
+              <b>Gertrude</b> (<code>.txt</code> à partir de la version 1.6) et les images associées
+              (au format <code>.jpg</code>) dans cette zone
+            </span>
+          }
           defaultEncoding="UTF-8"
         />
       </Container>

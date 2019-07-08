@@ -74,7 +74,13 @@ class Import extends React.Component {
             { name: "Identifiant", key: "REF" },
             { name: "N° inventaire", key: "INV" }
           ]}
-          dropzoneText="Glissez & déposez vos fichiers au format joconde (.txt ou .csv) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText={
+            <span>
+              Glissez & déposez vos fichiers au format <b>joconde</b> (<code>.txt</code> ou{" "}
+              <code>.csv</code>) et les images associées (au format <code>.jpg</code>) dans cette
+              zone
+            </span>
+          }
           children={this.renderMuseoFiles()}
         />
       </Container>
@@ -328,7 +334,8 @@ function readme() {
         <h6>Exemple de fichier d'import csv</h6>
         <a href="https://pop-general.s3.eu-west-3.amazonaws.com/import_examples/joconde.zip">
           joconde csv
-        </a><br /> <br />
+        </a>
+        <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
