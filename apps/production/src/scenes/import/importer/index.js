@@ -216,7 +216,9 @@ class Importer extends Component {
       <div className="working-area">
         <h4 className="subtitle">Contrôle et validation de l'import</h4>
         <div className="summary">
-          <div>{`Vous vous appretez à verser dans la base ${this.props.collection} les fichiers suivants: `}</div>
+          <div>{`Vous vous appretez à verser dans la base ${
+            this.props.collection
+          } les fichiers suivants: `}</div>
           <div className="filename">{filesnames}</div>
           <div>
             Ces fichiers totalisent {noticesChargees} notices, dont {noticesWithImages} sont
@@ -226,19 +228,31 @@ class Importer extends Component {
           <div className="lines">
             <div className="line">
               <div className="round" style={{ backgroundColor: "#58FB02" }} />
-              {`${noticesCrees} sont des nouvelles notices (non créées précedemment)`}
+              {noticesCrees === 1
+                ? `${noticesCrees} est une nouvelle notice (non créée précedemment)`
+                : `${noticesCrees} sont des nouvelles notices (non créées précedemment)`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#F9B234" }} />
-              {`${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${this.props.collection})`}
+              {noticesModifiees === 1
+                ? `${noticesModifiees} est une notice modifiée par rapport aux précedents imports dans ${
+                    this.props.collection
+                  })`
+                : `${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${
+                    this.props.collection
+                  })`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#E32634" }} />
-              {`${noticesRejetees} notices ne peuvent être importées car non conformes`}
+              {noticesRejetees === 1
+                ? `${noticesRejetees} notice ne peut être importée car non conforme`
+                : `${noticesRejetees} notices ne peuvent être importées car non conformes`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#FEEA10" }} />
-              {`${noticesWarning} notices presentent un avertissement non bloquant pour l'import`}
+              {noticesWarning === 1
+                ? `${noticesWarning} notice contient un ou plusieurs avertissements non bloquants pour l'import`
+                : `${noticesWarning} notices contiennent un ou plusieurs avertissements non bloquants pour l'import`}
             </div>
           </div>
           <Button
@@ -407,7 +421,9 @@ class Importer extends Component {
             {this.props.readme()}
           </Col>
           <Col md={7} className="right-col">
-            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${this.props.collection}, selon les trois étapes suivantes`}</p>
+            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${
+              this.props.collection
+            }, selon les trois étapes suivantes`}</p>
             <Steps labelPlacement="vertical" current={this.state.step} size="big">
               <Step title="Sélection et dépot des contenus à importer" />
               <Step title="Contrôle et validation de l'import" />
