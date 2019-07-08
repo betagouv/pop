@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
