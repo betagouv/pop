@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import Museo from "../../entities/Museo";
+import MuseoEntity from "../../entities/Museo";
 import Mapping from "../../services/mapping";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
@@ -55,7 +55,7 @@ class Museo extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    const notice = new Museo(values);
+    const notice = new MuseoEntity(values);
     if (notice._errors.length) {
       toastr.error("La modification n'a pas été enregistrée", "", {
         component: () => (
