@@ -28,9 +28,111 @@ class SearchAdvanced extends React.Component {
       key = bases.find(e => e.key === this.props.base).key;
       fields = Object.entries(Mapping[key])
         .filter(e => e[1].deprecated !== true)
+        .filter(([k]) => !["_id", "__v"].includes(k))
         .map(([k, v]) => {
           return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
         });
+      switch (this.props.base) {
+        case "memoire":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "AIRE.keyword",
+                "PAYS.keyword",
+                "REG.keyword",
+                "DPT.keyword",
+                "COM.keyword",
+                "WCOM.keyword",
+                "INSEE.keyword",
+                "MCGEO.keyword",
+                "LIEUORIG.keyword"
+              ],
+              text: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG - Localisation"
+            },
+            {
+              value: ["ADRESSE.keyword", "LIEU.keyword"],
+              text: "ADRESSE, LIEU - Adresse ou lieu-dit"
+            },
+            {
+              value: [
+                "DATPV.keyword",
+                "DATOR.keyword",
+                "DATOEU.keyword",
+                "SCLE.keyword",
+                "DATTI.keyword"
+              ],
+              text: "DATPV, DATOR, DATOEU, SCLE, DATTI - Époque"
+            },
+            {
+              value: [
+                "AUTP.keyword",
+                "AUTOR.keyword",
+                "AUTTI.keyword",
+                "AUTG.keyword",
+                "AUTOEU.keyword"
+              ],
+              text: "AUTP, AUTOR, AUTTI, AUTG, AUTOEU - Auteur ou photographe"
+            },
+            {
+              value: ["MCPER.keyword", "THEATRE.keyword", "ROLE.keyword"],
+              text: "MCPER, THEATRE, ROLE - Personne représentée"
+            },
+            {
+              value: [
+                "DOM.keyword",
+                "EDIF.keyword",
+                "MCL.keyword",
+                "LEG.keyword",
+                "SERIE.keyword",
+                "TITRE.keyword",
+                "OBJT.keyword",
+                "DENO.keyword",
+                "TICO.keyword",
+                "SUJET.keyword"
+              ],
+              text:
+                "DOM, EDIF, MCL, LEG, SERIE, TITRE, OBJT, DENO, TICO, SUJET - Sujet de la photographie"
+            },
+            {
+              value: ["EXPO.keyword", "PUBLI.keyword"],
+              text: "EXPO, PUBLI - Références d'exposition ou de publication"
+            },
+            {
+              value: [
+                "NUMP.keyword",
+                "ANUMP.keyword",
+                "NUMG.keyword",
+                "NUMAUTP.keyword",
+                "NUMOR.keyword",
+                "ANUMOR.keyword",
+                "RENVOI.keyword",
+                "NUMTI.keyword",
+                "ANUMTI.keyword",
+                "REPRO.keyword",
+                "COTECOR.keyword",
+                "COTECTI.keyword",
+                "PRECOR.keyword",
+                "REF.keyword"
+              ],
+              text:
+                "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote"
+            },
+            {
+              value: ["TYPDOC.keyword", "TECH.keyword", "TECHOR.keyword", "TECHTI.keyword"],
+              text: "TYPDOC, TECH, TECHOR, TECHTI - Type de document"
+            },
+            {
+              value: ["PRODUCTEUR.keyword", "IDPROD.keyword", "COPY.keyword"],
+              text: "PRODUCTEUR, IDPROD, COPY - Producteur de la notice"
+            },
+            {
+              value: ["OBS.keyword", "OBSOR.keyword", "OBSTI.keyword"],
+              text: "OBS, OBSOR, OBSTI - Producteur de la notice"
+            }
+          ];
+          break;
+      }
     }
 
     return (
@@ -81,7 +183,6 @@ class SearchAdvanced extends React.Component {
             border-radius: 5px;
             box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
             max-height: 325px;
-            margin: 10p;
             height: 40px;
             border-style: none;
             font-weight: normal;
@@ -134,8 +235,11 @@ class SearchAdvanced extends React.Component {
             position: relative;
             display: inline-block;
           }
-          .react-es-rule-value {
+          .react-autosuggest__container > .react-es-rule-value {
             width: 100%;
+          }
+          .react-es-rule-value {
+            padding-left: 5px;
           }
           .react-es-rule-value:focus {
             outline: none;
