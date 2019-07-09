@@ -132,6 +132,146 @@ class SearchAdvanced extends React.Component {
             }
           ];
           break;
+        case "joconde":
+          fields = [
+            ...fields,
+            {
+              value: ["DENO.keyword", "APPL.keyword", "UTIL.keyword", "DOMN.keyword"],
+              text: "DENO, APPL, UTIL, DOMN - Désignation"
+            },
+            {
+              value: ["GEOHI.keyword", "LIEUX.keyword", "PLIEUX.keyword"],
+              text: "GEOHI, LIEUX, PLIEUX - Lieu création"
+            },
+            {
+              value: ["PERI.keyword", "PERU.keyword", "MILL.keyword", "MILLU.keyword"],
+              text: "PERI, PERU, MILL, MILLU - Siècle / Millénaire / date création"
+            },
+            {
+              value: ["DESC.keyword", "ETAT.keyword", "PREP.keyword", "REPR.keyword"],
+              text: "DESC, ETAT, PREP, REPR - Description"
+            },
+            {
+              value: [
+                "GENE.keyword",
+                "HIST.keyword",
+                "PUTI.keyword",
+                "DECV.keyword",
+                "PDEC.keyword"
+              ],
+              text: "GENE, HIST, PUTI, DECV, PDEC - Contexte de création"
+            }
+          ];
+          break;
+        case "palissy":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "COM.keyword",
+                "WCOM.keyword",
+                "REG.keyword",
+                "PLOC.keyword",
+                "LIEU.keyword",
+                "DPT.keyword",
+                "CANT.keyword"
+              ],
+              text: "COM, WCOM, REG, PLOC, LIEU, DPT, CANT - Localisation"
+            },
+            {
+              value: ["ADRS.keyword", "WADRS.keyword"],
+              text: "ADRS, WADRS - Adresse"
+            },
+            {
+              value: ["SCLE.keyword", "SCLD.keyword", "DATE.keyword"],
+              text: "SCLE, SCLD, DATE - Époque"
+            },
+            {
+              value: ["DENO.keyword", "PARN.keyword", "PART.keyword", "CATE.keyword"],
+              text: "DENO, PARN, PART, CATE - Désignation"
+            },
+            {
+              value: ["PINS.keyword", "INSC.keyword"],
+              text: "PINS, INSC - Inscription portée sur l'objet"
+            },
+            {
+              value: ["EXEC.keyword", "ORIG.keyword", "ATEL.keyword"],
+              text: "EXEC, ORIG, ATEL - Lieu de provenance ou d'exécution"
+            },
+            {
+              value: ["AUTR.keyword", "AFIG.keyword"],
+              text: "AUTR, AFIG - Auteur de l'oeuvre ou du modèle"
+            }
+          ];
+          break;
+        case "merimee":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "COM.keyword",
+                "WCOM.keyword",
+                "REG.keyword",
+                "PLOC.keyword",
+                "LIEU.keyword",
+                "DPT.keyword",
+                "CANT.keyword"
+              ],
+              text: "COM, WCOM, REG, PLOC, LIEU, DPT, CANT - Localisation"
+            },
+            {
+              value: ["ADRS.keyword", "WADRS.keyword"],
+              text: "ADRS, WADRS - Adresse"
+            },
+            {
+              value: ["SCLE.keyword", "SCLD.keyword", "DATE.keyword"],
+              text: "SCLE, SCLD, DATE - Époque"
+            },
+            {
+              value: ["DENO.keyword", "PARN.keyword", "PART.keyword"],
+              text: "DENO, PARN, PART - Désignation"
+            }
+          ];
+          break;
+        case "mnr":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "AUTR.keyword",
+                "ATTR.keyword",
+                "AATT.keyword",
+                "ECOL.keyword",
+                "STYL.keyword"
+              ],
+              text: "AUTR, ATTR, AATT, ECOL, STYL - Auteur"
+            },
+            {
+              value: ["TITR.keyword", "ATIT.keyword", "AUTI.keyword"],
+              text: "TITR, ATIT, AUTI - Titre"
+            },
+            {
+              value: ["SCLE.keyword", "MILL.keyword"],
+              text: "SCLE, MILL - Époque"
+            },
+            {
+              value: ["GENE.keyword", "HIST.keyword", "NOTE.keyword"],
+              text: "GENE, HIST, NOTE - Historique"
+            },
+            {
+              value: ["TECH.keyword", "ETAT.keyword"],
+              text: "TECH, ETAT - Technique"
+            },
+            {
+              value: ["INSC.keyword", "MARQ.keyword"],
+              text: "INSC, MARQ - Inscription portée sur l’œuvre"
+            },
+            {
+              value: ["EXPO.keyword", "BIBL.keyword"],
+              text: "EXPO, BIBL - Annexes"
+            }
+          ];
+          break;
       }
     }
 
