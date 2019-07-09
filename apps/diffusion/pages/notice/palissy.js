@@ -363,7 +363,7 @@ const SeeMore = ({ notice }) => {
     const urls = [];
     for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
       const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
-      url.push(
+      urls.push(
         <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
           {filename}
         </a>
@@ -373,7 +373,7 @@ const SeeMore = ({ notice }) => {
       <Field
         key="notice.POP_ARRETE_PROTECTION"
         title={mapping.palissy.POP_ARRETE_PROTECTION.label}
-        content={<React.Fragment>{urls}</React.Fragment>}
+        content={<div style={{ display: "flex", flexDirection: "column" }}>{urls}</div>}
       />
     );
   }
