@@ -12,6 +12,7 @@ import LinkedNotices from "../../src/notices/LinkedNotices";
 import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
+import { bucket_url } from "./../../src/config";
 import Map from "../../src/notices/Map";
 import { schema, findCollection, postFixedLink } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
@@ -342,6 +343,37 @@ const SeeMore = ({ notice }) => {
         title={mapping.palissy.DOSURLPDF.label}
         content={<a href={postFixedLink(notice.DOSURLPDF)}>Télécharger</a>}
         key="notice.DOSURLPDF"
+      />
+    );
+  }
+
+  if (notice.POP_DOSSIER_VERT) {
+    arr.push(
+      <Field
+        title={mapping.palissy.POP_DOSSIER_VERT.label}
+        content={
+          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>Voir le dossier d'origine numérisé</a>
+        }
+        key="notice.POP_DOSSIER_VERT"
+      />
+    );
+  }
+
+  if (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) {
+    const urls = [];
+    for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
+      const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
+      url.push(
+        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+          {filename}
+        </a>
+      );
+    }
+    arr.push(
+      <Field
+        key="notice.POP_ARRETE_PROTECTION"
+        title={mapping.palissy.POP_ARRETE_PROTECTION.label}
+        content={<React.Fragment>{urls}</React.Fragment>}
       />
     );
   }
