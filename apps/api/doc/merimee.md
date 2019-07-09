@@ -7,7 +7,7 @@
 - [MEMOIRE](/apps/api/doc/merimee.md#MEMOIRE)
 - [POP_COORDONNEES.lat](/apps/api/doc/merimee.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/merimee.md#POP_COORDONNEES.lon)
-- [POP_COMMENTAIRES](/apps/api/doc/merimee.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/merimee.md#POP_FLAGS)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/merimee.md#POP_CONTIENT_GEOLOCALISATION)
 - [POP_COORDINATES_POLYGON.type](/apps/api/doc/merimee.md#POP_COORDINATES_POLYGON.type)
 - [POP_COORDINATES_POLYGON.coordinates](/apps/api/doc/merimee.md#POP_COORDINATES_POLYGON.coordinates)
@@ -131,14 +131,14 @@
 - [_id](/apps/api/doc/merimee.md#_id)
 - [__v](/apps/api/doc/merimee.md#__v)
 ### REF
-
+Référence de la notice. Obligatoire, doit être alphanumérique.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non|Alphanumeric|Référence de la notice|
+|String|oui|non|non|non||Référence de la notice|
 
 ### PRODUCTEUR
 
@@ -206,15 +206,15 @@ Longitude de la notice en WGS84. Il faut vider le champ COOR et ZONE pour pouvoi
 |----|------|------|------|--------|----------|-----|
 |Number|non|non|non|non|||
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_CONTIENT_GEOLOCALISATION
 Champ généré à chaque sauvegarde de la notice. Si notice contient des une géolocalisation, la valeur du champs sera 'oui', sinon 'non'
@@ -287,7 +287,7 @@ Champs qui devait contenir tous les champs dans mistral. Aujourd'hui est vide [D
 |String|non|non|non|non||Destination actuelle de l'édifice|
 
 ### ADRS
-
+Adresse de l'édifice. Ne peut pas être vide si WADRS est renseigné.
 
 
 
@@ -401,7 +401,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T98
 |Array|non|non|non|non||Nombre d'édifices concernés par l'étude|
 
 ### COM
-
+Commune normalisée. Ne peut pas être vide si WCOM est renseigné.
 
 
 
@@ -431,7 +431,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T98
 |String|non|non|non|non||Coordonnées géographiques multiples|
 
 ### COPY
-
+Copyright de la notice. Affiche un avertissement si vide.
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T21 
@@ -561,7 +561,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T11
 |String|non|oui|non|non||Date de versement de la notice|
 
 ### DOSS
-
+Typologie du dossier. Affiche un avertissement si vide.
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T13 
@@ -583,7 +583,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T13
 |String|non|non|non|non||Date et niveau de protection de l'édifice|
 
 ### DPT
-
+Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 
 
 
@@ -593,7 +593,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T13
 |String|non|non|non|non||Département|
 
 ### EDIF
-
+Nom de l'édifice. Affiche un avertissement si vide.
 
 
 
@@ -663,7 +663,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T30
 |Array|non|non|non|non||État de conservation (normalisé)|
 
 ### ETUD
-
+Cadre de l'étude. Affiche un avertissement si vide.
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T68 
@@ -719,7 +719,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T12
 |Array|non|non|non|non||Milieu d'implantation pour le domaine Inventaire|
 
 ### INSEE
-
+Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.
 
 
 
@@ -965,7 +965,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T6
 |Array|non|non|non|non||Description littéraire de l'iconographie|
 
 ### PROT
-
+Nature de la protection de l'édifice. Ne peut pas être vide si DPRO est renseigné.
 
 
 Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T10 
@@ -987,17 +987,17 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T10
 |String|non|non|non|non||Précisions sur le statut juridique du propriétaire|
 
 ### REFE
-
+Références de l'édifice de conservation. Doit être une référence valide vers une notice Mérimée.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Référence de l'édifice de conservation|
+|Array|non|non|non|non||Références de l'édifice de conservation|
 
 ### REFP
-
+Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.
 
 
 
@@ -1017,7 +1017,7 @@ REFO contient une ou plusieurs références de notice Palissy. C'est une référ
 |Array|non|oui|non|non||Référence aux objets conservés|
 
 ### REG
-
+Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne-Franche-Comté, Bretagne, Centre-Val de Loire, Corse, Grand Est, Guadeloupe, Guyane, Hauts-de-France, Île-de-France, La Réunion, Martinique, Mayotte, Normandie, Nouvelle-Aquitaine, Occitanie, Pays de la Loire, Provence-Alpes-Côte d'Azur, Rhône-Alpes, Alsace, Aquitaine, Auvergne, Basse-Normandie, Bourgogne, Centre, Champagne-Ardenne, Franche-Comté, Haute-Normandie, Languedoc-Roussillon, Limousin, Lorraine, Midi-Pyrénées, Nord-Pas-de-Calais, Picardie, Poitou-Charente
 
 
 
@@ -1047,7 +1047,7 @@ REFO contient une ou plusieurs références de notice Palissy. C'est une référ
 |String|non|non|non|non||Remploi|
 
 ### RENV
-
+Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Mérimée.
 
 
 
@@ -1139,7 +1139,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 |Array|non|non|non|non||Technique du décor porté de l'édifice|
 
 ### TICO
-
+Titre courant. Affiche un avertissement si vide.
 
 
 
@@ -1239,24 +1239,24 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 |Array|non|non|non|non||Dossier de protection MH|
 
 ### DOSURL
-
+URL du dossier Inventaire. Doit être une URL valide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|URL du dossier Inventaire|
+|String|non|non|non|non||URL du dossier Inventaire|
 
 ### DOSURLPDF
-
+Lien vers le dossier PDF. Doit être une URL valide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien vers le dossier PDF|
+|String|non|non|non|non||Lien vers le dossier PDF|
 
 ### DOSADRS
 
@@ -1276,7 +1276,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|url|Liens externes éventuels|
+|Array|non|non|non|non||Liens externes éventuels|
 
 ### IMAGE
 
@@ -1409,14 +1409,14 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 |String|non|non|oui|non|||
 
 ### CONTACT
- 
+Doit contenir une adresse email valide. Affiche un avertissement si vide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Adresse courriel de contact|
+|String|non|non|non|non||Adresse courriel de contact|
 
 ### IDAGR
 

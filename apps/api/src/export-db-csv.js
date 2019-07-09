@@ -21,7 +21,6 @@ const models = fs
         opendata: documentation ? documentation.opendata || "" : "",
         generated: documentation ? documentation.generated || "" : "",
         description: documentation ? documentation.description || "" : "",
-        validation: documentation ? documentation.validation || "" : "",
         thesaurus: documentation ? documentation.thesaurus || "" : ""
       };
       return obj;

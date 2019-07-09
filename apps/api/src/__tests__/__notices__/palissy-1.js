@@ -2,7 +2,7 @@ module.exports = {
   POP_COORDONNEES: { lat: 0, lon: 0 },
   POP_COORDINATES_POLYGON: { type: "Polygon", coordinates: [] },
   CONTIENT_IMAGE: "non",
-  POP_COMMENTAIRES: [],
+  POP_FLAGS: [],
   POP_CONTIENT_GEOLOCALISATION: "non",
   BASE: "Patrimoine mobilier (Palissy)",
   POP_IMPORT: [],

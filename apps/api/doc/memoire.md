@@ -3,7 +3,7 @@
 - [PRODUCTEUR](/apps/api/doc/memoire.md#PRODUCTEUR)
 - [BASE](/apps/api/doc/memoire.md#BASE)
 - [CONTIENT_IMAGE](/apps/api/doc/memoire.md#CONTIENT_IMAGE)
-- [POP_COMMENTAIRES](/apps/api/doc/memoire.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/memoire.md#POP_FLAGS)
 - [POP_IMPORT](/apps/api/doc/memoire.md#POP_IMPORT)
 - [REF](/apps/api/doc/memoire.md#REF)
 - [TOUT](/apps/api/doc/memoire.md#TOUT)
@@ -177,15 +177,15 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Contient une image|
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_IMPORT
 
@@ -198,7 +198,7 @@ Commentaires technique
 |Array|non|non|non|non|||
 
 ### REF
-Référence unique de la notice
+Référence unique de la notice. Doit contenir uniquement des lettres majuscules de A à Z, des chiffres de 0 à 9 et le tiret bas.
 
 
 
@@ -288,7 +288,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 |String|non|non|non|non||Commune|
 
 ### DOM
-Architecture, Objet, Portrait, Reportage
+Architecture, Objet, Portrait, Reportage. Affiche un avertissement si vide.
 
 
 
@@ -388,7 +388,7 @@ Forme REG ; DPT ; COM ; EDIF
 |String|non|non|non|non||Cote conservation du phototype|
 
 ### LEG
-Texte libre, toutes ponctuations admises
+Texte libre, toutes ponctuations admises. Affiche un avertissement si vide.
 
 
 
@@ -538,7 +538,7 @@ Date de la création POP/Mistral
 |String|non|oui|non|non||Date de création|
 
 ### IDPROD
-
+Nom du producteur. Affiche un avertissement si vide.
 
 
 
@@ -568,7 +568,7 @@ Référence du CD ayant servi au chargement des images
 |String|non|non|oui|non||Numero de fond|
 
 ### INSEE
-
+Code INSEE de la commune. Doit faire 5 caractères ou plus.
 
 
 
@@ -648,7 +648,7 @@ Aire d'étude
 |String|non|non|non|non||Ancien numéro du négatif|
 
 ### COPY
-
+Affiche un avertissement si vide.
 
 
 
@@ -818,7 +818,7 @@ Interprétation
 |String|non|non|non|non||Format du tirage|
 
 ### LBASE
-Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté
+Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou de l'objet représenté. Doit contenir exactement 11 caractères et commencer par "EA", "PA", "IA", "IM", "PM", "EM"
 
 
 
@@ -848,7 +848,7 @@ Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou d
 |String|non|non|oui|non||Mots candidats|
 
 ### LOCA
-Concaténation des champs PAYS ; REG ; DPT ; COM
+Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.
 
 
 
@@ -978,14 +978,14 @@ No vue CD
 |String|non|non|non|non||Numéro de l'original|
 
 ### NUMP
-
+Numéro du négatif. Doit contenir uniquement des caractères alphanumériques.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|Numéro du négatif|
+|String|non|non|non|non||Numéro du négatif|
 
 ### ANUMTI
 
@@ -998,14 +998,14 @@ No vue CD
 |String|non|non|non|non||Ancien numéro du tirage|
 
 ### NUMTI
-
+Numéro du tirage. Doit contenir uniquement des caractères alphanumériques.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Alphanumeric|Numéro du tirage|
+|String|non|non|non|non||Numéro du tirage|
 
 ### RENV
 
@@ -1108,7 +1108,7 @@ Type  [Qu'est ce que c'est ?]
 |String|non|non|non|non||Type|
 
 ### TYPDOC
-Négatif, Positif original, Image numérique, Tirage photographique, Reproduction
+Négatif, Positif original, Image numérique, Tirage photographique, Reproduction. Affiche un avertissement si vide.
 
 
 
@@ -1308,14 +1308,14 @@ Adresse saisie
 |String|non|non|non|non||Adresse saisie|
 
 ### CONTACT
-
+Doit contenir une adresse email valide. Affiche un avertissement si vide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|Email|Lien vers le service producteur|
+|String|non|non|non|non||Lien vers le service producteur|
 
 ### EMET
 

@@ -15,7 +15,6 @@ const {
   findPalissyProducteur
 } = require("./notice");
 const { formattedNow } = require("./date");
-const { fixLink } = require("./string");
 
 module.exports = {
   uploadFile,
@@ -27,7 +26,6 @@ module.exports = {
   lambertToWGS84,
   convertCOORM,
   getPolygonCentroid,
-  fixLink,
   hasCorrectCoordinates,
   hasCorrectPolygon,
   findMemoireProducteur,

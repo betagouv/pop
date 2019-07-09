@@ -2,7 +2,7 @@ import Palissy from "../../entities/Palissy";
 import utils from "../../scenes/import/utils";
 import fs from "fs";
 
-test("Create new Palissy entity without errors from file palissy-mh-valid-UTF-8.csv", async () => {
+test("Create new Palissy entities from file palissy-mh-valid-UTF-8.csv", async () => {
   const contents = new Blob([
     fs.readFileSync(__dirname + "/../__notices__/palissy-mh-valid-UTF-8.csv", "utf-8")
   ]);
@@ -12,12 +12,19 @@ test("Create new Palissy entity without errors from file palissy-mh-valid-UTF-8.
     return new Palissy(notice);
   });
   expect(notices).toHaveLength(3);
-  notices.forEach(notice => {
-    // This notice is valid and must have no errors.
-    expect(notice._errors).toHaveLength(0);
-    // VIDEO must be parsed to array
-    expect(notice.VIDEO).toBeInstanceOf(Array);
-    expect(notice.VIDEO.length).toBeGreaterThanOrEqual(1);
-  });
+  const [n1, n2, n3] = notices;
+  // n1 has 2 warnings and 0 errors.
+  expect(n1._errors).toHaveLength(0);
+  expect(n1._warnings).toHaveLength(2);
+  // VIDEO must be parsed to array
+  expect(n1.VIDEO).toBeInstanceOf(Array);
+  expect(n1.VIDEO.length).toBeGreaterThanOrEqual(1);
+  // n1 has 0 warnings and 0 errors.
+  expect(n2._errors).toHaveLength(0);
+  expect(n2._warnings).toHaveLength(0);
+  // n1 has 5 warnings and 1 errors.
+  expect(n3._errors).toHaveLength(1);
+  expect(n3._warnings).toHaveLength(5);
+
   expect(notices[2].AUTP).toBe("é, Anonyme");
 });

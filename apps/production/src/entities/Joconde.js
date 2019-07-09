@@ -1,5 +1,6 @@
 import Mapping from "../services/mapping";
 import Notice from "./Notice";
+import validator from "validator";
 
 export default class Joconde extends Notice {
   constructor(body) {
@@ -38,6 +39,10 @@ export default class Joconde extends Notice {
     for (let key in obj) {
       this._mapping[key].thesaurus_separator = obj[key];
     }
+
+    ["WWW", "LVID"]
+      .filter(prop => body[prop] && !validator.isURL(body[prop]))
+      .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
 
   extractManquant = function(str) {

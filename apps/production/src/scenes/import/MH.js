@@ -20,8 +20,9 @@ export default class Import extends React.Component {
           recipient="mh"
           dropzoneText={
             <span>
-              Glissez & déposez vos fichiers au format MH ( extension .csv avec séparateur | ) et
-              les images associées (au format .jpg) dans cette zone
+              Glissez & déposez vos fichiers au format <b>MH</b> (extension <code>.csv</code> avec
+              séparateur <code>|</code>) et les images associées (au format <code>.jpg</code>) dans
+              cette zone
               <br />
             </span>
           }

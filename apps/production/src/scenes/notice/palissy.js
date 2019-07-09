@@ -16,7 +16,7 @@ import { bucket_url } from "../../config.js";
 import Loader from "../../components/Loader";
 import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
-
+import Palissy from "../../entities/Palissy";
 import "./index.css";
 
 class Notice extends React.Component {
@@ -90,14 +90,27 @@ class Notice extends React.Component {
     }
 
     this.setState({ saving: true });
-    try {
-      await API.updateNotice(this.state.notice.REF, "palissy", values, files);
-      toastr.success(
-        "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion."
-      );
-    } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+    const notice = new Palissy(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "palissy", values, files);
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
     }
     this.setState({ saving: false });
   }
@@ -133,7 +146,7 @@ class Notice extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
-          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
 
           <FieldImages
             name="MEMOIRE"

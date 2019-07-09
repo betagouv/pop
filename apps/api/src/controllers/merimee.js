@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const filenamify = require("filenamify");
+const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 const Merimee = require("../models/merimee");
@@ -14,7 +15,6 @@ const {
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
-  fixLink,
   getNewId,
   uploadFile,
   hasCorrectCoordinates,
@@ -24,8 +24,77 @@ const {
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 const { canUpdateMerimee, canCreateMerimee, canDeleteMerimee } = require("./utils/authorization");
+const regions = require("./utils/regions");
 
-function transformBeforeCreateOrUpdate(notice) {
+// Control properties document, flag each error.
+async function withFlags(notice) {
+  notice.POP_FLAGS = [];
+  // Required properties.
+  ["DOSS", "ETUD", "COPY", "TICO", "CONTACT", "REF"]
+    .filter(prop => !notice[prop])
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
+  // If "existingProp" exists then "requiredProp" must not be empty.
+  [["PROT", "DPRO"], ["COM", "WCOM"], ["ADRS", "WADRS"]]
+    .filter(([existingProp, requiredProp]) => notice[existingProp] && !notice[requiredProp])
+    .forEach(([existingProp, requiredProp]) =>
+      notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
+    );
+  // DPT must be 2 char or more.
+  if (notice.DPT && notice.DPT.length < 2) {
+    notice.POP_FLAGS.push("DPT_LENGTH_2");
+  }
+  // INSEE must be 5 char or more.
+  if (notice.INSEE && notice.INSEE.length < 5) {
+    notice.POP_FLAGS.push("INSEE_LENGTH_5");
+  }
+  // INSEE & DPT must start with the same first 2 letters.
+  if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
+    notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+  }
+  // REF must be an Alphanumeric.
+  if (!validator.isAlphanumeric(notice.REF)) {
+    notice.POP_FLAGS.push("REF_INVALID_ALNUM");
+  }
+  // DOSURL and DOSURLPDF must be valid URLs.
+  ["DOSURL", "DOSURLPDF"]
+    .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
+  // CONTACT must be an email.
+  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
+    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
+  }
+  // Region should exist.
+  if (notice.REG && !regions.includes(notice.REG)) {
+    notice.POP_FLAGS.push("REG_INVALID");
+  }
+  // Reference not found (RENV, REFP, REFE)
+  // Reference not found RENV
+  if (notice.RENV) {
+    for (let i in notice.RENV) {
+      if (!(await Merimee.exists({ REF: notice.RENV[i] }))) {
+        notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
+      }
+    }
+  }
+  // Reference not found REFP
+  if (notice.REFP) {
+    for (let i in notice.REFP) {
+      if (!(await Merimee.exists({ REF: notice.REFP[i] }))) {
+        notice.POP_FLAGS.push("REFP_REF_NOT_FOUND");
+      }
+    }
+  }
+  // Reference not found REFE
+  if (notice.REFE) {
+    for (let i in notice.REFE) {
+      if (!(await Merimee.exists({ REF: notice.REFE[i] }))) {
+        notice.POP_FLAGS.push("REFE_REF_NOT_FOUND");
+      }
+    }
+  }
+  return notice;
+}
+async function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
 
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
@@ -54,77 +123,18 @@ function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-
-  if (notice.DOSURL) {
-    notice.DOSURL = fixLink(notice.DOSURL);
-  }
-  if (notice.DOSURLPDF) {
-    notice.DOSURLPDF = fixLink(notice.DOSURLPDF);
-  }
-  if (notice.LIENS && Array.isArray(notice.LIENS)) {
-    notice.LIENS = notice.LIENS.map(fixLink);
-  }
   notice.DISCIPLINE = notice.PRODUCTEUR = findMerimeeProducteur(notice);
+  notice = await withFlags(notice);
 }
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
-  transformBeforeCreateOrUpdate(notice);
+  await transformBeforeCreateOrUpdate(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
-  transformBeforeCreateOrUpdate(notice);
-}
-
-async function checkMerimee(notice) {
-  const errors = [];
-  try {
-    if (!notice.CONTACT) {
-      // Check contact.
-      errors.push("Le champ CONTACT ne doit pas être vide");
-    }
-
-    const { message } = lambertToWGS84(notice.COOR, notice.ZONE); // Check coor
-    if (message) {
-      errors.push(message);
-    }
-
-    if (!notice.TICO && !notice.TITR) {
-      // Check Title
-      errors.push("Cette notice devrait avoir un TICO ou un TITR");
-    }
-
-    const { RENV, REFP, REFE, REFO } = notice; // check Links
-    if (RENV && RENV.length) {
-      const doc = await Merimee.findOne({ REF: RENV[0] });
-      if (!doc) {
-        errors.push(`Le champ RENV ${RENV[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFP && REFP.length) {
-      const doc = await Merimee.findOne({ REF: REFP[0] });
-      if (!doc) {
-        errors.push(`Le champ REFP ${REFP[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFE && REFE.length) {
-      const doc = await Merimee.findOne({ REF: REFE[0] });
-      if (!doc) {
-        errors.push(`Le champ REFE ${REFE[0]} pointe vers une notice absente`);
-      }
-    }
-    if (REFO && REFO.length) {
-      const doc = await Palissy.findOne({ REF: REFO[0] });
-      if (!doc) {
-        errors.push(`Le champ REFO ${REFO[0]} pointe vers une notice absente`);
-      }
-    }
-  } catch (e) {
-    capture(e);
-  }
-
-  return errors;
+  await transformBeforeCreateOrUpdate(notice);
 }
 
 function checkIfMemoireImageExist(notice) {
@@ -213,7 +223,7 @@ router.put(
       }
 
       // Prepare and update notice.
-      transformBeforeUpdate(notice);
+      await transformBeforeUpdate(notice);
       promises.push(updateNotice(Merimee, ref, notice));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
@@ -239,7 +249,7 @@ router.post(
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
-      transformBeforeCreate(notice);
+      await transformBeforeCreate(notice);
 
       const promises = [];
       const doc = new Merimee(notice);

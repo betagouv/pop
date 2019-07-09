@@ -4,6 +4,7 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const filenamify = require("filenamify");
+const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
@@ -11,26 +12,26 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 
-async function checkJoconde(notice) {
-  const errors = [];
-  try {
-    if (!notice.CONTACT) {
-      errors.push("Le champ CONTACT ne doit pas être vide");
-    }
-    if (!notice.TICO && !notice.TITR) {
-      errors.push("Cette notice devrait avoir un TICO ou un TITR");
-    }
-    for (let i = 0; i < IMG.length; i++) {
-      try {
-        await rp.get(PREFIX_IMAGE + IMG[i]);
-      } catch (e) {
-        errors.push(`Image est inaccessible`);
-      }
-    }
-  } catch (e) {
-    capture(e);
+// Control properties document, flag each error.
+function withFlags(notice) {
+  notice.POP_FLAGS = [];
+  // Required properties.
+  ["CONTACT", "MUSEO", "REF", "DOMN", "INV", "STAT"]
+    .filter(prop => !notice[prop])
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
+  // REF must be 11 chars.
+  if (notice.REF && notice.REF.length !== 11) {
+    notice.POP_FLAGS.push("REF_LENGTH_EXACT_11");
   }
-  return errors;
+  // CONTACT must be an email.
+  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
+    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
+  }
+  // WWW and LVID must be valid URLs.
+  ["WWW", "LVID"]
+    .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
+    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
+  return notice;
 }
 
 function transformBeforeCreate(notice) {
@@ -63,7 +64,7 @@ function transformBeforeCreateAndUpdate(notice) {
           }
         }
       }
-
+      notice = withFlags(notice);
       resolve();
     } catch (e) {
       capture(e);

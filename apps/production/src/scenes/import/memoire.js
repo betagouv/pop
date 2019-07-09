@@ -15,7 +15,12 @@ export default class Import extends React.Component {
           readme={readme}
           recipient="memoire"
           parseFiles={parseFiles}
-          dropzoneText="Glissez & déposez vos fichiers au format mémoire ( extension .ods  ) et les images associées (au format .jpg) dans cette zone"
+          dropzoneText={
+            <span>
+              Glissez & déposez vos fichiers au format <b>mémoire</b> (extension <code>.ods</code>)
+              et les images associées (au format <code>.jpg</code>) dans cette zone
+            </span>
+          }
         />
       </Container>
     );
@@ -40,11 +45,8 @@ function parseFiles(files, encoding) {
     utils.readODS(objectFile).then(data => {
       const notices = [];
 
-      // Create image map
-
       for (let i = 0; i < data.length; i++) {
         const obj = data[i];
-
         if (!obj.REF) {
           reject(`La notice ligne ${i + 1} n'a pas de reference valide`);
           return;

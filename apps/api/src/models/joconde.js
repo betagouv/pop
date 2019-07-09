@@ -61,12 +61,12 @@ const Schema = new mongoose.Schema(
         label: "Contient une position"
       }
     },
-    POP_COMMENTAIRES: {
+    POP_FLAGS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Commentaires technique",
-        label: "Commentaires POP",
+        description: "Informations et avertissements techniques",
+        label: "Alertes POP",
         generated: true
       }
     },
@@ -77,9 +77,8 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence (numéro système de la notice)",
+        description: "Référence (numéro système de la notice). Doit contenir exactement 11 caractères.",
         label: "Référence",
-        validation: "Alphanumeric",
         opendata: true
       }
     },
@@ -173,10 +172,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien contact musée. Cette information vient de la notice MUSEO",
+        description: "Lien contact musée. Cette information vient de la notice MUSEO et doit être un email valide.",
         generated: true,
         label: "Contact musée",
-        validation: "Email"
       }
     },
     COOR: {
@@ -803,18 +801,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lien site associé",
-        label: "Lien site associé",
-        validation: "url"
+        description: "Lien site associé. Doit être une URL valide.",
+        label: "Lien site associé"
       }
     },
     LVID: {
       type: String,
       default: "",
       documentation: {
-        description: "Lien video",
-        label: "Lien Vidéo",
-        validation: "url"
+        description: "Lien vidéo. Doit être une URL valide.",
+        label: "Lien Vidéo"
       }
     }
   },

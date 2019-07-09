@@ -23,10 +23,10 @@ beforeEach(() => {
   removeJocondeNotices();
 });
 
-async function createNotice(user, expectedStatus = 200) {
+async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
   const response = await request(app)
     .post("/joconde")
-    .field("notice", JSON.stringify(sampleNotice))
+    .field("notice", JSON.stringify(notice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
     .set("Authorization", await getJwtToken(app, user))
@@ -80,6 +80,24 @@ describe("POST /joconde", () => {
     expect(res.success).toBe(true);
     res = await createNotice(user, 500);
     expect(res.success).toBe(false);
+  });
+  test(`It should raise flags on errors`, async () => {
+    // Create a valid notice for reference.
+    let res = await createNotice(await createUser(), 200);
+    // Create notice with errors.
+    const flagNotice = {
+      ...sampleNotice,
+      CONTACT: "a", // 1
+      REF: "123456789", // 2
+      WWW: "a", // 3
+      LVID: "htp://f", // 4
+    };
+    res = await createNotice(await createUser(), 200, flagNotice);
+    res = await request(app)
+      .get(`/joconde/${flagNotice.REF}`)
+      .set("Accept", "application/json")
+      .expect(200);
+    expect(res.body.POP_FLAGS).toHaveLength(4);
   });
 });
 

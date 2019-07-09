@@ -12,7 +12,7 @@ import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Map from "./components/map.js";
-
+import Joconde from "../../entities/Joconde";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
@@ -60,14 +60,27 @@ class Notice extends React.Component {
 
   async onSubmit(values) {
     this.setState({ saving: true });
-    try {
-      await API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles);
-      toastr.success(
-        "Modification enregistrée",
-        "La modification sera visible dans 1 à 5 min en diffusion."
-      );
-    } catch (e) {
-      toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+    const notice = new Joconde(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles);
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
     }
     this.setState({ saving: false });
   }
@@ -96,7 +109,7 @@ class Notice extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
-          <Comments POP_COMMENTAIRES={this.state.notice.POP_COMMENTAIRES} />
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
           <FieldImages
             name="IMG"
             canOrder={this.state.editable}

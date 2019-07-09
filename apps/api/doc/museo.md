@@ -1,7 +1,7 @@
 # POP SCHEMAS museo
 
 - [REF](/apps/api/doc/museo.md#REF)
-- [POP_COMMENTAIRES](/apps/api/doc/museo.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/museo.md#POP_FLAGS)
 - [POP_IMPORT](/apps/api/doc/museo.md#POP_IMPORT)
 - [BASE](/apps/api/doc/museo.md#BASE)
 - [ACCES](/apps/api/doc/museo.md#ACCES)
@@ -95,15 +95,15 @@ N° de référence dans la base Muséofile
 |----|------|------|------|--------|----------|-----|
 |String|oui|non|non|non||Identifiant du musée|
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### POP_IMPORT
 

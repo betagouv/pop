@@ -12,8 +12,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "",
-        validation: "Alphanumeric",
+        description: "Référence de la notice. Obligatoire, doit être alphanumérique.",
         label: "Référence de la notice"
       }
     },
@@ -69,12 +68,12 @@ const Schema = new mongoose.Schema(
         }
       }
     },
-    POP_COMMENTAIRES: {
+    POP_FLAGS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Commentaires technique",
-        label: "Commentaires POP",
+        description: "Informations et avertissements techniques",
+        label: "Alertes POP",
         generated: true
       }
     },
@@ -120,7 +119,10 @@ const Schema = new mongoose.Schema(
     ADRS: {
       type: String,
       default: "",
-      documentation: { description: "", label: "Adresse de l'édifice" }
+      documentation: {
+        description: "Adresse de l'édifice. Ne peut pas être vide si WADRS est renseigné.",
+        label: "Adresse de l'édifice"
+      }
     },
     AFFE: {
       type: String,
@@ -205,7 +207,10 @@ const Schema = new mongoose.Schema(
     COM: {
       type: String,
       default: "",
-      documentation: { description: "", label: "Commune normalisée" }
+      documentation: {
+        description: "Commune normalisée. Ne peut pas être vide si WCOM est renseigné.",
+        label: "Commune normalisée"
+      }
     },
     COOR: {
       type: String,
@@ -227,7 +232,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Copyright de la notice. Affiche un avertissement si vide.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T21",
         label: "Copyright de la notice"
       }
@@ -331,7 +336,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Typologie du dossier. Affiche un avertissement si vide.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T13",
         label: "Typologie du dossier"
       }
@@ -348,7 +353,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Département. Doit contenir 2 caractères ou plus et commencer comme DPT.",
         label: "Département"
       }
     },
@@ -356,7 +361,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Nom de l'édifice. Affiche un avertissement si vide.",
         label: "Nom de l'édifice"
       }
     },
@@ -409,7 +414,7 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Cadre de l'étude. Affiche un avertissement si vide.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T68",
         label: "Cadre de l'étude"
       }
@@ -452,7 +457,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description:
+          "Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.",
         label: "Numéro INSEE de la commune"
       }
     },
@@ -652,7 +658,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description:
+          "Nature de la protection de l'édifice. Ne peut pas être vide si DPRO est renseigné.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
         label: "Nature de la protection de l'édifice"
       }
@@ -669,15 +676,15 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
-        label: "Référence de l'édifice de conservation"
+        description: "Références de l'édifice de conservation. Doit être une référence valide vers une notice Mérimée.",
+        label: "Références de l'édifice de conservation"
       }
     },
     REFP: {
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description: "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
         label: "Références des parties constituantes étudiées"
       }
     },
@@ -694,7 +701,12 @@ const Schema = new mongoose.Schema(
     REG: {
       type: String,
       default: "",
-      documentation: { description: "", label: "Région" }
+      documentation: {
+        description:
+          "Région. Doit être une des valeurs suivantes : " +
+          require("../controllers/utils/regions").join(", "),
+        label: "Région"
+      }
     },
     REMA: {
       type: String,
@@ -713,7 +725,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "",
+        description:
+          "Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Mérimée.",
         label: "Numéro de renvoi vers un autre domaine"
       }
     },
@@ -787,7 +800,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
+        description: "Titre courant. Affiche un avertissement si vide.",
         label: "Titre courant"
       }
     },
@@ -870,18 +883,16 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "",
-        label: "URL du dossier Inventaire",
-        validation: "url"
+        description: "URL du dossier Inventaire. Doit être une URL valide.",
+        label: "URL du dossier Inventaire"
       }
     },
     DOSURLPDF: {
       type: String,
       default: "",
       documentation: {
-        description: "",
-        label: "Lien vers le dossier PDF",
-        validation: "url"
+        description: "Lien vers le dossier PDF. Doit être une URL valide.",
+        label: "Lien vers le dossier PDF"
       }
     },
     DOSADRS: {
@@ -897,8 +908,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Liens externes éventuels",
-        validation: "url"
+        label: "Liens externes éventuels"
       }
     },
     IMAGE: {
@@ -1011,8 +1021,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: " ",
-        validation: "Email",
+        description: "Doit contenir une adresse email valide. Affiche un avertissement si vide.",
         label: "Adresse courriel de contact"
       }
     },

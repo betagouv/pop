@@ -71,14 +71,14 @@ export default class ImportTester {
   }
 
   summaryPicturesCount(c) {
-    return this.countFromRegex(/.*?([0-9]+) sont illustrées.*/);
+    return this.countFromRegex(/.*?([0-9]+) (?:sont|est) illustrée.*/);
   }
 
   summaryNewDocsCount(c) {
-    return this.countFromRegex(/.*?([0-9]+) sont des nouvelles notices.*/);
+    return this.countFromRegex(/.*?([0-9]+) (?:sont|est) (?:des|une) nouvelles? notice.*/);
   }
 
   summaryInvalidDocsCount(c) {
-    return this.countFromRegex(/.*?([0-9]+) notices ne peuvent être importées.*/);
+    return this.countFromRegex(/.*?([0-9]+) notice.? ne peu(?:vent|t) être importée.*/);
   }
 }

@@ -6,7 +6,7 @@
 - [POP_COORDONNEES.lat](/apps/api/doc/joconde.md#POP_COORDONNEES.lat)
 - [POP_COORDONNEES.lon](/apps/api/doc/joconde.md#POP_COORDONNEES.lon)
 - [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/joconde.md#POP_CONTIENT_GEOLOCALISATION)
-- [POP_COMMENTAIRES](/apps/api/doc/joconde.md#POP_COMMENTAIRES)
+- [POP_FLAGS](/apps/api/doc/joconde.md#POP_FLAGS)
 - [REF](/apps/api/doc/joconde.md#REF)
 - [POP_IMPORT](/apps/api/doc/joconde.md#POP_IMPORT)
 - [REFMIS](/apps/api/doc/joconde.md#REFMIS)
@@ -154,25 +154,25 @@ Champ qui permet de savoir si la geolocalisation est disponible ou non
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Contient une position|
 
-### POP_COMMENTAIRES
-Commentaires technique
+### POP_FLAGS
+Informations et avertissements techniques
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Commentaires POP|
+|Array|non|oui|non|non||Alertes POP|
 
 ### REF
-Référence (numéro système de la notice)
+Référence (numéro système de la notice). Doit contenir exactement 11 caractères.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|oui|Alphanumeric|Référence|
+|String|oui|non|non|oui||Référence|
 
 ### POP_IMPORT
 
@@ -287,14 +287,14 @@ Commentaires
 |String|non|non|non|non||Commentaires|
 
 ### CONTACT
-Lien contact musée. Cette information vient de la notice MUSEO
+Lien contact musée. Cette information vient de la notice MUSEO et doit être un email valide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non|Email|Contact musée|
+|String|non|oui|non|non||Contact musée|
 
 ### COOR
 Coordinateur
@@ -1023,24 +1023,24 @@ Affichage image
 |Array|non|non|oui|non||Affichage image|
 
 ### WWW
-Lien site associé
+Lien site associé. Doit être une URL valide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien site associé|
+|String|non|non|non|non||Lien site associé|
 
 ### LVID
-Lien video
+Lien vidéo. Doit être une URL valide.
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|url|Lien Vidéo|
+|String|non|non|non|non||Lien Vidéo|
 
 ### _id
 

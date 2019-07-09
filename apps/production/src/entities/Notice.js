@@ -1,5 +1,4 @@
 import Mapping from "../services/mapping";
-import validator from "validator";
 
 export default class Notice {
   constructor(body, collection) {
@@ -24,8 +23,7 @@ export default class Notice {
         }
       }
     }
-
-    // Validate data
+    // Validate data.
     for (let key in this._mapping) {
       // Check required fields
       if (this._mapping[key].required) {
@@ -33,27 +31,9 @@ export default class Notice {
           this._errors.push(`Le champ ${key} ne doit pas être vide`);
         }
       }
-
-      // Check format
-      if (this._mapping[key].validation && this[key] && this[key].value) {
-        let validate = true;
-        switch (this._mapping[key].validation) {
-          case "Alphanumeric":
-            validate = validator.isAlphanumeric(this[key].value, "fr-FR");
-            break;
-          default:
-            console.log("TODO", this._mapping[key].validation);
-            break;
-        }
-
-        if (!validate) {
-          this._errors.push(
-            `Le champ ${key} avec la valeur "${this[key].value}" n'est pas de type ${this._mapping[key].validation}`
-          );
-        }
-      }
     }
   }
+
   makeItFlat = function() {
     let flat = {};
     for (var property in this) {
