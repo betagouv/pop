@@ -70,7 +70,7 @@ async function withFlags(notice) {
   // Reference not found (RENV, REFP, REFE)
   // Reference not found RENV
   if (notice.RENV) {
-    for (let i in notice.RENV) {
+    for (let i = 0; i < notice.RENV.length; i++) {
       if (!(await Merimee.exists({ REF: notice.RENV[i] }))) {
         notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
       }
@@ -78,7 +78,7 @@ async function withFlags(notice) {
   }
   // Reference not found REFP
   if (notice.REFP) {
-    for (let i in notice.REFP) {
+    for (let i = 0; i < notice.REFP.length; i++) {
       if (!(await Merimee.exists({ REF: notice.REFP[i] }))) {
         notice.POP_FLAGS.push("REFP_REF_NOT_FOUND");
       }
@@ -86,7 +86,7 @@ async function withFlags(notice) {
   }
   // Reference not found REFE
   if (notice.REFE) {
-    for (let i in notice.REFE) {
+    for (let i = 0; i < notice.REFE.length; i++) {
       if (!(await Merimee.exists({ REF: notice.REFE[i] }))) {
         notice.POP_FLAGS.push("REFE_REF_NOT_FOUND");
       }
