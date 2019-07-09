@@ -14,14 +14,18 @@ const InputFiles = ({ input, type }) => {
             <button
               type="button"
               onClick={() => {
-                const n = input.value.filter(f => {
-                  if (typeof f === "object") {
-                    return f.name !== e.key;
-                  } else {
-                    return f !== e.key;
-                  }
-                });
-                input.onChange(n);
+                if (Array.isArray(input.value)) {
+                  const n = input.value.filter(f => {
+                    if (typeof f === "object") {
+                      return f.name !== e.key;
+                    } else {
+                      return f !== e.key;
+                    }
+                  });
+                  input.onChange(n);
+                } else {
+                  input.onChange("");
+                }
               }}
             >
               supprimer
