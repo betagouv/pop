@@ -37,7 +37,8 @@ async function updateJocondeNotices(notice) {
   if (NOMOFF !== undefined) {
     obj.NOMOFF = NOMOFF;
   }
-  await Joconde.update({ MUSEO: notice.REF }, obj);
+
+  await Joconde.updateMany({ MUSEO: notice.REF }, obj);
 }
 
 // Get one notice.
