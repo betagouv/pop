@@ -331,7 +331,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURL.label}
-        content={<a href={notice.DOSURL}>Télécharger</a>}
+        content={<a href={notice.DOSURL}>Voir le dossier complet sur le site de la région</a>}
         key="notice.DOSURL"
       />
     );
@@ -341,7 +341,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURLPDF.label}
-        content={<a href={postFixedLink(notice.DOSURLPDF)}>Télécharger</a>}
+        content={<a href={postFixedLink(notice.DOSURLPDF)}>Voir le dossier d'origine numérisé</a>}
         key="notice.DOSURLPDF"
       />
     );
@@ -373,6 +373,25 @@ const SeeMore = ({ notice }) => {
       <Field
         key="notice.POP_ARRETE_PROTECTION"
         title={mapping.palissy.POP_ARRETE_PROTECTION.label}
+        content={<div style={{ display: "flex", flexDirection: "column" }}>{urls}</div>}
+      />
+    );
+  }
+
+  if (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) {
+    const urls = [];
+    for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
+      const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
+      urls.push(
+        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+          {filename}
+        </a>
+      );
+    }
+    arr.push(
+      <Field
+        key="notice.POP_DOSSIER_PROTECTION"
+        title={mapping.palissy.POP_DOSSIER_PROTECTION.label}
         content={<div style={{ display: "flex", flexDirection: "column" }}>{urls}</div>}
       />
     );

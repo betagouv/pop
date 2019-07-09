@@ -135,7 +135,7 @@ const Menu = ({ closeMenu, initialValues }) => (
       id="manquant"
       initialValue={initialValues.get("manquant")}
       fields={["MANQUANT.keyword"]}
-      title="Situations particulières"
+      title="Objets manquants ou volés"
     />
     <div style={{ display: "none" }}>
       {[
