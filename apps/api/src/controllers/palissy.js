@@ -94,7 +94,7 @@ async function withFlags(notice) {
   }
   // Reference not found REFA
   if (notice.REFA) {
-    for (let i in notice.REFA) {
+    for (let i = 0; i < notice.REFA.length; i++) {
       if (!(await Merimee.exists({ REF: notice.REFA[i] }))) {
         notice.POP_FLAGS.push("REFA_REF_NOT_FOUND");
       }
