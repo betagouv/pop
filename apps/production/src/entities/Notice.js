@@ -18,6 +18,8 @@ export default class Notice {
         }
         if (this._mapping[key].type === "Array") {
           this[key] = this.extractArray(body[key]);
+        } else if (typeof body[key] === "number") {
+          this[key] = String(body[key]);
         } else {
           this[key] = body[key];
         }
