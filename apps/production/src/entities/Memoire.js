@@ -8,19 +8,17 @@ export default class Memoire extends Notice {
     }
     super(body, "memoire");
 
-    console.log("this", this);
-
     // Every controls errors are *warnings* for now.
     // Required properties.
     ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
       .filter(prop => !this[prop])
       .forEach(prop => this._warnings.push(`Le champ ${prop} ne doit pas être vide`));
-    // LBASE must be 11 chars and starts with EA, PA, etc.
+    // LBASE must be 10 chars and starts with EA, PA, etc.
 
     if (this.LBASE) {
-      // LBASE must be 11 chars.
-      if (this.LBASE.filter(lb => lb.length !== 11).length > 0) {
-        this._warnings.push("Le champ LBASE doit faire 11 caractères");
+      // LBASE must be 10 chars.
+      if (this.LBASE.filter(lb => lb.length !== 10).length > 0) {
+        this._warnings.push("Le champ LBASE doit faire 10 caractères");
       }
       // LBASE must start with EA, PA, etc.
       if (

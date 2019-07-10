@@ -27,11 +27,11 @@ function withFlags(notice) {
   ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
     .filter(prop => !notice[prop])
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
-  // LBASE must be 11 chars and starts with EA, PA, etc.
+  // LBASE must be 10 chars and starts with EA, PA, etc.
   if (notice.LBASE) {
-    // LBASE must be 11 chars.
-    if (notice.LBASE.filter(lb => lb.length !== 11).length > 0) {
-      notice.POP_FLAGS.push("LBASE_LENGTH_EXACT_11");
+    // LBASE must be 10 chars.
+    if (notice.LBASE.filter(lb => lb.length !== 10).length > 0) {
+      notice.POP_FLAGS.push("LBASE_LENGTH_EXACT_10");
     }
     // LBASE must start with EA, PA, etc.
     if (
