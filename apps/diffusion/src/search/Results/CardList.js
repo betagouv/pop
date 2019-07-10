@@ -196,6 +196,8 @@ const Joconde = ({ data }) => {
     peri = "";
   }
 
+  const loca = joinData([data.VILLEM, data.NOMOFF]);
+
   return (
     <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
@@ -218,7 +220,7 @@ const Joconde = ({ data }) => {
             <div>
               <p>{author}</p>
               <p>{peri}</p>
-              <p>{data.LOCA}</p>
+              <p>{loca}</p>
             </div>
           </div>
         </div>
