@@ -7,6 +7,8 @@ export default ({ data }) => {
   const image = data.IMG.length
     ? `${bucket_url}${data.IMG[0]}`
     : require("../../../assets/noimage.jpg");
+
+  const loca = joinData([data.VILLEM, data.NOMOFF]);
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -25,7 +27,7 @@ export default ({ data }) => {
           <p>{data.DENO.join(", ")}</p>
           <p>{data.AUTR}</p>
           <p>{data.PERI.join(", ")}</p>
-          <p>{data.LOCA}</p>
+          <p>{loca}</p>
           <p>{data.INV}</p>
           <img src={mdf} className="producteur" />
         </div>
@@ -33,3 +35,14 @@ export default ({ data }) => {
     </Link>
   );
 };
+
+// (witch can be strings, array, array in arrays, etc.)
+function withoutEmptyStrings(data) {
+  return data
+    .map(x => x && (Array.isArray(x) ? x.join(", ").trim() : String(x).trim()))
+    .filter(x => x);
+}
+// Takes `[["foo", "bar"], ["foo"], "bar"]`, returns "foo, bar ; foo ; bar"
+function joinData(data) {
+  return withoutEmptyStrings(data).join(" ; ");
+}

@@ -16,7 +16,9 @@ router.use(bodyParser.json());
 
 function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
-  notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
+  if (notice.PHOTO !== undefined) {
+    notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
+  }
 }
 
 async function updateJocondeNotices(notice) {

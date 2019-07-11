@@ -41,7 +41,7 @@ export default class Joconde extends Notice {
     }
 
     ["WWW", "LVID"]
-      .filter(prop => body[prop] && !validator.isURL(body[prop]))
+      .filter(prop => this[prop] && !validator.isURL(this[prop]))
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
 

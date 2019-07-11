@@ -29,6 +29,21 @@ class SearchAdvanced extends React.Component {
       fields = Object.entries(Mapping[key])
         .filter(e => e[1].deprecated !== true)
         .filter(([k]) => !["_id", "__v"].includes(k))
+        .sort((a, b) => {
+          if (a[0] === "REF") {
+            return -1;
+          }
+          if (b[0] === "REF") {
+            return 1;
+          }
+          if (a[0].startsWith("POP") && !b[0].startsWith("POP")) {
+            return -1;
+          }
+          if (b[0].startsWith("POP") && !a[0].startsWith("POP")) {
+            return 1;
+          }
+          return a[0].localeCompare(b[0]);
+        })
         .map(([k, v]) => {
           return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
         });
