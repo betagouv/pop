@@ -28,6 +28,7 @@ class SearchAdvanced extends React.Component {
       key = bases.find(e => e.key === this.props.base).key;
       fields = Object.entries(Mapping[key])
         .filter(e => e[1].deprecated !== true)
+        .filter(([k]) => !["_id", "__v"].includes(k))
         .sort((a, b) => {
           if (a[0] === "REF") {
             return -1;
@@ -46,6 +47,247 @@ class SearchAdvanced extends React.Component {
         .map(([k, v]) => {
           return { value: `${k}.keyword`, text: `${k} - ${v.label}` };
         });
+      switch (this.props.base) {
+        case "memoire":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "AIRE.keyword",
+                "PAYS.keyword",
+                "REG.keyword",
+                "DPT.keyword",
+                "COM.keyword",
+                "WCOM.keyword",
+                "INSEE.keyword",
+                "MCGEO.keyword",
+                "LIEUORIG.keyword"
+              ],
+              text: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG - Localisation"
+            },
+            {
+              value: ["ADRESSE.keyword", "LIEU.keyword"],
+              text: "ADRESSE, LIEU - Adresse ou lieu-dit"
+            },
+            {
+              value: [
+                "DATPV.keyword",
+                "DATOR.keyword",
+                "DATOEU.keyword",
+                "SCLE.keyword",
+                "DATTI.keyword"
+              ],
+              text: "DATPV, DATOR, DATOEU, SCLE, DATTI - Époque"
+            },
+            {
+              value: [
+                "AUTP.keyword",
+                "AUTOR.keyword",
+                "AUTTI.keyword",
+                "AUTG.keyword",
+                "AUTOEU.keyword"
+              ],
+              text: "AUTP, AUTOR, AUTTI, AUTG, AUTOEU - Auteur ou photographe"
+            },
+            {
+              value: ["MCPER.keyword", "THEATRE.keyword", "ROLE.keyword"],
+              text: "MCPER, THEATRE, ROLE - Personne représentée"
+            },
+            {
+              value: [
+                "DOM.keyword",
+                "EDIF.keyword",
+                "MCL.keyword",
+                "LEG.keyword",
+                "SERIE.keyword",
+                "TITRE.keyword",
+                "OBJT.keyword",
+                "DENO.keyword",
+                "TICO.keyword",
+                "SUJET.keyword"
+              ],
+              text:
+                "DOM, EDIF, MCL, LEG, SERIE, TITRE, OBJT, DENO, TICO, SUJET - Sujet de la photographie"
+            },
+            {
+              value: ["EXPO.keyword", "PUBLI.keyword"],
+              text: "EXPO, PUBLI - Références d'exposition ou de publication"
+            },
+            {
+              value: [
+                "NUMP.keyword",
+                "ANUMP.keyword",
+                "NUMG.keyword",
+                "NUMAUTP.keyword",
+                "NUMOR.keyword",
+                "ANUMOR.keyword",
+                "RENVOI.keyword",
+                "NUMTI.keyword",
+                "ANUMTI.keyword",
+                "REPRO.keyword",
+                "COTECOR.keyword",
+                "COTECTI.keyword",
+                "PRECOR.keyword",
+                "REF.keyword"
+              ],
+              text:
+                "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote"
+            },
+            {
+              value: ["TYPDOC.keyword", "TECH.keyword", "TECHOR.keyword", "TECHTI.keyword"],
+              text: "TYPDOC, TECH, TECHOR, TECHTI - Type de document"
+            },
+            {
+              value: ["PRODUCTEUR.keyword", "IDPROD.keyword", "COPY.keyword"],
+              text: "PRODUCTEUR, IDPROD, COPY - Producteur de la notice"
+            },
+            {
+              value: ["OBS.keyword", "OBSOR.keyword", "OBSTI.keyword"],
+              text: "OBS, OBSOR, OBSTI - Producteur de la notice"
+            }
+          ];
+          break;
+        case "joconde":
+          fields = [
+            ...fields,
+            {
+              value: ["DENO.keyword", "APPL.keyword", "UTIL.keyword", "DOMN.keyword"],
+              text: "DENO, APPL, UTIL, DOMN - Désignation"
+            },
+            {
+              value: ["GEOHI.keyword", "LIEUX.keyword", "PLIEUX.keyword"],
+              text: "GEOHI, LIEUX, PLIEUX - Lieu création"
+            },
+            {
+              value: ["PERI.keyword", "PERU.keyword", "MILL.keyword", "MILLU.keyword"],
+              text: "PERI, PERU, MILL, MILLU - Siècle / Millénaire / date création"
+            },
+            {
+              value: ["DESC.keyword", "ETAT.keyword", "PREP.keyword", "REPR.keyword"],
+              text: "DESC, ETAT, PREP, REPR - Description"
+            },
+            {
+              value: [
+                "GENE.keyword",
+                "HIST.keyword",
+                "PUTI.keyword",
+                "DECV.keyword",
+                "PDEC.keyword"
+              ],
+              text: "GENE, HIST, PUTI, DECV, PDEC - Contexte de création"
+            }
+          ];
+          break;
+        case "palissy":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "COM.keyword",
+                "WCOM.keyword",
+                "REG.keyword",
+                "PLOC.keyword",
+                "LIEU.keyword",
+                "DPT.keyword",
+                "CANT.keyword"
+              ],
+              text: "COM, WCOM, REG, PLOC, LIEU, DPT, CANT - Localisation"
+            },
+            {
+              value: ["ADRS.keyword", "WADRS.keyword"],
+              text: "ADRS, WADRS - Adresse"
+            },
+            {
+              value: ["SCLE.keyword", "SCLD.keyword", "DATE.keyword"],
+              text: "SCLE, SCLD, DATE - Époque"
+            },
+            {
+              value: ["DENO.keyword", "PARN.keyword", "PART.keyword", "CATE.keyword"],
+              text: "DENO, PARN, PART, CATE - Désignation"
+            },
+            {
+              value: ["PINS.keyword", "INSC.keyword"],
+              text: "PINS, INSC - Inscription portée sur l'objet"
+            },
+            {
+              value: ["EXEC.keyword", "ORIG.keyword", "ATEL.keyword"],
+              text: "EXEC, ORIG, ATEL - Lieu de provenance ou d'exécution"
+            },
+            {
+              value: ["AUTR.keyword", "AFIG.keyword"],
+              text: "AUTR, AFIG - Auteur de l'oeuvre ou du modèle"
+            }
+          ];
+          break;
+        case "merimee":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "COM.keyword",
+                "WCOM.keyword",
+                "REG.keyword",
+                "PLOC.keyword",
+                "LIEU.keyword",
+                "DPT.keyword",
+                "CANT.keyword"
+              ],
+              text: "COM, WCOM, REG, PLOC, LIEU, DPT, CANT - Localisation"
+            },
+            {
+              value: ["ADRS.keyword", "WADRS.keyword"],
+              text: "ADRS, WADRS - Adresse"
+            },
+            {
+              value: ["SCLE.keyword", "SCLD.keyword", "DATE.keyword"],
+              text: "SCLE, SCLD, DATE - Époque"
+            },
+            {
+              value: ["DENO.keyword", "PARN.keyword", "PART.keyword"],
+              text: "DENO, PARN, PART - Désignation"
+            }
+          ];
+          break;
+        case "mnr":
+          fields = [
+            ...fields,
+            {
+              value: [
+                "AUTR.keyword",
+                "ATTR.keyword",
+                "AATT.keyword",
+                "ECOL.keyword",
+                "STYL.keyword"
+              ],
+              text: "AUTR, ATTR, AATT, ECOL, STYL - Auteur"
+            },
+            {
+              value: ["TITR.keyword", "ATIT.keyword", "AUTI.keyword"],
+              text: "TITR, ATIT, AUTI - Titre"
+            },
+            {
+              value: ["SCLE.keyword", "MILL.keyword"],
+              text: "SCLE, MILL - Époque"
+            },
+            {
+              value: ["GENE.keyword", "HIST.keyword", "NOTE.keyword"],
+              text: "GENE, HIST, NOTE - Historique"
+            },
+            {
+              value: ["TECH.keyword", "ETAT.keyword"],
+              text: "TECH, ETAT - Technique"
+            },
+            {
+              value: ["INSC.keyword", "MARQ.keyword"],
+              text: "INSC, MARQ - Inscription portée sur l’œuvre"
+            },
+            {
+              value: ["EXPO.keyword", "BIBL.keyword"],
+              text: "EXPO, BIBL - Annexes"
+            }
+          ];
+          break;
+      }
     }
 
     return (
@@ -96,7 +338,6 @@ class SearchAdvanced extends React.Component {
             border-radius: 5px;
             box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
             max-height: 325px;
-            margin: 10p;
             height: 40px;
             border-style: none;
             font-weight: normal;
@@ -149,8 +390,11 @@ class SearchAdvanced extends React.Component {
             position: relative;
             display: inline-block;
           }
-          .react-es-rule-value {
+          .react-autosuggest__container > .react-es-rule-value {
             width: 100%;
+          }
+          .react-es-rule-value {
+            padding-left: 5px;
           }
           .react-es-rule-value:focus {
             outline: none;
