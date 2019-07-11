@@ -224,7 +224,6 @@ function suggestionQuery(key, value) {
 
 function query(key, value, cb, shouldOrMust = "should") {
   if (Array.isArray(key)) {
-    console.log({ bool: { [shouldOrMust]: key.map(k => cb(k, value)) } });
     return { bool: { [shouldOrMust]: key.map(k => cb(k, value)) } };
   }
   return cb(key, value);
