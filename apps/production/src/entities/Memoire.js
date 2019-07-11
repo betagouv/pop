@@ -9,6 +9,7 @@ export default class Memoire extends Notice {
     super(body, "memoire");
   }
   validate(body) {
+    super.validate(body);
     // Every controls errors are *warnings* for now.
     // Required properties.
     ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
@@ -48,7 +49,5 @@ export default class Memoire extends Notice {
     ["NUMTI", "NUMP"]
       .filter(prop => body[prop] && !validator.isAlphanumeric(body[prop]))
       .forEach(prop => this._warnings.push(`${prop}_INVALID_ALNUM`));
-
-    super.validate(body);
   }
 }

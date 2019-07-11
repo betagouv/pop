@@ -7,6 +7,7 @@ export default class Palissy extends Notice {
     super(body, "palissy");
   }
   validate(body) {
+    super.validate(body);
     // Required properties.
     ["DOSS", "ETUD", "COPY", "TICO", "CONTACT", "REF"]
       .filter(prop => !body[prop])
@@ -47,6 +48,5 @@ export default class Palissy extends Notice {
     if (body.REG && !regions.includes(body.REG)) {
       this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
     }
-    super.validate(body);
   }
 }

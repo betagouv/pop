@@ -42,10 +42,10 @@ export default class Joconde extends Notice {
   }
 
   validate(body) {
+    super.validate(body);
     ["WWW", "LVID"]
       .filter(prop => body[prop] && !validator.isURL(body[prop]))
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
-    super.validate(body);
   }
 
   extractManquant = function(str) {
