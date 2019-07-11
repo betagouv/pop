@@ -296,6 +296,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
+    await doc.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
