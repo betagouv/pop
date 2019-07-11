@@ -36,7 +36,7 @@ export default class Memoire extends Notice {
       this._warnings.push("Le champ INSEE doit faire 5 caractères minimum");
     }
     // REF must only be alphanum + "_"
-    if (this.REF && !this.REF.match(/^[A-Z0-9_]$/)) {
+    if (this.REF && !this.REF.match(/^[A-Z0-9_]+$/)) {
       this._warnings.push("Le champ REF doit être alphanumérique");
     }
     // CONTACT must be an email.
