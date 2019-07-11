@@ -8,7 +8,7 @@ export default ({ data }) => {
     ? `${bucket_url}${data.IMG[0]}`
     : require("../../../assets/noimage.jpg");
 
-  const loca = joinData([data.VILLEM, data.NOMOFF]);
+  const loca = joinData([data.VILLE_M, data.NOMOFF]);
   return (
     <Link
       style={{ textDecoration: "none" }}

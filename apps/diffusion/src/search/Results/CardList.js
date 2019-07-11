@@ -196,7 +196,7 @@ const Joconde = ({ data }) => {
     peri = "";
   }
 
-  const loca = joinData([data.VILLEM, data.NOMOFF]);
+  const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
   return (
     <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
