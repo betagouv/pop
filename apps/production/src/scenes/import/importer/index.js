@@ -12,7 +12,7 @@ import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 import utils from "../utils";
 
-import diff from "./diff";
+import { compare } from "./diff";
 
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
@@ -57,7 +57,7 @@ class Importer extends Component {
       }
 
       // Get existing notices.
-      const existingNotices = [];
+      const existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({
           loading: true,
@@ -67,13 +67,33 @@ class Importer extends Component {
         const collection = importedNotices[i]._type;
         const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
-          existingNotices.push(notice);
+          existingNotices[importedNotices[i].REF] = notice;
         }
       }
 
       // Compute diff.
       this.setState({ loadingMessage: "Calcul des différences...." });
-      importedNotices = diff(importedNotices, existingNotices);
+
+      // START DIFF
+      for (let i = 0; i < importedNotices.length; i++) {
+        const existingNotice = existingNotices[importedNotices[i].REF];
+        if (existingNotice) {
+          let differences = compare(importedNotices[i], existingNotice);
+          importedNotices[i]._messages = differences.map(e => {
+            const from = JSON.stringify(existingNotice[e]);
+            const to = JSON.stringify(importedNotices[i][e]);
+            return `Le champ ${e} à évolué de ${from} à ${to}`;
+          });
+          if (differences.length) {
+            importedNotices[i]._status = "updated";
+          } else {
+            importedNotices[i]._status = "unchanged";
+          }
+        } else {
+          importedNotices[i]._status = "created";
+        }
+        importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
+      }
 
       await controleThesaurus(importedNotices);
 
@@ -83,25 +103,20 @@ class Importer extends Component {
         }
       }
 
-      this.setState({
-        step: 1,
-        importedNotices,
-        fileNames,
-        loading: false,
-        loadingMessage: ""
-      });
+      this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: "" });
 
-      amplitude.getInstance().logEvent("Import - Drop files", {
-        "Files droped": files.length,
-        Success: true
-      });
+      amplitude
+        .getInstance()
+        .logEvent("Import - Drop files", { "Files droped": files.length, Success: true });
     } catch (e) {
       const errors = e || "Erreur detectée";
+
       amplitude.getInstance().logEvent("Import - Drop files", {
         "Files droped": files.length,
         Success: false,
         "Message ": errors
       });
+
       this.setState({ errors, loading: false });
       return;
     }
@@ -226,9 +241,7 @@ class Importer extends Component {
               ? `totalisent 1 notice`
               : `totalisent ${noticesChargees} notices`}
             , dont{" "}
-            {noticesWithImages === 1
-              ? `1 est illustrée.`
-              : `${noticesWithImages} sont illustrées.`}
+            {noticesWithImages === 1 ? `1 est illustrée.` : `${noticesWithImages} sont illustrées.`}
           </div>
           <div>Parmi ces {noticesChargees} notices:</div>
           <div className="lines">
