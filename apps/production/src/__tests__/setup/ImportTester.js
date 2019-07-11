@@ -11,7 +11,7 @@ export default class ImportTester {
   component = null;
   constructor(props) {
     this.props = props;
-    this.props.api.getNotice.mockResolvedValue(() => null);
+    this.props.api.getNotice.mockResolvedValue(null);
   }
 
   get store() {

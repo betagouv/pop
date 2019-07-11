@@ -7,7 +7,11 @@ test("Create new Mnr entity without errors from file mnr-valid-UTF-8.csv", async
     fs.readFileSync(__dirname + "/../__notices__/mnr-valid-UTF-8.csv", "utf-8")
   ]);
   const csv = await utils.readCSV(contents, ";", "UTF-8", '"');
-  const notices = csv.map(notice => new Mnr(notice));
+  const notices = csv.map(notice => {
+    const n = new Mnr(notice);
+    n.validate(notice);
+    return n;
+  });
 
   expect(notices).toHaveLength(1);
   notices.forEach(notice => {

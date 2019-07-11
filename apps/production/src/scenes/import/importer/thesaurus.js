@@ -46,7 +46,6 @@ export default function checkThesaurus(importedNotices) {
                 importedNotices[i]._warnings.push(text);
               }
             }
-
             if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
             optimMap[thesaurus][value] = val;
           }
