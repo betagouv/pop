@@ -91,20 +91,6 @@ function parseFiles(files, encoding) {
         return;
       }
 
-      const { DPT, INSEE, INSEE2 } = newNotice;
-      if (!INSEE && !INSEE2) {
-        newNotice._errors.push("INSEE ne doit pas être vide");
-      }
-      if (!DPT || DPT.length < 2) {
-        newNotice._errors.push("DPT ne doit pas être vide ou n'est pas assez long");
-      }
-      if (INSEE && DPT && !String(INSEE).startsWith(String(DPT))) {
-        newNotice._errors.push("INSEE et Département ne coincident pas");
-      }
-      if (INSEE2 && DPT && !String(INSEE2).startsWith(String(DPT))) {
-        newNotice._errors.push("INSEE2 et Département ne coincident pas");
-      }
-
       importedNotices.push(newNotice);
     }
     resolve({ importedNotices, fileNames: [objectFile.name] });
