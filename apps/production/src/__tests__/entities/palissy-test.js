@@ -9,7 +9,9 @@ test("Create new Palissy entities from file palissy-mh-valid-UTF-8.csv", async (
   const csv = await utils.readCSV(contents, "|", "UTF-8");
   const notices = csv.map(notice => {
     expect(notice.REF.indexOf("PM")).not.toBe(-1);
-    return new Palissy(notice);
+    const n = new Palissy(notice);
+    n.validate(notice);
+    return n;
   });
   expect(notices).toHaveLength(3);
   const [n1, n2, n3] = notices;

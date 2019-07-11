@@ -20,7 +20,7 @@ test("import 3 Palissy notice", async () => {
   expect(importTester.summaryNewDocsCount()).toBe(2);
   const errors = importTester.notices[2]._errors;
   const warnings = importTester.notices[2]._warnings;
-  expect(errors[0]).toMatch("INSEE et DPT doivent commencer par les deux même lettres");
+  expect(errors[0]).toMatch("INSEE et Département ne coincident pas");
   expect(warnings).toHaveLength(5);
 });
 
