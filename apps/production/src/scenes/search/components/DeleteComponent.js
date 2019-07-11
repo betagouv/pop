@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CustomWidget } from "react-elasticsearch";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { es_url } from "../../../config";
 import API from "../../../services/api";
 
 // The main component. It can display nothing, a button or a loader according to its state.
@@ -114,20 +115,63 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
 function DeleteProcessor({ ctx, onFinish, collection }) {
   const total = ctx.widgets.get("result").result.total;
   useEffect(() => {
-    // A simple loop on data, delete each.
-    async function deleteData() {
-      const data = ctx.widgets.get("result").result.data;
-      for (let i in data) {
-        const notice = data[i];
-        await API.deleteNotice(collection, notice._source.REF);
+    // Delete data with query, using scroll API.
+    async function deleteData(query) {
+      let docs = [];
+      const headers = {
+        Accept: "application/json",
+        "User-Agent": "POP Prod",
+        "Content-Type": "application/x-ndjson"
+      };
+
+      try {
+        // First "iteration", send parameters, and get results + scroll_id.
+        let rawResponse = await fetch(`${es_url}/scroll?index=${collection}`, {
+          method: "POST",
+          headers,
+          body: `${JSON.stringify({ query, size: 1000 })}\n`
+        });
+        let response = await rawResponse.json();
+        const scrollId = response._scroll_id;
+        let hits = response.hits.hits.map(e => e._source.REF);
+        docs = hits;
+
+        // Next iterations, send scroll_id, get results.
+        while (hits && hits.length) {
+          rawResponse = await fetch(`${es_url}/scroll?scroll_id=${scrollId}`, {
+            method: "POST",
+            headers
+          });
+          response = await rawResponse.json();
+          hits = response.hits.hits.map(e => e._source.REF);
+          docs = [...docs, ...hits];
+        }
+
+        // Delete all.
+        for (let i in docs) {
+          await API.deleteNotice(collection, docs[i]);
+        }
+
+        // Success, end process.
+        let message =
+          total === 1 ? `1 notice a été supprimée.` : `${total} notices ont été supprimées.`;
+        toastr.success(`${message} Cela sera visible dans 1 à 5 min en diffusion.`);
+        onFinish();
+      } catch (e) {
+        // Fail.
+        toastr.warning(`Erreur lors de la suppression. ${JSON.stringify(e)}`);
+        onFinish();
       }
-      // Success, end process.
-      let message =
-        total === 1 ? `1 notice a été supprimée.` : `${total} notices ont été supprimées.`;
-      toastr.success(`${message} Cela sera visible dans 1 à 5 min en diffusion.`);
-      onFinish();
     }
-    deleteData();
+
+    const queries = [];
+    for (let w of ctx.widgets.values()) {
+      if (w && w.query) {
+        queries.push(w.query);
+      }
+    }
+    const query = { bool: { must: queries.length === 0 ? { match_all: {} } : queries } };
+    deleteData(query);
   }, []);
   return <>Supression de {total} notices en cours…</>;
 }
