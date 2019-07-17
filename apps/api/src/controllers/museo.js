@@ -40,7 +40,7 @@ async function updateJocondeNotices(notice) {
     obj.NOMOFF = NOMOFF;
   }
 
-  if (!Object.keys(update).length) {
+  if (!Object.keys(obj).length) {
     return;
   }
 
