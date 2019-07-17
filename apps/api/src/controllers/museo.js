@@ -40,7 +40,23 @@ async function updateJocondeNotices(notice) {
     obj.NOMOFF = NOMOFF;
   }
 
-  await Joconde.updateMany({ MUSEO: notice.REF }, obj);
+  if (!Object.keys(update).length) {
+    return;
+  }
+
+  //update only needed
+  const q = { $and: [{ MUSEO: notice.REF }] };
+  for (let i = 0; i < Object.keys(obj).length; i++) {
+    const key = Object.keys(obj)[i];
+    q.$and.push({ [key]: { $ne: obj[key] } });
+  }
+
+  Joconde.find(q)
+    .cursor()
+    .eachAsync(async model => {
+      await model.update(obj);
+      await model.index();
+    });
 }
 
 // Get one notice.
