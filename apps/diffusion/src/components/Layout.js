@@ -44,7 +44,7 @@ export default class Layout extends React.Component {
         <div className="footer">
           <ul className="list-inline">
             <li className="list-inline-item">
-              <a href="https://beta.gouv.fr/startup/pop.html" target="_blank" rel="noopener"> 
+              <a href="https://pop-general.s3.eu-west-3.amazonaws.com/POP_En_savoir_plus.pdf" target="_blank" rel="noopener"> 
                 À propos
               </a>
             </li>
