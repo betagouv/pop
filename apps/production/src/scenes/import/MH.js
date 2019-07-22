@@ -75,6 +75,8 @@ function parseFiles(files, encoding) {
       }
 
       let newNotice;
+
+      console.log("obj.REF.substring(0, 2)", obj.REF.substring(0, 2));
       if (["PM", "EM", "IM"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Palissy(obj);
         addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
@@ -87,7 +89,7 @@ function parseFiles(files, encoding) {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
       } else {
-        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`);
+        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`);
         return;
       }
 
