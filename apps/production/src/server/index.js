@@ -12,12 +12,22 @@ function forceHttps(res, req, next) {
   next();
 }
 
+function forceHttp(res, req, next) {
+  console.log(req.get("Host"));
+  console.log(req.hostname);
+  const isProdDomain = (req.get("Host") || "").match(/production\.pop\.culture\.gouv\.fr/);
+  if (!req.secure && req.get("x-forwarded-proto") === "https" && isProdDomain) {
+    return res.redirect(302, "http://production.pop.culture.gouv.fr" + req.url);
+  }
+  next();
+}
+
 console.log("START", new Date());
 
 const app = express();
-app.set('trust proxy', true);
+app.set("trust proxy", true);
 const port = 8081;
-// app.use(forceHttps);
+app.use(forceHttp);
 app.use(hsts({ maxAge: 31536000, includeSubDomains: true, preload: true }));
 app.use(express.static(path.join(__dirname, "/../../build")));
 app.route("*").all((req, res) => {
