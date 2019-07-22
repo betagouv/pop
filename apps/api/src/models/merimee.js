@@ -149,6 +149,14 @@ const Schema = new mongoose.Schema(
         label: "Appelation d'usage"
       }
     },
+    // MANQUANT: {
+    //   type: String,
+    //   default: "",
+    //   documentation: {
+    //     description: "",
+    //     label: ""
+    //   }
+    // },
     APRO: {
       type: [String],
       default: [],
@@ -676,7 +684,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références de l'édifice de conservation. Doit être une référence valide vers une notice Mérimée.",
+        description:
+          "Références de l'édifice de conservation. Doit être une référence valide vers une notice Mérimée.",
         label: "Références de l'édifice de conservation"
       }
     },
@@ -684,7 +693,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
+        description:
+          "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
         label: "Références des parties constituantes étudiées"
       }
     },
