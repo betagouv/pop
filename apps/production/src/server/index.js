@@ -14,7 +14,7 @@ function forceHttps(res, req, next) {
 
 function forceHttp(res, req, next) {
   const isProdDomain = (req.get("Host") || "").match(/production\.pop\.culture\.gouv\.fr/);
-  if (!req.secure && req.get("x-forwarded-proto") === "https" && isProdDomain) {
+  if (req.secure && req.get("x-forwarded-proto") === "https" && isProdDomain) {
     return res.redirect(302, "http://production.pop.culture.gouv.fr" + req.url);
   }
   next();
