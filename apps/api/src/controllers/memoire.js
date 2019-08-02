@@ -169,8 +169,12 @@ async function updateLinks(notice) {
 
     for (let i = 0; i < toAdd.length; i++) {
       const collection = await findCollection(toAdd[i]);
-      const doc = await collection.findOne({ REF: toAdd[i] });
-      promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME));
+      if (collection) {
+        const doc = await collection.findOne({ REF: toAdd[i] });
+        if (doc) {
+          promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME));
+        }
+      }
     }
 
     await Promise.all(promises);
