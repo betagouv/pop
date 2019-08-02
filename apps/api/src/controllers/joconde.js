@@ -40,10 +40,15 @@ function transformBeforeCreate(notice) {
 }
 
 function transformBeforeCreateAndUpdate(notice) {
+  console.log("transformBeforeCreateAndUpdate", notice.IMG);
   return new Promise(async (resolve, reject) => {
     try {
       if (notice.IMG !== undefined) {
-        notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+        if (Array.isArray(notice.IMG)) {
+          notice.CONTIENT_IMAGE = notice.IMG.length ? "oui" : "non";
+        } else {
+          notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+        }
       }
       notice.DMAJ = formattedNow();
 
