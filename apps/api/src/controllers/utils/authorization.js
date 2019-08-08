@@ -82,7 +82,8 @@ function canManageMemoire(user, notice) {
 
   if (user.group === "inv") {
     if (
-      ["producteur", "administrateur"].includes(user.role) //&& ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(producteur)
+      ["producteur", "administrateur"].includes(user.role) &&
+      ["AUTRE", "INV"].includes(producteur)
     ) {
       return true;
     }
