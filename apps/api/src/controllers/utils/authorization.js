@@ -50,19 +50,45 @@ function canDeleteMnr(user, notice) {
 
 function canManageMemoire(user, notice) {
   const producteur = notice && findMemoireProducteur(notice.REF, notice.IDPROD, notice.EMET);
-  return (
-    user &&
-    notice &&
-    user.role &&
-    user.group &&
-    ((user.role === "administrateur" && user.group === "admin") ||
-      (["producteur", "administrateur"].includes(user.role) &&
-        user.group === "memoire" &&
-        ["MAP", "AUTRE"].includes(producteur)) ||
-      (["producteur", "administrateur"].includes(user.role) &&
-        user.group === "mh" &&
-        ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(producteur)))
-  );
+
+  if (!user || !notice || !user.role || !user.group) {
+    return false;
+  }
+
+  //admin
+  if (user.role === "administrateur" && user.group === "admin") {
+    return true;
+  }
+
+  //memoire
+  if (user.group === "memoire") {
+    if (
+      ["producteur", "administrateur"].includes(user.role) &&
+      ["MAP", "AUTRE"].includes(producteur)
+    ) {
+      return true;
+    }
+  }
+
+  //mh
+  if (user.group === "mh") {
+    if (
+      ["producteur", "administrateur"].includes(user.role) &&
+      ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(producteur)
+    ) {
+      return true;
+    }
+  }
+
+  if (user.group === "inv") {
+    if (
+      ["producteur", "administrateur"].includes(user.role) //&& ["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(producteur)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function canCreateMemoire(user, notice) {
@@ -142,9 +168,7 @@ function canManageMuseo(user, notice) {
     user.role &&
     user.group &&
     ((user.role === "administrateur" && (user.group === "museo" || user.group === "admin")) ||
-      (user.role === "producteur" &&
-        user.group === "museo" &&
-        user.museofile.includes(notice.REF)))
+      (user.role === "producteur" && user.group === "museo" && user.museofile.includes(notice.REF)))
   );
 }
 
