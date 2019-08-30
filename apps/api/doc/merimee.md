@@ -44,6 +44,7 @@
 - [DOSS](/apps/api/doc/merimee.md#DOSS)
 - [DPRO](/apps/api/doc/merimee.md#DPRO)
 - [DPT](/apps/api/doc/merimee.md#DPT)
+- [DPT_LETTRE](/apps/api/doc/merimee.md#DPT_LETTRE)
 - [EDIF](/apps/api/doc/merimee.md#EDIF)
 - [ELEV](/apps/api/doc/merimee.md#ELEV)
 - [ENER](/apps/api/doc/merimee.md#ENER)
@@ -591,6 +592,16 @@ Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Département|
+
+### DPT_LETTRE
+Département en lettre
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Département en lettre|
 
 ### EDIF
 Nom de l'édifice. Affiche un avertissement si vide.
