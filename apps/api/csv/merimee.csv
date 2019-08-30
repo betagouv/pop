@@ -49,6 +49,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "DOSS","String","non","Typologie du dossier","","","Typologie du dossier. Affiche un avertissement si vide.","http://data.culture.fr/thesaurus/resource/ark:/67717/T13"
 "DPRO","String","non","Date et niveau de protection de l'édifice","","","",""
 "DPT","String","non","Département","","","Département. Doit contenir 2 caractères ou plus et commencer comme DPT.",""
+"DPT_LETTRE","String","non","Département en lettre","","","Département en lettre",""
 "EDIF","String","non","Nom de l'édifice","","","Nom de l'édifice. Affiche un avertissement si vide.",""
 "ELEV","Array","non","Partie d'élévation extérieure","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T25"
 "ENER","Array","non","Source de l'énergie utilisée par l'édifice","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T27"

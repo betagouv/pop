@@ -54,6 +54,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "DOSURLPDF","String","non","Précisions sur l'URL du dossier Inventaire","","","Lien vers le dossier PDF. Doit être une URL valide.",""
 "DPRO","String","non","Date et typologie de la protection","","","",""
 "DPT","String","non","Département","","","Département. Doit contenir 2 caractères ou plus et commencer comme DPT.",""
+"DPT_LETTRE","String","non","Département en lettre","","","Département en lettre",""
 "EDIF","String","non","Nom de l'édifice","","","",""
 "EDIF2","String","non","Edifice contenant masqué","","","",""
 "EMPL","String","non","Emplacement de l’œuvre dans l’édifice","","","",""

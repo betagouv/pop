@@ -50,6 +50,7 @@
 - [DOSURLPDF](/apps/api/doc/palissy.md#DOSURLPDF)
 - [DPRO](/apps/api/doc/palissy.md#DPRO)
 - [DPT](/apps/api/doc/palissy.md#DPT)
+- [DPT_LETTRE](/apps/api/doc/palissy.md#DPT_LETTRE)
 - [EDIF](/apps/api/doc/palissy.md#EDIF)
 - [EDIF2](/apps/api/doc/palissy.md#EDIF2)
 - [EMPL](/apps/api/doc/palissy.md#EMPL)
@@ -633,6 +634,16 @@ Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Département|
+
+### DPT_LETTRE
+Département en lettre
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Département en lettre|
 
 ### EDIF
 
