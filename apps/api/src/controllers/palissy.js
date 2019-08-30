@@ -24,7 +24,9 @@ const {
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
 const { canUpdatePalissy, canCreatePalissy, canDeletePalissy } = require("./utils/authorization");
+
 const regions = require("./utils/regions");
+const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -111,6 +113,13 @@ async function transformBeforeCreateOrUpdate(notice) {
     // Convert it to a proper format in WGS84
     const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
+  }
+
+  if (notice.DPT) {
+    const DPT_LETTRE = getDepartement(notice.DPT);
+    if (DPT_LETTRE) {
+      notice.DPT_LETTRE = DPT_LETTRE;
+    }
   }
 
   //If COOR in Lambert and not correct coordinates, convert this to WGS84.
