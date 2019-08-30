@@ -395,6 +395,14 @@ const Schema = new mongoose.Schema(
         label: "Département"
       }
     },
+    DPT_LETTRE: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Département en lettre",
+        label: "Département en lettre"
+      }
+    },
     EDIF: {
       type: String,
       default: "",
@@ -814,7 +822,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références de l'ensemble. Doit être une référence valide vers une notice Mérimée.",
+        description:
+          "Références de l'ensemble. Doit être une référence valide vers une notice Mérimée.",
         label: "Référence des l'ensemble"
       }
     },
@@ -831,7 +840,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
+        description:
+          "Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",
         label: "Références des parties constituantes étudiées"
       }
     },
