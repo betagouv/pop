@@ -77,6 +77,7 @@ const Menu = ({ closeMenu, initialValues }) => (
         "REG.keyword",
         "COM.keyword",
         "DPT.keyword",
+        "DPT_LETTRE.keyword",
         "PAYS.keyword",
         "NOMOFF.keyword",
         "VILLE_M.keyword",
