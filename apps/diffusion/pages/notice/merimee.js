@@ -152,10 +152,7 @@ export default class extends React.Component {
                       "COLL"
                     ]}
                   />
-                  <Field
-                    title="Localisation"
-                    content={notice.REG + " " + notice.DPT + " " + notice.COM}
-                  />
+                  <Field title="Localisation" content={localisation} />
                   <Field title={mapping.merimee.PLOC.label} content={notice.PLOC} />
                   <Field title={mapping.merimee.AIRE.label} content={notice.AIRE} />
                   <Field title={mapping.merimee.CANT.label} content={notice.CANT} />
