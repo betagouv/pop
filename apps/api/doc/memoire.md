@@ -6,6 +6,7 @@
 - [POP_FLAGS](/apps/api/doc/memoire.md#POP_FLAGS)
 - [POP_IMPORT](/apps/api/doc/memoire.md#POP_IMPORT)
 - [REF](/apps/api/doc/memoire.md#REF)
+- [POP_ANCIENNE_REF](/apps/api/doc/memoire.md#POP_ANCIENNE_REF)
 - [TOUT](/apps/api/doc/memoire.md#TOUT)
 - [ADRESSE](/apps/api/doc/memoire.md#ADRESSE)
 - [AUTOEU](/apps/api/doc/memoire.md#AUTOEU)
@@ -206,6 +207,16 @@ Référence unique de la notice. Doit contenir uniquement des lettres majuscules
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|oui|non|non|non||Référence|
+
+### POP_ANCIENNE_REF
+Ancienne reference avec conversion
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|String|non|non|non|non||Ancienne reference|
 
 ### TOUT
 Index global [Peut etre déprécié]

@@ -40,6 +40,7 @@ const Schema = new mongoose.Schema(
         label: "Contient une image"
       }
     },
+
     POP_FLAGS: {
       type: [String],
       default: [],
@@ -61,6 +62,13 @@ const Schema = new mongoose.Schema(
           "Référence unique de la notice. " +
           "Doit contenir uniquement des lettres majuscules de A à Z, des chiffres de 0 à 9 et le tiret bas.",
         label: "Référence"
+      }
+    },
+    POP_ANCIENNE_REF: {
+      type: String,
+      documentation: {
+        description: "Ancienne reference avec conversion",
+        label: "Ancienne reference"
       }
     },
     TOUT: {
