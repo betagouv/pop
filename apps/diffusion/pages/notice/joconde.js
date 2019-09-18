@@ -10,6 +10,7 @@ import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
 import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
+import InLineField from "../../src/notices/InLineField";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
@@ -235,8 +236,8 @@ export default class extends React.Component {
                     title={mapping.joconde.LOCA.label}
                     content={this.links(this.props.notice.LOCA.split(" ; "), "ou")}
                   />
-                  <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} />
-                  <Field title={mapping.joconde.MANQUANT_COM.label} content={notice.MANQUANT_COM} />
+                  <InLineField title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} />
+                  <Field content={notice.MANQUANT_COM} />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
