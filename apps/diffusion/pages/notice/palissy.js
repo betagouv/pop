@@ -144,9 +144,7 @@ export default class extends React.Component {
                       "VOLS"
                     ]}
                   />
-                  <Field title={mapping.palissy.REG.label} content={notice.REG} />
-                  <Field title={mapping.palissy.DPT.label} content={notice.DPT} />
-                  <Field title={mapping.palissy.COM.label} content={notice.COM} />
+                  <Field title="Localisation" content={localisation} />
                   <Field title={mapping.palissy.INSEE.label} content={notice.INSEE} />
                   <Field title={mapping.palissy.PLOC.label} content={notice.PLOC} />
                   <Field title={mapping.palissy.AIRE.label} content={notice.AIRE} />

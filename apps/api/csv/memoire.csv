@@ -20,6 +20,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "POP_FLAGS","Array","non","Alertes POP","","true","Informations et avertissements techniques",""
 "POP_IMPORT","Array","non","","","","",""
 "REF","String","oui","Référence","","","Référence unique de la notice. Doit contenir uniquement des lettres majuscules de A à Z, des chiffres de 0 à 9 et le tiret bas.",""
+"POP_ANCIENNE_REF","String","non","Ancienne reference","","","Ancienne reference avec conversion",""
 "TOUT","String","non","Index global","","","Index global [Peut etre déprécié]",""
 "ADRESSE","String","non","Adresse et/ou lieu-dit","","","Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",""
 "AUTOEU","String","non","Auteur de l'oeuvre représentée","","","Nom, Prénom (profession ou titre et/ou dates)",""

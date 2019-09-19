@@ -76,7 +76,7 @@ export default class extends React.Component {
                   img="/static/topics/mdf.jpg"
                   txt={
                     <div>
-                      Musées de France
+                      Collections des Musées de France
                       <p>Base Joconde</p>
                     </div>
                   }
@@ -148,7 +148,7 @@ export default class extends React.Component {
                   img="/static/topics/museo.jpg"
                   txt={
                     <div>
-                      Collections des musées de France
+                      Musées de France
                       <p>Base MUSEO</p>
                     </div>
                   }
