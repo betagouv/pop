@@ -149,7 +149,7 @@ export default class extends React.Component {
                   txt={
                     <div>
                       Musées de France
-                      <p>Base MUSEO</p>
+                      <p>Base Muséofile</p>
                     </div>
                   }
                   params={{
