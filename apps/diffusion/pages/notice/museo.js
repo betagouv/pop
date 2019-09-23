@@ -71,7 +71,7 @@ export default class extends React.Component {
                   <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} />
                   <Field
                     title={mapping.museo.URL_M.label}
-                    content={<a href={"https://" + notice.URL_M}>{notice.URL_M}</a>}
+                    content={<a href={"https://" + notice.URL_M} target="_blank">{notice.URL_M}</a>}
                     key="notice.URL_M"
                   />
                   <Field title={mapping.museo.ACCES.label} content={notice.ACCES} />
