@@ -67,6 +67,12 @@ export default class extends React.Component {
                   <Field title={mapping.museo.VILLE_M.label} content={notice.VILLE_M} />
                   <Field title={mapping.museo.DPT.label} content={notice.DPT} />
                   <Field title={mapping.museo.REGION.label} content={notice.REGION} />
+                  
+                  <Title
+                    content="Contact"
+                    notice={notice}
+                    fields={["TEL_M", "CONTACT_GENERIQUE", "URL_M", "ACCES"]}
+                  />
                   <Field title={mapping.museo.TEL_M.label} content={notice.TEL_M} />
                   <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} />
                   <Field
