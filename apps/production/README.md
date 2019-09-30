@@ -32,7 +32,10 @@ La branche _master_ est automatiquement livré sur la plateforme de _staging_ et
 Exemple avec la base MNR :
 
 ```bash
-mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e mongodump --host 127.0.0.1:27017 --db pop --collection "mnr" mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop
+mongod --dbpath Cluster0-shard-0-1548014151-5c47281a9ccf64a3f50bcc8e mongodump --host 127.0.0.1:27017 --db pop --collection "mnr" 
+
+
+mongorestore --host HOST --ssl --username fakeone:) --password fakeone:) --authenticationDatabase admin --drop
 ```
 
 ### How to restore image S3
