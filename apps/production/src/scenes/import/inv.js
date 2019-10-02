@@ -225,7 +225,12 @@ function convertGPS(e) {
   }
 }
 
-function checkReference(notice) {}
+function checkReference(notice) {
+  var regex = /IV[A-Z][0-9]{2,5}_[0-9]{4}([0-9]{2,3}|2B|2A)[0-9]{5}[A-Z0-9]*/g;
+  if (!str.match(regex)) {
+    notice._errors("La réfèrence n'est pas correctement formatée");
+  }
+}
 
 function convertLongNameToShort(str, delim = "/") {
   let name = str.substring(str.lastIndexOf(delim) + 1);
