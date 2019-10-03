@@ -35,7 +35,7 @@ export default class extends React.Component {
 
   links(value, name) {
     if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value) {
+      if (String(value) === value && !value.props == undefined) {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
         return <a href={url}>{value}</a>;
       }
@@ -51,7 +51,7 @@ export default class extends React.Component {
         );
       })
       .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
+      return <React.Fragment>{links}</React.Fragment>;
   }
 
   // Display a list of links to authors
