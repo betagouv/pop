@@ -274,7 +274,7 @@ workflows:
           filters:
             branches:
               only: 
-                - master
+                - staging
                 - new-search-system
       - build_diffusion_prod:
           requires:
@@ -287,7 +287,7 @@ workflows:
             - test_production
           filters:
             branches:
-              only: master
+              only: staging
       - build_production_prod:
           requires:
             - deploy_production_staging
@@ -299,21 +299,21 @@ workflows:
             - test_api
           filters:
             branches:
-              only: master
+              only: staging
       - deploy_diffusion_staging:
           requires:
             - build_diffusion_staging
           filters:
             branches:
               only: 
-                - master
+                - staging
                 - new-search-system
       - deploy_production_staging:
           requires:
             - build_production_staging
           filters:
             branches:
-              only: master
+              only: staging
       - deploy_api_prod:
           requires:
             - deploy_api_staging
