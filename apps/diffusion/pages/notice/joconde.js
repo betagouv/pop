@@ -51,7 +51,7 @@ export default class extends React.Component {
         );
       })
       .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
+      return <React.Fragment>{links}</React.Fragment>;
   }
 
   // Display a list of links to authors

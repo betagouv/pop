@@ -260,7 +260,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T69",
         label: "Dénomination de l'objet"
       }
     },

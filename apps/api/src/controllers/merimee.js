@@ -97,11 +97,12 @@ async function withFlags(notice) {
 }
 async function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.MEMOIRE && notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
+  let coordinates;
 
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
   if (notice.COORM && notice.ZONE) {
     // Convert it to a proper format in WGS84
-    const { coordinates } = convertCOORM(notice.COORM, notice.ZONE);
+    coordinates = (convertCOORM(notice.COORM, notice.ZONE)).coordinates;
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
 
