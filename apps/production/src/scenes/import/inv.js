@@ -114,7 +114,32 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
     const values = await Promise.all(arr);
 
     notices.push(...values[0].map(e => new Palissy(e)));
-    notices.push(...values[1].map(e => new Merimee(e)));
+    notices.push(
+      ...values[1].map(e => {
+        const merimeeObj = new Merimee(e);
+
+        if(e.POP_DOSSIER_VERT !== undefined){
+          console.log("je passe ici")
+          const pdfPath = e.POP_DOSSIER_VERT || "";
+          const pdfFile = files.find(
+            e =>
+              convertLongNameToShort(e.name)
+                .toUpperCase()
+                .indexOf(pdfPath.toUpperCase()) !== -1
+          );
+          if (pdfFile) {
+            console.log("pas error")
+            const shortname = convertLongNameToShort(pdfFile.name);
+            const newPdf = utils.renameFile(pdfFile, shortname);
+            merimeeObj._files.push(newPdf);
+            merimeeObj.POP_DOSSIER_VERT = `merimee/${e.REF}/${e.POP_DOSSIER_VERT}`;
+          } else {
+            console.log("error")
+            merimeeObj._errors.push(`Impossible de trouver le pdf ${pdfPath}`);
+          }
+        }
+      return merimeeObj;
+    }));
 
     // COORWGS84
 
