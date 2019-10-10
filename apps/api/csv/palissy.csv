@@ -37,7 +37,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "COPY","String","non","Copyright de la notice ","","","Copyright de la notice. Affiche un avertissement si vide.",""
 "DATE","Array","non","Année de création","","","",""
 "DBOR","Array","non","Date de rédaction de la notice","","","",""
-"DENO","Array","non","Dénomination de l'objet","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T96"
+"DENO","Array","non","Dénomination de l'objet","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T69"
 "DENQ","Array","non","Date de l'enquête ou du dernier récolement","","","",""
 "DEPL","String","non","Lieu de déplacement de l'objet","","","",""
 "DESC","String","non","Description matérielle","","","",""

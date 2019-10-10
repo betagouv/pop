@@ -467,7 +467,7 @@ Copyright de la notice. Affiche un avertissement si vide.
 
 
 
-Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T96 
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T69 
 
 
 
