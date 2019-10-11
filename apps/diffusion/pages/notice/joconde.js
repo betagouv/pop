@@ -33,7 +33,7 @@ export default class extends React.Component {
     };
   }
 
-  links(value, name) {
+  links(value, name){
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value)=="") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
