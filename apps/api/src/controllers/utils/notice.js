@@ -83,7 +83,7 @@ function findMerimeeProducteur(notice) {
     case "PA":
       return "Monuments Historiques";
     case "EA":
-      return "Architecture";
+      return "État";
     default:
       return "Autre";
   }
@@ -97,7 +97,7 @@ function findPalissyProducteur(notice) {
     case "PM":
       return "Monuments Historiques";
     case "EM":
-      return "Architecture";
+      return "État";
     default:
       return "Autre";
   }
