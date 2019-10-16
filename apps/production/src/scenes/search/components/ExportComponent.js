@@ -160,11 +160,11 @@ async function exportData(fileName, entities, header) {
         .replace(/"/g, '""')
         .replace(/^(et|ou) /, "");
       // Ads this text on first line
-      csv.push(`"Critères de recherche : ${queryAsText}"`);
+      csv.push(`"Critères de recherche : ${queryAsText.replace(/"/g,"")}"`);
     } else {
       const arr = Object.keys(search).map(e => `${e}=${search[e]}`);
       const queryAsText = arr.join(" ");
-      csv.push(`"Critères de recherche : ${queryAsText}"`);
+      csv.push(`"Critères de recherche : ${queryAsText.replace(/"/g,"")}"`);
     }
   }
 
