@@ -75,7 +75,7 @@ function findMemoireProducteur(REF, IDPROD, EMET) {
   return "AUTRE";
 }
 
-// Get "producteur" for merimee notices.
+// Get "producteur" for merimee notices (M34585 --> EA = Etat)
 function findMerimeeProducteur(notice) {
   switch (notice.REF.substring(0, 2)) {
     case "IA":
@@ -89,7 +89,7 @@ function findMerimeeProducteur(notice) {
   }
 }
 
-// Get "producteur" for palissy notices.
+// Get "producteur" for palissy notices (M34585 --> EA = Etat)
 function findPalissyProducteur(notice) {
   switch (notice.REF.substring(0, 2)) {
     case "IM":
