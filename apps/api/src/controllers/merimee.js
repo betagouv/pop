@@ -233,6 +233,8 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeUpdate(notice);
+      const doc = new Merimee(notice);
+      checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });

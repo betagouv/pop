@@ -215,6 +215,8 @@ router.put(
     }
 
     transformBeforeUpdate(notice);
+    const obj = new Memoire(notice);
+    checkESIndex(obj);
     promises.push(updateLinks(notice));
     promises.push(updateNotice(Memoire, ref, notice));
 

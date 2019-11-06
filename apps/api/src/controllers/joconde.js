@@ -125,6 +125,8 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
+      const obj = new Joconde(notice);
+      checkESIndex(obj);
       promises.push(updateNotice(Joconde, ref, notice));
 
       // Consume promises and send sucessful result.
