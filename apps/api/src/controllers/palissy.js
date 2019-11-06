@@ -260,6 +260,8 @@ router.put(
 
       // Add generate fields
       await transformBeforeUpdate(notice);
+      const obj = new Palissy(notice);
+      checkESIndex(obj);
 
       const promises = [];
 
