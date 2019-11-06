@@ -88,6 +88,8 @@ router.put(
       }
 
       transformBeforeUpdate(notice);
+      const doc = new Mnr(notice);
+      checkESIndex(doc);
       promises.push(updateNotice(Mnr, ref, notice));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
