@@ -78,7 +78,7 @@ function transformBeforeCreateAndUpdate(notice) {
   });
 }
 
-// Update a notice by ref
+// Update a notice by ref with checkESIndex
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
