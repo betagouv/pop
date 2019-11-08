@@ -154,7 +154,7 @@ async function exportData(fileName, entities, header) {
         }`;
       });
 
-      // Transform the whole queries into readable text.
+      // Transform the whole queries into readable text (Corrected for export mantis)
       const queryAsText = queries
         .join(" ")
         .replace(/"/g, '""')
