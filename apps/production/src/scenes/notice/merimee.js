@@ -59,7 +59,7 @@ class Notice extends React.Component {
     if (this.props.group === "mh") {
       return (
         ["producteur", "administrateur"].includes(this.props.role) &&
-        ["Monuments Historiques", "Architecture", "Etat", "Autre"].includes(notice.PRODUCTEUR)
+        ["Monuments Historiques", "Architecture", "État", "Autre"].includes(notice.PRODUCTEUR)
       );
     }
 
