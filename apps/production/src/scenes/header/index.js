@@ -56,12 +56,6 @@ class NavComponent extends React.Component {
         <Container className="NavContainer">
           <Logo />
           {this.renderLinks()}
-
-          <div id="beta">
-            <div>
-              <span>BETA</span>
-            </div>
-          </div>
         </Container>
       </div>
     );
