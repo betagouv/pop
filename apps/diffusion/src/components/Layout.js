@@ -32,11 +32,6 @@ export default class Layout extends React.Component {
                 <span>Ouverte du</span>
                 <span>Patrimoine</span>
               </div>
-              <div id="beta">
-                <div>
-                  <span>BETA</span>
-                </div>
-              </div>
             </div>
           </Container>
         </div>
