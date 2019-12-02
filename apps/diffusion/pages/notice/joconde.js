@@ -145,14 +145,16 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-                  <Field title={mapping.joconde.INV.label} content={notice.INV} />
+                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" />
                   <Field
                     title={mapping.joconde.DOMN.label}
                     content={this.links(this.props.notice.DOMN, "domn")}
+                    separator="#" 
                   />
                   <Field
                     title={mapping.joconde.DENO.label}
                     content={this.links(this.props.notice.DENO, "deno")}
+                    separator="#" 
                   />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" />
