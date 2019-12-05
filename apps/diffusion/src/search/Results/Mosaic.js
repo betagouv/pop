@@ -7,7 +7,7 @@ export default function({ initialValues }) {
   return (
     <div className="mosaic-view">
       <Results
-        initialPage={initialValues.get("resPage")}
+        initialPage={initialValues.get("mosaicPage")}
         id="mosaic"
         items={data =>
           data.map(({ _id, ...rest }) => (
