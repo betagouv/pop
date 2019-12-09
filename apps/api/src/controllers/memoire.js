@@ -300,6 +300,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     if (doc.IMG) {
       promises.push(deleteFile(doc.IMG, "memoire"));
     }
+    checkESIndex(doc);
     await Promise.all(promises);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
