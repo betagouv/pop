@@ -107,8 +107,14 @@ function findProducteur(REF, IDPROD, EMET) {
 // - You need to update information ( copy, name, url ) if memoire has been updated
 async function removeMemoireImageForNotice(notice, REF) {
   const MEMOIRE = notice.MEMOIRE.filter(e => e.ref !== REF);
-  const CONTIENT_IMAGE = notice.MEMOIRE.some(e => e.url) ? "oui" : "non";
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
+  notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
+  notice.MEMOIRE = MEMOIRE;
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
+  checkESIndex(notice);
+  notice.index((err, res) => {
+    console.log("I've been indexed!");
+  });
 }
 
 async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAME = "") {
@@ -127,8 +133,10 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
   } else {
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
-  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.ref) ? "oui" : "non";
+  notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
+  checkESIndex(notice);
   notice.index((err, res) => {
     console.log("I've been indexed!");
   });
