@@ -27,10 +27,15 @@ function withFlags(notice) {
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
+
   // WWW and LVID must be valid URLs.
-  ["WWW", "LVID"]
-    .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
-    .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
+  ["WWW"]
+  .filter(prop => !notice[prop] && !validator.isURL(notice[prop]))
+  .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
+
+  ["LVID"]
+  .filter(prop => notice[prop] && !validator.isURL(notice[prop]))
+  .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_URL`));
   return notice;
 }
 
