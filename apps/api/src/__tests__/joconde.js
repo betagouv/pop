@@ -145,8 +145,8 @@ describe("GET /joconde/:ref", () => {
       .get(`/joconde/${sampleNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-      console.log(res);
-    expect(res).toBe(true);
+      console.log("response : " + res.body.PRODUCTEUR + "=" + sampleNotice.PRODUCTEUR + " : " + (res.body.PRODUCTEUR==sampleNotice.PRODUCTEUR));
+    expect(res.body.PRODUCTEUR).toBe(sampleNotice.PRODUCTEUR);
   });
   test(`It should return 404 for non-existant notice`, async () => {
     const res = await request(app)
