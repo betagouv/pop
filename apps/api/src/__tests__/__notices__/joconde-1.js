@@ -13,7 +13,7 @@ module.exports = {
   APPL: "",
   APTN: "Van Ouwenhuysen Constant",
   ATTR: "",
-  AUTR: [],
+  AUTR: ["DIAZ DE LA PENA Narcisse"],
   BIBL:
     "Catalogue sommaire illustré des peintures du musée du Louvre et du musée d'Orsay, Ecole française, III, Paris, 1986, p. 224",
   COMM: "",
