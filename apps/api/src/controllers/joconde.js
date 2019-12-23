@@ -30,9 +30,11 @@ function withFlags(notice) {
 
   // WWW and LVID must be valid URLs.
   const arr = notice.WWW;
-  for(let i=0; i<notice.WWW.length; i++){
-    if(arr[i] && !validator.isURL(arr[i])){
-      notice.POP_FLAGS.push(`${prop}_INVALID_URL`);
+  if(arr){
+    for(let i=0; i<arr.length; i++){
+      if(arr[i] && !validator.isURL(arr[i])){
+        notice.POP_FLAGS.push(`${prop}_INVALID_URL`);
+      }
     }
   }
 
