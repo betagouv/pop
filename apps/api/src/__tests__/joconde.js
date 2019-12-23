@@ -145,7 +145,7 @@ describe("GET /joconde/:ref", () => {
       .get(`/joconde/${sampleNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-    expect(res.body.AUTR).toBe(sampleNotice.AUTR);
+    expect(res.body.REF).toBe(sampleNotice.REF);
   });
   test(`It should return 404 for non-existant notice`, async () => {
     const res = await request(app)
