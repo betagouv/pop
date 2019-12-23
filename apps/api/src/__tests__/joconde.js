@@ -118,25 +118,6 @@ describe("PUT /joconde/:ref", () => {
   });
 });
 
-describe("GET /joconde/:ref", () => {
-  test(`It should return a notice by for everyone`, async () => {
-    let res = await createNotice(await createUser(), 200);
-    res = await request(app)
-      .get(`/joconde/${sampleNotice.REF}`)
-      .set("Accept", "application/json")
-      .expect(200);
-      console.log("response : " + res.body.PRODUCTEUR + "=" + sampleNotice.PRODUCTEUR + " : " + (res.body.PRODUCTEUR==sampleNotice.PRODUCTEUR));
-    expect(res.body.PRODUCTEUR).toBe(sampleNotice.PRODUCTEUR);
-  });
-  test(`It should return 404 for non-existant notice`, async () => {
-    const res = await request(app)
-      .get("/joconde/LOL")
-      .set("Accept", "application/json")
-      .expect(404);
-    expect(res.body.success).toBe(false);
-  });
-});
-
 describe("DELETE /joconde/:ref", () => {
   test(`It should delete an existing notice`, async () => {
     const user = await createUser();
@@ -157,4 +138,20 @@ describe("DELETE /joconde/:ref", () => {
   });
 });
 
-
+describe("GET /joconde/:ref", () => {
+  test(`It should return a notice by for everyone`, async () => {
+    let res = await createNotice(await createUser(), 200);
+    res = await request(app)
+      .get(`/joconde/${sampleNotice.REF}`)
+      .set("Accept", "application/json")
+      .expect(200);
+    expect(res.body.PRODUCTEUR).toBe(sampleNotice.PRODUCTEUR);
+  });
+  test(`It should return 404 for non-existant notice`, async () => {
+    const res = await request(app)
+      .get("/joconde/LOL")
+      .set("Accept", "application/json")
+      .expect(404);
+    expect(res.body.success).toBe(false);
+  });
+});
