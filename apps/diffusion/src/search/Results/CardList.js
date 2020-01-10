@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { getNoticeInfo } from "../../utils";
+import Mapping from "../../services/mapping";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -175,8 +176,8 @@ const Mnr = ({ data }) => {
             <img src="/static/mnr.png" className="producteur" />
             <div>
               <p>{domn}</p>
-              <p>{data.LOCA}</p>
-              <p>{data.AFFE}</p>
+              <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p>
+              <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p>
               <p>{data.CATE}</p>
               <p>{data.PHOT}</p>
             </div>
