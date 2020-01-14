@@ -127,7 +127,7 @@ export function getNoticeInfo(notice) {
         }
       }
 
-      //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
+      //Si WCOM existe, on affiche WCOM, sinon on affiche COM (s'il existe)
       if (notice.WCOM || notice.COM) {
         if (notice.WCOM){
           localisation.push(notice.WCOM);
@@ -137,7 +137,7 @@ export function getNoticeInfo(notice) {
         }
       }
 
-      //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
+      //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS (s'il existe)
       if (notice.WADRS || notice.ADRS) {
         if (notice.WADRS){
           localisation.push(notice.WADRS);
