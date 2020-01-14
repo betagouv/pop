@@ -254,7 +254,7 @@ function checkReference(notice) {
   if (notice._type === "memoire") {
     var regex = /IV[A-Z][0-9]{2,5}_[0-9]{4}([0-9]{2,3}|2B|2A)[0-9]{5}[A-Z0-9]*/g;
     if (!notice.REF.match(regex)) {
-      notice._errors("La référence n'est pas correctement formatée");
+      notice._errors.push("La référence n'est pas correctement formatée");
     }
   }
 }
