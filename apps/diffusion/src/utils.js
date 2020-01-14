@@ -127,9 +127,26 @@ export function getNoticeInfo(notice) {
         }
       }
 
-      if (notice.WCOM) {
-        localisation.push(notice.WCOM);
+      //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
+      if (notice.WCOM || notice.COM) {
+        if (notice.WCOM){
+          localisation.push(notice.WCOM);
+        }
+        else {
+          localisation.push(notice.COM);
+        }
       }
+
+      //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
+      if (notice.WADRS || notice.ADRS) {
+        if (notice.WADRS){
+          localisation.push(notice.WADRS);
+        }
+        else {
+          localisation.push(notice.ADRS);
+        }
+      }
+
       if (notice.EDIF) {
         localisation.push(notice.EDIF);
       }
@@ -171,12 +188,27 @@ export function getNoticeInfo(notice) {
           localisation.push(notice.DPT);
         }
       }
-      if (notice.WCOM) {
-        localisation.push(notice.WCOM);
+
+      //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
+      if (notice.WCOM || notice.COM) {
+        if (notice.WCOM){
+          localisation.push(notice.WCOM);
+        }
+        else {
+          localisation.push(notice.COM);
+        }
       }
-      if (notice.WADRS) {
-        localisation.push(notice.WADRS);
+
+      //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
+      if (notice.WADRS || notice.ADRS) {
+        if (notice.WADRS){
+          localisation.push(notice.WADRS);
+        }
+        else {
+          localisation.push(notice.ADRS);
+        }
       }
+
       localisation = localisation.join(" ; ");
       let metaDescription = "";
 
