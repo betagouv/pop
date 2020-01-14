@@ -4,11 +4,37 @@ import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
   const arr = [];
-  if (notice.REG) arr.push(notice.REG);
-  if (notice.DPT) arr.push(departmentText(notice.DPT));
-  if (notice.WCOM) arr.push(notice.WCOM);
-  if (notice.EDIF) arr.push(notice.EDIF);
-  if (notice.WADRS) arr.push(notice.WADRS);
+  if (notice.REG){ 
+    arr.push(notice.REG);
+  }
+  if (notice.DPT){
+    arr.push(departmentText(notice.DPT));
+  }
+
+  //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
+  if (notice.WCOM || notice.COM) {
+    if (notice.WCOM){
+      arr.push(notice.WCOM);
+    }
+    else {
+      arr.push(notice.COM);
+    }
+  }
+
+  if (notice.EDIF){
+    arr.push(notice.EDIF);
+  }
+
+  //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
+  if (notice.WADRS || notice.ADRS) {
+    if (notice.WADRS){
+      arr.push(notice.WADRS);
+    }
+    else {
+      arr.push(notice.ADRS);
+    }
+  }
+
   return arr.join(", ");
 }
 
