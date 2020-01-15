@@ -233,6 +233,7 @@ export default function AdvancedSearch({ collection, card }) {
       ];
       break;
     case "mnr":
+
       fields = [
         {
           value: ["AATT.keyword"],
