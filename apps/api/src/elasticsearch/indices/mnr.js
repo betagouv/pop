@@ -274,7 +274,7 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 8000
+              ignore_above: 256
             },
             strict: {
               type: "text",
