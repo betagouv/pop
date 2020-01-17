@@ -251,76 +251,80 @@ class SearchAdvanced extends React.Component {
         case "mnr":
           fields = [
             {
+              value: ["AUTR.keyword"],
+              text: "AUTR : Auteur"
+            },
+            {
+              value: ["PAUT.keyword"],
+              text: "PAUT : Précisions auteur"
+            },
+            {
               value: ["AATT.keyword"],
               text: "AATT : Autre attribution"
-            },
-            {
-              value: ["AFFE.keyword"], 
-              text: "AFFE : Etablissement affectataire"
-            },
-            {
-              value: ["ATIT.keyword"], 
-              text: "ATIT : Ancien titre"
             },
             {
               value: ["ATTR.keyword"], 
               text: "ATTR : Ancienne attribution"
             },
             {
-              value: ["AUTI.keyword"], 
-              text: "AUTI : Autre titre"
+              value: ["ECOL.keyword"], 
+              text: "ECOL : Ecole"
             },
             {
-              value: ["AUTR.keyword"],
-              text: "AUTR : Auteur"
+              value: ["STYL.keyword"], 
+              text: "STYL : Style"
             },
             {
-              value: ["BIBL.keyword"], 
-              text: "BIBL : Bibliographie"
+              value: ["MILL.keyword"], 
+              text: "MILL : Millénaire"
             },
             {
-              value: ["CATE.keyword"], 
-              text: "CATE : Catégorie"
-            },
-            {
-              value: ["COMM.keyword"], 
-              text: "COMM : Commentaire"
+              value: ["SCLE.keyword"], 
+              text: "SCLE : Siècle"
             },
             {
               value: ["DENO.keyword"], 
               text: "DENO : Dénomination"
             },
             {
-              value: ["DESC.keyword"], 
-              text: "DESC : Description"
+              value: ["DOMN.keyword"], 
+              text: "DOMN : Domaine"
+            },
+            {
+              value: ["INV.keyword"], 
+              text: "INV : numéro d’inventaire"
+            },
+            {
+              value: ["TITR.keyword"], 
+              text: "TITR : Titre"
+            },
+            {
+              value: ["ATIT.keyword"], 
+              text: "ATIT : Ancien titre"
+            },
+            {
+              value: ["AUTI.keyword"], 
+              text: "AUTI : Autre titre"
+            },
+            {
+              value: ["PTIT.keyword"], 
+              text: "PTIT : Précision titre"
+            },
+            {
+              value: ["TECH.keyword"], 
+              text: "TECH : Technique"
             },
             {
               value: ["DIMS.keyword"], 
               text: "DIMS : Dimensions"
             },
             {
-              value: ["DMAJ.keyword"],
-              text: "DMAJ : date de mise à jour"
+              value: ["DESC.keyword"], 
+              text: "DESC : Description"
             },
             {
-              value: ["DOMN.keyword"], 
-              text: "DOMN : Domaine"
-            },
-            {
-              value: ["DREP.keyword"], 
-              text: "DREP : Date représentation"
-            },
-            {
-              value: ["ECOL.keyword"], 
-              text: "ECOL : Ecole"
-            },
-            {
-              value: ["ETAT.keyword"], 
-              text: "ETAT : Etat de conservation"
-            },
-            {
-              value: ["EXPO.keyword"], 
-              text: "EXPO : Expositions"
+              value: ["INSC.keyword"], 
+              text: "INSC : Inscriptions"
             },
             {
               value: ["GENE.keyword"], 
@@ -331,24 +335,8 @@ class SearchAdvanced extends React.Component {
               text: "HIST : Historique"
             },
             {
-              value: ["INSC.keyword"], 
-              text: "INSC : Inscriptions"
-            },
-            {
-              value: ["INV.keyword"], 
-              text: "INV : numéro d’inventaire"
-            },
-            {
-              value: ["LOCA.keyword"], 
-              text: "LOCA : Localisation"
-            },
-            {
-              value: ["MARQ.keyword"], 
-              text: "MARQ : Marques"
-            },
-            {
-              value: ["MILL.keyword"], 
-              text: "MILL : Millénaire"
+              value: ["PROV.keyword"], 
+              text: "PROV : Provenance"
             },
             {
               value: ["NOTE.keyword"], 
@@ -359,52 +347,64 @@ class SearchAdvanced extends React.Component {
               text: "NUMS : Autres numéros"
             },
             {
-              value: ["OBSE.keyword"], 
-              text: "OBSE : Observations"
-            },
-            {
-              value: ["PAUT.keyword"],
-              text: "PAUT : Précisions auteur"
-            },
-            {
-              value: ["PHOT.keyword"], 
-              text: "PHOT : Droits de photographies"
+              value: ["MARQ.keyword"], 
+              text: "MARQ : Marques"
             },
             {
               value: ["PREP.keyword"], 
               text: "PREP : Précisions sur représentation"
             },
             {
-              value: ["PROV.keyword"], 
-              text: "PROV : Provenance"
-            },
-            {
-              value: ["PTIT.keyword"], 
-              text: "PTIT : Précision titre"
-            },
-            {
-              value: ["RESUME.keyword"], 
-              text: "RESUME : Résumé"
-            },
-            {
-              value: ["SCLE.keyword"], 
-              text: "SCLE : Siècle"
-            },
-            {
-              value: ["STYL.keyword"], 
-              text: "STYL : Style"
+              value: ["DREP.keyword"], 
+              text: "DREP : Date représentation"
             },
             {
               value: ["SUITE.keyword"], 
               text: "SUITE : Oeuvres liées ensemble"
             },
             {
-              value: ["TECH.keyword"], 
-              text: "TECH : Technique"
+              value: ["EXPO.keyword"], 
+              text: "EXPO : Expositions"
             },
             {
-              value: ["TITR.keyword"], 
-              text: "TITR : Titre"
+              value: ["BIBL.keyword"], 
+              text: "BIBL : Bibliographie"
+            },
+            {
+              value: ["ETAT.keyword"], 
+              text: "ETAT : Etat de conservation"
+            },
+            {
+              value: ["OBSE.keyword"], 
+              text: "OBSE : Observations"
+            },
+            {
+              value: ["RESUME.keyword"], 
+              text: "RESUME : Résumé"
+            },
+            {
+              value: ["LOCA.keyword"], 
+              text: "LOCA : Localisation"
+            },
+            {
+              value: ["PHOT.keyword"], 
+              text: "PHOT : Droits de photographies"
+            },
+            {
+              value: ["CATE.keyword"], 
+              text: "CATE : Catégorie"
+            },
+            {
+              value: ["COMM.keyword"], 
+              text: "COMM : Commentaire"
+            },
+            {
+              value: ["AFFE.keyword"], 
+              text: "AFFE : Etablissement affectataire"
+            },
+            {
+              value: ["DMAJ.keyword"],
+              text: "DMAJ : date de mise à jour"
             },
             {
               value: ["AUTR.keyword", "ATTR.keyword", "AATT.keyword", "ECOL.keyword", "STYL.keyword"],
