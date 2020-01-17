@@ -133,7 +133,7 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
   } else {
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
-  const CONTIENT_IMAGE = MEMOIRE.some(e => e.ref) ? "oui" : "non";
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
   checkESIndex(notice);
