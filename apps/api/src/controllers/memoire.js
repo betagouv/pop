@@ -223,13 +223,13 @@ router.put(
     }
 
     transformBeforeUpdate(notice);
-    const obj = new Memoire(notice);
-    checkESIndex(obj);
     promises.push(updateLinks(notice));
     promises.push(updateNotice(Memoire, ref, notice));
-
+    
     try {
       await Promise.all(promises);
+      const obj = new Memoire(notice);
+      checkESIndex(obj);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
