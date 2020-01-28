@@ -231,7 +231,7 @@ const Joconde = ({ data }) => {
 };
 
 const Museo = ({ data }) => {
-  const { title, subtitle, image_preview } = getNoticeInfo(data);
+  const { title, subtitle, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
@@ -254,8 +254,8 @@ const Museo = ({ data }) => {
             </div>
             <img src="/static/musee-de-france.png" className="producteur" />
             <div>
-              <p>{data.NOMUSAGE}</p>
-              <p>{data.VILLE_M}</p>
+              <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
+              <p>{localisation}</p>
             </div>
           </div>
         </div>

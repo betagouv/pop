@@ -83,6 +83,13 @@ export default class extends React.Component {
                   <Field title={mapping.museo.ACCES.label} content={notice.ACCES} />
 
                   <Title
+                    content="Appellation/Protection"
+                    notice={notice}
+                    fields={["LABEL"]}
+                  />
+                  <Field title={mapping.museo.LABEL.label} content={notice.LABEL} />
+
+                  <Title
                     content="Collection"
                     notice={notice}
                     fields={[
@@ -91,7 +98,6 @@ export default class extends React.Component {
                       "HIST",
                       "ATOUT",
                       "THEMES",
-                      "CATEG",
                       "ARTISTE",
                       "PHARE",
                       "AN_CREAT",
@@ -103,7 +109,6 @@ export default class extends React.Component {
                   <Field title={mapping.museo.HIST.label} content={notice.HIST} />
                   <Field title={mapping.museo.ATOUT.label} content={notice.ATOUT} />
                   <Field title={mapping.museo.THEMES.label} content={notice.THEMES} />
-                  <Field title={mapping.museo.CATEG.label} content={notice.CATEG} />
                   <Field title={mapping.museo.ARTISTE.label} content={notice.ARTISTE} />
                   <Field title={mapping.museo.PHARE.label} content={notice.PHARE} />
                   <Field title={mapping.museo.AN_CREAT.label} content={notice.AN_CREAT} />
@@ -120,6 +125,7 @@ export default class extends React.Component {
                     <Field title={mapping.museo.REF.label} content={notice.REF} />
                     <Field title={mapping.museo.BASE.label} content={notice.BASE} />
                     <Field title={mapping.museo.COPY.label} content={notice.COPY} />
+                    <Field title={mapping.museo.DT_SAISI.label} content={notice.DT_SAISI} />
                   </div>
                   <ContactUs contact={notice.CONTACT_GENERIQUE} REF={notice.REF} base="museo" />
                 </div>
