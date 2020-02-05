@@ -53,14 +53,29 @@ export function getNoticeInfo(notice) {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 
-      const subtitle = notice.DOMPAL || "";
+      let subtitle = "";
+      if(notice.DOMPAL){
+        subtitle = notice.DOMPAL.join(", ");
+      }
+
+      let localisations = [];
+      if (notice.VILLE_M) {
+        localisations.push(notice.VILLE_M);
+      }
+      if (notice.DPT) {
+        localisations.push(notice.DPT);
+      }
+      if (notice.REGION) {
+        localisations.push(notice.REGION);
+      }
+      let localisation = localisations.join(", ");
 
       let metaDescription = "";
 
       const image_preview = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
       const images = notice.PHOTO ? [{ src: `${bucket_url}${notice.PHOTO}`, alt: title }] : [];
 
-      return { title, subtitle, metaDescription, image_preview, images };
+      return { title, subtitle, metaDescription, image_preview, images, localisation };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;

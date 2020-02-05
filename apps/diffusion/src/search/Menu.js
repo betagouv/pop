@@ -36,7 +36,7 @@ const Menu = ({ closeMenu, initialValues }) => (
     <CollapsableFacet
       id="domn"
       initialValue={initialValues.get("domn")}
-      fields={["DOMN.keyword", "CATE.keyword"]}
+      fields={["DOMN.keyword", "CATE.keyword", "DOMPAL.keyword"]}
       title="Domaine"
     />
     <CollapsableFacet
