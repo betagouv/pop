@@ -9,10 +9,11 @@ import Field from "./components/field.js";
 import Section from "./components/section.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import Autor from "../../entities/Autor";
 
 import "./index.css";
 
-class Autor extends React.Component {
+class Notice extends React.Component {
   state = {
     notice: null,
     error: "",
@@ -38,12 +39,36 @@ class Autor extends React.Component {
       return;
     }
     this.props.initialize(notice);
-    const editable = false;
+    const editable = true;
     this.setState({ loading: false, notice, editable });
   }
 
   // Not implemented yet (not editable)
-  async onSubmit() {}
+  async onSubmit(values) {
+    this.setState({ saving: true });
+    const notice = new Autor(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "autor", values, this.state.imagesFiles);
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
+    }
+    this.setState({ saving: false });  }
 
   render() {
     if (this.state.loading) {
@@ -112,6 +137,14 @@ class Autor extends React.Component {
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />
+            {this.props.canDelete ? (
+              <DeleteButton noticeType="autor" noticeRef={this.state.notice.REF} />
+            ) : (
+              <div />
+            )}
+            <Button disabled={!this.state.editable} color="primary" type="submit">
+              Sauvegarder
+            </Button>
           </div>
         </Form>
       </Container>
@@ -145,4 +178,4 @@ const mapStateToProps = ({ Auth }) => {
 export default connect(
   mapStateToProps,
   {}
-)(reduxForm({ form: "notice" })(Autor));
+)(reduxForm({ form: "notice" })(Notice));
