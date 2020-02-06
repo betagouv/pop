@@ -53,10 +53,9 @@ export default class extends React.Component {
             <p>
               Bien sûr ! Les statistiques d’usage de la majorité de nos produits, dont beta.gouv.fr,
               sont disponibles en accès libre sur{" "}
-              <a href="https://stats.data.gouv.fr">
+              <a href="https://stats.data.gouv.fr/index.php?module=CoreHome&action=index&idSite=63&period=range&date=previous30&updated=1#?idSite=63&period=range&date=previous30&category=Dashboard_Dashboard&subcategory=1">
                 <code>stats.data.gouv.fr</code>
-              </a>
-              .
+              </a>{"."}
             </p>
             <em>
               Cette page est largement inspirée par{" "}
