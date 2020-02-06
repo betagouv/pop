@@ -71,8 +71,8 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Base"
     />
     <CollapsableFacet
-      id="ou"
-      initialValue={initialValues.get("ou")}
+      id="où"
+      initialValue={initialValues.get("où")}
       fields={[
         "REG.keyword",
         "COM.keyword",
