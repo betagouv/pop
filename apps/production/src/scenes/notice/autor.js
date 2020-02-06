@@ -11,6 +11,7 @@ import Loader from "../../components/Loader";
 import API from "../../services/api";
 import Autor from "../../entities/Autor";
 
+
 import "./index.css";
 
 class Notice extends React.Component {

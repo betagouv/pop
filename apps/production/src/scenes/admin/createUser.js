@@ -86,7 +86,8 @@ class CreateUser extends React.Component {
         "inv",
         "memoire",
         "enluminures",
-        "museo"
+        "museo",
+        "autor"
       ]);
     } else {
       groups.push(this.props.group);

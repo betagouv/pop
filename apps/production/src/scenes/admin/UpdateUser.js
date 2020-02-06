@@ -89,7 +89,8 @@ class UpdateUser extends React.Component {
         "mh",
         "inv",
         "memoire",
-        "enluminures"
+        "enluminures",
+        "autor"
       ]);
     } else {
       groups.push(this.props.authUserGroup);

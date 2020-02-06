@@ -5,7 +5,9 @@ const Autor = require("../models/autor");
 const passport = require("passport");
 const { formattedNow, updateNotice } = require("./utils");
 const validator = require("validator");
-
+const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/authorization");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 
 
@@ -23,19 +25,21 @@ router.get("/:ref", async (req, res) => {
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
+  upload.any(),
   async (req, res) => {
     const ref = req.params.ref;
+
     const notice = JSON.parse(req.body.notice);
+
 
     try {
       const prevNotice = await Autor.findOne({ REF: ref });
-      //TODO: Changer en gestion de droits pour autor
-      // if (!canUpdateJoconde(req.user, prevNotice, notice)) {
-      //   return res.status(401).send({
-      //     success: false,
-      //     msg: "Autorisation nécessaire pour mettre à jour cette ressource."
-      //   });
-      // }
+      if (!canUpdateAutor(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
       const promises = [];
 
       // Prepare and update notice.

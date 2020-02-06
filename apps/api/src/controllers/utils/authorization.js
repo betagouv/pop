@@ -25,6 +25,30 @@ function canDeleteJoconde(user, notice) {
   return canManageJoconde(user, notice);
 }
 
+function canManageAutor(user, notice) {
+  return (
+    user &&
+    notice &&
+    user.role &&
+    user.group &&
+    ((user.role === "administrateur" && (user.group === "autor" || user.group === "admin")) ||
+      (user.role === "producteur" &&
+        user.group === "autor"))
+  );
+}
+
+function canCreateAutor(user, notice) {
+  return canManageAutor(user, notice);
+}
+
+function canUpdateAutor(user, prevNotice, newNotice) {
+  return canManageAutor(user, prevNotice) && canManageAutor(user, newNotice);
+}
+
+function canDeleteAutor(user, notice) {
+  return canManageAutor(user, notice);
+}
+
 function canManageMnr(user, notice) {
   return (
     user &&
@@ -203,5 +227,8 @@ module.exports = {
   canDeleteMerimee,
   canUpdateMuseo,
   canCreateMuseo,
-  canDeleteMuseo
+  canDeleteMuseo,
+  canUpdateAutor,
+  canCreateAutor,
+  canDeleteAutor
 };
