@@ -86,7 +86,7 @@ function withFlags(notice) {
   ["REF"]
     .filter(prop => !notice[prop])
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
-  // REF must be 11 chars.
+  // REF must be 7 chars.
   if (notice.REF && notice.REF.length !== 7) {
     notice.POP_FLAGS.push("REF_LENGTH_EXACT_7");
   }

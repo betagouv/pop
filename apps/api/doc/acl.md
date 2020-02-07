@@ -10,6 +10,7 @@
 - memoire
 - enluminures
 - museo
+- autor
 
 ## Liste des rôles
 

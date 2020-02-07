@@ -66,6 +66,15 @@ const Schema = new mongoose.Schema(
         generated: true
       }
     },
+    POP_FLAGS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Informations et avertissements techniques",
+        label: "Alertes POP",
+        generated: true
+      }
+    },
     DMIS: {
       type: String,
       default: "",
