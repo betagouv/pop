@@ -29,6 +29,7 @@ app.get("/", (_req, res) => {
 
 app.use("/auth", require("./controllers/auth"));
 app.use("/users", require("./controllers/users"));
+app.use("/producteur", require("./controllers/producteurs"));
 app.use("/import", require("./controllers/import"));
 
 // Notices
