@@ -305,7 +305,6 @@ export default class extends React.Component {
                     <Field title={mapping.palissy.DMIS.label} content={notice.DMIS} />
                     <Field title={mapping.palissy.DMAJ.label} content={notice.DMAJ} />
                     <Field title={mapping.palissy.NOMS.label} content={notice.NOMS} />
-                    <Field title={mapping.palissy.AUTP.label} content={notice.AUTP} />
                     <Field title={mapping.palissy.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" />

@@ -325,7 +325,6 @@ export default class extends React.Component {
                     <Field title={mapping.merimee.DMIS.label} content={notice.DMIS} />
                     <Field title={mapping.merimee.DMAJ.label} content={notice.DMAJ} />
                     <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} />
-                    <Field title={mapping.merimee.AUTP.label} content={notice.AUTP} />
                     <Field title={mapping.merimee.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="merimee" />
