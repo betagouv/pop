@@ -83,3 +83,10 @@
   align-items: center;
   height: 100%;
 }
+
+.home .version {
+  text-decoration: none;
+  color: #003f48;
+  font-weight: 300;
+  font-size: 12px;
+}

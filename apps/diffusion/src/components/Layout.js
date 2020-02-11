@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Container } from "reactstrap";
+import Version from "../../../version.json";
 
 export default class Layout extends React.Component {
   render() {
@@ -59,6 +60,9 @@ export default class Layout extends React.Component {
               </Link>
             </li>
           </ul>
+          <div className="version">
+              Pop version {Version.version}
+          </div>
         </div>
         <style jsx>{`
           .header {
@@ -192,6 +196,15 @@ export default class Layout extends React.Component {
           .footer a {
             text-decoration: none;
             padding-left: 20px;
+            color: #003f48;
+            font-weight: 300;
+            font-size: 14px;
+          }
+
+          .version {
+            margin-left: auto;
+            margin-right: 20px;
+            text-decoration: none;
             color: #003f48;
             font-weight: 300;
             font-size: 14px;
