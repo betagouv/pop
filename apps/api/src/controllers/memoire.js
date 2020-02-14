@@ -133,7 +133,7 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
   } else {
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
-  const CONTIENT_IMAGE = MEMOIRE.some(e => e.ref) ? "oui" : "non";
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
   checkESIndex(notice);
@@ -149,7 +149,13 @@ async function updateLinks(notice) {
       return;
     }
 
-    const { REF, IMG, COPY } = notice;
+    // get the original notice to get IMG & COPY
+    //const { REF, IMG, COPY } = notice;
+    let REF = notice.REF;
+    let noticeMemoire = await Memoire.findOne({ REF: REF });
+    let IMG = notice.IMG ? notice.IMG : noticeMemoire.IMG;
+    let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.IMG;
+
 
     const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];

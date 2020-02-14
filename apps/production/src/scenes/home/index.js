@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-
+import Version from "../../../../version.json";
 import "./index.css";
 
 export default class Home extends React.Component {
@@ -26,6 +26,9 @@ export default class Home extends React.Component {
                 remplacer intégralement des notices existantes.
               </li>
             </ul>
+          </div>
+          <div className="version">
+            Pop version {Version.version}            
           </div>
         </Container>
       </div>

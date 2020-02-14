@@ -56,7 +56,7 @@ const Menu = ({ closeMenu, initialValues }) => (
                 checked={isChecked(item)}
                 onChange={e => handleChange(item, e.target.checked)}
               />
-              {item.key} ({item.doc_count})
+              {item.key === "Musées de france (MUSEO)" ? "Répertoire des Musées de France (MUSEO)" : item.key} ({item.doc_count})
             </label>
           ));
       }}
@@ -71,8 +71,8 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Base"
     />
     <CollapsableFacet
-      id="ou"
-      initialValue={initialValues.get("ou")}
+      id="où"
+      initialValue={initialValues.get("où")}
       fields={[
         "REG.keyword",
         "COM.keyword",
