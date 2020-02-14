@@ -56,6 +56,18 @@ class UpdateProducteur extends React.Component {
 
   renderModal() {
     const { _id, LABEL, BASE } = this.state;
+    console.log("BASE = " + BASE);
+    let bases = [
+      "autor",
+      "enluminures",
+      "joconde",
+      "memoire",
+      "merimee",
+      "mnr",
+      "museo",
+      "palissy"
+    ];
+    bases = bases.map(e => <option key={e}>{e}</option>);
 
     return (
       <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
@@ -72,7 +84,12 @@ class UpdateProducteur extends React.Component {
         <div className="input-container">
           <div>
             <div>Base</div>
-            <Input value={BASE} onChange={e => this.setState({ BASE: e.target.value })} />
+            <Input 
+              type="select"
+              value={BASE}
+              onChange={e => this.setState({ BASE: e.target.value })}>
+              {bases}
+            </Input>
             </div>
         </div>
 

@@ -23,3 +23,8 @@
   align-items: center;
   padding-top: 20px;
 }
+
+.modal-content .addBaseButton {
+  background-color: #008000;
+  color: white;
+}
