@@ -76,7 +76,6 @@ router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req
 // Create one user.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => { 
     const { LABEL, BASE } = req.body;
-    
     // Validate required fields.
     const validation = producteurValidation({ ...req.body });
     if (!validation.success) {
@@ -126,12 +125,19 @@ router.delete("/:_id", passport.authenticate("jwt", { session: false }), async (
 });
 
 
-function producteurValidation({ LABEL, BASE }) {
+function producteurValidation({ LABEL, baseList }) {
     let msg = "";
+    console.log("api baseList = " + baseList[0].prefixes.length);
     // Some params are required.
-    if (!LABEL || !BASE) {
-      msg = "Nom du producteur et base ne doivent pas être vides";
+    if (!LABEL) {
+      msg = "Le nom du producteur ne doit pas être vide";
       return { success: false, msg };
+    }
+    for(let i=0; i<baseList.length; i++){
+      if(baseList[i].base=="" || baseList[i].prefixes.length<1){
+        msg = "Veuillez sélectionner une base et saisir le ou les préfixes associés";
+      return { success: false, msg };
+      }
     }
     return { success: true };
 }

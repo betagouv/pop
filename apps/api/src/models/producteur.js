@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const ProducteurSchema = new Schema({
   LABEL: { type: String, required: true },
-  BASE: { type: String, required: true }
+  BASE: { type: Array, required: true }
 });
 
 ProducteurSchema.method("toJSON", function() {

@@ -6,27 +6,25 @@ const Tags = ReactTags.WithContext;
 export default class PrefixInput extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            index: this.props.index,
-            prefixes: this.props.prefixes
-        };
-        console.log("handle prefixes = " + this.props.handleUpdatePrefixes);
+        this.state = {};
     }
   
     handleDelete(i) {
-      const arr = this.state.prefixes;
-      const newArr = arr.filter((tag, index) => index !== i);
-      this.setState({ prefixes: newArr});
-      this.props.handleUpdatePrefixes(this.state.index, newArr);
+      const arr = this.props.prefixes;
+      const prefixes = arr.filter((tag, index) => index !== i);
 
+      const base = this.props.base;
+      const newItem = {base, prefixes};
+      this.props.handleUpdateBase(this.props.index, newItem);
     }
   
     handleAddition(tag) {
-      const arr = this.state.prefixes;
-      const newArr = arr.concat(tag.text);
-      this.setState({ prefixes: newArr});
-      this.props.handleUpdatePrefixes(this.state.index, newArr);
+      const arr = this.props.prefixes;
+      const prefixes = arr.concat(tag.text);
 
+      const base = this.props.base;
+      const newItem = {base, prefixes};
+      this.props.handleUpdateBase(this.props.index, newItem);
     }
   
     handleInputChange(str) {
@@ -49,7 +47,7 @@ export default class PrefixInput extends React.Component {
     }
   
     render() {
-      if (!Array.isArray(this.state.prefixes)) {
+      if (!Array.isArray(this.props.prefixes)) {
         return (
           <div>
             {`Les préfixes devrait être une liste mais est un élément unique`}
@@ -57,7 +55,7 @@ export default class PrefixInput extends React.Component {
         );
       }
   
-      const prefixes = this.state.prefixes;  
+      const prefixes = this.props.prefixes;  
       return (
         <div>
             <Tags

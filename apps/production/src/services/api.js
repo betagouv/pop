@@ -52,7 +52,6 @@ class api {
 
   // Create a producteur.
   async createProducteur({ LABEL, BASE }) {
-    console.log("test 2");
     const props = { LABEL, BASE };
     return request.fetchJSON("POST", "/producteur", props);
   }

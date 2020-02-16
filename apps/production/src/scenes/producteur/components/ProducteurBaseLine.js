@@ -7,15 +7,14 @@ import PrefixInput from "./PrefixInput";
 export default class ProducteurBaseLine extends React.Component {  
     constructor(props){
         super(props);
-        this.state = {
-            BASE : this.props.baseList[this.props.index].base
-        }
+        this.state = {}
     }
 
 
-    setBase(key, newBase){
-        this.props.handleUpdateBase(this.props.index, newBase);
-        this.setState({BASE: newBase});
+    setBase(index, newBase){
+        const prefixes = this.props.prefixes;
+        const newItem = {newBase, prefixes};
+        this.props.handleUpdateBase(index, newItem);
     }
 
     render() {
@@ -33,16 +32,24 @@ export default class ProducteurBaseLine extends React.Component {
         bases = bases.map(e => <option key={e}>{e}</option>);
 
         return (
-            <div className="inline-fields">
+            <div className="base-prefixes-fields">
                 Base
-                <Input
-                    type="select"
-                    value={this.state.BASE}
-                    onChange={(e => this.setBase(this.props.index, e.target.value) )}>
-                    {bases}
-                </Input>
+                <div className="inline-container">
+                    <Input
+                        className="select-base"
+                        type="select"
+                        value={this.props.BASE}
+                        onChange={(e => this.setBase(this.props.index, e.target.value) )}>
+                        {bases}
+                    </Input>
+                    <Button
+                        className="deleteBaseButton" onClick={() => this.props.deleteBaseLine(this.props.index)}>
+                        -
+                    </Button>
+                </div>
+
                 Préfixe(s)
-                <PrefixInput key={0} index={this.props.index} prefixes={this.props.baseList[this.props.index].prefixes} handleUpdatePrefixes={this.props.handleUpdatePrefixes}/>
+                <PrefixInput key={0} index={this.props.index} base={this.props.BASE} prefixes={this.props.prefixes} handleUpdateBase={this.props.handleUpdateBase}/>
             </div>
             );
     }

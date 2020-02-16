@@ -14,33 +14,37 @@ class CreateProducteur extends React.Component {
     
     state = {
         modal: false,
+        indexMax: 0,
         LABEL: "",
         baseList:   [{
+                        index: 0,
                         base: "",
                         prefixes:[]
-                    }],
-        componentBaseList: [<ProducteurBaseLine key={0} index={0} baseList={ [{ base: "", prefixes:[] }] } handleUpdateBase={this.handleUpdateBase.bind(this)} handleUpdatePrefixes={this.handleUpdatePrefixes.bind(this)}/>]
-
+                    }]
     };
 
     //Méthode permettant de modifier la base de l'item à l'index key de la liste de base du composant parent
-    handleUpdateBase(key, newBase){
-        let newBaseList = this.state.baseList;
-        newBaseList[key].base = newBase;
-        this.setState({ baseList: newBaseList });
+    handleUpdateBase(index, newItem){
+        console.log("index updated = " + index);
+        this.setState({ baseList:
+            this.state.baseList.map(item => 
+                {
+                    if(item.index === index){
+                        item.base = newItem.base;
+                        item.prefixes = newItem.prefixes;
+                    }
+                    return item;
+                }
+            ) 
+        });
     }
     
-    //Méthode permettant de modifier les prefixes de l'item à l'index key de la liste de base du composant parent
-    handleUpdatePrefixes(key, newPrefixes){
-        let newBaseList = this.state.baseList;
-        newBaseList[key].prefixes = newPrefixes;
-        this.setState({ baseList: newBaseList });
-    }
 
     //Méthode créant un nouveau producteur en fonction des valeurs en entrée
     async createProducteur() {
         this.setState({ loading: true });
-        let { LABEL, BASE } = this.state;
+        let { LABEL, baseList } = this.state;
+        let BASE = baseList;
         try {
             await api.createProducteur({ LABEL, BASE });
             this.setState({ modal: false });
@@ -54,19 +58,23 @@ class CreateProducteur extends React.Component {
     //Ajoute un élément vide à baseList contenant la liste des bases et leurs préfixes, et un component à la liste
     async addBaseLine() {
         //Récupération des listes actuelles dans le state, et de la taille des listes
-        let newComponentBaseList = this.state.componentBaseList;
+        let newIndex = this.state.indexMax + 1;
+        console.log("indexMax = " + newIndex);
         let newBaseList = this.state.baseList;
-        let length = newComponentBaseList.length;
+        let length = this.state.baseList.length;
 
         //Ajout d'un élément à chaque liste
-        let newItem =  { base: "", prefixes:[] };
+        let newItem = { index: newIndex, base: "", prefixes:[] };
         newBaseList[length] = newItem;
-        newComponentBaseList[length] = <ProducteurBaseLine key={length} index={length} baseList={newBaseList} handleUpdateBase={this.handleUpdateBase.bind(this)} handleUpdatePrefixes={this.handleUpdatePrefixes.bind(this)} />;
-        
 
-        //Update le state avec chaque liste
-        this.setState({ componentBaseList: newComponentBaseList });
+        //Update le state avec la liste
+        this.setState({indexMax: newIndex});
         this.setState({ baseList: newBaseList });
+    }
+
+    //Méthode de suppression d'une ligne à l'index renseigné
+    deleteBaseLine(index) {
+        this.setState({ baseList: this.state.baseList.filter( item => item.index != index) });
     }
 
 
@@ -79,23 +87,30 @@ class CreateProducteur extends React.Component {
                 <div>
                     <div>Nom du producteur</div>
                     <Input
-                    value={this.state.LABEL}
-                    onChange={e => this.setState({ LABEL: e.target.value })}
+                        value={this.state.LABEL}
+                        onChange={e => this.setState({ LABEL: e.target.value })}
                     />
                 </div>
             </div>
             <div className="input-container">
-
                 <div>
-                    {this.state.componentBaseList.map(e =>
-                        <div>{e}</div>
-                     )}
+                    {this.state.baseList.map((item) =>
+                            <ProducteurBaseLine
+                                key={item.index}
+                                index={item.index}
+                                BASE={item.base}
+                                prefixes={item.prefixes}
+                                handleUpdateBase={this.handleUpdateBase.bind(this)}
+                                deleteBaseLine={this.deleteBaseLine.bind(this)}
+                            />)}
                 </div>
 
-                <Button
-                    className="addBaseButton" onClick={() => this.addBaseLine()}>
-                    +
-                </Button>
+                <div className="addButton-container">
+                    <Button
+                        className="addBaseButton" onClick={() => this.addBaseLine()}>
+                        +
+                    </Button>
+                </div>
             </div>
             <div className="button-container">
             <Button color="primary" onClick={this.createProducteur.bind(this)}>

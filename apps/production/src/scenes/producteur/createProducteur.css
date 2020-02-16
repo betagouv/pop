@@ -14,7 +14,7 @@
 }
 
 .modal-content .input-container {
-  padding: 10px;
+  margin-top: 10px;
 }
 
 .modal-content .button-container {
@@ -24,7 +24,35 @@
   padding-top: 20px;
 }
 
+.modal-content .select-base {
+  width: 90%;
+}
+
+.modal-content .addButton-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .modal-content .addBaseButton {
   background-color: #008000;
   color: white;
 }
+
+.modal-content .base-prefixes-fields {
+  margin-top: 30px;
+}
+
+.modal-content .inline-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content .deleteBaseButton {
+  background-color: #d8271b;
+  color: white;
+}
+
+
