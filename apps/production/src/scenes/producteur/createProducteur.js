@@ -6,16 +6,13 @@ import ReactTags from "react-tag-input";
 import api from "../../services/api";
 import "./createProducteur.css";
 import ProducteurBaseLine from "./components/ProducteurBaseLine";
-import PrefixInput from "./components/PrefixInput";
-
-const Tags = ReactTags.WithContext;
 
 class CreateProducteur extends React.Component {
     
     state = {
         modal: false,
         indexMax: 0,
-        LABEL: "",
+        label: "",
         baseList:   [{
                         index: 0,
                         base: "",
@@ -23,9 +20,18 @@ class CreateProducteur extends React.Component {
                     }]
     };
 
+    componentDidMount(){
+        this.setState({ baseList : 
+            [{
+                index: 0,
+                base: "",
+                prefixes:[]
+            }]
+        })
+      }
+
     //Méthode permettant de modifier la base de l'item à l'index key de la liste de base du composant parent
     handleUpdateBase(index, newItem){
-        console.log("index updated = " + index);
         this.setState({ baseList:
             this.state.baseList.map(item => 
                 {
@@ -39,14 +45,13 @@ class CreateProducteur extends React.Component {
         });
     }
     
-
     //Méthode créant un nouveau producteur en fonction des valeurs en entrée
     async createProducteur() {
         this.setState({ loading: true });
-        let { LABEL, baseList } = this.state;
-        let BASE = baseList;
+        let { label, baseList } = this.state;
+        let base = baseList;
         try {
-            await api.createProducteur({ LABEL, BASE });
+            await api.createProducteur({ label, base });
             this.setState({ modal: false });
             toastr.success("Le producteur a été ajouté.");
             this.props.callback();
@@ -59,7 +64,6 @@ class CreateProducteur extends React.Component {
     async addBaseLine() {
         //Récupération des listes actuelles dans le state, et de la taille des listes
         let newIndex = this.state.indexMax + 1;
-        console.log("indexMax = " + newIndex);
         let newBaseList = this.state.baseList;
         let length = this.state.baseList.length;
 
@@ -87,8 +91,8 @@ class CreateProducteur extends React.Component {
                 <div>
                     <div>Nom du producteur</div>
                     <Input
-                        value={this.state.LABEL}
-                        onChange={e => this.setState({ LABEL: e.target.value })}
+                        value={this.state.label}
+                        onChange={e => this.setState({ label: e.target.value })}
                     />
                 </div>
             </div>
@@ -98,7 +102,7 @@ class CreateProducteur extends React.Component {
                             <ProducteurBaseLine
                                 key={item.index}
                                 index={item.index}
-                                BASE={item.base}
+                                base={item.base}
                                 prefixes={item.prefixes}
                                 handleUpdateBase={this.handleUpdateBase.bind(this)}
                                 deleteBaseLine={this.deleteBaseLine.bind(this)}
@@ -121,7 +125,7 @@ class CreateProducteur extends React.Component {
         );
     }
 
-  render() {
+    render() {
         return (
             <div className="createProducteur">
                 {this.renderModal()}
@@ -130,7 +134,7 @@ class CreateProducteur extends React.Component {
                 </Button>
             </div>
         );
-  }
+    }
 }
 
 const mapStateToProps = ({ Auth }) => {

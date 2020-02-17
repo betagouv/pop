@@ -27,25 +27,6 @@ export default class PrefixInput extends React.Component {
       this.props.handleUpdateBase(this.props.index, newItem);
     }
   
-    handleInputChange(str) {
-      if (str && this.props.thesaurus) {
-        api
-          .getThesaurus(this.props.thesaurus, str)
-          .then(values => {
-            if (values) {
-              const suggestions = values.map(e => ({
-                id: e.value,
-                text: e.value
-              }));
-              this.setState({ suggestions });
-            }
-          })
-          .catch(e => {
-            console.log("ERROR", error);
-          });
-      }
-    }
-  
     render() {
       if (!Array.isArray(this.props.prefixes)) {
         return (
@@ -58,19 +39,18 @@ export default class PrefixInput extends React.Component {
       const prefixes = this.props.prefixes;  
       return (
         <div>
-            <Tags
-                tags={
-                    prefixes? prefixes.map(e => {
-                        return { 
-                            id: e,
-                            text: e
-                        };
-                    })
-                    : []
-                }
+          <Tags
+            tags={
+                prefixes? prefixes.map(e => {
+                    return { 
+                        id: e,
+                        text: e
+                    };
+                })
+                : []
+            }
             handleDelete={this.handleDelete.bind(this)}
             handleAddition={this.handleAddition.bind(this)}
-            handleInputChange={this.handleInputChange.bind(this)}
             autocomplete={0}
             placeholder="Ajouter une nouvelle entrée"
             autofocus={false}

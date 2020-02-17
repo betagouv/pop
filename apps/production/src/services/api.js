@@ -51,20 +51,15 @@ class api {
   }
 
   // Create a producteur.
-  async createProducteur({ LABEL, BASE }) {
-    const props = { LABEL, BASE };
+  async createProducteur({ label, base }) {
+    const props = { label, base };
     return request.fetchJSON("POST", "/producteur", props);
   }
 
   // Update a producteur.
-  async updateProducteur({ _id, LABEL, BASE }) {
-    const props = { _id, LABEL, BASE };
+  async updateProducteur({ _id, label, base }) {
+    const props = { _id, label, base };
     return request.fetchJSON("PUT", `/producteur/${_id}`, props);
-  }
-
-  // Delete one producteur by id.
-  deleteProducteur(_id) {
-    return request.fetchJSON("DELETE", `/producteur/${_id}`);
   }
 
   // Send a report.

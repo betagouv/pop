@@ -37,17 +37,33 @@ class Producteur extends React.Component {
         </thead>
         <tbody>
           {this.state.producteurs.map(producteur => {
-            const {
-              _id,
-              LABEL,
-              BASE
-            } = producteur;
+            const _id = producteur._id;
+            const label = producteur.LABEL;
+            const base = producteur.BASE;
             return (
               <tr key={_id}>
-                <td>{LABEL}</td>
-                <td>{BASE}</td>
+                <td>{label}</td>
+
                 <td>
-                  <UpdateProducteur producteur={producteur} callback={this.fetchProducteurs} />
+                  {
+                    base.map(item => {
+                      const {base, prefixes} = item;
+                      return (
+                        <tr>
+                          {
+                            base
+                            + " ("
+                            + prefixes.map(itemPrefix => 
+                                            { return(itemPrefix)}
+                                        ) 
+                            + ")"}
+                        </tr>
+                      )
+                    })                
+                  }
+                </td>
+                <td>
+                  <UpdateProducteur label={label} baseList={base} _id={_id} callback={this.fetchProducteurs} />
                 </td>
               </tr>
             );

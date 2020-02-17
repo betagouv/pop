@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Modal, Input, Row, Col } from "reactstrap";
+import { Button, Input } from "reactstrap";
 import PrefixInput from "./PrefixInput";
 
 
@@ -11,9 +10,9 @@ export default class ProducteurBaseLine extends React.Component {
     }
 
 
-    setBase(index, newBase){
+    setBase(index, base){
         const prefixes = this.props.prefixes;
-        const newItem = {newBase, prefixes};
+        const newItem = {base, prefixes};
         this.props.handleUpdateBase(index, newItem);
     }
 
@@ -38,7 +37,7 @@ export default class ProducteurBaseLine extends React.Component {
                     <Input
                         className="select-base"
                         type="select"
-                        value={this.props.BASE}
+                        value={this.props.base}
                         onChange={(e => this.setBase(this.props.index, e.target.value) )}>
                         {bases}
                     </Input>
@@ -49,7 +48,7 @@ export default class ProducteurBaseLine extends React.Component {
                 </div>
 
                 Préfixe(s)
-                <PrefixInput key={0} index={this.props.index} base={this.props.BASE} prefixes={this.props.prefixes} handleUpdateBase={this.props.handleUpdateBase}/>
+                <PrefixInput key={0} index={this.props.index} base={this.props.base} prefixes={this.props.prefixes} handleUpdateBase={this.props.handleUpdateBase}/>
             </div>
             );
     }

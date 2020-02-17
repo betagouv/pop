@@ -5,105 +5,128 @@ import { toastr } from "react-redux-toastr";
 
 import api from "../../services/api";
 import "./createProducteur.css";
-import Tags from "../../components/Tags";
+import ProducteurBaseLine from "./components/ProducteurBaseLine";
 
 class UpdateProducteur extends React.Component {
   state = {
     modal: false,
-    _id: this.props.producteur._id,
-    LABEL: this.props.producteur.LABEL,
-    BASE: this.props.producteur.BASE,
-    error: ""
+    indexMax: 0,
+    label: this.props.label,
+    baseList: this.props.baseList
   };
+
+  componentDidMount(){
+    this.setState({ baseList : 
+      this.state.baseList.map((item, index) => 
+        {
+          item.index = index;
+          return item;
+        }
+      )    
+    })
+  }
 
   handleClick = e => {
     e.preventDefault();
     this.setState({ modal: true });
   };
 
-  async updateProducteur() {
-    try {
-      this.setState({ loading: true });
-      const { _id, LABEL, BASE } = this.state;
-      await api.updateProducteur({ _id, LABEL, BASE });
-      this.setState({ modal: false, error: "" });
-      toastr.success("Les informations ont été enregistrées.");
-      this.props.callback();
-    } catch (error) {
-      this.setState({ error: error.msg });
-    }
+  //Méthode permettant de modifier la base de l'item à l'index key de la liste de base du composant parent
+  handleUpdateBase(index, newItem){
+    this.setState({ baseList:
+      this.state.baseList.map(item => 
+        {
+          if(item.index === index){
+            item.base = newItem.base;
+            item.prefixes = newItem.prefixes;
+          }
+          return item;
+        }
+      ) 
+    });
   }
 
-  async deleteProducteur() {
+  //Ajoute un élément vide à baseList contenant la liste des bases et leurs préfixes, et un component à la liste
+  async addBaseLine() {
+    //Récupération des listes actuelles dans le state, et de la taille des listes
+    let newIndex = this.state.indexMax + 1;
+    let newBaseList = this.state.baseList;
+    let length = this.state.baseList.length;
+
+    //Ajout d'un élément à chaque liste
+    let newItem = { index: newIndex, base: "", prefixes:[] };
+    newBaseList[length] = newItem;
+
+    //Update le state avec la liste
+    this.setState({indexMax: newIndex});
+    this.setState({ baseList: newBaseList });
+  }
+
+  //Méthode de suppression d'une ligne à l'index renseigné
+  deleteBaseLine(index) {
+    this.setState({ baseList: this.state.baseList.filter( item => item.index != index) });
+  }
+
+  //Méthode permettant de modifier un producteur existant
+  async updateProducteur() {
+    let _id = this.props._id;
+    this.setState({ loading: true });
+    let { label, baseList } = this.state;
+    let base = baseList;
     try {
-      this.setState({ loading: true });
-      const confirmText =
-        "Vous êtes sur le point de supprimer ce producteur. Souhaitez-vous continuer ?";
-      const toastrConfirmOptions = {
-        onOk: async () => {
-          console.log(this.state);
-          await api.deleteProducteur(this.state._id);
-          this.setState({ modal: false, error: "" });
-          toastr.success("Le producteur a été supprimé");
-          this.props.callback();
-        }
-      };
-      toastr.confirm(confirmText, toastrConfirmOptions);
+        await api.updateProducteur({_id, label, base });
+        this.setState({ modal: false });
+        toastr.success("Le producteur a été modifié.");
+        this.props.callback();
     } catch (error) {
-      this.setState({ error: error.msg });
+        this.setState({ error: error.msg });
     }
   }
 
   renderModal() {
-    const { _id, LABEL, BASE } = this.state;
-    console.log("BASE = " + BASE);
-    let bases = [
-      "autor",
-      "enluminures",
-      "joconde",
-      "memoire",
-      "merimee",
-      "mnr",
-      "museo",
-      "palissy"
-    ];
-    bases = bases.map(e => <option key={e}>{e}</option>);
-
     return (
       <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
-        <h3>
-          Modifier {LABEL}
-        </h3>
+        <h3>Modifier un producteur</h3>
         <div className="error">{this.state.error}</div>
         <div className="input-container">
           <div>
             <div>Nom du producteur</div>
-            <Input value={LABEL} onChange={e => this.setState({ LABEL: e.target.value })} />
+            <Input
+              value={this.state.label}
+              onChange={e => this.setState({ label: e.target.value })}
+            />
           </div>
         </div>
         <div className="input-container">
           <div>
-            <div>Base</div>
-            <Input 
-              type="select"
-              value={BASE}
-              onChange={e => this.setState({ BASE: e.target.value })}>
-              {bases}
-            </Input>
-            </div>
-        </div>
+            {this.state.baseList.map((item) =>
+                <ProducteurBaseLine
+                    key={item.index}
+                    index={item.index}
+                    base={item.base}
+                    prefixes={item.prefixes}
+                    handleUpdateBase={this.handleUpdateBase.bind(this)}
+                    deleteBaseLine={this.deleteBaseLine.bind(this)}
+                />
+              )}
+          </div>
 
+          <div className="addButton-container">
+            <Button
+              className="addBaseButton" onClick={() => this.addBaseLine()}>
+              +
+            </Button>
+          </div>
+        </div>
         <div className="button-container">
           <Button color="primary" onClick={this.updateProducteur.bind(this)}>
-            Enregistrer les modifications
-          </Button>
-          <Button color="danger" className="ml-3" onClick={this.deleteProducteur.bind(this)}>
-            Supprimer
+            Modifier
           </Button>
         </div>
       </Modal>
-    );
+      );
   }
+
   render() {
     return (
       <div>
