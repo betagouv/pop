@@ -90,7 +90,7 @@ class Notice extends React.Component {
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>
-                <CustomField name="REF" disabled={!this.state.editable} />
+                <CustomField name="REF" disabled={this.state.editable} />
                 <CustomField name="ISNI" disabled={!this.state.editable} />
                 <CustomField name="ALIAS" disabled={!this.state.editable} />
                 <CustomField name="BIBLIO" disabled={!this.state.editable} />
@@ -119,7 +119,7 @@ class Notice extends React.Component {
                 <CustomField name="OEUVR" disabled={!this.state.editable} />
                 <CustomField name="PUBLI" disabled={!this.state.editable} />
                 <CustomField name="ALAMAP" disabled={!this.state.editable} />
-                <CustomField name="EMET" disabled={!this.state.editable} />
+                <CustomField name="EMET" disabled={this.state.editable} />
                 <CustomField name="REDAC" disabled={!this.state.editable} />
                 <CustomField name="LRELA" disabled={!this.state.editable} />
                 <CustomField name="SEXE" disabled={!this.state.editable} />
@@ -131,8 +131,8 @@ class Notice extends React.Component {
                 <CustomField name="IDENT" disabled={!this.state.editable} />
                 <CustomField name="ARK" disabled={!this.state.editable} />
                 <CustomField name="OBSMAP" disabled={!this.state.editable} />
-                <CustomField name="DMAJ" disabled={!this.state.editable} />
-                <CustomField name="DMIS" disabled={!this.state.editable} />
+                <CustomField name="DMAJ" disabled={this.state.editable} />
+                <CustomField name="DMIS" disabled={this.state.editable} />
               </Col>
             </Row>
           </Section>

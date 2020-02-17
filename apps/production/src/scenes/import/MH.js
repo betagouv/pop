@@ -5,6 +5,7 @@ import Importer from "./importer";
 import Merimee from "../../entities/Merimee";
 import Memoire from "../../entities/Memoire";
 import Palissy from "../../entities/Palissy";
+import Autor from "../../entities/Autor";
 
 import api from "../../services/api";
 import utils from "./utils";
@@ -88,8 +89,10 @@ function parseFiles(files, encoding) {
       } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
+      } else if (["AW", "AA", "AB", "AC"].includes(obj.REF.substring(0, 2))) {
+        newNotice = new Autor(obj);
       } else {
-        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`);
+        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`);
         return;
       }
 
@@ -149,6 +152,9 @@ function readme() {
   const generatedPalissyFields = Object.keys(Mapping.palissy).filter(e => {
     return Mapping.palissy[e].generated;
   });
+  const generatedAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].generated;
+  });
   const validationMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].validation;
   });
@@ -158,6 +164,9 @@ function readme() {
   const validationMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
     return Mapping.merimee[e].validation;
   });
+  const validationAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].validation;
+  });
   const requiredMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].required;
   });
@@ -166,6 +175,9 @@ function readme() {
   });
   const requiredMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
     return Mapping.merimee[e].required;
+  });
+  const requiredAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].required;
   });
 
   // MH specific.
@@ -226,6 +238,12 @@ function readme() {
             <li key={e}>{e}</li>
           ))}
         </ul>
+        Autor :
+        <ul>
+          {requiredAutorFields.map(e => (
+            <li key={e}>{e}</li>
+          ))}
+        </ul>
         <br />
         <h6>Test de validation des champs : </h6>
         Les tests suivants sont effectués lors des imports
@@ -252,6 +270,14 @@ function readme() {
           {validationPalissyFields.map(e => (
             <li key={e}>
               {e} : {Mapping.palissy[e].validation}
+            </li>
+          ))}
+        </ul>
+        Autor :
+        <ul>
+          {validationAutorFields.map(e => (
+            <li key={e}>
+              {e} : {Mapping.autor[e].validation}
             </li>
           ))}
         </ul>
@@ -316,6 +342,12 @@ function readme() {
         Palissy :
         <ul>
           {generatedPalissyFields.map(e => (
+            <li key={e}>{e}</li>
+          ))}
+        </ul>
+        Autor :
+        <ul>
+        {generatedAutorFields.map(e => (
             <li key={e}>{e}</li>
           ))}
         </ul>
