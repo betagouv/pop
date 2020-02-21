@@ -19,7 +19,8 @@ const {
   uploadFile,
   hasCorrectCoordinates,
   hasCorrectPolygon,
-  findMerimeeProducteur
+  findMerimeeProducteur,
+  identifyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -132,7 +133,13 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice.DISCIPLINE = notice.PRODUCTEUR = findMerimeeProducteur(notice);
+  let noticeProducteur = await identifyProducteur("merimee", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.DISCIPLINE = notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
+  }
   notice = await withFlags(notice);
 }
 
