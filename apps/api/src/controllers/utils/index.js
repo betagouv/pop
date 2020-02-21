@@ -12,7 +12,8 @@ const {
   updateNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 } = require("./notice");
 const { formattedNow } = require("./date");
 
@@ -30,5 +31,6 @@ module.exports = {
   hasCorrectPolygon,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 };

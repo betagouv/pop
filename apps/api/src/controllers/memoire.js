@@ -15,7 +15,8 @@ const {
   checkESIndex,
   updateNotice,
   deleteFile,
-  findMemoireProducteur
+  findMemoireProducteur,
+  identifyProducteur
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
@@ -78,27 +79,39 @@ function findCollection(ref = "") {
   }
 }
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
   if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-    notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+    let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+    if(noticeProducteur){
+      notice.PRODUCTEUR = noticeProducteur;
+    }
+    else {
+      notice.PRODUCTEUR = "AUTRE";
+    }
   }
   notice.DMAJ = formattedNow();
   notice = withFlags(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
-  notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+  let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "AUTRE";
+  }
   notice = withFlags(notice);
 }
 
-function findProducteur(REF, IDPROD, EMET) {
-  return findMemoireProducteur(REF, IDPROD, EMET);
-}
+//function findProducteur(REF, IDPROD, EMET) {
+//  return findMemoireProducteur(REF, IDPROD, EMET);
+//}
 
 // Complicated function to update linked notice
 // Uses cases :
@@ -222,7 +235,7 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    transformBeforeUpdate(notice);
+    await transformBeforeUpdate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
     promises.push(updateLinks(notice));
@@ -261,7 +274,7 @@ router.post(
 
     // Update and save.
     promises.push(updateLinks(notice));
-    transformBeforeCreate(notice);
+    await transformBeforeCreate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
     promises.push(obj.save());

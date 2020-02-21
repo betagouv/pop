@@ -41,6 +41,11 @@ router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req
         return res.status(400).send({ success: validation.success, msg: validation.msg });
     }
 
+    //Update the new producteur with this LABEL and BASE and removing index from base objects
+    for(let i=0; i<base.length; i++){
+      delete base[i].index;
+    }
+
     // Get producteur by its id.
     let producteur;
     try {

@@ -1,3 +1,4 @@
+const Producteur = require("../../models/producteur");
 const { capture } = require("./../../sentry.js");
 
 // Creates a new ID for a notice of type "collection".
@@ -50,6 +51,48 @@ function addZeros(v, zeros) {
     .concat([v])
     .join("0")
     .slice(-zeros);
+}
+
+
+// Identifie le producteur en fonction de la collection et de la référence
+// Sinon retourne null
+async function identifyProducteur(collection, REF, IDPROD, EMET) {
+  let producteurs = [];
+  await Producteur.find({ "BASE.base": collection}).then(listProducteurs => producteurs = listProducteurs);
+  
+  //Liste des producteurs donc le préfixe correspond au début de la REF de la notice
+  let possibleProducteurs = [];
+
+  producteurs.map((producteur) => {
+    //Pour chaque champ BASE contenant la liste des base du producteur et la liste des préfixes
+    producteur.BASE.map((baseItem) => {
+      //Pour chaque préfixe
+      baseItem.prefixes.map( prefix => {
+        if(REF.startsWith(prefix.toString())){
+          //Retourne le label du producteur
+          let length = possibleProducteurs.length;
+          possibleProducteurs[length] = producteur.LABEL;
+        }
+      })
+    })
+  });
+
+  if(collection == "memoire") {
+    if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
+      possibleProducteurs[0] = "UDAP";
+    }
+    else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
+      possibleProducteurs[0] = "MAP";
+    }
+  }
+
+  //Si la liste des producteurs est non vide, on retourne le 1er élément
+  if(possibleProducteurs.length>0){
+    return possibleProducteurs[0];
+  }
+  else{
+    return null;
+  }
 }
 
 // Get "producteur" for memoire notices.
@@ -109,5 +152,6 @@ module.exports = {
   updateNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 };
