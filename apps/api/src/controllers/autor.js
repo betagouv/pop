@@ -7,7 +7,7 @@ const { formattedNow, updateNotice } = require("./utils");
 const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/authorization");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-const { checkESIndex } = require("../controllers/utils");
+const { checkESIndex, identifyProducteur } = require("../controllers/utils");
 
 
 
@@ -69,7 +69,7 @@ router.post(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
-    notice.DMAJ = formattedNow();
+    notice.DMIS = formattedNow();
     transformBeforeCreateAndUpdate(notice);
     if (!canCreateAutor(req.user, notice)) {
       return res
@@ -121,7 +121,14 @@ function transformBeforeCreateAndUpdate(notice) {
   console.log("transformBeforeCreateAndUpdate");
   return new Promise(async (resolve, reject) => {
     try {
-      notice.DMIS = formattedNow();
+      notice.DMAJ = formattedNow();
+      let noticeProducteur = await identifyProducteur("autor", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "Autre";
+      }
 
       notice = withFlags(notice);
 

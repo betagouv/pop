@@ -1,4 +1,5 @@
 import React from "react";
+import { bucket_url} from "../../config.js"
 import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
@@ -95,6 +96,7 @@ class Notice extends React.Component {
             canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
             canEdit={false} // As image come from memoire, we can't delete or update an image from autor
             external={true}
+            hideButton={true} // As image come from memoire, we can't delete or update an image from autor
             getAbsoluteUrl={e => {
               if (!e.url) {
                 return "";
@@ -142,7 +144,6 @@ class Notice extends React.Component {
                 <CustomField name="OBS" disabled={!this.state.editable} />
                 <CustomField name="DMAJ" disabled={this.state.editable} />
                 <CustomField name="DMIS" disabled={this.state.editable} />
-                <CustomField name="TYPID" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="NOM" disabled={!this.state.editable} />
@@ -164,13 +165,13 @@ class Notice extends React.Component {
                 <CustomField name="REDAC" disabled={!this.state.editable} />
                 <CustomField name="LRELA" disabled={!this.state.editable} />
                 <CustomField name="FORM" disabled={!this.state.editable} />
-                <CustomField name="SOCSAV" disabled={!this.state.editable} />
                 <CustomField name="SOURCES" disabled={!this.state.editable} />
                 <CustomField name="STAT" disabled={!this.state.editable} />
                 <CustomField name="SYMB" disabled={!this.state.editable} />
                 <CustomField name="INS" disabled={!this.state.editable} />
                 <CustomField name="TITR" disabled={!this.state.editable} />
                 <CustomField name="GAR" disabled={!this.state.editable} />
+                <CustomField name="TYPID" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>

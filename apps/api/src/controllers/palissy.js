@@ -19,7 +19,8 @@ const {
   uploadFile,
   hasCorrectCoordinates,
   hasCorrectPolygon,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");

@@ -46,7 +46,6 @@ const Schema = new mongoose.Schema(
     PRODUCTEUR: { type: String, default: "", documentation: { label: "Producteur" } },
     REDAC: { type: String, default: "", documentation: { label: "Nom du rédacteur" } },
     LRELA: { type: String, default: "", documentation: { label: "Personnes associées" } },
-    SOCSAV: { type: [String], default: [], documentation: { label: "SOCSAV ?" } },
     SOURCES: { type: String, default: "", documentation: { label: "Sources" } },
     TITR: { type: [String], default: [], documentation: { label: "Titres" } },
     TYPID: { type: [String], default: [], documentation: { label: "Personne physique ou morale" } },
