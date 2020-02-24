@@ -16,7 +16,8 @@ const {
   checkESIndex,
   updateNotice,
   deleteFile,
-  findMemoireProducteur
+  findMemoireProducteur,
+  identifyProducteur
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
@@ -83,27 +84,39 @@ function findCollection(ref = "") {
   }
 }
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
   if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-    notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+    let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+    if(noticeProducteur){
+      notice.PRODUCTEUR = noticeProducteur;
+    }
+    else {
+      notice.PRODUCTEUR = "AUTRE";
+    }
   }
   notice.DMAJ = formattedNow();
   notice = withFlags(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
-  notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
+  let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "AUTRE";
+  }
   notice = withFlags(notice);
 }
 
-function findProducteur(REF, IDPROD, EMET) {
-  return findMemoireProducteur(REF, IDPROD, EMET);
-}
+//function findProducteur(REF, IDPROD, EMET) {
+//  return findMemoireProducteur(REF, IDPROD, EMET);
+//}
 
 // Complicated function to update linked notice
 // Uses cases :
@@ -138,7 +151,7 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
   } else {
     MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
   }
-  const CONTIENT_IMAGE = MEMOIRE.some(e => e.ref) ? "oui" : "non";
+  const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
   await notice.update({ MEMOIRE, CONTIENT_IMAGE });
   checkESIndex(notice);
@@ -154,7 +167,13 @@ async function updateLinks(notice) {
       return;
     }
 
-    const { REF, IMG, COPY } = notice;
+    // get the original notice to get IMG & COPY
+    //const { REF, IMG, COPY } = notice;
+    let REF = notice.REF;
+    let noticeMemoire = await Memoire.findOne({ REF: REF });
+    let IMG = notice.IMG ? notice.IMG : noticeMemoire.IMG;
+    let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.IMG;
+
 
     const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
@@ -228,7 +247,7 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    transformBeforeUpdate(notice);
+    await transformBeforeUpdate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
     promises.push(updateLinks(notice));
@@ -267,7 +286,7 @@ router.post(
 
     // Update and save.
     promises.push(updateLinks(notice));
-    transformBeforeCreate(notice);
+    await transformBeforeCreate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
     promises.push(obj.save());

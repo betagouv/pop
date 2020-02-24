@@ -45,6 +45,23 @@ class api {
     return request.fetchJSON("GET", `/users`);
   }
 
+  // Get all producteurs.
+  getProducteurs() {
+    return request.fetchJSON("GET", `/producteur`);
+  }
+
+  // Create a producteur.
+  async createProducteur({ label, base }) {
+    const props = { label, base };
+    return request.fetchJSON("POST", "/producteur", props);
+  }
+
+  // Update a producteur.
+  async updateProducteur({ _id, label, base }) {
+    const props = { _id, label, base };
+    return request.fetchJSON("PUT", `/producteur/${_id}`, props);
+  }
+
   // Send a report.
   sendReport(subject, to, body) {
     const data = { subject, to, body };

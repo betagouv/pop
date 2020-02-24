@@ -142,7 +142,14 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
+  //notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
+  let noticeProducteur = await identifyProducteur("palissy", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.DISCIPLINE = notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
+  }
 
   notice = await withFlags(notice);
 }
