@@ -43,6 +43,15 @@ class TagsInput extends React.Component {
           console.log("ERROR", error);
         });
     }
+    else if(str && this.props.input.name === "TYPID"){
+      //Ticket 35635
+      const values = ["collectivité","organisation","personne","famille", "autre"]
+      const suggestions = values.map(e => ({
+        id: e,
+        text: e
+      }));
+      this.setState({suggestions});
+    }
   }
 
   render() {

@@ -9,6 +9,7 @@ const validator = require("validator");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const Autor = require("../models/autor");
 const {
   uploadFile,
   formattedNow,
@@ -73,6 +74,10 @@ function findCollection(ref = "") {
     case "PM":
     case "EM":
       return Palissy;
+    case "PM":
+    case "AW":
+    case "OR":
+      return Autor;
     default:
       return "";
   }
@@ -157,6 +162,7 @@ async function updateLinks(notice) {
     const linkedNotices = [];
     linkedNotices.push(...(await Palissy.find({ "MEMOIRE.ref": REF })));
     linkedNotices.push(...(await Merimee.find({ "MEMOIRE.ref": REF })));
+    linkedNotices.push(...(await Autor.find({ "MEMOIRE.ref": REF })));
 
     const toAdd = [...notice.LBASE];
 

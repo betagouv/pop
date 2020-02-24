@@ -30,7 +30,7 @@ async function run() {
       "-i --indices <indices>",
       "The name of the indices",
       val => val.split(","),
-      "joconde,memoire,merimee,mnr,palissy,import,museo,autor".split(",")
+      "joconde,memoire,merimee,mnr,palissy,import,museo,autor,enluminures".split(",")
     )
     .parse(process.argv);
 

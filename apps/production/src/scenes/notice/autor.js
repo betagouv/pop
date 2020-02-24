@@ -4,7 +4,10 @@ import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
+import FieldImages from "./components/fieldImages";
+import { Link } from "react-router-dom";
 import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
 import Loader from "../../components/Loader";
@@ -87,12 +90,37 @@ class Notice extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+        <FieldImages
+            name="MEMOIRE"
+            canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+            canEdit={false} // As image come from memoire, we can't delete or update an image from autor
+            external={true}
+            getAbsoluteUrl={e => {
+              if (!e.url) {
+                return "";
+              }
+              if (e.url && e.url.indexOf("memoire/") === 0) {
+                return `${bucket_url}${e.url}`;
+              } else {
+                return e.url;
+              }
+            }}
+            footer={e => {
+              return (
+                <Link to={`/notice/memoire/${e.ref}`} target="_blank" rel="noopener">
+                  {e.ref}
+                </Link>
+              );
+            }}
+          />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={this.state.editable} />
                 <CustomField name="ISNI" disabled={!this.state.editable} />
+                <CustomField name="ISNI_VERIFIEE" disabled={!this.state.editable} />
                 <CustomField name="ALIAS" disabled={!this.state.editable} />
+                <CustomField name="BASE" disabled={this.state.editable} />
                 <CustomField name="BIBLIO" disabled={!this.state.editable} />
                 <CustomField name="BIO" disabled={!this.state.editable} />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
@@ -100,39 +128,49 @@ class Notice extends React.Component {
                 <CustomField name="DMORT" disabled={!this.state.editable} />
                 <CustomField name="DNAISS" disabled={!this.state.editable} />
                 <CustomField name="EXPO" disabled={!this.state.editable} />
+                <CustomField name="INI" disabled={!this.state.editable} />
                 <CustomField name="FONC" disabled={!this.state.editable} />
                 <CustomField name="VIDEO" disabled={!this.state.editable} />
                 <CustomField name="LIENS" disabled={!this.state.editable} />
-                <CustomField name="LWEB" disabled={!this.state.editable} />
                 <CustomField name="LMDP" disabled={!this.state.editable} />
-                <CustomField name="LMEM" disabled={!this.state.editable} />
                 <CustomField name="LMORT" disabled={!this.state.editable} />
+                <CustomField name="LOCA" disabled={!this.state.editable} />
                 <CustomField name="LNAISS" disabled={!this.state.editable} />
-                <CustomField name="RESID" disabled={!this.state.editable} />
                 <CustomField name="NATIO" disabled={!this.state.editable} />
+                <CustomField name="IDENT" disabled={!this.state.editable} />
+                <CustomField name="ARK" disabled={!this.state.editable} />
+                <CustomField name="OBS" disabled={!this.state.editable} />
+                <CustomField name="DMAJ" disabled={this.state.editable} />
+                <CustomField name="DMIS" disabled={this.state.editable} />
+                <CustomField name="TYPID" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="NOM" disabled={!this.state.editable} />
+                <CustomField name="PREN" disabled={!this.state.editable} />
                 <CustomField name="PNOM" disabled={!this.state.editable} />
+                <CustomField name="ADRS" disabled={!this.state.editable} />
                 <CustomField name="TYPAPE" disabled={!this.state.editable} />
+                <CustomField name="SCLE" disabled={!this.state.editable} />
+                <CustomField name="DATES" disabled={!this.state.editable} />
                 <CustomField name="REJET" disabled={!this.state.editable} />
                 <CustomField name="OEUVR" disabled={!this.state.editable} />
                 <CustomField name="PUBLI" disabled={!this.state.editable} />
+                <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
                 <CustomField name="ALAMAP" disabled={!this.state.editable} />
-                <CustomField name="EMET" disabled={this.state.editable} />
+                <CustomField name="PREF" disabled={!this.state.editable} />
+                <CustomField name="LOCACT" disabled={!this.state.editable} />
+                <CustomField name="LBASE" disabled={!this.state.editable} />
+                <CustomField name="BIF" disabled={!this.state.editable} />
                 <CustomField name="REDAC" disabled={!this.state.editable} />
                 <CustomField name="LRELA" disabled={!this.state.editable} />
-                <CustomField name="SEXE" disabled={!this.state.editable} />
+                <CustomField name="FORM" disabled={!this.state.editable} />
                 <CustomField name="SOCSAV" disabled={!this.state.editable} />
                 <CustomField name="SOURCES" disabled={!this.state.editable} />
                 <CustomField name="STAT" disabled={!this.state.editable} />
+                <CustomField name="SYMB" disabled={!this.state.editable} />
+                <CustomField name="INS" disabled={!this.state.editable} />
                 <CustomField name="TITR" disabled={!this.state.editable} />
-                <CustomField name="TYPID" disabled={!this.state.editable} />
-                <CustomField name="IDENT" disabled={!this.state.editable} />
-                <CustomField name="ARK" disabled={!this.state.editable} />
-                <CustomField name="OBSMAP" disabled={!this.state.editable} />
-                <CustomField name="DMAJ" disabled={this.state.editable} />
-                <CustomField name="DMIS" disabled={this.state.editable} />
+                <CustomField name="GAR" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>
@@ -171,7 +209,15 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
+  // An "administrateur" (from "autor" or "admin" group) can delete.
+  const canDelete =
+    Auth.user && role === "administrateur" && (group === "autor" || group === "admin");
+  // If you can delete, you can update (see above).
+  // Also, you can update if you are a "producteur" from "autor"
+  const canUpdate = canDelete || (Auth.user && role === "producteur" && group === "autor");
   return {
+    canDelete,
+    canUpdate,
     user: { role, group }
   };
 };

@@ -2,6 +2,15 @@ module.exports = {
     "mappings": {
         "autor": {
             "properties": {
+                "ADRS": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
                 "ALAMAP": {
                     "type": "text",
                     "fields": {
@@ -20,7 +29,25 @@ module.exports = {
                         }
                     }
                 },
+                "BASE": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
                 "BIBLIO": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "BIF": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -56,20 +83,22 @@ module.exports = {
                         }
                     }
                 },
-                DMAJ: {
-                    type: "text",
-                    fields: {
-                      keyword: {
-                        type: "keyword"
-                      }
+                "DMAJ": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
                     }
                 },
-                DMIS: {
-                    type: "text",
-                    fields: {
-                      keyword: {
-                        type: "keyword"
-                      }
+                "DMIS": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
                     }
                 },
                 "DMORT": {
@@ -82,15 +111,6 @@ module.exports = {
                     }
                 },
                 "DNAISS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
-                "EMET": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -117,7 +137,34 @@ module.exports = {
                         }
                     }
                 },
-                "IDENT": {
+                "FORM": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "GAR": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "INI": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "INS": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -144,6 +191,15 @@ module.exports = {
                         }
                     }
                 },
+                "LBASE": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
                 "LIENS": {
                     "type": "text",
                     "fields": {
@@ -154,15 +210,6 @@ module.exports = {
                     }
                 },
                 "LMDP": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
-                "LMEM": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -189,7 +236,7 @@ module.exports = {
                         }
                     }
                 },
-                "LRELA": {
+                "LOCA": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -198,7 +245,16 @@ module.exports = {
                         }
                     }
                 },
-                "LWEB": {
+                "LOCACT": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "LRELA": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -225,7 +281,7 @@ module.exports = {
                         }
                     }
                 },
-                "OBSMAP": {
+                "OBS": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -252,7 +308,25 @@ module.exports = {
                         }
                     }
                 },
-                "POP_FLAGS": {
+                "PREF": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "PREN": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "PRODUCTEUR": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -297,24 +371,6 @@ module.exports = {
                         }
                     }
                 },
-                "RESID": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
-                "SEXE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
                 "SOCSAV": {
                     "type": "text",
                     "fields": {
@@ -333,7 +389,7 @@ module.exports = {
                         }
                     }
                 },
-                "STAT": {
+                "SYMB": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -377,6 +433,28 @@ module.exports = {
                             "ignore_above": 256
                         }
                     }
+                },
+                MEMOIRE: {
+                  properties: {
+                    ref: {
+                      type: "text",
+                      fields: {
+                        keyword: {
+                          type: "keyword",
+                          ignore_above: 256
+                        }
+                      }
+                    },
+                    url: {
+                      type: "text",
+                      fields: {
+                        keyword: {
+                          type: "keyword",
+                          ignore_above: 256
+                        }
+                      }
+                    }
+                  }
                 }
             }
         }

@@ -89,7 +89,7 @@ function parseFiles(files, encoding) {
       } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
-      } else if (["AW", "AA", "AB", "AC"].includes(obj.REF.substring(0, 2))) {
+      } else if (["AW", "AA", "AB", "AC", "OR", "MV"].includes(obj.REF.substring(0, 2))) {
         newNotice = new Autor(obj);
       } else {
         reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`);

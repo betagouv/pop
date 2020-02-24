@@ -4,10 +4,10 @@ const bodyParser = require("body-parser");
 const Autor = require("../models/autor");
 const passport = require("passport");
 const { formattedNow, updateNotice } = require("./utils");
-const validator = require("validator");
 const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/authorization");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const { checkESIndex } = require("../controllers/utils");
 
 
 
@@ -47,8 +47,7 @@ router.put(
 
       const obj = new Autor(notice);
       
-      //TODO: index elastic pas encore existant
-      //checkESIndex(obj);
+      checkESIndex(obj);
       promises.push(updateNotice(Autor, ref, notice));
 
 
@@ -70,9 +69,8 @@ router.post(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
-    console.log(notice);
+    notice.DMAJ = formattedNow();
     transformBeforeCreateAndUpdate(notice);
-    console.log("HELLOOOO");
     if (!canCreateAutor(req.user, notice)) {
       return res
         .status(401)
@@ -82,11 +80,9 @@ router.post(
       const obj = new Autor(notice);
       const promises = [];
 
-     // checkESIndex(obj);
+      checkESIndex(obj);
       promises.push(obj.save());
-      console.log("HELLO");
       await Promise.all(promises);
-      console.log("BYE");
 
       res.send({ success: true, msg: "OK" });
     } catch (error) {
@@ -96,11 +92,36 @@ router.post(
   }
 );
 
+// Delete one notice.
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const ref = req.params.ref;
+    const doc = await Autor.findOne({ REF: ref });
+    if (!doc) {
+      return res.status(404).send({
+        success: false,
+        msg: `Impossible de trouver la notice autor ${ref} à supprimer.`
+      });
+    }
+    if (!canDeleteAutor(req.user, doc)) {
+      return res
+        .status(401)
+        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+    }
+    // remove all images and the document itself.
+    await Promise.all([doc.remove()]);
+    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
+  } catch (error) {
+    capture(error);
+    return res.status(500).send({ success: false, error });
+  }
+});
+
 function transformBeforeCreateAndUpdate(notice) {
   console.log("transformBeforeCreateAndUpdate");
   return new Promise(async (resolve, reject) => {
     try {
-      notice.DMAJ = formattedNow();
+      notice.DMIS = formattedNow();
 
       notice = withFlags(notice);
 
@@ -119,14 +140,7 @@ function withFlags(notice) {
   ["REF"]
     .filter(prop => !notice[prop])
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
-  // REF must be 7 chars.
-  if (notice.REF && notice.REF.length !== 7) {
-    notice.POP_FLAGS.push("REF_LENGTH_EXACT_7");
-  }
-  // CONTACT must be an email.
-  if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
-    notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
-  }
+
   return notice;
 }
 
