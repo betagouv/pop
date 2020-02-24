@@ -62,6 +62,23 @@ class api {
     return request.fetchJSON("PUT", `/producteur/${_id}`, props);
   }
 
+  // Get all groups.
+  getGroups() {
+    return request.fetchJSON("GET", `/groups`);
+  }
+
+  // Create a group.
+  async createGroup({ label, producteurs }) {
+    const props = { label, producteurs };
+    return request.fetchJSON("POST", "/groups", props);
+  }
+
+  // Update a group.
+  async updateGroup({ _id, label, producteurs }) {
+    const props = { _id, label, producteurs };
+    return request.fetchJSON("PUT", `/groups/${_id}`, props);
+  }
+
   // Send a report.
   sendReport(subject, to, body) {
     const data = { subject, to, body };
