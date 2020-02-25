@@ -167,11 +167,11 @@ class TextInput extends React.Component {
   }
 }
 
-const TooltipComp = ({ deprecated, generated, description, name }) => {
+const TooltipComp = ({ deprecated, generated, description, name, hidedescriptionifempty }) => {
   const content = [];
   if (description) {
     content.push(<div>{description}</div>);
-  } else {
+  } else if (!hidedescriptionifempty){
     content.push(<div>En attente de description</div>);
   }
 
@@ -191,7 +191,7 @@ const TooltipComp = ({ deprecated, generated, description, name }) => {
 
 export default class AbstractField extends React.Component {
   render() {
-    const { label, type, name, description, generated, deprecated, ...rest } = this.props;
+    const { label, type, name, description, generated, deprecated, hidedescriptionifempty, ...rest } = this.props;
 
     let Child = <div />;
     if (type === "String" || type === "Number") {
@@ -204,17 +204,30 @@ export default class AbstractField extends React.Component {
 
     const title = label ? `${label} (${name})` : name;
 
-    return (
-      <div className="field">
-        {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
-        <TooltipComp
-          deprecated={deprecated}
-          description={description}
-          generated={generated}
-          name={name}
-        />
-        {Child}
-      </div>
-    );
+    //Permet de ne pas afficher le bloc de description si besoin 
+    if(!description && !generated && !deprecated && this.props.hidedescriptionifempty){
+      return (
+        <div className="field">
+          {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
+          {Child}
+        </div>
+      );
+    }
+    else{
+      return (
+        <div className="field">
+          {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
+          <TooltipComp
+            deprecated={deprecated}
+            description={description}
+            generated={generated}
+            name={name}
+            hidedescriptionifempty={hidedescriptionifempty}
+          />
+          {Child}
+        </div>
+      );
+    }
+    
   }
 }
