@@ -81,7 +81,7 @@ router.put(
 
     // Check authorisation.
     const prevNotice = await Museo.findOne({ REF: notice.REF });
-    if (!canUpdateMuseo(req.user, prevNotice, notice)) {
+    if (!await canUpdateMuseo(req.user, prevNotice, notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -126,7 +126,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice museo ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMuseo(req.user, doc)) {
+    if (!await canDeleteMuseo(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

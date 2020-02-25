@@ -59,7 +59,7 @@ router.put(
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
-      if (!canUpdateMnr(req.user, prevNotice, notice)) {
+      if (!await canUpdateMnr(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -108,7 +108,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     transformBeforeCreate(notice);
-    if (!canCreateMnr(req.user, notice)) {
+    if (!await canCreateMnr(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -146,7 +146,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice mnr ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMnr(req.user, doc)) {
+    if (!await canDeleteMnr(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

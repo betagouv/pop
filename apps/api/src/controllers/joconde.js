@@ -89,7 +89,7 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      if (!canUpdateJoconde(req.user, prevNotice, notice)) {
+      if (!await canUpdateJoconde(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
