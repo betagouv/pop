@@ -19,8 +19,6 @@ import { bucket_url } from "../../config";
 
 import "./index.css";
 
-const { canManage } = require("../../../../api/src/controllers/utils/authorization");
-
 class Notice extends React.Component {
   state = {
     notice: null,
@@ -51,13 +49,19 @@ class Notice extends React.Component {
       }
       this.props.initialize(notice);
       // As a "producteur", I can edit if "museofile" matches with notice.
-      /* const editable =
+       /* const editable =
         this.props.canUpdate &&
         (this.props.user.role === "administrateur" ||
           this.props.user.museofile.includes(notice.MUSEO)); */
-      const editable = canManage(this.props.user, notice, "joconde");
 
-      this.setState({ loading: false, notice, editable });
+
+        let editable = false;
+        API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "joconde").then(result => {
+          editable = result.validate;
+          this.setState({editable: editable});
+        });
+
+        this.setState({ loading: false, notice, editable });
     });
   }
 

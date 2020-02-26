@@ -14,10 +14,17 @@ const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-function transformBeforeCreateOrUpdate(notice) {
+async function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   if (notice.PHOTO !== undefined) {
     notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
+  }
+  let noticeProducteur = await identifyProducteur("museo", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "";
   }
 }
 

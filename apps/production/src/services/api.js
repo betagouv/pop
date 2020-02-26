@@ -73,6 +73,11 @@ class api {
     return request.fetchJSON("POST", "/groups", props);
   }
 
+  // can edit notice depending on producteurs, groups, user
+  canEdit( REF, MUSEO, PRODUCTEUR, COLLECTION ) {
+    return request.fetchJSON("GET", `/groups/canEdit?ref=${REF}&museo=${MUSEO}&producteur=${PRODUCTEUR}&collection=${COLLECTION}`);
+  }
+
   // Update a group.
   async updateGroup({ _id, label, producteurs }) {
     const props = { _id, label, producteurs };

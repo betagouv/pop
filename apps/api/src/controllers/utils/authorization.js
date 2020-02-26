@@ -30,10 +30,13 @@ async function canManage(user, notice, collection){
         group.PRODUCTEURS.map( producteur => {
 
           // Si le producteur de la notice correspond à un de ceux du groupe, on retourne true
-          if( String(notice.PRODUCTEUR)===String(producteur) ){
+          if( String(notice.PRODUCTEUR)===String(producteur) || collection==="museo"){
 
-            if(collection==="joconde" || collection==="museo"){
+            if(collection==="joconde"){
               validate = user.museofile.includes(notice.MUSEO);
+            }
+            else if(collection==="museo"){
+              validate = user.museofile.includes(notice.REF);
             }
             else{
               validate = true;

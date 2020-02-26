@@ -66,7 +66,13 @@ class Notice extends React.Component {
       console.error(`Impossible de charger la notice ${ref}`);
       return;
     }
-    const editable = this.canUpdate(notice.PRODUCTEUR);
+    //const editable = this.canUpdate(notice.PRODUCTEUR);
+    let editable = false;
+    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "memoire").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+
     this.props.initialize(notice);
     this.setState({ loading: false, notice, editable });
   }

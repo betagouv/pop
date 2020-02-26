@@ -6,21 +6,35 @@ const upload = multer({ dest: "uploads/" });
 const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
   if (notice.VIDEO !== undefined) {
     notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  }
+  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "MNR";
   }
 }
 
 async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "MNR";
+  }
 }
 
 async function checkMnr(notice) {

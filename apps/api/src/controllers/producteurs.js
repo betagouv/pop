@@ -18,10 +18,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   if (req.user.role !== "administrateur") {
     return res.status(403).send({ success: false, msg: "Autorisation requise." });
   }
-  // Limit to group if group !== admin.
-  if (req.user.group && req.user.group !== "admin") {
-    query.group = req.user.group;
-  }
+
   try {
     const producteurs = await Producteur.find(query);
     return res.status(200).send({ success: true, producteurs });
@@ -122,8 +119,8 @@ function producteurValidation({ label, base }) {
 
     for(let i=0; i<base.length; i++){
       //Test si base et préfixe sont remplis
-      if(base[i].base=="" || base[i].prefixes.length<1){
-        msg = "Veuillez sélectionner une base et saisir le ou les préfixes associés";
+      if(base[i].base==""){
+        msg = "Veuillez sélectionner une base";
         return { success: false, msg };
       }
 

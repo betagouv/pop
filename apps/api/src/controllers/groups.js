@@ -16,10 +16,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   if (req.user.role !== "administrateur") {
     return res.status(403).send({ success: false, msg: "Autorisation requise." });
   }
-  // Limit to group if group !== admin.
-  if (req.user.group && req.user.group !== "admin") {
-    query.group = req.user.group;
-  }
+
   try {
     const groups = await Group.find(query);
     return res.status(200).send({ success: true, groups });
@@ -28,6 +25,52 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
     return res.status(500).send({ success: false, error });
   }
 });
+
+
+// Get all groups.
+router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    const {ref, museo, producteur, collection} = req.query;
+    const user = req.user;
+    
+    let validate = false;
+
+    // Si on a bien un utilisateur rattaché à un groupe et un rôle, ainsi qu'une notice
+    if(user && ref && user.role && user.group){        
+        //Si l'utilisateur a un rôle administrateur et que son groupe est admin ou celui correspondant à la collection, retourne true
+        if(user.role == "administrateur" && user.group === "admin"){
+            validate = true;
+            return res.status(200).send({ success: true, validate });
+        }
+
+        //On récupère le groupe de l'utilisateur en base
+        let group = await Group.findOne({LABEL: user.group});
+
+        // Si l'utilisateur a le rôle administrateur ou producteur
+        if (["producteur", "administrateur"].includes(user.role)){
+            // Si le groupe récupéré en base contient bien un LABEL et des PRODUCTEURS
+            if(group.LABEL && group.PRODUCTEURS){
+                // Pour chaque producteurs rattachés au groupe, on vérifie sur le producteur de la notice y est présent
+                group.PRODUCTEURS.map( prod => {
+
+                // Si le producteur de la notice correspond à un de ceux du groupe
+                // Ou s'il s'agit de la base museo n'ayant pas de producteur
+                if( String(producteur)===String(prod) || collection==="museo"){
+                    if(collection==="joconde"){
+                        validate = user.museofile.includes(museo);
+                    }
+                    else if(collection==="museo"){
+                        validate = user.museofile.includes(ref);
+                    }
+                    else{
+                        validate = true;
+                    }
+                }
+                });
+            }
+        }
+    }
+    return res.status(200).send({ success: true, validate });
+  });
 
 // Update a group.
  router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
