@@ -213,7 +213,7 @@ router.put(
       const notice = JSON.parse(req.body.notice);
 
       const prevNotice = await Merimee.findOne({ REF: ref });
-      if (!canUpdateMerimee(req.user, prevNotice, notice)) {
+      if (!await canUpdateMerimee(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -260,7 +260,7 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      if (!canCreateMerimee(req.user, notice)) {
+      if (!await canCreateMerimee(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -309,7 +309,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice merimee ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMerimee(req.user, doc)) {
+    if (!await canDeleteMerimee(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

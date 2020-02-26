@@ -51,12 +51,9 @@ class Producteur extends React.Component {
                       return (
                         <tr>
                           {
-                            base
-                            + " ("
-                            + prefixes.map(itemPrefix => 
-                                            { return(" " + itemPrefix)}
-                                        ) 
-                            + " )"}
+                            base 
+                            + (prefixes.length > 0 ? (" (" + prefixes.map(itemPrefix => { return(" " + itemPrefix)} ) + " )") : "")
+                          }
                         </tr>
                       )
                     })                

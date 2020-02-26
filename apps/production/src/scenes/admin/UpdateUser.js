@@ -81,18 +81,11 @@ class UpdateUser extends React.Component {
     let groups = [];
 
     if (this.props.authUserGroup === "admin") {
-      groups = groups.concat([
-        "admin",
-        "mnr",
-        "museo",
-        "joconde",
-        "mh",
-        "inv",
-        "memoire",
-        "enluminures",
-        "autor"
-      ]);
-    } else {
+      //On ajoute le groupe admin et les autres groups de la bdd
+      groups.push("admin");
+      this.props.baseGroups.map( group => {groups.push(group.LABEL)} );
+    } 
+    else {
       groups.push(this.props.authUserGroup);
     }
     groups = groups.map(e => <option key={e}>{e}</option>);

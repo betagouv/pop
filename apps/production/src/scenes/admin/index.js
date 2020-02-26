@@ -9,7 +9,7 @@ import api from "../../services/api";
 import "./index.css";
 
 class Admin extends React.Component {
-  state = { users: [], loading: true };
+  state = { users: [], baseGroups: [], loading: true };
 
   fetchUsers = async () => {
     this.setState({ loading: true });
@@ -18,6 +18,16 @@ class Admin extends React.Component {
       this.setState({ users: response.users || [], loading: false });
     } catch (e) {}
   };
+
+  fetchGroups = async () => {
+    this.setState({ loading: true });
+    const response = await api.getGroups();
+    this.setState({ baseGroups: response.groups || [], loading: false });
+  };
+
+  componentDidMount(){
+    this.fetchGroups();
+  }
 
   componentWillMount() {
     this.fetchUsers();
@@ -66,7 +76,7 @@ class Admin extends React.Component {
                 <td>{role}</td>
                 <td>{lastCo}</td>
                 <td>
-                  <UpdateUser user={user} callback={this.fetchUsers} />
+                  <UpdateUser user={user} baseGroups={this.state.baseGroups} callback={this.fetchUsers} />
                 </td>
               </tr>
             );
@@ -82,7 +92,7 @@ class Admin extends React.Component {
     }
     return (
       <div className="admin">
-        <CreateUser callback={this.fetchUsers} />
+        <CreateUser baseGroups={this.state.baseGroups} callback={this.fetchUsers} />
         <div className="usersList">{this.renderUsers()}</div>
       </div>
     );

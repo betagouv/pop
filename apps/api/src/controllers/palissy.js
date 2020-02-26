@@ -250,7 +250,7 @@ router.put(
       const notice = JSON.parse(req.body.notice);
 
       const prevNotice = await Palissy.findOne({ REF: ref });
-      if (!canUpdatePalissy(req.user, prevNotice, notice)) {
+      if (!await canUpdatePalissy(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -303,7 +303,7 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      if (!canCreatePalissy(req.user, notice)) {
+      if (!await canCreatePalissy(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -355,7 +355,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice palissy ${ref} à supprimer.`
       });
     }
-    if (!canDeletePalissy(req.user, doc)) {
+    if (!await canDeletePalissy(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

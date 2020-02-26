@@ -47,7 +47,13 @@ class Notice extends React.Component {
 
     console.log("NOTICE", notice);
     this.props.initialize(notice);
-    const editable = this.canEdit(notice);
+    //const editable = this.canEdit(notice);
+    let editable = false;
+    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "palissy").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+    
     this.setState({ loading: false, notice, editable });
   }
 

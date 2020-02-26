@@ -49,12 +49,19 @@ class Notice extends React.Component {
       }
       this.props.initialize(notice);
       // As a "producteur", I can edit if "museofile" matches with notice.
-      const editable =
+       /* const editable =
         this.props.canUpdate &&
         (this.props.user.role === "administrateur" ||
-          this.props.user.museofile.includes(notice.MUSEO));
+          this.props.user.museofile.includes(notice.MUSEO)); */
 
-      this.setState({ loading: false, notice, editable });
+
+        let editable = false;
+        API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "joconde").then(result => {
+          editable = result.validate;
+          this.setState({editable: editable});
+        });
+
+        this.setState({ loading: false, notice, editable });
     });
   }
 

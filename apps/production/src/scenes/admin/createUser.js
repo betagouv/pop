@@ -78,18 +78,11 @@ class CreateUser extends React.Component {
     let groups = [];
 
     if (this.props.group === "admin") {
-      groups = groups.concat([
-        "admin",
-        "mnr",
-        "joconde",
-        "mh",
-        "inv",
-        "memoire",
-        "enluminures",
-        "museo",
-        "autor"
-      ]);
-    } else {
+      //On ajoute le groupe admin et les autres groups de la bdd
+      groups.push("admin");
+      this.props.baseGroups.map( group => {groups.push(group.LABEL)} );
+    } 
+    else {
       groups.push(this.props.group);
     }
     groups = groups.map(e => <option key={e}>{e}</option>);

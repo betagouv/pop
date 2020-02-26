@@ -14,10 +14,17 @@ const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-function transformBeforeCreateOrUpdate(notice) {
+async function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   if (notice.PHOTO !== undefined) {
     notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
+  }
+  let noticeProducteur = await identifyProducteur("museo", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "";
   }
 }
 
@@ -81,7 +88,7 @@ router.put(
 
     // Check authorisation.
     const prevNotice = await Museo.findOne({ REF: notice.REF });
-    if (!canUpdateMuseo(req.user, prevNotice, notice)) {
+    if (!await canUpdateMuseo(req.user, prevNotice, notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -126,7 +133,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice museo ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMuseo(req.user, doc)) {
+    if (!await canDeleteMuseo(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

@@ -46,9 +46,12 @@ class Museo extends React.Component {
     }
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
-    const editable =
-      this.props.canUpdate &&
-      (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
+    //const editable = this.props.canUpdate && (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
+    let editable = false;
+    API.canEdit(notice.REF, notice.REF, notice.PRODUCTEUR, "museo").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
 
     this.setState({ loading: false, notice, editable });
   }

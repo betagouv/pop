@@ -6,21 +6,35 @@ const upload = multer({ dest: "uploads/" });
 const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
   if (notice.VIDEO !== undefined) {
     notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  }
+  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "MNR";
   }
 }
 
 async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+  if(noticeProducteur){
+    notice.PRODUCTEUR = noticeProducteur;
+  }
+  else {
+    notice.PRODUCTEUR = "MNR";
+  }
 }
 
 async function checkMnr(notice) {
@@ -59,7 +73,7 @@ router.put(
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
-      if (!canUpdateMnr(req.user, prevNotice, notice)) {
+      if (!await canUpdateMnr(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -108,7 +122,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     transformBeforeCreate(notice);
-    if (!canCreateMnr(req.user, notice)) {
+    if (!await canCreateMnr(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -146,7 +160,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice mnr ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMnr(req.user, doc)) {
+    if (!await canDeleteMnr(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
