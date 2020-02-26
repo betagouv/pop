@@ -190,8 +190,8 @@ function readme() {
     <div>
       <h5>Monuments historiques</h5>
       <div>
-        Cet onglet permet d’alimenter les bases Mérimée MH, Palissy MH et Mémoire MH (CRMH, CAOA,
-        UDAP) <br /> <br />
+        Cet onglet permet d’alimenter les bases Mérimée MH, Palissy MH, Mémoire MH (CRMH, CAOA,
+        UDAP) et Autor <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>

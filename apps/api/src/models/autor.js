@@ -43,7 +43,7 @@ const Schema = new mongoose.Schema(
     OEUVR: { type: String, default: "", documentation: { label: "Oeuvre réalisée" } },
     PUBLI: { type: String, default: "", documentation: { label: "Publications" } },
     ALAMAP: { type: [String], default: [], documentation: { label: "Fonds en référence à la MAP" } },
-    PRODUCTEUR: { type: String, default: "", documentation: { label: "Producteur" } },
+    PRODUCTEUR: { type: String, default: "", documentation: { label: "Producteur", generated: true } },
     REDAC: { type: String, default: "", documentation: { label: "Nom du rédacteur" } },
     LRELA: { type: String, default: "", documentation: { label: "Personnes associées" } },
     SOURCES: { type: String, default: "", documentation: { label: "Sources" } },
