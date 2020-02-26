@@ -219,7 +219,7 @@ router.put(
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
 
-    if (!canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
+    if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -265,7 +265,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
-    if (!canCreateMemoire(req.user, notice)) {
+    if (!await canCreateMemoire(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -315,7 +315,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice memoire ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMemoire(req.user, doc)) {
+    if (!await canDeleteMemoire(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });

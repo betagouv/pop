@@ -9,7 +9,7 @@ const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const { capture } = require("./../sentry.js");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 
 // Control properties document, flag each error.
@@ -50,6 +50,14 @@ function transformBeforeCreateAndUpdate(notice) {
           notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
         }
       }
+      let noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "MUSEE";
+      }
+
       notice.DMAJ = formattedNow();
 
       if (notice.MUSEO) {
@@ -89,7 +97,7 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
-      if (!canUpdateJoconde(req.user, prevNotice, notice)) {
+      if (!await canUpdateJoconde(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."

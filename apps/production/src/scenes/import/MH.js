@@ -76,16 +76,33 @@ function parseFiles(files, encoding) {
 
       let newNotice;
 
-      console.log("obj.REF.substring(0, 2)", obj.REF.substring(0, 2));
-      if (["PM", "EM", "IM"].includes(obj.REF.substring(0, 2))) {
+      
+      //On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
+      let collection = "";
+      let producteurs = [];
+      const response = await api.getProducteurs();
+      producteurs = response.producteurs;
+      
+      producteurs.map( producteur => {
+        producteur.BASE.map( BASE => {
+          BASE.prefixes.map( prefix => {
+            if(String(obj.REF).startsWith(String(prefix))){
+              collection = BASE.base;
+            }
+          })
+        });
+      });
+
+
+      if (collection === "palissy") {
         newNotice = new Palissy(obj);
         addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
-      } else if (["PA", "EA", "IA"].includes(obj.REF.substring(0, 2))) {
+      } else if (collection === "merimee") {
         newNotice = new Merimee(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
-      } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
+      } else if (collection === "memoire") {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
       } else {
