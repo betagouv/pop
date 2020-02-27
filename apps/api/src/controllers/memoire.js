@@ -11,6 +11,7 @@ const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Autor = require("../models/autor");
 const Producteur = require("../models/producteur");
+
 const {
   uploadFile,
   formattedNow,
@@ -24,7 +25,9 @@ const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./util
 const { capture } = require("./../sentry.js");
 
 // Control properties document, flag each error.
-function withFlags(notice) {
+async function withFlags(notice) {
+  let listPrefix = getPrefixesFromProducteurs(["palissy", "merimee", "autor"]);
+
   notice.POP_FLAGS = [];
   // Required properties.
   ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
@@ -39,7 +42,7 @@ function withFlags(notice) {
     // LBASE must start with EA, PA, etc.
     if (
       notice.LBASE.map(lb => lb.substring(0, 2)).filter(
-        prefix => !["EA", "PA", "IA", "IM", "PM", "EM"].includes(prefix)
+        prefix => !listPrefix.includes(prefix)
       ).length > 0
     ) {
       notice.POP_FLAGS.push("LBASE_INVALID");
@@ -91,6 +94,21 @@ async function findCollection(ref = "") {
   }
 }
 
+async function getPrefixesFromProducteurs(listBase){
+  let listePrefix = [];
+  const producteurs = await Producteur.find({"BASE.base": {$in:listBase}});
+
+  producteurs.map(
+    producteur => producteur.BASE.filter(
+      base => listeProducteur.includes(base.base)
+    ).map(
+      base => listePrefix = listePrefix.concat(base.prefixes)
+    )
+  )  
+
+  return listePrefix;
+}
+
 async function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
@@ -105,7 +123,7 @@ async function transformBeforeUpdate(notice) {
     }
   }
   notice.DMAJ = formattedNow();
-  notice = withFlags(notice);
+  notice = await withFlags(notice);
 }
 
 async function transformBeforeCreate(notice) {

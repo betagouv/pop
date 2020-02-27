@@ -351,7 +351,7 @@ function link(listUrl) {
         listUrl.map(url => {
           return (
             <React.Fragment key={url.ref}>
-              <a href={url.url}>{url.ref}</a>
+              <a href={url.url || "#"}>{url.ref}</a>
               <br />
             </React.Fragment>
           );
