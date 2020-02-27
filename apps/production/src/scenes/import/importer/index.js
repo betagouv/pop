@@ -92,7 +92,7 @@ class Importer extends Component {
         } else {
           importedNotices[i]._status = "created";
         }
-        importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
+        await importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
       }
 
       await controleThesaurus(importedNotices);

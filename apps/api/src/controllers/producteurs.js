@@ -77,6 +77,23 @@ router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req
     }
 });
 
+router.get("/prefixesFromProducteurs", passport.authenticate("jwt", { session: false }), async (req, res) => { 
+  let listePrefix = [];
+  let listeProducteur = req.query.producteurs;
+  let producteurs = await Producteur.find({});
+  // Renvoie la liste des préfixes associés aux producteurs en paramètre
+  producteurs.map(
+    producteur => producteur.BASE.filter(
+      base => listeProducteur.includes(base.base)
+    ).map(
+      base => listePrefix = listePrefix.concat(base.prefixes)
+    )
+  )  
+
+  res.status(200).json({success: true, listePrefix: listePrefix})
+});
+
+
 // Create one producteur.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => { 
     let { label, base } = req.body;
