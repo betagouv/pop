@@ -12,13 +12,8 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // Get all producteurs.
-router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.get("/", async (req, res) => {
   const query = {};
-  // Only "administrateur" role can view all accounts.
-  if (req.user.role !== "administrateur") {
-    return res.status(403).send({ success: false, msg: "Autorisation requise." });
-  }
-
   try {
     const producteurs = await Producteur.find(query);
     return res.status(200).send({ success: true, producteurs });

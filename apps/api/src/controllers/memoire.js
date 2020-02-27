@@ -10,6 +10,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Autor = require("../models/autor");
+const Producteur = require("../models/producteur");
 const {
   uploadFile,
   formattedNow,
@@ -64,20 +65,26 @@ function withFlags(notice) {
 }
 
 // Get collection by ref prefix.
-function findCollection(ref = "") {
-  const prefix = ref.substring(0, 2);
-  switch (prefix) {
-    case "EA":
-    case "PA":
-    case "IA":
+async function findCollection(ref = "") {
+  let collection = "";
+  const producteurs = await Producteur.find();
+  
+  producteurs.map( producteur => {
+    producteur.BASE.map( BASE => {
+      BASE.prefixes.map( prefix => {
+        if(String(ref).startsWith(String(prefix))){
+          collection = BASE.base;
+        }
+      })
+    });
+  });
+
+  switch (collection) {
+    case "merimee":
       return Merimee;
-    case "IM":
-    case "PM":
-    case "EM":
+    case "palissy":
       return Palissy;
-    case "PM":
-    case "AW":
-    case "OR":
+    case "autor":
       return Autor;
     default:
       return "";
@@ -173,7 +180,6 @@ async function updateLinks(notice) {
     let noticeMemoire = await Memoire.findOne({ REF: REF });
     let IMG = notice.IMG ? notice.IMG : noticeMemoire.IMG;
     let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.IMG;
-
 
     const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];

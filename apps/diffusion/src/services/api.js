@@ -14,6 +14,17 @@ class api {
     });
   }
 
+  // Get all producteurs.
+  getProducteurs() {
+    return new Promise((resolve, reject) => {
+      return this._get(`${api_url}/producteur`)
+        .then(producteurs => {
+          resolve(producteurs);
+        })
+        .catch(e => reject(e));
+    });
+  }
+
   getImportCount(ref) {
     return this._get(`${api_url}/import/count`);
   }

@@ -19,13 +19,19 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("memoire", id);
-    const collection = notice && findCollection(notice.LBASE);
+    const collection = notice && await findCollection(notice.LBASE);
     let links = [];
     if (collection) {
       const values = await API.getNotice(collection, notice.LBASE);
       links = values.filter(v => v);
     }
-    return { notice, links };
+
+    let listUrl = await Promise.all(notice.LBASE.map( async ref => {
+      const collection = await findCollection(ref);
+      return {key: ref, ref: ref, url: url(collection, ref)};
+    }));
+
+    return { notice, links, listUrl };
   }
 
   photographer() {
@@ -318,7 +324,7 @@ export default class extends React.Component {
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="memoire" />
                 </div>
-                <SeeMore notice={notice} />
+                <SeeMore notice={notice} listUrl={this.props.listUrl} />
               </Col>
             </Row>
           </Container>
@@ -329,34 +335,33 @@ export default class extends React.Component {
   }
 }
 
-function url(ref) {
-  switch (ref.substring(0, 2)) {
-    case "EA":
-    case "PA":
-    case "IA":
+function url(collection, ref) {
+  switch (collection){
+    case "merimee" :
       return `/notice/merimee/${ref}`;
-    case "IM":
-    case "PM":
+    case "palissy":
       return `/notice/palissy/${ref}`;
   }
 }
 
-function link(data) {
+function link(listUrl) {
   return (
     <React.Fragment>
-      {data.map(d => {
-        return (
-          <React.Fragment key={d}>
-            <a href={url(d) || "#"}>{d}</a>
-            <br />
-          </React.Fragment>
-        );
-      })}
+      {
+        listUrl.map(url => {
+          return (
+            <React.Fragment key={url.ref}>
+              <a href={url.url}>{url.ref}</a>
+              <br />
+            </React.Fragment>
+          );
+        })
+      }
     </React.Fragment>
   );
 }
 
-const SeeMore = ({ notice }) => {
+const SeeMore = ({ notice, listUrl }) => {
   if (!notice.LAUTP && !(notice.LBASE && notice.LBASE.length)) {
     return null;
   }
@@ -385,7 +390,7 @@ const SeeMore = ({ notice }) => {
 
   if (notice.LBASE && notice.LBASE.length) {
     elements.push(
-      <Field title={mapping.memoire.LBASE.label} content={link(notice.LBASE)} key="notice.LBASE" />
+      <Field title={mapping.memoire.LBASE.label} content={link(listUrl)} key="notice.LBASE" />
     );
   }
 

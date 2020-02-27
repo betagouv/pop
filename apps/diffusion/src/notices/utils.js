@@ -1,20 +1,29 @@
-export function findCollection(ref = "") {
+ import API from "../../src/services/api";
+
+// Get collection by ref prefix.
+export async function findCollection(ref = "") {
   if (typeof ref !== "string") {
     return "";
   }
-  const prefix = ref.substring(0, 2);
-  switch (prefix) {
-    case "EA":
-    case "PA":
-    case "IA":
-      return "merimee";
-    case "IM":
-    case "PM":
-      return "palissy";
-    default:
-      return "";
+  let collection = "";
+  let producteurs = [];
+  const response = await API.getProducteurs();
+
+  if(response && response.producteurs){
+    producteurs = response.producteurs;
   }
-}
+  producteurs.map( producteur => {
+    producteur.BASE.map( BASE => {
+      BASE.prefixes.map( prefix => {
+        if(String(ref).startsWith(String(prefix))){
+          collection = BASE.base;
+        }
+      })
+    });
+  });
+
+  return collection;
+} 
 
 // Sometimes, links are f***ed up. We try to post-fix them.
 export function postFixedLink(link) {

@@ -82,17 +82,20 @@ function parseFiles(files, encoding) {
       let collection = "";
       let producteurs = [];
       const response = await api.getProducteurs();
-      producteurs = response.producteurs;
-      
-      producteurs.map( producteur => {
-        producteur.BASE.map( BASE => {
-          BASE.prefixes.map( prefix => {
-            if(String(obj.REF).startsWith(String(prefix))){
-              collection = BASE.base;
-            }
-          })
+
+      if(response){
+        producteurs = response.producteurs;
+        
+        producteurs.map( producteur => {
+          producteur.BASE.map( BASE => {
+            BASE.prefixes.map( prefix => {
+              if(String(obj.REF).startsWith(String(prefix))){
+                collection = BASE.base;
+              }
+            })
+          });
         });
-      });
+      }
 
 
       if (collection === "palissy") {
