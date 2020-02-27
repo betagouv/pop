@@ -62,6 +62,12 @@ class api {
     return request.fetchJSON("PUT", `/producteur/${_id}`, props);
   }
 
+  // Get prefix list from producteur list
+  async getPrefixesFromProducteurs(producteurs){
+    const producteurList = producteurs.reduce((result, list) => result = result == null ? list : result + "," + list )
+    return request.fetchJSON("GET", "/producteur/prefixesFromProducteurs?producteurs="+producteurList);
+  }
+
   // Get all groups.
   getGroups() {
     return request.fetchJSON("GET", `/groups`);

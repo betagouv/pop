@@ -1,5 +1,6 @@
 import Notice from "./Notice";
 import validator from "validator";
+import API from "../services/api";
 
 export default class Memoire extends Notice {
   constructor(body) {
@@ -8,10 +9,12 @@ export default class Memoire extends Notice {
     }
     super(body, "memoire");
   }
-  validate(body) {
+  async validate(body) {
     super.validate(body);
     // Every controls errors are *warnings* for now.
     // Required properties.
+    const listPrefix = await API.getPrefixesFromProducteurs(["autor", "palissy", "merimee"]);
+
     ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
       .filter(prop => !body[prop])
       .forEach(prop => this._warnings.push(`Le champ ${prop} ne doit pas être vide`));
@@ -25,11 +28,11 @@ export default class Memoire extends Notice {
       // LBASE must start with EA, PA, etc.
       if (
         body.LBASE.map(lb => lb.substring(0, 2)).filter(
-          prefix => !["EA", "PA", "IA", "IM", "PM", "EM"].includes(prefix)
+          prefix => !listPrefix.listePrefix.includes(prefix)
         ).length > 0
       ) {
         this._warnings.push(
-          `Le champ LBASE doit commencer par : "EA", "PA", "IA", "IM", "PM" ou "EM"`
+          `Le champ LBASE doit commencer par : ` + listPrefix.listePrefix.reduce((result, prefix) => result == null ? prefix : result + ", " + prefix)
         );
       }
     }
