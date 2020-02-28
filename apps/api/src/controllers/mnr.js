@@ -16,25 +16,11 @@ async function transformBeforeUpdate(notice) {
   if (notice.VIDEO !== undefined) {
     notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
   }
-  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
-  if(noticeProducteur){
-    notice.PRODUCTEUR = noticeProducteur;
-  }
-  else {
-    notice.PRODUCTEUR = "MNR";
-  }
 }
 
-async function transformBeforeCreate(notice) {
+function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
-  let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
-  if(noticeProducteur){
-    notice.PRODUCTEUR = noticeProducteur;
-  }
-  else {
-    notice.PRODUCTEUR = "MNR";
-  }
 }
 
 async function checkMnr(notice) {
@@ -73,6 +59,8 @@ router.put(
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
+      await determineProducteur(notice);
+
       if (!await canUpdateMnr(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
@@ -121,6 +109,7 @@ router.post(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
+    await determineProducteur(notice);
     transformBeforeCreate(notice);
     if (!await canCreateMnr(req.user, notice)) {
       return res
@@ -174,5 +163,24 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  console.log("determineProducteur");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "MNR";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
 
 module.exports = router;

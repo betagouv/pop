@@ -113,15 +113,7 @@ async function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
-  if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-    let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
-    if(noticeProducteur){
-      notice.PRODUCTEUR = noticeProducteur;
-    }
-    else {
-      notice.PRODUCTEUR = "AUTRE";
-    }
-  }
+  
   notice.DMAJ = formattedNow();
   notice = await withFlags(notice);
 }
@@ -129,13 +121,7 @@ async function transformBeforeUpdate(notice) {
 async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
-  let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
-  if(noticeProducteur){
-    notice.PRODUCTEUR = noticeProducteur;
-  }
-  else {
-    notice.PRODUCTEUR = "AUTRE";
-  }
+  
   notice = await withFlags(notice);
 }
 
@@ -248,7 +234,9 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-
+    if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
+      await determineProducteur(notice);
+    }
     if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
       return res.status(401).send({
         success: false,
@@ -295,6 +283,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
+    await determineProducteur(notice);
     if (!await canCreateMemoire(req.user, notice)) {
       return res
         .status(401)
@@ -365,5 +354,24 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  console.log("determineProducteur");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
 
 module.exports = router;

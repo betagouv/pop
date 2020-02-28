@@ -34,6 +34,7 @@ router.put(
 
     try {
       const prevNotice = await Autor.findOne({ REF: ref });
+      await determineProducteur(notice);
       if (!canUpdateAutor(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
@@ -70,6 +71,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = formattedNow();
+    await determineProducteur(notice);
     await transformBeforeCreateAndUpdate(notice);
     if (!canCreateAutor(req.user, notice)) {
       return res
@@ -123,14 +125,6 @@ function transformBeforeCreateAndUpdate(notice) {
     try {
       notice.DMAJ = formattedNow();
       notice.BASE = "Autor";
-      let noticeProducteur = await identifyProducteur("autor", notice.REF, "", "");
-      if(noticeProducteur){
-        notice.PRODUCTEUR = noticeProducteur;
-      }
-      else {
-        notice.PRODUCTEUR = "Autre";
-      }
-
       notice = withFlags(notice);
 
       resolve();
@@ -140,6 +134,26 @@ function transformBeforeCreateAndUpdate(notice) {
     }
   });
 }
+
+function determineProducteur(notice) {
+  console.log("determineProducteur");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("autor", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
+
 
 // Control properties document, flag each error.
 function withFlags(notice) {

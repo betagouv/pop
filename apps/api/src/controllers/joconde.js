@@ -50,13 +50,6 @@ function transformBeforeCreateAndUpdate(notice) {
           notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
         }
       }
-      let noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
-      if(noticeProducteur){
-        notice.PRODUCTEUR = noticeProducteur;
-      }
-      else {
-        notice.PRODUCTEUR = "MUSEE";
-      }
 
       notice.DMAJ = formattedNow();
 
@@ -97,6 +90,7 @@ router.put(
 
     try {
       const prevNotice = await Joconde.findOne({ REF: ref });
+      await determineProducteur(notice);
       if (!await canUpdateJoconde(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
@@ -155,6 +149,7 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
+      await determineProducteur(notice);
       if (!canCreateJoconde(req.user, notice)) {
         return res
           .status(401)
@@ -217,5 +212,24 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  console.log("determineProducteur");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "MUSEE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
 
 module.exports = router;

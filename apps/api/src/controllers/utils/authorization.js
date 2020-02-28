@@ -52,142 +52,142 @@ async function canManage(user, notice, collection){
 
 async function canManageJoconde(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "joconde");
+  let validate = await canManage(user, notice, "joconde");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateJoconde(user, notice) {
-  return canManageJoconde(user, notice);
+async function canCreateJoconde(user, notice) {
+  return await canManageJoconde(user, notice);
 }
 
-function canUpdateJoconde(user, prevNotice, newNotice) {
-  return canManageJoconde(user, prevNotice) && canManageJoconde(user, newNotice);
+async function canUpdateJoconde(user, prevNotice, newNotice) {
+  return await canManageJoconde(user, prevNotice) && await canManageJoconde(user, newNotice);
 }
 
-function canDeleteJoconde(user, notice) {
-  return canManageJoconde(user, notice);
+async function canDeleteJoconde(user, notice) {
+  return await canManageJoconde(user, notice);
 }
 
 async function canManageAutor(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice autor
-  let validate = canManage(user, notice, "autor");
+  let validate = await canManage(user, notice, "autor");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateAutor(user, notice) {
-  return canManageAutor(user, notice);
+async function canCreateAutor(user, notice) {
+  return await canManageAutor(user, notice);
 }
 
-function canUpdateAutor(user, prevNotice, newNotice) {
-  return canManageAutor(user, prevNotice) && canManageAutor(user, newNotice);
+async function canUpdateAutor(user, prevNotice, newNotice) {
+  return await canManageAutor(user, prevNotice) && await canManageAutor(user, newNotice);
 }
 
-function canDeleteAutor(user, notice) {
-  return canManageAutor(user, notice);
+async function canDeleteAutor(user, notice) {
+  return await canManageAutor(user, notice);
 }
 
 async function canManageMnr(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "mnr");
+  let validate = await canManage(user, notice, "mnr");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateMnr(user, notice) {
-  return canManageMnr(user, notice);
+async function canCreateMnr(user, notice) {
+  return await canManageMnr(user, notice);
 }
 
-function canUpdateMnr(user, prevNotice, newNotice) {
-  return canManageMnr(user, prevNotice) && canManageMnr(user, newNotice);
+async function canUpdateMnr(user, prevNotice, newNotice) {
+  return await canManageMnr(user, prevNotice) && await canManageMnr(user, newNotice);
 }
 
-function canDeleteMnr(user, notice) {
-  return canManageMnr(user, notice);
+async function canDeleteMnr(user, notice) {
+  return await canManageMnr(user, notice);
 }
 
 async function canManageMemoire(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "memoire");
+  let validate = await canManage(user, notice, "memoire");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateMemoire(user, notice) {
-  return canManageMemoire(user, notice);
+async function canCreateMemoire(user, notice) {
+  return await canManageMemoire(user, notice);
 }
 
-function canUpdateMemoire(user, prevNotice, newNotice) {
-  return canManageMemoire(user, prevNotice) && canManageMemoire(user, newNotice);
+async function canUpdateMemoire(user, prevNotice, newNotice) {
+  return await canManageMemoire(user, prevNotice) && await canManageMemoire(user, newNotice);
 }
 
-function canDeleteMemoire(user, notice) {
-  return canManageMemoire(user, notice);
+async function canDeleteMemoire(user, notice) {
+  return await canManageMemoire(user, notice);
 }
 
 async function canManagePalissy(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "palissy");
+  let validate = await canManage(user, notice, "palissy");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreatePalissy(user, notice) {
-  return canManagePalissy(user, notice);
+async function canCreatePalissy(user, notice) {
+  return await canManagePalissy(user, notice);
 }
 
-function canUpdatePalissy(user, prevNotice, newNotice) {
-  return canManagePalissy(user, prevNotice) && canManagePalissy(user, newNotice);
+async function canUpdatePalissy(user, prevNotice, newNotice) {
+  return await canManagePalissy(user, prevNotice) && await canManagePalissy(user, newNotice);
 }
 
-function canDeletePalissy(user, notice) {
-  return canManagePalissy(user, notice);
+async function canDeletePalissy(user, notice) {
+  return await canManagePalissy(user, notice);
 }
 
 async function canManageMerimee(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "joconde");
+  let validate = await canManage(user, notice, "merimee");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateMerimee(user, notice) {
-  return canManageMerimee(user, notice);
+async function canCreateMerimee(user, notice) {
+  return await canManageMerimee(user, notice);
 }
 
-function canUpdateMerimee(user, prevNotice, newNotice) {
-  return canManageMerimee(user, prevNotice) && canManageMerimee(user, newNotice);
+async function canUpdateMerimee(user, prevNotice, newNotice) {
+  return await canManageMerimee(user, prevNotice) && await canManageMerimee(user, newNotice);
 }
 
-function canDeleteMerimee(user, notice) {
-  return canManageMerimee(user, notice);
+async function canDeleteMerimee(user, notice) {
+  return await canManageMerimee(user, notice);
 }
 
 async function canManageMuseo(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = canManage(user, notice, "museo");
+  let validate = await canManage(user, notice, "museo");
 
   //On retourne si oui ou non il a le droit
   return validate;
 }
 
-function canCreateMuseo(user, notice) {
-  return canManageMuseo(user, notice);
+async function canCreateMuseo(user, notice) {
+  return await canManageMuseo(user, notice);
 }
 
-function canUpdateMuseo(user, prevNotice, newNotice) {
-  return canManageMuseo(user, prevNotice) && canManageMuseo(user, newNotice);
+async function canUpdateMuseo(user, prevNotice, newNotice) {
+  return await canManageMuseo(user, prevNotice) && await canManageMuseo(user, newNotice);
 }
 
-function canDeleteMuseo(user, notice) {
-  return canManageMuseo(user, notice);
+async function canDeleteMuseo(user, notice) {
+  return await canManageMuseo(user, notice);
 }
 
 //Retourne le groupe de l'utilisateur

@@ -143,13 +143,8 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  //notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
-  let noticeProducteur = await identifyProducteur("palissy", notice.REF, "", "");
-  if(noticeProducteur){
-    notice.DISCIPLINE = notice.PRODUCTEUR = noticeProducteur;
-  }
-  else {
-    notice.DISCIPLINE = notice.PRODUCTEUR = "Autre";
+  if(notice.PRODUCTEUR){
+    notice.DISCIPLINE = notice.PRODUCTEUR
   }
 
   notice = await withFlags(notice);
@@ -248,7 +243,7 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-
+      await determineProducteur(notice);
       const prevNotice = await Palissy.findOne({ REF: ref });
       if (!await canUpdatePalissy(req.user, prevNotice, notice)) {
         return res.status(401).send({
@@ -303,6 +298,7 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
+      await determineProducteur(notice);
       if (!await canCreatePalissy(req.user, notice)) {
         return res
           .status(401)
@@ -367,5 +363,24 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  console.log("determineProducteur");
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("palissy", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
 
 module.exports = router;
