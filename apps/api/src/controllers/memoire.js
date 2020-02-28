@@ -26,7 +26,7 @@ const { capture } = require("./../sentry.js");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
-  let listPrefix = getPrefixesFromProducteurs(["palissy", "merimee", "autor"]);
+  let listPrefix = await getPrefixesFromProducteurs(["palissy", "merimee", "autor"]);
 
   notice.POP_FLAGS = [];
   // Required properties.
@@ -42,7 +42,7 @@ async function withFlags(notice) {
     // LBASE must start with EA, PA, etc.
     if (
       notice.LBASE.map(lb => lb.substring(0, 2)).filter(
-        prefix => !listPrefix.listePrefixe.includes(prefix)
+        prefix => !listPrefix.includes(prefix)
       ).length > 0
     ) {
       notice.POP_FLAGS.push("LBASE_INVALID");
@@ -100,7 +100,7 @@ async function getPrefixesFromProducteurs(listBase){
 
   producteurs.map(
     producteur => producteur.BASE.filter(
-      base => listeProducteur.includes(base.base)
+      base => listBase.includes(base.base)
     ).map(
       base => listePrefix = listePrefix.concat(base.prefixes)
     )
