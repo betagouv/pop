@@ -42,7 +42,7 @@ async function withFlags(notice) {
     // LBASE must start with EA, PA, etc.
     if (
       notice.LBASE.map(lb => lb.substring(0, 2)).filter(
-        prefix => !listPrefix.includes(prefix)
+        prefix => !listPrefix.listePrefixe.includes(prefix)
       ).length > 0
     ) {
       notice.POP_FLAGS.push("LBASE_INVALID");
@@ -136,7 +136,7 @@ async function transformBeforeCreate(notice) {
   else {
     notice.PRODUCTEUR = "AUTRE";
   }
-  notice = withFlags(notice);
+  notice = await withFlags(notice);
 }
 
 //function findProducteur(REF, IDPROD, EMET) {
