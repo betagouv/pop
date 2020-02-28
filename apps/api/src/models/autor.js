@@ -63,7 +63,7 @@ const Schema = new mongoose.Schema(
     PREF: { type: String, default: "", documentation: { label: "Numéro du registre de la préfecture" } },
     BIF: { type: String, default: "", documentation: { label: "Date de biffage" } },
     LOCACT: { type: String, default: "", documentation: { label: "Lieu d'activités" } },
-    LBASE: { type: String, default: "", documentation: { label: "Liens autres bases" } },
+    LBASE: { type: [String], default: [], documentation: { label: "Liens autres bases" } },
     MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
 
 
