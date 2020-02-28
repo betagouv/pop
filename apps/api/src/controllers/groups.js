@@ -26,6 +26,18 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 });
 
+// Get group by label.
+router.get("/label", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    const {label} = req.query;
+    try {
+        const group = await Group.findOne({LABEL: label});
+        return res.status(200).send({ success: true, group });
+    } catch (error) {
+        capture(error);
+        return res.status(500).send({ success: false, error });
+    }
+});
+
 
 // Get all groups.
 router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (req, res) => {

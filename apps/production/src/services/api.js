@@ -73,6 +73,11 @@ class api {
     return request.fetchJSON("GET", `/groups`);
   }
 
+  // Get all groups.
+  getGroupByLabel(label) {
+    return request.fetchJSON("GET", `/groups/label?label=${label}`);
+  }
+
   // Create a group.
   async createGroup({ label, producteurs }) {
     const props = { label, producteurs };
