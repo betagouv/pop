@@ -122,6 +122,7 @@ function transformBeforeCreateAndUpdate(notice) {
   return new Promise(async (resolve, reject) => {
     try {
       notice.DMAJ = formattedNow();
+      notice.BASE = "Autor";
       let noticeProducteur = await identifyProducteur("autor", notice.REF, "", "");
       if(noticeProducteur){
         notice.PRODUCTEUR = noticeProducteur;
