@@ -70,7 +70,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = formattedNow();
-    transformBeforeCreateAndUpdate(notice);
+    await transformBeforeCreateAndUpdate(notice);
     if (!canCreateAutor(req.user, notice)) {
       return res
         .status(401)
