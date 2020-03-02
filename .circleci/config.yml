@@ -285,7 +285,7 @@ workflows:
       - build_production_staging:
           requires:
 #            - test_production
-          requires: prepare_all
+            - prepare_all
           filters:
             branches:
               only: staging
