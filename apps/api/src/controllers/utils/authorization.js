@@ -197,7 +197,13 @@ async function getUserGroup(userGroup){
   if(userGroup=="admin"){
     return {LABEL: "admin"};
   }
-  await Group.findOne({LABEL: userGroup}).then(item => group = item);
+  try{
+    group = await Group.findOne({LABEL: userGroup});
+  }catch (error) {
+    capture(error);
+    return res.status(500).send({ success: false, error });
+  }
+
   return group;
 }
 

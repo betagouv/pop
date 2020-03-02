@@ -28,7 +28,14 @@ router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req
     const { _id, label, base } = req.body;
 
     // Validate required fields.
-    const validation = producteurValidation({ ...req.body});
+    let allProducteurs;
+    try {
+      allProducteurs = await Producteur.find({});
+    } catch (error) {
+        capture(error);
+        return res.status(500).send({ success: false, error });
+    }
+    const validation = producteurValidation( _id, label, base, allProducteurs );
     if (!validation.success) {
         return res.status(400).send({ success: validation.success, msg: validation.msg });
     }
@@ -92,8 +99,16 @@ router.get("/prefixesFromProducteurs", passport.authenticate("jwt", { session: f
 // Create one producteur.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => { 
     let { label, base } = req.body;
+
     // Validate required fields.
-    const validation = producteurValidation({ ...req.body });
+    let allProducteurs;
+    try {
+      allProducteurs = await Producteur.find({});
+    } catch (error) {
+      capture(error);
+      return res.status(500).send({ success: false, error });
+    }
+    const validation = producteurValidation(0, label, base, allProducteurs);
     if (!validation.success) {
         return res.status(400).send({ success: validation.success, msg: validation.msg });
     }
@@ -119,7 +134,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 });
 
 
-function producteurValidation({ label, base }) {
+function producteurValidation( _id, label, base, allProducteurs ) {
     let msg = "";
     let usedBases = [];
 
@@ -129,6 +144,17 @@ function producteurValidation({ label, base }) {
       return { success: false, msg };
     }
 
+    //Si parmis les producteurs existants il y en a un portant le même nom, retourne une erreur
+    allProducteurs.map(item => {
+        if(String(item.LABEL) === label && item._id != _id){
+            msg = "Ce nom de producteur existe déjà";
+        }
+    })
+    if(msg!=""){
+        return { success: false, msg };
+    }
+
+    // Vérifie si les bases et les préfixes sont remplis
     for(let i=0; i<base.length; i++){
       //Test si base et préfixe sont remplis
       if(base[i].base==""){

@@ -35,27 +35,31 @@ router.put(
     try {
       const prevNotice = await Autor.findOne({ REF: ref });
       await determineProducteur(notice);
-      if (!canUpdateAutor(req.user, prevNotice, notice)) {
+      const canUpdate = await canUpdateAutor(req.user, prevNotice, notice);
+
+      if (!canUpdate) {
         return res.status(401).send({
           success: false,
-          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+          msg: "Autorisation nécessaire pour mettre à jour ces notices"
         });
       }
-      const promises = [];
+      else{
+        const promises = [];
 
-      // Prepare and update notice.
-      await transformBeforeCreateAndUpdate(notice);
+        // Prepare and update notice.
+        await transformBeforeCreateAndUpdate(notice);
 
-      const obj = new Autor(notice);
-      
-      checkESIndex(obj);
-      promises.push(updateNotice(Autor, ref, notice));
+        const obj = new Autor(notice);
+        
+        checkESIndex(obj);
+        promises.push(updateNotice(Autor, ref, notice));
 
 
-      // Consume promises and send sucessful result.
-      await Promise.all(promises);
+        // Consume promises and send sucessfull result.
+        await Promise.all(promises);
 
-      res.status(200).send({ success: true, msg: "Notice mise à jour." });
+        res.status(200).send({ success: true, msg: "Notice mise à jour." });
+      }
     } catch (e) {
       capture(e);
       res.status(500).send({ success: false, error: e });
@@ -120,11 +124,10 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
 });
 
 function transformBeforeCreateAndUpdate(notice) {
-  console.log("transformBeforeCreateAndUpdate");
   return new Promise(async (resolve, reject) => {
     try {
       notice.DMAJ = formattedNow();
-      notice.BASE = "Autor";
+      notice.BASE = "Ressources biographiques (Autor)";
       notice = withFlags(notice);
 
       resolve();
@@ -135,8 +138,7 @@ function transformBeforeCreateAndUpdate(notice) {
   });
 }
 
-function determineProducteur(notice) {
-  console.log("determineProducteur");
+async function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
       let noticeProducteur = await identifyProducteur("autor", notice.REF, "", "");
