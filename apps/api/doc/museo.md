@@ -116,7 +116,7 @@ Informations et avertissements techniques
 |Array|non|non|non|non|||
 
 ### BASE
-Nom de la base : Musées de france (MUSEO)
+Nom de la base : Répertoire des Musées de France (Muséofile)
 
 
 

@@ -153,7 +153,7 @@ export default class extends React.Component {
                     </div>
                   }
                   params={{
-                    base: ["Musées de france (MUSEO)"]
+                    base: ["Répertoire des Musées de France (Muséofile)"]
                   }}
                 />
               </Slider>
