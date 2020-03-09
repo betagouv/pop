@@ -299,6 +299,34 @@ const Enluminures = ({ data }) => {
   );
 };
 
+const Autor = ({ data }) => {
+  const REF = data.REF;
+  const { title, subtitle } = getNoticeInfo(data);
+
+  return (
+    <Link href={`/notice/autor/${REF}`} key={REF}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
+        <div className="list-card-container ">
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {title}
+                <br />
+                <small>{subtitle}</small>
+              </h2>
+              <span>
+                <small className="base">Autor</small>
+                <br />
+                {REF}
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </Link>
+  );
+};
+
 const withStyle = component => {
   return (
     <React.Fragment>
@@ -442,5 +470,7 @@ export default ({ data }) => {
       return withStyle(<Museo data={data._source} />);
     case "enluminures":
       return withStyle(<Enluminures data={data._source} />);
+    case "autor":
+      return withStyle(<Autor data={data._source} />);
   }
 };

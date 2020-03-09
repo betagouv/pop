@@ -238,6 +238,14 @@ export function getNoticeInfo(notice) {
 
       return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
+    case "Ressources biographiques (Autor)": {
+      let title = (notice.PREN || "") + " " +  (notice.NOM);
+      title = capitalizeFirstLetter(title);
+
+      const subtitle = notice.NATIO || "";
+
+      return { title, subtitle };
+    }
     default:
       return {};
   }

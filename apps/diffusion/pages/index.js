@@ -156,6 +156,19 @@ export default class extends React.Component {
                     base: ["Musées de france (MUSEO)"]
                   }}
                 />
+                <TopicCard
+                  base="autor"
+                  img="/static/topics/balmain.jpg"
+                  txt={
+                    <div>
+                      Ressources biographiques
+                      <p>Base Autor</p>
+                    </div>
+                  }
+                  params={{
+                    base: ["Ressources biographiques (Autor)"]
+                  }}
+                />
               </Slider>
               <h2>Accès thématiques</h2>
               <h3>Photographie</h3>

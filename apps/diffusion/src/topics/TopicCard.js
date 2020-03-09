@@ -10,7 +10,13 @@ const toReactiveSearchParams = params => {
 class TopicCard extends React.Component {
   render() {
     const { img, txt } = this.props;
-    const params = { ...this.props.params, image: ["oui"] };
+    let params;
+    if(String(this.props.base) != "autor"){
+      params = { ...this.props.params, image: ["oui"] };
+    }
+    else{
+      params = { ...this.props.params };
+    }
     const href = `/search/mosaic?${queryString.stringify({
       view: "mosaic",
       mode: "simple",
