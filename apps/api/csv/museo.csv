@@ -2,7 +2,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "REF","String","oui","Identifiant du musée","","","N° de référence dans la base Muséofile",""
 "POP_FLAGS","Array","non","Alertes POP","","true","Informations et avertissements techniques",""
 "POP_IMPORT","Array","non","","","","",""
-"BASE","String","non","Nom de la base","","true","Nom de la base : Musées de france (MUSEO)",""
+"BASE","String","non","Nom de la base","","true","Nom de la base : Répertoire des Musées de France (Muséofile)",""
 "ACCES","String","non","Musée ouvert (Oui/Non)","","","Indiquer "Non" en cas de fermeture au public.",""
 "ADRL1_M","String","non","Adresse","","","Adresse (n°, voie)",""
 "ARTISTE","String","non","Artistes phares","","","Artistes de la collection",""

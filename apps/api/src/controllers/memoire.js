@@ -183,9 +183,10 @@ async function updateLinks(notice) {
     let REF = notice.REF;
     let noticeMemoire = await Memoire.findOne({ REF: REF });
     let IMG = notice.IMG ? notice.IMG : noticeMemoire.IMG;
-    let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.IMG;
-
-    const NAME = notice.TICO || notice.LEG || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
+    let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.COPY;
+    const NAME = (notice.TICO ? notice.TICO : noticeMemoire.TICO) 
+                  || (notice.LEG ? notice.LEG : noticeMemoire.LEG) 
+                  || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
 
     const linkedNotices = [];

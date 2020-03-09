@@ -392,7 +392,13 @@ const operators = [
             { term: { [k]: "" } },
             // ... or not exists.
             { bool: { must_not: { exists: { field: k } } } }
-          ]
+          ],
+          filter:[{
+            script: {
+                script : "doc['"+k+"'].values.length <= 1"
+            }
+          }],
+          minimum_should_match: 1
         }
       }))
   }

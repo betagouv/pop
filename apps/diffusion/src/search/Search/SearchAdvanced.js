@@ -12,7 +12,7 @@ const bases = [
   { key: "memoire", base: "Photographies (Mémoire)" },
   { key: "palissy", base: "Patrimoine mobilier (Palissy)" },
   { key: "enluminures", base: "Enluminures (Enluminures)" },
-  { key: "museo", base: "Musées de france (MUSEO)" }
+  { key: "museo", base: "Répertoire des Musées de France (Muséofile)" }
 ];
 
 class SearchAdvanced extends React.Component {
