@@ -147,7 +147,8 @@ const Menu = ({ closeMenu, initialValues }) => (
         ["deno", "DENO.keyword"],
         ["serie", "SERIE.keyword"],
         ["repr", "REPR.keyword"],
-        ["util", "UTIL.keyword"]
+        ["util", "UTIL.keyword"],
+        ["loca", "LOCA.keyword"],
       ].map(([value, field]) => {
         return (
           <CollapsableFacet
