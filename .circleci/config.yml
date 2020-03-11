@@ -278,7 +278,7 @@ workflows:
                 - new-search-system
       - build_diffusion_prod:
           requires:
-            - deploy_diffusion_staging
+            - test_diffusion
           filters:
             branches:
               only: master
@@ -290,7 +290,7 @@ workflows:
               only: staging
       - build_production_prod:
           requires:
-            - deploy_production_staging
+            - test_production
           filters:
             branches:
               only: master
@@ -316,7 +316,7 @@ workflows:
               only: staging
       - deploy_api_prod:
           requires:
-            - deploy_api_staging
+            - test_api
           filters:
             branches:
               only: master
