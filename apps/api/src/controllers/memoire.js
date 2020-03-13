@@ -357,7 +357,6 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
 });
 
 function determineProducteur(notice) {
-  console.log("determineProducteur");
   return new Promise(async (resolve, reject) => {
     try {
       let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);

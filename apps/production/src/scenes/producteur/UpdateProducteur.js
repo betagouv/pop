@@ -10,7 +10,7 @@ import ProducteurBaseLine from "./components/ProducteurBaseLine";
 class UpdateProducteur extends React.Component {
   state = {
     modal: false,
-    indexMax: 0,
+    indexMax: this.props.baseList.length - 1,
     label: this.props.label,
     baseList: this.props.baseList
   };
