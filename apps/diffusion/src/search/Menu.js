@@ -30,7 +30,7 @@ const Menu = ({ closeMenu, initialValues }) => (
     <CollapsableFacet
       id="auteur"
       initialValue={initialValues.get("auteur")}
-      fields={["AUTP.keyword", "AUTR.keyword"]}
+      fields={["AUTP.keyword", "AUTR.keyword", "NOMPRENOM.keyword"]}
       title="Auteur"
     />
     <CollapsableFacet
@@ -82,22 +82,17 @@ const Menu = ({ closeMenu, initialValues }) => (
         "NOMOFF.keyword",
         "VILLE_M.keyword",
         "REGION.keyword",
-        "NOMUSAGE.keyword"
+        "NOMUSAGE.keyword",
+        "LOCA_AUTOR.keyword",
+        "LNAISS.keyword",
+        "LMORT.keyword"
       ]}
       title="Localisation"
     />
     <CollapsableFacet
-      id="auteur"
-      initialValue={initialValues.get("auteur")}
-      fields={[
-        "NOMPRENOM.keyword"
-      ]}
-      title="Auteur"
-    />
-    <CollapsableFacet
       id="periode"
       initialValue={initialValues.get("periode")}
-      fields={["PERI.keyword"]}
+      fields={["PERI.keyword", "SCLE.keyword"]}
       title="Période"
     />
     <CollapsableFacet

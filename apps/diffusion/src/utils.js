@@ -239,12 +239,51 @@ export function getNoticeInfo(notice) {
       return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
     case "Ressources biographiques (Autor)": {
-      let title = (notice.PREN || "") + " " +  (notice.NOM);
-      title = capitalizeFirstLetter(title);
+      let logo = "";
+      if (notice.PRODUCTEUR === "Inventaire") {
+        logo = "/static/inventaire.jpg";
+      } else if (notice.PRODUCTEUR === "Monuments Historiques") {
+        logo = "/static/mh.png";
+      }
+      else{
+        logo = notice.PRODUCTEUR;
+      }
 
-      const subtitle = notice.NATIO || "";
+      const image_preview = notice.MEMOIRE.filter(e => e.url).length
+        ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
+        : "/static/noimage.png";
 
-      return { title, subtitle };
+      const nom =  (notice.NOMPRENOM? notice.NOMPRENOM : (notice.PREN + " " + notice.NOM)) + (notice.ALIAS!="" ? (" - " + notice.ALIAS) : "");
+
+      //Description
+      let life = "";
+      if(notice.DNAISS && notice.DMORT){
+        life = " (" + notice.DNAISS + " - " + notice.DMORT + ")";
+      }
+      else if(notice.DNAISS && !notice.DMORT){
+        life = " (" + notice.DNAISS + ")";
+      }
+      const description = notice.INI + life;
+
+      //Date d'activité
+      let activite = "";
+      if(notice.DATES || LOCACT){
+        activite = " - (dates d'activité : " + notice.DATES + ((notice.DATES && notice.LOCACT)? (" - " + notice.LOCACT) : "");
+      }
+
+      //Fonction
+      let isOrfevre = false;
+      let fonction = "";
+      notice.FONC.map( (fonc, index) => {
+        if(fonc == "Orfèvre"){
+          isOrfevre = true;
+        }
+        fonction += ( index==0? fonc : (", " + fonc) )
+      });
+
+      //Symbole
+      let symbole = isOrfevre? notice.SYMB : "";
+      return { image_preview, logo, nom, description, fonction, symbole };
     }
     default:
       return {};

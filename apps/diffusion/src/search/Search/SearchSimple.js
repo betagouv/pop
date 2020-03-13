@@ -55,6 +55,7 @@ export default function SearchSimple({ initialValues }) {
           "TICO^10",
           "AUTR^10",
           "NOM^10",
+          "PREN^10",
           "TITRE^9",
           "TITR^9",
           "LEG^9",
