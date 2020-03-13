@@ -87,6 +87,14 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Localisation"
     />
     <CollapsableFacet
+      id="auteur"
+      initialValue={initialValues.get("auteur")}
+      fields={[
+        "NOMPRENOM.keyword"
+      ]}
+      title="Auteur"
+    />
+    <CollapsableFacet
       id="periode"
       initialValue={initialValues.get("periode")}
       fields={["PERI.keyword"]}

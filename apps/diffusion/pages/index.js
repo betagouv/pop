@@ -158,7 +158,7 @@ export default class extends React.Component {
                 />
                 <TopicCard
                   base="autor"
-                  img="/static/topics/balmain.jpg"
+                  img="/static/topics/autor.jpeg"
                   txt={
                     <div>
                       Ressources biographiques
