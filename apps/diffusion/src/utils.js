@@ -49,7 +49,7 @@ export function getNoticeInfo(notice) {
 
       return { title, subtitle, metaDescription, logo, image_preview, images };
     }
-    case "Musées de france (MUSEO)": {
+    case "Répertoire des Musées de France (Muséofile)": {
       let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 

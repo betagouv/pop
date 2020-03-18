@@ -56,7 +56,7 @@ const Menu = ({ closeMenu, initialValues }) => (
                 checked={isChecked(item)}
                 onChange={e => handleChange(item, e.target.checked)}
               />
-              {item.key === "Musées de france (MUSEO)" ? "Répertoire des Musées de France (MUSEO)" : item.key} ({item.doc_count})
+              {item.key} ({item.doc_count})
             </label>
           ));
       }}
