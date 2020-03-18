@@ -73,16 +73,16 @@ class api {
 
       while (arr.length) {
         const currentNotices = arr.splice(0, BULK_SIZE);
-        let currentQueries = currentNotices.map(e => {
-          if (e.action === "updated") {
-            return this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
-          } else {
-            return this.createNotice(e.collection, e.notice, e.files);
-          }
-        });
         const progress = (100 * (total - arr.length)) / total;
         try {
-          await Promise.all(currentQueries);
+          for(let i=0; i<currentNotices.length; i++){
+            let e = currentNotices[i];
+            if (e.action === "updated") {
+              await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
+            } else {
+              await this.createNotice(e.collection, e.notice, e.files);
+            }
+          }
           cb(progress, `Notices restantes  ${total - arr.length}/${total}`);
         } catch (e) {
           // I add the currents one back to the list.
@@ -116,7 +116,7 @@ class api {
   }
 
   // Update one notice.
-  updateNotice(ref, collection, data, files = []) {
+  async updateNotice(ref, collection, data, files = []) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
@@ -126,7 +126,7 @@ class api {
   }
 
   // Create a new notice.
-  createNotice(collection, data, files = []) {
+  async createNotice(collection, data, files = []) {
     // Clean object.
     for (let propName in data) {
       if (!data[propName]) {
