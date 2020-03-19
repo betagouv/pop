@@ -98,6 +98,12 @@ export default () => (
           </a>
           , patrimoine architectural
         </li>
+        <li>
+          <a href="https://data.culture.gouv.fr/explore/dataset/musees-de-france-base-museofile/information/">
+            Mémoire
+          </a>
+          , muséofile (répertoire des musées de France)
+        </li>
       </ul>
     </div>
     <style jsx>{`
