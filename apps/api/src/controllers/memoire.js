@@ -182,10 +182,10 @@ async function updateLinks(notice) {
     //const { REF, IMG, COPY } = notice;
     let REF = notice.REF;
     let noticeMemoire = await Memoire.findOne({ REF: REF });
-    let IMG = notice.IMG ? notice.IMG : noticeMemoire.IMG;
-    let COPY = noticeMemoire.COPY ? notice.COPY : noticeMemoire.COPY;
-    const NAME = (notice.TICO ? notice.TICO : noticeMemoire.TICO) 
-                  || (notice.LEG ? notice.LEG : noticeMemoire.LEG) 
+    let IMG = notice.IMG ? notice.IMG : (noticeMemoire? noticeMemoire.IMG : "");
+    let COPY = notice.COPY ? notice.COPY : (noticeMemoire? noticeMemoire.COPY : "");
+    const NAME = (notice.TICO ? notice.TICO : (noticeMemoire? noticeMemoire.TICO : "")) 
+                  || (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
                   || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
 
@@ -263,11 +263,16 @@ router.put(
     await transformBeforeUpdate(notice);
     const obj = new Memoire(notice);
     checkESIndex(obj);
-    promises.push(updateLinks(notice));
-    promises.push(updateNotice(Memoire, ref, notice));
 
     try {
-      await Promise.all(promises);
+      await updateNotice(Memoire, ref, notice);
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, error: e });
+    }
+
+    try {
+      await updateLinks(notice);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);

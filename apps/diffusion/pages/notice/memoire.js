@@ -90,6 +90,7 @@ export default class extends React.Component {
                       "LOCA",
                       "INSEE",
                       "ADRESSE",
+                      "LIEU",
                       "MCGEO",
                       "EDIF",
                       "OBJT",
@@ -117,11 +118,11 @@ export default class extends React.Component {
                     content="Localisation"
                     small={true}
                     notice={notice}
-                    fields={["LOCA", "INSEE", "ADRESSE", "MCGEO"]}
+                    fields={["LOCA", "INSEE", "ADRESSE", "LIEU", "MCGEO"]}
                   />
                   <Field title={mapping.memoire.LOCA.label} content={notice.LOCA} />
                   <Field title={mapping.memoire.INSEE.label} content={notice.INSEE} />
-                  <Field title={mapping.memoire.ADRESSE.label} content={notice.ADRESSE} />
+                  <Field title={notice.ADRESSE != "" ? mapping.memoire.ADRESSE.label : mapping.memoire.LIEU.label} content={notice.ADRESSE != "" ? notice.ADRESSE : notice.LIEU} />
                   <Field title={mapping.memoire.MCGEO.label} content={notice.MCGEO} />
                   <Title
                     content="Identification"
