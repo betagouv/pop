@@ -238,6 +238,86 @@ export function getNoticeInfo(notice) {
 
       return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
+    case "Ressources biographiques (Autor)": {
+      let title = 
+      (notice.NOMPRENOM ? notice.NOMPRENOM : 
+        ( (notice.PREN ? notice.PREN : " ") 
+          +(notice.NOM ? notice.NOM : "")
+        )
+      );
+      let logo = "";
+      if (notice.PRODUCTEUR === "Inventaire") {
+        logo = "/static/inventaire.jpg";
+      } else if (notice.PRODUCTEUR === "Monuments Historiques") {
+        logo = "/static/mh.png";
+      }
+      else{
+        logo = notice.PRODUCTEUR;
+      }
+
+      const images = notice.MEMOIRE.map((e, i) => {
+        const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
+        return { src, alt: `${e.name}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+      });
+
+      const image_preview = notice.MEMOIRE.filter(e => e.url).length
+        ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
+        : "/static/noimage.png";
+
+      const nom =  (notice.NOMPRENOM? notice.NOMPRENOM : (notice.PREN + " " + notice.NOM)) + (notice.ALIAS!="" ? (" - " + notice.ALIAS) : "");
+
+      //Description
+      let life = "";
+      if(notice.DNAISS && notice.DMORT){
+        life = " (" + notice.DNAISS + " - " + notice.DMORT + ")";
+      }
+      else if(notice.DNAISS && !notice.DMORT){
+        life = " (" + notice.DNAISS + ")";
+      }
+      const description = notice.INI + life;
+
+      //Date d'activité
+      let activite = "";
+      if(notice.DATES || LOCACT){
+        activite = " - (dates d'activité : " + notice.DATES + ((notice.DATES && notice.LOCACT)? (" - " + notice.LOCACT) : "");
+      }
+
+      //Fonction
+      let isOrfevre = false;
+      let fonction = "";
+      notice.FONC.map( (fonc, index) => {
+        if(fonc == "Orfèvre"){
+          isOrfevre = true;
+        }
+        fonction += ( index==0? fonc : (", " + fonc) )
+      });
+
+      //Symbole
+      let symbole = isOrfevre? notice.SYMB : "";
+
+      //Dates et lieus d'existence
+      let datesLieus = "";
+      datesLieus += ( notice.DNAISS ? (notice.DNAISS + (notice.LNAISS? (" ("+notice.LNAISS+") ") : "") ) : "" );
+      datesLieus += (notice.DNAISS && notice.DMORT ? " - " : "");
+      datesLieus += ( notice.DMORT ? (notice.DMORT + (notice.LMORT? (" ("+notice.LMORT+") ") : "") ) : "");
+
+      //Dates – lieu d’activités : SCLE ; DATES – LOCA – LOCACT – ADRS
+      let datesActivites = "";
+      const SCLE = notice.SCLE.join(", ");
+      const DATES = notice.DATES.join(", ");
+      datesActivites += SCLE ? (SCLE + "; ") : "";
+      datesActivites += ((datesActivites!=""?" - ":"") + (DATES ? (DATES) : ""));
+      datesActivites += ((datesActivites!=""?" - ":"") + (notice.LOCA ? (notice.LOCA) : ""));
+      datesActivites += ((datesActivites!=""?" - ":"") + (notice.LOCACT ? (notice.LOCACT) : ""));
+      datesActivites += ((datesActivites!=""?" - ":"") + (notice.ADRS ? (notice.ADRS) : ""));
+
+      //Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
+      let referenceArk = "";
+      referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
+      referenceArk += ((notice.ISNI_VERIFIEE? " / " : "") + ( notice.ARK ? ( "Lien ARK : " + notice.ARK) : "")); 
+
+      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, datesActivites, referenceArk };
+    }
     default:
       return {};
   }

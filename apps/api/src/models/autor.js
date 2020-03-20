@@ -65,6 +65,8 @@ const Schema = new mongoose.Schema(
     LOCACT: { type: String, default: "", documentation: { label: "Lieu d'activités" } },
     LBASE: { type: [String], default: [], documentation: { label: "Liens autres bases" } },
     MEMOIRE: [{ ref: { type: String, index: true }, url: String, name: String, copy: String }],
+    NOMPRENOM: { type: String, default: "", documentation: { label: "Nom complet" } },
+    CONTIENT_IMAGE: { type: String, default: "", documentation: { label: "Contient une image ou non" } },
 
 
 

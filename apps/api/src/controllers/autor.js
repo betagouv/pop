@@ -47,7 +47,7 @@ router.put(
         const promises = [];
 
         // Prepare and update notice.
-        await transformBeforeCreateAndUpdate(notice);
+        await transformBeforeCreateAndUpdate(notice, prevNotice);
 
         const obj = new Autor(notice);
         
@@ -76,7 +76,7 @@ router.post(
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = formattedNow();
     await determineProducteur(notice);
-    await transformBeforeCreateAndUpdate(notice);
+    await transformBeforeCreateAndUpdate(notice, null);
     if (!canCreateAutor(req.user, notice)) {
       return res
         .status(401)
@@ -123,12 +123,28 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   }
 });
 
-function transformBeforeCreateAndUpdate(notice) {
+function transformBeforeCreateAndUpdate(notice, prevNotice) {
   return new Promise(async (resolve, reject) => {
     try {
       notice.DMAJ = formattedNow();
       notice.BASE = "Ressources biographiques (Autor)";
       notice = withFlags(notice);
+
+      //Construction du champ Nom + Prenom
+      const NOM = notice.NOM;
+      const PREN = notice.PREN;
+      notice.NOMPRENOM = ((PREN? PREN : "")
+                        + (PREN && NOM ? " " : "")
+                        + (NOM? NOM : "")); 
+
+      //Champ CONTIENT_IMAGE égal à oui si Memoire contient une url d'image au moins
+      MEMOIRE = notice.MEMOIRE ? notice.MEMOIRE : (prevNotice? prevNotice.MEMOIRE : [])
+      if(MEMOIRE.length > 0){
+        notice.CONTIENT_IMAGE = ( MEMOIRE.some(e => e.url) ? "oui" : "non" );
+      }
+      else{
+        notice.CONTIENT_IMAGE = "non";
+      }
 
       resolve();
     } catch (e) {

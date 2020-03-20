@@ -299,6 +299,40 @@ const Enluminures = ({ data }) => {
   );
 };
 
+const Autor = ({ data }) => {
+  const REF = data.REF;
+  const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} />;
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+
+
+  return (
+    <Link href={`/notice/autor/${REF}`} key={REF}>
+      <a className="list-card" style={{ textDecoration: "none" }}>
+        <div className="list-card-container ">
+        <div className="thumbnail">{ImageComponent}</div>
+          <div className="content">
+            <div style={{ display: "flex" }}>
+              <h2>
+                {nom}<br />
+                {description}
+              </h2>
+              <span>
+                <small className="base">Autor</small>
+                <br />
+                {REF}
+              </span>
+              {LogoComponent}
+            </div>
+            <p>{fonction}</p>
+            <p>{symbole}</p>
+          </div>
+        </div>
+      </a>
+    </Link>
+  );
+};
+
 const withStyle = component => {
   return (
     <React.Fragment>
@@ -442,5 +476,7 @@ export default ({ data }) => {
       return withStyle(<Museo data={data._source} />);
     case "enluminures":
       return withStyle(<Enluminures data={data._source} />);
+    case "autor":
+      return withStyle(<Autor data={data._source} />);
   }
 };

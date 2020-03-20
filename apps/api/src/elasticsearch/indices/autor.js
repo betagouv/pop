@@ -1,4 +1,43 @@
 module.exports = {
+    "settings": {
+        "analysis": {
+            "filter": {
+                "french_elision": {
+                    "type": "elision",
+                    "articles_case": true,
+                    "articles": [
+                        "l",
+                        "m",
+                        "t",
+                        "qu",
+                        "n",
+                        "s",
+                        "j",
+                        "d",
+                        "c",
+                        "jusqu",
+                        "quoiqu",
+                        "lorsqu",
+                        "puisqu"
+                    ]
+                },
+                "french_stemmer": {
+                    "type": "stemmer",
+                    "language": "light_french"
+                }
+            },
+            "analyzer": {
+                "french_fuzzy": {
+                    "tokenizer": "icu_tokenizer",
+                    "filter": ["french_elision", "icu_folding", "french_stemmer"]
+                },
+                "french_strict": {
+                    "tokenizer": "icu_tokenizer",
+                    "filter": ["french_elision", "icu_folding"]
+                }
+            }
+        }
+    },
     "mappings": {
         "autor": {
             "properties": {
@@ -87,8 +126,7 @@ module.exports = {
                     "type": "text",
                     "fields": {
                         "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
+                            "type": "keyword"
                         }
                     }
                 },
@@ -96,8 +134,7 @@ module.exports = {
                     "type": "text",
                     "fields": {
                         "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
+                            "type": "keyword"
                         }
                     }
                 },
@@ -130,10 +167,15 @@ module.exports = {
                 },
                 "FONC": {
                     "type": "text",
+                    "analyzer": "french_fuzzy",
                     "fields": {
-                        "keyword": {
+                            "keyword": {
                             "type": "keyword",
                             "ignore_above": 256
+                        },
+                            "strict": {
+                            "type": "text",
+                            "analyzer": "french_strict"
                         }
                     }
                 },
@@ -183,15 +225,6 @@ module.exports = {
                     }
                 },
                 "ISNI_VERIFIEE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
-                "LBASE": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -274,11 +307,16 @@ module.exports = {
                 },
                 "NOM": {
                     "type": "text",
+                    "analyzer": "french_fuzzy",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
                             "ignore_above": 256
-                        }
+                        },
+                        "strict": {
+                            "type": "text",
+                            "analyzer": "french_strict"
+                        } 
                     }
                 },
                 "OBS": {
@@ -319,11 +357,16 @@ module.exports = {
                 },
                 "PREN": {
                     "type": "text",
+                    "analyzer": "french_fuzzy",
                     "fields": {
                         "keyword": {
                             "type": "keyword",
                             "ignore_above": 256
-                        }
+                        },
+                        "strict": {
+                            "type": "text",
+                            "analyzer": "french_strict"
+                        } 
                     }
                 },
                 "PRODUCTEUR": {
@@ -363,15 +406,6 @@ module.exports = {
                     }
                 },
                 "REJET": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                        }
-                    }
-                },
-                "SOCSAV": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -425,7 +459,7 @@ module.exports = {
                         }
                     }
                 },
-                "VIDEO": {
+                "NOMPRENOM": {
                     "type": "text",
                     "fields": {
                         "keyword": {
@@ -434,31 +468,25 @@ module.exports = {
                         }
                     }
                 },
-                MEMOIRE: {
-                  properties: {
-                    ref: {
-                      type: "text",
-                      fields: {
-                        keyword: {
-                          type: "keyword",
-                          ignore_above: 256
+                "CONTIENT_IMAGE": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
                         }
-                      }
-                    },
-                    url: {
-                      type: "text",
-                      fields: {
-                        keyword: {
-                          type: "keyword",
-                          ignore_above: 256
-                        }
-                      }
                     }
-                  }
+                },
+                "VIDEO": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
                 }
             }
         }
-    },
-    "settings": {
     }
 }
