@@ -20,7 +20,7 @@ function pickFirst(data) {
   return first;
 }
 
-const Memoire = ({ data }) => {
+export const Memoire = ({ data }) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
@@ -188,7 +188,7 @@ const Mnr = ({ data }) => {
   );
 };
 
-const Joconde = ({ data }) => {
+export const Joconde = ({ data }) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
