@@ -3,6 +3,14 @@ import App, { Container } from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faShoppingBasket, faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+  faShoppingBasket,
+  faShoppingCart,
+  faCartArrowDown
+);
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -22,9 +30,10 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     const cookies = new Cookies();
-    let bucketList = [{ref: '00000100256', base: 'joconde'}, {ref: 'AP53N00184', base: 'memoire'}];
-    var jsonBucketList = JSON.stringify(bucketList);
-    cookies.set('bucketList', jsonBucketList);
+    const currentBucket = cookies.get("currentBucket") || [];
+    var jsonCurrentBucket = JSON.stringify(currentBucket);
+    cookies.set('currentBucket', jsonCurrentBucket, {path: '/', overwrite: true});
+
     return (
       <Container>
         <Component {...pageProps} />

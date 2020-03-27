@@ -6,32 +6,31 @@ import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
-import {Joconde, Memoire} from "../src/search/Results/CardList";
-import API from "../src/services/api"
+import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
+import API from "../src/services/api";
 
 export default class Bucket extends React.Component {
   state = { bucket: [], loading: true };
 
-  /* componentDidMount() {
-    this.fillBucket();
-  }
+  //Méthode permettant de supprimer du panier
+  removeFromBucket = (ref) => {
 
-  //Récupère les données de la liste des notices du panier
-  fillBucket = async () => {
-    let cookies = new Cookies();
-    const bucket = cookies.get("bucketList");
-    bucket.map(item => {
-      try {
-        API.getNotice(item.base, item.ref).then( notice => {
-          let newBucket = this.state.bucket;
-          newBucket.push(notice);
-          this.setState({bucket : newBucket})
-        });
-      } catch (e) {
-        toastr.error("Erreur lors de la récupération des notices. L'API est innacessible", e);
-      }
-    })
-  }; */
+    //Récupération du panier actuel dans les cookies
+    const cookies = new Cookies();
+    let currentBucket = cookies.get("currentBucket") || [];
+    //Filtre en fonction de la notice que l'on veut enlever
+    currentBucket = currentBucket.filter( item => {
+      return item.ref !== ref;
+    });
+
+    //Transformation de la liste de notice au format json et modification du cookie
+    //Ainsi que le state contenant la liste des notices
+    var jsonCurrentBucket = JSON.stringify(currentBucket);
+    cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
+    this.setState({bucket: this.state.bucket.filter(notice =>
+      { return notice.REF !== ref })
+    });
+  }
 
   componentDidMount(){
     this.fillBucket();
@@ -39,7 +38,7 @@ export default class Bucket extends React.Component {
 
   fillBucket = async () => {
     let cookies = new Cookies();
-    const bucket = cookies.get("bucketList");
+    const bucket = cookies.get("currentBucket");
     try{
       let newBucket = await Promise.all(
         bucket.map(async item => {
@@ -55,13 +54,27 @@ export default class Bucket extends React.Component {
   }
 
   displayCard(notice){
-    switch(notice.collection){
-      case "joconde" :
-        return <Joconde data={notice} />
-      case "memoire" :
-        return <Memoire data={notice} />
-      default :
-        return null;
+    if(notice){
+      switch(notice.collection){
+        case "joconde" :
+          return <Joconde data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "memoire" :
+          return <Memoire data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "palissy" :
+          return <Palissy data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "merimee" :
+          return <Merimee data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "museo" :
+          return <Museo data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "mnr" :
+          return <Mnr data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "enluminures" :
+          return <Enluminures data={notice} removeFromBucket={this.removeFromBucket}/>
+        case "autor" :
+          return <Autor data={notice} removeFromBucket={this.removeFromBucket}/>
+        default :
+          return null;
+      }
     }
   }
 
@@ -79,6 +92,9 @@ export default class Bucket extends React.Component {
         <div className="bucketContainer">
           <h1 className="bucketTitle">Panier de notices</h1>
           <div className="notices">
+            <div>
+              {this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : "")}
+            </div>
             {this.state.bucket.map( notice =>
               <div>
                 {this.displayCard(notice)}
@@ -92,6 +108,9 @@ export default class Bucket extends React.Component {
             }
 
             .bucketContainer{
+              display: flex;
+              align-items: center;
+              flex-direction: column;
               padding-top: 20px;
             }
 
@@ -106,6 +125,7 @@ export default class Bucket extends React.Component {
               flex-direction: column;
               align-content: center;
               padding-top: 30px;
+              width: 80%;
             }
             .list-card {
               display: flex;
@@ -124,7 +144,8 @@ export default class Bucket extends React.Component {
               height: auto;
               margin: 7px 0px 7px 0px;
               border-radius: 5px;
-              width: 80%;
+              width: 100%;
+              justify-content: space-between;
             }
     
             .list-card .list-card-container:hover {
@@ -197,12 +218,31 @@ export default class Bucket extends React.Component {
             .list-card img.producteur {
               width: 50px;
               height: auto;
-              position: absolute;
               right: 7px;
               bottom: 7px;
             }
             .list-card img.producteur.mh {
               width: 100px;
+            }
+
+            .leftContent{
+              display: flex;
+              width: 80%;
+            }
+    
+            .cardTextContent{
+              display: flex;
+              flex-direction: column;
+              width: 80%;
+            }
+    
+            .rightContent{
+              display: flex;
+              flex-direction: column;
+              margin-right: 8px;
+              margin-top: 8px;
+              align-items: flex-end;
+              justify-content: space-around;
             }
           `}</style>
       </div>
