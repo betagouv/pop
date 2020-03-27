@@ -93,7 +93,10 @@ export default class Bucket extends React.Component {
           <h1 className="bucketTitle">Panier de notices</h1>
           <div className="notices">
             <div>
-              {this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : "")}
+              {this.state.bucket.length === 0 ? 
+                "Aucune notice dans le panier" : 
+                (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
+              }
             </div>
             {this.state.bucket.map( notice =>
               <div>
