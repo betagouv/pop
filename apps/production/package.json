@@ -1,6 +1,6 @@
 {
   "name": "pop_production",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "autosize": "^4.0.2",
     "bootstrap": "^4.3.1",
