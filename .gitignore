@@ -1,5 +1,1 @@
-
-apps/api/package-lock.json
 apps/api/src/controllers/search.js
-apps/diffusion/package-lock.json
-apps/production/package-lock.json
