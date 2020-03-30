@@ -100,9 +100,9 @@ export default () => (
         </li>
         <li>
           <a href="https://data.culture.gouv.fr/explore/dataset/musees-de-france-base-museofile/information/">
-            Mémoire
+            Muséofile
           </a>
-          , muséofile (répertoire des musées de France)
+          , répertoire des musées de France
         </li>
       </ul>
     </div>
