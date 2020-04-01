@@ -16,6 +16,30 @@ export default css`
     text-align: center;
   }
 
+  .top-container {
+    position: relative;
+  }
+
+  .printPdfBtn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #377d87;
+    font-weight: 400;
+    font-size: 16px;
+    border: 0;
+    color: #fff;
+    max-width: 250px;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .printPdfBtn:hover {
+    cursor: pointer;
+  }
+
   .notice .notice-details {
     background-color: #fff;
     padding: 25px;
