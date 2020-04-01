@@ -376,3 +376,44 @@ const capitalizeFirstLetter = s => {
   if (!s) return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+export function printPdf(){
+  const html2Canvas = require('html2canvas');
+  const jsPDF = require("jspdf");
+
+  console.log("print pdf");
+  html2Canvas(document.querySelector("#__next"), { useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
+  .then(canvas => {
+    /* //document.body.appendChild(canvas);
+    const imgData = canvas.toDataURL('image/png');
+    
+    const pdf = new jsPDF();
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('download.pdf'); */
+
+    const imgData = canvas.toDataURL('image/png');
+    var doc = new jsPDF('p', 'mm');
+    var position = 0;
+
+    var imgWidth = doc.internal.pageSize.getWidth();
+    var pageHeight = doc.internal.pageSize.getHeight(); 
+    var imgHeight = canvas.height * imgWidth / canvas.width;
+    var heightLeft = imgHeight;    
+
+    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      doc.addPage();
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    doc.save('test.pdf');
+
+  });
+}

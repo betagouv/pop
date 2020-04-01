@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, printPdf } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -79,7 +79,12 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
-            <h1 className="heading">{title}</h1>
+            <div className="top-container">
+              <h1 className="heading">{title}</h1>
+              <div className="printPdfBtn" onClick={() => printPdf()}>
+                Téléchargement PDF
+              </div>
+            </div>
             <Row>
               <Col md="8">
                 <div className="notice-details">

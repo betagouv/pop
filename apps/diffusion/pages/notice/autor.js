@@ -11,7 +11,7 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, printPdf } from "../../src/utils";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -61,7 +61,13 @@ export default class extends React.Component {
             <Head>
               <title>{title}</title>
             </Head>
-            <h1 className="heading">{title}</h1>
+
+            <div className="top-container">
+              <h1 className="heading">{title}</h1>
+              <div className="printPdfBtn" onClick={() => printPdf()}>
+                Téléchargement PDF
+              </div>
+            </div>
 
             <Row>
               <Col md="8">
