@@ -41,7 +41,7 @@ export default class BucketButton extends React.Component {
             <div>
                 <div>
                     {this.props.removeFromBucket? 
-                    <div className="btn btn-outline-danger d-none d-sm-block" onClick={() => this.props.removeFromBucket(this.props.reference)}>
+                    <div className="btn btn-outline-danger onPrintHide" onClick={() => this.props.removeFromBucket(this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Supprimer</div>
                             <FontAwesomeIcon 

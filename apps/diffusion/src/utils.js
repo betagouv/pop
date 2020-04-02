@@ -377,11 +377,17 @@ const capitalizeFirstLetter = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-export function printPdf(){
+//Fonction d'export pdf 
+export function printPdf(fileName){
   const html2Canvas = require('html2canvas');
   const jsPDF = require("jspdf");
 
-  console.log("print pdf");
+  const btnList = document.getElementsByClassName("onPrintHide");
+  console.log("btnList size = " + btnList.length);
+  for(let i=0; i<btnList.length; i++){
+    btnList[i].style.display = "none";
+  }
+
   html2Canvas(document.querySelector("#__next"), { useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
   .then(canvas => {
     /* //document.body.appendChild(canvas);
@@ -393,6 +399,9 @@ export function printPdf(){
     
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
     pdf.save('download.pdf'); */
+    for(let i=0; i<btnList.length; i++){
+      btnList[i].style.display = "block";
+    }
 
     const imgData = canvas.toDataURL('image/png');
     var doc = new jsPDF('p', 'mm');
@@ -403,17 +412,25 @@ export function printPdf(){
     var imgHeight = canvas.height * imgWidth / canvas.width;
     var heightLeft = imgHeight;    
 
+    doc.page=1;
+    doc.setFontSize(7);
     doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+    doc.text(imgWidth-10,pageHeight-5, 'page ' + doc.page);
+    doc.text(5,pageHeight-5, fileName);
 
+    heightLeft -= pageHeight;
     while (heightLeft >= 0) {
+      doc.page ++;
       position = heightLeft - imgHeight;
       doc.addPage();
       doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      doc.text(imgWidth-10,pageHeight-5, 'page ' + doc.page);
+      doc.text(5,pageHeight-5, fileName);
       heightLeft -= pageHeight;
+      
     }
 
-    doc.save('test.pdf');
+    doc.save(fileName + '.pdf');
 
   });
 }

@@ -81,7 +81,7 @@ export default class extends React.Component {
             </Head>
             <div className="top-container">
               <h1 className="heading">{title}</h1>
-              <div className="printPdfBtn" onClick={() => printPdf()}>
+              <div className="printPdfBtn" onClick={() => printPdf("memoire_" + notice.REF)}>
                 Téléchargement PDF
               </div>
             </div>

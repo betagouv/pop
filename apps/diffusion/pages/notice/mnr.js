@@ -91,7 +91,7 @@ export default class extends React.Component {
             
             <div className="top-container">
               <h1 className="heading">{notice.TICO || notice.TITR}</h1>
-              <div className="printPdfBtn" onClick={() => printPdf()}>
+              <div className="printPdfBtn" onClick={() => printPdf("mnr_" + notice.REF)}>
                 Téléchargement PDF
               </div>
             </div>

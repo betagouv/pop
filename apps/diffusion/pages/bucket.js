@@ -8,6 +8,7 @@ import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
 import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
 import API from "../src/services/api";
+import { printPdf } from "../src/utils"
 
 export default class Bucket extends React.Component {
   state = { bucket: [], loading: true };
@@ -80,6 +81,8 @@ export default class Bucket extends React.Component {
 
 
   render() {
+    const formatedDate = (new Intl.DateTimeFormat('en-GB').format(new Date())).replace("/", "_");
+
     return (
       <div className="bucketList">
         <Layout>
@@ -92,11 +95,16 @@ export default class Bucket extends React.Component {
         <div className="bucketContainer">
           <h1 className="bucketTitle">Panier de notices</h1>
           <div className="notices">
-            <div>
+            <div className="download-container">
+              <div className="notice-number">
               {this.state.bucket.length === 0 ? 
                 "Aucune notice dans le panier" : 
                 (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
               }
+              </div>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("notices_abrégées_panier_" + formatedDate)}>
+                Téléchargement PDF
+              </div>
             </div>
             {this.state.bucket.map( notice =>
               <div>
@@ -121,6 +129,29 @@ export default class Bucket extends React.Component {
               display: flex;
               justify-content: center;
               font-size: 30px;
+            }
+
+            .download-container {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            }
+          
+            .printPdfBtn {
+              background-color: #377d87;
+              font-weight: 400;
+              font-size: 16px;
+              border: 0;
+              color: #fff;
+              max-width: 250px;
+              width: 100%;
+              padding: 5px;
+              text-align: center;
+              border-radius: 5px;
+            }
+          
+            .printPdfBtn:hover {
+              cursor: pointer;
             }
 
             .notices {

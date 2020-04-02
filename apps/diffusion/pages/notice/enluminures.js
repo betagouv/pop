@@ -56,7 +56,7 @@ export default class extends React.Component {
               <h1 className="heading">
                 {notice.TITR} - {notice.SUJET}
               </h1>
-              <div className="printPdfBtn" onClick={() => printPdf()}>
+              <div className="printPdfBtn" onClick={() => printPdf("enluminures_" + notice.REF)}>
                 Téléchargement PDF
               </div>
             </div>

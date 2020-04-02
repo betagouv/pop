@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
             <div className="right-container">
               <div className="linkBucket">
                 <Link href="/bucket">
-                  <a className="btn btn-outline-danger d-none d-sm-block">
+                  <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
                       <a>Panier de notices</a>
                       <FontAwesomeIcon 
@@ -35,7 +35,7 @@ export default class Layout extends React.Component {
               <div>
                 <a
                   href="https://fier2.typeform.com/to/Qyz3xv"
-                  className="btn btn-outline-danger d-none d-sm-block"
+                  className="btn btn-outline-danger onPrintHide"
                   target="_blank"
                   rel="noopener"
                 >
