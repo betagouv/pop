@@ -114,10 +114,10 @@ export default class extends React.Component {
 
             <h1 className="heading">{title}</h1>
             <div className="top-container">
-              <div className="addBucket">
+              <div className="addBucket onPrintHide">
                 <BucketButton base="joconde" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn" onClick={() => printPdf("joconde_" + notice.REF)}>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("joconde_" + notice.REF)}>
               Imprimer la notice
               </div>
             </div>

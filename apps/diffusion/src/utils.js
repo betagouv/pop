@@ -377,32 +377,14 @@ const capitalizeFirstLetter = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-//Fonction d'export pdf 
+//Fonction d'export pdf d'une notice
 export function printPdf(fileName){
   const html2Canvas = require('html2canvas');
   const jsPDF = require("jspdf");
-
-  const btnList = document.getElementsByClassName("onPrintHide");
-  console.log("btnList size = " + btnList.length);
-  for(let i=0; i<btnList.length; i++){
-    btnList[i].style.display = "none";
-  }
-
+  hideOrShowButtons("none");
+  
   html2Canvas(document.querySelector("#__next"), { useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
   .then(canvas => {
-    /* //document.body.appendChild(canvas);
-    const imgData = canvas.toDataURL('image/png');
-    
-    const pdf = new jsPDF();
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('download.pdf'); */
-    for(let i=0; i<btnList.length; i++){
-      btnList[i].style.display = "block";
-    }
-
     const imgData = canvas.toDataURL('image/png');
     var doc = new jsPDF('p', 'mm');
     var position = 0;
@@ -427,10 +409,75 @@ export function printPdf(fileName){
       doc.text(imgWidth-10,pageHeight-5, 'page ' + doc.page);
       doc.text(5,pageHeight-5, fileName);
       heightLeft -= pageHeight;
-      
     }
 
+    hideOrShowButtons("block")
     doc.save(fileName + '.pdf');
-
   });
+}
+
+
+
+
+//Fonction d'export pdf du panier de notices
+//Les tâches prennant du temps, l'utilisation des promesses est devenue obligatoire pour cet export
+export async function printBucketPdf(fileName, blocNumber){
+  const html2Canvas = require('html2canvas');
+  const jsPDF = require("jspdf");
+  var doc = new jsPDF('p', 'mm');
+  window.scrollTo(0, 0);
+
+  //On cache les boutons que l'on ne veut pas afficher dans le pdf
+  const btnList = document.getElementsByClassName("onPrintHide");
+  hideOrShowButtons("none")
+
+  //On récupère les blocs à imprimer en pdf
+  let listOfBlocs = [];
+  for(let i=0; i<blocNumber-1; i++){
+    listOfBlocs.push(document.querySelector("#bloc_" + i))
+  }
+
+  await Promise.all(
+    listOfBlocs.map( bloc => {
+      return html2Canvas(bloc, { useCORS: true, backgroundColor: "#E6F3F2" } )
+        .then(canvas => {
+          return canvas;
+        });
+    })
+  ).then( async canvasList => {
+    await transformCanvasToPdf(doc, canvasList, fileName);
+    hideOrShowButtons("block")
+    doc.save(fileName + '.pdf'); 
+  })    
+}
+
+async function transformCanvasToPdf(doc, canvasList, fileName){  
+  doc.page=1;
+  for(let i=0; i<canvasList.length; i++){
+    const canvas = canvasList[i];
+    if(i !== 0){
+      doc.addPage();
+    }
+    makePdfPage(doc, canvas, fileName);
+    doc.page ++;
+  }
+}
+
+function makePdfPage(doc, canvas, fileName){
+  var imgWidth = doc.internal.pageSize.getWidth();
+  var pageHeight = doc.internal.pageSize.getHeight();
+  const imgData = canvas.toDataURL('image/png');
+  var imgHeight = canvas.height * imgWidth / canvas.width;
+  doc.setFontSize(7);
+  doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+  doc.text(imgWidth-10,pageHeight-2, 'page ' + doc.page);
+  doc.text(2,pageHeight-2, fileName);
+  return doc;
+}
+
+function hideOrShowButtons(show){
+  const btnList = document.getElementsByClassName("onPrintHide");
+  for(let i=0; i<btnList.length; i++){
+    btnList[i].style.display = show;
+  }
 }

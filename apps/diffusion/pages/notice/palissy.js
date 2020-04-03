@@ -113,10 +113,10 @@ export default class extends React.Component {
             <h1 className="heading">{notice.TICO}</h1>
 
             <div className="top-container">
-              <div className="addBucket">
+              <div className="addBucket onPrintHide">
                 <BucketButton base="palissy" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn" onClick={() => printPdf("palissy_" + notice.REF)}>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("palissy_" + notice.REF)}>
               Imprimer la notice
               </div>
             </div>

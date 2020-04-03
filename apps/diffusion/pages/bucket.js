@@ -8,7 +8,7 @@ import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
 import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
 import API from "../src/services/api";
-import { printPdf } from "../src/utils"
+import { printBucketPdf } from "../src/utils"
 
 export default class Bucket extends React.Component {
   state = { bucket: [], loading: true };
@@ -82,6 +82,25 @@ export default class Bucket extends React.Component {
 
   render() {
     const formatedDate = (new Intl.DateTimeFormat('en-GB').format(new Date())).replace("/", "_");
+    let blocIndex = 0;
+
+    const listOfNotices = this.state.bucket;
+    let blocList = [];
+    let tempList = [];
+
+    listOfNotices.map( (notice, index) => {
+      tempList.push(notice)
+
+      //multiple = x % y;
+      var multiple = (index+1) % 7;
+      if ((multiple===0 && index!==0) || listOfNotices.length === index + 1){
+        //x is a multiple of y
+        blocList.push({list: tempList, bloc: blocIndex});
+        tempList = [];
+        blocIndex++;
+      }
+    });
+
 
     return (
       <div className="bucketList">
@@ -102,15 +121,29 @@ export default class Bucket extends React.Component {
                 (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
               }
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("notices_abrégées_panier_" + formatedDate)}>
+              <div  className="printPdfBtn onPrintHide" 
+                    onClick={() => printBucketPdf("notices_abrégées_panier_" + formatedDate, blocIndex+1)}>
                 Imprimer le panier
               </div>
             </div>
-            {this.state.bucket.map( notice =>
+
+            {/* {this.state.bucket.map( notice, index =>
               <div>
                 {this.displayCard(notice)}
               </div>
-            )}
+            )} */}
+
+            {
+              blocList.map( item => 
+                <div id={`bloc_${item.bloc}`} style={{paddingRight: "20px", paddingLeft: "20px"}}>
+                  {item.list.map( notice =>
+                    <div>
+                      {this.displayCard(notice)}
+                    </div>
+                  )}
+                </div>
+              )
+            }
           </div>
         </div>
         <style jsx global>{`
@@ -135,6 +168,8 @@ export default class Bucket extends React.Component {
               display: flex;
               flex-direction: row;
               justify-content: space-between;
+              padding-right: 20px;
+              padding-left: 20px;
             }
           
             .printPdfBtn {
@@ -170,7 +205,6 @@ export default class Bucket extends React.Component {
             .list-card .list-card-container {
               display: flex;
               flex-direction: row;
-              box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
               transition: 0.3s;
               height: 110px;
               overflow: hidden;
