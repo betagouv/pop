@@ -12,6 +12,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { getNoticeInfo, printPdf } from "../../src/utils";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -62,10 +63,14 @@ export default class extends React.Component {
               <title>{title}</title>
             </Head>
 
+            <h1 className="heading">{title}</h1>
+
             <div className="top-container">
-              <h1 className="heading">{title}</h1>
+              <div className="addBucket">
+                <BucketButton base="autor" reference={notice.REF} />
+              </div>
               <div className="printPdfBtn" onClick={() => printPdf("autor_" + notice.REF)}>
-                Téléchargement PDF
+                Imprimer la notice
               </div>
             </div>
 

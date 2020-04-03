@@ -69,6 +69,7 @@ export default class BucketButton extends React.Component {
                         flex-direction: row;
                         align-items: center;
                         justify-content: flex-end;
+                        width: fill-content;
                     }
 
                     .btn-outline-success:hover{

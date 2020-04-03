@@ -16,6 +16,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -111,12 +112,16 @@ export default class extends React.Component {
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
 
+            <h1 className="heading">{title}</h1>
             <div className="top-container">
-              <h1 className="heading">{title}</h1>
+              <div className="addBucket">
+                <BucketButton base="joconde" reference={notice.REF} />
+              </div>
               <div className="printPdfBtn" onClick={() => printPdf("joconde_" + notice.REF)}>
-                Téléchargement PDF
+              Imprimer la notice
               </div>
             </div>
+
             <Row>
               <Col md="8">
                 <div className="notice-details">

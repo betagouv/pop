@@ -17,13 +17,13 @@ export default css`
   }
 
   .top-container {
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 15px;
   }
 
   .printPdfBtn {
-    position: absolute;
-    top: 0px;
-    right: 0px;
     background-color: #377d87;
     font-weight: 400;
     font-size: 16px;
@@ -34,6 +34,11 @@ export default css`
     padding: 5px;
     text-align: center;
     border-radius: 5px;
+  }
+
+  .addBucket{
+    width: fill-content;
+    margin-right: 15px;
   }
 
   .printPdfBtn:hover {

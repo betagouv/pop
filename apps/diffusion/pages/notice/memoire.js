@@ -15,6 +15,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -79,12 +80,17 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
+            <h1 className="heading">{title}</h1>
+
             <div className="top-container">
-              <h1 className="heading">{title}</h1>
+              <div className="addBucket">
+                <BucketButton base="memoire" reference={notice.REF} />
+              </div>
               <div className="printPdfBtn" onClick={() => printPdf("memoire_" + notice.REF)}>
-                Téléchargement PDF
+              Imprimer la notice
               </div>
             </div>
+
             <Row>
               <Col md="8">
                 <div className="notice-details">

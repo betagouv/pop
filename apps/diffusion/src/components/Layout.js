@@ -22,7 +22,7 @@ export default class Layout extends React.Component {
                 <Link href="/bucket">
                   <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
-                      <a>Panier de notices</a>
+                      <div>Consulter mon panier</div>
                       <FontAwesomeIcon 
                         className="icon-bucket"
                         icon="shopping-cart"

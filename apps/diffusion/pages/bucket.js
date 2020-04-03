@@ -103,7 +103,7 @@ export default class Bucket extends React.Component {
               }
               </div>
               <div className="printPdfBtn onPrintHide" onClick={() => printPdf("notices_abrégées_panier_" + formatedDate)}>
-                Téléchargement PDF
+                Imprimer le panier
               </div>
             </div>
             {this.state.bucket.map( notice =>
