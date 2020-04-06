@@ -140,7 +140,7 @@ export default class extends React.Component {
                   </div>
                   <ContactUs contact={notice.CONTACT_GENERIQUE} REF={notice.REF} base="museo" />
                 </div>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div className="onPrintHide" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <Link
                     href={`/search/list?${queryString.stringify({
                       museo: JSON.stringify([notice.REF])
