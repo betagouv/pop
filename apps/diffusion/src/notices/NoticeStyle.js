@@ -16,6 +16,35 @@ export default css`
     text-align: center;
   }
 
+  .top-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
+
+  .printPdfBtn {
+    background-color: #377d87;
+    font-weight: 400;
+    font-size: 16px;
+    border: 0;
+    color: #fff;
+    max-width: 250px;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .addBucket{
+    width: fill-content;
+    margin-right: 15px;
+  }
+
+  .printPdfBtn:hover {
+    cursor: pointer;
+  }
+
   .notice .notice-details {
     background-color: #fff;
     padding: 25px;

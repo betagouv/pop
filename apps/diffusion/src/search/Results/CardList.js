@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { getNoticeInfo } from "../../utils";
 import Mapping from "../../services/mapping";
+import BucketButton from "../../components/BucketButton"
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -20,7 +21,7 @@ function pickFirst(data) {
   return first;
 }
 
-const Memoire = ({ data }) => {
+export const Memoire = ({ data, removeFromBucket }) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
@@ -39,38 +40,41 @@ const Memoire = ({ data }) => {
   const loc = data.LOCA;
 
   return (
-    <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
-      <a className="list-card" style={{ textDecoration: "none" }}>
-        <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Mémoire</small>
-                <br />
-                {data.REF}
-              </span>
-            </div>
-            <p>{content}</p>
-            {LogoComponent}
-            <div>
+    <a className="list-card" style={{ textDecoration: "none" }}>
+      <div className="list-card-container ">
+        <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
+          <div className="leftContent">
+            <div className="thumbnail">{ImageComponent}</div>
+            <div className="content">
+              <div className="cardTextContent" style={{ display: "flex" }}>
+                <h2>
+                  {title}
+                  <br />
+                  <small>{subtitle}</small>
+                </h2>
+              </div>
               <p>{author}</p>
               <p>{date}</p>
               <p>{loc}</p>
+              <p>{content}</p>
             </div>
           </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Mémoire</small>
+            <br />
+            {data.REF}
+          </span>
+          <BucketButton base="memoire" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
         </div>
-      </a>
-    </Link>
+      </div>
+    </a>
   );
 };
 
-const Palissy = ({ data }) => {
+export const Palissy = ({ data, removeFromBucket }) => {
   const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -81,38 +85,43 @@ const Palissy = ({ data }) => {
   const line5 = joinData([data.STAT, data.DPRO]);
 
   return (
-    <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Palissy</small>
-                <br />
-                {data.REF}
-              </span>
+          <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent" style={{ display: "flex" }}>
+                  <h2>
+                    {title}
+                    <br />
+                    <small>{subtitle}</small>
+                  </h2>
+                  <div>
+                    <p>{localisation}</p>
+                    <p>{line3}</p>
+                    <p>{line4}</p>
+                    <p>{line5}</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Palissy</small>
+              <br />
+              {data.REF}
+            </span>
+            <BucketButton base="palissy" reference={data.REF} removeFromBucket={removeFromBucket} />
             {LogoComponent}
-            <div>
-              <p>{localisation}</p>
-              <p>{line3}</p>
-              <p>{line4}</p>
-              <p>{line5}</p>
-            </div>
           </div>
         </div>
       </a>
-    </Link>
   );
 };
 
-const Merimee = ({ data }) => {
+export const Merimee = ({ data, removeFromBucket }) => {
   const { title, logo, image_preview, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image_preview} alt={title} />;
@@ -121,33 +130,38 @@ const Merimee = ({ data }) => {
   const line4 = joinData([data.STAT, data.DPRO]);
 
   return (
-    <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
-      <a className="list-card" style={{ textDecoration: "none" }}>
-        <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>{title}</h2>
-              <span>
-                <small className="base">Mérimée</small>
-                <br />
-                {data.REF}
-              </span>
-            </div>
-            {LogoComponent}
-            <div>
-              <p>{localisation}</p>
-              <p>{line3}</p>
-              <p>{line4}</p>
+    <a className="list-card" style={{ textDecoration: "none" }}>
+      <div className="list-card-container ">
+        <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
+          <div className="leftContent">
+            <div className="thumbnail">{ImageComponent}</div>
+            <div className="content">
+              <div className="cardTextContent">
+                <h2>{title}</h2>
+                <div>
+                  <p>{localisation}</p>
+                  <p>{line3}</p>
+                  <p>{line4}</p>
+                </div>
+              </div>
             </div>
           </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Mérimée</small>
+            <br />
+            {data.REF}
+          </span>
+          <BucketButton base="merimee" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
         </div>
-      </a>
-    </Link>
+      </div>
+    </a>
   );
 };
 
-const Mnr = ({ data }) => {
+export const Mnr = ({ data, removeFromBucket }) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -155,40 +169,45 @@ const Mnr = ({ data }) => {
   const author = String(data.AUTR).replace("#", " ");
 
   return (
-    <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <p>{author}</p>
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Mnr</small>
-                <br />
-                {data.INV}
-              </span>
+          <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent">
+                  <p>{author}</p>
+                  <h2>
+                    {title}
+                    <br />
+                    <small>{subtitle}</small>
+                  </h2>
+                  <div>
+                    <p>{domn}</p>
+                    <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p>
+                    <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p>
+                    <p>{data.CATE}</p>
+                    <p>{data.PHOT}</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Mnr</small>
+              <br />
+              {data.INV}
+            </span>
+            <BucketButton base="mnr" reference={data.REF} removeFromBucket={removeFromBucket} />
             <img src="/static/mnr.png" className="producteur" />
-            <div>
-              <p>{domn}</p>
-              <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p>
-              <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p>
-              <p>{data.CATE}</p>
-              <p>{data.PHOT}</p>
-            </div>
           </div>
         </div>
       </a>
-    </Link>
   );
 };
 
-const Joconde = ({ data }) => {
+export const Joconde = ({ data, removeFromBucket }) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
@@ -200,102 +219,162 @@ const Joconde = ({ data }) => {
   const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
   return (
-    <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
+    <div>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Joconde</small>
-                <br />
-                {data.REF}
-              </span>
+          <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent" style={{ display: "flex" }}>
+                  <h2>
+                    {title}
+                    <br />
+                    <small>{subtitle}</small>
+                  </h2>
+                  <div>
+                    <p>{author}</p>
+                    <p>{peri}</p>
+                    <p>{loca}</p>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Joconde</small>
+              <br />
+              {data.REF}
+            </span>
+            <div>
+              <BucketButton base="joconde" reference={data.REF} removeFromBucket={removeFromBucket} />
             </div>
             <img src="/static/musee-de-france.png" className="producteur" />
-            <div>
-              <p>{author}</p>
-              <p>{peri}</p>
-              <p>{loca}</p>
-            </div>
           </div>
         </div>
       </a>
-    </Link>
+    </div>
   );
 };
 
-const Museo = ({ data }) => {
+export const Museo = ({ data, removeFromBucket }) => {
   const { title, subtitle, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-    <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Museo</small>
-                <br />
-                {data.REF}
-              </span>
+          <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent">
+                  <h2>
+                    {title}
+                    <br />
+                    <small>{subtitle}</small>
+                  </h2>
+                  <div>
+                    <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
+                    <p>{localisation}</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Museo</small>
+              <br />
+              {data.REF}
+            </span>
+            <BucketButton base="museo" reference={data.REF} removeFromBucket={removeFromBucket} />
             <img src="/static/musee-de-france.png" className="producteur" />
-            <div>
-              <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
-              <p>{localisation}</p>
-            </div>
           </div>
         </div>
       </a>
-    </Link>
   );
 };
 
-const Enluminures = ({ data }) => {
+export const Enluminures = ({ data, removeFromBucket }) => {
   const REF = data.REF;
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-    <Link href={`/notice/enluminures/${REF}`} key={REF}>
       <a className="list-card" style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <div className="thumbnail">{ImageComponent}</div>
-          <div className="content">
-            <div style={{ display: "flex" }}>
-              <h2>
-                {title}
-                <br />
-                <small>{subtitle}</small>
-              </h2>
-              <span>
-                <small className="base">Enluminures</small>
-                <br />
-                {REF}
-              </span>
+          <Link href={`/notice/enluminures/${REF}`} key={REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent">
+                  <h2>
+                    {title}
+                    <br />
+                    <small>{subtitle}</small>
+                  </h2>
+                  <div>
+                    <p>{data.ATTRIB}</p>
+                    <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
+                    <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              <p>{data.ATTRIB}</p>
-              <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
-              <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
-            </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Enluminures</small>
+              <br />
+              {REF}
+            </span>
+            <BucketButton base="enluminures" reference={data.REF} removeFromBucket={removeFromBucket} />
           </div>
         </div>
       </a>
-    </Link>
+  );
+};
+
+export const Autor = ({ data, removeFromBucket }) => {
+  const REF = data.REF;
+  const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
+  const ImageComponent = <img src={image_preview} />;
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+
+
+  return (
+      <a className="list-card" style={{ textDecoration: "none" }}>
+        <div className="list-card-container ">
+          <Link href={`/notice/autor/${REF}`} key={REF}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent">
+                  <h2>
+                    {nom}<br />
+                    {description}
+                  </h2>
+                  <div>
+                    <p>{fonction}</p>
+                    <p>{symbole}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+          <div className="rightContent">
+            <span>
+              <small className="base">Autor</small>
+              <br />
+              {REF}
+            </span>
+            <BucketButton base="autor" reference={data.REF} removeFromBucket={removeFromBucket} />
+            {LogoComponent}
+          </div>
+        </div>
+      </a>
   );
 };
 
@@ -319,6 +398,7 @@ const withStyle = component => {
           height: auto;
           margin: 7px 0px 7px 0px;
           border-radius: 5px;
+          justify-content: space-between;
         }
 
         .list-card .list-card-container:hover {
@@ -328,7 +408,7 @@ const withStyle = component => {
         .list-card .content {
           padding: 15px 30px 10px 0;
           overflow: hidden;
-          width: 100%;
+          width: 80%;
           position: relative;
         }
         .list-card .thumbnail {
@@ -390,12 +470,31 @@ const withStyle = component => {
         .list-card img.producteur {
           width: 50px;
           height: auto;
-          position: absolute;
           right: 7px;
           bottom: 7px;
         }
         .list-card img.producteur.mh {
           width: 100px;
+        }
+
+        .leftContent{
+          display: flex;
+          width: 80%;
+        }
+
+        .cardTextContent{
+          display: flex;
+          flex-direction: column;
+          width: 80%;
+        }
+
+        .rightContent{
+          display: flex;
+          flex-direction: column;
+          margin-right: 8px;
+          margin-top: 8px;
+          align-items: flex-end;
+          justify-content: space-around;
         }
 
         @media screen and (max-width: 767px) {
@@ -442,5 +541,7 @@ export default ({ data }) => {
       return withStyle(<Museo data={data._source} />);
     case "enluminures":
       return withStyle(<Enluminures data={data._source} />);
+    case "autor":
+      return withStyle(<Autor data={data._source} />);
   }
 };

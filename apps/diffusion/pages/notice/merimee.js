@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, printPdf } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -16,6 +16,7 @@ import Map from "../../src/notices/Map";
 import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
+import BucketButton from "../../src/components/BucketButton";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -115,6 +116,15 @@ export default class extends React.Component {
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
+
+            <div className="top-container">
+              <div className="addBucket onPrintHide">
+                <BucketButton base="merimee" reference={notice.REF} />
+              </div>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("merimee_" + notice.REF)}>
+              Imprimer la notice
+              </div>
+            </div>
 
             <Row>
               <Col md="8">

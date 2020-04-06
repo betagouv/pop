@@ -54,6 +54,8 @@ export default function SearchSimple({ initialValues }) {
         customQuery(value, [
           "TICO^10",
           "AUTR^10",
+          "NOM^10",
+          "PREN^10",
           "TITRE^9",
           "TITR^9",
           "LEG^9",
@@ -71,6 +73,7 @@ export default function SearchSimple({ initialValues }) {
           "EDIF^8",
           "OBJT^8",
           "REPR^8",
+          "FONC^8",
           "AUTP^7",
           "SERIE^7",
           "PDEN^5",

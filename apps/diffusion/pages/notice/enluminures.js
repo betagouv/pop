@@ -11,7 +11,8 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, printPdf } from "../../src/utils";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -53,6 +54,15 @@ export default class extends React.Component {
             <h1 className="heading">
               {notice.TITR} - {notice.SUJET}
             </h1>
+
+            <div className="top-container">
+              <div className="addBucket onPrintHide">
+                <BucketButton base="enluminures" reference={notice.REF} />
+              </div>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("enluminures_" + notice.REF)}>
+              Imprimer la notice
+              </div>
+            </div>
             <Row>
               <Col md="8">
                 <div className="notice-details">

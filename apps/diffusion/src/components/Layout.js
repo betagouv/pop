@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "reactstrap";
 import Version from "../../../version.json";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class Layout extends React.Component {
   render() {
@@ -17,10 +18,24 @@ export default class Layout extends React.Component {
               </a>
             </Link>
             <div className="right-container">
+              <div className="linkBucket">
+                <Link href="/bucket">
+                  <a className="btn btn-outline-danger onPrintHide">
+                    <div className="btn-bucket">
+                      <div>Consulter mon panier</div>
+                      <FontAwesomeIcon 
+                        className="icon-bucket"
+                        icon="shopping-cart"
+                        style={{marginLeft: '8px', fontSize: '20px'}}
+                      />
+                    </div>
+                  </a>
+                </Link>
+              </div>
               <div>
                 <a
                   href="https://fier2.typeform.com/to/Qyz3xv"
-                  className="btn btn-outline-danger d-none d-sm-block"
+                  className="btn btn-outline-danger onPrintHide"
                   target="_blank"
                   rel="noopener"
                 >
@@ -156,6 +171,13 @@ export default class Layout extends React.Component {
             .logo h1 {
               font-size: 20px;
             }
+          }
+
+          .btn-bucket{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
           }
 
           .company-title {

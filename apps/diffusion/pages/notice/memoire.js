@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, printPdf } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -15,6 +15,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -80,6 +81,16 @@ export default class extends React.Component {
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
+
+            <div className="top-container">
+              <div className="addBucket onPrintHide">
+                <BucketButton base="memoire" reference={notice.REF} />
+              </div>
+              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("memoire_" + notice.REF)}>
+              Imprimer la notice
+              </div>
+            </div>
+
             <Row>
               <Col md="8">
                 <div className="notice-details">
