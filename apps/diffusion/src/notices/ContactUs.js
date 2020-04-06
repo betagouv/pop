@@ -10,9 +10,17 @@ export default class ContactUs extends React.Component {
       mailTo = `mailto:pop@culture.gouv.fr?${subject}`;
     }
     return (
-      <a href={mailTo} className="notice-btn">
-        Contactez-nous
-      </a>
+      <div>
+        <a href={mailTo} className="notice-btn onPrintHide">
+          Contactez-nous
+        </a>
+        <div className="onPrintShow" style={{display: "none"}}>
+          {"Contact : "}
+          <a href={this.props.contact}>
+            {this.props.contact}
+          </a>
+        </div>
+      </div>
     );
   }
 }

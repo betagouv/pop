@@ -381,7 +381,8 @@ const capitalizeFirstLetter = s => {
 export function printPdf(fileName){
   const html2Canvas = require('html2canvas');
   const jsPDF = require("jspdf");
-  hideOrShowButtons("none");
+  hideButtons("none");
+  showButtons("block");
   
   html2Canvas(document.querySelector("#__next"), { useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
   .then(canvas => {
@@ -411,7 +412,8 @@ export function printPdf(fileName){
       heightLeft -= pageHeight;
     }
 
-    hideOrShowButtons("block")
+    hideButtons("block");
+    showButtons("none");
     doc.save(fileName + '.pdf');
   });
 }
@@ -429,7 +431,7 @@ export async function printBucketPdf(fileName, blocNumber){
 
   //On cache les boutons que l'on ne veut pas afficher dans le pdf
   const btnList = document.getElementsByClassName("onPrintHide");
-  hideOrShowButtons("none")
+  hideButtons("none")
 
   //On récupère les blocs à imprimer en pdf
   let listOfBlocs = [];
@@ -446,7 +448,7 @@ export async function printBucketPdf(fileName, blocNumber){
     })
   ).then( async canvasList => {
     await transformCanvasToPdf(doc, canvasList, fileName);
-    hideOrShowButtons("block")
+    hideButtons("block")
     doc.save(fileName + '.pdf'); 
   })    
 }
@@ -475,9 +477,19 @@ function makePdfPage(doc, canvas, fileName){
   return doc;
 }
 
-function hideOrShowButtons(show){
-  const btnList = document.getElementsByClassName("onPrintHide");
-  for(let i=0; i<btnList.length; i++){
-    btnList[i].style.display = show;
+//Fonction permettant de cacher certains éléments/boutons pour l'impression pdf
+function hideButtons(show){
+  const listToHide = document.getElementsByClassName("onPrintHide");
+  //On cache ceux à cacher anciennement affichés
+  for(let i=0; i<listToHide.length; i++){
+    listToHide[i].style.display = show;
+  }
+}
+
+function showButtons(show){
+  const listToShow = document.getElementsByClassName("onPrintShow");
+  //On affiche ceux anciennement cachés, maintenant affichés
+  for(let i=0; i<listToShow.length; i++){
+    listToShow[i].style.display = show;
   }
 }
