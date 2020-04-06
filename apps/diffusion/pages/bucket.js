@@ -121,10 +121,15 @@ export default class Bucket extends React.Component {
                 (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
               }
               </div>
-              <div  className="printPdfBtn onPrintHide" 
-                    onClick={() => printBucketPdf("notices_abrégées_panier_" + formatedDate, blocIndex+1)}>
+
+              {
+                this.state.bucket.length > 0 ? 
+                <div  className="printPdfBtn onPrintHide" 
+                      onClick={() => printBucketPdf("notices_abrégées_panier_" + formatedDate, blocIndex+1)}>
                 Imprimer le panier
-              </div>
+                </div> : ""
+              }
+              
             </div>
 
             {/* {this.state.bucket.map( notice, index =>
