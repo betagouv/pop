@@ -1,4 +1,5 @@
 import { bucket_url } from "./config";
+import html2Canvas from "./html2canvas";
 
 export function getNoticeInfo(notice) {
   const base = notice.BASE;
@@ -379,12 +380,12 @@ const capitalizeFirstLetter = s => {
 
 //Fonction d'export pdf d'une notice
 export function printPdf(fileName){
-  const html2Canvas = require('html2canvas');
+  //const html2Canvas = require('html2canvas');
   const jsPDF = require("jspdf");
   hideButtons("none");
   showButtons("block");
   
-  html2Canvas(document.querySelector("#__next"), { useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
+  html2Canvas(document.querySelector("#__next"), { allowTaint: false, useCORS: true, x:0, y:0, scrollX: 0, scrollY:0 } )
   .then(canvas => {
     const imgData = canvas.toDataURL('image/png');
     var doc = new jsPDF('p', 'mm');
