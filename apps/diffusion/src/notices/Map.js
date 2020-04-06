@@ -52,7 +52,7 @@ class MapComponent extends React.Component {
     }
 
     return (
-      <div className="map-container">
+      <div className="map-container onPrintHide">
         <Head>
           <link
             href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
