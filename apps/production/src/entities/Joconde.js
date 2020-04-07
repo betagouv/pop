@@ -43,7 +43,17 @@ export default class Joconde extends Notice {
 
   validate(body) {
     super.validate(body);
-    ["WWW", "LVID"]
+    //WWW doit contenir une liste d'urls valides
+    const arr = body.WWW;
+    if(arr){
+      for(let i=0; i<arr.length; i++){
+        if(arr[i] && !validator.isURL(arr[i])){
+          this._warnings.push(`Le champ WWW doit être une URL valide`);
+        }
+      }
+    }
+
+    ["LVID"]
       .filter(prop => body[prop] && !validator.isURL(body[prop]))
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
