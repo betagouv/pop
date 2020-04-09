@@ -109,8 +109,8 @@ const Schema = new mongoose.Schema(
       }
     },
     ADPT: {
-      type: [String],
-      default: [],
+      type: String,
+      default: "",
       documentation: {
         description: "Ancien dépôt / changement d’affectation",
         label: "Ancien dépôt",
@@ -143,8 +143,8 @@ const Schema = new mongoose.Schema(
       }
     },
     AUTR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Auteur",
         label: "Auteur",
@@ -248,8 +248,8 @@ const Schema = new mongoose.Schema(
       }
     },
     DEPO: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Dépôt / établissement dépositaire",
         label: "Lieu de dépot",
@@ -350,8 +350,8 @@ const Schema = new mongoose.Schema(
       }
     },
     ETAT: {
-      type: [String],
-      default: [],
+      type: String,
+      default: "",
       documentation: {
         description: "Etat du bien",
         label: "Etat du bien"
@@ -452,8 +452,8 @@ const Schema = new mongoose.Schema(
       }
     },
     LIEUX: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Lieu de création / d’exécution / d’utilisation",
         label: "Lieu de création/utilisation",
@@ -667,8 +667,8 @@ const Schema = new mongoose.Schema(
       }
     },
     PREP: {
-      type: [String],
-      default: [],
+      type: String,
+      default: "",
       documentation: {
         description: "Précisions sur le sujet représenté ",
         label: "Précisions sujet représenté"
@@ -707,8 +707,8 @@ const Schema = new mongoose.Schema(
       }
     },
     REPR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Sujet représenté ",
         label: "Sujet représenté",
@@ -798,8 +798,8 @@ const Schema = new mongoose.Schema(
       }
     },
     WWW: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Lien site associé. Doit être une URL valide.",
         label: "Lien site associé"
