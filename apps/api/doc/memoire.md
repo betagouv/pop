@@ -266,7 +266,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Photographe|
+|Array|non|non|non|non||Photographe|
 
 ### AUTOR
 Nom, Prénom (profession ou titre et/ou dates)

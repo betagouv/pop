@@ -25,7 +25,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "ADRESSE","String","non","Adresse et/ou lieu-dit","","","Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",""
 "AUTOEU","String","non","Auteur de l'oeuvre représentée","","","Nom, Prénom (profession ou titre et/ou dates)",""
 "AUTG","String","non","Auteur de la gravure","","","Nom, Prénom (profession ou titre et/ou dates)",""
-"AUTP","String","non","Photographe","","","Nom, Prénom (profession ou titre et/ou dates)",""
+"AUTP","Array","non","Photographe","","","Nom, Prénom (profession ou titre et/ou dates)",""
 "AUTOR","String","non","Auteur du document reproduit / auteur de l'original","","","Nom, Prénom (profession ou titre et/ou dates)",""
 "AUTTI","String","non","Auteur du tirage","","","Nom, Prénom (profession ou titre et/ou dates)",""
 "COM","String","non","Commune","","","",""

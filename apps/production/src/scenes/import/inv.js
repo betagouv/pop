@@ -144,7 +144,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
       ...values[2].map(e => {
         // Change data model from gertrude to pop
         if (e.AUT !== undefined) {
-          e.AUTP = e.AUT;
+          e.AUTP = [e.AUT];
         }
         if (e.EMET !== undefined) {
           e.IDPROD = e.EMET;
@@ -212,7 +212,7 @@ function ParseRenabl(files, xmlFiles, encoding) {
           obj.REF = EMET + "_" + NUMI;
 
           // we redirect AUT field to AUTP
-          obj.AUTP = obj.AUT;
+          obj.AUTP = [obj.AUT];
 
           const memoireObj = new Memoire(obj);
           const image = convertLongNameToShort(obj.FNU2, "\\");
