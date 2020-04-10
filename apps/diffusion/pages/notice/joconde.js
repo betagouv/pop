@@ -299,7 +299,7 @@ const SeeMore = ({ notice, museo }) => {
   }
 
   if (notice.WWW) {
-    if(notice.WWW.length>1){
+    if(notice.WWW.length>0){
       arr.push(
         <Field
           title={mapping.joconde.WWW.label}
