@@ -23,11 +23,6 @@ export default class Layout extends React.Component {
                   <a className="btn btn-outline-danger d-none d-sm-block">
                     <div className="btn-bucket">
                       <a>Panier de notices</a>
-                      <FontAwesomeIcon 
-                        className="icon-bucket"
-                        icon="shopping-cart"
-                        style={{marginLeft: '8px', fontSize: '20px'}}
-                      />
                     </div>
                   </a>
                 </Link>

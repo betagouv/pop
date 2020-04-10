@@ -33,27 +33,27 @@ export default class BucketButton extends React.Component {
             this.setState({pressed : true});
         }    
     }
-        //Méthode permettant d'ajouter la notice au panier
-        checkInBucket(base, ref){
-
-            //Récupération du panier actuel dans les cookies
-            const cookies = new Cookies();
-            let currentBucket = cookies.get("currentBucket") || [];
     
-            //Si on a bien une ref et une base, on ajoute la notice au panier
-            if(base && ref){
-                let isAlreadyInBucket = false;
-                currentBucket.map( item => {
-                    if(item.ref === ref && item.base === base){
-                        isAlreadyInBucket = true;
-                    }
-                })
-                if(isAlreadyInBucket){
-                    return true;
-                }   
-            }
-            return false
+    //Méthode permettant vérifier si la notice est dans le panier
+    checkInBucket(base, ref){
+        //Récupération du panier actuel dans les cookies
+        const cookies = new Cookies()
+        let currentBucket = cookies.get("currentBucket") || []
+    
+        //Si on a bien une ref et une base, return true
+        if(base && ref){
+            let isAlreadyInBucket = false
+            currentBucket.map( item => {
+                if(item.ref === ref && item.base === base){
+                    isAlreadyInBucket = true
+                }
+            })
+            if(isAlreadyInBucket){
+                return true
+            }   
         }
+        return false
+    }
 
     render() {
         return (
@@ -63,21 +63,11 @@ export default class BucketButton extends React.Component {
                     <div className="btn btn-outline-danger d-none d-sm-block" onClick={() => this.props.removeFromBucket(this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Supprimer</div>
-                            <FontAwesomeIcon 
-                                className="icon-bucket"
-                                icon="shopping-cart"
-                                style={{marginLeft: '8px', fontSize: '20px'}}
-                            />
                         </div>
                     </div> :
                     <div className={`btn btn-outline-success d-none d-sm-block ${this.checkInBucket(this.props.base, this.props.reference) ? "pressed" : ""}`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Ajouter au panier</div>
-                            <FontAwesomeIcon 
-                                className="icon-bucket"
-                                icon="cart-arrow-down"
-                                style={{marginLeft: '8px', fontSize: '20px'}}
-                            />
                         </div>
                     </div>
                     }
