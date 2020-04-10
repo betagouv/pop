@@ -31,10 +31,29 @@ export default class BucketButton extends React.Component {
                 cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
             }
             this.setState({pressed : true});
-        }
-
-        
+        }    
     }
+        //Méthode permettant d'ajouter la notice au panier
+        checkInBucket(base, ref){
+
+            //Récupération du panier actuel dans les cookies
+            const cookies = new Cookies();
+            let currentBucket = cookies.get("currentBucket") || [];
+    
+            //Si on a bien une ref et une base, on ajoute la notice au panier
+            if(base && ref){
+                let isAlreadyInBucket = false;
+                currentBucket.map( item => {
+                    if(item.ref === ref && item.base === base){
+                        isAlreadyInBucket = true;
+                    }
+                })
+                if(isAlreadyInBucket){
+                    return true;
+                }   
+            }
+            return false
+        }
 
     render() {
         return (
@@ -51,7 +70,7 @@ export default class BucketButton extends React.Component {
                             />
                         </div>
                     </div> :
-                    <div className={`btn btn-outline-success d-none d-sm-block ${this.state.pressed ? "pressed" : ""}`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
+                    <div className={`btn btn-outline-success d-none d-sm-block ${this.checkInBucket(this.props.base, this.props.reference) ? "pressed" : ""}`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Ajouter au panier</div>
                             <FontAwesomeIcon 
