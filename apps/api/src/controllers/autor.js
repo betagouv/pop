@@ -9,11 +9,6 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { checkESIndex, identifyProducteur } = require("../controllers/utils");
 
-
-
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
-
 router.get("/:ref", async (req, res) => {
   const autor = await Autor.findOne({ REF: req.params.ref });
   if (autor) {
@@ -23,43 +18,39 @@ router.get("/:ref", async (req, res) => {
 });
 
 router.put(
-  "/:ref",
+  "/",
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-    const ref = req.params.ref;
-
-    const notice = JSON.parse(req.body.notice);
-
+    const notices = JSON.parse(req.body.autorNotices);
+    var promises = [];
 
     try {
-      const prevNotice = await Autor.findOne({ REF: ref });
-      await determineProducteur(notice);
-      const canUpdate = await canUpdateAutor(req.user, prevNotice, notice);
+      let user = req.user
+      for(let i=0; i<notices.length; i++){
+        var e = notices[i];
+        const ref = e.notice.REF;
+        const prevNotice = await Autor.findOne({ REF: ref });
+        await determineProducteur(e.notice);
+        const canUpdate = await canUpdateAutor(user, prevNotice, e.notice);
 
-      if (!canUpdate) {
-        return res.status(401).send({
-          success: false,
-          msg: "Autorisation nécessaire pour mettre à jour ces notices"
-        });
+        if (!canUpdate) {
+          return res.status(401).send({
+            success: false,
+            msg: "Autorisation nécessaire pour mettre à jour ces notices"
+          });
+        }
+        else{
+          // Prepare and update notice.
+          await transformBeforeCreateAndUpdate(e.notice, prevNotice);
+          var obj = new Autor(e.notice);   
+          checkESIndex(obj);
+          promises.push(updateNotice(Autor, ref, e.notice));
+        }
       }
-      else{
-        const promises = [];
-
-        // Prepare and update notice.
-        await transformBeforeCreateAndUpdate(notice, prevNotice);
-
-        const obj = new Autor(notice);
-        
-        checkESIndex(obj);
-        promises.push(updateNotice(Autor, ref, notice));
-
-
-        // Consume promises and send sucessfull result.
-        await Promise.all(promises);
-
-        res.status(200).send({ success: true, msg: "Notice mise à jour." });
-      }
+      // Consume promises and send sucessfull result.
+      await Promise.all(promises);
+      res.status(200).send({ success: true, msg: "Notices mise à jour." });
     } catch (e) {
       capture(e);
       res.status(500).send({ success: false, error: e });
@@ -73,28 +64,36 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-    const notice = JSON.parse(req.body.notice);
-    notice.DMIS = formattedNow();
-    await determineProducteur(notice);
-    await transformBeforeCreateAndUpdate(notice, null);
-    if (!canCreateAutor(req.user, notice)) {
-      return res
-        .status(401)
-        .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
-    }
-    try {
-      const obj = new Autor(notice);
-      const promises = [];
-
+    const notices = JSON.parse(req.body.autorNotices);
+    let promises = [];
+    for(let i=0; i<notices.length; i++){
+      var e = notices[i];
+      // Clean object.
+      for (let propName in e.notice) {
+        if (!e.notice[propName]) {
+          delete e.notice[propName];
+         }
+      }
+  
+      e.notice.DMIS = formattedNow();
+      await determineProducteur(e.notice);
+      await transformBeforeCreateAndUpdate(e.notice, null);
+      if (!canCreateAutor(req.user, e.notice)) {
+        return res
+          .status(401)
+          .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+      }
+      var obj = new Autor(e.notice);
       checkESIndex(obj);
       promises.push(obj.save());
-      await Promise.all(promises);
-
-      res.send({ success: true, msg: "OK" });
-    } catch (error) {
-      capture(error);
-      res.status(500).send({ success: false, error });
     }
+      try {
+        await Promise.all(promises);
+        res.send({ success: true, msg: "OK" });
+      } catch (error) {
+        capture(error);
+        res.status(500).send({ success: false, error });
+      }
   }
 );
 
