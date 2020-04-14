@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col, Container, Button } from "reactstrap";
 import Head from "next/head";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
@@ -16,6 +16,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -110,7 +111,13 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
+
             <h1 className="heading">{title}</h1>
+            <div className="top-container">
+              <div className="addBucket">
+                <BucketButton base="joconde" reference={notice.REF} />
+              </div>
+            </div>
 
             <Row>
               <Col md="8">

@@ -16,6 +16,7 @@ import { bucket_url } from "./../../src/config";
 import Map from "../../src/notices/Map";
 import { schema, findCollection, postFixedLink } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -110,6 +111,13 @@ export default class extends React.Component {
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
             <h1 className="heading">{notice.TICO}</h1>
+
+            <div className="top-container">
+              <div className="addBucket">
+                <BucketButton base="palissy" reference={notice.REF} />
+              </div>
+            </div>
+
             <Row>
               <Col md="8">
                 <div className="notice-details">

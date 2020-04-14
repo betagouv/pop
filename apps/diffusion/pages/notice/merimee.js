@@ -16,6 +16,7 @@ import Map from "../../src/notices/Map";
 import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
+import BucketButton from "../../src/components/BucketButton";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -115,6 +116,12 @@ export default class extends React.Component {
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
             <h1 className="heading">{title}</h1>
+
+            <div className="top-container">
+              <div className="addBucket">
+                <BucketButton base="merimee" reference={notice.REF} />
+              </div>
+            </div>
 
             <Row>
               <Col md="8">

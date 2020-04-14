@@ -12,6 +12,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { getNoticeInfo } from "../../src/utils";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -61,7 +62,14 @@ export default class extends React.Component {
             <Head>
               <title>{title}</title>
             </Head>
+
             <h1 className="heading">{title}</h1>
+
+            <div className="top-container">
+              <div className="addBucket">
+                <BucketButton base="autor" reference={notice.REF} />
+              </div>
+            </div>
 
             <Row>
               <Col md="8">

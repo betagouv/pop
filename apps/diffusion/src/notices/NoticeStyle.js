@@ -8,14 +8,37 @@ export default css`
     flex-direction: column;
     padding-bottom: 60px;
   }
-
   .notice .heading {
     color: #025d59;
     font-size: 28px;
     margin: 30px 15px 30px 15px;
     text-align: center;
   }
-
+  .top-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+  }
+  .printPdfBtn {
+    background-color: #377d87;
+    font-weight: 400;
+    font-size: 16px;
+    border: 0;
+    color: #fff;
+    max-width: 250px;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  .addBucket{
+    width: fill-content;
+    margin-right: 15px;
+  }
+  .printPdfBtn:hover {
+    cursor: pointer;
+  }
   .notice .notice-details {
     background-color: #fff;
     padding: 25px;
@@ -23,14 +46,12 @@ export default css`
     border-radius: 5px;
     box-shadow: 0 2px 4px 0 rgba(189, 189, 189, 0.5);
   }
-
   :global(.notice .sidebar-section h2) {
     color: #19414c;
     font-weight: 600;
     font-size: 26px;
     margin-bottom: 20px;
   }
-
   :global(.notice .notice-btn) {
     text-decoration: none;
     background-color: #377d87;
@@ -46,13 +67,11 @@ export default css`
     text-align: center;
     border-radius: 5px;
   }
-
   :global(.notice .field span) {
     font-weight: bold;
     display: inline-block;
     word-wrap: break-word;
   }
-
   :global(.notice .sidebar-section) {
     background-color: #fff;
     padding: 20px;
@@ -60,7 +79,6 @@ export default css`
     box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
     margin-bottom: 20px;
   }
-
   :global(.notice .sidebar-section.links .card) {
     display: flex;
     flex-direction: row;
@@ -70,7 +88,6 @@ export default css`
     height: 110px;
     overflow: hidden;
   }
-
   :global(.notice .sidebar-section.links .card:hover) {
     box-shadow: 0 3px 6px 0 rgba(189, 189, 189, 1);
   }

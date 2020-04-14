@@ -13,6 +13,7 @@ import FieldImages from "../../src/notices/FieldImages";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "../../src/config";
+import BucketButton from "../../src/components/BucketButton";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -88,7 +89,15 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
+
             <h1 className="heading">{notice.TICO || notice.TITR}</h1>
+
+            <div className="top-container">
+              <div className="addBucket">
+                <BucketButton base="mnr" reference={notice.REF} />
+              </div>
+            </div>
+
             <Row>
               <Col className="image" md="8">
                 <div className="notice-details">
