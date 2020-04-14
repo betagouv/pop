@@ -21,20 +21,19 @@ import BucketButton from "../../src/components/BucketButton";
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("palissy", id);
-    const arr = [];
+    let arr = [];
+    let links = []
 
     if (notice) {
-      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice;
-      [...RENV, ...REFP, ...REFE, ...REFA, LBASE2]
-        .filter(e => e && e != REF)
-        .forEach(e => {
-          const collection = findCollection(e);
-          arr.push(API.getNotice(collection, e));
-        });
+      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice
+      arr = [...RENV, ...REFP, ...REFE, ...REFA, LBASE2].filter(e => e && e != REF)
+      for(let elem in arr ){
+        const collection = await findCollection(arr[elem])
+        const linkedNotice = await API.getNotice(collection, arr[elem])
+        links.push(linkedNotice)
+      }
     }
-
-    const links = (await Promise.all(arr)).filter(l => l);
-    return { notice, links };
+    return { notice, links }
   }
 
   fieldImage(notice) {

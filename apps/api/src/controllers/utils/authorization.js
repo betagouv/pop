@@ -11,7 +11,6 @@ async function canManage(user, notice, collection){
   let validate = false;
   // Si on a bien un utilisateur rattaché à un groupe et un rôle, ainsi qu'une notice
   if(user && notice && user.role && user.group){
-    
     //On récupère le groupe de l'utilisateur en base
     let group = await getUserGroup(user.group);
 
@@ -22,10 +21,8 @@ async function canManage(user, notice, collection){
 
     // Si l'utilisateur a le rôle administrateur ou producteur
     if (["producteur", "administrateur"].includes(user.role)){
-
       // Si le groupe récupéré en base contient bien un LABEL et des PRODUCTEURS
       if(group && group.LABEL && group.PRODUCTEURS){
-
         // Pour chaque producteurs rattachés au groupe, on vérifie sur le producteur de la notice y est présent
         group.PRODUCTEURS.map( producteur => {
 
