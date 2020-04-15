@@ -35,7 +35,7 @@ export const Memoire = ({ data, removeFromBucket }) => {
     data.DATOEU ? "" : data.SCLE
   ]);
 
-  const author = data.AUTP;
+  const author = data.AUTP.join(', ');
   const date = joinData([data.DATPV, data.DATOR]);
   const loc = data.LOCA;
 

@@ -7,7 +7,7 @@ module.exports = {
   ADRESSE: "Guet (le)",
   AUTOEU: "",
   AUTG: "",
-  AUTP: "Richard, Christian",
+  AUTP: ["Richard, Christian"],
   AUTOR: "",
   AUTTI: "",
   COM: "Chauvigny",

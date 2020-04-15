@@ -16,7 +16,7 @@ const Menu = ({ closeMenu, initialValues }) => (
             {activeFilters.map(({ key, value }) => {
               return (
                 <li key={key} onClick={() => removeFilter(key)}>
-                  <span>{`${key}: ${value}`}</span>
+                  <span>{`${key.replace('ou','où')}: ${value}`}</span>
                   <button>✕</button>
                 </li>
               );
@@ -71,8 +71,8 @@ const Menu = ({ closeMenu, initialValues }) => (
       title="Base"
     />
     <CollapsableFacet
-      id="où"
-      initialValue={initialValues.get("où")}
+      id="ou"
+      initialValue={initialValues.get("ou")}
       fields={[
         "REG.keyword",
         "COM.keyword",

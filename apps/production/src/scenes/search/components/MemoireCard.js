@@ -59,7 +59,7 @@ export default ({ data }) => {
         <div>
           <p>{data.LOCA}</p>
           <p>{content}</p>
-          <p>{data.AUTP}</p>
+          <p>{data.AUTP.join(', ')}</p>
           <p>{data.DATPV}</p>
           <p>{data.SERIE}</p>
           <p>{data.TITRE}</p>

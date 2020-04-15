@@ -36,9 +36,13 @@ export default class extends React.Component {
   }
 
   photographer() {
-    const autp = this.props.notice.AUTP;
-    const qs = queryString.stringify({ auteur: JSON.stringify([autp]) });
-    return autp && <a href={`/search/list?${qs}`}>{autp}</a>;
+    let autp = this.props.notice.AUTP;
+    return (<div style={{display: "flex", flexDirection: "row"}}>
+              {autp.map( (photographer, index) => {
+                const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
+                return (<div style={{display: "flex", flexDirection: "row"}}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length-1) ? <div>,&nbsp;</div> : ""}</div>);
+              })}
+            </div>)
   }
 
   serie() {
@@ -67,7 +71,7 @@ export default class extends React.Component {
       image: image_preview,
       description: metaDescription,
       contentLocation: notice.LOCA,
-      creator: [notice.AUTP]
+      creator: notice.AUTP
     };
 
     return (

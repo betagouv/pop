@@ -222,7 +222,7 @@ Ancien dépôt / changement d’affectation
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Ancien dépôt|
+|String|non|non|non|oui||Ancien dépôt|
 
 ### APPL
 Appellation
@@ -264,7 +264,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T513
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Auteur|
+|Array|non|non|non|oui||Auteur|
 
 ### BIBL
 Bibliographie
@@ -388,7 +388,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Lieu de dépot|
+|Array|non|non|non|oui||Lieu de dépot|
 
 ### DESC
 Description 
@@ -504,7 +504,7 @@ Etat du bien
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Etat du bien|
+|String|non|non|non|non||Etat du bien|
 
 ### EXPO
 Exposition 
@@ -628,7 +628,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Lieu de création/utilisation|
+|Array|non|non|non|oui||Lieu de création/utilisation|
 
 ### REGION
 Région syncronisée sur la valeur de REGION de la fiche MUSEO
@@ -876,7 +876,7 @@ Précisions sur le sujet représenté
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Précisions sujet représenté|
+|String|non|non|non|non||Précisions sujet représenté|
 
 ### PUTI
 Précisions sur l’utilisation 
@@ -926,7 +926,7 @@ Sujet représenté
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Sujet représenté|
+|Array|non|non|non|oui||Sujet représenté|
 
 ### RETIF
 Lien INHA
@@ -1030,7 +1030,7 @@ Lien site associé. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien site associé|
+|Array|non|non|non|non||Lien site associé|
 
 ### LVID
 Lien vidéo. Doit être une URL valide.
