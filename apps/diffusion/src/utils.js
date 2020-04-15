@@ -357,9 +357,7 @@ function jocondeMetaDescription(n) {
 function memoireMetaDescription(n) {
   const cleanAutor =
     n.AUTP &&
-    String(n.AUTP)
-      .split(/[;.]/)[0]
-      .replace(/\(.*\)/, "")
+    String(n.AUTP.join(', '))
       .trim();
   if (n.EDIF && n.LEG && n.COM) {
     return `${n.EDIF} à ${n.COM} - ${n.LEG}${cleanAutor ? ` - Photo : ${cleanAutor}` : ""}`;

@@ -13,10 +13,10 @@ export default class Layout extends React.Component {
           <Container className="NavContainer">
             <Link prefetch href="/">
               <a className="logo">
-                <img src="/static/logo.png" alt="Logo" className="md" />
-                <h1>Ministère de la Culture</h1>
+                <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
               </a>
             </Link>
+            <h3 className="Title">POP : la plateforme ouverte du patrimoine</h3>
             <div className="right-container">
               <div className="linkBucket">
                 <Link href="/bucket">
@@ -41,12 +41,6 @@ export default class Layout extends React.Component {
                 >
                   Votre avis est utile
                 </a>
-              </div>
-
-              <div className="company-title">
-                <span>Plateforme</span>
-                <span>Ouverte du</span>
-                <span>Patrimoine</span>
               </div>
             </div>
           </Container>
@@ -152,7 +146,7 @@ export default class Layout extends React.Component {
             text-decoration: none;
           }
           .logo img {
-            width: 170px;
+            width: 247px;
             object-fit: contain;
           }
           .logo h1 {
@@ -262,6 +256,9 @@ export default class Layout extends React.Component {
             .notice {
               display: block !important;
             }
+          }
+          .Title {
+            text-align: center;
           }
         `}</style>
       </React.Fragment>

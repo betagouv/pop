@@ -89,7 +89,7 @@ describe("POST /joconde", () => {
       ...sampleNotice,
       CONTACT: "a", // 1
       REF: "123456789", // 2
-      WWW: "a", // 3
+      WWW: ["a"], // 3
       LVID: "htp://f", // 4
     };
     res = await createNotice(await createUser(), 200, flagNotice);
@@ -145,7 +145,7 @@ describe("GET /joconde/:ref", () => {
       .get(`/joconde/${sampleNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-    expect(res.body.AUTR).toBe(sampleNotice.AUTR);
+      expect(res.body.AUTR).toEqual(sampleNotice.AUTR);
   });
   test(`It should return 404 for non-existant notice`, async () => {
     const res = await request(app)

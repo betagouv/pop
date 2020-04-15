@@ -56,31 +56,29 @@ export default class extends React.Component {
   }
 
   // Display a list of links to authors
-  author() {
-    const author = this.props.notice.AUTR;
-    if (!author) {
+  author(value, name) {
+    //const author = this.props.notice.AUTR;
+    if (!value) {
       return null;
     }
-    // Split authors and create links to both single author and all authors.
-    if (author.match(/;/)) {
-      const links = author
-        .split(";")
-        .map(a => a.trim())
-        .map(a => {
-          const url = `/search/list?${queryString.stringify({
-            auteur: JSON.stringify([a, author])
-          })}`;
-          return (
-            <a href={url} key={a}>
-              {a}
-            </a>
-          );
-        })
-        .reduce((p, c) => [p, " ; ", c]);
-      return <React.Fragment>{links}</React.Fragment>;
+    if (!value || !Array.isArray(value) || !value.length) {
+      if (String(value) === value && !String(value)=="") {
+        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
+        return <a href={url}>{value}</a>;
+      }
+      return null;
     }
-    const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([author]) })}`;
-    return <a href={url}>{author}</a>;
+    const links = value
+    .map(a => {
+      const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
+      return (
+        <a href={url} key={a}>
+          {a}
+        </a>
+      );
+    })
+    .reduce((p, c) => [p, " , ", c]);
+    return <React.Fragment>{links}</React.Fragment>;
   }
 
   render() {
@@ -168,7 +166,10 @@ export default class extends React.Component {
                   />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" />
-                  <Field title={mapping.joconde.AUTR.label} content={this.author()} separator="#" />
+                  <Field 
+                    title={mapping.joconde.AUTR.label} 
+                    content={this.author(this.props.notice.AUTR, "auteur")} 
+                    separator="#" />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" />
                   <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" />
@@ -308,13 +309,24 @@ const SeeMore = ({ notice, museo }) => {
   }
 
   if (notice.WWW) {
-    arr.push(
-      <Field
-        title={mapping.joconde.WWW.label}
-        content={<a href={notice.WWW}>{notice.WWW}</a>}
-        key="notice.WWW"
-      />
-    );
+    if(notice.WWW.length>0){
+      arr.push(
+        <Field
+          title={mapping.joconde.WWW.label}
+          content={<a href={notice.WWW[0]}>{notice.WWW[0]}</a>}
+          key="notice.WWW"
+        />
+      );
+
+      for(let i=1; i<notice.WWW.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.WWW[i]}>{notice.WWW[i]}</a>}
+            key="notice.WWW"
+          />
+          );
+      }      
+    }
   }
 
   if (notice.MUSEO) {

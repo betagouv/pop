@@ -106,8 +106,8 @@ const Schema = new mongoose.Schema(
       }
     },
     AUTP: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Photographe"
