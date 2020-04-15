@@ -21,7 +21,6 @@ export async function findCollection(ref = "") {
       })
     });
   });
-
   return collection;
 } 
 

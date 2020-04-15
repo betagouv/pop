@@ -62,6 +62,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
   
   //Liste des producteurs donc le préfixe correspond au début de la REF de la notice
   let possibleProducteurs = [];
+  let possibleProd = [];
   let defaultProducteur = "";
 
   producteurs.map((producteur) => {
@@ -77,8 +78,8 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
         baseItem.prefixes.map( prefix => {
           if(REF.startsWith(prefix.toString())){
             //Retourne le label du producteur
-            let length = possibleProducteurs.length;
-            possibleProducteurs[length] = producteur.LABEL;
+            let label = producteur.LABEL;
+            possibleProd.push({prefix : prefix,label: label});
           }
         })
       }
@@ -95,7 +96,14 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
   }
 
   //Si la liste des producteurs est non vide, on retourne le 1er élément
-  if(possibleProducteurs.length>0){
+  if(possibleProd.length>0){
+    let PrefSize = possibleProd[0].prefix.length
+    possibleProd.map( prod => {
+      if(PrefSize < prod.prefix.length){
+        PrefSize = prod.prefix.length
+        possibleProducteurs[0] = prod.label
+      }
+    })
     return possibleProducteurs[0];
   }
   else if(defaultProducteur!=""){
