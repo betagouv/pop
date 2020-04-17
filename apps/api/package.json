@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/betagouv/pop",
   "dependencies": {
+    "@react-pdf/renderer": "^1.6.8",
     "@sentry/node": "^4.6.6",
     "asyncawait": "^1.0.8",
     "aws-sdk": "^2.491.0",

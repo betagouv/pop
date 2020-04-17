@@ -1,6 +1,8 @@
 import * as React from "react";
+import { Text, Image, View, Link } from '@react-pdf/renderer';
+import { styles } from "../../pages/pdfNotice/styles";
 
-export default ({ content, title, separator, join = ", " }) => {
+export default ({ content, title, separator, join = ", ", isPdf, link }) => {
   // Don't render empty elements.
   const isEmptyArray = c => Array.isArray(c) && c.length === 0;
   const isEmptyString = s => typeof s === "string" && !s.trim();
@@ -8,48 +10,83 @@ export default ({ content, title, separator, join = ", " }) => {
     return null;
   }
 
-  // Transform array to string, by joining with a character.
-  let str = Array.isArray(content) ? content.join(join) : content;
+  let str;
+  if(!link){
+    // Transform array to string, by joining with a character.
+    str = Array.isArray(content) ? content.join(join) : content;
 
-  // Don't apply transformations on React components
-  if (!React.isValidElement(str)) {
-    // Fix simple quotes and capitalize first letter (only if it's a string)
-    str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
-    if (separator) {
-      str = replaceAll(str, separator, "\n");
+    // Don't apply transformations on React components
+    if (!React.isValidElement(str)) {
+      // Fix simple quotes and capitalize first letter (only if it's a string)
+      str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
+      if (separator) {
+        str = replaceAll(str, separator, "\n");
+      }
     }
   }
 
-  return (
-    <div id={title} className="field">
-      <h3>{title}</h3>
-      <p>{str}</p>
-      <style jsx>{`
-        .field {
-          padding-bottom: 10px;
-        }
+  if(!isPdf){
+    return (
+      <div id={title} className="field">
+        <h3>{title}</h3>
+        <p>{str}</p>
+        <style jsx>{`
+          .field {
+            padding-bottom: 10px;
+          }
 
-        .field p {
-          font-weight: normal;
-          font-size: 1rem;
-          word-wrap: break-word;
-          white-space: pre-line;
-          margin-bottom: 0px;
-          text-align: justify;
-        }
+          .field p {
+            font-weight: normal;
+            font-size: 1rem;
+            word-wrap: break-word;
+            white-space: pre-line;
+            margin-bottom: 0px;
+            text-align: justify;
+          }
 
-        .field h3 {
-          font-size: 1rem;
-          font-weight: 700;
-          line-height: 1.5;
-          color: #19414cd0;
-          text-align: left;
-          padding-right: 7px;
-          margin-bottom: 3px;
-        }
-      `}</style>
-    </div>
-  );
+          .field h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #19414cd0;
+            text-align: left;
+            padding-right: 7px;
+            margin-bottom: 3px;
+          }
+        `}</style>
+      </div>
+    );
+  }
+  //Si on imprime un pdf d'une notice
+  else {
+    //S'il s'agit de liens cliquables
+    if(link){
+      return (
+        <View>
+          <Text style={styles.fieldTitle} >{title + " : "}</Text>
+          <View style={styles.listLinked}>
+            {Array.isArray(content)? content.map( (item, index) => {
+              return (
+                <View style={styles.listItem}>
+                  <Link style={styles.textLinked} key={item.val} src={item.url}>{item.val}</Link>
+                  {(index < content.length-1) ? <Text>, </Text> : null}
+                </View>)
+            }) : 
+            <Link style={styles.textLinked} src={content.url} >{content.val}</Link>}
+          </View>
+        </View>
+      )
+    }
+    //S'il s'agit de texte statique
+    else {
+      return (
+        <View>
+          <Text style={styles.fieldTitle} >{title + " : "}</Text>
+          <Text style={styles.text} >{str}</Text>
+        </View>
+      )
+    }
+  }
 };
 
 function replaceAll(str, find, replace) {
