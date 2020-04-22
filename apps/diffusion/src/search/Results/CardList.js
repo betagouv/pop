@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { getNoticeInfo } from "../../utils";
 import Mapping from "../../services/mapping";
-import BucketButton from "../../components/BucketButton"
-import toUrlQueryString from "react-elasticsearch-pop"
+import BucketButton from "../../components/BucketButton";
+import {toUrlQueryString} from "react-elasticsearch-pop";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
