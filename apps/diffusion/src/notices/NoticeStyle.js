@@ -137,4 +137,8 @@ export default css`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  :global(.highlight) {
+    background-color: #377d87;
+    color: white;
+  }
 `;
