@@ -2,7 +2,7 @@ import React from "react";
 import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 import Mapping from "../../services/mapping";
-import { QueryBuilder } from "react-elasticsearch";
+import { QueryBuilder } from "react-elasticsearch-pop";
 import { operators } from "../utils";
 
 const bases = [

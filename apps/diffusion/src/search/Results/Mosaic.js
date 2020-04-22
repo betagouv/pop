@@ -1,5 +1,5 @@
 import React from "react";
-import { Results } from "react-elasticsearch";
+import { Results } from "react-elasticsearch-pop";
 import { pagination } from "../utils";
 import CardMosaique from "./CardMosaic";
 

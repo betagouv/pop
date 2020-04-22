@@ -14,9 +14,10 @@ import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
-import { schema } from "../../src/notices/utils";
+import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+
 
 export default class extends React.Component {
   static loadMuseo(m) {
@@ -25,13 +26,20 @@ export default class extends React.Component {
     } catch (e) {}
     return null;
   }
-  static async getInitialProps({ query: { id } }) {
+
+  static async getInitialProps({ query : {id}, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
     return {
       notice,
-      museo
+      museo,
+      searchParams
     };
+  }
+
+  componentDidMount(){
+    this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
   }
 
   links(value, name) {
