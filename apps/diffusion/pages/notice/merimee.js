@@ -116,7 +116,7 @@ export default class extends React.Component {
       creator: notice.AUTR
     };
 
-    const pdf = MerimeePdf(notice, title);
+    const pdf = MerimeePdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink document={pdf} fileName={"merimee_" + notice.REF + ".pdf"}>

@@ -89,5 +89,40 @@ export const styles = StyleSheet.create({
     listItem: {
         display: "flex",
         flexDirection: "row"
+    },
+    linkedNoticesContainer: {
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "#ffffff",
+        padding: "5px",
+        marginBottom: "10px"
+    },
+    linkedNotice: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+        marginBottom: "5px"
+    },
+    linkedNoticeImage: {
+        height: "45px"
+    },
+    linkedNoticeDetails:{
+        display: "flex",
+        flexDirection: "column",
+        padding: "2px",
+        width: "55%"
+    },
+    linkedNoticeTitle: {
+        fontSize: 8,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        maxHeight: "40px",
+        textOverflow: "hidden"
+    },
+    linkedNoticeContent:{
+        fontSize: 6,
+        fontFamily: 'Open Sans',
+        fontWeight: 300
     }
 });

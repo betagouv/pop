@@ -5,7 +5,7 @@ import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@reac
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 
-export function PalissyPdf(notice, title, localisation){
+export function PalissyPdf(notice, title, localisation, links){
   return(
     <Document>
       <Page style={styles.page}>
@@ -127,6 +127,16 @@ export function PalissyPdf(notice, title, localisation){
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0].url}
               />
             </View> : null}
+
+            <View style={styles.linkedNoticesContainer}>
+              <Text style={styles.subtitle}>Notices liées</Text>
+              <View>
+                {links.length > 0 ?
+                    links.map( link => {
+                      return LinkedNoticesPdf(link);
+                    }) : null}
+              </View>
+            </View>
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>

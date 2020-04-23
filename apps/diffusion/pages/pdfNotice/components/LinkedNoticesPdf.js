@@ -1,17 +1,21 @@
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../../pdfNotice/styles";
+import { getNoticeInfo } from "../../../src/utils";
 
-export function LinkedNoticesPdf(image_preview, title, deno, domn, autr){
+export function LinkedNoticesPdf(notice){
+    const { title, image_preview } = getNoticeInfo(notice);
     return(
-        <View style={styles.linkedNoticesContainer}>
-            <Image src={image_preview} />
-            <View>
-                <Text style={styles.linkedNoticeTitle}>{title}</Text>
-                <Text style={styles.linkedNoticeContent}>{deno}</Text>
-                <Text style={styles.linkedNoticeContent}>{domn}</Text>
-                <Text style={styles.linkedNoticeContent}>{autr}</Text>
+        <Link src={"https://www.pop.culture.gouv.fr/notice/" + notice.collection + "/" + notice.REF}>
+            <View style={styles.linkedNotice}>
+                <Image style={styles.linkedNoticeImage} src={image_preview} />
+                <View style={styles.linkedNoticeDetails}>
+                    <Text style={styles.linkedNoticeTitle}>{title}</Text>
+                    <Text style={styles.linkedNoticeContent}>{notice.DENO}</Text>
+                    <Text style={styles.linkedNoticeContent}>{notice.DOMN}</Text>
+                    <Text style={styles.linkedNoticeContent}>{notice.AUTR}</Text>
+                </View>
             </View>
-        </View>
+        </Link>
     )
 }

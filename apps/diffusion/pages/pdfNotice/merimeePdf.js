@@ -2,9 +2,10 @@ import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 
-export function MerimeePdf(notice, title, datesLieus, datesActivites){
+export function MerimeePdf(notice, title, links){
   return(
     <Document>
       <Page style={styles.page}>
@@ -135,6 +136,16 @@ export function MerimeePdf(notice, title, datesLieus, datesActivites){
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0].url}
               />
             </View> : null}
+
+            <View style={styles.linkedNoticesContainer}>
+              <Text style={styles.subtitle}>Notices liées</Text>
+              <View>
+                {links.length > 0 ?
+                    links.map( link => {
+                      return LinkedNoticesPdf(link);
+                    }) : null}
+              </View>
+            </View>
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>
