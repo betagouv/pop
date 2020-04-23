@@ -16,8 +16,18 @@ import { schema } from "../../src/notices/utils";
 import { findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MemoirePdf } from "../pdfNotice/memoirePdf";
+
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("memoire", id);
     const collection = notice && await findCollection(notice.LBASE);
@@ -70,6 +80,15 @@ export default class extends React.Component {
       creator: [notice.AUTP]
     };
 
+    const pdf = MemoirePdf(notice, title, this.props.notice.AUTP, this.props.notice.SERIE, this.props.notice.EXPO);
+    const App = () => (
+      <div>
+        <PDFDownloadLink document={pdf} fileName={"memoire_" + notice.REF + ".pdf"}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -86,9 +105,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="memoire" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("memoire_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

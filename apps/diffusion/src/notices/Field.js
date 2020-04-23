@@ -68,11 +68,15 @@ export default ({ content, title, separator, join = ", ", isPdf, link }) => {
             {Array.isArray(content)? content.map( (item, index) => {
               return (
                 <View style={styles.listItem}>
-                  <Link style={styles.textLinked} key={item.val} src={item.url}>{item.val}</Link>
+                  <Link style={styles.textLinked} 
+                        key={item.val? item.val : item} 
+                        src={item.url? item.url : item}>
+                        {item.val? item.val : item}
+                  </Link>
                   {(index < content.length-1) ? <Text>, </Text> : null}
                 </View>)
             }) : 
-            <Link style={styles.textLinked} src={content.url} >{content.val}</Link>}
+            <Link style={styles.textLinked} src={content.url? content.url : content} >{content.val? content.val : content}</Link>}
           </View>
         </View>
       )

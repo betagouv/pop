@@ -14,8 +14,17 @@ import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "../../src/config";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MnrPdf } from "../pdfNotice/mnrPdf";
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("mnr", id);
     return { notice };
@@ -79,6 +88,15 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
+    const pdf = MnrPdf(notice, title);
+    const App = () => (
+      <div>
+        <PDFDownloadLink document={pdf} fileName={"mnr_" + notice.REF + ".pdf"}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -96,9 +114,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="mnr" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("mnr_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

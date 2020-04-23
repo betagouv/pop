@@ -53,12 +53,13 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'Open Sans',
+        marginTop: "10px"
     },
     subtitle: {
         fontSize: 14,
         fontFamily: 'Open Sans',
         fontWeight: 700,
-        marginBottom: "5px"
+        marginBottom: "10px"
     },
     fieldTitle: {
         fontSize: 12,

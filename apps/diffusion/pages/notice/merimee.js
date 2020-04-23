@@ -17,6 +17,9 @@ import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MerimeePdf } from "../pdfNotice/merimeePdf";
+
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -26,6 +29,13 @@ const pushLinkedNotices = (a, d, base) => {
 };
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("merimee", id);
     const arr = [];
@@ -105,6 +115,16 @@ export default class extends React.Component {
       contentLocation: localisation,
       creator: notice.AUTR
     };
+
+    const pdf = MerimeePdf(notice, title);
+    const App = () => (
+      <div>
+        <PDFDownloadLink document={pdf} fileName={"merimee_" + notice.REF + ".pdf"}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -121,9 +141,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="merimee" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("merimee_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

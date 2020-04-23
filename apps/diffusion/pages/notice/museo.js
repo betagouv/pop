@@ -15,8 +15,18 @@ import FieldImages from "../../src/notices/FieldImages";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MuseoPdf } from "../pdfNotice/museoPdf";
+
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("museo", id);
     return { notice };
@@ -35,6 +45,16 @@ export default class extends React.Component {
       image: image_preview,
       description: metaDescription
     };
+
+    const pdf = MuseoPdf(notice, title);
+    const App = () => (
+      <div>
+        <PDFDownloadLink document={pdf} fileName={"museo_" + notice.REF + ".pdf"}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -52,9 +72,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="museo" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("museo_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>
