@@ -9,9 +9,12 @@ import Cookies from 'universal-cookie';
 import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
 import API from "../src/services/api";
 import { printBucketPdf } from "../src/utils"
+import { PDFDownloadLink, Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import { BucketPdf } from "../pages/pdfNoticeAbregees/BucketPdf"
 
 export default class Bucket extends React.Component {
-  state = { bucket: [], loading: true };
+  state = { bucket: [], loading: true, display: false};
+  
 
   //Méthode permettant de supprimer du panier
   removeFromBucket = (ref) => {
@@ -35,6 +38,7 @@ export default class Bucket extends React.Component {
 
   componentDidMount(){
     this.fillBucket();
+    this.setState({display : true});
   }
 
   fillBucket = async () => {
@@ -101,6 +105,15 @@ export default class Bucket extends React.Component {
       }
     });
 
+    
+    const pdf = BucketPdf(this.state.bucket);
+    const App = () => (
+      <div>
+        <PDFDownloadLink document={pdf} fileName="somename.pdf">
+          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download now!')}
+        </PDFDownloadLink>
+      </div>
+    )
 
     return (
       <div className="bucketList">
@@ -123,11 +136,8 @@ export default class Bucket extends React.Component {
               </div>
 
               {
-                this.state.bucket.length > 0 ? 
-                <div  className="printPdfBtn onPrintHide" 
-                      onClick={() => printBucketPdf("notices_abrégées_panier_" + formatedDate, blocIndex+1)}>
-                Imprimer le panier
-                </div> : ""
+                (this.state.bucket.length > 0 && this.state.display == true)? 
+                App() : ""
               }
               
             </div>
