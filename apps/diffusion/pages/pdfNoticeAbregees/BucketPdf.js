@@ -8,7 +8,9 @@ import { PalissyAbregeePdf } from "./PalissyAbregeePdf";
 import { MerimeeAbregeePdf } from "./MerimeeAbregeePdf";
 import { MuseoAbregeePdf } from "./MuseoAbregeePdf";
 import { MnrAbregeePdf } from "./MnrAbregeePdf";
-
+import { MemoireAbregeePdf } from "./MemoireAbregeePdf";
+import { EnluminuresAbregeePdf } from "./EnluminuresAbregeePdf";
+import { AutorAbregeePdf } from "./AutorAbregeePdf";
 
 export function BucketPdf(bucket){
   return(
@@ -31,6 +33,12 @@ export function BucketPdf(bucket){
                       return MuseoAbregeePdf(notice);
                     case "mnr" :
                       return MnrAbregeePdf(notice);
+                    case "memoire":
+                        return MemoireAbregeePdf(notice);
+                    case "enluminures":
+                        return EnluminuresAbregeePdf(notice);
+                    case "autor" :
+                        return AutorAbregeePdf(notice);
                     default :
                       return null;
                   }
