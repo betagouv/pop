@@ -124,5 +124,124 @@ export const styles = StyleSheet.create({
         fontSize: 6,
         fontFamily: 'Open Sans',
         fontWeight: 300
+    },
+
+
+
+
+
+    bucketContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "5px"
+    },
+    noticeNumber:{
+        fontSize: 12,
+        fontFamily: 'Open Sans',
+        textAlign: 'center',
+        fontWeight: 300,
+        marginTop: "20px",
+        marginBottom: "5px"
+    },
+    noticeAbregeeContainer: {
+        display: "flex",
+        flexDirection: "row",
+        padding: "5px",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#ffffff",
+        width: "560px",
+        height: "120px",
+        marginBottom: "10px"
+    },
+    imageAbregee: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        alignContent: "flex-start",
+        width: "110px",
+        height: "110px"
+    },
+    noticeAbregeeDetails: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        height: "120px",
+        width: "400px",
+        marginLeft: "10px"
+    },
+    leftContent: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        width: "300px",
+        paddingTop: "5px"
+    },
+    rightContent: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100px",
+        alignItems: "flex-end",
+        justifyContent: "space-around"
+    },
+    abregeeContentTitle: {
+        fontSize: 12,
+        fontFamily: 'Open Sans',
+        fontWeight: 600,
+        maxHeight: "35px",
+        textOverflow: "hidden"
+    },
+    abregeeContentSubtitle: {
+        fontSize: 8,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        height: "12px",
+        width: "275px",
+        textOverflow: "hidden"
+    },
+    abregeeContentText: {
+        fontSize: 10,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        height: "15px",
+        width: "250px",
+        textOverflow: "hidden"
+    },
+    abregeeContentTitleMnr: {
+        fontSize: 10,
+        fontFamily: 'Open Sans',
+        fontWeight: 600,
+        maxHeight: "30px",
+        textOverflow: "hidden"
+    },
+    abregeeContentSubtitleMnr: {
+        fontSize: 6,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        height: "10px",
+        width: "275px",
+        textOverflow: "hidden"
+    },
+    abregeeContentTextMnr: {
+        fontSize: 8,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        height: "12px",
+        width: "250px",
+        textOverflow: "hidden"
+    },
+    abregeeBase: {
+        fontSize: 12,
+        fontFamily: 'Open Sans',
+        fontWeight: 300
+    },
+    abregeeREF: {
+        fontSize: 12,
+        fontFamily: 'Open Sans',
+        fontWeight: 300
+    },
+    logo: {
+        width: "40px"
     }
 });
