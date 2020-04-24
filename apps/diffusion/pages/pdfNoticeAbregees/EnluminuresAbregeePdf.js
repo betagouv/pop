@@ -11,9 +11,14 @@ export function EnluminuresAbregeePdf(notice){
     const line4 = [notice.DATE, notice.ORIGG, notice.ORIGH].filter(d => d).join(", ");
     const line5 = [notice.CONTXT, notice.NOMENC.join(", "), notice.REFD].filter(d => d).join(", ");
     return(
+        <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
         <View style={styles.noticeAbregeeContainer}>
-            <Image style={styles.imageAbregee} src={image_preview} />
-            <View style={styles.noticeAbregeeDetails}>
+        <View style={styles.imageAbregee}>
+            {notice.VIDEO.length > 0? 
+            <Image src={ bucket_url + notice.VIDEO[0]} />
+            : <Image src={"/static/noimage.png"} />}
+         </View>             
+         <View style={styles.noticeAbregeeDetails}>
                 <View style={styles.leftContent}>
                     <Text style={styles.abregeeContentTitle}>{title}</Text>
                     <Text style={styles.abregeeContentSubtitle}>{subtitle}</Text>
@@ -27,6 +32,7 @@ export function EnluminuresAbregeePdf(notice){
                 </View>
             </View>
         </View>
+        </Link>
     )
 }
   

@@ -2,7 +2,7 @@ let env = null || process.env.APP_URLS_ENV;
 
 let api_url = "http://127.0.0.1:3000";
 let es_url = "http://127.0.0.1:3000/search/";
-let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
+let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque-dev/";
 
 switch (env) {
   case "production":

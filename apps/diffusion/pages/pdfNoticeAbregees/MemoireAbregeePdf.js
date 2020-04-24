@@ -1,6 +1,7 @@
 import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
+import { bucket_url } from "./../../src/config";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { getNoticeInfo } from "../../src/utils"
@@ -33,9 +34,14 @@ export function MemoireAbregeePdf(notice){
       const date = joinData([notice.DATPV, notice.DATOR]);
       const localisation = notice.LOCA;
     return(
+        <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
         <View style={styles.noticeAbregeeContainer}>
-            <Image style={styles.imageAbregee} src={image_preview} />
-            <View style={styles.noticeAbregeeDetails}>
+        <View style={styles.imageAbregee}>
+            {notice.IMG ? 
+            <Image src={ bucket_url + notice.IMG} />
+            : <Image src={"/static/noimage.png"} />}
+        </View>  
+        <View style={styles.noticeAbregeeDetails}>
                 <View style={styles.leftContent}>
                     <Text style={styles.abregeeContentTitle}>{title}</Text>
                     <Text style={styles.abregeeContentSubtitle}>{subtitle}</Text>
@@ -50,6 +56,7 @@ export function MemoireAbregeePdf(notice){
                 </View>
             </View>
         </View>
+        </Link>
     )
 }
   
