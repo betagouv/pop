@@ -147,7 +147,8 @@ export default class extends React.Component {
             <h1 className="heading">{title}</h1>
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="joconde" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="joconde" reference={notice.REF} />}
               </div>
               {this.state.display && App()}
             </div>
