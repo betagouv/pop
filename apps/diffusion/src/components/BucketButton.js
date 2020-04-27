@@ -1,5 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from "reactstrap";
 import Cookies from 'universal-cookie';
 

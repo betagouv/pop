@@ -3,14 +3,6 @@ import App, { Container } from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faShoppingBasket, faShoppingCart, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
-
-library.add(
-  faShoppingBasket,
-  faShoppingCart,
-  faCartArrowDown
-);
 
 export default class MyApp extends App {
   componentDidMount() {
