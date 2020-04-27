@@ -243,5 +243,14 @@ export const styles = StyleSheet.create({
     },
     logo: {
         width: "40px"
+    },
+    pageNumber: {
+        position: "absolute",
+        fontSize: 10,
+        bottom: 15,
+        left: 0,
+        right: 15,
+        textAlign: 'right',
+        color: 'grey'
     }
 });

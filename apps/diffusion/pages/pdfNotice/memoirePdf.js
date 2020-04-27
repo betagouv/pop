@@ -144,6 +144,9 @@ export function MemoirePdf(notice, title){
             </View>
           </View>
         </View>
+        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+          `${pageNumber} / ${totalPages}`
+        )} fixed />
       </Page>
     </Document>
 )}

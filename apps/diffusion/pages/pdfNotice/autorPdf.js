@@ -79,6 +79,9 @@ export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk
             </View>
           </View>
         </View>
+        <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+          `${pageNumber} / ${totalPages}`
+        )} fixed />
       </Page>
     </Document>
 )}

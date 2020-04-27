@@ -4,7 +4,7 @@ import Head from "next/head";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -115,7 +115,21 @@ export default class extends React.Component {
     const pdf = JocondePdf(notice, title);
     const App = () => (
       <div>
-        <PDFDownloadLink document={pdf} fileName={"joconde_" + notice.REF + ".pdf"}>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"joconde_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>

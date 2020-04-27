@@ -11,7 +11,7 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { EnluminuresPdf } from "../pdfNotice/enluminuresPdf";
@@ -54,7 +54,21 @@ export default class extends React.Component {
     const pdf = EnluminuresPdf(notice, title);
     const App = () => (
       <div>
-        <PDFDownloadLink document={pdf} fileName={"enluminures_" + notice.REF + ".pdf"}>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"enluminures_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>

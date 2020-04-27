@@ -20,29 +20,13 @@ export default css`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: center;
     margin-bottom: 15px;
-  }
-
-  .printPdfBtn {
-    background-color: #377d87;
-    font-weight: 400;
-    font-size: 16px;
-    border: 0;
-    color: #fff;
-    max-width: 250px;
-    width: 100%;
-    padding: 5px;
-    text-align: center;
-    border-radius: 5px;
   }
 
   .addBucket{
     width: fill-content;
     margin-right: 15px;
-  }
-
-  .printPdfBtn:hover {
-    cursor: pointer;
   }
 
   .notice .notice-details {
