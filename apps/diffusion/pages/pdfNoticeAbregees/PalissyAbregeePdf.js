@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { getNoticeInfo } from "../../src/utils"
+import { bucket_url, pop_url } from "./../../src/config";
 
 export function PalissyAbregeePdf(notice){
     const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(notice);
@@ -12,11 +13,11 @@ export function PalissyAbregeePdf(notice){
     const line5 = notice.STAT.join(" , ") + (notice.DPRO? (" ; " + notice.DPRO) : "");
 
     return(
-        <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
+        <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.MEMOIRE.length > 0 ?
-                    <Image src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0].url} />
+                    <Image src={ bucket_url + notice.MEMOIRE[0].url} />
                     : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>

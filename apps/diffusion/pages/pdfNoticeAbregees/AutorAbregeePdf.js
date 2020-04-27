@@ -1,16 +1,16 @@
 import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
-import { bucket_url } from "./../../src/config";
+import { bucket_url, pop_url } from "./../../src/config";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { getNoticeInfo } from "../../src/utils"
 
 export function AutorAbregeePdf(notice){
-    const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
+    const { logo, nom, description, fonction, symbole } = getNoticeInfo(notice);
 
     return(
-        <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
+        <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
         <View style={styles.noticeAbregeeContainer}>
         <View style={styles.imageAbregee}>
             {notice.MEMOIRE.length > 0 ?
@@ -21,7 +21,6 @@ export function AutorAbregeePdf(notice){
                 <View style={styles.leftContent}>
                     <Text style={styles.abregeeContentTitle}>{nom}</Text>
                     <Text style={styles.abregeeContentSubtitle}>{description}</Text>
-                    <Text style={styles.abregeeContentText}>{localisation}</Text>
                     <Text style={styles.abregeeContentText}>{fonction}</Text>
                     <Text style={styles.abregeeContentText}>{symbole}</Text>
                 </View>

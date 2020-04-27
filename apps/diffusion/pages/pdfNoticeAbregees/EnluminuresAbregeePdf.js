@@ -2,6 +2,7 @@ import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { bucket_url, pop_url } from "./../../src/config";
 import { styles } from "../pdfNotice/styles";
 import { getNoticeInfo } from "../../src/utils"
 
@@ -11,7 +12,7 @@ export function EnluminuresAbregeePdf(notice){
     const line4 = [notice.DATE, notice.ORIGG, notice.ORIGH].filter(d => d).join(", ");
     const line5 = [notice.CONTXT, notice.NOMENC.join(", "), notice.REFD].filter(d => d).join(", ");
     return(
-        <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
+        <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
         <View style={styles.noticeAbregeeContainer}>
         <View style={styles.imageAbregee}>
             {notice.VIDEO.length > 0? 

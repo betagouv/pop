@@ -1,7 +1,7 @@
 import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
-import { bucket_url } from "./../../src/config";
+import { bucket_url, pop_url } from "./../../src/config";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { getNoticeInfo } from "../../src/utils"
@@ -33,7 +33,7 @@ export function JocondeAbregeePdf(notice){
   
     const localisation = joinData([notice.VILLE_M, notice.NOMOFF]);
     return(
-      <Link src={"https://www.pop.culture.gouv.fr/notice/palissy/" + notice.REF}>
+        <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
         <View style={styles.noticeAbregeeContainer}>
         <View style={styles.imageAbregee}>
             {notice.IMG.length > 0? 

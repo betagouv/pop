@@ -3,17 +3,18 @@ import mapping from "../../src/services/mapping";
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
+import { bucket_url, pop_url } from "./../../src/config";
 import { getNoticeInfo } from "../../src/utils"
 
 export function MuseoAbregeePdf(notice){
     const { title, subtitle, image_preview, localisation } = getNoticeInfo(notice);
     
     return(
-        <Link src={"https://www.pop.culture.gouv.fr/notice/museo/" + notice.REF}>
+        <Link src={pop_url +  "notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.PHOTO ? 
-                    <Image src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.PHOTO} />
+                    <Image src={ bucket_url + notice.PHOTO} />
                     : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
