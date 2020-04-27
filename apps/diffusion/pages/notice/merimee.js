@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -17,6 +17,9 @@ import { postFixedLink, schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MerimeePdf } from "../pdfNotice/merimeePdf";
+
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -26,6 +29,13 @@ const pushLinkedNotices = (a, d, base) => {
 };
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("merimee", id);
     const arr = [];
@@ -105,6 +115,30 @@ export default class extends React.Component {
       contentLocation: localisation,
       creator: notice.AUTR
     };
+
+    const pdf = MerimeePdf(notice, title, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"merimee_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -121,9 +155,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="merimee" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("merimee_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

@@ -4,7 +4,7 @@ import Head from "next/head";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -17,8 +17,17 @@ import Map from "../../src/notices/Map";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { JocondePdf } from "../pdfNotice/jocondePdf";
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static loadMuseo(m) {
     try {
       return API.getNotice("museo", m);
@@ -99,6 +108,31 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
+    //construction du pdf au format joconde
+    //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
+    const pdf = JocondePdf(notice, title);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"joconde_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -115,9 +149,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="joconde" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("joconde_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

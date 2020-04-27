@@ -11,10 +11,20 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { AutorPdf } from "../pdfNotice/autorPdf";
+
 
 export default class extends React.Component {
+
+  state = {display: false}
+
+  componentDidMount(){
+    this.setState({display : true});
+  }
+
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("autor", id);
     return { notice };
@@ -55,6 +65,31 @@ export default class extends React.Component {
 
     const { title, images, datesLieus, datesActivites, referenceArk } = getNoticeInfo(notice);
 
+    //construction du pdf au format joconde
+    //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
+    const pdf = AutorPdf(notice, title, datesLieus, datesActivites, referenceArk);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"autor_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -69,9 +104,7 @@ export default class extends React.Component {
               <div className="addBucket onPrintHide">
                 <BucketButton base="autor" reference={notice.REF} />
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("autor_" + notice.REF)}>
-                Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>

@@ -8,10 +8,12 @@ import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
 import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
 import API from "../src/services/api";
-import { printBucketPdf } from "../src/utils"
+import { PDFDownloadLink, Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import { BucketPdf } from "../pages/pdfNoticeAbregees/BucketPdf"
 
 export default class Bucket extends React.Component {
-  state = { bucket: [], loading: true };
+  state = { bucket: [], loading: true, display: false};
+  
 
   //Méthode permettant de supprimer du panier
   removeFromBucket = (ref) => {
@@ -35,6 +37,7 @@ export default class Bucket extends React.Component {
 
   componentDidMount(){
     this.fillBucket();
+    this.setState({display : true});
   }
 
   fillBucket = async () => {
@@ -101,6 +104,29 @@ export default class Bucket extends React.Component {
       }
     });
 
+    
+    const pdf = BucketPdf(this.state.bucket);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName="panier_de_notices.pdf"
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "5px",
+                  paddingBottom: "5px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Télécharger le panier')}
+        </PDFDownloadLink>
+      </div>
+    )
 
     return (
       <div className="bucketList">
@@ -123,11 +149,8 @@ export default class Bucket extends React.Component {
               </div>
 
               {
-                this.state.bucket.length > 0 ? 
-                <div  className="printPdfBtn onPrintHide" 
-                      onClick={() => printBucketPdf("notices_abrégées_panier_" + formatedDate, blocIndex+1)}>
-                Imprimer le panier
-                </div> : ""
+                (this.state.bucket.length > 0 && this.state.display == true)? 
+                App() : ""
               }
               
             </div>
@@ -175,23 +198,6 @@ export default class Bucket extends React.Component {
               justify-content: space-between;
               padding-right: 20px;
               padding-left: 20px;
-            }
-          
-            .printPdfBtn {
-              background-color: #377d87;
-              font-weight: 400;
-              font-size: 16px;
-              border: 0;
-              color: #fff;
-              max-width: 250px;
-              width: 100%;
-              padding: 5px;
-              text-align: center;
-              border-radius: 5px;
-            }
-          
-            .printPdfBtn:hover {
-              cursor: pointer;
             }
 
             .notices {
