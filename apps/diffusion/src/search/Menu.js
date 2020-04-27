@@ -16,7 +16,7 @@ const Menu = ({ closeMenu, initialValues }) => (
             {activeFilters.map(({ key, value }) => {
               return (
                 <li key={key} onClick={() => removeFilter(key)}>
-                  <span>{`${key.replace('ou','où')}: ${value}`}</span>
+                  <span>{`${key.replace('ou','où')} : ${value}`}</span>
                   <button>✕</button>
                 </li>
               );
