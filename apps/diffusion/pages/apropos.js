@@ -130,10 +130,10 @@ export default class extends React.Component {
             La liste suivante correspond aux navigateurs compatibles avec l'application POP :
             </p>
             <ul>
-                <li><b>Chrome :</b> a partir de la version 49.</li>
-                <li><b>Firefox :</b> a partir de la version 50.</li>
-                <li><b>Internet Explorer :</b> a partir de la version 9.</li>
-                <li><b>Safari :</b> a partir de la version 10.</li>
+                <li><b>Chrome :</b> à partir de la version 49.</li>
+                <li><b>Firefox :</b> à partir de la version 50.</li>
+                <li><b>Internet Explorer :</b> à partir de la version 9.</li>
+                <li><b>Safari :</b> à partir de la version 10.</li>
             </ul>
           </div>
         </Container>
