@@ -10,7 +10,7 @@ export default ({ initialValues }) => (
       itemsPerPage={25}
       initialPage={initialValues.get("resPage")}
       id="res"
-      items={data => data.map(({ _id, ...rest }) => <CardList key={_id} data={rest} searchParams={initialValues}/>)}
+      items={(data, listRefs, idQuery) => data.map(({ _id, ...rest }) => <CardList key={_id} data={rest} searchParams={initialValues} listRefs={listRefs} idQuery={idQuery}/>)}
       pagination={pagination}
       stats={total => (
         <div>

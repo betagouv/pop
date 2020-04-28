@@ -1,9 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { getNoticeInfo } from "../../utils";
+import { getNoticeInfo} from "../../utils";
+import Cookies from 'universal-cookie';
 import Mapping from "../../services/mapping";
 import BucketButton from "../../components/BucketButton";
 import {toUrlQueryString} from "react-elasticsearch-pop";
+import router from "next/dist/client/router";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -208,7 +210,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
-export const Joconde = ({ data, removeFromBucket, searchParams }) => {
+export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
@@ -219,11 +221,19 @@ export const Joconde = ({ data, removeFromBucket, searchParams }) => {
 
   const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
+  const saveListRef = () => {
+    const cookies = new Cookies();
+    const encodedListRefs = JSON.stringify(listRefs);
+    cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+
+    return true;
+  }
+
   return (
     <div>
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef()} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/joconde/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
+          <Link href={`/notice/joconde/${data.REF}?${toUrlQueryString(searchParams)}`}  key={data.REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -525,25 +535,25 @@ const withStyle = component => {
   );
 };
 
-export default ({ data, searchParams }) => {
+export default ({ data, searchParams, listRefs, idQuery }) => {
   const index = data._index.replace(/[0-9]+/, "");
-  console.log("hello");console.log(searchParams);
+  searchParams.set("idQuery", idQuery);
   switch (index) {
     case "joconde":
-      return withStyle(<Joconde data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Joconde data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "mnr":
-      return withStyle(<Mnr data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Mnr data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "merimee":
-      return withStyle(<Merimee data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Merimee data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "palissy":
-      return withStyle(<Palissy data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Palissy data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "memoire":
-      return withStyle(<Memoire data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Memoire data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "museo":
-      return withStyle(<Museo data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Museo data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "enluminures":
-      return withStyle(<Enluminures data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Enluminures data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "autor":
-      return withStyle(<Autor data={data._source} searchParams={searchParams}/>);
+      return withStyle(<Autor data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
   }
 };

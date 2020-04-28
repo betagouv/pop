@@ -17,9 +17,18 @@ import Map from "../../src/notices/Map";
 import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import {toUrlQueryString} from "react-elasticsearch-pop";
+import { replaceSearchRouteWithUrl } from "../../src/services/url";
+import Cookies from 'universal-cookie';
+
 
 
 export default class extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {prevLink: undefined, nextLink: undefined};
+  }
+
   static loadMuseo(m) {
     try {
       return API.getNotice("museo", m);
@@ -30,16 +39,37 @@ export default class extends React.Component {
   static async getInitialProps({ query : {id}, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
     return {
       notice,
       museo,
-      searchParams
+      searchParams,
+      searchParamsUrl
     };
   }
 
   componentDidMount(){
-    this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        prevLink = listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        nextLink = listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+      }
+      this.setState({prevLink, nextLink});
+    }
   }
 
   links(value, name) {
@@ -89,10 +119,37 @@ export default class extends React.Component {
     return <React.Fragment>{links}</React.Fragment>;
   }
 
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
   render() {
     if (!this.props.notice) {
       return throw404();
     }
+
     const { title, image_preview, metaDescription, images } = getNoticeInfo(this.props.notice);
     const notice = this.props.notice;
     const obj = {
@@ -118,7 +175,14 @@ export default class extends React.Component {
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
 
-            <h1 className="heading">{title}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+
+            </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
                 <BucketButton base="joconde" reference={notice.REF} />
