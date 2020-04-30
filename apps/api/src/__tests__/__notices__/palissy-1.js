@@ -93,6 +93,7 @@ module.exports = {
   REFE: [],
   REFM: "",
   REFP: [],
+  REFJOC: [],
   REG: "Saint-Pierre-et-Miquelon",
   RENP: [],
   RENV: [],

@@ -78,6 +78,8 @@ module.exports = {
   REFE: [],
   REFP: [],
   REFO: [],
+  REFJOC: [],
+  REFMUS: [],
   REG: "Mayotte",
   REMA: "",
   REMP: "",
