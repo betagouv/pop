@@ -522,6 +522,22 @@ module.exports = {
             }
           }
         },
+        LINHA: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        LREG: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         LBASE2: {
           type: "text",
           fields: {

@@ -593,6 +593,30 @@ module.exports = {
             }
           }
         },
+        LARC: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        LINHA: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        LREG: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         LBASE2: {
           type: "text",
           fields: {

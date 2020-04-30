@@ -471,6 +471,48 @@ const SeeMore = ({ notice }) => {
     }
   }
 
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
+    }
+  }
+
   if (notice.LMDP) {
     arr.push(
       <Field

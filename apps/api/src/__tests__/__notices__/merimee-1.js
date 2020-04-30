@@ -53,6 +53,8 @@ module.exports = {
   INTE: [],
   JATT: [],
   JDAT: [],
+  LINHA: [],
+  LREG: [],
   LBASE2: "",
   LIEU: "",
   LOCA: "",

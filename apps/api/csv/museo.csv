@@ -96,6 +96,8 @@ path,type,required,label,opendata,generated,description,thesaurus
 "PROPBAT","String","non","Propr. bat.","","","",""
 "PROPCOLL","String","non","Propr. coll.","","","",""
 "PUBLI","String","non","Publications","","","",""
+"REFMEM","Array","non","Référence aux objets Mémoire","","true","REFMEM contient une ou plusieurs références de notice Mémoire.",""
+"REFMER","Array","non","Référence aux objets Mérimée","","true","REFMER contient une ou plusieurs références de notice Mérimée.",""
 "REPCOLL","String","non","Distr. coll","","","",""
 "SERVICES","String","non","Services","","","",""
 "SIGLE_M","String","non","Sigle musée","","","",""

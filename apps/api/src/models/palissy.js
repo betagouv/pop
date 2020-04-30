@@ -552,6 +552,30 @@ const Schema = new mongoose.Schema(
         label: "Justification de la datation"
       }
     },
+    LARC: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Lien base Arcade",
+        label: "Lien base Arcade"
+      }
+    },
+    LINHA: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien INHA",
+        label: "Lien INHA"
+      }
+    },
+    LREG: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien notice Regards",
+        label: "Lien notice Regards"
+      }
+    },
     LBASE2: {
       type: String,
       default: "",
