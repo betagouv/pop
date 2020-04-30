@@ -42,6 +42,11 @@ export default class extends React.Component {
         const linkedNotice = await API.getNotice(collection, arr[elem])
         links.push(linkedNotice)
       }
+
+      for(let i=0; i<notice.REFJOC.length; i++){
+        const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
+        links.push(linkedJoconde)
+      }
     }
 
     return { notice, links };

@@ -788,6 +788,22 @@ module.exports = {
             }
           }
         },
+        REFMEM: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFMER: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REGION: {
           type: "text",
           fields: {

@@ -28,7 +28,9 @@ class SmallNotice extends React.Component {
           <img src={image_preview} alt={title} />
           <div className="content">
             <h3>{title}</h3>
+            {this.props.notice.DENO ? 
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>
+            : <p className="categories">{this.props.notice.CATEG}</p>}
             <div>
               <p>{this.props.notice.DOMN}</p>
               <p>{this.props.notice.AUTR}</p>

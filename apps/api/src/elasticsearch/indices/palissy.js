@@ -963,6 +963,14 @@ module.exports = {
             }
           }
         },
+        REFJOC: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REG: {
           type: "text",
           analyzer: "french_fuzzy",

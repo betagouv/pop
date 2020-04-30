@@ -19,6 +19,12 @@ import BucketButton from "../../src/components/BucketButton";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MemoirePdf } from "../pdfNotice/memoirePdf";
 
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
 
 export default class extends React.Component {
 
@@ -36,6 +42,15 @@ export default class extends React.Component {
       const values = await API.getNotice(collection, notice.LBASE);
       links = values.filter(v => v);
     }
+
+    const arr = [];
+    if (notice) {
+      const { REFJOC, REFMUS } = notice;
+      pushLinkedNotices(arr, REFMUS, "museo");
+      pushLinkedNotices(arr, REFJOC, "joconde");
+    }
+    const linkedNotices = (await Promise.all(arr)).filter(l => l);
+    links.push(...linkedNotices);
 
     let listUrl = await Promise.all(notice.LBASE.map( async ref => {
       const collection = await findCollection(ref);
@@ -84,7 +99,7 @@ export default class extends React.Component {
       creator: notice.AUTP
     };
 
-    const pdf = MemoirePdf(notice, title, this.props.notice.AUTP, this.props.notice.SERIE, this.props.notice.EXPO);
+    const pdf = MemoirePdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink 

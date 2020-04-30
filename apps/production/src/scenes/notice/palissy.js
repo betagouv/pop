@@ -284,6 +284,11 @@ class Notice extends React.Component {
                 <CustomField name="EDIF2" disabled={!this.state.editable} />
                 <CustomField name="ADRS2" disabled={!this.state.editable} />
                 <CustomField name="EMPL2" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
             </Row>
           </Section>

@@ -877,6 +877,22 @@ const Schema = new mongoose.Schema(
         deprecated: true
       }
     },
+    REFJOC: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Joconde liées ",
+        label: "Notices Joconde liées"
+      }
+    },
+    REFMUS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Muséofile liées ",
+        label: "Notices Muséofile liées"
+      }
+    },
     MOSA: {
       type: String,
       default: "",

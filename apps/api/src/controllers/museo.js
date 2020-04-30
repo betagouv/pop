@@ -8,6 +8,9 @@ const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
+const Memoire = require("../models/memoire");
+const Merimee = require("../models/merimee");
+
 const { formattedNow, deleteFile, uploadFile } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 
@@ -110,6 +113,10 @@ router.put(
     }
 
     transformBeforeCreateOrUpdate(notice);
+
+    await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
+    await populateBaseFromMuseo(notice, notice.REFMER, Merimee);
+
     promises.push(updateJocondeNotices(notice));
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
@@ -148,5 +155,52 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function populateBaseFromMuseo(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFMUS: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFMUS = noticesToPopulate[i].REFMUS.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Memoire : 
+          list = notice.REFMEM;
+          break;
+        case Merimee : 
+          list = notice.REFMER;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFMUS) && !obj.REFMUS.includes(notice.REF)) {
+            obj.REFMUS.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
+  });
+}
 
 module.exports = router;

@@ -17,7 +17,14 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MuseoPdf } from "../pdfNotice/museoPdf";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
 
 export default class extends React.Component {
 
@@ -29,7 +36,18 @@ export default class extends React.Component {
 
   static async getInitialProps({ query: { id } }) {
     const notice = await API.getNotice("museo", id);
-    return { notice };
+
+    const arr = [];
+
+    if (notice) {
+      const { REFJOC, REFMEM, REFMER } = notice;
+      pushLinkedNotices(arr, REFMEM, "memoire");
+      pushLinkedNotices(arr, REFMER, "merimee");
+    }
+
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    return { notice, links };
   }
 
   render() {
@@ -46,7 +64,7 @@ export default class extends React.Component {
       description: metaDescription
     };
 
-    const pdf = MuseoPdf(notice, title);
+    const pdf = MuseoPdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink 
@@ -163,6 +181,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

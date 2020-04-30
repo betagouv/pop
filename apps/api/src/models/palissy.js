@@ -845,6 +845,14 @@ const Schema = new mongoose.Schema(
         label: "Références des parties constituantes étudiées"
       }
     },
+    REFJOC: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Joconde liées ",
+        label: "Notices Joconde liées"
+      }
+    },
     REG: {
       type: String,
       default: "",

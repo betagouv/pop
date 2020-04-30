@@ -232,6 +232,16 @@ class Notice extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={true} />
+                <CustomField
+                  name="REFMEM"
+                  createUrl={e => `/notice/memoire/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMER"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="REFMIS" disabled={!this.state.editable} />
                 <CustomField name="REFIM" disabled={!this.state.editable} />
                 <CustomField name="VIDEO" disabled={!this.state.editable} />
@@ -243,6 +253,11 @@ class Notice extends React.Component {
               </Col>
               <Col sm={6}>
                 <CustomField name="WWW" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="LVID" disabled={!this.state.editable} />
                 <CustomField name="MUSEO" disabled={!this.state.editable} />
                 <CustomField name="COOR" disabled={!this.state.editable} />

@@ -2,9 +2,10 @@ import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 
-export function JocondePdf(notice, title){
+export function JocondePdf(notice, title, links){
   return(
     <Document>
       <Page style={styles.page}>
@@ -92,6 +93,16 @@ export function JocondePdf(notice, title){
               <Image style={styles.image}
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.IMG[0]}
               />
+            </View>
+
+            <View style={styles.linkedNoticesContainer}>
+              <Text style={styles.subtitle}>Notices liées</Text>
+              <View>
+                {links.length > 0 ?
+                    links.map( link => {
+                      return LinkedNoticesPdf(link);
+                    }) : null}
+              </View>
             </View>
 
             <View style={styles.aPropos}>

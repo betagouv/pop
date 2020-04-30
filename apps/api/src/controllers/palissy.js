@@ -8,6 +8,8 @@ const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const Joconde = require("../models/joconde");
+
 const {
   formattedNow,
   getNewId,
@@ -264,6 +266,10 @@ router.put(
 
       // Add generate fields
       await transformBeforeUpdate(notice);
+
+      //Modification des liens entre bases
+      await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
+
       const obj = new Palissy(notice);
       checkESIndex(obj);
 
@@ -308,6 +314,9 @@ router.post(
       await populateMerimeeREFO(notice);
 
       await transformBeforeCreate(notice);
+
+      //Modification des liens entre bases
+      await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
 
       const obj = new Palissy(notice);
       checkESIndex(obj);
@@ -378,6 +387,45 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function populateBaseFromPalissy(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFPAL: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFPAL = noticesToPopulate[i].REFPAL.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = notice.REFJOC;
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFPAL) && !obj.REFPAL.includes(notice.REF)) {
+            obj.REFPAL.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
     }
   });
 }

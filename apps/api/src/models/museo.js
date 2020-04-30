@@ -214,6 +214,22 @@ const Schema = new mongoose.Schema(
 `
       }
     },
+    REFMEM: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mémoire liées ",
+        label: "Notices Mémoire liées"
+      }
+    },
+    REFMER: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mérimée liées ",
+        label: "Notices Mérimée liées"
+      }
+    },
     REGION: {
       type: String,
       default: "",

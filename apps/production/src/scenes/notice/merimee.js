@@ -208,6 +208,16 @@ class Notice extends React.Component {
               <Col sm={6}>
                 <CustomField name="THEM" disabled={!this.state.editable} />
                 <CustomField name="ETUD" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="DOSS" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
