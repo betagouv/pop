@@ -232,6 +232,13 @@ class Notice extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={true} />
+                <CustomField name="REFMIS" disabled={!this.state.editable} />
+                <CustomField name="REFIM" disabled={!this.state.editable} />
+                <CustomField name="VIDEO" disabled={!this.state.editable} />
+                <CustomField name="IMG" disabled={!this.state.editable} />
+                <CustomField name="LABEL" disabled={!this.state.editable} />
+                <CustomField name="COPY" disabled={!this.state.editable} />
+                <CustomField name="MSGCOM" disabled={!this.state.editable} />
                 <CustomField
                   name="REFMEM"
                   createUrl={e => `/notice/memoire/${e}`}
@@ -242,28 +249,21 @@ class Notice extends React.Component {
                   createUrl={e => `/notice/merimee/${e}`}
                   disabled={!this.state.editable}
                 />
-                <CustomField name="REFMIS" disabled={!this.state.editable} />
-                <CustomField name="REFIM" disabled={!this.state.editable} />
-                <CustomField name="VIDEO" disabled={!this.state.editable} />
-                <CustomField name="IMG" disabled={!this.state.editable} />
-                <CustomField name="LABEL" disabled={!this.state.editable} />
-                <CustomField name="COPY" disabled={!this.state.editable} />
-                <CustomField name="MSGCOM" disabled={!this.state.editable} />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="WWW" disabled={!this.state.editable} />
-                <CustomField
-                  name="REFPAL"
-                  createUrl={e => `/notice/palissy/${e}`}
-                  disabled={!this.state.editable}
-                />
                 <CustomField name="LVID" disabled={!this.state.editable} />
                 <CustomField name="MUSEO" disabled={!this.state.editable} />
                 <CustomField name="COOR" disabled={!this.state.editable} />
                 <CustomField name="DMAJ" disabled={!this.state.editable} />
                 <CustomField name="DMIS" disabled={!this.state.editable} />
                 <CustomField name="LARC" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="RETIF" disabled={!this.state.editable} />
               </Col>
             </Row>

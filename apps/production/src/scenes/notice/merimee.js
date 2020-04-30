@@ -208,16 +208,6 @@ class Notice extends React.Component {
               <Col sm={6}>
                 <CustomField name="THEM" disabled={!this.state.editable} />
                 <CustomField name="ETUD" disabled={!this.state.editable} />
-                <CustomField
-                  name="REFJOC"
-                  createUrl={e => `/notice/joconde/${e}`}
-                  disabled={!this.state.editable}
-                />
-                <CustomField
-                  name="REFMUS"
-                  createUrl={e => `/notice/museo/${e}`}
-                  disabled={!this.state.editable}
-                />
                 <CustomField name="DOSS" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
@@ -422,6 +412,11 @@ class Notice extends React.Component {
                   disabled={!this.state.editable}
                   {...Mapping.merimee["POP_DOSSIER_PROTECTION"]}
                 />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="DOSURL" disabled={!this.state.editable} />
@@ -434,6 +429,11 @@ class Notice extends React.Component {
                 <CustomField name="LMDP" disabled={!this.state.editable} />
                 <CustomField name="RFPA" disabled={!this.state.editable} />
                 <CustomField name="NBOR" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
             </Row>
           </Section>

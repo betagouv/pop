@@ -284,11 +284,6 @@ class Notice extends React.Component {
                 <CustomField name="EDIF2" disabled={!this.state.editable} />
                 <CustomField name="ADRS2" disabled={!this.state.editable} />
                 <CustomField name="EMPL2" disabled={!this.state.editable} />
-                <CustomField
-                  name="REFJOC"
-                  createUrl={e => `/notice/joconde/${e}`}
-                  disabled={!this.state.editable}
-                />
               </Col>
             </Row>
           </Section>
@@ -412,6 +407,11 @@ class Notice extends React.Component {
                   name="POP_DOSSIER_PROTECTION"
                   disabled={!this.state.editable}
                   {...Mapping.palissy["POP_DOSSIER_PROTECTION"]}
+                />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
                 />
               </Col>
               <Col sm={6}>
