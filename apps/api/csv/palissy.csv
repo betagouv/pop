@@ -112,6 +112,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "REFM","String","non","","","","[PAS AFFICHE]",""
 "REFP","Array","non","Références des parties constituantes étudiées","","","Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.",""
 "REFJOC","Array","non","Référence aux objets Joconde","","true","REFJOC contient une ou plusieurs références de notice Joconde.",""
+"REFMUS","Array","non","Référence aux objets Muséo","","true","REFMUS contient une ou plusieurs références de notice Muséo.",""
 "REG","String","non","Région","","","Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne-Franche-Comté, Bretagne, Centre-Val de Loire, Corse, Grand Est, Guadeloupe, Guyane, Hauts-de-France, Île-de-France, La Réunion, Martinique, Mayotte, Normandie, Nouvelle-Aquitaine, Occitanie, Pays de la Loire, Provence-Alpes-Côte d'Azur, Rhône-Alpes, Alsace, Aquitaine, Auvergne, Basse-Normandie, Bourgogne, Centre, Champagne-Ardenne, Franche-Comté, Haute-Normandie, Languedoc-Roussillon, Limousin, Lorraine, Midi-Pyrénées, Nord-Pas-de-Calais, Picardie, Poitou-Charente",""
 "RENP","Array","non","Renvoi vers dossier 'peinture'","","","",""
 "RENV","Array","non","Numéro de renvoi vers un autre domaine","","","Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Mérimée.",""

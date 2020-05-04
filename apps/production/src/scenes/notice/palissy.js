@@ -423,6 +423,11 @@ class Notice extends React.Component {
                   createUrl={e => `/notice/joconde/${e}`}
                   disabled={!this.state.editable}
                 />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="LARC" disabled={!this.state.editable} />
                 <CustomField name="LINHA" disabled={!this.state.editable} />
                 <CustomField name="LREG" disabled={!this.state.editable} />

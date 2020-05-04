@@ -47,6 +47,11 @@ export default class extends React.Component {
         const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
         links.push(linkedJoconde)
       }
+
+      for(let i=0; i<notice.REFMUS.length; i++){
+        const linkedMuseo = await API.getNotice("museo", notice.REFMUS[i]);
+        links.push(linkedMuseo)
+      }
     }
 
     return { notice, links };

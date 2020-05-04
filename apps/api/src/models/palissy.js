@@ -877,6 +877,14 @@ const Schema = new mongoose.Schema(
         label: "Notices Joconde liées"
       }
     },
+    REFMUS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Muséo liées ",
+        label: "Notices Muséo liées"
+      }
+    },
     REG: {
       type: String,
       default: "",

@@ -10,6 +10,7 @@ const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
+const Palissy = require("../models/palissy");
 
 const { formattedNow, deleteFile, uploadFile } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -116,6 +117,7 @@ router.put(
 
     await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
     await populateBaseFromMuseo(notice, notice.REFMER, Merimee);
+    await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
 
     promises.push(updateJocondeNotices(notice));
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
@@ -181,6 +183,9 @@ function populateBaseFromMuseo(notice, refList, baseToPopulate) {
           break;
         case Merimee : 
           list = notice.REFMER;
+          break;
+        case Palissy : 
+          list = notice.REFPAL;
           break;
       }
 

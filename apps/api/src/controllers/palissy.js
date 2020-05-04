@@ -9,6 +9,8 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
+
 
 const {
   formattedNow,
@@ -269,6 +271,7 @@ router.put(
 
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
+      await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
       const obj = new Palissy(notice);
       checkESIndex(obj);
@@ -317,6 +320,7 @@ router.post(
 
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
+      await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
       const obj = new Palissy(notice);
       checkESIndex(obj);
@@ -409,7 +413,15 @@ function populateBaseFromPalissy(notice, refList, baseToPopulate) {
         }
       }
 
-      let list = notice.REFJOC;
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
 
       for (let i = 0; i < list.length; i++) {
         if (!noticesToPopulate.find(e => e.REF === list[i])) {

@@ -219,6 +219,11 @@ class Museo extends React.Component {
                   createUrl={e => `/notice/merimee/${e}`}
                   disabled={!this.state.editable}
                 />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="DT_SAISI" disabled={!this.state.editable} />

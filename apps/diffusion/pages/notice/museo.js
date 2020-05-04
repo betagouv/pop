@@ -40,9 +40,10 @@ export default class extends React.Component {
     const arr = [];
 
     if (notice) {
-      const { REFJOC, REFMEM, REFMER } = notice;
+      const { REFMEM, REFMER, REFPAL } = notice;
       pushLinkedNotices(arr, REFMEM, "memoire");
       pushLinkedNotices(arr, REFMER, "merimee");
+      pushLinkedNotices(arr, REFPAL, "palissy");
     }
 
     const links = (await Promise.all(arr)).filter(l => l);

@@ -230,6 +230,14 @@ const Schema = new mongoose.Schema(
         label: "Notices Mérimée liées"
       }
     },
+    REFPAL: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Palissy liées ",
+        label: "Notices Palissy liées"
+      }
+    },
     REGION: {
       type: String,
       default: "",
