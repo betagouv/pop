@@ -13,10 +13,11 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { postFixedLink, schema } from "../../src/notices/utils";
+import { postFixedLink, schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -26,9 +27,17 @@ const pushLinkedNotices = (a, d, base) => {
 };
 
 export default class extends React.Component {
-  static async getInitialProps({ query: { id } }) {
+
+  constructor(props){
+    super(props);
+    this.state = {prevLink: undefined, nextLink: undefined};
+  }
+
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("merimee", id);
     const arr = [];
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
     if (notice) {
       const { RENV, REFP, REFE, REFO } = notice;
@@ -39,7 +48,7 @@ export default class extends React.Component {
     }
 
     const links = (await Promise.all(arr)).filter(l => l);
-    return { notice, links };
+    return { notice, links, searchParams, searchParamsUrl };
   }
 
   fieldImage(notice) {
@@ -65,6 +74,55 @@ export default class extends React.Component {
 
     if (imageComponents.length) {
       return <FieldImages images={imageComponents} />;
+    }
+  }
+
+  componentDidMount(){
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        prevLink = listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        nextLink = listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+      }
+      this.setState({prevLink, nextLink});
+    }
+  }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
     }
   }
 
@@ -115,8 +173,13 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{title}</h1>
-
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
                 <BucketButton base="merimee" reference={notice.REF} />

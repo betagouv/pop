@@ -24,7 +24,7 @@ function pickFirst(data) {
   return first;
 }
 
-export const Memoire = ({ data, removeFromBucket, searchParams}) => {
+export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
@@ -43,7 +43,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams}) => {
   const loc = data.LOCA;
 
   return (
-    <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
       <div className="list-card-container ">
         <Link href={`/notice/memoire/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
           <div className="leftContent">
@@ -77,7 +77,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams}) => {
   );
 };
 
-export const Palissy = ({ data, removeFromBucket, searchParams }) => {
+export const Palissy = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -88,7 +88,7 @@ export const Palissy = ({ data, removeFromBucket, searchParams }) => {
   const line5 = joinData([data.STAT, data.DPRO]);
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/palissy/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
@@ -124,7 +124,7 @@ export const Palissy = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
-export const Merimee = ({ data, removeFromBucket, searchParams }) => {
+export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, logo, image_preview, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image_preview} alt={title} />;
@@ -133,7 +133,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams }) => {
   const line4 = joinData([data.STAT, data.DPRO]);
 
   return (
-    <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
       <div className="list-card-container ">
         <Link href={`/notice/merimee/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
           <div className="leftContent">
@@ -164,7 +164,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
-export const Mnr = ({ data, removeFromBucket, searchParams }) => {
+export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -172,7 +172,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams }) => {
   const author = String(data.AUTR).replace("#", " ");
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/mnr/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
@@ -210,6 +210,14 @@ export const Mnr = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
+function saveListRef (listRefs, searchParams){
+  const cookies = new Cookies();
+  const encodedListRefs = JSON.stringify(listRefs);
+  cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+
+  return true;
+}
+
 export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
@@ -221,17 +229,11 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
 
   const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
-  const saveListRef = () => {
-    const cookies = new Cookies();
-    const encodedListRefs = JSON.stringify(listRefs);
-    cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
-
-    return true;
-  }
+  
 
   return (
     <div>
-      <a className="list-card" onClick={() => saveListRef()} style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/joconde/${data.REF}?${toUrlQueryString(searchParams)}`}  key={data.REF}>
             <div className="leftContent">
@@ -269,12 +271,12 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
   );
 };
 
-export const Museo = ({ data, removeFromBucket, searchParams }) => {
+export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/museo/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
@@ -308,13 +310,13 @@ export const Museo = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
-export const Enluminures = ({ data, removeFromBucket, searchParams }) => {
+export const Enluminures = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const REF = data.REF;
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/enluminures/${REF}?${toUrlQueryString(searchParams)}`} key={REF}>
             <div className="leftContent">
@@ -348,7 +350,7 @@ export const Enluminures = ({ data, removeFromBucket, searchParams }) => {
   );
 };
 
-export const Autor = ({ data, removeFromBucket, searchParams }) => {
+export const Autor = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const REF = data.REF;
   const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} />;
@@ -356,7 +358,7 @@ export const Autor = ({ data, removeFromBucket, searchParams }) => {
 
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
           <Link href={`/notice/autor/${REF}?${toUrlQueryString(searchParams)}`} key={REF}>
             <div className="leftContent">
