@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -18,13 +18,12 @@ import { schema, findCollection, postFixedLink, getParamsFromUrl } from "../../s
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PalissyPdf } from "../pdfNotice/palissyPdf";
 
 export default class extends React.Component {
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
-  constructor(props){
-    super(props);
-    this.state = {prevLink: undefined, nextLink: undefined};
-  }
 
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("palissy", id);
@@ -42,11 +41,23 @@ export default class extends React.Component {
         const linkedNotice = await API.getNotice(collection, arr[elem])
         links.push(linkedNotice)
       }
+
+      for(let i=0; i<notice.REFJOC.length; i++){
+        const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
+        links.push(linkedJoconde)
+      }
+
+      for(let i=0; i<notice.REFMUS.length; i++){
+        const linkedMuseo = await API.getNotice("museo", notice.REFMUS[i]);
+        links.push(linkedMuseo)
+      }
     }
     return { notice, links, searchParams, searchParamsUrl }
   }
 
   componentDidMount(){
+    this.setState({display : true});
+
     //highlighting
     if(this.props.searchParams.mainSearch){
       this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
@@ -159,6 +170,30 @@ export default class extends React.Component {
       creator: notice.AUTR,
       artMedium: notice.MATR.join(", ")
     };
+
+    const pdf = PalissyPdf(notice, title, localisation, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"palissy_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -179,11 +214,10 @@ export default class extends React.Component {
 
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="palissy" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="palissy" reference={notice.REF} />}
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("palissy_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>
@@ -479,6 +513,48 @@ const SeeMore = ({ notice }) => {
           key={`notice.LIENS${i}`}
         />
       );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
     }
   }
 

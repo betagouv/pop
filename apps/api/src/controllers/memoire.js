@@ -10,6 +10,8 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Autor = require("../models/autor");
+const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
 const Producteur = require("../models/producteur");
 
 const {
@@ -261,6 +263,11 @@ router.put(
     }
 
     await transformBeforeUpdate(notice);
+
+    //Modification des liens entre bases
+    await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
+    await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
+
     const obj = new Memoire(notice);
     checkESIndex(obj);
 
@@ -306,6 +313,10 @@ router.post(
     // Update and save.
     promises.push(updateLinks(notice));
     await transformBeforeCreate(notice);
+    //Modification des liens entre bases
+    await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
+    await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
+
     const obj = new Memoire(notice);
     checkESIndex(obj);
     promises.push(obj.save());
@@ -375,6 +386,53 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function populateBaseFromMemoire(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFMEM: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFMEM = noticesToPopulate[i].REFMEM.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFMEM) && !obj.REFMEM.includes(notice.REF)) {
+            obj.REFMEM.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
     }
   });
 }

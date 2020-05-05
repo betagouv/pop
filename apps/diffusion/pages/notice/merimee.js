@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -18,6 +18,8 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MerimeePdf } from "../pdfNotice/merimeePdf";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -28,10 +30,9 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = {prevLink: undefined, nextLink: undefined};
-  }
+
+
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("merimee", id);
@@ -40,11 +41,13 @@ export default class extends React.Component {
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
     if (notice) {
-      const { RENV, REFP, REFE, REFO } = notice;
+      const { RENV, REFP, REFE, REFO, REFJOC, REFMUS } = notice;
       pushLinkedNotices(arr, RENV, "merimee");
       pushLinkedNotices(arr, REFP, "merimee");
       pushLinkedNotices(arr, REFE, "merimee");
       pushLinkedNotices(arr, REFO, "palissy");
+      pushLinkedNotices(arr, REFJOC, "joconde");
+      pushLinkedNotices(arr, REFMUS, "museo");
     }
 
     const links = (await Promise.all(arr)).filter(l => l);
@@ -78,6 +81,8 @@ export default class extends React.Component {
   }
 
   componentDidMount(){
+    this.setState({display : true});
+
     //highlighting
     if(this.props.searchParams.mainSearch){
       this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
@@ -163,6 +168,30 @@ export default class extends React.Component {
       contentLocation: localisation,
       creator: notice.AUTR
     };
+
+    const pdf = MerimeePdf(notice, title, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"merimee_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -182,11 +211,10 @@ export default class extends React.Component {
             </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="merimee" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="merimee" reference={notice.REF} />}
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("merimee_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>
@@ -496,6 +524,48 @@ const SeeMore = ({ notice }) => {
           key={`notice.LIENS${i}`}
         />
       );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
     }
   }
 

@@ -8,6 +8,9 @@ const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
+const Memoire = require("../models/memoire");
+const Merimee = require("../models/merimee");
+const Palissy = require("../models/palissy");
 const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
@@ -141,6 +144,11 @@ router.put(
       checkESIndex(obj);
       promises.push(updateNotice(Joconde, ref, notice));
 
+      //Modification des liens entre bases
+      await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
+      await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
+      await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+
       // Consume promises and send sucessful result.
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
@@ -176,6 +184,11 @@ router.post(
       // Transform and create.
       transformBeforeCreate(notice);
       await transformBeforeCreateAndUpdate(notice);
+      //Modification des liens entre bases
+      await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
+      await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
+      await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+
       const obj = new Joconde(notice);
       checkESIndex(obj);
       promises.push(obj.save());
@@ -237,6 +250,56 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function populateBaseFromJoconde(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFJOC: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFJOC = noticesToPopulate[i].REFJOC.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Memoire : 
+          list = notice.REFMEM;
+          break;
+        case Merimee : 
+          list = notice.REFMER;
+          break;
+        case Palissy : 
+          list = notice.REFPAL;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFJOC) && !obj.REFJOC.includes(notice.REF)) {
+            obj.REFJOC.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
     }
   });
 }

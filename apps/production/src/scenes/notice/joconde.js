@@ -239,6 +239,16 @@ class Notice extends React.Component {
                 <CustomField name="LABEL" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
                 <CustomField name="MSGCOM" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMEM"
+                  createUrl={e => `/notice/memoire/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMER"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
@@ -249,6 +259,11 @@ class Notice extends React.Component {
                 <CustomField name="DMAJ" disabled={!this.state.editable} />
                 <CustomField name="DMIS" disabled={!this.state.editable} />
                 <CustomField name="LARC" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="RETIF" disabled={!this.state.editable} />
               </Col>
             </Row>

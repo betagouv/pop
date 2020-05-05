@@ -631,6 +631,30 @@ module.exports = {
             }
           }
         },
+        REFMEM: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFPAL: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFMER: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REFMIS: {
           type: "text",
           fields: {

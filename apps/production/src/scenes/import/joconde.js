@@ -210,7 +210,7 @@ function report(notices, collection, email, institution, importId) {
     return acc;
   }, 0);
 
-  let contact = "jeannette.ivain@culture.gouv.fr et sophie.daenens@culture.gouv.fr";
+  let contact = "sophie.daenens@culture.gouv.fr et angelina.meslem@culture.gouv.fr";
 
   arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
   arr.push(`<h2>Établissement : ${institution}</h2>`);

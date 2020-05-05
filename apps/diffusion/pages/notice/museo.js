@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -16,23 +16,41 @@ import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { MuseoPdf } from "../pdfNotice/museoPdf";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};  
 export default class extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = {prevLink: undefined, nextLink: undefined};
-  }
-
+  state = {display: false, prevLink: undefined, nextLink: undefined}
+ 
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("museo", id);
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+    const arr = [];
 
-    return { notice, searchParamsUrl, searchParams };
+    if (notice) {
+      const { REFMEM, REFMER, REFPAL } = notice;
+      pushLinkedNotices(arr, REFMEM, "memoire");
+      pushLinkedNotices(arr, REFMER, "merimee");
+      pushLinkedNotices(arr, REFPAL, "palissy");
+    }
+
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    return { notice, links, searchParamsUrl, searchParams };
   }
 
   componentDidMount(){
+    this.setState({display : true});
+
     //highlighting
     if(this.props.searchParams.mainSearch){
       this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
@@ -72,13 +90,13 @@ export default class extends React.Component {
     if(this.state.nextLink != undefined){
       return(
           <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
-           &rsaquo;
+          &rsaquo;
           </a>
       )
     }
     else {
       return null;
-    }
+    }  
   }
 
   render() {
@@ -94,6 +112,30 @@ export default class extends React.Component {
       image: image_preview,
       description: metaDescription
     };
+
+    const pdf = MuseoPdf(notice, title, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"museo_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -115,11 +157,10 @@ export default class extends React.Component {
 
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="museo" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="museo" reference={notice.REF} />}
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("museo_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>
@@ -195,6 +236,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

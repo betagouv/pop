@@ -117,6 +117,8 @@ path,type,required,label,opendata,generated,description,thesaurus
 "VIDEO","String","non","Vidéo","","","Vidéo [Semble être doublon avec IMG]",""
 "LBASE2","String","non","Liens base","","","Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",""
 "LEG2","String","non","Légende thes.","","","",""
+"REFJOC","Array","non","Référence aux objets Joconde","","true","REFJOC contient une ou plusieurs références de notice Joconde.",""
+"REFMUS","Array","non","Référence aux objets Muséo","","true","REFMUS contient une ou plusieurs références de notice Muséo.",""
 "REFIM","String","non","Référence de l'image","","","",""
 "REFIMG","String","non","Nom Image","","","Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",""
 "MOSA","String","non","Mosaïques","","","",""

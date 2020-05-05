@@ -2,9 +2,18 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "reactstrap";
 import Version from "../../../version.json";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Cookies from 'universal-cookie';
+
 
 export default class Layout extends React.Component {
+
+  getNbNoticesInBucket(){
+    //Récupération du panier actuel dans les cookies
+    const cookies = new Cookies()
+    let currentBucket = cookies.get("currentBucket") || []
+    return currentBucket.length
+  }
+
   render() {
     const { children } = this.props;
     return (
@@ -22,12 +31,7 @@ export default class Layout extends React.Component {
                 <Link href="/bucket">
                   <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
-                      <div>Consulter mon panier</div>
-                      <FontAwesomeIcon 
-                        className="icon-bucket"
-                        icon="shopping-cart"
-                        style={{marginLeft: '8px', fontSize: '20px'}}
-                      />
+                    <div id="nbBucket">Consulter mon panier {this.getNbNoticesInBucket() != 0 ? " ( "+ this.getNbNoticesInBucket() + " )" : "" } </div>
                     </div>
                   </a>
                 </Link>
@@ -49,9 +53,9 @@ export default class Layout extends React.Component {
         <div className="footer">
           <ul className="list-inline">
             <li className="list-inline-item">
-              <a href="https://pop-general.s3.eu-west-3.amazonaws.com/POP_En_savoir_plus.pdf" target="_blank" rel="noopener"> 
-                À propos
-              </a>
+              <Link href="/apropos">
+                <a>À propos</a>
+              </Link>
             </li>
             <li className="list-inline-item">
               <Link href="/opendata">

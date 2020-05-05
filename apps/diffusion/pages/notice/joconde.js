@@ -4,7 +4,7 @@ import Head from "next/head";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 import queryString from "query-string";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -17,17 +17,21 @@ import Map from "../../src/notices/Map";
 import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
-import {toUrlQueryString} from "react-elasticsearch-pop";
-import { replaceSearchRouteWithUrl } from "../../src/services/url";
 import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { JocondePdf } from "../pdfNotice/jocondePdf";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 
-
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
 
 export default class extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {prevLink: undefined, nextLink: undefined};
-  }
+
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
   static loadMuseo(m) {
     try {
@@ -39,17 +43,30 @@ export default class extends React.Component {
   static async getInitialProps({ query : {id}, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
+    const arr = [];
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    if (notice) {
+      const { REFPAL, REFMEM, REFMER, REFMUS } = notice;
+      pushLinkedNotices(arr, REFMEM, "memoire");
+      pushLinkedNotices(arr, REFMER, "merimee");
+      pushLinkedNotices(arr, REFPAL, "palissy");
+    }
+    
     return {
       notice,
       museo,
       searchParams,
-      searchParamsUrl
+      searchParamsUrl,
+      links
     };
   }
 
   componentDidMount(){
+    this.setState({display : true});
+
     //highlighting
     if(this.props.searchParams.mainSearch){
       this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
@@ -164,6 +181,31 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
+    //construction du pdf au format joconde
+    //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
+    const pdf = JocondePdf(notice, title, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"joconde_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -185,11 +227,10 @@ export default class extends React.Component {
             </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="joconde" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="joconde" reference={notice.REF} />}
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("joconde_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
 
             <Row>
@@ -338,6 +379,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

@@ -11,16 +11,17 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo, printPdf } from "../../src/utils";
+import { getNoticeInfo } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { EnluminuresPdf } from "../pdfNotice/enluminuresPdf";
+
+
 
 export default class extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = {prevLink: undefined, nextLink: undefined};
-  }
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("enluminures", id);
@@ -31,6 +32,8 @@ export default class extends React.Component {
   }
 
   componentDidMount(){
+    this.setState({display : true});
+
     //highlighting
     if(this.props.searchParams.mainSearch){
       this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
@@ -99,6 +102,30 @@ export default class extends React.Component {
       comment: notice.NOTEDEC,
       contentLocation: notice.ORIGG
     };
+
+    const pdf = EnluminuresPdf(notice, title);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"enluminures_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
     return (
       <Layout>
         <div className="notice">
@@ -120,11 +147,10 @@ export default class extends React.Component {
 
             <div className="top-container">
               <div className="addBucket onPrintHide">
-                <BucketButton base="enluminures" reference={notice.REF} />
+                {this.state.display &&
+                  <BucketButton base="enluminures" reference={notice.REF} />}
               </div>
-              <div className="printPdfBtn onPrintHide" onClick={() => printPdf("enluminures_" + notice.REF)}>
-              Imprimer la notice
-              </div>
+              {this.state.display && App()}
             </div>
             <Row>
               <Col md="8">
