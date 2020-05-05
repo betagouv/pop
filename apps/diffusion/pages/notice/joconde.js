@@ -14,9 +14,10 @@ import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
-import { schema } from "../../src/notices/utils";
+import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { JocondePdf } from "../pdfNotice/jocondePdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
@@ -30,11 +31,7 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  state = {display: false}
-
-  componentDidMount(){
-    this.setState({display : true});
-  }
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
   static loadMuseo(m) {
     try {
@@ -42,10 +39,14 @@ export default class extends React.Component {
     } catch (e) {}
     return null;
   }
-  static async getInitialProps({ query: { id } }) {
+
+  static async getInitialProps({ query : {id}, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
     const arr = [];
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+    const links = (await Promise.all(arr)).filter(l => l);
 
     if (notice) {
       const { REFPAL, REFMEM, REFMER, REFMUS } = notice;
@@ -53,14 +54,39 @@ export default class extends React.Component {
       pushLinkedNotices(arr, REFMER, "merimee");
       pushLinkedNotices(arr, REFPAL, "palissy");
     }
-
-    const links = (await Promise.all(arr)).filter(l => l);
-
+    
     return {
       notice,
       museo,
+      searchParams,
+      searchParamsUrl,
       links
     };
+  }
+
+  componentDidMount(){
+    this.setState({display : true});
+
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        prevLink = listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        nextLink = listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+      }
+      this.setState({prevLink, nextLink});
+    }
   }
 
   links(value, name) {
@@ -110,10 +136,37 @@ export default class extends React.Component {
     return <React.Fragment>{links}</React.Fragment>;
   }
 
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
   render() {
     if (!this.props.notice) {
       return throw404();
     }
+
     const { title, image_preview, metaDescription, images } = getNoticeInfo(this.props.notice);
     const notice = this.props.notice;
     const obj = {
@@ -164,7 +217,14 @@ export default class extends React.Component {
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
 
-            <h1 className="heading">{title}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+
+            </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
                 {this.state.display &&

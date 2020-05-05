@@ -1,8 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { getNoticeInfo } from "../../utils";
+import { getNoticeInfo} from "../../utils";
+import Cookies from 'universal-cookie';
 import Mapping from "../../services/mapping";
-import BucketButton from "../../components/BucketButton"
+import BucketButton from "../../components/BucketButton";
+import {toUrlQueryString} from "react-elasticsearch-pop";
+import router from "next/dist/client/router";
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -21,7 +24,7 @@ function pickFirst(data) {
   return first;
 }
 
-export const Memoire = ({ data, removeFromBucket }) => {
+export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
@@ -40,9 +43,9 @@ export const Memoire = ({ data, removeFromBucket }) => {
   const loc = data.LOCA;
 
   return (
-    <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
       <div className="list-card-container ">
-        <Link href={`/notice/memoire/${data.REF}`} key={data.REF}>
+        <Link href={`/notice/memoire/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
           <div className="leftContent">
             <div className="thumbnail">{ImageComponent}</div>
             <div className="content">
@@ -74,7 +77,7 @@ export const Memoire = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Palissy = ({ data, removeFromBucket }) => {
+export const Palissy = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -85,9 +88,9 @@ export const Palissy = ({ data, removeFromBucket }) => {
   const line5 = joinData([data.STAT, data.DPRO]);
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/palissy/${data.REF}`} key={data.REF}>
+          <Link href={`/notice/palissy/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -121,7 +124,7 @@ export const Palissy = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Merimee = ({ data, removeFromBucket }) => {
+export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, logo, image_preview, localisation } = getNoticeInfo(data);
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
   const ImageComponent = <img src={image_preview} alt={title} />;
@@ -130,9 +133,9 @@ export const Merimee = ({ data, removeFromBucket }) => {
   const line4 = joinData([data.STAT, data.DPRO]);
 
   return (
-    <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
       <div className="list-card-container ">
-        <Link href={`/notice/merimee/${data.REF}`} key={data.REF}>
+        <Link href={`/notice/merimee/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
           <div className="leftContent">
             <div className="thumbnail">{ImageComponent}</div>
             <div className="content">
@@ -161,7 +164,7 @@ export const Merimee = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Mnr = ({ data, removeFromBucket }) => {
+export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
@@ -169,9 +172,9 @@ export const Mnr = ({ data, removeFromBucket }) => {
   const author = String(data.AUTR).replace("#", " ");
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/mnr/${data.REF}`} key={data.REF}>
+          <Link href={`/notice/mnr/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -207,7 +210,15 @@ export const Mnr = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Joconde = ({ data, removeFromBucket }) => {
+function saveListRef (listRefs, searchParams){
+  const cookies = new Cookies();
+  const encodedListRefs = JSON.stringify(listRefs);
+  cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+
+  return true;
+}
+
+export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
@@ -218,11 +229,13 @@ export const Joconde = ({ data, removeFromBucket }) => {
 
   const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
+  
+
   return (
     <div>
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/joconde/${data.REF}`} key={data.REF}>
+          <Link href={`/notice/joconde/${data.REF}?${toUrlQueryString(searchParams)}`}  key={data.REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -258,14 +271,14 @@ export const Joconde = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Museo = ({ data, removeFromBucket }) => {
+export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview, localisation } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/museo/${data.REF}`} key={data.REF}>
+          <Link href={`/notice/museo/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -297,15 +310,15 @@ export const Museo = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Enluminures = ({ data, removeFromBucket }) => {
+export const Enluminures = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const REF = data.REF;
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/enluminures/${REF}`} key={REF}>
+          <Link href={`/notice/enluminures/${REF}?${toUrlQueryString(searchParams)}`} key={REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -337,7 +350,7 @@ export const Enluminures = ({ data, removeFromBucket }) => {
   );
 };
 
-export const Autor = ({ data, removeFromBucket }) => {
+export const Autor = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const REF = data.REF;
   const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} />;
@@ -345,9 +358,9 @@ export const Autor = ({ data, removeFromBucket }) => {
 
 
   return (
-      <a className="list-card" style={{ textDecoration: "none" }}>
+      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams)} style={{ textDecoration: "none" }}>
         <div className="list-card-container ">
-          <Link href={`/notice/autor/${REF}`} key={REF}>
+          <Link href={`/notice/autor/${REF}?${toUrlQueryString(searchParams)}`} key={REF}>
             <div className="leftContent">
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
@@ -524,24 +537,25 @@ const withStyle = component => {
   );
 };
 
-export default ({ data }) => {
+export default ({ data, searchParams, listRefs, idQuery }) => {
   const index = data._index.replace(/[0-9]+/, "");
+  searchParams.set("idQuery", idQuery);
   switch (index) {
     case "joconde":
-      return withStyle(<Joconde data={data._source} />);
+      return withStyle(<Joconde data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "mnr":
-      return withStyle(<Mnr data={data._source} />);
+      return withStyle(<Mnr data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "merimee":
-      return withStyle(<Merimee data={data._source} />);
+      return withStyle(<Merimee data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "palissy":
-      return withStyle(<Palissy data={data._source} />);
+      return withStyle(<Palissy data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "memoire":
-      return withStyle(<Memoire data={data._source} />);
+      return withStyle(<Memoire data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "museo":
-      return withStyle(<Museo data={data._source} />);
+      return withStyle(<Museo data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "enluminures":
-      return withStyle(<Enluminures data={data._source} />);
+      return withStyle(<Enluminures data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
     case "autor":
-      return withStyle(<Autor data={data._source} />);
+      return withStyle(<Autor data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
   }
 };

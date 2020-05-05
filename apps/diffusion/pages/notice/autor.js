@@ -9,27 +9,76 @@ import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
-import { schema } from "../../src/notices/utils";
+import { schema, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { getNoticeInfo } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { AutorPdf } from "../pdfNotice/autorPdf";
-
-
 export default class extends React.Component {
 
-  state = {display: false}
+  state = {display: false, prevLink: undefined, nextLink: undefined}
+
+  static async getInitialProps({ query: { id }, asPath }) {
+    const notice = await API.getNotice("autor", id);
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+
+    return { notice, searchParamsUrl, searchParams };
+  }
 
   componentDidMount(){
     this.setState({display : true});
+
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        prevLink = listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        nextLink = listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+      }
+      this.setState({prevLink, nextLink});
+    }
   }
 
-  static async getInitialProps({ query: { id } }) {
-    const notice = await API.getNotice("autor", id);
-    return { notice };
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
   }
 
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+  
   fieldImage(notice) {
     const { images } = getNoticeInfo(notice);
     const imageComponents = images.map(e => ({
@@ -98,7 +147,13 @@ export default class extends React.Component {
               <title>{title}</title>
             </Head>
 
-            <h1 className="heading">{title}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
 
             <div className="top-container">
               <div className="addBucket onPrintHide">

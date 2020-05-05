@@ -11,10 +11,22 @@ export default css`
   .notice .heading {
     color: #025d59;
     font-size: 28px;
-    margin: 30px 15px 30px 15px;
+    display: table;
+    width: 1000px;
+    height: 90px;
+    margin: 5px auto;
     text-align: center;
   }
-  .top-container {
+
+  .heading-title{
+    color: #025d59;
+    font-size: 28px;
+    margin: 0px 5px 0px 5px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;  }
+
+  :global(.top-container) {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -26,6 +38,19 @@ export default css`
     width: fill-content;
     margin-right: 15px;
   }
+
+  :global(.navButton) {
+    font-weight: 600;
+    font-size: 60px;
+    color: #377d87;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  :global(.navButton:hover) {
+    cursor: pointer;
+  }
+
   .notice .notice-details {
     background-color: #fff;
     padding: 25px;
@@ -111,5 +136,9 @@ export default css`
     margin-bottom: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  :global(.highlight) {
+    background-color: #377d87;
+    color: white;
   }
 `;
