@@ -213,6 +213,13 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
 function saveListRef (listRefs, searchParams){
   const cookies = new Cookies();
   const encodedListRefs = JSON.stringify(listRefs);
+
+  // Suppression du cookie de la recherche précédente
+  Object.keys(cookies.getAll())
+  .filter(key => key.startsWith("listRefs-"))
+  .forEach(name => {cookies.remove(name, {path: '/'})});
+
+
   cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
 
   return true;
