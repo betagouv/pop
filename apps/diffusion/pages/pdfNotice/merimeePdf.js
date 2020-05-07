@@ -149,13 +149,13 @@ export function MerimeePdf(notice, title, links){
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>
-                <Field title={mapping.merimee.REF.label} content={notice.REF} separator="#" isPdf={true} />
+                <Field title={mapping.merimee.REF.label} content={notice.REF}  isPdf={true} separator="#"/>
                 <Field title={mapping.merimee.BASE.label} content={notice.BASE} isPdf={true}/>
                 <Field title={mapping.merimee.DMIS.label} content={notice.DMIS} isPdf={true}/>
                 <Field title={mapping.merimee.DMAJ.label} content={notice.DMAJ} isPdf={true}/>
                 <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} isPdf={true}/>
                 <Field title={mapping.merimee.COPY.label} content={notice.COPY} isPdf={true}/>
-                <Field title={"Contactez-nous"} content={notice.CONTACT} separator="#" isPdf={true} />
+                <Field title={"Contactez-nous"} content={notice.CONTACT}  isPdf={true} separator="#"/>
             </View>
           </View>
         </View>
