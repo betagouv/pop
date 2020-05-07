@@ -128,6 +128,7 @@ export function PalissyPdf(notice, title, localisation, links){
               />
             </View> : null}
 
+            {links.length > 0 ?
             <View style={styles.linkedNoticesContainer}>
               <Text style={styles.subtitle}>Notices liées</Text>
               <View>
@@ -137,6 +138,7 @@ export function PalissyPdf(notice, title, localisation, links){
                     }) : null}
               </View>
             </View>
+            : null}
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>

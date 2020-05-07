@@ -136,7 +136,8 @@ export function MerimeePdf(notice, title, links){
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0].url}
               />
             </View> : null}
-
+            
+            {links.length > 0 ?
             <View style={styles.linkedNoticesContainer}>
               <Text style={styles.subtitle}>Notices liées</Text>
               <View>
@@ -146,6 +147,7 @@ export function MerimeePdf(notice, title, links){
                     }) : null}
               </View>
             </View>
+            : null}
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>
