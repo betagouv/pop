@@ -11,7 +11,7 @@ export default function({ initialValues }) {
         id="mosaic"
         items={data =>
           data.map(({ _id, ...rest }) => (
-            <CardMosaique key={_id} index={rest._index} data={rest._source} />
+            <CardMosaique key={_id} index={rest._index} searchParams={initialValues} data={rest._source} />
           ))
         }
         itemsPerPage={25}

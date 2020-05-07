@@ -2,13 +2,15 @@ import React from "react";
 import Link from "next/link";
 import { Col } from "reactstrap";
 import { getNoticeInfo } from "../../utils";
+import {toUrlQueryString} from "react-elasticsearch-pop";
 
-export default ({ index, data }) => {
+
+export default ({ index, data, searchParams }) => {
   const { title, image_preview } = getNoticeInfo(data);
 
   return (
     <Col>
-      <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}`} key={data.REF}>
+      <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}?${toUrlQueryString(searchParams)}`} key={data.REF}>
         <a style={{ textDecoration: "none" }} className="mosaique-card">
           <div className="thumbnail">
             <img src={image_preview} alt={title} />
