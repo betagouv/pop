@@ -43,17 +43,18 @@ export default class extends React.Component {
   static async getInitialProps({ query : {id}, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
-    const arr = [];
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
-    const links = (await Promise.all(arr)).filter(l => l);
 
+    const arr = [];
     if (notice) {
-      const { REFPAL, REFMEM, REFMER, REFMUS } = notice;
+      const { REFPAL, REFMEM, REFMER } = notice;
       pushLinkedNotices(arr, REFMEM, "memoire");
       pushLinkedNotices(arr, REFMER, "merimee");
       pushLinkedNotices(arr, REFPAL, "palissy");
     }
+
+    const links = (await Promise.all(arr)).filter(l => l);
     
     return {
       notice,

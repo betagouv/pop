@@ -9,9 +9,9 @@ export default function({ initialValues }) {
       <Results
         initialPage={initialValues.get("mosaicPage")}
         id="mosaic"
-        items={data =>
+        items={(data, listRefs, idQuery) =>
           data.map(({ _id, ...rest }) => (
-            <CardMosaique key={_id} index={rest._index} data={rest._source} />
+            <CardMosaique key={_id} index={rest._index} searchParams={initialValues} data={rest._source} listRefs={listRefs} idQuery={idQuery} />
           ))
         }
         itemsPerPage={25}
