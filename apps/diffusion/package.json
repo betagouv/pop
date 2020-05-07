@@ -25,7 +25,7 @@
     "query-string": "^5.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-elasticsearch-pop": "^2.0.1",
+    "react-elasticsearch-pop": "^2.0.2",
     "react-image-gallery": "0.8.12",
     "react-slick": "^0.23.2",
     "react-switch": "^4.1.0",
