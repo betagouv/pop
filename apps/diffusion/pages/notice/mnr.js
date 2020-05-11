@@ -10,13 +10,14 @@ import Layout from "../../src/components/Layout";
 import Field from "../../src/notices/Field";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { schema, getParamsFromUrl } from "../../src/notices/utils";
+import { schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "../../src/config";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MnrPdf } from "../pdfNotice/mnrPdf";
+import { pop_url } from "../../src/config";
 
 export default class extends React.Component {
 
@@ -44,7 +45,7 @@ export default class extends React.Component {
     }
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     this.setState({display : true});
 
     //highlighting
@@ -60,10 +61,16 @@ export default class extends React.Component {
       let prevLink = undefined;
       let nextLink = undefined;
       if(indexOfCurrentNotice > 0){
-        prevLink = listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
       }
       if(indexOfCurrentNotice < listRefs.length - 1){
-        nextLink = listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
       }
       this.setState({prevLink, nextLink});
     }
@@ -72,7 +79,7 @@ export default class extends React.Component {
   renderPrevButton(){
     if(this.state.prevLink != undefined){
       return(
-          <a title="Notice précédente" href={this.state.prevLink} className="navButton onPrintHide">
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
             &lsaquo;
           </a>
       )
@@ -85,7 +92,7 @@ export default class extends React.Component {
   renderNextButton(){
     if(this.state.nextLink != undefined){
       return(
-          <a title="Notice suivante" href={this.state.nextLink} className="navButton onPrintHide">
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
            &rsaquo;
           </a>
       )

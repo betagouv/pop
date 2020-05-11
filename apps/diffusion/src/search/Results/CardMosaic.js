@@ -11,7 +11,7 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
 
   return (
     <Col>
-      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, null)} style={{ textDecoration: "none" }}>
+      <a className="list-card" style={{ textDecoration: "none" }} onMouseDown={() => saveListRef(listRefs, searchParams, null)} >
         <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
           <a style={{ textDecoration: "none" }} className="mosaique-card">
             <div className="thumbnail">
