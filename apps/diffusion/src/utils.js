@@ -1,3 +1,4 @@
+import Cookies from 'universal-cookie';
 import { bucket_url } from "./config";
 
 export function getNoticeInfo(notice) {
@@ -375,3 +376,17 @@ const capitalizeFirstLetter = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
+export function saveListRef (listRefs, searchParams, removeFromBucket){
+  //Si la props removeFromBucket existe, c'est qu'on est dans le panier et qu'on n'enregistre pas de recherche
+  if(!removeFromBucket){
+    const cookies = new Cookies();
+    const encodedListRefs = JSON.stringify(listRefs);
+
+    // Suppression du cookie de la recherche précédente
+    Object.keys(cookies.getAll())
+    .filter(key => key.startsWith("listRefs-"))
+    .forEach(name => {cookies.remove(name, {path: '/'})});
+
+    cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+  }
+}

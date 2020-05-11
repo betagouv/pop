@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchBox } from "react-elasticsearch";
+import { SearchBox } from "react-elasticsearch-pop";
 
 function customQuery(query, fields) {
   // No value, return all documents.

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch";
+import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch-pop";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
@@ -373,6 +373,13 @@ export default class extends React.Component {
           ul.react-es-pagination > li {
             display: inline;
           }
+
+          ul.react-es-pagination > li > input {
+            background: transparent;
+            border: none;
+            text-align: center;
+          }
+
           .react-es-searchbox input {
             border: 0;
             border-radius: 5px;

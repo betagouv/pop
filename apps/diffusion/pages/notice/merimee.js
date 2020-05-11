@@ -13,13 +13,14 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { postFixedLink, schema } from "../../src/notices/utils";
+import { postFixedLink, schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MerimeePdf } from "../pdfNotice/merimeePdf";
-
+import { pop_url } from "../../src/config";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -30,26 +31,28 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  state = {display: false}
 
-  componentDidMount(){
-    this.setState({display : true});
-  }
 
-  static async getInitialProps({ query: { id } }) {
+  state = {display: false, prevLink: undefined, nextLink: undefined}
+
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("merimee", id);
     const arr = [];
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
     if (notice) {
-      const { RENV, REFP, REFE, REFO } = notice;
+      const { RENV, REFP, REFE, REFO, REFJOC, REFMUS } = notice;
       pushLinkedNotices(arr, RENV, "merimee");
       pushLinkedNotices(arr, REFP, "merimee");
       pushLinkedNotices(arr, REFE, "merimee");
       pushLinkedNotices(arr, REFO, "palissy");
+      pushLinkedNotices(arr, REFJOC, "joconde");
+      pushLinkedNotices(arr, REFMUS, "museo");
     }
 
     const links = (await Promise.all(arr)).filter(l => l);
-    return { notice, links };
+    return { notice, links, searchParams, searchParamsUrl };
   }
 
   fieldImage(notice) {
@@ -75,6 +78,63 @@ export default class extends React.Component {
 
     if (imageComponents.length) {
       return <FieldImages images={imageComponents} />;
+    }
+  }
+
+  async componentDidMount(){
+    this.setState({display : true});
+
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      this.setState({prevLink, nextLink});
+    }
+  }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
     }
   }
 
@@ -149,8 +209,13 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{title}</h1>
-
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
                 {this.state.display &&
@@ -466,6 +531,48 @@ const SeeMore = ({ notice }) => {
           key={`notice.LIENS${i}`}
         />
       );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
     }
   }
 

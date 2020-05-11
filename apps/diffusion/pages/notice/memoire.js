@@ -12,37 +12,53 @@ import LinkedNotices from "../../src/notices/LinkedNotices";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
-import { schema } from "../../src/notices/utils";
-import { findCollection } from "../../src/notices/utils";
+import { schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MemoirePdf } from "../pdfNotice/memoirePdf";
+import { pop_url } from "../../src/config";
 
+
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
 
 export default class extends React.Component {
 
-  state = {display: false}
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
-  componentDidMount(){
-    this.setState({display : true});
-  }
-
-  static async getInitialProps({ query: { id } }) {
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("memoire", id);
     const collection = notice && await findCollection(notice.LBASE);
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+
     let links = [];
     if (collection) {
       const values = await API.getNotice(collection, notice.LBASE);
       links = values.filter(v => v);
     }
 
+    const arr = [];
+    if (notice) {
+      const { REFJOC, REFMUS } = notice;
+      pushLinkedNotices(arr, REFMUS, "museo");
+      pushLinkedNotices(arr, REFJOC, "joconde");
+    }
+    const linkedNotices = (await Promise.all(arr)).filter(l => l);
+    links.push(...linkedNotices);
+
     let listUrl = await Promise.all(notice.LBASE.map( async ref => {
       const collection = await findCollection(ref);
       return {key: ref, ref: ref, url: url(collection, ref)};
     }));
 
-    return { notice, links, listUrl };
+    return { notice, links, listUrl, searchParamsUrl, searchParams };
   }
 
   photographer() {
@@ -67,6 +83,62 @@ export default class extends React.Component {
     return expo && <a href={`/search/list?${qs}`}>{expo}</a>;
   }
 
+  async componentDidMount(){
+    this.setState({display : true});
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      this.setState({prevLink, nextLink});
+    }
+  }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
   render() {
     if (!this.props.notice) {
       return throw404();
@@ -84,7 +156,7 @@ export default class extends React.Component {
       creator: notice.AUTP
     };
 
-    const pdf = MemoirePdf(notice, title, this.props.notice.AUTP, this.props.notice.SERIE, this.props.notice.EXPO);
+    const pdf = MemoirePdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink 
@@ -117,8 +189,13 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {images.length ? <meta property="og:image" content={image_preview} /> : <meta />}
             </Head>
-            <h1 className="heading">{title}</h1>
-
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
             <div className="top-container">
               <div className="addBucket onPrintHide">
                 {this.state.display &&

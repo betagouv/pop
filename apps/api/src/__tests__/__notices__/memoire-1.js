@@ -128,5 +128,7 @@ module.exports = {
   NUMG: "",
   NOMSN: "",
   REF: "978601295ZA",
-  MEMOIRE: []
+  MEMOIRE: [],
+  REFJOC: [],
+  REFMUS: []
 };

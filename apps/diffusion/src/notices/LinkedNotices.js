@@ -27,8 +27,11 @@ class SmallNotice extends React.Component {
         <a style={{ textDecoration: "none" }} className="card">
           <img src={image_preview} alt={title} />
           <div className="content">
+            <p className="categories">{this.props.notice.collection}</p>
             <h3>{title}</h3>
+            {this.props.notice.DENO ? 
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>
+            : ""}
             <div>
               <p>{this.props.notice.DOMN}</p>
               <p>{this.props.notice.AUTR}</p>

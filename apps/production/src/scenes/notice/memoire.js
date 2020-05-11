@@ -311,6 +311,11 @@ class Notice extends React.Component {
                 <CustomField name="EMET" disabled={!this.state.editable} />
                 <CustomField name="REFIMG" disabled={!this.state.editable} />
                 <CustomField name="TYPSUPP" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="TYPEIMG" disabled={!this.state.editable} />
@@ -321,6 +326,11 @@ class Notice extends React.Component {
                 <CustomField name="IMG" disabled={!this.state.editable} />
                 <CustomField name="WCOM" disabled={!this.state.editable} />
                 <CustomField name="WEB" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
             </Row>
           </Section>

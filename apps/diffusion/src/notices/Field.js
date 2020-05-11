@@ -67,6 +67,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link }) => {
           <View style={styles.listLinked}>
             {Array.isArray(content)? content.map( (item, index) => {
               return (
+                item ?
                 <View style={styles.listItem}>
                   <Link style={styles.textLinked} 
                         key={item.val? item.val : item} 
@@ -74,7 +75,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link }) => {
                         {item.val? item.val : item}
                   </Link>
                   {(index < content.length-1) ? <Text>, </Text> : null}
-                </View>)
+                </View> : null)
             }) : 
             <Link style={styles.textLinked} src={content.url? content.url : content} >{content.val? content.val : content}</Link>}
           </View>

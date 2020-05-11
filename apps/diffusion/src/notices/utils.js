@@ -1,4 +1,7 @@
  import API from "../../src/services/api";
+ import {fromUrlQueryString } from "react-elasticsearch-pop";
+ import queryString from "query-string";
+
 
 // Get collection by ref prefix.
 export async function findCollection(ref = "") {
@@ -9,20 +12,89 @@ export async function findCollection(ref = "") {
   let producteurs = [];
   const response = await API.getProducteurs();
 
+  //Bases ne contenant pas de prefixes
+  let possibleBases = [];
+
   if(response && response.producteurs){
     producteurs = response.producteurs;
   }
   producteurs.map( producteur => {
     producteur.BASE.map( BASE => {
-      BASE.prefixes.map( prefix => {
-        if(String(ref).startsWith(String(prefix))){
-          collection = BASE.base;
-        }
-      })
+      if(BASE.prefixes.length > 0){
+        BASE.prefixes.map( prefix => {
+          if(String(ref).startsWith(String(prefix))){
+            collection = BASE.base;
+          }
+        })
+      }
+      else {
+        possibleBases.push(BASE.base)
+      }
     });
   });
+  //Pour chaque base n'ayant pas de préfixe, on test si la notice provient d'une de ces bases
+  if(collection == "" && possibleBases.length > 0){
+    for(let i=0; i<possibleBases.length; i++){
+      const notice = await API.getNotice(possibleBases[i], ref);
+      if(notice){
+        return possibleBases[i];
+      }
+    }
+  }
   return collection;
 } 
+
+export function getParamsFromUrl(url) {
+  let initialValues;
+
+  // This whole part is about backward compatibility of old search system.
+  // If the URL has a `q[0][combinator]` param, it's the old system, so
+  // it must be updated.
+  const parsed = queryString.parse(url.substring(url.indexOf("?") + 1));
+
+  if (parsed && parsed["q[0][combinator]"]) {
+    const qb = [];
+    Object.entries(parsed)
+      // Map params from `q[0][combinator]=ET` to `{index: 0, key: combinator, value: ET}`
+      .map(([k, value]) => {
+        const matches = k.match(/\[([0-9]+)\]\[([a-z]+)\]/i);
+        if (matches && matches.length === 3) {
+          return { index: Number(matches[1]), key: matches[2], value };
+        }
+      })
+      // Remove empty
+      .filter(a => a)
+      // Sort by index (0, 1, 2, etc.)
+      .sort((a, b) => a.index - b.index)
+      // Create a new "qb" param with the current system
+      .forEach(e => {
+        if (!qb[e.index]) {
+          qb.push({ index: e.index });
+        }
+        switch (e.key) {
+          case "combinator":
+            qb[e.index].combinator = e.value === "OU" ? "OR" : "AND";
+            break;
+          case "key":
+            qb[e.index].field = `${e.value}.keyword`;
+            break;
+          case "operator":
+            qb[e.index].operator = e.value.replace("<>", "∃").replace("><", "!∃");
+            break;
+          default:
+            qb[e.index][e.key] = e.value;
+        }
+      });
+    // Create a Map with "qb" property (which is the current system).
+    initialValues = new Map([["qb", qb]]);
+  } else {
+    initialValues = fromUrlQueryString(url.substring(url.indexOf("?") + 1));
+  }
+
+
+
+  return initialValues;
+}
 
 // Sometimes, links are f***ed up. We try to post-fix them.
 export function postFixedLink(link) {
@@ -59,3 +131,21 @@ export function schema({
   obj["artMedium"] = artMedium;
   return JSON.stringify(obj);
 }
+
+export function pdfLinks(value, name){
+  if(value && value!==""){
+    if(Array.isArray(value)){
+      let links = value.map( val => {
+        if(val){
+          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
+        }
+        else {return null}
+      });
+      return links;
+    }
+    else{
+      return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
+    }
+  }
+  return null;
+};

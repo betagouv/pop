@@ -8,6 +8,8 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
+const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
 const {
   formattedNow,
   checkESIndex,
@@ -233,6 +235,11 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeUpdate(notice);
+
+      //Modification liens entre bases
+      await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
+      await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
+
       const doc = new Merimee(notice);
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
@@ -262,6 +269,10 @@ router.post(
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       await transformBeforeCreate(notice);
+
+      //Modification liens entre bases
+      await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
+      await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
       const promises = [];
       const doc = new Merimee(notice);
@@ -330,6 +341,53 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function populateBaseFromMerimee(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFMER: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFMER = noticesToPopulate[i].REFMER.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFMER) && !obj.REFMER.includes(notice.REF)) {
+            obj.REFMER.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
     }
   });
 }

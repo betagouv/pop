@@ -12,24 +12,98 @@ import Title from "../../src/notices/Title";
 import Link from "next/link";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { schema } from "../../src/notices/utils";
+import { schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MuseoPdf } from "../pdfNotice/museoPdf";
+import LinkedNotices from "../../src/notices/LinkedNotices";
+import { pop_url } from "../../src/config";
 
-
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};  
 export default class extends React.Component {
 
-  state = {display: false}
+  state = {display: false, prevLink: undefined, nextLink: undefined}
+ 
+  static async getInitialProps({ query: { id }, asPath }) {
+    const notice = await API.getNotice("museo", id);
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+    const arr = [];
 
-  componentDidMount(){
-    this.setState({display : true});
+    if (notice) {
+      const { REFMEM, REFMER, REFPAL } = notice;
+      pushLinkedNotices(arr, REFMEM, "memoire");
+      pushLinkedNotices(arr, REFMER, "merimee");
+      pushLinkedNotices(arr, REFPAL, "palissy");
+    }
+
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    return { notice, links, searchParamsUrl, searchParams };
   }
 
-  static async getInitialProps({ query: { id } }) {
-    const notice = await API.getNotice("museo", id);
-    return { notice };
+  async componentDidMount(){
+    this.setState({display : true});
+
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
+    }
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      this.setState({prevLink, nextLink});
+    }
+  }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+          &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }  
   }
 
   render() {
@@ -46,7 +120,7 @@ export default class extends React.Component {
       description: metaDescription
     };
 
-    const pdf = MuseoPdf(notice, title);
+    const pdf = MuseoPdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink 
@@ -80,7 +154,13 @@ export default class extends React.Component {
               {images.length ? <meta property="og:image" content={images[0].src} /> : <meta />}
             </Head>
 
-            <h1 className="heading">{title}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{title}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
 
             <div className="top-container">
               <div className="addBucket onPrintHide">
@@ -163,6 +243,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
+import { pdfLinks } from "../../src/notices/utils";
 
 export function MerimeePdf(notice, title, links){
   return(
@@ -63,7 +64,7 @@ export function MerimeePdf(notice, title, links){
               notice.ENER || notice.VERT || notice.DESC || notice.TECH || notice.REPR || notice.PREP || notice.DIMS || notice.TYPO || notice.ETAT) ? 
             <View>
               <Text style={styles.subtitle} >Description</Text>
-              <Field title={mapping.merimee.MURS.label} content={notice.MURS} />
+                  <Field title={mapping.merimee.MURS.label} content={notice.MURS} isPdf={true} />
                   <Field title={mapping.merimee.TOIT.label} content={notice.TOIT} isPdf={true} />
                   <Field title={mapping.merimee.PLAN.label} content={notice.PLAN} isPdf={true} />
                   <Field title={mapping.merimee.ETAG.label} content={notice.ETAG} isPdf={true} />
@@ -136,7 +137,8 @@ export function MerimeePdf(notice, title, links){
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0].url}
               />
             </View> : null}
-
+            
+            {links.length > 0 ?
             <View style={styles.linkedNoticesContainer}>
               <Text style={styles.subtitle}>Notices liées</Text>
               <View>
@@ -146,16 +148,17 @@ export function MerimeePdf(notice, title, links){
                     }) : null}
               </View>
             </View>
+            : null}
 
             <View style={styles.aPropos}>
                 <Text  style={styles.subtitle} >À propos de la notice</Text>
-                <Field title={mapping.merimee.REF.label} content={notice.REF} separator="#" isPdf={true} />
+                <Field title={mapping.merimee.REF.label} content={notice.REF}  isPdf={true} separator="#"/>
                 <Field title={mapping.merimee.BASE.label} content={notice.BASE} isPdf={true}/>
                 <Field title={mapping.merimee.DMIS.label} content={notice.DMIS} isPdf={true}/>
                 <Field title={mapping.merimee.DMAJ.label} content={notice.DMAJ} isPdf={true}/>
                 <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} isPdf={true}/>
                 <Field title={mapping.merimee.COPY.label} content={notice.COPY} isPdf={true}/>
-                <Field title={"Contactez-nous"} content={notice.CONTACT} separator="#" isPdf={true} />
+                <Field title={"Contactez-nous"} content={notice.CONTACT}  isPdf={true} separator="#"/>
             </View>
           </View>
         </View>
@@ -165,18 +168,3 @@ export function MerimeePdf(notice, title, links){
       </Page>
     </Document>
 )}
-
-function pdfLinks(value, name){
-    if(value && value!==""){
-      if(Array.isArray(value)){
-        let links = value.map( val => {
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        });
-        return links;
-      }
-      else{
-        return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-      }
-    }
-    return null;
-};

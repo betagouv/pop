@@ -2,9 +2,11 @@ import Field from "../../src/notices/Field";
 import mapping from "../../src/services/mapping";
 import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
+import { pdfLinks } from "../../src/notices/utils";
 
-export function JocondePdf(notice, title){
+export function JocondePdf(notice, title, links){
   return(
     <Document>
       <Page style={styles.page}>
@@ -40,7 +42,7 @@ export function JocondePdf(notice, title){
             <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" isPdf={true}/>
             <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} />
             <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" isPdf={true}/>
-            <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true}/>
+            <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true}/> 
             <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" isPdf={true}/>
             </View> : null}
             
@@ -93,6 +95,17 @@ export function JocondePdf(notice, title){
                 src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.IMG[0]}
               />
             </View>
+            {links.length > 0 ?
+            <View style={styles.linkedNoticesContainer}>
+              <Text style={styles.subtitle}>Notices liées</Text>
+              <View>
+                {links.length > 0 ?
+                    links.map( link => {
+                      return LinkedNoticesPdf(link);
+                    }) : null}
+              </View>
+            </View>
+            : null}
 
             <View style={styles.aPropos}>
               <Text  style={styles.subtitle} >À propos de la notice</Text>
@@ -111,18 +124,3 @@ export function JocondePdf(notice, title){
       </Page>
     </Document>
 )}
-
-function pdfLinks(value, name){
-    if(value && value!==""){
-      if(Array.isArray(value)){
-        let links = value.map( val => {
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        });
-        return links;
-      }
-      else{
-        return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-      }
-    }
-    return null;
-};

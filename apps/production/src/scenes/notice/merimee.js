@@ -424,6 +424,18 @@ class Notice extends React.Component {
                 <CustomField name="LMDP" disabled={!this.state.editable} />
                 <CustomField name="RFPA" disabled={!this.state.editable} />
                 <CustomField name="NBOR" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField name="LREG" disabled={!this.state.editable} />
+                <CustomField name="LINHA" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>

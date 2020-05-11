@@ -14,23 +14,23 @@ import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import { bucket_url } from "./../../src/config";
 import Map from "../../src/notices/Map";
-import { schema, findCollection, postFixedLink } from "../../src/notices/utils";
+import { schema, findCollection, postFixedLink, getParamsFromUrl } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { PalissyPdf } from "../pdfNotice/palissyPdf";
-
+import { pop_url } from "../../src/config";
 
 export default class extends React.Component {
+  state = {display: false, prevLink: undefined, nextLink: undefined}
 
-  state = {display: false}
 
-  componentDidMount(){
-    this.setState({display : true});
-  }
-
-  static async getInitialProps({ query: { id } }) {
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("palissy", id);
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+
     let arr = [];
     let links = []
 
@@ -42,10 +42,77 @@ export default class extends React.Component {
         const linkedNotice = await API.getNotice(collection, arr[elem])
         links.push(linkedNotice)
       }
+
+      for(let i=0; i<notice.REFJOC.length; i++){
+        const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
+        links.push(linkedJoconde)
+      }
+
+      for(let i=0; i<notice.REFMUS.length; i++){
+        const linkedMuseo = await API.getNotice("museo", notice.REFMUS[i]);
+        links.push(linkedMuseo)
+      }
+    }
+    return { notice, links, searchParams, searchParamsUrl }
+  }
+
+  async componentDidMount(){
+    this.setState({display : true});
+
+    //highlighting
+    if(this.props.searchParams.mainSearch){
+      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
     }
 
-    return { notice, links };
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      this.setState({prevLink, nextLink});
+    }
   }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
 
   fieldImage(notice) {
     const { images } = getNoticeInfo(notice);
@@ -144,7 +211,13 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{notice.TICO}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{notice.TICO}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
 
             <div className="top-container">
               <div className="addBucket onPrintHide">
@@ -447,6 +520,48 @@ const SeeMore = ({ notice }) => {
           key={`notice.LIENS${i}`}
         />
       );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
     }
   }
 

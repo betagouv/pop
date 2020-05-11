@@ -53,7 +53,9 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'Open Sans',
-        marginTop: "10px"
+        marginTop: "10px",
+        marginLeft: "20px", 
+        marginRight: "20px"
     },
     subtitle: {
         fontSize: 14,
@@ -84,7 +86,8 @@ export const styles = StyleSheet.create({
         fontWeight: 300,
         marginBottom: "10px",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        flexWrap: "wrap-reverse"
     },
     listItem: {
         display: "flex",
@@ -125,9 +128,6 @@ export const styles = StyleSheet.create({
         fontFamily: 'Open Sans',
         fontWeight: 300
     },
-
-
-
 
 
     bucketContainer: {
