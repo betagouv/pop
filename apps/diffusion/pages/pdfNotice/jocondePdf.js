@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
+import { pdfLinks } from "../../src/notices/utils";
 
 export function JocondePdf(notice, title, links){
   return(
@@ -41,7 +42,7 @@ export function JocondePdf(notice, title, links){
             <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" isPdf={true}/>
             <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} />
             <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" isPdf={true}/>
-            <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true}/>
+            <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true}/> 
             <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" isPdf={true}/>
             </View> : null}
             
@@ -123,18 +124,3 @@ export function JocondePdf(notice, title, links){
       </Page>
     </Document>
 )}
-
-function pdfLinks(value, name){
-    if(value && value!==""){
-      if(Array.isArray(value)){
-        let links = value.map( val => {
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        });
-        return links;
-      }
-      else{
-        return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-      }
-    }
-    return null;
-};

@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
+import { pdfLinks } from "../../src/notices/utils";
 
 export function MerimeePdf(notice, title, links){
   return(
@@ -63,7 +64,7 @@ export function MerimeePdf(notice, title, links){
               notice.ENER || notice.VERT || notice.DESC || notice.TECH || notice.REPR || notice.PREP || notice.DIMS || notice.TYPO || notice.ETAT) ? 
             <View>
               <Text style={styles.subtitle} >Description</Text>
-              <Field title={mapping.merimee.MURS.label} content={notice.MURS} />
+                  <Field title={mapping.merimee.MURS.label} content={notice.MURS} isPdf={true} />
                   <Field title={mapping.merimee.TOIT.label} content={notice.TOIT} isPdf={true} />
                   <Field title={mapping.merimee.PLAN.label} content={notice.PLAN} isPdf={true} />
                   <Field title={mapping.merimee.ETAG.label} content={notice.ETAG} isPdf={true} />
@@ -167,18 +168,3 @@ export function MerimeePdf(notice, title, links){
       </Page>
     </Document>
 )}
-
-function pdfLinks(value, name){
-    if(value && value!==""){
-      if(Array.isArray(value)){
-        let links = value.map( val => {
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        });
-        return links;
-      }
-      else{
-        return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-      }
-    }
-    return null;
-};

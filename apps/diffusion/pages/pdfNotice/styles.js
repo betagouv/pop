@@ -86,7 +86,8 @@ export const styles = StyleSheet.create({
         fontWeight: 300,
         marginBottom: "10px",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        flexWrap: "wrap-reverse"
     },
     listItem: {
         display: "flex",

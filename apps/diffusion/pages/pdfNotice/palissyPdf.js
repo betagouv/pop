@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
+import { pdfLinks } from "../../src/notices/utils";
 
 export function PalissyPdf(notice, title, localisation, links){
   return(
@@ -158,18 +159,3 @@ export function PalissyPdf(notice, title, localisation, links){
       </Page>
     </Document>
 )}
-
-function pdfLinks(value, name){
-    if(value && value!==""){
-      if(Array.isArray(value)){
-        let links = value.map( val => {
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        });
-        return links;
-      }
-      else{
-        return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-      }
-    }
-    return null;
-};
