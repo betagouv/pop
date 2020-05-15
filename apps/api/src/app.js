@@ -55,4 +55,7 @@ app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 // Proxy to ES
 app.use("/search", require("./controllers/search"));
 
+//  Entrepot OAI
+app.use("/oai", require("./controllers/oai"));
+
 module.exports = app;

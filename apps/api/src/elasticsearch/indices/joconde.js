@@ -2,6 +2,14 @@ module.exports = {
   settings: {
     analysis: {
       filter: {
+        char_filter:{
+          replace_and:{
+            type: "mapping",
+            ppings: [
+              "&=> and"
+            ]
+	    		}
+	    	},
         french_elision: {
           type: "elision",
           articles_case: true,
@@ -29,7 +37,7 @@ module.exports = {
       analyzer: {
         french_fuzzy: {
           tokenizer: "icu_tokenizer",
-          filter: ["french_elision", "icu_folding", "french_stemmer"]
+          filter: ["french_elision", "icu_folding", "french_stemmer","char_filter"]
         },
         french_strict: {
           tokenizer: "icu_tokenizer",

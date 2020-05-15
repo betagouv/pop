@@ -26,10 +26,19 @@ module.exports = {
           language: "light_french"
         }
       },
+      char_filter:{
+        replace_and:{
+          type: "mapping",
+          mappings: [
+            "&=> and"
+          ]
+        }
+      },
       analyzer: {
         french_fuzzy: {
           tokenizer: "icu_tokenizer",
-          filter: ["french_elision", "icu_folding", "french_stemmer"]
+          filter: ["french_elision", "icu_folding", "french_stemmer"],
+          char_filter: ["replace_and"]
         },
         french_strict: {
           tokenizer: "icu_tokenizer",
