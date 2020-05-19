@@ -14,6 +14,7 @@ import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import { schema } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import Map from "../../src/notices/Map";
 
 export default class extends React.Component {
   static async getInitialProps({ query: { id } }) {
@@ -139,6 +140,7 @@ export default class extends React.Component {
                     </a>
                   </Link>
                 </div>
+                <Map notice={notice} />
               </Col>
             </Row>
           </Container>

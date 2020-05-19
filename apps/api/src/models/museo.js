@@ -503,7 +503,7 @@ const Schema = new mongoose.Schema(
     REST: { type: String, default: "", deprecated: true },
     ACQU: { type: String, default: "", deprecated: true },
     RECOL: { type: String, default: "", deprecated: true },
-    location: {
+    POP_COORDONNEES: {
       lat: { type: Number, default: 0 },
       lon: { type: Number, default: 0 }
     }

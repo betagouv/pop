@@ -995,7 +995,7 @@ module.exports = {
             }
           }
         },
-        location: {
+        POP_COORDONNEES: {
           type: "geo_point"
         }
       }

@@ -71,8 +71,8 @@ function transformBeforeCreateAndUpdate(notice) {
           notice.NOMOFF = museo.NOMOFF || "";
           notice.CONTACT = museo.CONTACT_GENERIQUE || "";
 
-          if (museo.location && museo.location.lat) {
-            notice.POP_COORDONNEES = museo.location;
+          if (museo.POP_COORDONNEES && museo.POP_COORDONNEES.lat) {
+            notice.POP_COORDONNEES = museo.POP_COORDONNEES;
             notice.POP_CONTIENT_GEOLOCALISATION = "oui";
           } else {
             notice.POP_CONTIENT_GEOLOCALISATION = "non";
