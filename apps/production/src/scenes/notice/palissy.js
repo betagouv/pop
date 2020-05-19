@@ -18,6 +18,7 @@ import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
 import Palissy from "../../entities/Palissy";
 import "./index.css";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 class Notice extends React.Component {
   state = {
@@ -109,7 +110,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "palissy", values, files);
+        await API.updateNotice(this.state.notice.REF, "palissy", values, files, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -434,6 +435,7 @@ class Notice extends React.Component {
 
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <Map notice={this.state.notice} />
           <div className="buttons">

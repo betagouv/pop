@@ -95,7 +95,16 @@ const Schema = new mongoose.Schema(
         label: "Date de création de la notice",
         generated: true
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "autor" }
 );

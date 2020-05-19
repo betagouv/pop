@@ -9,6 +9,7 @@ import Section from "./components/section.js";
 import Loader from "../../components/Loader";
 import FieldImages from "./components/fieldImages";
 import API from "../../services/api";
+import AccordionHistorique from "./components/AccordionHistorique"
 
 import { bucket_url } from "../../config";
 
@@ -127,6 +128,7 @@ class Enluminures extends React.Component {
                 <CustomField name="IMG" disabled={!this.state.editable} />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

@@ -247,6 +247,8 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
+      const updateMode = req.body.updateMode;
+      const user = req.user;
       await determineProducteur(notice);
       const prevNotice = await Palissy.findOne({ REF: ref });
       if (!await canUpdatePalissy(req.user, prevNotice, notice)) {
@@ -272,6 +274,18 @@ router.put(
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
 
       const obj = new Palissy(notice);
       checkESIndex(obj);

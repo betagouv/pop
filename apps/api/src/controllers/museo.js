@@ -86,6 +86,8 @@ router.put(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
     if (!notice || !notice.REF) {
       return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
     }
@@ -114,6 +116,18 @@ router.put(
     }
 
     transformBeforeCreateOrUpdate(notice);
+
+    //Ajout de l'historique de la notice
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    
+    let HISTORIQUE = notice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+    HISTORIQUE.push(newHistorique);
+    notice.HISTORIQUE = HISTORIQUE;
 
     await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
     await populateBaseFromMuseo(notice, notice.REFMER, Merimee);

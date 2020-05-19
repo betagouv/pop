@@ -102,6 +102,8 @@ router.put(
     const notice = JSON.parse(req.body.notice);
 
     try {
+      const updateMode = req.body.updateMode;
+      const user = req.user;
       const prevNotice = await Joconde.findOne({ REF: ref });
       await determineProducteur(notice);
       if (!await canUpdateJoconde(req.user, prevNotice, notice)) {
@@ -137,6 +139,18 @@ router.put(
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
 
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);

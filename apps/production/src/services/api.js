@@ -189,7 +189,7 @@ class api {
             for(let i=0; i<currentNotices.length; i++){
               let e = currentNotices[i];
               if (e.action === "updated") {
-                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
+                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files, "import");
               } else {
                 await this.createNotice(e.collection, e.notice, e.files);
               }
@@ -228,12 +228,13 @@ class api {
   }
 
   // Update one notice.
-  async updateNotice(ref, collection, data, files = []) {
+  async updateNotice(ref, collection, data, files = [], updateMode) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
+    formData.append("updateMode", updateMode);
     return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 

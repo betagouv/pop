@@ -1107,7 +1107,16 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Date de label"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "merimee" }
 );

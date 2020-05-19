@@ -26,6 +26,7 @@ router.put(
     var promises = [];
 
     try {
+      const updateMode = req.body.updateMode;
       let user = req.user
       for(let i=0; i<notices.length; i++){
         var e = notices[i];
@@ -43,6 +44,19 @@ router.put(
         else{
           // Prepare and update notice.
           await transformBeforeCreateAndUpdate(e.notice, prevNotice);
+
+          //Ajout de l'historique de la notice
+          var today = new Date();
+          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+          var time = today.getHours() + ":" + today.getMinutes();
+          var dateTime = date+' '+time;
+          
+          let HISTORIQUE = notice.HISTORIQUE || [];
+          const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+          HISTORIQUE.push(newHistorique);
+          notice.HISTORIQUE = HISTORIQUE;
+          
           var obj = new Autor(e.notice);   
           checkESIndex(obj);
           promises.push(updateNotice(Autor, ref, e.notice));

@@ -15,6 +15,7 @@ import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -71,7 +72,7 @@ class Museo extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "museo", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "museo", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -235,6 +236,7 @@ class Museo extends React.Component {
                 />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

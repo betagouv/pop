@@ -530,7 +530,16 @@ const Schema = new mongoose.Schema(
     location: {
       lat: { type: Number, default: 0 },
       lon: { type: Number, default: 0 }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "museo" }
 );
