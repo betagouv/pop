@@ -24,7 +24,7 @@ import { getNoticeInfo } from "../../src/utils"
   }
 
 export function JocondeAbregeePdf(notice){
-    const { title, subtitle, image_preview } = getNoticeInfo(notice);
+    const { title, subtitle} = getNoticeInfo(notice);
     const author = joinData([notice.AUTR, notice.ECOL, notice.EPOQ]);
     let peri = pickFirst([notice.MILL, notice.PERI, notice.EPOQ]);
     if (peri === author) {
