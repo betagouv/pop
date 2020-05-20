@@ -1,6 +1,6 @@
 {
   "name": "pop-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "POP API",
   "main": "index.js",
   "scripts": {
