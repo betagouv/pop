@@ -19,6 +19,13 @@ function transformBeforeCreateOrUpdate(notice) {
   if (notice.PHOTO !== undefined) {
     notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
   }
+
+  //Si la notice contient des coordonnées, contient geolocalisation devient oui
+  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat) {
+    notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+  } else {
+    notice.POP_CONTIENT_GEOLOCALISATION = "non";
+  }
 }
 
 async function updateJocondeNotices(notice) {

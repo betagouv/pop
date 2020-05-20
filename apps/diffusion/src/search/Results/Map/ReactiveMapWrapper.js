@@ -46,7 +46,7 @@ function MyComponent({ ctx }) {
   }, [JSON.stringify(actualQuery)]);
   useEffect(() => {
     async function fetchData() {
-      const res = await msearch(`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures`, [
+      const res = await msearch(`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures,museo`, [
         { id: "map", query }
       ]);
       setAggregations(res.responses[0].aggregations);

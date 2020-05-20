@@ -506,6 +506,16 @@ const Schema = new mongoose.Schema(
     POP_COORDONNEES: {
       lat: { type: Number, default: 0 },
       lon: { type: Number, default: 0 }
+    },
+    POP_CONTIENT_GEOLOCALISATION: {
+      type: String,
+      enum: ["oui", "non"],
+      default: "non",
+      documentation: {
+        description: "Champ qui permet de savoir si la geolocalisation est disponible ou non",
+        generated: true,
+        label: "Contient une position"
+      }
     }
   },
   { collection: "museo" }
