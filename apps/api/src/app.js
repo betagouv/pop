@@ -42,6 +42,7 @@ app.use("/memoire", require("./controllers/memoire"));
 app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 app.use("/autor", require("./controllers/autor"));
+app.use("/deleteHistorique", require("./controllers/deleteHistorique"));
 
 // Gallery
 app.use("/gallery", require("./controllers/gallery"));

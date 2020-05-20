@@ -84,6 +84,20 @@ class api {
     return request.fetchJSON("POST", "/groups", props);
   }
 
+  // Get all delete historiques.
+  getDeleteHistoriques() {
+    console.log("get delete historique");
+    return request.fetchJSON("GET", `/deleteHistorique`);
+  }
+
+  // Create delete historique.
+  async createDeleteHistorique( ref, base ) {
+    const props = { ref, base };
+    console.log("create delete historique ref = " + JSON.stringify(props));
+
+    return request.fetchJSON("POST", "/deleteHistorique", props);
+  }
+
   // can edit notice depending on producteurs, groups, user
   canEdit( REF, MUSEO, PRODUCTEUR, COLLECTION ) {
     return request.fetchJSON("GET", `/groups/canEdit?ref=${REF}&museo=${MUSEO}&producteur=${PRODUCTEUR}&collection=${COLLECTION}`);
