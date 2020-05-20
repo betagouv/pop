@@ -184,26 +184,30 @@ async function getSetNotices(queryContent){
         }
     }else {
         try{
-            setNotices.push( await Joconde.find().limit(1))
-            setNotices.push( await Palissy.find().limit(1))
+            setNotices.push( await Joconde.find({}).limit(10))
+            setNotices.push( await Palissy.find({}).limit(10))
         }catch (error) {
             capture(error);
             return res.status(500).send({ success: false, error })
         }
     }
+
     let identifier = { ListIdentifiers: [] }
-    setNotices.map( notice => { 
-        let base = getBaseSpec(notice[0].BASE)
-        let elem = {
-            header:
-            [
-                {identifier: `oai:${ base }:${ notice[0].REF }`},
-                {datestamp: notice[0].DMIS},
-                {setSpec: base}
-            ]
-        }
-       identifier.ListIdentifiers.push(elem)
+    setNotices.map( notices => { 
+            notices.map(notice => {
+            let base = getBaseSpec(notice.BASE)
+            let elem = {
+                header:
+                [
+                    {identifier: `oai:${ base }:${ notice.REF }`},
+                    {datestamp: notice.DMIS},
+                    {setSpec: base}
+                ]
+            }
+        identifier.ListIdentifiers.push(elem)
+        })
     })
+    console.log(identifier)
     return identifier
 }
 
