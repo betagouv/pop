@@ -155,6 +155,14 @@ class Museo extends React.Component {
                 <CustomField name="REGION" disabled={!this.state.editable} />
               </Col>
             </Row>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="POP_COORDONNEES.lat" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="POP_COORDONNEES.lon" disabled={!this.state.editable} />
+              </Col>
+            </Row>
           </Section>
           <Section title="Contact" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
