@@ -1,244 +1,37 @@
 const express = require("express")
 const router = express.Router()
-const Memoire = require("../models/memoire");
-const Merimee = require("../models/merimee");
-const Palissy = require("../models/palissy");
-const Joconde = require("../models/joconde");
-const Museo = require("../models/museo");
-const Mnr = require("../models/mnr");
-const Autor = require("../models/autor");
-const Enluminures = require("../models/enluminures");
-
-const xml = require('xml');
-
-const baseUrl = "https://api.pop.culture.gouv.fr/oai"
 
 
+/***************************************** Templates ****************************************/
+const {
+    responseContentIdentify,
+    responseContentListSets,
+    responseContentListmetadataformats
+  } = require("./utils/OAI/oai_response_Content")
 
-const responseContentIdentify = {
-    Identify: [
-        {repositoryName: "POP Entrepôt OAI"},
-        {baseURL: "https://api.pop.culture.gouv.fr/oai"},
-        {protocolVersion: "2.0"},
-        {adminEmail: "test_email@pop.fr"},
-        {earliestDatestamp: "test_date"},
-        {deletedRecord: "no"},
-        {granularity: "test_date"}
-    ]
-}
 
-const responseContentListSets = {
-    ListSets: [
-        {   
-            set:
-            [
-                {setSpec: "autor"},
-                {setName: "Ressources biographiques (Autor)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "enluminures"},
-                {setName: "Enluminures (Enluminures)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "joconde"},
-                {setName: "Collections des musées de France (Joconde)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "memoire"},
-                {setName: "Photographies (Mémoire)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "merimee"},
-                {setName: "Patrimoine architectural (Mérimée)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "mnr"},
-                {setName: "Récupération artistique (MNR Rose-Valland)"}
-            ]      
-        },
-        {
-            set:
-            [
-                {setSpec: "museo"},
-                {setName: "Répertoire des Musées de France (Muséofile)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "palissy"},
-                {setName: "Patrimoine mobilier (Palissy)"}
-            ]
-        }
-    ]
-}
+/**************************************** Fonctions *******************************************/
 
-const responseContentListmetadataformats = {
-    ListMetadataFormats: [
-        {   
-            metadataFormat:
-            [
-                {metadataPrefix: "oai_dc"},
-                {schema: "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"},
-                {metadataNamespace: "http://www.openarchives.org/OAI/2.0/oai_dc/"}
-            ]
-        }
-    ]
-}
+const {
+    createXmlFile,
+    createXmlFileListIdentifiers
+  } = require("./utils/OAI/oai_utils")
 
-function getBaseSpec(baseName){
-    try{
-        switch(baseName){
-            case "Ressources biographiques (Autor)":
-                return "Autor"
-            case "Enluminures (Enluminures)":
-                return "Enluminures"
-            case "Collections des musées de France (Joconde)":
-                return "Joconde"
-            case "Photographies (Mémoire)":
-                return "Mémoire"
-            case "Patrimoine architectural (Mérimée)":
-                return "Mérimée"
-            case "Récupération artistique (MNR Rose-Valland)":
-                return "MNR Rose-Valland"
-            case "Répertoire des Musées de France (Muséofile)":
-                return "Muséofile"
-            case "Patrimoine mobilier (Palissy)":
-                return "Palissy"
-            default:
-                res.status(500).send({
-                    success: false,
-                    msg: `Unknown set: ${ queryContent.set }`
-                })
-                break
-        }
-    }catch (error) {
-        capture(error)
-        return res.status(500).send({ success: false, msg: "Error at getBaseSpec: "+error })
-      }
-}
-function generateResponse(queryContent,responseContent){
-    resp = {
-        'OAI-PMH': [
-            {
-                _attr:
-                    {
-                        xmlns: "http://www.openarchives.org/OAI/2.0/",
-                        'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                        'xmlns:dc': "http://purl.org/dc/elements/1.1/",
-                        'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
-                    }
-            },
-            {responseDate: new Date().toISOString()}
-        ]
-    }
-    resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]});
-    resp['OAI-PMH'].push(responseContent);
-    return xml(resp, {declaration: true});
-}
 
-async function getSetNotices(queryContent){
-    let setNotices = []
-    if(Object.keys(queryContent).includes("set")){
-        switch (queryContent.set) {
-            
-            case "joconde":
-                try{
-                    setNotices.push(await Joconde.find().limit(50))
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
 
-            case "palissy":
-                try{
-                    setNotices.push(await Palissy.find().limit(50))
-                }catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            default:
-                res.status(500).send({
-                    success: false,
-                    msg: `Unknown set: ${ queryContent.set }`
-                })
-                break; 
-        }
-    }else {
-        try{
-            setNotices.push( await Joconde.find({}).limit(10))
-            setNotices.push( await Palissy.find({}).limit(10))
-        }catch (error) {
-            capture(error);
-            return res.status(500).send({ success: false, error })
-        }
-    }
-
-    let identifier = { ListIdentifiers: [] }
-    setNotices.map( notices => { 
-            notices.map(notice => {
-            let base = getBaseSpec(notice.BASE)
-            let elem = {
-                header:
-                [
-                    {identifier: `oai:${ base }:${ notice.REF }`},
-                    {datestamp: notice.DMIS},
-                    {setSpec: base}
-                ]
-            }
-        identifier.ListIdentifiers.push(elem)
-        })
-    })
-    console.log(identifier)
-    return identifier
-}
-
-async function generateResponseListIdentifiers(queryContent){
-    resp = {
-        'OAI-PMH': [
-            {
-                _attr:
-                    {
-                        xmlns: "http://www.openarchives.org/OAI/2.0/",
-                        'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                        'xmlns:dc': "http://purl.org/dc/elements/1.1/",
-                        'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
-                    }
-            },
-            {responseDate: new Date().toISOString()}
-        ]
-    }
-    resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
-    resp['OAI-PMH'].push(await getSetNotices(queryContent))
-    return xml(resp, {declaration: true})
-}
-
-// OAI
+/**
+ * OAI entrepot GET function
+ * les différentes API pour l'entrepot OAI 
+ * fonction GET qui encapsule les différents appels
+ */
 router.get("/", async (req, res) => {
     try{
     res.set('Content-Type', 'text/xml')
     switch (req.query.verb) {
-        case "identify":
+        
+        case "Identify":
             try{
-                res.locals.identify = generateResponse(req.query,responseContentIdentify)
+                res.locals.identify = createXmlFile(req.query,responseContentIdentify)
                 res.status(200).send(res.locals.identify).end()
             }catch(oaiError) {
                 res.status(500)
@@ -247,9 +40,9 @@ router.get("/", async (req, res) => {
             break;  
         
 
-        case "listsets": 
+        case "ListSets": 
             try{
-                res.locals.ListSets = generateResponse(req.query,responseContentListSets)
+                res.locals.ListSets = createXmlFile(req.query,responseContentListSets)
                 res.status(200).send(res.locals.ListSets).end()
             }catch(oaiError) {
                     res.status(500)
@@ -257,9 +50,9 @@ router.get("/", async (req, res) => {
             }
             break;
 
-        case "listmetadataformats": 
+        case "ListMetadataFormats": 
             try{
-                res.locals.listmetadataformats = generateResponse(req.query,responseContentListmetadataformats)
+                res.locals.listmetadataformats = createXmlFile(req.query,responseContentListmetadataformats)
                 res.status(200).send(res.locals.listmetadataformats).end()
             }catch(oaiError) {
                     res.status(500)
@@ -267,12 +60,12 @@ router.get("/", async (req, res) => {
             }
             break;
         
-        case "listidentifiers": 
+        case "ListIdentifiers": 
             try{
                 if(!Object.keys(req.query).includes("metadataprefix")){
-                    throw new Error(`l'argument "metadataPrefix" est obligatoire`);
+                    return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
                 }
-                res.locals.listidentifiers = await generateResponseListIdentifiers(req.query)
+                res.locals.listidentifiers = await createXmlFileListIdentifiers(req.query)
                 res.status(200).send(res.locals.listidentifiers).end()
             }catch(oaiError) {
                     res.status(500)
