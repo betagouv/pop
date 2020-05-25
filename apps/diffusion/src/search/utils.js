@@ -32,6 +32,7 @@ export function pagination(total, itemsPerPage, page, setPage) {
 // It works (TM).
 function toFrenchRegex(text) {
   return text
+    .replace(/&/g, "\\&")
     .replace(/[éèêëeÉÈÊËE]/g, "[éèêëeÉÈÊËE]")
     .replace(/[àâäaÀÂÄA]/g, "[àâäaÀÂÄA]")
     .replace(/[cçÇC]/g, "[cçÇC]")

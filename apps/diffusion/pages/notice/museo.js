@@ -20,6 +20,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MuseoPdf } from "../pdfNotice/museoPdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
+import Map from "../../src/notices/Map";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -265,6 +266,7 @@ export default class extends React.Component {
                     </a>
                   </Link>
                 </div>
+                <Map notice={notice} />
               </Col>
             </Row>
           </Container>
