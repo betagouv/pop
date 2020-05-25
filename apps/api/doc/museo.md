@@ -81,8 +81,8 @@
 - [REST](/apps/api/doc/museo.md#REST)
 - [ACQU](/apps/api/doc/museo.md#ACQU)
 - [RECOL](/apps/api/doc/museo.md#RECOL)
-- [location.lat](/apps/api/doc/museo.md#location.lat)
-- [location.lon](/apps/api/doc/museo.md#location.lon)
+- [POP_COORDONNEES.lat](/apps/api/doc/museo.md#POP_COORDONNEES.lat)
+- [POP_COORDONNEES.lon](/apps/api/doc/museo.md#POP_COORDONNEES.lon)
 - [_id](/apps/api/doc/museo.md#_id)
 - [__v](/apps/api/doc/museo.md#__v)
 ### REF
@@ -932,7 +932,7 @@ Date de la création POP/Mistral
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non|||
 
-### location.lat
+### POP_COORDONNEES.lat
 
 
 
@@ -942,7 +942,7 @@ Date de la création POP/Mistral
 |----|------|------|------|--------|----------|-----|
 |Number|non|non|non|non|||
 
-### location.lon
+### POP_COORDONNEES.lon
 
 
 
