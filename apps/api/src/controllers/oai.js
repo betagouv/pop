@@ -4,6 +4,7 @@ const router = express.Router()
 
 /***************************************** Templates ****************************************/
 const {
+    baseNames,
     responseContentIdentify,
     responseContentListSets,
     responseContentListmetadataformats
@@ -14,7 +15,9 @@ const {
 
 const {
     createXmlFile,
-    createXmlFileListIdentifiers
+    createXmlFileListIdentifiers,
+    createXmlFileListRecords,
+    createXmlFileGetRecord
   } = require("./utils/OAI/oai_utils")
 
 
@@ -58,7 +61,7 @@ router.get("/", async (req, res) => {
                     res.status(500)
                     res.send(oaiError)
             }
-            break;
+            break
         
         case "ListIdentifiers": 
             try{
@@ -71,7 +74,44 @@ router.get("/", async (req, res) => {
                     res.status(500)
                     res.send(oaiError)
             }
-            break;
+            break
+
+            case "ListRecords": 
+            try{
+                if(!Object.keys(req.query).includes("metadataprefix")){
+                    return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
+                }
+                res.locals.listrecords = await createXmlFileListRecords(req.query)
+
+                res.status(200).send(res.locals.listrecords).end()
+            }catch(oaiError) {
+                    res.status(500)
+                    res.send(oaiError)
+            }
+            break
+
+            case "GetRecord": 
+            try{
+                if(!Object.keys(req.query).includes("metadataprefix")){
+                    return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
+                }
+                if(!Object.keys(req.query).includes("identifier")){
+                    return res.status(500).send({success: false,msg: `l'argument "identifier" est obligatoire`})
+                }
+
+                let arg = req.query.identifier.split(":")
+                if(arg.length == 3 && arg[0] == "oai" && baseNames.hasOwnProperty(arg[1]) && arg[2] != ""){
+                    res.locals.getrecord = await createXmlFileGetRecord(req.query)
+                    res.status(200).send(res.locals.getrecord).end()
+                }else{
+                    return res.status(500).send({success: false, msg: `l'argument "identifier" incorrect ou incomplet`})
+                }
+
+            }catch(oaiError) {
+                    res.status(500)
+                    res.send(oaiError)
+            }
+            break
 
         default:
             res.status(500).send({

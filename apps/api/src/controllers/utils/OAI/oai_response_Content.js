@@ -1,14 +1,15 @@
 const baseUrl = "https://api.pop.culture.gouv.fr/oai"
+const pop_url = "https://www.pop.culture.gouv.fr/"
 
 const baseNames = {
-    Joconde: "Joconde",
-    Palissy: "Palissy",
-    Memoire: "Memoire",
-    Merimee: "Merimee",
-    Museo: "Museo",
-    Mnr: "Mnr",
-    Enluminures: "Enluminures",
-    Autor: "Autor"
+    joconde: "Joconde",
+    palissy: "Palissy",
+    memoire: "Memoire",
+    merimee: "Merimee",
+    museo: "Museo",
+    mnr: "Mnr",
+    enluminures: "Enluminures",
+    autor: "Autor"
 }
 
 const responseContentIdentify = {
@@ -99,6 +100,7 @@ const responseContentListmetadataformats = {
 
 module.exports = {
     baseUrl,
+    pop_url,
     baseNames,
     responseContentIdentify,
     responseContentListSets,
