@@ -454,10 +454,16 @@ async function createListIdentifiersXml(queryContent){
                 header:
                 [
                     {identifier: `oai:pop.culture.gouv.fr:${ notice.REF }`},
-                    {datestamp: moment(new Date(notice.DMIS)).format('YYYY-MM-DD')},
-                    {setSpec: base}
                 ]
             }
+            if(notice.DMIS != ""){
+                elem.header.push({datestamp: moment(new Date(notice.DMIS)).format('YYYY-MM-DD')}
+                )
+            }else{
+                elem.header.push({datestamp: "Non précisée"})
+            }
+            
+            elem.header.push({setSpec: base})
             identifier.ListIdentifiers.push(elem)
         })
     })

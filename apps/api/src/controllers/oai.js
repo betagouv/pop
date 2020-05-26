@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+let moment = require('moment-timezone')
 
 
 /***************************************** Templates ****************************************/
@@ -68,6 +69,11 @@ router.get("/", async (req, res) => {
                 if(!Object.keys(req.query).includes("metadataprefix")){
                     return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
                 }
+                if(Object.keys(req.query).includes("from") && Object.keys(req.query).includes("until")){
+                    if(moment(req.query.from).format('YYYY-MM-DD') > moment(req.query.until).format('YYYY-MM-DD')){
+                        return res.status(500).send({success: false,msg: `"from" doit étre inférieur de "until"`})
+                    }
+                }
                 res.locals.listidentifiers = await createXmlFileListIdentifiers(req.query)
                 res.status(200).send(res.locals.listidentifiers).end()
             }catch(oaiError) {
@@ -80,6 +86,11 @@ router.get("/", async (req, res) => {
             try{
                 if(!Object.keys(req.query).includes("metadataprefix")){
                     return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
+                }
+                if(Object.keys(req.query).includes("from") && Object.keys(req.query).includes("until")){
+                    if(moment(req.query.from).format('YYYY-MM-DD') > moment(req.query.until).format('YYYY-MM-DD')){
+                        return res.status(500).send({success: false,msg: `"from" doit étre inférieur de "until"`})
+                    }
                 }
                 res.locals.listrecords = await createXmlFileListRecords(req.query)
 
