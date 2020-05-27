@@ -50,6 +50,11 @@ class api {
     return request.fetchJSON("GET", `/producteur`);
   }
 
+  //Get one producteur
+  getProducteurByLabel(label) {
+    return request.fetchJSON("GET", `/producteur/label?label=${label}`);
+  }
+
   // Create a producteur.
   async createProducteur({ label, base }) {
     const props = { label, base };

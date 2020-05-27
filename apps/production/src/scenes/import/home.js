@@ -26,9 +26,14 @@ class Import extends React.Component {
   renderOldImports(group){
     if(group === "admin"){
       return (
-        <Col className="m-4 text-center">
-          <Link to="/import/list">Consultez les anciens imports</Link>
-        </Col>
+        <div>
+          <Col className="m-4 text-center">
+            <Link to="/import/list">Consultez les anciens imports</Link>
+          </Col>
+          <Col className="m-4 text-center">
+            <Link to="/deletedNotices">Consultez l'historique de suppression</Link>
+          </Col>
+        </div>
       );
     }
   }
