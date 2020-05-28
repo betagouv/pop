@@ -36,6 +36,15 @@ class Import extends React.Component {
         </div>
       );
     }
+    else {
+      return (
+        <div>
+          <Col className="m-4 text-center">
+            <Link to="/deletedNotices">Consultez l'historique de suppression</Link>
+          </Col>
+        </div>
+      );
+    }
   }
 
   render() {

@@ -121,16 +121,56 @@ class DeletedNotices extends React.Component {
   }
 
 
+  triByUser(a,b){ return (a.USER > b.USER)?1:-1;}
+  triByEmail(a,b){ return (a.EMAIL > b.EMAIL)?1:-1;}
+  triByBase(a,b){ return (a.BASE > b.BASE)?1:-1;}
+  triByRef(a,b){ return (a.REF > b.REF)?1:-1;}
+  triByDate(a,b){ 
+    const dateA = new Date(a.DATE);
+    const dateB = new Date(b.DATE);
+
+    if(dateA == "Invalid Date" && dateB !== "Invalid Date"){
+      return 1;
+    }
+    else {
+      return (dateA > dateB)?1:-1;
+    }
+  }
+
+  sort(mode){
+    let deletedNotices = this.state.deletedNotices;
+    switch(mode){
+        case "user":
+          deletedNotices.sort(this.triByUser);
+          break;
+        case "email":
+          deletedNotices.sort(this.triByEmail);
+          break;
+        case "base":
+          deletedNotices.sort(this.triByBase);
+          break;
+        case "date":
+          deletedNotices.sort(this.triByDate);
+          break;
+        case "ref":
+          deletedNotices.sort(this.triByRef);
+          break;
+        default:
+          return null;
+    }
+    this.setState({deletedNotices: deletedNotices});
+  }
+
   renderDeletedNotices(){
     return (
       <Table>
         <thead>
           <tr>
-            <th>REF</th>
-            <th>Base</th>
-            <th>Utilisateur</th>
-            <th>Email</th>
-            <th>Date</th>
+            <th onClick={() => this.sort("ref")}>REF</th>
+            <th onClick={() => this.sort("base")}>Base</th>
+            <th onClick={() => this.sort("user")}>Utilisateur</th>
+            <th onClick={() => this.sort("email")}>Email</th>
+            <th onClick={() => this.sort("date")}>Date</th>
           </tr>
         </thead>
         <tbody>
