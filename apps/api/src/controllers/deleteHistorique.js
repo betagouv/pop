@@ -15,7 +15,6 @@ router.use(bodyParser.json());
 router.get("/", async (req, res) => {
   const query = {};
   try {
-    console.log("get delete historique in controller");
     const deleteHistorique = await DeleteHistorique.find(query);
     return res.status(200).send({ success: true, deleteHistorique });
   } catch (error) {

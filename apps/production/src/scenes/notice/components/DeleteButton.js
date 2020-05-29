@@ -11,18 +11,14 @@ export default class DeleteButton extends React.Component {
       `Êtes-vous certain·e de vouloir continuer ?`;
     const toastrConfirmOptions = {
       onOk: () => {
-        console.log("ref delete button = " + ref)
-        console.log("noticeType delete button = " + this.props.noticeType)
-
-        //API.deleteNotice(this.props.noticeType, ref).then(() => {
+        API.deleteNotice(this.props.noticeType, ref).then(() => {
           API.createDeleteHistorique(ref, this.props.noticeType).then(() => {
             toastr.success(
-              //"Notice supprimée",
-              "Historique créé",
+              "Notice supprimée et historique de suppression sauvegardé",
               "La modification sera visible dans 1 à 5 min en diffusion"
             );
           });
-        //});
+        });
       }
     };
     toastr.confirm(confirmText, toastrConfirmOptions);

@@ -9,7 +9,15 @@ import excelIcon from "../../assets/microsoftexcel.svg";
 
 
 class DeletedNotices extends React.Component {
-  state = { deletedNotices: [], group: null, loading: true };
+  state = { deletedNotices: [],
+            group: null,
+            loading: true,
+            triUser: false,
+            triEmail: false,
+            triBase: false,
+            triDate: false,
+            triRef: false
+          };
 
   fetchDeletedNotices = async () => {
     this.setState({ loading: true });
@@ -17,12 +25,11 @@ class DeletedNotices extends React.Component {
       //Récuperation de l'historique complet
       const responseHistorique = await api.getDeleteHistoriques();
       let historiqueList = responseHistorique.deleteHistorique || [];
-      console.log("historiqueList length before = " + historiqueList.length);
-
 
       //Récuperation du group de l'utilisateur
       let group;
       let authorizedBases = [];
+      let originalOrder = [];
 
       if(this.props.group == "admin"){
         group = {label: "admin"};
@@ -121,16 +128,35 @@ class DeletedNotices extends React.Component {
   }
 
 
-  triByUser(a,b){ return (a.USER > b.USER)?1:-1;}
-  triByEmail(a,b){ return (a.EMAIL > b.EMAIL)?1:-1;}
-  triByBase(a,b){ return (a.BASE > b.BASE)?1:-1;}
-  triByRef(a,b){ return (a.REF > b.REF)?1:-1;}
+  triByUser(a,b){
+    if(a.USER == undefined && b.USER !== undefined){return 1;}
+    else if(a.USER !== undefined && b.USER == undefined){return -1;}
+    else {return (a.USER > b.USER)?1:-1;}
+  }
+  triByEmail(a,b){
+    if(a.EMAIL == undefined && b.EMAIL !== undefined){return 1;}
+    else if(a.EMAIL !== undefined && b.EMAIL == undefined){return -1;}
+    else {return (a.EMAIL > b.EMAIL)?1:-1;}
+  }
+  triByBase(a,b){
+    if(a.BASE == undefined && b.BASE !== undefined){return 1;}
+    else if(a.BASE !== undefined && b.BASE == undefined){return -1;}
+    else {return (a.BASE > b.BASE)?1:-1;}
+  }
+  triByRef(a,b){
+    if(a.REF == undefined && b.REF !== undefined){return 1;}
+    else if(a.REF !== undefined && b.REF == undefined){return -1;}
+    else {return (a.REF > b.REF)?1:-1;}
+  }
   triByDate(a,b){ 
     const dateA = new Date(a.DATE);
     const dateB = new Date(b.DATE);
 
     if(dateA == "Invalid Date" && dateB !== "Invalid Date"){
       return 1;
+    }
+    else if(dateA !== "Invalid Date" && dateB == "Invalid Date"){
+      return -1;
     }
     else {
       return (dateA > dateB)?1:-1;
@@ -139,21 +165,57 @@ class DeletedNotices extends React.Component {
 
   sort(mode){
     let deletedNotices = this.state.deletedNotices;
+    let triUser = this.state.triUser;
+    let triEmail = this.state.triEmail;
+    let triBase = this.state.triBase;
+    let triDate = this.state.triDate;
+    let triRef = this.state.triRef;
+
     switch(mode){
         case "user":
-          deletedNotices.sort(this.triByUser);
+          if(!triUser){
+            deletedNotices.sort(this.triByUser);
+            this.setState({triUser: true, triBase: false, triRef: false, triDate: false, triEmail: false})
+          }
+          else{
+            deletedNotices.reverse();
+          }
           break;
         case "email":
-          deletedNotices.sort(this.triByEmail);
+          if(!triEmail){
+            deletedNotices.sort(this.triByEmail);
+            this.setState({triUser: false, triBase: false, triRef: false, triDate: false, triEmail: true})
+          }
+          else{
+            deletedNotices.reverse();
+          }
           break;
         case "base":
-          deletedNotices.sort(this.triByBase);
+          if(!triBase){
+            deletedNotices.sort(this.triByBase);
+            this.setState({triUser: false, triBase: true, triRef: false, triDate: false, triEmail: false})
+          }
+          else{
+            deletedNotices.reverse();
+          }
           break;
         case "date":
-          deletedNotices.sort(this.triByDate);
+          if(!triDate){
+            deletedNotices.sort(this.triByDate);
+            this.setState({triUser: false, triBase: false, triRef: false, triDate: true, triEmail: false})
+          }
+          else{
+            deletedNotices.reverse();
+          }
           break;
         case "ref":
-          deletedNotices.sort(this.triByRef);
+          if(!triRef){
+            deletedNotices.sort(this.triByRef);
+            this.setState({triUser: false, triBase: false, triRef: true, triDate: false, triEmail: false})
+          }
+          else{
+            deletedNotices.reverse();
+          }
           break;
         default:
           return null;
@@ -166,11 +228,11 @@ class DeletedNotices extends React.Component {
       <Table>
         <thead>
           <tr>
-            <th onClick={() => this.sort("ref")}>REF</th>
-            <th onClick={() => this.sort("base")}>Base</th>
-            <th onClick={() => this.sort("user")}>Utilisateur</th>
-            <th onClick={() => this.sort("email")}>Email</th>
-            <th onClick={() => this.sort("date")}>Date</th>
+            <th className="historiqueTitle" onClick={() => this.sort("ref")}>REF</th>
+            <th className="historiqueTitle" onClick={() => this.sort("base")}>Base</th>
+            <th className="historiqueTitle" onClick={() => this.sort("user")}>Utilisateur</th>
+            <th className="historiqueTitle" onClick={() => this.sort("email")}>Email</th>
+            <th className="historiqueTitle" onClick={() => this.sort("date")}>Date</th>
           </tr>
         </thead>
         <tbody>

@@ -91,7 +91,6 @@ class api {
 
   // Get all delete historiques.
   getDeleteHistoriques() {
-    console.log("get delete historique");
     return request.fetchJSON("GET", `/deleteHistorique`);
   }
 

@@ -39,3 +39,7 @@
   word-break: break-all;
   width: 350px;
 }
+
+.historiqueTitle:hover {
+  cursor: pointer;
+}
