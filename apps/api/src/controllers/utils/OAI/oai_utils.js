@@ -10,6 +10,40 @@ const { baseUrl, baseNames, pop_url} = require("./oai_response_Content")
 let xml = require('xml');
 let moment = require('moment-timezone')
 
+/**
+ * Fonction permet de retourner le nom réduit de la base
+ * A partir du nom complet
+ * @param {*} baseName : le nom complet de la base
+ */
+function getBaseName(baseName){
+    try{
+        switch(baseName){
+            case "autor":
+                return Autor
+            case "joconde":
+                return Joconde
+            case "mémoire":
+                return Memoire
+            case "mérimée":
+                return Merimee
+            case "mnr":
+                return Mnr
+            case "museo":
+                return Museo
+            case "palissy":
+                return Palissy
+            default:
+                res.status(500).send({
+                    success: false,
+                    msg: `Unknown base: ${ baseName }`
+                })
+                break
+        }
+    }catch (error) {
+        capture(error)
+        return res.status(500).send({ success: false, msg: "Error at getBaseCompletName: "+error })
+      }
+}
 
 /**
  * Fonction permet de retourner le nom réduit de la base
@@ -21,8 +55,6 @@ function getBaseCompletName(baseName){
         switch(baseName){
             case "Ressources biographiques (Autor)":
                 return "Autor"
-            case "Enluminures (Enluminures)":
-                return "Enluminures"
             case "Collections des musées de France (Joconde)":
                 return "Joconde"
             case "Photographies (Mémoire)":
@@ -36,11 +68,10 @@ function getBaseCompletName(baseName){
             case "Patrimoine mobilier (Palissy)":
                 return "Palissy"
             default:
-                return "Autor"
-/*                 res.status(500).send({
+                res.status(500).send({
                     success: false,
                     msg: `Unknown base: ${ baseName }`
-                }) */
+                })
                 break
         }
     }catch (error) {
@@ -169,32 +200,35 @@ function createRecordObject(elem,notice,base){
  * @param {*} listNotices : a liste qui va contenir les notices.
  * @param {*} queryContent : les arguments de l'api.
  */
-async function getNoticesFromMongo(base,listNotices,queryContent){
+async function getNoticesFromMongo(base,queryContent){
     try{
+        let listNotices = []
         if(Object.keys(queryContent).includes("from")){
             if(Object.keys(queryContent).includes("until")){
                 listNotices.push(await base.find({ 
                     DMIS: { 
                         $gte: moment(queryContent.from).format('YYYY-MM-DD'), 
-                        $lte: moment(queryContent.until).format('YYYY-MM-DD')} 
-                }).limit(50))
+                        $lte: moment(queryContent.until).format('YYYY-MM-DD')
+                    } 
+                }).sort({DMAJ: -1}).limit(50))
             }else {
                 listNotices.push(await base.find({ 
                     DMIS: { 
                         $gte: moment(new Date(queryContent.from)).format('YYYY-MM-DD')
                     } 
-                }).limit(50)) 
+                }).sort({DMAJ: -1}).limit(50)) 
             }
         }else {
             if(Object.keys(queryContent).includes("until")){
                 listNotices.push(await base.find({ 
                     DMIS: {  
                         $lte: moment(queryContent.until).format('YYYY-MM-DD')} 
-                }).limit(50))
+                }).sort({DMAJ: -1}).limit(50))
             }else{
-                listNotices.push(await base.find().limit(50))
+                listNotices.push(await base.find().sort({DMAJ: -1}).limit(50))
             }
         }
+        return listNotices
     }catch(err){
         capture(error)
         return res.status(500).send({ success: false, msg: "Error at getNoticesFromMongo: "+error })
@@ -207,234 +241,78 @@ async function getNoticesFromMongo(base,listNotices,queryContent){
  * @param {*} queryContent : les arguments de l'api.
  */
 async function createMongoGetRecordQuery(queryContent){
+    try{
         let identifier = queryContent.identifier.split(":")
-        switch(identifier[1]){
-            case "joconde":
-                try{
-                   return await Joconde.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "palissy":
-                try{
-                    return await Palissy.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "memoire":
-                try{
-                    return await Memoire.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-    
-            case "merimee":
-                try{
-                   return await Merimee.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "museo":
-                try{
-                   return await Museo.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break;  
-        
-            case "mnr":
-                try{
-                    return await Mnr.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break;  
-
-            case "enluminures":
-                try{
-                   return await Enluminures.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "autor":
-                try{
-                    return await Autor.find({ REF: identifier[2]})
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            default:
-                res.status(500).send({
-                    success: false,
-                    msg: `Unknown set: ${ queryContent.set }`
-                })
-                break; 
+        let base = getBaseName(identifier[1])
+        try{
+            return await base.find({ REF: identifier[2]})
+        } catch (error) {
+            res.status(500).send({
+                success: false,
+                msg: `Unknown set: ${ queryContent.set }`})
         }
+    }catch(error){
+        capture(error)
+        res.status(500).send({ success: false, error })
+
+    }
 }
 /**
  * Cette fonction permet de construire la requéte mongo pour les différents "verb"
  * ainsi que retourner la liste des notices selon la requéte crée
- * @param {*} ListNotices : la liste des notices a retourner
+ * @param {*} base : la base
  * @param {*} queryContent : les arguments de l'api. 
  */
-async function createMongoQuery(ListNotices,queryContent){
+async function createMongoQuery(queryContent){
+    let ListNotices = []
     if(Object.keys(queryContent).includes("set")){
-        switch (queryContent.set) {        
-            
-            case "joconde":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Joconde,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Joconde.find().limit(50))
-                    }
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "palissy":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Palissy,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Palissy.find().limit(50))
-                    }                
-                }catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "memoire":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Memoire,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Memoire.find().limit(50))
-                    }                 
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-    
-            case "merimee":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Merimee,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Merimee.find().limit(50))
-                    } 
-                }catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break;
-
-            case "museo":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Museo,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Museo.find().limit(50))
-                    }                 } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-        
-            case "mnr":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Mnr,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Mnr.find().limit(50))
-                    }                 
-                }catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "enluminures":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Enluminures,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Enluminures.find().limit(50))
-                    }                     
-                } catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            case "autor":
-                try{
-                    if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
-                        await getNoticesFromMongo(Autor,ListNotices,queryContent)
-                    }else {
-                        ListNotices.push(await Autor.find().limit(50))
-                    } 
-                }catch (error) {
-                    capture(error);
-                    return res.status(500).send({ success: false, error })
-                }
-                break; 
-
-            default:
-                res.status(500).send({
-                    success: false,
-                    msg: `Unknown set: ${ queryContent.set }`
-                })
-                break; 
-        }
+        try{
+            let base = getBaseName(queryContent.set)
+            if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){
+                ListNotices = await getNoticesFromMongo(base,queryContent)
+            }else {
+                    ListNotices.push(await base.find().sort({DMAJ: -1}).limit(50))
+            }
+        } catch (error) {
+            capture(error);
+            return res.status(500).send({ success: false, error })}       
     }else {
         try{
             if(Object.keys(queryContent).includes("from") || Object.keys(queryContent).includes("until")){               
-                    await getNoticesFromMongo(Joconde,ListNotices,queryContent)
-                    await getNoticesFromMongo(Palissy,ListNotices,queryContent)
-                    await getNoticesFromMongo(Memoire,ListNotices,queryContent)
-                    await getNoticesFromMongo(Merimee,ListNotices,queryContent)
-                    await getNoticesFromMongo(Museo,ListNotices,queryContent)
-                    await getNoticesFromMongo(Mnr,ListNotices,queryContent)
-                    await getNoticesFromMongo(Enluminures,ListNotices,queryContent)
-                    await getNoticesFromMongo(Autor,ListNotices,queryContent)
+                ListNotices = await getNoticesFromMongo(Joconde,queryContent)
+                (await getNoticesFromMongo(Palissy,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
+                (await getNoticesFromMongo(Memoire,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
+                (await getNoticesFromMongo(Merimee,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
+                (await getNoticesFromMongo(Museo,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
+                (await getNoticesFromMongo(Mnr,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
+                (await getNoticesFromMongo(Autor,queryContent)).map( notice => {
+                    ListNotices.push(notice)
+                })
             }else {
-                    ListNotices.push( await Joconde.find().limit(10))
-                    ListNotices.push( await Palissy.find().limit(10))
-                    ListNotices.push( await Memoire.find().limit(10))
-                    ListNotices.push( await Merimee.find().limit(10))
-                    ListNotices.push( await Museo.find().limit(10))
-                    ListNotices.push( await Mnr.find().limit(10))
-                    ListNotices.push( await Enluminures.find().limit(10))
-                    ListNotices.push( await Autor.find().limit(10))
+                    ListNotices.push( await Joconde.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Palissy.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Memoire.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Merimee.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Museo.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Mnr.find().sort({DMAJ: -1}).limit(10))
+                    ListNotices.push( await Autor.find().sort({DMAJ: -1}).limit(10))
             }
         }catch (error) {
             capture(error);
             return res.status(500).send({ success: false, error })
         }
     }
+    return ListNotices
 }
 
 
@@ -444,8 +322,7 @@ async function createMongoQuery(ListNotices,queryContent){
  * @param {*} queryContent : les arguments de l'api. 
  */
 async function createListIdentifiersXml(queryContent){
-    var ListNotices = []
-    await createMongoQuery(ListNotices,queryContent)
+    var ListNotices = await createMongoQuery(queryContent)
     let identifier = { ListIdentifiers: [] }
     ListNotices.map( notices => { 
             notices.map(notice => {
@@ -456,11 +333,11 @@ async function createListIdentifiersXml(queryContent){
                     {identifier: `oai:pop.culture.gouv.fr:${ notice.REF }`},
                 ]
             }
-            if(notice.DMIS != ""){
-                elem.header.push({datestamp: moment(new Date(notice.DMIS)).format('YYYY-MM-DD')}
+            if(notice.DMAJ != ""){
+                elem.header.push({datestamp: moment(new Date(notice.DMAJ)).format('YYYY-MM-DD')}
                 )
             }else{
-                elem.header.push({datestamp: "Non précisée"})
+                elem.header.push({datestamp: moment(new Date(notice.DMIS)).format('YYYY-MM-DD-')})
             }
             
             elem.header.push({setSpec: base})
@@ -472,9 +349,15 @@ async function createListIdentifiersXml(queryContent){
 
 async function createGetRecordXml(queryContent){
     try{
+        let date
         let notice = await createMongoGetRecordQuery(queryContent)
         let identifier = { ListRecords: [] }
         let base = getBaseCompletName(notice[0].BASE)
+        if(notice[0].DMAJ != ""){
+            date = notice[0].DMAJ
+        }else{
+            date = notice[0].DMIS
+        }
         let elem = {
             record:
             [
@@ -482,7 +365,7 @@ async function createGetRecordXml(queryContent){
                     header:
                     [
                         {identifier: `oai:pop.culture.gouv.fr:${ notice[0].REF }`},
-                        {datestamp: moment(new Date(notice[0].DMIS)).format('YYYY-MM-DD')},
+                        {datestamp: moment(new Date(date)).format('YYYY-MM-DD')},
                         {setSpec: base}
                     ]
                 },
@@ -507,7 +390,7 @@ async function createGetRecordXml(queryContent){
                 }
             ]
         }
-        createRecordObject(elem,notice[0],base)
+        //createRecordObject(elem,notice[0],base)
         identifier.ListRecords.push(elem)
         return identifier
     }catch(err){
@@ -523,12 +406,18 @@ async function createGetRecordXml(queryContent){
  * @param {*} queryContent : les arguments de l'api. : arguments de la requéte
  */
 async function createListRecordsXml(queryContent){
-    var ListNotices = []
-    await createMongoQuery(ListNotices,queryContent)
+    let date
+    let ListNotices = []
+    ListNotices = await createMongoQuery(queryContent)
     let identifier = { ListRecords: [] }
     ListNotices.map( notices => {
             notices.map(notice => {
             let base = getBaseCompletName(notice.BASE)
+            if(notice.DMAJ != ""){
+                date = notice.DMAJ
+            }else{
+                date = notice.DMIS
+            }
             let elem = {
                 record:
                 [
@@ -536,7 +425,7 @@ async function createListRecordsXml(queryContent){
                         header:
                         [
                             {identifier: `oai:pop.culture.gouv.fr:${ notice.REF }`},
-                            {datestamp: moment(new Date(notice.DMIS)).format('YYYY-MM-DD')},
+                            {datestamp: moment(new Date(date)).format('YYYY-MM-DD')},
                             {setSpec: base}
                         ]
                     },
@@ -561,7 +450,7 @@ async function createListRecordsXml(queryContent){
                     }
                 ]
             }
-        createRecordObject(elem,notice,base)
+        //createRecordObject(elem,notice,base)
         identifier.ListRecords.push(elem)
         })
     })

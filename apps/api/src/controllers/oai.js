@@ -24,7 +24,7 @@ const {
 
 
 /**
- * OAI entrepot GET function
+ * OAI entrepot GET route
  * les différentes API pour l'entrepot OAI 
  * fonction GET qui encapsule les différents appels
  */
