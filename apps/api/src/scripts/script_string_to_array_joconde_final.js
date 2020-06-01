@@ -1,8 +1,8 @@
 var notices = db.joconde.find().noCursorTimeout();
 var noticeCount = db.joconde.count();
 
-var word = ''
-var check = 0
+var word = '';
+var check = 0;
 
 notices.forEach(function( aRow ){
 	var ref = aRow.REF;
@@ -10,27 +10,28 @@ notices.forEach(function( aRow ){
 	//Procédure pour AUTR
 	
 	var autr = aRow.AUTR;
-	var arrayAutr;
+	var arrayAutr = [];
 	var typeAutr = typeof autr;
 	if(typeAutr == "string"){
 		autr = Array.from(autr)
 		autr.forEach(function( item ){
 			if(item == '('){
 			  check = 1
-			}
-			if(!check && item != ',' && item != ';' && item != ':' && item != '#' && item !='\n'){
-			   word = word.concat(item)
 			}	
+			if(!check){
+				if(item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
+					word = word.trim()
+					arrayAutr.push(word)
+					word = '' 
+				}else {
+					word = word.concat(item)
+				}
+			}
 			if(check) {
 			   word = word.concat(item)
 			   if(item == ')'){
 				 check = 0 
 			   }
-			}
-			if( !check && item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
-				word = word.trim()
-				arrayAutr.push(word)
-				word = ''  
 			}
 		})
 	
@@ -60,29 +61,32 @@ notices.forEach(function( aRow ){
 
 	
 	//Procédure pour DEPO
+	word = ''
+	check = 0
 	var depo = aRow.DEPO;
-	var arrayDepo;
+	var arrayDepo = [];
 	var typeDepo = typeof depo;
 	if(typeDepo == "string"){
 		depo = Array.from(depo)
 		depo.forEach(function( item ){
 			if(item == '('){
 			  check = 1
-			}
-			if(!check && item != ',' && item != ';' && item != ':' && item != '#' && item !='\n'){
-			   word = word.concat(item)
 			}	
+			if(!check){
+				if(item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
+					word = word.trim()
+					arrayDepo.push(word)
+					word = '' 
+				}else {
+					word = word.concat(item)
+				}
+			}
 			if(check) {
 			   word = word.concat(item)
 			   if(item == ')'){
 				 check = 0 
 			   }
-			}
-			if( !check && item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
-				word = word.trim()
-				arrayDepo.push(word)
-				word = ''  
-			}
+			}			
 		})
 	
 		if(word != ""){
@@ -112,8 +116,10 @@ notices.forEach(function( aRow ){
 	
 	
 	//Procédure pour LIEUX
+	word = ''
+	check = 0
 	var lieux = aRow.LIEUX;
-	var arrayLieux;
+	var arrayLieux = [];
 	var typeLieux = typeof lieux;
 	if(typeLieux == "string"){
 		lieux = Array.from(lieux)
@@ -121,19 +127,20 @@ notices.forEach(function( aRow ){
 			if(item == '('){
 			  check = 1
 			}
-			if(!check && item != ',' && item != ';' && item != ':' && item != '#' && item !='\n'){
-			   word = word.concat(item)
-			}	
+			if(!check){
+				if(item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
+					word = word.trim()
+					arrayLieux.push(word)
+					word = '' 
+				}else {
+					word = word.concat(item)
+				}
+			}
 			if(check) {
 			   word = word.concat(item)
 			   if(item == ')'){
 				 check = 0 
 			   }
-			}
-			if( !check && item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
-				word = word.trim()
-				arrayLieux.push(word)
-				word = ''  
 			}
 		})
 	
@@ -164,8 +171,10 @@ notices.forEach(function( aRow ){
 	
 	
 	//Procédure pour REPR
+	word = ''
+	check = 0
 	var repr = aRow.REPR;
-	var arrayRepr;
+	var arrayRepr = [];
 	var typeRepr = typeof repr;
 	if(typeRepr == "string"){
 		repr = Array.from(repr)
@@ -173,20 +182,22 @@ notices.forEach(function( aRow ){
 			if(item == '('){
 			  check = 1
 			}
-			if(!check && item != ',' && item != ';' && item != ':' && item != '#' && item !='\n'){
-			   word = word.concat(item)
-			}	
+			if(!check){
+				if(item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
+					word = word.trim()
+					arrayRepr.push(word)
+					word = '' 
+				}else {
+				word = word.concat(item)
+				}
+			}
 			if(check) {
 			   word = word.concat(item)
 			   if(item == ')'){
 				 check = 0 
 			   }
 			}
-			if( !check && item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
-				word = word.trim()
-				arrayRepr.push(word)
-				word = ''  
-			}
+			
 		})
 	
 		if(word != ""){
@@ -216,8 +227,10 @@ notices.forEach(function( aRow ){
 	
 	
 	//Procédure pour WWW
+	word = ''
+	check = 0
 	var www = aRow.WWW;
-	var arrayWww;
+	var arrayWww = [];
 	var typeWww = typeof www;
 	if(typeWww == "string"){
 		www = Array.from(www)
@@ -225,19 +238,20 @@ notices.forEach(function( aRow ){
 			if(item == '('){
 			  check = 1
 			}
-			if(!check && item != ',' && item != ';' && item != ':' && item != '#' && item !='\n'){
-			   word = word.concat(item)
-			}	
+			if(!check){
+				if(item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
+					word = word.trim()
+					arrayWww.push(word)
+					word = '' 
+				}else {
+				word = word.concat(item)
+				}
+			}
 			if(check) {
 			   word = word.concat(item)
 			   if(item == ')'){
 				 check = 0 
 			   }
-			}
-			if( !check && item == ',' || item == ';' || item == ':' || item == '#' || item == '\n'){
-				word = word.trim()
-				arrayWww.push(word)
-				word = ''  
 			}
 		})
 	
