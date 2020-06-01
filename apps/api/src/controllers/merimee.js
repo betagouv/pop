@@ -93,6 +93,13 @@ async function withFlags(notice) {
       }
     }
   }
+  //Coorm not in France
+  if(notice.COORM && notice.ZONE){
+    const convert = convertCOORM(notice.COORM, notice.ZONE);
+    if(convert.message && convert.message == "La projection utilisée n'est pas correct"){
+      notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
+    }
+  }
   return notice;
 }
 async function transformBeforeCreateOrUpdate(notice) {
