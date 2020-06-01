@@ -90,7 +90,7 @@ class MapComponent extends React.Component {
 
 function getGeoJson(notice) {
   const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = notice;
-  if (POP_COORDINATES_POLYGON && POP_COORDINATES_POLYGON.coordinates.length) {
+  if (POP_COORDINATES_POLYGON && POP_COORDINATES_POLYGON.coordinates && POP_COORDINATES_POLYGON.coordinates.length) {
     return {
       center: { lng: POP_COORDONNEES.lon, lat: POP_COORDONNEES.lat },
       geometry: {
