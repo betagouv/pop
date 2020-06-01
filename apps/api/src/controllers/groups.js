@@ -67,7 +67,10 @@ router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (
                 // Si le producteur de la notice correspond à un de ceux du groupe
                 // Ou s'il s'agit de la base museo n'ayant pas de producteur
                 if( String(producteur)===String(prod) || collection==="museo"){
-                    if(collection==="joconde"){
+                    if(user.role === "administrateur"){
+                        validate = true;
+                    }
+                    else if(collection==="joconde"){
                         validate = user.museofile.includes(museo);
                     }
                     else if(collection==="museo"){

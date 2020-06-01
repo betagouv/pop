@@ -122,6 +122,14 @@ async function exportData(fileName, entities, header) {
     return true;
   });
 
+  //Si export de museo, on enlève la colonne POP_COORDONNEES
+  //Pour remplacer par POP_COORDONNEES.lat et lon
+  if(entities[0].BASE == "Répertoire des Musées de France (Muséofile)"){
+    columns.splice(columns.indexOf("POP_COORDONNEES"), 1);
+    columns.push("POP_COORDONNEES.lat");
+    columns.push("POP_COORDONNEES.lon");
+  }
+
   columns.sort((a, b) => {
     if (a === "REF") {
       return -1;
@@ -191,6 +199,17 @@ async function exportData(fileName, entities, header) {
         value = JSON.stringify(value);
       }
       value = ("" + value).replace(/"/g, '""');
+
+      //Traitement spécifique pour la base Muséofile
+      if(entities[j].BASE == "Répertoire des Musées de France (Muséofile)"){
+        if(columns[i] == "POP_COORDONNEES.lat" ){
+          value = entities[j].POP_COORDONNEES.lat || "";
+        }
+        if(columns[i] == "POP_COORDONNEES.lon" ){
+          value = entities[j].POP_COORDONNEES.lon || "";
+        }
+      }
+
       arr.push(`"${value}"`);
     }
     csv.push(arr.join(";"));
