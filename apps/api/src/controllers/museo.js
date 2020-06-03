@@ -10,6 +10,7 @@ const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
 const { formattedNow, deleteFile, uploadFile } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
+const { checkESIndex } = require("../controllers/utils")
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -21,7 +22,7 @@ function transformBeforeCreateOrUpdate(notice) {
   }
 
   //Si la notice contient des coordonnées, contient geolocalisation devient oui
-  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat) {
+  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon) {
     notice.POP_CONTIENT_GEOLOCALISATION = "oui";
   } else {
     notice.POP_CONTIENT_GEOLOCALISATION = "non";
@@ -114,6 +115,10 @@ router.put(
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
       await Promise.all(promises);
+      //Maj index elasticsearch
+      var obj = new Museo(notice);   
+      checkESIndex(obj);
+
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
