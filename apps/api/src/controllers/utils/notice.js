@@ -62,7 +62,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
   
   //Liste des producteurs donc le préfixe correspond au début de la REF de la notice
   let possibleProducteurs = [];
-  let possibleProd = [];
+  let finalProd = "";
   let defaultProducteur = "";
 
   producteurs.map((producteur) => {
@@ -79,7 +79,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
           if(REF.startsWith(prefix.toString())){
             //Retourne le label du producteur
             let label = producteur.LABEL;
-            possibleProd.push({prefix : prefix,label: label});
+            possibleProducteurs.push({prefix : prefix,label: label});
           }
         })
       }
@@ -88,23 +88,24 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
 
   if(collection == "memoire") {
     if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
-      possibleProducteurs[0] = "UDAP";
+      return "UDAP";
     }
     else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
-      possibleProducteurs[0] = "MAP";
+      return "MAP";
     }
   }
 
-  //Si la liste des producteurs est non vide, on retourne le 1er élément
-  if(possibleProd.length>0){
-    let PrefSize = possibleProd[0].prefix.length
-    possibleProd.map( prod => {
+  //Si la liste des producteurs est non vide, on parcourt la liste pour déterminer le préfixe le plus précis
+  if(possibleProducteurs.length>0){
+    let PrefSize = possibleProducteurs[0].prefix.length
+    finalProd = possibleProducteurs[0].label;
+    possibleProducteurs.map( prod => {
       if(PrefSize < prod.prefix.length){
         PrefSize = prod.prefix.length
-        possibleProducteurs[0] = prod.label
+        finalProd = prod.label
       }
     })
-    return possibleProducteurs[0];
+    return finalProd;
   }
   else if(defaultProducteur!=""){
     return defaultProducteur;
