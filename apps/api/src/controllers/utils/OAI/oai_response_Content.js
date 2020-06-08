@@ -14,13 +14,13 @@ const baseNames = {
 
 const responseContentIdentify = {
     Identify: [
-        {repositoryName: "POP Entrepôt OAI"},
+        {repositoryName: "pop.culture.gouv.fr - Entrepôt OAI"},
         {baseURL: "https://api.pop.culture.gouv.fr/oai"},
         {protocolVersion: "2.0"},
-        {adminEmail: "test_email@pop.fr"},
+        {adminEmail: "pop@culture.gouv.fr"},
         {earliestDatestamp: "test_date"},
         {deletedRecord: "no"},
-        {granularity: "test_date"}
+        {granularity: "YYYY-MM-DD"}
     ]
 }
 
@@ -31,13 +31,6 @@ const responseContentListSets = {
             [
                 {setSpec: "autor"},
                 {setName: "Ressources biographiques (Autor)"}
-            ]
-        },
-        {
-            set:
-            [
-                {setSpec: "enluminures"},
-                {setName: "Enluminures (Enluminures)"}
             ]
         },
         {

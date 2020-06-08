@@ -16,6 +16,7 @@ const {
 
 const {
     createXmlFile,
+    createXmlFileIdentify,
     createXmlFileListIdentifiers,
     createXmlFileListRecords,
     createXmlFileGetRecord
@@ -35,7 +36,7 @@ router.get("/", async (req, res) => {
         
         case "Identify":
             try{
-                res.locals.identify = createXmlFile(req.query,responseContentIdentify)
+                res.locals.identify = await createXmlFileIdentify(req.query,responseContentIdentify)
                 res.status(200).send(res.locals.identify).end()
             }catch(oaiError) {
                 res.status(500)
@@ -66,7 +67,11 @@ router.get("/", async (req, res) => {
         
         case "ListIdentifiers": 
             try{
-                if(!Object.keys(req.query).includes("metadataprefix")){
+                if(Object.keys(req.query).includes("resumptionToken") && (Object.keys(req.query).includes("metadataprefix") || Object.keys(req.query).includes("set") || Object.keys(req.query).includes("from") || Object.keys(req.query).includes("until"))){
+                    return res.status(500).send({success: false,msg: `query must have just verb wiht resumptionToken`})
+
+                }
+                if(!Object.keys(req.query).includes("metadataprefix") && !Object.keys(req.query).includes("resumptionToken")){
                     return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
                 }
                 if(Object.keys(req.query).includes("from") && Object.keys(req.query).includes("until")){
@@ -84,7 +89,11 @@ router.get("/", async (req, res) => {
 
             case "ListRecords": 
             try{
-                if(!Object.keys(req.query).includes("metadataprefix")){
+                if(Object.keys(req.query).includes("resumptionToken") && (Object.keys(req.query).includes("metadataprefix") || Object.keys(req.query).includes("set") || Object.keys(req.query).includes("from") || Object.keys(req.query).includes("until"))){
+                    return res.status(500).send({success: false,msg: `query must have just verb wiht resumptionToken`})
+
+                }
+                if(!Object.keys(req.query).includes("metadataprefix") && !Object.keys(req.query).includes("resumptionToken")){
                     return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
                 }
                 if(Object.keys(req.query).includes("from") && Object.keys(req.query).includes("until")){

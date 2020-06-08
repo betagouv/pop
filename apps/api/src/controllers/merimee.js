@@ -10,10 +10,14 @@ const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
+const NoticesOAI = require("../models/noticesOAI");
+
 const {
   formattedNow,
   checkESIndex,
   updateNotice,
+  updateOaiNotice, 
+  getBaseCompletName,
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
@@ -241,8 +245,11 @@ router.put(
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
       const doc = new Merimee(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
+
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -274,11 +281,18 @@ router.post(
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
+      let oaiObj = {
+        REF: e.notice.REF,
+        BASE: getBaseCompletName(e.notice.BASE),
+        DMAJ: e.notice.DMIS
+      }
+
       const promises = [];
       const doc = new Merimee(notice);
+      const obj2 = new NoticesOAI(oaiObj)
       checkESIndex(doc);
       promises.push(doc.save());
-
+      promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
@@ -308,6 +322,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Merimee.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -320,6 +336,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     await doc.remove();
+    await docOai.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

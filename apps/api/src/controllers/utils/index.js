@@ -10,13 +10,14 @@ const {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
   findPalissyProducteur,
   identifyProducteur
 } = require("./notice");
 const { formattedNow } = require("./date");
-
+const { getBaseCompletName } = require("./OAI/oai_utils")
 module.exports = {
   uploadFile,
   deleteFile,
@@ -24,6 +25,7 @@ module.exports = {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   lambertToWGS84,
   convertCOORM,
   getPolygonCentroid,
@@ -32,5 +34,6 @@ module.exports = {
   findMemoireProducteur,
   findMerimeeProducteur,
   findPalissyProducteur,
-  identifyProducteur
+  identifyProducteur,
+  getBaseCompletName
 };

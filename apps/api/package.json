@@ -74,7 +74,8 @@
     "xml2js": "^0.4.19",
     "oai-pmh": "^2.0.3",
     "xml": "^1.0.1",
-    "moment-timezone": "^0.5.23"
+    "moment-timezone": "^0.5.23",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",

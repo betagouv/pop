@@ -11,8 +11,9 @@ const Joconde = require("../models/joconde");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const NoticesOAI = require("../models/noticesOAI");
 
-const { formattedNow, deleteFile, uploadFile } = require("./utils");
+const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -120,7 +121,9 @@ router.put(
     await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
 
     promises.push(updateJocondeNotices(notice));
+    let oaiObj = { DMAJ: notice.DMAJ }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
+    promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
     try {
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
@@ -136,6 +139,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Museo.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -151,6 +156,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
       deleteFile(doc.PHOTO, "museo");
     }
     await doc.remove();
+    await docOai.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

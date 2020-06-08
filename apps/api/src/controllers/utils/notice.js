@@ -34,12 +34,25 @@ function checkESIndex(doc) {
 // Update a notice.
 function updateNotice(collection, REF, notice) {
   return new Promise((resolve, reject) => {
-    collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true }, (err, doc) => {
+    collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true, useFindAndModify: false }, (err, doc) => {
       if (err) {
         reject(err);
         return;
       }
       checkESIndex(doc);
+      resolve(doc);
+    });
+  });
+}
+
+// Update a OAI Notice.
+function updateOaiNotice(collection, REF, dmaj) {
+  return new Promise((resolve, reject) => {
+    collection.findOneAndUpdate({ REF }, dmaj, { upsert: true, new: true, useFindAndModify: false}, (err, doc) => {
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve(doc);
     });
   });
@@ -169,6 +182,7 @@ module.exports = {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
   findPalissyProducteur,
