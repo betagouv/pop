@@ -22,7 +22,7 @@ async function createResumptionToken(nbPage,listSize,queryContent){
         let expDate = new Date()
         let resumpObj = {
             TOKEN: uuid(),
-            DEXP: moment(expDate.setDate(expDate.getDate()+1)).format('YYYY-MM-DD'),
+            DEXP: moment(expDate.setDate(expDate.getDate()+1)).format('YYYY-MM-DDTHH:mm:ss'),
             CURSOR: nbPage + 1,
             FROM: queryContent.from,
             UNTIL: queryContent.until,

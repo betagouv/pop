@@ -12,6 +12,9 @@ const baseNames = {
     autor: "Autor"
 }
 
+const METADATA_FORMATS = {
+    oai_dc: 'oai_dc'
+}
 const responseContentIdentify = {
     Identify: [
         {repositoryName: "pop.culture.gouv.fr - Entrepôt OAI"},
@@ -95,6 +98,7 @@ module.exports = {
     baseUrl,
     pop_url,
     baseNames,
+    METADATA_FORMATS,
     responseContentIdentify,
     responseContentListSets,
     responseContentListmetadataformats

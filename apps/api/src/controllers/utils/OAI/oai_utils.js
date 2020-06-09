@@ -6,13 +6,26 @@ const Museo = require("../../../models/museo")
 const Mnr = require("../../../models/mnr")
 const Autor = require("../../../models/autor")
 const noticesOAI = require("../../../models/noticesOAI")
+const resumptionTokenOAI = require("../../../models/resumptionToken");
 
 const { baseUrl, baseNames, pop_url} = require("./oai_response_Content")
 const { getResumptionToken, createResumptionToken, updateResumptionToken, deleteResumptionToken } = require("../../resumptionToken")
-
+const { EXCEPTION_CODES, generateException } = require("../OAI/oai_Exceptions")
 const {createRecordAutor, createRecordJoconde, createRecordMemoire, createRecordMerimee, createRecordMnr,createRecordMuseo, createRecordPalissy} = require("./oai_records")
 let xml = require('xml');
 let moment = require('moment-timezone')
+
+/**
+ * setInterval permet de supprimer les tokens expiré
+ */
+setInterval(async function (){
+    let listTokens = await resumptionTokenOAI.find()
+    listTokens.map(async token => {
+        if( moment(token.DEXP).format("YYYY-MM-DDTHH:mm:ss") < moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")){
+            await deleteResumptionToken(token.TOKEN)
+        }
+    })
+  },300000)
 
 /**
  * Fonction permet de retourner le nom réduit de la base
@@ -85,9 +98,10 @@ function getBaseCompletName(baseName){
 }
 
 /**
- * 
- * @param {*} base 
- * @param {*} queryContent 
+ * Cette focntion permet de créer le XML record 
+ * pour les notices de chaque base.
+ * @param {*} elem 
+ * @param {*} notice 
  */
 function createRecord(elem,notice){
     let base = getBaseCompletName(notice.BASE).toLowerCase()
@@ -120,25 +134,9 @@ function createRecord(elem,notice){
             })
             break
     }
-
 }
 
-/** ***********************************************************************************************************************************
- * Cette fonction permet de construire les query MongoDB 
- * Selon la base et selon les arguments "from" et "until" de la requéte
- * Et retourne une liste de notices.
- * @param {*} base : la base pour laquel on cherche les notices. 
- * @param {*} queryContent : les arguments de l'api.
- */
-async function getNoticesFromMongoWithRef(noticeOAI){
-    try{
-        let base = getBaseName(noticeOAI.BASE)
-
-    }catch(err){
-        capture(error)
-        return res.status(500).send({ success: false, msg: "Error at getNoticesFromMongoWithRef: "+error })
-      }
-}
+/**************************************************************************************************************************************/
 
 /**
  * Cette fonction permet de construire la requéte mongo pour le verb "GetRecord"
@@ -384,6 +382,7 @@ async function getCompletListSize(queryContent){
         return res.status(500).send({ success: false, error })
     }
 }
+
 /**
  *  Cette fonction permet a partir de la liste des notices selon la base
  *  De Construit et retourne la partie du fichier xml pour le verb "listidentifiers"
@@ -398,11 +397,6 @@ async function createListIdentifiersXml(queryContent){
     if(Object.keys(queryContent).includes("resumptionToken")){
         let token = await getResumptionToken(queryContent.resumptionToken)
         token = token[0]
-        if( moment(token.DEXP).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD")){
-            await deleteResumptionToken(token.TOKEN)
-            return res.status(500).send({success: false,msg: `le token a expirer`})
-        }
-
         ListSize = token.SIZE
         if(token.SIZE > ((token.CURSOR * 3) + 3)){
             let query = {
@@ -428,7 +422,7 @@ async function createListIdentifiersXml(queryContent){
             let elem = {
                 header:
                 [
-                    {identifier: `oai:pop.culture.gouv.fr:${ notice.REF }`},
+                    {identifier: `oai:${ notice.BASE.toLowerCase()}:${ notice.REF }`},
                 ]
             }
             elem.header.push({datestamp: moment(new Date(notice.DMAJ)).format('YYYY-MM-DD')})       
@@ -472,7 +466,7 @@ async function createGetRecordXml(queryContent){
                 {
                     header:
                     [
-                        {identifier: `oai:pop.culture.gouv.fr:${ notice[0].REF }`},
+                        {identifier: `oai:${base.toLowerCase()}:${ notice[0].REF }`},
                         {datestamp: moment(new Date(date)).format('YYYY-MM-DD')},
                         {setSpec: base}
                     ]
@@ -522,10 +516,6 @@ async function createListRecordsXml(queryContent){
     if(Object.keys(queryContent).includes("resumptionToken")){
         let token = await getResumptionToken(queryContent.resumptionToken)
         token = token[0]
-        if( moment(token.DEXP).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD")){
-            await deleteResumptionToken(token.TOKEN)
-            return res.status(500).send({success: false,msg: `le token a expirer`})
-        }
         ListSize = token.SIZE
         if(token.SIZE > ((token.CURSOR * 3) + 3)){
             let query = {
@@ -566,7 +556,7 @@ async function createListRecordsXml(queryContent){
                     {
                         header:
                         [
-                            {identifier: `oai:pop.culture.gouv.fr:${ notice[0].REF }`},
+                            {identifier: `oai:${base.toLowerCase()}:${ notice[0].REF }`},
                             {datestamp: moment(new Date(oai.DMAJ)).format('YYYY-MM-DD')},
                             {setSpec: base}
                         ]
@@ -730,6 +720,7 @@ async function createXmlFileListRecords(queryContent){
 }
 
 async function createXmlFileGetRecord(queryContent){
+    try{
     resp = {
         'OAI-PMH': [
             {
@@ -747,16 +738,18 @@ async function createXmlFileGetRecord(queryContent){
     resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
     resp['OAI-PMH'].push(await createGetRecordXml(queryContent))
     return xml(resp, {declaration: true})
+    }catch(err){
+        throw err
+    }
 }
-
 
 module.exports = {
     getBaseCompletName,
-    getNoticesFromMongoWithRef,
     createListIdentifiersXml,
     createXmlFile,
     createXmlFileIdentify,
     createXmlFileListIdentifiers,
     createXmlFileListRecords,
-    createXmlFileGetRecord
+    createXmlFileGetRecord,
+    createMongoGetRecordQuery
 }
