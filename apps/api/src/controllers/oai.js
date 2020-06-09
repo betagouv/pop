@@ -96,6 +96,9 @@ router.get("/", async (req, res) => {
                 if(!Object.keys(req.query).includes("metadataprefix") && !Object.keys(req.query).includes("resumptionToken")){
                     return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" est obligatoire`})
                 }
+                if(Object.keys(req.query).includes("metadataprefix") && Object.keys(req.query).includes("resumptionToken")){
+                    return res.status(500).send({success: false,msg: `l'argument "metadataPrefix" faux`})
+                }
                 if(Object.keys(req.query).includes("from") && Object.keys(req.query).includes("until")){
                     if(moment(req.query.from).format('YYYY-MM-DD') > moment(req.query.until).format('YYYY-MM-DD')){
                         return res.status(500).send({success: false,msg: `"from" doit étre inférieur de "until"`})

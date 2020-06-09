@@ -517,6 +517,7 @@ async function createListRecordsXml(queryContent){
     let ListNotices = []
     var ListOai = []
     var ListSize
+    let resumpToken = null
 
     if(Object.keys(queryContent).includes("resumptionToken")){
         let token = await getResumptionToken(queryContent.resumptionToken)
@@ -526,21 +527,21 @@ async function createListRecordsXml(queryContent){
             return res.status(500).send({success: false,msg: `le token a expirer`})
         }
         ListSize = token.SIZE
-        let query = {
-            from: token.FROM,
-            until: token.UNTIL,
-            set: token.SET,
-            metadataprefix : token.META,
-        }
         if(token.SIZE > ((token.CURSOR * 3) + 3)){
+            let query = {
+                from: token.FROM,
+                until: token.UNTIL,
+                set: token.SET,
+                metadataprefix : token.META,
+            }
             resumpToken = await createResumptionToken(token.CURSOR,ListSize,query)
         }
-        ListOai = await createMongoQueryNoticeOai(query)
+        ListOai = await createMongoQueryNoticeOaiWithToken(token)
         ListOai.map(  noticesOAI => {
             noticesOAI.map(  noticeOAI => {
                 ListNotices.push( noticeOAI )
             })
-        })    
+        }) 
     }else{
         ListSize = await getCompletListSize(queryContent)
         if(ListSize > 3){
@@ -553,29 +554,30 @@ async function createListRecordsXml(queryContent){
             })
         })
     }
-    var identifier = { ListRecords: [] }
-    await ListNotices.map( async oai => {
-            var set = getBaseName(oai.BASE)
+    let identifier = { ListRecords: [] }
+    let Promises = []
+    Promises.push(await Promise.all(ListNotices.map( async oai => {
+            const set = getBaseName(oai.BASE)
             var notice = await set.find({ REF: oai.REF })
-            notice = notice[0]
+            let base = getBaseCompletName(notice[0].BASE)
             let elem = {
                 record:
                 [
                     {
                         header:
                         [
-                            {identifier: `oai:pop.culture.gouv.fr:${ notice.REF }`},
+                            {identifier: `oai:pop.culture.gouv.fr:${ notice[0].REF }`},
                             {datestamp: moment(new Date(oai.DMAJ)).format('YYYY-MM-DD')},
-                            {setSpec: set}
+                            {setSpec: base}
                         ]
                     },
                     {
                         metadata:
                         [
                             {'oai_dc:dc': 
-                                [
-                                    {
-                                        _attr:
+                            [
+                                {
+                                    _attr:
                                             {
                                                 'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
                                                 'xmlns:oai_dc':"http://www.openarchives.org/OAI/2.0/oai_dc/",                               
@@ -583,17 +585,37 @@ async function createListRecordsXml(queryContent){
                                                 'xmlns:mml':"http://www.w3.org/1998/Math/MathML",
                                                 'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
                                             }
-                                    },
-                                ]
+                                }
+                            ]
                             }
                         ]
                     }
                 ]
             }
-            createRecord(elem,notice)
-            identifier.ListRecords.push(elem)
+            createRecord(elem,notice[0])
+            return JSON.stringify(elem)
+        })))
+        Promises.map(  tabpromises => {
+            tabpromises.map(  record => {
+                identifier.ListRecords.push( JSON.parse(record) )
+            })
         })
-        console.log(identifier)
+        if(resumpToken != null){
+            token = {
+                resumptionToken:[
+                    {
+                        _attr:
+                            {
+                                expirationDate: resumpToken.DEXP,
+                                completeListSize: resumpToken.SIZE,
+                                cursor: resumpToken.CURSOR
+                            }
+                    },
+                    resumpToken.TOKEN
+                ]
+            }
+            identifier.ListRecords.push(token)
+        }
         return identifier
 }
 
