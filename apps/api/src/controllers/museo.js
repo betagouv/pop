@@ -11,9 +11,9 @@ const Joconde = require("../models/joconde");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-
 const { formattedNow, deleteFile, uploadFile } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
+const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -24,19 +24,19 @@ async function transformBeforeCreateOrUpdate(notice) {
     notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
   }
 
+  //Si la notice contient des coordonnées, contient geolocalisation devient oui
+  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon) {
+    notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+  } else {
+    notice.POP_CONTIENT_GEOLOCALISATION = "non";
+  }
+
   let noticeProducteur = await identifyProducteur("museo", notice.REF, "", "");
   if(noticeProducteur){
     notice.PRODUCTEUR = noticeProducteur;
   }
   else {
     notice.PRODUCTEUR = "";
-  }
-
-  //Si la notice contient des coordonnées, contient geolocalisation devient oui
-  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat) {
-    notice.POP_CONTIENT_GEOLOCALISATION = "oui";
-  } else {
-    notice.POP_CONTIENT_GEOLOCALISATION = "non";
   }
 }
 
@@ -121,7 +121,7 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    transformBeforeCreateOrUpdate(notice);
+    await transformBeforeCreateOrUpdate(notice);
 
     await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
     await populateBaseFromMuseo(notice, notice.REFMER, Merimee);
@@ -131,6 +131,11 @@ router.put(
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     try {
       await Promise.all(promises);
+
+      //Maj index elasticsearch
+      var obj = new Museo(notice);   
+      checkESIndex(obj);
+
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
       capture(e);
