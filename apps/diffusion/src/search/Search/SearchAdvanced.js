@@ -5,7 +5,7 @@ import Mapping from "../../services/mapping";
 import { QueryBuilder } from "react-elasticsearch-pop";
 import { operators } from "../utils";
 
-const bases = [
+export const bases = [
   { key: "joconde", base: "Collections des musées de France (Joconde)" },
   { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" },
   { key: "merimee", base: "Patrimoine architectural (Mérimée)" },
