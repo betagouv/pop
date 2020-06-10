@@ -6,18 +6,18 @@ import { QueryBuilder } from "react-elasticsearch-pop";
 import { operators } from "../utils";
 
 const bases = [
-  { key: "joconde", base: "Collections des musées de France (Joconde)" },
-  { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)" },
-  { key: "merimee", base: "Patrimoine architectural (Mérimée)" },
-  { key: "memoire", base: "Photographies (Mémoire)" },
-  { key: "palissy", base: "Patrimoine mobilier (Palissy)" },
-  { key: "enluminures", base: "Enluminures (Enluminures)" },
-  { key: "museo", base: "Répertoire des Musées de France (Muséofile)" },
-  { key: "autor", base: "Ressources biographiques (Autor)"}
+  { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
+  { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)", img: "/static/topics/mnr.jpg" },
+  { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
+  { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
+  { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
+  { key: "enluminures", base: "Enluminures (Enluminures)", img: "/static/topics/enluminures.jpg" },
+  { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
+  { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg"}
 ];
 
 class SearchAdvanced extends React.Component {
-  onBaseChange = e => {
+  onBaseChange(e){
     const value = e.target.value;
     this.props.router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
   };
@@ -1044,8 +1044,22 @@ class SearchAdvanced extends React.Component {
 
     return (
       <div className="advanced-search">
-        <div className="collection">
-          <Row className="advanced-search-title">
+        <div className="radioContainer">
+            {bases.map( base => 
+              <div className="radioCard">
+                <img src={base.img} alt={base.key} className="radioImg" height="220" />
+                <div className="radioButtonContainer">
+                  <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
+                          onChange={e => this.onBaseChange(e)}/>
+                  <div className="radioName">
+                    {base.base}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        <div className="collection">          
+          {/* <Row className="advanced-search-title">
             {hasBase ? <div>Dans la base</div> : ""}
             <select value={this.props.base} onChange={this.onBaseChange}>
               <option value="">{!hasBase ? "Sélectionnez une base" : null}</option>
@@ -1054,9 +1068,9 @@ class SearchAdvanced extends React.Component {
                   {e.base}
                 </option>
               ))}
-            </select>
+            </select> 
             {hasBase ? <div>je recherche</div> : null}
-          </Row>
+          </Row>*/}
         </div>
         {hasBase ? (
           <QueryBuilder
@@ -1215,6 +1229,37 @@ class SearchAdvanced extends React.Component {
             left: 10px;
             font-size: 10px;
             max-width: 400px;
+          }
+          .radioContainer{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+          .radioCard{
+            display: flex;
+            flex-direction: column;
+            width: 180px;
+            margin: 15px;
+          }
+          .radioImg{
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+          }
+          .radioButtonContainer{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+          }
+          .radioButton{
+            box-shadow: none !important;
+          }
+          .radioName{
+            font-weight: 600;
+            font-size: 15px;
+            margin-left: 5px;
           }
         `}</style>
       </div>
