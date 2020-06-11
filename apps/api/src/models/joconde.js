@@ -836,7 +836,16 @@ const Schema = new mongoose.Schema(
         description: "Lien vidéo. Doit être une URL valide.",
         label: "Lien Vidéo"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "joconde" }
 );

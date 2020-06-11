@@ -12,10 +12,12 @@ export default class DeleteButton extends React.Component {
     const toastrConfirmOptions = {
       onOk: () => {
         API.deleteNotice(this.props.noticeType, ref).then(() => {
-          toastr.success(
-            "Notice supprimée",
-            "La modification sera visible dans 1 à 5 min en diffusion"
-          );
+          API.createDeleteHistorique(ref, this.props.noticeType).then(() => {
+            toastr.success(
+              "Notice supprimée et historique de suppression sauvegardé",
+              "La modification sera visible dans 1 à 5 min en diffusion"
+            );
+          });
         });
       }
     };

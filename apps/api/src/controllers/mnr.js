@@ -6,7 +6,9 @@ const upload = multer({ dest: "uploads/" });
 const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
+const NoticesOAI = require("../models/noticesOAI");
+
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
@@ -56,6 +58,8 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
@@ -90,9 +94,24 @@ router.put(
       }
 
       transformBeforeUpdate(notice);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
       const doc = new Mnr(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(doc);
       promises.push(updateNotice(Mnr, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
@@ -117,9 +136,17 @@ router.post(
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
     }
     try {
+      let oaiObj = {
+        REF: e.notice.REF,
+        BASE: getBaseCompletName(e.notice.BASE),
+        DMAJ: e.notice.DMIS
+      }
       const doc = new Mnr(notice);
+      const obj2 = new NoticesOAI(oaiObj)
+
       checkESIndex(doc);
       await doc.save();
+      await obj2.save();
       res.send({ success: true, msg: "OK" });
     } catch (error) {
       capture(error);
@@ -143,6 +170,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Mnr.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -156,6 +185,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     }
     const promises = doc.VIDEO.map(f => deleteFile(f, "mnr"));
     promises.push(doc.remove());
+    promises.push(docOai.remove());
     await Promise.all(promises);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {

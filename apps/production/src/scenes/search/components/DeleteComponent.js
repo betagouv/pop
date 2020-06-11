@@ -150,6 +150,7 @@ function DeleteProcessor({ ctx, onFinish, collection }) {
         // Delete all.
         for (let i in docs) {
           await API.deleteNotice(collection, docs[i]);
+          await API.createDeleteHistorique(docs[i], collection);
         }
 
         // Success, end process.

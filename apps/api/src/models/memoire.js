@@ -1098,7 +1098,16 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Nom de l'image numérisée"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "memoire" }
 );

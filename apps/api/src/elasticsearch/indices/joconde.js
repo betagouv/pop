@@ -2,6 +2,14 @@ module.exports = {
   settings: {
     analysis: {
       filter: {
+        char_filter:{
+          replace_and:{
+            type: "mapping",
+            ppings: [
+              "&=> and"
+            ]
+	    		}
+	    	},
         french_elision: {
           type: "elision",
           articles_case: true,
@@ -789,6 +797,64 @@ module.exports = {
         },
         POP_COORDONNEES: {
           type: "geo_point"
+        },
+        HISTORIQUE: {
+          properties: {
+            _id: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            nom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            prenom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            email: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            date: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            updateMode: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            }
+          }
         }
       }
     }

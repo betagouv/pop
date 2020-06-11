@@ -11,7 +11,9 @@ const Joconde = require("../models/joconde");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
-const { formattedNow, deleteFile, uploadFile } = require("./utils");
+const NoticesOAI = require("../models/noticesOAI");
+
+const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 
@@ -94,6 +96,8 @@ router.put(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
     if (!notice || !notice.REF) {
       return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
     }
@@ -123,12 +127,26 @@ router.put(
 
     await transformBeforeCreateOrUpdate(notice);
 
+    //Ajout de l'historique de la notice
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    
+    let HISTORIQUE = notice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+    HISTORIQUE.push(newHistorique);
+    notice.HISTORIQUE = HISTORIQUE;
+
     await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
     await populateBaseFromMuseo(notice, notice.REFMER, Merimee);
     await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
 
     promises.push(updateJocondeNotices(notice));
+    let oaiObj = { DMAJ: notice.DMAJ }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
+    promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
     try {
       await Promise.all(promises);
 
@@ -149,6 +167,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Museo.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -164,6 +184,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
       deleteFile(doc.PHOTO, "museo");
     }
     await doc.remove();
+    await docOai.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

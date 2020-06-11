@@ -17,6 +17,7 @@ import { bucket_url } from "../../config.js";
 import Merimee from "../../entities/Merimee";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -110,7 +111,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "merimee", values, files);
+        await API.updateNotice(this.state.notice.REF, "merimee", values, files, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -438,6 +439,7 @@ class Notice extends React.Component {
                 <CustomField name="LINHA" disabled={!this.state.editable} />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
 
           <Map notice={this.state.notice} />

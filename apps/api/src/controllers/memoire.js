@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const filenamify = require("filenamify");
 const passport = require("passport");
 const validator = require("validator");
+const NoticesOAI = require("../models/noticesOAI");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
@@ -19,6 +20,7 @@ const {
   formattedNow,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   deleteFile,
   findMemoireProducteur,
   identifyProducteur
@@ -237,6 +239,8 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
     if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
       await determineProducteur(notice);
     }
@@ -264,15 +268,29 @@ router.put(
 
     await transformBeforeUpdate(notice);
 
+    //Ajout de l'historique de la notice
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    
+    let HISTORIQUE = notice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+    HISTORIQUE.push(newHistorique);
+    notice.HISTORIQUE = HISTORIQUE;
+
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
 
-    const obj = new Memoire(notice);
-    checkESIndex(obj);
+    const obj = new Memoire(notice)
+    let oaiObj = { DMAJ: notice.DMAJ }
+    checkESIndex(obj)
 
     try {
-      await updateNotice(Memoire, ref, notice);
+      await updateNotice(Memoire, ref, notice)
+      await updateOaiNotice(NoticesOAI, ref, oaiObj)
     } catch (e) {
       capture(e);
       res.status(500).send({ success: false, error: e });
@@ -316,10 +334,19 @@ router.post(
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
+    
+    let oaiObj = {
+      REF: e.notice.REF,
+      BASE: getBaseCompletName(e.notice.BASE),
+      DMAJ: e.notice.DMIS
+    }
 
     const obj = new Memoire(notice);
+    const obj2 = new NoticesOAI(oaiObj)
+
     checkESIndex(obj);
     promises.push(obj.save());
+    promises.push(obj2.save());
     try {
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
@@ -345,6 +372,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Memoire.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -360,6 +389,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     doc.LBASE = [];
     await updateLinks(doc);
     const promises = [doc.remove()];
+    promises.push([docOai.remove()]);
+
     if (doc.IMG) {
       promises.push(deleteFile(doc.IMG, "memoire"));
     }

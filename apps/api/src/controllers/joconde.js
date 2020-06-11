@@ -11,8 +11,9 @@ const Museo = require("../models/museo");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const NoticesOAI = require("../models/noticesOAI");
 const { capture } = require("./../sentry.js");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, identifyProducteur } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 
 // Control properties document, flag each error.
@@ -102,6 +103,8 @@ router.put(
     const notice = JSON.parse(req.body.notice);
 
     try {
+      const updateMode = req.body.updateMode;
+      const user = req.user;
       const prevNotice = await Joconde.findOne({ REF: ref });
       await determineProducteur(notice);
       if (!await canUpdateJoconde(req.user, prevNotice, notice)) {
@@ -138,11 +141,25 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
       const obj = new Joconde(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(obj);
       promises.push(updateNotice(Joconde, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
 
       //Modification des liens entre bases
       await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
@@ -189,9 +206,16 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
 
+      let oaiObj = {
+        REF: e.notice.REF,
+        BASE: getBaseCompletName(e.notice.BASE),
+        DMAJ: e.notice.DMIS
+      }
       const obj = new Joconde(notice);
+      const obj2 = new NoticesOAI(oaiObj)
       checkESIndex(obj);
       promises.push(obj.save());
+      promises.push(obj2.save());
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
     } catch (e) {
@@ -216,6 +240,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Joconde.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -229,6 +254,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     }
     // remove all images and the document itself.
     await Promise.all([doc.IMG.filter(i => i).map(f => deleteFile(f, "joconde")), doc.remove()]);
+    await Promise.all([docOai.remove()]);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

@@ -96,7 +96,16 @@ const Schema = new mongoose.Schema(
         generated: true,
         label: "Date de création"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "enluminures" }
 );
