@@ -23,6 +23,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get producteur by label.
+router.get("/label", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  const {label} = req.query;
+  try {
+      const producteur = await Producteur.findOne({LABEL: label});
+      return res.status(200).send({ success: true, producteur });
+  } catch (error) {
+      capture(error);
+      return res.status(500).send({ success: false, error });
+  }
+});
+
 // Update a producteur.
 router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { _id, label, base } = req.body;

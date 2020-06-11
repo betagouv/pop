@@ -1,0 +1,45 @@
+.deletedNoticesTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.exportButton {
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+  width: 120px;
+  background-color: #008000;
+  color: white;
+  padding: 3px 7px;
+  border-radius: 2px;
+  box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
+}
+
+.exportButton > img {
+  width: 16px;
+  margin-right: 10px;
+}
+
+.deletedNotices {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px 0 #e4e4e4;
+}
+
+.deletedNotices .usersList {
+  padding: 20px;
+  font-size: 14px;
+}
+
+.deletedNotices .admin-email {
+  word-break: break-all;
+  width: 350px;
+}
+
+.historiqueTitle:hover {
+  cursor: pointer;
+}

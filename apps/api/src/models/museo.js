@@ -540,7 +540,16 @@ const Schema = new mongoose.Schema(
         generated: true,
         label: "Contient une position"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "museo" }
 );

@@ -1065,7 +1065,16 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Typologie de la coordonnée géographique de l'édifice"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "palissy" }
 );

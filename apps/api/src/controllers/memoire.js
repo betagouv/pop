@@ -239,6 +239,8 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
     if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
       await determineProducteur(notice);
     }
@@ -265,6 +267,18 @@ router.put(
     }
 
     await transformBeforeUpdate(notice);
+
+    //Ajout de l'historique de la notice
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    
+    let HISTORIQUE = notice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+    HISTORIQUE.push(newHistorique);
+    notice.HISTORIQUE = HISTORIQUE;
 
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);

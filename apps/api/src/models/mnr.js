@@ -464,7 +464,16 @@ const Schema = new mongoose.Schema(
         description: "Droits de copie photo ",
         label: "Droits de copie photo"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "mnr" }
 );

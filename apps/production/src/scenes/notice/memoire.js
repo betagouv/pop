@@ -14,6 +14,7 @@ import Memoire from "../../entities/Memoire";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -92,7 +93,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -333,6 +334,7 @@ class Notice extends React.Component {
                 />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
 
           {this.state.editable ? (

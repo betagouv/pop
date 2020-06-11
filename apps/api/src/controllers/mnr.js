@@ -58,6 +58,8 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
@@ -92,6 +94,19 @@ router.put(
       }
 
       transformBeforeUpdate(notice);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
       const doc = new Mnr(notice);
       let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(doc);

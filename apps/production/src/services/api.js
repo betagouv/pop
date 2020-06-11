@@ -50,6 +50,11 @@ class api {
     return request.fetchJSON("GET", `/producteur`);
   }
 
+  //Get one producteur
+  getProducteurByLabel(label) {
+    return request.fetchJSON("GET", `/producteur/label?label=${label}`);
+  }
+
   // Create a producteur.
   async createProducteur({ label, base }) {
     const props = { label, base };
@@ -82,6 +87,19 @@ class api {
   async createGroup({ label, producteurs }) {
     const props = { label, producteurs };
     return request.fetchJSON("POST", "/groups", props);
+  }
+
+  // Get all delete historiques.
+  getDeleteHistoriques() {
+    return request.fetchJSON("GET", `/deleteHistorique`);
+  }
+
+  // Create delete historique.
+  async createDeleteHistorique( ref, base ) {
+    const props = { ref, base };
+    console.log("create delete historique ref = " + JSON.stringify(props));
+
+    return request.fetchJSON("POST", "/deleteHistorique", props);
   }
 
   // can edit notice depending on producteurs, groups, user
@@ -189,7 +207,7 @@ class api {
             for(let i=0; i<currentNotices.length; i++){
               let e = currentNotices[i];
               if (e.action === "updated") {
-                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
+                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files, "import");
               } else {
                 await this.createNotice(e.collection, e.notice, e.files);
               }
@@ -228,13 +246,13 @@ class api {
   }
 
   // Update one notice.
-  async updateNotice(ref, collection, data, files = []) {
+  async updateNotice(ref, collection, data, files = [], updateMode) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
-    console.log("before return")
+    formData.append("updateMode", updateMode);
     return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 

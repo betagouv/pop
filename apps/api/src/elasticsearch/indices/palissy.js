@@ -1231,6 +1231,64 @@ module.exports = {
               ignore_above: 256
             }
           }
+        },
+        HISTORIQUE: {
+          properties: {
+            _id: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            nom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            prenom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            email: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            date: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            updateMode: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            }
+          }
         }
       }
     }
