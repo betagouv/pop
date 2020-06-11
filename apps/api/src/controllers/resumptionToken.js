@@ -27,7 +27,7 @@ async function createResumptionToken(nbPage,listSize,queryContent){
             FROM: queryContent.from,
             UNTIL: queryContent.until,
             SET: queryContent.set,
-            META: queryContent.metadataprefix,
+            META: queryContent.metadataPrefix,
             SIZE: listSize
         }
         let obj = new resumptionToken(resumpObj)

@@ -802,7 +802,6 @@ function createRecordMemoire(elem,notice){
                 elem.record[1].metadata[0]['oai_dc:dc'].push({'dc:title': notice.TICO})
             }
         }
-
         if('EDIF' in notice){
             if(notice.EDIF != ""){
                 if(subject != ""){
@@ -874,7 +873,6 @@ function createRecordMemoire(elem,notice){
             if(notice.AUTOEU != ""){
                     if(creator != ""){
                         creator.concat(" ;", notice.AUTOEU)
-
                     }else{
                         creator = notice.AUTOEU
                     }
@@ -902,7 +900,7 @@ function createRecordMemoire(elem,notice){
         }
 
         if(creator != ""){
-            elem.record[1].metadata[0]['oai_dc:dc'].push({'dc:creator': subject})
+            elem.record[1].metadata[0]['oai_dc:dc'].push({'dc:creator': creator})
         }
 
         if('CONTACT' in notice){
@@ -916,14 +914,14 @@ function createRecordMemoire(elem,notice){
         if('SCLE' in notice){
             if(notice.SCLE != ""){
                 if(date != ""){
-                    date.concat(" ;", scle)
+                    date.concat(" ;", notice.SCLE)
                 }else{
-                    date = scle
+                    date = notice.SCLE
                 }
                 if(coverageTemporal != ""){
-                    coverageTemporal.concat(" ;", scle)
+                    coverageTemporal.concat(" ;", notice.SCLE)
                 }else{
-                    coverageTemporal = scle
+                    coverageTemporal = notice.SCLE
                 }
             }
         }
@@ -931,18 +929,17 @@ function createRecordMemoire(elem,notice){
         if('DATOEU' in notice){
             if(notice.DATOEU != ""){
                 if(date != ""){
-                    date.concat(" ;", DATOEU)
+                    date.concat(" ;", notice.DATOEU)
                 }else{
-                    date = DATOEU
+                    date = notice.DATOEU
                 }
                 if(coverageTemporal != ""){
-                    coverageTemporal.concat(" ;", DATOEU)
+                    coverageTemporal.concat(" ;", notice.DATOEU)
                 }else{
-                    coverageTemporal = DATOEU
+                    coverageTemporal = notice.DATOEU
                 }
             }
         }  
-        
         if('DATPV' in notice){
             if(notice.DATPV != ""){
                 if(date != ""){
