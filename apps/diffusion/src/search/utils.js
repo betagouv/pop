@@ -39,7 +39,7 @@ function toFrenchRegex(text) {
     .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
     .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
     .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
-    .replace(/([bdfghjklmnpqrstvwxz])/gi, (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`);
+    .replace(/([bdfghjklmnpqrstvwxz])/gi, (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`)
 }
 
 function notStrict(value) {

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const Autor = require("../models/autor");
+const NoticesOAI = require("../models/noticesOAI");
 const passport = require("passport");
-const { formattedNow, updateNotice } = require("./utils");
+const { formattedNow, updateNotice, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/authorization");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -17,6 +18,7 @@ router.get("/:ref", async (req, res) => {
   return res.status(404).send({ success: false, msg: "Document introuvable" });
 });
 
+// PUT for IMPORT
 router.put(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -43,9 +45,12 @@ router.put(
         else{
           // Prepare and update notice.
           await transformBeforeCreateAndUpdate(e.notice, prevNotice);
+          let oaiObj = { DMAJ: e.notice.DMAJ}
           var obj = new Autor(e.notice);   
           checkESIndex(obj);
           promises.push(updateNotice(Autor, ref, e.notice));
+          promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
+
         }
       }
       // Consume promises and send sucessfull result.
@@ -57,6 +62,46 @@ router.put(
     }
   }
 );
+
+// PUT for UPDATE
+router.put(
+  "/:ref",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const ref = req.params.ref;
+
+    const notice = JSON.parse(req.body.notice);
+
+    try {
+      const prevNotice = await Autor.findOne({ REF: ref });
+      if (!canUpdateAutor(req.user, prevNotice, notice)) {
+        return res.status(401).send({
+          success: false,
+          msg: "Autorisation nécessaire pour mettre à jour cette ressource."
+        });
+      }
+      const promises = [];
+
+      // Prepare and update notice.
+      await transformBeforeCreateAndUpdate(notice);
+      await determineProducteur(notice);
+      let oaiObj = { DMAJ: notice.DMAJ}
+      const obj = new Autor(notice);
+      
+      checkESIndex(obj);
+      promises.push(updateNotice(Autor, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
+
+
+      // Consume promises and send sucessful result.
+      await Promise.all(promises);
+      res.status(200).send({ success: true, msg: "Notice mise à jour." });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, error: e });
+    }
+  })
 
 // Create a new notice.
 router.post(
@@ -76,6 +121,11 @@ router.post(
       }
   
       e.notice.DMIS = formattedNow();
+      let oaiObj = {
+        REF: e.notice.REF,
+        BASE: getBaseCompletName(e.notice.BASE),
+        DMAJ: e.notice.DMIS
+      }
       await determineProducteur(e.notice);
       await transformBeforeCreateAndUpdate(e.notice, null);
       if (!canCreateAutor(req.user, e.notice)) {
@@ -84,8 +134,10 @@ router.post(
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
       var obj = new Autor(e.notice);
+      var obj2 = new NoticesOAI(oaiObj)
       checkESIndex(obj);
       promises.push(obj.save());
+      promises.push(obj2.save());
     }
       try {
         await Promise.all(promises);
@@ -102,6 +154,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Autor.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
     if (!doc) {
       return res.status(404).send({
         success: false,
@@ -115,6 +168,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     }
     // remove all images and the document itself.
     await Promise.all([doc.remove()]);
+    await Promise.all([docOai.remove()]);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);

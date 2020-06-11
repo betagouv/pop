@@ -234,6 +234,7 @@ class api {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
+    console.log("before return")
     return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 

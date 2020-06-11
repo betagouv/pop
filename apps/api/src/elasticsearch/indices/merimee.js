@@ -30,7 +30,7 @@ module.exports = {
         replace_and:{
           type: "mapping",
           mappings: [
-            "& => and"
+            "&=> and"
           ]
         }
       },
