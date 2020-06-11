@@ -85,6 +85,7 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
+      await determineProducteur(notice);
       let oaiObj = { DMAJ: notice.DMAJ}
       const obj = new Autor(notice);
       
