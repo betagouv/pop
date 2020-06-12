@@ -1116,9 +1116,6 @@ function createRecordMerimee(elem,notice){
         let subject = ""
         let creator = ""
         let date = ""
-        let rights = ""
-        let type = ""
-        let format = ""
         let coverageSpatial = ""
         let coverageTemporal = ""
 
@@ -1246,9 +1243,9 @@ function createRecordMerimee(elem,notice){
                     subject = notice.WADRS
                 }
                 if(coverageSpatial != ""){
-                    coverageSpatial.concat(" ;",notice.REG)
+                    coverageSpatial.concat(" ;",notice.WADRS)
                 }else{
-                    coverageSpatial = notice.REG
+                    coverageSpatial = notice.WADRS
                 }
             }
         }
@@ -1411,14 +1408,14 @@ function createRecordMerimee(elem,notice){
             notice.DATE.map( date => {
                 if(date != ""){
                     if(date != ""){
-                        date.concat(" ;",notice.date)
+                        date.concat(" ;",date)
                     }else{
-                        date = notice.date
+                        date = date
                     } 
                     if(coverageTemporal != ""){
-                        coverageTemporal.concat(" ;", scle)
+                        coverageTemporal.concat(" ;", date)
                     }else{
-                        coverageTemporal = scle
+                        coverageTemporal = date
                     }
                 }               
             })
