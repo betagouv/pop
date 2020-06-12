@@ -1120,6 +1120,9 @@ class SearchAdvanced extends React.Component {
             margin-right: 20px;
           }
           .react-es-rule {
+            display: flex;
+            flex-direction: row;
+            align-items: center
             margin-top: 5px;
             margin-bottom: 5px;
           }
@@ -1143,6 +1146,8 @@ class SearchAdvanced extends React.Component {
             outline: none;
           }
           .react-es-rule button.react-es-rule-add {
+            width: 40px;
+            margin-right: 20px;
             background-color: #008000;
             color: white;
           }
@@ -1160,6 +1165,7 @@ class SearchAdvanced extends React.Component {
             width: 100%;
           }
           .react-es-rule-value {
+            width: 280px;
             padding-left: 5px;
           }
           .react-es-rule-value:focus {
@@ -1203,7 +1209,7 @@ class SearchAdvanced extends React.Component {
             width: 55px;
           }
           .react-es-rule:first-of-type > .react-es-rule-field {
-            margin-left: 60px;
+            margin-left: 20px;
           }
           .react-es-query-builder {
             margin-top: 25px;
