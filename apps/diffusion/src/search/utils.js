@@ -71,42 +71,12 @@ function query(key, value, cb, shouldOrMust = "should") {
 
 export const operators = [
   {
-    value: "===",
-    text: "égal à (recherche stricte)",
-    useInput: true,
-    query: (key, value) => value && query(key, value, (k, v) => ({ term: { [k]: v } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
-  },
-  {
-    value: "!==",
-    text: "différent de (recherche stricte)",
+    value: "*",
+    text: "contient",
     useInput: true,
     query: (key, value) =>
-      value && query(key, value, (k, v) => ({ bool: { must_not: { term: { [k]: v } } } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
-  },
-  {
-    value: "===*",
-    text: "contient (recherche stricte)",
-    useInput: true,
-    query: (key, value) => value && query(key, value, (k, v) => ({ wildcard: { [k]: `*${v}*` } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
-  },
-  {
-    value: "!==*",
-    text: "ne contient pas (recherche stricte)",
-    useInput: true,
-    query: (key, value) =>
-      value &&
-      query(key, value, (k, v) => ({ bool: { must_not: { wildcard: { [k]: `*${v}*` } } } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
-  },
-  {
-    value: "===^",
-    text: "commence par (recherche stricte)",
-    useInput: true,
-    query: (key, value) => value && query(key, value, (k, v) => ({ wildcard: { [k]: `${v}*` } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
+      value && query(key, value, (k, v) => ({ regexp: { [k]: `.*${notStrict(v)}.*` } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${notStrict(value)}.*`)
   },
   {
     value: "==",
@@ -117,21 +87,12 @@ export const operators = [
     suggestionQuery: (key, value) => suggestionQuery(key, `${notStrict(value)}.*`)
   },
   {
-    value: "!=",
-    text: "différent de",
+    value: "^",
+    text: "commence par",
     useInput: true,
     query: (key, value) =>
-      value &&
-      query(key, value, (k, v) => ({ bool: { must_not: { regexp: { [k]: notStrict(v) } } } })),
+      value && query(key, value, (k, v) => ({ regexp: { [k]: `${notStrict(v)}.*` } })),
     suggestionQuery: (key, value) => suggestionQuery(key, `${notStrict(value)}.*`)
-  },
-  {
-    value: "*",
-    text: "contient",
-    useInput: true,
-    query: (key, value) =>
-      value && query(key, value, (k, v) => ({ regexp: { [k]: `.*${notStrict(v)}.*` } })),
-    suggestionQuery: (key, value) => suggestionQuery(key, `.*${notStrict(value)}.*`)
   },
   {
     value: "!*",
@@ -145,12 +106,52 @@ export const operators = [
     suggestionQuery: (key, value) => suggestionQuery(key, `.*${notStrict(value)}.*`)
   },
   {
-    value: "^",
-    text: "commence par",
+    value: "!=",
+    text: "différent de",
     useInput: true,
     query: (key, value) =>
-      value && query(key, value, (k, v) => ({ regexp: { [k]: `${notStrict(v)}.*` } })),
+      value &&
+      query(key, value, (k, v) => ({ bool: { must_not: { regexp: { [k]: notStrict(v) } } } })),
     suggestionQuery: (key, value) => suggestionQuery(key, `${notStrict(value)}.*`)
+  },
+  {
+    value: "===*",
+    text: "contient (recherche stricte)",
+    useInput: true,
+    query: (key, value) => value && query(key, value, (k, v) => ({ wildcard: { [k]: `*${v}*` } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
+  },
+  {
+    value: "===",
+    text: "égal à (recherche stricte)",
+    useInput: true,
+    query: (key, value) => value && query(key, value, (k, v) => ({ term: { [k]: v } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
+  },
+
+  {
+    value: "===^",
+    text: "commence par (recherche stricte)",
+    useInput: true,
+    query: (key, value) => value && query(key, value, (k, v) => ({ wildcard: { [k]: `${v}*` } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
+  },
+  {
+    value: "!==*",
+    text: "ne contient pas (recherche stricte)",
+    useInput: true,
+    query: (key, value) =>
+      value &&
+      query(key, value, (k, v) => ({ bool: { must_not: { wildcard: { [k]: `*${v}*` } } } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `.*${escapeRegex(value)}.*`)
+  },
+  {
+    value: "!==",
+    text: "différent de (recherche stricte)",
+    useInput: true,
+    query: (key, value) =>
+      value && query(key, value, (k, v) => ({ bool: { must_not: { term: { [k]: v } } } })),
+    suggestionQuery: (key, value) => suggestionQuery(key, `${escapeRegex(value)}.*`)
   },
   {
     value: ">=",
@@ -207,7 +208,13 @@ export const operators = [
             { term: { [k]: "" } },
             // ... or not exists.
             { bool: { must_not: { exists: { field: k } } } }
-          ]
+          ],
+          filter:[{
+            script: {
+                script : "doc['"+k+"'].values.length <= 1"
+            }
+          }],
+          minimum_should_match: 1
         }
       }))
   }

@@ -12,6 +12,7 @@ import Results from "../src/search/Results";
 import Search from "../src/search/Search";
 import { es_url } from "../src/config";
 import queryString from "query-string";
+import {bases} from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
@@ -30,8 +31,20 @@ export default class extends React.Component {
   }
 
   handleSwitchChange = checked => {
+    const hasBase = Boolean(this.props.base);
     if (checked) {
-      Router.push("/search?view=list&mode=advanced", "/advanced-search/list");
+      if(hasBase){
+        let myBase = this.props.base.split('"')
+        if(myBase.length > 3){
+          Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
+        }else{
+          let key = bases.find(e => e.base === myBase[1]).key;
+          Router.push("/advanced-search/list/" + key);
+        }
+      }
+      else{
+        Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
+      }
     } else {
       Router.push("/search?view=list&mode=simple", "/search/list");
     }
