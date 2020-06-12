@@ -179,14 +179,14 @@ async function createMongoQueryNoticeOai(queryContent){
                                 $lte: moment(queryContent.until).format('YYYY-MM-DD')
                             },
                             BASE: queryContent.set
-                        }).sort({DMAJ: -1}).limit(3))  
+                        }).sort({DMAJ: -1}).limit(50))  
                     }else {
                         listNotices.push(await noticesOAI.find({ 
                             DMAJ: { 
                                 $gte: moment(new Date(queryContent.from)).format('YYYY-MM-DD')
                             },
                             BASE: queryContent.set
-                        }).sort({DMAJ: -1}).limit(3)) 
+                        }).sort({DMAJ: -1}).limit(50)) 
                     }
                 }else {
                     if(Object.keys(queryContent).includes("until")){
@@ -195,9 +195,9 @@ async function createMongoQueryNoticeOai(queryContent){
                                 $lte: moment(queryContent.until).format('YYYY-MM-DD')
                             },
                             BASE: queryContent.set
-                        }).sort({DMAJ: -1}).limit(3))
+                        }).sort({DMAJ: -1}).limit(50))
                     }else{
-                        listNotices.push(await noticesOAI.find({BASE: queryContent.set}).sort({DMAJ: -1}).limit(3))
+                        listNotices.push(await noticesOAI.find({BASE: queryContent.set}).sort({DMAJ: -1}).limit(50))
                     }
                 }
             }else{
@@ -208,13 +208,13 @@ async function createMongoQueryNoticeOai(queryContent){
                                 $gte: moment(queryContent.from).format('YYYY-MM-DD'), 
                                 $lte: moment(queryContent.until).format('YYYY-MM-DD')
                             },
-                        }).sort({DMAJ: -1}).limit(3))  
+                        }).sort({DMAJ: -1}).limit(50))  
                     }else {
                         listNotices.push(await noticesOAI.find({ 
                             DMAJ: { 
                                 $gte: moment(new Date(queryContent.from)).format('YYYY-MM-DD')
                             },
-                        }).sort({DMAJ: -1}).limit(3)) 
+                        }).sort({DMAJ: -1}).limit(50)) 
                     }
                 }else {
                     if(Object.keys(queryContent).includes("until")){
@@ -222,9 +222,9 @@ async function createMongoQueryNoticeOai(queryContent){
                             DMAJ: {  
                                 $lte: moment(queryContent.until).format('YYYY-MM-DD')
                             },
-                        }).sort({DMAJ: -1}).limit(3))
+                        }).sort({DMAJ: -1}).limit(50))
                     }else{
-                        listNotices.push(await noticesOAI.find().sort({DMAJ: -1}).limit(3))
+                        listNotices.push(await noticesOAI.find().sort({DMAJ: -1}).limit(50))
                     }
                 }
             }
@@ -253,14 +253,14 @@ async function createMongoQueryNoticeOaiWithToken(token){
                             $lte: moment(token.UNTIL).format('YYYY-MM-DD')
                         },
                         BASE: token.SET
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3))  
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50))  
                 }else {
                     listNotices.push(await noticesOAI.find({ 
                         DMAJ: { 
                             $gte: moment(new Date(token.FROM)).format('YYYY-MM-DD')
                         },
                         BASE: token.SET
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3)) 
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50)) 
                 }
             }else {
                 if("UNTIL" in token && token.UNTIL != ""){
@@ -269,9 +269,9 @@ async function createMongoQueryNoticeOaiWithToken(token){
                             $lte: moment(token.UNTIL).format('YYYY-MM-DD')
                         },
                         BASE: token.SET
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3))
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50))
                 }else{
-                    listNotices.push(await noticesOAI.find({BASE: token.SET}).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3))
+                    listNotices.push(await noticesOAI.find({BASE: token.SET}).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50))
                 }
             }
         }else{
@@ -282,13 +282,13 @@ async function createMongoQueryNoticeOaiWithToken(token){
                             $gte: moment(token.FROM).format('YYYY-MM-DD'), 
                             $lte: moment(token.UNTIL).format('YYYY-MM-DD')
                         },
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3)) 
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50)) 
                 }else {
                     listNotices.push(await noticesOAI.find({ 
                         DMAJ: { 
                             $gte: moment(new Date(token.FROM)).format('YYYY-MM-DD')
                         },
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3)) 
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50)) 
                 }
             }else {
                 if("UNTIL" in token && token.UNTIL != ""){
@@ -296,9 +296,9 @@ async function createMongoQueryNoticeOaiWithToken(token){
                         DMAJ: {  
                             $lte: moment(token.UNTIL).format('YYYY-MM-DD')
                         },
-                    }).sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3)) 
+                    }).sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50)) 
                 }else{
-                    listNotices.push(await noticesOAI.find().sort({DMAJ: -1}).skip(token.CURSOR*3).limit(3))
+                    listNotices.push(await noticesOAI.find().sort({DMAJ: -1}).skip(token.CURSOR*50).limit(50))
                 }
             }
         }
@@ -398,7 +398,7 @@ async function createListIdentifiersXml(queryContent){
         let token = await getResumptionToken(queryContent.resumptionToken)
         token = token[0]
         ListSize = token.SIZE
-        if(token.SIZE > ((token.CURSOR * 3) + 3)){
+        if(token.SIZE > ((token.CURSOR * 50) + 50)){
             let query = {
                 from: token.FROM,
                 until: token.UNTIL,
@@ -410,7 +410,7 @@ async function createListIdentifiersXml(queryContent){
         ListNotices = await createMongoQueryNoticeOaiWithToken(token)
     }else{
         ListSize = await getCompletListSize(queryContent)
-        if(ListSize > 3){
+        if(ListSize > 50){
             resumpToken = await createResumptionToken(0,ListSize,queryContent)
         }
         ListNotices = await createMongoQueryNoticeOai(queryContent)
@@ -508,105 +508,109 @@ async function createGetRecordXml(queryContent){
  * @param {*} queryContent : les arguments de l'api. : arguments de la requéte
  */
 async function createListRecordsXml(queryContent){
-    let ListNotices = []
-    var ListOai = []
-    var ListSize
-    let resumpToken = null
+    try{
+        let ListNotices = []
+        var ListOai = []
+        var ListSize
+        let resumpToken = null
 
-    if(Object.keys(queryContent).includes("resumptionToken")){
-        let token = await getResumptionToken(queryContent.resumptionToken)
-        token = token[0]
-        ListSize = token.SIZE
-        if(token.SIZE > ((token.CURSOR * 3) + 3)){
-            let query = {
-                from: token.FROM,
-                until: token.UNTIL,
-                set: token.SET,
-                metadataprefix : token.META,
+        if(Object.keys(queryContent).includes("resumptionToken")){
+            let token = await getResumptionToken(queryContent.resumptionToken)
+            token = token[0]
+            ListSize = token.SIZE
+            if(token.SIZE > ((token.CURSOR * 50) + 50)){
+                let query = {
+                    from: token.FROM,
+                    until: token.UNTIL,
+                    set: token.SET,
+                    metadataprefix : token.META,
+                }
+                resumpToken = await createResumptionToken(token.CURSOR,ListSize,query)
             }
-            resumpToken = await createResumptionToken(token.CURSOR,ListSize,query)
-        }
-        ListOai = await createMongoQueryNoticeOaiWithToken(token)
-        ListOai.map(  noticesOAI => {
-            noticesOAI.map(  noticeOAI => {
-                ListNotices.push( noticeOAI )
+            ListOai = await createMongoQueryNoticeOaiWithToken(token)
+            ListOai.map(  noticesOAI => {
+                noticesOAI.map(  noticeOAI => {
+                    ListNotices.push( noticeOAI )
+                })
+            }) 
+        }else{
+            ListSize = await getCompletListSize(queryContent)
+            if(ListSize > 50){
+                resumpToken = await createResumptionToken(0,ListSize,queryContent)
+            }
+            ListOai = await createMongoQueryNoticeOai(queryContent)
+            ListOai.map(  noticesOAI => {
+                noticesOAI.map(  noticeOAI => {
+                    ListNotices.push( noticeOAI )
+                })
             })
-        }) 
-    }else{
-        ListSize = await getCompletListSize(queryContent)
-        if(ListSize > 3){
-            resumpToken = await createResumptionToken(0,ListSize,queryContent)
         }
-        ListOai = await createMongoQueryNoticeOai(queryContent)
-        ListOai.map(  noticesOAI => {
-            noticesOAI.map(  noticeOAI => {
-                ListNotices.push( noticeOAI )
-            })
-        })
-    }
-    let identifier = { ListRecords: [] }
-    let Promises = []
-    Promises.push(await Promise.all(ListNotices.map( async oai => {
-            const set = getBaseName(oai.BASE)
-            var notice = await set.find({ REF: oai.REF })
-            let base = getBaseCompletName(notice[0].BASE)
-            let elem = {
-                record:
-                [
-                    {
-                        header:
-                        [
-                            {identifier: `oai:${base.toLowerCase()}:${ notice[0].REF }`},
-                            {datestamp: moment(new Date(oai.DMAJ)).format('YYYY-MM-DD')},
-                            {setSpec: base}
-                        ]
-                    },
-                    {
-                        metadata:
-                        [
-                            {'oai_dc:dc': 
+        let identifier = { ListRecords: [] }
+        let Promises = []
+        Promises.push(await Promise.all(ListNotices.map( async oai => {
+                const set = getBaseName(oai.BASE)
+                var notice = await set.find({ REF: oai.REF })
+                let base = getBaseCompletName(notice[0].BASE)
+                let elem = {
+                    record:
+                    [
+                        {
+                            header:
                             [
-                                {
-                                    _attr:
-                                            {
-                                                'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                                                'xmlns:oai_dc':"http://www.openarchives.org/OAI/2.0/oai_dc/",                               
-                                                'xmlns:dc': "http://purl.org/dc/elements/1.1/",
-                                                'xmlns:mml':"http://www.w3.org/1998/Math/MathML",
-                                                'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
-                                            }
+                                {identifier: `oai:${base.toLowerCase()}:${ notice[0].REF }`},
+                                {datestamp: moment(new Date(oai.DMAJ)).format('YYYY-MM-DD')},
+                                {setSpec: base}
+                            ]
+                        },
+                        {
+                            metadata:
+                            [
+                                {'oai_dc:dc': 
+                                [
+                                    {
+                                        _attr:
+                                                {
+                                                    'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
+                                                    'xmlns:oai_dc':"http://www.openarchives.org/OAI/2.0/oai_dc/",                               
+                                                    'xmlns:dc': "http://purl.org/dc/elements/1.1/",
+                                                    'xmlns:mml':"http://www.w3.org/1998/Math/MathML",
+                                                    'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
+                                                }
+                                    }
+                                ]
                                 }
                             ]
-                            }
-                        ]
-                    }
-                ]
-            }
-            createRecord(elem,notice[0])
-            return JSON.stringify(elem)
-        })))
-        Promises.map(  tabpromises => {
-            tabpromises.map(  record => {
-                identifier.ListRecords.push( JSON.parse(record) )
+                        }
+                    ]
+                }
+                createRecord(elem,notice[0])
+                return JSON.stringify(elem)
+            })))
+            Promises.map(  tabpromises => {
+                tabpromises.map(  record => {
+                    identifier.ListRecords.push( JSON.parse(record) )
+                })
             })
-        })
-        if(resumpToken != null){
-            token = {
-                resumptionToken:[
-                    {
-                        _attr:
-                            {
-                                expirationDate: resumpToken.DEXP,
-                                completeListSize: resumpToken.SIZE,
-                                cursor: resumpToken.CURSOR
-                            }
-                    },
-                    resumpToken.TOKEN
-                ]
+            if(resumpToken != null){
+                token = {
+                    resumptionToken:[
+                        {
+                            _attr:
+                                {
+                                    expirationDate: resumpToken.DEXP,
+                                    completeListSize: resumpToken.SIZE,
+                                    cursor: resumpToken.CURSOR
+                                }
+                        },
+                        resumpToken.TOKEN
+                    ]
+                }
+                identifier.ListRecords.push(token)
             }
-            identifier.ListRecords.push(token)
-        }
-        return identifier
+            return identifier
+    }catch(err){
+        return res.status(500).send({ success: false, msg: "Error at createListRecordXml: "+err }) 
+    }
 }
 
 /************************************ Fonctions de constructions du xml ******************************************/
@@ -675,23 +679,27 @@ async function createXmlFileIdentify(queryContent,responseContent){
  * @param {*} queryContent : les arguments de l'api. 
  */
 async function createXmlFileListIdentifiers(queryContent){
-    resp = {
-        'OAI-PMH': [
-            {
-                _attr:
-                    {
-                        xmlns: "http://www.openarchives.org/OAI/2.0/",
-                        'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                        'xmlns:dc': "http://purl.org/dc/elements/1.1/",
-                        'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
-                    }
-            },
-            {responseDate: new Date().toISOString()}
-        ]
+    try {
+        resp = {
+            'OAI-PMH': [
+                {
+                    _attr:
+                        {
+                            xmlns: "http://www.openarchives.org/OAI/2.0/",
+                            'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
+                            'xmlns:dc': "http://purl.org/dc/elements/1.1/",
+                            'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
+                        }
+                },
+                {responseDate: new Date().toISOString()}
+            ]
+        }
+        resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
+        resp['OAI-PMH'].push(await createListIdentifiersXml(queryContent))
+        return xml(resp, {declaration: true})
+    }catch(err){
+        return res.status(500).send({ success: false, msg: "Error at createListRecordsXml: "+err })
     }
-    resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
-    resp['OAI-PMH'].push(await createListIdentifiersXml(queryContent))
-    return xml(resp, {declaration: true})
 }
 
 /**
@@ -700,23 +708,27 @@ async function createXmlFileListIdentifiers(queryContent){
  * @param {*} queryContent : les arguments de l'api. 
  */
 async function createXmlFileListRecords(queryContent){
-    resp = {
-        'OAI-PMH': [
-            {
-                _attr:
-                    {
-                        xmlns: "http://www.openarchives.org/OAI/2.0/",
-                        'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                        'xmlns:dc': "http://purl.org/dc/elements/1.1/",
-                        'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
-                    }
-            },
-            {responseDate: new Date().toISOString()}
-        ]
+    try{
+        resp = {
+            'OAI-PMH': [
+                {
+                    _attr:
+                        {
+                            xmlns: "http://www.openarchives.org/OAI/2.0/",
+                            'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
+                            'xmlns:dc': "http://purl.org/dc/elements/1.1/",
+                            'xsi:schemaLocation': "http://www.openarchives.org/OAI/2.0/" + "\nhttp://www.openarchives.org/OAI/2.0OAI-PMH.xsd"
+                        }
+                },
+                {responseDate: new Date().toISOString()}
+            ]
+        }
+        resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
+        resp['OAI-PMH'].push(await createListRecordsXml(queryContent))
+        return xml(resp, {declaration: true})
+    }catch(err){
+        return res.status(500).send({ success: false, msg: "Error at createListRecordsXml: "+err })
     }
-    resp['OAI-PMH'].push({request: [{_attr: queryContent }, baseUrl]})
-    resp['OAI-PMH'].push(await createListRecordsXml(queryContent))
-    return xml(resp, {declaration: true})
 }
 
 async function createXmlFileGetRecord(queryContent){
