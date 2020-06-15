@@ -64,13 +64,15 @@ export default class BucketButton extends React.Component {
                         <div className="btn-bucket">
                             <div>Supprimer</div>
                         </div>
-                    </div> :
-                    <div className={`btn btn-outline-success d-none d-sm-block ${this.checkInBucket(this.props.base, this.props.reference) ? "pressed" : ""}`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
+                    </div> : 
+                    (this.checkInBucket(this.props.base, this.props.reference) ? 
+                    <div></div> :
+                    <div className={`btn btn-outline-success d-none d-sm-block`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Ajouter au panier</div>
                         </div>
                     </div>
-                    }
+                    )}
                 </div>
                 <style jsx>{`
                     .btn-bucket{

@@ -82,6 +82,32 @@ export default class Bucket extends React.Component {
     }
   }
 
+  //Détermine le nom du fichier téléchargé pour le pdf
+  PdfFileName(){
+    var today = new Date();
+    var month = (today.getMonth() + 1) == 13 ? 1 : (today.getMonth() + 1);
+    var data = today.getFullYear() + '-' + ((month < 10) ? "0" : "") + month.toString() + '-' + ((today.getDate() < 10) ? "0" : "") + today.getDate();
+    return "panier_de_notices_" + data + ".pdf";
+  }
+
+  //Vide le panier de notices
+  EmptyBucket(){    
+    const cookies = new Cookies();
+    let currentBucket = cookies.get("currentBucket");
+    // Obliger d'imiter la méthode de removebucket sinon les champs n'existent pas
+    //Filtre en fonction de la notice que l'on veut enlever
+    currentBucket = currentBucket.filter( item => {
+      return item.ref === null;
+    });
+
+    //Transformation de la liste de notice au format json et modification du cookie
+    //Ainsi que le state contenant la liste des notices
+    var jsonCurrentBucket = JSON.stringify(currentBucket);
+    cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
+    this.setState({bucket: this.state.bucket.filter(notice =>
+      { return notice.REF === null })
+    });
+  }
 
   render() {
     const formatedDate = (new Intl.DateTimeFormat('en-GB').format(new Date())).replace("/", "_");
@@ -110,7 +136,7 @@ export default class Bucket extends React.Component {
       <div>
         <PDFDownloadLink 
           document={pdf} 
-          fileName="panier_de_notices.pdf"
+          fileName={this.PdfFileName()}
           style={{backgroundColor: "#377d87",
                   border: 0,
                   color: "#fff",
@@ -127,6 +153,23 @@ export default class Bucket extends React.Component {
         </PDFDownloadLink>
       </div>
     )
+
+    const EmptyBucketButton = () => (
+      <div><Button  style={{
+        backgroundColor: "#377d87",
+        border: 0,
+        color: "#fff",
+        maxWidth: "250px",
+        width: "100%",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        textAlign: "center",
+        borderRadius: "5px"}}
+        onClick={() => this.EmptyBucket()}>Vider le panier</Button>
+      </div>
+    ) 
 
     return (
       <div className="bucketList">
@@ -147,6 +190,11 @@ export default class Bucket extends React.Component {
                 (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
               }
               </div>
+
+              {
+                (this.state.bucket.length > 0 && this.state.display == true)?
+                EmptyBucketButton() : ""
+              }
 
               {
                 (this.state.bucket.length > 0 && this.state.display == true)? 

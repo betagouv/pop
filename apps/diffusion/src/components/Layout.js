@@ -31,8 +31,7 @@ export default class Layout extends React.Component {
                 <Link href="/bucket">
                   <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
-                    <div id="nbBucket">Consulter mon panier {this.getNbNoticesInBucket() != 0 ? " ( "+ this.getNbNoticesInBucket() + " )" : "" } </div>
-                    </div>
+                    <div id="nbBucket">{this.getNbNoticesInBucket() != 0 ? "Consulter mon panier ( "+ this.getNbNoticesInBucket() + " )" : "Panier vide" } </div>                    </div>
                   </a>
                 </Link>
               </div>
