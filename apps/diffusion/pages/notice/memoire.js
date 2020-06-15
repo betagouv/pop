@@ -63,7 +63,7 @@ export default class extends React.Component {
 
   photographer() {
     let autp = this.props.notice.AUTP;
-    return (autp && <div style={{display: "flex", flexDirection: "row"}}>
+    return ((autp && autp.length > 0) && <div style={{display: "flex", flexDirection: "row"}}>
               {autp.map( (photographer, index) => {
                 const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
                 return (<div style={{display: "flex", flexDirection: "row"}}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length-1) ? <div>,&nbsp;</div> : ""}</div>);

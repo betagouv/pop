@@ -149,7 +149,6 @@ router.put(
     promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
     try {
       await Promise.all(promises);
-
       //Maj index elasticsearch
       var obj = new Museo(notice);   
       checkESIndex(obj);
