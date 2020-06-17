@@ -34,7 +34,7 @@ const Memoire = ({ data }) => {
     data.DATOEU ? "" : data.SCLE
   ]);
 
-  const author = data.AUTP.join(', ');
+  const author = data.AUTP ? data.AUTP.join(', ') : "";
   const date = joinData([data.DATPV, data.DATOR]);
   const loc = data.LOCA;
 
