@@ -11,6 +11,7 @@ const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+const utilsnocite = require("utils/");
 
 const {
   formattedNow,
@@ -58,6 +59,16 @@ async function withFlags(notice) {
   // INSEE & DPT must start with the same first 2 letters.
   if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
     notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+  }
+
+  // REFJOC must point toward existing REF in Joconde
+  if (notice.REFJOC){ // manque le call sur la fonction qui check les ref
+    notice.POP_FLAGS.push("REFJOC_MATCH_FAIL");
+  }
+
+  // REFMUS must point toward existing REF in Muséofile
+  if (notice.REFMUS){
+    notice.POP_FLAGS.push("REFMUS_MATCH_FAIL");
   }
   // REF must be an Alphanumeric.
   if (!validator.isAlphanumeric(notice.REF)) {
