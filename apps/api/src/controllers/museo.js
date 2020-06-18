@@ -12,6 +12,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
 
 const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -19,6 +20,17 @@ const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+
+async function withFlags(notice) {
+  notice.POP_FLAGS = [];
+
+  //check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFMEM, Memoire, notice.POP_FLAGS, "REFMEM");
+  notice.POP_FLAGS = await checkValidRef(notice.REFPAL, Palissy, notice.POP_FLAGS, "REFPAL");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMER, Merimee, notice.POP_FLAGS, "REFMER");
+
+  return notice;
+}
 
 async function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
@@ -40,6 +52,8 @@ async function transformBeforeCreateOrUpdate(notice) {
   else {
     notice.PRODUCTEUR = "";
   }
+
+  notice = await withFlags(notice);
 }
 
 async function updateJocondeNotices(notice) {

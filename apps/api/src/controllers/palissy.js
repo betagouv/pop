@@ -11,6 +11,8 @@ const Palissy = require("../models/palissy");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
+
 
 
 const {
@@ -117,6 +119,10 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
     }
   }
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
   
   return notice;
 }

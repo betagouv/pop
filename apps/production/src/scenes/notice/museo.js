@@ -120,6 +120,7 @@ class Museo extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
           <FieldImages
             name="PHOTO"
             canOrder={this.state.editable}

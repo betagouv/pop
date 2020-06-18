@@ -14,6 +14,7 @@ const Autor = require("../models/autor");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const Producteur = require("../models/producteur");
+const { checkValidRef } = require("./utils/notice");
 
 const {
   uploadFile,
@@ -68,6 +69,10 @@ async function withFlags(notice) {
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
   return notice;
 }
 
