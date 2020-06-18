@@ -9,6 +9,9 @@ export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk
   return(
     <Document>
       <Page style={styles.page}>
+        <Text style={styles.header} fixed>
+          {" "}
+        </Text>
         <Text style={styles.title}>{title}</Text>
 
         <View style={styles.content}>

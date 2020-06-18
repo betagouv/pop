@@ -9,6 +9,9 @@ export function EnluminuresPdf(notice, title){
   return(
     <Document>
       <Page style={styles.page}>
+        <Text style={styles.header} fixed>
+          {" "}
+        </Text>
         <Text style={styles.title}>{notice.TITR + " - " + notice.SUJET}</Text>
 
         <View style={styles.content}>
