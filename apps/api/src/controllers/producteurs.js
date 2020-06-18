@@ -149,6 +149,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 function producteurValidation( _id, label, base, allProducteurs ) {
     let msg = "";
     let usedBases = [];
+    let usedPrefixes = [];
 
     // Some params are required.
     if (!label) {
@@ -158,9 +159,15 @@ function producteurValidation( _id, label, base, allProducteurs ) {
 
     //Si parmis les producteurs existants il y en a un portant le même nom, retourne une erreur
     allProducteurs.map(item => {
+      //Ajout des préfixes déjà utilisés
+      if(item._id != _id){
+        item.BASE.map( base => {
+          usedPrefixes.push(...base.prefixes);
+        })
         if(String(item.LABEL) === label && item._id != _id){
             msg = "Ce nom de producteur existe déjà";
         }
+      }
     })
     if(msg!=""){
         return { success: false, msg };
@@ -168,21 +175,35 @@ function producteurValidation( _id, label, base, allProducteurs ) {
 
     // Vérifie si les bases et les préfixes sont remplis
     for(let i=0; i<base.length; i++){
+      const testedBase = base[i];
+      
       //Test si base et préfixe sont remplis
-      if(base[i].base==""){
+      if(testedBase.base==""){
         msg = "Veuillez sélectionner une base";
         return { success: false, msg };
       }
 
       //Test si une même base est sélectionnée plusieurs fois
       for(let j=0; j<usedBases.length; j++){
-        if(usedBases[j] == base[i].base){
+        if(usedBases[j] == testedBase.base){
           msg = "Une même base ne doit pas être sélectionnée plusieurs fois pour un même producteur";
           return { success: false, msg };
         }
       }
+
+      //Test si un préfixe est déjà utilisé
+      for(let k=0; k<testedBase.prefixes.length; k++){
+        if(usedPrefixes.includes(testedBase.prefixes[k])){
+          msg = "Le préfixe " + testedBase.prefixes[k] + " est déjà utilisé";
+          return { success: false, msg };
+        }
+        else{
+          usedPrefixes.push(testedBase.prefixes[k]);
+        }
+      }
+
       //Ajout de la base utilisée dans la liste des bases
-      usedBases[i] = base[i].base;
+      usedBases[i] = testedBase.base;
     }
     return { success: true };
 }
