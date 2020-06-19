@@ -33,7 +33,7 @@ const Schema = new mongoose.Schema(
     LMDP: { type: String, default: "", documentation: { label: "Liens vers Médiathek" } },
     LMORT: { type: String, default: "", documentation: { label: "Lieux de décès" } },
     LNAISS: { type: String, default: "", documentation: { label: "Lieu de naissance" } },
-    LOCA: { type: String, default: "", documentation: { label: "Localisation" } },
+    AUTORLOCA: { type: String, default: "", documentation: { label: "Localisation" } },
     NATIO: { type: String, default: "", documentation: { label: "Nationnalités" } },
     NOM: { type: String, default: "", documentation: { label: "Nom" } },
     PREN: { type: String, default: "", documentation: { label: "Prénom" } },

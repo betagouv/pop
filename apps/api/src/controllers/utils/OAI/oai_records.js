@@ -155,12 +155,12 @@ function createRecordAutor(elem,notice){
             elem.record[1].metadata[0]['oai_dc:dc'].push({'dc:type': type})
         }
 
-        if('LOCA' in notice){
-            if(notice.LOCA != ""){
+        if('AUTORLOCA' in notice){
+            if(notice.AUTORLOCA != ""){
                 if(coverageSpatial != ""){
-                    coverageSpatial.concat(" ;",notice.LOCA)
+                    coverageSpatial.concat(" ;",notice.AUTORLOCA)
                 }else{
-                    coverageSpatial = notice.LOCA
+                    coverageSpatial = notice.AUTORLOCA
                 }
             }
         }
