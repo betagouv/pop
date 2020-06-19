@@ -15,9 +15,10 @@ const NoticesOAI = require("../models/noticesOAI");
 const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
+const { checkValidRef } = require("./utils/notice");
 
 // Control properties document, flag each error.
-function withFlags(notice) {
+async function withFlags(notice) {
   notice.POP_FLAGS = [];
   // Required properties.
   ["CONTACT", "MUSEO", "REF", "DOMN", "INV", "STAT"]
@@ -45,6 +46,12 @@ function withFlags(notice) {
   if (notice.LVID && !validator.isEmail(notice.LVID)) {
     notice.POP_FLAGS.push("LVID_INVALID_EMAIL");
   }
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFMEM, Memoire, notice.POP_FLAGS, "REFMEM");
+  notice.POP_FLAGS = await checkValidRef(notice.REFPAL, Palissy, notice.POP_FLAGS, "REFPAL");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMER, Merimee, notice.POP_FLAGS, "REFMER");
+
   return notice;
 }
 
@@ -84,7 +91,7 @@ function transformBeforeCreateAndUpdate(notice) {
           }
         }
       }
-      notice = withFlags(notice);
+      notice = await withFlags(notice);
       resolve();
     } catch (e) {
       capture(e);
@@ -207,9 +214,9 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
 
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Joconde",
+        DMAJ: notice.DMIS
       }
       const obj = new Joconde(notice);
       const obj2 = new NoticesOAI(oaiObj)

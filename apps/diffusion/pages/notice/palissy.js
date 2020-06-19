@@ -45,12 +45,12 @@ export default class extends React.Component {
 
       for(let i=0; i<notice.REFJOC.length; i++){
         const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
-        links.push(linkedJoconde)
+        if(linkedJoconde){links.push(linkedJoconde)}
       }
 
       for(let i=0; i<notice.REFMUS.length; i++){
         const linkedMuseo = await API.getNotice("museo", notice.REFMUS[i]);
-        links.push(linkedMuseo)
+        if(linkedMuseo){links.push(linkedMuseo)}
       }
     }
     return { notice, links, searchParams, searchParamsUrl }

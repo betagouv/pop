@@ -11,6 +11,8 @@ const Palissy = require("../models/palissy");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
+
 
 
 const {
@@ -19,7 +21,7 @@ const {
   checkESIndex,
   updateNotice,
   updateOaiNotice,
-  getBaseCompletName,
+
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
@@ -117,6 +119,10 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
     }
   }
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
   
   return notice;
 }
@@ -349,10 +355,11 @@ router.post(
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
       
+      
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Palissy",
+        DMAJ: notice.DMIS
       }
       const obj = new Palissy(notice);
       const obj2 = new NoticesOAI(oaiObj)

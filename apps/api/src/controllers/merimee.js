@@ -11,6 +11,7 @@ const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
 
 const {
   formattedNow,
@@ -107,6 +108,10 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
     }
   }
+  //Check link refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
+  
   return notice;
 }
 async function transformBeforeCreateOrUpdate(notice) {
@@ -303,9 +308,9 @@ router.post(
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Merimee",
+        DMAJ: notice.DMIS
       }
 
       const promises = [];

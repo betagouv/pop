@@ -25,7 +25,7 @@ function DeleteComponent({ role, group, collection }) {
     }
     return (
       role === "administrateur" &&
-      ["joconde", "merimee", "palissy", "mnr", "memoire"].includes(collection) &&
+      ["joconde", "merimee", "palissy", "mnr", "memoire", "autor"].includes(collection) &&
       allowedGroups(collection).includes(group)
     );
   }

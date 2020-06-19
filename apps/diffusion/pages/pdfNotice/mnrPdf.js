@@ -9,6 +9,9 @@ export function MnrPdf(notice, title){
   return(
     <Document>
       <Page style={styles.page}>
+        <Text style={styles.header} fixed>
+          {" "}
+        </Text>
         <Text style={styles.title}>{notice.TICO || notice.TITR}</Text>
 
         <View style={styles.content}>

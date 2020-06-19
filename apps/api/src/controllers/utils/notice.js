@@ -179,6 +179,20 @@ function findPalissyProducteur(notice) {
   }
 }
 
+async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
+  for(let i=0; i<refList.length; i++){
+    const ref = refList[i];
+    console.log("ref = " + ref);
+    const notice = await collection.findOne({REF: ref});
+    if(!notice){
+      console.log("ref " + ref + " n'existe pas")
+      POP_FLAGS.push(fieldName + "_MATCH_FAIL");
+    }
+  }
+
+  return POP_FLAGS;
+}
+
 module.exports = {
   getNewId,
   checkESIndex,
@@ -187,5 +201,6 @@ module.exports = {
   findMemoireProducteur,
   findMerimeeProducteur,
   findPalissyProducteur,
-  identifyProducteur
+  identifyProducteur,
+  checkValidRef
 };

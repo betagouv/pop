@@ -15,7 +15,13 @@ export const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignContent: "center",
-        backgroundColor: "#e5edef"
+        backgroundColor: "#e5edef",
+        paddingBottom: 15
+    },
+    header: {
+        fontSize: 12,
+        textAlign: 'center',
+        color: 'grey',
     },
     content: {
         display: "flex",

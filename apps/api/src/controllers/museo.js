@@ -12,6 +12,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
 
 const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -20,6 +21,17 @@ const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
+async function withFlags(notice) {
+  notice.POP_FLAGS = [];
+
+  //check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFMEM, Memoire, notice.POP_FLAGS, "REFMEM");
+  notice.POP_FLAGS = await checkValidRef(notice.REFPAL, Palissy, notice.POP_FLAGS, "REFPAL");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMER, Merimee, notice.POP_FLAGS, "REFMER");
+
+  return notice;
+}
+
 async function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   if (notice.PHOTO !== undefined) {
@@ -27,8 +39,21 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   //Si la notice contient des coordonnées, contient geolocalisation devient oui
-  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon) {
-    notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+  if (notice.POP_COORDONNEES) {
+    if(notice.POP_COORDONNEES.lat){
+      notice.POP_COORDONNEES.lat = notice.POP_COORDONNEES.lat.replace(",",".")
+    }
+    if(notice.POP_COORDONNEES.lon){
+      notice.POP_COORDONNEES.lon = notice.POP_COORDONNEES.lon.replace(",",".")
+    }
+
+    //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
+    if(notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+      notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+    }
+    else {
+      notice.POP_CONTIENT_GEOLOCALISATION = "non";
+    }
   } else {
     notice.POP_CONTIENT_GEOLOCALISATION = "non";
   }
@@ -40,6 +65,8 @@ async function transformBeforeCreateOrUpdate(notice) {
   else {
     notice.PRODUCTEUR = "";
   }
+
+  notice = await withFlags(notice);
 }
 
 async function updateJocondeNotices(notice) {
@@ -144,7 +171,11 @@ router.put(
     await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
 
     promises.push(updateJocondeNotices(notice));
-    let oaiObj = { DMAJ: notice.DMAJ }
+    let oaiObj = {
+      REF: notice.REF,
+      BASE: "Museo",
+      DMAJ: notice.DMAJ
+    }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
     try {
