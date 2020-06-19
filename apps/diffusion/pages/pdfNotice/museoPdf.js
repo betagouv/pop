@@ -10,6 +10,9 @@ export function MuseoPdf(notice, title, links){
   return(
     <Document>
       <Page style={styles.page}>
+        <Text style={styles.header} fixed>
+          {" "}
+        </Text>
         <Text style={styles.title}>{title}</Text>
 
         <View style={styles.content}>
