@@ -269,7 +269,7 @@ module.exports = {
                         }
                     }
                 },
-                "LOCA": {
+                "AUTORLOCA": {
                     "type": "text",
                     "fields": {
                         "keyword": {

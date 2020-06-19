@@ -195,7 +195,7 @@ export default class extends React.Component {
                       content="Fonctions et activités"
                       notice={notice}
                       fields={[
-                        "FONC", "SCLE", "DATES", "LOCA", "LOCACT", "ADRS", "LRELA", "FORM", "OEUVR", "SYMB", "INS", "GAR", "PREF", "BIF"
+                        "FONC", "SCLE", "DATES", "AUTORLOCA", "LOCACT", "ADRS", "LRELA", "FORM", "OEUVR", "SYMB", "INS", "GAR", "PREF", "BIF"
                       ]}
                   />
                   <Field title={mapping.autor.FONC.label} content={notice.FONC} separator="#" />

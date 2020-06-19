@@ -83,7 +83,6 @@ const Menu = ({ closeMenu, initialValues }) => (
         "VILLE_M.keyword",
         "REGION.keyword",
         "NOMUSAGE.keyword",
-        "LOCA_AUTOR.keyword",
         "LNAISS.keyword",
         "LMORT.keyword"
       ]}

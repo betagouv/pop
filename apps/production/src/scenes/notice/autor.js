@@ -137,7 +137,7 @@ class Notice extends React.Component {
                 <CustomField name="LIENS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="LMDP" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="LMORT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
-                <CustomField name="LOCA" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="AUTORLOCA" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="LNAISS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="NATIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="IDENT" disabled={!this.state.editable} hidedescriptionifempty={true}/>

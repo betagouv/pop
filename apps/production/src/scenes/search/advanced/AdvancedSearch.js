@@ -331,8 +331,8 @@ export default function AdvancedSearch({ collection, card }) {
               text: "SCLE - Siècle d'activité"
             },
             {
-              value: ["LOCA.keyword"], 
-              text: "LOCA - Localisations"
+              value: ["AUTORLOCA.keyword"], 
+              text: "AUTORLOCA - Localisations"
             },
             {
               value: ["LOCACT.keyword"], 

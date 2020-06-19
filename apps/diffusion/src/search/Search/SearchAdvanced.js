@@ -842,9 +842,9 @@ class SearchAdvanced extends React.Component {
               fields: "SCLE"
             },
             {
-              value: ["LOCA.keyword"], 
+              value: ["AUTORLOCA.keyword"], 
               text: "Localisations",
-              fields: "LOCA"
+              fields: "AUTORLOCA"
             },
             {
               value: ["LOCACT.keyword"], 

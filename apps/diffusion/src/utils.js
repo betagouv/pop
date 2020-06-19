@@ -308,7 +308,7 @@ export function getNoticeInfo(notice) {
       const DATES = notice.DATES.join(", ");
       datesActivites += SCLE ? (SCLE + "; ") : "";
       datesActivites += ((datesActivites!=""?" - ":"") + (DATES ? (DATES) : ""));
-      datesActivites += ((datesActivites!=""?" - ":"") + (notice.LOCA ? (notice.LOCA) : ""));
+      datesActivites += ((datesActivites!=""?" - ":"") + (notice.AUTORLOCA ? (notice.AUTORLOCA) : ""));
       datesActivites += ((datesActivites!=""?" - ":"") + (notice.LOCACT ? (notice.LOCACT) : ""));
       datesActivites += ((datesActivites!=""?" - ":"") + (notice.ADRS ? (notice.ADRS) : ""));
 
