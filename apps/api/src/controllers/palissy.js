@@ -19,7 +19,7 @@ const {
   checkESIndex,
   updateNotice,
   updateOaiNotice,
-  getBaseCompletName,
+
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
@@ -349,10 +349,11 @@ router.post(
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
       
+      
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Palissy",
+        DMAJ: notice.DMIS
       }
       const obj = new Palissy(notice);
       const obj2 = new NoticesOAI(oaiObj)

@@ -137,7 +137,7 @@ router.post(
       e.notice.DMIS = formattedNow();
       let oaiObj = {
         REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
+        BASE: "Autor",
         DMAJ: e.notice.DMIS
       }
       await determineProducteur(e.notice);

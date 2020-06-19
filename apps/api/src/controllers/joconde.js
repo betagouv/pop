@@ -207,9 +207,9 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
 
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Joconde",
+        DMAJ: notice.DMIS
       }
       const obj = new Joconde(notice);
       const obj2 = new NoticesOAI(oaiObj)

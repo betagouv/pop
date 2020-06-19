@@ -137,9 +137,9 @@ router.post(
     }
     try {
       let oaiObj = {
-        REF: e.notice.REF,
-        BASE: getBaseCompletName(e.notice.BASE),
-        DMAJ: e.notice.DMIS
+        REF: notice.REF,
+        BASE: "Mnr",
+        DMAJ: notice.DMIS
       }
       const doc = new Mnr(notice);
       const obj2 = new NoticesOAI(oaiObj)
