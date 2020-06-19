@@ -41,6 +41,16 @@ function flagAsText(flag) {
     return `Le champ ${prop} doit être un lien valide`;
   } else if (flag === "REG_INVALID") {
     return `Le champ REG doit être une région valide : ${regions.join(", ")}`;
+  } else if (flag === "REFJOC_MATCH_FAIL") {
+    return `Les références vers la base Joconde ne sont pas toutes existantes.`;
+  } else if (flag === "REFMUS_MATCH_FAIL") {
+    return `Les références vers la base Muséofile ne sont pas toutes existantes.`;
+  } else if (flag === "REFPAL_MATCH_FAIL") {
+    return `Les références vers la base Palissy ne sont pas toutes existantes.`;
+  } else if (flag === "REFMEM_MATCH_FAIL") {
+    return `Les références vers la base Mémoire ne sont pas toutes existantes.`;
+  } else if (flag === "REFMER_MATCH_FAIL") {
+    return `Les références vers la base Mérimée ne sont pas toutes existantes.`;
   }
 }
 
