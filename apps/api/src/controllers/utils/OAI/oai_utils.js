@@ -50,14 +50,12 @@ function getBaseName(baseName){
             case "palissy":
                 return Palissy
             default:
-                res.status(500).send({
+                return res.status(500).send({
                     success: false,
                     msg: `Unknown base: ${ baseName }`
                 })
-                break
         }
     }catch (error) {
-        capture(error)
         return res.status(500).send({ success: false, msg: "Error at getBaseCompletName: "+error })
       }
 }
@@ -85,11 +83,10 @@ function getBaseCompletName(baseName){
             case "Patrimoine mobilier (Palissy)":
                 return "Palissy"
             default:
-                res.status(500).send({
+                return res.status(500).send({
                     success: false,
                     msg: `Unknown base: ${ baseName }`
                 })
-                break
         }
     }catch (error) {
         capture(error)
@@ -128,11 +125,10 @@ function createRecord(elem,notice){
             createRecordPalissy(elem,notice)
             break
         default:
-            res.status(500).send({
+            return res.status(500).send({
                 success: false,
                 msg: `Unknown base: ${ base }`
             })
-            break
     }
 }
 
@@ -150,13 +146,12 @@ async function createMongoGetRecordQuery(queryContent){
         try{
             return await base.find({ REF: identifier[2]})
         } catch (error) {
-            res.status(500).send({
+            return res.status(500).send({
                 success: false,
                 msg: `Unknown set: ${ queryContent.set }`})
         }
     }catch(error){
-        capture(error)
-        res.status(500).send({ success: false, error })
+        return res.status(500).send({ success: false, error })
 
     }
 }
@@ -230,7 +225,6 @@ async function createMongoQueryNoticeOai(queryContent){
             }
             return listNotices
         }catch (error) {
-            capture(error)
             return res.status(500).send({ success: false, error })
         }
 }
@@ -304,7 +298,6 @@ async function createMongoQueryNoticeOaiWithToken(token){
         }
         return listNotices
     }catch (error) {
-        capture(error)
         return res.status(500).send({ success: false, error })
     }
 }
@@ -378,7 +371,6 @@ async function getCompletListSize(queryContent){
         }
         return listSize
     }catch (error) {
-        capture(error)
         return res.status(500).send({ success: false, error })
     }
 }
@@ -496,7 +488,6 @@ async function createGetRecordXml(queryContent){
         identifier.ListRecords.push(elem)
         return identifier
     }catch(err){
-        capture(error)
         return res.status(500).send({ success: false, msg: "Error at createGetRecordXml: "+error })
     }
 }

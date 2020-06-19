@@ -341,9 +341,9 @@ router.post(
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
     
     let oaiObj = {
-      REF: e.notice.REF,
-      BASE: getBaseCompletName(e.notice.BASE),
-      DMAJ: e.notice.DMIS
+      REF: notice.REF,
+      BASE: "Memoire",
+      DMAJ: notice.DMIS
     }
 
     const obj = new Memoire(notice);

@@ -171,7 +171,11 @@ router.put(
     await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
 
     promises.push(updateJocondeNotices(notice));
-    let oaiObj = { DMAJ: notice.DMAJ }
+    let oaiObj = {
+      REF: notice.REF,
+      BASE: "Museo",
+      DMAJ: notice.DMAJ
+    }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
     try {
