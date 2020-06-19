@@ -22,8 +22,21 @@ function transformBeforeCreateOrUpdate(notice) {
   }
 
   //Si la notice contient des coordonnées, contient geolocalisation devient oui
-  if (notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon) {
-    notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+  if (notice.POP_COORDONNEES) {
+    if(notice.POP_COORDONNEES.lat){
+      notice.POP_COORDONNEES.lat = notice.POP_COORDONNEES.lat.replace(",",".")
+    }
+    if(notice.POP_COORDONNEES.lon){
+      notice.POP_COORDONNEES.lon = notice.POP_COORDONNEES.lon.replace(",",".")
+    }
+
+    //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
+    if(notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+      notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+    }
+    else {
+      notice.POP_CONTIENT_GEOLOCALISATION = "non";
+    }
   } else {
     notice.POP_CONTIENT_GEOLOCALISATION = "non";
   }
