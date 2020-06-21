@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl } = require("../config.js");
+const { esUrl, esPort } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 
@@ -19,7 +19,7 @@ router.post("/scroll", (req, res) => {
     return res.status(400).send({ success: false, msg: "Impossible de parser la requête." });
   }
   const headers = { "Content-Type": "Application/json" };
-  const opts = { host: esUrl, path, body, method: "POST", headers };
+  const opts = { host: esUrl, port: esPort, path, body, method: "POST", headers };
   aws4.sign(opts);
   http
     .request(opts, res1 => {
@@ -31,6 +31,7 @@ router.post("/scroll", (req, res) => {
 router.use("/*/_msearch", (req, res) => {
   let opts = {
     host: esUrl,
+    port: esPort, 
     path: req.originalUrl.replace("/search", ""),
     body: req.body,
     method: "POST",

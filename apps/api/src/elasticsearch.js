@@ -1,11 +1,11 @@
 const AWS = require("aws-sdk");
-const { esUrl } = require("./config.js");
+const { esUrl, esPort } = require("./config.js");
 
 const getElasticInstance = () => {
   let options;
   if (esUrl !== "http://127.0.0.1:9200") {
     options = {
-      hosts: [esUrl],
+      hosts: [`${esUrl}:${esPort}`],
       connectionClass: require("http-aws-es"),
       awsConfig: new AWS.Config({
         region: "eu-west-3",
