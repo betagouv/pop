@@ -1,4 +1,5 @@
 import utils from "../utils";
+import { api_url, bucket_url } from "../../../config"
 
 export default function generate(
   notices,
@@ -17,13 +18,9 @@ export default function generate(
   const updated = notices.filter(e => e._status === "updated");
   const rejected = notices.filter(e => e._status === "rejected");
 
-  const diffUrl = `http://pop${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }.culture.gouv.fr/search/list?import=["${importId}"]`;
+  const diffUrl = `${api_url}/search/list?import=["${importId}"]`;
 
-  const fileUrl = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }/import/${importId}/import.csv`;
+  const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
 
   const imagesNumber = notices.reduce((acc, val) => {
     if (val.status === "created" || val.status === "updated") {

@@ -17,6 +17,7 @@ import { compare } from "./diff";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
 import "./index.css";
+import { api_url } from "../../../config";
 
 class Importer extends Component {
   constructor(props) {
@@ -322,9 +323,7 @@ class Importer extends Component {
       e => e._status === "created" || e._status === "updated"
     ).length;
 
-    const URL = `http://pop${
-      process.env.NODE_ENV === "production" ? "" : "-staging"
-    }.culture.gouv.fr/search/list?import=["${this.state.importId}"]`;
+    const URL = `${api_url}/search/list?import=["${this.state.importId}"]`;
 
     return (
       <div className="working-area">

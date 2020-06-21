@@ -3,6 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = env => {
   const plugins = [
@@ -15,11 +16,7 @@ module.exports = env => {
       inject: "body",
       favicon: path.join("public/favicon.ico")
     }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("dev")
-      }
-    })
+    new Dotenv(),
   ];
 
   return {

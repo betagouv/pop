@@ -10,16 +10,14 @@ import "./index.css";
 
 dotenv.load();
 
-if (process.env.NODE_ENV === "production") {
-  Raven.config("https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21", {
+if (process.env.SENTRY_DSN) {
+  Raven.config(process.env.SENTRY_DSN, {
     release: "pop-production-" + require("../package.json").version
   }).install();
 }
 
-if (process.env.NODE_ENV === "production") {
-  amplitude.getInstance().init("91193206fbbafb6ab42aebba6c765819");
-} else {
-  amplitude.getInstance().init("e67834238a49cf416bacf47c3d8055c4");
+if (process.env.AMPLITUDE_API_KEY) {
+  amplitude.getInstance().init(AMPLITUDE_API_KEY);
 }
 const store = configureStore(/* provide initial state if any */);
 
