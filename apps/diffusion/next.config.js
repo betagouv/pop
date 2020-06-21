@@ -1,4 +1,5 @@
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   webpack: (config, options) => {
@@ -25,6 +26,9 @@ module.exports = {
         ]
       })
     );
+    
+    // Load environment variables from ".env" file.
+    config.plugins.push(new Dotenv());
 
     // Source: https://github.com/zeit/styled-jsx#nextjs
     config.module.rules.push({

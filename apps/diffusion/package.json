@@ -14,6 +14,8 @@
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
     "html2canvas": "^1.0.0-rc.5",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.8.0",
     "isomorphic-unfetch": "^3.0.0",
     "jspdf": "^1.5.3",
     "lodash": "^4.17.14",
@@ -73,7 +75,8 @@
     "dev": "node src/services/server.js",
     "build:prod": "APP_URLS_ENV=production next build",
     "build:staging": "APP_URLS_ENV=staging next build",
-    "start": "NODE_ENV=production node src/services/server.js",
+    "build": "next build",
+    "start": "node src/services/server.js",
     "test": "jest"
   },
   "prettier": {
