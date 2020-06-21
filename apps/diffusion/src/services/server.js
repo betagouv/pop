@@ -5,7 +5,8 @@ const { join } = require("path");
 const Sentry = require("@sentry/node");
 
 Sentry.init({ dsn: "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21" });
-const dev = process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "staging";
+const dev = process.env.NODE_ENV === "dev";
+
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
