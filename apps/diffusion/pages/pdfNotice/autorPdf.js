@@ -5,7 +5,7 @@ import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@reac
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
 
-export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk){
+export function AutorPdf(notice, title, datesLieus, referenceArk){
   return(
     <Document>
       <Page style={styles.page}>
@@ -31,12 +31,13 @@ export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk
                 <Field title="Dates (lieus) d’existence" content={datesLieus} separator="#" isPdf={true} />
             </View> : null}
             
-            {(notice.FONC || datesActivites || notice.LRELA || notice.FORM || notice.OEUVR || notice.SYMB ||
+            {(notice.FONC || notice.DATES || notice.LOCACT || notice.LRELA || notice.FORM || notice.OEUVR || notice.SYMB ||
               notice.INS || notice.GAR || notice.PREF || notice.BIF) ? 
             <View>
               <Text style={styles.subtitle} >Fonctions et activités</Text>
               <Field title={mapping.autor.FONC.label} content={notice.FONC} separator="#" isPdf={true} />
-              <Field title="Dates – lieu d’activités" content={datesActivites} separator="#" isPdf={true} />
+              <Field title={mapping.autor.DATES.label} content={notice.DATES} separator="#" isPdf={true} />
+              <Field title={mapping.autor.LOCACT.label} content={notice.LOCACT} separator="#" isPdf={true} />
               <Field title={mapping.autor.LRELA.label} content={notice.LRELA} separator="#" isPdf={true} />
               <Field title={mapping.autor.FORM.label} content={notice.FORM} separator="#" isPdf={true} />
               <Field title={mapping.autor.OEUVR.label} content={notice.OEUVR} separator="#" isPdf={true} />

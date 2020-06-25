@@ -297,7 +297,7 @@ export default function AdvancedSearch({ collection, card }) {
             },
             {
               value: ["REJET.keyword"], 
-              text: "REJET - Forme rejetée"
+              text: "REJET - Forme rejetée du nom"
             },
             {
               value: ["NATIO.keyword"], 
@@ -320,11 +320,11 @@ export default function AdvancedSearch({ collection, card }) {
             },
             {
               value: ["FONC.keyword"], 
-              text: "FONC - Fonctions"
+              text: "FONC - Profession"
             },
             {
               value: ["DATES.keyword"], 
-              text: "DATES - Dates"
+              text: "DATES - Période d'activités"
             },
             {
               value: ["SCLE.keyword"], 
@@ -336,7 +336,7 @@ export default function AdvancedSearch({ collection, card }) {
             },
             {
               value: ["LOCACT.keyword"], 
-              text: "LOCACT - Localisation d'activité"
+              text: "LOCACT - Lieu d'activité"
             },
             {
               value: ["ADRS.keyword"], 
@@ -356,23 +356,23 @@ export default function AdvancedSearch({ collection, card }) {
             },
             {
               value: ["SYMB.keyword"], 
-              text: "SYMB - Symbole"
+              text: "SYMB - Symbole (pour les orfèvres)"
             },
             {
               value: ["INS.keyword"], 
-              text: "INS - Date d'inculpation"
+              text: "INS - Date d'insculpation (pour les orfèvres)"
             },
             {
               value: ["GAR.keyword"], 
-              text: "GAR - Numéro du registre de la garantie de Paris"
+              text: "GAR - Numéro du registre de la garantie (pour les orfèvres)"
             },
             {
               value: ["PREF.keyword"], 
-              text: "PREF - Numéro du registre de la préfecture"
+              text: "PREF - Numéro du registre de la préfecture (pour les orfèvres)"
             },
             {
               value: ["BIF.keyword"], 
-              text: "BIF - Date de biffage"
+              text: "BIF - Date de biffage (pour les orfèvres)"
             },
             {
               value: ["BIO.keyword"], 

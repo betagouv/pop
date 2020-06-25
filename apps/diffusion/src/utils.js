@@ -302,22 +302,12 @@ export function getNoticeInfo(notice) {
       datesLieus += (notice.DNAISS && notice.DMORT ? " - " : "");
       datesLieus += ( notice.DMORT ? (notice.DMORT + (notice.LMORT? (" ("+notice.LMORT+") ") : "") ) : "");
 
-      //Dates – lieu d’activités : SCLE ; DATES – LOCA – LOCACT – ADRS
-      let datesActivites = "";
-      const SCLE = notice.SCLE.join(", ");
-      const DATES = notice.DATES.join(", ");
-      datesActivites += SCLE ? (SCLE + "; ") : "";
-      datesActivites += ((datesActivites!=""?" - ":"") + (DATES ? (DATES) : ""));
-      datesActivites += ((datesActivites!=""?" - ":"") + (notice.AUTORLOCA ? (notice.AUTORLOCA) : ""));
-      datesActivites += ((datesActivites!=""?" - ":"") + (notice.LOCACT ? (notice.LOCACT) : ""));
-      datesActivites += ((datesActivites!=""?" - ":"") + (notice.ADRS ? (notice.ADRS) : ""));
-
       //Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
       let referenceArk = "";
       referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
       referenceArk += ((notice.ISNI_VERIFIEE? " / " : "") + ( notice.ARK ? ( "Lien ARK : " + notice.ARK) : "")); 
 
-      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, datesActivites, referenceArk };
+      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, referenceArk };
     }
     default:
       return {};
