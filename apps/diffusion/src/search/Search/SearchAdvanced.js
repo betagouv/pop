@@ -1028,7 +1028,6 @@ class SearchAdvanced extends React.Component {
           <div className="radioContainer">
             {bases.map( base => 
               <div className="radioCard">
-                <img src={base.img} alt={base.key} className="radioImg" height="220" />
                 <div className="radioButtonContainer">
                   <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
                           onChange={e => this.onBaseChange(e)}/>
@@ -1239,11 +1238,10 @@ class SearchAdvanced extends React.Component {
           .radioButtonContainer{
             display: flex;
             flex-direction: row;
-            align-items: flex-start;
+            align-items: center;
           }
           .radioButton{
             box-shadow: none !important;
-            height: 25px !important;
           }
           .radioName{
             font-weight: 600;

@@ -116,8 +116,6 @@ export default class extends React.Component {
       { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
       { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg"}
     ];
-
-    console.log("props base = " + this.props.base);
     
     return (
       <Layout>
@@ -176,30 +174,32 @@ export default class extends React.Component {
                       />
                     ) : null}
                   </div>
-                  {this.props.base ? (
-                    <Results
-                      mode={this.props.mode}
-                      view={this.props.view}
-                      base={this.props.base}
-                      initialValues={initialValues}
-                    />
-                  ) : null}
+                  {!(this.props.mode === "advanced" && !this.props.base) ? (
+                      <Results
+                        mode={this.props.mode}
+                        view={this.props.view}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                    ) : null}
                 </div> :
 
                 <div className="search-main-container">
-                  <div className="search-bases-radio-buttons">
-                    {bases.map( base => 
-                      <div className="radioCard">
-                        <div className="radioButtonContainer">
-                              <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
-                                      onChange={() => this.handleRadioBaseChange(base.key)}/>
-                              <div className="radioName">
-                            {base.base}
+                  {(this.props.base != undefined && this.props.base != "")? 
+                    <div className="search-bases-radio-buttons">
+                      {bases.map( base => 
+                        <div className="radioCard">
+                          <div className="radioButtonContainer">
+                                <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
+                                        onChange={() => this.handleRadioBaseChange(base.key)}/>
+                                <div className="radioName">
+                              {base.base}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div> : null}
+
                   <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "")? "-choice" : ""}`}>
                     <div className={`search-container search-container-${this.props.mode}`}>
                       <Search
@@ -296,7 +296,7 @@ export default class extends React.Component {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
+            width: 50%;
             min-height: 1px;
             padding-right: 15px;
             padding-left: 15px;
@@ -312,8 +312,7 @@ export default class extends React.Component {
             background-color: white;
             box-shadow: 0 3px 6px 0 rgba(189,189,189,1);
             border-radius: 5px;
-            width: 20%;
-            max-width: 20%;
+            max-width: 18%;
             margin-left: 20px;
             height: max-content;
           }
