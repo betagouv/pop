@@ -154,10 +154,6 @@ class SearchAdvanced extends React.Component {
               text: "Producteur de la notice",
               fields: "PRODUCTEUR, IDPROD, COPY, EMET"
             },
-            {
-              group: true,
-              text: "Autres champs"
-            },
             //Tous les champs
             {value: ["ACC.keyword"], text:"Accessoire de pose", fields: "ACC"},
             {value: ["ACQU.keyword"], text:"Modalité d'entrée", fields: "ACQU"},
@@ -294,10 +290,6 @@ class SearchAdvanced extends React.Component {
               text: "Sources complémentaires",
               fields: "EXPO, BIBL, COMM"
             },
-            {
-              group: true,
-              text: "Autres champs"
-            },
             //Tous les champs
             { value:["ADPT.keyword"], text: "Ancien dépôt", fields: "ADPT"},
             { value:["APPL.keyword"], text: "Appellation", fields: "APPL"},
@@ -404,10 +396,6 @@ class SearchAdvanced extends React.Component {
               value: ["AUTR.keyword", "AFIG.keyword"],
               text: "Auteur de l'oeuvre ou du modèle",
               fields: "AUTR, AFIG"
-            },
-            {
-              group: true,
-              text: "Autres champs"
             },
             //Tous les champs
             {value: ["REF.keyword"], text: "Référence de la notice", fields: "REF"},
@@ -553,10 +541,6 @@ class SearchAdvanced extends React.Component {
               value: ["DENO.keyword", "PARN.keyword", "PART.keyword"],
               text: "Désignation",
               fields: "DENO, PARN, PART"
-            },
-            {
-              group: true,
-              text: "Autres champs"
             },
             //Tous les champs
             {value: ["REF.keyword"], text: "Référence de la notice", field: "REF"},
@@ -714,10 +698,6 @@ class SearchAdvanced extends React.Component {
               value: ["EXPO.keyword", "BIBL.keyword"],
               text: "Annexes",
               fields: "EXPO, BIBL"
-            },
-            {
-              group: true,
-              text: "Autres champs"
             },
             //Tous les champs
             {value: "AATT.keyword",  text: "Ancienne attribution", fields: "AATT"},
@@ -1044,7 +1024,8 @@ class SearchAdvanced extends React.Component {
 
     return (
       <div className="advanced-search">
-        <div className="radioContainer">
+        {(this.props.base == "" || this.props.base == null) &&
+          <div className="radioContainer">
             {bases.map( base => 
               <div className="radioCard">
                 <img src={base.img} alt={base.key} className="radioImg" height="220" />
@@ -1058,6 +1039,7 @@ class SearchAdvanced extends React.Component {
               </div>
             )}
           </div>
+        }
         <div className="collection">          
           {/* <Row className="advanced-search-title">
             {hasBase ? <div>Dans la base</div> : ""}
@@ -1104,6 +1086,7 @@ class SearchAdvanced extends React.Component {
             border-radius: 5px;
             box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
             max-height: 325px;
+            max-width: 350px;
             height: 40px;
             border-style: none;
             font-weight: normal;
@@ -1130,10 +1113,10 @@ class SearchAdvanced extends React.Component {
             margin-right: 5px;
           }
           .react-es-rule-field {
-            max-width: 35%;
+            max-width: 280px !important;
           }
           .react-es-rule-operator {
-            max-width: 25%;
+            max-width: 230px !important;
           }
           .react-es-rule button {
             margin-left: 5px;
@@ -1147,7 +1130,6 @@ class SearchAdvanced extends React.Component {
           }
           .react-es-rule button.react-es-rule-add {
             width: 40px;
-            margin-right: 20px;
             background-color: #008000;
             color: white;
           }
@@ -1165,7 +1147,7 @@ class SearchAdvanced extends React.Component {
             width: 100%;
           }
           .react-es-rule-value {
-            width: 280px;
+            width: 350px;
             padding-left: 5px;
           }
           .react-es-rule-value:focus {
@@ -1212,14 +1194,10 @@ class SearchAdvanced extends React.Component {
             margin-left: 20px;
           }
           .react-es-query-builder {
-            margin-top: 25px;
-          }
-
-          .groupTitle {
-            font-size: 15px;
-            font-weight: bold;
-            max-width: 400px;
-            color: #000001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 5px;
           }
           .seeMoreOption {
             font-size: 15px;
@@ -1229,12 +1207,16 @@ class SearchAdvanced extends React.Component {
           .option_enabled {
             text-indent: 10px;
             font-size: 15px;
+            font-weight: bold;
             max-width: 400px;
           }
           .option_disabled {
             left: 10px;
             font-size: 10px;
             max-width: 400px;
+          }
+          .option_invisible{
+            font-size: 3px;
           }
           .radioContainer{
             display: flex;
@@ -1244,8 +1226,8 @@ class SearchAdvanced extends React.Component {
           .radioCard{
             display: flex;
             flex-direction: column;
-            width: 180px;
             margin: 15px;
+            max-width: 200px;
           }
           .radioImg{
             width: 100%;
@@ -1261,6 +1243,7 @@ class SearchAdvanced extends React.Component {
           }
           .radioButton{
             box-shadow: none !important;
+            height: 25px !important;
           }
           .radioName{
             font-weight: 600;
