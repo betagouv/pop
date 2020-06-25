@@ -20,14 +20,14 @@ export function AutorPdf(notice, title, datesLieus, referenceArk){
               notice.INI || notice.REJET || notice.NATIO || datesLieus) ?
             <View>
                 <Text style={styles.subtitle} >Identification</Text>
-                <Field title={mapping.autor.NOM} content={notice.NOM} separator="#" isPdf={true} />
-                <Field title={mapping.autor.PREN} content={notice.PREN} separator="#" isPdf={true} />
-                <Field title={mapping.autor.PNOM} content={notice.PNOM} separator="#" isPdf={true} />
-                <Field title={mapping.autor.TYPID} content={notice.TYPID} separator="#" isPdf={true} />
-                <Field title={mapping.autor.ALIAS} content={notice.ALIAS} separator="#" isPdf={true} />
-                <Field title={mapping.autor.INI} content={notice.INI} separator="#" isPdf={true} />
-                <Field title={mapping.autor.REJET} content={notice.REJET} separator="#" isPdf={true} />
-                <Field title={mapping.autor.NATIO} content={notice.NATIO} separator="#" isPdf={true} />
+                <Field title={mapping.autor.NOM.label} content={notice.NOM} separator="#" isPdf={true} />
+                <Field title={mapping.autor.PREN.label} content={notice.PREN} separator="#" isPdf={true} />
+                <Field title={mapping.autor.PNOM.label} content={notice.PNOM} separator="#" isPdf={true} />
+                <Field title={mapping.autor.TYPID.label} content={notice.TYPID} separator="#" isPdf={true} />
+                <Field title={mapping.autor.ALIAS.label} content={notice.ALIAS} separator="#" isPdf={true} />
+                <Field title={mapping.autor.INI.label} content={notice.INI} separator="#" isPdf={true} />
+                <Field title={mapping.autor.REJET.label} content={notice.REJET} separator="#" isPdf={true} />
+                <Field title={mapping.autor.NATIO.label} content={notice.NATIO} separator="#" isPdf={true} />
                 <Field title="Dates (lieus) d’existence" content={datesLieus} separator="#" isPdf={true} />
             </View> : null}
             
