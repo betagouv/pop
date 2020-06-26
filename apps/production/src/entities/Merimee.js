@@ -39,6 +39,10 @@ export default class Merimee extends Notice {
     if (!validator.isAlphanumeric(body.REF)) {
       this._warnings.push("Le champ REF doit être alphanumérique");
     }
+    // REF max length should be 10 characters.
+    if (body.REF && body.REF.length > 10) {
+      this._errors.push("La longueur du champ REF ne doit pas dépasser 10 caractères");
+    }
     // DOSURL and DOSURLPDF must be valid URLs.
     ["DOSURL", "DOSURLPDF"]
       .filter(prop => body[prop] && !validator.isURL(body[prop]))
