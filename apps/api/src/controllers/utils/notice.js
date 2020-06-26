@@ -71,6 +71,7 @@ function addZeros(v, zeros) {
 // Sinon retourne null
 async function identifyProducteur(collection, REF, IDPROD, EMET) {
   let producteurs = [];
+  console.log("here")
   await Producteur.find({ "BASE.base": collection}).then(listProducteurs => producteurs = listProducteurs);
   
   //Liste des producteurs donc le préfixe correspond au début de la REF de la notice

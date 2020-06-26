@@ -339,26 +339,19 @@ router.post(
   upload.any(),
   async (req, res) => {
     try {
-      console.log("post 1")
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
-      console.log("post 2")
       if (!await canCreatePalissy(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
-      console.log("post 3")
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
-      console.log("post 4")
       await populateMerimeeREFO(notice);
-      console.log("post 5")
       await transformBeforeCreate(notice);
-      console.log("post 6")
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
-      console.log("post 7")      
       
       let oaiObj = {
         REF: notice.REF,
@@ -369,24 +362,18 @@ router.post(
       const obj2 = new NoticesOAI(oaiObj)
 
       checkESIndex(obj);
-      console.log("post 8")
       const promises = [];
       promises.push(obj.save());
       promises.push(obj2.save());
-      console.log("post 9")
       for (let i = 0; i < req.files.length; i++) {
         promises.push(
           uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i])
         );
       }
-      console.log("post 10")
       await Promise.all(promises);
-      console.log("post 11")
       res.status(200).send({ success: true, msg: "OK" });
-      console.log("----------------------------")
     } catch (e) {
       capture(e);
-      console.log("erreur : "+ e )
       res.status(500).send({ success: false, msg: JSON.stringify(e) });
     }
   }

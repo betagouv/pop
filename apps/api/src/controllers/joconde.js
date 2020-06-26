@@ -62,7 +62,6 @@ function transformBeforeCreate(notice) {
 }
 
 function transformBeforeCreateAndUpdate(notice) {
-  console.log("transformBeforeCreateAndUpdate", notice.IMG);
   return new Promise(async (resolve, reject) => {
     try {
       if (notice.IMG !== undefined) {
@@ -265,6 +264,7 @@ function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
       let noticeProducteur
+      console.log('in')
       noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
       if(noticeProducteur){
         notice.PRODUCTEUR = noticeProducteur;
