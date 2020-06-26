@@ -5,7 +5,8 @@ const {
   createUser,
   getJwtToken,
   removeAllUsers,
-  removeMerimeeNotices
+  removeMerimeeNotices,
+  removeOAINotices
 } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/merimee-1");
 
@@ -25,6 +26,7 @@ afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
   removeMerimeeNotices();
+  removeOAINotices();
 });
 
 async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
@@ -129,7 +131,7 @@ describe("POST /merimee", () => {
       .get(`/merimee/${flagNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-    expect(res.body.POP_FLAGS).toHaveLength(10);
+    expect(res.body.POP_FLAGS).toHaveLength(11);
   });
 });
 

@@ -6,7 +6,8 @@ const {
   getJwtToken,
   removeAllUsers,
   removePalissyNotices,
-  removeMerimeeNotices
+  removeMerimeeNotices,
+  removeOAINotices
 } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/palissy-1");
 const sampleMerimeeNotice = require("./__notices__/merimee-1");
@@ -28,6 +29,7 @@ beforeEach(() => {
   removeAllUsers();
   removePalissyNotices();
   removeMerimeeNotices();
+  removeOAINotices();
 });
 
 async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {

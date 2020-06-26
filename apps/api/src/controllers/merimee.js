@@ -11,6 +11,7 @@ const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
 const { checkValidRef } = require("./utils/notice");
 
 const {
@@ -136,7 +137,6 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -144,12 +144,10 @@ async function transformBeforeCreateOrUpdate(notice) {
       notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
     }
   }
-
   // To prevent crash on ES
   if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   notice = await withFlags(notice);
 }
@@ -292,42 +290,52 @@ router.post(
   upload.any(),
   async (req, res) => {
     try {
+      console.log("POST 1")
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
+      console.log("POST 2")
       if (!await canCreateMerimee(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
+      console.log("POST 3")
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
+      console.log("POST 4")
       notice.REFO = await populateREFO(notice);
+      console.log("POST 5")
       await transformBeforeCreate(notice);
-
+      console.log("POST 6")
       //Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
-
+      console.log("POST 7")
       let oaiObj = {
         REF: notice.REF,
         BASE: "Merimee",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
 
       const promises = [];
       const doc = new Merimee(notice);
       const obj2 = new NoticesOAI(oaiObj)
+      console.log("POST 8")
       checkESIndex(doc);
       promises.push(doc.save());
       promises.push(obj2.save());
+      console.log("POST 9")
       for (let i = 0; i < req.files.length; i++) {
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
       }
-
+      console.log("POST 10")
       await Promise.all(promises);
+      console.log("POST 11")
+      console.log("-------------------------------")
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
+      console.log("ERREUR : "+ e)
       res.status(500).send({ success: false, msg: JSON.stringify(e) });
     }
   }

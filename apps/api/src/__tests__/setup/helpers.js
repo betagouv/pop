@@ -5,6 +5,7 @@ const Mnr = require("../../models/mnr");
 const Memoire = require("../../models/memoire");
 const Palissy = require("../../models/palissy");
 const Merimee = require("../../models/merimee");
+const noticeOAI = require("../../models/noticesOAI");
 
 async function createUser(props = {}) {
   const user = {
@@ -46,6 +47,9 @@ async function removePalissyNotices() {
 async function removeMerimeeNotices() {
   await Merimee.deleteMany();
 }
+async function removeOAINotices() {
+  await noticeOAI.deleteMany();
+}
 
 module.exports = {
   getJwtToken,
@@ -55,5 +59,6 @@ module.exports = {
   removeMemoireNotices,
   removePalissyNotices,
   removeMerimeeNotices,
+  removeOAINotices,
   createUser
 };

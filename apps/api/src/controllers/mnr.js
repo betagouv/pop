@@ -7,6 +7,7 @@ const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
 const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
 
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
@@ -127,29 +128,37 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    console.log("post 1")
     const notice = JSON.parse(req.body.notice);
     await determineProducteur(notice);
+    console.log("post 2")
     transformBeforeCreate(notice);
     if (!await canCreateMnr(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
     }
+    console.log("post 3")
     try {
       let oaiObj = {
         REF: notice.REF,
         BASE: "Mnr",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const doc = new Mnr(notice);
       const obj2 = new NoticesOAI(oaiObj)
+      console.log("post 4")
 
       checkESIndex(doc);
       await doc.save();
+      console.log("post 5")
       await obj2.save();
+      console.log("post 6")
+
       res.send({ success: true, msg: "OK" });
     } catch (error) {
       capture(error);
+      console.log("ERREUR : "+ error)
       res.status(500).send({ success: false, error });
     }
   }
