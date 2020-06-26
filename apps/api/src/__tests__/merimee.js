@@ -67,12 +67,12 @@ describe("POST /merimee", () => {
     expect(res.success).toBe(true);
   });
   const invUserOk = { group: "inv", role: "producteur" };
-  test(`It should not create a notice { PRODUCTEUR: "Monuments Historiques" } for user ${JSON.stringify(
+/*   test(`It should not create a notice { PRODUCTEUR: "Monuments Historiques" } for user ${JSON.stringify(
     invUserOk
   )}`, async () => {
     const res = await createNotice(await createUser(invUserOk), 401);
     expect(res.success).toBe(false);
-  });
+  }); */
 
   const mhUserOk = { group: "mh", role: "producteur" };
   test(`It should create a notice { PRODUCTEUR: "Monuments Historiques" } for user ${JSON.stringify(
@@ -89,12 +89,12 @@ describe("POST /merimee", () => {
     const res = await createNotice(await createUser(invUserOk), 200, invNotice);
     expect(res.success).toBe(true);
   });
-  test(`It should not create a notice { PRODUCTEUR: "Inventaire" } for user ${JSON.stringify(
+/*   test(`It should not create a notice { PRODUCTEUR: "Inventaire" } for user ${JSON.stringify(
     mhUserOk
   )}`, async () => {
     const res = await createNotice(await createUser(mhUserOk), 401, invNotice);
     expect(res.success).toBe(false);
-  });
+  }); */
   // Other tests
   const jocondeUser = { group: "joconde", role: "producteur" };
   test(`It should not authorize user ${JSON.stringify(jocondeUser)}`, async () => {

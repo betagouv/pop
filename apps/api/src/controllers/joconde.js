@@ -185,7 +185,7 @@ router.post(
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
-      if (!canCreateJoconde(req.user, notice)) {
+      if (!(await canCreateJoconde(req.user, notice))) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -245,7 +245,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice joconde ${ref} à supprimer.`
       });
     }
-    if (!canDeleteJoconde(req.user, doc)) {
+    if (!await canDeleteJoconde(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
@@ -264,7 +264,6 @@ function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
       let noticeProducteur
-      console.log('in')
       noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
       if(noticeProducteur){
         notice.PRODUCTEUR = noticeProducteur;

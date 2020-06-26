@@ -352,7 +352,7 @@ router.post(
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
-      
+
       let oaiObj = {
         REF: notice.REF,
         BASE: "Palissy",
