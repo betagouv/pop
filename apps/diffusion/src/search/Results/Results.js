@@ -67,7 +67,7 @@ class Results extends React.Component {
 
   render() {
     return (
-      <div className="result-view">
+      <div className={`result-view${this.props.mode == "advanced" ? "-advanced" : ""}`}>
         {this.renderTabs()}
         {this.renderResults()}
         <style jsx global>{`
