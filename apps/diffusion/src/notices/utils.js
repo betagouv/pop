@@ -149,3 +149,22 @@ export function pdfLinks(value, name){
   }
   return null;
 };
+
+export function highlighting(wholeWord){
+  //highlighting
+  if(wholeWord){
+    const notIncludedTerms = [
+      "l'","le","la","les",
+      "qu'","que","quoi",
+      "n'","ne",
+      "d'","de","du","des",
+      "c'","ce","ca","ces","cette",
+      "jusqu'",
+      "quoiqu'",
+      "lorsqu'",
+      "puisqu'"
+    ];
+    $("p").highlight(wholeWord);
+    wholeWord.split(" ").forEach(word => {if(!notIncludedTerms.includes(String(word))){$("p").highlight(word)}});
+  }
+}
