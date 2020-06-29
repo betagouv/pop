@@ -1,7 +1,15 @@
 const app = require("../app");
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { createUser, getJwtToken, removeAllUsers, removeMnrNotices, removeOAINotices} = require("./setup/helpers");
+const { createUser,
+  getJwtToken,
+  removeAllUsers,
+  removeMnrNotices,
+  removeOAINotices,
+  createProducteurs,
+  createGroups,
+  removeProducteurs,
+  removeGroups} = require("./setup/helpers");
 const sampleNotice = require("./__notices__/mnr-1");
 
 jest.mock("../elasticsearch");
@@ -56,6 +64,9 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
 
 describe("POST /mnr", () => {
   test(`It should create a notice for "administrateur" (group: "admin")`, async () => {
+    await createGroups();
+    await createProducteurs();
+    
     const res = await createNotice(await createUser(), 200);
     expect(res.success).toBe(true);
   });
@@ -115,6 +126,9 @@ describe("DELETE /mnr/:ref", () => {
 
 describe("GET /mnr/:ref", () => {
   test(`It should return a notice by for everyone`, async () => {
+    await removeProducteurs();
+    await removeGroups();
+
     let res = await createNotice(await createUser(), 200);
     res = await request(app)
       .get(`/mnr/${sampleNotice.REF}`)

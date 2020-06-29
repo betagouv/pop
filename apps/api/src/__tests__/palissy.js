@@ -7,7 +7,11 @@ const {
   removeAllUsers,
   removePalissyNotices,
   removeMerimeeNotices,
-  removeOAINotices
+  removeOAINotices,
+  createProducteurs,
+  createGroups,
+  removeProducteurs,
+  removeGroups
 } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/palissy-1");
 const sampleMerimeeNotice = require("./__notices__/merimee-1");
@@ -77,6 +81,9 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
 describe("POST /palissy", () => {
   // PRODUCTEUR: "Monuments Historiques"
   test(`It should create a notice { PRODUCTEUR: "Monuments Historiques" } for "administrateur" (group: "admin")`, async () => {
+    await createGroups();
+    await createProducteurs();
+    
     const res = await createNotice(await createUser(), 200);
     expect(res.success).toBe(true);
   });
@@ -183,6 +190,9 @@ describe("DELETE /palissy/:ref", () => {
 
 describe("GET /palissy/:ref", () => {
   test(`It should return a notice by for everyone`, async () => {
+    await removeProducteurs();
+    await removeGroups();
+    
     let res = await createNotice(await createUser(), 200);
     res = await request(app)
       .get(`/palissy/${sampleNotice.REF}`)

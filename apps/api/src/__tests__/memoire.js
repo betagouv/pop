@@ -6,7 +6,11 @@ const {
   getJwtToken,
   removeAllUsers,
   removeMemoireNotices,
-  removeOAINotices
+  removeOAINotices,
+  createProducteurs,
+  createGroups,
+  removeProducteurs,
+  removeGroups
 } = require("./setup/helpers");
 let sampleNotice = require("./__notices__/memoire-1");
 
@@ -63,6 +67,8 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
 describe("POST /memoire", () => {
   // PRODUCTEUR: "AUTRE"
   test(`It should create a notice { PRODUCTEUR: "AUTRE" } for "administrateur" (group: "admin")`, async () => {
+    await createGroups();
+    await createProducteurs();
     const res = await createNotice(await createUser(), 200);
     expect(res.success).toBe(true);
   });
@@ -166,6 +172,9 @@ describe("DELETE /memoire/:ref", () => {
 
 describe("GET /memoire/:ref", () => {
   test(`It should return a notice by for everyone`, async () => {
+    await removeProducteurs();
+    await removeGroups();
+
     let res = await createNotice(await createUser(), 200);
     res = await request(app)
       .get(`/memoire/${sampleNotice.REF}`)
