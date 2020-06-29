@@ -14,6 +14,7 @@ const Autor = require("../models/autor");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const Producteur = require("../models/producteur");
+let moment = require('moment-timezone')
 const { checkValidRef } = require("./utils/notice");
 
 const {
@@ -255,7 +256,6 @@ router.put(
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
       });
     }
-
     const promises = [];
 
     // Upload files.
@@ -263,28 +263,23 @@ router.put(
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
       promises.push(uploadFile(path, req.files[i]));
     }
-
     // Update IMPORT ID.
-    if (notice.POP_IMPORT.length) {
+    if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
       const id = notice.POP_IMPORT[0];
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
-
     await transformBeforeUpdate(notice);
-
     //Ajout de l'historique de la notice
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes();
     var dateTime = date+' '+time;
-    
     let HISTORIQUE = notice.HISTORIQUE || [];
     const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
 
     HISTORIQUE.push(newHistorique);
     notice.HISTORIQUE = HISTORIQUE;
-
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
@@ -332,23 +327,20 @@ router.post(
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
       promises.push(uploadFile(path, req.files[i]));
     }
-
     // Update and save.
     promises.push(updateLinks(notice));
     await transformBeforeCreate(notice);
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
-    
     let oaiObj = {
       REF: notice.REF,
       BASE: "Memoire",
-      DMAJ: notice.DMIS
+      DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
     }
 
     const obj = new Memoire(notice);
     const obj2 = new NoticesOAI(oaiObj)
-
     checkESIndex(obj);
     promises.push(obj.save());
     promises.push(obj2.save());
@@ -408,7 +400,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   }
 });
 
-function determineProducteur(notice) {
+async function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
       let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);

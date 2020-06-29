@@ -12,6 +12,7 @@ const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
 const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
@@ -61,7 +62,6 @@ function transformBeforeCreate(notice) {
 }
 
 function transformBeforeCreateAndUpdate(notice) {
-  console.log("transformBeforeCreateAndUpdate", notice.IMG);
   return new Promise(async (resolve, reject) => {
     try {
       if (notice.IMG !== undefined) {
@@ -108,7 +108,6 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-
     try {
       const updateMode = req.body.updateMode;
       const user = req.user;
@@ -133,21 +132,18 @@ router.put(
           }
         }
       }
-
       // Upload all files.
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
-
       // Update IMPORT ID (this code is unclear…)
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
-
       //Ajout de l'historique de la notice
       var today = new Date();
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -159,7 +155,6 @@ router.put(
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
-
       // Prepare and update notice.
       await transformBeforeCreateAndUpdate(notice);
       const obj = new Joconde(notice);
@@ -167,12 +162,10 @@ router.put(
       checkESIndex(obj);
       promises.push(updateNotice(Joconde, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
-
       //Modification des liens entre bases
       await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
       await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
-
       // Consume promises and send sucessful result.
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
@@ -192,7 +185,7 @@ router.post(
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
-      if (!canCreateJoconde(req.user, notice)) {
+      if (!(await canCreateJoconde(req.user, notice))) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -204,7 +197,6 @@ router.post(
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
       }
-
       // Transform and create.
       transformBeforeCreate(notice);
       await transformBeforeCreateAndUpdate(notice);
@@ -212,11 +204,10 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
       await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
-
       let oaiObj = {
         REF: notice.REF,
         BASE: "Joconde",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const obj = new Joconde(notice);
       const obj2 = new NoticesOAI(oaiObj)
@@ -254,7 +245,7 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
         msg: `Impossible de trouver la notice joconde ${ref} à supprimer.`
       });
     }
-    if (!canDeleteJoconde(req.user, doc)) {
+    if (!await canDeleteJoconde(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
@@ -272,7 +263,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
 function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
-      let noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
+      let noticeProducteur
+      noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
       if(noticeProducteur){
         notice.PRODUCTEUR = noticeProducteur;
       }

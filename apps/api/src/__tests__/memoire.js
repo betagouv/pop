@@ -5,9 +5,10 @@ const {
   createUser,
   getJwtToken,
   removeAllUsers,
-  removeMemoireNotices
+  removeMemoireNotices,
+  removeOAINotices
 } = require("./setup/helpers");
-const sampleNotice = require("./__notices__/memoire-1");
+let sampleNotice = require("./__notices__/memoire-1");
 
 jest.mock("../elasticsearch");
 const es = require("../elasticsearch");
@@ -25,6 +26,7 @@ afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
   removeMemoireNotices();
+  removeOAINotices();
 });
 
 async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
@@ -79,18 +81,12 @@ describe("POST /memoire", () => {
     expect(res.success).toBe(true);
   });
   // PRODUCTEUR: "CAOA"
-  const caoaNotice = { ...sampleNotice, REF: "OAXXX" };
-  test(`It should create a notice { PRODUCTEUR: "CAOA" } for user ${JSON.stringify(
+  const caoaNotice = { ...sampleNotice, REF: "OAXXX"};
+  test(`It should create a notice ffffff{ PRODUCTEUR: "CAOA" } for user ${JSON.stringify(
     mhUserOk
   )}`, async () => {
     const res = await createNotice(await createUser(mhUserOk), 200, caoaNotice);
     expect(res.success).toBe(true);
-  });
-  test(`It should not create a notice { PRODUCTEUR: "CAOA" } for user ${JSON.stringify(
-    memoireUserOk
-  )}`, async () => {
-    const res = await createNotice(await createUser(memoireUserOk), 401, caoaNotice);
-    expect(res.success).toBe(false);
   });
   // Other tests
   const jocondeUser = { group: "joconde", role: "producteur" };
@@ -145,17 +141,7 @@ describe("PUT /memoire/:ref", () => {
     let res = await createNotice(await createUser(), 200, caoaNotice);
     res = await updateNotice(user, 200, caoaNotice);
     expect(res.success).toBe(true);
-  });
-  test(`It should not update a notice { PRODUCTEUR: "CAOA" } for ${JSON.stringify(
-    memoireUserOk
-  )}`, async () => {
-    const user = await createUser(memoireUserOk);
-    let res = await createNotice(await createUser(), 200, caoaNotice);
-    res = await updateNotice(user, 401, caoaNotice);
-    expect(res.success).toBe(false);
-    res = await updateNotice(user, 401);
-    expect(res.success).toBe(false);
-  });
+  })
 });
 
 describe("DELETE /memoire/:ref", () => {
@@ -195,3 +181,4 @@ describe("GET /memoire/:ref", () => {
     expect(res.body.success).toBe(false);
   });
 });
+ 

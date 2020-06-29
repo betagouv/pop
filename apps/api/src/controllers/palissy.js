@@ -12,7 +12,7 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
-
+let moment = require('moment-timezone')
 
 
 const {
@@ -348,34 +348,28 @@ router.post(
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       await populateMerimeeREFO(notice);
-
       await transformBeforeCreate(notice);
-
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
-      
-      
+
       let oaiObj = {
         REF: notice.REF,
         BASE: "Palissy",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const obj = new Palissy(notice);
       const obj2 = new NoticesOAI(oaiObj)
 
       checkESIndex(obj);
-
       const promises = [];
       promises.push(obj.save());
       promises.push(obj2.save());
-
       for (let i = 0; i < req.files.length; i++) {
         promises.push(
           uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i])
         );
       }
-
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {

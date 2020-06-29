@@ -7,6 +7,7 @@ const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
 const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
 
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
@@ -139,7 +140,7 @@ router.post(
       let oaiObj = {
         REF: notice.REF,
         BASE: "Mnr",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const doc = new Mnr(notice);
       const obj2 = new NoticesOAI(oaiObj)
@@ -147,6 +148,7 @@ router.post(
       checkESIndex(doc);
       await doc.save();
       await obj2.save();
+
       res.send({ success: true, msg: "OK" });
     } catch (error) {
       capture(error);

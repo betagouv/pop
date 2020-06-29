@@ -5,7 +5,8 @@ const {
   createUser,
   getJwtToken,
   removeAllUsers,
-  removeJocondeNotices
+  removeJocondeNotices,
+  removeOAINotices
 } = require("./setup/helpers");
 const sampleNotice = require("./__notices__/joconde-1");
 
@@ -21,6 +22,7 @@ afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
   removeJocondeNotices();
+  removeOAINotices();
 });
 
 async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
