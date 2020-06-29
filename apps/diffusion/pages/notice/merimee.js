@@ -13,7 +13,7 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { postFixedLink, schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
+import { postFixedLink, schema, getParamsFromUrl, findCollection, highlighting } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
@@ -85,9 +85,7 @@ export default class extends React.Component {
     this.setState({display : true});
 
     //highlighting
-    if(this.props.searchParams.mainSearch){
-      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
-    }
+    highlighting(this.props.searchParams.mainSearch);
 
     //Construction des liens précédents/suivants
     const cookies = new Cookies();

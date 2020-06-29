@@ -12,7 +12,7 @@ import Title from "../../src/notices/Title";
 import Link from "next/link";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
-import { schema, getParamsFromUrl, findCollection } from "../../src/notices/utils";
+import { schema, getParamsFromUrl, findCollection, highlighting } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
@@ -54,9 +54,7 @@ export default class extends React.Component {
     this.setState({display : true});
 
     //highlighting
-    if(this.props.searchParams.mainSearch){
-      this.props.searchParams.mainSearch.split(" ").forEach(word => $("p").highlight(word));
-    }
+    highlighting(this.props.searchParams.mainSearch);
 
     //Construction des liens précédents/suivants
     const cookies = new Cookies();

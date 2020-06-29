@@ -50,6 +50,11 @@ export default class extends React.Component {
     }
   };
 
+  handleRadioBaseChange(base){
+    const value = base;
+    Router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
+  }
+
   render = () => {
     if (!this.props.mode || !this.props.view) {
       return throw404();
@@ -101,6 +106,17 @@ export default class extends React.Component {
       initialValues = fromUrlQueryString(this.props.queryString);
     }
 
+    const bases = [
+      { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
+      { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)", img: "/static/topics/mnr.jpg" },
+      { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
+      { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
+      { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
+      { key: "enluminures", base: "Enluminures (Enluminures)", img: "/static/topics/enluminures.jpg" },
+      { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
+      { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg"}
+    ];
+    
     return (
       <Layout>
         <div className="search">
@@ -141,8 +157,12 @@ export default class extends React.Component {
                     />
                   </div>
                 ) : null}
+
+
+
+                {this.props.mode === "simple" ? 
                 <div className="search-results">
-                  <div className={`search-container search-container-${this.props.mode}`}>
+                  <div className={`search-container search-container-simple`}>
                     <Search
                       mode={this.props.mode}
                       base={this.props.base}
@@ -155,14 +175,54 @@ export default class extends React.Component {
                     ) : null}
                   </div>
                   {!(this.props.mode === "advanced" && !this.props.base) ? (
-                    <Results
-                      mode={this.props.mode}
-                      view={this.props.view}
-                      base={this.props.base}
-                      initialValues={initialValues}
-                    />
-                  ) : null}
-                </div>
+                      <Results
+                        mode={this.props.mode}
+                        view={this.props.view}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                    ) : null}
+                </div> :
+
+                <div className="search-main-container">
+                  {(this.props.base != undefined && this.props.base != "")? 
+                    <div className="search-bases-radio-buttons">
+                      {bases.map( base => 
+                        <div className="radioCard">
+                          <div className="radioButtonContainer">
+                                <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
+                                        onChange={() => this.handleRadioBaseChange(base.key)}/>
+                                <div className="radioName">
+                              {base.base}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div> : null}
+
+                  <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "")? "-choice" : ""}`}>
+                    <div className={`search-container search-container-${this.props.mode}`}>
+                      <Search
+                        mode={this.props.mode}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                      {this.props.mode === "simple" ? (
+                        <MobileFilters
+                          openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
+                        />
+                      ) : null}
+                    </div>
+                    {!(this.props.mode === "advanced" && !this.props.base) ? (
+                      <Results
+                        mode={this.props.mode}
+                        view={this.props.view}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                    ) : null}
+                  </div>
+                </div>}
               </Row>
             </Elasticsearch>
           </Container>
@@ -200,6 +260,12 @@ export default class extends React.Component {
             justify-content: space-between;
           }
 
+          .search .search-container.search-container-advanced {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+
           .search .search-results {
             flex: 0 0 75%;
             max-width: 75%;
@@ -208,6 +274,47 @@ export default class extends React.Component {
             min-height: 1px;
             padding-right: 15px;
             padding-left: 15px;
+          }
+
+          .search .search-main-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: -webkit-fill-available;
+          }
+          .search .search-results-advanced {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 80%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+
+          .search .search-results-advanced-choice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+
+          .search-radio-results{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+          }
+          .search-bases-radio-buttons {
+            background-color: white;
+            box-shadow: 0 3px 6px 0 rgba(189,189,189,1);
+            border-radius: 5px;
+            max-width: 18%;
+            margin-left: 20px;
+            height: max-content;
           }
 
           .search .search-sidebar .close_mobile_menu,
@@ -234,6 +341,11 @@ export default class extends React.Component {
           }
 
           .search .result-view {
+            width: 100%;
+            padding-top: 10px;
+          }
+
+          .search .result-view-advanced {
             width: 100%;
             padding-top: 10px;
           }

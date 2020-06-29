@@ -11,6 +11,7 @@ const Memoire = require("../models/memoire");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
 const { checkValidRef } = require("./utils/notice");
 
 const {
@@ -22,6 +23,7 @@ const {
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
+  isInFrance,
   getNewId,
   uploadFile,
   hasCorrectCoordinates,
@@ -108,6 +110,14 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
     }
   }
+
+  //Test if coordinates in France
+  if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
+    }
+  }
+
   //Check link refs
   notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
   notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
@@ -136,7 +146,6 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -144,12 +153,10 @@ async function transformBeforeCreateOrUpdate(notice) {
       notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
     }
   }
-
   // To prevent crash on ES
   if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   notice = await withFlags(notice);
 }
@@ -302,15 +309,13 @@ router.post(
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       await transformBeforeCreate(notice);
-
       //Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
-
       let oaiObj = {
         REF: notice.REF,
         BASE: "Merimee",
-        DMAJ: notice.DMIS
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
 
       const promises = [];
@@ -323,7 +328,6 @@ router.post(
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
       }
-
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
