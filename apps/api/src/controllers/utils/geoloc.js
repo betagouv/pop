@@ -195,5 +195,6 @@ module.exports = {
   convertCOORM,
   getPolygonCentroid,
   hasCorrectCoordinates,
-  hasCorrectPolygon
+  hasCorrectPolygon,
+  isInFrance
 };

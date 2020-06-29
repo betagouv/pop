@@ -21,7 +21,7 @@ const {
   checkESIndex,
   updateNotice,
   updateOaiNotice,
-
+  isInFrance,
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
@@ -117,6 +117,13 @@ async function withFlags(notice) {
     const convert = convertCOORM(notice.COORM, notice.ZONE);
     if(convert.message && convert.message == "La projection utilisée n'est pas correct"){
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
+    }
+  }
+
+  //Test if coordinates in France
+  if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
     }
   }
 

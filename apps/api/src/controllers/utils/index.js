@@ -1,5 +1,6 @@
 const {
   lambertToWGS84,
+  isInFrance,
   convertCOORM,
   getPolygonCentroid,
   hasCorrectCoordinates,
@@ -27,6 +28,7 @@ module.exports = {
   updateNotice,
   updateOaiNotice,
   lambertToWGS84,
+  isInFrance,
   convertCOORM,
   getPolygonCentroid,
   hasCorrectCoordinates,

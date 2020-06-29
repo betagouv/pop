@@ -23,6 +23,7 @@ const {
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
+  isInFrance,
   getNewId,
   uploadFile,
   hasCorrectCoordinates,
@@ -109,6 +110,14 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
     }
   }
+
+  //Test if coordinates in France
+  if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
+    }
+  }
+
   //Check link refs
   notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
   notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");

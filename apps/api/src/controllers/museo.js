@@ -39,16 +39,28 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   //Si la notice contient des coordonnées, contient geolocalisation devient oui
-  if (notice.POP_COORDONNEES) {
-    if(notice.POP_COORDONNEES.lat){
-      notice.POP_COORDONNEES.lat = notice.POP_COORDONNEES.lat.replace(",",".")
-    }
-    if(notice.POP_COORDONNEES.lon){
-      notice.POP_COORDONNEES.lon = notice.POP_COORDONNEES.lon.replace(",",".")
-    }
+  let lat = "";
+  let lon = "";
+  let coordonnees = {lat: 0, lon: 0}
 
+  if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
+    lat = String(notice["POP_COORDONNEES.lat"]);
+    lon = String(notice["POP_COORDONNEES.lon"]);
+  }
+  else if(notice.POP_COORDONNEES && (notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)){
+    lat = String(notice.POP_COORDONNEES.lat);
+    lon = String(notice.POP_COORDONNEES.lon);
+  }
+  if (lat || lon) {
+    if(lat){
+      coordonnees.lat = parseFloat(lat.replace(",","."));
+    }
+    if(lon){
+      coordonnees.lon = parseFloat(lon.replace(",","."));
+    }
     //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
-    if(notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(coordonnees.lat !==0  && !isNaN(coordonnees.lat) && 
+       coordonnees.lon !==0  && !isNaN(coordonnees.lon)){
       notice.POP_CONTIENT_GEOLOCALISATION = "oui";
     }
     else {
@@ -57,7 +69,15 @@ async function transformBeforeCreateOrUpdate(notice) {
   } else {
     notice.POP_CONTIENT_GEOLOCALISATION = "non";
   }
+  if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
+    notice["POP_COORDONNEES.lat"] = coordonnees.lat;
+    notice["POP_COORDONNEES.lon"] = coordonnees.lon;
+  }
+  else{
+    notice.POP_COORDONNEES = coordonnees;
+  }
 
+  //Attribution producteur
   let noticeProducteur = await identifyProducteur("museo", notice.REF, "", "");
   if(noticeProducteur){
     notice.PRODUCTEUR = noticeProducteur;
@@ -166,9 +186,9 @@ router.put(
     HISTORIQUE.push(newHistorique);
     notice.HISTORIQUE = HISTORIQUE;
 
-    await populateBaseFromMuseo(notice, notice.REFMEM, Memoire);
-    await populateBaseFromMuseo(notice, notice.REFMER, Merimee);
-    await populateBaseFromMuseo(notice, notice.REFPAL, Palissy);
+    if(notice.REFMEM && notice.REFMEM.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMEM, Memoire));}
+    if(notice.REFMER && notice.REFMER.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMER, Merimee));}
+    if(notice.REFPAL && notice.REFPAL.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFPAL, Palissy));}
 
     promises.push(updateJocondeNotices(notice));
     let oaiObj = {
