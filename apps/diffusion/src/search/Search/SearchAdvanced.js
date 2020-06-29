@@ -779,7 +779,7 @@ class SearchAdvanced extends React.Component {
             },
             {
               value: ["REJET.keyword"], 
-              text: "Forme rejetée",
+              text: "Forme rejetée du nom",
               fields: "REJET"
             },
             {
@@ -808,12 +808,12 @@ class SearchAdvanced extends React.Component {
             },
             {
               value: ["FONC.keyword"], 
-              text: "Fonctions",
+              text: "Profession",
               fields: "FONC"
             },
             {
               value: ["DATES.keyword"], 
-              text: "Dates",
+              text: "Période d'activités",
               fields: "DATES"
             },
             {
@@ -828,7 +828,7 @@ class SearchAdvanced extends React.Component {
             },
             {
               value: ["LOCACT.keyword"], 
-              text: "Localisation d'activité",
+              text: "Lieu d'activité",
               fields: "LOCACT"
             },
             {
@@ -853,27 +853,27 @@ class SearchAdvanced extends React.Component {
             },
             {
               value: ["SYMB.keyword"], 
-              text: "Symbole",
+              text: "Symbole (pour les orfèvres)",
               fields: "SYMB"
             },
             {
               value: ["INS.keyword"], 
-              text: "Date d'inculpation",
+              text: "Date d'insculpation (pour les orfèvres)",
               fields: "INS"
             },
             {
               value: ["GAR.keyword"], 
-              text: "Numéro du registre de la garantie de Paris",
+              text: "Numéro du registre de la garantie (pour les orfèvres)",
               fields: "GAR"
             },
             {
               value: ["PREF.keyword"], 
-              text: "Numéro du registre de la préfecture",
+              text: "Numéro du registre de la préfecture (pour les orfèvres)",
               fields: "PREF"
             },
             {
               value: ["BIF.keyword"], 
-              text: "Date de biffage",
+              text: "Date de biffage (pour les orfèvres)",
               fields: "BIF"
             },
             {

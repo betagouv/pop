@@ -120,11 +120,11 @@ export default class extends React.Component {
       return throw404();
     }
 
-    const { title, images, datesLieus, datesActivites, referenceArk } = getNoticeInfo(notice);
+    const { title, images, datesLieus, referenceArk } = getNoticeInfo(notice);
 
     //construction du pdf au format joconde
     //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
-    const pdf = AutorPdf(notice, title, datesLieus, datesActivites, referenceArk);
+    const pdf = AutorPdf(notice, title, datesLieus, referenceArk);
     const App = () => (
       <div>
         <PDFDownloadLink 
@@ -199,7 +199,8 @@ export default class extends React.Component {
                       ]}
                   />
                   <Field title={mapping.autor.FONC.label} content={notice.FONC} separator="#" />
-                  <Field title="Dates – lieu d’activités " content={datesActivites} separator="#" />
+                  <Field title={mapping.autor.LOCACT.label} content={notice.LOCACT} separator="#" />
+                  <Field title={mapping.autor.DATES.label} content={notice.DATES} separator="#" />
                   <Field title={mapping.autor.LRELA.label} content={notice.LRELA} separator="#" />
                   <Field title={mapping.autor.FORM.label} content={notice.FORM} separator="#" />
                   <Field title={mapping.autor.OEUVR.label} content={notice.OEUVR} separator="#" />

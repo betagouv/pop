@@ -5,7 +5,7 @@ import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@reac
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
 
-export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk){
+export function AutorPdf(notice, title, datesLieus, referenceArk){
   return(
     <Document>
       <Page style={styles.page}>
@@ -20,23 +20,24 @@ export function AutorPdf(notice, title, datesLieus, datesActivites, referenceArk
               notice.INI || notice.REJET || notice.NATIO || datesLieus) ?
             <View>
                 <Text style={styles.subtitle} >Identification</Text>
-                <Field title={mapping.autor.NOM} content={notice.NOM} separator="#" isPdf={true} />
-                <Field title={mapping.autor.PREN} content={notice.PREN} separator="#" isPdf={true} />
-                <Field title={mapping.autor.PNOM} content={notice.PNOM} separator="#" isPdf={true} />
-                <Field title={mapping.autor.TYPID} content={notice.TYPID} separator="#" isPdf={true} />
-                <Field title={mapping.autor.ALIAS} content={notice.ALIAS} separator="#" isPdf={true} />
-                <Field title={mapping.autor.INI} content={notice.INI} separator="#" isPdf={true} />
-                <Field title={mapping.autor.REJET} content={notice.REJET} separator="#" isPdf={true} />
-                <Field title={mapping.autor.NATIO} content={notice.NATIO} separator="#" isPdf={true} />
+                <Field title={mapping.autor.NOM.label} content={notice.NOM} separator="#" isPdf={true} />
+                <Field title={mapping.autor.PREN.label} content={notice.PREN} separator="#" isPdf={true} />
+                <Field title={mapping.autor.PNOM.label} content={notice.PNOM} separator="#" isPdf={true} />
+                <Field title={mapping.autor.TYPID.label} content={notice.TYPID} separator="#" isPdf={true} />
+                <Field title={mapping.autor.ALIAS.label} content={notice.ALIAS} separator="#" isPdf={true} />
+                <Field title={mapping.autor.INI.label} content={notice.INI} separator="#" isPdf={true} />
+                <Field title={mapping.autor.REJET.label} content={notice.REJET} separator="#" isPdf={true} />
+                <Field title={mapping.autor.NATIO.label} content={notice.NATIO} separator="#" isPdf={true} />
                 <Field title="Dates (lieus) d’existence" content={datesLieus} separator="#" isPdf={true} />
             </View> : null}
             
-            {(notice.FONC || datesActivites || notice.LRELA || notice.FORM || notice.OEUVR || notice.SYMB ||
+            {(notice.FONC || notice.DATES || notice.LOCACT || notice.LRELA || notice.FORM || notice.OEUVR || notice.SYMB ||
               notice.INS || notice.GAR || notice.PREF || notice.BIF) ? 
             <View>
               <Text style={styles.subtitle} >Fonctions et activités</Text>
               <Field title={mapping.autor.FONC.label} content={notice.FONC} separator="#" isPdf={true} />
-              <Field title="Dates – lieu d’activités" content={datesActivites} separator="#" isPdf={true} />
+              <Field title={mapping.autor.DATES.label} content={notice.DATES} separator="#" isPdf={true} />
+              <Field title={mapping.autor.LOCACT.label} content={notice.LOCACT} separator="#" isPdf={true} />
               <Field title={mapping.autor.LRELA.label} content={notice.LRELA} separator="#" isPdf={true} />
               <Field title={mapping.autor.FORM.label} content={notice.FORM} separator="#" isPdf={true} />
               <Field title={mapping.autor.OEUVR.label} content={notice.OEUVR} separator="#" isPdf={true} />

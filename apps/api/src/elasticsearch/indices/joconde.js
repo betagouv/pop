@@ -2,14 +2,6 @@ module.exports = {
   settings: {
     analysis: {
       filter: {
-        char_filter:{
-          replace_and:{
-            type: "mapping",
-            ppings: [
-              "&=> and"
-            ]
-	    		}
-	    	},
         french_elision: {
           type: "elision",
           articles_case: true,
