@@ -17,17 +17,37 @@ Johann Burkard
 jQuery.fn.highlight = function(pat) {
  function innerHighlight(node, pat) {
   var skip = 0;
+  var whole = true;
   if (node.nodeType == 3) {
    var pos = node.data.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(pat.normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
    pos -= (node.data.substr(0, pos).toUpperCase().length - node.data.substr(0, pos).length);
    if (pos >= 0) {
+    var totalLength = node.data.length;
     var spannode = document.createElement('span');
     spannode.className = 'highlight';
     var middlebit = node.splitText(pos);
     var endbit = middlebit.splitText(pat.length);
     var middleclone = middlebit.cloneNode(true);
     spannode.appendChild(middleclone);
-    middlebit.parentNode.replaceChild(spannode, middlebit);
+    
+    const regex = /[a-zA-Z]/g;
+    if(pos != 0){
+        //test caractère avant
+        if( node.data.charAt(node.data.length-1).match(regex) !== null ){
+            whole = node.data.charAt(node.data.length-1).match(regex).size <= 0;
+        }
+    }
+    if(pos + pat.length != totalLength){
+        //test caractère après
+        if( endbit.data.charAt(0).match(regex) !== null ){
+            whole = endbit.data.charAt(0).match(regex).size <= 0;
+        }
+    }
+
+
+    if(whole){
+        middlebit.parentNode.replaceChild(spannode, middlebit);
+    }
     skip = 1;
    }
   }
