@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container, Button } from "reactstrap";
 import Head from "next/head";
+import Link from "next/link";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 import queryString from "query-string";
@@ -14,7 +15,7 @@ import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
-import { schema, getParamsFromUrl, findCollection, highlighting } from "../../src/notices/utils";
+import { schema, getParamsFromUrl, findCollection, highlighting, lastSearch } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
@@ -212,6 +213,8 @@ export default class extends React.Component {
       </div>
     )
 
+    const lastRecherche = lastSearch(this.props.searchParams, this.props.searchParamsUrl, pop_url);
+
     return (
       <Layout>
         <div className="notice">
@@ -236,6 +239,14 @@ export default class extends React.Component {
                 {this.state.display &&
                   <BucketButton base="joconde" reference={notice.REF} />}
               </div>
+              {lastRecherche !== null && 
+              <div className="btn btn-last-search">
+                <Link href={lastRecherche}>
+                  <div className="text-last-search">
+                    Dernière recherche
+                  </div>
+                </Link>
+              </div>}
               {this.state.display && App()}
             </div>
 

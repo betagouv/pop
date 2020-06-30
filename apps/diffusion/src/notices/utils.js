@@ -168,3 +168,18 @@ export function highlighting(wholeWord){
     wholeWord.split(" ").forEach(word => {if(!notIncludedTerms.includes(String(word))){$("p").highlight(word)}});
   }
 }
+
+export function lastSearch(searchParams, searchParamsUrl, pop_url){
+  if(searchParams.idQuery){
+    let url;
+    if(searchParams.qb){
+      let list = searchParamsUrl.split("qb=");
+      url = `${pop_url}advanced-search/list/${searchParams.base}?qb=${list[1]}`
+    }
+    else{
+      url = `${pop_url}search/list?${searchParamsUrl}`
+    }
+    return url;
+  }
+  return null;
+}

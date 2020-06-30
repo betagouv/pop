@@ -39,6 +39,19 @@ export default css`
     margin-right: 15px;
   }
 
+  .btn-last-search {
+    background-color: rgb(55,125,135);
+    border: 0px;
+    color: rgb(255,255,255);
+    max-width: 200px;
+    width: 100%;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 15px;
+  }
+
   :global(.navButton) {
     font-weight: 600;
     font-size: 60px;
