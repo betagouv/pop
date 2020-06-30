@@ -20,7 +20,6 @@ export default ({ initialValues }) => (
     />
     <style jsx global>{`
       .list-view {
-        padding-top: 25px;
         width: 100%;
       }
     `}</style>
