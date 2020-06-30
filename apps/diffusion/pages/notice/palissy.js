@@ -245,6 +245,15 @@ export default class extends React.Component {
                   </div>
                 {this.state.display && App()}
               </div>
+              {lastRecherche !== null && 
+              <div className="btn btn-last-search">
+                <Link href={lastRecherche}>
+                  <div className="text-last-search">
+                    Dernière recherche
+                  </div>
+                </Link>
+              </div>}
+              {this.state.display && App()}
             </div>
 
             <Row>
