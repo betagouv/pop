@@ -314,7 +314,7 @@ export default class extends React.Component {
             border-radius: 5px;
             max-width: 18%;
             margin-left: 20px;
-            height: max-content;
+            height: fit-content;
           }
 
           .search .search-sidebar .close_mobile_menu,
@@ -341,11 +341,17 @@ export default class extends React.Component {
           }
 
           .search .result-view {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
             width: 100%;
             padding-top: 10px;
           }
 
           .search .result-view-advanced {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
             width: 100%;
             padding-top: 10px;
           }

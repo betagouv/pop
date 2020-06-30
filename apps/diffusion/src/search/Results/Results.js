@@ -72,9 +72,11 @@ class Results extends React.Component {
         {this.renderResults()}
         <style jsx global>{`
           .search .nav-pills {
+            display: flex;
+            flex-direction: row;
+            width: 40%;
+            flex-wrap: nowrap;
             box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
-            position: absolute;
-            right: 15px;
           }
           .search .nav-pills .nav-link {
             background-color: #fff;

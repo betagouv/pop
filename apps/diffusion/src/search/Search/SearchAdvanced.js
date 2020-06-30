@@ -1064,6 +1064,9 @@ class SearchAdvanced extends React.Component {
           />
         ) : null}
         <style jsx global>{`
+          .search .advanced-search {
+            width: inherit;
+          }
           .search .advanced-search .advanced-search-title {
             width: 100%;
             display: flex;
@@ -1085,7 +1088,6 @@ class SearchAdvanced extends React.Component {
             border-radius: 5px;
             box-shadow: 1px 2px 2px 0 rgba(197, 197, 197, 0.5);
             max-height: 325px;
-            max-width: 350px;
             height: 40px;
             border-style: none;
             font-weight: normal;
@@ -1102,8 +1104,10 @@ class SearchAdvanced extends React.Component {
             margin-right: 20px;
           }
           .react-es-rule {
+            width: 100%;
             display: flex;
             flex-direction: row;
+            justify-content: center;
             align-items: center
             margin-top: 5px;
             margin-bottom: 5px;
@@ -1128,12 +1132,14 @@ class SearchAdvanced extends React.Component {
             outline: none;
           }
           .react-es-rule button.react-es-rule-add {
+            min-width: 40px;
             width: 40px;
             background-color: #008000;
             color: white;
           }
 
           .react-es-rule button.react-es-rule-delete {
+            min-width: 25px;
             background-color: #c43a2f;
             color: white;
           }
@@ -1146,7 +1152,8 @@ class SearchAdvanced extends React.Component {
             width: 100%;
           }
           .react-es-rule-value {
-            width: 350px;
+            min-width: 350px;
+            width: inherit;
             padding-left: 5px;
           }
           .react-es-rule-value:focus {
