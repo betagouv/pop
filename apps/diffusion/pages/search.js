@@ -318,7 +318,8 @@ export default class extends React.Component {
             border-radius: 5px;
             max-width: 18%;
             margin-left: 20px;
-            height: fit-content;
+            height: max-content !important;
+            max-height: max-content;
           }
 
           .search .search-sidebar .close_mobile_menu,
