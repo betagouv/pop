@@ -1205,6 +1205,7 @@ class SearchAdvanced extends React.Component {
             flex-direction: column;
             margin: 15px;
             max-width: 200px;
+            max-height: 70px;
           }
           .radioImg{
             width: 100%;

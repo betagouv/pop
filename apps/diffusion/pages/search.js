@@ -317,7 +317,8 @@ export default class extends React.Component {
             max-width: 18%;
             margin-left: 20px;
             height: max-content !important;
-            max-height: max-content;
+            max-height: 680px;
+            justify-content: space-between;
           }
 
           .search .search-sidebar .close_mobile_menu,
