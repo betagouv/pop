@@ -22,8 +22,11 @@ export default class BucketButton extends React.Component {
                 if(item.ref === ref && item.base === base){
                     isAlreadyInBucket = true;
                 }
-            })
-            if(!isAlreadyInBucket){
+            });
+            if(currentBucket.length >= 50){
+                alert("Le panier de notices ne peut contenir que 50 notices maximum.")
+            }
+            else if(!isAlreadyInBucket){
                 currentBucket.push({ref: ref, base: base});
                 document.getElementById("nbBucket").innerHTML = "Consulter mon panier ( "+ currentBucket.length + " )";
                 //Transformation de la liste de notice au format json et modification du cookie

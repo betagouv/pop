@@ -191,19 +191,23 @@ export default class extends React.Component {
             </div>
 
             <div className="top-container">
-              <div className="addBucket onPrintHide">
-                {this.state.display &&
-                  <BucketButton base="mnr" reference={notice.REF} />}
+              <div className="leftContainer-buttons">
+                {lastRecherche !== null && 
+                <div className="btn btn-last-search">
+                  <Link href={lastRecherche}>
+                    <div className="text-last-search">
+                      Retour à la recherche
+                    </div>
+                  </Link>
+                </div>}
               </div>
-              {lastRecherche !== null && 
-              <div className="btn btn-last-search">
-                <Link href={lastRecherche}>
-                  <div className="text-last-search">
-                    Dernière recherche
+              <div className="rightContainer-buttons">
+                <div className="addBucket onPrintHide">
+                  {this.state.display &&
+                    <BucketButton base="mnr" reference={notice.REF} />}
                   </div>
-                </Link>
-              </div>}
-              {this.state.display && App()}
+                {this.state.display && App()}
+              </div>
             </div>
 
             <Row>

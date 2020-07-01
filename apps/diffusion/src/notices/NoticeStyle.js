@@ -52,6 +52,22 @@ export default css`
     margin-right: 15px;
   }
 
+  .leftContainer-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+  }
+
+  .rightContainer-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+    justify-content: flex-end;
+  }
+
   :global(.navButton) {
     font-weight: 600;
     font-size: 60px;
