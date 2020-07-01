@@ -309,12 +309,15 @@ export default class extends React.Component {
             width: 100%;
           }
           .search-bases-radio-buttons {
+            display: flex;
+            flex-direction: column;
             background-color: white;
             box-shadow: 0 3px 6px 0 rgba(189,189,189,1);
             border-radius: 5px;
             max-width: 18%;
             margin-left: 20px;
-            height: fit-content;
+            height: max-content !important;
+            max-height: max-content;
           }
 
           .search .search-sidebar .close_mobile_menu,
