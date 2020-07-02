@@ -314,7 +314,7 @@ router.post(
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
       let oaiObj = {
         REF: notice.REF,
-        BASE: "Merimee",
+        BASE: "merimee",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
 

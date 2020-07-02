@@ -206,7 +206,7 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
       let oaiObj = {
         REF: notice.REF,
-        BASE: "Joconde",
+        BASE: "joconde",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const obj = new Joconde(notice);

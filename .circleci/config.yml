@@ -259,12 +259,12 @@ workflows:
   ci_cd:
     jobs:
       - prepare_all
- #     - test_api:
- #         requires:
- #           - prepare_all
- #     - test_production:
- #         requires:
- #           - prepare_all
+      - test_api:
+          requires:
+            - prepare_all
+      - test_production:
+          requires:
+            - prepare_all
       - test_diffusion:
           requires:
             - prepare_all
@@ -284,21 +284,21 @@ workflows:
               only: master
       - build_production_staging:
           requires:
-#            - test_production
+            - test_production
             - prepare_all
           filters:
             branches:
               only: staging
       - build_production_prod:
           requires:
-#            - test_production
+            - test_production
             - prepare_all
           filters:
             branches:
               only: master
       - deploy_api_staging:
           requires:
-#            - test_api
+            - test_api
             - prepare_all
           filters:
             branches:
@@ -319,7 +319,7 @@ workflows:
               only: staging
       - deploy_api_prod:
           requires:
-#            - test_api
+            - test_api
             - prepare_all
           filters:
             branches:

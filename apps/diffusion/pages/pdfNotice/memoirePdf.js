@@ -5,6 +5,7 @@ import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@reac
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
+import { bucket_url } from "../../src/config";
 
 export function MemoirePdf(notice, title, links){
   return(
@@ -132,7 +133,7 @@ export function MemoirePdf(notice, title, links){
             { notice.IMG ?
             <View>
               <Image style={styles.image}
-                src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-dev/" + notice.IMG}
+                src={bucket_url + notice.IMG}
               />
             </View> : null}
 

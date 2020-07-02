@@ -335,7 +335,7 @@ router.post(
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
     let oaiObj = {
       REF: notice.REF,
-      BASE: "Memoire",
+      BASE: "memoire",
       DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
     }
 

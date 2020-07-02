@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
+import { bucket_url } from "../../src/config";
 
 export function MnrPdf(notice, title){
   return(
@@ -64,7 +65,7 @@ export function MnrPdf(notice, title){
             { notice.VIDEO.length > 0 ?
             <View>
               <Image style={styles.image}
-                src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.VIDEO[0]}
+                src={bucket_url + notice.VIDEO[0]}
               />
             </View> : null}
 

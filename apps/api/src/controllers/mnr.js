@@ -139,7 +139,7 @@ router.post(
     try {
       let oaiObj = {
         REF: notice.REF,
-        BASE: "Mnr",
+        BASE: "mnr",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const doc = new Mnr(notice);
