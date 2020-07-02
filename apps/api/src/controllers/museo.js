@@ -193,7 +193,7 @@ router.put(
     promises.push(updateJocondeNotices(notice));
     let oaiObj = {
       REF: notice.REF,
-      BASE: "Museo",
+      BASE: "museo",
       DMAJ: notice.DMAJ
     }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));

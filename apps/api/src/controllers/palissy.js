@@ -362,7 +362,7 @@ router.post(
 
       let oaiObj = {
         REF: notice.REF,
-        BASE: "Palissy",
+        BASE: "palissy",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
       const obj = new Palissy(notice);

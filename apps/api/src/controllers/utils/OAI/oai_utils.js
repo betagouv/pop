@@ -17,15 +17,18 @@ let moment = require('moment-timezone')
 
 /**
  * setInterval permet de supprimer les tokens expiré
+ * Bloqué si on fait les tests
  */
-setInterval(async function (){
-    let listTokens = await resumptionTokenOAI.find()
-    listTokens.map(async token => {
-        if( moment(token.DEXP).format("YYYY-MM-DDTHH:mm:ss") < moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")){
-            await deleteResumptionToken(token.TOKEN)
-        }
-    })
-  },300000)
+if (process.env.NODE_ENV !== "test") {
+    setInterval(async function (){
+        let listTokens = await resumptionTokenOAI.find()
+        listTokens.map(async token => {
+            if( moment(token.DEXP).format("YYYY-MM-DDTHH:mm:ss") < moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")){
+                await deleteResumptionToken(token.TOKEN)
+            }
+        })
+    },300000)
+}
 
 /**
  * Fonction permet de retourner le nom réduit de la base
