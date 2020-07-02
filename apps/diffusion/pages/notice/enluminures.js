@@ -33,7 +33,7 @@ export default class extends React.Component {
   }
 
   async componentDidMount(){
-    this.setState({display : true});
+    //this.setState({display : true});
 
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
@@ -59,6 +59,10 @@ export default class extends React.Component {
       }
       this.setState({prevLink, nextLink});
     }
+  }
+
+  componentDidUpdate(){
+    this.state.display == false && this.setState({display : true});
   }
 
   renderPrevButton(){
