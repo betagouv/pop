@@ -126,7 +126,7 @@ export function PalissyPdf(notice, title, localisation, links){
             : null}
           </View>
           <View style={styles.seeMore}>
-            { notice.MEMOIRE.length > 0 ?
+            { (notice.MEMOIRE.length > 0 && notice.MEMOIRE[0].url) ?
             <View>
               <Image style={styles.image}
                 src={bucket_url + notice.MEMOIRE[0].url}

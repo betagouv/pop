@@ -8,7 +8,7 @@ export function LinkedNoticesPdf(notice){
     return(
         <Link src={"https://www.pop.culture.gouv.fr/notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.linkedNotice}>
-                <Image style={styles.linkedNoticeImage} src={image_preview} />
+                {image_preview && <Image style={styles.linkedNoticeImage} src={image_preview} />}
                 <View style={styles.linkedNoticeDetails}>
                     <Text style={styles.linkedNoticeTitle}>{title}</Text>
                     <Text style={styles.linkedNoticeContent}>{notice.DENO}</Text>
