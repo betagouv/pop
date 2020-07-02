@@ -5,6 +5,7 @@ import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@reac
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
+import { bucket_url } from "../../src/config";
 
 export function JocondePdf(notice, title, links){
   return(
@@ -95,7 +96,7 @@ export function JocondePdf(notice, title, links){
           <View style={styles.seeMore}>
             <View>
               <Image style={styles.image}
-                src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.IMG[0]}
+                src={bucket_url + notice.IMG[0]}
               />
             </View>
             {links.length > 0 ?

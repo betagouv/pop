@@ -4,6 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
+import { bucket_url } from "../../src/config";
 
 export function AutorPdf(notice, title, datesLieus, referenceArk){
   return(
@@ -72,7 +73,7 @@ export function AutorPdf(notice, title, datesLieus, referenceArk){
             { notice.MEMOIRE.length > 0 ?
             <View>
               <Image style={styles.image}
-                src={"https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/" + notice.MEMOIRE[0]}
+                src={bucket_url + notice.MEMOIRE[0]}
               />
             </View> : null}
 
