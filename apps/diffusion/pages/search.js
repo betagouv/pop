@@ -280,7 +280,9 @@ export default class extends React.Component {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            width: -moz-available;;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
           }
           .search .search-results-advanced {
             display: flex;

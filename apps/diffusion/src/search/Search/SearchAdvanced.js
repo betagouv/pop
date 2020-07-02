@@ -1085,7 +1085,7 @@ class SearchAdvanced extends React.Component {
             margin-right: 5px;
           }
           .react-es-rule-field {
-            max-width: 280px !important;
+            max-width: 250px !important;
           }
           .react-es-rule-operator {
             max-width: 230px !important;
@@ -1168,7 +1168,7 @@ class SearchAdvanced extends React.Component {
             min-width: 50px;
           }
           .react-es-rule:first-of-type > .react-es-rule-field {
-            margin-left: 20px;
+            margin-left: 10px;
           }
           .react-es-query-builder {
             display: flex;
