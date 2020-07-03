@@ -797,6 +797,22 @@ module.exports = {
             }
           }
         },
+        REFMEM: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFMER: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REGION: {
           type: "text",
           fields: {
@@ -1004,8 +1020,75 @@ module.exports = {
             }
           }
         },
-        location: {
+        POP_COORDONNEES: {
           type: "geo_point"
+        },
+        POP_CONTIENT_GEOLOCALISATION: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        HISTORIQUE: {
+          properties: {
+            _id: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            nom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            prenom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            email: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            date: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            updateMode: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            }
+          }
         }
       }
     }

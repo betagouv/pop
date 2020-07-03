@@ -16,6 +16,7 @@ import Joconde from "../../entities/Joconde";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
+import AccordionHistorique from "./components/AccordionHistorique"
 
 import "./index.css";
 
@@ -49,12 +50,19 @@ class Notice extends React.Component {
       }
       this.props.initialize(notice);
       // As a "producteur", I can edit if "museofile" matches with notice.
-      const editable =
+       /* const editable =
         this.props.canUpdate &&
         (this.props.user.role === "administrateur" ||
-          this.props.user.museofile.includes(notice.MUSEO));
+          this.props.user.museofile.includes(notice.MUSEO)); */
 
-      this.setState({ loading: false, notice, editable });
+
+        let editable = false;
+        API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "joconde").then(result => {
+          editable = result.validate;
+          this.setState({editable: editable});
+        });
+
+        this.setState({ loading: false, notice, editable });
     });
   }
 
@@ -73,7 +81,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -232,6 +240,16 @@ class Notice extends React.Component {
                 <CustomField name="LABEL" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
                 <CustomField name="MSGCOM" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMEM"
+                  createUrl={e => `/notice/memoire/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMER"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
@@ -242,9 +260,15 @@ class Notice extends React.Component {
                 <CustomField name="DMAJ" disabled={!this.state.editable} />
                 <CustomField name="DMIS" disabled={!this.state.editable} />
                 <CustomField name="LARC" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
                 <CustomField name="RETIF" disabled={!this.state.editable} />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <Map notice={this.state.notice} />
           <div className="buttons">

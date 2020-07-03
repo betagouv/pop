@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch";
+import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch-pop";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
@@ -12,9 +12,10 @@ import Results from "../src/search/Results";
 import Search from "../src/search/Search";
 import { es_url } from "../src/config";
 import queryString from "query-string";
+import {bases} from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 
-const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures"].join(",");
+const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
 
 import throw404 from "../src/services/throw404";
 
@@ -30,12 +31,29 @@ export default class extends React.Component {
   }
 
   handleSwitchChange = checked => {
+    const hasBase = Boolean(this.props.base);
     if (checked) {
-      Router.push("/search?view=list&mode=advanced", "/advanced-search/list");
+      if(hasBase){
+        let myBase = this.props.base.split('"')
+        if(myBase.length > 3){
+          Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
+        }else{
+          let key = bases.find(e => e.base === myBase[1]).key;
+          Router.push("/advanced-search/list/" + key);
+        }
+      }
+      else{
+        Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
+      }
     } else {
       Router.push("/search?view=list&mode=simple", "/search/list");
     }
   };
+
+  handleRadioBaseChange(base){
+    const value = base;
+    Router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
+  }
 
   render = () => {
     if (!this.props.mode || !this.props.view) {
@@ -88,6 +106,17 @@ export default class extends React.Component {
       initialValues = fromUrlQueryString(this.props.queryString);
     }
 
+    const bases = [
+      { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
+      { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)", img: "/static/topics/mnr.jpg" },
+      { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
+      { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
+      { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
+      { key: "enluminures", base: "Enluminures (Enluminures)", img: "/static/topics/enluminures.jpg" },
+      { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
+      { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg"}
+    ];
+    
     return (
       <Layout>
         <div className="search">
@@ -128,8 +157,12 @@ export default class extends React.Component {
                     />
                   </div>
                 ) : null}
+
+
+
+                {this.props.mode === "simple" ? 
                 <div className="search-results">
-                  <div className={`search-container search-container-${this.props.mode}`}>
+                  <div className={`search-container search-container-simple`}>
                     <Search
                       mode={this.props.mode}
                       base={this.props.base}
@@ -142,14 +175,54 @@ export default class extends React.Component {
                     ) : null}
                   </div>
                   {!(this.props.mode === "advanced" && !this.props.base) ? (
-                    <Results
-                      mode={this.props.mode}
-                      view={this.props.view}
-                      base={this.props.base}
-                      initialValues={initialValues}
-                    />
-                  ) : null}
-                </div>
+                      <Results
+                        mode={this.props.mode}
+                        view={this.props.view}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                    ) : null}
+                </div> :
+
+                <div className="search-main-container">
+                  {(this.props.base != undefined && this.props.base != "")? 
+                    <div className="search-bases-radio-buttons">
+                      {bases.map( base => 
+                        <div className="radioCard">
+                          <div className="radioButtonContainer">
+                                <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
+                                        onChange={() => this.handleRadioBaseChange(base.key)}/>
+                                <div className="radioName">
+                              {base.base}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div> : null}
+
+                  <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "")? "-choice" : ""}`}>
+                    <div className={`search-container search-container-${this.props.mode}`}>
+                      <Search
+                        mode={this.props.mode}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                      {this.props.mode === "simple" ? (
+                        <MobileFilters
+                          openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
+                        />
+                      ) : null}
+                    </div>
+                    {!(this.props.mode === "advanced" && !this.props.base) ? (
+                      <Results
+                        mode={this.props.mode}
+                        view={this.props.view}
+                        base={this.props.base}
+                        initialValues={initialValues}
+                      />
+                    ) : null}
+                  </div>
+                </div>}
               </Row>
             </Elasticsearch>
           </Container>
@@ -187,6 +260,12 @@ export default class extends React.Component {
             justify-content: space-between;
           }
 
+          .search .search-container.search-container-advanced {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+
           .search .search-results {
             flex: 0 0 75%;
             max-width: 75%;
@@ -195,6 +274,53 @@ export default class extends React.Component {
             min-height: 1px;
             padding-right: 15px;
             padding-left: 15px;
+          }
+
+          .search .search-main-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
+          }
+          .search .search-results-advanced {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 80%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+
+          .search .search-results-advanced-choice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+          }
+
+          .search-radio-results{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+          }
+          .search-bases-radio-buttons {
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            box-shadow: 0 3px 6px 0 rgba(189,189,189,1);
+            border-radius: 5px;
+            max-width: 18%;
+            margin-left: 20px;
+            height: max-content !important;
+            max-height: 680px;
+            justify-content: space-between;
           }
 
           .search .search-sidebar .close_mobile_menu,
@@ -221,6 +347,17 @@ export default class extends React.Component {
           }
 
           .search .result-view {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 100%;
+            padding-top: 10px;
+          }
+
+          .search .result-view-advanced {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
             width: 100%;
             padding-top: 10px;
           }
@@ -373,6 +510,13 @@ export default class extends React.Component {
           ul.react-es-pagination > li {
             display: inline;
           }
+
+          ul.react-es-pagination > li > input {
+            background: transparent;
+            border: none;
+            text-align: center;
+          }
+
           .react-es-searchbox input {
             border: 0;
             border-radius: 5px;

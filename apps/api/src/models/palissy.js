@@ -552,6 +552,30 @@ const Schema = new mongoose.Schema(
         label: "Justification de la datation"
       }
     },
+    LARC: {
+      type: String,
+      default: "",
+      documentation: {
+        description: "Lien base Arcade",
+        label: "Lien base Arcade"
+      }
+    },
+    LINHA: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien INHA",
+        label: "Lien INHA"
+      }
+    },
+    LREG: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien notice Regards",
+        label: "Lien notice Regards"
+      }
+    },
     LBASE2: {
       type: String,
       default: "",
@@ -845,6 +869,22 @@ const Schema = new mongoose.Schema(
         label: "Références des parties constituantes étudiées"
       }
     },
+    REFJOC: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Joconde liées ",
+        label: "Notices Joconde liées"
+      }
+    },
+    REFMUS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Muséo liées ",
+        label: "Notices Muséo liées"
+      }
+    },
     REG: {
       type: String,
       default: "",
@@ -1025,7 +1065,16 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Typologie de la coordonnée géographique de l'édifice"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "palissy" }
 );

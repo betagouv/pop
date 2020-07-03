@@ -52,7 +52,7 @@ class MapComponent extends React.Component {
     }
 
     return (
-      <div className="map-container">
+      <div className="map-container onPrintHide">
         <Head>
           <link
             href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css"
@@ -90,7 +90,7 @@ class MapComponent extends React.Component {
 
 function getGeoJson(notice) {
   const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = notice;
-  if (POP_COORDINATES_POLYGON && POP_COORDINATES_POLYGON.coordinates.length) {
+  if (POP_COORDINATES_POLYGON && POP_COORDINATES_POLYGON.coordinates && POP_COORDINATES_POLYGON.coordinates.length) {
     return {
       center: { lng: POP_COORDONNEES.lon, lat: POP_COORDONNEES.lat },
       geometry: {

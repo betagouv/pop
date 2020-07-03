@@ -14,6 +14,7 @@ import Comments from "./components/comments.js";
 import Mnr from "../../entities/Mnr";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -72,7 +73,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "mnr", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "mnr", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -173,6 +174,7 @@ class Notice extends React.Component {
                 <CustomField name="AFFE" />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

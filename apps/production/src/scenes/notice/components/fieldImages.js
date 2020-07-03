@@ -164,7 +164,7 @@ class FieldImages extends React.Component {
     });
 
     const hideButton =
-      this.props.disabled || (!Array.isArray(this.props.input.value) && this.props.input.value);
+      this.props.disabled || this.props.hideButton || (!Array.isArray(this.props.input.value) && this.props.input.value);
 
     if (!hideButton) {
       arr.push(

@@ -6,22 +6,34 @@ const mongoose = require("mongoose");
 const filenamify = require("filenamify");
 const passport = require("passport");
 const validator = require("validator");
+const NoticesOAI = require("../models/noticesOAI");
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const Autor = require("../models/autor");
+const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
+const Producteur = require("../models/producteur");
+let moment = require('moment-timezone')
+const { checkValidRef } = require("./utils/notice");
+
 const {
   uploadFile,
   formattedNow,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   deleteFile,
-  findMemoireProducteur
+  findMemoireProducteur,
+  identifyProducteur
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
 
 // Control properties document, flag each error.
-function withFlags(notice) {
+async function withFlags(notice) {
+  let listPrefix = await getPrefixesFromProducteurs(["palissy", "merimee", "autor"]);
+
   notice.POP_FLAGS = [];
   // Required properties.
   ["CONTACT", "TYPDOC", "DOM", "LOCA", "LEG", "COPY", "REF", "IDPROD"]
@@ -36,7 +48,7 @@ function withFlags(notice) {
     // LBASE must start with EA, PA, etc.
     if (
       notice.LBASE.map(lb => lb.substring(0, 2)).filter(
-        prefix => !["EA", "PA", "IA", "IM", "PM", "EM"].includes(prefix)
+        prefix => !listPrefix.includes(prefix)
       ).length > 0
     ) {
       notice.POP_FLAGS.push("LBASE_INVALID");
@@ -58,47 +70,74 @@ function withFlags(notice) {
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
   return notice;
 }
 
 // Get collection by ref prefix.
-function findCollection(ref = "") {
-  const prefix = ref.substring(0, 2);
-  switch (prefix) {
-    case "EA":
-    case "PA":
-    case "IA":
+async function findCollection(ref = "") {
+  let collection = "";
+  const producteurs = await Producteur.find();
+  
+  producteurs.map( producteur => {
+    producteur.BASE.map( BASE => {
+      BASE.prefixes.map( prefix => {
+        if(String(ref).startsWith(String(prefix))){
+          collection = BASE.base;
+        }
+      })
+    });
+  });
+
+  switch (collection) {
+    case "merimee":
       return Merimee;
-    case "IM":
-    case "PM":
-    case "EM":
+    case "palissy":
       return Palissy;
+    case "autor":
+      return Autor;
     default:
       return "";
   }
 }
 
-function transformBeforeUpdate(notice) {
+async function getPrefixesFromProducteurs(listBase){
+  let listePrefix = [];
+  const producteurs = await Producteur.find({"BASE.base": {$in:listBase}});
+
+  producteurs.map(
+    producteur => producteur.BASE.filter(
+      base => listBase.includes(base.base)
+    ).map(
+      base => listePrefix = listePrefix.concat(base.prefixes)
+    )
+  )  
+
+  return listePrefix;
+}
+
+async function transformBeforeUpdate(notice) {
   if (notice.IMG !== undefined) {
     notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   }
-  if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-    notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
-  }
+  
   notice.DMAJ = formattedNow();
-  notice = withFlags(notice);
+  notice = await withFlags(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
-  notice.PRODUCTEUR = findProducteur(notice.REF, notice.IDPROD, notice.EMET);
-  notice = withFlags(notice);
+  
+  notice = await withFlags(notice);
 }
 
-function findProducteur(REF, IDPROD, EMET) {
-  return findMemoireProducteur(REF, IDPROD, EMET);
-}
+//function findProducteur(REF, IDPROD, EMET) {
+//  return findMemoireProducteur(REF, IDPROD, EMET);
+//}
 
 // Complicated function to update linked notice
 // Uses cases :
@@ -163,6 +202,7 @@ async function updateLinks(notice) {
     const linkedNotices = [];
     linkedNotices.push(...(await Palissy.find({ "MEMOIRE.ref": REF })));
     linkedNotices.push(...(await Merimee.find({ "MEMOIRE.ref": REF })));
+    linkedNotices.push(...(await Autor.find({ "MEMOIRE.ref": REF })));
 
     const toAdd = [...notice.LBASE];
 
@@ -205,14 +245,17 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
-
-    if (!canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
+    const updateMode = req.body.updateMode;
+    const user = req.user;
+    if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
+      await determineProducteur(notice);
+    }
+    if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
       });
     }
-
     const promises = [];
 
     // Upload files.
@@ -220,20 +263,34 @@ router.put(
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
       promises.push(uploadFile(path, req.files[i]));
     }
-
     // Update IMPORT ID.
-    if (notice.POP_IMPORT.length) {
+    if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
       const id = notice.POP_IMPORT[0];
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
+    await transformBeforeUpdate(notice);
+    //Ajout de l'historique de la notice
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    let HISTORIQUE = notice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
 
-    transformBeforeUpdate(notice);
-    const obj = new Memoire(notice);
-    checkESIndex(obj);
+    HISTORIQUE.push(newHistorique);
+    notice.HISTORIQUE = HISTORIQUE;
+    //Modification des liens entre bases
+    await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
+    await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
+
+    const obj = new Memoire(notice)
+    let oaiObj = { DMAJ: notice.DMAJ }
+    checkESIndex(obj)
 
     try {
-      await updateNotice(Memoire, ref, notice);
+      await updateNotice(Memoire, ref, notice)
+      await updateOaiNotice(NoticesOAI, ref, oaiObj)
     } catch (e) {
       capture(e);
       res.status(500).send({ success: false, error: e });
@@ -257,7 +314,8 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
-    if (!canCreateMemoire(req.user, notice)) {
+    await determineProducteur(notice);
+    if (!await canCreateMemoire(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -269,13 +327,23 @@ router.post(
       const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
       promises.push(uploadFile(path, req.files[i]));
     }
-
     // Update and save.
     promises.push(updateLinks(notice));
-    transformBeforeCreate(notice);
+    await transformBeforeCreate(notice);
+    //Modification des liens entre bases
+    await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
+    await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
+    let oaiObj = {
+      REF: notice.REF,
+      BASE: "memoire",
+      DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
+    }
+
     const obj = new Memoire(notice);
+    const obj2 = new NoticesOAI(oaiObj)
     checkESIndex(obj);
     promises.push(obj.save());
+    promises.push(obj2.save());
     try {
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
@@ -301,13 +369,15 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Memoire.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
         msg: `Impossible de trouver la notice memoire ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMemoire(req.user, doc)) {
+    if (!await canDeleteMemoire(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
@@ -316,6 +386,8 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     doc.LBASE = [];
     await updateLinks(doc);
     const promises = [doc.remove()];
+    promises.push([docOai.remove()]);
+
     if (doc.IMG) {
       promises.push(deleteFile(doc.IMG, "memoire"));
     }
@@ -327,5 +399,70 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+async function determineProducteur(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("memoire", notice.REF, notice.IDPROD, notice.EMET);
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
+
+function populateBaseFromMemoire(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFMEM: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFMEM = noticesToPopulate[i].REFMEM.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFMEM) && !obj.REFMEM.includes(notice.REF)) {
+            obj.REFMEM.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
+  });
+}
 
 module.exports = router;

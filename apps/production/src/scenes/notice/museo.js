@@ -15,6 +15,7 @@ import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -46,9 +47,12 @@ class Museo extends React.Component {
     }
     this.props.initialize(notice);
     // As a "producteur", I can edit if "museofile" matches with notice.
-    const editable =
-      this.props.canUpdate &&
-      (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
+    //const editable = this.props.canUpdate && (this.props.user.role === "administrateur" || this.props.user.museofile.includes(notice.REF));
+    let editable = false;
+    API.canEdit(notice.REF, notice.REF, notice.PRODUCTEUR, "museo").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
 
     this.setState({ loading: false, notice, editable });
   }
@@ -68,7 +72,7 @@ class Museo extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "museo", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "museo", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -116,6 +120,7 @@ class Museo extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
           <FieldImages
             name="PHOTO"
             canOrder={this.state.editable}
@@ -153,6 +158,14 @@ class Museo extends React.Component {
                 <CustomField name="VILLE_M" disabled={!this.state.editable} />
                 <CustomField name="DPT" disabled={!this.state.editable} />
                 <CustomField name="REGION" disabled={!this.state.editable} />
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <CustomField name="POP_COORDONNEES.lat" disabled={!this.state.editable} />
+              </Col>
+              <Col sm={6}>
+                <CustomField name="POP_COORDONNEES.lon" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>
@@ -211,12 +224,28 @@ class Museo extends React.Component {
                 <CustomField name="REF" disabled={true} />
                 <CustomField name="DMIS" disabled={true} />
                 <CustomField name="DMAJ" disabled={true} />
+                <CustomField
+                  name="REFMER"
+                  createUrl={e => `/notice/merimee/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFPAL"
+                  createUrl={e => `/notice/palissy/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="DT_SAISI" disabled={!this.state.editable} />
                 <CustomField name="COPY" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMEM"
+                  createUrl={e => `/notice/memoire/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />

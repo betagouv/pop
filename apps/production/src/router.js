@@ -11,6 +11,9 @@ import SimpleSearch from "./scenes/search/simple";
 import AdvancedSearch from "./scenes/search/advanced";
 import Notice from "./scenes/notice";
 import Admin from "./scenes/admin";
+import Producteur from "./scenes/producteur";
+import Groups from "./scenes/groups";
+import DeletedNotices from "./scenes/deletedNotices"
 import Import from "./scenes/import";
 import Gallery from "./scenes/gallery";
 import Thesaurus from "./scenes/thesaurus";
@@ -64,6 +67,24 @@ class PublicRoutes extends React.Component {
               <RestrictedRoute
                 path={"/admin/"}
                 component={Admin}
+                isLoggedIn={this.props.isLoggedIn}
+                hasResetPassword={this.props.hasResetPassword}
+              />
+              <RestrictedRoute
+                path={"/producteur/"}
+                component={Producteur}
+                isLoggedIn={this.props.isLoggedIn}
+                hasResetPassword={this.props.hasResetPassword}
+              />
+              <RestrictedRoute
+                path={"/groups/"}
+                component={Groups}
+                isLoggedIn={this.props.isLoggedIn}
+                hasResetPassword={this.props.hasResetPassword}
+              />
+              <RestrictedRoute
+                path={"/deletedNotices/"}
+                component={DeletedNotices}
                 isLoggedIn={this.props.isLoggedIn}
                 hasResetPassword={this.props.hasResetPassword}
               />

@@ -640,6 +640,30 @@ module.exports = {
             }
           }
         },
+        REFMEM: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFPAL: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFMER: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REFMIS: {
           type: "text",
           fields: {
@@ -765,6 +789,64 @@ module.exports = {
         },
         POP_COORDONNEES: {
           type: "geo_point"
+        },
+        HISTORIQUE: {
+          properties: {
+            _id: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            nom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            prenom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            email: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            date: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            updateMode: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            }
+          }
         }
       }
     }

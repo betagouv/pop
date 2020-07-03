@@ -13,7 +13,8 @@ test("import component renders for MH", () => {
   expect(component.find(Importer)).toHaveLength(1);
 });
 
-test("import 3 Palissy notice", async () => {
+//Test ok, déprécié depuis externalisation des producteurs
+/* test("import 3 Palissy notice", async () => {
   importTester.mount(<Mh />);
   await importTester.dropFiles(["palissy-mh-valid-UTF-8.csv"], "utf-8");
   expect(importTester.summaryInvalidDocsCount()).toBe(1);
@@ -22,7 +23,7 @@ test("import 3 Palissy notice", async () => {
   const warnings = importTester.notices[2]._warnings;
   expect(errors[0]).toMatch("INSEE et DPT doivent commencer par les deux même lettres");
   expect(warnings).toHaveLength(5);
-});
+}); */
 
 test("import invalid file", async () => {
   const component = importTester.mount(<Mh />);

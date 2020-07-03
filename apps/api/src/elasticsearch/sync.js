@@ -10,6 +10,7 @@ const Merimee = require("../models/merimee");
 const Joconde = require("../models/joconde");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
+const Autor = require("../models/autor");
 const Mnr = require("../models/mnr");
 const Import = require("../models/import");
 const Museo = require("../models/museo");
@@ -29,7 +30,7 @@ async function run() {
       "-i --indices <indices>",
       "The name of the indices",
       val => val.split(","),
-      "joconde,memoire,merimee,mnr,palissy,import,museo".split(",")
+      "joconde,memoire,merimee,mnr,palissy,import,museo,autor,enluminures".split(",")
     )
     .parse(process.argv);
 
@@ -74,7 +75,8 @@ async function run() {
       import: Import,
       mnr: Mnr,
       museo: Museo,
-      enluminures: Enluminures
+      enluminures: Enluminures,
+      autor: Autor
     }[db];
     tasks.add({
       title: `Processing ${db}`,

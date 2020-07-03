@@ -39,6 +39,16 @@ class NavComponent extends React.Component {
         <Link to="/admin" key="admin">
           Administration
         </Link>
+      ) : null,
+      hasAdminRole ? (
+        <Link to="/producteur" key="producteur">
+          Producteurs
+        </Link>
+      ) : null,
+      hasAdminRole ? (
+        <Link to="/groups" key="groups">
+          Groupes
+        </Link>
       ) : null
     ].filter(Boolean);
 

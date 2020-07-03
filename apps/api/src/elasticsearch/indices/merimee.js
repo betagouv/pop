@@ -30,7 +30,7 @@ module.exports = {
         replace_and:{
           type: "mapping",
           mappings: [
-            "& => and"
+            "&=> and"
           ]
         }
       },
@@ -531,6 +531,22 @@ module.exports = {
             }
           }
         },
+        LINHA: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        LREG: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         LBASE2: {
           type: "text",
           fields: {
@@ -808,6 +824,22 @@ module.exports = {
             }
           }
         },
+        REFJOC: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
+        REFMUS: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REG: {
           type: "text",
           analyzer: "french_fuzzy",
@@ -1041,6 +1073,64 @@ module.exports = {
             keyword: {
               type: "keyword",
               ignore_above: 256
+            }
+          }
+        },
+        HISTORIQUE: {
+          properties: {
+            _id: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            nom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            prenom: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            email: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            date: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            },
+            updateMode: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
             }
           }
         }

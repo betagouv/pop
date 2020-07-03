@@ -8,18 +8,28 @@ const router = express.Router();
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const Memoire = require("../models/memoire");
+const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
+const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
+const { checkValidRef } = require("./utils/notice");
+
 const {
   formattedNow,
   checkESIndex,
   updateNotice,
+  updateOaiNotice, 
+  getBaseCompletName,
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
+  isInFrance,
   getNewId,
   uploadFile,
   hasCorrectCoordinates,
   hasCorrectPolygon,
-  findMerimeeProducteur
+  findMerimeeProducteur,
+  identifyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -93,6 +103,25 @@ async function withFlags(notice) {
       }
     }
   }
+  //Coorm not in France
+  if(notice.COORM && notice.ZONE){
+    const convert = convertCOORM(notice.COORM, notice.ZONE);
+    if(convert.message && convert.message == "La projection utilisée n'est pas correct"){
+      notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
+    }
+  }
+
+  //Test if coordinates in France
+  if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
+    }
+  }
+
+  //Check link refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
+  
   return notice;
 }
 async function transformBeforeCreateOrUpdate(notice) {
@@ -117,7 +146,6 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -125,14 +153,11 @@ async function transformBeforeCreateOrUpdate(notice) {
       notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
     }
   }
-
   // To prevent crash on ES
   if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice.DISCIPLINE = notice.PRODUCTEUR = findMerimeeProducteur(notice);
   notice = await withFlags(notice);
 }
 
@@ -204,9 +229,11 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-
+      const updateMode = req.body.updateMode;
+      const user = req.user;
+      await determineProducteur(notice);
       const prevNotice = await Merimee.findOne({ REF: ref });
-      if (!canUpdateMerimee(req.user, prevNotice, notice)) {
+      if (!await canUpdateMerimee(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -233,9 +260,29 @@ router.put(
 
       // Prepare and update notice.
       await transformBeforeUpdate(notice);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
+      //Modification liens entre bases
+      await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
+      await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
+
       const doc = new Merimee(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
+
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -253,7 +300,8 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      if (!canCreateMerimee(req.user, notice)) {
+      await determineProducteur(notice);
+      if (!await canCreateMerimee(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
@@ -261,17 +309,25 @@ router.post(
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       notice.REFO = await populateREFO(notice);
       await transformBeforeCreate(notice);
+      //Modification liens entre bases
+      await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
+      await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
+      let oaiObj = {
+        REF: notice.REF,
+        BASE: "merimee",
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
+      }
 
       const promises = [];
       const doc = new Merimee(notice);
+      const obj2 = new NoticesOAI(oaiObj)
       checkESIndex(doc);
       promises.push(doc.save());
-
+      promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
         const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
         promises.push(uploadFile(path, req.files[i]));
       }
-
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -296,23 +352,91 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Merimee.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
         msg: `Impossible de trouver la notice merimee ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMerimee(req.user, doc)) {
+    if (!await canDeleteMerimee(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     await doc.remove();
+    await docOai.remove();
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("merimee", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
+
+function populateBaseFromMerimee(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFMER: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFMER = noticesToPopulate[i].REFMER.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFMER) && !obj.REFMER.includes(notice.REF)) {
+            obj.REFMER.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
+  });
+}
 
 module.exports = router;

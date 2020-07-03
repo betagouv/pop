@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
+import Link from "next/link";
 import queryString from "query-string";
 import { getNoticeInfo } from "../../src/utils";
 import API from "../../src/services/api";
@@ -14,27 +15,107 @@ import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import { bucket_url } from "./../../src/config";
 import Map from "../../src/notices/Map";
-import { schema, findCollection, postFixedLink } from "../../src/notices/utils";
+import { schema, findCollection, postFixedLink, getParamsFromUrl, highlighting, lastSearch } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
+import BucketButton from "../../src/components/BucketButton";
+import Cookies from 'universal-cookie';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PalissyPdf } from "../pdfNotice/palissyPdf";
+import { pop_url } from "../../src/config";
 
 export default class extends React.Component {
-  static async getInitialProps({ query: { id } }) {
+  state = {display: false, prevLink: undefined, nextLink: undefined}
+
+
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("palissy", id);
-    const arr = [];
+    const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
+    const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+
+    let arr = [];
+    let links = []
 
     if (notice) {
-      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice;
-      [...RENV, ...REFP, ...REFE, ...REFA, LBASE2]
-        .filter(e => e && e != REF)
-        .forEach(e => {
-          const collection = findCollection(e);
-          arr.push(API.getNotice(collection, e));
-        });
-    }
+      const { RENV, REFP, REFE, REFA, LBASE2, REF } = notice
+      arr = [...RENV, ...REFP, ...REFE, ...REFA, LBASE2].filter(e => e && e != REF)
+      for(let elem in arr ){
+        const collection = await findCollection(arr[elem])
+        const linkedNotice = await API.getNotice(collection, arr[elem])
+        links.push(linkedNotice)
+      }
 
-    const links = (await Promise.all(arr)).filter(l => l);
-    return { notice, links };
+      for(let i=0; i<notice.REFJOC.length; i++){
+        const linkedJoconde = await API.getNotice("joconde", notice.REFJOC[i]);
+        if(linkedJoconde){links.push(linkedJoconde)}
+      }
+
+      for(let i=0; i<notice.REFMUS.length; i++){
+        const linkedMuseo = await API.getNotice("museo", notice.REFMUS[i]);
+        if(linkedMuseo){links.push(linkedMuseo)}
+      }
+    }
+    return { notice, links, searchParams, searchParamsUrl }
   }
+
+  async componentDidMount(){
+    //this.setState({display : true});
+
+    //highlighting
+    highlighting(this.props.searchParams.mainSearch);
+
+    //Construction des liens précédents/suivants
+    const cookies = new Cookies();
+    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
+    if(listRefs){
+      const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
+      let prevLink = undefined;
+      let nextLink = undefined;
+      if(indexOfCurrentNotice > 0){
+        const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
+        if(previousCollection !== ""){
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      if(indexOfCurrentNotice < listRefs.length - 1){
+        const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
+        if(nextCollection !== ""){
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        }
+      }
+      this.setState({prevLink, nextLink});
+    }
+  }
+
+  componentDidUpdate(){
+    this.state.display == false && this.setState({display : true});
+  }
+
+  renderPrevButton(){
+    if(this.state.prevLink != undefined){
+      return(
+          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+            &lsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  renderNextButton(){
+    if(this.state.nextLink != undefined){
+      return(
+          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+           &rsaquo;
+          </a>
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
 
   fieldImage(notice) {
     const { images } = getNoticeInfo(notice);
@@ -99,6 +180,32 @@ export default class extends React.Component {
       creator: notice.AUTR,
       artMedium: notice.MATR.join(", ")
     };
+
+    const pdf = PalissyPdf(notice, title, localisation, this.props.links);
+    const App = () => (
+      <div>
+        <PDFDownloadLink 
+          document={pdf} 
+          fileName={"palissy_" + notice.REF + ".pdf"}
+          style={{backgroundColor: "#377d87",
+                  border: 0,
+                  color: "#fff",
+                  maxWidth: "250px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  textAlign: "center",
+                  borderRadius: "5px"
+                }}>
+          {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
+        </PDFDownloadLink>
+      </div>
+    )
+
+    const lastRecherche = lastSearch(this.props.searchParams, this.props.searchParamsUrl, pop_url);
+
     return (
       <Layout>
         <div className="notice">
@@ -109,7 +216,34 @@ export default class extends React.Component {
               <script type="application/ld+json">{schema(obj)}</script>
               {image ? <meta property="og:image" content={image} /> : <meta />}
             </Head>
-            <h1 className="heading">{notice.TICO}</h1>
+            <div>
+              <div className="heading heading-center">
+                {this.renderPrevButton()}
+                <h1 className="heading-title">{notice.TICO}</h1>
+                {this.renderNextButton()}
+              </div>
+            </div>
+
+            <div className="top-container">
+              <div className="leftContainer-buttons">
+                {lastRecherche !== null && 
+                <div className="btn btn-last-search">
+                  <Link href={lastRecherche}>
+                    <div className="text-last-search">
+                      Retour à la recherche
+                    </div>
+                  </Link>
+                </div>}
+              </div>
+              <div className="rightContainer-buttons">
+                <div className="addBucket onPrintHide">
+                  {this.state.display &&
+                    <BucketButton base="palissy" reference={notice.REF} />}
+                  </div>
+                {this.state.display && App()}
+              </div>
+            </div>
+
             <Row>
               <Col md="8">
                 <div className="notice-details">
@@ -403,6 +537,48 @@ const SeeMore = ({ notice }) => {
           key={`notice.LIENS${i}`}
         />
       );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
     }
   }
 

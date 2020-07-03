@@ -23,26 +23,78 @@ class Import extends React.Component {
     });
   }
 
+  renderOldImports(group){
+    if(group === "admin"){
+      return (
+        <div>
+          <Col className="m-4 text-center">
+            <Link to="/import/list">Consultez les anciens imports</Link>
+          </Col>
+          <Col className="m-4 text-center">
+            <Link to="/deletedNotices">Consultez l'historique de suppression</Link>
+          </Col>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <Col className="m-4 text-center">
+            <Link to="/deletedNotices">Consultez l'historique de suppression</Link>
+          </Col>
+        </div>
+      );
+    }
+  }
+
   render() {
     const image = require("../../assets/outbox.png");
+    const group = this.props.group;
+
+    let listRoutes = [];
+    if(group === "admin"){
+      listRoutes = [{ url: "/import/joconde", name: "Joconde", image },
+      { url: "/import/mnr", name: "MNR", image },
+      { url: "/import/inv", name: "Inventaire", image },
+      { url: "/import/mh", name: "Monuments historiques", image },
+      { url: "/import/memoire", name: "MAP (Service Archives Photos)", image },
+      { url: "/import/museo", name: "Museo", image }];
+    }
+    else {
+      if(this.props.authorizedImports){
+        let authorizedImports = this.props.authorizedImports;
+        if(authorizedImports.includes("joconde")){
+          listRoutes.push({ url: "/import/joconde", name: "Joconde", image });
+        }
+        if(authorizedImports.includes("mnr")){
+          listRoutes.push({ url: "/import/mnr", name: "MNR", image });
+        }
+        if(authorizedImports.includes("inv")){
+          listRoutes.push({ url: "/import/inv", name: "Inventaire", image });
+        }
+        if(authorizedImports.includes("mh")){
+          listRoutes.push({ url: "/import/mh", name: "Monuments historiques", image });
+        }
+        if(authorizedImports.includes("map")){
+          listRoutes.push({ url: "/import/memoire", name: "MAP (Service Archives Photos)", image });
+        }
+        if(authorizedImports.includes("museo")){
+          listRoutes.push({ url: "/import/museo", name: "Museo", image });
+        }
+      }
+    }
+    
+
+
     return (
       <Container>
         <div className="home-import">
           <div className="subtitle">Je souhaite importer</div>
           <Row>
-            {this.renderTiles([
-              { url: "/import/joconde", name: "Joconde", image },
-              { url: "/import/mnr", name: "MNR", image },
-              { url: "/import/inv", name: "Inventaire", image },
-              { url: "/import/mh", name: "Monuments historiques", image },
-              { url: "/import/memoire", name: "MAP (Service Archives Photos)", image },
-              { url: "/import/museo", name: "Museo", image }
-            ])}
+            {this.renderTiles(listRoutes)}
           </Row>
           <Row>
-            <Col className="m-4 text-center">
-              <Link to="/import/list">Consultez les anciens imports</Link>
-            </Col>
+            {this.renderOldImports(group)}
           </Row>
         </div>
       </Container>

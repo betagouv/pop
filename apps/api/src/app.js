@@ -29,6 +29,8 @@ app.get("/", (_req, res) => {
 
 app.use("/auth", require("./controllers/auth"));
 app.use("/users", require("./controllers/users"));
+app.use("/producteur", require("./controllers/producteurs"));
+app.use("/groups", require("./controllers/groups"));
 app.use("/import", require("./controllers/import"));
 
 // Notices
@@ -40,6 +42,7 @@ app.use("/memoire", require("./controllers/memoire"));
 app.use("/enluminures", require("./controllers/enluminures"));
 app.use("/museo", require("./controllers/museo"));
 app.use("/autor", require("./controllers/autor"));
+app.use("/deleteHistorique", require("./controllers/deleteHistorique"));
 
 // Gallery
 app.use("/gallery", require("./controllers/gallery"));
@@ -52,5 +55,8 @@ app.use("/thesaurus", bodyParser.json(), require("./controllers/thesaurus"));
 
 // Proxy to ES
 app.use("/search", require("./controllers/search"));
+
+// Entrepot OAI
+app.use("/oai", require("./controllers/oai"));
 
 module.exports = app;

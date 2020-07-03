@@ -17,6 +17,7 @@ import { bucket_url } from "../../config.js";
 import Merimee from "../../entities/Merimee";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -46,9 +47,14 @@ class Notice extends React.Component {
       this.setState({ loading: false, error: "Cette notice n'existe pas" });
       return;
     }
-    console.log(notice);
     this.props.initialize(notice);
-    const editable = this.canEdit(notice);
+    //const editable = this.canEdit(notice);
+    let editable = false;
+    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "merimee").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+    
     this.setState({ loading: false, notice, editable });
   }
 
@@ -105,7 +111,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "merimee", values, files);
+        await API.updateNotice(this.state.notice.REF, "merimee", values, files, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -419,8 +425,21 @@ class Notice extends React.Component {
                 <CustomField name="LMDP" disabled={!this.state.editable} />
                 <CustomField name="RFPA" disabled={!this.state.editable} />
                 <CustomField name="NBOR" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
+                <CustomField name="LREG" disabled={!this.state.editable} />
+                <CustomField name="LINHA" disabled={!this.state.editable} />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
 
           <Map notice={this.state.notice} />

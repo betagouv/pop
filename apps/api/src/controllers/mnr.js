@@ -6,19 +6,22 @@ const upload = multer({ dest: "uploads/" });
 const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice } = require("./utils");
+const NoticesOAI = require("../models/noticesOAI");
+let moment = require('moment-timezone')
+
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
 
-function transformBeforeUpdate(notice) {
+async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
   if (notice.VIDEO !== undefined) {
     notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
   }
 }
 
-async function transformBeforeCreate(notice) {
+function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
 }
@@ -56,10 +59,14 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    const updateMode = req.body.updateMode;
+    const user = req.user;
 
     try {
       const prevNotice = await Mnr.findOne({ REF: ref });
-      if (!canUpdateMnr(req.user, prevNotice, notice)) {
+      await determineProducteur(notice);
+
+      if (!await canUpdateMnr(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -88,9 +95,24 @@ router.put(
       }
 
       transformBeforeUpdate(notice);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
       const doc = new Mnr(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(doc);
       promises.push(updateNotice(Mnr, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
     } catch (e) {
@@ -107,16 +129,26 @@ router.post(
   upload.any(),
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
+    await determineProducteur(notice);
     transformBeforeCreate(notice);
-    if (!canCreateMnr(req.user, notice)) {
+    if (!await canCreateMnr(req.user, notice)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
     }
     try {
+      let oaiObj = {
+        REF: notice.REF,
+        BASE: "mnr",
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
+      }
       const doc = new Mnr(notice);
+      const obj2 = new NoticesOAI(oaiObj)
+
       checkESIndex(doc);
       await doc.save();
+      await obj2.save();
+
       res.send({ success: true, msg: "OK" });
     } catch (error) {
       capture(error);
@@ -140,19 +172,22 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Mnr.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
         msg: `Impossible de trouver la notice mnr ${ref} à supprimer.`
       });
     }
-    if (!canDeleteMnr(req.user, doc)) {
+    if (!await canDeleteMnr(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     const promises = doc.VIDEO.map(f => deleteFile(f, "mnr"));
     promises.push(doc.remove());
+    promises.push(docOai.remove());
     await Promise.all(promises);
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
@@ -160,5 +195,23 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("mnr", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "MNR";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
 
 module.exports = router;

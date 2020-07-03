@@ -8,18 +8,28 @@ const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
 const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
+const Joconde = require("../models/joconde");
+const Museo = require("../models/museo");
+const NoticesOAI = require("../models/noticesOAI");
+const { checkValidRef } = require("./utils/notice");
+let moment = require('moment-timezone')
+
+
 const {
   formattedNow,
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
+  isInFrance,
   lambertToWGS84,
   getPolygonCentroid,
   convertCOORM,
   uploadFile,
   hasCorrectCoordinates,
   hasCorrectPolygon,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -102,6 +112,25 @@ async function withFlags(notice) {
       }
     }
   }
+  // Coorm not in France
+  if(notice.COORM && notice.ZONE){
+    const convert = convertCOORM(notice.COORM, notice.ZONE);
+    if(convert.message && convert.message == "La projection utilisée n'est pas correct"){
+      notice.POP_FLAGS.push("COORM_NOT_IN_FRANCE");
+    }
+  }
+
+  //Test if coordinates in France
+  if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
+    if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
+    }
+  }
+
+  //Check refs
+  notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
+  notice.POP_FLAGS = await checkValidRef(notice.REFMUS, Museo, notice.POP_FLAGS, "REFMUS");
+  
   return notice;
 }
 
@@ -142,7 +171,9 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice.DISCIPLINE = notice.PRODUCTEUR = findPalissyProducteur(notice);
+  if(notice.PRODUCTEUR){
+    notice.DISCIPLINE = notice.PRODUCTEUR
+  }
 
   notice = await withFlags(notice);
 }
@@ -240,9 +271,11 @@ router.put(
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
-
+      const updateMode = req.body.updateMode;
+      const user = req.user;
+      await determineProducteur(notice);
       const prevNotice = await Palissy.findOne({ REF: ref });
-      if (!canUpdatePalissy(req.user, prevNotice, notice)) {
+      if (!await canUpdatePalissy(req.user, prevNotice, notice)) {
         return res.status(401).send({
           success: false,
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -261,7 +294,25 @@ router.put(
 
       // Add generate fields
       await transformBeforeUpdate(notice);
+
+      //Modification des liens entre bases
+      await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
+      await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+
       const obj = new Palissy(notice);
+      let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(obj);
 
       const promises = [];
@@ -276,6 +327,7 @@ router.put(
       }
 
       promises.push(updateNotice(Palissy, ref, notice));
+      promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       promises.push(populateMerimeeREFO(notice));
 
       await Promise.all(promises);
@@ -295,28 +347,36 @@ router.post(
   async (req, res) => {
     try {
       const notice = JSON.parse(req.body.notice);
-      if (!canCreatePalissy(req.user, notice)) {
+      await determineProducteur(notice);
+      if (!await canCreatePalissy(req.user, notice)) {
         return res
           .status(401)
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       await populateMerimeeREFO(notice);
-
       await transformBeforeCreate(notice);
+      //Modification des liens entre bases
+      await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
+      await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
+      let oaiObj = {
+        REF: notice.REF,
+        BASE: "palissy",
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
+      }
       const obj = new Palissy(notice);
-      checkESIndex(obj);
+      const obj2 = new NoticesOAI(oaiObj)
 
+      checkESIndex(obj);
       const promises = [];
       promises.push(obj.save());
-
+      promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
         promises.push(
           uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i])
         );
       }
-
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -341,23 +401,92 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
   try {
     const ref = req.params.ref;
     const doc = await Palissy.findOne({ REF: ref });
+    const docOai = await NoticesOAI.findOne({ REF: ref });
+
     if (!doc) {
       return res.status(404).send({
         success: false,
         msg: `Impossible de trouver la notice palissy ${ref} à supprimer.`
       });
     }
-    if (!canDeletePalissy(req.user, doc)) {
+    if (!await canDeletePalissy(req.user, doc)) {
       return res
         .status(401)
         .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
     }
     await doc.remove();
+    await docOai.remove();
+
     return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
   } catch (error) {
     capture(error);
     return res.status(500).send({ success: false, error });
   }
 });
+
+function determineProducteur(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let noticeProducteur = await identifyProducteur("palissy", notice.REF, "", "");
+      if(noticeProducteur){
+        notice.PRODUCTEUR = noticeProducteur;
+      }
+      else {
+        notice.PRODUCTEUR = "AUTRE";
+      }
+      resolve();
+    } catch (e) {
+      capture(e);
+      reject(e);
+    }
+  });
+}
+
+function populateBaseFromPalissy(notice, refList, baseToPopulate) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const noticesToPopulate = await baseToPopulate.find({ REFPAL: notice.REF });
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // If the object is removed from notice, then remove it from palissy
+        if(!refList.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i].REFPAL = noticesToPopulate[i].REFPAL.filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      let list = [];
+      switch(baseToPopulate){
+        case Joconde : 
+          list = notice.REFJOC;
+          break;
+        case Museo : 
+          list = notice.REFMUS;
+          break;
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          const obj = await baseToPopulate.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj.REFPAL) && !obj.REFPAL.includes(notice.REF)) {
+            obj.REFPAL.push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
+  });
+}
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Results } from "react-elasticsearch";
+import { Results } from "react-elasticsearch-pop";
 import { pagination } from "../utils";
 import CardMosaique from "./CardMosaic";
 
@@ -9,9 +9,9 @@ export default function({ initialValues }) {
       <Results
         initialPage={initialValues.get("mosaicPage")}
         id="mosaic"
-        items={data =>
+        items={(data, listRefs, idQuery) =>
           data.map(({ _id, ...rest }) => (
-            <CardMosaique key={_id} index={rest._index} data={rest._source} />
+            <CardMosaique key={_id} index={rest._index} searchParams={initialValues} data={rest._source} listRefs={listRefs} idQuery={idQuery} />
           ))
         }
         itemsPerPage={25}
@@ -26,6 +26,9 @@ export default function({ initialValues }) {
         }}
       />
       <style jsx global>{`
+        .mosaic-view {
+          width: inherit;
+        }
         .mosaic-view > div {
           display: flex;
           -ms-flex-wrap: wrap;
@@ -33,8 +36,12 @@ export default function({ initialValues }) {
           margin-right: -15px;
           margin-left: -15px;
         }
-        .mosaic-view > .react-es-results {
+        .react-es-results {
+          width: inherit;
           padding-top: 25px;
+        }
+        .react-es-results-items {
+          width: inherit;
         }
         .mosaic-view .result-count {
           margin-left: 15px;

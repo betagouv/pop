@@ -9,7 +9,7 @@ const { signinByToken } = Actions;
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  state = { alert: process.env.NODE_ENV !== "production" };
+  state = { alert: process.env.NODE_ENV !== "production", alertMEP: true };
   componentWillMount() {
     this.props.signinByToken();
   }
@@ -32,6 +32,22 @@ class App extends React.Component {
     );
   }
 
+  renderMEPalert(){
+    return (
+      <Alert
+        style={{ marginBottom: "0px" }}
+        color="danger"
+        isOpen={this.state.alertMEP}
+        toggle={() => this.setState({ alertMEP: false })}
+      >
+        Attention : en raison d’une montée de version, l’application POP sera indisponible à 
+        partir de 18h le 3 Juillet. POP sera de nouveau disponible à partir du 4 Juillet 9h.
+        Veuillez nous excuser pour la gêne occasionnée. 
+      </Alert>
+    );
+  }
+
+
   render() {
     if (this.props.user === undefined) {
       return <Loader />;
@@ -39,6 +55,7 @@ class App extends React.Component {
     return (
       <div>
         {this.renderAlert()}
+        {this.renderMEPalert()}
         <PublicRoutes history={history} />;
       </div>
     );

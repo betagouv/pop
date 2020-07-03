@@ -503,6 +503,22 @@ const Schema = new mongoose.Schema(
         label: "Commentaires concernant la datation"
       }
     },
+    LINHA: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien INHA",
+        label: "Lien INHA"
+      }
+    },
+    LREG: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Lien notice Regards",
+        label: "Lien notice Regards"
+      }
+    },
     LBASE2: {
       type: String,
       default: "",
@@ -714,6 +730,22 @@ const Schema = new mongoose.Schema(
           "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
         label: "Référence aux objets conservés",
         generated: true
+      }
+    },
+    REFJOC: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Joconde liées ",
+        label: "Notices Joconde liées"
+      }
+    },
+    REFMUS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Muséofile liées ",
+        label: "Notices Muséofile liées"
       }
     },
     REG: {
@@ -1075,7 +1107,16 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Date de label"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "merimee" }
 );

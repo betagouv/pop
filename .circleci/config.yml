@@ -285,18 +285,21 @@ workflows:
       - build_production_staging:
           requires:
             - test_production
+            - prepare_all
           filters:
             branches:
               only: staging
       - build_production_prod:
           requires:
             - test_production
+            - prepare_all
           filters:
             branches:
               only: master
       - deploy_api_staging:
           requires:
             - test_api
+            - prepare_all
           filters:
             branches:
               only: staging
@@ -317,6 +320,7 @@ workflows:
       - deploy_api_prod:
           requires:
             - test_api
+            - prepare_all
           filters:
             branches:
               only: master

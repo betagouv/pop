@@ -214,6 +214,30 @@ const Schema = new mongoose.Schema(
 `
       }
     },
+    REFMEM: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mémoire liées ",
+        label: "Notices Mémoire liées"
+      }
+    },
+    REFMER: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mérimée liées ",
+        label: "Notices Mérimée liées"
+      }
+    },
+    REFPAL: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Palissy liées ",
+        label: "Notices Palissy liées"
+      }
+    },
     REGION: {
       type: String,
       default: "",
@@ -503,10 +527,29 @@ const Schema = new mongoose.Schema(
     REST: { type: String, default: "", deprecated: true },
     ACQU: { type: String, default: "", deprecated: true },
     RECOL: { type: String, default: "", deprecated: true },
-    location: {
+    POP_COORDONNEES: {
       lat: { type: Number, default: 0 },
       lon: { type: Number, default: 0 }
-    }
+    },
+    POP_CONTIENT_GEOLOCALISATION: {
+      type: String,
+      enum: ["oui", "non"],
+      default: "non",
+      documentation: {
+        description: "Champ qui permet de savoir si la geolocalisation est disponible ou non",
+        generated: true,
+        label: "Contient une position"
+      }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "museo" }
 );

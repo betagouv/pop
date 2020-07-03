@@ -1,5 +1,5 @@
 import React from "react";
-import { ActiveFilters, Facet } from "react-elasticsearch";
+import { ActiveFilters, Facet } from "react-elasticsearch-pop";
 import { CollapsableFacet } from "./utils";
 
 const Menu = ({ closeMenu, initialValues }) => (
@@ -30,7 +30,7 @@ const Menu = ({ closeMenu, initialValues }) => (
     <CollapsableFacet
       id="auteur"
       initialValue={initialValues.get("auteur")}
-      fields={["AUTP.keyword", "AUTR.keyword"]}
+      fields={["AUTP.keyword", "AUTR.keyword", "NOMPRENOM.keyword"]}
       title="Auteur"
     />
     <CollapsableFacet
@@ -82,14 +82,16 @@ const Menu = ({ closeMenu, initialValues }) => (
         "NOMOFF.keyword",
         "VILLE_M.keyword",
         "REGION.keyword",
-        "NOMUSAGE.keyword"
+        "NOMUSAGE.keyword",
+        "LNAISS.keyword",
+        "LMORT.keyword"
       ]}
       title="Localisation"
     />
     <CollapsableFacet
       id="periode"
       initialValue={initialValues.get("periode")}
-      fields={["PERI.keyword"]}
+      fields={["PERI.keyword", "SCLE.keyword"]}
       title="Période"
     />
     <CollapsableFacet

@@ -45,6 +45,74 @@ class api {
     return request.fetchJSON("GET", `/users`);
   }
 
+  // Get all producteurs.
+  getProducteurs() {
+    return request.fetchJSON("GET", `/producteur`);
+  }
+
+  //Get one producteur
+  getProducteurByLabel(label) {
+    return request.fetchJSON("GET", `/producteur/label?label=${label}`);
+  }
+
+  // Create a producteur.
+  async createProducteur({ label, base }) {
+    const props = { label, base };
+    return request.fetchJSON("POST", "/producteur", props);
+  }
+
+  // Update a producteur.
+  async updateProducteur({ _id, label, base }) {
+    const props = { _id, label, base };
+    return request.fetchJSON("PUT", `/producteur/${_id}`, props);
+  }
+
+  // Get prefix list from producteur list
+  async getPrefixesFromProducteurs(producteurs){
+    const producteurList = producteurs.reduce((result, list) => result = result == null ? list : result + "," + list )
+    return request.fetchJSON("GET", "/producteur/prefixesFromProducteurs?producteurs="+producteurList);
+  }
+
+  // Get all groups.
+  getGroups() {
+    return request.fetchJSON("GET", `/groups`);
+  }
+
+  // Get all groups.
+  getGroupByLabel(label) {
+    return request.fetchJSON("GET", `/groups/label?label=${label}`);
+  }
+
+  // Create a group.
+  async createGroup({ label, producteurs }) {
+    const props = { label, producteurs };
+    return request.fetchJSON("POST", "/groups", props);
+  }
+
+  // Get all delete historiques.
+  getDeleteHistoriques() {
+    return request.fetchJSON("GET", `/deleteHistorique`);
+  }
+
+  // Create delete historique.
+  async createDeleteHistorique( ref, base ) {
+    const props = { ref, base };
+    console.log("create delete historique ref = " + JSON.stringify(props));
+
+    return request.fetchJSON("POST", "/deleteHistorique", props);
+  }
+
+  // can edit notice depending on producteurs, groups, user
+  canEdit( REF, MUSEO, PRODUCTEUR, COLLECTION ) {
+    return request.fetchJSON("GET", `/groups/canEdit?ref=${REF}&museo=${MUSEO}&producteur=${PRODUCTEUR}&collection=${COLLECTION}`);
+  }
+
+  // Update a group.
+  async updateGroup({ _id, label, producteurs }) {
+    const props = { _id, label, producteurs };
+    return request.fetchJSON("PUT", `/groups/${_id}`, props);
+  }
+
   // Send a report.
   sendReport(subject, to, body) {
     const data = { subject, to, body };
@@ -66,21 +134,83 @@ class api {
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
       const MAX_ATTEMPTS = 5;
-      const BULK_SIZE = 5;
       const TIME_BEFORE_RETRY = 30000;
       let attempts = 0;
       const total = arr.length;
+      const progress =  (100 * (total - arr.length)) / total;
+      const BULK_SIZE = 5;
+      const BULK_SIZE_AUTOR = 200;
 
+      // Lists for "autor" notices
+      let autorCurrentNoticesCreate = []
+      let autorCurrentNoticesUpdate = []
+      let currentNoticesCreate = []
+      let currentNoticesUpdate = []
+
+      // Get All "autor" notices for CREATE if it exists
+      autorCurrentNoticesCreate = arr.reduce((accumulatorNotices, currentNotice) => {
+      if(currentNotice.collection === "autor" && currentNotice.action === "created"){
+        accumulatorNotices.push(currentNotice)
+      }
+      return accumulatorNotices
+      }, [])
+      
+      // Get All "autor" notices for UPDATE if it exists
+      autorCurrentNoticesUpdate = arr.reduce((accumulatorNotices, currentNotice) => {
+      if(currentNotice.collection === "autor" && currentNotice.action === "updated"){
+        accumulatorNotices.push(currentNotice)
+      }
+      return accumulatorNotices
+      }, [])
+      
+      // DELETE those "autor" notices from currentNotices
+      arr = arr.filter(notice => !autorCurrentNoticesCreate.includes(notice) && !autorCurrentNoticesUpdate.includes(notice))
+
+      while(autorCurrentNoticesCreate.length || autorCurrentNoticesUpdate.length){
+        try{
+        // CREATE "autor" notices
+        if(autorCurrentNoticesCreate.length > 0){
+          currentNoticesCreate = autorCurrentNoticesCreate.splice(0, BULK_SIZE_AUTOR);
+          await this.createNoticeAutor(currentNoticesCreate);
+        }
+        // UPDATE "autor" notices
+        if(autorCurrentNoticesUpdate.length > 0){
+          currentNoticesUpdate = autorCurrentNoticesUpdate.splice(0, BULK_SIZE_AUTOR);
+          await this.updateNoticeAutor(currentNoticesUpdate);
+        }
+        cb(progress, `Notices restantes  ${total - (autorCurrentNoticesUpdate.length + autorCurrentNoticesCreate.length)}/${total}`);
+      } catch (e) {
+          // I add the currents one back to the list.
+          // I put it at the beginning because if there is a server error on this one,
+          // I dont want to wait the end to know (but maybe I should)
+          let currentNoticesAutor = autorCurrentNoticesCreate
+          currentNoticesAutor = currentNoticesAutor.concat(autorCurrentNoticesUpdate)
+          arr.splice(0, 0, ...currentNoticesAutor);
+          if (++attempts >= MAX_ATTEMPTS) {
+            reject("Import échoué. Trop d'erreurs ont été détectées");
+            return;
+          }
+          cb(
+            progress,
+            `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
+              `Tentative : ${attempts}/${MAX_ATTEMPTS}`
+          );
+          await timeout(TIME_BEFORE_RETRY);
+        }
+      }
+      
       while (arr.length) {
         const currentNotices = arr.splice(0, BULK_SIZE);
-        const progress = (100 * (total - arr.length)) / total;
-        try {
-          for(let i=0; i<currentNotices.length; i++){
-            let e = currentNotices[i];
-            if (e.action === "updated") {
-              await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files);
-            } else {
-              await this.createNotice(e.collection, e.notice, e.files);
+       try{
+          // add other bases
+          if(currentNotices.length > 0) {
+            for(let i=0; i<currentNotices.length; i++){
+              let e = currentNotices[i];
+              if (e.action === "updated") {
+                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files, "import");
+              } else {
+                await this.createNotice(e.collection, e.notice, e.files);
+              }
             }
           }
           cb(progress, `Notices restantes  ${total - arr.length}/${total}`);
@@ -116,12 +246,13 @@ class api {
   }
 
   // Update one notice.
-  async updateNotice(ref, collection, data, files = []) {
+  async updateNotice(ref, collection, data, files = [], updateMode) {
     let formData = new FormData();
     formData.append("notice", JSON.stringify(data));
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i].name);
     }
+    formData.append("updateMode", updateMode);
     return request.fetchFormData("PUT", `/${collection}/${ref}`, formData);
   }
 
@@ -141,6 +272,20 @@ class api {
     return request.fetchFormData("POST", `/${collection}`, formData);
   }
 
+  // Create a new autor notice.
+  async createNoticeAutor(autorNotices) {
+    let formData = new FormData();
+    formData.append("autorNotices", JSON.stringify(autorNotices));
+    return request.fetchFormData("POST", "/autor", formData);
+  }
+
+  // Update autor notice.
+  async updateNoticeAutor(autorNotices) {
+    let formData = new FormData();
+    formData.append("autorNotices", JSON.stringify(autorNotices));
+    return request.fetchFormData("PUT", "/autor", formData);
+  }
+  
   // Get one notice.
   getNotice(collection, ref) {
     return request.getJSON(`/${collection}/${ref}`);

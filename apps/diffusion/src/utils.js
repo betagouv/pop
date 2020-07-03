@@ -1,3 +1,4 @@
+import Cookies from 'universal-cookie';
 import { bucket_url } from "./config";
 
 export function getNoticeInfo(notice) {
@@ -238,6 +239,76 @@ export function getNoticeInfo(notice) {
 
       return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
+    case "Ressources biographiques (Autor)": {
+      let title = 
+      (notice.NOMPRENOM ? notice.NOMPRENOM : 
+        ( (notice.PREN ? notice.PREN : " ") 
+          +(notice.NOM ? notice.NOM : "")
+        )
+      );
+      let logo = "";
+      if (notice.PRODUCTEUR === "Inventaire") {
+        logo = "/static/inventaire.jpg";
+      } else if (notice.PRODUCTEUR === "Monuments Historiques") {
+        logo = "/static/mh.png";
+      }
+      else{
+        logo = notice.PRODUCTEUR;
+      }
+
+      const images = notice.MEMOIRE.map((e, i) => {
+        const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
+        return { src, alt: `${e.name}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+      });
+
+      const image_preview = notice.MEMOIRE.filter(e => e.url).length
+        ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
+        : "/static/noimage.png";
+
+      const nom =  (notice.NOMPRENOM? notice.NOMPRENOM : (notice.PREN + " " + notice.NOM)) + (notice.ALIAS!="" ? (" - " + notice.ALIAS) : "");
+
+      //Description
+      let life = "";
+      if(notice.DNAISS && notice.DMORT){
+        life = " (" + notice.DNAISS + " - " + notice.DMORT + ")";
+      }
+      else if(notice.DNAISS && !notice.DMORT){
+        life = " (" + notice.DNAISS + ")";
+      }
+      const description = notice.INI + life;
+
+      //Date d'activité
+      let activite = "";
+      if(notice.DATES || LOCACT){
+        activite = " - (dates d'activité : " + notice.DATES + ((notice.DATES && notice.LOCACT)? (" - " + notice.LOCACT) : "");
+      }
+
+      //Fonction
+      let isOrfevre = false;
+      let fonction = "";
+      notice.FONC.map( (fonc, index) => {
+        if(fonc == "Orfèvre"){
+          isOrfevre = true;
+        }
+        fonction += ( index==0? fonc : (", " + fonc) )
+      });
+
+      //Symbole
+      let symbole = isOrfevre? notice.SYMB : "";
+
+      //Dates et lieus d'existence
+      let datesLieus = "";
+      datesLieus += ( notice.DNAISS ? (notice.DNAISS + (notice.LNAISS? (" ("+notice.LNAISS+") ") : "") ) : "" );
+      datesLieus += (notice.DNAISS && notice.DMORT ? " - " : "");
+      datesLieus += ( notice.DMORT ? (notice.DMORT + (notice.LMORT? (" ("+notice.LMORT+") ") : "") ) : "");
+
+      //Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
+      let referenceArk = "";
+      referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
+      referenceArk += ((notice.ISNI_VERIFIEE? " / " : "") + ( notice.ARK ? ( "Lien ARK : " + notice.ARK) : "")); 
+
+      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, referenceArk };
+    }
     default:
       return {};
   }
@@ -294,3 +365,18 @@ const capitalizeFirstLetter = s => {
   if (!s) return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+export function saveListRef (listRefs, searchParams, removeFromBucket){
+  //Si la props removeFromBucket existe, c'est qu'on est dans le panier et qu'on n'enregistre pas de recherche
+  if(!removeFromBucket){
+    const cookies = new Cookies();
+    const encodedListRefs = JSON.stringify(listRefs);
+
+    // Suppression du cookie de la recherche précédente
+    Object.keys(cookies.getAll())
+    .filter(key => key.startsWith("listRefs-"))
+    .forEach(name => {cookies.remove(name, {path: '/'})});
+
+    cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+  }
+}

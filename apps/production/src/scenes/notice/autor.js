@@ -1,18 +1,25 @@
 import React from "react";
+import { bucket_url} from "../../config.js"
 import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
+import FieldImages from "./components/fieldImages";
+import { Link } from "react-router-dom";
 import BackButton from "./components/BackButton";
+import DeleteButton from "./components/DeleteButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
+import Autor from "../../entities/Autor";
+import AccordionHistorique from "./components/AccordionHistorique";
+
 
 import "./index.css";
 
-class Autor extends React.Component {
+class Notice extends React.Component {
   state = {
     notice: null,
     error: "",
@@ -38,12 +45,36 @@ class Autor extends React.Component {
       return;
     }
     this.props.initialize(notice);
-    const editable = false;
+    const editable = true;
     this.setState({ loading: false, notice, editable });
   }
 
   // Not implemented yet (not editable)
-  async onSubmit() {}
+  async onSubmit(values) {
+    this.setState({ saving: true });
+    const notice = new Autor(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "autor", values, this.state.imagesFiles, "manuel");
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
+    }
+    this.setState({ saving: false });  }
 
   render() {
     if (this.state.loading) {
@@ -61,57 +92,101 @@ class Autor extends React.Component {
         <BackButton left history={this.props.history} />
         <h2 className="main-title">Notice {this.state.notice.REF}</h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+        <FieldImages
+            name="MEMOIRE"
+            canOrder={this.state.editable} // We can ordering images only if we have the proper rights on the notice
+            canEdit={false} // As image come from memoire, we can't delete or update an image from autor
+            external={true}
+            hideButton={true} // As image come from memoire, we can't delete or update an image from autor
+            getAbsoluteUrl={e => {
+              if (!e.url) {
+                return "";
+              }
+              if (e.url && e.url.indexOf("memoire/") === 0) {
+                return `${bucket_url}${e.url}`;
+              } else {
+                return e.url;
+              }
+            }}
+            footer={e => {
+              return (
+                <Link to={`/notice/memoire/${e.ref}`} target="_blank" rel="noopener">
+                  {e.ref}
+                </Link>
+              );
+            }}
+          />
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>
-                <CustomField name="REF" disabled={!this.state.editable} />
-                <CustomField name="ISNI" disabled={!this.state.editable} />
-                <CustomField name="ALIAS" disabled={!this.state.editable} />
-                <CustomField name="BIBLIO" disabled={!this.state.editable} />
-                <CustomField name="BIO" disabled={!this.state.editable} />
-                <CustomField name="CONTACT" disabled={!this.state.editable} />
-                <CustomField name="COPY" disabled={!this.state.editable} />
-                <CustomField name="DMORT" disabled={!this.state.editable} />
-                <CustomField name="DNAISS" disabled={!this.state.editable} />
-                <CustomField name="EXPO" disabled={!this.state.editable} />
-                <CustomField name="FONC" disabled={!this.state.editable} />
-                <CustomField name="VIDEO" disabled={!this.state.editable} />
-                <CustomField name="LIENS" disabled={!this.state.editable} />
-                <CustomField name="LWEB" disabled={!this.state.editable} />
-                <CustomField name="LMDP" disabled={!this.state.editable} />
-                <CustomField name="LMEM" disabled={!this.state.editable} />
-                <CustomField name="LMORT" disabled={!this.state.editable} />
-                <CustomField name="LNAISS" disabled={!this.state.editable} />
-                <CustomField name="RESID" disabled={!this.state.editable} />
-                <CustomField name="NATIO" disabled={!this.state.editable} />
+                <CustomField name="REF" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ISNI" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ISNI_VERIFIEE" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ALIAS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="BASE" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="BIBLIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="BIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="CONTACT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="COPY" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DMORT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DNAISS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="EXPO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="INI" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="FONC" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="VIDEO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LIENS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LMDP" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LMORT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="AUTORLOCA" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LNAISS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="NATIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="IDENT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ARK" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="OBS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DMAJ" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DMIS" disabled={this.state.editable} hidedescriptionifempty={true}/>
               </Col>
               <Col sm={6}>
-                <CustomField name="NOM" disabled={!this.state.editable} />
-                <CustomField name="PNOM" disabled={!this.state.editable} />
-                <CustomField name="TYPAPE" disabled={!this.state.editable} />
-                <CustomField name="REJET" disabled={!this.state.editable} />
-                <CustomField name="OEUVR" disabled={!this.state.editable} />
-                <CustomField name="PUBLI" disabled={!this.state.editable} />
-                <CustomField name="ALAMAP" disabled={!this.state.editable} />
-                <CustomField name="EMET" disabled={!this.state.editable} />
-                <CustomField name="REDAC" disabled={!this.state.editable} />
-                <CustomField name="LRELA" disabled={!this.state.editable} />
-                <CustomField name="SEXE" disabled={!this.state.editable} />
-                <CustomField name="SOCSAV" disabled={!this.state.editable} />
-                <CustomField name="SOURCES" disabled={!this.state.editable} />
-                <CustomField name="STAT" disabled={!this.state.editable} />
-                <CustomField name="TITR" disabled={!this.state.editable} />
-                <CustomField name="TYPID" disabled={!this.state.editable} />
-                <CustomField name="IDENT" disabled={!this.state.editable} />
-                <CustomField name="ARK" disabled={!this.state.editable} />
-                <CustomField name="OBSMAP" disabled={!this.state.editable} />
-                <CustomField name="DMAJ" disabled={!this.state.editable} />
-                <CustomField name="DMIS" disabled={!this.state.editable} />
+                <CustomField name="NOM" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="PREN" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="PNOM" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ADRS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="TYPAPE" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="SCLE" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DATES" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="REJET" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="OEUVR" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="PUBLI" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="PRODUCTEUR" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="ALAMAP" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="PREF" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LOCACT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LBASE" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="BIF" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="REDAC" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="LRELA" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="FORM" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="SOURCES" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="STAT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="SYMB" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="INS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="TITR" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="GAR" disabled={!this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="TYPID" disabled={!this.state.editable} hidedescriptionifempty={true}/>
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />
+            {this.props.canDelete ? (
+              <DeleteButton noticeType="autor" noticeRef={this.state.notice.REF} />
+            ) : (
+              <div />
+            )}
+            <Button disabled={!this.state.editable} color="primary" type="submit">
+              Sauvegarder
+            </Button>
           </div>
         </Form>
       </Container>
@@ -137,7 +212,15 @@ const CustomField = ({ name, disabled, ...rest }) => {
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group } = Auth.user;
+  // An "administrateur" (from "autor" or "admin" group) can delete.
+  const canDelete =
+    Auth.user && role === "administrateur" && (group === "autor" || group === "admin");
+  // If you can delete, you can update (see above).
+  // Also, you can update if you are a "producteur" from "autor"
+  const canUpdate = canDelete || (Auth.user && role === "producteur" && group === "autor");
   return {
+    canDelete,
+    canUpdate,
     user: { role, group }
   };
 };
@@ -145,4 +228,4 @@ const mapStateToProps = ({ Auth }) => {
 export default connect(
   mapStateToProps,
   {}
-)(reduxForm({ form: "notice" })(Autor));
+)(reduxForm({ form: "notice" })(Notice));

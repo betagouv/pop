@@ -706,6 +706,30 @@ const Schema = new mongoose.Schema(
         label: "Référence image"
       }
     },
+    REFMEM: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mémoire liées ",
+        label: "Notices Mémoire liées"
+      }
+    },
+    REFMER: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Mérimée liées ",
+        label: "Notices Mérimée liées"
+      }
+    },
+    REFPAL: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Références des notices Palissy liées ",
+        label: "Notices Palissy liées"
+      }
+    },
     REPR: {
       type: [String],
       default: [],
@@ -812,7 +836,16 @@ const Schema = new mongoose.Schema(
         description: "Lien vidéo. Doit être une URL valide.",
         label: "Lien Vidéo"
       }
-    }
+    },
+    HISTORIQUE: [
+      { 
+        nom: String,
+        prenom: String,
+        email: String,
+        date: String,
+        updateMode: String
+      }
+    ]
   },
   { collection: "joconde" }
 );

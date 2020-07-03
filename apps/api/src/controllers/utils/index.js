@@ -1,5 +1,6 @@
 const {
   lambertToWGS84,
+  isInFrance,
   convertCOORM,
   getPolygonCentroid,
   hasCorrectCoordinates,
@@ -10,12 +11,14 @@ const {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur
 } = require("./notice");
 const { formattedNow } = require("./date");
-
+const { getBaseCompletName } = require("./OAI/oai_utils")
 module.exports = {
   uploadFile,
   deleteFile,
@@ -23,12 +26,16 @@ module.exports = {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   lambertToWGS84,
+  isInFrance,
   convertCOORM,
   getPolygonCentroid,
   hasCorrectCoordinates,
   hasCorrectPolygon,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur,
+  getBaseCompletName
 };

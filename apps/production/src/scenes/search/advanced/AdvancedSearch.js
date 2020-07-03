@@ -265,6 +265,148 @@ export default function AdvancedSearch({ collection, card }) {
         }
       ];
       break;
+      case "autor":
+          fields = [
+            {
+              value: ["REF.keyword"], 
+              text: "REF - Référence"
+            },
+            {
+              value: ["NOM.keyword"], 
+              text: "NOM - Nom"
+            },
+            {
+              value: ["PREN.keyword"], 
+              text: "PREN - Prenom"
+            },
+            {
+              value: ["PNOM.keyword"], 
+              text: "PNOM - Précision sur le nom"
+            },
+            {
+              value: ["TYPID.keyword"], 
+              text: "TYPID - Type"
+            },
+            {
+              value: ["ALIAS.keyword"], 
+              text: "ALIAS - Autre forme du nom"
+            },
+            {
+              value: ["INI.keyword"], 
+              text: "INI - Initiales"
+            },
+            {
+              value: ["REJET.keyword"], 
+              text: "REJET - Forme rejetée du nom"
+            },
+            {
+              value: ["NATIO.keyword"], 
+              text: "NATIO - Nationalité"
+            },
+            {
+              value: ["DNAISS.keyword"], 
+              text: "DNAISS - Date de naissance"
+            },
+            {
+              value: ["DMORT.keyword"], 
+              text: "DMORT - Date de décès"
+            },
+            {
+              value: ["LNAISS.keyword"], 
+              text: "LNAISS - Lieu de naissance"
+            },{
+              value: ["LMORT.keyword"], 
+              text: "LMORT - Lieu de décès"
+            },
+            {
+              value: ["FONC.keyword"], 
+              text: "FONC - Profession"
+            },
+            {
+              value: ["DATES.keyword"], 
+              text: "DATES - Période d'activités"
+            },
+            {
+              value: ["SCLE.keyword"], 
+              text: "SCLE - Siècle d'activité"
+            },
+            {
+              value: ["AUTORLOCA.keyword"], 
+              text: "AUTORLOCA - Localisations"
+            },
+            {
+              value: ["LOCACT.keyword"], 
+              text: "LOCACT - Lieu d'activité"
+            },
+            {
+              value: ["ADRS.keyword"], 
+              text: "ADRS - Adresse"
+            },
+            {
+              value: ["LRELA.keyword"], 
+              text: "LRELA - Personnes associées"
+            },
+            {
+              value: ["FORM.keyword"], 
+              text: "FORM - Formateur"
+            },
+            {
+              value: ["OEUVR.keyword"], 
+              text: "OEUVR - Oeuvre réalisée"
+            },
+            {
+              value: ["SYMB.keyword"], 
+              text: "SYMB - Symbole (pour les orfèvres)"
+            },
+            {
+              value: ["INS.keyword"], 
+              text: "INS - Date d'insculpation (pour les orfèvres)"
+            },
+            {
+              value: ["GAR.keyword"], 
+              text: "GAR - Numéro du registre de la garantie (pour les orfèvres)"
+            },
+            {
+              value: ["PREF.keyword"], 
+              text: "PREF - Numéro du registre de la préfecture (pour les orfèvres)"
+            },
+            {
+              value: ["BIF.keyword"], 
+              text: "BIF - Date de biffage (pour les orfèvres)"
+            },
+            {
+              value: ["BIO.keyword"], 
+              text: "BIO - Biographie"
+            },{
+              value: ["OBS.keyword"], 
+              text: "OBS - Observations"
+            },
+            {
+              value: ["SOURCES.keyword"], 
+              text: "SOURCES - Sources"
+            },
+            {
+              value: ["BIBLIO.keyword"], 
+              text: "BIBLIO - Bibliographie"
+            },
+            {
+              value: ["PUBLI.keyword"], 
+              text: "PUBLI - Publications liées à la personne"
+            },
+            {
+              value: ["EXPO.keyword"], 
+              text: "EXPO - Expositions en référence"
+            },
+            {
+              value: ["ISNI_VERIFIEE.keyword"], 
+              text: "ISNI_VERIFIEE - Référence ISNI"
+            },
+            {
+              value: ["ARK.keyword"], 
+              text: "ARK - Lien ARK"
+            },
+          ];
+          break;
   }
 
   const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.keyword");

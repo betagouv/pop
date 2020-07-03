@@ -2,8 +2,18 @@ import React from "react";
 import Link from "next/link";
 import { Container } from "reactstrap";
 import Version from "../../../version.json";
+import Cookies from 'universal-cookie';
+
 
 export default class Layout extends React.Component {
+
+  getNbNoticesInBucket(){
+    //Récupération du panier actuel dans les cookies
+    const cookies = new Cookies()
+    let currentBucket = cookies.get("currentBucket") || []
+    return currentBucket.length
+  }
+
   render() {
     const { children } = this.props;
     return (
@@ -17,10 +27,18 @@ export default class Layout extends React.Component {
             </Link>
             <h3 className="Title">POP : la plateforme ouverte du patrimoine</h3>
             <div className="right-container">
+              <div className="linkBucket">
+                <Link href="/bucket">
+                  <a className="btn btn-outline-danger onPrintHide">
+                    <div className="btn-bucket">
+                    <div id="nbBucket">{this.getNbNoticesInBucket() != 0 ? "Consulter mon panier ( "+ this.getNbNoticesInBucket() + " )" : "Panier vide" } </div>                    </div>
+                  </a>
+                </Link>
+              </div>
               <div>
                 <a
                   href="https://fier2.typeform.com/to/Qyz3xv"
-                  className="btn btn-outline-danger d-none d-sm-block"
+                  className="btn btn-outline-danger onPrintHide"
                   target="_blank"
                   rel="noopener"
                 >
@@ -150,6 +168,13 @@ export default class Layout extends React.Component {
             .logo h1 {
               font-size: 20px;
             }
+          }
+
+          .btn-bucket{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
           }
 
           .company-title {

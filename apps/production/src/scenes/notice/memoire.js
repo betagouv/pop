@@ -14,6 +14,7 @@ import Memoire from "../../entities/Memoire";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
 import { bucket_url } from "../../config";
+import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
 
@@ -66,7 +67,13 @@ class Notice extends React.Component {
       console.error(`Impossible de charger la notice ${ref}`);
       return;
     }
-    const editable = this.canUpdate(notice.PRODUCTEUR);
+    //const editable = this.canUpdate(notice.PRODUCTEUR);
+    let editable = false;
+    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "memoire").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+
     this.props.initialize(notice);
     this.setState({ loading: false, notice, editable });
   }
@@ -86,7 +93,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
-        await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles);
+        await API.updateNotice(this.state.notice.REF, "memoire", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
           "La modification sera visible dans 1 à 5 min en diffusion."
@@ -305,6 +312,11 @@ class Notice extends React.Component {
                 <CustomField name="EMET" disabled={!this.state.editable} />
                 <CustomField name="REFIMG" disabled={!this.state.editable} />
                 <CustomField name="TYPSUPP" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFMUS"
+                  createUrl={e => `/notice/museo/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
               <Col sm={6}>
                 <CustomField name="TYPEIMG" disabled={!this.state.editable} />
@@ -315,8 +327,14 @@ class Notice extends React.Component {
                 <CustomField name="IMG" disabled={!this.state.editable} />
                 <CustomField name="WCOM" disabled={!this.state.editable} />
                 <CustomField name="WEB" disabled={!this.state.editable} />
+                <CustomField
+                  name="REFJOC"
+                  createUrl={e => `/notice/joconde/${e}`}
+                  disabled={!this.state.editable}
+                />
               </Col>
             </Row>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
 
           {this.state.editable ? (

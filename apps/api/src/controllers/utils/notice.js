@@ -1,3 +1,4 @@
+const Producteur = require("../../models/producteur");
 const { capture } = require("./../../sentry.js");
 
 // Creates a new ID for a notice of type "collection".
@@ -33,12 +34,25 @@ function checkESIndex(doc) {
 // Update a notice.
 function updateNotice(collection, REF, notice) {
   return new Promise((resolve, reject) => {
-    collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true }, (err, doc) => {
+    collection.findOneAndUpdate({ REF }, notice, { upsert: true, new: true, useFindAndModify: false }, (err, doc) => {
       if (err) {
         reject(err);
         return;
       }
       checkESIndex(doc);
+      resolve(doc);
+    });
+  });
+}
+
+// Update a OAI Notice.
+function updateOaiNotice(collection, REF, dmaj) {
+  return new Promise((resolve, reject) => {
+    collection.findOneAndUpdate({ REF }, dmaj, { upsert: true, new: true, useFindAndModify: false}, (err, doc) => {
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve(doc);
     });
   });
@@ -50,6 +64,68 @@ function addZeros(v, zeros) {
     .concat([v])
     .join("0")
     .slice(-zeros);
+}
+
+
+// Identifie le producteur en fonction de la collection et de la référence
+// Sinon retourne null
+async function identifyProducteur(collection, REF, IDPROD, EMET) {
+  let producteurs = [];
+  await Producteur.find({ "BASE.base": collection}).then(listProducteurs => producteurs = listProducteurs);
+  
+  //Liste des producteurs donc le préfixe correspond au début de la REF de la notice
+  let possibleProducteurs = [];
+  let finalProd = "";
+  let defaultProducteur = "";
+
+  producteurs.map((producteur) => {
+    //Pour chaque champ BASE contenant la liste des base du producteur et la liste des préfixes
+    producteur.BASE.map((baseItem) => {
+
+      //Si la base correspond à la collection
+      if(baseItem.base === collection){
+        //Pour chaque préfixe
+        if(baseItem.prefixes.length<1){
+          defaultProducteur = producteur.LABEL;
+        }
+        baseItem.prefixes.map( prefix => {
+          if(REF.startsWith(prefix.toString())){
+            //Retourne le label du producteur
+            let label = producteur.LABEL;
+            possibleProducteurs.push({prefix : prefix,label: label});
+          }
+        })
+      }
+    })
+  });
+
+  if(collection == "memoire") {
+    if (String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
+      return "UDAP";
+    }
+    else if (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP")) {
+      return "MAP";
+    }
+  }
+
+  //Si la liste des producteurs est non vide, on parcourt la liste pour déterminer le préfixe le plus précis
+  if(possibleProducteurs.length>0){
+    let PrefSize = possibleProducteurs[0].prefix.length
+    finalProd = possibleProducteurs[0].label;
+    possibleProducteurs.map( prod => {
+      if(PrefSize < prod.prefix.length){
+        PrefSize = prod.prefix.length
+        finalProd = prod.label
+      }
+    })
+    return finalProd;
+  }
+  else if(defaultProducteur!=""){
+    return defaultProducteur;
+  }
+  else{
+    return null;
+  }
 }
 
 // Get "producteur" for memoire notices.
@@ -103,11 +179,28 @@ function findPalissyProducteur(notice) {
   }
 }
 
+async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
+  if(refList){
+    for(let i=0; i<refList.length; i++){
+      const ref = refList[i];
+      const notice = await collection.findOne({REF: ref});
+      if(!notice){
+        POP_FLAGS.push(fieldName + "_MATCH_FAIL");
+      }
+    }
+  }
+
+  return POP_FLAGS;
+}
+
 module.exports = {
   getNewId,
   checkESIndex,
   updateNotice,
+  updateOaiNotice,
   findMemoireProducteur,
   findMerimeeProducteur,
-  findPalissyProducteur
+  findPalissyProducteur,
+  identifyProducteur,
+  checkValidRef
 };

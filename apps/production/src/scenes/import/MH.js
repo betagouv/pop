@@ -5,6 +5,7 @@ import Importer from "./importer";
 import Merimee from "../../entities/Merimee";
 import Memoire from "../../entities/Memoire";
 import Palissy from "../../entities/Palissy";
+import Autor from "../../entities/Autor";
 
 import api from "../../services/api";
 import utils from "./utils";
@@ -76,20 +77,42 @@ function parseFiles(files, encoding) {
 
       let newNotice;
 
-      console.log("obj.REF.substring(0, 2)", obj.REF.substring(0, 2));
-      if (["PM", "EM", "IM"].includes(obj.REF.substring(0, 2))) {
+      
+      //On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
+      let collection = "";
+      let producteurs = [];
+      const response = await api.getProducteurs();
+
+      if(response){
+        producteurs = response.producteurs;
+        
+        producteurs.map( producteur => {
+          producteur.BASE.map( BASE => {
+            BASE.prefixes.map( prefix => {
+              if(String(obj.REF).startsWith(String(prefix))){
+                collection = BASE.base;
+              }
+            })
+          });
+        });
+      }
+
+
+      if (collection === "palissy") {
         newNotice = new Palissy(obj);
         addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
-      } else if (["PA", "EA", "IA"].includes(obj.REF.substring(0, 2))) {
+      } else if (collection === "merimee") {
         newNotice = new Merimee(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
-      } else if (["IV", "OA", "MH", "AR", "AP"].includes(obj.REF.substring(0, 2))) {
+      } else if (collection === "memoire") {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
+      } else if (collection === "autor") {
+        newNotice = new Autor(obj);
       } else {
-        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`);
+        reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`);
         return;
       }
 
@@ -149,6 +172,9 @@ function readme() {
   const generatedPalissyFields = Object.keys(Mapping.palissy).filter(e => {
     return Mapping.palissy[e].generated;
   });
+  const generatedAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].generated;
+  });
   const validationMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].validation;
   });
@@ -158,6 +184,9 @@ function readme() {
   const validationMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
     return Mapping.merimee[e].validation;
   });
+  const validationAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].validation;
+  });
   const requiredMemoireFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].required;
   });
@@ -166,6 +195,9 @@ function readme() {
   });
   const requiredMerimeeFields = Object.keys(Mapping.merimee).filter(e => {
     return Mapping.merimee[e].required;
+  });
+  const requiredAutorFields = Object.keys(Mapping.autor).filter(e => {
+    return Mapping.autor[e].required;
   });
 
   // MH specific.
@@ -178,8 +210,8 @@ function readme() {
     <div>
       <h5>Monuments historiques</h5>
       <div>
-        Cet onglet permet d’alimenter les bases Mérimée MH, Palissy MH et Mémoire MH (CRMH, CAOA,
-        UDAP) <br /> <br />
+        Cet onglet permet d’alimenter les bases Mérimée MH, Palissy MH, Mémoire MH (CRMH, CAOA,
+        UDAP) et Autor <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
@@ -226,6 +258,12 @@ function readme() {
             <li key={e}>{e}</li>
           ))}
         </ul>
+        Autor :
+        <ul>
+          {requiredAutorFields.map(e => (
+            <li key={e}>{e}</li>
+          ))}
+        </ul>
         <br />
         <h6>Test de validation des champs : </h6>
         Les tests suivants sont effectués lors des imports
@@ -252,6 +290,14 @@ function readme() {
           {validationPalissyFields.map(e => (
             <li key={e}>
               {e} : {Mapping.palissy[e].validation}
+            </li>
+          ))}
+        </ul>
+        Autor :
+        <ul>
+          {validationAutorFields.map(e => (
+            <li key={e}>
+              {e} : {Mapping.autor[e].validation}
             </li>
           ))}
         </ul>
@@ -316,6 +362,12 @@ function readme() {
         Palissy :
         <ul>
           {generatedPalissyFields.map(e => (
+            <li key={e}>{e}</li>
+          ))}
+        </ul>
+        Autor :
+        <ul>
+        {generatedAutorFields.map(e => (
             <li key={e}>{e}</li>
           ))}
         </ul>
