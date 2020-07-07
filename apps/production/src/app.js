@@ -9,9 +9,27 @@ const { signinByToken } = Actions;
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  state = { alert: process.env.NODE_ENV !== "production" };
+  state = { 
+    alert: process.env.NODE_ENV !== "production",
+    alertMaintenance: true,
+  };
   componentWillMount() {
     this.props.signinByToken();
+  }
+
+  renderMaintenanceAlert() {
+    return (
+      <Alert
+        style={{ marginBottom: "0px" }}
+        color="danger"
+        isOpen={this.state.alertMaintenance}
+        toggle={() => this.setState({ alertMaintenance: false })}
+      >
+        L’application PRODUCTION.POP est en cours de maintenance, 
+        seule la consultation des notices reste accessible. 
+        Veuillez nous excuser pour la gêne occasionnée.
+      </Alert>
+    );
   }
 
   renderAlert() {
@@ -39,6 +57,7 @@ class App extends React.Component {
     return (
       <div>
         {this.renderAlert()}
+        {this.renderMaintenanceAlert()}
         <PublicRoutes history={history} />;
       </div>
     );
