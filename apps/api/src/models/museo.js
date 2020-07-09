@@ -216,6 +216,7 @@ const Schema = new mongoose.Schema(
     },
     REFMEM: {
       type: [String],
+      index: true,
       default: [],
       documentation: {
         description: "Références des notices Mémoire liées ",
@@ -224,6 +225,7 @@ const Schema = new mongoose.Schema(
     },
     REFMER: {
       type: [String],
+      index: true,
       default: [],
       documentation: {
         description: "Références des notices Mérimée liées ",
@@ -232,6 +234,7 @@ const Schema = new mongoose.Schema(
     },
     REFPAL: {
       type: [String],
+      index: true,
       default: [],
       documentation: {
         description: "Références des notices Palissy liées ",
