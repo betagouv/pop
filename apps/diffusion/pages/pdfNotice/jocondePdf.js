@@ -96,7 +96,7 @@ export function JocondePdf(notice, title, links){
           <View style={styles.seeMore}>
             <View>
               <Image style={styles.image}
-                src={bucket_url + notice.IMG[0]}
+                src={bucket_url + notice.IMG[0] + "?" + (new Date()).getTime()}
               />
             </View>
             {links.length > 0 ?

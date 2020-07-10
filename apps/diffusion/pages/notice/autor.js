@@ -58,6 +58,9 @@ export default class extends React.Component {
       }
       this.setState({prevLink, nextLink});
     }
+    else{
+      this.state.display == false && this.setState({display : true});
+    }
   }
 
   componentDidUpdate(){

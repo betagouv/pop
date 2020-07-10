@@ -70,7 +70,7 @@ export function MuseoPdf(notice, title, links){
             { notice.PHOTO ?
             <View>
               <Image style={styles.image}
-                src={bucket_url + notice.PHOTO}
+                src={bucket_url + notice.PHOTO + "?" + (new Date()).getTime()}
               />
             </View> : null}
 
