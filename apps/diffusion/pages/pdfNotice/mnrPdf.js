@@ -65,7 +65,7 @@ export function MnrPdf(notice, title){
             { notice.VIDEO.length > 0 ?
             <View>
               <Image style={styles.image}
-                src={bucket_url + notice.VIDEO[0]}
+                src={bucket_url + notice.VIDEO[0] + "?" + (new Date()).getTime()}
               />
             </View> : null}
 

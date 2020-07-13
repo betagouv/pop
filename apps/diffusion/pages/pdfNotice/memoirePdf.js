@@ -133,7 +133,7 @@ export function MemoirePdf(notice, title, links){
             { notice.IMG ?
             <View>
               <Image style={styles.image}
-                src={bucket_url + notice.IMG}
+                src={bucket_url + notice.IMG + "?" + (new Date()).getTime()}
               />
             </View> : null}
 

@@ -54,12 +54,12 @@ router.put(
           var time = today.getHours() + ":" + today.getMinutes();
           var dateTime = date+' '+time;
           
-          let HISTORIQUE = notice.HISTORIQUE || [];
+          let HISTORIQUE = e.notice.HISTORIQUE || [];
           const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
 
           HISTORIQUE.push(newHistorique);
-          notice.HISTORIQUE = HISTORIQUE;
-          
+          e.notice.HISTORIQUE = HISTORIQUE;
+
           var obj = new Autor(e.notice);   
           checkESIndex(obj);
           promises.push(updateNotice(Autor, ref, e.notice));
@@ -101,6 +101,19 @@ router.put(
       await transformBeforeCreateAndUpdate(notice);
       await determineProducteur(notice);
       let oaiObj = { DMAJ: notice.DMAJ}
+
+      //Ajout de l'historique de la notice
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes();
+      var dateTime = date+' '+time;
+      
+      let HISTORIQUE = notice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+
+      HISTORIQUE.push(newHistorique);
+      notice.HISTORIQUE = HISTORIQUE;
+      
       const obj = new Autor(notice);
       
       checkESIndex(obj);

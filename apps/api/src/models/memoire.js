@@ -879,6 +879,7 @@ const Schema = new mongoose.Schema(
     },
     REFJOC: {
       type: [String],
+      index: true,
       default: [],
       documentation: {
         description: "Références des notices Joconde liées ",
@@ -887,6 +888,7 @@ const Schema = new mongoose.Schema(
     },
     REFMUS: {
       type: [String],
+      index: true,
       default: [],
       documentation: {
         description: "Références des notices Muséofile liées ",
