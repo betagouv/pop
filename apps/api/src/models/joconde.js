@@ -856,7 +856,8 @@ const Schema = new mongoose.Schema(
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
-  index: "joconde"
+  index: "joconde",
+  bulk: { size: 500, delay: 2000 }
 });
 
 const object = mongoose.model("joconde", Schema);
