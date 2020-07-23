@@ -247,9 +247,7 @@ router.put(
     const notice = JSON.parse(req.body.notice);
     const updateMode = req.body.updateMode;
     const user = req.user;
-    if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-      await determineProducteur(notice);
-    }
+    await determineProducteur(notice);
     if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
       return res.status(401).send({
         success: false,
