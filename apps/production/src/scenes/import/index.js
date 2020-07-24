@@ -70,35 +70,35 @@ class Import extends React.Component {
         });
       }
 
-      // Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
-      // à partir de son groupe ou de ses bases 
+            // Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
+      // à partir de son groupe
       let group = this.props.group;
-      if(userBases.includes("joconde") || group === "joconde" || group === "admin"){
+      if(group.toUpperCase() === "JOCONDE" || group === "admin"){
         authorizedImports.push("joconde");
         routeJoconde = <Route path={`/import/joconde`} component={Joconde} />;
         routes.push(routeJoconde);
       }
-      if(userBases.includes("mnr")  || group === "admin"){
+      if(group.toUpperCase() === "MNR" || group === "admin"){
         authorizedImports.push("mnr");
         routeMnr = <Route path={`/import/mnr`} component={Mnr} />;
         routes.push(routeMnr);
       }
-      if(group === "inv"  || group === "admin"){
+      if(group.toUpperCase() === "INV"  || group === "admin"){
         authorizedImports.push("inv");
         routeInv = <Route path={`/import/inv`} component={Inv} />;
         routes.push(routeInv);
       }
-      if(userBases.includes("memoire") || userBases.includes("palissy") || userBases.includes("merimee") || userBases.includes("autor")  || group === "admin"){
+      if(group.toUpperCase() === "MH"  || group === "admin"){
         authorizedImports.push("mh");
         routeMh = <Route path={`/import/mh`} component={Mh} />;
         routes.push(routeMh);
       }
-      if(userBases.includes("memoire")  || group === "admin"){
+      if(group.toUpperCase() === "MEMOIRE"  || group === "admin"){
         authorizedImports.push("map");
         routeMap = <Route path={`/import/memoire`} component={Memoire} />;
         routes.push(routeMap);
       }
-      if(userBases.includes("museo")  || group === "admin"){
+      if(group.toUpperCase() === "MUSEO"  || group === "admin"){
         authorizedImports.push("museo");
         routeMuseo = <Route path={`/import/museo`} component={Museo} />;
         routes.push(routeMuseo);
@@ -107,6 +107,7 @@ class Import extends React.Component {
         routeListe = <Route path={`/import/list`} component={List} />;
         routes.push(routeListe);
       }
+
 
       this.setState({ loading: false, authorizedImports: authorizedImports, routes: routes });
     } catch (error) {
