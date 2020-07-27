@@ -92,7 +92,15 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
           if(REF.startsWith(prefix.toString())){
             //Retourne le label du producteur
             let label = producteur.LABEL;
-            possibleProducteurs.push({prefix : prefix,label: label});
+            //Cas particulier pour memoire : le prefixe AP n'est pas suffisant pour déterminer le producteur
+            //Dans ce cas, le producteur "AUTRE" est ajouté et le cas particulier est géré plus bas pour déterminer
+            //si le producteur reste "AUTRE", ou s'il devient UDAP ou MAP
+            if(prefix=="AP" && collection == "memoire"){
+              possibleProducteurs.push({prefix : prefix,label: "AUTRE"});
+            }
+            else{
+              possibleProducteurs.push({prefix : prefix,label: label});
+            }
           }
         })
       }
