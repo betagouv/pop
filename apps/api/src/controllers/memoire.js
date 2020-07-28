@@ -245,11 +245,18 @@ router.put(
   async (req, res) => {
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
+    //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
+    let REF = notice.REF;
+    let noticeMemoire = await Memoire.findOne({ REF: REF });
+                if(noticeMemoire!= null && noticeMemoire.IDPROD != null && notice.IDPROD==null){
+                               notice.IDPROD = noticeMemoire.IDPROD;
+                }
+                if(noticeMemoire!= null && noticeMemoire.EMET != null && notice.EMET==null){
+                               notice.EMET = noticeMemoire.EMET;
+                }
     const updateMode = req.body.updateMode;
     const user = req.user;
-    if (notice.IDPROD !== undefined && notice.EMET !== undefined) {
-      await determineProducteur(notice);
-    }
+    await determineProducteur(notice);
     if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
       return res.status(401).send({
         success: false,
