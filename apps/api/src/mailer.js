@@ -33,7 +33,7 @@ class Mailer {
         service: "gmail",
         auth: {
           type: "OAuth2",
-          user: "popbetagouv@gmail.com",
+          user: "pop.patrimoine@gmail.com",
           clientId: process.env.GMAIL_CLIENT_ID,
           clientSecret: process.env.GMAIL_CLIENT_SECRET,
           refreshToken: process.env.GMAIL_REFRESH_TOKEN,
