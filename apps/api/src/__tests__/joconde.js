@@ -22,6 +22,10 @@ jest.mock("../controllers/utils");
 const { checkESIndex } = require("../controllers/utils");
 checkESIndex.mockImplementation(() => ({}));
 
+jest.mock("mongoosastic");
+const mongoosastic = require("mongoosastic");
+mongoosastic.mockImplementation(() => ({}));
+
 afterAll(() => mongoose.disconnect());
 beforeEach(() => {
   removeAllUsers();
