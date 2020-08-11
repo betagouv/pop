@@ -14,14 +14,14 @@ import List from "./list";
 import Museo from "./museo";
 
 class Import extends React.Component {
-  state = { 
+  state = {
     authorizedImports: [],
     routes: [],
     error: "",
     loading: true,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.fetchAuthorizedImports();
   }
 
@@ -32,7 +32,7 @@ class Import extends React.Component {
       let allProducteurs = [];
       //On récupère tous les producteurs
       const responseProd = await API.getProducteurs();
-      if(responseProd && responseProd.producteurs){
+      if (responseProd && responseProd.producteurs) {
         allProducteurs = responseProd.producteurs;
       }
 
@@ -47,22 +47,22 @@ class Import extends React.Component {
       let routeJoconde, routeMnr, routeInv, routeMh, routeMap, routeMuseo, routeListe;
 
       //On récupère le groupe de l'utilisateur pour identifier les bases qu'il peut alimenter
-      if(this.props.group != "admin"){
+      if (this.props.group != "admin") {
         const responseGroup = await API.getGroupByLabel(String(this.props.group));
-        if(responseGroup && responseGroup.group){
+        if (responseGroup && responseGroup.group) {
           let userGroup = responseGroup.group;
           //Pour chaque producteur du groupe, on alimente la liste des producteurs de l'utilisateur
-          userGroup.PRODUCTEURS.map( producteur => {
+          userGroup.PRODUCTEURS.map(producteur => {
             userProducteurs.push(producteur);
           });
         }
 
-        allProducteurs.map( producteur => {
-          if(userProducteurs.includes(String(producteur.LABEL))){
+        allProducteurs.map(producteur => {
+          if (userProducteurs.includes(String(producteur.LABEL))) {
             //On ajoute chaque base rattachée au producteur pour déterminer
             //l'ensemble des bases auxquelles l'utilisateur a accès
-            producteur.BASE.map( BASE => {
-              if(!userBases.includes(BASE.base)){
+            producteur.BASE.map(BASE => {
+              if (!userBases.includes(BASE.base)) {
                 userBases.push(BASE.base);
               }
             })
@@ -70,40 +70,41 @@ class Import extends React.Component {
         });
       }
 
-            // Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
+      // Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
       // à partir de son groupe
       let group = this.props.group;
-      if(group.toUpperCase() === "JOCONDE" || group === "admin"){
+      let role = this.props.role;
+      if (group.toUpperCase() === "JOCONDE" || group === "admin") {
         authorizedImports.push("joconde");
         routeJoconde = <Route path={`/import/joconde`} component={Joconde} />;
         routes.push(routeJoconde);
       }
-      if(group.toUpperCase() === "MNR" || group === "admin"){
+      if (group.toUpperCase() === "MNR" || group === "admin") {
         authorizedImports.push("mnr");
         routeMnr = <Route path={`/import/mnr`} component={Mnr} />;
         routes.push(routeMnr);
       }
-      if(group.toUpperCase() === "INV"  || group === "admin"){
+      if (group.toUpperCase() === "INV" || group === "admin") {
         authorizedImports.push("inv");
         routeInv = <Route path={`/import/inv`} component={Inv} />;
         routes.push(routeInv);
       }
-      if(group.toUpperCase() === "MH"  || group === "admin"){
+      if (group.toUpperCase() === "MH" || group === "admin") {
         authorizedImports.push("mh");
         routeMh = <Route path={`/import/mh`} component={Mh} />;
         routes.push(routeMh);
       }
-      if(group.toUpperCase() === "MEMOIRE"  || group === "admin"){
+      if (group.toUpperCase() === "MEMOIRE" || group === "admin") {
         authorizedImports.push("map");
         routeMap = <Route path={`/import/memoire`} component={Memoire} />;
         routes.push(routeMap);
       }
-      if(group.toUpperCase() === "MUSEO"  || group === "admin"){
+      if (group.toUpperCase() === "MUSEO" || group === "admin") {
         authorizedImports.push("museo");
         routeMuseo = <Route path={`/import/museo`} component={Museo} />;
         routes.push(routeMuseo);
       }
-      if(group === "admin"){
+      if (role === "administrateur" || group === "admin") {
         routeListe = <Route path={`/import/list`} component={List} />;
         routes.push(routeListe);
       }
@@ -114,7 +115,7 @@ class Import extends React.Component {
       this.setState({ error: error.msg });
     }
   };
-  
+
   render() {
     return (
       <div>
@@ -125,7 +126,7 @@ class Import extends React.Component {
             render={(props) => <Home {...props} authorizedImports={this.state.authorizedImports} />}
           />
           {
-            this.state.routes.map( route => {
+            this.state.routes.map(route => {
               return route;
             })
           }
@@ -137,7 +138,10 @@ class Import extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { group: Auth.user ? Auth.user.group : "" };
+  return {
+    group: Auth.user ? Auth.user.group : "",
+    role: Auth.user ? Auth.user.role : "utilisateur"
+  };
 };
 
 export default connect(
