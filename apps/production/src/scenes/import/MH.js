@@ -141,7 +141,9 @@ function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
       for (let i = 0; i < filenames.length; i++) {
         let fileName = filenames[i];
         fileName = convertLongNameToShort(fileName);
+
         const file = filesMap[fileName];
+
         if (file) {
           if (type === "Array") {
             newNotice[toProperty].push(`${newNotice._type}/${newNotice.REF}/${fileName}`);
@@ -150,7 +152,12 @@ function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
           }
 
           newNotice._files.push(file);
-        } else {
+        } 
+        else if (!file && fromProperty === 'REFIMG' && fileName !== '' && newNotice[toProperty] === '') {
+          // Gère le cas où l'import d'une notice mémoire doit fonctionner malgré l'absence d'une image
+          fileName = convertLongNameToShort('');
+        }
+            else {
           newNotice._errors.push(`Impossible de trouver le fichier "${fileName}"`);
         }
       }
