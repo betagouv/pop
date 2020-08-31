@@ -2,8 +2,9 @@ var notices = db.merimee.find().noCursorTimeout(); //Récuperation des notices d
 
 var noticeCount = db.merimee.count(); //le nombre de notices trouvée en base
 
-if(notices.length >0) {
+if(noticeCount > 0) {
 	notices.forEach(notice => {
+		const ref = notice.REF;
 
 		if (((notice.COOR !=='' || notice.COORM !=='') && notice.ZONE !=='') || (notice.POP_COORDONNEES.lat !== 0 && notice.POP_COORDONNEES.lon !== 0)){ // verification si les champ COOR COORM ZONE et POP_COORDONNEES sont renseignés
 
