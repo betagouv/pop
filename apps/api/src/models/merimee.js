@@ -1126,7 +1126,8 @@ const Schema = new mongoose.Schema(
 Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
-  index: "merimee"
+  index: "merimee",
+  bulk: { size: 500, delay: 2000 }
 });
 
 const object = mongoose.model("merimee", Schema);

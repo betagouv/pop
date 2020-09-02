@@ -64,6 +64,7 @@ function lambertToWGS84(xy, zone) {
 
   switch (zone.toLowerCase()) {
     case "lambert0":
+    case "wgs84":
     case "lambert2": {
       let message = "";
       let c = proj4("lambert2", "WGS84", [coords[0], coords[1]]);
