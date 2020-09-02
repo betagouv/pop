@@ -1,35 +1,20 @@
-var notices = db.merimee.find().noCursorTimeout(); //Récuperation des notices de la base merimee
+//Récuperation des notices de la base merimee
+//Cette requête s'exprime ainsi: Récupère les notices de la base mérimée où: ((COOR ou COORM) && ZONE sont renseignés && POP_CONTIENT_GEOLOCALISATION = non) OU (latitude && longitude = 0 && POP_CONTIENT_GEOLOCALISATION = non)
+let notices = db.merimee.find({ $or: [{ $and: [{ $or: [{ COOR: { $ne: "" } }, { COORM: { $ne: "" } }] }, { ZONE: { $ne: "" } }, { POP_CONTIENT_GEOLOCALISATION: "non" }] }, { $and: [{ "POP_COORDONNEES.lat": { $ne: 0 } }, { "POP_COORDONNEES.lon": { $ne: 0 } }, { POP_CONTIENT_GEOLOCALISATION: "non" }] }] }).noCursorTimeout();
 
-var noticeCount = db.merimee.count(); //le nombre de notices trouvée en base
+let noticeCount = notices.count(); //le nombre de notices trouvé en base
 
-if(noticeCount > 0) {
-	notices.forEach(notice => {
-		const ref = notice.REF;
+notices.forEach(notice => {
+	const ref = notice.REF;
 
-		if (((notice.COOR !=='' || notice.COORM !=='') && notice.ZONE !=='') || (notice.POP_COORDONNEES.lat !== 0 && notice.POP_COORDONNEES.lon !== 0)){ // verification si les champ COOR COORM ZONE et POP_COORDONNEES sont renseignés
+	db.merimee.update(
 
-			db.merimee.update(
+		{ REF: ref },
+		{ $set: { POP_CONTIENT_GEOLOCALISATION: "oui" } }
 
-				{ REF : ref},
-				{ $set : { POP_CONTIENT_GEOLOCALISATION : "oui" } }	
+	);
 
-				);
+	noticeCount--;
 
-		} else{
-		
-			db.merimee.update(
-
-				{ REF : ref},
-				{ $set : { POP_CONTIENT_GEOLOCALISATION : "non" } }	
-
-				);
-			
-		}
-
-		noticeCount--;
-
-		print(noticeCount + " notices restantes");
-
-		
-	});
-}
+	print(noticeCount + " notices restantes");
+});
