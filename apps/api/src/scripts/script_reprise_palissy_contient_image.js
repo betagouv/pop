@@ -1,7 +1,7 @@
-const noticesNon = db.palissy.find({ CONTIENT_IMAGE: 'non', MEMOIRE: { $gt: { $size: 0 } } }).noCursorTimeout(); // Notices contenant des images avec le filtre contient_image à 'non'
-const noticesOui = db.palissy.find({CONTIENT_IMAGE:'oui',MEMOIRE:{$size:0}}).noCursorTimeout(); // Notices ne contenant pas d'images avec le filtre contient_image à 'oui'
-const notices = noticesNon.concat(noticesOui);
-const nbNotices = notices.length;
+let noticesNon = db.palissy.find({ CONTIENT_IMAGE: 'non', MEMOIRE: { $gt: { $size: 0 } } }).noCursorTimeout().toArray(); // Notices contenant des images avec le filtre contient_image à 'non'
+let noticesOui = db.palissy.find({CONTIENT_IMAGE:'oui',MEMOIRE:{$size:0}}).noCursorTimeout().toArray(); // Notices ne contenant pas d'images avec le filtre contient_image à 'oui'
+let notices = noticesNon.concat(noticesOui);
+let nbNotices = notices.length;
 
 
 if (nbNotices > 0) {
