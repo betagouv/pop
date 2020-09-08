@@ -64,7 +64,6 @@ function lambertToWGS84(xy, zone) {
 
   switch (zone.toLowerCase()) {
     case "lambert0":
-    case "wgs84":
     case "lambert2": {
       let message = "";
       let c = proj4("lambert2", "WGS84", [coords[0], coords[1]]);
@@ -106,6 +105,13 @@ function lambertToWGS84(xy, zone) {
     }
     case "lambert93": {
       const c = proj4("lambert93", "WGS84", [coords[0], coords[1]]);
+      if (!isInFrance(c[1], c[0])) {
+        return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
+      }
+      return { lat: c[1], lon: c[0] };
+    }
+    case "wgs84":{
+      const c = proj4("WGS84", "WGS84", [coords[0], coords[1]]);
       if (!isInFrance(c[1], c[0])) {
         return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
       }
