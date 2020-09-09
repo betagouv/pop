@@ -253,17 +253,12 @@ function readme() {
             <li key={e}>{e} </li>
           ))}
         </ul>
-        Mérimee :
+        Mérimee et Palissy :
         <ul>
           {requiredMerimeeFields.map(e => (
             <li key={e}>{e}</li>
           ))}
-        </ul>
-        Palissy :
-        <ul>
-          {requiredPalissyFields.map(e => (
-            <li key={e}>{e}</li>
-          ))}
+          <li>Les champs DESC et HIST ne peuvent contenir plus de 7500 caractères</li>
         </ul>
         Autor :
         <ul>
