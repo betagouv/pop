@@ -23,8 +23,8 @@ class Import extends React.Component {
     });
   }
 
-  renderOldImports(group){
-    if(group === "admin"){
+  renderOldImports(group, role){
+    if(role === "administrateur" || role === "producteur"){
       return (
         <div>
           <Col className="m-4 text-center">
@@ -50,6 +50,8 @@ class Import extends React.Component {
   render() {
     const image = require("../../assets/outbox.png");
     const group = this.props.group;
+    const role = this.props.role;
+
 
     let listRoutes = [];
     if(group === "admin"){
@@ -94,7 +96,7 @@ class Import extends React.Component {
             {this.renderTiles(listRoutes)}
           </Row>
           <Row>
-            {this.renderOldImports(group)}
+            {this.renderOldImports(group, role)}
           </Row>
         </div>
       </Container>
@@ -104,7 +106,8 @@ class Import extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
   const { group } = Auth.user;
-  return { group };
+  const { role } = Auth.user;
+  return { group, role };
 };
 
 export default connect(
