@@ -252,6 +252,9 @@ function readme() {
           {requiredMemoireFields.map(e => (
             <li key={e}>{e} </li>
           ))}
+          <li>
+          Pour toutes modifications d'une notice ayant un LBASE complété, le champ LBASE est obligatoire dans le ficher d'import
+          </li>
         </ul>
         Mérimee et Palissy :
         <ul>
