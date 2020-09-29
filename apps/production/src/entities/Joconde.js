@@ -12,8 +12,8 @@ export default class Joconde extends Notice {
 
     if (body.LOCA) {
       const { MANQUANT, MANQUANT_COM } = this.extractManquant(body.LOCA);
-      this.MANQUANT = MANQUANT;
-      this.MANQUANT_COM = MANQUANT_COM;
+      this.MANQUANT = body.MANQUANT = MANQUANT;
+      this.MANQUANT_COM = body.MANQUANT_COM = MANQUANT_COM;
     }
 
     // ADD Boring stuff in order to split text to check for the thesaurus
