@@ -324,19 +324,13 @@ function readme() {
             <li key={e}>{e} </li>
           ))}
         </ul>
-        Mérimee :
+        Mérimee et Palissy :
         <ul>
           {requiredMerimeeFields.map(e => (
-            <li key={e}>{e}</li>
+            <li key={e}>{e} : obligatoire</li>
           ))}
+          <li>Les champs DESC et HIST ne peuvent contenir plus de 7500 caractères</li>
         </ul>
-        Palissy :
-        <ul>
-          {requiredPalissyFields.map(e => (
-            <li key={e}>{e}</li>
-          ))}
-        </ul>
-        <br />
         <b>
           Si un champ REFIMG est renseigné mais que l'image est absente, i.e. pas de .jpeg dans un
           des fichiers importés, alors l'import de la notice est bloqué.

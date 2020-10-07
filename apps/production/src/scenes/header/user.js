@@ -23,7 +23,8 @@ class User extends Component {
   }
 
   renderImportList() {
-    if (this.props.account.role !== "administrateur") {
+    let role = this.props.role;
+    if (role !== "administrateur" && role !== "producteur") {
       return <div />;
     }
     return (
@@ -76,7 +77,7 @@ class User extends Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { account: Auth.user };
+  return { account: Auth.user, role: Auth.user.role };
 };
 
 export default connect(

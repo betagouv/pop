@@ -73,6 +73,7 @@ class Import extends React.Component {
             // Pour chaque import, on identifie si oui ou non l'utilisateur peut l'utiliser
       // à partir de son groupe
       let group = this.props.group;
+      let role = this.props.role;
       if(group.toUpperCase() === "JOCONDE" || group === "admin"){
         authorizedImports.push("joconde");
         routeJoconde = <Route path={`/import/joconde`} component={Joconde} />;
@@ -103,7 +104,7 @@ class Import extends React.Component {
         routeMuseo = <Route path={`/import/museo`} component={Museo} />;
         routes.push(routeMuseo);
       }
-      if(group === "admin"){
+      if(role === "administrateur" || role === "producteur"){
         routeListe = <Route path={`/import/list`} component={List} />;
         routes.push(routeListe);
       }
@@ -137,7 +138,9 @@ class Import extends React.Component {
 }
 
 const mapStateToProps = ({ Auth }) => {
-  return { group: Auth.user ? Auth.user.group : "" };
+  return { group: Auth.user ? Auth.user.group : "",
+          role: Auth.user ? Auth.user.role : "utilisateur"
+};
 };
 
 export default connect(

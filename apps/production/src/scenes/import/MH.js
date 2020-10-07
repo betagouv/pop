@@ -141,7 +141,9 @@ function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
       for (let i = 0; i < filenames.length; i++) {
         let fileName = filenames[i];
         fileName = convertLongNameToShort(fileName);
+
         const file = filesMap[fileName];
+
         if (file) {
           if (type === "Array") {
             newNotice[toProperty].push(`${newNotice._type}/${newNotice.REF}/${fileName}`);
@@ -150,7 +152,12 @@ function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
           }
 
           newNotice._files.push(file);
-        } else {
+        } 
+        else if (!file && fromProperty === 'REFIMG' && fileName !== '' && newNotice[toProperty] === '') {
+          // Gère le cas où l'import d'une notice mémoire doit fonctionner malgré l'absence d'une image
+          fileName = convertLongNameToShort('');
+        }
+            else {
           newNotice._errors.push(`Impossible de trouver le fichier "${fileName}"`);
         }
       }
@@ -245,18 +252,16 @@ function readme() {
           {requiredMemoireFields.map(e => (
             <li key={e}>{e} </li>
           ))}
+          <li>
+          Pour toutes modifications d'une notice ayant un LBASE complété, le champ LBASE est obligatoire dans le ficher d'import
+          </li>
         </ul>
-        Mérimee :
+        Mérimee et Palissy :
         <ul>
           {requiredMerimeeFields.map(e => (
             <li key={e}>{e}</li>
           ))}
-        </ul>
-        Palissy :
-        <ul>
-          {requiredPalissyFields.map(e => (
-            <li key={e}>{e}</li>
-          ))}
+          <li>Les champs DESC et HIST ne peuvent contenir plus de 7500 caractères</li>
         </ul>
         Autor :
         <ul>

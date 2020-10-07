@@ -120,6 +120,14 @@ async function withFlags(notice) {
     }
   }
 
+   //Coor not in France
+   if(notice.COOR && notice.ZONE){
+    const convert = convertCOORM(notice.COOR, notice.ZONE);
+    if(convert.message && convert.message == "La projection utilisée n'est pas correct"){
+      notice.POP_FLAGS.push("COOR_NOT_IN_FRANCE");
+    }
+  }
+
   //Test if coordinates in France
   if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
     if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
