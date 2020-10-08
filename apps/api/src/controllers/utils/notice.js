@@ -111,7 +111,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
     if (IDPROD != null && String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
       return "UDAP";
     }
-    else if (IDPROD != null && EMET != null && (String(IDPROD).startsWith("SAP") || String(EMET).startsWith("SAP"))) {
+    else if ((IDPROD != null && String(IDPROD).startsWith("SAP")) || (EMET != null && String(EMET).startsWith("SAP"))) {
       return "MAP";
     }
   }
