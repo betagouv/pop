@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
 import mh from "../../../assets/mh.png";
 import inv from "../../../assets/inventaire.jpg";
+import mdi from "../../../assets/logoMDI.png";
 
 import utils from "./utils";
 
@@ -24,6 +25,8 @@ export default ({ data }) => {
       return <img src={inv} className="producteur" />;
     } else if (p === "Monuments Historiques") {
       return <img src={mh} className="producteur mh" />;
+    }else if (p === "Label Maison des Illustres") {
+      return <img src={mdi} className="producteur mdi" />;
     }
     return <div />;
   };

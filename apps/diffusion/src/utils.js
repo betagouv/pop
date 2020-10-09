@@ -253,6 +253,8 @@ export function getNoticeInfo(notice) {
         logo = "/static/inventaire.jpg";
       } else if (notice.PRODUCTEUR === "Monuments Historiques") {
         logo = "/static/mh.png";
+      } else if (notice.PRODUCTEUR === "Label Maison des Illustres") {
+        logo = "/static/logoMDI.png";
       }
       else{
         logo = notice.PRODUCTEUR;
