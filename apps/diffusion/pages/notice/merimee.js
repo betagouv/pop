@@ -182,7 +182,7 @@ export default class extends React.Component {
       creator: notice.AUTR
     };
 
-    const pdf = MerimeePdf(notice, title, this.props.links);
+    const pdf = MerimeePdf(notice, title, localisation, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink 

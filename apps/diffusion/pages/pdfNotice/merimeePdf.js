@@ -7,7 +7,7 @@ import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
 import { bucket_url } from "../../src/config";
 
-export function MerimeePdf(notice, title, links){
+export function MerimeePdf(notice, title, localisation, links){
   return(
     <Document>
       <Page style={styles.page}>
@@ -34,6 +34,7 @@ export function MerimeePdf(notice, title, links){
               notice.CADA || notice.IMPL || notice.HYDR || notice.PARN || notice.EDIF || notice.REFE || notice.COLL) ?
             <View>
                 <Text style={styles.subtitle} >Localisation</Text>
+                <Field title="Localisation" content={localisation} isPdf={true} />
                 <Field title={mapping.merimee.PLOC.label} content={notice.PLOC}  isPdf={true} />
                 <Field title={mapping.merimee.AIRE.label} content={notice.AIRE}  isPdf={true} />
                 <Field title={mapping.merimee.CANT.label} content={notice.CANT}  isPdf={true} />
