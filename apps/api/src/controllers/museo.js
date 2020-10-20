@@ -137,6 +137,64 @@ router.get("/:ref", async (req, res) => {
 });
 
 // Update a notice.
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+   // const updateMode = req.body.updateMode;
+    const user = req.user;
+    console.log(notice)
+    
+    if (!notice || !notice.REF) {
+      return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+    }
+
+    const promises = [];
+
+    // Upload images.
+    for (let i = 0; i < req.files.length; i++) {
+      const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+      promises.push(uploadFile(path, req.files[i]));
+    }
+
+    // Update IMPORT ID (this code is unclear…)
+    if (notice.POP_IMPORT.length) {
+      const id = notice.POP_IMPORT[0];
+      delete notice.POP_IMPORT;
+      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
+    await transformBeforeCreateOrUpdate(notice);
+
+    if(notice.REFMEM && notice.REFMEM.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMEM, Memoire));}
+    if(notice.REFMER && notice.REFMER.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMER, Merimee));}
+    if(notice.REFPAL && notice.REFPAL.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFPAL, Palissy));}
+
+    promises.push(updateJocondeNotices(notice));
+    let oaiObj = {
+      REF: notice.REF,
+      BASE: "museo",
+      DMAJ: notice.DMAJ
+    }
+    promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
+    promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
+    try {
+      await Promise.all(promises);
+      //Maj index elasticsearch
+      var obj = new Museo(notice);   
+      checkESIndex(obj);
+
+      res.status(200).send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, error: JSON.stringify(e) });
+    }
+  }
+);
+
+// Update a notice.
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
