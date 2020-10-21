@@ -84,10 +84,10 @@ export default function render() {
               title="Techniques"
             />
             <CollapsableFacet
-              id="aptn"
-              initialValue={initialValues.get("aptn")}
-              fields={["APTN.keyword"]}
-              title="Ancienne appartenance"
+              id="repr"
+              initialValue={initialValues.get("repr")}
+              fields={["REPR.keyword"]}
+              title="Sujet représenté"
             />
             <CollapsableFacet
               id="ville"
