@@ -111,7 +111,7 @@ export function getNoticeInfo(notice) {
 
       const images = notice.VIDEO.map((e, i) => ({
         src: `${bucket_url}${e}`,
-        alt: `${title}_${i}`
+        alt: e
       }));
 
       return { title, subtitle, image_preview, metaDescription, images };
