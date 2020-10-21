@@ -44,8 +44,8 @@ async function withFlags(notice) {
   }
 
   // LVID must be an url.
-  if (notice.LVID && !validator.isEmail(notice.LVID)) {
-    notice.POP_FLAGS.push("LVID_INVALID_EMAIL");
+  if (notice.LVID && !validator.isURL(notice.LVID)) { 
+    notice.POP_FLAGS.push("LVID_INVALID_URL");
   }
 
   //Check refs
