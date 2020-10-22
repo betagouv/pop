@@ -35,7 +35,7 @@ export default function render() {
             placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
             initialValue={initialValues.get("main")}
             customQuery={value =>
-              utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA"], ["AUTR"])
+              utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA", "MUSEO", "DMIS"], ["AUTR"])
             }
           />
         </div>
