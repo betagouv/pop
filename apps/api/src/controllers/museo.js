@@ -137,6 +137,62 @@ router.get("/:ref", async (req, res) => {
 });
 
 // Update a notice.
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+    const notice = JSON.parse(req.body.notice);
+
+    if (!notice || !notice.REF) {
+      return res.status(400).json({ success: false, msg: "Objet museo ou référence absente" });
+    }
+
+    // Update IMPORT ID (this code is unclear…)
+    if (notice.POP_IMPORT.length) {
+      const id = notice.POP_IMPORT[0];
+      delete notice.POP_IMPORT;
+      notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
+    await transformBeforeCreateOrUpdate(notice);
+
+    const promises = [];
+    try {
+
+      if(notice.REFMEM && notice.REFMEM.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMEM, Memoire));}
+      if(notice.REFMER && notice.REFMER.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFMER, Merimee));}
+      if(notice.REFPAL && notice.REFPAL.length > 0){promises.push(populateBaseFromMuseo(notice, notice.REFPAL, Palissy));}
+
+      promises.push(updateJocondeNotices(notice));
+      let oaiObj = {
+        REF: notice.REF,
+        BASE: "museo",
+        DMAJ: notice.DMAJ
+      }
+      const doc = new Museo(notice);
+      const obj2 = new NoticesOAI(oaiObj)
+      promises.push(doc.save());
+      promises.push(obj2.save());
+      checkESIndex(doc);
+
+      // Upload images.
+      for (let i = 0; i < req.files.length; i++) {
+        const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+        promises.push(uploadFile(path, req.files[i]));
+      }
+
+      await Promise.all(promises);
+
+      res.status(200).send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, error: JSON.stringify(e) });
+    }
+  }
+);
+
+// Update a notice.
 router.put(
   "/:ref",
   passport.authenticate("jwt", { session: false }),
