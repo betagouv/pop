@@ -52,6 +52,7 @@
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "elasticsearch": "^15.5.0",
+    "csv": "^5.3.2",
     "express": "^4.17.1",
     "express-rate-limit": "^5.3.0",
     "filenamify": "^4.3.0",
