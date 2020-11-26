@@ -32,7 +32,7 @@ export function PalissyAbregeePdf(notice){
                     <View style={styles.rightContent}>
                         <Text style={styles.abregeeBase}>Palissy</Text>
                         <Text style={styles.abregeeREF}>{notice.REF}</Text>
-                        { logo != null ? <Image style={styles.logo} src={logo} /> : '' }
+                        { logo != null && logo !== ""  ? <Image style={styles.logo} src={logo} /> : <Text></Text> }
                     </View>
                 </View>
             </View>
