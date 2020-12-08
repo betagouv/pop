@@ -189,7 +189,7 @@ export function getNoticeInfo(notice) {
         logo = "/static/inventaire.jpg";
       } else if (notice.PRODUCTEUR === "Monuments Historiques") {
         logo = "/static/mh.png";
-      } else if (notice.PRODUCTEUR === "Label Maison des Illustres") {
+      } else if (notice.PRODUCTEUR === "Label Maisons des illustres") {
         logo = "/static/logoMDI.png";
       }
 
