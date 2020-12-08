@@ -25,7 +25,7 @@ export default ({ data }) => {
       return <img src={inv} className="producteur" />;
     } else if (p === "Monuments Historiques") {
       return <img src={mh} className="producteur mh" />;
-    }else if (p === "Label Maison des Illustres") {
+    }else if (p === "Label Maisons des illustres") {
       return <img src={mdi} className="producteur mdi" />;
     }
     return <div />;
