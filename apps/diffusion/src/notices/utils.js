@@ -183,3 +183,8 @@ export function lastSearch(searchParams, searchParamsUrl, pop_url){
   }
   return null;
 }
+
+// Retourne l'url des archives pour les notices qui ont un champ LMDP renseignée
+export function getUrlArchive(REF){
+  return `https://archives-map.culture.gouv.fr/archive/resultats/simple/lineaire/n:19?RECH_S=${REF}&type=simple`;
+}
