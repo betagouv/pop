@@ -4,6 +4,7 @@ import { bucket_url } from "../../../config.js";
 import mh from "../../../assets/mh.png";
 import inv from "../../../assets/inventaire.jpg";
 import mdi from "../../../assets/logoMDI.png";
+import jr from "../../../assets/JR.S.jpg";
 
 import utils from "./utils";
 
@@ -25,8 +26,10 @@ export default ({ data }) => {
       return <img src={inv} className="producteur" />;
     } else if (p === "Monuments Historiques") {
       return <img src={mh} className="producteur mh" />;
-    }else if (p === "Label Maisons des illustres") {
+    } else if (p === "Label Maisons des illustres") {
       return <img src={mdi} className="producteur mdi" />;
+    } else if (p === "Label Jardin remarquable") {
+      return <img src={jr} className="producteur jr" />;
     }
     return <div />;
   };

@@ -191,6 +191,8 @@ export function getNoticeInfo(notice) {
         logo = "/static/mh.png";
       } else if (notice.PRODUCTEUR === "Label Maisons des illustres") {
         logo = "/static/logoMDI.png";
+      } else if (notice.PRODUCTEUR === "Label Jardin remarquable") {
+        logo = "/static/JR.S.jpg";
       }
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
