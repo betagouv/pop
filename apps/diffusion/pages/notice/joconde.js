@@ -103,21 +103,53 @@ export default class extends React.Component {
     this.state.display == false && this.setState({display : true});
   }
 
+  prepareLinkRepr(value, name){
+    // Caractères possible dans la valeur reneignée
+    const arrayPattern = ['(',')',':',',',' ',';']; 
+    let prevString = '';
+    const arrayContent = [];
+    for(let i = 0; i < value.length; i++){ 
+      if(arrayPattern.includes(value[i])){
+        // Si un string a déjà été construit, on crée le lien
+        if(prevString !== ''){
+          let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([prevString]) })}`;
+          arrayContent.push(<a href={url} key={prevString}>{prevString}</a>);
+          prevString = '';
+        }
+        arrayContent.push(value[i]);
+      } else {
+        prevString += value[i];
+      }
+    }
+    return arrayContent.reduce((a,b) => [a, "", b])
+  }
+
   links(value, name) {
+    // Regex pour le champ REPR
+    const regex = new RegExp('[():,;]');
+
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value)=="") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
-        return <a href={url}>{value}</a>;
+        let content = <a href={url}>{value}</a>;
+        // Traitement pour repr
+        if(name == 'repr' && regex.test(value)){
+          content = this.prepareLinkRepr(value, name);
+        } 
+        return content
       }
       return null;
     }
     const links = value
       .map(d => {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([d]) })}`;
+        let content = <a href={url}>{d}</a>;
+        // Traitement pour repr
+        if(name == 'repr' && regex.test(d)){
+          content = this.prepareLinkRepr(d, name);
+        } 
         return (
-          <a href={url} key={d}>
-            {d}
-          </a>
+          content
         );
       })
       .reduce((p, c) => [p, ", ", c]);
