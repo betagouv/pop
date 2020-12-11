@@ -602,8 +602,9 @@ const SeeMore = ({ notice }) => {
       <Field
         title={mapping.merimee.LMDP.label}
         content={
-          <a href={getUrlArchive(notice.REF)}>
-            Voir les archives conservées à la Médiathèque de l'architecture et du patrimoine
+          <a href={getUrlArchive(notice.REF)} target="_blank">
+            Voir aussi
+            Les archives conservées à la Médiathèque de l'architecture et du patrimoine
           </a>
         }
         key="mediathek_cible"
