@@ -591,7 +591,6 @@ const SeeMore = ({ notice }) => {
         title={mapping.palissy.LMDP.label}
         content={
           <a href={getUrlArchive(notice.REF)} target="_blank">
-            Voir aussi
             Les archives conservées à la Médiathèque de l'architecture et du patrimoine
           </a>
         }
