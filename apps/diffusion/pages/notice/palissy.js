@@ -588,7 +588,6 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <Field
-        title={mapping.palissy.LMDP.label}
         content={
           <a href={getUrlArchive(notice.REF)} target="_blank">
             Les archives conservées à la Médiathèque de l'architecture et du patrimoine
