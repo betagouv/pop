@@ -506,7 +506,7 @@ const SeeMore = ({ notice, museo }) => {
   if (notice.MUSEO) {
     const text = museo
       ? [
-          museo.NOMUSAGE || museo.NOMOFF || museo.ANC,
+          museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
           museo.VILLE_M || museo.VILLE_AD,
           museo.REF
         ].join(" - ")
