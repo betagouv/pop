@@ -600,10 +600,8 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <Field
-        title={mapping.merimee.LMDP.label}
         content={
           <a href={getUrlArchive(notice.REF)} target="_blank">
-            Voir aussi
             Les archives conservées à la Médiathèque de l'architecture et du patrimoine
           </a>
         }
