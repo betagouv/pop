@@ -172,12 +172,13 @@ export function highlighting(wholeWord){
 export function lastSearch(searchParams, searchParamsUrl, pop_url){
   if(searchParams.idQuery){
     let url;
+    let view = searchParams.last_view;
     if(searchParams.qb){
       let list = searchParamsUrl.split("qb=");
-      url = `${pop_url}advanced-search/list/${searchParams.base}?qb=${list[1]}`
+      url = `${pop_url}advanced-search/${view}/${searchParams.base}?qb=${list[1]}`
     }
     else{
-      url = `${pop_url}search/list?${searchParamsUrl}`
+      url = `${pop_url}search/${view}?${searchParamsUrl}`
     }
     return url;
   }
