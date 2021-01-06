@@ -14,7 +14,7 @@ import Title from "../../src/notices/Title";
 import ContactUs from "../../src/notices/ContactUs";
 import FieldImages from "../../src/notices/FieldImages";
 import Map from "../../src/notices/Map";
-import { postFixedLink, schema, getParamsFromUrl, findCollection, highlighting, lastSearch } from "../../src/notices/utils";
+import { postFixedLink, schema, getParamsFromUrl, findCollection, highlighting, lastSearch, getUrlArchive } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { bucket_url } from "./../../src/config";
 import BucketButton from "../../src/components/BucketButton";
@@ -600,10 +600,9 @@ const SeeMore = ({ notice }) => {
   if (notice.LMDP) {
     arr.push(
       <Field
-        title={mapping.merimee.LMDP.label}
         content={
-          <a href="http://www.mediatheque-patrimoine.culture.gouv.fr/pages/bases/mediathek_cible.html">
-            Voir les archives conservées à la Médiathèque de l'architecture et du patrimoine
+          <a href={getUrlArchive(notice.REF)} target="_blank">
+            Les archives conservées à la Médiathèque de l'architecture et du patrimoine
           </a>
         }
         key="mediathek_cible"

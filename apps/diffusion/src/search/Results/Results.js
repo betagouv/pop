@@ -28,7 +28,7 @@ class Results extends React.Component {
       <ul className="nav nav-pills">
         <li className="nav-item">
           <a
-            onClick={() => this.toggle("list", { geolocalisation: [], image: [] })}
+            onClick={() => this.toggle("list", { geolocalisation: [], image: ["oui"] })}
             className={`${view === "list" ? "active " : ""} nav-link`}
           >
             LISTE
@@ -55,6 +55,9 @@ class Results extends React.Component {
   }
 
   renderResults() {
+    // Ajout de la sélection présentation (list, mosaic) dans la sauvegarde de recherche
+    this.props.initialValues.set('last_view', this.props.view);
+
     const view = this.props.view || "list";
     if (view === "mosaic") {
       return <Mosaic key="mosaique" initialValues={this.props.initialValues} />;
