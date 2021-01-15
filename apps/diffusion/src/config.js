@@ -5,6 +5,8 @@ let es_url = "http://127.0.0.1:3000/search/";
 let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
 let pop_url = "https://www.pop.culture.gouv.fr/";
 
+let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr";
+
 switch (env) {
   case "production":
     api_url = "https://api.pop.culture.gouv.fr";
@@ -25,5 +27,6 @@ module.exports = {
   api_url,
   es_url,
   bucket_url,
-  pop_url
+  pop_url,
+  emailContactMnr
 };

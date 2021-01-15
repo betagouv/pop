@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
-import { bucket_url } from "../../src/config";
+import { bucket_url, emailContactMnr } from "../../src/config";
 
 export function MnrPdf(notice, title){
   return(
@@ -74,7 +74,7 @@ export function MnrPdf(notice, title){
               <Field title={mapping.mnr.REF.label} content={notice.REF} separator="#" isPdf={true} />
               <Field title={mapping.mnr.BASE.label} content={notice.BASE} separator="#" isPdf={true} />
               <Field title={mapping.mnr.DMAJ.label} content={notice.DMAJ} separator="#" isPdf={true} />
-              <Field title={"Contactez-nous"} content={notice.CONTACT || "francoise.gaborit@culture.gouv.fr"} separator="#" isPdf={true} />
+              <Field title={"Contactez-nous"} content={notice.CONTACT || emailContactMnr } separator="#" isPdf={true} />
             </View>
           </View>
         </View>

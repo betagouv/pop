@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 async function recipients(to) {
   switch (to) {
     case "mnr":
-      return "francoise.gaborit@culture.gouv.fr";
+      return "isabelle.rouge-ducos@culture.gouv.fr";
     case "inv":
       return ["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr", "sandrine.della-bartolomea@culture.gouv.fr"].join(",");
     case "joconde":
@@ -29,10 +29,12 @@ async function recipients(to) {
       return [
         "gaelle.pichon-meunier@culture.gouv.fr",
         "antonella.rotolo@culture.gouv.fr",
-        "franck.fusibet@culture.gouv.fr"
+        "franck.fusibet@culture.gouv.fr",
+        "franck.genestoux@culture.gouv.fr",
+        "anne-violaine.bouilloud@culture.gouv.fr"
       ].join(",");
     case "museo":
-      return "natacha.villeroy@culture.gouv.fr";
+      return "laurent.manoeuvre@culture.gouv.fr";
     // Dynamic recipient (email): user must exist in database.
     default:
       try {
