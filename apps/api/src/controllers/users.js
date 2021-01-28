@@ -190,8 +190,8 @@ function userValidation({ nom, prenom, institution, group, role, museofile, emai
     if (!museofile.length) {
       msg = "Le champ muséofile est obligatoire pour les producteurs du groupe joconde ou museo.";
       return { success: false, msg };
-    } else if (museofile.some(e => !e.match(/^M[0-9]+$/))) {
-      msg = "Le format du champ muséofile est invalide (utilisez M suivi de plusieurs chiffres)";
+    } else if (museofile.some(e => !e.match(/^[M?B][0-9]+$/))) {
+      msg = "Le format du champ muséofile est invalide (utilisez M ou B suivi de plusieurs chiffres)";
       return { success: false, msg };
     }
   }
