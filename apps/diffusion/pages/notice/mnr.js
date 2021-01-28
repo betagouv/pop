@@ -18,7 +18,7 @@ import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MnrPdf } from "../pdfNotice/mnrPdf";
-import { pop_url } from "../../src/config";
+import { pop_url, emailContactMnr } from "../../src/config";
 
 export default class extends React.Component {
 
@@ -474,7 +474,7 @@ export default class extends React.Component {
                     <Field title={mapping.mnr.DMAJ.label} content={notice.DMAJ} />
                   </div>
                   <ContactUs
-                    contact={notice.CONTACT || "francoise.gaborit@culture.gouv.fr"}
+                    contact={notice.CONTACT || emailContactMnr}
                     REF={notice.REF}
                     base="mnr"
                   />
