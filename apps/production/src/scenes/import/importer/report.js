@@ -38,7 +38,7 @@ export default function generate(
       contact = "gaelle.pichon-meunier@culture.gouv.fr";
       break;
     case "mnr":
-      contact = "isabelle.rouge-ducos@culture.gouv.fr et contact.m2rs@culture.gouv.fr";
+      contact = "isabelle.rouge-ducos@culture.gouv.fr";
       break;
     case "memoire":
       contact = "anne.cook@culture.gouv.fr";
