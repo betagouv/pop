@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 async function recipients(to) {
   switch (to) {
     case "mnr":
-      return "isabelle.rouge-ducos@culture.gouv.fr";
+      return ["isabelle.rouge-ducos@culture.gouv.fr", "contact.m2rs@culture.gouv.fr"].joint(',');
     case "inv":
       return ["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr", "sandrine.della-bartolomea@culture.gouv.fr"].join(",");
     case "joconde":

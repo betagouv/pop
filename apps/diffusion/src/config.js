@@ -3,9 +3,10 @@ let env = null || process.env.APP_URLS_ENV;
 let api_url = "http://127.0.0.1:3000";
 let es_url = "http://127.0.0.1:3000/search/";
 let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
-let pop_url = "https://www.pop.culture.gouv.fr/";
+// let pop_url = "https://www.pop.culture.gouv.fr/";
+let pop_url = "http://127.0.0.1:8081/";
 
-let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr";
+let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 
 switch (env) {
   case "production":
