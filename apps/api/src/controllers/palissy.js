@@ -289,8 +289,11 @@ router.put(
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
         });
       }
-       // Maintient des notices MEMOIRE précédemment rattachées.
-       notice.MEMOIRE = prevNotice.MEMOIRE;
+      
+      if(notice.MEMOIRE === undefined){
+        // Maintient des notices MEMOIRE précédemment rattachées.
+        notice.MEMOIRE = prevNotice.MEMOIRE;
+      } 
 
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
