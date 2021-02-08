@@ -290,7 +290,7 @@ router.put(
         });
       }
       
-      if(notice.MEMOIRE === undefined){
+      if(typeof notice.MEMOIRE === "undefined"){
         // Maintient des notices MEMOIRE précédemment rattachées.
         notice.MEMOIRE = prevNotice.MEMOIRE;
       } 
