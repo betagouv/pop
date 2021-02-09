@@ -177,10 +177,11 @@ function isLongitude(lng) {
 
 function hasCorrectCoordinates(notice) {
   const c = notice.POP_COORDONNEES;
+
   return (
     c &&
-    c.lat &&
-    c.lon &&
+    typeof c.lat !== 'undefined' &&
+    typeof c.lon !== 'undefined' &&
     Number(c.lat) === c.lat &&
     Number(c.lon) === c.lon &&
     isLatitude(c.lat) &&
