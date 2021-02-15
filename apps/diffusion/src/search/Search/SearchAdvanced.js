@@ -135,9 +135,15 @@ class SearchAdvanced extends React.Component {
                       "COTECOR.keyword",
                       "COTECTI.keyword",
                       "PRECOR.keyword",
-                      "REF.keyword"],
+                      "REF.keyword",
+                      "NUMCAF.keyword"],
               text: "Numéro ou cote",
-              fields: "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF"
+              fields: "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMCAF"
+            },
+            {
+              value: ["NUMCAF.keyword"],
+              text: "Numéro de versement",
+              fields: "NUMCAF"
             },
             {
               value: ["OBS.keyword",
