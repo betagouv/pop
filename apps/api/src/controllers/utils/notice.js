@@ -201,6 +201,38 @@ async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
   return POP_FLAGS;
 }
 
+/**
+ * Supprime le caractère search en début et fin de chaine de caractères
+ * @param { stringt } chaine 
+ * @param { string } search 
+ */
+function removeChar(chaine, search){
+  let find = false;
+  let position = 0;
+  let i = 0;
+
+  do{ 
+    find = false;
+
+    if(chaine.indexOf(search) !== -1){
+      position = chaine.indexOf(search);
+
+      if(position === 0){
+        find = true;
+        chaine = chaine.substring(position + 1, chaine.length)
+      }
+
+      if(position === chaine.length - 1){
+        find = true;
+        chaine = chaine.substring(0, position)
+      }
+    }
+   
+  }while(find)
+
+  return chaine;
+}
+
 module.exports = {
   getNewId,
   checkESIndex,
@@ -210,5 +242,6 @@ module.exports = {
   findMerimeeProducteur,
   findPalissyProducteur,
   identifyProducteur,
-  checkValidRef
+  checkValidRef,
+  removeChar
 };
