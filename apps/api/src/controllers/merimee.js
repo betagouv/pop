@@ -247,8 +247,14 @@ router.put(
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
         });
       }
-      // Maintient des notices MEMOIRE précédemment rattachées.
-      notice.MEMOIRE = prevNotice.MEMOIRE;
+
+      if(typeof notice.MEMOIRE === "undefined"){
+        // Maintient des notices MEMOIRE précédemment rattachées.
+        notice.MEMOIRE = prevNotice.MEMOIRE;
+        console.log('reprise')
+      } else {
+        console.log('update')
+      }
 
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
@@ -284,6 +290,7 @@ router.put(
       notice.HISTORIQUE = HISTORIQUE;
 
       //Modification liens entre bases
+     
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
@@ -294,6 +301,7 @@ router.put(
       promises.push(updateNotice(Merimee, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       await Promise.all(promises);
+    
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);

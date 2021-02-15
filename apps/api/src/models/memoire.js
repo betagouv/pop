@@ -686,7 +686,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numéro de carte à fenêtre",
+        label: "Numéro de versement",
         deprecated: true
       }
     },

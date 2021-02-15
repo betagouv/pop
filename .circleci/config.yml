@@ -125,7 +125,7 @@ jobs:
     steps:
       - checkout
       # Sorry.
-      - run: sudo npm install npm@latest -g
+      - run: sudo npm install npm@latest-6 -g
       - prepare:
           app: api
       - prepare:
