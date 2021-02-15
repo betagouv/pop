@@ -193,6 +193,8 @@ export function getNoticeInfo(notice) {
         logo = "/static/logoMDI.png";
       } else if (notice.PRODUCTEUR === "Label Jardin remarquable") {
         logo = "/static/JR.S.jpg";
+      } else if (notice.PRODUCTEUR === "Label Architecture contemporaine remarquable") {
+        logo = "/static/ACR_Logotype_Noir.png";
       }
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";

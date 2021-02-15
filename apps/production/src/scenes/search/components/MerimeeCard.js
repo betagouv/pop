@@ -5,6 +5,7 @@ import mh from "../../../assets/mh.png";
 import inv from "../../../assets/inventaire.jpg";
 import mdi from "../../../assets/logoMDI.png";
 import jr from "../../../assets/JR.S.jpg";
+import acr from '../../../assets/ACR_Logotype_Noir.png';
 
 import utils from "./utils";
 
@@ -30,6 +31,8 @@ export default ({ data }) => {
       return <img src={mdi} className="producteur mdi" />;
     } else if (p === "Label Jardin remarquable") {
       return <img src={jr} className="producteur jr" />;
+    } else if (p === "Label Architecture contemporaine remarquable") {
+      return <img src={acr} className="producteur acr" />;
     }
     return <div />;
   };

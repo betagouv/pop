@@ -217,7 +217,8 @@
   bottom: 7px;
 }
 
-img.producteur.mh {
+img.producteur.mh,
+img.producteur.acr{
   width: 100px;
 }
 
