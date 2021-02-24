@@ -112,9 +112,12 @@ function lambertToWGS84(xy, zone) {
     }
     case "wgs84":{
       const c = proj4("WGS84", "WGS84", [coords[0], coords[1]]);
+      /*
+      * Condition supprimée pour affichage de la carte popur les coordonnées hors France Métropolitaine
       if (!isInFrance(c[1], c[0])) {
         return { lat: 0, lon: 0, message: "La projection utilisée n'est pas correct" };
       }
+      */
       return { lat: c[1], lon: c[0] };
     }
     default:
