@@ -118,10 +118,16 @@ export default function AdvancedSearch({ collection, card }) {
             "COTECOR.keyword",
             "COTECTI.keyword",
             "PRECOR.keyword",
-            "REF.keyword"
+            "REF.keyword",
+            "NUMCAF.keyword"
           ],
           text:
-            "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote"
+            "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote, NUMCAF"
+        },
+        {
+          value: ["NUMCAF.keyword"],
+          text: "NUMCAF - Numéro de versement",
+          fields: "NUMCAF"
         },
         {
           value: ["TYPDOC.keyword", "TECH.keyword", "TECHOR.keyword", "TECHTI.keyword"],
