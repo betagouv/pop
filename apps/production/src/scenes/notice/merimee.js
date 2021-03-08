@@ -357,6 +357,7 @@ class Notice extends React.Component {
               <Col sm={6}>
                 <CustomField name="DLAB" disabled={!this.state.editable} />
                 <CustomField name="INTE" disabled={!this.state.editable} />
+                <CustomField name="PINT" disabled={!this.state.editable} />
                 <CustomField name="REMA" disabled={!this.state.editable} />
                 <CustomField name="OBS" disabled={!this.state.editable} />
                 <CustomField name="ARCHEO" disabled={!this.state.editable} />
