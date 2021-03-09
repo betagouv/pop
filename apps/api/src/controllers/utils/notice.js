@@ -1,5 +1,6 @@
 const Producteur = require("../../models/producteur");
 const { capture } = require("./../../sentry.js");
+const { indexOf } = require("./regions");
 
 // Creates a new ID for a notice of type "collection".
 function getNewId(collection, prefix, dpt) {
@@ -201,6 +202,25 @@ async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
   return POP_FLAGS;
 }
 
+/**
+ * Supprime le caractère search en début et fin de chaine de caractères
+ * @param { stringt } chaine 
+ */
+function removeChar(chaine){
+  const search = '""';
+  const replaceChar = '"';
+
+  let keep = chaine[0] === search && chaine[chaine.length - 1] === search;
+  chaine = chaine.replace(search, replaceChar);
+  
+  // Analyse des caractères à supprimer
+  if(!keep && chaine[0] === replaceChar && chaine[chaine.length - 1] === replaceChar){
+    chaine = chaine.substring(1, chaine.length - 1)
+  }
+
+  return chaine;
+}
+
 module.exports = {
   getNewId,
   checkESIndex,
@@ -210,5 +230,6 @@ module.exports = {
   findMerimeeProducteur,
   findPalissyProducteur,
   identifyProducteur,
-  checkValidRef
+  checkValidRef,
+  removeChar
 };
