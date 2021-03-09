@@ -12,7 +12,7 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
-const { checkValidRef } = require("./utils/notice");
+const { checkValidRef, removeChar } = require("./utils/notice");
 
 const {
   formattedNow,
@@ -248,14 +248,19 @@ router.put(
         });
       }
 
+      if(typeof notice.DESC !== undefined){
+        notice.DESC = removeChar(notice.DESC);
+      }
+
+      if(typeof notice.HIST !== undefined){
+        notice.HIST = removeChar(notice.HIST);
+      }
+
       if(typeof notice.MEMOIRE === "undefined"){
         // Maintient des notices MEMOIRE précédemment rattachées.
         notice.MEMOIRE = prevNotice.MEMOIRE;
-        console.log('reprise')
-      } else {
-        console.log('update')
       }
-
+      
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }

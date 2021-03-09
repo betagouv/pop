@@ -289,9 +289,13 @@ router.put(
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
         });
       }
-
+      
       if(typeof notice.DESC !== undefined){
-        notice.DESC = removeChar(notice.DESC, '"');
+        notice.DESC = removeChar(notice.DESC);
+      }
+
+      if(typeof notice.HIST !== undefined){
+        notice.HIST = removeChar(notice.HIST);
       }
 
       
