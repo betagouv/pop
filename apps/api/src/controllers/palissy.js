@@ -11,7 +11,7 @@ const Palissy = require("../models/palissy");
 const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
-const { checkValidRef } = require("./utils/notice");
+const { checkValidRef, removeChar } = require("./utils/notice");
 let moment = require('moment-timezone')
 
 
@@ -289,6 +289,15 @@ router.put(
           msg: "Autorisation nécessaire pour mettre à jour cette ressource."
         });
       }
+      
+      if(typeof notice.DESC !== undefined){
+        notice.DESC = removeChar(notice.DESC);
+      }
+
+      if(typeof notice.HIST !== undefined){
+        notice.HIST = removeChar(notice.HIST);
+      }
+
       
       if(typeof notice.MEMOIRE === "undefined"){
         // Maintient des notices MEMOIRE précédemment rattachées.
