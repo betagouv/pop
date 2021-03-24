@@ -480,7 +480,7 @@ class SearchAdvanced extends React.Component {
             {value: ["PRODUCTEUR.keyword"], text: "Producteur", fields: "PRODUCTEUR"},
             {value: ["PROT.keyword"], text: "Typologie de la protection", fields: "PROT"},
             {value: ["REFA.keyword"], text: "Référence Mérimée de l'édifice", fields: "REFA"},
-            {value: ["REFE.keyword"], text: "Référence des l'ensemble", fields: "REFE"},
+            {value: ["REFE.keyword"], text: "Référence de l'ensemble", fields: "REFE"},
             {value: ["REFP.keyword"], text: "Références des parties constituantes étudiées", fields: "REFP"},
             {value: ["REG.keyword"], text: "Région", fields: "REG"},
             {value: ["RENP.keyword"], text: "Renvoi vers dossier 'peinture'", fields: "RENP"},
