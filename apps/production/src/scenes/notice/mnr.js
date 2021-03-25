@@ -129,6 +129,10 @@ class Notice extends React.Component {
                 <CustomField title="REF (REF) :" name="REF" disabled />
                 <CustomField name="INV" />
                 <CustomField name="DOMN" />
+                <CustomField
+                  name="RENV"
+                  createUrl={e => `/notice/mnr/${e}`}
+                />
                 <CustomField name="DENO" />
                 <CustomField name="AUTR" />
                 <CustomField name="PAUT" />
