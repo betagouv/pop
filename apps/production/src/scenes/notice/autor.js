@@ -45,7 +45,14 @@ class Notice extends React.Component {
       return;
     }
     this.props.initialize(notice);
-    const editable = true;
+    
+    // Mantis 38639 - ajout vérification edition
+    let editable = false;
+    API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "autor").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+
     this.setState({ loading: false, notice, editable });
   }
 
@@ -119,11 +126,11 @@ class Notice extends React.Component {
           <Section title="Identification" icon={require("../../assets/info.png")} color="#FF7676">
             <Row>
               <Col sm={6}>
-                <CustomField name="REF" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="REF" disabled hidedescriptionifempty={true}/>
                 <CustomField name="ISNI" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="ISNI_VERIFIEE" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="ALIAS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
-                <CustomField name="BASE" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="BASE" disabled hidedescriptionifempty={true}/>
                 <CustomField name="BIBLIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="BIO" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="CONTACT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
@@ -143,8 +150,8 @@ class Notice extends React.Component {
                 <CustomField name="IDENT" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="ARK" disabled={!this.state.editable} hidedescriptionifempty={true}/>
                 <CustomField name="OBS" disabled={!this.state.editable} hidedescriptionifempty={true}/>
-                <CustomField name="DMAJ" disabled={this.state.editable} hidedescriptionifempty={true}/>
-                <CustomField name="DMIS" disabled={this.state.editable} hidedescriptionifempty={true}/>
+                <CustomField name="DMAJ" disabled hidedescriptionifempty={true}/>
+                <CustomField name="DMIS" disabled hidedescriptionifempty={true}/>
               </Col>
               <Col sm={6}>
                 <CustomField name="NOM" disabled={!this.state.editable} hidedescriptionifempty={true}/>
