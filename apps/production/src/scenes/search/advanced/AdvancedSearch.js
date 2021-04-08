@@ -5,7 +5,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   QueryBuilder
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 import Mapping from "../../../services/mapping";
 import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";
@@ -484,6 +484,13 @@ export default function AdvancedSearch({ collection, card }) {
           <DeleteComponent collection={collection} />
         </div>
       </Elasticsearch>
+      <style jsx global>{`
+        .option_disabled,
+        .option_invisible{
+          display: none;
+        }
+      `  
+      }</style>
     </Container>
   );
 }
