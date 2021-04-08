@@ -473,7 +473,16 @@ const Schema = new mongoose.Schema(
         date: String,
         updateMode: String
       }
-    ]
+    ],
+    RENV: {
+      type: [String],
+      default: [],
+      documentation: {
+        description:
+          "Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice MNR.",
+        label: "Numéro de renvoi vers un autre domaine"
+      }
+    },
   },
   { collection: "mnr" }
 );

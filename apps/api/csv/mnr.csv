@@ -36,6 +36,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "DIMS","Array","non","Dimensions","","","Dimensions ",""
 "VIDEO","Array","non","Champ qui contient les images","","","Champ qui contient les images",""
 "INV","String","non","N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt","","","N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",""
+"RENV","Array","non","Numéro de renvoi vers un autre domaine","","","Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice MNR.",""
 "EXPO","String","non","Exposition","","","Exposition ",""
 "BIBL","String","non","Bibliographie","","","Bibliographie ",""
 "AATT","String","non","Ancienne attribution","","","Ancienne attribution",""

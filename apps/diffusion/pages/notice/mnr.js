@@ -19,6 +19,14 @@ import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MnrPdf } from "../pdfNotice/mnrPdf";
 import { pop_url, emailContactMnr } from "../../src/config";
+import LinkedNotices from "../../src/notices/LinkedNotices";
+
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
 
 export default class extends React.Component {
 
@@ -29,8 +37,16 @@ export default class extends React.Component {
     const notice = await API.getNotice("mnr", id);
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
+    const arr = [];
 
-    return { notice, searchParamsUrl, searchParams };
+    if (notice) {
+      const { RENV } = notice;
+      pushLinkedNotices(arr, RENV, "mnr");
+    }
+
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    return { notice, searchParamsUrl, searchParams, links };
   }
 
   fieldImage(notice) {
@@ -466,6 +482,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>

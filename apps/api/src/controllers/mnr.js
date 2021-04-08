@@ -14,16 +14,33 @@ const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorizat
 
 const router = express.Router();
 
+async function withFlags(notice) {
+  notice.POP_FLAGS = [];
+
+  // Reference not found RENV
+  if (notice.RENV) {
+    for (let i = 0; i < notice.RENV.length; i++) {
+      if (!(await Mnr.exists({ REF: notice.RENV[i] }))) {
+        notice.POP_FLAGS.push("RENV_REF_NOT_FOUND");
+      }
+    }
+  }
+  
+  return notice;
+}
+
 async function transformBeforeUpdate(notice) {
   notice.DMAJ = formattedNow();
   if (notice.VIDEO !== undefined) {
     notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
   }
+  notice = await withFlags(notice);
 }
 
-function transformBeforeCreate(notice) {
+async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
+  notice = await withFlags(notice);
 }
 
 async function checkMnr(notice) {
@@ -94,7 +111,7 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
 
-      transformBeforeUpdate(notice);
+      await transformBeforeUpdate(notice);
 
       //Ajout de l'historique de la notice
       var today = new Date();
@@ -130,7 +147,7 @@ router.post(
   async (req, res) => {
     const notice = JSON.parse(req.body.notice);
     await determineProducteur(notice);
-    transformBeforeCreate(notice);
+    await transformBeforeCreate(notice);
     if (!await canCreateMnr(req.user, notice)) {
       return res
         .status(401)
