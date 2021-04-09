@@ -258,7 +258,7 @@ function report(notices, collection, email, institution, importId) {
       }
     }
   }
-
+console.log(obj);
   arr.push(`<p>${count} avertissement(s) dont : </p>`);
   arr.push(`<ul>`);
   for (let key in obj) {
@@ -266,9 +266,16 @@ function report(notices, collection, email, institution, importId) {
     const nots = obj[key].notices;
     const { terme, champ, thesaurus } = regexIt(key);
 
-    arr.push(
-      `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
-    );
+    // Mantis 38569 - Ajout condition pour avoir le vrai message si le champ n'est pas un thesaurus (et non plus des champs undefined)
+    if(terme !== undefined){
+      arr.push(
+        `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
+      );
+    }else{
+      arr.push(
+        `<li>${count} avec pour message : "${key}":</li>`
+      );
+    }
     arr.push(`<ul>`);
     arr.push(...nots.map(e => `<li>${e}</li>`));
     arr.push(`</ul>`);

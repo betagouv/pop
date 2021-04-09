@@ -3,7 +3,9 @@ import api from "../../../services/api";
 export default function checkThesaurus(importedNotices) {
   return new Promise(async (resolve, _reject) => {
     const optimMap = {};
-
+    // Mantis 38569 - Champs thesaurus à ne pas controler - à supprimer une fois les controles thesaurus ok
+    const thesaurusNonControle = ['MILL','ECOL','EPOQ','LIEUX','TECH','GENE'];
+    
     if (!importedNotices.length) {
       return;
     }
@@ -19,7 +21,8 @@ export default function checkThesaurus(importedNotices) {
           importedNotices[i]._mapping[field] &&
           importedNotices[i]._mapping[field].thesaurus_separator;
 
-        if (!thesaurus) {
+        // Mantis 38569 - Ajout condition pour outrepasser le controle des champs thesaurus à ne pas controler - à supprimer une fois les controles thesaurus ok
+        if (!thesaurus || thesaurusNonControle.includes(field)) {
           continue;
         }
 
