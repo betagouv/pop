@@ -54,6 +54,18 @@ router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (
             return res.status(200).send({ success: true, validate });
         }
 
+        // Mantis 38639 - Si utilisateur de role producteur et groupe inventaire, alors pas de modif possible
+        if(user.role == "producteur" && user.group === "inv" ){
+            validate = false;
+            return res.status(200).send({ success: true, validate });
+        }else{
+            // Si la collection est mnr ou author, on renvoie true pour eviter de changer le comportement
+            if (collection==="mnr" || collection==="autor"){
+                validate = true;
+                return res.status(200).send({ success: true, validate });
+            }
+        }
+
         //On récupère le groupe de l'utilisateur en base
         let group = await Group.findOne({LABEL: user.group});
 

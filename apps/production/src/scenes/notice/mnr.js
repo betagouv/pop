@@ -50,6 +50,14 @@ class Notice extends React.Component {
         }
         console.log("NOTICE", notice);
         this.props.initialize(notice);
+
+        // Mantis 38639 - ajout vérification edition
+        let editable = false;
+        API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "mnr").then(result => {
+          editable = result.validate;
+          this.setState({editable: editable});
+        });
+        
         this.setState({ loading: false, notice });
       })
       .catch(e => {
@@ -127,55 +135,56 @@ class Notice extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField title="REF (REF) :" name="REF" disabled />
-                <CustomField name="INV" />
-                <CustomField name="DOMN" />
+                <CustomField name="INV" disabled={!this.state.editable}/>
+                <CustomField name="DOMN" disabled={!this.state.editable}/>
                 <CustomField
                   name="RENV"
                   createUrl={e => `/notice/mnr/${e}`}
+                  disabled={!this.state.editable}
                 />
-                <CustomField name="DENO" />
-                <CustomField name="AUTR" />
-                <CustomField name="PAUT" />
-                <CustomField name="ATTR" />
-                <CustomField name="ECOL" />
-                <CustomField name="GENE" />
-                <CustomField name="TITR" />
-                <CustomField name="ATIT" />
-                <CustomField name="PTIT" />
-                <CustomField name="SCLE" />
-                <CustomField name="STYL" />
-                <CustomField name="MILL" />
-                <CustomField name="TECH" />
-                <CustomField name="DIMS" />
-                <CustomField name="DESC" />
-                <CustomField name="INSC" />
-                <CustomField name="HIST" />
-                <CustomField name="PROV" />
-                <CustomField name="EXPO" />
-                <CustomField name="LOCA" />
+                <CustomField name="DENO" disabled={!this.state.editable}/>
+                <CustomField name="AUTR" disabled={!this.state.editable}/>
+                <CustomField name="PAUT" disabled={!this.state.editable}/>
+                <CustomField name="ATTR" disabled={!this.state.editable}/>
+                <CustomField name="ECOL" disabled={!this.state.editable}/>
+                <CustomField name="GENE" disabled={!this.state.editable}/>
+                <CustomField name="TITR" disabled={!this.state.editable}/>
+                <CustomField name="ATIT" disabled={!this.state.editable}/>
+                <CustomField name="PTIT" disabled={!this.state.editable}/>
+                <CustomField name="SCLE" disabled={!this.state.editable}/>
+                <CustomField name="STYL" disabled={!this.state.editable}/>
+                <CustomField name="MILL" disabled={!this.state.editable}/>
+                <CustomField name="TECH" disabled={!this.state.editable}/>
+                <CustomField name="DIMS" disabled={!this.state.editable}/>
+                <CustomField name="DESC" disabled={!this.state.editable}/>
+                <CustomField name="INSC" disabled={!this.state.editable}/>
+                <CustomField name="HIST" disabled={!this.state.editable}/>
+                <CustomField name="PROV" disabled={!this.state.editable}/>
+                <CustomField name="EXPO" disabled={!this.state.editable}/>
+                <CustomField name="LOCA" disabled={!this.state.editable}/>
               </Col>
               <Col sm={6}>
-                <CustomField name="BIBL" />
-                <CustomField name="OBSE" />
-                <CustomField name="REFIM" />
-                <CustomField name="AATT" />
-                <CustomField name="AUTI" />
-                <CustomField name="DMAJ" />
-                <CustomField name="ETAT" />
-                <CustomField name="RESUME" />
-                <CustomField name="NOTE" />
-                <CustomField name="PREP" />
-                <CustomField name="SUITE" />
-                <CustomField name="SREP" />
-                <CustomField name="REPR" />
-                <CustomField name="REDC" />
-                <CustomField name="PHOT" />
-                <CustomField name="NUMS" />
-                <CustomField name="MARQ" />
-                <CustomField name="DREP" />
-                <CustomField name="CATE" />
-                <CustomField name="COMM" />
-                <CustomField name="AFFE" />
+                <CustomField name="BIBL" disabled={!this.state.editable}/>
+                <CustomField name="OBSE" disabled={!this.state.editable}/>
+                <CustomField name="REFIM" disabled={!this.state.editable}/>
+                <CustomField name="AATT" disabled={!this.state.editable}/>
+                <CustomField name="AUTI" disabled={!this.state.editable}/>
+                <CustomField name="DMAJ" disabled={!this.state.editable}/>
+                <CustomField name="ETAT" disabled={!this.state.editable}/>
+                <CustomField name="RESUME" disabled={!this.state.editable}/>
+                <CustomField name="NOTE" disabled={!this.state.editable}/>
+                <CustomField name="PREP" disabled={!this.state.editable}/>
+                <CustomField name="SUITE" disabled={!this.state.editable}/>
+                <CustomField name="SREP" disabled={!this.state.editable}/>
+                <CustomField name="REPR" disabled={!this.state.editable}/>
+                <CustomField name="REDC" disabled={!this.state.editable}/>
+                <CustomField name="PHOT" disabled={!this.state.editable}/>
+                <CustomField name="NUMS" disabled={!this.state.editable}/>
+                <CustomField name="MARQ" disabled={!this.state.editable}/>
+                <CustomField name="DREP" disabled={!this.state.editable}/>
+                <CustomField name="CATE" disabled={!this.state.editable}/>
+                <CustomField name="COMM" disabled={!this.state.editable}/>
+                <CustomField name="AFFE" disabled={!this.state.editable}/>
               </Col>
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
