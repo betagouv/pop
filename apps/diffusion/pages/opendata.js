@@ -69,11 +69,6 @@ export default () => (
         relative à l'informatique, aux fichiers et aux libertés.
         <br />
          <br />
-        Pour toute question relative à la réutilisation du contenu des bases de données
-        patrimoniales du Ministère de la Culture, vous pouvez nous écrire en utilisant le formulaire
-        accessible à la page https://data.culture.gouv.fr/pages/contact/
-        <br />
-         <br />
         Pour toute demande d’information, réclamation ou demande de retrait du site de diffusion,
         vous pouvez adresser votre demande au service responsable à l’aide de l’onglet
         « Contactez-nous » présent sur chaque notice. <br />
@@ -83,26 +78,32 @@ export default () => (
       <br />
       <ul>
         <li>
-          <a href="https://data.culture.gouv.fr/explore/dataset/base-joconde-extrait/">Joconde</a>,
+          <a href="https://data.culture.gouv.fr/explore/dataset/base-joconde-extrait/" target="_blank">Joconde</a>,
           collections des musées de France
         </li>
         <li>
-          <a href="https://data.culture.gouv.fr/explore/dataset/liste-des-objets-mobiliers-propriete-publique-classes-au-titre-des-monuments-/">
+          <a href="https://data.culture.gouv.fr/explore/dataset/liste-des-objets-mobiliers-propriete-publique-classes-au-titre-des-monuments-/" target="_blank">
             Palissy MH
           </a>
           , patrimoine mobilier
         </li>
         <li>
-          <a href="https://data.culture.gouv.fr/explore/dataset/liste-des-immeubles-proteges-au-titre-des-monuments-historiques/table/">
+          <a href="https://data.culture.gouv.fr/explore/dataset/liste-des-immeubles-proteges-au-titre-des-monuments-historiques/table/" target="_blank">
             Mérimée MH
           </a>
           , patrimoine architectural
         </li>
         <li>
-          <a href="https://data.culture.gouv.fr/explore/dataset/musees-de-france-base-museofile/information/">
+          <a href="https://data.culture.gouv.fr/explore/dataset/musees-de-france-base-museofile/information/" target="_blank">
             Muséofile
           </a>
           , répertoire des musées de France
+        </li>
+        <li>
+          <a href="https://data.culture.gouv.fr/explore/dataset/base-autor-ressources-biographiques-et-identification-des-auteurs/information/" target="_blank">
+            Autor
+          </a>
+          , ressources biographiques et identification des auteurs
         </li>
       </ul>
     </div>
