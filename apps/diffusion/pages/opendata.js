@@ -18,8 +18,9 @@ export default () => (
         <br />• aux collections des musées de France (base Joconde) ;
         <br />• au patrimoine architectural, protégé et non-protégé (base Mérimée) ;
         <br />• au patrimoine mobilier, protégé et non-protégé (base Palissy) ;
-        <br />• aux fonds photographiques reçus, conservés et/ou constitués par le Ministère (base
-        Mémoire) <br />• aux œuvres spoliées en dépôt temporaire dans les musées (base MNR) ;
+        <br />• aux fonds photographiques reçus, conservés et/ou constitués par le Ministère (base Mémoire) ;
+        <br />• aux œuvres spoliées en dépôt temporaire dans les musées (base MNR) ;
+        <br />• aux ressources biographiques et identifications des auteurs (base Autor) ;
         <br />
          <br />
         <br />
@@ -30,8 +31,8 @@ export default () => (
         <br />
          <br />
         Dans un souci de clarté et de simplicité pour les ré-utilisateurs, les informations
-        publiques au sens du code des relations entre le public et l’Administration, regroupées au
-        sein de la plateforme POP, sont téléchargeables au lien suivant.
+        publiques au sens du code des relations entre le public et l’Administration, regroupées au sein de la plateforme POP, 
+        sont téléchargeables sur <a href="https://data.culture.gouv.fr" target="_blank">https://data.culture.gouv.fr</a>
         <br />
          <br />
         S’agissant desdites informations publiques, le lecteur dispose d’un droit non exclusif et
@@ -42,14 +43,13 @@ export default () => (
         <br />
          <br />
         Dans le cas où le ré-utilisateur souhaiterait faire usage d’informations soumises au droit
-        d’auteur, notamment disponibles sur l’interface de diffusion mais pas en téléchargement au
-        lien mentionné ci-dessus, le ré-utilisateur doit obtenir les autorisations nécessaires
-        auprès des auteurs et ayant-droits.
+        d’auteur, notamment disponibles sur l’interface de diffusion mais pas en téléchargement au lien mentionné ci-dessous, 
+        le ré-utilisateur doit obtenir les autorisations nécessaires auprès des auteurs et ayants droit.
         <br />
          <br />
         Similairement certaines des informations diffusées sur la plateforme POP peuvent comporter
         des données à caractère personnel pour lesquelles les ré-utilisateurs sont tenus au respect
-        de la loi Informatique et Libertés (lien).
+        de <a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000038528420/" target="_blank">la loi Informatique et Libertés</a>.
         <br />
          <br />
         Le lecteur est donc tenu au respect des droits d'auteur attachés aux documents, des droits
