@@ -316,7 +316,7 @@ export default class extends React.Component {
                   <Field title={mapping.palissy.CATE.label} content={notice.CATE} />
                   <Field title={mapping.palissy.STRU.label} content={notice.STRU} />
                   <Field title={mapping.palissy.MATR.label} content={notice.MATR} />
-                  <Field title={mapping.palissy.DESC.label} content={notice.DESC} separator="£" />
+                  <Field title={mapping.palissy.DESC.label} content={notice.DESC} separator="£" addLink="true" />
                   <Field title={mapping.palissy.REPR.label} content={notice.REPR} separator="£" />
                   <Field title={mapping.palissy.PREP.label} content={notice.PREP} />
                   <Field title={mapping.palissy.DIMS.label} content={notice.DIMS} separator="£" />
@@ -355,7 +355,7 @@ export default class extends React.Component {
                   <Field title={mapping.palissy.SCLE.label} content={notice.SCLE} />
                   <Field title={mapping.palissy.DATE.label} content={notice.DATE} />
                   <Field title={mapping.palissy.JDAT.label} content={notice.JDAT} />
-                  <Field title={mapping.palissy.HIST.label} content={notice.HIST} separator="£" />
+                  <Field title={mapping.palissy.HIST.label} content={notice.HIST} separator="£" addLink="true" />
                   <Title
                     content="Statut juridique et protection"
                     notice={notice}

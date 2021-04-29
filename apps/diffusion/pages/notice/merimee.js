@@ -321,7 +321,7 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.PERS.label} content={notice.PERS} separator="£" />
                   <Field title={mapping.merimee.REMP.label} content={notice.REMP} />
                   <Field title={mapping.merimee.DEPL.label} content={notice.DEPL} />
-                  <Field title={mapping.merimee.HIST.label} content={notice.HIST} separator="£" />
+                  <Field title={mapping.merimee.HIST.label} content={notice.HIST} separator="£" addLink="true" />
                   <Title
                     content="Description"
                     notice={notice}
@@ -358,7 +358,7 @@ export default class extends React.Component {
                   />
                   <Field title={mapping.merimee.ENER.label} content={notice.ENER} />
                   <Field title={mapping.merimee.VERT.label} content={notice.VERT} />
-                  <Field title={mapping.merimee.DESC.label} content={notice.DESC} separator="£" />
+                  <Field title={mapping.merimee.DESC.label} content={notice.DESC} separator="£" addLink="true" />
                   <Field
                     title="Technique du décor des immeubles par nature"
                     content={notice.TECH}
