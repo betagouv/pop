@@ -6,7 +6,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 import { Row, Col } from "reactstrap";
 import CollapsableFacet from "../search/components/CollapsableFacet";
 import utils from "./utils.js";

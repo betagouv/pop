@@ -13,7 +13,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 
 export default function render() {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
