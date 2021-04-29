@@ -7,7 +7,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 import ExportComponent from "../components/ExportComponent";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";

@@ -4,7 +4,7 @@ import utils from "./utils";
 import fetch from "isomorphic-fetch";
 import { es_url } from "../../../config";
 import excelIcon from "../../../assets/microsoftexcel.svg";
-import { CustomWidget } from "react-elasticsearch";
+import { CustomWidget } from "react-elasticsearch-pop";
 
 export default function ExportComponent({ collection, target, header }) {
   const [exporting, setExporting] = useState(false);

@@ -6,7 +6,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";

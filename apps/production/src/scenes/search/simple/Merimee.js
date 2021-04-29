@@ -7,7 +7,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   ActiveFilters
-} from "react-elasticsearch";
+} from "react-elasticsearch-pop";
 import ExportComponent from "../components/ExportComponent";
 import Card from "../components/MerimeeCard";
 import { es_url } from "../../../config.js";
