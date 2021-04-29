@@ -338,6 +338,7 @@ export default class extends React.Component {
                     content={notice.DESC}
                     join=" ; "
                     separator="#"
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.INSC.label}
@@ -356,6 +357,7 @@ export default class extends React.Component {
                     content={notice.HIST}
                     separator="#"
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.PROV.label}
@@ -368,6 +370,7 @@ export default class extends React.Component {
                     content={notice.COMM}
                     separator="#"
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.CATE.label}
@@ -410,18 +413,21 @@ export default class extends React.Component {
                     separator="#"
                     content={notice.EXPO}
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.BIBL.label}
                     separator="#"
                     content={notice.BIBL}
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.NOTE.label}
                     separator="#"
                     content={notice.NOTE}
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.RESUME.label}

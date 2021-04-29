@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, Image, View, Link } from '@react-pdf/renderer';
 import { styles } from "../../pages/pdfNotice/styles";
 
-export default ({ content, title, separator, join = ", ", isPdf, link }) => {
+export default ({ content, title, separator, join = ", ", isPdf, link, addLink }) => {
   // Don't render empty elements.
   const isEmptyArray = c => Array.isArray(c) && c.length === 0;
   const isEmptyString = s => typeof s === "string" && !s.trim();
@@ -26,10 +26,19 @@ export default ({ content, title, separator, join = ", ", isPdf, link }) => {
   }
 
   if(!isPdf){
+    
+    if(typeof str == 'string' && addLink != 'undefined' && addLink){
+      str = addLinkToText(str);
+    }else{
+      str = <p>{str}</p>;
+    }
+
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
-        <p>{str}</p>
+
+        {str}
+        
         <style jsx>{`
           .field {
             padding-bottom: 10px;
@@ -96,4 +105,85 @@ export default ({ content, title, separator, join = ", ", isPdf, link }) => {
 
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, "g"), replace);
+}
+
+function addLinkToText(str){
+  let result;
+  let obj = new Object();
+  let i = 1;
+  
+  do{
+    result = splitString(str);
+    
+    obj['text_'+i] = result.text1;
+    
+    if (result.continue){
+        obj['link_'+i] = result.link;
+        str = result.text3;
+        i++;
+    }else{
+        if(typeof result.link !== 'undefined'){
+            obj['link_'+i] = result.link;
+        }
+    }
+  }
+  while(result.continue);
+
+  let content = [];
+
+  for (let j = 1; j <= i; j++) {
+    
+    if(typeof obj['text_'+j] != 'undefined'){
+      content.push(obj['text_'+j]);
+    }
+    if(typeof obj['link_'+j] != 'undefined'){
+      content.push(<a href={obj['link_'+j]}>{obj['link_'+j]}</a>);
+    }
+  }
+
+  return <p>{content}</p>;
+}
+
+function splitString(str){
+  const termeHTTP = 'http';
+  const termeWWW = 'www';
+  const termeEspace = ' ';
+
+  const length = str.length;
+
+  // Recherche du premier http ou www rencontré
+  let splitHTTP = str.toLowerCase().indexOf(termeHTTP);
+  let splitWWW = str.toLowerCase().indexOf(termeWWW);
+  let firstSplit;
+
+  if(splitHTTP !== -1 && splitWWW !== -1){
+      if(splitHTTP < splitWWW){
+          firstSplit = splitHTTP;
+      }else{
+          firstSplit = splitWWW;
+      }
+  }else if(splitHTTP !== -1 && splitWWW === -1){
+      firstSplit = splitHTTP;
+  }else if(splitHTTP === -1 && splitWWW !== -1){
+      firstSplit = splitWWW;
+  }else{
+      return {text1: str, continue:false};
+  }
+
+  // Découpage en 2 selon la première occurence trouvée
+  let text1 = str.substring(0, firstSplit);
+  let text2 = str.substring(firstSplit, length);
+
+  // Découpage de la 2ème partie pour trouver la fin du lien
+  let splitEspace = text2.indexOf(termeEspace);
+
+  if(splitEspace === -1){
+      let link = text2.substring(0, length);
+      return {text1: text1, link: link, continue:false}
+  }
+
+  let link = text2.substring(0, splitEspace);
+  let text3 = text2.substring(splitEspace, length);
+
+  return {text1: text1, link: link, text3: text3, continue:true}
 }
