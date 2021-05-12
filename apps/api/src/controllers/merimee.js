@@ -248,11 +248,11 @@ router.put(
         });
       }
 
-      if(typeof notice.DESC !== undefined){
+      if(typeof notice.DESC !== "undefined"){
         notice.DESC = removeChar(notice.DESC);
       }
 
-      if(typeof notice.HIST !== undefined){
+      if(typeof notice.HIST !== "undefined"){
         notice.HIST = removeChar(notice.HIST);
       }
 
