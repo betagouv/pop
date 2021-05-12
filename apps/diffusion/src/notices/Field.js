@@ -137,7 +137,11 @@ function addLinkToText(str){
       content.push(obj['text_'+j]);
     }
     if(typeof obj['link_'+j] != 'undefined'){
-      content.push(<a href={obj['link_'+j]}>{obj['link_'+j]}</a>);
+      if(obj['link_'+j].toLowerCase().indexOf('www') === 0){
+        content.push(<a href={"http://"+obj['link_'+j]} target="_blank">{obj['link_'+j]}</a>);
+      }else{
+        content.push(<a href={obj['link_'+j]} target="_blank">{obj['link_'+j]}</a>);
+      }
     }
   }
 
