@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     let deleteHistorique;
 
     if(req.query.limit && parseInt(req.query.limit)){
-      deleteHistorique = await DeleteHistorique.find(query).sort({ 'date': -1 }).limit(parseInt(req.query.limit));
+      deleteHistorique = await DeleteHistorique.find(query).sort({ 'DATE': -1 }).limit(parseInt(req.query.limit));
     } else {
       deleteHistorique = await DeleteHistorique.find(query);
     }
