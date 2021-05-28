@@ -11,23 +11,21 @@ module.exports = function(passport) {
   opts.secretOrKey = config.secret;
   passport.use(
     new JwtStrategy(opts, function(jwtPayload, done) {
-      done(null, false);
-
-      // User.findOne(
-      //   {
-      //     _id: jwtPayload._id
-      //   },
-      //   function(err, user) {
-      //     if (err) {
-      //       return done(err, false);
-      //     }
-      //     if (user) {
-      //       done(null, user);
-      //     } else {
-      //       done(null, false);
-      //     }
-      //   }
-      // );
+      User.findOne(
+        {
+          _id: jwtPayload._id
+        },
+        function(err, user) {
+          if (err) {
+            return done(err, false);
+          }
+          if (user) {
+            done(null, user);
+          } else {
+            done(null, false);
+          }
+        }
+      );
     })
   );
 };
