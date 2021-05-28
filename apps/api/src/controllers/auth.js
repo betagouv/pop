@@ -14,6 +14,8 @@ router.use(bodyParser.json());
 
 // Sign in.
 router.post("/signin", async (req, res) => {
+  return res.status(401).send({ success: false, msg: `En raison d’une montée de version, l’application POP est indisponible ce vendredi 28 mai 2021. La connexion est impossible car aucune création ou modification de notice ne peut être prise en compte durant l'intervention. Veuillez nous excuser pour la gêne occasionnée.` });
+
   const email = req.body.email.toLowerCase();
   const password = req.body.password;
   if (!email || !password) {
