@@ -6,7 +6,7 @@
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.5",
     "connected-react-router": "^6.4.0",
-    "csv-parse": "^2.4.0",
+    "csv-parse": "^4.4.6",
     "deep-diff": "^1.0.2",
     "dotenv": "^4.0.0",
     "es6-promise": "^4.2.8",
