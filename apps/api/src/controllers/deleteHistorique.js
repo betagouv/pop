@@ -13,9 +13,16 @@ router.use(bodyParser.json());
 
 // Get all deleteHistorique.
 router.get("/", async (req, res) => {
-  const query = {};
+  let query = {};
   try {
-    const deleteHistorique = await DeleteHistorique.find(query);
+    let deleteHistorique;
+
+    if(req.query.limit && parseInt(req.query.limit)){
+      deleteHistorique = await DeleteHistorique.find(query).sort({ 'DATE': -1 }).limit(parseInt(req.query.limit));
+    } else {
+      deleteHistorique = await DeleteHistorique.find(query);
+    }
+  
     return res.status(200).send({ success: true, deleteHistorique });
   } catch (error) {
     capture(error);

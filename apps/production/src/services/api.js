@@ -90,8 +90,12 @@ class api {
   }
 
   // Get all delete historiques.
-  getDeleteHistoriques() {
-    return request.fetchJSON("GET", `/deleteHistorique`);
+  getDeleteHistoriques(limit = null) {
+    let route = "/deleteHistorique";
+    if(limit){
+      route += `?limit=${limit}`;
+    }
+    return request.fetchJSON("GET", route);
   }
 
   // Create delete historique.

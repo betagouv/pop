@@ -9,6 +9,7 @@ import excelIcon from "../../assets/microsoftexcel.svg";
 
 
 class DeletedNotices extends React.Component {
+  // Limite le nombre de résultat dans la liste affichée.
   state = { deletedNotices: [],
             group: null,
             loading: true,
@@ -16,14 +17,15 @@ class DeletedNotices extends React.Component {
             triEmail: false,
             triBase: false,
             triDate: false,
-            triRef: false
+            triRef: false,
+            limit: 4000
           };
 
   fetchDeletedNotices = async () => {
     this.setState({ loading: true });
     try {
       //Récuperation de l'historique complet
-      const responseHistorique = await api.getDeleteHistoriques();
+      const responseHistorique = await api.getDeleteHistoriques(this.state.limit);
       let historiqueList = responseHistorique.deleteHistorique || [];
 
       //Récuperation du group de l'utilisateur
@@ -74,9 +76,58 @@ class DeletedNotices extends React.Component {
 
 
   //Export des données au format csv
-  exportData(fileName, entities) {
+  exportData = async (fileName, entities) => {
+    /*
     if (!entities.length) {
       return;
+    }*/
+
+    let historiqueList = []
+
+    try {
+      //Récuperation de l'historique complet
+      const responseHistorique = await api.getDeleteHistoriques();
+      historiqueList = responseHistorique.deleteHistorique || [];
+
+      //Récuperation du group de l'utilisateur
+      let group;
+      let authorizedBases = [];
+      let originalOrder = [];
+
+      if(this.props.group == "admin"){
+        group = {label: "admin"};
+      }
+      else {
+        //Récuperation du groupe de l'utilisateur
+        const responseGroup = await api.getGroupByLabel(this.props.group);
+        group = responseGroup.group;
+
+        //Pour chaque producteur rattaché au groupe
+        const producteurs = group.PRODUCTEURS;
+        for(let i = 0; i<producteurs.length; i++){
+          const label = producteurs[i];
+          const response = await api.getProducteurByLabel(label);
+          const producteur = response.producteur;
+
+          //Pour chaque base rattachée au producteur
+          producteur.BASE.map( base => {
+
+            //On récupère le nom de la base et on le push dans la liste authorized bases
+            //Si pas déjà présente dedans
+            if(!authorizedBases.includes(base.base)){
+              authorizedBases.push(base.base);
+            }
+          })
+        }
+
+        historiqueList = historiqueList.filter( histo => {
+          return authorizedBases.includes(histo.BASE)
+        })
+      }
+
+     // this.setState({ deletedNotices: historiqueList || [], group: group, loading: false });
+    } catch (e) {
+      toastr.error("L'api est innacessible", e.msg || "");
     }
   
     //Définition des colonnes
@@ -87,13 +138,13 @@ class DeletedNotices extends React.Component {
     csv.push(columns.join(";"));
   
     //Pour chaque notice, on récupère les données et on ajoute au csv
-    for (let j = 0; j < entities.length; j++) {
+    for (let j = 0; j < historiqueList.length; j++) {
       const arr = [];
-      arr.push(`${this.verifyData(entities[j].REF)}` || "");
-      arr.push(`${this.verifyData(entities[j].BASE)}` || "");
-      arr.push(`${this.verifyData(entities[j].USER)}` || "");
-      arr.push(`${this.verifyData(entities[j].EMAIL)}` || "");
-      arr.push(`${this.verifyData(entities[j].DATE)}` || "");
+      arr.push(`${this.verifyData(historiqueList[j].REF)}` || "");
+      arr.push(`${this.verifyData(historiqueList[j].BASE)}` || "");
+      arr.push(`${this.verifyData(historiqueList[j].USER)}` || "");
+      arr.push(`${this.verifyData(historiqueList[j].EMAIL)}` || "");
+      arr.push(`${this.verifyData(historiqueList[j].DATE)}` || "");
       csv.push(arr.join(";"));
     }
   
@@ -263,6 +314,7 @@ class DeletedNotices extends React.Component {
           <img src={excelIcon} />
           Exporter
         </button>
+        <p>Les { this.state.limit } dernières suppressions sont présentes dans la liste ci-dessous, l'ensemble des suppressions est consultable via l'export.</p>
         <div className="deletedNotices">{this.renderDeletedNotices()}</div>
       </div>
     );
