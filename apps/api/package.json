@@ -54,7 +54,7 @@
     "filenamify": "^3.0.0",
     "fs": "^0.0.1-security",
     "generate-password": "^1.4.2",
-    "googleapis": "^35.0.0",
+    "googleapis": "^39.1.0",
     "helmet": "^3.18.0",
     "http-aws-es": "^6.0.0",
     "http-proxy-middleware": "^0.19.0",
