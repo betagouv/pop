@@ -259,9 +259,9 @@ workflows:
   ci_cd:
     jobs:
       - prepare_all
-      - test_api:
-          requires:
-            - prepare_all
+      #      - test_api:
+      #          requires:
+      #            - prepare_all
       - test_production:
           requires:
             - prepare_all
