@@ -20,19 +20,34 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink }
       // Fix simple quotes and capitalize first letter (only if it's a string)
       str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
       if (separator) {
-        str = replaceAll(str, separator, "\n");
+        str = str.replace(separator, "\n");
       }
     }
   }
 
   if(!isPdf){
-    
+
+    // modification du retour à la ligne \n non interprété dans la page web
+    if (typeof str == 'string') {
+      let arraySplit = str.split("\n");
+      let arrayContent = [];
+      arraySplit.forEach((element, index) => {
+        if(index > 0){
+          arrayContent.push(<br />);
+        }
+        arrayContent.push(element);
+      });
+      str = arrayContent.reduce((a,b) => [a, ' ', b]);
+    }
+
+ 
     if(typeof str == 'string' && addLink != 'undefined' && addLink){
       str = addLinkToText(str);
     }else{
       str = <p>{str}</p>;
     }
 
+  
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
