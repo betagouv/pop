@@ -104,8 +104,8 @@ export default class extends React.Component {
   }
 
   prepareLinkRepr(value, name){
-    // Caractères possible dans la valeur reneignée
-    const arrayPattern = ['(',')',':',',',' ',';']; 
+    // Caractères possible dans la valeur renseignée
+    const arrayPattern = ['(',')',':',',',' ',';','#']; 
     let prevString = '';
     const arrayContent = [];
     for(let i = 0; i < value.length; i++){ 
@@ -116,7 +116,13 @@ export default class extends React.Component {
           arrayContent.push(<a href={url} key={prevString}>{prevString}</a>);
           prevString = '';
         }
-        arrayContent.push(value[i]);
+        // le caractère # doit être interprété comme un retour à la ligne
+        if(value[i] == '#'){
+          arrayContent.push(<br />);
+        } else {
+          arrayContent.push(value[i]);
+        }
+        
       } else {
         prevString += value[i];
       }
