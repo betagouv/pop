@@ -289,7 +289,7 @@ class SearchAdvanced extends React.Component {
             {
               value: ["LOCA.keyword","DEPO.keyword","MUSEO.keyword","REGION.keyword","DPT.keyword","VILLE_M.keyword","NOMOFF.keyword"],
               text: "Lieux de conservation",
-              fields: "LOCA, DEPO, MUSEO, REG, DPT, VILLE_M, NOMOFF"
+              fields: "LOCA, DEPO, MUSEO, REGION, DPT, VILLE_M, NOMOFF"
             },
             {
               value: ["EXPO.keyword","BIBL.keyword","COMM.keyword"],
@@ -345,7 +345,7 @@ class SearchAdvanced extends React.Component {
             { value:["PREP.keyword"], text:"Précisions sur la représentation", fields: "PREP"},
             { value:["PUTI.keyword"], text:"Précisions utilisation", fields: "PUTI"},
             { value:["REF.keyword"], text:"Référence", fields: "REF"},
-            { value:["REGION.keyword"], text:"Région", fields: "REG"},
+            { value:["REGION.keyword"], text:"Région", fields: "REGION"},
             { value:["REPR.keyword"], text:"Sujet représenté", fields: "REPR"},
             { value:["RETIF.keyword"], text:"Lien INHA", fields: "RETIF"},
             { value:["SREP.keyword"], text:"Source représentation", fields: "SREP"},
