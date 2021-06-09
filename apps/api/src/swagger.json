@@ -1,0 +1,80 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "API POP",
+        "description": "Liste des Webservices POP"
+    },
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/gallery/{id}": {
+            "parameters": [{
+                "name": "id",
+                "in": "path",
+                "description": "Identifiant de la galerie"
+            }],
+            "get": {
+                "summary": "Retourne les informations d'une galerie",
+                "description": "Retourne les informations de la galerie (permaliens MNR)",
+                "responses": {
+                    "200": {
+                        "description": "Informations de a galerie",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "properties": {
+                                    "success": { 
+                                        "type": "boolean" 
+                                    },
+                                    "doc": {
+                                        "type": "object",
+                                        "items": {
+                                            "properties": {
+                                                "createdBy": { 
+                                                    "type": "string" 
+                                                },
+                                                "institution": { 
+                                                    "type": "string" 
+                                                },
+                                                "createdAt": { 
+                                                    "type": "string" 
+                                                },
+                                                "_id": { 
+                                                    "type": "string" 
+                                                },
+                                                "params": { 
+                                                    "type": "object",
+                                                    "items": {
+                                                        "properties": {
+                                                            "base": { 
+                                                                "type": "string" 
+                                                            },
+                                                            "mode": { 
+                                                                "type": "string" 
+                                                            },
+                                                            "qb": {
+                                                                "type": "string" 
+                                                            },
+                                                            "view": {
+                                                                "type": "string" 
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

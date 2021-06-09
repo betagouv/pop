@@ -8,6 +8,9 @@ require("./mongo");
 
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 app.enable("trust proxy");
 
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -58,5 +61,8 @@ app.use("/search", require("./controllers/search"));
 
 // Entrepot OAI
 app.use("/oai", require("./controllers/oai"));
+
+// Swagger DOC
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
