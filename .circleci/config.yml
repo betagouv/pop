@@ -1,0 +1,338 @@
+version: 2.1
+
+executors:
+  docker_node:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11
+  docker_python:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:3.9
+
+commands:
+  restore_node_modules:
+    parameters:
+      app:
+        type: string
+    steps:
+      - restore_cache:
+          key: << parameters.app >>-dependencies-{{ checksum "apps/<< parameters.app >>/package-lock.json" }}
+  save_node_modules:
+    parameters:
+      app:
+        type: string
+    steps:
+      - save_cache:
+          paths:
+            - apps/<< parameters.app >>/node_modules
+          key: << parameters.app >>-dependencies-{{ checksum "apps/<< parameters.app >>/package-lock.json" }}
+  prepare:
+    parameters:
+      app:
+        type: string
+    steps:
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: prepare
+          command: |
+            cd apps/<< parameters.app >>
+            npm ci
+      - save_node_modules:
+          app: << parameters.app >>
+  test:
+    parameters:
+      app:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: test
+          command: |
+            cd apps/<< parameters.app >>
+            npm test
+  build:
+    parameters:
+      env:
+        type: string
+      app:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: << parameters.app >>
+      - run:
+          name: build
+          command: |
+            cd apps/<< parameters.app >>
+            npm run build:<< parameters.env >>
+      - persist_to_workspace:
+          root: ~/repo/apps/<< parameters.app >>
+          paths:
+            - build
+  deploy:
+    parameters:
+      eb_deploy:
+        type: string
+      app:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/<< parameters.app >>
+      - restore_node_modules:
+          app: << parameters.app >>
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/<< parameters.app >>
+            eb deploy << parameters.eb_deploy >>
+  deploy_api:
+    parameters:
+      eb_deploy:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: api
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/api
+            eb deploy << parameters.eb_deploy >>
+  configure_aws_ebcli:
+    steps:
+      - run: sudo pip install awsebcli
+      - run:
+          name: AWS credentials
+          command: |
+            mkdir ~/.aws
+            echo "[eb-cli]" > ~/.aws/credentials
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
+########
+# JOBS #
+########
+jobs:
+  prepare_all:
+    executor: docker_node
+    steps:
+      - checkout
+      # Sorry.
+      - run: sudo npm install npm@latest-6 -g
+      - prepare:
+          app: api
+      - prepare:
+          app: production
+      - prepare:
+          app: diffusion
+  ##############
+  # TEST JOBS #
+  ##############
+  test_api:
+    docker:
+      - image: circleci/node:8.11
+      - image: circleci/mongo:3.6
+    working_directory: ~/repo
+    steps:
+      - test:
+          app: api
+  test_diffusion:
+    executor: docker_node
+    steps:
+      - test:
+          app: diffusion
+  test_production:
+    executor: docker_node
+    steps:
+      - test:
+          app: production
+  ##############
+  # BUILD JOBS #
+  ##############
+  build_diffusion_staging:
+    executor: docker_node
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: diffusion
+      - run:
+          name: build
+          command: |
+            cd apps/diffusion
+            npm run build:staging
+      - persist_to_workspace:
+          root: ~/repo/apps/diffusion
+          paths:
+            - .next
+  build_diffusion_prod:
+    executor: docker_node
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: diffusion
+      - run:
+          name: build
+          command: |
+            cd apps/diffusion
+            npm run build:prod
+      - persist_to_workspace:
+          root: ~/repo/apps/diffusion
+          paths:
+            - .next
+  build_production_staging:
+    executor: docker_node
+    steps:
+      - build:
+          app: production
+          env: staging
+  build_production_prod:
+    executor: docker_node
+    steps:
+      - build:
+          app: production
+          env: prod
+  ###############
+  # DEPLOY JOBS #
+  ###############
+  deploy_diffusion_staging:
+    executor: docker_python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/diffusion
+      - restore_node_modules:
+          app: diffusion
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/diffusion
+            eb deploy pop-consultation-staging
+  deploy_production_staging:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: production
+          eb_deploy: pop-production-staging
+  deploy_api_staging:
+    executor: docker_python
+    steps:
+      - deploy_api:
+          eb_deploy: pop-api-staging
+  deploy_production_prod:
+    executor: docker_python
+    steps:
+      - deploy:
+          app: production
+          eb_deploy: pop-production
+  deploy_api_prod:
+    executor: docker_python
+    steps:
+      - deploy_api:
+          eb_deploy: pop-api
+  deploy_diffusion_prod:
+    executor: docker_python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/diffusion
+      - restore_node_modules:
+          app: diffusion
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/diffusion
+            eb deploy pop-consultation
+#############
+# WORKFLOWS #
+#############
+workflows:
+  version: 2.1
+  ci_cd:
+    jobs:
+      - prepare_all
+      - test_api:
+          requires:
+            - prepare_all
+      - test_production:
+          requires:
+            - prepare_all
+      - test_diffusion:
+          requires:
+            - prepare_all
+      - build_diffusion_staging:
+          requires:
+            - test_diffusion
+          filters:
+            branches:
+              only: 
+                - staging
+                - new-search-system
+      - build_diffusion_prod:
+          requires:
+            - test_diffusion
+          filters:
+            branches:
+              only: master
+      - build_production_staging:
+          requires:
+            - test_production
+            - prepare_all
+          filters:
+            branches:
+              only: staging
+      - build_production_prod:
+          requires:
+            - test_production
+            - prepare_all
+          filters:
+            branches:
+              only: master
+      - deploy_api_staging:
+          requires:
+            - test_api
+            - prepare_all
+          filters:
+            branches:
+              only: staging
+      - deploy_diffusion_staging:
+          requires:
+            - build_diffusion_staging
+          filters:
+            branches:
+              only: 
+                - staging
+                - new-search-system
+      - deploy_production_staging:
+          requires:
+            - build_production_staging
+          filters:
+            branches:
+              only: staging
+      - deploy_api_prod:
+          requires:
+            - test_api
+            - prepare_all
+          filters:
+            branches:
+              only: master
+      - deploy_production_prod:
+          requires:
+            - build_production_prod
+          filters:
+            branches:
+              only: master
+      - deploy_diffusion_prod:
+          requires:
+            - build_diffusion_prod
+          filters:
+            branches:
+              only: master
