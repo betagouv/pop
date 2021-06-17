@@ -249,7 +249,7 @@ function convertGPS(e) {
 
 function checkReference(notice) {
   if (notice._type === "memoire") {
-    var regex = /^IV(N00|R[0-9]{2}|D[0-9]{2}|C[0-9]{5}|[0-9]{5})_[0-9]{4}([0-9][0-9]|2A|2B|97[0-9]{1})([0-9]{5})[NUCXVLPNGMFBKHTZAD012345]{0,4}[AYESGFHOMIRTPDUWQCI]{0,3}$/g;
+    var regex = /^IV(N00|R[0-9]{2}|D[0-9]{2}|C[0-9]{5}|[0-9]{5})_[0-9]{4}([0-9][0-9]|2A|2B|97[0-9]{1})([0-9]{5})[NUCXVLPNGMFBKHTZAD012345]{0,4}[ABYESGFHOMIRTPDUWQCI]{0,3}$/g;
     if (!notice.REF.match(regex)) {
       notice._errors.push("La référence n'est pas correctement formatée");
     }
