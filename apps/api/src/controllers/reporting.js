@@ -47,6 +47,11 @@ async function recipients(to) {
 }
 
 router.post("/email", passport.authenticate("jwt", { session: false }), async (req, res) => {
+   /* 	
+      #swagger.tags = ['Reporting']
+      #swagger.path = '/reporting/email'
+      #swagger.description = 'Envoie du rapport par mail' 
+    */
   let { subject, to, body } = req.body;
   if (!subject || !to || !body) {
     return res.status(400).send("Information incomplete.");

@@ -106,6 +106,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+     /* 	
+      #swagger.tags = ['Joconde']
+      #swagger.path = '/joconde/{ref}'
+      #swagger.description = 'Modification de la notice Joconde' 
+  */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     try {
@@ -182,6 +187,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+     /* 	
+      #swagger.tags = ['Joconde']
+      #swagger.path = '/joconde'
+      #swagger.description = 'Création de la notice Joconde' 
+  */
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
@@ -225,6 +235,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
+   /* 	
+      #swagger.tags = ['Joconde']
+      #swagger.path = '/joconde/{ref}'
+      #swagger.description = 'Retourne les informations de la notice Joconde' 
+      #swagger.parameters['ref'] = { 
+        in: 'path', 
+        description: 'Référence de la notice Joconde',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetJoconde'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
   const ref = req.params.ref;
   const notice = await Joconde.findOne({ REF: ref });
   if (notice) {
@@ -235,6 +268,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+   /* 	
+      #swagger.tags = ['Joconde']
+      #swagger.path = '/joconde/{ref}'
+      #swagger.description = 'Suppression de la notice Joconde' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Joconde.findOne({ REF: ref });

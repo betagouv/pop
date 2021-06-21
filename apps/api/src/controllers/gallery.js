@@ -13,6 +13,30 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json({ limit: "200kb" }));
 
 router.get("/:id", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Gallery']
+      #swagger.path = '/gallery/{id}'
+      #swagger.description = 'Retourne les informations de la notice gallery (permaliens MNR)' 
+      #swagger.parameters['id'] = { 
+        in: 'path', 
+        description: 'Identifiant de la notice gallery',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetGallery'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
+
   let doc;
   try {
     doc = await Gallery.findById(req.params.id);
@@ -28,6 +52,10 @@ const limiter = rateLimit({
 });
 
 router.post("/", limiter, upload.any(), async (req, res) => {
+   /* 	
+      #swagger.tags = ['Gallery']
+      #swagger.path = '/gallery'
+  */
   try {
     const data = JSON.parse(req.body.gallery);
     if (!data) {

@@ -42,7 +42,7 @@ async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.VIDEO && notice.VIDEO.length ? "oui" : "non";
   notice = await withFlags(notice);
 }
-
+/*
 async function checkMnr(notice) {
   const errors = [];
   try {
@@ -67,6 +67,7 @@ async function checkMnr(notice) {
   }
   return errors;
 }
+*/
 
 // Update a notice by ref.
 router.put(
@@ -74,6 +75,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+     /* 	
+    #swagger.tags = ['Mnr']
+    #swagger.path = '/mnr/{ref}'
+    #swagger.description = 'Modification de la notice Mnr' 
+  */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     const updateMode = req.body.updateMode;
@@ -145,6 +151,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+  /* 	
+    #swagger.tags = ['Mnr']
+    #swagger.path = '/mnr'
+    #swagger.description = 'Création de la notice Mnr' 
+  */
     const notice = JSON.parse(req.body.notice);
     await determineProducteur(notice);
     await transformBeforeCreate(notice);
@@ -176,6 +187,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
+  /* 	
+    #swagger.tags = ['Mnr']
+
+    #swagger.description = 'Retourne les informations de la notice Mnr' 
+    #swagger.parameters['ref'] = { 
+      in: 'path', 
+      description: 'Référence de la notice Mnr',
+      type: 'string' 
+    }
+    #swagger.responses[200] = { 
+      schema: { 
+        "$ref": '#/definitions/GetMnr'
+      },
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[404] = { 
+      description: 'Document non trouvé',
+      schema: {
+        success: false,
+        msg: "Document introuvable"
+      } 
+    }
+  */
   const ref = req.params.ref;
   const notice = await Mnr.findOne({ REF: ref });
   if (notice) {
@@ -186,6 +220,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+   /* 	
+    #swagger.tags = ['Mnr']
+    #swagger.path = '/mnr/{ref}'
+    #swagger.description = 'Suppression de la notice Mnr' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Mnr.findOne({ REF: ref });

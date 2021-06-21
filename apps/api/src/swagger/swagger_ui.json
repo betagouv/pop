@@ -1,0 +1,6269 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "POP Api",
+    "description": "Documentation sur les webservices de l'application Api"
+  },
+  "host": "api.pop.culture.gouv.fr",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Webservices Authentification"
+    },
+    {
+      "name": "Autor",
+      "description": "Webservices de la collection Autor"
+    },
+    {
+      "name": "Enluminures",
+      "description": "Webservices de la collection Enluminures"
+    },
+    {
+      "name": "DeleteHistorique",
+      "description": "Webservices de la collection DeleteHistorique"
+    },
+    {
+      "name": "Gallery",
+      "description": "Webservices de la collection Gallery"
+    },
+    {
+      "name": "Groups",
+      "description": "Webservices de la collection Groups (Utilisateur)"
+    },
+    {
+      "name": "Import",
+      "description": "Webservices de la collection import"
+    },
+    {
+      "name": "Joconde",
+      "description": "Webservices de la collection Joconde"
+    },
+    {
+      "name": "Mémoire",
+      "description": "Webservices de la collection Mémoire"
+    },
+    {
+      "name": "Mérimée",
+      "description": "Webservices de la collection Mérimée"
+    },
+    {
+      "name": "Mnr",
+      "description": "Webservices de la collection Mnr"
+    },
+    {
+      "name": "Museo",
+      "description": "Webservices de la collection Museo"
+    },
+    {
+      "name": "Oai",
+      "description": "Webservices de la collection Oai"
+    },
+    {
+      "name": "Palissy",
+      "description": "Webservices de la collection Palissy"
+    },
+    {
+      "name": "Producteurs",
+      "description": "Webservices de la collection Producteurs"
+    },
+    {
+      "name": "Reporting",
+      "description": "Webservices de la collection Reporting"
+    },
+    {
+      "name": "Thesaurus",
+      "description": "Webservices de la collection Thesaurus"
+    },
+    {
+      "name": "Users",
+      "description": "Webservices de la collection Users"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-KEY",
+      "description": "any description..."
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Authentification utilisateur",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Informations utilisateur",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/auth/forgetPassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Demande de modification du mot de passe",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/updatePassword": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Modification mot de passe",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "pwd": {
+                  "example": "any"
+                },
+                "pwd1": {
+                  "example": "any"
+                },
+                "pwd2": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/autor/{ref}": {
+      "get": {
+        "tags": [
+          "Autor"
+        ],
+        "description": "Retourne les informations de la notice auteur",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice auteur"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetAutor"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "\r/": {
+      "put": {
+        "tags": [
+          "Autor"
+        ],
+        "description": "Utilisé lors de l'import",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "autorNotices": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Autor"
+        ],
+        "description": "Utilisé pour la création du document",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "autorNotices": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "\r/{ref}": {
+      "put": {
+        "tags": [
+          "Autor"
+        ],
+        "description": "Utilisé pour la mise à jour du document",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{ref}": {
+      "get": {
+        "tags": [
+          "Mnr"
+        ],
+        "description": "Retourne les informations de la notice Mnr",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Mnr"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetMnr"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enluminures/{ref}": {
+      "get": {
+        "tags": [
+          "Enluminures"
+        ],
+        "description": "Retourne les informations de la notice enluminure par rapport à la référence",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice enluminure"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetEnluminures"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deleteHistorique": {
+      "get": {
+        "tags": [
+          "DeleteHistorique"
+        ],
+        "description": "Retourne la liste des notices supprimées",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string",
+            "description": "Optionnel: Permet de limiter le nombre de résultat"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetDeleteHistorique"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DeleteHistorique"
+        ],
+        "description": "Création d\\'un enregistrement pour une notice supprimée",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ref": {
+                  "example": "any"
+                },
+                "base": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/gallery/{id}": {
+      "get": {
+        "tags": [
+          "Gallery"
+        ],
+        "description": "Retourne les informations de la notice gallery (permaliens MNR)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Identifiant de la notice gallery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetGallery"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gallery": {
+      "post": {
+        "tags": [
+          "Gallery"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "gallery": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/import": {
+      "post": {
+        "tags": [
+          "Import"
+        ],
+        "description": "Création d'un import",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "import": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/import/count": {
+      "get": {
+        "tags": [
+          "Import"
+        ],
+        "description": "Retourne le nombre total d\\'import",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "type": "string",
+              "example": "number",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erreur interne serveur",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Erreur survenue lors de la récupération des données"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/joconde/{ref}": {
+      "put": {
+        "tags": [
+          "Joconde"
+        ],
+        "description": "Modification de la notice Joconde",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Joconde"
+        ],
+        "description": "Retourne les informations de la notice Joconde",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Joconde"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetJoconde"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Joconde"
+        ],
+        "description": "Suppression de la notice Joconde",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/joconde": {
+      "post": {
+        "tags": [
+          "Joconde"
+        ],
+        "description": "Création de la notice Joconde",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memoire/{ref}": {
+      "put": {
+        "tags": [
+          "Mémoire"
+        ],
+        "description": "Modification de la notice Mémoire",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Mémoire"
+        ],
+        "description": "Retourne les informations de la notice Mémoire",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Mémoire"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetMemoire"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mémoire"
+        ],
+        "description": "Suppression de la notice Mémoire",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/memoire": {
+      "post": {
+        "tags": [
+          "Mémoire"
+        ],
+        "description": "Création de la notice Mémoire",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/merimee/newId": {
+      "get": {
+        "tags": [
+          "Mérimée"
+        ],
+        "description": "Retourne la nouvelle référence",
+        "parameters": [
+          {
+            "name": "prefix",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "dpt",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/merimee/{ref}": {
+      "put": {
+        "tags": [
+          "Mérimée"
+        ],
+        "description": "Modification de la notice Mérimée",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Mérimée"
+        ],
+        "description": "Retourne les informations de la notice Mérimée",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Mérimée"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetMerimee"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mérimée"
+        ],
+        "description": "Suppression de la notice Mérimée",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/merimee": {
+      "post": {
+        "tags": [
+          "Mérimée"
+        ],
+        "description": "Création de la notice Mérimée",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/mnr/{ref}": {
+      "put": {
+        "tags": [
+          "Mnr"
+        ],
+        "description": "Modification de la notice Mnr",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Mnr"
+        ],
+        "description": "Suppression de la notice Mnr",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/mnr": {
+      "post": {
+        "tags": [
+          "Mnr"
+        ],
+        "description": "Création de la notice Mnr",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/museo/{ref}": {
+      "get": {
+        "tags": [
+          "Museo"
+        ],
+        "description": "Retourne les informations de la notice Museo",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Museo"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetMuseo"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/museo": {
+      "post": {
+        "tags": [
+          "Museo"
+        ],
+        "description": "Création de la notice Museo",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/museo/[ref}": {
+      "put": {
+        "tags": [
+          "Museo"
+        ],
+        "description": "Modification de la notice Museo",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Museo"
+        ],
+        "description": "Suppression de la notice Museo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/oai": {
+      "get": {
+        "tags": [
+          "Oai"
+        ],
+        "description": "Retourne les informations en fonction du paramètre (Identify, ListSets, ListMetadataFormats, ListIdentifiers, ListRecords, GetRecord)",
+        "parameters": [
+          {
+            "name": "verb",
+            "in": "query",
+            "type": "string",
+            "description": "Paramètre suivant description"
+          },
+          {
+            "name": "metadataPrefix",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "set",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "identifier",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés"
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/palissy/newId": {
+      "get": {
+        "tags": [
+          "Palissy"
+        ],
+        "description": "Retourne la nouvelle référence",
+        "parameters": [
+          {
+            "name": "prefix",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "dpt",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/palissy/{ref}": {
+      "put": {
+        "tags": [
+          "Palissy"
+        ],
+        "description": "Modification de la notice Palissy",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Palissy"
+        ],
+        "description": "Retourne les informations de la notice Palissy",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Référence de la notice Palissy"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetPalissy"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Palissy"
+        ],
+        "description": "Suppression de la notice Palissy",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/palissy": {
+      "post": {
+        "tags": [
+          "Palissy"
+        ],
+        "description": "Création de la notice Palissy",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/producteur": {
+      "get": {
+        "tags": [
+          "Producteurs"
+        ],
+        "description": "Retourne la liste des Producteurs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Récupération des informations avec succés",
+            "schema": {
+              "$ref": "#/definitions/GetProducteurs"
+            }
+          },
+          "404": {
+            "description": "Document non trouvé",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Document introuvable"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Producteurs"
+        ],
+        "description": "Création d",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "example": "any"
+                },
+                "base": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/producteur/label": {
+      "get": {
+        "tags": [
+          "Producteurs"
+        ],
+        "description": "Retourne les informations du Producteur en fonction du label",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/producteur/{id}": {
+      "put": {
+        "tags": [
+          "Producteurs"
+        ],
+        "description": "Modification du Producteur",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                },
+                "label": {
+                  "example": "any"
+                },
+                "base": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/producteur/prefixesFromProducteurs": {
+      "get": {
+        "tags": [
+          "Producteurs"
+        ],
+        "description": "Retourne les informations du Producteur en fonction du prefixes",
+        "parameters": [
+          {
+            "name": "producteurs",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/reporting/email": {
+      "post": {
+        "tags": [
+          "Reporting"
+        ],
+        "description": "Envoie du rapport par mail",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subject": {
+                  "example": "any"
+                },
+                "to": {
+                  "example": "any"
+                },
+                "body": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Récupère la liste des groupes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Mise à jour d\\'un groupe",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                },
+                "label": {
+                  "example": "any"
+                },
+                "producteurs": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Création d\\'un groupe",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "example": "any"
+                },
+                "producteurs": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/label": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Récupère le groupe en fonction du label",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/canEdit": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "description": "Vérification de l\\'ahtorisation d\\'accés",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "museo",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "producteur",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "collection",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/thesaurus/search": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/thesaurus/validate": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/thesaurus/getTopConceptsByThesaurusId": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/thesaurus/getAllChildrenConcept": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/thesaurus/getPreferredTermByConceptId": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/thesaurus/deleteAllThesaurus": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Suppression de tous les Thesaurus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Création d",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "terms": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Récupère la liste des utilisateurs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Mise à jour d\\'un utilisateur",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nom": {
+                  "example": "any"
+                },
+                "prenom": {
+                  "example": "any"
+                },
+                "institution": {
+                  "example": "any"
+                },
+                "group": {
+                  "example": "any"
+                },
+                "role": {
+                  "example": "any"
+                },
+                "museofile": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Création d\\'un utilisateur",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "nom": {
+                  "example": "any"
+                },
+                "prenom": {
+                  "example": "any"
+                },
+                "institution": {
+                  "example": "any"
+                },
+                "group": {
+                  "example": "any"
+                },
+                "role": {
+                  "example": "any"
+                },
+                "museofile": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Suppression d\\'un utilisateur",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetAutor": {
+      "type": "object",
+      "properties": {
+        "REF": {
+          "type": "string",
+          "example": "OR000001"
+        },
+        "ISNI": {
+          "type": "string",
+          "example": ""
+        },
+        "ISNI_VERIFIEE": {
+          "type": "string",
+          "example": "non"
+        },
+        "ALIAS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "BIBLIO": {
+          "type": "string",
+          "example": ""
+        },
+        "BIO": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "string",
+          "example": ""
+        },
+        "DMORT": {
+          "type": "string",
+          "example": ""
+        },
+        "DNAISS": {
+          "type": "string",
+          "example": ""
+        },
+        "EXPO": {
+          "type": "string",
+          "example": ""
+        },
+        "FONC": {
+          "type": "array",
+          "example": [
+            "Fabricant orfèvre"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "VIDEO": {
+          "type": "string",
+          "example": ""
+        },
+        "LIENS": {
+          "type": "string",
+          "example": ""
+        },
+        "LMDP": {
+          "type": "string",
+          "example": ""
+        },
+        "LMORT": {
+          "type": "string",
+          "example": ""
+        },
+        "LNAISS": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTORLOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "NATIO": {
+          "type": "string",
+          "example": ""
+        },
+        "NOM": {
+          "type": "string",
+          "example": "Abit"
+        },
+        "PREN": {
+          "type": "string",
+          "example": "Armand"
+        },
+        "PNOM": {
+          "type": "string",
+          "example": ""
+        },
+        "TYPAPE": {
+          "type": "string",
+          "example": ""
+        },
+        "REJET": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "OEUVR": {
+          "type": "string",
+          "example": ""
+        },
+        "PUBLI": {
+          "type": "string",
+          "example": ""
+        },
+        "ALAMAP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": "Inventaire"
+        },
+        "REDAC": {
+          "type": "string",
+          "example": ""
+        },
+        "LRELA": {
+          "type": "string",
+          "example": ""
+        },
+        "SOURCES": {
+          "type": "string",
+          "example": ""
+        },
+        "TITR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "TYPID": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ARK": {
+          "type": "string",
+          "example": ""
+        },
+        "OBS": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": "Ressources biographiques (Autor)"
+        },
+        "INI": {
+          "type": "string",
+          "example": "A.A."
+        },
+        "ADRS": {
+          "type": "string",
+          "example": "71 rue du Temple"
+        },
+        "SCLE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DATES": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "FORM": {
+          "type": "string",
+          "example": ""
+        },
+        "SYMB": {
+          "type": "string",
+          "example": "un habit"
+        },
+        "INS": {
+          "type": "string",
+          "example": "16 octobre 1895"
+        },
+        "GAR": {
+          "type": "string",
+          "example": "B882"
+        },
+        "PREF": {
+          "type": "string",
+          "example": "11298"
+        },
+        "BIF": {
+          "type": "string",
+          "example": "4 juillet 1898"
+        },
+        "LOCACT": {
+          "type": "string",
+          "example": "Paris"
+        },
+        "LBASE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "NOMPRENOM": {
+          "type": "string",
+          "example": "Armand Abit"
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": "non"
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": "2020-06-11"
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DMIS": {
+          "type": "string",
+          "example": "2020-06-11"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5ee1efbe65451d2f5a1c8b02"
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "MEMOIRE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        }
+      }
+    },
+    "GetDeleteHistorique": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        },
+        "deleteHistorique": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "5f6cc49c3998404bdf7d6487"
+              },
+              "REF": {
+                "type": "string",
+                "example": "AP13R001264"
+              },
+              "BASE": {
+                "type": "string",
+                "example": "memoire"
+              },
+              "USER": {
+                "type": "string",
+                "example": "Nom utilisateur"
+              },
+              "EMAIL": {
+                "type": "string",
+                "example": "Email utilisateur"
+              },
+              "DATE": {
+                "type": "string",
+                "example": "2020-9-24 16:9"
+              },
+              "__v": {
+                "type": "number",
+                "example": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetEnluminures": {
+      "type": "object",
+      "properties": {
+        "BASE": {
+          "type": "string",
+          "example": "Enluminures (Enluminures)"
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": "oui"
+        },
+        "ATTRIB": {
+          "type": "string",
+          "example": "Maître de la Légende dorée de Munich (proche du)"
+        },
+        "APPL": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTR": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTS": {
+          "type": "string",
+          "example": ""
+        },
+        "CONSERV": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTXT": {
+          "type": "string",
+          "example": "Miniature"
+        },
+        "COTE": {
+          "type": "string",
+          "example": "ms. 0002"
+        },
+        "DATE": {
+          "type": "string",
+          "example": "vers 1430-1440"
+        },
+        "DATDEB": {
+          "type": "string",
+          "example": "1430"
+        },
+        "DATFIN": {
+          "type": "string",
+          "example": "1440"
+        },
+        "DIMS": {
+          "type": "string",
+          "example": ""
+        },
+        "ETAB": {
+          "type": "string",
+          "example": "Aurillac - BM"
+        },
+        "FOPG": {
+          "type": "string",
+          "example": "f. 015"
+        },
+        "FOLIOS": {
+          "type": "string",
+          "example": ""
+        },
+        "LANGOUV": {
+          "type": "string",
+          "example": "latin ; français"
+        },
+        "NFICH": {
+          "type": "string",
+          "example": ""
+        },
+        "NVUE": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMENC": {
+          "type": "array",
+          "example": [
+            "Liturgie",
+            "Dévotion"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "NOTES": {
+          "type": "string",
+          "example": "Les 16 grandes miniatures de style parisien (proche du Maître de la Légende de Munich ?), les 24 petites miniatures du calendrier et la décoration ornée, avec lés éléments figurés très variés des encadrements (parfois en rapport avec le texte ?), d'un autre style (France de l'ouest, influencé par l'Angleterre ?). Calendrier illustré."
+        },
+        "NOTDEC": {
+          "type": "string",
+          "example": "Grand disque d'or à liseré rouge (gloire), rayonnant au-dessus du groupe (cf. f. 59v). L'ermite, lanterne à la main, se tient au seuil d'une chapelle avec enclos construite au bord d'une forêt, sur un promontoire."
+        },
+        "OPHOT": {
+          "type": "string",
+          "example": ""
+        },
+        "ORIGG": {
+          "type": "string",
+          "example": "France (ouest)"
+        },
+        "ORIGH": {
+          "type": "string",
+          "example": "Normandie"
+        },
+        "ORIGP": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMN": {
+          "type": "string",
+          "example": "décor"
+        },
+        "TYPE": {
+          "type": "string",
+          "example": "enluminure ; manuscrit"
+        },
+        "POSS": {
+          "type": "array",
+          "example": [
+            "anonyme femme (destinataire)",
+            "Morel, Gabriel"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFD": {
+          "type": "string",
+          "example": "Aurillac - BM - ms. 0002"
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "ENRGFP": {
+          "type": "string",
+          "example": ""
+        },
+        "ENRGMS": {
+          "type": "string",
+          "example": ""
+        },
+        "DROIT": {
+          "type": "string",
+          "example": "cliché IRHT ; droits collectivité, CNRS et MCC"
+        },
+        "COPY": {
+          "type": "string",
+          "example": "© Institut de recherche et d'histoire des textes - CNRS"
+        },
+        "SUJET": {
+          "type": "string",
+          "example": "Saint Christophe portant l'Enfant Jésus"
+        },
+        "SUPP": {
+          "type": "string",
+          "example": ""
+        },
+        "TITR": {
+          "type": "string",
+          "example": "Heures à l'usage de Bayeux"
+        },
+        "TYPDEC": {
+          "type": "string",
+          "example": "page décorée (en nombre)/miniature (40)/encadrement animé (en nombre)/encadrement orné (en nombre)/initiale ornée (en nombre)/initiale champie (en nombre)/bout-de-ligne champi (en nombre)/armoiries"
+        },
+        "TYPCOD": {
+          "type": "string",
+          "example": "codex"
+        },
+        "LOCA": {
+          "type": "string",
+          "example": "Aurillac"
+        },
+        "LOCA2": {
+          "type": "string",
+          "example": ""
+        },
+        "VISITE": {
+          "type": "string",
+          "example": ""
+        },
+        "VIDEO": {
+          "type": "array",
+          "example": [
+            "enluminures/D-000001/IRHT_079949-p.jpg"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "IMG": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": "2019-01-01"
+        },
+        "DMIS": {
+          "type": "string",
+          "example": "2019-01-01"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c7f7f85c6342ed5afeea4c3"
+        },
+        "REF": {
+          "type": "string",
+          "example": "D-000001"
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        }
+      }
+    },
+    "GetGallery": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string",
+          "example": "anonyme"
+        },
+        "institution": {
+          "type": "string",
+          "example": "public"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2021-06-18T08:32:25.186Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c9a6074ae8d106e1142d96b"
+        },
+        "params": {
+          "type": "object",
+          "properties": {
+            "view": {
+              "type": "string",
+              "example": "mosaic"
+            },
+            "mode": {
+              "type": "string",
+              "example": "simple"
+            },
+            "base": {
+              "type": "string",
+              "example": "[\"Photographies (Mémoire)\"]"
+            },
+            "auteur": {
+              "type": "string",
+              "example": "[\"Nadar (atelier)\"]"
+            },
+            "image": {
+              "type": "string",
+              "example": "[\"oui\"]"
+            }
+          }
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        }
+      }
+    },
+    "GetJoconde": {
+      "type": "object",
+      "properties": {
+        "POP_COORDONNEES": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "example": 44.931125
+            },
+            "lon": {
+              "type": "number",
+              "example": 4.889563
+            }
+          }
+        },
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": "oui"
+        },
+        "POP_CONTIENT_GEOLOCALISATION": {
+          "type": "string",
+          "example": "oui"
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "MANQUANT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "MANQUANT_COM": {
+          "type": "string",
+          "example": ""
+        },
+        "ADPT": {
+          "type": "string",
+          "example": ""
+        },
+        "APPL": {
+          "type": "string",
+          "example": ""
+        },
+        "APTN": {
+          "type": "string",
+          "example": ""
+        },
+        "ATTR": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "BIBL": {
+          "type": "string",
+          "example": ""
+        },
+        "COMM": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "COOR": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "string",
+          "example": ""
+        },
+        "DACQ": {
+          "type": "string",
+          "example": ""
+        },
+        "DATA": {
+          "type": "string",
+          "example": ""
+        },
+        "DATION": {
+          "type": "string",
+          "example": ""
+        },
+        "DDPT": {
+          "type": "string",
+          "example": ""
+        },
+        "DECV": {
+          "type": "string",
+          "example": ""
+        },
+        "DENO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DEPO": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DESC": {
+          "type": "string",
+          "example": ""
+        },
+        "DESY": {
+          "type": "string",
+          "example": ""
+        },
+        "DIFFU": {
+          "type": "string",
+          "example": ""
+        },
+        "DIMS": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMN": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DREP": {
+          "type": "string",
+          "example": ""
+        },
+        "ECOL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "EPOQ": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "ETAT": {
+          "type": "string",
+          "example": ""
+        },
+        "EXPO": {
+          "type": "string",
+          "example": ""
+        },
+        "GENE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "GEOHI": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HIST": {
+          "type": "string",
+          "example": ""
+        },
+        "IMAGE": {
+          "type": "string",
+          "example": "oui"
+        },
+        "IMG": {
+          "type": "array",
+          "example": [
+            "",
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "INSC": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "INV": {
+          "type": "string",
+          "example": ""
+        },
+        "LABEL": {
+          "type": "string",
+          "example": ""
+        },
+        "LABO": {
+          "type": "string",
+          "example": ""
+        },
+        "LARC": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEUX": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REGION": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT": {
+          "type": "string",
+          "example": ""
+        },
+        "VILLE_M": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMOFF": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA2": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA3": {
+          "type": "string",
+          "example": ""
+        },
+        "MILL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "MILU": {
+          "type": "string",
+          "example": ""
+        },
+        "MOSA": {
+          "type": "string",
+          "example": ""
+        },
+        "MSGCOM": {
+          "type": "string",
+          "example": ""
+        },
+        "MUSEO": {
+          "type": "string",
+          "example": ""
+        },
+        "NSDA": {
+          "type": "string",
+          "example": ""
+        },
+        "ONOM": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PAUT": {
+          "type": "string",
+          "example": ""
+        },
+        "PDAT": {
+          "type": "string",
+          "example": ""
+        },
+        "PDEC": {
+          "type": "string",
+          "example": ""
+        },
+        "PEOC": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PERI": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PERU": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PHOT": {
+          "type": "string",
+          "example": ""
+        },
+        "PINS": {
+          "type": "string",
+          "example": ""
+        },
+        "PLIEUX": {
+          "type": "string",
+          "example": ""
+        },
+        "PREP": {
+          "type": "string",
+          "example": ""
+        },
+        "PUTI": {
+          "type": "string",
+          "example": ""
+        },
+        "RANG": {
+          "type": "string",
+          "example": ""
+        },
+        "REDA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "REFMEM": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFMER": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFPAL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REPR": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "RETIF": {
+          "type": "string",
+          "example": ""
+        },
+        "SREP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "STAT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "TECH": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TICO": {
+          "type": "string",
+          "example": ""
+        },
+        "TITR": {
+          "type": "string",
+          "example": ""
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "UTIL": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "VIDEO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "WWW": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "LVID": {
+          "type": "string",
+          "example": ""
+        },
+        "_id": {
+          "type": "string",
+          "example": ""
+        },
+        "REF": {
+          "type": "string",
+          "example": ""
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetMemoire": {
+      "type": "object",
+      "properties": {
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": "oui"
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRESSE": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTOEU": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTG": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTP": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "AUTOR": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTTI": {
+          "type": "string",
+          "example": ""
+        },
+        "COM": {
+          "type": "string",
+          "example": ""
+        },
+        "DOM": {
+          "type": "string",
+          "example": ""
+        },
+        "EDIF": {
+          "type": "string",
+          "example": ""
+        },
+        "EXPO": {
+          "type": "string",
+          "example": ""
+        },
+        "JDATPV": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEUCOR": {
+          "type": "string",
+          "example": ""
+        },
+        "COTECOR": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEUCTI": {
+          "type": "string",
+          "example": ""
+        },
+        "COTECTI": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEUCP": {
+          "type": "string",
+          "example": ""
+        },
+        "COTECP": {
+          "type": "string",
+          "example": ""
+        },
+        "LEG": {
+          "type": "string",
+          "example": ""
+        },
+        "OBJT": {
+          "type": "string",
+          "example": ""
+        },
+        "OBS": {
+          "type": "string",
+          "example": ""
+        },
+        "OBSOR": {
+          "type": "string",
+          "example": ""
+        },
+        "OBSTI": {
+          "type": "string",
+          "example": ""
+        },
+        "PAYS": {
+          "type": "string",
+          "example": ""
+        },
+        "PUBLI": {
+          "type": "string",
+          "example": ""
+        },
+        "TIREDE": {
+          "type": "string",
+          "example": ""
+        },
+        "ROLE": {
+          "type": "string",
+          "example": ""
+        },
+        "PRECOR": {
+          "type": "string",
+          "example": ""
+        },
+        "SERIE": {
+          "type": "string",
+          "example": ""
+        },
+        "THEATRE": {
+          "type": "string",
+          "example": ""
+        },
+        "TITRE": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "IDPROD": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMCD": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMF": {
+          "type": "string",
+          "example": ""
+        },
+        "INSEE": {
+          "type": "string",
+          "example": ""
+        },
+        "NVD": {
+          "type": "string",
+          "example": ""
+        },
+        "MARQ": {
+          "type": "string",
+          "example": ""
+        },
+        "ACC": {
+          "type": "string",
+          "example": ""
+        },
+        "ACQU": {
+          "type": "string",
+          "example": ""
+        },
+        "ADPHOT": {
+          "type": "string",
+          "example": ""
+        },
+        "AIRE": {
+          "type": "string",
+          "example": ""
+        },
+        "ANUMP": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "string",
+          "example": ""
+        },
+        "COULEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "COSTUME": {
+          "type": "string",
+          "example": ""
+        },
+        "DATIMM": {
+          "type": "string",
+          "example": ""
+        },
+        "DATOEU": {
+          "type": "string",
+          "example": ""
+        },
+        "DATPV": {
+          "type": "string",
+          "example": ""
+        },
+        "DATOR": {
+          "type": "string",
+          "example": ""
+        },
+        "DATTI": {
+          "type": "string",
+          "example": ""
+        },
+        "DATG": {
+          "type": "string",
+          "example": ""
+        },
+        "DATD": {
+          "type": "string",
+          "example": ""
+        },
+        "DIFF": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT": {
+          "type": "string",
+          "example": ""
+        },
+        "EDIARCH": {
+          "type": "string",
+          "example": ""
+        },
+        "ECH": {
+          "type": "string",
+          "example": ""
+        },
+        "FORMAT": {
+          "type": "string",
+          "example": ""
+        },
+        "FORMATOR": {
+          "type": "string",
+          "example": ""
+        },
+        "FORMATTI": {
+          "type": "string",
+          "example": ""
+        },
+        "LBASE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "WEB": {
+          "type": "string",
+          "example": ""
+        },
+        "LIB": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEUORIG": {
+          "type": "string",
+          "example": ""
+        },
+        "MCGEO": {
+          "type": "string",
+          "example": ""
+        },
+        "MCL": {
+          "type": "string",
+          "example": ""
+        },
+        "MENTIONS": {
+          "type": "string",
+          "example": ""
+        },
+        "MENTOR": {
+          "type": "string",
+          "example": ""
+        },
+        "MENTTI": {
+          "type": "string",
+          "example": ""
+        },
+        "MCPER": {
+          "type": "string",
+          "example": ""
+        },
+        "VUECD": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMAUTP": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMCAF": {
+          "type": "string",
+          "example": ""
+        },
+        "ANUMOR": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMOR": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMP": {
+          "type": "string",
+          "example": ""
+        },
+        "ANUMTI": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMTI": {
+          "type": "string",
+          "example": ""
+        },
+        "RENV": {
+          "type": "string",
+          "example": ""
+        },
+        "REG": {
+          "type": "string",
+          "example": ""
+        },
+        "SENS": {
+          "type": "string",
+          "example": ""
+        },
+        "SCLE": {
+          "type": "string",
+          "example": ""
+        },
+        "SUP": {
+          "type": "string",
+          "example": ""
+        },
+        "TECH": {
+          "type": "string",
+          "example": ""
+        },
+        "TECHOR": {
+          "type": "string",
+          "example": ""
+        },
+        "TECHTI": {
+          "type": "string",
+          "example": ""
+        },
+        "TOILE": {
+          "type": "string",
+          "example": ""
+        },
+        "TYP": {
+          "type": "string",
+          "example": "AREF"
+        },
+        "TYPDOC": {
+          "type": "string",
+          "example": ""
+        },
+        "TYPEIMG": {
+          "type": "string",
+          "example": ""
+        },
+        "TYPSUPP": {
+          "type": "string",
+          "example": ""
+        },
+        "VIDEO": {
+          "type": "string",
+          "example": ""
+        },
+        "LBASE2": {
+          "type": "string",
+          "example": ""
+        },
+        "LEG2": {
+          "type": "string",
+          "example": ""
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "REFIMG": {
+          "type": "string",
+          "example": ""
+        },
+        "REFJOC": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFMUS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "MOSA": {
+          "type": "string",
+          "example": ""
+        },
+        "SITE": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMSITE": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMOP": {
+          "type": "string",
+          "example": ""
+        },
+        "CHRONO": {
+          "type": "string",
+          "example": ""
+        },
+        "REPRO": {
+          "type": "string",
+          "example": ""
+        },
+        "STRUCT": {
+          "type": "string",
+          "example": ""
+        },
+        "SUJET": {
+          "type": "string",
+          "example": ""
+        },
+        "TICO": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMI": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEU": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "EMET": {
+          "type": "string",
+          "example": ""
+        },
+        "NUM": {
+          "type": "string",
+          "example": ""
+        },
+        "IMG": {
+          "type": "string",
+          "example": ""
+        },
+        "WCOM": {
+          "type": "string",
+          "example": ""
+        },
+        "LIENS": {
+          "type": "string",
+          "example": ""
+        },
+        "LAUTP": {
+          "type": "string",
+          "example": ""
+        },
+        "TRL": {
+          "type": "string",
+          "example": ""
+        },
+        "DENO": {
+          "type": "string",
+          "example": ""
+        },
+        "AUT": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTR": {
+          "type": "string",
+          "example": ""
+        },
+        "DOC": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMG": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMSN": {
+          "type": "string",
+          "example": ""
+        },
+        "_id": {
+          "type": "string",
+          "example": ""
+        },
+        "REF": {
+          "type": "string",
+          "example": ""
+        },
+        "__v": {
+          "type": "number",
+          "example": 1
+        },
+        "MEMOIRE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_COMMENTAIRES": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetMerimee": {
+      "type": "object",
+      "properties": {
+        "POP_COORDONNEES": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "example": 0
+            },
+            "lon": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "POP_COORDINATES_POLYGON": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Polygon"
+            },
+            "coordinates": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        },
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "POP_CONTIENT_GEOLOCALISATION": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_DATE": {
+          "type": "array",
+          "example": [
+            1500
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [
+            "5c0b8dd6d0c49a0e191ccdf4"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "ACTU": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "AFFE": {
+          "type": "string",
+          "example": ""
+        },
+        "AIRE": {
+          "type": "string",
+          "example": ""
+        },
+        "APPL": {
+          "type": "string",
+          "example": ""
+        },
+        "APRO": {
+          "type": "array",
+          "example": [
+            "Arrêté"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "ARCHEO": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTP": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "AUTR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "CADA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "CANT": {
+          "type": "string",
+          "example": ""
+        },
+        "COLL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "COM": {
+          "type": "string",
+          "example": ""
+        },
+        "COOR": {
+          "type": "string",
+          "example": ""
+        },
+        "COORM": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "COUV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DATE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DBOR": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMN": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DENO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DENQ": {
+          "type": "string",
+          "example": ""
+        },
+        "DEPL": {
+          "type": "string",
+          "example": ""
+        },
+        "DESC": {
+          "type": "string",
+          "example": ""
+        },
+        "DIMS": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSS": {
+          "type": "string",
+          "example": ""
+        },
+        "DPRO": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT_LETTRE": {
+          "type": "string",
+          "example": ""
+        },
+        "EDIF": {
+          "type": "string",
+          "example": ""
+        },
+        "ELEV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ENER": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ESCA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETAG": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETAT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETUD": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "GENR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HIST": {
+          "type": "string",
+          "example": ""
+        },
+        "HYDR": {
+          "type": "string",
+          "example": ""
+        },
+        "IMPL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "INSEE": {
+          "type": "string",
+          "example": ""
+        },
+        "INTE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "JATT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "JDAT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LINHA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LREG": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LBASE2": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEU": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "MFICH": {
+          "type": "string",
+          "example": ""
+        },
+        "MOSA": {
+          "type": "string",
+          "example": ""
+        },
+        "MHPP": {
+          "type": "string",
+          "example": ""
+        },
+        "MICR": {
+          "type": "string",
+          "example": ""
+        },
+        "MURS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "NBOR": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "OBS": {
+          "type": "string",
+          "example": ""
+        },
+        "PAFF": {
+          "type": "string",
+          "example": ""
+        },
+        "PART": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PARN": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PDEN": {
+          "type": "string",
+          "example": ""
+        },
+        "PERS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PLAN": {
+          "type": "string",
+          "example": ""
+        },
+        "PLOC": {
+          "type": "string",
+          "example": ""
+        },
+        "PPRO": {
+          "type": "string",
+          "example": ""
+        },
+        "PREP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PROT": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "PSTA": {
+          "type": "string",
+          "example": ""
+        },
+        "REFE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFJOC": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFMUS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REG": {
+          "type": "string",
+          "example": ""
+        },
+        "REMA": {
+          "type": "string",
+          "example": ""
+        },
+        "REMP": {
+          "type": "string",
+          "example": ""
+        },
+        "RENV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REPR": {
+          "type": "string",
+          "example": ""
+        },
+        "RFPA": {
+          "type": "string",
+          "example": ""
+        },
+        "SCLD": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "SCLE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "SCLX": {
+          "type": "array",
+          "example": [
+            "16e s."
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "SITE": {
+          "type": "string",
+          "example": ""
+        },
+        "STAT": {
+          "type": "string",
+          "example": ""
+        },
+        "TECH": {
+          "type": "array",
+          "example": [
+            "Vitrail"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TICO": {
+          "type": "string",
+          "example": ""
+        },
+        "TOIT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "TYPO": {
+          "type": "string",
+          "example": ""
+        },
+        "VERT": {
+          "type": "string",
+          "example": ""
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "IMG": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "VIDEO": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_DOSSIER_VERT": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_ARRETE_PROTECTION": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_DOSSIER_PROTECTION": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DOSURL": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSURLPDF": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "LIENS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "VISI": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "VOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "VOUT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "WEB": {
+          "type": "string",
+          "example": ""
+        },
+        "ZONE": {
+          "type": "string",
+          "example": ""
+        },
+        "THEM": {
+          "type": "string",
+          "example": ""
+        },
+        "ACMH": {
+          "type": "string",
+          "example": ""
+        },
+        "ACURL": {
+          "type": "string",
+          "example": ""
+        },
+        "WADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "WCOM": {
+          "type": "string",
+          "example": "Auxon"
+        },
+        "WRENV": {
+          "type": "string",
+          "example": ""
+        },
+        "REFM": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "IDAGR": {
+          "type": "string",
+          "example": ""
+        },
+        "LMDP": {
+          "type": "string",
+          "example": ""
+        },
+        "PINT": {
+          "type": "string",
+          "example": ""
+        },
+        "DLAB": {
+          "type": "string",
+          "example": ""
+        },
+        "_id": {
+          "type": "string",
+          "example": "5b8418e054caee0d1410972b"
+        },
+        "POP_COORDINATES_POINT": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        },
+        "POP_HAS_LOCATION": {
+          "type": "array",
+          "example": [
+            "non"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DOSURLP": {
+          "type": "string",
+          "example": ""
+        },
+        "REF": {
+          "type": "string",
+          "example": "PA00078021"
+        },
+        "MEMOIRE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "ref": {
+                "type": "string",
+                "example": ""
+              },
+              "name": {
+                "type": "string",
+                "example": ""
+              },
+              "url": {
+                "type": "string",
+                "example": ""
+              },
+              "copy": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        },
+        "__v": {
+          "type": "number",
+          "example": 14
+        },
+        "POP_COMMENTAIRES": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetMnr": {
+      "type": "object",
+      "properties": {
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTR": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "PAUT": {
+          "type": "string",
+          "example": ""
+        },
+        "ATTR": {
+          "type": "string",
+          "example": ""
+        },
+        "ECOL": {
+          "type": "string",
+          "example": ""
+        },
+        "TITR": {
+          "type": "string",
+          "example": ""
+        },
+        "ATIT": {
+          "type": "string",
+          "example": ""
+        },
+        "PTIT": {
+          "type": "string",
+          "example": ""
+        },
+        "DENO": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DESC": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMN": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "INSC": {
+          "type": "string",
+          "example": ""
+        },
+        "MARQ": {
+          "type": "string",
+          "example": ""
+        },
+        "OBSE": {
+          "type": "string",
+          "example": ""
+        },
+        "ETAT": {
+          "type": "string",
+          "example": "B"
+        },
+        "GENE": {
+          "type": "string",
+          "example": ""
+        },
+        "PROV": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST2": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST3": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST4": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST5": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST6": {
+          "type": "string",
+          "example": ""
+        },
+        "SCLE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "STYL": {
+          "type": "string",
+          "example": ""
+        },
+        "MILL": {
+          "type": "string",
+          "example": ""
+        },
+        "TECH": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DIMS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "VIDEO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "INV": {
+          "type": "string",
+          "example": ""
+        },
+        "EXPO": {
+          "type": "string",
+          "example": ""
+        },
+        "BIBL": {
+          "type": "string",
+          "example": ""
+        },
+        "AATT": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTI": {
+          "type": "string",
+          "example": ""
+        },
+        "CATE": {
+          "type": "string",
+          "example": ""
+        },
+        "CATE_DEPREC": {
+          "type": "string",
+          "example": ""
+        },
+        "NOTE": {
+          "type": "string",
+          "example": ""
+        },
+        "REDC": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DREP": {
+          "type": "string",
+          "example": ""
+        },
+        "PREP": {
+          "type": "string",
+          "example": ""
+        },
+        "REPR": {
+          "type": "string",
+          "example": ""
+        },
+        "SREP": {
+          "type": "string",
+          "example": ""
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "AFFE": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMS": {
+          "type": "string",
+          "example": ""
+        },
+        "SUITE": {
+          "type": "string",
+          "example": ""
+        },
+        "COMM": {
+          "type": "string",
+          "example": ""
+        },
+        "NOTE2": {
+          "type": "string",
+          "example": ""
+        },
+        "RESUME": {
+          "type": "string",
+          "example": ""
+        },
+        "PHOT": {
+          "type": "string",
+          "example": ""
+        },
+        "RENV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "_id": {
+          "type": "string",
+          "example": ""
+        },
+        "REF": {
+          "type": "string",
+          "example": "AGR00001"
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        },
+        "POP_COMMENTAIRES": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetMuseo": {
+      "type": "object",
+      "properties": {
+        "POP_COORDONNEES": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "example": 0
+            },
+            "lon": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "REF": {
+          "type": "string",
+          "example": "M1128"
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "ACCES": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRL1_M": {
+          "type": "string",
+          "example": ""
+        },
+        "ARTISTE": {
+          "type": "string",
+          "example": ""
+        },
+        "ATOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "CATEG": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "string",
+          "example": ""
+        },
+        "CP_M": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMPAL": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DPT": {
+          "type": "string",
+          "example": ""
+        },
+        "DT_MODIF": {
+          "type": "string",
+          "example": ""
+        },
+        "HIST": {
+          "type": "string",
+          "example": ""
+        },
+        "INTERET": {
+          "type": "string",
+          "example": ""
+        },
+        "LABEL": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEU_M": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMANC": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMOFF": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMUSAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "PHARE": {
+          "type": "string",
+          "example": ""
+        },
+        "PROT-BAT": {
+          "type": "string",
+          "example": ""
+        },
+        "PROT-ESP": {
+          "type": "string",
+          "example": ""
+        },
+        "REFMEM": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFMER": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFPAL": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REGION": {
+          "type": "string",
+          "example": ""
+        },
+        "TEL_M": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT_GENERIQUE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT_MUSEO": {
+          "type": "string",
+          "example": ""
+        },
+        "THEMES": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "URL_M": {
+          "type": "string",
+          "example": ""
+        },
+        "VILLE_M": {
+          "type": "string",
+          "example": ""
+        },
+        "PHOTO": {
+          "type": "string",
+          "example": ""
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "ACTIV": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRESSE": {
+          "type": "string",
+          "example": ""
+        },
+        "AMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "AN_CREAT": {
+          "type": "string",
+          "example": ""
+        },
+        "ANNEE_FE": {
+          "type": "string",
+          "example": ""
+        },
+        "ANNEXE": {
+          "type": "string",
+          "example": ""
+        },
+        "ANTARIF": {
+          "type": "string",
+          "example": ""
+        },
+        "CEDEX_AD": {
+          "type": "string",
+          "example": ""
+        },
+        "CTRLTECH": {
+          "type": "string",
+          "example": ""
+        },
+        "DT_CREAT": {
+          "type": "string",
+          "example": ""
+        },
+        "DT_SAISI": {
+          "type": "string",
+          "example": ""
+        },
+        "GESTION": {
+          "type": "string",
+          "example": ""
+        },
+        "ITI2_M": {
+          "type": "string",
+          "example": ""
+        },
+        "ITI_M": {
+          "type": "string",
+          "example": ""
+        },
+        "JOCONDE": {
+          "type": "string",
+          "example": ""
+        },
+        "LEGS": {
+          "type": "string",
+          "example": ""
+        },
+        "MONOPLUR": {
+          "type": "string",
+          "example": ""
+        },
+        "NB_AMI": {
+          "type": "string",
+          "example": ""
+        },
+        "NOM_AMI": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "OBS_AMI": {
+          "type": "string",
+          "example": ""
+        },
+        "OBS_TOUR": {
+          "type": "string",
+          "example": ""
+        },
+        "PROPBAT": {
+          "type": "string",
+          "example": ""
+        },
+        "PROPCOLL": {
+          "type": "string",
+          "example": ""
+        },
+        "PUBLI": {
+          "type": "string",
+          "example": ""
+        },
+        "REPCOLL": {
+          "type": "string",
+          "example": ""
+        },
+        "SERVICES": {
+          "type": "string",
+          "example": ""
+        },
+        "SIGLE_M": {
+          "type": "string",
+          "example": ""
+        },
+        "STATUT": {
+          "type": "string",
+          "example": ""
+        },
+        "SURFACES": {
+          "type": "string",
+          "example": ""
+        },
+        "URL_M2": {
+          "type": "string",
+          "example": ""
+        },
+        "VIDEO": {
+          "type": "string",
+          "example": ""
+        },
+        "RESP": {
+          "type": "string",
+          "example": ""
+        },
+        "GRESP": {
+          "type": "string",
+          "example": ""
+        },
+        "PSC": {
+          "type": "string",
+          "example": ""
+        },
+        "DPSC-D": {
+          "type": "string",
+          "example": ""
+        },
+        "DPSC-S": {
+          "type": "string",
+          "example": ""
+        },
+        "DMDF": {
+          "type": "string",
+          "example": ""
+        },
+        "SPUB": {
+          "type": "string",
+          "example": ""
+        },
+        "SPUB-P": {
+          "type": "string",
+          "example": ""
+        },
+        "INVR": {
+          "type": "string",
+          "example": ""
+        },
+        "NUMER": {
+          "type": "string",
+          "example": ""
+        },
+        "LGN": {
+          "type": "string",
+          "example": ""
+        },
+        "REST": {
+          "type": "string",
+          "example": ""
+        },
+        "ACQU": {
+          "type": "string",
+          "example": ""
+        },
+        "RECOL": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_CONTIENT_GEOLOCALISATION": {
+          "type": "string",
+          "example": ""
+        },
+        "_id": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_COMMENTAIRES": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "MEL": {
+          "type": "string",
+          "example": ""
+        },
+        "__v": {
+          "type": "number",
+          "example": 0
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetPalissy": {
+      "type": "object",
+      "properties": {
+        "POP_COORDONNEES": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number",
+              "example": 0
+            },
+            "lon": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "POP_COORDINATES_POLYGON": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Polygon"
+            },
+            "coordinates": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        },
+        "PRODUCTEUR": {
+          "type": "string",
+          "example": ""
+        },
+        "BASE": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTIENT_IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_FLAGS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "POP_CONTIENT_GEOLOCALISATION": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_DATE": {
+          "type": "array",
+          "example": [
+            1500
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "POP_IMPORT": {
+          "type": "array",
+          "example": [
+            "5c0b8dd6d0c49a0e191ccdf4"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TOUT": {
+          "type": "string",
+          "example": ""
+        },
+        "ACTU": {
+          "type": "string",
+          "example": ""
+        },
+        "ADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "AFFE": {
+          "type": "string",
+          "example": ""
+        },
+        "AIRE": {
+          "type": "string",
+          "example": ""
+        },
+        "APPL": {
+          "type": "string",
+          "example": ""
+        },
+        "APRO": {
+          "type": "array",
+          "example": [
+            "Arrêté"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "ARCHEO": {
+          "type": "string",
+          "example": ""
+        },
+        "AUTP": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "AUTR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "CADA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "CANT": {
+          "type": "string",
+          "example": ""
+        },
+        "COLL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "COM": {
+          "type": "string",
+          "example": ""
+        },
+        "COOR": {
+          "type": "string",
+          "example": ""
+        },
+        "COORM": {
+          "type": "string",
+          "example": ""
+        },
+        "COPY": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "COUV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DATE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DBOR": {
+          "type": "string",
+          "example": ""
+        },
+        "DOMN": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DENO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DENQ": {
+          "type": "string",
+          "example": ""
+        },
+        "DEPL": {
+          "type": "string",
+          "example": ""
+        },
+        "DESC": {
+          "type": "string",
+          "example": ""
+        },
+        "DIMS": {
+          "type": "string",
+          "example": ""
+        },
+        "DMAJ": {
+          "type": "string",
+          "example": ""
+        },
+        "DMIS": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSS": {
+          "type": "string",
+          "example": ""
+        },
+        "DPRO": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT": {
+          "type": "string",
+          "example": ""
+        },
+        "DPT_LETTRE": {
+          "type": "string",
+          "example": ""
+        },
+        "EDIF": {
+          "type": "string",
+          "example": ""
+        },
+        "ELEV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ENER": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ESCA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETAG": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETAT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "ETUD": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "GENR": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HIST": {
+          "type": "string",
+          "example": ""
+        },
+        "HYDR": {
+          "type": "string",
+          "example": ""
+        },
+        "IMPL": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "INSEE": {
+          "type": "string",
+          "example": ""
+        },
+        "INTE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "JATT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "JDAT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LINHA": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LREG": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "LBASE2": {
+          "type": "string",
+          "example": ""
+        },
+        "LIEU": {
+          "type": "string",
+          "example": ""
+        },
+        "LOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "MFICH": {
+          "type": "string",
+          "example": ""
+        },
+        "MOSA": {
+          "type": "string",
+          "example": ""
+        },
+        "MHPP": {
+          "type": "string",
+          "example": ""
+        },
+        "MICR": {
+          "type": "string",
+          "example": ""
+        },
+        "MURS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "NBOR": {
+          "type": "string",
+          "example": ""
+        },
+        "NOMS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "OBS": {
+          "type": "string",
+          "example": ""
+        },
+        "PAFF": {
+          "type": "string",
+          "example": ""
+        },
+        "PART": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PARN": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PDEN": {
+          "type": "string",
+          "example": ""
+        },
+        "PERS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PLAN": {
+          "type": "string",
+          "example": ""
+        },
+        "PLOC": {
+          "type": "string",
+          "example": ""
+        },
+        "PPRO": {
+          "type": "string",
+          "example": ""
+        },
+        "PREP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "PROT": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "PSTA": {
+          "type": "string",
+          "example": ""
+        },
+        "REFE": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFP": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REFO": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFJOC": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REFMUS": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "REG": {
+          "type": "string",
+          "example": ""
+        },
+        "REMA": {
+          "type": "string",
+          "example": ""
+        },
+        "REMP": {
+          "type": "string",
+          "example": ""
+        },
+        "RENV": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "REPR": {
+          "type": "string",
+          "example": ""
+        },
+        "RFPA": {
+          "type": "string",
+          "example": ""
+        },
+        "SCLD": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "SCLE": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "SCLX": {
+          "type": "array",
+          "example": [
+            "16e s."
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "SITE": {
+          "type": "string",
+          "example": ""
+        },
+        "STAT": {
+          "type": "string",
+          "example": ""
+        },
+        "TECH": {
+          "type": "array",
+          "example": [
+            "Vitrail"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "TICO": {
+          "type": "string",
+          "example": ""
+        },
+        "TOIT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "TYPO": {
+          "type": "string",
+          "example": ""
+        },
+        "VERT": {
+          "type": "string",
+          "example": ""
+        },
+        "REFIM": {
+          "type": "string",
+          "example": ""
+        },
+        "IMG": {
+          "type": "array",
+          "example": [
+            ""
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "VIDEO": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_DOSSIER_VERT": {
+          "type": "string",
+          "example": ""
+        },
+        "POP_ARRETE_PROTECTION": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "POP_DOSSIER_PROTECTION": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "DOSURL": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSURLPDF": {
+          "type": "string",
+          "example": ""
+        },
+        "DOSADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "LIENS": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "IMAGE": {
+          "type": "string",
+          "example": ""
+        },
+        "VISI": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "VOCA": {
+          "type": "string",
+          "example": ""
+        },
+        "VOUT": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "WEB": {
+          "type": "string",
+          "example": ""
+        },
+        "ZONE": {
+          "type": "string",
+          "example": ""
+        },
+        "THEM": {
+          "type": "string",
+          "example": ""
+        },
+        "ACMH": {
+          "type": "string",
+          "example": ""
+        },
+        "ACURL": {
+          "type": "string",
+          "example": ""
+        },
+        "WADRS": {
+          "type": "string",
+          "example": ""
+        },
+        "WCOM": {
+          "type": "string",
+          "example": "Auxon"
+        },
+        "WRENV": {
+          "type": "string",
+          "example": ""
+        },
+        "REFM": {
+          "type": "string",
+          "example": ""
+        },
+        "CONTACT": {
+          "type": "string",
+          "example": ""
+        },
+        "IDAGR": {
+          "type": "string",
+          "example": ""
+        },
+        "LMDP": {
+          "type": "string",
+          "example": ""
+        },
+        "PINT": {
+          "type": "string",
+          "example": ""
+        },
+        "DLAB": {
+          "type": "string",
+          "example": ""
+        },
+        "_id": {
+          "type": "string",
+          "example": "5b8418e054caee0d1410972b"
+        },
+        "POP_COORDINATES_POINT": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "example": [],
+              "items": {}
+            }
+          }
+        },
+        "POP_HAS_LOCATION": {
+          "type": "array",
+          "example": [
+            "non"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "DOSURLP": {
+          "type": "string",
+          "example": ""
+        },
+        "REF": {
+          "type": "string",
+          "example": "PA00078021"
+        },
+        "MEMOIRE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "ref": {
+                "type": "string",
+                "example": ""
+              },
+              "name": {
+                "type": "string",
+                "example": ""
+              },
+              "url": {
+                "type": "string",
+                "example": ""
+              },
+              "copy": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        },
+        "__v": {
+          "type": "number",
+          "example": 14
+        },
+        "POP_COMMENTAIRES": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        },
+        "HISTORIQUE": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "nom": {
+                "type": "string",
+                "example": ""
+              },
+              "prenom": {
+                "type": "string",
+                "example": ""
+              },
+              "email": {
+                "type": "string",
+                "example": ""
+              },
+              "date": {
+                "type": "string",
+                "example": ""
+              },
+              "updateMode": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetProducteurs": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        },
+        "producteurs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "BASE": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "base": {
+                      "type": "string",
+                      "example": "museo"
+                    },
+                    "prefixes": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  }
+                }
+              },
+              "_id": {
+                "type": "string",
+                "example": ""
+              },
+              "LABEL": {
+                "type": "string",
+                "example": "MUSEE"
+              },
+              "__v": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

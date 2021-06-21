@@ -19,49 +19,54 @@
                 "description": "Identifiant de la galerie"
             }],
             "get": {
+                "tags": ["Gallery"],
                 "summary": "Retourne les informations d'une galerie",
                 "description": "Retourne les informations de la galerie (permaliens MNR)",
                 "responses": {
                     "200": {
-                        "description": "Informations de a galerie",
-                        "schema": {
-                            "type": "object",
-                            "items": {
-                                "properties": {
-                                    "success": { 
-                                        "type": "boolean" 
-                                    },
-                                    "doc": {
-                                        "type": "object",
-                                        "items": {
-                                            "properties": {
-                                                "createdBy": { 
-                                                    "type": "string" 
-                                                },
-                                                "institution": { 
-                                                    "type": "string" 
-                                                },
-                                                "createdAt": { 
-                                                    "type": "string" 
-                                                },
-                                                "_id": { 
-                                                    "type": "string" 
-                                                },
-                                                "params": { 
-                                                    "type": "object",
-                                                    "items": {
-                                                        "properties": {
-                                                            "base": { 
-                                                                "type": "string" 
-                                                            },
-                                                            "mode": { 
-                                                                "type": "string" 
-                                                            },
-                                                            "qb": {
-                                                                "type": "string" 
-                                                            },
-                                                            "view": {
-                                                                "type": "string" 
+                        "description": "Informations de la galerie",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "items": {
+                                        "properties": {
+                                            "success": { 
+                                                "type": "boolean" 
+                                            },
+                                            "doc": {
+                                                "type": "object",
+                                                "items": {
+                                                    "properties": {
+                                                        "createdBy": { 
+                                                            "type": "string" 
+                                                        },
+                                                        "institution": { 
+                                                            "type": "string" 
+                                                        },
+                                                        "createdAt": { 
+                                                            "type": "string" 
+                                                        },
+                                                        "_id": { 
+                                                            "type": "string" 
+                                                        },
+                                                        "params": { 
+                                                            "type": "object",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "base": { 
+                                                                        "type": "string" 
+                                                                    },
+                                                                    "mode": { 
+                                                                        "type": "string" 
+                                                                    },
+                                                                    "qb": {
+                                                                        "type": "string" 
+                                                                    },
+                                                                    "view": {
+                                                                        "type": "string" 
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }

@@ -11,6 +11,29 @@ const upload = multer({ dest: "uploads/" });
 const { checkESIndex, identifyProducteur } = require("../controllers/utils");
 
 router.get("/:ref", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Autor']
+      #swagger.path = '/autor/{ref}'
+      #swagger.description = "Retourne les informations de la notice auteur"
+      #swagger.parameters['ref'] = { 
+        in: 'path', 
+        description: 'Référence de la notice auteur',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetAutor'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
   const autor = await Autor.findOne({ REF: req.params.ref });
   if (autor) {
     return res.status(200).send(autor);
@@ -24,6 +47,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+
+     /* 	
+      #swagger.tags = ['Autor']
+      #swagger.description = "Utilisé lors de l'import"  
+    */
     const notices = JSON.parse(req.body.autorNotices);
     var promises = [];
 
@@ -83,6 +111,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Autor']
+      #swagger.description = "Utilisé pour la mise à jour du document"  
+    */
+
     const ref = req.params.ref;
 
     const notice = JSON.parse(req.body.notice);
@@ -136,6 +169,10 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Autor']
+      #swagger.description = "Utilisé pour la création du document"  
+    */
     const notices = JSON.parse(req.body.autorNotices);
     let promises = [];
     for(let i=0; i<notices.length; i++){
@@ -178,6 +215,11 @@ router.post(
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Autor']
+    #swagger.description = "Utilisé pour la suppression du document"  
+  */
+
   try {
     const ref = req.params.ref;
     const doc = await Autor.findOne({ REF: ref });

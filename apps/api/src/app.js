@@ -9,7 +9,7 @@ require("./mongo");
 const app = express();
 
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('./swagger/swagger_ui.json');
 
 app.enable("trust proxy");
 

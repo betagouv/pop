@@ -13,6 +13,11 @@ router.use(bodyParser.json());
 
 // Get all users.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+      #swagger.tags = ['Users']
+      #swagger.path = '/users'
+      #swagger.description = 'Récupère la liste des utilisateurs' 
+  */
   const query = {};
   // Only "administrateur" role can view all accounts.
   if (req.user.role !== "administrateur") {
@@ -33,6 +38,11 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 
 // Update a user (or self) by email.
 router.put("/:email", passport.authenticate("jwt", { session: false }), async (req, res) => {
+   /* 	
+      #swagger.tags = ['Users']
+      #swagger.path = '/users'
+      #swagger.description = 'Mise à jour d\'un utilisateur' 
+  */
   const { nom, prenom, institution, group, role, museofile } = req.body;
   const email = req.params.email && req.params.email.toLowerCase();
   const authenticatedUser = req.user;
@@ -93,6 +103,11 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
 
 // Create one user.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+      #swagger.tags = ['Users']
+      #swagger.path = '/users'
+      #swagger.description = 'Création d\'un utilisateur' 
+  */
   const { nom, prenom, institution, group, role, museofile } = req.body;
   const email = req.body.email && req.body.email.toLowerCase();
   const authenticatedUser = req.user;
@@ -147,6 +162,11 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 
 // Delete one user by her email.
 router.delete("/:email", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+      #swagger.tags = ['Users']
+      #swagger.path = '/users'
+      #swagger.description = 'Suppression d\'un utilisateur' 
+  */
   try {
     const email = req.params.email;
     const authenticatedUser = req.user;

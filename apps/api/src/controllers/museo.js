@@ -129,6 +129,29 @@ async function updateJocondeNotices(notice) {
 
 // Get one notice.
 router.get("/:ref", async (req, res) => {
+  /* 	
+    #swagger.tags = ['Museo']
+    #swagger.path = '/museo/{ref}'
+    #swagger.description = 'Retourne les informations de la notice Museo' 
+    #swagger.parameters['ref'] = { 
+      in: 'path', 
+      description: 'Référence de la notice Museo',
+      type: 'string' 
+    }
+    #swagger.responses[200] = { 
+      schema: { 
+        "$ref": '#/definitions/GetMuseo'
+      },
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[404] = { 
+      description: 'Document non trouvé',
+      schema: {
+        success: false,
+        msg: "Document introuvable"
+      } 
+    }
+  */
   const museo = await Museo.findOne({ REF: req.params.ref });
   if (museo) {
     return res.status(200).send(museo);
@@ -142,6 +165,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+  /* 	
+    #swagger.tags = ['Museo']
+    #swagger.path = '/museo'
+    #swagger.description = 'Création de la notice Museo' 
+  */
     const notice = JSON.parse(req.body.notice);
 
     if (!notice || !notice.REF) {
@@ -198,6 +226,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+  /* 	
+    #swagger.tags = ['Museo']
+    #swagger.path = '/museo/[ref}'
+    #swagger.description = 'Modification de la notice Museo' 
+  */
     const notice = JSON.parse(req.body.notice);
     const updateMode = req.body.updateMode;
     const user = req.user;
@@ -270,6 +303,11 @@ router.put(
 
 // Delete a notice by its ref.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Museo']
+    #swagger.path = '/museo/[ref}'
+    #swagger.description = 'Suppression de la notice Museo' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Museo.findOne({ REF: ref });

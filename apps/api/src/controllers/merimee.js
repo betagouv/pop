@@ -213,6 +213,11 @@ function populateREFO(notice) {
 
 // Generate new ID from notice information (department + prefix)
 router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Mérimée']
+    #swagger.path = '/merimee/newId'
+    #swagger.description = 'Retourne la nouvelle référence' 
+  */
   try {
     const prefix = req.query.prefix;
     const dpt = req.query.dpt;
@@ -234,6 +239,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Mérimée']
+      #swagger.path = '/merimee/{ref}'
+      #swagger.description = 'Modification de la notice Mérimée' 
+    */
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
@@ -321,6 +331,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Mérimée']
+      #swagger.path = '/merimee'
+      #swagger.description = 'Création de la notice Mérimée' 
+    */
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
@@ -362,6 +377,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Mérimée']
+      #swagger.path = '/merimee/{ref}'
+      #swagger.description = 'Retourne les informations de la notice Mérimée' 
+      #swagger.parameters['ref'] = { 
+        in: 'path', 
+        description: 'Référence de la notice Mérimée',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetMerimee'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
   const ref = req.params.ref;
   const notice = await Merimee.findOne({ REF: ref });
   if (notice) {
@@ -372,6 +410,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Mérimée']
+    #swagger.path = '/merimee/{ref}'
+    #swagger.description = 'Suppression de la notice Mérimée' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Merimee.findOne({ REF: ref });

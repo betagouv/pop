@@ -243,6 +243,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Mémoire']
+      #swagger.path = '/memoire/{ref}'
+      #swagger.description = 'Modification de la notice Mémoire' 
+  */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
@@ -319,6 +324,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Mémoire']
+      #swagger.path = '/memoire'
+      #swagger.description = 'Création de la notice Mémoire' 
+  */
     const notice = JSON.parse(req.body.notice);
     notice.DMIS = notice.DMAJ = formattedNow();
     await determineProducteur(notice);
@@ -363,6 +373,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Mémoire']
+      #swagger.path = '/memoire/{ref}'
+      #swagger.description = 'Retourne les informations de la notice Mémoire' 
+      #swagger.parameters['ref'] = { 
+        in: 'path', 
+        description: 'Référence de la notice Mémoire',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetMemoire'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
   const ref = req.params.ref;
   const notice = await Memoire.findOne({ REF: ref });
   if (notice) {
@@ -373,6 +406,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+      #swagger.tags = ['Mémoire']
+      #swagger.path = '/memoire/{ref}'
+      #swagger.description = 'Suppression de la notice Mémoire' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Memoire.findOne({ REF: ref });

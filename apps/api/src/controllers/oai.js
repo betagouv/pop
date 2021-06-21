@@ -38,6 +38,26 @@ const {
  * fonction GET qui encapsule les différents appels
  */
 router.get("/", async (req, res) => {
+    /* 	
+    #swagger.tags = ['Oai']
+    #swagger.path = '/oai'
+    #swagger.description = 'Retourne les informations en fonction du paramètre (Identify, ListSets, ListMetadataFormats, ListIdentifiers, ListRecords, GetRecord)' 
+    #swagger.parameters['verb'] = { 
+      in: 'query', 
+      description: 'Paramètre suivant description',
+      type: 'string' 
+    }
+    #swagger.responses[200] = { 
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[404] = { 
+      description: 'Document non trouvé',
+      schema: {
+        success: false,
+        msg: "Document introuvable"
+      } 
+    }
+  */
     try{
     res.set('Content-Type', 'text/xml;charset=UTF-8')
     switch (req.query.verb) {

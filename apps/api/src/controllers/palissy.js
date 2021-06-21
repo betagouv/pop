@@ -257,6 +257,11 @@ function populateMerimeeREFO(notice) {
 }
 
 router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Palissy']
+    #swagger.path = '/palissy/newId'
+    #swagger.description = 'Retourne la nouvelle référence' 
+  */
   const prefix = req.query.prefix;
   const dpt = req.query.dpt;
   try {
@@ -276,6 +281,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Palissy']
+      #swagger.path = '/palissy/{ref}'
+      #swagger.description = 'Modification de la notice Palissy' 
+    */
     try {
       const ref = req.params.ref;
       const notice = JSON.parse(req.body.notice);
@@ -367,6 +377,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+      #swagger.tags = ['Palissy']
+      #swagger.path = '/palissy'
+      #swagger.description = 'Création de la notice Palissy' 
+    */
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
@@ -410,6 +425,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Palissy']
+      #swagger.path = '/palissy/{ref}'
+      #swagger.description = 'Retourne les informations de la notice Palissy' 
+      #swagger.parameters['ref'] = { 
+        in: 'path', 
+        description: 'Référence de la notice Palissy',
+        type: 'string' 
+      }
+      #swagger.responses[200] = { 
+        schema: { 
+          "$ref": '#/definitions/GetPalissy'
+        },
+        description: 'Récupération des informations avec succés' 
+      }
+      #swagger.responses[404] = { 
+        description: 'Document non trouvé',
+        schema: {
+          success: false,
+          msg: "Document introuvable"
+        } 
+      }
+  */
   const ref = req.params.ref;
   const notice = await Palissy.findOne({ REF: ref });
   if (notice) {
@@ -420,6 +458,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Palissy']
+    #swagger.path = '/palissy/{ref}'
+    #swagger.description = 'Suppression de la notice Palissy' 
+  */
   try {
     const ref = req.params.ref;
     const doc = await Palissy.findOne({ REF: ref });
