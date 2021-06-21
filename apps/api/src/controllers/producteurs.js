@@ -13,6 +13,25 @@ router.use(bodyParser.json());
 
 // Get all producteurs.
 router.get("/", async (req, res) => {
+  /* 	
+    #swagger.tags = ['Producteurs']
+    #swagger.path = '/producteur'
+    #swagger.description = 'Retourne la liste des Producteurs' 
+    
+    #swagger.responses[200] = { 
+      schema: { 
+        "$ref": '#/definitions/GetProducteurs'
+      },
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[404] = { 
+      description: 'Document non trouvé',
+      schema: {
+        success: false,
+        msg: "Document introuvable"
+      } 
+    }
+  */
   const query = {};
   try {
     const producteurs = await Producteur.find(query);
@@ -26,6 +45,11 @@ router.get("/", async (req, res) => {
 // Get producteur by label.
 router.get("/label", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const {label} = req.query;
+  /* 	
+    #swagger.tags = ['Producteurs']
+    #swagger.path = '/producteur/label'
+    #swagger.description = 'Retourne les informations du Producteur en fonction du label' 
+  */
   try {
       const producteur = await Producteur.findOne({LABEL: label});
       return res.status(200).send({ success: true, producteur });
@@ -37,6 +61,11 @@ router.get("/label", passport.authenticate("jwt", { session: false }), async (re
 
 // Update a producteur.
 router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+   /* 	
+    #swagger.tags = ['Producteurs']
+    #swagger.path = '/producteur/{id}'
+    #swagger.description = 'Modification du Producteur' 
+  */
     const { _id, label, base } = req.body;
 
     // Validate required fields.
@@ -92,6 +121,11 @@ router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req
 });
 
 router.get("/prefixesFromProducteurs", passport.authenticate("jwt", { session: false }), async (req, res) => { 
+  /* 	
+    #swagger.tags = ['Producteurs']
+    #swagger.path = '/producteur/prefixesFromProducteurs'
+    #swagger.description = 'Retourne les informations du Producteur en fonction du prefixes' 
+  */
   let listePrefix = [];
   let listeProducteur = req.query.producteurs;
   let producteurs = await Producteur.find({});
@@ -110,6 +144,11 @@ router.get("/prefixesFromProducteurs", passport.authenticate("jwt", { session: f
 
 // Create one producteur.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => { 
+  /* 	
+    #swagger.tags = ['Producteurs']
+    #swagger.path = '/producteur'
+    #swagger.description = 'Création d'une nouveau Producteur' 
+  */
     let { label, base } = req.body;
 
     // Validate required fields.

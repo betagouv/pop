@@ -14,6 +14,11 @@ router.use(bodyParser.json());
 
 // Sign in.
 router.post("/signin", async (req, res) => {
+  /* 	
+    #swagger.tags = ['Auth']
+    #swagger.path = '/auth/signin'
+    #swagger.description = 'Authentification utilisateur' 
+  */
   const email = req.body.email.toLowerCase();
   const password = req.body.password;
   if (!email || !password) {
@@ -42,11 +47,21 @@ router.post("/signin", async (req, res) => {
 
 // Get current user.
 router.get("/user", passport.authenticate("jwt", { session: false }), (req, res) => {
+   /* 	
+    #swagger.tags = ['Auth']
+    #swagger.path = '/auth/user'
+    #swagger.description = 'Informations utilisateur' 
+  */
   res.send({ success: true, user: req.user });
 });
 
 // Password lost.
 router.post("/forgetPassword", async (req, res) => {
+  /* 	
+    #swagger.tags = ['Auth']
+    #swagger.path = '/auth/forgetPassword'
+    #swagger.description = 'Demande de modification du mot de passe' 
+  */
   const email = req.body.email.toLowerCase();
   if (!email) {
     return res.status(400).send({ success: false, msg: `Email requis.` });
@@ -85,6 +100,11 @@ router.post(
   "/updatePassword",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
+  /* 	
+    #swagger.tags = ['Auth']
+    #swagger.path = '/auth/updatePassword'
+    #swagger.description = 'Modification mot de passe' 
+  */
     const { email, pwd, pwd1, pwd2 } = req.body;
 
     if (!pwd1) {

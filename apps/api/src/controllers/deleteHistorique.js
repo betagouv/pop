@@ -13,6 +13,28 @@ router.use(bodyParser.json());
 
 // Get all deleteHistorique.
 router.get("/", async (req, res) => {
+  /* 	
+    #swagger.tags = ['DeleteHistorique']
+    #swagger.path = '/deleteHistorique'
+    #swagger.description = 'Retourne la liste des notices supprimées' 
+    #swagger.parameters['limit'] = {
+      description: 'Optionnel: Permet de limiter le nombre de résultat'
+    }
+    #swagger.responses[200] = { 
+      schema: { 
+        "$ref": '#/definitions/GetDeleteHistorique'
+      },
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[404] = { 
+      description: 'Document non trouvé',
+      schema: {
+        success: false,
+        msg: "Document introuvable"
+      } 
+    }
+  */
+
   let query = {};
   try {
     let deleteHistorique;
@@ -34,6 +56,12 @@ router.get("/", async (req, res) => {
 
 // Create one historique from deleted notice.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => { 
+    /* 	
+      #swagger.tags = ['DeleteHistorique']
+      #swagger.path = '/deleteHistorique'
+      #swagger.description = 'Création d\'un enregistrement pour une notice supprimée' 
+    */
+  
     const { ref, base } = req.body;
     const user = req.user;
 

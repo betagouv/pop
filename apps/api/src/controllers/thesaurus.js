@@ -13,6 +13,11 @@ function escapeRegExp(string) {
 }
 
 router.get("/search", passport.authenticate("jwt", { session: false }), (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/search'
+      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+  */
   let id = req.query.id;
   let value = escapeRegExp(req.query.value);
   let q = Thesaurus.find({ arc: id, value: { $regex: new RegExp("^" + value) } }).limit(10);
@@ -22,6 +27,11 @@ router.get("/search", passport.authenticate("jwt", { session: false }), (req, re
 });
 
 router.get("/validate", passport.authenticate("jwt", { session: false }), (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/validate'
+      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+  */
   let id = req.query.id;
   let value = escapeRegExp(req.query.value);
   const query = {
@@ -39,6 +49,11 @@ router.get(
   "/getTopConceptsByThesaurusId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/getTopConceptsByThesaurusId'
+      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+    */
     try {
       const thesaurusId = req.query.id;
       getTopConceptsByThesaurusId(thesaurusId).then(arr => {
@@ -55,6 +70,11 @@ router.get(
   "/getAllChildrenConcept",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/getAllChildrenConcept'
+      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+    */
     try {
       const topconcepts = req.query.id;
       const arr = [];
@@ -72,6 +92,11 @@ router.get(
   "/getPreferredTermByConceptId",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/getPreferredTermByConceptId'
+      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+    */
     try {
       const conceptId = req.query.id;
       const allTerms = [];
@@ -91,6 +116,11 @@ router.get(
 );
 
 router.get("/deleteAllThesaurus", passport.authenticate("jwt", { session: false }), (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/deleteAllThesaurus'
+      #swagger.description = 'Suppression de tous les Thesaurus' 
+  */
   try {
     const thesaurusId = req.query.id;
     Thesaurus.remove({ arc: thesaurusId }, function() {
@@ -103,6 +133,11 @@ router.get("/deleteAllThesaurus", passport.authenticate("jwt", { session: false 
 });
 
 router.post("/createThesaurus", passport.authenticate("jwt", { session: false }), (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/deleteAllThesaurus'
+      #swagger.description = 'Création d'un Thesaurus' 
+  */
   try {
     const thesaurusId = req.query.id;
     const terms = req.body.terms;

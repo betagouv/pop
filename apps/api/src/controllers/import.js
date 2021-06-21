@@ -14,6 +14,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
+    /* 	
+    #swagger.tags = ['Import']
+    #swagger.path = '/import'
+    #swagger.description = "Création d'un import"
+  */
     try {
       const body = JSON.parse(req.body.import);
       const obj = new Import(body);
@@ -34,6 +39,22 @@ router.post(
 
 // Get imports count (for diffusion stats).
 router.get("/count", async (req, res) => {
+   /* 	
+    #swagger.tags = ['Import']
+    #swagger.path = '/import/count'
+    #swagger.description = "Retourne le nombre total d\'import"
+    #swagger.responses[200] = { 
+      schema: 'number',
+      description: 'Récupération des informations avec succés' 
+    }
+    #swagger.responses[500] = { 
+      description: 'Erreur interne serveur',
+      schema: {
+        success: false,
+        msg: "Erreur survenue lors de la récupération des données"
+      } 
+    }
+  */
   let imports = null;
   try {
     imports = await Import.collection.estimatedDocumentCount({});

@@ -11,6 +11,11 @@ router.use(bodyParser.json());
 
 // Get all groups.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+    #swagger.tags = ['Groups']
+    #swagger.path = '/groups'
+    #swagger.description = 'Récupère la liste des groupes' 
+  */
   const query = {};
   // Only "administrateur" role can view all accounts.
   if (req.user.role !== "administrateur") {
@@ -28,6 +33,11 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 
 // Get group by label.
 router.get("/label", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    /* 	
+    #swagger.tags = ['Groups']
+    #swagger.path = '/groups/label'
+    #swagger.description = 'Récupère le groupe en fonction du label' 
+  */
     const {label} = req.query;
     try {
         const group = await Group.findOne({LABEL: label});
@@ -41,6 +51,11 @@ router.get("/label", passport.authenticate("jwt", { session: false }), async (re
 
 // Get all groups.
 router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    /* 	
+        #swagger.tags = ['Groups']
+        #swagger.path = '/groups/canEdit'
+        #swagger.description = 'Vérification de l\'ahtorisation d\'accés' 
+    */
     const {ref, museo, producteur, collection} = req.query;
     const user = req.user;
     
@@ -101,6 +116,11 @@ router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (
 
 // Update a group.
  router.put("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    /* 	
+        #swagger.tags = ['Groups']
+        #swagger.path = '/groups'
+        #swagger.description = 'Mise à jour d\'un groupe' 
+    */
     const { _id, label, producteurs } = req.body;
 
     // Validate required fields.
@@ -153,6 +173,11 @@ router.get("/canEdit", passport.authenticate("jwt", { session: false }), async (
 
 // Create one group.
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    /* 	
+        #swagger.tags = ['Groups']
+        #swagger.path = '/groups'
+        #swagger.description = 'Création d\'un groupe' 
+    */
     let { label, producteurs } = req.body;
     // Validate required fields.
     let allGroups;

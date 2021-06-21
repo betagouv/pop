@@ -6,14 +6,15 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
     "dev:env": "nodemon -r dotenv/config ./src/index.js",
-    "start": "node ./src/index.js  ",
+    "start": "node ./src/swagger/swagger.js && node ./src/index.js  ",
     "deploy:prod": "npm install && eb deploy pop-api --profil POP",
     "deploy:staging": "npm install && eb deploy pop-api-staging --profil POP",
     "test": "jest -i",
     "sitemap": "nodemon -r dotenv/config src/sitemap/sitemap.js",
     "export:schemas": "node src/export-db-schemas",
     "export:csv": "node src/export-db-csv",
-    "export:mapping": "node src/export-db-mapping"
+    "export:mapping": "node src/export-db-mapping",
+    "start-gendoc": "node ./src/swagger/swagger.js"
   },
   "repository": {
     "type": "git",
@@ -71,6 +72,7 @@
     "passport-jwt": "^4.0.0",
     "proj4": "^2.5.0",
     "request": "^2.87.0",
+    "swagger-autogen": "^2.10.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^3.3.2",
     "validator": "^11.1.0",
