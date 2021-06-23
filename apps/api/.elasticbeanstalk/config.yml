@@ -1,18 +1,5 @@
-environment-defaults:
-  pop-api-staging:
-    branch: null
-    repository: null
 global:
-  application_name: pop_api
-  branch: null
-  default_ec2_keyname: null
-  default_platform: node.js
+  application_name: pop-api
   default_region: eu-west-3
   include_git_submodules: true
-  instance_profile: null
-  platform_name: null
-  platform_version: null
-  profile: null
-  repository: null
-  sc: git
   workspace_type: Application
