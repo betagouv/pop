@@ -209,7 +209,9 @@ async function exportData(fileName, entities, header) {
           value = entities[j].POP_COORDONNEES.lon || "";
         }
       }
-
+      
+      value = value.replace(/\0/g, '');
+      
       arr.push(`"${value}"`);
     }
     csv.push(arr.join(";"));
