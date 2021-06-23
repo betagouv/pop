@@ -5,7 +5,7 @@
     "title": "POP Api",
     "description": "Documentation sur les webservices de l'application Api"
   },
-  "host": "api.pop.culture.gouv.fr",
+  "host": "pop-api-staging.eu-west-3.elasticbeanstalk.com",
   "basePath": "/",
   "tags": [
     {
