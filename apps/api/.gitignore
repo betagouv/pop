@@ -16,6 +16,8 @@ upload
 
 uploads
 
+src/swagger/swagger_ui.json
+
 sitemap/
 
 # Created by .ignore support plugin (hsz.mobi)
