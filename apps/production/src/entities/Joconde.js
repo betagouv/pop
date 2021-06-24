@@ -11,9 +11,10 @@ export default class Joconde extends Notice {
     }
 
     if (body.LOCA) {
-      const { MANQUANT, MANQUANT_COM } = this.extractManquant(body.LOCA);
+      const { LOCA, MANQUANT, MANQUANT_COM } = this.extractManquant(body.LOCA, body.MANQUANT, body.MANQUANT_COM);
+      this.LOCA = body.LOCA = LOCA;
       this.MANQUANT = body.MANQUANT = MANQUANT;
-      this.MANQUANT_COM = MANQUANT_COM;
+      this.MANQUANT_COM = body.MANQUANT_COM = MANQUANT_COM;
     }
 
     // ADD Boring stuff in order to split text to check for the thesaurus
@@ -58,29 +59,40 @@ export default class Joconde extends Notice {
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
 
-  extractManquant = function(str) {
+  extractManquant = function(loca, manquant, manquantcom) {
     const MANQUANT = ["manquant"];
 
-    if (["détruit", "détruite", "detruit", "detruite"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT: [], MANQUANT_COM: "détruit" };
+    if (["manquant", "manquants", "manquante", "manquantes"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["manquantes", "manquants", "manquante", "manquant"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: manquantcom };
     }
-    if (["localisation inconnue"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT, MANQUANT_COM: "" };
+
+    if (["volé", "volée", "volés", "volées"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["volées", "volés", "volée", "volé"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT:['volé'], MANQUANT_COM: manquantcom };
     }
-    if (["disparu", "disparue", "disparus"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT, MANQUANT_COM: "disparu" };
+
+    if (["disparu", "disparue", "disparus", "disparues"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["disparues", "disparus", "disparue", "disparu"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "disparu" };
     }
-    if (["pillé", "pillée"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT, MANQUANT_COM: "pillé" };
+
+    if (["localisation inconnue"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["localisation inconnue"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "localisation inconnue" };
     }
-    if (["volé", "volée", "volés", "volées"].some(e => str.indexOf(e) !== -1)) {
-      MANQUANT.push("volé");
-      return { MANQUANT, MANQUANT_COM: "" };
+
+    if (["pillé", "pillée"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["pillée", "pillé"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "pillé" };
     }
-    if (["manquant", "manquants", "manquante", "manquantes"].some(e => str.indexOf(e) !== -1)) {
-      return { MANQUANT, MANQUANT_COM: "" };
-    }
-    return { MANQUANT: [], MANQUANT_COM: "" };
+
+    return { LOCA: loca, MANQUANT: manquant, MANQUANT_COM: manquantcom };
   };
 
   extractIMGNames = function(str) {
