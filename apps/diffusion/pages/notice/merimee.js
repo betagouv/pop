@@ -369,7 +369,7 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.TYPO.label} content={notice.TYPO} />
                   <Field title={mapping.merimee.ETAT.label} content={notice.ETAT} />
                   <Title
-                    content="Protection"
+                    content="Protection et label"
                     notice={notice}
                     fields={[
                       "PROT",

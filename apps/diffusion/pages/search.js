@@ -283,6 +283,7 @@ export default class extends React.Component {
             width: -moz-available;
             width: -webkit-fill-available;
             width: fill-available;
+            max-width: 100%;
           }
           .search .search-results-advanced {
             display: flex;
@@ -361,6 +362,7 @@ export default class extends React.Component {
           }
 
           .search .search-row {
+            display: flex;
             justify-content: center;
           }
           @media screen and (max-width: 767px) {
