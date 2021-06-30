@@ -55,12 +55,12 @@ function parseFiles(files, encoding) {
         const notice = new Memoire(obj);
 
         // If NOMSN does not exists, don't update IMG.
-        if (obj.NOMSN !== undefined) {
-          if (!obj.NOMSN) {
+        if (obj.REFIMG !== undefined) {
+          if (!obj.REFIMG) {
             // If REFIMG is empty, delete IMG
             notice.IMG = "";
           } else {
-            let fileName = String(obj.NOMSN);
+            let fileName = String(obj.REFIMG);
             fileName = convertLongNameToShort(fileName);
             let img = filesMap[fileName];
             if (img) {
