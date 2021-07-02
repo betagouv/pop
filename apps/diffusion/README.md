@@ -14,7 +14,7 @@ npm install
 
 ## Utilisation (locale)
 
-Lancer la commande `npm run dev` pour accéder à l'application via l'URL `http://localhost:8081`. Voir le fichier `package.json` pour le détail des commandes.
+Lancer la commande `npm run dev` pour accéder à l'application via l'URL `http://localhost:8083`. Voir le fichier `package.json` pour le détail des commandes.
 
 ## Tests
 
