@@ -297,6 +297,150 @@ export function PalissyPdf(notice, title, localisation, links) {
                   : <></>
                 }
             </View>
+            <View style={styles.voirAussi}>
+                  {
+                  (notice.DOSURL || notice.DOSURLPDF || notice.POP_DOSSIER_VERT || (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) 
+                  || (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) || (notice.LIENS && notice.LIENS.length) 
+                  || (notice.LINHA && notice.LINHA.length) || (notice.LREG && notice.LREG.length) || (notice.LMDP)) ?
+                  <Text  style={styles.subtitle} >Voir aussi</Text>
+                  : <></>
+                  }
+
+                  {
+                  (notice.DOSURL) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURL.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.DOSURL) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.merimee.DOSURL.label}
+                  src={notice.DOSURL}
+                  key="notice.DOSURL">Voir le dossier complet sur le site de la région</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.DOSURLPDF) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURLPDF.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.DOSURLPDF) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.merimee.DOSURLPDF.label}
+                  src={postFixedLink(notice.DOSURLPDF)}
+                  key="notice.DOSURLPDF">Voir le dossier d'origine numérisé</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.POP_DOSSIER_VERT) ? 
+                  <Text style={styles.fieldTitle}>{mapping.palissy.POP_DOSSIER_VERT.label}</Text>
+                  : <></>
+                  }     
+                  {
+                  (notice.POP_DOSSIER_VERT) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.palissy.POP_DOSSIER_VERT.label}
+                  src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
+                  key="notice.POP_DOSSIER_VERT">Voir le dossier d'origine numérisé</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_ARRETE_PROTECTION.label}</Text>
+                  : <></>
+                  }     
+                  {
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length)?
+                  notice.POP_ARRETE_PROTECTION.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
+                  target="_blank"
+                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                  }) : <></>
+                  }
+
+                  {
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_DOSSIER_PROTECTION.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length)? 
+                    notice.POP_DOSSIER_PROTECTION.map((value, index) =>{
+                    return <Link
+                    style={styles.listLinked}
+                    src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
+                    target="_blank"
+                    key="notice.POP_DOSSIER_PROTECTION">{notice.POP_DOSSIER_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                  }) : <></>
+                  }
+                  
+                  {
+                  (notice.LIENS && notice.LIENS.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LIENS.label}</Text>
+                  : <></>
+                  }
+                  {
+                    (notice.LIENS && notice.LIENS.length)? 
+                      notice.LIENS.map((value, index) =>{
+                      return <Link
+                      style={styles.listLinked}
+                      src={notice.LIENS[index]}
+                      target="_blank"
+                      key={`notice.LIENS${index}`}>{notice.LIENS[index]}</Link>
+                    }) : <></>
+                    }
+
+                  {
+                  (notice.LINHA && notice.LINHA.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LINHA.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LINHA && notice.LINHA.length)?
+                  notice.LINHA.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={notice.LINHA[index]}
+                  target="_blank"
+                  key={"notice.LINHA_"+index}>{notice.LINHA[index]}</Link>
+                  }) : <></>
+                  }
+
+                  {
+                  (notice.LREG && notice.LREG.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LREG.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LREG && notice.LREG.length)? 
+                  notice.LREG.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={notice.LREG[index]}
+                  target="_blank"
+                  key={"notice.LREG_"+index}>{notice.LREG[index]}</Link>
+                  }) : <></>
+                  }
+
+                {
+                  (notice.LMDP) ? 
+                  <Link
+                  style={styles.listLinked}
+                  src={getUrlArchive(notice.REF)}
+                  target="_blank"
+                  key="mediathek_cible">Les archives conservées à la Médiathèque de l'architecture et du patrimoine</Link>
+                  : <></>
+                }
+            </View>
           </View>
         </View>
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
