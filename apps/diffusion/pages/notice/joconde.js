@@ -235,7 +235,7 @@ export default class extends React.Component {
 
     //construction du pdf au format joconde
     //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
-    const pdf = JocondePdf(notice, title, this.props.links);
+    const pdf = JocondePdf(notice, title, this.props.links, this.props.museo);
     const App = () => (
       <div>
         <PDFDownloadLink 
