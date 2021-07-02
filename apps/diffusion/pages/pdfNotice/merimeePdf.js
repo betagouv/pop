@@ -6,8 +6,148 @@ import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
 import { bucket_url } from "../../src/config";
+import { postFixedLink, getUrlArchive } from "../../src/notices/utils";
 
 export function MerimeePdf(notice, title, localisation, links){
+
+  const arr = [];
+
+ /**  if (notice.DOSURL) {
+    arr.push(
+      <Field
+        title={mapping.merimee.DOSURL.label}
+        content={<a href={notice.DOSURL}>Voir le dossier complet sur le site de la région</a>}
+        key="notice.DOSURL"
+      />
+    );
+  }
+
+  if (notice.DOSURLPDF) {
+    arr.push(
+      <Field
+        title={mapping.merimee.DOSURLPDF.label}
+        content={<a href={postFixedLink(notice.DOSURLPDF)}>Voir le dossier d'origine numérisé</a>}
+        key="notice.DOSURLPDF"
+      />
+    );
+  }
+
+  if (notice.POP_DOSSIER_VERT) {
+    arr.push(
+      <Field
+        title={mapping.palissy.POP_DOSSIER_VERT.label}
+        content={
+          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>Voir le dossier d'origine numérisé</a>
+        }
+        key="notice.POP_DOSSIER_VERT"
+      />
+    );
+  }
+
+  if (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) {
+    const urls = [];
+    for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
+      const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
+      urls.push(
+        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+          {filename}
+        </a>
+      );
+    }
+    arr.push(
+      <Field
+        key="notice.POP_ARRETE_PROTECTION"
+        title={mapping.merimee.POP_ARRETE_PROTECTION.label}
+        content={<div style={{ display: "flex", flexDirection: "column" }}>{urls}</div>}
+      />
+    );
+  }
+
+  if (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) {
+    const urls = [];
+    for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
+      const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
+      urls.push(
+        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+          {filename}
+        </a>
+      );
+    }
+    arr.push(
+      <Field
+        key="notice.POP_DOSSIER_PROTECTION"
+        title={mapping.merimee.POP_DOSSIER_PROTECTION.label}
+        content={<div style={{ display: "flex", flexDirection: "column" }}>{urls}</div>}
+      />
+    );
+  }
+
+  if (notice.LIENS && notice.LIENS.length) {
+    for (let i = 0; i < notice.LIENS.length; i++) {
+      arr.push(
+        <Field
+          title={mapping.merimee.LIENS.label}
+          content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
+          key={`notice.LIENS${i}`}
+        />
+      );
+    }
+  }
+
+  if (notice.LINHA) {
+    if(notice.LINHA.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LINHA.label}
+          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          key="notice.LINHA_0"
+        />
+      );
+
+      for(let i=1; i<notice.LINHA.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            key={"notice.LINHA_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LREG) {
+    if(notice.LREG.length>0){
+      arr.push(
+        <Field
+          title={mapping.merimee.LREG.label}
+          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          key="notice.LREG_0"
+        />
+      );
+
+      for(let i=1; i<notice.LREG.length; i++){
+        arr.push(
+          <Field
+            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            key={"notice.LREG_"+i}
+          />
+          );
+      }      
+    }
+  }
+
+  if (notice.LMDP) {
+    arr.push(
+      <Field
+        content={
+          <a href={getUrlArchive(notice.REF)} target="_blank">
+            Les archives conservées à la Médiathèque de l'architecture et du patrimoine
+          </a>
+        }
+        key="mediathek_cible"
+      />
+    );
+  } */
   return(
     <Document>
       <Page style={styles.page}>
@@ -164,6 +304,151 @@ export function MerimeePdf(notice, title, localisation, links){
                 <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} isPdf={true}/>
                 <Field title={mapping.merimee.COPY.label} content={notice.COPY} isPdf={true}/>
                 <Field title={"Contactez-nous"} content={notice.CONTACT}  isPdf={true} separator="#"/>
+            </View>
+
+            <View style={styles.voirAussi}>
+                  {
+                  (notice.DOSURL || notice.DOSURLPDF || notice.POP_DOSSIER_VERT || (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) 
+                  || (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) || (notice.LIENS && notice.LIENS.length)  || (notice.LINHA && notice.LINHA.length) 
+                  || (notice.LREG && notice.LREG.length) || (notice.LMDP)) ?
+                  <Text  style={styles.subtitle} >Voir aussi</Text>
+                  : <></>
+                  }
+
+                  {
+                  (notice.DOSURL) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURL.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.DOSURL) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.merimee.DOSURL.label}
+                  src={notice.DOSURL}
+                  key="notice.DOSURL">Voir le dossier complet sur le site de la région</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.DOSURLPDF) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURLPDF.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.DOSURLPDF) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.merimee.DOSURLPDF.label}
+                  src={postFixedLink(notice.DOSURLPDF)}
+                  key="notice.DOSURLPDF">Voir le dossier d'origine numérisé</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.POP_DOSSIER_VERT) ? 
+                  <Text style={styles.fieldTitle}>{mapping.palissy.POP_DOSSIER_VERT.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.POP_DOSSIER_VERT) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.palissy.POP_DOSSIER_VERT.label}
+                  src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
+                  key="notice.POP_DOSSIER_VERT">Voir le dossier d'origine numérisé</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_ARRETE_PROTECTION.label}</Text>
+                  : <></>
+                  }     
+                  {
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length)?
+                  notice.POP_ARRETE_PROTECTION.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
+                  target="_blank"
+                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                  }) : <></>
+                  }
+
+                  {
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_DOSSIER_PROTECTION.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length)? 
+                    notice.POP_DOSSIER_PROTECTION.map((value, index) =>{
+                    return <Link
+                    style={styles.listLinked}
+                    src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
+                    target="_blank"
+                    key="notice.POP_DOSSIER_PROTECTION">{notice.POP_DOSSIER_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                  }) : <></>
+                  }
+                  
+                  {
+                  (notice.LIENS) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LIENS.label}</Text>
+                  : <></>
+                  }
+                  {
+                    (notice.LIENS && notice.LIENS.length)? 
+                      notice.LIENS.map((value, index) =>{
+                      return <Link
+                      style={styles.listLinked}
+                      src={notice.LIENS[index]}
+                      target="_blank"
+                      key={`notice.LIENS${index}`}>{notice.LIENS[index]}</Link>
+                    }) : <></>
+                    }
+
+                  {
+                  (notice.LINHA && notice.LINHA.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LINHA.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LINHA && notice.LINHA.length)?
+                  notice.LINHA.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={notice.LINHA[index]}
+                  target="_blank"
+                  key={"notice.LINHA_"+index}>{notice.LINHA[index]}</Link>
+                  }) : <></>
+                  }
+
+                  {
+                  (notice.LREG && notice.LREG.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.merimee.LREG.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LREG && notice.LREG.length)? 
+                  notice.LREG.map((value, index) =>{
+                  return <Link
+                  style={styles.listLinked}
+                  src={notice.LREG[index]}
+                  target="_blank"
+                  key={"notice.LREG_"+index}>{notice.LREG[index]}</Link>
+                  }) : <></>
+                  }
+
+                  {
+                  (notice.LMDP) ? 
+                  <Link
+                  style={styles.listLinked}
+                  src={getUrlArchive(notice.REF)}
+                  target="_blank"
+                  key="mediathek_cible">Les archives conservées à la Médiathèque de l'architecture et du patrimoine</Link>
+                  : <></>
+                }
             </View>
           </View>
         </View>

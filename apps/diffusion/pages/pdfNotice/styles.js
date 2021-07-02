@@ -52,6 +52,14 @@ export const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         padding: "10px"
     },
+    voirAussi: {
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        backgroundColor: "#ffffff",
+        padding: "10px",
+        marginTop:"10px"
+    },
     image: {
         margin: "10px"
     },

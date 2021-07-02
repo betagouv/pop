@@ -6,8 +6,10 @@ import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../src/notices/utils";
 import { bucket_url } from "../../src/config";
+import isURL from "validator/lib/isURL";
+import isEmail from "validator/lib/isEmail";
 
-export function JocondePdf(notice, title, links){
+export function JocondePdf(notice, title, links, museo){
   return(
     <Document>
       <Page style={styles.page}>
@@ -119,6 +121,94 @@ export function JocondePdf(notice, title, links){
               <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} separator="#" isPdf={true} />
               <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" isPdf={true} />
               <Field title={"Contactez-nous"} content={notice.CONTACT} separator="#" isPdf={true} />
+            </View>
+            <View style={styles.voirAussi}>
+                  {
+                  (notice.LVID || (notice.WWW && notice.WWW.length) || notice.MUSEO || isURL(notice.RETIF) || isEmail(notice.MSGCOM)) ?
+                  <Text  style={styles.subtitle} >Voir aussi</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LVID) ? 
+                  <Text style={styles.fieldTitle}>{mapping.joconde.LVID.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LVID) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.joconde.LVID.label}
+                  src={notice.LVID}
+                  key="notice.LVID">{notice.LVID}</Link>
+                  : <></>
+                  }
+
+                  {
+                  (notice.WWW && notice.WWW.length) ? 
+                  <Text style={styles.fieldTitle}>{mapping.joconde.WWW.label}</Text>
+                  : <></>
+                  }
+                  {
+                    (notice.WWW && notice.WWW.length)? 
+                      notice.WWW.map((value, index) =>{
+                      return <Link
+                      style={styles.listLinked}
+                      src={notice.WWW[index]}
+                      target="_blank"
+                      key={notice.WWW[index]}>{notice.WWW[index]}</Link>
+                    }) : <></>
+                  }
+
+                  {
+                  (notice.MUSEO) ? 
+                  <Text style={styles.fieldTitle}>{mapping.joconde.MUSEO.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.MUSEO) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.joconde.MUSEO.label}
+                  src={`/notice/museo/${notice.MUSEO}`}
+                  key={notice.MUSEO}>{museo
+                    ? [
+                        museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
+                        museo.VILLE_M || museo.VILLE_AD,
+                        museo.REF
+                      ].join(" - ")
+                    : test}</Link>
+                  : <></>
+                  }
+
+                  {
+                  (isURL(notice.RETIF)) ? 
+                  <Text style={styles.fieldTitle}>{mapping.joconde.RETIF.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (isURL(notice.RETIF)) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.joconde.RETIF.label}
+                  src={notice.RETIF}
+                  key="notice.RETIF">INHA</Link>
+                  : <></>
+                  }
+
+                  {
+                  (isEmail(notice.MSGCOM)) ? 
+                  <Text style={styles.fieldTitle}>{mapping.joconde.MSGCOM.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (isEmail(notice.MSGCOM)) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.joconde.MSGCOM.label}
+                  src={`mailto:${notice.MSGCOM}`}
+                  key="notice.MSGCOM">Demande de photographie et/ou de conditions d'utilisation</Link>
+                  : <></>
+                  }
             </View>
           </View>
         </View>

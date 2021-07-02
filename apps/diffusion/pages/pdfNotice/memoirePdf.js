@@ -160,6 +160,28 @@ export function MemoirePdf(notice, title, links){
               <Field title={mapping.memoire.COPY.label} content={notice.COPY} separator="#" isPdf={true} />
               <Field title={"Contactez-nous"} content={notice.CONTACT} separator="#" isPdf={true} />
             </View>
+            <View style={styles.voirAussi}>
+                  {
+                  (notice.LAUTP) ?
+                  <Text  style={styles.subtitle} >Voir aussi</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LAUTP) ? 
+                  <Text style={styles.fieldTitle}>{mapping.memoire.LAUTP.label}</Text>
+                  : <></>
+                  }
+                  {
+                  (notice.LAUTP) ? 
+                  <Link
+                  style={styles.listLinked}
+                  title={mapping.memoire.LAUTP.label}
+                  src={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
+                  target="_blank"
+                  key="notice.LAUTP">{notice.LAUTP}</Link>
+                  : <></>
+                  }
+            </View>
           </View>
         </View>
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
