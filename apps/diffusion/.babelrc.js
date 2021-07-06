@@ -1,5 +1,3 @@
-const env = require("./src/env-config.js");
-
 module.exports = {
   presets: [
     [
@@ -14,5 +12,4 @@ module.exports = {
       }
     ]
   ],
-  plugins: [["transform-define", env]]
 };
