@@ -1,4 +1,4 @@
-# Variable à définir au niveau du projet Gitlab, avec l'option "masqué" :
+# Variable à définir au niveau du projet Gitlab, avec l'option "masquée" :
 # - AWS_ACCESS_KEY_ID_OPEN      : Identifiant AWS pour les environnements Open
 # - AWS_SECRET_ACCESS_KEY_OPEN  : Clé AWS pour les environnements Open
 # - AWS_ACCESS_KEY_ID_MC        : Identifiant AWS pour les environnements du Ministère de la Culture
@@ -15,6 +15,14 @@ stages:
   - deploy
   - staging
   - production
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+    - when: never
 
 #
 # TEMPLATES
@@ -193,14 +201,10 @@ test-diffusion:
       - apps/production/build
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 30 days
-
-build-production-devic1:
-  <<: *build-production
-  variables:
-    APP: production
-    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
-    NODE_ENV: devic1
+  rules:
+    - changes:
+        - "apps/${APP}/*"
+        - ".gitlab-ci.yml"
 
 #
 # BUILD DIFFUSION
@@ -230,6 +234,29 @@ build-production-devic1:
       - apps/diffusion/.next
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 30 days
+  rules:
+    - changes:
+        - "apps/${APP}/*"
+        - ".gitlab-ci.yml"
+
+#
+# DEVIC1 - OPEN
+#
+
+.devic1-rules: &devic1-rules
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+    - when: never
+
+build-production-devic1:
+  <<: *build-production
+  variables:
+    APP: production
+    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
+    NODE_ENV: devic1
+  <<: *devic1-rules
 
 build-diffusion-devic1:
   <<: *build-diffusion
@@ -239,10 +266,7 @@ build-diffusion-devic1:
     POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: devic1
-
-#
-# DEPLOY
-#
+  <<: *devic1-rules
 
 deploy-api-devic1:
   <<: *deploy-open
@@ -255,6 +279,7 @@ deploy-api-devic1:
     name: pop-api-devic1
     url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  <<: *devic1-rules
 
 deploy-production-devic1:
   <<: *deploy-open
@@ -268,6 +293,7 @@ deploy-production-devic1:
     name: pop-production-devic1
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
+  <<: *devic1-rules
 
 deploy-diffusion-devic1:
   <<: *deploy-open
@@ -281,6 +307,7 @@ deploy-diffusion-devic1:
     name: pop-consultation-devic1
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  <<: *devic1-rules
 
 #
 # STAGING - MC
@@ -293,7 +320,8 @@ build-production-staging:
     API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
     NODE_ENV: staging
-  when: manual
+  rules:
+    - when: manual
 
 build-diffusion-staging:
   <<: *build-diffusion
@@ -303,7 +331,8 @@ build-diffusion-staging:
     POP_URL: http://pop-staging.culture.gouv.fr/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
     NODE_ENV: staging
-  when: manual
+  rules:
+    - when: manual
 
 deploy-api-staging:
   <<: *deploy-mc
@@ -360,7 +389,8 @@ build-production-production:
     API_URL: https://api.pop.culture.gouv.fr
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
     NODE_ENV: production
-  when: manual
+  rules:
+    - when: manual
 
 build-diffusion-production:
   <<: *build-diffusion
@@ -370,7 +400,8 @@ build-diffusion-production:
     POP_URL: https://pop.culture.gouv.fr/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
     NODE_ENV: production
-  when: manual
+  rules:
+    - when: manual
 
 deploy-api-production:
   <<: *deploy-mc
