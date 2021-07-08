@@ -246,7 +246,7 @@ test-diffusion:
 .devic1-rules: &devic1-rules
   rules:
     - if: '$CI_COMMIT_BRANCH == "develop"'
-      when: always
+      when: on_success
     - when: never
 
 build-production-devic1:
