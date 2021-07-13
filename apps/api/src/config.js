@@ -5,6 +5,8 @@ let esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";
 let esPort = process.env.ES_PORT || 80;
 let s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 const secret = process.env.SECRET || "not-so-secret";
+const MAPBOX_API_SECRET_TOKEN = process.env.MAPBOX_API_SECRET_TOKEN;
+const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
 
 module.exports = {
   mongoUrl,
@@ -12,5 +14,7 @@ module.exports = {
   esPort,
   s3Bucket,
   PORT,
-  secret
+  secret,
+  MAPBOX_API_SECRET_TOKEN,
+  MAPBOX_EXPIRATION_DELAY,
 };
