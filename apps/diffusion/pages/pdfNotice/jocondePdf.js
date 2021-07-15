@@ -144,7 +144,7 @@ export function JocondePdf(notice, title, links, museo){
                   }
 
                   {
-                  (notice.WWW && notice.WWW.length) ? 
+                  (notice.WWW && notice.WWW.length > 0) ? 
                   <Text style={styles.fieldTitle}>{mapping.joconde.WWW.label}</Text>
                   : <></>
                   }
@@ -191,7 +191,7 @@ export function JocondePdf(notice, title, links, museo){
                   style={styles.listLinked}
                   title={mapping.joconde.RETIF.label}
                   src={notice.RETIF}
-                  key="notice.RETIF">INHA</Link>
+                  key="notice.RETIF">{notice.RETIF}</Link>
                   : <></>
                   }
 
@@ -206,7 +206,7 @@ export function JocondePdf(notice, title, links, museo){
                   style={styles.listLinked}
                   title={mapping.joconde.MSGCOM.label}
                   src={`mailto:${notice.MSGCOM}`}
-                  key="notice.MSGCOM">Demande de photographie et/ou de conditions d'utilisation</Link>
+                  key="notice.MSGCOM">{`mailto:${notice.MSGCOM}`}</Link>
                   : <></>
                   }
             </View>
