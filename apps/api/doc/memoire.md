@@ -246,7 +246,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur de l'oeuvre représentée|
+|Array|non|non|non|non||Auteur de l'oeuvre représentée|
 
 ### AUTG
 Nom, Prénom (profession ou titre et/ou dates)
@@ -256,7 +256,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur de la gravure|
+|Array|non|non|non|non||Auteur de la gravure|
 
 ### AUTP
 Nom, Prénom (profession ou titre et/ou dates)
@@ -276,7 +276,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur du document reproduit / auteur de l'original|
+|Array|non|non|non|non||Auteur du document reproduit / auteur de l'original|
 
 ### AUTTI
 Nom, Prénom (profession ou titre et/ou dates)
@@ -286,7 +286,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur du tirage|
+|Array|non|non|non|non||Auteur du tirage|
 
 ### COM
 
@@ -296,7 +296,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune|
+|Array|non|non|non|non||Commune|
 
 ### DOM
 Architecture, Objet, Portrait, Reportage. Affiche un avertissement si vide.
@@ -306,7 +306,7 @@ Architecture, Objet, Portrait, Reportage. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Domaine|
+|Array|non|non|non|non||Domaine|
 
 ### EDIF
 
@@ -356,7 +356,7 @@ Forme REG ; DPT ; COM ; EDIF
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote de conservation du document reproduit|
+|Array|non|non|non|non||Cote de conservation du document reproduit|
 
 ### LIEUCTI
 Forme REG ; DPT ; COM ; EDIF
@@ -456,7 +456,7 @@ Si plusieurs noms successifs, les citer tous en utilisant le point-virgule comme
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Pays|
+|Array|non|non|non|non||Pays|
 
 ### PUBLI
 Auteur, titre, lieu, éditeur, date
@@ -586,7 +586,7 @@ Code INSEE de la commune. Doit faire 5 caractères ou plus.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Code INSEE de la commune|
+|Array|non|non|non|non||Code INSEE de la commune|
 
 ### NVD
 
@@ -706,7 +706,7 @@ Date de l'œuvre représentée (édifice, objet, pièce de théâtre, film), en 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date de l'oeuvre|
+|Array|non|non|non|non||Date de l'oeuvre|
 
 ### DATPV
 AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA
@@ -776,7 +776,7 @@ Droits diffusion
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Département|
+|Array|non|non|non|non||Département|
 
 ### EDIARCH
 Interprétation
@@ -896,7 +896,7 @@ Régions non administratives, parcs naturels, fleuves, massifs montagneux, îles
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Mots-clés|
+|Array|non|non|non|non||Mots-clés|
 
 ### MENTIONS
 
@@ -936,7 +936,7 @@ Nom, Prénom (profession ou titre et/ou dates)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Identité de la personne photographiée|
+|Array|non|non|non|non||Identité de la personne photographiée|
 
 ### VUECD
 No vue CD
@@ -1036,7 +1036,7 @@ Numéro du tirage. Doit contenir uniquement des caractères alphanumériques.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Région|
+|Array|non|non|non|non||Région|
 
 ### SENS
 V, H, C, O
@@ -1056,7 +1056,7 @@ V, H, C, O
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Siècle de l'œuvre|
+|Array|non|non|non|non||Siècle de l'œuvre|
 
 ### SUP
 
@@ -1416,7 +1416,7 @@ Ville [Quelle difference avec COM ?]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur du phototype ou du document graphique|
+|Array|non|non|non|non||Auteur du phototype ou du document graphique|
 
 ### AUTR
 
@@ -1426,7 +1426,7 @@ Ville [Quelle difference avec COM ?]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur de l'œuvre étudiée|
+|Array|non|non|non|non||Auteur de l'œuvre étudiée|
 
 ### DOC
 

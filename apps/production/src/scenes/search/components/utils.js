@@ -4,20 +4,28 @@ import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
   const arr = [];
-  if (notice.REG){ 
-    arr.push(notice.REG);
+  if (Array.isArray(notice.REG) && notice.REG.length > 0){ 
+    for(let i=0; i<notice.REG.length; i++){
+      arr.push(notice.REG[i]);
+    }
   }
-  if (notice.DPT){
-    arr.push(departmentText(notice.DPT));
+  if (Array.isArray(notice.DPT) && notice.DPT.length > 0){
+    for(let i=0; i<notice.DPT.length; i++){
+      arr.push(departmentText(notice.DPT[i]));
+    }
   }
 
   //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
-  if (notice.WCOM || notice.COM) {
-    if (notice.WCOM){
-      arr.push(notice.WCOM);
+  if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
+    if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
+      for(let i=0; i<notice.WCOM.length; i++){
+        arr.push(notice.WCOM[i]);
+      }
     }
     else {
-      arr.push(notice.COM);
+      for(let i=0; i<notice.COM.length; i++){
+        arr.push(notice.COM[i]);
+      }
     }
   }
 
