@@ -139,8 +139,8 @@ const Schema = new mongoose.Schema(
       }
     },
     ATEL: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Personne morale créatrice de l'objet"
@@ -184,16 +184,16 @@ const Schema = new mongoose.Schema(
       }
     },
     COM: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Commune. Ne peut pas être vide si WCOM est renseigné.",
         label: "Commune"
       }
     },
     COM2: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Commune masquée"
@@ -388,16 +388,16 @@ const Schema = new mongoose.Schema(
       }
     },
     DPT: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Département. Doit contenir 2 caractères ou plus et commencer comme DPT.",
         label: "Département"
       }
     },
     DPT_LETTRE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Département en lettre",
         label: "Département en lettre"
@@ -519,8 +519,8 @@ const Schema = new mongoose.Schema(
       }
     },
     INSEE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description:
           "Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.",
@@ -528,8 +528,8 @@ const Schema = new mongoose.Schema(
       }
     },
     INSEE2: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Code INSEE masqué"
@@ -888,8 +888,8 @@ const Schema = new mongoose.Schema(
       }
     },
     REG: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description:
           "Région. Doit être une des valeurs suivantes : " +
@@ -1036,8 +1036,8 @@ const Schema = new mongoose.Schema(
       }
     },
     WCOM: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Commune pour l'affichage"
