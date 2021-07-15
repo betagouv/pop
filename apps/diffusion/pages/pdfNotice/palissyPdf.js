@@ -175,7 +175,7 @@ export function PalissyPdf(notice, title, localisation, links){
                   style={styles.listLinked}
                   title={mapping.merimee.DOSURL.label}
                   src={notice.DOSURL}
-                  key="notice.DOSURL">Voir le dossier complet sur le site de la région</Link>
+                  key="notice.DOSURL">{notice.DOSURL}</Link>
                   : <></>
                   }
 
@@ -190,7 +190,7 @@ export function PalissyPdf(notice, title, localisation, links){
                   style={styles.listLinked}
                   title={mapping.merimee.DOSURLPDF.label}
                   src={postFixedLink(notice.DOSURLPDF)}
-                  key="notice.DOSURLPDF">Voir le dossier d'origine numérisé</Link>
+                  key="notice.DOSURLPDF">{postFixedLink(notice.DOSURLPDF)}</Link>
                   : <></>
                   }
 
@@ -205,49 +205,49 @@ export function PalissyPdf(notice, title, localisation, links){
                   style={styles.listLinked}
                   title={mapping.palissy.POP_DOSSIER_VERT.label}
                   src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-                  key="notice.POP_DOSSIER_VERT">Voir le dossier d'origine numérisé</Link>
+                  key="notice.POP_DOSSIER_VERT">{`${bucket_url}${notice.POP_DOSSIER_VERT}`}</Link>
                   : <></>
                   }
 
                   {
-                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) ? 
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length > 0) ? 
                   <Text style={styles.fieldTitle}>{mapping.merimee.POP_ARRETE_PROTECTION.label}</Text>
                   : <></>
                   }     
                   {
-                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length)?
+                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length > 0)?
                   notice.POP_ARRETE_PROTECTION.map((value, index) =>{
                   return <Link
                   style={styles.listLinked}
                   src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
                   target="_blank"
-                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}</Link>
                   }) : <></>
                   }
 
                   {
-                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) ? 
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length > 0) ? 
                   <Text style={styles.fieldTitle}>{mapping.merimee.POP_DOSSIER_PROTECTION.label}</Text>
                   : <></>
                   }
                   {
-                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length)? 
+                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length > 0)? 
                     notice.POP_DOSSIER_PROTECTION.map((value, index) =>{
                     return <Link
                     style={styles.listLinked}
                     src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
                     target="_blank"
-                    key="notice.POP_DOSSIER_PROTECTION">{notice.POP_DOSSIER_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                    key="notice.POP_DOSSIER_PROTECTION">{`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}</Link>
                   }) : <></>
                   }
                   
                   {
-                  (notice.LIENS && notice.LIENS.length) ? 
+                  (notice.LIENS && notice.LIENS.length > 0) ? 
                   <Text style={styles.fieldTitle}>{mapping.merimee.LIENS.label}</Text>
                   : <></>
                   }
                   {
-                    (notice.LIENS && notice.LIENS.length)? 
+                    (notice.LIENS && notice.LIENS.length > 0)? 
                       notice.LIENS.map((value, index) =>{
                       return <Link
                       style={styles.listLinked}
@@ -258,7 +258,7 @@ export function PalissyPdf(notice, title, localisation, links){
                     }
 
                   {
-                  (notice.LINHA && notice.LINHA.length) ? 
+                  (notice.LINHA && notice.LINHA.length > 0) ? 
                   <Text style={styles.fieldTitle}>{mapping.merimee.LINHA.label}</Text>
                   : <></>
                   }
@@ -274,12 +274,12 @@ export function PalissyPdf(notice, title, localisation, links){
                   }
 
                   {
-                  (notice.LREG && notice.LREG.length) ? 
+                  (notice.LREG && notice.LREG.length > 0 ) ? 
                   <Text style={styles.fieldTitle}>{mapping.merimee.LREG.label}</Text>
                   : <></>
                   }
                   {
-                  (notice.LREG && notice.LREG.length)? 
+                  (notice.LREG && notice.LREG.length > 0)? 
                   notice.LREG.map((value, index) =>{
                   return <Link
                   style={styles.listLinked}
@@ -295,7 +295,7 @@ export function PalissyPdf(notice, title, localisation, links){
                   style={styles.listLinked}
                   src={getUrlArchive(notice.REF)}
                   target="_blank"
-                  key="mediathek_cible">Les archives conservées à la Médiathèque de l'architecture et du patrimoine</Link>
+                  key="mediathek_cible">{getUrlArchive(notice.REF)}</Link>
                   : <></>
                 }
             </View>
