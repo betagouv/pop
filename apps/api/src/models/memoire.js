@@ -90,16 +90,16 @@ const Schema = new mongoose.Schema(
       }
     },
     AUTOEU: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Auteur de l'oeuvre représentée"
       }
     },
     AUTG: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Auteur de la gravure"
@@ -114,29 +114,29 @@ const Schema = new mongoose.Schema(
       }
     },
     AUTOR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Auteur du document reproduit / auteur de l'original"
       }
     },
     AUTTI: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Auteur du tirage"
       }
     },
     COM: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: { description: "", label: "Commune" }
     },
     DOM: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Architecture, Objet, Portrait, Reportage. Affiche un avertissement si vide.",
         label: "Domaine"
@@ -175,8 +175,8 @@ const Schema = new mongoose.Schema(
       }
     },
     COTECOR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Cote de conservation du document reproduit"
@@ -256,8 +256,8 @@ const Schema = new mongoose.Schema(
       }
     },
     PAYS: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description:
           "Si plusieurs noms successifs, les citer tous en utilisant le point-virgule comme séparateur",
@@ -362,8 +362,8 @@ const Schema = new mongoose.Schema(
       }
     },
     INSEE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Code INSEE de la commune. Doit faire 5 caractères ou plus.",
         label: "Code INSEE de la commune"
@@ -464,8 +464,8 @@ const Schema = new mongoose.Schema(
       }
     },
     DATOEU: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description:
           "Date de l'œuvre représentée (édifice, objet, pièce de théâtre, film), en année",
@@ -523,8 +523,8 @@ const Schema = new mongoose.Schema(
       }
     },
     DPT: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Département"
@@ -625,8 +625,8 @@ const Schema = new mongoose.Schema(
       }
     },
     MCL: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Mots-clés"
@@ -657,8 +657,8 @@ const Schema = new mongoose.Schema(
       }
     },
     MCPER: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "Nom, Prénom (profession ou titre et/ou dates)",
         label: "Identité de la personne photographiée"
@@ -736,8 +736,8 @@ const Schema = new mongoose.Schema(
       documentation: { description: "", label: "Phototype(s) en relation" }
     },
     REG: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: { description: "", label: "Région" }
     },
     SENS: {
@@ -749,8 +749,8 @@ const Schema = new mongoose.Schema(
       }
     },
     SCLE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "12e ; 18e (fin)",
         label: "Siècle de l'œuvre"
@@ -1062,16 +1062,16 @@ const Schema = new mongoose.Schema(
       }
     },
     AUT: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Auteur du phototype ou du document graphique"
       }
     },
     AUTR: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [],
       documentation: {
         description: "",
         label: "Auteur de l'œuvre étudiée"

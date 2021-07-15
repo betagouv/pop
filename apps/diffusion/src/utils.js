@@ -132,24 +132,34 @@ export function getNoticeInfo(notice) {
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
       let localisation = [];
-      if (notice.REG) {
-        localisation.push(notice.REG);
+      if (Array.isArray(notice.REG) && notice.REG.length > 0) {
+        for(let i=0; i<notice.REG.length; i++){
+          localisation.push(notice.REG[i]);
+        }
       }
-      if (notice.DPT) {
-        if (notice.DPT_LETTRE) {
-          localisation.push(`${notice.DPT_LETTRE} (${notice.DPT})`);
+      if (Array.isArray(notice.DPT) && notice.DPT.length > 0) {
+        if (Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length > 0) {
+          for(let i=0; i<notice.DPT_LETTRE.length; i++){
+            localisation.push(`${notice.DPT_LETTRE[i]} (${notice.DPT[i]})`);
+          }
         } else {
-          localisation.push(notice.DPT);
+          for(let i=0; i<notice.DPT.length; i++){
+            localisation.push(notice.DPT[i]);
+          }
         }
       }
 
       //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
-      if (notice.WCOM || notice.COM) {
-        if (notice.WCOM){
-          localisation.push(notice.WCOM);
+      if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
+        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
+          for(let i=0; i<notice.WCOM.length; i++){
+            localisation.push(notice.WCOM[i]);
+          }
         }
         else {
-          localisation.push(notice.COM);
+          for(let i=0; i<notice.COM.length; i++){
+           localisation.push(notice.COM[i]);
+          }
         }
       }
 
@@ -198,26 +208,36 @@ export function getNoticeInfo(notice) {
       }
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
-
+      
       let localisation = [];
-      if (notice.REG) {
-        localisation.push(notice.REG);
+      if (Array.isArray(notice.REG) && notice.REG.length > 0) {
+        for(let i=0; i<notice.REG.length; i++){
+          localisation.push(notice.REG[i]);
+        }
       }
-      if (notice.DPT) {
-        if (notice.DPT_LETTRE) {
-          localisation.push(`${notice.DPT_LETTRE} (${notice.DPT})`);
+      if (Array.isArray(notice.DPT) && notice.DPT.length > 0) {
+        if (Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length > 0) {
+          for(let i=0; i<notice.DPT_LETTRE.length; i++){
+            localisation.push(`${notice.DPT_LETTRE[i]} (${notice.DPT[i]})`);
+          }
         } else {
-          localisation.push(notice.DPT);
+          for(let i=0; i<notice.DPT.length; i++){
+            localisation.push(notice.DPT[i]);
+          }
         }
       }
 
       //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
-      if (notice.WCOM || notice.COM) {
-        if (notice.WCOM){
-          localisation.push(notice.WCOM);
+      if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
+        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
+          for(let i=0; i<notice.WCOM.length; i++){
+            localisation.push(notice.WCOM[i]);
+          }
         }
         else {
-          localisation.push(notice.COM);
+          for(let i=0; i<notice.COM.length; i++){
+            localisation.push(notice.COM[i]);
+          }
         }
       }
 

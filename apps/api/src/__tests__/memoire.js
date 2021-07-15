@@ -116,7 +116,7 @@ describe("POST /memoire", () => {
       IDPROD: "", // 1
       LEG: "", // 2
       LBASE: ["123456789"], // 3, 4 (two errors in a row)
-      INSEE: "2", // 5
+      INSEE: ["2"], // 5
       CONTACT: "o", // 6
       NUMTI: "à", // 7
       NUMP: "à", // 8
