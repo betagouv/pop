@@ -5,6 +5,7 @@ import Location from "./Location";
 import Drawer from "./Drawer";
 import Marker from "./Marker";
 import Loader from "../../../components/Loader";
+import api from "../../../services/api";
 
 export default class Map extends React.Component {
   state = {
@@ -25,10 +26,10 @@ export default class Map extends React.Component {
     this.mapRef = React.createRef();
   }
 
-  componentDidMount() {
+  async loadMapBox() {
+
     const mapboxgl = require("mapbox-gl");
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
+    mapboxgl.accessToken = await api.getMapboxToken();
     this.map = new mapboxgl.Map({
       container: "map",
       style: this.state.style
@@ -51,6 +52,18 @@ export default class Map extends React.Component {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
+
+    this.map.on("error", event => {
+      if (event.error && event.error.status === 401) {
+        this.map.remove();
+        this.loadMapBox();
+      }
+    });
+  }
+
+  componentDidMount() {
+
+    this.loadMapBox();
   }
 
   updateQuery() {
