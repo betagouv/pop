@@ -10,7 +10,7 @@
     "@react-pdf/renderer": "^1.6.8",
     "@sentry/browser": "^4.6.6",
     "@sentry/node": "^4.6.6",
-    "acorn": "^6.2.0",
+    "acorn": "^6.4.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
     "html2canvas": "^1.0.0-rc.5",
