@@ -60,40 +60,34 @@ export default class Joconde extends Notice {
   }
 
   extractManquant = function(loca, manquant, manquantcom) {
-    const MANQUANT = ["manquant"];
-
-    if (["manquant", "manquants", "manquante", "manquantes"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["manquantes", "manquants", "manquante", "manquant"].find(e => loca.indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: manquantcom };
+    if(loca.indexOf("; manquant") !== -1){
+      let array = loca.split("; manquant");
+      return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
     }
 
-    if (["volé", "volée", "volés", "volées"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["volées", "volés", "volée", "volé"].find(e => loca.indexOf(e) !== -1);
-      let array = loca.split(element);
+    if(loca.indexOf("; volé") !== -1){
+      let array = loca.split("; volé");
       return { LOCA:array[0] + array[1], MANQUANT:['volé'], MANQUANT_COM: manquantcom };
     }
 
-    if (["disparu", "disparue", "disparus", "disparues"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["disparues", "disparus", "disparue", "disparu"].find(e => loca.indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "disparu" };
-    }
-
-    if (["localisation inconnue"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["localisation inconnue"].find(e => loca.indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "localisation inconnue" };
-    }
-
-    if (["pillé", "pillée"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["pillée", "pillé"].find(e => loca.indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT, MANQUANT_COM: "pillé" };
+    if (["; disparu", "; localisation inconnue", "; pillé"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; disparu", "; localisation inconnue", "; pillé"].find(e => loca.indexOf(e) !== -1);
+      return this.addManquantCom(loca, manquantcom, element);
     }
 
     return { LOCA: loca, MANQUANT: manquant, MANQUANT_COM: manquantcom };
   };
+
+  addManquantCom = function(loca, manquantcom, str){
+    let array = loca.split(str);
+    if(typeof manquantcom !== "undefined" && manquantcom !== "" && manquantcom !== " "){
+      manquantcom = manquantcom + " " + str;
+    }else{
+      const value = str.split("; ");
+      manquantcom = value[1];
+    }
+    return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
+  }
 
   extractIMGNames = function(str) {
     if (!str) {
