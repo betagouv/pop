@@ -16,7 +16,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "isomorphic-unfetch": "^3.0.0",
     "jspdf": "^1.5.3",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.21",
     "lodash.template": "^4.5.0",
     "mapbox-gl": "^0.53.1",
     "next": "^8.1.0",
