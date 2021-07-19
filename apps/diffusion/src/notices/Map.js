@@ -9,7 +9,7 @@ class MapComponent extends React.Component {
     super(props);
     this.mapRef = React.createRef();
     this.state = {
-      loading: true
+      loaded: false
     };
   }
 
@@ -32,7 +32,9 @@ class MapComponent extends React.Component {
         map.on("error", event => {
           if (event.error && event.error.status === 401) {
             map.remove();
-            loadMapBox();
+            this.setState({ loaded: false }, () => {
+              loadMapBox();
+            });
           }
         });
 
@@ -53,6 +55,8 @@ class MapComponent extends React.Component {
           });
           map.addLayer(layer);
         });
+
+        this.setState({ loaded: true });
       };
 
       loadMapBox();

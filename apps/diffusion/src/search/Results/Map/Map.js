@@ -24,6 +24,7 @@ export default class Map extends React.Component {
   constructor(props) {
     super(props);
     this.mapRef = React.createRef();
+    this.reload = this.reload.bind(this)
   }
 
   async loadMapBox() {
@@ -35,29 +36,44 @@ export default class Map extends React.Component {
       style: this.state.style
     });
 
-    this.map.on("load", e => {
+    const handleMapLoad = () => {
       this.mapInitialPosition(this.map);
       this.setState({ loaded: true });
       this.updateQuery();
-    });
+    };
+    this.map.on("load", handleMapLoad);
 
-    this.map.on("moveend", () => {
+    const handleMapMoveend = () => {
       if (this.state.loaded) {
         this.updateQuery();
       }
-    });
+    };
+    this.map.on("moveend", handleMapMoveend);
 
-    this.map.on("click", () => {
+    const handleMapClick = () => {
       this.selectMarker(null);
-    });
+    };
+    this.map.on("click", handleMapClick);
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    this.map.on("error", event => {
+    const handleMapError = event => {
       if (event.error && event.error.status === 401) {
-        this.map.remove();
-        this.loadMapBox();
+        this.setState({ loaded: false }, () => {
+          this.map.off("load", handleMapLoad);
+          this.map.off("moveend", handleMapMoveend);
+          this.map.off("click", handleMapClick);
+          this.map.off("error", handleMapError);
+          this.loadMapBox();
+        });
       }
+    };
+    this.map.on("error", handleMapError);
+  }
+
+  reload() {
+    this.setState({ loaded: false }, () => {
+      this.loadMapBox();
     });
   }
 
@@ -81,6 +97,11 @@ export default class Map extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if (!this.map) {
+      return;
+    }
+
     if (!nextProps.aggregations) {
       return;
     }
@@ -221,6 +242,7 @@ export default class Map extends React.Component {
           ready={this.state.loaded}
           map={this.map}
           setPosition={this.setPosition.bind(this)}
+          onReload={this.reload}
         />
         <Drawer
           notices={this.state.selectedMarker ? this.state.selectedMarker.getHits() : null}
