@@ -42,7 +42,7 @@
     "redux-saga": "^0.16.0",
     "validator": "^10.11.0",
     "webfontloader": "^1.6.28",
-    "xlsx": "^0.13.3"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "node src/server/index.js",
