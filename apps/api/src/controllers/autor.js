@@ -142,7 +142,7 @@ router.put(
       var dateTime = date+' '+time;
       
       let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+      const newHistorique = {nom: req.user.nom, prenom: req.user.prenom, email: req.user.email, date: dateTime, updateMode: req.body.updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
