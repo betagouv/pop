@@ -446,6 +446,7 @@ export default class extends React.Component {
                     separator="#"
                     content={notice.SUITE}
                     join=" ; "
+                    addLink="true"
                   />
                   <Field
                     title={mapping.mnr.REPR.label}
