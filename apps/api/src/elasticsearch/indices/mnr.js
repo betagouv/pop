@@ -141,7 +141,7 @@ module.exports = {
             }
           }
         },
-        CATE_DEPREC: {
+        RCL: {
           type: "text",
           fields: {
             keyword: {
@@ -318,7 +318,7 @@ module.exports = {
             }
           }
         },
-        HIST5: {
+        SALLES: {
           type: "text",
           fields: {
             keyword: {
@@ -327,7 +327,7 @@ module.exports = {
             }
           }
         },
-        HIST6: {
+        CARTELS: {
           type: "text",
           fields: {
             keyword: {
@@ -590,7 +590,7 @@ module.exports = {
             }
           }
         },
-        TOUT: {
+        NET: {
           type: "text",
           fields: {
             keyword: {
