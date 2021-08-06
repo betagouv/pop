@@ -50,7 +50,7 @@ module.exports = {
   mappings: {
     memoire: {
       properties: {
-        ACC: {
+        PLOC: {
           type: "text",
           fields: {
             keyword: {
@@ -86,7 +86,7 @@ module.exports = {
             }
           }
         },
-        ADRS: {
+        WADRS: {
           type: "text",
           fields: {
             keyword: {
@@ -738,7 +738,7 @@ module.exports = {
             }
           }
         },
-        NUMCAF: {
+        NUMVERS: {
           type: "text",
           fields: {
             keyword: {
@@ -1136,7 +1136,7 @@ module.exports = {
             }
           }
         },
-        TOILE: {
+        CINEPROD: {
           type: "text",
           fields: {
             keyword: {
@@ -1281,7 +1281,7 @@ module.exports = {
             }
           }
         },
-        NUMG: {
+        NEGPOS: {
           type: "text",
           fields: {
             keyword: {

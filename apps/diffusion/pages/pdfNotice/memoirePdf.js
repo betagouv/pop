@@ -70,7 +70,7 @@ export function MemoirePdf(notice, title, links){
 
 
             {(notice.TYPDOC || notice.NUMI || notice.NUMP || notice.ANUMP || notice.NUMAUTP || notice.NUMTI || notice.ANUMTI || notice.REPRO ||
-              notice.REPRO || notice.NUMG || notice.NUMOR || notice.ANUMOR || notice.RENV || notice.LIEUCTI || notice.COTECTI || notice.PRECOR ||
+              notice.REPRO || notice.NEGPOS || notice.NUMOR || notice.ANUMOR || notice.RENV || notice.LIEUCTI || notice.COTECTI || notice.PRECOR ||
               notice.ACQU || notice.DIFF || notice.ECH) ? 
             <View>
               <Text style={styles.subtitle} >3. Description de la photographie</Text>
@@ -83,7 +83,7 @@ export function MemoirePdf(notice, title, links){
               <Field title={mapping.memoire.NUMTI.label} content={notice.NUMTI} separator="#" isPdf={true} />
               <Field title={mapping.memoire.ANUMTI.label} content={notice.ANUMTI} separator="#" isPdf={true} />
               <Field title={mapping.memoire.REPRO.label} content={notice.REPRO} separator="#" isPdf={true} />
-              <Field title={mapping.memoire.NUMG.label} content={notice.NUMG} separator="#" isPdf={true} />
+              <Field title={mapping.memoire.NEGPOS.label} content={notice.NEGPOS} separator="#" isPdf={true} />
               <Field title={mapping.memoire.NUMOR.label} content={notice.NUMOR} separator="#" isPdf={true} />
               <Field title={mapping.memoire.ANUMOR.label} content={notice.ANUMOR} separator="#" isPdf={true} />
               <Field title={mapping.memoire.RENV.label} content={notice.RENV} separator="#" isPdf={true} />
