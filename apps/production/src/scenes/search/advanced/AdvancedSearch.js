@@ -107,7 +107,7 @@ export default function AdvancedSearch({ collection, card }) {
           value: [
             "NUMP.keyword",
             "ANUMP.keyword",
-            "NUMG.keyword",
+            "NEGPOS.keyword",
             "NUMAUTP.keyword",
             "NUMOR.keyword",
             "ANUMOR.keyword",
@@ -119,15 +119,15 @@ export default function AdvancedSearch({ collection, card }) {
             "COTECTI.keyword",
             "PRECOR.keyword",
             "REF.keyword",
-            "NUMCAF.keyword"
+            "NUMVERS.keyword"
           ],
           text:
-            "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote, NUMCAF"
+            "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote, NUMVERS"
         },
         {
-          value: ["NUMCAF.keyword"],
-          text: "NUMCAF - Numéro de versement",
-          fields: "NUMCAF"
+          value: ["NUMVERS.keyword"],
+          text: "NUMVERS - Numéro de versement",
+          fields: "NUMVERS"
         },
         {
           value: ["TYPDOC.keyword", "TECH.keyword", "TECHOR.keyword", "TECHTI.keyword"],
