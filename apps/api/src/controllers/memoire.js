@@ -29,6 +29,7 @@ const {
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
+const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
