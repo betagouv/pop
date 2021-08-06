@@ -192,9 +192,9 @@ class Notice extends React.Component {
                 <CustomField name="MARQ" disabled={!this.state.editable} />
                 <CustomField name="SERIE" disabled={!this.state.editable} />
                 <CustomField name="MCL" disabled={!this.state.editable} />
-                <CustomField name="COSTUME" disabled={!this.state.editable} />
-                <CustomField name="ACC" disabled={!this.state.editable} />
-                <CustomField name="TOILE" disabled={!this.state.editable} />
+                <CustomField name="DPT_LETTRE" disabled={!this.state.editable} />
+                <CustomField name="PLOC" disabled={!this.state.editable} />
+                <CustomField name="CINEPROD" disabled={!this.state.editable} />
                 <CustomField name="MCPER" disabled={!this.state.editable} />
                 <CustomField name="ADPHOT" disabled={!this.state.editable} />
                 <CustomField name="DOM" disabled={!this.state.editable} />
@@ -242,12 +242,12 @@ class Notice extends React.Component {
                 <CustomField name="NUMTI" disabled={!this.state.editable} />
                 <CustomField name="ANUMTI" disabled={!this.state.editable} />
                 <CustomField name="REPRO" disabled={!this.state.editable} />
-                <CustomField name="NUMG" disabled={!this.state.editable} />
+                <CustomField name="NEGPOS" disabled={!this.state.editable} />
                 <CustomField name="NUMOR" disabled={!this.state.editable} />
                 <CustomField name="ANUMOR" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
-                <CustomField name="NUMCAF" disabled={!this.state.editable} />
+                <CustomField name="NUMVERS" disabled={!this.state.editable} />
                 <CustomField name="RENV" disabled={!this.state.editable} />
                 <CustomField name="LIEUCTI" disabled={!this.state.editable} />
                 <CustomField name="COTECTI" disabled={!this.state.editable} />
@@ -263,7 +263,7 @@ class Notice extends React.Component {
             </div>
             <Row>
               <Col sm={6}>
-                <CustomField name="TECH" disabled={!this.state.editable} />
+                <CustomField name="TECHN" disabled={!this.state.editable} />
                 <CustomField name="FORMAT" disabled={!this.state.editable} />
                 <CustomField name="TECHTI" disabled={!this.state.editable} />
                 <CustomField name="FORMATTI" disabled={!this.state.editable} />
