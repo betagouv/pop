@@ -53,12 +53,12 @@ const Schema = new mongoose.Schema(
       }
     },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
-    TOUT: {
+    NET: {
       type: String,
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
+        label: "Présence sur site internet du musée ; date",
         deprecated: true
       }
     },
@@ -222,21 +222,21 @@ const Schema = new mongoose.Schema(
         deprecated: true
       }
     },
-    HIST5: {
+    SALLES: {
       type: String,
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
+        label: "Exposé en salles, à telle date",
         deprecated: true
       }
     },
-    HIST6: {
+    CARTELS: {
       type: String,
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
+        label: "Formulation des cartels (fautive ou non, à telle date)",
         deprecated: true
       }
     },
@@ -331,12 +331,12 @@ const Schema = new mongoose.Schema(
         label: "Catégorie"
       }
     },
-    CATE_DEPREC: {
+    RCL: {
       type: String,
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
+        label: "Récolé, date",
         deprecated: true
       }
     },

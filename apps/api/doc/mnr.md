@@ -6,7 +6,7 @@
 - [POP_FLAGS](/apps/api/doc/mnr.md#POP_FLAGS)
 - [REF](/apps/api/doc/mnr.md#REF)
 - [POP_IMPORT](/apps/api/doc/mnr.md#POP_IMPORT)
-- [TOUT](/apps/api/doc/mnr.md#TOUT)
+- [NET](/apps/api/doc/mnr.md#NET)
 - [AUTR](/apps/api/doc/mnr.md#AUTR)
 - [PAUT](/apps/api/doc/mnr.md#PAUT)
 - [ATTR](/apps/api/doc/mnr.md#ATTR)
@@ -28,8 +28,8 @@
 - [HIST2](/apps/api/doc/mnr.md#HIST2)
 - [HIST3](/apps/api/doc/mnr.md#HIST3)
 - [HIST4](/apps/api/doc/mnr.md#HIST4)
-- [HIST5](/apps/api/doc/mnr.md#HIST5)
-- [HIST6](/apps/api/doc/mnr.md#HIST6)
+- [SALLES](/apps/api/doc/mnr.md#SALLES)
+- [CARTELS](/apps/api/doc/mnr.md#CARTELS)
 - [SCLE](/apps/api/doc/mnr.md#SCLE)
 - [STYL](/apps/api/doc/mnr.md#STYL)
 - [MILL](/apps/api/doc/mnr.md#MILL)
@@ -42,7 +42,7 @@
 - [AATT](/apps/api/doc/mnr.md#AATT)
 - [AUTI](/apps/api/doc/mnr.md#AUTI)
 - [CATE](/apps/api/doc/mnr.md#CATE)
-- [CATE_DEPREC](/apps/api/doc/mnr.md#CATE_DEPREC)
+- [RCL](/apps/api/doc/mnr.md#RCL)
 - [NOTE](/apps/api/doc/mnr.md#NOTE)
 - [REDC](/apps/api/doc/mnr.md#REDC)
 - [DREP](/apps/api/doc/mnr.md#DREP)
@@ -122,7 +122,7 @@ Référence unique de la notice
 |----|------|------|------|--------|----------|-----|
 |Array|non|non|non|non|||
 
-### TOUT
+### NET
 [PAS AFFICHE]
 
 
@@ -130,7 +130,7 @@ Référence unique de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non||Présence sur site internet du musée ; date|
 
 ### AUTR
 Auteur / exécutant / collecteur
@@ -344,7 +344,7 @@ Historique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|oui|non|||
 
-### HIST5
+### SALLES
 [PAS AFFICHE]
 
 
@@ -352,9 +352,9 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non||Exposé en salles, à telle date|
 
-### HIST6
+### CARTELS
 [PAS AFFICHE]
 
 
@@ -362,7 +362,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non||Formulation des cartels (fautive ou non, à telle date)|
 
 ### SCLE
 Siècle 
@@ -484,7 +484,7 @@ Catégorie
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Catégorie|
 
-### CATE_DEPREC
+### RCL
 [PAS AFFICHE]
 
 
@@ -492,7 +492,7 @@ Catégorie
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non||Récolé, date|
 
 ### NOTE
 Notes 
