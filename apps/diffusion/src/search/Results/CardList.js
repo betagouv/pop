@@ -32,9 +32,12 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const content = joinData([
     data.OBJET,
     data.EDIF,
-    data.LEG,
-    data.DATOEU,
-    data.DATOEU ? "" : data.SCLE
+    data.LEG
+  ]);
+
+  const contentSerieTitre = joinData([
+    data.SERIE,
+    data.TITRE,
   ]);
 
   const author = data.AUTP ? data.AUTP.join(', ') : "";
@@ -55,10 +58,14 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   <small>{subtitle}</small>
                 </h2>
               </div>
+              <p>{content}</p>
+              <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+              <p>{loc}</p>
+              <p>{data.TYPDOC}</p>
               <p>{author}</p>
               <p>{date}</p>
-              <p>{loc}</p>
-              <p>{content}</p>
+              <p>{contentSerieTitre}</p>
+              <p>{data.COPY}</p>
             </div>
           </div>
         </Link>
