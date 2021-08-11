@@ -38,11 +38,13 @@ export default ({ data }) => {
   const content = joinData([
     data.OBJET,
     data.EDIF,
-    data.LEG,
-    data.DATOEU,
-    data.DATOEU ? "" : data.SCLE
+    data.LEG
   ]);
 
+  const contentSerieTitre = joinData([
+    data.SERIE,
+    data.TITRE,
+  ]);
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -57,12 +59,13 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.LOCA}</p>
           <p>{content}</p>
+          <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+          <p>{data.LOCA}</p>
+          <p>{data.TYPDOC}</p>
           <p>{data.AUTP.join(', ')}</p>
           <p>{data.DATPV}</p>
-          <p>{data.SERIE}</p>
-          <p>{data.TITRE}</p>
+          <p>{contentSerieTitre}</p>
           <p>{data.COPY}</p>
           {productorImage(data.PRODUCTEUR)}
         </div>
