@@ -236,7 +236,7 @@ Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse et/ou lieu-dit|
+|Array|non|non|non|non||Adresse et/ou lieu-dit|
 
 ### AUTOEU
 Nom, Prénom (profession ou titre et/ou dates)
@@ -506,7 +506,7 @@ Nom de l'acteur : nom du personnage joué
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre de la série|
+|Array|non|non|non|non||Titre de la série|
 
 ### THEATRE
 
@@ -1366,7 +1366,7 @@ Ville [Quelle difference avec COM ?]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ville|
+|Array|non|non|non|non||Ville|
 
 ### LIENS
 

@@ -81,8 +81,8 @@ const Schema = new mongoose.Schema(
       }
     },
     ADRESSE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description:
           "Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
@@ -297,8 +297,8 @@ const Schema = new mongoose.Schema(
       }
     },
     SERIE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description: "",
         label: "Titre de la série"
@@ -1022,8 +1022,8 @@ const Schema = new mongoose.Schema(
       }
     },
     WCOM: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description: "Ville [Quelle difference avec COM ?]",
         label: "Ville"
