@@ -686,7 +686,7 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Département en lettre|
+|Array|non|non|oui|non||Département en lettre|
 
 ### DATIMM
 Date d'entrée dans les collections ou date de traitement intellectuel
@@ -1308,7 +1308,7 @@ Contient le numéro du fichier numérique
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Lieu-dit|
 
-### ADRS
+### WADRS
 Adresse saisie
 
 
@@ -1316,7 +1316,7 @@ Adresse saisie
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse éditoriale|
+|Array|non|non|non|non||Adresse éditoriale|
 
 ### CONTACT
 Doit contenir une adresse email valide. Affiche un avertissement si vide.

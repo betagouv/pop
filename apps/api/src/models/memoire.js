@@ -447,8 +447,8 @@ const Schema = new mongoose.Schema(
       }
     },
     DPT_LETTRE: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description: "",
         label: "Département en lettre",
@@ -982,8 +982,8 @@ const Schema = new mongoose.Schema(
       }
     },
     WADRS: {
-      type: String,
-      default: "",
+      type: [String],
+      default: [""],
       documentation: {
         description: "Adresse éditoriale",
         label: "Adresse éditoriale"
