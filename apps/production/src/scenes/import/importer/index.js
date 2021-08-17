@@ -140,6 +140,7 @@ class Importer extends Component {
         user: this.props.userId,
         email: this.props.email,
         created: created.length,
+        importedAt: new Date(),
         updated: updated.length,
         rejected: rejected.length,
         notices: this.state.importedNotices.map(({ REF }) => REF),
