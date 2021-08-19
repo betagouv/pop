@@ -1,19 +1,19 @@
 import React from "react";
-import { Pagination } from "react-elasticsearch";
+import { Pagination } from "react-elasticsearch-pop";
 import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
   const arr = [];
-  if (notice.REG){ 
+  if (notice.REG) {
     arr.push(notice.REG);
   }
-  if (notice.DPT){
+  if (notice.DPT) {
     arr.push(departmentText(notice.DPT));
   }
 
   //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
   if (notice.WCOM || notice.COM) {
-    if (notice.WCOM){
+    if (notice.WCOM) {
       arr.push(notice.WCOM);
     }
     else {
@@ -21,13 +21,13 @@ function generateLoca(notice) {
     }
   }
 
-  if (notice.EDIF){
+  if (notice.EDIF) {
     arr.push(notice.EDIF);
   }
 
   //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
   if (notice.WADRS || notice.ADRS) {
-    if (notice.WADRS){
+    if (notice.WADRS) {
       arr.push(notice.WADRS);
     }
     else {
@@ -393,9 +393,9 @@ const operators = [
             // ... or not exists.
             { bool: { must_not: { exists: { field: k } } } }
           ],
-          filter:[{
+          filter: [{
             script: {
-                script : "doc['"+k+"'].values.length <= 1"
+              script: "doc['" + k + "'].values.length <= 1"
             }
           }],
           minimum_should_match: 1
