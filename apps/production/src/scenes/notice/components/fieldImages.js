@@ -48,7 +48,7 @@ class FieldImages extends React.Component {
       };
     } else {
       return {
-        source: this.state.imageFiles[index].preview,
+        source: URL.createObjectURL(this.state.imageFiles[index]),
         name: this.props.createUrlFromName(this.state.imageFiles[index].name)
       };
     }
