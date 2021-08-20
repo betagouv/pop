@@ -1,6 +1,6 @@
 import React from "react";
 import L from "leaflet";
-import { Map, Marker, Popup, TileLayer, Polygon } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, Polygon } from "react-leaflet";
 
 import "./map.css";
 
@@ -73,14 +73,14 @@ export default class MapComponent extends React.Component {
 
     return (
       <div className="leaflet-parent-container">
-        <Map center={center} zoom={15} scrollWheelZoom={false}>
+        <MapContainer center={center} zoom={15} scrollWheelZoom={false}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           {this.renderGeometry()}
           {this.renderPoint()}
-        </Map>
+        </MapContainer>
       </div>
     );
   }

@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import Viewer from "react-viewer";
 import { toastr } from "react-redux-toastr";
-import "react-viewer/dist/index.css";
 
 import "./fieldImages.css";
 
