@@ -2,12 +2,12 @@ const path = require("path");
 
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = env => {
   const plugins = [
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       seed: require("./public/manifest.json")
     }),
     new HtmlWebpackPlugin({
@@ -17,6 +17,9 @@ module.exports = env => {
       favicon: path.join("public/favicon.ico")
     }),
     new Dotenv(),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
   ];
 
   return {
@@ -25,45 +28,49 @@ module.exports = env => {
     devtool: "source-map",
     output: {
       path: path.resolve("build"),
-      filename: "[hash].index.js",
+      filename: "[contenthash].index.js",
       publicPath: "/"
     },
     devServer: {
-      contentBase: "build",
+      static: {
+        directory: "build"
+      },
       historyApiFallback: true,
-      inline: true,
-      stats: "errors-only"
+      devMiddleware: {
+        stats: "errors-only"
+      }
     },
-    node: {
-      fs: "empty"
+    resolve: {
+      fallback: {
+        fs: false,
+        stream: require.resolve("stream-browserify"),
+        path: require.resolve("path-browserify"),
+        os: require.resolve("os-browserify/browser"),
+        buffer: require.resolve("buffer/")
+      }
     },
     module: {
       rules: [
         {
           test: /\.css$/,
-          loader: "style-loader!css-loader"
+          use: [
+            { loader: "style-loader" },
+            { loader: "css-loader" }
+          ]
         },
         {
           test: /\.js$/,
           loader: "babel-loader",
           include: path.resolve("src"),
           exclude: /(node_modules|__tests__)/,
-          query: {
+          options: {
             babelrc: true
           }
         },
         {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
-          use: [
-            "file-loader",
-            {
-              loader: "image-webpack-loader",
-              options: {
-                bypassOnDebug: true
-              }
-            }
-          ]
+          type: 'asset/resource'
         }
       ]
     },

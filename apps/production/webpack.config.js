@@ -3,13 +3,13 @@ const path = require("path");
 const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 module.exports = env => {
   const mode = env["production"] ? "production" : "staging";
   console.log("MODE :", mode);
   const plugins = [
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       seed: require("./public/manifest.json")
     }),
     new HtmlWebpackPlugin({
@@ -46,17 +46,26 @@ module.exports = env => {
     bail: true,
     output: {
       path: path.resolve("build"),
-      filename: "[hash].index.js",
+      filename: "[contenthash].index.js",
       publicPath: "/"
     },
-    node: {
-      fs: "empty"
+    resolve: {
+      fallback: {
+        fs: false,
+        stream: require.resolve("stream-browserify"),
+        path: require.resolve("path-browserify"),
+        os: require.resolve("os-browserify/browser"),
+        buffer: require.resolve("buffer/")
+      }
     },
     module: {
       rules: [
         {
           test: /\.css$/,
-          loader: "style-loader!css-loader"
+          use: [
+            { loader: "style-loader" },
+            { loader: "css-loader" }
+          ]
         },
         {
           test: /\.js$/,
