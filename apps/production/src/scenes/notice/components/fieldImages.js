@@ -169,7 +169,12 @@ class FieldImages extends React.Component {
       arr.push(
         <Col className="item" md={arr.length ? 6 : 12} key="dropzone">
           <Dropzone onDrop={this.onDrop.bind(this)}>
-            <p>Ajouter une nouvelle image</p>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Ajouter une nouvelle image</p>
+              </div>
+            )}
           </Dropzone>
         </Col>
       );
