@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 
 class App extends React.Component {
   state = { alert: process.env.NODE_ENV !== "production" };
-  componentWillMount() {
+  componentDidMount() {
     this.props.signinByToken();
   }
 
