@@ -1,14 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import dotenv from "dotenv";
 import App from "./app";
 import registerServiceWorker from "./registerServiceWorker";
 import configureStore from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-
-dotenv.load();
 
 if (process.env.SENTRY_DSN) {
   Raven.config(process.env.SENTRY_DSN, {
