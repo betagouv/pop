@@ -85,6 +85,10 @@ div.ReactTags__selected a.ReactTags__remove {
   cursor: pointer;
 }
 
+.ReactTags__remove {
+  border: none;
+}
+
 /* Styles for suggestions */
 div.ReactTags__suggestions {
   position: absolute;
