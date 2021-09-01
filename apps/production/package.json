@@ -20,6 +20,7 @@
     "leaflet": "^1.7.1",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
     "prop-types": "^15.7.2",
     "qs": "^6.10.1",
     "rc-steps": "^3.6",

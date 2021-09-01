@@ -19,6 +19,7 @@ module.exports = env => {
     new Dotenv(),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
     }),
   ];
 
@@ -42,11 +43,12 @@ module.exports = env => {
     },
     resolve: {
       fallback: {
+        buffer: require.resolve("buffer/"),
         fs: false,
-        stream: require.resolve("stream-browserify"),
-        path: require.resolve("path-browserify"),
         os: require.resolve("os-browserify/browser"),
-        buffer: require.resolve("buffer/")
+        path: require.resolve("path-browserify"),
+        process: require.resolve("process/browser"),
+        stream: require.resolve("stream-browserify"),
       }
     },
     module: {
