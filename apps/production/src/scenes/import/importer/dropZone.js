@@ -96,12 +96,11 @@ export default class ImportDropComponent extends Component {
     return (
       <div className="dropzone">
         <Dropzone
-          className="dropArea"
           onDrop={files => this.onDrop(null, files)}
           onDropRejected={() => { }}
         >
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps()}>
+            <div {...getRootProps()} className="dropArea">
               <input {...getInputProps()} />
               {this.state.loading ? <Loader /> : <div />}
               <img src={require("../../../assets/upload.png")} />
