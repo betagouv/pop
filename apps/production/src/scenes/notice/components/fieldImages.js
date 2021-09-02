@@ -165,12 +165,22 @@ class FieldImages extends React.Component {
     const hideButton =
       this.props.disabled || this.props.hideButton || (!Array.isArray(this.props.input.value) && this.props.input.value);
 
+    const dropZoneStyle = {
+      position: 'relative',
+      width: '200px',
+      height: '200px',
+      borderWidth: '2px',
+      borderColor: 'rgb(102, 102, 102)',
+      borderStyle: 'dashed',
+      borderRadius: '5px',
+    }
+
     if (!hideButton) {
       arr.push(
         <Col className="item" md={arr.length ? 6 : 12} key="dropzone">
           <Dropzone onDrop={this.onDrop.bind(this)}>
             {({ getRootProps, getInputProps }) => (
-              <div {...getRootProps()}>
+              <div {...getRootProps()} style={dropZoneStyle}>
                 <input {...getInputProps()} />
                 <p>Ajouter une nouvelle image</p>
               </div>
