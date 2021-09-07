@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = env => {
   const mode = env["production"] ? "production" : "staging";
@@ -26,10 +27,10 @@ module.exports = env => {
         removeEmptyAttributes: true
       }
     }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(mode)
-      }
+    new Dotenv(),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
     }),
     new UglifyJsPlugin({
       test: /\.js($|\?)/i,
@@ -55,6 +56,7 @@ module.exports = env => {
         stream: require.resolve("stream-browserify"),
         path: require.resolve("path-browserify"),
         os: require.resolve("os-browserify/browser"),
+        process: require.resolve("process/browser"),
         buffer: require.resolve("buffer/")
       }
     },

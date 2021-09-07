@@ -27,6 +27,10 @@ module.exports = env => {
       }
     }),
     new Dotenv(),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
+    }),
     new UglifyJsPlugin({
       test: /\.js($|\?)/i,
       exclude: /node_modules/,
@@ -51,6 +55,7 @@ module.exports = env => {
         stream: require.resolve("stream-browserify"),
         path: require.resolve("path-browserify"),
         os: require.resolve("os-browserify/browser"),
+        process: require.resolve("process/browser"),
         buffer: require.resolve("buffer/")
       }
     },
@@ -96,16 +101,13 @@ module.exports = env => {
         {
           test: /\.(woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
-          use: [
-            "file-loader",
-          ]
+          type: 'asset/resource'
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: require.resolve('url-loader'),
-          options: {
-            limit: 10000,
-            name: '[name].[hash:8].[ext]',
+          type: 'asset/resource',
+          generator: {
+            filename: '[name].[hash:8].[ext]',
           },
         },
       ]
