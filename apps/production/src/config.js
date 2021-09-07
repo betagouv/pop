@@ -1,6 +1,6 @@
 
 let api_url = process.env.API_URL;
-let es_url = `${api_url}/search/`;
+let es_url = `${api_url}/search`;
 let bucket_url = process.env.BUCKET_URL;
 
 module.exports = {
