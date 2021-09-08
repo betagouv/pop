@@ -1,6 +1,5 @@
 import React from "react";
 import Viewer from "react-viewer";
-import ImageGalleryStyle from "react-image-gallery/styles/css/image-gallery.css";
 import Slider from "react-slick";
 
 class FieldImages extends React.Component {
@@ -79,9 +78,6 @@ class FieldImages extends React.Component {
       <div className="fieldImages">
         {this.renderModal()}
         {this.renderImages()}
-        <style jsx global>
-          {ImageGalleryStyle}
-        </style>
         <style jsx global>{`
           .fieldImages {
             width: 100%;

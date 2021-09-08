@@ -29,7 +29,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-elasticsearch-pop": "^2.0.6",
-    "react-image-gallery": "0.8.12",
     "react-slick": "^0.23.2",
     "react-switch": "^4.1.0",
     "react-viewer": "^3.2.2",
