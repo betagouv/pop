@@ -60,31 +60,41 @@ export default class Joconde extends Notice {
   }
 
   extractManquant = function(loca, manquant, manquantcom) {
-    if(loca.indexOf("; manquant") !== -1){
-      let array = loca.split("; manquant");
+    if (["; manquantes", "; manquants",  "; manquante", "; manquant"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; manquantes", "; manquants", "; manquante", "; manquant"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
       return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
     }
 
-    if(loca.indexOf("; volé") !== -1){
-      let array = loca.split("; volé");
+    if (["; volées", "; volés", "; volée", "; volé"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; volées", "; volés", "; volée", "; volé"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
       return { LOCA:array[0] + array[1], MANQUANT:['volé'], MANQUANT_COM: manquantcom };
     }
 
-    if (["; disparu", "; localisation inconnue", "; pillé"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; disparu", "; localisation inconnue", "; pillé"].find(e => loca.indexOf(e) !== -1);
-      return this.addManquantCom(loca, manquantcom, element);
+    if (["; disparues", "; disparus", "; disparue", "; disparu"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; disparues", "; disparus", "; disparue", "; disparu"].find(e => loca.indexOf(e) !== -1);
+      return this.addManquantCom(loca, manquantcom, element, "disparu");
+    }
+
+    if(loca.indexOf("; localisation inconnue") !== -1){
+      return this.addManquantCom(loca, manquantcom, "; localisation inconnue", "localisation inconnue");
+    }
+
+    if (["; pillées", "; pillés", "; pillée", "; pillé"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; pillées", "; pillés", "; pillée", "; pillé"].find(e => loca.indexOf(e) !== -1);
+      return this.addManquantCom(loca, manquantcom, element, "pillé");
     }
 
     return { LOCA: loca, MANQUANT: manquant, MANQUANT_COM: manquantcom };
   };
 
-  addManquantCom = function(loca, manquantcom, str){
-    let array = loca.split(str);
+  addManquantCom = function(loca, manquantcom, element, addon){
+    let array = loca.split(element);
     if(typeof manquantcom !== "undefined" && manquantcom !== "" && manquantcom !== " "){
-      manquantcom = manquantcom + " " + str;
+      manquantcom = manquantcom + " ; " + addon;
     }else{
-      const value = str.split("; ");
-      manquantcom = value[1];
+      manquantcom = addon ;
     }
     return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
   }
