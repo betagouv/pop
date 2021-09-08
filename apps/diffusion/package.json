@@ -37,7 +37,7 @@
     "shave": "^2.5.4",
     "unfetch": "^4.1.0",
     "universal-cookie": "^4.0.3",
-    "validator": "^11.1.0"
+    "validator": "^13.6.0"
   },
   "jest": {
     "setupFilesAfterEnv": [
