@@ -1,5 +1,5 @@
 import React from "react";
-import App, { Container } from "next/app";
+import App from "next/app";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
@@ -24,10 +24,10 @@ export default class MyApp extends App {
     const cookies = new Cookies();
     const currentBucket = cookies.get("currentBucket") || [];
     var jsonCurrentBucket = JSON.stringify(currentBucket);
-    cookies.set('currentBucket', jsonCurrentBucket, {path: '/', overwrite: true});
+    cookies.set('currentBucket', jsonCurrentBucket, { path: '/', overwrite: true });
 
     return (
-      <Container>
+      <>
         <Component {...pageProps} />
         <style jsx global>{`
           html {
@@ -92,7 +92,7 @@ export default class MyApp extends App {
               url("/static/fonts/nexa.woff") format("woff");
           }
         `}</style>
-      </Container>
+      </>
     );
   }
 }
