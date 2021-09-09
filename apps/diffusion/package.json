@@ -25,7 +25,7 @@
     "next-offline": "^5.0.5",
     "ngeohash": "^0.6.3",
     "nprogress": "^0.2.0",
-    "query-string": "^5.1.1",
+    "query-string": "^7.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-elasticsearch-pop": "^2.0.6",
