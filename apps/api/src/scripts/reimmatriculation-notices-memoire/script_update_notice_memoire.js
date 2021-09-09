@@ -27,8 +27,8 @@ async function readCsv(){
         if(i > 0 && row[0] !== ""){
             noticesMemoire.push({
                 updateOne: {
-                    filter: { REF: row[3] },
-                    update: { REF: row[0], IMG: row[4] }
+                    filter: { REF: row[0] },
+                    update: { REF: row[3], IMG: row[4] }
                 }
             })
         }

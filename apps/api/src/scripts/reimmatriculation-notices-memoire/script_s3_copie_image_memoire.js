@@ -9,8 +9,6 @@ const { async } = require("rxjs/internal/scheduler/async");
 const s3 = new AWS.S3();
 const { pathFileCsv, nameFileS3Log } = require('./utils');
 
-// const pathFileCsv = path.resolve(__dirname,'reimmatriculation_notices_memoire.csv');
-
 let i = 0;
 const noticesMemoire = [];
 let countUpdate = 0;
