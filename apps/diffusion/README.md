@@ -18,7 +18,7 @@ Lancer la commande `npm run dev` pour accéder à l'application via l'URL `http:
 
 ## Tests
 
-Les tests sont pilotés par [Jest](https://jestjs.io/) et [Enzyme](http://airbnb.io/enzyme/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop. Pour lancer les tests en local, utiliser `npm test`.
+Les tests sont pilotés par [Jest](https://jestjs.io/) et [Testing Library](https://testing-library.com/), et exécutés à chaque `push` par CircleCi : https://circleci.com/gh/betagouv/pop. Pour lancer les tests en local, utiliser `npm test`.
 
 ## Déploiement
 
