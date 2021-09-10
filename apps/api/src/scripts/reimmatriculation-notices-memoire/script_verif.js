@@ -65,11 +65,7 @@ function updateNoticesMemoire(notice){
                 if(res.length > 0){
                     counter++;
                 } else {
-<<<<<<< HEAD
-                    fs.writeFileSync(validationLog, 'ANCIENNE REF : ' + notice.OLD_REF +' NOUVELLE REF : ' + notice.NEW_REF + '\n', { flag: 'a+'} );
-=======
                     fs.writeFileSync(validationLog, notice.OLD_REF + ';' + notice.OLD_IMG + ';' + notice.OLD_NAME_IMG + ';' + notice.NEW_REF + ';' + notice.NEW_IMG + ';' + notice.NEW_NAME_IMG + '\n', { flag: 'a+'} );
->>>>>>> 35c3759a... M37427 - Ajout du script de vérification de la mise à jour
                 }
                 resolve(counter);
             })
