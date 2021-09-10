@@ -11,7 +11,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   let str;
-  if(!link){
+  if (!link) {
     // Transform array to string, by joining with a character.
     str = Array.isArray(content) ? content.join(join) : content;
 
@@ -48,7 +48,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
  
     if(typeof str == 'string' && addLink != 'undefined' && addLink){
       str = addLinkToText(str);
-    }else{
+    } else {
       str = <p>{str}</p>;
     }
 
@@ -58,7 +58,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
         <h3>{title}</h3>
 
         {str}
-        
+
         <style jsx>{`
           .field {
             padding-bottom: 10px;
@@ -89,24 +89,24 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   //Si on imprime un pdf d'une notice
   else {
     //S'il s'agit de liens cliquables
-    if(link){
+    if (link) {
       return (
         <View>
           <Text style={styles.fieldTitle} >{title + " : "}</Text>
           <View style={styles.listLinked}>
-            {Array.isArray(content)? content.map( (item, index) => {
+            {Array.isArray(content) ? content.map((item, index) => {
               return (
                 item ?
-                <View style={styles.listItem}>
-                  <Link style={styles.textLinked} 
-                        key={item.val? item.val : item} 
-                        src={item.url? item.url : item}>
-                        {item.val? item.val : item}
-                  </Link>
-                  {(index < content.length-1) ? <Text>, </Text> : null}
-                </View> : null)
-            }) : 
-            <Link style={styles.textLinked} src={content.url? content.url : content} >{content.val? content.val : content}</Link>}
+                  <View style={styles.listItem}>
+                    <Link style={styles.textLinked}
+                      key={item.val ? item.val : item}
+                      src={item.url ? item.url : item}>
+                      {item.val ? item.val : item}
+                    </Link>
+                    {(index < content.length - 1) ? <Text>, </Text> : null}
+                  </View> : null)
+            }) :
+              <Link style={styles.textLinked} src={content.url ? content.url : content} >{content.val ? content.val : content}</Link>}
           </View>
         </View>
       )
@@ -127,40 +127,40 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, "g"), replace);
 }
 
-function addLinkToText(str){
+function addLinkToText(str) {
   let result;
   let obj = new Object();
   let i = 1;
-  
-  do{
+
+  do {
     result = splitString(str);
-    
-    obj['text_'+i] = result.text1;
-    
-    if (result.continue){
-        obj['link_'+i] = result.link;
-        str = result.text3;
-        i++;
-    }else{
-        if(typeof result.link !== 'undefined'){
-            obj['link_'+i] = result.link;
-        }
+
+    obj['text_' + i] = result.text1;
+
+    if (result.continue) {
+      obj['link_' + i] = result.link;
+      str = result.text3;
+      i++;
+    } else {
+      if (typeof result.link !== 'undefined') {
+        obj['link_' + i] = result.link;
+      }
     }
   }
-  while(result.continue);
+  while (result.continue);
 
   let content = [];
 
   for (let j = 1; j <= i; j++) {
-    
-    if(typeof obj['text_'+j] != 'undefined'){
-      content.push(obj['text_'+j]);
+
+    if (typeof obj['text_' + j] != 'undefined') {
+      content.push(obj['text_' + j]);
     }
-    if(typeof obj['link_'+j] != 'undefined'){
-      if(obj['link_'+j].toLowerCase().indexOf('www') === 0){
-        content.push(<a href={"http://"+obj['link_'+j]} target="_blank">{obj['link_'+j]}</a>);
-      }else{
-        content.push(<a href={obj['link_'+j]} target="_blank">{obj['link_'+j]}</a>);
+    if (typeof obj['link_' + j] != 'undefined') {
+      if (obj['link_' + j].toLowerCase().indexOf('www') === 0) {
+        content.push(<a href={"http://" + obj['link_' + j]} target="_blank">{obj['link_' + j]}</a>);
+      } else {
+        content.push(<a href={obj['link_' + j]} target="_blank">{obj['link_' + j]}</a>);
       }
     }
   }
@@ -168,7 +168,7 @@ function addLinkToText(str){
   return <p>{content}</p>;
 }
 
-function splitString(str){
+function splitString(str) {
   const termeHTTP = 'http';
   const termeWWW = 'www';
   const termeEspace = ' ';
@@ -180,18 +180,18 @@ function splitString(str){
   let splitWWW = str.toLowerCase().indexOf(termeWWW);
   let firstSplit;
 
-  if(splitHTTP !== -1 && splitWWW !== -1){
-      if(splitHTTP < splitWWW){
-          firstSplit = splitHTTP;
-      }else{
-          firstSplit = splitWWW;
-      }
-  }else if(splitHTTP !== -1 && splitWWW === -1){
+  if (splitHTTP !== -1 && splitWWW !== -1) {
+    if (splitHTTP < splitWWW) {
       firstSplit = splitHTTP;
-  }else if(splitHTTP === -1 && splitWWW !== -1){
+    } else {
       firstSplit = splitWWW;
-  }else{
-      return {text1: str, continue:false};
+    }
+  } else if (splitHTTP !== -1 && splitWWW === -1) {
+    firstSplit = splitHTTP;
+  } else if (splitHTTP === -1 && splitWWW !== -1) {
+    firstSplit = splitWWW;
+  } else {
+    return { text1: str, continue: false };
   }
 
   // Découpage en 2 selon la première occurence trouvée
@@ -201,13 +201,13 @@ function splitString(str){
   // Découpage de la 2ème partie pour trouver la fin du lien
   let splitEspace = text2.indexOf(termeEspace);
 
-  if(splitEspace === -1){
-      let link = text2.substring(0, length);
-      return {text1: text1, link: link, continue:false}
+  if (splitEspace === -1) {
+    let link = text2.substring(0, length);
+    return { text1: text1, link: link, continue: false }
   }
 
   let link = text2.substring(0, splitEspace);
   let text3 = text2.substring(splitEspace, length);
 
-  return {text1: text1, link: link, text3: text3, continue:true}
+  return { text1: text1, link: link, text3: text3, continue: true }
 }
