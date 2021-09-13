@@ -25,7 +25,7 @@ export default ({ data }) => {
         <div>
           <p>{data.DOMN.join(", ")}</p>
           <p>{data.DENO.join(", ")}</p>
-          <p>{data.AUTR.join("; ")}</p>
+          <p>{data.AUTR.join(" ; ")}</p>
           <p>{data.PERI.join(", ")}</p>
           <p>{loca}</p>
           <p>{data.INV}</p>
