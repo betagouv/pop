@@ -63,8 +63,6 @@
   },
   "scripts": {
     "dev": "node src/services/server.js",
-    "build:prod": "APP_URLS_ENV=production next build",
-    "build:staging": "APP_URLS_ENV=staging next build",
     "build": "next build",
     "start": "node src/services/server.js",
     "test": "jest"
