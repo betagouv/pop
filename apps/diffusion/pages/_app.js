@@ -1,5 +1,6 @@
 import React from "react";
 import App from "next/app";
+import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
@@ -28,6 +29,13 @@ export default class MyApp extends App {
 
     return (
       <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          />
+        </Head>
         <Component {...pageProps} />
         <style jsx global>{`
           html {
