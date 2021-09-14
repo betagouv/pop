@@ -1,6 +1,11 @@
 import React from "react";
-import Viewer from "react-viewer";
+import dynamic from "next/dynamic";
+// import Viewer from "react-viewer";
 import Slider from "react-slick";
+const Viewer = dynamic(
+  () => import("react-viewer"),
+  { ssr: false }
+);
 
 class FieldImages extends React.Component {
   state = {
