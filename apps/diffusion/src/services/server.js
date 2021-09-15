@@ -44,7 +44,7 @@ app.prepare().then(() => {
       const path = join(__dirname, "../../static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname === "/service-worker.js") {
-      const path = join(__dirname, "../../.next", parsedUrl.pathname);
+      const path = join(__dirname, "../../.next/static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {
       const renderParams = Object.assign(
