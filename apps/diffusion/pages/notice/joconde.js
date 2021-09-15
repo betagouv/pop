@@ -20,7 +20,7 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import { JocondePdf } from "../pdfNotice/jocondePdf";
+import { JocondePdf } from "../../src/pdf/pdfNotice/jocondePdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
 
@@ -33,16 +33,16 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  state = {display: false, prevLink: undefined, nextLink: undefined}
+  state = { display: false, prevLink: undefined, nextLink: undefined }
 
   static loadMuseo(m) {
     try {
       return API.getNotice("museo", m);
-    } catch (e) {}
+    } catch (e) { }
     return null;
   }
 
-  static async getInitialProps({ query : {id}, asPath }) {
+  static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("joconde", id);
     const museo = notice && notice.MUSEO && (await this.loadMuseo(notice.MUSEO));
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
@@ -57,7 +57,7 @@ export default class extends React.Component {
     }
 
     const links = (await Promise.all(arr)).filter(l => l);
-    
+
     return {
       notice,
       museo,
@@ -67,7 +67,7 @@ export default class extends React.Component {
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     //this.setState({display : true});
 
     //highlighting
@@ -75,32 +75,32 @@ export default class extends React.Component {
 
     //Construction des liens précédents/suivants
     const cookies = new Cookies();
-    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
-    if(listRefs){
+    const listRefs = cookies.get("listRefs-" + this.props.searchParams.idQuery);
+    if (listRefs) {
       const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
       let prevLink = undefined;
       let nextLink = undefined;
-      if(indexOfCurrentNotice > 0){
+      if (indexOfCurrentNotice > 0) {
         const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
-        if(previousCollection !== ""){
-          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        if (previousCollection !== "") {
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      if(indexOfCurrentNotice < listRefs.length - 1){
+      if (indexOfCurrentNotice < listRefs.length - 1) {
         const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
-        if(nextCollection !== ""){
-          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        if (nextCollection !== "") {
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      this.setState({prevLink, nextLink});
+      this.setState({ prevLink, nextLink });
     }
-    else{
-      this.state.display == false && this.setState({display : true});
+    else {
+      this.state.display == false && this.setState({ display: true });
     }
   }
 
-  componentDidUpdate(){
-    this.state.display == false && this.setState({display : true});
+  componentDidUpdate() {
+    this.state.display == false && this.setState({ display: true });
   }
 
   prepareLinkRepr(value, name){
@@ -108,10 +108,10 @@ export default class extends React.Component {
     const arrayPattern = ['(',')',':',',',' ',';','#']; 
     let prevString = '';
     const arrayContent = [];
-    for(let i = 0; i < value.length; i++){ 
-      if(arrayPattern.includes(value[i])){
+    for (let i = 0; i < value.length; i++) {
+      if (arrayPattern.includes(value[i])) {
         // Si un string a déjà été construit, on crée le lien
-        if(prevString !== ''){
+        if (prevString !== '') {
           let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([prevString]) })}`;
           arrayContent.push(<a href={url} key={prevString}>{prevString}</a>);
           prevString = '';
@@ -127,7 +127,7 @@ export default class extends React.Component {
         prevString += value[i];
       }
     }
-    return arrayContent.reduce((a,b) => [a, "", b])
+    return arrayContent.reduce((a, b) => [a, "", b])
   }
 
   links(value, name) {
@@ -135,13 +135,13 @@ export default class extends React.Component {
     const regex = new RegExp('[():,;]');
 
     if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value)=="") {
+      if (String(value) === value && !String(value) == "") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
         let content = <a href={url}>{value}</a>;
         // Traitement pour repr
-        if(name == 'repr' && regex.test(value)){
+        if (name == 'repr' && regex.test(value)) {
           content = this.prepareLinkRepr(value, name);
-        } 
+        }
         return content
       }
       return null;
@@ -151,15 +151,15 @@ export default class extends React.Component {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([d]) })}`;
         let content = <a href={url}>{d}</a>;
         // Traitement pour repr
-        if(name == 'repr' && regex.test(d)){
+        if (name == 'repr' && regex.test(d)) {
           content = this.prepareLinkRepr(d, name);
-        } 
+        }
         return (
           content
         );
       })
       .reduce((p, c) => [p, ", ", c]);
-      return <React.Fragment>{links}</React.Fragment>;
+    return <React.Fragment>{links}</React.Fragment>;
   }
 
   // Display a list of links to authors
@@ -169,31 +169,31 @@ export default class extends React.Component {
       return null;
     }
     if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value)=="") {
+      if (String(value) === value && !String(value) == "") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
         return <a href={url}>{value}</a>;
       }
       return null;
     }
     const links = value
-    .map(a => {
-      const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
-      return (
-        <a href={url} key={a}>
-          {a}
-        </a>
-      );
-    })
-    .reduce((p, c) => [p, " , ", c]);
+      .map(a => {
+        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
+        return (
+          <a href={url} key={a}>
+            {a}
+          </a>
+        );
+      })
+      .reduce((p, c) => [p, " , ", c]);
     return <React.Fragment>{links}</React.Fragment>;
   }
 
-  renderPrevButton(){
-    if(this.state.prevLink != undefined){
-      return(
-          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
-            &lsaquo;
-          </a>
+  renderPrevButton() {
+    if (this.state.prevLink != undefined) {
+      return (
+        <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+          &lsaquo;
+        </a>
       )
     }
     else {
@@ -201,12 +201,12 @@ export default class extends React.Component {
     }
   }
 
-  renderNextButton(){
-    if(this.state.nextLink != undefined){
-      return(
-          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
-           &rsaquo;
-          </a>
+  renderNextButton() {
+    if (this.state.nextLink != undefined) {
+      return (
+        <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+          &rsaquo;
+        </a>
       )
     }
     else {
@@ -238,21 +238,22 @@ export default class extends React.Component {
     const pdf = JocondePdf(notice, title, this.props.links, this.props.museo);
     const App = () => (
       <div>
-        <PDFDownloadLink 
-          document={pdf} 
+        <PDFDownloadLink
+          document={pdf}
           fileName={"joconde_" + notice.REF + ".pdf"}
-          style={{backgroundColor: "#377d87",
-                  border: 0,
-                  color: "#fff",
-                  maxWidth: "250px",
-                  width: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  textAlign: "center",
-                  borderRadius: "5px"
-                }}>
+          style={{
+            backgroundColor: "#377d87",
+            border: 0,
+            color: "#fff",
+            maxWidth: "250px",
+            width: "100%",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "8px",
+            paddingBottom: "8px",
+            textAlign: "center",
+            borderRadius: "5px"
+          }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
@@ -281,14 +282,14 @@ export default class extends React.Component {
             </div>
             <div className="top-container">
               <div className="leftContainer-buttons">
-                {lastRecherche !== null && 
-                <div className="btn btn-last-search">
-                  <Link href={lastRecherche}>
-                    <div className="text-last-search">
-                      Retour à la recherche
-                    </div>
-                  </Link>
-                </div>}
+                {lastRecherche !== null &&
+                  <div className="btn btn-last-search">
+                    <Link href={lastRecherche}>
+                      <div className="text-last-search">
+                        Retour à la recherche
+                      </div>
+                    </Link>
+                  </div>}
               </div>
               <div className="rightContainer-buttons">
                 <div className="addBucket onPrintHide">
@@ -336,18 +337,18 @@ export default class extends React.Component {
                   <Field
                     title={mapping.joconde.DOMN.label}
                     content={this.links(this.props.notice.DOMN, "domn")}
-                    separator="#" 
+                    separator="#"
                   />
                   <Field
                     title={mapping.joconde.DENO.label}
                     content={this.links(this.props.notice.DENO, "deno")}
-                    separator="#" 
+                    separator="#"
                   />
                   <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" />
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" />
-                  <Field 
-                    title={mapping.joconde.AUTR.label} 
-                    content={this.author(this.props.notice.AUTR, "auteur")} 
+                  <Field
+                    title={mapping.joconde.AUTR.label}
+                    content={this.author(this.props.notice.AUTR, "auteur")}
                     separator="#" />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" />
@@ -494,7 +495,7 @@ const SeeMore = ({ notice, museo }) => {
   }
 
   if (notice.WWW) {
-    if(notice.WWW.length>0){
+    if (notice.WWW.length > 0) {
       arr.push(
         <Field
           title={mapping.joconde.WWW.label}
@@ -503,24 +504,24 @@ const SeeMore = ({ notice, museo }) => {
         />
       );
 
-      for(let i=1; i<notice.WWW.length; i++){
+      for (let i = 1; i < notice.WWW.length; i++) {
         arr.push(
           <Field
             content={<a href={notice.WWW[i]} target="_blank">{notice.WWW[i]}</a>}
             key="notice.WWW"
           />
-          );
-      }      
+        );
+      }
     }
   }
 
   if (notice.MUSEO) {
     const text = museo
       ? [
-          museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
-          museo.VILLE_M || museo.VILLE_AD,
-          museo.REF
-        ].join(" - ")
+        museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
+        museo.VILLE_M || museo.VILLE_AD,
+        museo.REF
+      ].join(" - ")
       : notice.MUSEO;
     arr.push(
       <Field

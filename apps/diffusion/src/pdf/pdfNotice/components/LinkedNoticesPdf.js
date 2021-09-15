@@ -1,11 +1,10 @@
-import queryString from "query-string";
-import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { View, Text, Image, Link } from '@react-pdf/renderer';
 import { styles } from "../../pdfNotice/styles";
-import { getNoticeInfo } from "../../../src/utils";
+import { getNoticeInfo } from "../../../utils";
 
-export function LinkedNoticesPdf(notice){
+export function LinkedNoticesPdf(notice) {
     const { title, image_preview } = getNoticeInfo(notice);
-    return(
+    return (
         <Link src={"https://www.pop.culture.gouv.fr/notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.linkedNotice}>
                 {image_preview && <Image style={styles.linkedNoticeImage} src={image_preview} />}

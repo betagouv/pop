@@ -1,23 +1,20 @@
-import Field from "../../src/notices/Field";
-import mapping from "../../src/services/mapping";
-import queryString from "query-string";
-import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
-import { bucket_url, pop_url } from "./../../src/config";
-import { styles } from "../pdfNotice/styles";
-import { getNoticeInfo } from "../../src/utils"
+import { View, Text, Image, Link } from '@react-pdf/renderer';
+import { bucket_url, pop_url } from "./../../config";
+import { styles } from "../../pdf/pdfNotice/styles";
+import { getNoticeInfo } from "../../utils"
 
-export function MerimeeAbregeePdf(notice){
-    const { title, logo, image_preview, localisation } = getNoticeInfo(notice);
+export function MerimeeAbregeePdf(notice) {
+    const { title, logo, localisation } = getNoticeInfo(notice);
     const line3 = concatTabs(notice.AUTR, notice.SCLE);
     const line4 = notice.STAT + (notice.STAT && notice.DPRO ? " ; " : "") + notice.DPRO;
 
-    return(
+    return (
         <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.MEMOIRE.length > 0 ?
-                    <Image src={ bucket_url + notice.MEMOIRE[0].url} />
-                    : <Image src={"/static/noimage.png"} />}
+                        <Image src={bucket_url + notice.MEMOIRE[0].url} />
+                        : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
                     <View style={styles.leftContent}>
@@ -29,7 +26,7 @@ export function MerimeeAbregeePdf(notice){
                     <View style={styles.rightContent}>
                         <Text style={styles.abregeeBase}>Mérimée</Text>
                         <Text style={styles.abregeeREF}>{notice.REF}</Text>
-                        { logo != null && logo !== ""  ? <Image style={styles.logo} src={logo} /> : <Text></Text> }
+                        {logo != null && logo !== "" ? <Image style={styles.logo} src={logo} /> : <Text></Text>}
                     </View>
                 </View>
             </View>
@@ -37,9 +34,8 @@ export function MerimeeAbregeePdf(notice){
     )
 }
 
-function concatTabs(tab1, tab2){
+function concatTabs(tab1, tab2) {
     let tab = [];
     let string = tab.concat(tab1).concat(tab2).join(", ");
     return string;
 }
-  

@@ -1,23 +1,20 @@
-import Field from "../../src/notices/Field";
-import mapping from "../../src/services/mapping";
-import queryString from "query-string";
-import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
+import { View, Text, Image, Link } from '@react-pdf/renderer';
 import { styles } from "../pdfNotice/styles";
-import { getNoticeInfo } from "../../src/utils"
-import { bucket_url, pop_url } from "./../../src/config";
+import { getNoticeInfo } from "../../utils"
+import { bucket_url, pop_url } from "../../config";
 
-export function MnrAbregeePdf(notice){
-    const { title, subtitle, image_preview } = getNoticeInfo(notice);
+export function MnrAbregeePdf(notice) {
+    const { title, subtitle } = getNoticeInfo(notice);
     const domn = notice.DOMN ? notice.DOMN.join(", ") : "";
     const author = String(notice.AUTR).replace("#", " ");
 
-    return(
+    return (
         <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.VIDEO.length > 0 ?
-                    <Image src={ bucket_url + notice.VIDEO[0]} />
-                    : <Image src={"/static/noimage.png"} />}
+                        <Image src={bucket_url + notice.VIDEO[0]} />
+                        : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
                     <View style={styles.leftContent}>
@@ -40,4 +37,3 @@ export function MnrAbregeePdf(notice){
         </Link>
     )
 }
-  

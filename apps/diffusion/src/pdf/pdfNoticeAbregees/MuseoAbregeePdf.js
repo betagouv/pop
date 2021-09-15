@@ -1,21 +1,18 @@
-import Field from "../../src/notices/Field";
-import mapping from "../../src/services/mapping";
-import queryString from "query-string";
-import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
-import { styles } from "../pdfNotice/styles";
-import { bucket_url, pop_url } from "./../../src/config";
-import { getNoticeInfo } from "../../src/utils"
+import { View, Text, Image, Link } from '@react-pdf/renderer';
+import { styles } from "../../pdf/pdfNotice/styles";
+import { bucket_url, pop_url } from "./../../config";
+import { getNoticeInfo } from "../../utils"
 
-export function MuseoAbregeePdf(notice){
+export function MuseoAbregeePdf(notice) {
     const { title, subtitle, image_preview, localisation } = getNoticeInfo(notice);
-    
-    return(
-        <Link src={pop_url +  "notice/" + notice.collection + "/" + notice.REF}>
+
+    return (
+        <Link src={pop_url + "notice/" + notice.collection + "/" + notice.REF}>
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
-                    {notice.PHOTO ? 
-                    <Image src={ bucket_url + notice.PHOTO} />
-                    : <Image src={"/static/noimage.png"} />}
+                    {notice.PHOTO ?
+                        <Image src={bucket_url + notice.PHOTO} />
+                        : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
                     <View style={styles.leftContent}>
@@ -35,9 +32,8 @@ export function MuseoAbregeePdf(notice){
     )
 }
 
-function concatTabs(tab1, tab2){
+function concatTabs(tab1, tab2) {
     let tab = [];
     let string = tab.concat(tab1).concat(tab2).join(", ");
     return string;
 }
-  

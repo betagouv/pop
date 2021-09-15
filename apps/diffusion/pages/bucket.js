@@ -1,19 +1,19 @@
 import Head from "next/head";
 import React from "react";
-import { Button, Input, Container} from "reactstrap";
+import { Button, Input, Container } from "reactstrap";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
-import {Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor} from "../src/search/Results/CardList";
+import { Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor } from "../src/search/Results/CardList";
 import API from "../src/services/api";
 import { PDFDownloadLink, Document, Page, View, Text, Image } from '@react-pdf/renderer';
-import { BucketPdf } from "../pages/pdfNoticeAbregees/BucketPdf"
+import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 
 export default class Bucket extends React.Component {
-  state = { bucket: [], loading: true, display: false};
-  
+  state = { bucket: [], loading: true, display: false };
+
 
   //Méthode permettant de supprimer du panier
   removeFromBucket = (ref) => {
@@ -22,7 +22,7 @@ export default class Bucket extends React.Component {
     const cookies = new Cookies();
     let currentBucket = cookies.get("currentBucket") || [];
     //Filtre en fonction de la notice que l'on veut enlever
-    currentBucket = currentBucket.filter( item => {
+    currentBucket = currentBucket.filter(item => {
       return item.ref !== ref;
     });
 
@@ -30,60 +30,60 @@ export default class Bucket extends React.Component {
     //Ainsi que le state contenant la liste des notices
     var jsonCurrentBucket = JSON.stringify(currentBucket);
     cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
-    this.setState({bucket: this.state.bucket.filter(notice =>
-      { return notice.REF !== ref })
+    this.setState({
+      bucket: this.state.bucket.filter(notice => { return notice.REF !== ref })
     });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.fillBucket();
-    this.setState({display : true});
+    this.setState({ display: true });
   }
 
   fillBucket = async () => {
     let cookies = new Cookies();
     const bucket = cookies.get("currentBucket");
-    try{
+    try {
       let newBucket = await Promise.all(
         bucket.map(async item => {
           let notice = await API.getNotice(item.base, item.ref);
           return notice;
         })
       )
-      this.setState({bucket: newBucket});
+      this.setState({ bucket: newBucket });
     }
-    catch(e){
+    catch (e) {
       return [];
     }
   }
 
-  displayCard(notice){
-    if(notice){
-      switch(notice.collection){
-        case "joconde" :
-          return <Joconde data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "memoire" :
-          return <Memoire data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "palissy" :
-          return <Palissy data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "merimee" :
-          return <Merimee data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "museo" :
-          return <Museo data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "mnr" :
-          return <Mnr data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "enluminures" :
-          return <Enluminures data={notice} removeFromBucket={this.removeFromBucket}/>
-        case "autor" :
-          return <Autor data={notice} removeFromBucket={this.removeFromBucket}/>
-        default :
+  displayCard(notice) {
+    if (notice) {
+      switch (notice.collection) {
+        case "joconde":
+          return <Joconde data={notice} removeFromBucket={this.removeFromBucket} />
+        case "memoire":
+          return <Memoire data={notice} removeFromBucket={this.removeFromBucket} />
+        case "palissy":
+          return <Palissy data={notice} removeFromBucket={this.removeFromBucket} />
+        case "merimee":
+          return <Merimee data={notice} removeFromBucket={this.removeFromBucket} />
+        case "museo":
+          return <Museo data={notice} removeFromBucket={this.removeFromBucket} />
+        case "mnr":
+          return <Mnr data={notice} removeFromBucket={this.removeFromBucket} />
+        case "enluminures":
+          return <Enluminures data={notice} removeFromBucket={this.removeFromBucket} />
+        case "autor":
+          return <Autor data={notice} removeFromBucket={this.removeFromBucket} />
+        default:
           return null;
       }
     }
   }
 
   //Détermine le nom du fichier téléchargé pour le pdf
-  PdfFileName(){
+  PdfFileName() {
     var today = new Date();
     var month = (today.getMonth() + 1) == 13 ? 1 : (today.getMonth() + 1);
     var data = today.getFullYear() + '-' + ((month < 10) ? "0" : "") + month.toString() + '-' + ((today.getDate() < 10) ? "0" : "") + today.getDate();
@@ -91,12 +91,12 @@ export default class Bucket extends React.Component {
   }
 
   //Vide le panier de notices
-  EmptyBucket(){    
+  EmptyBucket() {
     const cookies = new Cookies();
     let currentBucket = cookies.get("currentBucket");
     // Obliger d'imiter la méthode de removebucket sinon les champs n'existent pas
     //Filtre en fonction de la notice que l'on veut enlever
-    currentBucket = currentBucket.filter( item => {
+    currentBucket = currentBucket.filter(item => {
       return item.ref === null;
     });
 
@@ -104,8 +104,8 @@ export default class Bucket extends React.Component {
     //Ainsi que le state contenant la liste des notices
     var jsonCurrentBucket = JSON.stringify(currentBucket);
     cookies.set("currentBucket", jsonCurrentBucket, { path: '/', overwrite: true });
-    this.setState({bucket: this.state.bucket.filter(notice =>
-      { return notice.REF === null })
+    this.setState({
+      bucket: this.state.bucket.filter(notice => { return notice.REF === null })
     });
   }
 
@@ -117,45 +117,46 @@ export default class Bucket extends React.Component {
     let blocList = [];
     let tempList = [];
 
-    listOfNotices.map( (notice, index) => {
+    listOfNotices.map((notice, index) => {
       tempList.push(notice)
 
       //multiple = x % y;
-      var multiple = (index+1) % 7;
-      if ((multiple===0 && index!==0) || listOfNotices.length === index + 1){
+      var multiple = (index + 1) % 7;
+      if ((multiple === 0 && index !== 0) || listOfNotices.length === index + 1) {
         //x is a multiple of y
-        blocList.push({list: tempList, bloc: blocIndex});
+        blocList.push({ list: tempList, bloc: blocIndex });
         tempList = [];
         blocIndex++;
       }
     });
 
-    
+
     const pdf = BucketPdf(this.state.bucket);
     const App = () => (
       <div>
-        <PDFDownloadLink 
-          document={pdf} 
+        <PDFDownloadLink
+          document={pdf}
           fileName={this.PdfFileName()}
-          style={{backgroundColor: "#377d87",
-                  border: 0,
-                  color: "#fff",
-                  maxWidth: "250px",
-                  width: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  paddingTop: "5px",
-                  paddingBottom: "5px",
-                  textAlign: "center",
-                  borderRadius: "5px"
-                }}>
+          style={{
+            backgroundColor: "#377d87",
+            border: 0,
+            color: "#fff",
+            maxWidth: "250px",
+            width: "100%",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "5px",
+            paddingBottom: "5px",
+            textAlign: "center",
+            borderRadius: "5px"
+          }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Télécharger le panier')}
         </PDFDownloadLink>
       </div>
     )
 
     const EmptyBucketButton = () => (
-      <div><Button  style={{
+      <div><Button style={{
         backgroundColor: "#377d87",
         border: 0,
         color: "#fff",
@@ -166,18 +167,19 @@ export default class Bucket extends React.Component {
         paddingTop: "5px",
         paddingBottom: "5px",
         textAlign: "center",
-        borderRadius: "5px"}}
+        borderRadius: "5px"
+      }}
         onClick={() => this.EmptyBucket()}>Vider le panier</Button>
       </div>
-    ) 
+    )
 
     return (
       <div className="bucketList">
         <Layout>
           <div className="home">
-              <Head>
-                  <title>Panier de notices</title>
-              </Head>
+            <Head>
+              <title>Panier de notices</title>
+            </Head>
           </div>
         </Layout>
         <div className="bucketContainer">
@@ -185,22 +187,22 @@ export default class Bucket extends React.Component {
           <div className="notices">
             <div className="download-container">
               <div className="notice-number">
-              {this.state.bucket.length === 0 ? 
-                "Aucune notice dans le panier" : 
-                (this.state.bucket.length + " résultat" + (this.state.bucket.length>1 ? "s" : ""))
-              }
+                {this.state.bucket.length === 0 ?
+                  "Aucune notice dans le panier" :
+                  (this.state.bucket.length + " résultat" + (this.state.bucket.length > 1 ? "s" : ""))
+                }
               </div>
 
               {
-                (this.state.bucket.length > 0 && this.state.display == true)?
-                EmptyBucketButton() : ""
+                (this.state.bucket.length > 0 && this.state.display == true) ?
+                  EmptyBucketButton() : ""
               }
 
               {
-                (this.state.bucket.length > 0 && this.state.display == true)? 
-                App() : ""
+                (this.state.bucket.length > 0 && this.state.display == true) ?
+                  App() : ""
               }
-              
+
             </div>
 
             {/* {this.state.bucket.map( notice, index =>
@@ -210,9 +212,9 @@ export default class Bucket extends React.Component {
             )} */}
 
             {
-              blocList.map( item => 
-                <div id={`bloc_${item.bloc}`} style={{paddingRight: "20px", paddingLeft: "20px"}}>
-                  {item.list.map( notice =>
+              blocList.map(item =>
+                <div id={`bloc_${item.bloc}`} style={{ paddingRight: "20px", paddingLeft: "20px" }}>
+                  {item.list.map(notice =>
                     <div>
                       {this.displayCard(notice)}
                     </div>
@@ -373,7 +375,7 @@ export default class Bucket extends React.Component {
             }
           `}</style>
       </div>
-      
+
     );
   }
 }

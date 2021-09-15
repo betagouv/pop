@@ -17,7 +17,7 @@ import { bucket_url } from "../../src/config";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import { MnrPdf } from "../pdfNotice/mnrPdf";
+import { MnrPdf } from "../../src/pdf/pdfNotice/mnrPdf";
 import { pop_url, emailContactMnr } from "../../src/config";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 
@@ -30,7 +30,7 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  state = {display: false, prevLink: undefined, nextLink: undefined}
+  state = { display: false, prevLink: undefined, nextLink: undefined }
 
 
   static async getInitialProps({ query: { id }, asPath }) {
@@ -62,7 +62,7 @@ export default class extends React.Component {
     }
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     //this.setState({display : true});
 
     //highlighting
@@ -70,40 +70,40 @@ export default class extends React.Component {
 
     //Construction des liens précédents/suivants
     const cookies = new Cookies();
-    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
-    if(listRefs){
+    const listRefs = cookies.get("listRefs-" + this.props.searchParams.idQuery);
+    if (listRefs) {
       const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
       let prevLink = undefined;
       let nextLink = undefined;
-      if(indexOfCurrentNotice > 0){
+      if (indexOfCurrentNotice > 0) {
         const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
-        if(previousCollection !== ""){
-          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        if (previousCollection !== "") {
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      if(indexOfCurrentNotice < listRefs.length - 1){
+      if (indexOfCurrentNotice < listRefs.length - 1) {
         const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
-        if(nextCollection !== ""){
-          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        if (nextCollection !== "") {
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      this.setState({prevLink, nextLink});
+      this.setState({ prevLink, nextLink });
     }
-    else{
-      this.state.display == false && this.setState({display : true});
+    else {
+      this.state.display == false && this.setState({ display: true });
     }
   }
 
-  componentDidUpdate(){
-    this.state.display == false && this.setState({display : true});
+  componentDidUpdate() {
+    this.state.display == false && this.setState({ display: true });
   }
 
-  renderPrevButton(){
-    if(this.state.prevLink != undefined){
-      return(
-          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
-            &lsaquo;
-          </a>
+  renderPrevButton() {
+    if (this.state.prevLink != undefined) {
+      return (
+        <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+          &lsaquo;
+        </a>
       )
     }
     else {
@@ -111,12 +111,12 @@ export default class extends React.Component {
     }
   }
 
-  renderNextButton(){
-    if(this.state.nextLink != undefined){
-      return(
-          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
-           &rsaquo;
-          </a>
+  renderNextButton() {
+    if (this.state.nextLink != undefined) {
+      return (
+        <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+          &rsaquo;
+        </a>
       )
     }
     else {
@@ -172,21 +172,22 @@ export default class extends React.Component {
     const pdf = MnrPdf(notice, title);
     const App = () => (
       <div>
-        <PDFDownloadLink 
-          document={pdf} 
+        <PDFDownloadLink
+          document={pdf}
           fileName={"mnr_" + notice.REF + ".pdf"}
-          style={{backgroundColor: "#377d87",
-                  border: 0,
-                  color: "#fff",
-                  maxWidth: "250px",
-                  width: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  textAlign: "center",
-                  borderRadius: "5px"
-                }}>
+          style={{
+            backgroundColor: "#377d87",
+            border: 0,
+            color: "#fff",
+            maxWidth: "250px",
+            width: "100%",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "8px",
+            paddingBottom: "8px",
+            textAlign: "center",
+            borderRadius: "5px"
+          }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
@@ -215,20 +216,20 @@ export default class extends React.Component {
 
             <div className="top-container">
               <div className="leftContainer-buttons">
-                {lastRecherche !== null && 
-                <div className="btn btn-last-search">
-                  <Link href={lastRecherche}>
-                    <div className="text-last-search">
-                      Retour à la recherche
-                    </div>
-                  </Link>
-                </div>}
+                {lastRecherche !== null &&
+                  <div className="btn btn-last-search">
+                    <Link href={lastRecherche}>
+                      <div className="text-last-search">
+                        Retour à la recherche
+                      </div>
+                    </Link>
+                  </div>}
               </div>
               <div className="rightContainer-buttons">
                 <div className="addBucket onPrintHide">
                   {this.state.display &&
                     <BucketButton base="mnr" reference={notice.REF} />}
-                  </div>
+                </div>
                 {this.state.display && App()}
               </div>
             </div>

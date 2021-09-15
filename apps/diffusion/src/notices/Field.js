@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, Image, View, Link } from '@react-pdf/renderer';
-import { styles } from "../../pages/pdfNotice/styles";
+import { styles } from "../pdf/pdfNotice/styles";
 
 export default ({ content, title, separator, join = ", ", isPdf, link, addLink, upper = true }) => {
   // Don't render empty elements.
