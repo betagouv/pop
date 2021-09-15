@@ -1,14 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import { Button, Input, Container } from "reactstrap";
-import Router from "next/router";
+import { Button } from "reactstrap";
 import Layout from "../src/components/Layout";
-import { pushSearchRoute } from "../src/services/url";
-import TopicCard from "../src/topics/TopicCard";
 import Cookies from 'universal-cookie';
 import { Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor } from "../src/search/Results/CardList";
 import API from "../src/services/api";
-import { PDFDownloadLink, Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 
 export default class Bucket extends React.Component {
@@ -132,7 +129,7 @@ export default class Bucket extends React.Component {
 
 
     const pdf = BucketPdf(this.state.bucket);
-    const App = () => (
+    const PDFLink = () => (
       <div>
         <PDFDownloadLink
           document={pdf}
@@ -200,7 +197,7 @@ export default class Bucket extends React.Component {
 
               {
                 (this.state.bucket.length > 0 && this.state.display == true) ?
-                  App() : ""
+                  PDFLink() : ""
               }
 
             </div>
