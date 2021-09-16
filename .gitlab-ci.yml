@@ -6,7 +6,7 @@
 #
 
 default:
-  image: node:8.11
+  image: node:14.17
 
 stages:
   - node-modules
@@ -78,7 +78,6 @@ workflow:
 .node-modules: &node-modules
   stage: node-modules
   script:
-    - npm install npm@latest-6 -g
     - cd apps/${APP}
     - npm ci
   cache:
