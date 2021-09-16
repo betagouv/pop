@@ -73,10 +73,6 @@
     },
     "testEnvironment": "jsdom"
   },
-  "engines": {
-    "node": "8.11.x",
-    "npm": "5.x"
-  },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
