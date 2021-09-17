@@ -150,7 +150,7 @@ router.put(
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
       //Ajout de l'historique de la notice
-      var today = new Date();
+      var today = new Date(Date.now());
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes();
       var dateTime = date+' '+time;
