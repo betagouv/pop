@@ -340,13 +340,10 @@ router.put(
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
       //Ajout de l'historique de la notice
-      var today = new Date(Date.now());
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes();
-      var dateTime = date+' '+time;
+      var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
       
       let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
