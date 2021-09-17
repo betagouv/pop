@@ -133,12 +133,6 @@ class Importer extends Component {
       this.props.collection,
       this.props.fieldsToExport
     );
- 
-    //Ajout de l'historique de la notice
-    var today = new Date(Date.now());
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+' '+time;
     
     const doc = await api.createImport(
       {
@@ -146,7 +140,7 @@ class Importer extends Component {
         user: this.props.userId,
         email: this.props.email,
         created: created.length,
-        importedAt: dateTime,
+        importedAt: Date.now(),
         updated: updated.length,
         rejected: rejected.length,
         notices: this.state.importedNotices.map(({ REF }) => REF),

@@ -7,6 +7,7 @@ const mailer = require("../mailer");
 const { capture } = require("./../sentry.js");
 require("../passport")(passport);
 const DeleteHistorique = require("../models/deleteHistorique");
+let moment = require('moment-timezone')
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -67,11 +68,9 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 
     //Create the new historique with this LABEL and BASE and removing index from base objects
     const userString = user.prenom + " " + user.nom;
-    var today = new Date(Date.now());
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+' '+time;
-    const data = { REF: ref, BASE: base, USER: userString, EMAIL: user.email, DATE: dateTime };
+    var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
+
+    const data = { REF: ref, BASE: base, USER: userString, EMAIL: user.email, DATE: today };
     const newDeleteHistorique = new DeleteHistorique(data);
     try {
         console.log("new delete historique = " + JSON.stringify(newDeleteHistorique))
