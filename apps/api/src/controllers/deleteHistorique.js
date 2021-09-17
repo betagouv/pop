@@ -67,7 +67,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 
     //Create the new historique with this LABEL and BASE and removing index from base objects
     const userString = user.prenom + " " + user.nom;
-    var today = new Date();
+    var today = new Date(Date.now());
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes();
     var dateTime = date+' '+time;

@@ -77,7 +77,7 @@ router.put(
           let oaiObj = { DMAJ: e.notice.DMAJ}
 
           //Ajout de l'historique de la notice
-          var today = new Date();
+          var today = new Date(Date.now());
           var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
           var time = today.getHours() + ":" + today.getMinutes();
           var dateTime = date+' '+time;
@@ -136,7 +136,7 @@ router.put(
       let oaiObj = { DMAJ: notice.DMAJ}
 
       //Ajout de l'historique de la notice
-      var today = new Date();
+      var today = new Date(Date.now());
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes();
       var dateTime = date+' '+time;

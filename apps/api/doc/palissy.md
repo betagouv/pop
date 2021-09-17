@@ -321,7 +321,7 @@ Adresse de l'édifice. Ne peut pas être vide si WADRS est renseigné.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Personne morale créatrice de l'objet|
+|Array|non|non|non|non||Personne morale créatrice de l'objet|
 
 ### AUTP
 
@@ -381,7 +381,7 @@ Commune. Ne peut pas être vide si WCOM est renseigné.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune|
+|Array|non|non|non|non||Commune|
 
 ### COM2
 
@@ -391,7 +391,7 @@ Commune. Ne peut pas être vide si WCOM est renseigné.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune masquée|
+|Array|non|non|non|non||Commune masquée|
 
 ### PRECISION_JURIDIQUE
 
@@ -633,7 +633,7 @@ Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Département|
+|Array|non|non|non|non||Département|
 
 ### DPT_LETTRE
 Département en lettre
@@ -643,7 +643,7 @@ Département en lettre
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Département en lettre|
+|Array|non|non|non|non||Département en lettre|
 
 ### EDIF
 
@@ -795,7 +795,7 @@ Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer co
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numéro INSEE de la commune|
+|Array|non|non|non|non||Numéro INSEE de la commune|
 
 ### INSEE2
 
@@ -805,7 +805,7 @@ Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer co
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Code INSEE masqué|
+|Array|non|non|non|non||Code INSEE masqué|
 
 ### INTE
 
@@ -1191,7 +1191,7 @@ Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Région|
+|Array|non|non|non|non||Région|
 
 ### RENP
 
@@ -1373,7 +1373,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune pour l'affichage|
+|Array|non|non|non|non||Commune pour l'affichage|
 
 ### WEB
 

@@ -59,7 +59,7 @@ async function withFlags(notice) {
     notice.POP_FLAGS.push("INSEE_LENGTH_5");
   }
   // INSEE & DPT must start with the same first 2 letters.
-  if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
+  if (notice.INSEE && notice.DPT && notice.INSEE[0].substring(0, 2) !== notice.DPT[0].substring(0, 2)) {
     notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
   }
   // REF must be an Alphanumeric.
@@ -75,8 +75,12 @@ async function withFlags(notice) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
   // Region should exist.
-  if (notice.REG && !regions.includes(notice.REG)) {
-    notice.POP_FLAGS.push("REG_INVALID");
+  if (Array.isArray(notice.REG) && notice.REG.length > 0 ) {
+    for(let i=0; i<notice.REG.length; i++){
+      if(!regions.includes(notice.REG[i])){
+        notice.POP_FLAGS.push("REG_INVALID");
+      } 
+    }
   }
   // Reference not found (RENV, REFP, REFE)
   // Reference not found RENV
@@ -293,7 +297,7 @@ router.put(
       await transformBeforeUpdate(notice);
 
       //Ajout de l'historique de la notice
-      var today = new Date();
+      var today = new Date(Date.now());
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes();
       var dateTime = date+' '+time;
