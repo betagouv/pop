@@ -135,12 +135,12 @@ describe("POST /palissy", () => {
     // Create notice with errors.
     const flagNotice = {
       ...sampleNotice,
-      REG: "x", // 1
+      REG: ["x"], // 1
       ETUD: "", // 2
       PROT: "x", // 3
       DPRO: "", // 3 too.
-      DPT: "1", // 4,
-      INSEE: "2", // 5 and 6
+      DPT: ["1"], // 4,
+      INSEE: ["2"], // 5 and 6
       REF: "à", // 7
       DOSURL: "htd://_.com", // 8
       RENV: ["x"], // 9
