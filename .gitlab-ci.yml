@@ -1,4 +1,4 @@
-# Variable à définir au niveau du projet Gitlab, avec l'option "masquée" :
+# Variables à définir au niveau du projet Gitlab, avec l'option "masquée" :
 # - AWS_ACCESS_KEY_ID_OPEN      : Identifiant AWS pour les environnements Open
 # - AWS_SECRET_ACCESS_KEY_OPEN  : Clé AWS pour les environnements Open
 # - AWS_ACCESS_KEY_ID_MC        : Identifiant AWS pour les environnements du Ministère de la Culture
@@ -18,13 +18,13 @@ stages:
 
 workflow:
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: always
-    - if: '$CI_COMMIT_BRANCH == "develop"'
-      when: always
-    - when: never
+    # - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    #   when: always
+    # - if: '$CI_COMMIT_BRANCH == "develop"'
+    #   when: always
+    - when: always
 
-#
+##############################################################
 # TEMPLATES
 #
 
@@ -69,7 +69,7 @@ workflow:
     - cd apps/${APP}
     - eb deploy ${ENV}
 
-#
+##############################################################
 # NODE-MODULES
 #
 
@@ -108,7 +108,7 @@ node-modules-diffusion:
   variables:
     APP: diffusion
 
-#
+##############################################################
 # TEST
 #
 
@@ -157,7 +157,7 @@ test-diffusion:
   variables:
     APP: production
 
-#
+##############################################################
 # BUILD
 #
 
@@ -238,7 +238,7 @@ test-diffusion:
         - "apps/${APP}/*"
         - ".gitlab-ci.yml"
 
-#
+##############################################################
 # DEVIC1 - OPEN
 #
 
@@ -246,7 +246,7 @@ test-diffusion:
   rules:
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: on_success
-    - when: never
+    - when: manual
 
 build-production-devic1:
   <<: *build-production
@@ -308,7 +308,7 @@ deploy-diffusion-devic1:
     deployment_tier: development
   <<: *devic1-rules
 
-#
+##############################################################
 # STAGING - MC
 #
 
@@ -340,12 +340,12 @@ deploy-api-staging:
   variables:
     APP: api
     ENV: pop-api-staging
-  when: manual
   stage: staging
   environment:
     name: pop-api-staging
     url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
     deployment_tier: staging
+  when: manual
 
 deploy-production-staging:
   <<: *deploy-mc
@@ -355,12 +355,12 @@ deploy-production-staging:
   variables:
     APP: production
     ENV: pop-production-staging
-  when: manual
   stage: staging
   environment:
     name: pop-production-staging
     url: http://pop-production-staging.eu-west-3.elasticbeanstalk.com/
     deployment_tier: staging
+  when: manual
 
 deploy-diffusion-staging:
   <<: *deploy-mc
@@ -370,14 +370,14 @@ deploy-diffusion-staging:
   variables:
     APP: diffusion
     ENV: pop-consultation-staging
-  when: manual
   stage: staging
   environment:
     name: pop-consultation-staging
     url: http://pop-staging.culture.gouv.fr/
     deployment_tier: staging
+  when: manual
 
-#
+##############################################################
 # PRODUCTION - MC
 #
 
@@ -409,12 +409,12 @@ deploy-api-production:
   variables:
     APP: api
     ENV: pop-api
-  when: manual
   stage: production
   environment:
     name: pop-api-production
     url: https://api.pop.culture.gouv.fr/
     deployment_tier: production
+  when: manual
 
 deploy-production-production:
   <<: *deploy-mc
@@ -424,12 +424,12 @@ deploy-production-production:
   variables:
     APP: production
     ENV: pop-production
-  when: manual
   stage: production
   environment:
     name: pop-production-production
     url: https://production.pop.culture.gouv.fr/
     deployment_tier: production
+  when: manual
 
 deploy-diffusion-production:
   <<: *deploy-mc
@@ -439,9 +439,9 @@ deploy-diffusion-production:
   variables:
     APP: diffusion
     ENV: pop-consultation
-  when: manual
   stage: production
   environment:
     name: pop-consultation-production
     url: https://www.pop.culture.gouv.fr/
     deployment_tier: production
+  when: manual
