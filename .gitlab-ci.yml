@@ -155,7 +155,7 @@ test-diffusion:
     - node-modules-diffusion
   <<: *test
   variables:
-    APP: production
+    APP: diffusion
 
 ##############################################################
 # BUILD
