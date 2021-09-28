@@ -9,7 +9,8 @@ const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/auth
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { checkESIndex, identifyProducteur } = require("../controllers/utils");
-let moment = require('moment-timezone')
+let moment = require('moment-timezone');
+const timeZone = 'Europe/Paris';
 
 router.get("/:ref", async (req, res) => {
   /* 	
@@ -78,7 +79,7 @@ router.put(
           let oaiObj = { DMAJ: e.notice.DMAJ}
 
           //Ajout de l'historique de la notice
-          var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
+          var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
           
           let HISTORIQUE = e.notice.HISTORIQUE || [];
           const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
@@ -134,7 +135,7 @@ router.put(
       let oaiObj = { DMAJ: notice.DMAJ}
 
       //Ajout de l'historique de la notice
-      var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
+      var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
       
       let HISTORIQUE = notice.HISTORIQUE || [];
       const newHistorique = {nom: req.user.nom, prenom: req.user.prenom, email: req.user.email, date: today, updateMode: req.body.updateMode};

@@ -282,8 +282,10 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
     await transformBeforeUpdate(notice);
+
+    const timeZone = 'Europe/Paris';
     //Ajout de l'historique de la notice
-    var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
+    var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
   
     let HISTORIQUE = notice.HISTORIQUE || [];
     const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
