@@ -41,7 +41,9 @@ export default class extends React.Component {
       for(let elem in arr ){
         const collection = await findCollection(arr[elem])
         const linkedNotice = await API.getNotice(collection, arr[elem])
-        links.push(linkedNotice)
+        if(linkedNotice != null){
+          links.push(linkedNotice)
+        }
       }
 
       for(let i=0; i<notice.REFJOC.length; i++){
