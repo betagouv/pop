@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { Document, Page, View, Text, Image, Link, StyleSheet, Font } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
-import { pdfLinks, postFixedLink } from "../../src/notices/utils";
+import { pdfLinks, postFixedLink, getUrlArchive } from "../../src/notices/utils";
 import { bucket_url } from "../../src/config";
 
 export function PalissyPdf(notice, title, localisation, links){
