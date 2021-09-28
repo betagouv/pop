@@ -79,7 +79,7 @@ router.put(
           let oaiObj = { DMAJ: e.notice.DMAJ}
 
           //Ajout de l'historique de la notice
-          var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
+          var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
           
           let HISTORIQUE = e.notice.HISTORIQUE || [];
           const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
