@@ -69,7 +69,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
     const timeZone = 'Europe/Paris';
     //Create the new historique with this LABEL and BASE and removing index from base objects
     const userString = user.prenom + " " + user.nom;
-    var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
+    var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
 
     const data = { REF: ref, BASE: base, USER: userString, EMAIL: user.email, DATE: today };
     const newDeleteHistorique = new DeleteHistorique(data);
