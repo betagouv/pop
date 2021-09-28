@@ -339,8 +339,9 @@ router.put(
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
+      const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = moment(new Date()).format("YYYY-MM-DD HH:mm");
+      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
       
       let HISTORIQUE = notice.HISTORIQUE || [];
       const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
