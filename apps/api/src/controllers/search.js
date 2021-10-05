@@ -31,7 +31,7 @@ router.post("/scroll", (req, res) => {
 router.use("/*/_msearch", (req, res) => {
   let opts = {
     host: esUrl,
-    port: esPort, 
+    port: esPort,
     path: req.originalUrl.replace("/search", ""),
     body: req.body,
     method: "POST",
@@ -40,7 +40,8 @@ router.use("/*/_msearch", (req, res) => {
   aws4.sign(opts);
   http
     .request(opts, res1 => {
-      res1.pipe(res);
+      const routedResponse = res1.pipe(res);
+      routedResponse.setHeader("Content-Type", "application/json");
     })
     .end(opts.body || "");
 });
