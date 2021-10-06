@@ -19,8 +19,9 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink }
     if (!React.isValidElement(str)) {
       // Fix simple quotes and capitalize first letter (only if it's a string)
       str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
-      if (separator) {
-        str = str.replace(separator, "\n");
+
+      if(separator && typeof str == "string" && str.indexOf(separator) > -1){ 
+        str = str.replace(new RegExp(separator, "g"), "\n");
       }
     }
   }
