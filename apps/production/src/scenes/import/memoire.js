@@ -154,28 +154,14 @@ function readme() {
         <br />
         <br />
         <h6>Je veux ajouter une image :</h6>
-        1) A l'import, dans mon fichier, je renseigne la notice concernée en précisant le champ REF,
-        ainsi que le champ : IMG ou NOMSN avec le .jpeg de l'illustration. Les deux champs
-        fonctionnent mais <b>IMG est prioritaire sur NOMSN</b>, i.e. si IMG est rempli avec le
-        .jpeg, alors ce champ sera utilisé par POP pour illustrer la notice. Si en revanche, IMG est
-        vide, alors POP traduira le champ NOMSN renseigné pour remplir automatiquement le champ IMG.{" "}
-        <br /> <br />
-        <b>
-          ATTENTION : une fois l'import passé, seul le champ IMG est affiché dans la notice
-          développée.
-        </b>
-        <br /> <br />
-        2) Directement depuis une notice développée : je peux cliquer sur "Ajouter une nouvelle
-        image" et télécharger une nouvelle image directement depuis mon ordinateur. La notice
-        Mémoire reçoit alors dans son champ IMG le contenu .jpeg de l'image téléchargée. <br />
-        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée, alors l'image ainsi
-        stockée dans IMG pourra également illustrer une notice MH associée. <br />
-        <br /> <br />
-        NB : le champ LBASE2 est inutile sur POP. Nul besoin de l'importer."
+        1) A l'import, dans mon fichier, je renseigne la notice concernée en précisant le champ REF, ainsi que le champ : IMG ou REFIMG avec le .jpeg de l'illustration.<br />
+        <br />
+        2) Directement depuis une notice développée : je peux cliquer sur "Ajouter une nouvelle image" et télécharger une nouvelle image directement depuis mon ordinateur. La notice Mémoire reçoit alors dans son champ IMG le contenu .jpeg de l'image téléchargée.<br />
+        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée, alors l'image ainsi stockée dans IMG pourra également illustrer une notice MH associée.
         <br />
         <br />
-        NB2 : à la création d'une notice, POP génère automatiquement certains champs utiles au
-        traitement des données. Il s'agit des champs : <br />
+        NB : à la création d'une notice, POP génère automatiquement certains champs utiles au traitement des données. Il s'agit des champs : <br />
+        <br />
         <ul>
           {generatedFields.map(e => (
             <li key={e}>{e}</li>
