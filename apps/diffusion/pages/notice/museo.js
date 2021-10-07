@@ -205,7 +205,7 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["NOMOFF", "NOMUSAGE", "NOMANC"]}
                   />
-                  <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} />
+                  <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} upper={false}/>
                   <Field title={mapping.museo.NOMUSAGE.label} content={notice.NOMUSAGE} />
                   <Field title={mapping.museo.NOMANC.label} content={notice.NOMANC} />
                   <Title
@@ -226,7 +226,7 @@ export default class extends React.Component {
                     fields={["TEL_M", "CONTACT_GENERIQUE", "URL_M", "ACCES"]}
                   />
                   <Field title={mapping.museo.TEL_M.label} content={notice.TEL_M} />
-                  <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} />
+                  <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} upper={false}/>
                   <Field
                     title={mapping.museo.URL_M.label}
                     content={<a href={"https://" + notice.URL_M} target="_blank">{notice.URL_M}</a>}
