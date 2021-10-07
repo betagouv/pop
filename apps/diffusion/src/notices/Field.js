@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, Image, View, Link } from '@react-pdf/renderer';
 import { styles } from "../../pages/pdfNotice/styles";
 
-export default ({ content, title, separator, join = ", ", isPdf, link, addLink }) => {
+export default ({ content, title, separator, join = ", ", isPdf, link, addLink, upper = true }) => {
   // Don't render empty elements.
   const isEmptyArray = c => Array.isArray(c) && c.length === 0;
   const isEmptyString = s => typeof s === "string" && !s.trim();
@@ -17,8 +17,13 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink }
 
     // Don't apply transformations on React components
     if (!React.isValidElement(str)) {
-      // Fix simple quotes and capitalize first letter (only if it's a string)
-      str = str.replace(/\u0092/g, `'`).replace(/^./, str => str.toUpperCase());
+      // Fix simple quotes (only if it's a string)
+      str = str.replace(/\u0092/g, `'`);
+
+      // Capitalize first letter (if needed)
+      if(upper){
+        str = str.replace(/^./, str => str.toUpperCase());
+      }
 
       if(separator && typeof str == "string" && str.indexOf(separator) > -1){ 
         str = str.replace(new RegExp(separator, "g"), "\n");
@@ -40,7 +45,6 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink }
       });
       str = arrayContent.reduce((a,b) => [a, ' ', b]);
     }
-
  
     if(typeof str == 'string' && addLink != 'undefined' && addLink){
       str = addLinkToText(str);
