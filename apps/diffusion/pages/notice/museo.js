@@ -38,6 +38,13 @@ export default class extends React.Component {
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
     const arr = [];
 
+    let hideButton = false;
+    const noticesLiees = await API.getMuseoCollection(notice.REF);
+
+    if(noticesLiees == 0){
+      hideButton = true;
+    }
+    
     if (notice) {
       const { REFMEM, REFMER, REFPAL } = notice;
       pushLinkedNotices(arr, REFMEM, "memoire");
@@ -47,7 +54,7 @@ export default class extends React.Component {
 
     const links = (await Promise.all(arr)).filter(l => l);
 
-    return { notice, links, searchParamsUrl, searchParams };
+    return { notice, links, searchParamsUrl, searchParams, hideButton };
   }
 
   async componentDidMount(){
@@ -198,7 +205,7 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["NOMOFF", "NOMUSAGE", "NOMANC"]}
                   />
-                  <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} />
+                  <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} upper={false}/>
                   <Field title={mapping.museo.NOMUSAGE.label} content={notice.NOMUSAGE} />
                   <Field title={mapping.museo.NOMANC.label} content={notice.NOMANC} />
                   <Title
@@ -219,7 +226,7 @@ export default class extends React.Component {
                     fields={["TEL_M", "CONTACT_GENERIQUE", "URL_M", "ACCES"]}
                   />
                   <Field title={mapping.museo.TEL_M.label} content={notice.TEL_M} />
-                  <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} />
+                  <Field title={mapping.museo.CONTACT_GENERIQUE.label} content={notice.CONTACT_GENERIQUE} upper={false}/>
                   <Field
                     title={mapping.museo.URL_M.label}
                     content={<a href={"https://" + notice.URL_M} target="_blank">{notice.URL_M}</a>}
@@ -280,7 +287,7 @@ export default class extends React.Component {
                       museo: JSON.stringify([notice.REF])
                     })}`}
                   >
-                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }}>
+                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }} hidden={ this.props.hideButton }>
                       Voir les collections du musée
                     </a>
                   </Link>
