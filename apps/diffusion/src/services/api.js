@@ -85,6 +85,36 @@ class api {
         });
     });
   }
+
+  getMuseoCollection(ref) {
+    // Attenttion ! La requete dans "query" est sensible aux retours chariots et aux espaces, y compris ceux de l'indentation
+    const query = `{"preference":"res"}
+    {"query":{"bool":{"must":[{"bool":{"should":[{"term":{"MUSEO.keyword":"`+ref+`"}}]}},{"match_all":{}}]}},"size":25,"from":0}
+`;
+
+    return new Promise((resolve, reject) => {
+      fetch(`${api_url}/search/merimee,palissy,memoire,joconde,mnr,museo,enluminures,autor/_msearch`, {
+        method: "POST",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: { "Content-Type": "Application/x-ndjson" },
+        mode: "cors",
+        redirect: "follow",
+        referrer: "no-referrer",
+        body: query
+      }).then(response => {
+        response.json()
+          .then(data => {
+            resolve(data.responses[0].hits.total);
+          })
+          .catch(e => {
+            Sentry.captureException(e);
+            reject("Probleme lors de la récupération de la donnée", e);
+          });
+      })
+      .catch(e => reject(e));;
+    });
+  }
 }
 
 const apiObject = new api();
