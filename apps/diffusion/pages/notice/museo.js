@@ -38,6 +38,13 @@ export default class extends React.Component {
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
     const arr = [];
 
+    let hideButton = false;
+    const noticesLiees = await API.getMuseoCollection(notice.REF);
+
+    if(noticesLiees == 0){
+      hideButton = true;
+    }
+    
     if (notice) {
       const { REFMEM, REFMER, REFPAL } = notice;
       pushLinkedNotices(arr, REFMEM, "memoire");
@@ -47,7 +54,7 @@ export default class extends React.Component {
 
     const links = (await Promise.all(arr)).filter(l => l);
 
-    return { notice, links, searchParamsUrl, searchParams };
+    return { notice, links, searchParamsUrl, searchParams, hideButton };
   }
 
   async componentDidMount(){
@@ -280,7 +287,7 @@ export default class extends React.Component {
                       museo: JSON.stringify([notice.REF])
                     })}`}
                   >
-                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }}>
+                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }} hidden={ this.props.hideButton }>
                       Voir les collections du musée
                     </a>
                   </Link>
