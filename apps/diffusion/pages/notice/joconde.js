@@ -471,6 +471,11 @@ export default class extends React.Component {
   }
 }
 
+function handleClick(e) {    
+  e.preventDefault();   
+  window.open(e.target.href, '_blank');  
+}
+
 const SeeMore = ({ notice, museo }) => {
   const arr = [];
 
@@ -493,7 +498,7 @@ const SeeMore = ({ notice, museo }) => {
       arr.push(
         <Field
           title={mapping.joconde.WWW.label}
-          content={<a href={notice.WWW[0]}>{notice.WWW[0]}</a>}
+          content={<a href={notice.WWW[0]} target="_blank">{notice.WWW[0]}</a>}
           key="notice.WWW"
         />
       );
@@ -501,7 +506,7 @@ const SeeMore = ({ notice, museo }) => {
       for(let i=1; i<notice.WWW.length; i++){
         arr.push(
           <Field
-            content={<a href={notice.WWW[i]}>{notice.WWW[i]}</a>}
+            content={<a href={notice.WWW[i]} target="_blank">{notice.WWW[i]}</a>}
             key="notice.WWW"
           />
           );
@@ -520,7 +525,7 @@ const SeeMore = ({ notice, museo }) => {
     arr.push(
       <Field
         title={mapping.joconde.MUSEO.label}
-        content={<a href={`/notice/museo/${notice.MUSEO}`}>{text}</a>}
+        content={<a href={`/notice/museo/${notice.MUSEO}`} target="_blank">{text}</a>}
         key="notice.MUSEO"
       />
     );
@@ -530,7 +535,7 @@ const SeeMore = ({ notice, museo }) => {
     arr.push(
       <Field
         title={mapping.joconde.RETIF.label}
-        content={<a href={notice.RETIF}>INHA</a>}
+        content={<a href={notice.RETIF} target="_blank">INHA</a>}
         key="notice.RETIF"
       />
     );
@@ -541,7 +546,7 @@ const SeeMore = ({ notice, museo }) => {
       <Field
         title={mapping.joconde.MSGCOM.label}
         content={
-          <a href={`mailto:${notice.MSGCOM}`}>
+          <a href={`mailto:${notice.MSGCOM}`} onClick={handleClick}>
             Demande de photographie et/ou de conditions d'utilisation
           </a>
         }
