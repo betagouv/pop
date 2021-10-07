@@ -344,6 +344,7 @@ class SearchAdvanced extends React.Component {
             { value:["PLIEUX.keyword"], text:"Précisions lieu création", fields: "PLIEUX"},
             { value:["PREP.keyword"], text:"Précisions sur la représentation", fields: "PREP"},
             { value:["PUTI.keyword"], text:"Précisions utilisation", fields: "PUTI"},
+            { value:["REDA.keyword"], text:"Rédacteur", fields: "REDA"},
             { value:["REF.keyword"], text:"Référence", fields: "REF"},
             { value:["REGION.keyword"], text:"Région", fields: "REGION"},
             { value:["REPR.keyword"], text:"Sujet représenté", fields: "REPR"},
@@ -664,11 +665,6 @@ class SearchAdvanced extends React.Component {
               fields: "GENE, HIST, NOTE"
             },
             {
-              value: ["TECH.keyword", "ETAT.keyword"],
-              text: "Technique",
-              fields: "TECH, ETAT"
-            },
-            {
               value: ["INSC.keyword", "MARQ.keyword"],
               text: "Inscription portée sur l’œuvre",
               fields: "INSC, MARQ"
@@ -695,7 +691,6 @@ class SearchAdvanced extends React.Component {
             {value: "DOMN.keyword",  text: "Domaine", fields: "DOMN"},
             {value: "DREP.keyword",  text: "Date représentation", fields: "DREP"},
             {value: "ECOL.keyword",  text: "École", fields: "ECOL"},
-            {value: "ETAT.keyword",  text: "État de conservation", fields: "ETAT"},
             {value: "EXPO.keyword",  text: "Exposition", fields: "EXPO"},
             {value: "GENE.keyword",  text: "Genèse", fields: "GENE"},
             {value: "HIST.keyword",  text: "Historique", fields: "HIST"},

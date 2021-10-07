@@ -436,12 +436,6 @@ export default class extends React.Component {
                     join=" ; "
                   />
                   <Field
-                    title={mapping.mnr.ETAT.label}
-                    separator="#"
-                    content={notice.ETAT}
-                    join=" ; "
-                  />
-                  <Field
                     title={mapping.mnr.SUITE.label}
                     separator="#"
                     content={notice.SUITE}
