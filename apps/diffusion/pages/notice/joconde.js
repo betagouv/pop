@@ -325,7 +325,7 @@ export default class extends React.Component {
                       "PINS",
                       "ONOM",
                       "DESC",
-                      "ETAT",
+                      "REDA",
                       "REPR",
                       "PREP",
                       "DREP",
@@ -371,7 +371,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" />
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" />
                   <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" />
-                  <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" />
+                  <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" />
                   <Field
                     title={mapping.joconde.REPR.label}
                     content={this.links(this.props.notice.REPR, "repr")}
