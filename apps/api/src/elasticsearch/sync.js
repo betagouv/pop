@@ -34,7 +34,9 @@ async function run() {
     )
     .parse(process.argv);
 
-  program.chunks = Number(program.chunks);
+  const opts = program.opts();
+
+  opts.chunks = Number(opts.chunks);
 
   console.log(
     chalk.white.bgRed.bold("The script may run for several hours and should not be stopped.")
@@ -43,7 +45,7 @@ async function run() {
     "Still, it can be stopped, but it will leave temporary indices which must be cleaned manually."
   );
 
-  if (!program.force) {
+  if (!opts.force) {
     const answers = await inquirer.prompt({
       type: "confirm",
       name: "force",
@@ -66,7 +68,7 @@ async function run() {
     }
   ]);
 
-  program.indices.map(async db => {
+  opts.indices.map(async db => {
     const noticeClass = {
       joconde: Joconde,
       merimee: Merimee,
@@ -122,7 +124,7 @@ async function run() {
                   let notices = await noticeClass
                     .find(lastId ? { _id: { $gt: lastId } } : {})
                     .sort({ _id: 1 })
-                    .limit(program.chunks);
+                    .limit(opts.chunks);
                   if (!notices.length) {
                     ctx.error = false;
                     observer.complete();
@@ -149,7 +151,7 @@ async function run() {
                     }
                     counter++;
                     lastId = notices[notices.length - 1];
-                    observer.next(counter * program.chunks + " notices done.");
+                    observer.next(counter * opts.chunks + " notices done.");
                   }
                 }
               });
