@@ -27,7 +27,7 @@ async function withFlags(notice) {
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
   // REF must be 11 chars.
   if (notice.REF && notice.REF.length !== 11) {
-    notice.POP_FLAGS.push("REF_LENGTH_EXACT_11");
+    notice.POP_FLAGS.push("REF_LENGTH_11");
   }
   // CONTACT must be an email.
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
