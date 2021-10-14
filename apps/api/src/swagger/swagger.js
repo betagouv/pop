@@ -768,7 +768,7 @@ const doc = {
             "POP_IMPORT": [
               ""
             ],
-            "TOUT": "",
+            "NET": "",
             "AUTR": [
               ""
             ],
@@ -794,8 +794,8 @@ const doc = {
             "HIST2": "",
             "HIST3": "",
             "HIST4": "",
-            "HIST5": "",
-            "HIST6": "",
+            "SALLES": "",
+            "CARTELS": "",
             "SCLE": [
               ""
             ],
@@ -816,7 +816,7 @@ const doc = {
             "AATT": "",
             "AUTI": "",
             "CATE": "",
-            "CATE_DEPREC": "",
+            "RCL": "",
             "NOTE": "",
             "REDC": [
               ""
