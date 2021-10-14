@@ -210,7 +210,9 @@ async function exportData(fileName, entities, header) {
         }
       }
       
-      value = value.replace(/\0/g, '');
+      if(typeof value == "string"){
+        value = value.replace(/\0/g, '');
+      }
       
       arr.push(`"${value}"`);
     }
