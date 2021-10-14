@@ -970,7 +970,7 @@ class SearchAdvanced extends React.Component {
             {value: ["INTERET.keyword"], text: "Intérêt architectural", fields: "INTERET"},
             {value: ["LABEL.keyword"], text: "Appellation musée de France", fields: "LABEL"},
             {value: ["LIEU_M.keyword"], text: "Adresse complementaire", fields: "LIEU_M"},
-            {value: ["NOMANC.keyword"], text: "Ancien nom", fields: "NOMANC"},
+            {value: ["AUTNOM.keyword"], text: "Autres noms", fields: "AUTNOM"},
             {value: ["NOMOFF.keyword"], text: "Dénomination officielle du musée", fields: "NOMOFF"},
             {value: ["NOMUSAGE.keyword"], text: "Nom usuel", fields: "NOMUSAGE"},
             {value: ["PHARE.keyword"], text: "Personnages phares", fields: "PHARE"},

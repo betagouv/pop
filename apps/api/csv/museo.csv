@@ -40,7 +40,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "INTERET","String","non","Intérêt architectural","","","Caractéristique architecturale du bâtiment (3500 caractères maximum)",""
 "LABEL","String","non","Appellation musée de France","","","Musée de France, au sens de la loi n°2002-5 du 4 janvier 2002",""
 "LIEU_M","String","non","Adresse complementaire","","","Précision(s) sur le lieu",""
-"NOMANC","String","non","Ancien nom","","","Ancien nom",""
+"AUTNOM","String","non","Autres noms","","","Autres noms",""
 "NOMOFF","String","non","Dénomination officielle du musée","","","Dénomination officielle du musée selon l’arrêté publié au JO",""
 "NOMUSAGE","String","non","Nom usuel","","","Nom d'usage du musée",""
 "PHARE","String","non","Personnages phares","","","Personnages phares de la collection (3500 caractères maximum)",""

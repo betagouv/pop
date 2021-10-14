@@ -5114,7 +5114,7 @@
           "type": "string",
           "example": ""
         },
-        "NOMANC": {
+        "AUTNOM": {
           "type": "string",
           "example": ""
         },
