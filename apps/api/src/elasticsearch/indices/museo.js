@@ -635,7 +635,7 @@ module.exports = {
             }
           }
         },
-        NOMANC: {
+        AUTNOM: {
           type: "text",
           fields: {
             keyword: {

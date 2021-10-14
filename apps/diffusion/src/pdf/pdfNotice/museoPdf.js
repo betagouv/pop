@@ -16,16 +16,16 @@ export function MuseoPdf(notice, title, links) {
 
         <View style={styles.content}>
           <View style={styles.body}>
-            {(notice.NOMOFF || notice.NOMUSAGE || notice.NOMANC) ?
-              <View>
+            {(notice.NOMOFF || notice.NOMUSAGE || notice.AUTNOM) ?
+            <View>
                 <Text style={styles.subtitle} >Nom du musée</Text>
                 <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} isPdf={true} />
                 <Field title={mapping.museo.NOMUSAGE.label} content={notice.NOMUSAGE} isPdf={true} />
-                <Field title={mapping.museo.NOMANC.label} content={notice.NOMANC} isPdf={true} />
-              </View> : null}
-
-            {(notice.ADRL_1 || notice.LIEU_M || notice.CP_M || notice.VILLE_M || notice.DPT || notice.REGION) ?
-              <View>
+                <Field title={mapping.museo.AUTNOM.label} content={notice.AUTNOM} isPdf={true} />
+            </View> : null}
+            
+            {(notice.ADRL_1 || notice.LIEU_M || notice.CP_M || notice.VILLE_M || notice.DPT || notice.REGION) ? 
+            <View>
                 <Text style={styles.subtitle} >Adresse</Text>
                 <Field title={mapping.museo.ADRL1_M.label} content={notice.ADRL1_M} isPdf={true} />
                 <Field title={mapping.museo.LIEU_M.label} content={notice.LIEU_M} isPdf={true} />

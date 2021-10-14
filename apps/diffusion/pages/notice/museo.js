@@ -204,11 +204,11 @@ export default class extends React.Component {
                   <Title
                     content="Nom du musée"
                     notice={notice}
-                    fields={["NOMOFF", "NOMUSAGE", "NOMANC"]}
+                    fields={["NOMOFF", "NOMUSAGE", "AUTNOM"]}
                   />
                   <Field title={mapping.museo.NOMOFF.label} content={notice.NOMOFF} upper={false}/>
                   <Field title={mapping.museo.NOMUSAGE.label} content={notice.NOMUSAGE} />
-                  <Field title={mapping.museo.NOMANC.label} content={notice.NOMANC} />
+                  <Field title={mapping.museo.AUTNOM.label} content={notice.AUTNOM} />
                   <Title
                     content="Adresse"
                     notice={notice}

@@ -51,7 +51,7 @@ export function getNoticeInfo(notice) {
       return { title, subtitle, metaDescription, logo, image_preview, images };
     }
     case "Répertoire des Musées de France (Muséofile)": {
-      let title = notice.NOMOFF || notice.NOMANC || notice.NOMUSAGE;
+      let title = notice.NOMOFF || notice.AUTNOM || notice.NOMUSAGE;
       title = capitalizeFirstLetter(title);
 
       let subtitle = "";
