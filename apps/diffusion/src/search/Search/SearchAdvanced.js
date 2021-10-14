@@ -100,10 +100,10 @@ class SearchAdvanced extends React.Component {
             {
               value: ["TECHTI.keyword",
                       "TECHOR.keyword",
-                      "TECH.keyword",
+                      "TECHN.keyword",
                       "TYPDOC.keyword"],
               text: "Type de document",
-              fields: "TYPDOC, TECH, TECHOR, TECHTI"
+              fields: "TYPDOC, TECHN, TECHOR, TECHTI"
             },
             {
               value: ["DATPV.keyword",
@@ -243,7 +243,7 @@ class SearchAdvanced extends React.Component {
             {value: ["TICO.keyword"], text:"Titre courant de l’oeuvre", fields: "TICO"},
             {value: ["TIREDE.keyword"], text:"Référence bibliographique ou documentaire", fields: "TIREDE"},
             {value: ["TITRE.keyword"], text:"Titre de la pièce de théâtre ou du film", fields: "TITRE"},
-            {value: ["CINEPROD.keyword"], text:"Traducteur du film", fields: "CINEPROD"},
+            {value: ["CINEPROD.keyword"], text:"Producteur du film", fields: "CINEPROD"},
             {value: ["TYPDOC.keyword"], text:"Catégorie de phototype", fields: "TYPDOC"},
             {value: ["WCOM.keyword"], text:"Ville", fields: "WCOM"}
           ];

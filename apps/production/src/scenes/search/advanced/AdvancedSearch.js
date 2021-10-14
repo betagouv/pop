@@ -130,8 +130,8 @@ export default function AdvancedSearch({ collection, card }) {
           fields: "NUMVERS"
         },
         {
-          value: ["TYPDOC.keyword", "TECH.keyword", "TECHOR.keyword", "TECHTI.keyword"],
-          text: "TYPDOC, TECH, TECHOR, TECHTI - Type de document"
+          value: ["TYPDOC.keyword", "TECHN.keyword", "TECHOR.keyword", "TECHTI.keyword"],
+          text: "TYPDOC, TECHN, TECHOR, TECHTI - Type de document"
         },
         {
           value: ["PRODUCTEUR.keyword", "IDPROD.keyword", "COPY.keyword"],

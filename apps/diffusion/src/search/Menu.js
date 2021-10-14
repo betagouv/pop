@@ -118,7 +118,7 @@ const Menu = ({ closeMenu, initialValues }) => (
     <CollapsableFacet
       id="tech"
       initialValue={initialValues.get("tech")}
-      fields={["TECH.keyword", "TYPDOC.keyword"]}
+      fields={["TECHN.keyword", "TECH.keyword", "TYPDOC.keyword"]}
       title="Techniques"
     />
 

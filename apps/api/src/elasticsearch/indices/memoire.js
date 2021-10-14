@@ -255,7 +255,7 @@ module.exports = {
             }
           }
         },
-        COSTUME: {
+        DPT_LETTRE: {
           type: "text",
           fields: {
             keyword: {
@@ -1063,7 +1063,7 @@ module.exports = {
             }
           }
         },
-        TECH: {
+        TECHN: {
           type: "text",
           fields: {
             keyword: {
