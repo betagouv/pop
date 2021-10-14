@@ -41,7 +41,7 @@ export function getNoticeInfo(notice) {
         logo = "/static/inventaire.jpg";
       }
 
-      const subtitle = notice.TECH;
+      const subtitle = notice.TECHN;
 
       const metaDescription = capitalizeFirstLetter(memoireMetaDescription(notice));
 

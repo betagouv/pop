@@ -347,7 +347,7 @@ export default class extends React.Component {
                       "ACQU",
                       "DIFF",
                       "ECH",
-                      "TECH",
+                      "TECHN",
                       "FORMAT",
                       "TECHTI",
                       "FORMATTI",
@@ -415,7 +415,7 @@ export default class extends React.Component {
                     small={true}
                     notice={notice}
                     fields={[
-                      "TECH",
+                      "TECHN",
                       "FORMAT",
                       "TECHTI",
                       "FORMATTI",
@@ -426,7 +426,7 @@ export default class extends React.Component {
                       "SENS"
                     ]}
                   />
-                  <Field title={mapping.memoire.TECH.label} content={notice.TECH} />
+                  <Field title={mapping.memoire.TECHN.label} content={notice.TECHN} />
                   <Field title={mapping.memoire.FORMAT.label} content={notice.FORMAT} />
                   <Field title={mapping.memoire.TECHTI.label} content={notice.TECHTI} />
                   <Field title={mapping.memoire.FORMATTI.label} content={notice.FORMATTI} />

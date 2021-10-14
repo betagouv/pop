@@ -3694,7 +3694,7 @@
           "type": "string",
           "example": ""
         },
-        "TECH": {
+        "TECHN": {
           "type": "string",
           "example": ""
         },

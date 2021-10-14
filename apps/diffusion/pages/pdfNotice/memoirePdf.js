@@ -96,11 +96,11 @@ export function MemoirePdf(notice, title, links){
             </View>
             : null}
 
-            {(notice.TECH || notice.FORMAT || notice.TECHTI || notice.FORMATTI || notice.TECHOR ||
+            {(notice.TECHN || notice.FORMAT || notice.TECHTI || notice.FORMATTI || notice.TECHOR ||
               notice.FORMATOR || notice.MENTIONS || notice.MENTTI || notice.SENS) ? 
             <View>
               <Text style={styles.subtitle} >Description technique du phototype</Text>
-              <Field title={mapping.memoire.TECH.label} content={notice.TECH} separator="#" isPdf={true} />
+              <Field title={mapping.memoire.TECHN.label} content={notice.TECHN} separator="#" isPdf={true} />
               <Field title={mapping.memoire.FORMAT.label} content={notice.FORMAT} separator="#" isPdf={true} />
               <Field title={mapping.memoire.TECHTI.label} content={notice.TECHTI} separator="#" isPdf={true} />
               <Field title={mapping.memoire.FORMATTI.label} content={notice.FORMATTI} separator="#" isPdf={true} />
