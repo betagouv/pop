@@ -18,7 +18,7 @@
 - [INTERET](/apps/api/doc/museo.md#INTERET)
 - [LABEL](/apps/api/doc/museo.md#LABEL)
 - [LIEU_M](/apps/api/doc/museo.md#LIEU_M)
-- [NOMANC](/apps/api/doc/museo.md#NOMANC)
+- [AUTNOM](/apps/api/doc/museo.md#AUTNOM)
 - [NOMOFF](/apps/api/doc/museo.md#NOMOFF)
 - [NOMUSAGE](/apps/api/doc/museo.md#NOMUSAGE)
 - [PHARE](/apps/api/doc/museo.md#PHARE)
@@ -288,15 +288,15 @@ Précision(s) sur le lieu
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Adresse complementaire|
 
-### NOMANC
-Ancien nom
+### AUTNOM
+Autres noms
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ancien nom|
+|String|non|non|non|non||Autres noms|
 
 ### NOMOFF
 Dénomination officielle du musée selon l’arrêté publié au JO
