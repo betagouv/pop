@@ -562,6 +562,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       required: true,
+      index: true,
       documentation: {
         description: "Lien MUSEOFILE",
         label: "Lien MUSEOFILE",
