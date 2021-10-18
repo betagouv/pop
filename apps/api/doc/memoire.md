@@ -46,14 +46,14 @@
 - [INSEE](/apps/api/doc/memoire.md#INSEE)
 - [NVD](/apps/api/doc/memoire.md#NVD)
 - [MARQ](/apps/api/doc/memoire.md#MARQ)
-- [ACC](/apps/api/doc/memoire.md#ACC)
+- [PLOC](/apps/api/doc/memoire.md#PLOC)
 - [ACQU](/apps/api/doc/memoire.md#ACQU)
 - [ADPHOT](/apps/api/doc/memoire.md#ADPHOT)
 - [AIRE](/apps/api/doc/memoire.md#AIRE)
 - [ANUMP](/apps/api/doc/memoire.md#ANUMP)
 - [COPY](/apps/api/doc/memoire.md#COPY)
 - [COULEUR](/apps/api/doc/memoire.md#COULEUR)
-- [COSTUME](/apps/api/doc/memoire.md#COSTUME)
+- [DPT_LETTRE](/apps/api/doc/memoire.md#DPT_LETTRE)
 - [DATIMM](/apps/api/doc/memoire.md#DATIMM)
 - [DATOEU](/apps/api/doc/memoire.md#DATOEU)
 - [DATPV](/apps/api/doc/memoire.md#DATPV)
@@ -81,7 +81,7 @@
 - [MCPER](/apps/api/doc/memoire.md#MCPER)
 - [VUECD](/apps/api/doc/memoire.md#VUECD)
 - [NUMAUTP](/apps/api/doc/memoire.md#NUMAUTP)
-- [NUMCAF](/apps/api/doc/memoire.md#NUMCAF)
+- [NUMVERS](/apps/api/doc/memoire.md#NUMVERS)
 - [ANUMOR](/apps/api/doc/memoire.md#ANUMOR)
 - [NUMOR](/apps/api/doc/memoire.md#NUMOR)
 - [NUMP](/apps/api/doc/memoire.md#NUMP)
@@ -92,10 +92,10 @@
 - [SENS](/apps/api/doc/memoire.md#SENS)
 - [SCLE](/apps/api/doc/memoire.md#SCLE)
 - [SUP](/apps/api/doc/memoire.md#SUP)
-- [TECH](/apps/api/doc/memoire.md#TECH)
+- [TECHN](/apps/api/doc/memoire.md#TECHN)
 - [TECHOR](/apps/api/doc/memoire.md#TECHOR)
 - [TECHTI](/apps/api/doc/memoire.md#TECHTI)
-- [TOILE](/apps/api/doc/memoire.md#TOILE)
+- [CINEPROD](/apps/api/doc/memoire.md#CINEPROD)
 - [TYP](/apps/api/doc/memoire.md#TYP)
 - [TYPDOC](/apps/api/doc/memoire.md#TYPDOC)
 - [TYPEIMG](/apps/api/doc/memoire.md#TYPEIMG)
@@ -116,7 +116,7 @@
 - [TICO](/apps/api/doc/memoire.md#TICO)
 - [NUMI](/apps/api/doc/memoire.md#NUMI)
 - [LIEU](/apps/api/doc/memoire.md#LIEU)
-- [ADRS](/apps/api/doc/memoire.md#ADRS)
+- [WADRS](/apps/api/doc/memoire.md#WADRS)
 - [CONTACT](/apps/api/doc/memoire.md#CONTACT)
 - [EMET](/apps/api/doc/memoire.md#EMET)
 - [NUM](/apps/api/doc/memoire.md#NUM)
@@ -129,7 +129,7 @@
 - [AUT](/apps/api/doc/memoire.md#AUT)
 - [AUTR](/apps/api/doc/memoire.md#AUTR)
 - [DOC](/apps/api/doc/memoire.md#DOC)
-- [NUMG](/apps/api/doc/memoire.md#NUMG)
+- [NEGPOS](/apps/api/doc/memoire.md#NEGPOS)
 - [NOMSN](/apps/api/doc/memoire.md#NOMSN)
 - [_id](/apps/api/doc/memoire.md#_id)
 - [__v](/apps/api/doc/memoire.md#__v)
@@ -236,7 +236,7 @@ Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse et/ou lieu-dit|
+|String|non|non|non|non||Adresse|
 
 ### AUTOEU
 Nom, Prénom (profession ou titre et/ou dates)
@@ -516,7 +516,7 @@ Nom de l'acteur : nom du personnage joué
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Producteur de la pièce de théâtre ou du film|
+|String|non|non|non|non||Lieu de représentation|
 
 ### TITRE
 
@@ -608,7 +608,7 @@ Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Paliss
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Rang d'affichage de l'image|
 
-### ACC
+### PLOC
 
 
 
@@ -616,7 +616,7 @@ Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Paliss
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Accessoire de pose|
+|String|non|non|oui|non||Précision sur la localisation|
 
 ### ACQU
 Don, legs, dation, achat, dépôt
@@ -678,7 +678,7 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Couleur|
 
-### COSTUME
+### DPT_LETTRE
 
 
 
@@ -686,7 +686,7 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Costume de la personne représentée|
+|Array|non|non|oui|non||Département en lettre|
 
 ### DATIMM
 Date d'entrée dans les collections ou date de traitement intellectuel
@@ -958,7 +958,7 @@ No vue CD
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Numéro donné par le photographe|
 
-### NUMCAF
+### NUMVERS
 
 
 
@@ -1068,7 +1068,7 @@ V, H, C, O
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Support|
 
-### TECH
+### TECHN
 
 
 
@@ -1098,7 +1098,7 @@ V, H, C, O
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Description technique du tirage|
 
-### TOILE
+### CINEPROD
 
 
 
@@ -1106,7 +1106,7 @@ V, H, C, O
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Toile de fond|
+|String|non|non|oui|non||Traducteur du film|
 
 ### TYP
 Type  [Qu'est ce que c'est ?]
@@ -1306,9 +1306,9 @@ Contient le numéro du fichier numérique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse et/ou lieu-dit|
+|String|non|non|non|non||Lieu-dit|
 
-### ADRS
+### WADRS
 Adresse saisie
 
 
@@ -1316,7 +1316,7 @@ Adresse saisie
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Adresse saisie|
+|Array|non|non|non|non||Adresse éditoriale|
 
 ### CONTACT
 Doit contenir une adresse email valide. Affiche un avertissement si vide.
@@ -1438,7 +1438,7 @@ Ville [Quelle difference avec COM ?]
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non||Technique, support, dimensions et date du document reproduit|
 
-### NUMG
+### NEGPOS
 
 
 

@@ -86,7 +86,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
-        label: "Adresse et/ou lieu-dit"
+        label: ""
       }
     },
     AUTOEU: {
@@ -309,7 +309,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Producteur de la pièce de théâtre ou du film"
+        label: "Lieu de représentation"
       }
     },
     TITRE: {
@@ -387,12 +387,12 @@ const Schema = new mongoose.Schema(
         label: "Rang d'affichage de l'image"
       }
     },
-    ACC: {
+    PLOC: {
       type: String,
       default: "",
       documentation: {
         description: "",
-        label: "Accessoire de pose",
+        label: "Précision sur la localisation",
         deprecated: true
       }
     },
@@ -446,12 +446,12 @@ const Schema = new mongoose.Schema(
         label: "Couleur"
       }
     },
-    COSTUME: {
-      type: String,
-      default: "",
+    DPT_LETTRE: {
+      type: [String],
+      default: [""],
       documentation: {
         description: "",
-        label: "Costume de la personne représentée",
+        label: "Département en lettre",
         deprecated: true
       }
     },
@@ -681,7 +681,7 @@ const Schema = new mongoose.Schema(
         label: "Numéro donné par le photographe"
       }
     },
-    NUMCAF: {
+    NUMVERS: {
       type: String,
       default: "",
       documentation: {
@@ -764,7 +764,7 @@ const Schema = new mongoose.Schema(
         label: "Support"
       }
     },
-    TECH: {
+    TECHN: {
       type: String,
       default: "",
       documentation: {
@@ -788,12 +788,12 @@ const Schema = new mongoose.Schema(
         label: "Description technique du tirage"
       }
     },
-    TOILE: {
+    CINEPROD: {
       type: String,
       default: "",
       documentation: {
         description: "",
-        label: "Toile de fond",
+        label: "Traducteur du film",
         deprecated: true
       }
     },
@@ -978,15 +978,15 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse et/ou lieu-dit"
+        label: ""
       }
     },
-    ADRS: {
-      type: String,
-      default: "",
+    WADRS: {
+      type: [String],
+      default: [""],
       documentation: {
-        description: "Adresse saisie",
-        label: "Adresse saisie"
+        description: "Adresse éditoriale",
+        label: "Adresse éditoriale"
       }
     },
     CONTACT: {
@@ -1085,7 +1085,7 @@ const Schema = new mongoose.Schema(
         label: "Technique, support, dimensions et date du document reproduit"
       }
     },
-    NUMG: {
+    NEGPOS: {
       type: String,
       default: "",
       documentation: {

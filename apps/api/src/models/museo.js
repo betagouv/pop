@@ -152,12 +152,12 @@ const Schema = new mongoose.Schema(
         description: "Précision(s) sur le lieu"
       }
     },
-    NOMANC: {
+    AUTNOM: {
       type: String,
       default: "",
       documentation: {
-        label: "Ancien nom",
-        description: "Ancien nom"
+        label: "Autres noms",
+        description: "Autres noms"
       }
     },
     NOMOFF: {

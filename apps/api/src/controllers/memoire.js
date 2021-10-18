@@ -29,6 +29,7 @@ const {
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
+const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -66,6 +67,14 @@ async function withFlags(notice) {
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
+
+  if (notice.DPT) {
+    const DPT_LETTRE = getDepartement(notice.DPT);
+    if (DPT_LETTRE) {
+      notice.DPT_LETTRE = DPT_LETTRE;
+    }
+  }
+
   // NUMTI and NUMP must be valid Alphanumeric.
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
