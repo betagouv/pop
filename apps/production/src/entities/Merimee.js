@@ -23,18 +23,32 @@ export default class Merimee extends Notice {
           `Le champ ${requiredProp} ne doit pas être vide quand ${existingProp} est renseigné`
         )
       );
-    // DPT must be 2 char or more.
-    if (body.DPT && body.DPT.length < 2) {
-      this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+
+    if(body.DPT && body.DPT.length > 0){
+      body.DPT.forEach((val) => {
+        // DPT must be 2 char or more.
+        if (val && val.length < 2) {
+          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+        }
+      });
     }
-    // INSEE must be 5 char or more.
-    if (body.INSEE && body.INSEE.length < 5) {
-      this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+
+    if(body.INSEE && body.INSEE.length > 0){
+      body.INSEE.forEach((val) => {
+        // INSEE must be 5 char or more.
+        if (val && val.length < 5) {
+          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+        }
+
+        if(body.DPT.length > 0){
+          // INSEE & DPT must start with the same first 2 letters.
+          if (val && !body.DPT.includes(val.substring(0, 2))) {
+            this._errors.push("INSEE et DPT doivent commencer par les deux même lettres");
+          }
+        }
+      });
     }
-    // INSEE & DPT must start with the same first 2 letters.
-    if (body.INSEE && body.DPT && body.INSEE.substring(0, 2) !== body.DPT.substring(0, 2)) {
-      this._errors.push("INSEE et DPT doivent commencer par les deux même lettres");
-    }
+   
     // REF must be an Alphanumeric.
     if (!validator.isAlphanumeric(body.REF)) {
       this._warnings.push("Le champ REF doit être alphanumérique");
@@ -52,8 +66,12 @@ export default class Merimee extends Notice {
       this._warnings.push("Le champ CONTACT doit être un email valide");
     }
     // Region should exist.
-    if (body.REG && !regions.includes(body.REG)) {
-      this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
+    if (body.REG && body.REG.length > 0) {
+      body.REG.forEach((val) => {
+        if(!regions.includes(val)){
+          this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
+        }
+      })
     }
   }
 }
