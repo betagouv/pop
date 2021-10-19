@@ -3,11 +3,12 @@ import regions from "../services/regions";
 import validator from "validator";
 
 export default class Palissy extends Notice {
-  constructor(body) {
+  constructor(body) { console.log(body.DPT)
     super(body, "palissy");
   }
   validate(body) {
     super.validate(body);
+    
     // Required properties.
     ["DOSS", "ETUD", "COPY", "TICO", "CONTACT", "REF"]
       .filter(prop => !body[prop])
@@ -20,9 +21,10 @@ export default class Palissy extends Notice {
           `Le champ ${requiredProp} ne doit pas être vide quand ${existingProp} est renseigné`
         )
       );
-
-    if(body.DPT.length > 0){
-      body.DPT.forEach((val) => {
+   
+    if(body.DPT && body.DPT.length > 0){
+      let arrayDpt = Array.isArray(body.DPT) ? body.DPT : body.DPT.split(";"); 
+      arrayDpt.forEach((val) => {
         // DPT must be 2 char or more.
         if (val && val.length < 2) {
           this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
@@ -30,16 +32,19 @@ export default class Palissy extends Notice {
       });
     }
 
-    if(body.INSEE.length > 0){
-      body.INSEE.forEach((val) => {
+    if(body.INSEE && body.INSEE.length > 0){
+      let arrayInsee = Array.isArray(body.INSEE) ? body.INSEE : body.INSEE.split(";"); 
+      arrayInsee.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
           this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
         }
 
-        if(body.DPT.length > 0){
+        let arrayDpt = Array.isArray(body.DPT) ? body.DPT : body.DPT.split(";"); 
+
+        if(body.DPT && body.DPT.length > 0){
           // INSEE & DPT must start with the same first 2 letters.
-          if (val && !body.DPT.includes(val.substring(0, 2))) {
+          if (val && !arrayDpt.includes(val.substring(0, 2))) {
             this._errors.push("INSEE et DPT doivent commencer par les deux même lettres");
           }
         }
@@ -63,8 +68,9 @@ export default class Palissy extends Notice {
       this._warnings.push("Le champ CONTACT doit être un email valide");
     }
     // Region should exist.
-    if (body.REG.length > 0) {
-      body.REG.forEach((val) => {
+    if (body.REG && body.REG.length > 0) {
+      let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";"); 
+      arrayReg.forEach((val) => {
         if(!regions.includes(val)){
           this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
         }

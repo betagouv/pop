@@ -40,7 +40,7 @@ export default class Merimee extends Notice {
           this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
         }
 
-        if(body.DPT.length > 0){
+        if(body.DPT && body.DPT.length > 0){
           // INSEE & DPT must start with the same first 2 letters.
           if (val && !body.DPT.includes(val.substring(0, 2))) {
             this._errors.push("INSEE et DPT doivent commencer par les deux même lettres");
