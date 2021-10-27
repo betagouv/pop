@@ -70,6 +70,13 @@ module.exports = env => {
           }
         },
         {
+          test: /\.js$/,
+          include: path.resolve("node_modules/react-elasticsearch-pop"),
+          exclude: path.resolve("node_modules/react-elasticsearch-pop/node_modules"),
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
+        {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           type: 'asset/resource'
