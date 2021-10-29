@@ -16,13 +16,13 @@ stages:
   - staging
   - production
 
-workflow:
-  rules:
-    # - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    #   when: always
-    # - if: '$CI_COMMIT_BRANCH == "develop"'
-    #   when: always
-    - when: always
+# workflow:
+#   rules:
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#       when: always
+#     - if: '$CI_COMMIT_BRANCH == "develop"'
+#       when: always
+#     - when: never
 
 ##############################################################
 # TEMPLATES
