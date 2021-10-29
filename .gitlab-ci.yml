@@ -80,6 +80,7 @@ stages:
   script:
     - cd apps/${APP}
     - npm ci
+    - token_auth=`echo -n $SERVICE_LOGIN:$SERVICE_PWD | base64`
   cache:
     key:
       files:
