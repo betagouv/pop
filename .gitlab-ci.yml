@@ -79,7 +79,7 @@ stages:
   stage: node-modules
   script:
     - cd apps/${APP}
-    - token_auth=`echo -n $SERVICE_LOGIN:$SERVICE_PWD | base64`
+    - export token_auth=`echo -n $SERVICE_LOGIN:$SERVICE_PWD | base64`
     - npm ci
   cache:
     key:
