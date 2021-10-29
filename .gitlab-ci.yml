@@ -80,6 +80,7 @@ stages:
   script:
     - cd apps/${APP}
     - export token_auth=`echo -n $SERVICE_LOGIN:$SERVICE_PWD | base64`
+    - echo "_auth=${token_auth}" >> .npmrc
     - npm ci
   cache:
     key:
