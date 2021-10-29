@@ -61,6 +61,9 @@
     "@testing-library/react": "^12.1.0",
     "jest": "^27.1.1"
   },
+  "engines": {
+    "node": "^14.17.5"
+  },
   "scripts": {
     "dev": "node src/services/server.js",
     "build": "next build",

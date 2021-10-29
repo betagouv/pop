@@ -47,6 +47,9 @@
     "webfontloader": "^1.6.28",
     "xlsx": "^0.17.1"
   },
+  "engines": {
+    "node": "^14.17.5"
+  },
   "scripts": {
     "start": "node src/server/index.js",
     "build": "webpack --config webpack.build.config.js --env NODE_OPTIONS=--max_old_space_size=2048 ",
