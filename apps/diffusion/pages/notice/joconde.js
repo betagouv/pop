@@ -450,9 +450,9 @@ export default class extends React.Component {
                   <div>
                     <Field title={mapping.joconde.REF.label} content={notice.REF} separator="#" />
                     <Field title={mapping.joconde.BASE.label} content={notice.BASE} separator="#" />
-                    <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" />
                     <Field title={mapping.joconde.DMIS.label} content={notice.DMIS} separator="#" />
                     <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} separator="#" />
+                    <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" />
                     <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" />
                   </div>
 
