@@ -1,35 +1,40 @@
 var notices = db.palissy.find().noCursorTimeout();
 var noticeCount = db.palissy.count();
+
+function cleanData(array){
+    return array.map((element) => { return  element.trim() } ).filter((element) => element !== "" );
+}
+
 notices.forEach(function( notice ){
 	var ref = notice.REF;
 	
 	//Transformation des champ string to array
 	//REG
-	var arrayReg = (!Array.isArray(notice.REG)) ? notice.REG.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.REG;
+	var arrayReg = (!Array.isArray(notice.REG)) ? cleanData(notice.REG.split(';')) : cleanData(notice.REG);
  
 	//DPT
-	var arrayDpt = (!Array.isArray(notice.DPT)) ? notice.DPT.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.DPT;
+	var arrayDpt = (!Array.isArray(notice.DPT)) ? cleanData(notice.DPT.split(';')) : cleanData(notice.DPT);
  
 	//DPT_Lettre
-	var arrayDpt_Lettre = (notice.DPT_Lettre) ?  (!Array.isArray(notice.DPT_Lettre)) ? notice.DPT_Lettre.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.DPT_Lettre : [];
+	var arrayDpt_Lettre = (notice.DPT_LETTRE) ?  (!Array.isArray(notice.DPT_LETTRE)) ? cleanData(notice.DPT_LETTRE.split(';')) : cleanData(notice.DPT_LETTRE) : [];
  
 	//COM
-	var arrayCom = (!Array.isArray(notice.COM)) ? notice.COM.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.COM;
+	var arrayCom = (!Array.isArray(notice.COM)) ? cleanData(notice.COM.split(';')) : cleanData(notice.COM);
  
 	//WCOM
-	var arrayWcom = (!Array.isArray(notice.WCOM)) ? notice.WCOM.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.WCOM;
+	var arrayWcom = (!Array.isArray(notice.WCOM)) ? cleanData(notice.WCOM.split(';')) : cleanData(notice.WCOM);
  
 	//INSEE
-	var arrayInsee = (!Array.isArray(notice.INSEE)) ? notice.INSEE.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.INSEE;
+	var arrayInsee = (!Array.isArray(notice.INSEE)) ? cleanData(notice.INSEE.split(';')) : cleanData(notice.INSEE);
  
 	//COM2
-	var arrayCom2 = (!Array.isArray(notice.COM2)) ? notice.COM2.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.COM2;
+	var arrayCom2 = (!Array.isArray(notice.COM2)) ? cleanData(notice.COM2.split(';')) : cleanData(notice.COM2);
  
 	//INSEE2
-	var arrayInsee2 = (!Array.isArray(notice.INSEE2)) ? notice.INSEE2.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.INSEE2;
+	var arrayInsee2 = (!Array.isArray(notice.INSEE2)) ? cleanData(notice.INSEE2.split(';')) : cleanData(notice.INSEE2);
  
 	//ATEL
-	var arrayAtel = (!Array.isArray(notice.ATEL)) ? notice.ATEL.split(';').map((element) => { return  element.trim() } ).filter((element) => element !== "" ) : notice.ATEL;
+	var arrayAtel = (!Array.isArray(notice.ATEL)) ? cleanData(notice.ATEL.split(';')) : cleanData(notice.ATEL);
  
 	//Update field REG, DPT, DPT_Lettre, COM, WCOM, INSEE, COM2, INSEE2, ATEL
 	db.palissy.update(
@@ -38,7 +43,7 @@ notices.forEach(function( notice ){
 			$set : {
 				REG:  arrayReg,
 				DPT: arrayDpt,
-				DPT_Lettre: arrayDpt_Lettre,
+				DPT_LETTRE: arrayDpt_Lettre,
 				COM: arrayCom,
 				WCOM: arrayWcom,
 				INSEE: arrayInsee,

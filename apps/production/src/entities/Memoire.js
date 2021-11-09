@@ -37,7 +37,7 @@ export default class Memoire extends Notice {
       }
     }
     
-    if(body.INSEE.length > 0){
+    if(body.INSEE && body.INSEE.length > 0){
       body.INSEE.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
