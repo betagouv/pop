@@ -146,12 +146,11 @@ async function transformBeforeCreateOrUpdate(notice) {
     coordinates = (convertCOORM(notice.COORM, notice.ZONE)).coordinates;
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
-
-  if (notice.DPT) {
-    const DPT_LETTRE = getDepartement(notice.DPT);
-    if (DPT_LETTRE) {
-      notice.DPT_LETTRE = DPT_LETTRE;
-    }
+  
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT_LETTRE = notice.DPT.map( dpt => getDepartement(dpt)).filter(el => el !== "");
+  } else {
+    notice.DPT_LETTRE = [];
   }
 
   //If COOR in Lambert and not correct coordinates, convert this to WGS84.
