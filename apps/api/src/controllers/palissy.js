@@ -157,15 +157,10 @@ async function transformBeforeCreateOrUpdate(notice) {
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
 
-  notice.DPT_LETTRE = [];
-  if(Array.isArray(notice.DPT) && notice.DPT.length > 0){
-  
-    for(let i=0; i<notice.DPT .length; i++){
-      if(notice.DPT[i] && getDepartement(notice.DPT[i])){
-        notice.DPT_LETTRE.push(getDepartement(notice.DPT[i]));
-        
-      }
-    }
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT_LETTRE = notice.DPT.map( dpt => getDepartement(dpt)).filter(el => el !== "");
+  } else {
+    notice.DPT_LETTRE = [];
   }
 
   //If COOR in Lambert and not correct coordinates, convert this to WGS84.

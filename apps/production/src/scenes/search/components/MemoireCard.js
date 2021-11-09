@@ -36,15 +36,28 @@ export default ({ data }) => {
   };
 
   const content = joinData([
-    data.OBJET,
-    data.EDIF,
-    data.LEG
+    data.LEG,
+    data.EDIF
+  ]);
+
+  const contentWcomOrCom = data.WCOM ? data.WCOM : data.COM;
+  const contentWadrsOrAdresse = data.WADRS  ? data.WADRS  : data.ADRESSE;
+
+  const contentLoca = joinData([
+    data.PAYS,
+    data.REG,
+    data.DPT_lettre ,
+    contentWcomOrCom,
+    contentWadrsOrAdresse,
   ]);
 
   const contentSerieTitre = joinData([
     data.SERIE,
     data.TITRE,
   ]);
+
+  const loc = data.LOCA ? data.LOCA : contentLoca;
+
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -55,13 +68,11 @@ export default ({ data }) => {
       <img src={image} alt="Lien cassé" />
       <div className="content">
         <div style={{ display: "flex" }}>
-          <h2>{data.TICO || data.LEG || `${data.EDIF || ""}`.trim()}</h2>
-          <span>{data.REF}</span>
+          <h2>{content}</h2>
         </div>
         <div>
-          <p>{content}</p>
           <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
-          <p>{data.LOCA}</p>
+          <p>{loc}</p>
           <p>{data.TYPDOC}</p>
           <p>{data.AUTP.join(', ')}</p>
           <p>{data.DATPV}</p>

@@ -30,7 +30,6 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   const content = joinData([
-    data.OBJET,
     data.EDIF,
     data.LEG
   ]);
@@ -40,9 +39,21 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
     data.TITRE,
   ]);
 
+  const contentWcomOrCom = data.WCOM ? data.WCOM : data.COM;
+  const contentWadrsOrAdresse = data.WADRS  ? data.WADRS  : data.ADRESSE;
+
+  const contentLoca = joinData([
+    data.PAYS,
+    data.REG,
+    data.DPT_lettre ,
+    contentWcomOrCom,
+    contentWadrsOrAdresse,
+  ]);
+
   const author = data.AUTP ? data.AUTP.join(', ') : "";
-  const date = joinData([data.DATPV, data.DATOR]);
-  const loc = data.LOCA;
+
+  const date = data.DATPV ? data.DATPV : data.DATOR;
+  const loc = data.LOCA ? data.LOCA : contentLoca;
 
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
@@ -53,12 +64,10 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
             <div className="content">
               <div className="cardTextContent" style={{ display: "flex" }}>
                 <h2>
-                  {title}
+                  {content}
                   <br />
-                  <small>{subtitle}</small>
                 </h2>
               </div>
-              <p>{content}</p>
               <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
               <p>{loc}</p>
               <p>{data.TYPDOC}</p>
