@@ -268,7 +268,8 @@ router.put(
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
-    if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
+    const prevNotice = await Memoire.findOne({ REF: ref });
+    if (!await canUpdateMemoire(req.user, prevNotice, notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -293,7 +294,7 @@ router.put(
     //Ajout de l'historique de la notice
     var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
   
-    let HISTORIQUE = notice.HISTORIQUE || [];
+    let HISTORIQUE = prevNotice.HISTORIQUE || [];
     const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
     HISTORIQUE.push(newHistorique);
