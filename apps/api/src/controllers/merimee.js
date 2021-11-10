@@ -300,7 +300,7 @@ router.put(
       //Ajout de l'historique de la notice
       var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
       
-      let HISTORIQUE = notice.HISTORIQUE || [];
+      let HISTORIQUE = prevNotice.HISTORIQUE || [];
       const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
