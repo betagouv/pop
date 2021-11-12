@@ -398,39 +398,34 @@ export function addFilterFields(){
     XMLHttpRequest.prototype.send = function(data) {
       let transformData = false;
 
-      let newReq = data.split('\n').filter( val => val !== "").map((val) => {
-        let obj = JSON.parse(val);
-   
-        if(Object.keys(obj).includes('query')){
-          obj._source = {
-            "excludes": listeNonDiffusable()
+      if(data){
+        let newReq = data.split('\n').filter( val => val !== "").map((val) => {
+          let obj = JSON.parse(val);
+     
+          if(Object.keys(obj).includes('query')){
+            obj._source = {
+              "excludes": listeNonDiffusable()
+            }
+            transformData = true;
           }
-          transformData = true;
+          return JSON.stringify(obj);
+        }).join('\n');
+  
+        if(transformData){
+          data = newReq + '\n';
         }
-        return JSON.stringify(obj);
-      }).join('\n');
-
-      if(transformData){
-        data = newReq + '\n';
       }
-
-        // in this case I'm injecting an access token (eg. accessToken) in the request headers before it gets sent
-      //  if(accessToken) this.setRequestHeader('x-access-token', accessToken);
-
-        send.call(this, data);
+      
+      send.call(this, data);
     };
 
   })(XMLHttpRequest.prototype.send);
 }
 
+/**
+ * Retourne les champs non diffusable pour Palissy
+ * @returns array
+ */
 export function listeNonDiffusable(){
-  let listeEnluminures = ['LOCA2'];
-  let listePalissy = ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
-  let listeJoconde = ['LOCA2'];
-  let listeMemoire = ['LEG2'];
-  let listeMerimee = ['LBASE2'];
-  let listeMnr = ['NOTE2','HIST2'];
-  let listeMuseo = ['URL_M2'];
-
-  return [...new Set([...listeEnluminures, ...listePalissy, ...listeJoconde, ...listeMemoire, ...listeMerimee, ...listeMnr, ...listeMuseo])];
+  return ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
 }
