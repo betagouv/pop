@@ -2,28 +2,30 @@ notices = db.merimee.find( { MEMOIRE: { $gt: { $size: 0 }  } } );
 nbreNotices = notices.count();
 
 let nbrN = 0
-let arrayMemoire = [];
 
 print(nbreNotices);
  
 notices.forEach(notice => {
-  arrayMemoire = notice.MEMOIRE.map((element) => {
-        if(element.url == ''){
-            var noticeMemoire = db.memoire.find({ REF: element.ref });
-            
-            noticeMemoire.forEach((el) => {
-                if(el.IMG &&  el.IMG != ''){
-                element.url = el.IMG;
-                nbrN++
-                print(nbrN + " notices");
-                }
-            });
+    let arrayMemoire = notice.MEMOIRE.map((element) => {
+        var noticeMemoire = db.memoire.findOne({ REF: element.ref });
+        let memoire = {};
+        if(noticeMemoire){
+            memoire._id = noticeMemoire._id;
+            memoire.ref = noticeMemoire.REF;
+            memoire.url = noticeMemoire.IMG;
+            memoire.copy = noticeMemoire.COPY;
+            memoire.name = noticeMemoire.LEG;
+
+            nbrN++
+            print(nbrN + " notices");
+
+            return memoire;
         }
-        return element;
+        
     });
-    printjson(arrayMemoire );
+
     db.merimee.update(
-        { REF : notice.ref },
+        { REF : notice.REF },
         {
             $set : {
                 MEMOIRE : arrayMemoire
