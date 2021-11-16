@@ -151,15 +151,6 @@ export default function AdvancedSearch({ collection, card }) {
       fields = [
         ...fields,
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
-          text: "Historique des modifications"
-        }
-      ];
-      break;
-      case "museo":
-      fields = [
-        ...fields,
-        {
           value: ["DENO.keyword", "APPL.keyword", "UTIL.keyword", "DOMN.keyword"],
           text: "DENO, APPL, UTIL, DOMN - Désignation"
         },
@@ -179,6 +170,15 @@ export default function AdvancedSearch({ collection, card }) {
           value: ["GENE.keyword", "HIST.keyword", "PUTI.keyword", "DECV.keyword", "PDEC.keyword"],
           text: "GENE, HIST, PUTI, DECV, PDEC - Contexte de création"
         },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
+        }
+      ];
+      break;
+      case "museo":
+      fields = [
+        ...fields,
         {
           value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
