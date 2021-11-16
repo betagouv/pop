@@ -140,10 +140,23 @@ export default function AdvancedSearch({ collection, card }) {
         {
           value: ["OBS.keyword", "OBSOR.keyword", "OBSTI.keyword"],
           text: "OBS, OBSOR, OBSTI - Producteur de la notice"
+        },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
         }
       ];
       break;
     case "joconde":
+      fields = [
+        ...fields,
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
+        }
+      ];
+      break;
+      case "museo":
       fields = [
         ...fields,
         {
@@ -165,6 +178,10 @@ export default function AdvancedSearch({ collection, card }) {
         {
           value: ["GENE.keyword", "HIST.keyword", "PUTI.keyword", "DECV.keyword", "PDEC.keyword"],
           text: "GENE, HIST, PUTI, DECV, PDEC - Contexte de création"
+        },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
         }
       ];
       break;
@@ -206,6 +223,10 @@ export default function AdvancedSearch({ collection, card }) {
         {
           value: ["AUTR.keyword", "AFIG.keyword"],
           text: "AUTR, AFIG - Auteur de l'oeuvre ou du modèle"
+        },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
         }
       ];
       break;
@@ -235,6 +256,10 @@ export default function AdvancedSearch({ collection, card }) {
         {
           value: ["DENO.keyword", "PARN.keyword", "PART.keyword"],
           text: "DENO, PARN, PART - Désignation"
+        },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
         }
       ];
       break;
@@ -268,6 +293,10 @@ export default function AdvancedSearch({ collection, card }) {
         {
           value: ["EXPO.keyword", "BIBL.keyword"],
           text: "EXPO, BIBL - Annexes"
+        },
+        {
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          text: "Historique des modifications"
         }
       ];
       break;
