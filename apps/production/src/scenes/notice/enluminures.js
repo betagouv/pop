@@ -37,7 +37,13 @@ class Enluminures extends React.Component {
     this.setState({ loading: true });
     const notice = await API.getNotice("enluminures", ref);
     this.props.initialize(notice);
-    const editable = false;
+    //const editable = false;
+    let editable = false;
+    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(result => {
+      editable = result.validate;
+      this.setState({editable: editable});
+    });
+
     this.setState({ loading: false, notice, editable });
   }
 
