@@ -162,7 +162,7 @@ async function removeMemoireImageForNotice(notice, REF) {
   });
 }
 
-async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAME = "") {
+async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAME = "", MARQ = "") {
   const MEMOIRE = notice.MEMOIRE;
   let index = MEMOIRE.findIndex(e => e.ref === REF);
   if (index !== -1) {
@@ -170,13 +170,14 @@ async function updateMemoireImageForNotice(notice, REF, IMG = "", COPY = "", NAM
     if (
       MEMOIRE[index].url === IMG &&
       MEMOIRE[index].copy === COPY &&
-      MEMOIRE[index].name === NAME
+      MEMOIRE[index].name === NAME &&
+      MEMOIRE[index].marq === MARQ
     ) {
       return;
     }
-    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME }; // create
+    MEMOIRE[index] = { ref: REF, url: IMG, copy: COPY, name: NAME, marq: MARQ }; // create
   } else {
-    MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME });
+    MEMOIRE.push({ ref: REF, url: IMG, copy: COPY, name: NAME, marq: MARQ });
   }
   const CONTIENT_IMAGE = MEMOIRE.some(e => e.url) ? "oui" : "non";
   notice.CONTIENT_IMAGE = CONTIENT_IMAGE;
@@ -204,6 +205,7 @@ async function updateLinks(notice) {
                   || (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
                   || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
+    let MARQ = notice.MARQ ? notice.MARQ : (noticeMemoire? noticeMemoire.MARQ : "");
 
     const linkedNotices = [];
     linkedNotices.push(...(await Palissy.find({ "MEMOIRE.ref": REF })));
@@ -223,7 +225,7 @@ async function updateLinks(notice) {
           toAdd.splice(index, 1);
         }
         // existing notices
-        promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, NAME));
+        promises.push(updateMemoireImageForNotice(linkedNotices[i], REF, IMG, COPY, NAME, MARQ));
       }
     }
 
@@ -232,7 +234,7 @@ async function updateLinks(notice) {
       if (collection) {
         const doc = await collection.findOne({ REF: toAdd[i] });
         if (doc) {
-          promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME));
+          promises.push(updateMemoireImageForNotice(doc, REF, IMG, COPY, NAME, MARQ));
         }
       }
     }
