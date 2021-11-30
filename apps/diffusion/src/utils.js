@@ -181,7 +181,7 @@ export function getNoticeInfo(notice) {
 
       const images = notice.MEMOIRE.map((e, i) => {
         const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
-        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name, marq: e.marq };
       });
 
       const image_preview = notice.MEMOIRE.filter(e => e.url).length
@@ -256,7 +256,7 @@ export function getNoticeInfo(notice) {
 
       const images = notice.MEMOIRE.map((e, i) => {
         const src = e.url ? `${bucket_url}${e.url}` : "/static/noimage.png";
-        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name };
+        return { src, alt: `${title}_${i}`, ref: e.ref, copy: e.copy, name: e.name, marq: e.marq };
       });
 
       const image_preview = notice.MEMOIRE.filter(e => e.url).length
