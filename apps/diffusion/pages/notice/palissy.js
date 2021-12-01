@@ -390,7 +390,7 @@ export default class extends React.Component {
                   <Field title={mapping.palissy.PINT.label} content={notice.PINT} />
                   <Field title={mapping.palissy.ACQU.label} content={notice.ACQU} />
                   <Field title={mapping.palissy.EXPO.label} content={notice.EXPO} separator="£" addLink="true" />
-                  <Field title={mapping.palissy.BIBL.label} content={notice.BIBL} />
+                  <Field title={mapping.palissy.BIBL.label} content={notice.BIBL} separator="£" addLink="true"/>
                   <Field title={mapping.palissy.SOUR.label} content={notice.SOUR} separator="£" addLink="true"/>
                   <Field title={mapping.palissy.PHOTO.label} content={notice.PHOTO} />
 
