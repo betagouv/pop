@@ -106,6 +106,9 @@ function parseFiles(files, encoding) {
       } else if (collection === "merimee") {
         newNotice = new Merimee(obj);
         addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
+        addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
+        addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
+        addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
       } else if (collection === "memoire") {
         newNotice = new Memoire(obj);
         addFile("REFIMG", "IMG", obj, newNotice, filesMap);
@@ -138,11 +141,14 @@ function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
       const filenames = String(data[fromProperty]).split(";");
       newNotice[toProperty] = type === "Array" ? [] : "";
 
+
       for (let i = 0; i < filenames.length; i++) {
         let fileName = filenames[i];
         fileName = convertLongNameToShort(fileName);
 
         const file = filesMap[fileName];
+
+        
 
         if (file) {
           if (type === "Array") {
