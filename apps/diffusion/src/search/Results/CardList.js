@@ -53,7 +53,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const author = data.AUTP ? data.AUTP.join(', ') : "";
 
   const date = data.DATPV ? data.DATPV : data.DATOR;
-  const loc = data.LOCA ? data.LOCA : contentLoca;
+  const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;
 
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
@@ -68,7 +68,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   <br />
                 </h2>
               </div>
-              <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+              <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
               <p>{loc}</p>
               <p>{data.TYPDOC}</p>
               <p>{author}</p>
