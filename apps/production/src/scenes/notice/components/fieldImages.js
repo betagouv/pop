@@ -63,7 +63,15 @@ class FieldImages extends React.Component {
       return [this.getFile(this.props.input.value)];
     }
     // Convert FILE to local url
-    return this.props.input.value.map(e => {
+    return this.props.input.value.sort((a,b) => { 
+      let aMarq = typeof a.marq != "undefined" ? a.marq : "";
+      let bMarq = typeof b.marq != "undefined" ? b.marq : "";
+
+      if(aMarq != "" && bMarq == "") { return -1  }
+      if(aMarq == "" && bMarq != "") { return 1  }
+      if(aMarq == "" && bMarq == "") { return 0  }
+      return Number.parseInt(a.marq) - Number.parseInt(b.marq);
+    }).map(e => {
       return this.getFile(e);
     });
   }
@@ -233,6 +241,12 @@ function arrayMove(arr, old_index, new_index) {
     }
   }
   arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  var i = 0;
+  //mise a jour du champs marq
+  while (arr[i]) {
+    arr[i].marq = i+1;
+    i++;
+  }
   return arr; // for testing
 }
 
