@@ -178,6 +178,18 @@ class Notice extends React.Component {
               );
             }}
           />
+          <div className="imageLinks">
+            <div>
+              <span>Pour ajouter une image, il faut enregistrer la référence {this.state.notice.REF} dans le champ LBASE des notices de la base Mémoire : </span>  
+              <Link to={`/recherche-avancee/memoire?qb=%5B%7B%22field%22%3A%22COM.keyword%22%2C%22operator%22%3A%22%2A%22%2C%22value%22%3A%22${
+                this.state.notice.COM
+                }%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A0%7D%2C%7B%22field%22%3A%22DPT.keyword%22%2C%22operator%22%3A%22%2A%22%2C%22value%22%3A%22${
+                  this.state.notice.DPT
+                }%22%2C%22combinator%22%3A%22AND%22%2C%22index%22%3A1%7D%5D&sortKey=%22REF.keyword%22&sortOrder=%22desc%22`} target="_blank" rel="noopener">
+              Voir les images de la base Mémoire correspondant à la même localisation
+              </Link>
+            </div>
+          </div>
 
           <Section
             title="Références documentaires"
