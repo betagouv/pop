@@ -163,7 +163,7 @@ class FieldImages extends React.Component {
     });
 
     const hideButton =
-      this.props.disabled || this.props.hideButton || (!Array.isArray(this.props.input.value) && this.props.input.value);
+      this.props.disabled || this.props.hideButton || (!Array.isArray(this.props.input.value) && this.props.input.value || this.props.input.name == 'MEMOIRE');
 
     const dropZoneStyle = {
       position: 'relative',
