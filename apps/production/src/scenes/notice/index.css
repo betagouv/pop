@@ -45,3 +45,13 @@
   font-size: x-large;
   font-weight: bold;
 }
+
+.notice .imageLinks {
+  padding: 0px 20px;
+}
+
+.notice .imageLinks > div {
+  width:100%;
+  padding: 10px 15px;
+  background-color: #fff1f1;
+}
