@@ -40,8 +40,8 @@ export default ({ data }) => {
     data.EDIF
   ]);
 
-  const contentWcomOrCom = data.WCOM ? data.WCOM : data.COM;
-  const contentWadrsOrAdresse = data.WADRS  ? data.WADRS  : data.ADRESSE;
+  const contentWcomOrCom = data.WCOM && data.WCOM != "" ? data.WCOM : data.COM;
+  const contentWadrsOrAdresse = data.WADRS && data.WADRS !="" ? data.WADRS  : data.ADRESSE;
 
   const contentLoca = joinData([
     data.PAYS,
@@ -56,7 +56,7 @@ export default ({ data }) => {
     data.TITRE,
   ]);
 
-  const loc = data.LOCA ? data.LOCA : contentLoca;
+  const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;
 
   return (
     <Link
@@ -71,7 +71,7 @@ export default ({ data }) => {
           <h2>{content}</h2>
         </div>
         <div>
-          <p> {data.AUTOEU? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+          <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
           <p>{loc}</p>
           <p>{data.TYPDOC}</p>
           <p>{data.AUTP.join(', ')}</p>
