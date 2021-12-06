@@ -206,7 +206,7 @@ function checkIfMemoireImageExist(notice) {
       const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
       const arr = NoticesMemoire.map(e => {
         const NAME = e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
-        return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME };
+        return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME, marq: e.MARQ };
       });
 
       const newArr = (notice.MEMOIRE || []).filter(e => arr.find(f => f.ref == e.ref));
