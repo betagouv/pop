@@ -78,15 +78,19 @@ class SearchAdvanced extends React.Component {
                       "WCOM.keyword",
                       "INSEE.keyword",
                       "MCGEO.keyword",
-                      "LIEUORIG.keyword"],
+                      "LIEUORIG.keyword",
+                      "WADRS.keyword"
+                    ],
               text: "Localisation",
-              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG"
+              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS"
             },
             {
               value: [ "ADRESSE.keyword",
-                      "LIEU.keyword"],
+                       "LIEU.keyword",
+                       "WADRS.keyword"
+                      ],
               text: "Adresse ou lieu-dit",
-              fields: "ADRESSE, LIEU"
+              fields: "ADRESSE, LIEU, WADRS"
             },
             {
               value: ["AUTP.keyword",
@@ -159,6 +163,11 @@ class SearchAdvanced extends React.Component {
                       "EMET.keyword"],
               text: "Producteur de la notice",
               fields: "PRODUCTEUR, IDPROD, COPY, EMET"
+            },
+            {
+              value: ["WADRS.keyword"],
+              text: "Adresse éditoriale",
+              fields: "WADRS"
             },
             //Tous les champs
             {value: ["PLOC.keyword"], text:"Précision sur la localisation", fields: "PLOC"},
