@@ -327,9 +327,14 @@ class api {
   getThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
-  // Validate with thesaurus
+  // Validate with thesaurus, ancienne validation à supprimer dès que toutes les collections seront sur OpenTheso
   validateWithThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/validate?id=${thesaurusId}&value=${str}`);
+  }
+
+  // Validation OpenTheso
+  validateOpenTheso(thesaurusId, str){
+    return request.getJSON(`/thesaurus/getThesaurusById?id=${thesaurusId}&value=${str}`);
   }
 }
 
