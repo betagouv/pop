@@ -7,6 +7,7 @@ import Mapping from "../../../services/mapping.js";
 
 const importTester = new ImportTester({ api });
 importTester.disableAmplitude();
+api.validateOpenTheso.mockResolvedValue({});
 
 test("import component renders for Joconde", () => {
   const component = importTester.mount(<Joconde />);
