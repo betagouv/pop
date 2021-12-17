@@ -40,13 +40,13 @@ export default ({ data }) => {
     data.EDIF
   ]);
 
-  const contentWcomOrCom = data.WCOM && data.WCOM != "" ? data.WCOM : data.COM;
-  const contentWadrsOrAdresse = data.WADRS && data.WADRS !="" ? data.WADRS  : data.ADRESSE;
+  const contentWcomOrCom = data.WCOM && data.WCOM.length > 0 ? data.WCOM : data.COM;
+  const contentWadrsOrAdresse = data.WADRS && data.WADRS.length > 0 ? data.WADRS  : data.ADRESSE;
 
   const contentLoca = joinData([
     data.PAYS,
     data.REG,
-    data.DPT_lettre ,
+    data.DPT_LETTRE,
     contentWcomOrCom,
     contentWadrsOrAdresse,
   ]);
