@@ -272,6 +272,13 @@ console.log(obj);
         `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
       );
     }else{
+      // Mise en gras des valeurs saisies qui posent problème sur le Thésaurus.
+      console.log(key, typeof key)
+      if(key){
+        let listeVal = key.substring(key.indexOf('[') + 1, key.indexOf(']'));
+        key = key.substring(0, key.indexOf('[') + 1) + `<strong>${listeVal}</strong>` + key.substring(key.indexOf(']'), key.length);
+      }
+    
       arr.push(
         `<li>${count} avec pour message "${key}" :</li>`
       );

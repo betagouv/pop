@@ -37,7 +37,7 @@ export default function checkThesaurus(importedNotices) {
 
           values = [];
           if (thesaurus_separator && typeof noticeField === 'object') {
-            values = noticeField[0].split(thesaurus_separator);
+            values = (noticeField.length > 0) ? noticeField[0].split(',') : [];
           } else {
             values = [].concat(noticeField);
           }
