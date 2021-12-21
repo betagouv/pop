@@ -105,7 +105,6 @@ function parseFiles(files, encoding) {
         addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
       } else if (collection === "merimee") {
         newNotice = new Merimee(obj);
-        addFile("DOSURLPDF", "DOSURLPDF", obj, newNotice, filesMap);
         addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
         addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
