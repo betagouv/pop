@@ -15,7 +15,7 @@ export default function checkThesaurus(importedNotices) {
       for (var field in importedNotices[i]) { 
         const noticeField = importedNotices[i][field];
 
-        // Ne pas vérifier les propriétés qui ne conernent pas les champs de la notice
+        // Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
         if(typeof noticeField === 'function' || field.indexOf('_') === 0 || field === 'POP_IMPORT'){
           continue;
         }
@@ -37,7 +37,7 @@ export default function checkThesaurus(importedNotices) {
 
           values = [];
           if (thesaurus_separator && typeof noticeField === 'object') {
-            values = (noticeField.length > 0) ? noticeField[0].split(',') : [];
+            values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : [];
           } else {
             values = [].concat(noticeField);
           }

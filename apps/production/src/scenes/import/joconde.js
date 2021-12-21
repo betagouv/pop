@@ -253,7 +253,7 @@ function report(notices, collection, email, institution, importId) {
       }
     }
   }
-console.log(obj);
+
   arr.push(`<p>${count} avertissement(s) dont : </p>`);
   arr.push(`<ul>`);
   for (let key in obj) {
@@ -268,7 +268,6 @@ console.log(obj);
       );
     }else{
       // Mise en gras des valeurs saisies qui posent problème sur le Thésaurus.
-      console.log(key, typeof key)
       if(key){
         let listeVal = key.substring(key.indexOf('[') + 1, key.indexOf(']'));
         key = key.substring(0, key.indexOf('[') + 1) + `<strong>${listeVal}</strong>` + key.substring(key.indexOf(']'), key.length);
