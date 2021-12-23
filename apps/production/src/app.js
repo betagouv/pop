@@ -9,8 +9,8 @@ const { signinByToken } = Actions;
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  state = { alert: process.env.NODE_ENV !== "production" };
-  componentDidMount() {
+  state = { alert: process.env.NODE_ENV !== "production", maintenance: process.env.MAINTENANCE };
+  componentWillMount() {
     this.props.signinByToken();
   }
 
@@ -32,6 +32,18 @@ class App extends React.Component {
     );
   }
 
+  renderAlertMaintenance() {
+    return (
+      <Alert
+        style={{ marginBottom: "0px" }}
+        color="warning"
+        isOpen={this.state.maintenance}
+      >
+        Une mise à jour est en cours actuellement, le service de versement ou de mise-à-jour de notices est indisponible.
+      </Alert>
+    );
+  }
+
   render() {
     if (this.props.user === undefined) {
       return <Loader />;
@@ -39,6 +51,7 @@ class App extends React.Component {
     return (
       <div>
         {this.renderAlert()}
+        {this.renderAlertMaintenance()}
         <PublicRoutes history={history} />;
       </div>
     );
