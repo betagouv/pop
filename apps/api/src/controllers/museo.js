@@ -13,6 +13,7 @@ const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
+let moment = require('moment-timezone')
 
 const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -263,14 +264,12 @@ router.put(
 
     await transformBeforeCreateOrUpdate(notice);
 
+    const timeZone = 'Europe/Paris';
     //Ajout de l'historique de la notice
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+' '+time;
+    var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
     
     let HISTORIQUE = notice.HISTORIQUE || [];
-    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
     HISTORIQUE.push(newHistorique);
     notice.HISTORIQUE = HISTORIQUE;

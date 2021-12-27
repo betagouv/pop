@@ -119,14 +119,12 @@ router.put(
 
       await transformBeforeUpdate(notice);
 
+      const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes();
-      var dateTime = date+' '+time;
+      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
       
-      let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+      let HISTORIQUE = prevNotice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;

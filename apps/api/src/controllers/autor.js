@@ -9,6 +9,8 @@ const { canUpdateAutor, canCreateAutor, canDeleteAutor } = require("./utils/auth
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { checkESIndex, identifyProducteur } = require("../controllers/utils");
+let moment = require('moment-timezone');
+const timeZone = 'Europe/Paris';
 
 router.get("/:ref", async (req, res) => {
   /* 	
@@ -77,13 +79,10 @@ router.put(
           let oaiObj = { DMAJ: e.notice.DMAJ}
 
           //Ajout de l'historique de la notice
-          var today = new Date();
-          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-          var time = today.getHours() + ":" + today.getMinutes();
-          var dateTime = date+' '+time;
+          var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
           
           let HISTORIQUE = e.notice.HISTORIQUE || [];
-          const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+          const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
           HISTORIQUE.push(newHistorique);
           e.notice.HISTORIQUE = HISTORIQUE;
@@ -136,13 +135,10 @@ router.put(
       let oaiObj = { DMAJ: notice.DMAJ}
 
       //Ajout de l'historique de la notice
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes();
-      var dateTime = date+' '+time;
+      var today = moment.tz(new Date(),'YYYY-MM-DD HH:mm',timeZone);
       
       let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: req.user.nom, prenom: req.user.prenom, email: req.user.email, date: dateTime, updateMode: req.body.updateMode};
+      const newHistorique = {nom: req.user.nom, prenom: req.user.prenom, email: req.user.email, date: today, updateMode: req.body.updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;

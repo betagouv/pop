@@ -29,6 +29,7 @@ const {
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
+const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -66,6 +67,14 @@ async function withFlags(notice) {
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
+
+  if (notice.DPT) {
+    const DPT_LETTRE = getDepartement(notice.DPT);
+    if (DPT_LETTRE) {
+      notice.DPT_LETTRE = DPT_LETTRE;
+    }
+  }
+
   // NUMTI and NUMP must be valid Alphanumeric.
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
@@ -119,18 +128,15 @@ async function getPrefixesFromProducteurs(listBase){
   return listePrefix;
 }
 
-async function transformBeforeUpdate(notice) {
-  if (notice.IMG !== undefined) {
-    notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
-  }
-  
-  notice.DMAJ = formattedNow();
-  notice = await withFlags(notice);
-}
-
-async function transformBeforeCreate(notice) {
+async function transformBeforeCreateOrUpdate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
+
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT_LETTRE = notice.DPT.map( dpt => getDepartement(dpt)).filter(el => el !== "");
+  } else {
+    notice.DPT_LETTRE = [];
+  }
   
   notice = await withFlags(notice);
 }
@@ -262,7 +268,8 @@ router.put(
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
-    if (!await canUpdateMemoire(req.user, await Memoire.findOne({ REF: ref }), notice)) {
+    const prevNotice = await Memoire.findOne({ REF: ref });
+    if (!await canUpdateMemoire(req.user, prevNotice, notice)) {
       return res.status(401).send({
         success: false,
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
@@ -281,14 +288,14 @@ router.put(
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
-    await transformBeforeUpdate(notice);
+    await transformBeforeCreateOrUpdate(notice);
+
+    const timeZone = 'Europe/Paris';
     //Ajout de l'historique de la notice
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+' '+time;
-    let HISTORIQUE = notice.HISTORIQUE || [];
-    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+    var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
+  
+    let HISTORIQUE = prevNotice.HISTORIQUE || [];
+    const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
     HISTORIQUE.push(newHistorique);
     notice.HISTORIQUE = HISTORIQUE;
@@ -346,7 +353,7 @@ router.post(
     }
     // Update and save.
     promises.push(updateLinks(notice));
-    await transformBeforeCreate(notice);
+    await transformBeforeCreateOrUpdate(notice);
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);

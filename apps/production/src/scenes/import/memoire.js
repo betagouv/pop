@@ -157,10 +157,10 @@ function readme() {
         1) A l'import, dans mon fichier, je renseigne la notice concernée en précisant le champ REF, ainsi que le champ : IMG ou REFIMG avec le .jpeg de l'illustration.<br />
         <br />
         2) Directement depuis une notice développée : je peux cliquer sur "Ajouter une nouvelle image" et télécharger une nouvelle image directement depuis mon ordinateur. La notice Mémoire reçoit alors dans son champ IMG le contenu .jpeg de l'image téléchargée.<br />
-        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée, alors l'image ainsi stockée dans IMG pourra également illustrer une notice MH associée.
+        Si le champ LBASE contient bien la REF Mérimée ou Palissy MH associée, alors l'image ainsi stockée dans IMG pourra également illustrer une notice MH associée.  
         <br />
         <br />
-        NB : à la création d'une notice, POP génère automatiquement certains champs utiles au traitement des données. Il s'agit des champs : <br />
+        NB : à la création d'une notice, POP génère automatiquement certains champs utiles au traitement des données. Il s'agit des champs :<br />
         <br />
         <ul>
           {generatedFields.map(e => (

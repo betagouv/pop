@@ -409,7 +409,7 @@ Commune normalisée. Ne peut pas être vide si WCOM est renseigné.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune normalisée|
+|Array|non|non|non|non||Commune normalisée|
 
 ### COOR
 
@@ -591,7 +591,7 @@ Département. Doit contenir 2 caractères ou plus et commencer comme DPT.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Département|
+|Array|non|non|non|non||Département|
 
 ### DPT_LETTRE
 Département en lettre
@@ -601,7 +601,7 @@ Département en lettre
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Département en lettre|
+|Array|non|non|non|non||Département en lettre|
 
 ### EDIF
 Nom de l'édifice. Affiche un avertissement si vide.
@@ -737,7 +737,7 @@ Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer co
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Numéro INSEE de la commune|
+|Array|non|non|non|non||Numéro INSEE de la commune|
 
 ### INTE
 
@@ -1035,7 +1035,7 @@ Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Région|
+|Array|non|non|non|non||Région|
 
 ### REMA
 
@@ -1397,7 +1397,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commune pour l'affichage|
+|Array|non|non|non|non||Commune pour l'affichage|
 
 ### WRENV
 

@@ -78,15 +78,19 @@ class SearchAdvanced extends React.Component {
                       "WCOM.keyword",
                       "INSEE.keyword",
                       "MCGEO.keyword",
-                      "LIEUORIG.keyword"],
+                      "LIEUORIG.keyword",
+                      "WADRS.keyword"
+                    ],
               text: "Localisation",
-              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG"
+              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS"
             },
             {
               value: [ "ADRESSE.keyword",
-                      "LIEU.keyword"],
+                       "LIEU.keyword",
+                       "WADRS.keyword"
+                      ],
               text: "Adresse ou lieu-dit",
-              fields: "ADRESSE, LIEU"
+              fields: "ADRESSE, LIEU, WADRS"
             },
             {
               value: ["AUTP.keyword",
@@ -100,10 +104,10 @@ class SearchAdvanced extends React.Component {
             {
               value: ["TECHTI.keyword",
                       "TECHOR.keyword",
-                      "TECH.keyword",
+                      "TECHN.keyword",
                       "TYPDOC.keyword"],
               text: "Type de document",
-              fields: "TYPDOC, TECH, TECHOR, TECHTI"
+              fields: "TYPDOC, TECHN, TECHOR, TECHTI"
             },
             {
               value: ["DATPV.keyword",
@@ -124,7 +128,7 @@ class SearchAdvanced extends React.Component {
             {
               value: [ "NUMP.keyword",
                       "ANUMP.keyword",
-                      "NUMG.keyword",
+                      "NEGPOS.keyword",
                       "NUMAUTP.keyword",
                       "NUMOR.keyword",
                       "ANUMOR.keyword",
@@ -136,14 +140,14 @@ class SearchAdvanced extends React.Component {
                       "COTECTI.keyword",
                       "PRECOR.keyword",
                       "REF.keyword",
-                      "NUMCAF.keyword"],
+                      "NUMVERS.keyword"],
               text: "Numéro ou cote",
-              fields: "NUMP, ANUMP, NUMG, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMCAF"
+              fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
             },
             {
-              value: ["NUMCAF.keyword"],
+              value: ["NUMVERS.keyword"],
               text: "Numéro de versement",
-              fields: "NUMCAF"
+              fields: "NUMVERS"
             },
             {
               value: ["OBS.keyword",
@@ -160,8 +164,13 @@ class SearchAdvanced extends React.Component {
               text: "Producteur de la notice",
               fields: "PRODUCTEUR, IDPROD, COPY, EMET"
             },
+            {
+              value: ["WADRS.keyword"],
+              text: "Adresse éditoriale",
+              fields: "WADRS"
+            },
             //Tous les champs
-            {value: ["ACC.keyword"], text:"Accessoire de pose", fields: "ACC"},
+            {value: ["PLOC.keyword"], text:"Précision sur la localisation", fields: "PLOC"},
             {value: ["ACQU.keyword"], text:"Modalité d'entrée", fields: "ACQU"},
             {value: ["ADPHOT.keyword"], text:"Adresse de la personne photographiée", fields: "ADPHOT"},
             {value: ["ANUMOR.keyword"], text:"Ancien numéro de l'original", fields: "ANUMOR"},
@@ -176,7 +185,7 @@ class SearchAdvanced extends React.Component {
             {value: ["AUTTI.keyword"], text:"Auteur du tirage", fields: "AUTTI"},
             {value: ["COM.keyword"], text:"Commune", fields: "COM"},
             {value: ["COPY.keyword"], text:"Crédit photographique", fields: "COPY"},
-            {value: ["COSTUME.keyword"], text:"Costume de la personne représentée", fields: "COSTUME"},
+            {value: ["DPT_LETTRE.keyword"], text:"Département en lettre", fields: "DPT_LETTRE"},
             {value: ["COTECOR.keyword"], text:"Cote de conservation du document reproduit", fields: "COTECOR"},
             {value: ["COTECTI.keyword"], text:"Cote de conservation du tirage", fields: "COTECTI"},
             {value: ["COULEUR.keyword"], text:"Couleur", fields: "COULEUR"},
@@ -203,7 +212,7 @@ class SearchAdvanced extends React.Component {
             {value: ["LAUTP.keyword"], text:"Notice biographique", fields: "LAUTP"},
             {value: ["LBASE.keyword"], text:"Références liées", fields: "LBASE"},
             {value: ["LEG.keyword"], text:"Légende", fields: "LEG"},
-            {value: ["LIEU.keyword"], text:"Adresse et/ou lieu-dit", fields: "LIEU"},
+            {value: ["LIEU.keyword"], text:"Lieu-dit", fields: "LIEU"},
             {value: ["LIEUCOR.keyword"], text:"Lieu de conservation du document reproduit ou de l'objet", fields: "LIEUCOR"},
             {value: ["LIEUCTI.keyword"], text:"Lieu de conservation du tirage", fields: "LIEUCTI"},
             {value: ["LIEUORIG.keyword"], text:"Lieu de dépôt", fields: "LIEUORIG"},
@@ -236,14 +245,14 @@ class SearchAdvanced extends React.Component {
             {value: ["SENS.keyword"], text:"Orientation du phototype", fields: "SENS"},
             {value: ["SERIE.keyword"], text:"Titre de la série", fields: "SERIE"},
             {value: ["SUJET.keyword"], text:"Sujet représenté par la photographie ou le document graphique", fields: "SUJET"},
-            {value: ["TECH.keyword"], text:"Description technique du négatif", fields: "TECH"},
+            {value: ["TECHN.keyword"], text:"Description technique du négatif", fields: "TECHN"},
             {value: ["TECHOR.keyword"], text:"Description technique de l'original", fields: "TECHOR"},
             {value: ["TECHTI.keyword"], text:"Description technique du tirage", fields: "TECHTI"},
-            {value: ["THEATRE.keyword"], text:"Producteur de la pièce de théâtre ou du film", fields: "THEATRE"},
+            {value: ["THEATRE.keyword"], text:"Lieu de représentation", fields: "THEATRE"},
             {value: ["TICO.keyword"], text:"Titre courant de l’oeuvre", fields: "TICO"},
             {value: ["TIREDE.keyword"], text:"Référence bibliographique ou documentaire", fields: "TIREDE"},
             {value: ["TITRE.keyword"], text:"Titre de la pièce de théâtre ou du film", fields: "TITRE"},
-            {value: ["TOILE.keyword"], text:"Toile de fond", fields: "TOILE"},
+            {value: ["CINEPROD.keyword"], text:"Producteur du film", fields: "CINEPROD"},
             {value: ["TYPDOC.keyword"], text:"Catégorie de phototype", fields: "TYPDOC"},
             {value: ["WCOM.keyword"], text:"Ville", fields: "WCOM"}
           ];

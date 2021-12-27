@@ -36,10 +36,16 @@ export default class Memoire extends Notice {
         );
       }
     }
-    // INSEE must be 5 char or more.
-    if (body.INSEE && body.INSEE.length < 5) {
-      this._warnings.push("Le champ INSEE doit faire 5 caractères minimum");
+    
+    if(body.INSEE && body.INSEE.length > 0){
+      body.INSEE.forEach((val) => {
+        // INSEE must be 5 char or more.
+        if (val && val.length < 5) {
+          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+        }
+      });
     }
+
     // REF must only be alphanum + "_"
     if (body.REF && !body.REF.match(/^[A-Z0-9_]+$/)) {
       this._warnings.push("Le champ REF doit être alphanumérique");

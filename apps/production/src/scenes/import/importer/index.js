@@ -78,9 +78,16 @@ class Importer extends Component {
       for (let i = 0; i < importedNotices.length; i++) {
         const existingNotice = existingNotices[importedNotices[i].REF];
         if (existingNotice) {
+          let from ="";
           let differences = compare(importedNotices[i], existingNotice);
           importedNotices[i]._messages = differences.map(e => {
-            const from = JSON.stringify(existingNotice[e]);
+            if(e === 'POP_COORDONNEES.lat'){
+            from = JSON.stringify(existingNotice.POP_COORDONNEES.lat);
+            } else if(e === 'POP_COORDONNEES.lon'){
+            from = JSON.stringify(existingNotice.POP_COORDONNEES.lon);
+            } else{
+              from = JSON.stringify(existingNotice[e]);
+            }
             const to = JSON.stringify(importedNotices[i][e]);
             return `Le champ ${e} à évolué de ${from} à ${to}`;
           });
@@ -133,13 +140,14 @@ class Importer extends Component {
       this.props.collection,
       this.props.fieldsToExport
     );
-
+    
     const doc = await api.createImport(
       {
         institution: this.props.institution,
         user: this.props.userId,
         email: this.props.email,
         created: created.length,
+        importedAt: Date.now(),
         updated: updated.length,
         rejected: rejected.length,
         notices: this.state.importedNotices.map(({ REF }) => REF),

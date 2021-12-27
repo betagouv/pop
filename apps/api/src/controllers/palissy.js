@@ -52,7 +52,7 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
     );
   // DPT must be 2 char or more.
-  if (notice.DPT && notice.DPT.length < 2) {
+  if (notice.DPT && notice.DPT[0].length < 2) {
     notice.POP_FLAGS.push("DPT_LENGTH_2");
   }
   // INSEE must be 5 char or more.
@@ -60,7 +60,7 @@ async function withFlags(notice) {
     notice.POP_FLAGS.push("INSEE_LENGTH_5");
   }
   // INSEE & DPT must start with the same first 2 letters.
-  if (notice.INSEE && notice.DPT && notice.INSEE.substring(0, 2) !== notice.DPT.substring(0, 2)) {
+  if (notice.INSEE && notice.DPT && notice.INSEE[0].substring(0, 2) !== notice.DPT[0].substring(0, 2)) {
     notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
   }
   // REF must be an Alphanumeric.
@@ -76,8 +76,12 @@ async function withFlags(notice) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
   // Region should exist.
-  if (notice.REG && !regions.includes(notice.REG)) {
-    notice.POP_FLAGS.push("REG_INVALID");
+  if (Array.isArray(notice.REG) && notice.REG.length > 0) {
+    for(let i=0; i<notice.REG.length; i++){
+      if(!regions.includes(notice.REG[i])){
+        notice.POP_FLAGS.push("REG_INVALID");
+      }
+    }
   }
   // Reference not found (RENV, REFP, REFE, REFA)
   // Reference not found RENV
@@ -153,11 +157,10 @@ async function transformBeforeCreateOrUpdate(notice) {
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
 
-  if (notice.DPT) {
-    const DPT_LETTRE = getDepartement(notice.DPT);
-    if (DPT_LETTRE) {
-      notice.DPT_LETTRE = DPT_LETTRE;
-    }
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT_LETTRE = notice.DPT.map( dpt => getDepartement(dpt)).filter(el => el !== "");
+  } else {
+    notice.DPT_LETTRE = [];
   }
 
   //If COOR in Lambert and not correct coordinates, convert this to WGS84.
@@ -331,14 +334,12 @@ router.put(
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
 
+      const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes();
-      var dateTime = date+' '+time;
+      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
       
-      let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+      let HISTORIQUE = prevNotice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;

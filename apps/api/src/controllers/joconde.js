@@ -27,7 +27,7 @@ async function withFlags(notice) {
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
   // REF must be 11 chars.
   if (notice.REF && notice.REF.length !== 11) {
-    notice.POP_FLAGS.push("REF_LENGTH_EXACT_11");
+    notice.POP_FLAGS.push("REF_LENGTH_11");
   }
   // CONTACT must be an email.
   if (notice.CONTACT && !validator.isEmail(notice.CONTACT)) {
@@ -149,14 +149,13 @@ router.put(
         delete notice.POP_IMPORT;
         notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
       }
+
+      const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var time = today.getHours() + ":" + today.getMinutes();
-      var dateTime = date+' '+time;
+      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
       
-      let HISTORIQUE = notice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: dateTime, updateMode: updateMode};
+      let HISTORIQUE = prevNotice.HISTORIQUE || [];
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
