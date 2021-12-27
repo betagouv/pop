@@ -29,7 +29,7 @@ module.exports = env => {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(mode),
-        MAINTENANCE: true
+        MAINTENANCE: false
       }
     }),
     new UglifyJsPlugin({
