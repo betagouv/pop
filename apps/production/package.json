@@ -16,7 +16,7 @@
     "history": "^4.9.0",
     "hsts": "^2.2.0",
     "isomorphic-fetch": "^2.2.1",
-    "jszip": "^3.2.1",
+    "jszip": "^3.7.0",
     "leaflet": "^1.5.1",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
