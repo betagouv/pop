@@ -142,7 +142,7 @@ export default function AdvancedSearch({ collection, card }) {
           text: "OBS, OBSOR, OBSTI - Producteur de la notice"
         },
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
@@ -171,7 +171,7 @@ export default function AdvancedSearch({ collection, card }) {
           text: "GENE, HIST, PUTI, DECV, PDEC - Contexte de création"
         },
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
@@ -180,7 +180,7 @@ export default function AdvancedSearch({ collection, card }) {
       fields = [
         ...fields,
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
@@ -225,7 +225,7 @@ export default function AdvancedSearch({ collection, card }) {
           text: "AUTR, AFIG - Auteur de l'oeuvre ou du modèle"
         },
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
@@ -258,7 +258,7 @@ export default function AdvancedSearch({ collection, card }) {
           text: "DENO, PARN, PART - Désignation"
         },
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
@@ -295,7 +295,7 @@ export default function AdvancedSearch({ collection, card }) {
           text: "EXPO, BIBL - Annexes"
         },
         {
-          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.updateMode.keyword"],
+          value: ["HISTORIQUE.nom.keyword", "HISTORIQUE.prenom.keyword", "HISTORIQUE.email.keyword", "HISTORIQUE.date.keyword", "HISTORIQUE.updateMode.keyword"],
           text: "Historique des modifications"
         }
       ];
