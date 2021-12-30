@@ -127,6 +127,7 @@ export default class extends React.Component {
     const imageComponents = images.map(e => ({
       src: e.src,
       alt: e.name,
+      marq: e.marq,
       footer: (
         <div style={{ marginTop: "5px" }}>
           <div style={{ textAlign: "center", fontWeight: "bold" }}>{e.name}</div>
@@ -141,7 +142,16 @@ export default class extends React.Component {
           </a>
         </div>
       )
-    }));
+    })).sort((a,b) => { 
+      console.log(a,b);
+      let aMarq = typeof a.marq != "undefined" ? a.marq : "";
+      let bMarq = typeof b.marq != "undefined" ? b.marq : "";
+
+      if(aMarq != "" && bMarq == "") { return -1  }
+      if(aMarq == "" && bMarq != "") { return 1  }
+      if(aMarq == "" && bMarq == "") { return 0  }
+      return Number.parseInt(a.marq) - Number.parseInt(b.marq);
+    });
 
     if (imageComponents.length) {
       return <FieldImages images={imageComponents} />;
@@ -390,7 +400,7 @@ export default class extends React.Component {
                   <Field title={mapping.palissy.PINT.label} content={notice.PINT} />
                   <Field title={mapping.palissy.ACQU.label} content={notice.ACQU} />
                   <Field title={mapping.palissy.EXPO.label} content={notice.EXPO} separator="£" addLink="true" />
-                  <Field title={mapping.palissy.BIBL.label} content={notice.BIBL} />
+                  <Field title={mapping.palissy.BIBL.label} content={notice.BIBL} separator="£" addLink="true"/>
                   <Field title={mapping.palissy.SOUR.label} content={notice.SOUR} separator="£" addLink="true"/>
                   <Field title={mapping.palissy.PHOTO.label} content={notice.PHOTO} />
 
