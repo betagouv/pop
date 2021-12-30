@@ -167,7 +167,9 @@ export const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         width: "560px",
         height: "120px",
-        marginBottom: "10px"
+        marginBottom: "10px",
+        textDecoration: "none",
+        color: '#2a282b'
     },
     imageAbregee: {
         display: "flex",
@@ -210,7 +212,7 @@ export const styles = StyleSheet.create({
         fontSize: 8,
         fontFamily: 'Open Sans',
         fontWeight: 300,
-        height: "12px",
+        minHeight: "12px",
         width: "275px",
         textOverflow: "hidden"
     },
@@ -218,9 +220,10 @@ export const styles = StyleSheet.create({
         fontSize: 10,
         fontFamily: 'Open Sans',
         fontWeight: 300,
-        height: "15px",
+        miniHeight: "15px",
         width: "250px",
-        textOverflow: "hidden"
+        textOverflow: "hidden",
+        maxLines: 1
     },
     abregeeContentTitleMnr: {
         fontSize: 10,
@@ -233,7 +236,7 @@ export const styles = StyleSheet.create({
         fontSize: 6,
         fontFamily: 'Open Sans',
         fontWeight: 300,
-        height: "10px",
+        minHeight: "10px",
         width: "275px",
         textOverflow: "hidden"
     },
@@ -241,9 +244,10 @@ export const styles = StyleSheet.create({
         fontSize: 8,
         fontFamily: 'Open Sans',
         fontWeight: 300,
-        height: "12px",
+        minHeight: "12px",
         width: "250px",
-        textOverflow: "hidden"
+        textOverflow: "hidden",
+        maxLines: 1
     },
     abregeeBase: {
         fontSize: 12,
