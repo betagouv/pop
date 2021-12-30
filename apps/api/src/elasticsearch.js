@@ -3,7 +3,7 @@ const { esUrl, esPort } = require("./config.js");
 
 const getElasticInstance = () => {
   let options;
-  if (esUrl !== "http://127.0.0.1:9200") {
+  if (esUrl !== "127.0.0.1") {
     options = {
       hosts: [`${esUrl}:${esPort}`],
       connectionClass: require("http-aws-es"),
