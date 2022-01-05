@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { esUrl, esPort } = require("../config.js");
 const http = require("http");
+const aws4 = require("aws4");
 
 // Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
@@ -19,6 +20,7 @@ router.post("/scroll", (req, res) => {
   }
   const headers = { "Content-Type": "Application/json" };
   const opts = { host: esUrl, port: esPort, path, body, method: "POST", headers };
+  aws4.sign(opts);
   http
     .request(opts, res1 => {
       res1.pipe(res);
@@ -35,6 +37,7 @@ router.use("/*/_msearch", (req, res) => {
     method: "POST",
     headers: { "Content-Type": "Application/x-ndjson" }
   };
+  aws4.sign(opts);
   http
     .request(opts, res1 => {
       const routedResponse = res1.pipe(res);
