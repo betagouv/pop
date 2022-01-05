@@ -11,7 +11,7 @@
     "start": "node ./src/swagger/swagger.js && node ./src/index.js  ",
     "deploy:prod": "npm install && eb deploy pop-api --profil POP",
     "deploy:staging": "npm install && eb deploy pop-api-staging --profil POP",
-    "test": "cross-env DB_ENDPOINT=mongodb://127.0.0.1/poptest jest -i",
+    "test": "jest -i",
     "export:schemas": "node src/export-db-schemas",
     "export:csv": "node src/export-db-csv",
     "export:mapping": "node src/export-db-mapping",
