@@ -54,7 +54,11 @@ export default function checkThesaurus(importedNotices) {
           continue;
         }
 
-        values = [].concat(noticeField);
+        if (!thesaurus) {
+          continue;
+        }
+
+        values = [].concat(noticeField); console.log(noticeField);
         if (thesaurus_separator) {
           values = values.reduce((acc, val) => acc.concat(val.split(thesaurus_separator)), []);
         }
