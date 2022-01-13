@@ -9,4 +9,3 @@ test("import component renders for Joconde", () => {
   renderImport(<Joconde />);
   expect(screen.getByText(/déposez vos fichiers/i)).toBeInTheDocument();
 });
-
