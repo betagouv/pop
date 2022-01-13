@@ -331,10 +331,9 @@ class api {
   validateWithThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/validate?id=${thesaurusId}&value=${str}`);
   }
-
-  // Validation OpenTheso
+  // Validation OpenTheso par autocomplétion
   validateOpenTheso(thesaurusId, str){
-    return request.getJSON(`/thesaurus/getThesaurusById?id=${thesaurusId}&value=${str}`);
+    return request.getJSON(`/thesaurus/autocompleteByIdthesaurusAndValue?id=${thesaurusId}&value=${str}`);
   }
 }
 
