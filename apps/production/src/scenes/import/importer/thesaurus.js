@@ -36,8 +36,12 @@ export default function checkThesaurus(importedNotices) {
           }
 
           values = [];
-          if (thesaurus_separator && typeof noticeField === 'object') {
-            values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : [];
+          if (thesaurus_separator) {
+            if(typeof noticeField === 'object'){
+              values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : [];
+            } else {
+              values = noticeField.split(thesaurus_separator);
+            }
           } else {
             values = [].concat(noticeField);
           }
@@ -95,43 +99,59 @@ export default function checkThesaurus(importedNotices) {
 }
 
 
-async function checkJocondeThesaurus(mappingField, value){
+async function checkJocondeThesaurus(mappingField, value){ console.log(mappingField, value)
   let arrayLabel = [];
   let message = "";
-  if(!saveThesaurus[mappingField.idthesaurus]){
-    let res = await callThesaurus(mappingField.idthesaurus, "");
+ 
+  try{
+    const res = await callThesaurus(mappingField.idthesaurus, value);
+    let foundValue = false;
+
     if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
       saveThesaurus[mappingField.idthesaurus] = arrayLabel;
     }
-  } else {
-    arrayLabel = saveThesaurus[mappingField.idthesaurus];
-  }
 
-  if(arrayLabel.length > 0){
+    // si un résultat est trouvé
+    if(arrayLabel.length > 0){
+  
+      if(arrayLabel.length > 1){
+        // Préparation des valeurs préférées
+        const arrayPrefLabel = arrayLabel.filter( element => !element.isAltLabel ).map( element => element.label );
+        const arrayFilterWithValue = [];
 
-    // mise en forme du tableau
-    let arrayPrefLabel = arrayLabel.map(element => { return {"label": element.label, "isAltLabel": element.isAltLabel} });
+        // Recherhe de la présence de la valeur exacte dans le tableau des labels préférés
+        arrayPrefLabel.forEach(element => {
+          if(element == value){
+            foundValue = true;
+          }
+        });
 
-    let valueInList = false;
-    let returnPrefLabel = [];
-    arrayPrefLabel.map(element => { 
-      if(element.label == value && !element.isAltLabel){
-        valueInList = true;
-      } else if(element.label.indexOf(value) == 0){
-          returnPrefLabel.push(element.label);
-      }
-    });
-    if(!valueInList){
-      // renvoie de la liste des prefLabel
-      if(returnPrefLabel.length > 0){
-        let strVal = returnPrefLabel.length > 1 ? `les valeurs [${returnPrefLabel.join(",")}] sont à préférer` : `la valeur [${returnPrefLabel[0]}] est la forme à préférer`;
-        message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})], ${strVal}`;
+        if(foundValue){
+          return message;
+        }
+
+        let strVal = arrayPrefLabel.length > 1 ? `les valeurs ${arrayPrefLabel.join(" ou ")} sont à préférer` : arrayPrefLabel.length > 0 ? `la valeur ${arrayPrefLabel[0]} est la forme à préférer` : null;
+        message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
+        if(strVal !== null){
+          message += ", " + strVal;
+        }
       } else {
-        message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
-      }
+        // Si le label trouvé est un prefLabel (isAltLabel == false)
+        if(arrayLabel[0].isAltLabel){
+          message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
+        }
+      } 
+
+    } else {
+      // Sinon 
+      message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
     }
+  } catch(err){
+    // Erreur du à l'absence de la valeur dans le référentiel opentheso
+    message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
   }
+
   return message;
 }
 

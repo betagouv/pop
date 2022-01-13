@@ -90,7 +90,7 @@ class Importer extends Component {
               from = JSON.stringify(existingNotice[e]);
             }
             const to = JSON.stringify(importedNotices[i][e]);
-            return `Le champ ${e} à évolué de ${from} à ${to}`;
+            return `Le champ ${e} a évolué de ${from} à ${to}`;
           });
           if (differences.length) {
             importedNotices[i]._status = "updated";
