@@ -36,6 +36,9 @@ export default class Joconde extends Notice {
     obj["SREP"] = /[,;]/g;
     obj["TECH"] = /[,;]/g;
     obj["UTIL"] = /[,;]/g;
+    obj["STAT"] = /[,;]/g;
+    obj["LOCA"] = /[,;]/g;
+    obj["DEPO"] = /[,;]/g;
 
     for (let key in obj) {
       this._mapping[key].thesaurus_separator = obj[key];
