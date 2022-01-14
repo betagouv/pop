@@ -37,7 +37,7 @@ class App extends React.Component {
       <Alert
         style={{ marginBottom: "0px" }}
         color="warning"
-        isOpen={this.state.maintenance}
+        isOpen={this.state.maintenance == true}
       >
         Une mise à jour est en cours actuellement, le service de versement ou de mise-à-jour de notices est indisponible.
       </Alert>

@@ -69,7 +69,7 @@ export function MemoirePdf(notice, title, links) {
 
 
             {(notice.TYPDOC || notice.NUMI || notice.NUMP || notice.ANUMP || notice.NUMAUTP || notice.NUMTI || notice.ANUMTI || notice.REPRO ||
-              notice.REPRO || notice.NUMG || notice.NUMOR || notice.ANUMOR || notice.RENV || notice.LIEUCTI || notice.COTECTI || notice.PRECOR ||
+              notice.REPRO || notice.NEGPOS || notice.NUMOR || notice.ANUMOR || notice.RENV || notice.LIEUCTI || notice.COTECTI || notice.PRECOR ||
               notice.ACQU || notice.DIFF || notice.ECH) ?
               <View>
                 <Text style={styles.subtitle} >3. Description de la photographie</Text>
@@ -82,7 +82,7 @@ export function MemoirePdf(notice, title, links) {
                 <Field title={mapping.memoire.NUMTI.label} content={notice.NUMTI} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.ANUMTI.label} content={notice.ANUMTI} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.REPRO.label} content={notice.REPRO} separator="#" isPdf={true} />
-                <Field title={mapping.memoire.NUMG.label} content={notice.NUMG} separator="#" isPdf={true} />
+                <Field title={mapping.memoire.NEGPOS.label} content={notice.NEGPOS} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.NUMOR.label} content={notice.NUMOR} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.ANUMOR.label} content={notice.ANUMOR} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.RENV.label} content={notice.RENV} separator="#" isPdf={true} />
@@ -95,11 +95,11 @@ export function MemoirePdf(notice, title, links) {
               </View>
               : null}
 
-            {(notice.TECH || notice.FORMAT || notice.TECHTI || notice.FORMATTI || notice.TECHOR ||
+            {(notice.TECHN || notice.FORMAT || notice.TECHTI || notice.FORMATTI || notice.TECHOR ||
               notice.FORMATOR || notice.MENTIONS || notice.MENTTI || notice.SENS) ?
               <View>
                 <Text style={styles.subtitle} >Description technique du phototype</Text>
-                <Field title={mapping.memoire.TECH.label} content={notice.TECH} separator="#" isPdf={true} />
+                <Field title={mapping.memoire.TECHN.label} content={notice.TECHN} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.FORMAT.label} content={notice.FORMAT} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.TECHTI.label} content={notice.TECHTI} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.FORMATTI.label} content={notice.FORMATTI} separator="#" isPdf={true} />
