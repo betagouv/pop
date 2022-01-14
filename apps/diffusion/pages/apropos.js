@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
 
@@ -16,9 +17,9 @@ export default class extends React.Component {
         </Head>
         <Container>
           <div className="apropos">
-            <h1 style={{ color: "#19414c", fontWeight: 500, marginTop: "30px", fontSize: "28px" }}>
+            <h2 style={{ color: "#19414c", fontWeight: 500, marginTop: "30px", fontSize: "28px" }}>
                 POP, un outil au service de la connaissance du patrimoine français
-            </h1>
+            </h2>
             <br/>
             <p>
             « Rendre accessibles les œuvres capitales de l’humanité, et d’abord de la France, au plus
@@ -120,10 +121,34 @@ export default class extends React.Component {
             services tiers, comme des services de cartographie, d’excursions, de tourisme, de visites
             culturelles virtuelles…
             </p>
+            <br />
 
-            <h1 style={{ color: "#19414c", fontWeight: 500, marginTop: "30px", fontSize: "28px" }}>
+            <h2 style={{ color: "#19414c", fontWeight: 500, marginTop: "30px", fontSize: "28px" }}>
+            Aides à la recherche
+            </h2>
+            <br />
+
+            <p>
+                <b>Palissy et Mérimée (Monuments historiques) :</b>
+            </p>
+            <ul>
+                <li>
+                  aide pour une
+                  <Link href={'https://pop-general.s3.eu-west-3.amazonaws.com/2022_Aide_POP_MH.pdf'} >
+                    <a target="_blank" style={{ marginLeft: "5px" }}>recherche simple</a>
+                  </Link>
+                </li>
+                <li>
+                  aide pour une
+                  <Link href={'https://pop-general.s3.eu-west-3.amazonaws.com/2022_Aide_POP_MH_complexe.pdf'}>
+                  <a target="_blank" style={{ marginLeft: "5px" }}>recherche complexe</a>
+                  </Link>
+                </li>
+            </ul>
+
+            <h2 style={{ color: "#19414c", fontWeight: 500, marginTop: "30px", fontSize: "28px" }}>
             Les versions des navigateurs compatibles avec POP
-            </h1>
+            </h2>
             <br/>
 
             <p>
