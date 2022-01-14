@@ -41,8 +41,8 @@ export default class Merimee extends Notice {
         }
 
         if(body.DPT && body.DPT.length > 0){
-          // INSEE & DPT must start with the same first 2 letters.
-          if (val && !body.DPT.includes(val.substring(0, 2))) {
+          // INSEE & DPT must start with the same first 2 letters or 3 letters.
+          if ( val && !body.DPT.includes(val.substring(0, 2)) && !body.DPT.includes(val.substring(0, 3)) ){
             this._errors.push("INSEE et DPT doivent commencer par les deux même lettres");
           }
         }
