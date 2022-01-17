@@ -13,7 +13,7 @@ export function MerimeeAbregeePdf(notice) {
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.MEMOIRE.length > 0 ?
-                        <Image src={bucket_url + notice.MEMOIRE[0].url} />
+                        <Image src={bucket_url + notice.MEMOIRE[0].url + "?" + (new Date()).getTime()} />
                         : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
