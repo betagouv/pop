@@ -11,7 +11,7 @@ export function MuseoAbregeePdf(notice) {
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.PHOTO ?
-                        <Image src={bucket_url + notice.PHOTO} />
+                        <Image src={bucket_url + notice.PHOTO + "?" + (new Date()).getTime()} />
                         : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>
