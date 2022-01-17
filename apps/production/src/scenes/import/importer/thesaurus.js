@@ -38,7 +38,7 @@ export default function checkThesaurus(importedNotices) {
           values = [];
           if (thesaurus_separator) {
             if(typeof noticeField === 'object'){
-              values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : [];
+              values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : []; 
             } else {
               values = noticeField.split(thesaurus_separator);
             }
@@ -46,7 +46,7 @@ export default function checkThesaurus(importedNotices) {
             values = [].concat(noticeField);
           }
 
-          values = values.map(e => e.trim());
+          values = values.map(e => e.trim()).filter((element) => element !== '');;
 
           for (var k = 0; k < values.length; k++) {
             await checkJocondeThesaurus(importedNotices[i]._mapping[field], values[k]).then( message => {
