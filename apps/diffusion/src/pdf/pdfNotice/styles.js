@@ -155,7 +155,6 @@ export const styles = StyleSheet.create({
         fontFamily: 'Open Sans',
         textAlign: 'center',
         fontWeight: 300,
-        marginTop: "20px",
         marginBottom: "5px"
     },
     noticeAbregeeContainer: {
