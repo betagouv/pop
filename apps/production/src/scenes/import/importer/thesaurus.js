@@ -117,18 +117,27 @@ async function checkJocondeThesaurus(mappingField, value){
   
       if(arrayLabel.length > 1){
         // Préparation des valeurs préférées
-        const arrayPrefLabel = arrayLabel.filter( element => !element.isAltLabel ).map( element => element.label );
-        const arrayFilterWithValue = [];
+        let arrayPrefLabel = arrayLabel.filter( element => !element.isAltLabel ).map( element => element.label );
+        let arrayFilterWithValue = [];
 
         // Recherhe de la présence de la valeur exacte dans le tableau des labels préférés
         arrayPrefLabel.forEach(element => {
           if(element == value){
             foundValue = true;
+          } else {
+            // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
+            if(element.indexOf(value) == 0 || element.indexOf(value.toLowerCase()) == 0){
+              arrayFilterWithValue.push(element);
+            }
           }
         });
 
         if(foundValue){
           return message;
+        }
+
+        if(arrayFilterWithValue.length > 0){
+          arrayPrefLabel = arrayFilterWithValue;
         }
 
         let strVal = arrayPrefLabel.length > 1 ? `les valeurs ${arrayPrefLabel.join(" ou ")} sont à préférer` : arrayPrefLabel.length > 0 ? `la valeur ${arrayPrefLabel[0]} est la forme à préférer` : null;
