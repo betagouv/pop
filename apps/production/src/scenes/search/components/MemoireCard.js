@@ -69,17 +69,18 @@ export default ({ data }) => {
       <div className="content">
         <div style={{ display: "flex" }}>
           <h2>{content}</h2>
+          <span>{data.REF}</span>
         </div>
-        <div>
-          <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
-          <p>{loc}</p>
-          <p>{data.TYPDOC}</p>
-          <p>{data.AUTP.join(', ')}</p>
-          <p>{data.DATPV}</p>
-          <p>{contentSerieTitre}</p>
-          <p>{data.COPY}</p>
-          {productorImage(data.PRODUCTEUR)}
+        <div style={{ maxWidth: "80%" }}>
+          <p style={{ whiteSpace: "initial" }}> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+          <p style={{ whiteSpace: "initial" }}>{loc}</p>
+          <p style={{ whiteSpace: "initial" }}>{data.TYPDOC}</p>
+          <p style={{ whiteSpace: "initial" }}>{data.AUTP.join(', ')}</p>
+          <p style={{ whiteSpace: "initial" }}>{data.DATPV}</p>
+          <p style={{ whiteSpace: "initial" }}>{contentSerieTitre}</p>
+          <p style={{ whiteSpace: "initial" }}>{data.COPY}</p>    
         </div>
+        <span>{productorImage(data.PRODUCTEUR)}</span>
       </div>
     </Link>
   );
