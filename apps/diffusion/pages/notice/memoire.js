@@ -304,7 +304,7 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.SCLE.label} content={notice.SCLE} />
                   <Field title={mapping.memoire.DATOEU.label} content={notice.DATOEU} />
                   <Field title={mapping.memoire.LIEUORIG.label} content={notice.LIEUORIG} />
-                  <Field title={mapping.memoire.SERIE.label} content={this.serie()} />
+                  { notice.SERIE.length > 0 ? <Field title={mapping.memoire.SERIE.label} content={this.serie()} /> : null }
                   <Field title={"Mots-clés"} content={notice.MCL + " " + notice.SUJET} />
                   <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} />
                   <Title
