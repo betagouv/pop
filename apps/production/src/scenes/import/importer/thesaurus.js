@@ -138,7 +138,7 @@ async function checkJocondeThesaurus(mappingField, value){
           arrayPrefLabel = arrayFilterWithValue;
         }
 
-        let strVal = arrayPrefLabel.length > 1 ? `les valeurs ${arrayPrefLabel.join(" ou ")} sont à préférer` : arrayPrefLabel.length > 0 ? `la valeur ${arrayPrefLabel[0]} est la forme à préférer` : null;
+        let strVal = arrayPrefLabel.length > 1 ? `les valeurs ${arrayPrefLabel.join(" ou ")} peuvent correspondre` : arrayPrefLabel.length > 0 ? `la valeur ${arrayPrefLabel[0]} peut correspondre` : null;
         message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
         if(strVal !== null){
           message += ", " + strVal;
@@ -155,7 +155,7 @@ async function checkJocondeThesaurus(mappingField, value){
 
           if(resp.statusCode == "202"){
             let prefLabel = JSON.parse(resp.body).prefLabel;
-            message += `, la valeur ${prefLabel} peut correspondre`;
+            message += `, la valeur ${prefLabel} est la forme à préférer`;
           }
         }
       } 
