@@ -335,6 +335,10 @@ class api {
   validateOpenTheso(thesaurusId, str){
     return request.getJSON(`/thesaurus/autocompleteByIdthesaurusAndValue?id=${thesaurusId}&value=${str}`);
   }
+  // Récupération du prefLabel par l'identifiant Ark
+  getPrefLabelByIdArk(IdArk){
+    return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
+  }
 }
 
 const apiObject = new api();
