@@ -1,6 +1,5 @@
 import api from "../../../services/api";
 
-const saveThesaurus = {};
 const thesaurusJocondeControle = ['ECOL','EPOQ','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'UTIL', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
 
 export default function checkThesaurus(importedNotices) {
@@ -109,7 +108,6 @@ async function checkJocondeThesaurus(mappingField, value){
 
     if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
-      saveThesaurus[mappingField.idthesaurus] = arrayLabel;
     }
 
     // si un résultat est trouvé
@@ -149,6 +147,16 @@ async function checkJocondeThesaurus(mappingField, value){
         // Si le label trouvé est un prefLabel (isAltLabel == false)
         if(arrayLabel[0].isAltLabel){
           message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
+
+          // On recherche le prefLabel par rapport à son identifiant ark
+          const uri = arrayLabel[0].uri;
+          let idArk = uri.substr(uri.indexOf('ark:') + 5);
+          let resp = await callPrefLabel(idArk);
+
+          if(resp.statusCode == "202"){
+            let prefLabel = JSON.parse(resp.body).prefLabel;
+            message += `, la valeur ${prefLabel} peut correspondre`;
+          }
         }
       } 
 
@@ -166,4 +174,8 @@ async function checkJocondeThesaurus(mappingField, value){
 
 async function callThesaurus(thesaurus, value){
   return api.validateOpenTheso(thesaurus, value);;
+}
+
+async function callPrefLabel(id){
+  return api.getPrefLabelByIdArk(id);;
 }
