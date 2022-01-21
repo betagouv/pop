@@ -94,6 +94,14 @@ export default class extends React.Component {
     return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
 
+  addLinkFieldMultiValue(fieldValues, name){
+    const links = fieldValues.map((element) => {
+      const qs = queryString.stringify({ name: JSON.stringify([element]) });
+      return <a href={`/search/list?${qs}`}>{element}</a>
+    });
+    return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
+  }
+
   async componentDidMount() {
     //this.setState({display : true});
 
