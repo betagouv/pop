@@ -19,7 +19,7 @@ export default class Joconde extends Notice {
 
     // ADD Boring stuff in order to split text to check for the thesaurus
     const obj = {};
-    obj["AUTR"] = /[(),;]/g;
+    obj["AUTR"] = /[,;]/g;
     obj["DECV"] = /[(),;]/g;
     obj["DENO"] = /[(),;]/g;
     obj["DOMN"] = /[(),;]/g;
