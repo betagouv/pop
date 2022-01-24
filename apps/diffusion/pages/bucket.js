@@ -7,6 +7,7 @@ import { Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor } fr
 import API from "../src/services/api";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
+import { tag } from "./../src/services//tags";
 
 export default class Bucket extends React.Component {
   state = { bucket: [], loading: true, display: false };
@@ -35,6 +36,10 @@ export default class Bucket extends React.Component {
   componentDidMount() {
     this.fillBucket();
     this.setState({ display: true });
+
+    tag.sendPage({
+      name: 'Page Panier'
+    });
   }
 
   fillBucket = async () => {
