@@ -28,7 +28,7 @@ export default class Merimee extends Notice {
       body.DPT.forEach((val) => {
         // DPT must be 2 char or more.
         if (val && val.length < 2) {
-          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+          this._errors.push(`Le champ DPT doit avoir une longueur de 2 caractères minimum`);
         }
       });
     }
@@ -37,7 +37,7 @@ export default class Merimee extends Notice {
       body.INSEE.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
-          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+          this._errors.push(`Le champ INSEE doit avoir une longueur de 5 caractères minimum`);
         }
 
         if(body.DPT && body.DPT.length > 0){
