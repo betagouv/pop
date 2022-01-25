@@ -52,12 +52,20 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
     );
   // DPT must be 2 char or more.
-  if (notice.DPT && notice.DPT[0].length < 2) {
-    notice.POP_FLAGS.push("DPT_LENGTH_2");
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT.forEach( dpt => {
+      if(dpt.length < 2 && !notice.POP_FLAGS.includes("DPT_LENGTH_2")){
+        notice.POP_FLAGS.push("DPT_LENGTH_2");
+      }
+    });
   }
   // INSEE must be 5 char or more.
-  if (notice.INSEE && notice.INSEE.length < 5) {
-    notice.POP_FLAGS.push("INSEE_LENGTH_5");
+  if (notice.INSEE && notice.INSEE.length > 0) {
+    notice.INSEE.forEach( insee => {
+      if(insee.length < 5 && !notice.POP_FLAGS.includes("INSEE_LENGTH_5")){
+        notice.POP_FLAGS.push("INSEE_LENGTH_5");
+      }
+    });
   }
   // INSEE & DPT must start with the same first 2 letters.
   if (notice.INSEE && notice.DPT && notice.INSEE[0].substring(0, 2) !== notice.DPT[0].substring(0, 2)) {
