@@ -137,7 +137,7 @@ export default class extends React.Component {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value) == "") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
-        let content = <a href={url}>{value}</a>;
+        let content = <a href={url} target="_blank">{value}</a>;
         // Traitement pour repr
         if (name == 'repr' && regex.test(value)) {
           content = this.prepareLinkRepr(value, name);
@@ -149,7 +149,7 @@ export default class extends React.Component {
     const links = value
       .map(d => {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([d]) })}`;
-        let content = <a href={url}>{d}</a>;
+        let content = <a href={url} target="_blank">{d}</a>;
         // Traitement pour repr
         if (name == 'repr' && regex.test(d)) {
           content = this.prepareLinkRepr(d, name);
@@ -171,7 +171,7 @@ export default class extends React.Component {
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value) == "") {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
-        return <a href={url}>{value}</a>;
+        return <a href={url} target="_blank">{value}</a>;
       }
       return null;
     }
@@ -179,7 +179,7 @@ export default class extends React.Component {
       .map(a => {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
         return (
-          <a href={url} key={a}>
+          <a href={url} key={a} target="_blank">
             {a}
           </a>
         );

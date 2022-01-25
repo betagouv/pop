@@ -66,7 +66,7 @@ export default class extends React.Component {
     return ((autp && autp.length > 0) && <div style={{ display: "flex", flexDirection: "row" }}>
       {autp.map((photographer, index) => {
         const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
-        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
+        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`} target="_blank">{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
       })}
     </div>)
   }
@@ -75,7 +75,7 @@ export default class extends React.Component {
     const serie = this.props.notice.SERIE;
     const links = serie.map((element) => {
       const qs = queryString.stringify({ serie: JSON.stringify([element]) });
-      return <a href={`/search/list?${qs}`}>{element}</a>
+      return <a href={`/search/list?${qs}`} target="_blank">{element}</a>
     });
     return serie && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
@@ -83,13 +83,13 @@ export default class extends React.Component {
   expo() {
     const expo = this.props.notice.EXPO;
     const qs = queryString.stringify({ expo: JSON.stringify([expo]) });
-    return expo && <a href={`/search/list?${qs}`}>{expo}</a>;
+    return expo && <a href={`/search/list?${qs}`} target="_blank">{expo}</a>;
   }
 
   addLinkFieldMultiValue(fieldValues, name){
     const links = fieldValues.map((element) => {
       const qs = queryString.stringify({ name: JSON.stringify([element]) });
-      return <a href={`/search/list?${qs}`}>{element}</a>
+      return <a href={`/search/list?${qs}`} target="_blank">{element}</a>
     });
     return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
@@ -509,7 +509,7 @@ function link(listUrl) {
         listUrl.map(url => {
           return (
             <React.Fragment key={url.ref}>
-              <a href={url.url || "#"}>{url.ref}</a>
+              <a href={url.url || "#"} target="_blank">{url.ref}</a>
               <br />
             </React.Fragment>
           );
