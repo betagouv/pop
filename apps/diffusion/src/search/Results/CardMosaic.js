@@ -12,8 +12,8 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
   return (
     <Col>
       <a className="list-card" style={{ textDecoration: "none" }} onMouseDown={() => saveListRef(listRefs, searchParams, null)} >
-        <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
-          <a style={{ textDecoration: "none" }} className="mosaique-card">
+        {/* <Link href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}> */}
+          <a href={`/notice/${index.replace(/[0-9]+/, "")}/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF} style={{ textDecoration: "none" }} className="mosaique-card">
             <div className="thumbnail">
               <img src={image_preview} alt={title} />
             </div>
@@ -21,7 +21,7 @@ export default ({ index, data, searchParams, listRefs, idQuery }) => {
               <span>{title}</span>
             </div>
           </a>
-        </Link>
+        {/* </Link> */}
         <style jsx global>{`
           .mosaique-card {
             display: flex;
