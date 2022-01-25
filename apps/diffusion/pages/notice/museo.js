@@ -288,7 +288,7 @@ export default class extends React.Component {
                       museo: JSON.stringify([notice.REF])
                     })}`}
                   >
-                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }} hidden={ this.props.hideButton }>
+                    <a className="btn btn-secondary" style={{ backgroundColor: "#C43A2F" }} hidden={ this.props.hideButton } target="_blank">
                       Voir les collections du musée
                     </a>
                   </Link>

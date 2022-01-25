@@ -169,7 +169,7 @@ export default class extends React.Component {
       .map(a => {
         const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
         return (
-          <a href={url} key={a}>
+          <a href={url} key={a} target="_blank">
             {a}
           </a>
         );
@@ -478,7 +478,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURL.label}
-        content={<a href={notice.DOSURL}>Voir le dossier complet sur le site de la région</a>}
+        content={<a href={notice.DOSURL} target="_blank">Voir le dossier complet sur le site de la région</a>}
         key="notice.DOSURL"
       />
     );
@@ -488,7 +488,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURLPDF.label}
-        content={<a href={postFixedLink(notice.DOSURLPDF)}>Voir le dossier d'origine numérisé</a>}
+        content={<a href={postFixedLink(notice.DOSURLPDF)} target="_blank">Voir le dossier d'origine numérisé</a>}
         key="notice.DOSURLPDF"
       />
     );
@@ -499,7 +499,7 @@ const SeeMore = ({ notice }) => {
       <Field
         title={mapping.palissy.POP_DOSSIER_VERT.label}
         content={
-          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>Voir le dossier d'origine numérisé</a>
+          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`} target="_blank">Voir le dossier d'origine numérisé</a>
         }
         key="notice.POP_DOSSIER_VERT"
       />
@@ -511,7 +511,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
       const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -530,7 +530,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
       const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -549,7 +549,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.palissy.LIENS.label}
-          content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
+          content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
           key={`notice.LIENS${i}`}
         />
       );
@@ -561,7 +561,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LINHA.label}
-          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          content={<a href={notice.LINHA[0]} target="_blank">{notice.LINHA[0]}</a>}
           key="notice.LINHA_0"
         />
       );
@@ -569,7 +569,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LINHA.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            content={<a href={notice.LINHA[i]} target="_blank">{notice.LINHA[i]}</a>}
             key={"notice.LINHA_" + i}
           />
         );
@@ -582,7 +582,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LREG.label}
-          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          content={<a href={notice.LREG[0]} target="_blank">{notice.LREG[0]}</a>}
           key="notice.LREG_0"
         />
       );
@@ -590,7 +590,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LREG.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            content={<a href={notice.LREG[i]} target="_blank">{notice.LREG[i]}</a>}
             key={"notice.LREG_" + i}
           />
         );

@@ -134,7 +134,7 @@ export default class extends React.Component {
       .map(d => {
         const url = `/search/list?${queryString.stringify({ domn: JSON.stringify([d]) })}`;
         return (
-          <a href={url} key={d}>
+          <a href={url} key={d} target="_blank">
             {d}
           </a>
         );
