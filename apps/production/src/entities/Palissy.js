@@ -27,7 +27,7 @@ export default class Palissy extends Notice {
       arrayDpt.forEach((val) => {
         // DPT must be 2 char or more.
         if (val && val.length < 2) {
-          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+          this._errors.push(`Le champ DPT doit avoir une longueur de 2 caractères minimum`);
         }
       });
     }
@@ -37,7 +37,7 @@ export default class Palissy extends Notice {
       arrayInsee.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
-          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+          this._errors.push(`Le champ INSEE doit avoir une longueur de 5 caractères minimum`);
         }
 
         let arrayDpt = Array.isArray(body.DPT) ? body.DPT : body.DPT.split(";"); 
