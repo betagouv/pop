@@ -37,7 +37,15 @@ export default function checkThesaurus(importedNotices) {
           values = [];
           if (thesaurus_separator) {
             if(typeof noticeField === 'object'){
-              values = (noticeField.length > 0) ? noticeField[0].split(thesaurus_separator) : []; 
+                noticeField.forEach(element => {
+                  let elSplit = element.split(thesaurus_separator);
+
+                  if(Array.isArray(elSplit)){
+                    elSplit.forEach(el => values.push(el));
+                  } else {
+                    values.push(element)
+                  }
+              });
             } else {
               values = noticeField.split(thesaurus_separator);
             }
@@ -106,13 +114,15 @@ async function checkJocondeThesaurus(mappingField, value){
     const res = await callThesaurus(mappingField.idthesaurus, value);
     let foundValue = false;
 
+    
+
     if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
     }
 
     // si un résultat est trouvé
     if(arrayLabel.length > 0){
-  
+
       if(arrayLabel.length > 1){
         // Préparation des valeurs préférées
         let arrayPrefLabel = arrayLabel.filter( element => !element.isAltLabel ).map( element => element.label );
