@@ -182,7 +182,7 @@ router.get("/getThesaurusById", passport.authenticate("jwt", { session: false })
   .then(resp => { 
     res.status(200).send(resp);
   })
-  .catch(error => res.status(500).send({ success: false, msg: error}));
+  .catch(error => res.status(400).send({ success: false, msg: error}));
 });
 
 router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { session: false }), (req, res) => { 
@@ -211,7 +211,7 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
   .then(resp => { 
     res.status(200).send(resp);
   })
-  .catch(error => res.status(500).send({ success: false, msg: error}));
+  .catch(error => res.status(400).send({ success: false, msg: error}));
 });
 
 router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false }), (req, res) => { 
@@ -239,7 +239,7 @@ router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false
   .then(resp => { 
     res.status(200).send(resp);
   })
-  .catch(error => res.status(500).send({ success: false, msg: error}));
+  .catch(error => { res.status(400).send({ success: false, msg: error}) });
 });
 
 function getAllChildrenConcept(conceptId, arr) {
