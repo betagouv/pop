@@ -235,7 +235,7 @@ function report(notices, collection, email, institution, importId) {
   arr.push(`<li>${rejected.length} notice(s) rejetée(s)</li>`);
   arr.push(`</ul>`);
 
-  const obj = {};
+  let obj = {};
   let count = 0;
 
   const URL = `http://pop${
@@ -255,10 +255,29 @@ function report(notices, collection, email, institution, importId) {
           count: 1,
           notices: [`<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${notices[i].INV})`]
         };
+
+        let idThesaurus = notices[i]._warnings[j].substr(notices[i]._warnings[j].indexOf(')]') -3, 3);
+        if(!Number.isNaN(parseInt(idThesaurus))){
+          obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
+        }
       }
     }
   }
-console.log(obj);
+
+  const newObj = Object.entries(obj).sort(function(a, b) {
+    // Compare
+    if (a[1].idThesaurus < b[1].idThesaurus) return -1;
+    if (a[1].idThesaurus > b[1].idThesaurus) return 1;
+    return 0;
+  }).reduce( ( a, key) => {
+    a[key[0]] = obj[key[0]]
+    return a
+  }, {});
+
+  obj = newObj;
+
+  const urlOpenTheso = "https://opentheso.huma-num.fr/opentheso/";
+
   arr.push(`<p>${count} avertissement(s) dont : </p>`);
   arr.push(`<ul>`);
   for (let key in obj) {
@@ -272,6 +291,34 @@ console.log(obj);
         `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
       );
     }else{
+      
+      if(key){
+        const libRefus = "ne fait pas partie du thésaurus";
+        const valueFounded = key.indexOf(libRefus) == -1;
+
+        const arrayKey = key.split(/[\[\]]/g);
+
+        if(arrayKey.length < 2){
+          continue;
+        }
+
+        const val = arrayKey[1];
+        const autoriteThesaurus = arrayKey[3];
+        
+        // Mise en gras des valeurs saisies qui posent problème sur le Thésaurus.
+        key = key.replace(`[${val}]`, `[<strong>${val}</strong>]`);
+
+        // Mise en place du lien cliquable pour les référentiels thesaurus
+        const idthesaurus = autoriteThesaurus.split(/[()]/g)[1];
+        key = key.replace(`[${autoriteThesaurus}]`, `<a href="${urlOpenTheso}?idt=${idthesaurus}">${autoriteThesaurus}</a>`);
+
+        // Si des propositions ont été trouvé, alors on met les propositions en caractères gras
+        if(valueFounded){
+          const listProposition = arrayKey[5].split(' ou ').filter(element => element !== "").map(element => `<strong>${element}</strong>`).join(' ou ');
+          key = key.replace(`[${arrayKey[5]}]`, listProposition);
+        }
+      }
+
       arr.push(
         `<li>${count} avec pour message "${key}" :</li>`
       );

@@ -1,38 +1,40 @@
-notices = db.palissy.find( { MEMOIRE: { $gt: { $size: 0 }  } } );
+notices = db.palissy.find( { MEMOIRE: { $eq: [] } } );
 nbreNotices = notices.count();
-
-let nbrN = 0
+let countUpdate = 0;
 
 print(nbreNotices);
- 
+
 notices.forEach(notice => {
-    let arrayMemoire = notice.MEMOIRE.map((element) => {
-        if(element){
-        var noticeMemoire = db.memoire.findOne({ REF: element.ref });
-        let memoire = {};
+    // On récupère les notices MEMOIRE liées
+    const noticesMemoire = db.memoire.find( { LBASE: { $elemMatch: { $eq: notice.REF }  } } );
+
+    // Construction du tableau MEMOIRE
+    let arrayMemoire = noticesMemoire.map((noticeMemoire) => {
         if(noticeMemoire){
+            let memoire = {};
             memoire._id = noticeMemoire._id;
             memoire.ref = noticeMemoire.REF;
             memoire.url = noticeMemoire.IMG;
             memoire.copy = noticeMemoire.COPY;
             memoire.name = noticeMemoire.LEG;
 
-            nbrN++
-            print(nbrN + " notices");
-            print(notice.REF);
-
             return memoire;
         }
-    }
-        
-    });
+    }).filter(val => val);
 
-    db.palissy.update(
-        { REF : notice.REF },
-        {
-            $set : {
-                MEMOIRE : arrayMemoire
+    if(arrayMemoire.length > 0){
+        db.palissy.update(
+            { REF : notice.REF },
+            {
+                $set : {
+                    MEMOIRE : arrayMemoire
+                }
             }
-        }
-    )
+        )
+
+        countUpdate++;
+    }   
 });
+
+
+print(countUpdate + " notices mise à jour");

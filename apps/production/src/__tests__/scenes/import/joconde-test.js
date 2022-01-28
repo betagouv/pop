@@ -7,6 +7,7 @@ import Mapping from "../../../services/mapping.js";
 
 const importTester = new ImportTester({ api });
 importTester.disableAmplitude();
+api.validateOpenTheso.mockResolvedValue({});
 
 test("import component renders for Joconde", () => {
   const component = importTester.mount(<Joconde />);
@@ -51,5 +52,5 @@ test("import file with some warnings", async () => {
   await importTester.dropFiles(["joconde-valid-UTF-8-warnings.txt"]);
   expect(importTester.summaryInvalidDocsCount()).toBe(1);
   const warnings = importTester.notices[0]._warnings.filter(f => !f.match(/thesaurus/));
-  expect(warnings).toHaveLength(2);
+  expect(warnings).toHaveLength(21);
 });

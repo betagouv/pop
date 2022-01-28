@@ -156,6 +156,92 @@ router.post("/createThesaurus", passport.authenticate("jwt", { session: false })
   }
 });
 
+
+router.get("/getThesaurusById", passport.authenticate("jwt", { session: false }), (req, res) => { 
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/getThesaurusById'
+      #swagger.description = 'Retourne la liste des Thesaurus en fonction de l'identifiant' 
+  */
+  const thesaurusId = req.query.id;
+
+  return new Promise((resolve, reject) => {
+    request.get({
+      url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
+    },
+    (error, response) => {
+      if (!error && response.statusCode === 202) {
+        resolve(response);
+      } else {
+        capture(error);
+        reject(error);
+      }
+    }
+  );
+  })
+  .then(resp => { 
+    res.status(200).send(resp);
+  })
+  .catch(error => res.status(400).send({ success: false, msg: error}));
+});
+
+router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { session: false }), (req, res) => { 
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/autocompleteByIdthesaurusAndValue'
+      #swagger.description = 'Recherche de l'autocomplétion de la valeur par rapport à l'identifiant du thesaurus dans le référentiel thesaurus' 
+  */
+  const thesaurusId = req.query.id;
+  const value = req.query.value;
+
+  return new Promise((resolve, reject) => {
+    request.get({
+      url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
+    },
+    (error, response) => {
+      if (!error && response.statusCode === 202) {
+        resolve(response);
+      } else {
+        capture(error);
+        reject(error);
+      }
+    }
+  );
+  })
+  .then(resp => { 
+    res.status(200).send(resp);
+  })
+  .catch(error => res.status(400).send({ success: false, msg: error}));
+});
+
+router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false }), (req, res) => { 
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/getPrefLabelByIdArk'
+      #swagger.description = 'Recherche le prefLabel par rapport à l'identifiant Ark' 
+  */
+  const arkId = req.query.id;
+
+  return new Promise((resolve, reject) => {
+    request.get({
+      url: `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`
+    },
+    (error, response) => {
+      if (!error && response.statusCode === 202) {
+        resolve(response);
+      } else {
+        capture(error);
+        reject(error);
+      }
+    }
+  );
+  })
+  .then(resp => { 
+    res.status(200).send(resp);
+  })
+  .catch(error => { res.status(400).send({ success: false, msg: error}) });
+});
+
 function getAllChildrenConcept(conceptId, arr) {
   try {
     return new Promise(async (resolve, reject) => {

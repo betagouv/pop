@@ -32,7 +32,7 @@ export default function render() {
         <div>
           <SearchBox
             id="main"
-            placeholder="Saisissez un titre, une dénomination, une reference ou une localisation"
+            placeholder="Titre, n° d'inventaire, dénomination, référence, localisation ou auteur"
             initialValue={initialValues.get("main")}
             customQuery={value =>
               utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA", "MUSEO", "DMIS"], ["AUTR"])

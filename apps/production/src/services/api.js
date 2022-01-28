@@ -327,9 +327,17 @@ class api {
   getThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/search?id=${thesaurusId}&value=${str}`);
   }
-  // Validate with thesaurus
+  // Validate with thesaurus, ancienne validation à supprimer dès que toutes les collections seront sur OpenTheso
   validateWithThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/validate?id=${thesaurusId}&value=${str}`);
+  }
+  // Validation OpenTheso par autocomplétion
+  validateOpenTheso(thesaurusId, str){
+    return request.getJSON(`/thesaurus/autocompleteByIdthesaurusAndValue?id=${thesaurusId}&value=${str}`);
+  }
+  // Récupération du prefLabel par l'identifiant Ark
+  getPrefLabelByIdArk(IdArk){
+    return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
   }
 }
 

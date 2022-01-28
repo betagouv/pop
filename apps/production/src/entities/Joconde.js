@@ -19,23 +19,26 @@ export default class Joconde extends Notice {
 
     // ADD Boring stuff in order to split text to check for the thesaurus
     const obj = {};
-    obj["AUTR"] = /[(,);#]/g;
-    obj["DECV"] = /[(,);#]/g;
-    obj["DENO"] = /[(,);#]/g;
-    obj["DOMN"] = /[(,);#]/g;
-    obj["ECOL"] = /[(,);#]/g;
-    obj["EPOQ"] = /[(,);#]/g;
-    obj["GENE"] = /[(,);#]/g;
-    obj["INSC"] = /[(,);#]/g;
-    obj["LIEUX"] = /[(,);#]/g;
-    obj["LOCA"] = /[(,);#]/g;
-    obj["PEOC"] = /[(,);#]/g;
-    obj["PERI"] = /[(,);#]/g;
-    obj["PERU"] = /[(,);#]/g;
-    obj["REPR"] = /[(,);#]/g;
-    obj["SREP"] = /[(,);#]/g;
-    obj["TECH"] = /[(,);#]/g;
-    obj["UTIL"] = /[(,);#]/g;
+    obj["AUTR"] = /[,;]/g;
+    obj["DECV"] = /[(),;]/g;
+    obj["DENO"] = /[(),;]/g;
+    obj["DOMN"] = /[(),;]/g;
+    obj["ECOL"] = /[(),;]/g;
+    obj["EPOQ"] = /[(),;]/g;
+    obj["GENE"] = /[(),;]/g;
+    obj["INSC"] = /[(),;]/g;
+    obj["LIEUX"] = /[(),;]/g;
+    obj["LOCA"] = /[(),;]/g;
+    obj["PEOC"] = /[(),;]/g;
+    obj["PERI"] = /[(),;]/g;
+    obj["PERU"] = /[(),;]/g;
+    obj["REPR"] = /[(),;]/g;
+    obj["SREP"] = /[(),;]/g;
+    obj["TECH"] = /[(),;]/g;
+    obj["UTIL"] = /[(),;]/g;
+    obj["STAT"] = /[(),;]/g;
+    obj["LOCA"] = /[(),;]/g;
+    obj["DEPO"] = /[(),;]/g;
 
     for (let key in obj) {
       this._mapping[key].thesaurus_separator = obj[key];
