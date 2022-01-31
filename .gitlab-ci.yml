@@ -197,7 +197,7 @@ test-diffusion:
     - npm run build
   artifacts:
     paths:
-      - apps/production/build
+      - apps/production/*
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
@@ -230,7 +230,7 @@ test-diffusion:
     - npm run build
   artifacts:
     paths:
-      - apps/diffusion/.next
+      - apps/diffusion/*
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
