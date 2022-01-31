@@ -198,6 +198,8 @@ test-diffusion:
   artifacts:
     paths:
       - apps/production/*
+    exclude: 
+      - apps/production/node_modules
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
@@ -231,6 +233,8 @@ test-diffusion:
   artifacts:
     paths:
       - apps/diffusion/*
+    exclude: 
+      - apps/diffusion/node_modules
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
