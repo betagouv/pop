@@ -249,7 +249,7 @@ export default class extends React.Component {
               <Col md="8">
                 <div className="notice-details">
                   <Title
-                    content="1. Sujet de la photographie"
+                    content="Sujet de la photographie"
                     notice={notice}
                     fields={[
                       "LOCA",
@@ -327,7 +327,7 @@ export default class extends React.Component {
                   <Field title={"Mots-clés"} content={[...notice.MCL, notice.SUJET].filter(el => el !== "")} join={' ; '}/>
                   <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} join={' ; '}/>
                   <Title
-                    content="Références des documents reprouits"
+                    content="Références des documents reproduits"
                     small={true}d
                     notice={notice}
                     fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
@@ -338,11 +338,16 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.COTECOR.label} content={notice.COTECOR} join={' ; '}/>
                   <Field title={mapping.memoire.AUTG.label} content={notice.AUTG} join={' ; '}/>
                 </div>
-                <div className="notice-details">
-                  <Title content="2. Auteur" notice={notice} fields={["AUTP", "AUTTI"]} />
-                  <Field title={"Photographe ou dessinateur"} content={this.photographer()} />
-                  <Field title={mapping.memoire.AUTTI.label} content={notice.AUTTI} />
-                </div>
+                { 
+                  (this.photographer() || notice.AUTTI.length > 0) 
+                  ? <div className="notice-details">
+                      <Title content="Auteur" notice={notice} fields={["AUTP", "AUTTI"]} />
+                      <Field title={"Photographe ou dessinateur"} content={this.photographer()} />
+                      <Field title={mapping.memoire.AUTTI.label} content={notice.AUTTI} />
+                    </div> 
+                  : ""
+                }
+                
                 <div className="notice-details">
                   <Title
                     content="3. Description de la photographie"
