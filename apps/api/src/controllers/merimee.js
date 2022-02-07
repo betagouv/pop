@@ -13,6 +13,7 @@ const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 const { checkValidRef, removeChar } = require("./utils/notice");
+const { cleanArrayValue } = require("./utils/dataFilter");
 
 const {
   formattedNow,
@@ -321,10 +322,13 @@ router.put(
       const doc = new Merimee(notice);
       let oaiObj = { DMAJ: notice.DMAJ }
 
+      // Suppression des valeurs vident pour les champs multivalues
+      cleanArrayValue(notice);
+
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
-      await Promise.all(promises);
+      // await Promise.all(promises);
     
       res.status(200).send({ success: true, msg: "OK" });
     } catch (e) {
@@ -364,6 +368,9 @@ router.post(
         BASE: "merimee",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
+      
+       // Suppression des valeurs vident pour les champs multivalues
+       cleanArrayValue(notice);
 
       const promises = [];
       const doc = new Merimee(notice);
