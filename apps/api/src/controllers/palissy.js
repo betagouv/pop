@@ -12,8 +12,8 @@ const Joconde = require("../models/joconde");
 const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef, removeChar } = require("./utils/notice");
-let moment = require('moment-timezone')
-
+let moment = require('moment-timezone');
+const { cleanArrayValue } = require("./utils/dataFilter");
 
 const {
   formattedNow,
@@ -352,6 +352,9 @@ router.put(
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
 
+      // Suppression des valeurs vident pour les champs multivalues
+      cleanArrayValue(notice);
+
       const obj = new Palissy(notice);
       let oaiObj = { DMAJ: notice.DMAJ }
       checkESIndex(obj);
@@ -411,6 +414,10 @@ router.post(
         BASE: "palissy",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
+
+      // Suppression des valeurs vident pour les champs multivalues
+      cleanArrayValue(notice);
+
       const obj = new Palissy(notice);
       const obj2 = new NoticesOAI(oaiObj)
 
