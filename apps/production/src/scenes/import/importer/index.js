@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import DropZone from "./dropZone";
 import api from "../../../services/api";
 import generate from "./report";
-import controleThesaurus from "./thesaurus";
+import { checkThesaurus, checkOpenTheso } from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 import utils from "../utils";
@@ -32,7 +32,9 @@ class Importer extends Component {
       step: 0,
       email: props.email,
       importId: null,
-      emailSent: false
+      emailSent: false,
+      loadOpenTheso: false,
+      countControleNotice: 0
     };
   }
 
@@ -103,7 +105,16 @@ class Importer extends Component {
         await importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
       }
 
-      await controleThesaurus(importedNotices);
+      this.setState({ loadOpenTheso : true });
+      for (var i = 0; i < importedNotices.length; i++) {
+        await checkOpenTheso(importedNotices[i]);
+        this.setState({ countControleNotice: this.state.countControleNotice + 1})
+      }
+
+      this.setState({ loadOpenTheso : false });
+      this.setState({ countControleNotice: 0});
+
+  //    await checkThesaurus(importedNotices);
 
       for (var i = 0; i < importedNotices.length; i++) {
         if (importedNotices[i]._errors.length) {
@@ -112,6 +123,7 @@ class Importer extends Component {
       }
 
       this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: "" });
+      
 
       amplitude
         .getInstance()
@@ -418,6 +430,14 @@ class Importer extends Component {
         <div className="working-area">
           <Progress value={this.state.progress.toString()} />
           <div>{this.state.loadingMessage}</div>
+          { this.state.loadOpenTheso ?
+          <div>
+            <div>Contrôle des notices</div> 
+            <div>{this.state.countControleNotice} notices contrôlées</div>
+          </div>
+          : "" 
+          }
+          
         </div>
       );
     } else if (this.state.errors) {

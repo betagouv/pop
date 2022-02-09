@@ -2,7 +2,7 @@ import api from "../../../services/api";
 
 const thesaurusJocondeControle = ['ECOL','EPOQ','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'UTIL', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
 
-export default function checkThesaurus(importedNotices) {
+export function checkThesaurus(importedNotices) {
   return new Promise(async (resolve, _reject) => {
     const optimMap = {};
 
@@ -101,6 +101,102 @@ export default function checkThesaurus(importedNotices) {
       }
     }
 
+    resolve();
+  });
+}
+
+export function checkOpenTheso(notice) {
+  return new Promise(async (resolve, _reject) => {
+    const optimMap = {};
+    
+    for (var field in notice) { 
+      const noticeField = notice[field];
+
+      // Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
+      if(typeof noticeField === 'function' || field.indexOf('_') === 0 || field === 'POP_IMPORT'){
+        continue;
+      }
+
+      let values = [];
+      const thesaurus =
+        notice._mapping[field] && notice._mapping[field].thesaurus;
+
+      const thesaurus_separator =
+        notice._mapping[field] &&
+        notice._mapping[field].thesaurus_separator;
+
+      // Controle Joconde 
+      if(notice._type === 'joconde'){
+
+        if(!thesaurusJocondeControle.includes(field)){
+          continue;
+        }
+
+        values = [];
+        if (thesaurus_separator) {
+          if(typeof noticeField === 'object'){
+              noticeField.forEach(element => {
+                let elSplit = element.split(thesaurus_separator);
+
+                if(Array.isArray(elSplit)){
+                  elSplit.forEach(el => values.push(el));
+                } else {
+                  values.push(element)
+                }
+            });
+          } else {
+            values = noticeField.split(thesaurus_separator);
+          }
+        } else {
+          values = [].concat(noticeField);
+        }
+
+        values = values.map(e => e.trim()).filter((element) => element !== '');;
+
+        for (var k = 0; k < values.length; k++) {
+          await checkJocondeThesaurus(notice._mapping[field], values[k]).then( message => {
+            if(message !== ""){
+              notice._warnings.push(message);
+            }
+          });
+        }
+        continue;
+      }
+
+      if (!thesaurus) {
+        continue;
+      }
+
+      values = [].concat(noticeField);
+      if (thesaurus_separator) {
+        values = values.reduce((acc, val) => acc.concat(val.split(thesaurus_separator)), []);
+      }
+      values = values.map(e => e.trim());
+
+      for (var k = 0; k < values.length; k++) {
+        const value = values[k];
+        if (value) {
+          
+          let val = null;
+          if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
+            val = optimMap[thesaurus][value];
+          } else {
+            val = await api.validateWithThesaurus(thesaurus, value);
+          }
+
+          if (!val) {
+            const text = `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`;
+            if (noticeField.thesaurus_strict === true) {
+              notice._errors.push(text);
+            } else {
+              notice._warnings.push(text);
+            }
+          }
+          if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
+          optimMap[thesaurus][value] = val;
+        }
+      }
+    }
     resolve();
   });
 }
