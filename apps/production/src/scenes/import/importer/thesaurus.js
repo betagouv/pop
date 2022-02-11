@@ -29,6 +29,7 @@ export default function checkThesaurus(importedNotices) {
 
         // Controle Joconde 
         if(importedNotices[i]._type === 'joconde'){
+          continue;
 
           if(!thesaurusJocondeControle.includes(field)){
             continue;
