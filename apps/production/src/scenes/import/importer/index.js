@@ -106,6 +106,7 @@ class Importer extends Component {
       }
 
       this.setState({ loadOpenTheso : true });
+
       for (var i = 0; i < importedNotices.length; i++) {
         await checkOpenTheso(importedNotices[i]);
         this.setState({ countControleNotice: this.state.countControleNotice + 1})

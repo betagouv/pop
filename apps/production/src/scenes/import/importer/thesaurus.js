@@ -202,15 +202,38 @@ export function checkOpenTheso(notice) {
 }
 
 
-async function checkJocondeThesaurus(mappingField, value){
+async function checkJocondeThesaurus(mappingField, value){ 
   let arrayLabel = [];
   let message = "";
+
+  const arrayIdThesaurus = ["th305", "th291", "th294", "th306", "th284", "th290", "th304", "th287", "th295", "th298"]
+  //const arrayIdThesaurus = []
  
   try{
-    const res = await callThesaurus(mappingField.idthesaurus, value);
-    let foundValue = false;
+    let res = {};
+    if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
+      res = await api.validateWithThesaurus(mappingField.idthesaurus, value)
+    } else {
+      res = await callThesaurus(mappingField.idthesaurus, value);
+    }
+/*
+   let arrayStorage = JSON.parse(localStorage.getItem('opentheso')) || {};
+   console.log(JSON.parse(localStorage.getItem('opentheso')))
+    if(!arrayStorage[mappingField.idthesaurus]){
+      const resp = await api.getThesaurusById(mappingField.idthesaurus);
+      if(resp.statusCode == 202){
+        arrayStorage[mappingField.idthesaurus] = resp.body;
+        localStorage.setItem('opentheso', JSON.stringify(arrayStorage));
+      }
+    }
 
+    console.log(arrayStorage)
+*/
+    arrayLabel = arrayStorage[mappingField.idthesaurus].filter( element => {
+      return element.value.indexOf(value) === 0 || element.value.toLowerCase().indexOf(value.toLowerCase()) === 0
+    });
     
+    let foundValue = false;
 
     if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
@@ -229,6 +252,7 @@ async function checkJocondeThesaurus(mappingField, value){
           if(element == value){
             foundValue = true;
           } else {
+          
             // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
             if(element.indexOf(value) === 0 || element.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
               arrayFilterWithValue.push(element);
@@ -270,7 +294,7 @@ async function checkJocondeThesaurus(mappingField, value){
       // Sinon 
       message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
     }
-  } catch(err){
+  } catch(err){ console.log(err)
     // Erreur du à l'absence de la valeur dans le référentiel opentheso
     message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
   }
@@ -278,8 +302,18 @@ async function checkJocondeThesaurus(mappingField, value){
   return message;
 }
 
+async function addThesaurusInStorage(idThesaurus){
+
+  const resp = await api.getThesaurusById(idThesaurus);
+  if(resp.statusCode == 202){
+    let arrayStorage = JSON.parse(localStorage.getItem('opentheso')) || {};
+    arrayStorage[idThesaurus] = resp.body;
+    localStorage.setItem('opentheso', JSON.stringify(arrayStorage));
+  }
+}
+
 async function callThesaurus(thesaurus, value){
-  return api.validateOpenTheso(thesaurus, value);;
+  return api.validateOpenTheso(thesaurus, value);
 }
 
 async function callPrefLabel(id){
