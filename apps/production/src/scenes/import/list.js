@@ -11,7 +11,7 @@ import { Row, Col } from "reactstrap";
 import CollapsableFacet from "../search/components/CollapsableFacet";
 import utils from "./utils.js";
 import "./list.css";
-import { es_url, api_url, bucket_url } from "../../config.js";
+import { es_url, bucket_url, pop_url } from "../../config.js";
 
 export default function List() {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
@@ -92,7 +92,7 @@ export default function List() {
 }
 
 const Card = ({ data, id }) => {
-  const preview_url = `${api_url}/search/list?import=["${id}"]`;
+  const preview_url = `${pop_url}/search/list?import=["${id}"]`;
 
   const details_url = `${bucket_url}/import/${id}/import.csv`;
 

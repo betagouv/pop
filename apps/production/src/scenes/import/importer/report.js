@@ -1,5 +1,5 @@
 import utils from "../utils";
-import { api_url, bucket_url } from "../../../config"
+import { bucket_url, pop_url } from "../../../config"
 
 export default function generate(
   notices,
@@ -18,7 +18,7 @@ export default function generate(
   const updated = notices.filter(e => e._status === "updated");
   const rejected = notices.filter(e => e._status === "rejected");
 
-  const diffUrl = `${api_url}/search/list?import=["${importId}"]`;
+  const diffUrl = `${pop_url}/search/list?import=["${importId}"]`;
 
   const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
 
