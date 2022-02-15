@@ -323,6 +323,7 @@ build-production-staging:
   variables:
     APP: production
     API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
     NODE_ENV: staging
   rules:
@@ -392,6 +393,7 @@ build-production-production:
   variables:
     APP: production
     API_URL: https://api.pop.culture.gouv.fr
+    POP_URL: https://pop.culture.gouv.fr
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque
     NODE_ENV: production
   rules:
