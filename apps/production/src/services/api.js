@@ -339,6 +339,10 @@ class api {
   getPrefLabelByIdArk(IdArk){
     return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
   }
+
+  getThesaurusById(idThesaurus){ console.log(idThesaurus)
+    return request.getJSON(`/thesaurus/getAllThesaurusById?id=${idThesaurus}`)
+  }
 }
 
 const apiObject = new api();
