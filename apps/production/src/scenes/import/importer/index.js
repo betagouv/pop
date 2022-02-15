@@ -34,8 +34,13 @@ class Importer extends Component {
       importId: null,
       emailSent: false,
       loadOpenTheso: false,
-      countControleNotice: 0
+      countControleNotice: 0,
+      localStorage: null
     };
+  }
+
+  componentDidMount(){
+    this.setState({ localStorage: window.localStorage });
   }
 
   async onFilesDropped(errors, files, encoding) {
@@ -106,6 +111,13 @@ class Importer extends Component {
       }
 
       this.setState({ loadOpenTheso : true });
+
+      Object.keys(localStorage).forEach((key) => {
+        if(key.indexOf('opentheso-') === 0){
+          localStorage.removeItem(key);
+        }
+
+      })
 
       for (var i = 0; i < importedNotices.length; i++) {
         await checkOpenTheso(importedNotices[i]);

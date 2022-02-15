@@ -1,6 +1,7 @@
 import api from "../../../services/api";
 
 const thesaurusJocondeControle = ['ECOL','EPOQ','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'UTIL', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
+const thesaurusJocondeNonControle = ['th305'];
 
 export function checkThesaurus(importedNotices) {
   return new Promise(async (resolve, _reject) => {
@@ -128,7 +129,7 @@ export function checkOpenTheso(notice) {
       // Controle Joconde 
       if(notice._type === 'joconde'){
 
-        if(!thesaurusJocondeControle.includes(field)){
+        if(!thesaurusJocondeControle.includes(field) || thesaurusJocondeNonControle.includes(notice._mapping[field].idthesaurus)){
           continue;
         }
 
@@ -201,6 +202,7 @@ export function checkOpenTheso(notice) {
   });
 }
 
+const storageExceptionThesaurus = [];
 
 async function checkJocondeThesaurus(mappingField, value){ 
   let arrayLabel = [];
@@ -211,33 +213,53 @@ async function checkJocondeThesaurus(mappingField, value){
  
   try{
     let res = {};
-    if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
+ /*   if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
       res = await api.validateWithThesaurus(mappingField.idthesaurus, value)
     } else {
       res = await callThesaurus(mappingField.idthesaurus, value);
+    }*/
+
+   let arrayStorage = [];
+   
+    if(!localStorage.getItem('opentheso-' + mappingField.idthesaurus)){  
+
+      if(!storageExceptionThesaurus.includes(mappingField.idthesaurus)){
+        const resp = await api.getThesaurusById(mappingField.idthesaurus);
+        if(resp.statusCode == 202){
+          arrayStorage = JSON.parse(resp.body);
+          try{
+            localStorage.setItem('opentheso-' + mappingField.idthesaurus, resp.body);
+          } catch(exception){
+            storageExceptionThesaurus.push(mappingField.idthesaurus);
+          }
+        }
+      }
+     
+    } else {
+      arrayStorage = JSON.parse(localStorage.getItem('opentheso-' + mappingField.idthesaurus));
     }
-/*
-   let arrayStorage = JSON.parse(localStorage.getItem('opentheso')) || {};
-   console.log(JSON.parse(localStorage.getItem('opentheso')))
-    if(!arrayStorage[mappingField.idthesaurus]){
-      const resp = await api.getThesaurusById(mappingField.idthesaurus);
-      if(resp.statusCode == 202){
-        arrayStorage[mappingField.idthesaurus] = resp.body;
-        localStorage.setItem('opentheso', JSON.stringify(arrayStorage));
+
+    if(!storageExceptionThesaurus.includes(mappingField.idthesaurus)){ 
+      arrayLabel = Object.values(arrayStorage).filter( element => {
+        return element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0
+      });
+    } else {
+      if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
+        res = await api.validateWithThesaurus(mappingField.idthesaurus, value)
+      }else {
+        res = await callThesaurus(mappingField.idthesaurus, value);
+      }
+
+      if(res.statusCode == "202"){
+        arrayLabel = JSON.parse(res.body);
       }
     }
 
-    console.log(arrayStorage)
-*/
-    arrayLabel = arrayStorage[mappingField.idthesaurus].filter( element => {
-      return element.value.indexOf(value) === 0 || element.value.toLowerCase().indexOf(value.toLowerCase()) === 0
-    });
-    
     let foundValue = false;
 
-    if(res.statusCode == "202"){
+   /* if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
-    }
+    }*/
 
     // si un résultat est trouvé
     if(arrayLabel.length > 0){
@@ -279,7 +301,7 @@ async function checkJocondeThesaurus(mappingField, value){
           message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
 
           // On recherche le prefLabel par rapport à son identifiant ark
-          const uri = arrayLabel[0].uri;
+          const uri = arrayLabel[0].arc;
           let idArk = uri.substr(uri.indexOf('ark:') + 5);
           let resp = await callPrefLabel(idArk);
 
@@ -303,13 +325,25 @@ async function checkJocondeThesaurus(mappingField, value){
 }
 
 async function addThesaurusInStorage(idThesaurus){
-
+/*
   const resp = await api.getThesaurusById(idThesaurus);
   if(resp.statusCode == 202){
     let arrayStorage = JSON.parse(localStorage.getItem('opentheso')) || {};
     arrayStorage[idThesaurus] = resp.body;
     localStorage.setItem('opentheso', JSON.stringify(arrayStorage));
   }
+*/
+  let store = [];
+  const resp = await api.getThesaurusById(mappingField.idthesaurus);
+  if(resp.statusCode == 202){
+    store = JSON.parse(resp.body);
+    try{
+      localStorage.setItem('opentheso-' + mappingField.idthesaurus, resp.body);
+    } catch(exception){
+      storageExceptionThesaurus.push(mappingField.idthesaurus);
+    }
+  }
+  return store;
 }
 
 async function callThesaurus(thesaurus, value){
