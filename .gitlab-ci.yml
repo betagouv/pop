@@ -200,7 +200,7 @@ test-diffusion:
     paths:
       - apps/production/*
     exclude: 
-      - apps/production/node_module/*
+      - apps/production/node_modules/
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
@@ -235,7 +235,7 @@ test-diffusion:
     paths:
       - apps/diffusion/*
     exclude: 
-      - apps/diffusion/node_modules/*
+      - apps/diffusion/node_modules
     name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
     expire_in: 7 days
   rules:
@@ -258,7 +258,7 @@ build-production-devic1:
   variables:
     APP: production
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consulation-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
     NODE_ENV: devic1
   <<: *devic1-rules
@@ -268,7 +268,7 @@ build-diffusion-devic1:
   variables:
     APP: diffusion
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
     NODE_ENV: devic1
   <<: *devic1-rules
@@ -282,7 +282,7 @@ deploy-api-devic1:
     ENV: pop-api-devic1
   environment:
     name: pop-api-devic1
-    url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
   <<: *devic1-rules
 
@@ -310,7 +310,7 @@ deploy-diffusion-devic1:
     ENV: pop-consultation-devic1
   environment:
     name: pop-consultation-devic1
-    url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
+    url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
   <<: *devic1-rules
 
@@ -323,7 +323,6 @@ build-production-staging:
   variables:
     APP: production
     API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
     NODE_ENV: staging
   rules:
@@ -365,7 +364,7 @@ deploy-production-staging:
   stage: staging
   environment:
     name: pop-production-staging
-    url: http://pop-production-staging.eu-west-3.elasticbeanstalk.com
+    url: http://pop-production-staging.eu-west-3.elasticbeanstalk.com/
     deployment_tier: staging
   when: manual
 
@@ -380,7 +379,7 @@ deploy-diffusion-staging:
   stage: staging
   environment:
     name: pop-consultation-staging
-    url: http://pop-staging.culture.gouv.fr
+    url: http://pop-staging.culture.gouv.fr/
     deployment_tier: staging
   when: manual
 
@@ -393,7 +392,6 @@ build-production-production:
   variables:
     APP: production
     API_URL: https://api.pop.culture.gouv.fr
-    POP_URL: https://pop.culture.gouv.fr
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque
     NODE_ENV: production
   rules:
@@ -404,7 +402,7 @@ build-diffusion-production:
   variables:
     APP: diffusion
     API_URL: https://api.pop.culture.gouv.fr
-    POP_URL: https://pop.culture.gouv.fr
+    POP_URL: https://pop.culture.gouv.fr/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque
     NODE_ENV: production
   rules:
@@ -420,7 +418,7 @@ deploy-api-production:
   stage: production
   environment:
     name: pop-api-production
-    url: https://api.pop.culture.gouv.fr
+    url: https://api.pop.culture.gouv.fr/
     deployment_tier: production
   when: manual
 
@@ -435,7 +433,7 @@ deploy-production-production:
   stage: production
   environment:
     name: pop-production-production
-    url: https://production.pop.culture.gouv.fr
+    url: https://production.pop.culture.gouv.fr/
     deployment_tier: production
   when: manual
 
@@ -450,6 +448,6 @@ deploy-diffusion-production:
   stage: production
   environment:
     name: pop-consultation-production
-    url: https://www.pop.culture.gouv.fr
+    url: https://www.pop.culture.gouv.fr/
     deployment_tier: production
   when: manual
