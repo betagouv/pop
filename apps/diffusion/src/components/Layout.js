@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 
 export default class Layout extends React.Component {
 
-  getNbNoticesInBucket(){
+  getNbNoticesInBucket() {
     //Récupération du panier actuel dans les cookies
     const cookies = new Cookies()
     let currentBucket = cookies.get("currentBucket") || []
@@ -20,7 +20,7 @@ export default class Layout extends React.Component {
       <React.Fragment>
         <div className="header">
           <Container className="NavContainer">
-            <Link prefetch href="/">
+            <Link href="/">
               <a className="logo">
                 <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
               </a>
@@ -31,7 +31,7 @@ export default class Layout extends React.Component {
                 <Link href="/bucket">
                   <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
-                    <div id="nbBucket">{this.getNbNoticesInBucket() != 0 ? "Consulter mon panier ( "+ this.getNbNoticesInBucket() + " )" : "Panier vide" } </div>                    </div>
+                      <div id="nbBucket">{this.getNbNoticesInBucket() != 0 ? "Consulter mon panier ( " + this.getNbNoticesInBucket() + " )" : "Panier vide"} </div>                    </div>
                   </a>
                 </Link>
               </div>
@@ -73,7 +73,7 @@ export default class Layout extends React.Component {
             </li>
           </ul>
           <div className="version">
-              Pop version {Version.version}
+            Pop version {Version.version}
           </div>
         </div>
         <style jsx>{`

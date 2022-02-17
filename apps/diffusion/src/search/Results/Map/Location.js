@@ -1,28 +1,52 @@
+import { configureScope } from "@sentry/browser";
 import React, { Component } from "react";
+import api from "../../../services/api";
 
 class Location extends Component {
+
+  state = { loaded: false }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.ready && !this.props.ready) {
       this.load(nextProps.map);
     }
   }
-  load(map) {
+
+  async load(map) {
     var geocoder = new MapboxGeocoder({
-      accessToken:
-        "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ",
+      accessToken: await api.getMapboxToken(),
       countries: "fr", // limit results to France,
       placeholder: "Entrez une ville ou une adresse"
     });
     document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
-    geocoder.on("result", ev => {
+
+    const handleGeoCoderResult = ev => {
       this.props.setPosition(ev.result.center);
-    });
-    geocoder.on("clear", () => {
+    };
+    geocoder.on("result", handleGeoCoderResult);
+
+    const handleGeoCoderClear = () => {
       this.props.setPosition(null);
-    });
+    };
+    geocoder.on("clear", handleGeoCoderClear);
+
+    const handleGeoCoderError = event => {
+      if (event.error && event.error.statusCode === 401) {
+        this.setState({ loaded: false }, () => {
+          geocoder.off("result", handleGeoCoderResult);
+          geocoder.off("clear", handleGeoCoderClear);
+          geocoder.off("error", handleGeoCoderError);
+          this.props.onReload();
+        });
+      }
+    };
+    geocoder.on("error", handleGeoCoderError);
+
+    this.setState({ loaded: true });
   }
+
   render() {
-    return (
+    return this.props.ready && (
       <div>
         <div className="location">
           <div id="geocoder" style={{ display: "flex" }} />

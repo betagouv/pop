@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import DropZone from "./dropZone";
 import api from "../../../services/api";
 import generate from "./report";
-import controleThesaurus from "./thesaurus";
+import { checkThesaurus, checkOpenTheso } from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 import utils from "../utils";
@@ -17,6 +17,7 @@ import { compare } from "./diff";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
 import "./index.css";
+import { pop_url } from "../../../config";
 
 class Importer extends Component {
   constructor(props) {
@@ -31,8 +32,15 @@ class Importer extends Component {
       step: 0,
       email: props.email,
       importId: null,
-      emailSent: false
+      emailSent: false,
+      loadOpenTheso: false,
+      countControleNotice: 0,
+      localStorage: null
     };
+  }
+
+  componentDidMount(){
+    this.setState({ localStorage: window.localStorage });
   }
 
   async onFilesDropped(errors, files, encoding) {
@@ -102,7 +110,24 @@ class Importer extends Component {
         await importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
       }
 
-      await controleThesaurus(importedNotices);
+      this.setState({ loadOpenTheso : true });
+
+      Object.keys(localStorage).forEach((key) => {
+        if(key.indexOf('opentheso-') === 0){
+          localStorage.removeItem(key);
+        }
+
+      })
+
+      for (var i = 0; i < importedNotices.length; i++) {
+        await checkOpenTheso(importedNotices[i]);
+        this.setState({ countControleNotice: this.state.countControleNotice + 1})
+      }
+
+      this.setState({ loadOpenTheso : false });
+      this.setState({ countControleNotice: 0});
+
+  //    await checkThesaurus(importedNotices);
 
       for (var i = 0; i < importedNotices.length; i++) {
         if (importedNotices[i]._errors.length) {
@@ -111,6 +136,7 @@ class Importer extends Component {
       }
 
       this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: "" });
+      
 
       amplitude
         .getInstance()
@@ -330,9 +356,7 @@ class Importer extends Component {
       e => e._status === "created" || e._status === "updated"
     ).length;
 
-    const URL = `http://pop${
-      process.env.NODE_ENV === "production" ? "" : "-staging"
-    }.culture.gouv.fr/search/list?import=["${this.state.importId}"]`;
+    const URL = `${pop_url}/search/list?import=["${this.state.importId}"]`;
 
     return (
       <div className="working-area">
@@ -419,6 +443,14 @@ class Importer extends Component {
         <div className="working-area">
           <Progress value={this.state.progress.toString()} />
           <div>{this.state.loadingMessage}</div>
+          { this.state.loadOpenTheso ?
+          <div>
+            <div>Contrôle des notices</div> 
+            <div>{this.state.countControleNotice} notices contrôlées</div>
+          </div>
+          : "" 
+          }
+          
         </div>
       );
     } else if (this.state.errors) {

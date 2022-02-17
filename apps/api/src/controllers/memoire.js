@@ -128,17 +128,29 @@ async function getPrefixesFromProducteurs(listBase){
   return listePrefix;
 }
 
-async function transformBeforeCreateOrUpdate(notice) {
+async function transformBeforeUpdate(notice) {
+  if (notice.IMG !== undefined) {
+    notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  }
+  
+  notice.DMAJ = formattedNow();
+  await transformBeforeCreateOrUpdate(notice);
+  notice = await withFlags(notice);
+}
+
+async function transformBeforeCreate(notice) {
   notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
   notice.DMAJ = notice.DMIS = formattedNow();
+  await transformBeforeCreateOrUpdate(notice);
+  notice = await withFlags(notice);
+}
 
+async function transformBeforeCreateOrUpdate(notice) {
   if (notice.DPT && notice.DPT.length > 0) {
     notice.DPT_LETTRE = notice.DPT.map( dpt => getDepartement(dpt)).filter(el => el !== "");
   } else {
     notice.DPT_LETTRE = [];
   }
-  
-  notice = await withFlags(notice);
 }
 
 //function findProducteur(REF, IDPROD, EMET) {
@@ -290,7 +302,7 @@ router.put(
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
-    await transformBeforeCreateOrUpdate(notice);
+    await transformBeforeUpdate(notice);
 
     const timeZone = 'Europe/Paris';
     //Ajout de l'historique de la notice

@@ -1,6 +1,7 @@
-const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
+const withOffline = require("next-offline");
+const Dotenv = require('dotenv-webpack');
 
-module.exports = {
+module.exports = withOffline({
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
@@ -12,19 +13,9 @@ module.exports = {
       }
       return entries;
     };
-    // Source: https://github.com/zeit/next.js/tree/85769c3d3296cdcddc0fb36f05058c8e451ca57f/examples/with-sw-precache
-    config.plugins.push(
-      new SWPrecacheWebpackPlugin({
-        verbose: true,
-        staticFileGlobsIgnorePatterns: [/\.next\//],
-        runtimeCaching: [
-          {
-            handler: "networkFirst",
-            urlPattern: /^https?.*/
-          }
-        ]
-      })
-    );
+
+    // Load environment variables from ".env" file.
+    config.plugins.push(new Dotenv());
 
     // Source: https://github.com/zeit/styled-jsx#nextjs
     config.module.rules.push({
@@ -41,5 +32,30 @@ module.exports = {
     });
 
     return config;
-  }
-};
+  },
+  workboxOpts: {
+    swDest: process.env.NEXT_EXPORT
+      ? 'service-worker.js'
+      : 'static/service-worker.js',
+    runtimeCaching: [
+      {
+        urlPattern: /^https?.*/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'offlineCache',
+          expiration: {
+            maxEntries: 200,
+          },
+        },
+      },
+    ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/service-worker.js',
+        destination: '/_next/static/service-worker.js',
+      },
+    ]
+  },
+});

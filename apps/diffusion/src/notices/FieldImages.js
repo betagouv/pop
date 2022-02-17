@@ -1,8 +1,11 @@
 import React from "react";
-import Viewer from "react-viewer";
-import ImageGalleryStyle from "react-image-gallery/styles/css/image-gallery.css";
-import ViewerStyle from "react-viewer/dist/index.css";
+import dynamic from "next/dynamic";
+// import Viewer from "react-viewer";
 import Slider from "react-slick";
+const Viewer = dynamic(
+  () => import("react-viewer"),
+  { ssr: false }
+);
 
 class FieldImages extends React.Component {
   state = {
@@ -80,12 +83,6 @@ class FieldImages extends React.Component {
       <div className="fieldImages">
         {this.renderModal()}
         {this.renderImages()}
-        <style jsx global>
-          {ImageGalleryStyle}
-        </style>
-        <style jsx global>
-          {ViewerStyle}
-        </style>
         <style jsx global>{`
           .fieldImages {
             width: 100%;

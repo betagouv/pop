@@ -11,7 +11,7 @@ import { Row, Col } from "reactstrap";
 import CollapsableFacet from "../search/components/CollapsableFacet";
 import utils from "./utils.js";
 import "./list.css";
-import { es_url } from "../../config.js";
+import { es_url, bucket_url, pop_url } from "../../config.js";
 
 export default function List() {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
@@ -92,13 +92,9 @@ export default function List() {
 }
 
 const Card = ({ data, id }) => {
-  const preview_url = `http://pop${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }.culture.gouv.fr/search/list?import=["${id}"]`;
+  const preview_url = `${pop_url}/search/list?import=["${id}"]`;
 
-  const details_url = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }/import/${id}/import.csv`;
+  const details_url = `${bucket_url}/import/${id}/import.csv`;
 
   return (
     <div className="import-card col-6">

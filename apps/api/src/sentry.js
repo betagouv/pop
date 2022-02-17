@@ -1,6 +1,6 @@
 const Sentry = require("@sentry/node");
 
-if (process.env.NODE_ENV !== "development") {
+if (process.env.SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
     release: "pop-api@" + require("../package.json").version,

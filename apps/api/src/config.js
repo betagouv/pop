@@ -1,28 +1,20 @@
-// ES
+require('dotenv').config();
 let PORT = process.env.PORT || 3000;
 let mongoUrl = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
 let esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";
+let esPort = process.env.ES_PORT || 80;
 let s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 const secret = process.env.SECRET || "not-so-secret";
-
-if (process.env.NODE_ENV === "test") {
-  PORT = 3000;
-  mongoUrl = `mongodb://localhost:27017/poptest`;
-  esUrl = "127.0.0.1:9200";
-  s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
-}
-
-if (process.env.NODE_ENV !== "test") {
-  console.log(`PORT : ${PORT}`);
-  console.log(`MONGO : ${mongoUrl}`);
-  console.log(`ES : ${esUrl}`);
-  console.log(`S3 : ${s3Bucket}`);
-}
+const MAPBOX_API_SECRET_TOKEN = process.env.MAPBOX_API_SECRET_TOKEN;
+const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
 
 module.exports = {
   mongoUrl,
   esUrl,
+  esPort,
   s3Bucket,
   PORT,
-  secret
+  secret,
+  MAPBOX_API_SECRET_TOKEN,
+  MAPBOX_EXPIRATION_DELAY,
 };

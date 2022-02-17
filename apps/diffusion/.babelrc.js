@@ -1,5 +1,3 @@
-const env = require("./src/env-config.js");
-
 module.exports = {
   presets: [
     [
@@ -9,10 +7,10 @@ module.exports = {
           targets: {
             browsers: [">0.03%"]
           },
-          useBuiltIns: "entry"
+          useBuiltIns: "entry",
+          corejs: "3.17"
         }
       }
     ]
   ],
-  plugins: [["transform-define", env]]
 };

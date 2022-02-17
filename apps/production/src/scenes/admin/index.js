@@ -16,7 +16,7 @@ class Admin extends React.Component {
     try {
       const response = await api.getUsers();
       this.setState({ users: response.users || [], loading: false });
-    } catch (e) {}
+    } catch (e) { }
   };
 
   fetchGroups = async () => {
@@ -25,12 +25,9 @@ class Admin extends React.Component {
     this.setState({ baseGroups: response.groups || [], loading: false });
   };
 
-  componentDidMount(){
-    this.fetchGroups();
-  }
-
-  componentWillMount() {
+  componentDidMount() {
     this.fetchUsers();
+    this.fetchGroups();
   }
 
   renderUsers() {

@@ -58,26 +58,28 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
       <div className="list-card-container ">
-        <Link href={`/notice/memoire/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
-          <div className="leftContent">
-            <div className="thumbnail">{ImageComponent}</div>
-            <div className="content">
-              <div className="cardTextContent" style={{ display: "flex" }}>
-                <h2>
-                  {content}
-                  <br />
-                </h2>
+        {/* <Link href={`/notice/memoire/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}> */}
+          <a href={`/notice/memoire/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF} style={{ textDecoration: "none" }}>
+            <div className="leftContent">
+              <div className="thumbnail">{ImageComponent}</div>
+              <div className="content">
+                <div className="cardTextContent" style={{ display: "flex" }}>
+                  <h2>
+                    {content}
+                    <br />
+                  </h2>
+                </div>
+                <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+                <p>{loc}</p>
+                <p>{data.TYPDOC}</p>
+                <p>{author}</p>
+                <p>{date}</p>
+                <p>{contentSerieTitre}</p>
+                <p>{data.COPY}</p>
               </div>
-              <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
-              <p>{loc}</p>
-              <p>{data.TYPDOC}</p>
-              <p>{author}</p>
-              <p>{date}</p>
-              <p>{contentSerieTitre}</p>
-              <p>{data.COPY}</p>
             </div>
-          </div>
-        </Link>
+            </a>
+        {/* </Link> */}
         <div className="rightContent">
           <span>
             <small className="base">Mémoire</small>

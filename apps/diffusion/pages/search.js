@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
 import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch-pop";
@@ -12,7 +13,7 @@ import Results from "../src/search/Results";
 import Search from "../src/search/Search";
 import { es_url } from "../src/config";
 import queryString from "query-string";
-import {bases} from "../src/search/Search/SearchAdvanced";
+import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
@@ -33,16 +34,16 @@ export default class extends React.Component {
   handleSwitchChange = checked => {
     const hasBase = Boolean(this.props.base);
     if (checked) {
-      if(hasBase){
+      if (hasBase) {
         let myBase = this.props.base.split('"')
-        if(myBase.length > 3){
+        if (myBase.length > 3) {
           Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
-        }else{
+        } else {
           let key = bases.find(e => e.base === myBase[1]).key;
           Router.push("/advanced-search/list/" + key);
         }
       }
-      else{
+      else {
         Router.push("/search?view=list&mode=advanced", "/advanced-search/list/");
       }
     } else {
@@ -50,7 +51,7 @@ export default class extends React.Component {
     }
   };
 
-  handleRadioBaseChange(base){
+  handleRadioBaseChange(base) {
     const value = base;
     Router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
   }
@@ -114,9 +115,9 @@ export default class extends React.Component {
       { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
       { key: "enluminures", base: "Enluminures (Enluminures)", img: "/static/topics/enluminures.jpg" },
       { key: "museo", base: "Répertoire des Musées de France (Muséofile)", img: "/static/topics/museo.jpg" },
-      { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg"}
+      { key: "autor", base: "Ressources biographiques (Autor)", img: "/static/topics/autor.jpeg" }
     ];
-    
+
     return (
       <Layout>
         <div className="search">
@@ -160,48 +161,9 @@ export default class extends React.Component {
 
 
 
-                {this.props.mode === "simple" ? 
-                <div className="search-results">
-                  <div className={`search-container search-container-simple`}>
-                    <Search
-                      mode={this.props.mode}
-                      base={this.props.base}
-                      initialValues={initialValues}
-                    />
-                    {this.props.mode === "simple" ? (
-                      <MobileFilters
-                        openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
-                      />
-                    ) : null}
-                  </div>
-                  {!(this.props.mode === "advanced" && !this.props.base) ? (
-                      <Results
-                        mode={this.props.mode}
-                        view={this.props.view}
-                        base={this.props.base}
-                        initialValues={initialValues}
-                      />
-                    ) : null}
-                </div> :
-
-                <div className="search-main-container">
-                  {(this.props.base != undefined && this.props.base != "")? 
-                    <div className="search-bases-radio-buttons">
-                      {bases.map( base => 
-                        <div className="radioCard">
-                          <div className="radioButtonContainer">
-                                <input  className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
-                                        onChange={() => this.handleRadioBaseChange(base.key)}/>
-                                <div className="radioName">
-                              {base.base}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div> : null}
-
-                  <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "")? "-choice" : ""}`}>
-                    <div className={`search-container search-container-${this.props.mode}`}>
+                {this.props.mode === "simple" ?
+                  <div className="search-results">
+                    <div className={`search-container search-container-simple`}>
                       <Search
                         mode={this.props.mode}
                         base={this.props.base}
@@ -221,8 +183,47 @@ export default class extends React.Component {
                         initialValues={initialValues}
                       />
                     ) : null}
-                  </div>
-                </div>}
+                  </div> :
+
+                  <div className="search-main-container">
+                    {(this.props.base != undefined && this.props.base != "") ?
+                      <div className="search-bases-radio-buttons">
+                        {bases.map(base =>
+                          <div className="radioCard">
+                            <div className="radioButtonContainer">
+                              <input className="radioButton" key={base.key} type="radio" value={base.key} checked={this.props.base == base.key ? true : false}
+                                onChange={() => this.handleRadioBaseChange(base.key)} />
+                              <div className="radioName">
+                                {base.base}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div> : null}
+
+                    <div className={`search-results-advanced${(this.props.base == undefined || this.props.base == "") ? "-choice" : ""}`}>
+                      <div className={`search-container search-container-${this.props.mode}`}>
+                        <Search
+                          mode={this.props.mode}
+                          base={this.props.base}
+                          initialValues={initialValues}
+                        />
+                        {this.props.mode === "simple" ? (
+                          <MobileFilters
+                            openMenu={() => this.setState({ mobile_menu: "mobile_open" })}
+                          />
+                        ) : null}
+                      </div>
+                      {!(this.props.mode === "advanced" && !this.props.base) ? (
+                        <Results
+                          mode={this.props.mode}
+                          view={this.props.view}
+                          base={this.props.base}
+                          initialValues={initialValues}
+                        />
+                      ) : null}
+                    </div>
+                  </div>}
               </Row>
             </Elasticsearch>
           </Container>

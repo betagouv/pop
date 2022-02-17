@@ -18,9 +18,8 @@ import noticeStyle from "../../src/notices/NoticeStyle";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import { MemoirePdf } from "../pdfNotice/memoirePdf";
+import { MemoirePdf } from "../../src/pdf/pdfNotice/memoirePdf";
 import { pop_url } from "../../src/config";
-
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -31,7 +30,7 @@ const pushLinkedNotices = (a, d, base) => {
 
 export default class extends React.Component {
 
-  state = {display: false, prevLink: undefined, nextLink: undefined}
+  state = { display: false, prevLink: undefined, nextLink: undefined }
 
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("memoire", id);
@@ -54,9 +53,9 @@ export default class extends React.Component {
     const linkedNotices = (await Promise.all(arr)).filter(l => l);
     links.push(...linkedNotices);
 
-    let listUrl = await Promise.all(notice.LBASE.map( async ref => {
+    let listUrl = await Promise.all(notice.LBASE.map(async ref => {
       const collection = await findCollection(ref);
-      return {key: ref, ref: ref, url: url(collection, ref)};
+      return { key: ref, ref: ref, url: url(collection, ref) };
     }));
 
     return { notice, links, listUrl, searchParamsUrl, searchParams };
@@ -64,12 +63,12 @@ export default class extends React.Component {
 
   photographer() {
     let autp = this.props.notice.AUTP;
-    return ((autp && autp.length > 0) && <div style={{display: "flex", flexDirection: "row"}}>
-              {autp.map( (photographer, index) => {
-                const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
-                return (<div style={{display: "flex", flexDirection: "row"}}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length-1) ? <div>,&nbsp;</div> : ""}</div>);
-              })}
-            </div>)
+    return ((autp && autp.length > 0) && <div style={{ display: "flex", flexDirection: "row" }}>
+      {autp.map((photographer, index) => {
+        const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
+        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
+      })}
+    </div>)
   }
 
   serie() {
@@ -84,48 +83,48 @@ export default class extends React.Component {
     return expo && <a href={`/search/list?${qs}`}>{expo}</a>;
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     //this.setState({display : true});
-    
+
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
 
     //Construction des liens précédents/suivants
     const cookies = new Cookies();
-    const listRefs = cookies.get("listRefs-"+this.props.searchParams.idQuery);
-    if(listRefs){
+    const listRefs = cookies.get("listRefs-" + this.props.searchParams.idQuery);
+    if (listRefs) {
       const indexOfCurrentNotice = listRefs.indexOf(this.props.notice.REF);
       let prevLink = undefined;
       let nextLink = undefined;
-      if(indexOfCurrentNotice > 0){
+      if (indexOfCurrentNotice > 0) {
         const previousCollection = await findCollection(listRefs[indexOfCurrentNotice - 1]);
-        if(previousCollection !== ""){
-          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1]+"?"+this.props.searchParamsUrl;
+        if (previousCollection !== "") {
+          prevLink = "notice/" + previousCollection + "/" + listRefs[indexOfCurrentNotice - 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      if(indexOfCurrentNotice < listRefs.length - 1){
+      if (indexOfCurrentNotice < listRefs.length - 1) {
         const nextCollection = await findCollection(listRefs[indexOfCurrentNotice + 1]);
-        if(nextCollection !== ""){
-          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1]+"?"+this.props.searchParamsUrl;
+        if (nextCollection !== "") {
+          nextLink = "notice/" + nextCollection + "/" + listRefs[indexOfCurrentNotice + 1] + "?" + this.props.searchParamsUrl;
         }
       }
-      this.setState({prevLink, nextLink});
+      this.setState({ prevLink, nextLink });
     }
-    else{
-      this.state.display == false && this.setState({display : true});
+    else {
+      this.state.display == false && this.setState({ display: true });
     }
   }
 
-  componentDidUpdate(){
-    this.state.display == false && this.setState({display : true});
+  componentDidUpdate() {
+    this.state.display == false && this.setState({ display: true });
   }
 
-  renderPrevButton(){
-    if(this.state.prevLink != undefined){
-      return(
-          <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
-            &lsaquo;
-          </a>
+  renderPrevButton() {
+    if (this.state.prevLink != undefined) {
+      return (
+        <a title="Notice précédente" href={pop_url + this.state.prevLink} className="navButton onPrintHide">
+          &lsaquo;
+        </a>
       )
     }
     else {
@@ -133,12 +132,12 @@ export default class extends React.Component {
     }
   }
 
-  renderNextButton(){
-    if(this.state.nextLink != undefined){
-      return(
-          <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
-           &rsaquo;
-          </a>
+  renderNextButton() {
+    if (this.state.nextLink != undefined) {
+      return (
+        <a title="Notice suivante" href={pop_url + this.state.nextLink} className="navButton onPrintHide">
+          &rsaquo;
+        </a>
       )
     }
     else {
@@ -166,21 +165,22 @@ export default class extends React.Component {
     const pdf = MemoirePdf(notice, title, this.props.links);
     const App = () => (
       <div>
-        <PDFDownloadLink 
-          document={pdf} 
+        <PDFDownloadLink
+          document={pdf}
           fileName={"memoire_" + notice.REF + ".pdf"}
-          style={{backgroundColor: "#377d87",
-                  border: 0,
-                  color: "#fff",
-                  maxWidth: "250px",
-                  width: "100%",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  paddingTop: "8px",
-                  paddingBottom: "8px",
-                  textAlign: "center",
-                  borderRadius: "5px"
-                }}>
+          style={{
+            backgroundColor: "#377d87",
+            border: 0,
+            color: "#fff",
+            maxWidth: "250px",
+            width: "100%",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "8px",
+            paddingBottom: "8px",
+            textAlign: "center",
+            borderRadius: "5px"
+          }}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
@@ -208,20 +208,20 @@ export default class extends React.Component {
 
             <div className="top-container">
               <div className="leftContainer-buttons">
-                {lastRecherche !== null && 
-                <div className="btn btn-last-search">
-                  <Link href={lastRecherche}>
-                    <div className="text-last-search">
-                      Retour à la recherche
-                    </div>
-                  </Link>
-                </div>}
+                {lastRecherche !== null &&
+                  <div className="btn btn-last-search">
+                    <Link href={lastRecherche}>
+                      <div className="text-last-search">
+                        Retour à la recherche
+                      </div>
+                    </Link>
+                  </div>}
               </div>
               <div className="rightContainer-buttons">
                 <div className="addBucket onPrintHide">
                   {this.state.display &&
                     <BucketButton base="memoire" reference={notice.REF} />}
-                  </div>
+                </div>
                 {this.state.display && App()}
               </div>
             </div>
@@ -483,8 +483,8 @@ export default class extends React.Component {
 }
 
 function url(collection, ref) {
-  switch (collection){
-    case "merimee" :
+  switch (collection) {
+    case "merimee":
       return `/notice/merimee/${ref}`;
     case "palissy":
       return `/notice/palissy/${ref}`;
@@ -523,9 +523,8 @@ const SeeMore = ({ notice, listUrl }) => {
           <a
             target="_blank"
             rel="noopener"
-            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${
-              notice.LAUTP
-            }`}
+            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP
+              }`}
           >
             {notice.LAUTP}
           </a>

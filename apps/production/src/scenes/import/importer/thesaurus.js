@@ -1,8 +1,9 @@
 import api from "../../../services/api";
 
 const thesaurusJocondeControle = ['ECOL','EPOQ','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'UTIL', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
+const thesaurusJocondeNonControle = ['th305'];
 
-export default function checkThesaurus(importedNotices) {
+export function checkThesaurus(importedNotices) {
   return new Promise(async (resolve, _reject) => {
     const optimMap = {};
 
@@ -105,20 +106,160 @@ export default function checkThesaurus(importedNotices) {
   });
 }
 
+export function checkOpenTheso(notice) {
+  return new Promise(async (resolve, _reject) => {
+    const optimMap = {};
+    
+    for (var field in notice) { 
+      const noticeField = notice[field];
 
-async function checkJocondeThesaurus(mappingField, value){
+      // Ne pas vérifier les propriétés qui ne concernent pas les champs de la notice
+      if(typeof noticeField === 'function' || field.indexOf('_') === 0 || field === 'POP_IMPORT'){
+        continue;
+      }
+
+      let values = [];
+      const thesaurus =
+        notice._mapping[field] && notice._mapping[field].thesaurus;
+
+      const thesaurus_separator =
+        notice._mapping[field] &&
+        notice._mapping[field].thesaurus_separator;
+
+      // Controle Joconde 
+      if(notice._type === 'joconde'){
+
+        if(!thesaurusJocondeControle.includes(field) || thesaurusJocondeNonControle.includes(notice._mapping[field].idthesaurus)){
+          continue;
+        }
+
+        values = [];
+        if (thesaurus_separator) {
+          if(typeof noticeField === 'object'){
+              noticeField.forEach(element => {
+                let elSplit = element.split(thesaurus_separator);
+
+                if(Array.isArray(elSplit)){
+                  elSplit.forEach(el => values.push(el));
+                } else {
+                  values.push(element)
+                }
+            });
+          } else {
+            values = noticeField.split(thesaurus_separator);
+          }
+        } else {
+          values = [].concat(noticeField);
+        }
+
+        values = values.map(e => e.trim()).filter((element) => element !== '');;
+
+        for (var k = 0; k < values.length; k++) {
+          await checkJocondeThesaurus(notice._mapping[field], values[k]).then( message => {
+            if(message !== ""){
+              notice._warnings.push(message);
+            }
+          });
+        }
+        continue;
+      }
+
+      if (!thesaurus) {
+        continue;
+      }
+
+      values = [].concat(noticeField);
+      if (thesaurus_separator) {
+        values = values.reduce((acc, val) => acc.concat(val.split(thesaurus_separator)), []);
+      }
+      values = values.map(e => e.trim());
+
+      for (var k = 0; k < values.length; k++) {
+        const value = values[k];
+        if (value) {
+          
+          let val = null;
+          if (optimMap[thesaurus] && optimMap[thesaurus][value] !== undefined) {
+            val = optimMap[thesaurus][value];
+          } else {
+            val = await api.validateWithThesaurus(thesaurus, value);
+          }
+
+          if (!val) {
+            const text = `Le champ ${field} avec la valeur ${value} n'est pas conforme avec le thesaurus ${thesaurus}`;
+            if (noticeField.thesaurus_strict === true) {
+              notice._errors.push(text);
+            } else {
+              notice._warnings.push(text);
+            }
+          }
+          if (!optimMap[thesaurus]) optimMap[thesaurus] = {};
+          optimMap[thesaurus][value] = val;
+        }
+      }
+    }
+    resolve();
+  });
+}
+
+const storageExceptionThesaurus = [];
+
+async function checkJocondeThesaurus(mappingField, value){ 
   let arrayLabel = [];
   let message = "";
+
+  const arrayIdThesaurus = ["th305", "th291", "th294", "th306", "th284", "th290", "th304", "th287", "th295", "th298"]
+  //const arrayIdThesaurus = []
  
   try{
-    const res = await callThesaurus(mappingField.idthesaurus, value);
+    let res = {};
+ /*   if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
+      res = await api.validateWithThesaurus(mappingField.idthesaurus, value)
+    } else {
+      res = await callThesaurus(mappingField.idthesaurus, value);
+    }*/
+
+   let arrayStorage = [];
+   
+    if(!localStorage.getItem('opentheso-' + mappingField.idthesaurus)){  
+
+      if(!storageExceptionThesaurus.includes(mappingField.idthesaurus)){
+        const resp = await api.getThesaurusById(mappingField.idthesaurus);
+        if(resp.statusCode == 202){
+          arrayStorage = JSON.parse(resp.body);
+          try{
+            localStorage.setItem('opentheso-' + mappingField.idthesaurus, resp.body);
+          } catch(exception){
+            storageExceptionThesaurus.push(mappingField.idthesaurus);
+          }
+        }
+      }
+     
+    } else {
+      arrayStorage = JSON.parse(localStorage.getItem('opentheso-' + mappingField.idthesaurus));
+    }
+
+    if(!storageExceptionThesaurus.includes(mappingField.idthesaurus)){ 
+      arrayLabel = Object.values(arrayStorage).filter( element => {
+        return element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0
+      });
+    } else {
+      if(arrayIdThesaurus.includes(mappingField.idthesaurus)){
+        res = await api.validateWithThesaurus(mappingField.idthesaurus, value)
+      }else {
+        res = await callThesaurus(mappingField.idthesaurus, value);
+      }
+
+      if(res.statusCode == "202"){
+        arrayLabel = JSON.parse(res.body);
+      }
+    }
+
     let foundValue = false;
 
-    
-
-    if(res.statusCode == "202"){
+   /* if(res.statusCode == "202"){
       arrayLabel = JSON.parse(res.body);
-    }
+    }*/
 
     // si un résultat est trouvé
     if(arrayLabel.length > 0){
@@ -133,6 +274,7 @@ async function checkJocondeThesaurus(mappingField, value){
           if(element == value){
             foundValue = true;
           } else {
+          
             // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
             if(element.indexOf(value) === 0 || element.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
               arrayFilterWithValue.push(element);
@@ -159,7 +301,7 @@ async function checkJocondeThesaurus(mappingField, value){
           message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
 
           // On recherche le prefLabel par rapport à son identifiant ark
-          const uri = arrayLabel[0].uri;
+          const uri = arrayLabel[0].arc;
           let idArk = uri.substr(uri.indexOf('ark:') + 5);
           let resp = await callPrefLabel(idArk);
 
@@ -174,7 +316,7 @@ async function checkJocondeThesaurus(mappingField, value){
       // Sinon 
       message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
     }
-  } catch(err){
+  } catch(err){ console.log(err)
     // Erreur du à l'absence de la valeur dans le référentiel opentheso
     message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
   }
@@ -182,8 +324,30 @@ async function checkJocondeThesaurus(mappingField, value){
   return message;
 }
 
+async function addThesaurusInStorage(idThesaurus){
+/*
+  const resp = await api.getThesaurusById(idThesaurus);
+  if(resp.statusCode == 202){
+    let arrayStorage = JSON.parse(localStorage.getItem('opentheso')) || {};
+    arrayStorage[idThesaurus] = resp.body;
+    localStorage.setItem('opentheso', JSON.stringify(arrayStorage));
+  }
+*/
+  let store = [];
+  const resp = await api.getThesaurusById(mappingField.idthesaurus);
+  if(resp.statusCode == 202){
+    store = JSON.parse(resp.body);
+    try{
+      localStorage.setItem('opentheso-' + mappingField.idthesaurus, resp.body);
+    } catch(exception){
+      storageExceptionThesaurus.push(mappingField.idthesaurus);
+    }
+  }
+  return store;
+}
+
 async function callThesaurus(thesaurus, value){
-  return api.validateOpenTheso(thesaurus, value);;
+  return api.validateOpenTheso(thesaurus, value);
 }
 
 async function callPrefLabel(id){

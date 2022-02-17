@@ -26,8 +26,8 @@ class TopicCard extends React.Component {
 
     return (
       <div className="topic-card">
-        <Link href={href} as={alias}>
-          <a>
+        {/* <Link href={href} as={alias}> */}
+          <a href={href}>
             <Card>
               <img src={img} alt={txt} className="card-img" height="220" />
               <CardBody>
@@ -35,7 +35,7 @@ class TopicCard extends React.Component {
               </CardBody>
             </Card>
           </a>
-        </Link>
+       { /*} </Link> */}
         <style jsx>{`
           .topic-card {
             padding-left: 15px;

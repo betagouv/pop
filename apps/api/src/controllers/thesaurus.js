@@ -26,7 +26,7 @@ router.get("/search", passport.authenticate("jwt", { session: false }), (req, re
   });
 });
 
-router.get("/validate", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.get("/validate", /*passport.authenticate("jwt", { session: false }),*/ (req, res) => {
   /* 	
       #swagger.tags = ['Thesaurus']
       #swagger.path = '/thesaurus/validate'
@@ -35,13 +35,27 @@ router.get("/validate", passport.authenticate("jwt", { session: false }), (req, 
   let id = req.query.id;
   let value = escapeRegExp(req.query.value);
   const query = {
-    arc: id,
+    idThesaurus: id,
     $text: { $search: `"${value}"`, $caseSensitive: false, $diacriticSensitive: false }
   };
+  /*
   let q = Thesaurus.find(query).limit(1);
   q.exec((e, values) => {
     const exist = !!values.length;
     res.send(exist);
+  });*/
+
+  Thesaurus.find(query, (e, values) => {
+    values = values.map( element => {
+      return {
+        _id: element._id,
+        idThesaurus: element.idThesaurus,
+        arc: element.arc,
+        label: element.value,
+        isAltLabel: element.altLabel,
+      }
+    })
+    res.send({ statusCode: 202, body: JSON.stringify(values) });
   });
 });
 
@@ -157,7 +171,7 @@ router.post("/createThesaurus", passport.authenticate("jwt", { session: false })
 });
 
 
-router.get("/getThesaurusById", passport.authenticate("jwt", { session: false }), (req, res) => { 
+router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false }),*/ (req, res) => { 
   /* 	
       #swagger.tags = ['Thesaurus']
       #swagger.path = '/thesaurus/getThesaurusById'
@@ -171,6 +185,7 @@ router.get("/getThesaurusById", passport.authenticate("jwt", { session: false })
     },
     (error, response) => {
       if (!error && response.statusCode === 202) {
+        updateThesaurus(thesaurusId, response.body);
         resolve(response);
       } else {
         capture(error);
@@ -184,6 +199,52 @@ router.get("/getThesaurusById", passport.authenticate("jwt", { session: false })
   })
   .catch(error => res.status(400).send({ success: false, msg: error}));
 });
+
+async function updateThesaurus(idThesaurus, respData){
+  const data = respData;
+ 
+  Thesaurus.deleteMany({ idThesaurus: idThesaurus }, function() {
+    createThesaurus(idThesaurus, data)
+  });
+}
+
+async function createThesaurus(idThesaurus, data){
+  const promises = [];
+  const parseData = JSON.parse(data);
+  const propId = "@id";
+  const propAltLabel = "http://www.w3.org/2004/02/skos/core#altLabel";
+  const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
+
+  parseData.forEach( ( el, i ) => {
+    if(parseData[i][propAltLabel]) {
+      parseData[i][propAltLabel].forEach(element => {
+        let theso = new Thesaurus({
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: true
+        });
+        promises.push(theso.save());
+      });
+    }
+   
+    parseData[i][propPrefLabel].forEach( (element) => {
+      let theso = new Thesaurus({
+        idThesaurus: idThesaurus,
+        arc: parseData[i][propId],
+        value: element["@value"],
+        altLabel: false
+      });
+      promises.push(theso.save());
+    });
+  });
+
+  await Promise.all(promises);
+}
+
+async function deleteThesaurusById(id){
+  await Thesaurus.deleteMany({ idThesaurus: id});
+}
 
 router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { session: false }), (req, res) => { 
   /* 	
@@ -212,6 +273,28 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
     res.status(200).send(resp);
   })
   .catch(error => res.status(400).send({ success: false, msg: error}));
+});
+
+router.get("/getAllThesaurusById", (req, res) => { 
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/autocompleteByIdthesaurusAndValue'
+      #swagger.description = 'Recherche de l'autocomplétion de la valeur par rapport à l'identifiant du thesaurus dans le référentiel thesaurus' 
+  */
+  const thesaurusId = req.query.id;
+
+  Thesaurus.find({ idThesaurus:  thesaurusId}, (e, values) => {
+    values = values.map( element => {
+      return {
+        _id: element._id,
+        idThesaurus: element.idThesaurus,
+        arc: element.arc,
+        label: element.value,
+        isAltLabel: element.altLabel,
+      }
+    })
+    res.send({ statusCode: 202, body: JSON.stringify(values) });
+  });
 });
 
 router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false }), (req, res) => { 

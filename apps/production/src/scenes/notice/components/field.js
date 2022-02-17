@@ -43,14 +43,14 @@ class TagsInput extends React.Component {
           console.log("ERROR", error);
         });
     }
-    else if(str && this.props.input.name === "TYPID"){
+    else if (str && this.props.input.name === "TYPID") {
       //Ticket 35635
-      const values = ["collectivité","organisation","personne","famille", "autre"]
+      const values = ["collectivité", "organisation", "personne", "famille", "autre"]
       const suggestions = values.map(e => ({
         id: e,
         text: e
       }));
-      this.setState({suggestions});
+      this.setState({ suggestions });
     }
   }
 
@@ -73,19 +73,19 @@ class TagsInput extends React.Component {
           tags={
             value
               ? value.map(e => {
-                  if (this.props.createUrl) {
-                    const url = this.props.createUrl(e);
-                    return {
-                      id: e,
-                      text: (
-                        <a href={url} target="_blank" rel="noopener">
-                          {e}
-                        </a>
-                      )
-                    };
-                  }
-                  return { id: e, text: e };
-                })
+                if (this.props.createUrl) {
+                  const url = this.props.createUrl(e);
+                  return {
+                    id: e,
+                    text: (
+                      <a href={url} target="_blank" rel="noopener">
+                        {e}
+                      </a>
+                    )
+                  };
+                }
+                return { id: e, text: e };
+              })
               : []
           }
           suggestions={this.state.suggestions}
@@ -171,7 +171,7 @@ const TooltipComp = ({ deprecated, generated, description, name, hidedescription
   const content = [];
   if (description) {
     content.push(<div>{description}</div>);
-  } else if (!hidedescriptionifempty){
+  } else if (!hidedescriptionifempty) {
     content.push(<div>En attente de description</div>);
   }
 
@@ -205,7 +205,7 @@ export default class AbstractField extends React.Component {
     const title = label ? `${label} (${name})` : name;
 
     //Permet de ne pas afficher le bloc de description si besoin 
-    if(!description && !generated && !deprecated && this.props.hidedescriptionifempty){
+    if (!description && !generated && !deprecated && this.props.hidedescriptionifempty) {
       return (
         <div className="field">
           {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
@@ -213,7 +213,7 @@ export default class AbstractField extends React.Component {
         </div>
       );
     }
-    else{
+    else {
       return (
         <div className="field">
           {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
@@ -228,6 +228,6 @@ export default class AbstractField extends React.Component {
         </div>
       );
     }
-    
+
   }
 }
