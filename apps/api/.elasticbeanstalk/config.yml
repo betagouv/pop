@@ -3,7 +3,7 @@ environment-defaults:
     branch: null
     repository: null
 global:
-  application_name: pop_api
+  application_name: pop-api
   branch: null
   default_ec2_keyname: null
   default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Node.js 14 running on
