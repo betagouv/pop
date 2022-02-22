@@ -367,7 +367,7 @@ router.post(
     }
     // Update and save.
     promises.push(updateLinks(notice));
-    await transformBeforeCreateOrUpdate(notice);
+    await transformBeforeCreate(notice);
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
