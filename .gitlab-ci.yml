@@ -44,7 +44,7 @@ stages:
   - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_MC}" >> ~/.aws/credentials
 
 .elasticbeanstalk-open: &elasticbeanstalk-open
-  - cd .elasticbeanstalk
+  - cd ~/.elasticbeanstalk
   - sed -i "s/pop_api/pop-api/" config.yml
 
 # Variables à utiliser avec ce template :
