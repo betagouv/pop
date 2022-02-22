@@ -68,6 +68,10 @@ commands:
           name: build
           command: |
             cd apps/<< parameters.app >>
+            echo "API_URL=http://pop-api-staging.eu-west-3.elasticbeanstalk.com" > .env
+            echo "POP_URL=http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com" >> .env
+            echo "BUCKET_URL=https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging" >> .env
+            echo "NODE_ENV=staging" >> .env
             npm run build
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
@@ -172,6 +176,10 @@ jobs:
           name: build
           command: |
             cd apps/diffusion
+            echo "API_URL=http://pop-api-staging.eu-west-3.elasticbeanstalk.com" > .env
+            echo "POP_URL=http://pop-staging.culture.gouv.fr/" >> .env
+            echo "BUCKET_URL=https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging" >> .env
+            echo "NODE_ENV=staging" >> .env
             npm run build
       - persist_to_workspace:
           root: ~/repo/apps/diffusion
