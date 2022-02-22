@@ -79,6 +79,8 @@ commands:
         type: string
       app:
         type: string
+      app_name:
+        type: string
     steps:
       - checkout
       - attach_workspace:
@@ -90,6 +92,7 @@ commands:
           name: deploy
           command: |
             cd apps/<< parameters.app >>
+            sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             eb deploy << parameters.eb_deploy >>
   deploy_api:
     parameters:
@@ -217,6 +220,7 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
@@ -224,6 +228,7 @@ jobs:
       - deploy:
           app: production
           eb_deploy: pop-production-staging
+          app_name: pop-production-staging
   deploy_api_staging:
     executor: docker_python
     steps:
@@ -236,6 +241,7 @@ jobs:
       - deploy:
           app: production
           eb_deploy: pop-production
+          app_name: pop-production
   deploy_api_prod:
     executor: docker_python
     steps:
