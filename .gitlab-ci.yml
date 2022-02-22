@@ -53,9 +53,8 @@ stages:
   script:
     - *install-awsebcli
     - *aws-open-credentials
-    - cd apps/${APP}/.elasticbeanstalk
-    - sed -i "s/pop_api/pop-api/" config.yml
     - cd apps/${APP}
+    - sed -i "s/pop_api/pop-api/" ~/.elasticbeanstalk/config.yml
     - eb deploy ${ENV}
 
 # Variables à utiliser avec ce template :
