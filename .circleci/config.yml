@@ -106,7 +106,7 @@ commands:
           name: deploy
           command: |
             cd apps/api
-            sed -i "s/pop_api/${pamameters.app_name}/""
+            sed -i "s/pop_api/${pamameters.app_name}/" .elasticbeanstalk/config.yml
             eb deploy << parameters.eb_deploy >>
   configure_aws_ebcli:
     steps:
