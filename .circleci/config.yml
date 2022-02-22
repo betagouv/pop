@@ -68,7 +68,7 @@ commands:
           name: build
           command: |
             cd apps/<< parameters.app >>
-            npm run build:<< parameters.env >>
+            npm run build
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
           paths:
