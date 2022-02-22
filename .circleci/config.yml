@@ -241,6 +241,7 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api
+          app_name: pop_api
   deploy_diffusion_prod:
     executor: docker_python
     steps:
