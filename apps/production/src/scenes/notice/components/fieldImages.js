@@ -258,7 +258,9 @@ function arrayMove(arr, old_index, new_index) {
   var i = 0;
   //mise a jour du champs marq
   while (arr[i]) {
-    arr[i].marq = i+1;
+    if(typeof arr[i].marq != "undefined"){
+      arr[i].marq = i+1;
+    }
     i++;
   }
   return arr; // for testing
