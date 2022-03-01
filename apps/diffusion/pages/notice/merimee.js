@@ -48,6 +48,7 @@ export default class extends React.Component {
       pushLinkedNotices(arr, REFP, "merimee");
       pushLinkedNotices(arr, REFE, "merimee");
       pushLinkedNotices(arr, REFO, "palissy");
+      pushLinkedNotices(arr, RENV, "palissy");
       pushLinkedNotices(arr, REFJOC, "joconde");
       pushLinkedNotices(arr, REFMUS, "museo");
     }
