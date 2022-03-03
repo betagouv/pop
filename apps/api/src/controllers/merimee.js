@@ -197,7 +197,7 @@ function checkIfMemoireImageExist(notice) {
       // Here, we update the images and we keep the order ( !! important )
       const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
       const arr = NoticesMemoire.map(e => {
-        const NAME = e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
+        const NAME = e.LEG || e.TICO || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
         return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME, marq: e.MARQ };
       });
 
