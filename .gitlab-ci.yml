@@ -33,7 +33,7 @@ stages:
 
 .aws-open-credentials: &aws-open-credentials
   - mkdir ~/.aws
-  - echo "[default]" > ~/.aws/credentials
+  - echo "[eb-cli]" > ~/.aws/credentials
   - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_OPEN}" >> ~/.aws/credentials
   - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
 
