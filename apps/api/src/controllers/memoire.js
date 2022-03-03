@@ -214,8 +214,8 @@ async function updateLinks(notice) {
     let noticeMemoire = await Memoire.findOne({ REF: REF });
     let IMG = notice.IMG ? notice.IMG : (noticeMemoire? noticeMemoire.IMG : "");
     let COPY = notice.COPY ? notice.COPY : (noticeMemoire? noticeMemoire.COPY : "");
-    const NAME = (notice.TICO ? notice.TICO : (noticeMemoire? noticeMemoire.TICO : "")) 
-                  || (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
+    const NAME = (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
+                  || (notice.TICO ? notice.TICO : (noticeMemoire? noticeMemoire.TICO : "")) 
                   || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
     let MARQ = notice.MARQ ? notice.MARQ : (noticeMemoire? noticeMemoire.MARQ : "");
