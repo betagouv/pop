@@ -34,6 +34,7 @@ class Importer extends Component {
       importId: null,
       emailSent: false,
       loadOpenTheso: false,
+      countRecupNotice: 0,
       countControleNotice: 0,
       localStorage: null,
       saveDisabled: false
@@ -68,20 +69,24 @@ class Importer extends Component {
       // Get existing notices.
       const existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
+        this.setState({ countRecupNotice: this.state.countRecupNotice + 1})
         this.setState({
           loading: true,
-          loadingMessage: `Récupération des notices existantes ... `,
+          loadingMessage: `Récupération des notices existantes ... ${this.state.countRecupNotice} / ${importedNotices.length} notices`,
           progress: Math.floor((i * 100) / (importedNotices.length * 2))
         });
         const collection = importedNotices[i]._type;
         const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
           existingNotices[importedNotices[i].REF] = notice;
-        }
+        } 
       }
 
       // Compute diff.
-      this.setState({ loadingMessage: "Calcul des différences...." });
+      this.setState({ 
+        loadingMessage: "Calcul des différences....",
+        countRecupNotice: 0 
+      });
 
       // START DIFF
       for (let i = 0; i < importedNotices.length; i++) {
