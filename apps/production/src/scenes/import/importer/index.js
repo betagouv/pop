@@ -35,7 +35,8 @@ class Importer extends Component {
       emailSent: false,
       loadOpenTheso: false,
       countControleNotice: 0,
-      localStorage: null
+      localStorage: null,
+      saveDisabled: false
     };
   }
 
@@ -156,6 +157,8 @@ class Importer extends Component {
   }
 
   async onSave() {
+    this.setState({ saveDisabled: true });
+
     const total = this.state.importedNotices.length;
     const created = this.state.importedNotices.filter(e => e._status === "created");
     const updated = this.state.importedNotices.filter(e => e._status === "updated");
@@ -225,7 +228,8 @@ class Importer extends Component {
       this.setState({
         loading: false,
         step: 2,
-        loadingMessage: `Import effectué avec succès`
+        loadingMessage: `Import effectué avec succès`,
+        saveDisabled: false
       });
 
       // End send report
@@ -329,7 +333,7 @@ class Importer extends Component {
           >
             Annuler l'import
           </Button>
-          <Button className="button" color="primary" onClick={() => this.onSave()}>
+          <Button className="button" color="primary" onClick={() => this.onSave()} disabled={ this.props.saveDisabled }>
             Confirmer l'import
           </Button>
         </div>
