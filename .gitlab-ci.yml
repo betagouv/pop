@@ -46,6 +46,8 @@ stages:
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #   - ENV : Nom de l'environnement AWS cible.
+#   - NAME: Nom de l'application (présent dans le fichier .elasticbeanstalk/config.yml)
+#   - REPLACE: Nom de l'application cible AWS
 #
 .deploy-open: &deploy-open
   stage: deploy
@@ -54,7 +56,7 @@ stages:
     - *install-awsebcli
     - *aws-open-credentials
     - cd apps/${APP}
-    - sed -i "s/pop_api/pop-api/" .elasticbeanstalk/config.yml
+    - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
     - eb deploy ${ENV}
 
 # Variables à utiliser avec ce template :
@@ -281,6 +283,8 @@ deploy-api-devic1:
   variables:
     APP: api
     ENV: pop-api-devic1
+    NAME: pop_api
+    REPLACE: pop-api
   environment:
     name: pop-api-devic1
     url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
@@ -295,6 +299,8 @@ deploy-production-devic1:
   variables:
     APP: production
     ENV: pop-production-devic1
+    NAME: pop_production
+    REPLACE: pop-production
   environment:
     name: pop-production-devic1
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
@@ -309,6 +315,8 @@ deploy-diffusion-devic1:
   variables:
     APP: diffusion
     ENV: pop-consultation-devic1
+    NAME: pop_consultation
+    REPLACE: pop-consultation
   environment:
     name: pop-consultation-devic1
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
