@@ -340,7 +340,7 @@ class api {
     return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
   }
 
-  getThesaurusById(idThesaurus){ console.log(idThesaurus)
+  getThesaurusById(idThesaurus){
     return request.getJSON(`/thesaurus/getAllThesaurusById?id=${idThesaurus}`)
   }
 }
