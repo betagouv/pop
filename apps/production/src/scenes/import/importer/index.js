@@ -162,7 +162,13 @@ class Importer extends Component {
   }
 
   async onSave() {
-    this.setState({ saveDisabled: true });
+
+    this.setState({
+      saveDisabled: true,
+      loading: true,
+      loadingMessage: "Sauvegarde de l'import..."
+    });
+
 
     const total = this.state.importedNotices.length;
     const created = this.state.importedNotices.filter(e => e._status === "created");
