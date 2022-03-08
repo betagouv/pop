@@ -93,8 +93,7 @@ stages:
     policy: push
   rules:
     - changes:
-        - "apps/${APP}/*"
-        - ".gitlab-ci.yml"
+        - "apps/*"
 
 node-modules-api:
   <<: *node-modules
@@ -133,8 +132,7 @@ node-modules-diffusion:
     - npm test
   rules:
     - changes:
-        - "apps/${APP}/*"
-        - ".gitlab-ci.yml"
+        - "apps/*"
 
 test-api:
   needs:
@@ -208,8 +206,7 @@ test-diffusion:
     expire_in: 7 days
   rules:
     - changes:
-        - "apps/${APP}/*"
-        - ".gitlab-ci.yml"
+        - "apps/*"
 
 #
 # BUILD DIFFUSION
@@ -243,8 +240,7 @@ test-diffusion:
     expire_in: 7 days
   rules:
     - changes:
-        - "apps/${APP}/*"
-        - ".gitlab-ci.yml"
+        - "apps/*"
 
 ##############################################################
 # DEVIC1 - OPEN
