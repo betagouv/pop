@@ -188,7 +188,7 @@ test-diffusion:
 .build-production: &build-production
   stage: build
   needs:
-    - node-modules-production
+    - test-production
   <<: *pull-cache
   script:
     - cd apps/production
@@ -222,7 +222,7 @@ test-diffusion:
 .build-diffusion: &build-diffusion
   stage: build
   needs:
-    - node-modules-diffusion
+    - test-diffusion
   <<: *pull-cache
   script:
     - cd apps/diffusion
@@ -240,7 +240,7 @@ test-diffusion:
     expire_in: 7 days
   rules:
     - changes:
-        - ".apps/*"
+        - "*"
 
 ##############################################################
 # DEVIC1 - OPEN
