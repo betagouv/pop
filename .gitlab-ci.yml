@@ -93,7 +93,7 @@ stages:
     policy: push
   rules:
     - changes:
-        - "apps/*"
+        - "*"
 
 node-modules-api:
   <<: *node-modules
@@ -132,7 +132,7 @@ node-modules-diffusion:
     - npm test
   rules:
     - changes:
-        - "apps/*"
+        - "*"
 
 test-api:
   needs:
@@ -206,7 +206,7 @@ test-diffusion:
     expire_in: 7 days
   rules:
     - changes:
-        - "apps/*"
+        - "*"
 
 #
 # BUILD DIFFUSION
@@ -240,7 +240,7 @@ test-diffusion:
     expire_in: 7 days
   rules:
     - changes:
-        - "apps/*"
+        - ".apps/*"
 
 ##############################################################
 # DEVIC1 - OPEN
@@ -290,7 +290,6 @@ deploy-api-devic1:
 deploy-production-devic1:
   <<: *deploy-open
   needs:
-    - test-production
     - build-production-devic1
   variables:
     APP: production
@@ -306,7 +305,6 @@ deploy-production-devic1:
 deploy-diffusion-devic1:
   <<: *deploy-open
   needs:
-    - test-diffusion
     - build-diffusion-devic1
   variables:
     APP: diffusion
