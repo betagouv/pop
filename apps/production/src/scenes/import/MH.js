@@ -119,9 +119,28 @@ function parseFiles(files, encoding) {
       }
 
       importedNotices.push(newNotice);
+      controlREFIMG(importedNotices);
     }
     resolve({ importedNotices, fileNames: [objectFile.name] });
   });
+}
+
+
+function controlREFIMG(importedNotices){
+
+  for (var i = 0; i < importedNotices.length; i++) {
+    const names = importedNotices[i].IMG;
+    const refIMG = importedNotices[i].REFIMG;
+
+    let img = convertLongNameToShort(names);
+
+    //Si refimg est renseigné une image avec le même nom doit être joint lors de l'import 
+    if (refIMG && refIMG !== img) {
+      importedNotices[i]._errors.push(
+        `Image ${convertLongNameToShort(names)} introuvable`
+      );
+    } 
+  }
 }
 
 function addFile(fromProperty, toProperty, data, newNotice, filesMap) {
