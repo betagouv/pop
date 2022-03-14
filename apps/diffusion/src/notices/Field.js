@@ -46,8 +46,19 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       str = arrayContent.reduce((a,b) => [a, ' ', b]);
     }
  
-    if(typeof str == 'string' && addLink != 'undefined' && addLink){
-      str = addLinkToText(str);
+    if(addLink != 'undefined' && addLink){
+      if(typeof str == 'string'){
+        str = addLinkToText(str);
+      } else if(Array.isArray(str)){
+        str = str.map((element => {
+          if(typeof element == "string"){
+            element = addLinkToText(element);
+          } else {
+            element = <p>{element}</p>
+          }
+          return element;
+        }));
+      }
     } else {
       str = <p>{str}</p>;
     }
