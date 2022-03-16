@@ -1,6 +1,7 @@
 import api from "../../../services/api";
 
-const thesaurusJocondeControle = ['ECOL','EPOQ','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'UTIL', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
+// Joconde : Liste des champs à prendre en compte pour le contrôle Thésaurus
+const thesaurusJocondeControle = ['ECOL','LIEUX','TECH','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
 const thesaurusJocondeNonControle = [];
 
 export function checkThesaurus(importedNotices) {
@@ -209,7 +210,6 @@ async function checkJocondeThesaurus(mappingField, value){
   let message = "";
 
   const arrayIdThesaurus = ["th305", "th291", "th294", "th306", "th284", "th290", "th304", "th287", "th295", "th298"]
-  //const arrayIdThesaurus = []
  
   try{
     let res = {};
