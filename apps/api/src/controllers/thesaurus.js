@@ -306,18 +306,17 @@ router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false
   const arkId = req.query.id;
 
   return new Promise((resolve, reject) => {
-    request.get({
-      url: `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`
-    },
-    (error, response) => {
-      if (!error && response.statusCode === 202) {
-        resolve(response);
-      } else {
-        capture(error);
-        reject(error);
+    request.get(
+      `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`,
+      (error, response) => {
+        if (!error && response.statusCode === 202) {
+          resolve(response);
+        } else {
+          capture(error);
+          reject(error);
+        }
       }
-    }
-  );
+    );
   })
   .then(resp => { 
     res.status(200).send(resp);
