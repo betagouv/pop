@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import Viewer from "react-viewer";
 import { toastr } from "react-redux-toastr";
-import "react-viewer/dist/index.css";
 
 import "./fieldImages.css";
 
@@ -48,7 +47,7 @@ class FieldImages extends React.Component {
       };
     } else {
       return {
-        source: this.state.imageFiles[index].preview,
+        source: URL.createObjectURL(this.state.imageFiles[index]),
         name: this.props.createUrlFromName(this.state.imageFiles[index].name)
       };
     }
@@ -174,11 +173,26 @@ class FieldImages extends React.Component {
     const hideButton =
       this.props.disabled || this.props.hideButton || (!Array.isArray(this.props.input.value) && this.props.input.value || this.props.input.name == 'MEMOIRE');
 
+    const dropZoneStyle = {
+      position: 'relative',
+      width: '200px',
+      height: '200px',
+      borderWidth: '2px',
+      borderColor: 'rgb(102, 102, 102)',
+      borderStyle: 'dashed',
+      borderRadius: '5px',
+    }
+
     if (!hideButton) {
       arr.push(
         <Col className="item" md={arr.length ? 6 : 12} key="dropzone">
           <Dropzone onDrop={this.onDrop.bind(this)}>
-            <p>Ajouter une nouvelle image</p>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()} style={dropZoneStyle}>
+                <input {...getInputProps()} />
+                <p>Ajouter une nouvelle image</p>
+              </div>
+            )}
           </Dropzone>
         </Col>
       );

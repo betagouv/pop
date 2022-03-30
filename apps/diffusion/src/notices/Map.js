@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import api from "../services/api";
 
 class MapComponent extends React.Component {
   map = null;
@@ -8,42 +9,57 @@ class MapComponent extends React.Component {
     super(props);
     this.mapRef = React.createRef();
     this.state = {
-      loading: true
+      loaded: false
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { center, geometry, layer } = getGeoJson(this.props.notice);
 
     if (center && this.props.notice.POP_COORDONNEES && this.props.notice.POP_COORDONNEES.lat) {
-      const mapboxgl = require("mapbox-gl");
-      mapboxgl.accessToken =
-        "pk.eyJ1IjoiZ29mZmxlIiwiYSI6ImNpanBvcXNkMTAwODN2cGx4d2UydzM4bGYifQ.ep25-zsrkOpdm6W1CsQMOQ";
 
-      const map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v9",
-        zoom: 14,
-        center
-      });
+      const loadMapBox = async () => {
+        const mapboxgl = require("mapbox-gl");
+        mapboxgl.accessToken = await api.getMapboxToken();
 
-      map.on("load", e => {
-        map.addSource("pop", {
-          type: "geojson",
-          data: {
-            type: "FeatureCollection",
-            features: [
-              {
-                type: "Feature",
-                id: 0,
-                properties: { id: 0 },
-                geometry
-              }
-            ]
+        const map = new mapboxgl.Map({
+          container: "map",
+          style: "mapbox://styles/mapbox/streets-v9",
+          zoom: 14,
+          center
+        });
+
+        map.on("error", event => {
+          if (event.error && event.error.status === 401) {
+            map.remove();
+            this.setState({ loaded: false }, () => {
+              loadMapBox();
+            });
           }
         });
-        map.addLayer(layer);
-      });
+
+        map.on("load", e => {
+          map.addSource("pop", {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              features: [
+                {
+                  type: "Feature",
+                  id: 0,
+                  properties: { id: 0 },
+                  geometry
+                }
+              ]
+            }
+          });
+          map.addLayer(layer);
+        });
+
+        this.setState({ loaded: true });
+      };
+
+      loadMapBox();
     }
   }
   render() {

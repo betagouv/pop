@@ -6,13 +6,14 @@ global:
   application_name: pop_api
   branch: null
   default_ec2_keyname: null
-  default_platform: node.js
+  default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Node.js 14 running on
+    64bit Amazon Linux 2/5.4.9
   default_region: eu-west-3
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
-  profile: null
+  profile: eb-cli
   repository: null
   sc: git
   workspace_type: Application

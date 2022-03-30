@@ -65,4 +65,6 @@ app.use("/oai", require("./controllers/oai"));
 // Swagger DOC
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use('/mapbox', require("./controllers/mapbox"));
+
 module.exports = app;

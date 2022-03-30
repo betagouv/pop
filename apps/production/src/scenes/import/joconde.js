@@ -5,6 +5,7 @@ import Mapping from "../../services/mapping";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 import utils from "./utils";
+import { api_url, bucket_url } from "../../config";
 
 class Import extends React.Component {
   constructor(props) {
@@ -191,13 +192,9 @@ function report(notices, collection, email, institution, importId) {
 
   const dateStr = utils.formatDate();
 
-  const diffUrl = `http://pop${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }.culture.gouv.fr/search/list?import=["${importId}"]`;
+  const diffUrl = `${api_url}/search/list?import=["${importId}"]`;
 
-  const fileUrl = `https://s3.eu-west-3.amazonaws.com/pop-phototeque${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }/import/${importId}/import.csv`;
+  const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
 
   const created = notices.filter(e => e._status === "created");
   const updated = notices.filter(e => e._status === "updated");
@@ -238,9 +235,7 @@ function report(notices, collection, email, institution, importId) {
   let obj = {};
   let count = 0;
 
-  const URL = `http://pop${
-    process.env.NODE_ENV === "production" ? "" : "-staging"
-  }.culture.gouv.fr/notice/joconde/`;
+  const URL = `${api_url}/notice/joconde/`;
 
   for (let i = 0; i < notices.length; i++) {
     for (let j = 0; j < notices[i]._warnings.length; j++) {
@@ -292,7 +287,7 @@ function report(notices, collection, email, institution, importId) {
       );
     }else{
       
-      if(key){
+      if(key !== undefined){
         const libRefus = "ne fait pas partie du thésaurus";
         const valueFounded = key.indexOf(libRefus) == -1;
 
@@ -313,7 +308,7 @@ function report(notices, collection, email, institution, importId) {
         key = key.replace(`[${autoriteThesaurus}]`, `<a href="${urlOpenTheso}?idt=${idthesaurus}">${autoriteThesaurus}</a>`);
 
         // Si des propositions ont été trouvé, alors on met les propositions en caractères gras
-        if(valueFounded){
+        if(valueFounded && arrayKey[5]){
           const listProposition = arrayKey[5].split(' ou ').filter(element => element !== "").map(element => `<strong>${element}</strong>`).join(' ou ');
           key = key.replace(`[${arrayKey[5]}]`, listProposition);
         }

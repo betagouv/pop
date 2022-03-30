@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import DropZone from "./dropZone";
 import api from "../../../services/api";
 import generate from "./report";
-import controleThesaurus from "./thesaurus";
+import { checkThesaurus, checkOpenTheso } from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 import utils from "../utils";
@@ -17,6 +17,7 @@ import { compare } from "./diff";
 import "rc-steps/assets/index.css";
 import "rc-steps/assets/iconfont.css";
 import "./index.css";
+import { pop_url } from "../../../config";
 
 class Importer extends Component {
   constructor(props) {
@@ -31,8 +32,17 @@ class Importer extends Component {
       step: 0,
       email: props.email,
       importId: null,
-      emailSent: false
+      emailSent: false,
+      loadOpenTheso: false,
+      countRecupNotice: 0,
+      countControleNotice: 0,
+      localStorage: null,
+      saveDisabled: false
     };
+  }
+
+  componentDidMount(){
+    this.setState({ localStorage: window.localStorage });
   }
 
   async onFilesDropped(errors, files, encoding) {
@@ -59,20 +69,24 @@ class Importer extends Component {
       // Get existing notices.
       const existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
+        this.setState({ countRecupNotice: this.state.countRecupNotice + 1})
         this.setState({
           loading: true,
-          loadingMessage: `Récupération des notices existantes ... `,
+          loadingMessage: `Récupération des notices existantes ... ${this.state.countRecupNotice} / ${importedNotices.length} notices`,
           progress: Math.floor((i * 100) / (importedNotices.length * 2))
         });
         const collection = importedNotices[i]._type;
         const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
           existingNotices[importedNotices[i].REF] = notice;
-        }
+        } 
       }
 
       // Compute diff.
-      this.setState({ loadingMessage: "Calcul des différences...." });
+      this.setState({ 
+        loadingMessage: "Calcul des différences....",
+        countRecupNotice: 0 
+      });
 
       // START DIFF
       for (let i = 0; i < importedNotices.length; i++) {
@@ -102,7 +116,24 @@ class Importer extends Component {
         await importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
       }
 
-      await controleThesaurus(importedNotices);
+      this.setState({ loadOpenTheso : true });
+
+      Object.keys(localStorage).forEach((key) => {
+        if(key.indexOf('opentheso-') === 0){
+          localStorage.removeItem(key);
+        }
+
+      })
+
+      for (var i = 0; i < importedNotices.length; i++) {
+        await checkOpenTheso(importedNotices[i]);
+        this.setState({ countControleNotice: this.state.countControleNotice + 1})
+      }
+
+      this.setState({ loadOpenTheso : false });
+      this.setState({ countControleNotice: 0});
+
+  //    await checkThesaurus(importedNotices);
 
       for (var i = 0; i < importedNotices.length; i++) {
         if (importedNotices[i]._errors.length) {
@@ -111,6 +142,7 @@ class Importer extends Component {
       }
 
       this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: "" });
+      
 
       amplitude
         .getInstance()
@@ -130,6 +162,14 @@ class Importer extends Component {
   }
 
   async onSave() {
+
+    this.setState({
+      saveDisabled: true,
+      loading: true,
+      loadingMessage: "Sauvegarde de l'import..."
+    });
+
+
     const total = this.state.importedNotices.length;
     const created = this.state.importedNotices.filter(e => e._status === "created");
     const updated = this.state.importedNotices.filter(e => e._status === "updated");
@@ -199,7 +239,8 @@ class Importer extends Component {
       this.setState({
         loading: false,
         step: 2,
-        loadingMessage: `Import effectué avec succès`
+        loadingMessage: `Import effectué avec succès`,
+        saveDisabled: false
       });
 
       // End send report
@@ -303,7 +344,7 @@ class Importer extends Component {
           >
             Annuler l'import
           </Button>
-          <Button className="button" color="primary" onClick={() => this.onSave()}>
+          <Button className="button" color="primary" onClick={() => this.onSave()} disabled={ this.props.saveDisabled }>
             Confirmer l'import
           </Button>
         </div>
@@ -330,9 +371,7 @@ class Importer extends Component {
       e => e._status === "created" || e._status === "updated"
     ).length;
 
-    const URL = `http://pop${
-      process.env.NODE_ENV === "production" ? "" : "-staging"
-    }.culture.gouv.fr/search/list?import=["${this.state.importId}"]`;
+    const URL = `${pop_url}/search/list?import=["${this.state.importId}"]`;
 
     return (
       <div className="working-area">
@@ -419,6 +458,14 @@ class Importer extends Component {
         <div className="working-area">
           <Progress value={this.state.progress.toString()} />
           <div>{this.state.loadingMessage}</div>
+          { this.state.loadOpenTheso ?
+          <div>
+            <div>Contrôle des notices</div> 
+            <div>{this.state.countControleNotice} notices contrôlées</div>
+          </div>
+          : "" 
+          }
+          
         </div>
       );
     } else if (this.state.errors) {

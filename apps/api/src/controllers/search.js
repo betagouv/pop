@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl } = require("../config.js");
+const { esUrl, esPort } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 
@@ -20,6 +20,9 @@ router.post("/scroll", (req, res) => {
   }
   const headers = { "Content-Type": "Application/json" };
   const opts = { host: esUrl, path, body, method: "POST", headers };
+  if(esPort !== "80"){
+    opts.port = esPort;
+  }
   aws4.sign(opts);
   http
     .request(opts, res1 => {
@@ -36,10 +39,15 @@ router.use("/*/_msearch", (req, res) => {
     method: "POST",
     headers: { "Content-Type": "Application/x-ndjson" }
   };
+  // Ajout du port sur l'environnement de dev
+  if(esPort !== "80"){
+    opts.port = esPort;
+  }
   aws4.sign(opts);
   http
     .request(opts, res1 => {
-      res1.pipe(res);
+      const routedResponse = res1.pipe(res);
+      routedResponse.setHeader("Content-Type", "application/json");
     })
     .end(opts.body || "");
 });

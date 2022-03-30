@@ -4,7 +4,7 @@ executors:
   docker_node:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:8.11
+      - image: circleci/node:14.17
   docker_python:
     working_directory: ~/repo
     docker:
@@ -68,7 +68,11 @@ commands:
           name: build
           command: |
             cd apps/<< parameters.app >>
-            npm run build:<< parameters.env >>
+            echo "API_URL=http://pop-api-staging.eu-west-3.elasticbeanstalk.com" > .env
+            echo "POP_URL=http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com" >> .env
+            echo "BUCKET_URL=https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging" >> .env
+            echo "NODE_ENV=staging" >> .env
+            npm run build
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
           paths:
@@ -78,6 +82,8 @@ commands:
       eb_deploy:
         type: string
       app:
+        type: string
+      app_name:
         type: string
     steps:
       - checkout
@@ -90,10 +96,13 @@ commands:
           name: deploy
           command: |
             cd apps/<< parameters.app >>
+            sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             eb deploy << parameters.eb_deploy >>
   deploy_api:
     parameters:
       eb_deploy:
+        type: string
+      app_name:
         type: string
     steps:
       - checkout
@@ -104,6 +113,7 @@ commands:
           name: deploy
           command: |
             cd apps/api
+            sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             eb deploy << parameters.eb_deploy >>
   configure_aws_ebcli:
     steps:
@@ -125,7 +135,7 @@ jobs:
     steps:
       - checkout
       # Sorry.
-      - run: sudo npm install npm@latest-6 -g
+      - run: sudo npm install npm@latest -g
       - prepare:
           app: api
       - prepare:
@@ -137,8 +147,8 @@ jobs:
   ##############
   test_api:
     docker:
-      - image: circleci/node:8.11
-      - image: circleci/mongo:3.6
+      - image: circleci/node:14.17
+      - image: circleci/mongo:4.4
     working_directory: ~/repo
     steps:
       - test:
@@ -166,7 +176,11 @@ jobs:
           name: build
           command: |
             cd apps/diffusion
-            npm run build:staging
+            echo "API_URL=http://pop-api-staging.eu-west-3.elasticbeanstalk.com" > .env
+            echo "POP_URL=http://pop-staging.culture.gouv.fr/" >> .env
+            echo "BUCKET_URL=https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging" >> .env
+            echo "NODE_ENV=staging" >> .env
+            npm run build
       - persist_to_workspace:
           root: ~/repo/apps/diffusion
           paths:
@@ -214,6 +228,7 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
@@ -221,22 +236,26 @@ jobs:
       - deploy:
           app: production
           eb_deploy: pop-production-staging
+          app_name: pop-production-staging
   deploy_api_staging:
     executor: docker_python
     steps:
       - deploy_api:
           eb_deploy: pop-api-staging
+          app_name: pop-api-staging
   deploy_production_prod:
     executor: docker_python
     steps:
       - deploy:
           app: production
           eb_deploy: pop-production
+          app_name: pop-production
   deploy_api_prod:
     executor: docker_python
     steps:
       - deploy_api:
           eb_deploy: pop-api
+          app_name: pop_api
   deploy_diffusion_prod:
     executor: docker_python
     steps:

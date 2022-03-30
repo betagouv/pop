@@ -49,7 +49,9 @@ function MyComponent({ ctx }) {
       const res = await msearch(`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures,museo`, [
         { id: "map", query }
       ]);
-      setAggregations(res.responses[0].aggregations);
+      if (res.responses && res.responses.length > 0) {
+        setAggregations(res.responses[0].aggregations);
+      }
     }
     fetchData();
   }, [JSON.stringify(query)]);

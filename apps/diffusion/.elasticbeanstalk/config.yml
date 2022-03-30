@@ -11,8 +11,8 @@ environment-defaults:
 global:
   application_name: pop_consultation
   default_ec2_keyname: null
-  default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Node.js running on
-    64bit Amazon Linux/4.5.0
+  default_platform: arn:aws:elasticbeanstalk:eu-west-3::platform/Node.js 14 running on
+    64bit Amazon Linux 2/5.4.9
   default_region: eu-west-3
   include_git_submodules: true
   instance_profile: null

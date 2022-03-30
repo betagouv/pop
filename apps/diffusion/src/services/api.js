@@ -48,6 +48,10 @@ class api {
     });
   }
 
+  async getMapboxToken() {
+    return (await this._get(`${api_url}/mapbox/token`)).token;
+  }
+
   _get(url) {
     return new Promise((resolve, reject) => {
       fetch(url)

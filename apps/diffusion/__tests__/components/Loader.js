@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import Loader from '../../src/components/Loader';
 
 describe('Loader suite', () => {
-  
+
   it('should render without throwing an error', () => {
-    expect(shallow(<Loader />).find('#loader')).toHaveLength(1);
+    const rendered = render(<Loader />).container;
+    expect(rendered.querySelector('#loader')).toBeInTheDocument();
   });
 });

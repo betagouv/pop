@@ -1,28 +1,12 @@
-//ES
 
-let env = null || process.env.NODE_ENV;
-
-let api_url = "http://127.0.0.1:3000";
-let es_url = "http://127.0.0.1:3000/search/";
-let bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/";
-
-switch (env) {
-  case "production":
-    // Certaines personnes du ministère utilisent encore l'addresse EB car ils n'ont pas accès a l'adresse en culture.gouv.fr
-    api_url = "https://api.pop.culture.gouv.fr/"; //"http://pop-api.eu-west-3.elasticbeanstalk.com/";
-    es_url = "https://api.pop.culture.gouv.fr/search";
-    bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque/";
-    break;
-
-  case "staging":
-    api_url = "http://pop-api-staging.eu-west-3.elasticbeanstalk.com";
-    es_url = "http://pop-api-staging.eu-west-3.elasticbeanstalk.com/search";
-    bucket_url = "https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/";
-    break;
-}
+let api_url = process.env.API_URL;
+let es_url = `${api_url}/search`;
+let pop_url = process.env.POP_URL;
+let bucket_url = process.env.BUCKET_URL;
 
 module.exports = {
   api_url,
+  pop_url,
   es_url,
   bucket_url
 };

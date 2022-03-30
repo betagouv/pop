@@ -84,10 +84,15 @@ class Gallery extends Component {
                 this.setState({ image: acceptedFiles[0] });
               }}
             >
-              {this.state.image ? (
-                <img src={this.state.image.preview} style={{ width: "100%", height: "100%" }} />
-              ) : (
-                <div>Ajoutez ici une image</div>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {this.state.image ? (
+                    <img src={URL.createObjectURL(this.state.image)} style={{ width: "100%", height: "100%" }} />
+                  ) : (
+                    <div>Ajoutez ici une image</div>
+                  )}
+                </div>
               )}
             </Dropzone>
           </div>

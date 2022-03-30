@@ -1,5 +1,6 @@
 import React from "react";
-import App, { Container } from "next/app";
+import App from "next/app";
+import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
@@ -28,10 +29,17 @@ export default class MyApp extends App {
     const cookies = new Cookies();
     const currentBucket = cookies.get("currentBucket") || [];
     var jsonCurrentBucket = JSON.stringify(currentBucket);
-    cookies.set('currentBucket', jsonCurrentBucket, {path: '/', overwrite: true});
+    cookies.set('currentBucket', jsonCurrentBucket, { path: '/', overwrite: true });
 
     return (
-      <Container>
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          />
+        </Head>
         <Component {...pageProps} />
         <style jsx global>{`
           html {
@@ -96,7 +104,7 @@ export default class MyApp extends App {
               url("/static/fonts/nexa.woff") format("woff");
           }
         `}</style>
-      </Container>
+      </>
     );
   }
 }

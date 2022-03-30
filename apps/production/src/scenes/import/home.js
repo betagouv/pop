@@ -23,8 +23,8 @@ class Import extends React.Component {
     });
   }
 
-  renderOldImports(group, role){
-    if(role === "administrateur" || role === "producteur"){
+  renderOldImports(group, role) {
+    if (role === "administrateur" || role === "producteur") {
       return (
         <div>
           <Col className="m-4 text-center">
@@ -54,7 +54,7 @@ class Import extends React.Component {
 
 
     let listRoutes = [];
-    if(group === "admin"){
+    if (group === "admin") {
       listRoutes = [{ url: "/import/joconde", name: "Joconde", image },
       { url: "/import/mnr", name: "MNR", image },
       { url: "/import/inv", name: "Inventaire", image },
@@ -63,29 +63,29 @@ class Import extends React.Component {
       { url: "/import/museo", name: "Museo", image }];
     }
     else {
-      if(this.props.authorizedImports){
+      if (this.props.authorizedImports) {
         let authorizedImports = this.props.authorizedImports;
-        if(authorizedImports.includes("joconde")){
+        if (authorizedImports.includes("joconde")) {
           listRoutes.push({ url: "/import/joconde", name: "Joconde", image });
         }
-        if(authorizedImports.includes("mnr")){
+        if (authorizedImports.includes("mnr")) {
           listRoutes.push({ url: "/import/mnr", name: "MNR", image });
         }
-        if(authorizedImports.includes("inv")){
+        if (authorizedImports.includes("inv")) {
           listRoutes.push({ url: "/import/inv", name: "Inventaire", image });
         }
-        if(authorizedImports.includes("mh")){
+        if (authorizedImports.includes("mh")) {
           listRoutes.push({ url: "/import/mh", name: "Monuments historiques", image });
         }
-        if(authorizedImports.includes("map")){
+        if (authorizedImports.includes("map")) {
           listRoutes.push({ url: "/import/memoire", name: "MAP (Service Archives Photos)", image });
         }
-        if(authorizedImports.includes("museo")){
+        if (authorizedImports.includes("museo")) {
           listRoutes.push({ url: "/import/museo", name: "Museo", image });
         }
       }
     }
-    
+
 
 
     return (

@@ -2,11 +2,12 @@ const path = require("path");
 
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = env => {
   const plugins = [
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       seed: require("./public/manifest.json")
     }),
     new HtmlWebpackPlugin({
@@ -15,12 +16,11 @@ module.exports = env => {
       inject: "body",
       favicon: path.join("public/favicon.ico")
     }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("dev"),
-        MAINTENANCE: false
-      }
-    })
+    new Dotenv(),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
+    }),
   ];
 
   return {
@@ -29,45 +29,57 @@ module.exports = env => {
     devtool: "source-map",
     output: {
       path: path.resolve("build"),
-      filename: "[hash].index.js",
+      filename: "[contenthash].index.js",
       publicPath: "/"
     },
     devServer: {
-      contentBase: "build",
+      static: {
+        directory: "build"
+      },
       historyApiFallback: true,
-      inline: true,
-      stats: "errors-only"
+      devMiddleware: {
+        stats: "errors-only"
+      }
     },
-    node: {
-      fs: "empty"
+    resolve: {
+      fallback: {
+        buffer: require.resolve("buffer/"),
+        fs: false,
+        os: require.resolve("os-browserify/browser"),
+        path: require.resolve("path-browserify"),
+        process: require.resolve("process/browser"),
+        stream: require.resolve("stream-browserify"),
+      }
     },
     module: {
       rules: [
         {
           test: /\.css$/,
-          loader: "style-loader!css-loader"
+          use: [
+            { loader: "style-loader" },
+            { loader: "css-loader" }
+          ]
         },
         {
           test: /\.js$/,
           loader: "babel-loader",
           include: path.resolve("src"),
           exclude: /(node_modules|__tests__)/,
-          query: {
+          options: {
             babelrc: true
           }
         },
         {
+          test: /\.js$/,
+          include: path.resolve("node_modules/react-elasticsearch-pop"),
+          exclude: path.resolve("node_modules/react-elasticsearch-pop/node_modules"),
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
+        {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
-          use: [
-            "file-loader",
-            {
-              loader: "image-webpack-loader",
-              options: {
-                bypassOnDebug: true
-              }
-            }
-          ]
+          type: 'asset/resource'
         }
       ]
     },

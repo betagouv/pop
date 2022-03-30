@@ -5,7 +5,7 @@ const inquirer = require("inquirer");
 const program = require("commander");
 const Listr = require("listr");
 const Observable = require("rxjs").Observable;
-const { mongoUrl } = require("../config.js");
+const { mongoUrl, esUrl } = require("../config.js");
 const Merimee = require("../models/merimee");
 const Joconde = require("../models/joconde");
 const Palissy = require("../models/palissy");
@@ -21,6 +21,10 @@ const { pingElasticsearchTask } = require("./utils");
 
 // Sync all data from mongo to ES. Rebuild indices. It works without breaking off service.
 async function run() {
+
+  console.log("ES : " + esUrl);
+  console.log("MongoDB : " + mongoUrl);
+
   program
     .version("0.1.0")
     .option("-f, --force", "Force sync and reindex")
@@ -34,7 +38,9 @@ async function run() {
     )
     .parse(process.argv);
 
-  program.chunks = Number(program.chunks);
+  const opts = program.opts();
+
+  opts.chunks = Number(opts.chunks);
 
   console.log(
     chalk.white.bgRed.bold("The script may run for several hours and should not be stopped.")
@@ -43,7 +49,7 @@ async function run() {
     "Still, it can be stopped, but it will leave temporary indices which must be cleaned manually."
   );
 
-  if (!program.force) {
+  if (!opts.force) {
     const answers = await inquirer.prompt({
       type: "confirm",
       name: "force",
@@ -66,7 +72,7 @@ async function run() {
     }
   ]);
 
-  program.indices.map(async db => {
+  opts.indices.map(async db => {
     const noticeClass = {
       joconde: Joconde,
       merimee: Merimee,
@@ -122,7 +128,7 @@ async function run() {
                   let notices = await noticeClass
                     .find(lastId ? { _id: { $gt: lastId } } : {})
                     .sort({ _id: 1 })
-                    .limit(program.chunks);
+                    .limit(opts.chunks);
                   if (!notices.length) {
                     ctx.error = false;
                     observer.complete();
@@ -149,7 +155,7 @@ async function run() {
                     }
                     counter++;
                     lastId = notices[notices.length - 1];
-                    observer.next(counter * program.chunks + " notices done.");
+                    observer.next(counter * opts.chunks + " notices done.");
                   }
                 }
               });
