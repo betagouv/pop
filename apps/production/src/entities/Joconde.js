@@ -88,6 +88,12 @@ export default class Joconde extends Notice {
       let element = ["; pillées", "; pillés", "; pillée", "; pillé"].find(e => loca.indexOf(e) !== -1);
       return this.addManquantCom(loca, manquantcom, element, "pillé");
     }
+
+    if (["; présumé détruit"].some(e => loca.indexOf(e) !== -1)) {
+      let element = ["; présumé détruit"].find(e => loca.indexOf(e) !== -1);
+      let array = loca.split(element);
+      return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: "présumé détruit" };
+    }
     
     if(manquant == ""){
       manquant = [];
