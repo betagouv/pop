@@ -61,15 +61,22 @@ class FieldImages extends React.Component {
       }
       return [this.getFile(this.props.input.value)];
     }
-    // Convert FILE to local url
-    return this.props.input.value.sort((a,b) => { 
-      let aMarq = typeof a.marq != "undefined" ? a.marq : "";
-      let bMarq = typeof b.marq != "undefined" ? b.marq : "";
 
-      if(aMarq != "" && bMarq == "") { return -1  }
-      if(aMarq == "" && bMarq != "") { return 1  }
-      if(aMarq == "" && bMarq == "") { return 0  }
-      return Number.parseInt(a.marq) - Number.parseInt(b.marq);
+    // Convert FILE to local url
+    return this.props.input.value.sort((a,b) => {
+      // Si la notice est de type Mérimée ou Palissy, l'ordre est géré avec le champ marq
+      if(typeof a == "object" && typeof b == "object"){
+        let aMarq = typeof a.marq != "undefined" ? a.marq : "";
+        let bMarq = typeof b.marq != "undefined" ? b.marq : "";
+  
+        if(aMarq != "" && bMarq == "") { return -1  }
+        if(aMarq == "" && bMarq != "") { return 1  }
+        if(aMarq == "" && bMarq == "") { return 0  }
+        return Number.parseInt(a.marq) - Number.parseInt(b.marq);
+      }
+      // M42546 - MNR les mages sont présentes dans le champ VIDEO qui est un tableau d'url, 
+      // l'ordre des index est maintenu pour l'affichage.
+      return 1;
     }).map(e => {
       return this.getFile(e);
     });
