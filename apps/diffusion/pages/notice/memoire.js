@@ -350,7 +350,7 @@ export default class extends React.Component {
                 
                 <div className="notice-details">
                   <Title
-                    content="3. Description de la photographie"
+                    content="Description de la photographie"
                     notice={notice}
                     fields={[
                       "TYPDOC",
