@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Layout from "../src/components/Layout";
-import { tag } from "./../src/services//tags";
+import { tag } from "./../src/services/tags";
 
 export default class extends React.Component {
   componentDidMount() {

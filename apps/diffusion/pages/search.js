@@ -15,7 +15,7 @@ import { es_url } from "../src/config";
 import queryString from "query-string";
 import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
-import { tag } from "./../src/services//tags";
+import { tag } from "./../src/services/tags";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
 

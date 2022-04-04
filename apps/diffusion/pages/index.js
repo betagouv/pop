@@ -7,7 +7,7 @@ import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
-import { tag } from "./../src/services//tags";
+import { tag } from "./../src/services/tags";
 
 export default class extends React.Component {
   componentDidMount() {
