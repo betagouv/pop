@@ -5,9 +5,8 @@ import { tag } from "./../src/services/tags";
 
 export default class extends React.Component {
   componentDidMount() {
-    console.log(process.env.NODE_ENV)
     tag.sendPage({
-      name: 'Page OpenData'
+      name: 'Page Télécharger les bases'
     });
   }
 
