@@ -17,7 +17,9 @@ class ATInternetService {
     //@param info: {name: string, level2?: string, chapter1?: string, chapter2?: string, chapter3?: string, customObject?: any}
     sendPage(info) {
       this.tag.page.set(info);
-      this.tag.dispatch();
+      if(process.env.NODE_ENV == "production"){
+        this.tag.dispatch();
+      }
     }
   }
   
