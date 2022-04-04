@@ -48,7 +48,7 @@ class Notice extends React.Component {
           console.error(`Impossible de charger la notice ${ref}`);
           return;
         }
-        console.log("NOTICE", notice);
+
         this.props.initialize(notice);
 
         // Mantis 38639 - ajout vérification edition
