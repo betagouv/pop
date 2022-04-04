@@ -36,6 +36,7 @@ class MyDocument extends Document {
           <script src="/static/piwik.js" />
           <script src="/static/jquery.min.js"></script>
           <script src="/static/jquery.highlight-5.js" />
+          <script src="/static/smarttag.js" />
         </Head>
         <body>
           <Main />
