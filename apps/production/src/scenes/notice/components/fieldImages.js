@@ -76,7 +76,7 @@ class FieldImages extends React.Component {
       }
       // M42546 - MNR les mages sont présentes dans le champ VIDEO qui est un tableau d'url, 
       // l'ordre des index est maintenu pour l'affichage.
-      return 1;
+      return 0;
     }).map(e => {
       return this.getFile(e);
     });
