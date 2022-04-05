@@ -237,7 +237,7 @@ export default class extends React.Component {
                   params={{
                     base: ["Collections des musées de France (Joconde)"],
                     domn: ["dessin"],
-                    auteur: "DELACROIX Eugène"
+                    auteur: ["DELACROIX Eugène"]
                   }}
                 />
                 <TopicCard
