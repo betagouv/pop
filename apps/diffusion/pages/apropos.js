@@ -59,13 +59,6 @@ export default class extends React.Component {
             </p>
 
             <p>
-            Les internautes trouveront sur POP plus de trois millions de notices patrimoniales,
-            décrivant des œuvres d’art, des édifices, des photographies. POP a vocation à s’enrichir
-            régulièrement par la mise à jour et l’illustration des notices existantes et par le versement
-            de nouvelles notices.
-            </p>
-
-            <p>
             <b>Joconde</b> est le catalogue collectif des collections des musées de France. <b>Muséofile</b>, qui
             lui est lié, est le répertoire des institutions bénéficiant de l’appellation « musée de
             France ».
