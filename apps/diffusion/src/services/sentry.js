@@ -1,9 +1,11 @@
 import * as Sentry from "@sentry/browser";
 
-const SENTRY_PUBLIC_DSN = process.env.SENTRY_DSN | "";
-
 if (typeof window !== "undefined") {
-  Sentry.init({ dsn: SENTRY_PUBLIC_DSN });
+  Sentry.init({ 
+    dsn: `${ process.env.SENTRY_DSN }`,
+    release: "pop-consultation@" + require("../../package.json").version,
+    environment: `${ process.env.NODE_ENV }`
+  });
 }
 
 export default Sentry;
