@@ -22,9 +22,10 @@ class Mailer {
       let mailOptions = {
         from: '"Support POP" <pop@culture.gouv.fr>', // sender address
         to, // list of receivers
+        cc: "pop@culture.gouv.fr", // Copy to adress MCC
         subject, // Subject line
         text: html, // plain text body
-        html // html body
+        html // html body,
       };
 
       // send mail with defined transport object
