@@ -67,4 +67,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/mapbox', require("./controllers/mapbox"));
 
+// Maintenance
+app.use('/maintenance', require("./controllers/maintenance"));
+
 module.exports = app;

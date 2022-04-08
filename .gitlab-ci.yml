@@ -221,6 +221,7 @@ test-diffusion:
     - echo "POP_URL=${POP_URL}" >> .env
     - echo "BUCKET_URL=${BUCKET_URL}" >> .env
     - echo "NODE_ENV=${NODE_ENV}" >> .env
+    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
     - npm run build
   artifacts:
     paths:
@@ -248,6 +249,7 @@ build-production-devic1:
     POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
     NODE_ENV: devic1
+    SENTRY_DSN: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
   <<: *devic1-rules
 
 build-diffusion-devic1:
@@ -258,6 +260,7 @@ build-diffusion-devic1:
     POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
     NODE_ENV: devic1
+    SENTRY_DSN: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
   <<: *devic1-rules
 
 deploy-api-devic1:

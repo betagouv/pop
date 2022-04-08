@@ -343,6 +343,10 @@ class api {
   getThesaurusById(idThesaurus){
     return request.getJSON(`/thesaurus/getAllThesaurusById?id=${idThesaurus}`)
   }
+
+  getMaintenance() {
+    return request.getJSON(`/maintenance`)
+  }
 }
 
 const apiObject = new api();

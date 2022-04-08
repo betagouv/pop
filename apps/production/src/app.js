@@ -4,14 +4,24 @@ import Loader from "./components/Loader";
 import { history } from "./redux/store";
 import PublicRoutes from "./router";
 import Actions from "./redux/auth/actions";
+import API from './services/api';
 const { signinByToken } = Actions;
 
 import { connect } from "react-redux";
 
+const message_maintenance = "Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
+
 class App extends React.Component {
-  state = { alert: process.env.NODE_ENV !== "production", maintenance: process.env.MAINTENANCE };
+  state = { alert: process.env.NODE_ENV !== "production", maintenance: "FALSE" };
+
   componentWillMount() {
     this.props.signinByToken();
+    this.isMaintenanceSite();
+  }
+
+  async isMaintenanceSite(){
+    const response = await API.getMaintenance();
+    this.setState({ maintenance: response.maintenance });
   }
 
   renderAlert() {
@@ -35,11 +45,11 @@ class App extends React.Component {
   renderAlertMaintenance() {
     return (
       <Alert
-        style={{ marginBottom: "0px" }}
+        style={{ marginBottom: "0px", textAlign: "center" }}
         color="warning"
-        isOpen={this.state.maintenance == true}
+        isOpen={this.state.maintenance == "TRUE"}
       >
-        Une mise à jour est en cours actuellement, le service de versement ou de mise-à-jour de notices est indisponible.
+        { message_maintenance }
       </Alert>
     );
   }

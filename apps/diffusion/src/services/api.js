@@ -119,6 +119,16 @@ class api {
       .catch(e => reject(e));;
     });
   }
+
+  getMaintenance() {
+    return new Promise((resolve, reject) => {
+      this._get(`${api_url}/maintenance`)
+        .then(resp => {
+          resolve(resp);
+        })
+        .catch(e => reject(e));
+    });
+  }
 }
 
 const apiObject = new api();
