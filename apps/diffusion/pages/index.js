@@ -2,17 +2,13 @@ import Head from "next/head";
 import Slider from "react-slick";
 import React from "react";
 import Link from "next/link";
-import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody, Alert } from "reactstrap";
+import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody } from "reactstrap";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
-import API from '../src/services/api';
-
-const message_maintenance = "Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
 
 export default class extends React.Component {
-  state = { maintenance: "FALSE" };
 
   componentDidMount() {
     Router.prefetch("/search");
@@ -21,7 +17,6 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.gotoSearch = this.gotoSearch.bind(this);
-    this.isMaintenanceSite();
   }
 
   gotoSearch() {
@@ -29,11 +24,6 @@ export default class extends React.Component {
     pushSearchRoute({ mode: "simple", view: "list", params: { mainSearch } }).then(() =>
       window.scrollTo(0, 0)
     );
-  }
-
-  async isMaintenanceSite(){
-    const response = await API.getMaintenance();
-    this.setState({ maintenance: response.maintenance });
   }
 
   render() {
@@ -57,13 +47,6 @@ export default class extends React.Component {
               content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 3 millions de contenus numériques du patrimoine français."
             />
           </Head>
-          <Alert
-            style={{ marginBottom: "0px", textAlign: "center" }}
-            color="warning"
-            isOpen={this.state.maintenance == "TRUE"}
-            >
-            { message_maintenance }
-          </Alert>
           <div className="home-search-background">
             <div className="home-search">
               <h1>
