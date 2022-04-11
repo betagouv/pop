@@ -1,17 +1,31 @@
 import React from "react";
 import Link from "next/link";
-import { Container } from "reactstrap";
+import { Container, Alert } from "reactstrap";
 import Version from "../../../version.json";
 import Cookies from 'universal-cookie';
+import API from '../../src/services/api';
+
+const message_maintenance = "Une opération de maintenance est en cours. Elle peut fausser l’affichage des résultats. Nous vous présentons nos excuses pour la gêne occasionnée. L’opération devrait être finie le 12 avril 2022";
 
 
 export default class Layout extends React.Component {
+  state = { maintenance: "FALSE" };
 
   getNbNoticesInBucket() {
     //Récupération du panier actuel dans les cookies
     const cookies = new Cookies()
     let currentBucket = cookies.get("currentBucket") || []
     return currentBucket.length
+  }
+
+  constructor(props) {
+    super(props);
+    this.isMaintenanceSite();
+  }
+
+  async isMaintenanceSite(){
+    const response = await API.getMaintenance();
+    this.setState({ maintenance: response.maintenance });
   }
 
   render() {
@@ -47,6 +61,13 @@ export default class Layout extends React.Component {
               </div>
             </div>
           </Container>
+          <Alert
+              style={{ marginBottom: "0px", textAlign: "center" }}
+              color="warning"
+              isOpen={this.state.maintenance == "TRUE"}
+              >
+              { message_maintenance }
+            </Alert>
         </div>
         {children}
         <div className="footer">
