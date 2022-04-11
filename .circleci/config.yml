@@ -64,6 +64,8 @@ commands:
         type: string
       bucket_url:
         type: string
+      env:
+        type: string
       sentry:
         type: string
     steps:
