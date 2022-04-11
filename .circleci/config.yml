@@ -68,6 +68,8 @@ commands:
         type: string
       sentry:
         type: string
+      path:
+        type: string
     steps:
       - checkout
       - restore_node_modules:
@@ -85,7 +87,7 @@ commands:
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
           paths:
-            - build
+            - << parameters.path >>
   deploy:
     parameters:
       eb_deploy:
@@ -178,9 +180,6 @@ jobs:
   build_diffusion_staging:
     executor: docker_node
     steps:
-      - checkout
-      - restore_node_modules:
-          app: diffusion
       - build:
           app: diffusion
           api_url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
@@ -188,10 +187,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
           env: staging
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
-      - persist_to_workspace:
-          root: ~/repo/apps/diffusion
-          paths:
-            - .next
+          path: .next
   build_diffusion_prod:
     executor: docker_node
     steps:
@@ -219,6 +215,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
           env: staging
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
+          path: build
   build_production_prod:
     executor: docker_node
     steps:
