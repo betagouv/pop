@@ -183,8 +183,8 @@ jobs:
       - build:
           app: diffusion
           api_url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-          pop_url: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
-          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
+          pop_url: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
+          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
           path: .next
@@ -194,8 +194,8 @@ jobs:
       - build:
            app: diffusion
            api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
-           pop_url: http://pop-consultation.eu-west-3.elasticbeanstalk.com
-           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque
+           pop_url: http://pop-consultation.eu-west-3.elasticbeanstalk.com/
+           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
            env: production
            sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
            path: .next
