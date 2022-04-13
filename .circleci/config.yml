@@ -206,7 +206,7 @@ jobs:
           app: production
           api_url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
           pop_url: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
-          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
+          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
@@ -217,7 +217,7 @@ jobs:
           app: production
           api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
           pop_url: http://pop-consultation.eu-west-3.elasticbeanstalk.com
-          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque
+          bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
           env: production
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
@@ -264,7 +264,7 @@ jobs:
     steps:
       - deploy_api:
           eb_deploy: pop-api
-          app_name: pop_api
+          app_name: pop-api
   deploy_diffusion_prod:
     executor: docker_python
     steps:
@@ -278,6 +278,7 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/pop_consultation/pop-consultation/" .elasticbeanstalk/config.yml
             eb deploy pop-consultation
 #############
 # WORKFLOWS #
