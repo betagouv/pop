@@ -246,7 +246,7 @@ build-production-devic1:
     APP: production
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
     POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: devic1
   <<: *devic1-rules
 
@@ -256,7 +256,7 @@ build-diffusion-devic1:
     APP: diffusion
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
     POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: devic1
   <<: *devic1-rules
 
@@ -315,7 +315,7 @@ build-production-staging:
     APP: production
     API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
     POP_URL: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
     NODE_ENV: staging
   rules:
     - when: manual
@@ -326,7 +326,7 @@ build-diffusion-staging:
     APP: diffusion
     API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
     POP_URL: http://pop-staging.culture.gouv.fr/
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
     NODE_ENV: staging
   rules:
     - when: manual
@@ -385,7 +385,7 @@ build-production-production:
     APP: production
     API_URL: https://api.pop.culture.gouv.fr
     POP_URL: https://pop.culture.gouv.fr
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
     NODE_ENV: production
   rules:
     - when: manual
@@ -396,7 +396,7 @@ build-diffusion-production:
     APP: diffusion
     API_URL: https://api.pop.culture.gouv.fr
     POP_URL: https://pop.culture.gouv.fr/
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
     NODE_ENV: production
   rules:
     - when: manual
