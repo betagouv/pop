@@ -193,7 +193,7 @@ jobs:
     steps:
       - build:
            app: diffusion
-           api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
+           api_url: https://api.pop.culture.gouv.fr
            pop_url: https://pop.culture.gouv.fr/
            bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
            env: production
@@ -215,7 +215,7 @@ jobs:
     steps:
       - build:
           app: production
-          api_url: http://pop-api.eu-west-3.elasticbeanstalk.com
+          api_url: https://api.pop.culture.gouv.fr
           pop_url: https://pop.culture.gouv.fr/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
           env: production
