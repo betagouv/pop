@@ -179,11 +179,15 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
   */
   const thesaurusId = req.query.id;
 
+  if(!thesaurusId){
+    return res.status(400).send({ success: false, msg: `L'identifiant "${thesaurusId}" est invalide`});
+  }
+
   return new Promise((resolve, reject) => {
     request.get({
       url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
     },
-    (error, response) => {
+    (error, response) => { console.log(response.statusCode)
       if (!error && response.statusCode === 202) {
         updateThesaurus(thesaurusId, response.body);
         resolve(response);
