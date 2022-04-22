@@ -94,7 +94,7 @@ export default function List() {
 const Card = ({ data, id }) => {
   const preview_url = `${pop_url}/search/list?import=["${id}"]`;
 
-  const details_url = `${bucket_url}/import/${id}/import.csv`;
+  const details_url = `${bucket_url}import/${id}/import.csv`;
 
   return (
     <div className="import-card col-6">
