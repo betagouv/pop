@@ -194,7 +194,7 @@ function report(notices, collection, email, institution, importId) {
 
   const diffUrl = `${pop_url}/search/list?import=["${importId}"]`;
 
-  const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
+  const fileUrl = `${bucket_url}import/${importId}/import.csv`;
 
   const created = notices.filter(e => e._status === "created");
   const updated = notices.filter(e => e._status === "updated");
