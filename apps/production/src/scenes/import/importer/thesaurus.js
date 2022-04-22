@@ -1,7 +1,7 @@
 import api from "../../../services/api";
 
 // Joconde : Liste des champs à prendre en compte pour le contrôle Thésaurus
-const thesaurusJocondeControle = ['ECOL','GENE', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
+const thesaurusJocondeControle = ['ECOL', 'AUTR', 'STAT', 'LOCA', 'DEPO', 'DOMN', 'DENO', 'PERI', 'PEOC', 'PERU'];
 const thesaurusJocondeNonControle = [];
 
 export function checkThesaurus(importedNotices) {
