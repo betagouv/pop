@@ -105,13 +105,13 @@ const Card = ({ data, id }) => {
               new Date(data.importedAt)
             )} par ${data.email || "inconnu"} (${data.institution})`}</div>
             <div className="title">
-              {`Vous pouvez consultez le résultat de l'import ici : `}
+              {`Vous pouvez consulter le résultat de l'import ici : `}
               <a href={preview_url} target="_blank" rel="noopener">
                 Voir en diffusion
               </a>
             </div>
             <div className="title">
-              {`Vous pouvez consultez le détail de l'import ici : `}
+              {`Vous pouvez consulter le détail de l'import ici : `}
               <a href={details_url} target="_blank" rel="noopener">
                 Fichier de détail
               </a>

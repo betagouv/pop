@@ -152,7 +152,8 @@ async function transformBeforeCreateOrUpdate(notice) {
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
   if (notice.COORM && notice.ZONE) {
     // Convert it to a proper format in WGS84
-    coordinates = (convertCOORM(notice.COORM, notice.ZONE)).coordinates;
+    let convert = (convertCOORM(notice.COORM, notice.ZONE));
+    coordinates = convert.coordinates ? convert.coordinates : [];
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
   

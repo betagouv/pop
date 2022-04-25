@@ -3,7 +3,6 @@ function cleanArrayValue(notice){
         if(Array.isArray(value)){
         notice[key] = value.filter( el => el !== "");
         }
-        console.log(`${key}: ${value}`);
     }
 }
 
