@@ -31,6 +31,23 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
     }
   }
 
+  if(addLink != 'undefined' && addLink){
+    if(typeof str == 'string'){
+      str = addLinkToText(str);
+    } else if(Array.isArray(str)){
+      str = str.map((element => {
+        if(typeof element == "string"){
+          element = addLinkToText(element);
+        } else {
+          element = <p>{element}</p>
+        }
+        return element;
+      }));
+    }
+  } else {
+    str = <p>{str}</p>;
+  }
+
   if(!isPdf){
 
     // modification du retour à la ligne \n non interprété dans la page web
@@ -45,25 +62,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       });
       str = arrayContent.reduce((a,b) => [a, ' ', b]);
     }
- 
-    if(addLink != 'undefined' && addLink){
-      if(typeof str == 'string'){
-        str = addLinkToText(str);
-      } else if(Array.isArray(str)){
-        str = str.map((element => {
-          if(typeof element == "string"){
-            element = addLinkToText(element);
-          } else {
-            element = <p>{element}</p>
-          }
-          return element;
-        }));
-      }
-    } else {
-      str = <p>{str}</p>;
-    }
 
-  
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
