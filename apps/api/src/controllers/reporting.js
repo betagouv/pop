@@ -15,7 +15,7 @@ async function recipients(to) {
     case "mnr":
       return "isabelle.rouge-ducos@culture.gouv.fr";
     case "inv":
-      return ["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr", "sandrine.della-bartolomea@culture.gouv.fr", "ines.graillat@culture.gouv.fr"].join(",");
+      return ["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr", "ines.graillat@culture.gouv.fr"].join(",");
     case "joconde":
       return ["sophie.daenens@culture.gouv.fr", "angelina.meslem@culture.gouv.fr"].join(",");
     case "memoire":
