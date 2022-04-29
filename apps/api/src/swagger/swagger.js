@@ -1,21 +1,7 @@
 const swaggerAutogen = require('swagger-autogen')();
 require("dotenv").config();
 
-let api_url = '';
-
-switch(process.env.BUCKET){
-  case 'pop-phototeque-staging':
-    api_url = 'pop-api-staging.eu-west-3.elasticbeanstalk.com';
-    break;
-  case 'pop-phototeque':
-    api_url = 'api.pop.culture.gouv.fr';
-    break;
-  default:
-    // Environnement DEV
-    api_url = 'localhost:3000';
-    break;
-}
-
+let api_url = process.env.API_URL | 'localhost:3000';
 
 const doc = {
     info: {
