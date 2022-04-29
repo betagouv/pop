@@ -13,7 +13,7 @@ const doc = {
     },
     host: api_url,
     basePath: "/",
-    schemes: ['http', 'https'],
+    schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],
     tags: [
