@@ -1199,7 +1199,7 @@ const endpointsFiles = [
   './src/controllers/auth.js',
     './src/controllers/autor.js',
     './src/controllers/enluminures.js',
-    './src/controllers/deletehistorique.js',
+    './src/controllers/deleteHistorique.js',
     './src/controllers/gallery.js',
     './src/controllers/import.js',
     './src/controllers/joconde.js',
