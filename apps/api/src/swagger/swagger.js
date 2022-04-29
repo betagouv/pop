@@ -1,7 +1,7 @@
 const swaggerAutogen = require('swagger-autogen')();
 require("dotenv").config();
 
-let api_url = process.env.API_URL ? process.env.API_URL : 'localhost:3000';
+let api_url = 'http://' + (process.env.API_URL) ? process.env.API_URL : 'localhost:3000';
 
 console.log(api_url)
 
