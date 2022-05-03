@@ -1,9 +1,7 @@
 const swaggerAutogen = require('swagger-autogen')();
 require("dotenv").config();
 
-let api_url = 'http://' + ( (process.env.API_URL) ? process.env.API_URL : 'localhost:3000');
-
-console.log(api_url)
+let api_url = (process.env.API_URL) ? process.env.API_URL : 'localhost:3000';
 
 const doc = {
     info: {
@@ -12,11 +10,7 @@ const doc = {
         description: "Documentation sur les webservices de l'application Api"
     },
     host: api_url,
-    servers:[
-      api_url,
-    ],
     basePath: "/",
-    schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],
     tags: [

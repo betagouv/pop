@@ -63,7 +63,19 @@ app.use("/search", require("./controllers/search"));
 app.use("/oai", require("./controllers/oai"));
 
 // Swagger DOC
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Swagger DOC
+app.use('/api-docs', function(req, res, next){ 
+  
+  res.setHeader(
+    'Content-Security-Policy',
+ //   "default-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; style-src-attr 'self';  frame-src 'self';"
+    "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' data:;frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';"
+  );
+  //swaggerDocument.host = req.get('host');
+  //req.swaggerDoc = swaggerDocument;
+  next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/mapbox', require("./controllers/mapbox"));
 

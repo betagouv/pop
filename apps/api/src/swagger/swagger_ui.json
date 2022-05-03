@@ -5,7 +5,7 @@
     "title": "POP Api",
     "description": "Documentation sur les webservices de l'application Api"
   },
-  "host": "pop-api-staging.eu-west-3.elasticbeanstalk.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -82,8 +82,7 @@
     }
   ],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "apiKeyAuth": {
@@ -108,7 +107,7 @@
         "description": "Authentification utilisateur",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -146,7 +145,11 @@
         ],
         "description": "Informations utilisateur",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/auth/forgetPassword": {
@@ -157,7 +160,7 @@
         "description": "Demande de modification du mot de passe",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -193,7 +196,7 @@
         "description": "Modification mot de passe",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -217,6 +220,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -274,7 +280,7 @@
         }
       }
     },
-    "\r/": {
+    "/": {
       "put": {
         "tags": [
           "Autor"
@@ -282,7 +288,7 @@
         "description": "Utilisé lors de l'import",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -316,45 +322,12 @@
         "description": "Utilisé pour la création du document",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
                 "autorNotices": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "\r/{ref}": {
-      "put": {
-        "tags": [
-          "Autor"
-        ],
-        "description": "Utilisé pour la mise à jour du document",
-        "parameters": [
-          {
-            "name": "ref",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "notice": {
                   "example": "any"
                 }
               }
@@ -471,9 +444,9 @@
         "parameters": [
           {
             "name": "limit",
+            "description": "Optionnel: Permet de limiter le nombre de résultat",
             "in": "query",
-            "type": "string",
-            "description": "Optionnel: Permet de limiter le nombre de résultat"
+            "type": "string"
           }
         ],
         "responses": {
@@ -514,7 +487,7 @@
         "description": "Création d\\'un enregistrement pour une notice supprimée",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -591,7 +564,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -624,7 +597,7 @@
         "description": "Création d'un import",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -637,6 +610,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -697,7 +673,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -783,6 +759,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -800,7 +779,7 @@
         "description": "Création de la notice Joconde",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -813,6 +792,12 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -833,7 +818,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -919,6 +904,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -936,7 +924,7 @@
         "description": "Création de la notice Mémoire",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -949,6 +937,12 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -997,7 +991,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1083,6 +1077,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -1100,7 +1097,7 @@
         "description": "Création de la notice Mérimée",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1115,6 +1112,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1136,7 +1136,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1180,6 +1180,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -1197,7 +1200,7 @@
         "description": "Création de la notice Mnr",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1210,6 +1213,12 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1268,7 +1277,7 @@
         "description": "Création de la notice Museo",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1301,7 +1310,7 @@
         "description": "Modification de la notice Museo",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1341,6 +1350,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -1360,12 +1372,7 @@
           {
             "name": "verb",
             "in": "query",
-            "type": "string",
-            "description": "Paramètre suivant description"
-          },
-          {
-            "name": "metadataPrefix",
-            "in": "query",
+            "description": "Paramètre suivant description",
             "type": "string"
           },
           {
@@ -1375,11 +1382,6 @@
           },
           {
             "name": "until",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "set",
             "in": "query",
             "type": "string"
           },
@@ -1460,7 +1462,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1546,6 +1548,9 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -1563,7 +1568,7 @@
         "description": "Création de la notice Palissy",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1578,6 +1583,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1630,7 +1638,7 @@
         "description": "Création d",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1695,7 +1703,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1714,6 +1722,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           },
@@ -1754,7 +1765,7 @@
         "description": "Envoie du rapport par mail",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1811,7 +1822,7 @@
         "description": "Mise à jour d\\'un groupe",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1830,6 +1841,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           },
@@ -1848,7 +1862,7 @@
         "description": "Création d\\'un groupe",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1952,7 +1966,11 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/thesaurus/validate": {
@@ -1973,7 +1991,11 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/thesaurus/getTopConceptsByThesaurusId": {
@@ -2079,7 +2101,7 @@
             "type": "string"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2097,6 +2119,72 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/thesaurus/getThesaurusById": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne la liste des Thesaurus en fonction de l",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/thesaurus/autocompleteByIdthesaurusAndValue": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Recherche de l",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/thesaurus/getPrefLabelByIdArk": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Recherche le prefLabel par rapport à l",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -2127,7 +2215,7 @@
         "description": "Mise à jour d\\'un utilisateur",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2155,6 +2243,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "400": {
             "description": "Bad Request"
           },
@@ -2176,7 +2267,7 @@
         "description": "Création d\\'un utilisateur",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
@@ -3505,7 +3596,7 @@
           "type": "string",
           "example": ""
         },
-        "ACC": {
+        "PLOC": {
           "type": "string",
           "example": ""
         },
@@ -3533,7 +3624,7 @@
           "type": "string",
           "example": ""
         },
-        "COSTUME": {
+        "DPT_LETTRE": {
           "type": "string",
           "example": ""
         },
@@ -3650,7 +3741,7 @@
           "type": "string",
           "example": ""
         },
-        "NUMCAF": {
+        "NUMVERS": {
           "type": "string",
           "example": ""
         },
@@ -3706,7 +3797,7 @@
           "type": "string",
           "example": ""
         },
-        "TOILE": {
+        "CINEPROD": {
           "type": "string",
           "example": ""
         },
@@ -3800,7 +3891,7 @@
           "type": "string",
           "example": ""
         },
-        "ADRS": {
+        "WADRS": {
           "type": "string",
           "example": ""
         },
@@ -3852,7 +3943,7 @@
           "type": "string",
           "example": ""
         },
-        "NUMG": {
+        "NEGPOS": {
           "type": "string",
           "example": ""
         },
@@ -4711,7 +4802,7 @@
             "type": "string"
           }
         },
-        "TOUT": {
+        "NET": {
           "type": "string",
           "example": ""
         },
@@ -4810,11 +4901,11 @@
           "type": "string",
           "example": ""
         },
-        "HIST5": {
+        "SALLES": {
           "type": "string",
           "example": ""
         },
-        "HIST6": {
+        "CARTELS": {
           "type": "string",
           "example": ""
         },
@@ -4886,7 +4977,7 @@
           "type": "string",
           "example": ""
         },
-        "CATE_DEPREC": {
+        "RCL": {
           "type": "string",
           "example": ""
         },
