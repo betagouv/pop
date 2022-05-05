@@ -175,7 +175,7 @@ export function JocondePdf(notice, title, links, museo) {
                         museo.VILLE_M || museo.VILLE_AD,
                         museo.REF
                       ].join(" - ")
-                      : test}</Link>
+                      : null}</Link>
                   : <></>
               }
 

@@ -189,6 +189,7 @@ test-diffusion:
     - echo "API_URL=${API_URL}" > .env
     - echo "POP_URL=${POP_URL}" >> .env
     - echo "BUCKET_URL=${BUCKET_URL}" >> .env
+    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
     - echo "NODE_ENV=${NODE_ENV}" >> .env
     - npm run build
   artifacts:

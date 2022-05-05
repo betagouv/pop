@@ -16,6 +16,7 @@ const Museo = require("../models/museo");
 const Producteur = require("../models/producteur");
 let moment = require('moment-timezone')
 const { checkValidRef } = require("./utils/notice");
+const { cleanArrayValue } = require("./utils/dataFilter");
 
 const {
   uploadFile,
@@ -213,8 +214,8 @@ async function updateLinks(notice) {
     let noticeMemoire = await Memoire.findOne({ REF: REF });
     let IMG = notice.IMG ? notice.IMG : (noticeMemoire? noticeMemoire.IMG : "");
     let COPY = notice.COPY ? notice.COPY : (noticeMemoire? noticeMemoire.COPY : "");
-    const NAME = (notice.TICO ? notice.TICO : (noticeMemoire? noticeMemoire.TICO : "")) 
-                  || (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
+    const NAME = (notice.LEG ? notice.LEG : (noticeMemoire? noticeMemoire.LEG : "")) 
+                  || (notice.TICO ? notice.TICO : (noticeMemoire? noticeMemoire.TICO : "")) 
                   || `${notice.EDIF || ""} ${notice.OBJ || ""}`.trim();
     let LBASE = notice.LBASE || [];
     let MARQ = notice.MARQ ? notice.MARQ : (noticeMemoire? noticeMemoire.MARQ : "");
@@ -317,6 +318,9 @@ router.put(
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
 
+    // Suppression des valeurs vident pour les champs multivalues
+    cleanArrayValue(notice);
+
     const obj = new Memoire(notice)
     let oaiObj = { DMAJ: notice.DMAJ }
     checkESIndex(obj)
@@ -376,6 +380,9 @@ router.post(
       BASE: "memoire",
       DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
     }
+
+    // Suppression des valeurs vident pour les champs multivalues
+    cleanArrayValue(notice);
 
     const obj = new Memoire(notice);
     const obj2 = new NoticesOAI(oaiObj)

@@ -48,7 +48,7 @@ class Notice extends React.Component {
           console.error(`Impossible de charger la notice ${ref}`);
           return;
         }
-        console.log("NOTICE", notice);
+
         this.props.initialize(notice);
 
         // Mantis 38639 - ajout vérification edition
@@ -185,6 +185,10 @@ class Notice extends React.Component {
                 <CustomField name="CATE" disabled={!this.state.editable}/>
                 <CustomField name="COMM" disabled={!this.state.editable}/>
                 <CustomField name="AFFE" disabled={!this.state.editable}/>
+                <CustomField name="SALLES" disabled={!this.state.editable}/>
+                <CustomField name="CARTELS" disabled={!this.state.editable}/>
+                <CustomField name="RCL" disabled={!this.state.editable}/>
+                <CustomField name="NET" disabled={!this.state.editable}/>
               </Col>
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>

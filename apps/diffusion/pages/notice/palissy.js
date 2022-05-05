@@ -169,7 +169,7 @@ export default class extends React.Component {
       .map(a => {
         const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
         return (
-          <a href={url} key={a}>
+          <a href={url} key={a} target="_blank">
             {a}
           </a>
         );
@@ -268,8 +268,8 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["DENO", "PDEN", "NART", "APPL", "TICO"]}
                   />
-                  <Field title={mapping.palissy.DENO.label} content={notice.DENO} />
-                  <Field title={mapping.palissy.PDEN.label} content={notice.PDEN} />
+                  <Field title={mapping.palissy.DENO.label} content={notice.DENO} join={' ; '}/>
+                  <Field title={mapping.palissy.PDEN.label} content={notice.PDEN} join={' ; '}/>
                   <Field title={mapping.palissy.NART.label} content={notice.NART} />
                   <Field title={mapping.palissy.APPL.label} content={notice.APPL} />
                   <Field title={mapping.palissy.TICO.label} content={notice.TICO} />
@@ -295,14 +295,14 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title="Localisation" content={localisation} />
-                  <Field title={mapping.palissy.INSEE.label} content={notice.INSEE} />
+                  <Field title={mapping.palissy.INSEE.label} content={notice.INSEE} join={' ; '}/>
                   <Field title={mapping.palissy.PLOC.label} content={notice.PLOC} />
                   <Field title={mapping.palissy.AIRE.label} content={notice.AIRE} />
                   <Field title={mapping.palissy.CANT.label} content={notice.CANT} />
                   <Field title={mapping.palissy.LIEU.label} content={notice.LIEU} />
                   <Field title={mapping.palissy.ADRS.label} content={notice.ADRS} />
                   <Field title={mapping.palissy.EDIF.label} content={notice.EDIF} />
-                  <Field title={mapping.palissy.REFA.label} content={notice.REFA} />
+                  <Field title={mapping.palissy.REFA.label} content={notice.REFA} join={' ; '}/>
                   <Field title={mapping.palissy.IMPL.label} content={notice.IMPL} />
                   <Field title={mapping.palissy.EMPL.label} content={notice.EMPL} />
                   <Field title={mapping.palissy.DEPL.label} content={notice.DEPL} />
@@ -326,17 +326,17 @@ export default class extends React.Component {
                       "PINS"
                     ]}
                   />
-                  <Field title={mapping.palissy.CATE.label} content={notice.CATE} />
-                  <Field title={mapping.palissy.STRU.label} content={notice.STRU} />
-                  <Field title={mapping.palissy.MATR.label} content={notice.MATR} />
+                  <Field title={mapping.palissy.CATE.label} content={notice.CATE} join={' ; '}/>
+                  <Field title={mapping.palissy.STRU.label} content={notice.STRU} join={' ; '}/>
+                  <Field title={mapping.palissy.MATR.label} content={notice.MATR} join={' ; '}/>
                   <Field title={mapping.palissy.DESC.label} content={notice.DESC} separator="£" addLink="true" />
-                  <Field title={mapping.palissy.REPR.label} content={notice.REPR} separator="£" />
+                  <Field title={mapping.palissy.REPR.label} content={notice.REPR} separator="£" join={' ; '}/>
                   <Field title={mapping.palissy.PREP.label} content={notice.PREP} />
                   <Field title={mapping.palissy.DIMS.label} content={notice.DIMS} separator="£" />
                   <Field title={mapping.palissy.PDIM.label} content={notice.PDIM} />
-                  <Field title={mapping.palissy.ETAT.label} content={notice.ETAT} />
+                  <Field title={mapping.palissy.ETAT.label} content={notice.ETAT} join={' ; '}/>
                   <Field title={mapping.palissy.PETA.label} content={notice.PETA} />
-                  <Field title={mapping.palissy.INSC.label} content={notice.INSC} />
+                  <Field title={mapping.palissy.INSC.label} content={notice.INSC} join={' ; '}/>
                   <Field title={mapping.palissy.PINS.label} content={notice.PINS} />
                   <Title
                     content="Historique"
@@ -357,17 +357,17 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.palissy.AUTR.label} content={this.authors()} />
-                  <Field title={mapping.palissy.AFIG.label} content={notice.AFIG} />
-                  <Field title={mapping.palissy.ATEL.label} content={notice.ATEL} />
+                  <Field title={mapping.palissy.AFIG.label} content={notice.AFIG} join={' ; '}/>
+                  <Field title={mapping.palissy.ATEL.label} content={notice.ATEL} join={' ; '}/>
                   <Field title={mapping.palissy.REFM.label} content={notice.REFM} />
-                  <Field title={mapping.palissy.PERS.label} content={notice.PERS} separator="£" />
+                  <Field title={mapping.palissy.PERS.label} content={notice.PERS} separator="£" join={' ; '}/>
                   <Field title={mapping.palissy.EXEC.label} content={notice.EXEC} />
                   <Field title={mapping.palissy.ORIG.label} content={notice.ORIG} />
-                  <Field title={mapping.palissy.STAD.label} content={notice.STAD} />
+                  <Field title={mapping.palissy.STAD.label} content={notice.STAD} join={' ; '}/>
 
-                  <Field title={mapping.palissy.SCLE.label} content={notice.SCLE} />
-                  <Field title={mapping.palissy.DATE.label} content={notice.DATE} />
-                  <Field title={mapping.palissy.JDAT.label} content={notice.JDAT} />
+                  <Field title={mapping.palissy.SCLE.label} content={notice.SCLE} join={' ; '}/>
+                  <Field title={mapping.palissy.DATE.label} content={notice.DATE} join={' ; '}/>
+                  <Field title={mapping.palissy.JDAT.label} content={notice.JDAT} join={' ; '}/>
                   <Field title={mapping.palissy.HIST.label} content={notice.HIST} separator="£" addLink="true" />
                   <Title
                     content="Statut juridique et protection"
@@ -389,7 +389,7 @@ export default class extends React.Component {
                       "PHOTO"
                     ]}
                   />
-                  <Field title={mapping.palissy.STAT.label} content={notice.STAT} />
+                  <Field title={mapping.palissy.STAT.label} content={notice.STAT} join={' ; '}/>
                   <Field title={mapping.palissy.PROT.label} content={notice.PROT} />
                   <Field title={mapping.palissy.DPRO.label} content={notice.DPRO} />
                   <Field title={mapping.palissy.PPRO.label} content={notice.PPRO} />
@@ -425,15 +425,15 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.palissy.ETUD.label} content={notice.ETUD} />
-                  <Field title={mapping.palissy.DOSS.label} content={notice.DOSS} />
-                  <Field title={mapping.palissy.PART.label} content={notice.PART} />
-                  <Field title={mapping.palissy.REFP.label} content={notice.REFP} />
-                  <Field title={mapping.palissy.PARN.label} content={notice.PARN} />
+                  <Field title={mapping.palissy.DOSS.label} content={notice.DOSS} join={' ; '}/>
+                  <Field title={mapping.palissy.PART.label} content={notice.PART} join={' ; '}/>
+                  <Field title={mapping.palissy.REFP.label} content={notice.REFP} join={' ; '}/>
+                  <Field title={mapping.palissy.PARN.label} content={notice.PARN} join={' ; '}/>
                   <Field title={mapping.palissy.PAPP.label} content={notice.PAPP} />
-                  <Field title={mapping.palissy.REFE.label} content={notice.REFE} />
-                  <Field title={mapping.palissy.DENQ.label} content={notice.DENQ} />
-                  <Field title={mapping.palissy.DBOR.label} content={notice.DBOR} />
-                  <Field title={mapping.palissy.RENP.label} content={notice.RENP} />
+                  <Field title={mapping.palissy.REFE.label} content={notice.REFE} join={' ; '}/>
+                  <Field title={mapping.palissy.DENQ.label} content={notice.DENQ} join={' ; '}/>
+                  <Field title={mapping.palissy.DBOR.label} content={notice.DBOR} join={' ; '}/>
+                  <Field title={mapping.palissy.RENP.label} content={notice.RENP} join={' ; '}/>
 
                   <Field
                     title={mapping.palissy.DOSADRS.label}
@@ -454,7 +454,7 @@ export default class extends React.Component {
                     <Field title={mapping.palissy.BASE.label} content={notice.BASE} />
                     <Field title={mapping.palissy.DMIS.label} content={notice.DMIS} />
                     <Field title={mapping.palissy.DMAJ.label} content={notice.DMAJ} />
-                    <Field title={mapping.palissy.NOMS.label} content={notice.NOMS} />
+                    <Field title={mapping.palissy.NOMS.label} content={notice.NOMS} join={' ; '}/>
                     <Field title={mapping.palissy.COPY.label} content={notice.COPY} />
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" />
@@ -478,7 +478,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURL.label}
-        content={<a href={notice.DOSURL}>Voir le dossier complet sur le site de la région</a>}
+        content={<a href={notice.DOSURL} target="_blank">Voir le dossier complet sur le site de la région</a>}
         key="notice.DOSURL"
       />
     );
@@ -488,7 +488,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURLPDF.label}
-        content={<a href={postFixedLink(notice.DOSURLPDF)}>Voir le dossier d'origine numérisé</a>}
+        content={<a href={postFixedLink(notice.DOSURLPDF)} target="_blank">Voir le dossier d'origine numérisé</a>}
         key="notice.DOSURLPDF"
       />
     );
@@ -499,7 +499,7 @@ const SeeMore = ({ notice }) => {
       <Field
         title={mapping.palissy.POP_DOSSIER_VERT.label}
         content={
-          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>Voir le dossier d'origine numérisé</a>
+          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`} target="_blank">Voir le dossier d'origine numérisé</a>
         }
         key="notice.POP_DOSSIER_VERT"
       />
@@ -511,7 +511,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
       const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -530,7 +530,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
       const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -549,7 +549,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.palissy.LIENS.label}
-          content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
+          content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
           key={`notice.LIENS${i}`}
         />
       );
@@ -561,7 +561,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LINHA.label}
-          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          content={<a href={notice.LINHA[0]} target="_blank">{notice.LINHA[0]}</a>}
           key="notice.LINHA_0"
         />
       );
@@ -569,7 +569,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LINHA.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            content={<a href={notice.LINHA[i]} target="_blank">{notice.LINHA[i]}</a>}
             key={"notice.LINHA_" + i}
           />
         );
@@ -582,7 +582,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LREG.label}
-          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          content={<a href={notice.LREG[0]} target="_blank">{notice.LREG[0]}</a>}
           key="notice.LREG_0"
         />
       );
@@ -590,7 +590,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LREG.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            content={<a href={notice.LREG[i]} target="_blank">{notice.LREG[i]}</a>}
             key={"notice.LREG_" + i}
           />
         );

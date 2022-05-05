@@ -1,21 +1,7 @@
 const swaggerAutogen = require('swagger-autogen')();
 require("dotenv").config();
 
-let api_url = '';
-
-switch(process.env.BUCKET){
-  case 'pop-phototeque-staging':
-    api_url = 'pop-api-staging.eu-west-3.elasticbeanstalk.com';
-    break;
-  case 'pop-phototeque':
-    api_url = 'api.pop.culture.gouv.fr';
-    break;
-  default:
-    // Environnement DEV
-    api_url = 'localhost:3000';
-    break;
-}
-
+let api_url = (process.env.API_URL) ? process.env.API_URL : 'localhost:3000';
 
 const doc = {
     info: {
@@ -25,7 +11,6 @@ const doc = {
     },
     host: api_url,
     basePath: "/",
-    schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
     tags: [
@@ -1199,7 +1184,7 @@ const endpointsFiles = [
   './src/controllers/auth.js',
     './src/controllers/autor.js',
     './src/controllers/enluminures.js',
-    './src/controllers/deletehistorique.js',
+    './src/controllers/deleteHistorique.js',
     './src/controllers/gallery.js',
     './src/controllers/import.js',
     './src/controllers/joconde.js',

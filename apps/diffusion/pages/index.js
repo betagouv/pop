@@ -2,15 +2,19 @@ import Head from "next/head";
 import Slider from "react-slick";
 import React from "react";
 import Link from "next/link";
-import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody } from "reactstrap";
+import { Button, Input, Container, Row, Col, Card, CardTitle, CardBody, Alert } from "reactstrap";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
+import { tag } from "./../src/services/tags";
 
 export default class extends React.Component {
 
   componentDidMount() {
+    tag.sendPage({
+      name: 'Page Accueil'
+    });
     Router.prefetch("/search");
   }
 
@@ -179,7 +183,7 @@ export default class extends React.Component {
                   txt="André Kertész"
                   params={{
                     base: ["Photographies (Mémoire)"],
-                    auteur: ["Kertész, André", "Kertész, André (1894-1985)"]
+                    auteur: ["Kertész, André (1894-1985)"]
                   }}
                 />
                 <TopicCard
@@ -196,7 +200,7 @@ export default class extends React.Component {
                   txt="Atelier Nadar"
                   params={{
                     base: ["Photographies (Mémoire)"],
-                    auteur: ["Nadar (atelier)"]
+                    auteur: ["Atelier Nadar"]
                   }}
                 />
                 <TopicCard
@@ -204,7 +208,7 @@ export default class extends React.Component {
                   txt="Sam Lévin"
                   params={{
                     base: ["Photographies (Mémoire)"],
-                    auteur: ["Lévin, Sam", "Studio Lévin"]
+                    auteur: ["Lévin, Sam (1904-1992)", "Studio Lévin"]
                   }}
                 />
                 <TopicCard
@@ -212,7 +216,7 @@ export default class extends React.Component {
                   txt="Studio Harcourt"
                   params={{
                     base: ["Photographies (Mémoire)"],
-                    auteur: ["Harcourt (studio)"]
+                    auteur: ["Studio Harcourt (1934-1989)"]
                   }}
                 />
               </Slider>
@@ -369,8 +373,8 @@ export default class extends React.Component {
                   txt="Rosa Bonheur"
                   params={{
                     auteur: [
-                      "BONHEUR Marie Rosalie, BONHEUR Rosa (dite)",
-                      "BONHEUR Marie Rosalie ; BONHEUR Rosa (dite)",
+                      "BONHEUR Marie Rosalie",
+                      "BONHEUR Rosa (dite)",
                       "BONHEUR Rosa (dessinateur)"
                     ]
                   }}

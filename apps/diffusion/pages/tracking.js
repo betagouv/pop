@@ -2,8 +2,16 @@ import React from "react";
 import Head from "next/head";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
+import { tag } from "./../src/services/tags";
 
 export default class extends React.Component {
+
+  componentDidMount() {
+    tag.sendPage({
+      name: `Page Suivi d'audience et vie privée`
+    });
+  }
+
   render() {
     return (
       <Layout>

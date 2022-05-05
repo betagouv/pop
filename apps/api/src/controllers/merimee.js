@@ -13,6 +13,7 @@ const Museo = require("../models/museo");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 const { checkValidRef, removeChar } = require("./utils/notice");
+const { cleanArrayValue } = require("./utils/dataFilter");
 
 const {
   formattedNow,
@@ -51,12 +52,20 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push(`${existingProp}_REQUIRED_FOR_${requiredProp}`)
     );
   // DPT must be 2 char or more.
-  if (notice.DPT && notice.DPT.length < 2) {
-    notice.POP_FLAGS.push("DPT_LENGTH_2");
+  if (notice.DPT && notice.DPT.length > 0) {
+    notice.DPT.forEach( dpt => {
+      if(dpt.length < 2 && !notice.POP_FLAGS.includes("DPT_LENGTH_2")){
+        notice.POP_FLAGS.push("DPT_LENGTH_2");
+      }
+    });
   }
   // INSEE must be 5 char or more.
-  if (notice.INSEE && notice.INSEE.length < 5) {
-    notice.POP_FLAGS.push("INSEE_LENGTH_5");
+  if (notice.INSEE && notice.INSEE.length > 0) {
+    notice.INSEE.forEach( insee => {
+      if(insee.length < 5 && !notice.POP_FLAGS.includes("INSEE_LENGTH_5")){
+        notice.POP_FLAGS.push("INSEE_LENGTH_5");
+      }
+    });
   }
   // INSEE & DPT must start with the same first 2 letters.
   if (notice.INSEE && notice.DPT && notice.INSEE[0].substring(0, 2) !== notice.DPT[0].substring(0, 2)) {
@@ -143,7 +152,8 @@ async function transformBeforeCreateOrUpdate(notice) {
   // IF POLYGON IN LAMBERT, We convert it to a polygon in WGS84
   if (notice.COORM && notice.ZONE) {
     // Convert it to a proper format in WGS84
-    coordinates = (convertCOORM(notice.COORM, notice.ZONE)).coordinates;
+    let convert = (convertCOORM(notice.COORM, notice.ZONE));
+    coordinates = convert.coordinates ? convert.coordinates : [];
     notice["POP_COORDINATES_POLYGON"] = { type: "Polygon", coordinates };
   }
   
@@ -188,7 +198,7 @@ function checkIfMemoireImageExist(notice) {
       // Here, we update the images and we keep the order ( !! important )
       const NoticesMemoire = await Memoire.find({ LBASE: notice.REF });
       const arr = NoticesMemoire.map(e => {
-        const NAME = e.TICO || e.LEG || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
+        const NAME = e.LEG || e.TICO || `${e.EDIF || ""} ${e.OBJ || ""}`.trim();
         return { ref: e.REF, url: e.IMG, copy: e.COPY, name: NAME, marq: e.MARQ };
       });
 
@@ -313,6 +323,9 @@ router.put(
       const doc = new Merimee(notice);
       let oaiObj = { DMAJ: notice.DMAJ }
 
+      // Suppression des valeurs vident pour les champs multivalues
+      cleanArrayValue(notice);
+
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
@@ -356,6 +369,9 @@ router.post(
         BASE: "merimee",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
+      
+       // Suppression des valeurs vident pour les champs multivalues
+       cleanArrayValue(notice);
 
       const promises = [];
       const doc = new Merimee(notice);

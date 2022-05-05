@@ -48,6 +48,7 @@ export default class extends React.Component {
       pushLinkedNotices(arr, REFP, "merimee");
       pushLinkedNotices(arr, REFE, "merimee");
       pushLinkedNotices(arr, REFO, "palissy");
+      pushLinkedNotices(arr, RENV, "palissy");
       pushLinkedNotices(arr, REFJOC, "joconde");
       pushLinkedNotices(arr, REFMUS, "museo");
     }
@@ -164,7 +165,7 @@ export default class extends React.Component {
       .map(a => {
         const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
         return (
-          <a href={url} key={a}>
+          <a href={url} key={a} target="_blank">
             {a}
           </a>
         );
@@ -263,8 +264,8 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["DENO", "GENR", "PDEN", "VOCA", "APPL", "ACTU", "TICO"]}
                   />
-                  <Field title={mapping.merimee.DENO.label} content={notice.DENO} />
-                  <Field title={mapping.merimee.GENR.label} content={notice.GENR} />
+                  <Field title={mapping.merimee.DENO.label} content={notice.DENO} join={' ; '} />
+                  <Field title={mapping.merimee.GENR.label} content={notice.GENR} join={' ; '}/>
                   <Field title={mapping.merimee.PDEN.label} content={notice.PDEN} />
                   <Field title={mapping.merimee.VOCA.label} content={notice.VOCA} />
                   <Field title={mapping.merimee.APPL.label} content={notice.APPL} />
@@ -297,13 +298,13 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.CANT.label} content={notice.CANT} />
                   <Field title={mapping.merimee.LIEU.label} content={notice.LIEU} />
                   <Field title={mapping.merimee.ADRS.label} content={notice.ADRS} />
-                  <Field title={mapping.merimee.CADA.label} content={notice.CADA} />
-                  <Field title={mapping.merimee.IMPL.label} content={notice.IMPL} />
+                  <Field title={mapping.merimee.CADA.label} content={notice.CADA} join={' ; '}/>
+                  <Field title={mapping.merimee.IMPL.label} content={notice.IMPL} join={' ; '}/>
                   <Field title={mapping.merimee.HYDR.label} content={notice.HYDR} />
-                  <Field title={mapping.merimee.PARN.label} content={notice.PARN} />
+                  <Field title={mapping.merimee.PARN.label} content={notice.PARN} join={' ; '}/>
                   <Field title={mapping.merimee.EDIF.label} content={notice.EDIF} />
-                  <Field title={mapping.merimee.REFE.label} content={notice.REFE} />
-                  <Field title={mapping.merimee.COLL.label} content={notice.COLL} />
+                  <Field title={mapping.merimee.REFE.label} content={notice.REFE} join={' ; '}  />
+                  <Field title={mapping.merimee.COLL.label} content={notice.COLL} join={' ; '}/>
                   <Title
                     content="Historique"
                     notice={notice}
@@ -321,14 +322,14 @@ export default class extends React.Component {
                       "HIST"
                     ]}
                   />
-                  <Field title={mapping.merimee.SCLE.label} content={notice.SCLE} />
-                  <Field title={mapping.merimee.SCLD.label} content={notice.SCLD} />
-                  <Field title={mapping.merimee.DATE.label} content={notice.DATE} />
-                  <Field title={mapping.merimee.JDAT.label} content={notice.JDAT} />
+                  <Field title={mapping.merimee.SCLE.label} content={notice.SCLE} join={' ; '}/>
+                  <Field title={mapping.merimee.SCLD.label} content={notice.SCLD} join={' ; '} />
+                  <Field title={mapping.merimee.DATE.label} content={notice.DATE} join={' ; '}/>
+                  <Field title={mapping.merimee.JDAT.label} content={notice.JDAT} join={' ; '}/>
                   <Field title={mapping.merimee.AUTR.label} content={this.authors()} />
                   <Field title={mapping.merimee.REFM.label} content={notice.REFM} />
-                  <Field title={mapping.merimee.JATT.label} content={notice.JATT} />
-                  <Field title={mapping.merimee.PERS.label} content={notice.PERS} separator="£" />
+                  <Field title={mapping.merimee.JATT.label} content={notice.JATT} join={' ; '}/>
+                  <Field title={mapping.merimee.PERS.label} content={notice.PERS} separator="£" join={' ; '} />
                   <Field title={mapping.merimee.REMP.label} content={notice.REMP} />
                   <Field title={mapping.merimee.DEPL.label} content={notice.DEPL} />
                   <Field title={mapping.merimee.HIST.label} content={notice.HIST} separator="£" addLink="true" />
@@ -355,29 +356,31 @@ export default class extends React.Component {
                       "ETAT"
                     ]}
                   />
-                  <Field title={mapping.merimee.MURS.label} content={notice.MURS} />
-                  <Field title={mapping.merimee.TOIT.label} content={notice.TOIT} />
+                  <Field title={mapping.merimee.MURS.label} content={notice.MURS} join={' ; '}/>
+                  <Field title={mapping.merimee.TOIT.label} content={notice.TOIT} join={' ; '} />
                   <Field title={mapping.merimee.PLAN.label} content={notice.PLAN} />
-                  <Field title={mapping.merimee.ETAG.label} content={notice.ETAG} />
-                  <Field title={mapping.merimee.VOUT.label} content={notice.VOUT} />
-                  <Field title={mapping.merimee.ELEV.label} content={notice.ELEV} />
-                  <Field title={mapping.merimee.COUV.label} content={notice.COUV} />
+                  <Field title={mapping.merimee.ETAG.label} content={notice.ETAG} join={' ; '}/>
+                  <Field title={mapping.merimee.VOUT.label} content={notice.VOUT} join={' ; '} />
+                  <Field title={mapping.merimee.ELEV.label} content={notice.ELEV} join={' ; '} />
+                  <Field title={mapping.merimee.COUV.label} content={notice.COUV} join={' ; '}/>
                   <Field
                     title="Emplacement, forme et structure de l’escalier"
                     content={notice.ESCA}
+                    join={' ; '}
                   />
-                  <Field title={mapping.merimee.ENER.label} content={notice.ENER} />
+                  <Field title={mapping.merimee.ENER.label} content={notice.ENER} join={' ; '}/>
                   <Field title={mapping.merimee.VERT.label} content={notice.VERT} />
                   <Field title={mapping.merimee.DESC.label} content={notice.DESC} separator="£" addLink="true" />
                   <Field
                     title="Technique du décor des immeubles par nature"
                     content={notice.TECH}
+                    join={' ; '} 
                   />
                   <Field title={mapping.merimee.REPR.label} content={notice.REPR} />
-                  <Field title={mapping.merimee.PREP.label} content={notice.PREP} />
+                  <Field title={mapping.merimee.PREP.label} content={notice.PREP} join={' ; '} />
                   <Field title={mapping.merimee.DIMS.label} content={notice.DIMS} />
                   <Field title={mapping.merimee.TYPO.label} content={notice.TYPO} />
-                  <Field title={mapping.merimee.ETAT.label} content={notice.ETAT} />
+                  <Field title={mapping.merimee.ETAT.label} content={notice.ETAT} join={' ; '}/>
                   <Title
                     content="Protection et label"
                     notice={notice}
@@ -396,14 +399,14 @@ export default class extends React.Component {
                       "OBS"
                     ]}
                   />
-                  <Field title={mapping.merimee.PROT.label} content={notice.PROT} />
+                  <Field title={mapping.merimee.PROT.label} content={notice.PROT} join={' ; '}/>
                   <Field title={mapping.merimee.DPRO.label} content={notice.DPRO} />
                   <Field title={mapping.merimee.PPRO.label} content={notice.PPRO} />
-                  <Field title={mapping.merimee.APRO.label} content={notice.APRO} />
+                  <Field title={mapping.merimee.APRO.label} content={notice.APRO} join={' ; '}/>
                   <Field title={mapping.merimee.MHPP.label} content={notice.MHPP} />
-                  <Field title={mapping.merimee.REFO.label} content={notice.REFO} />
+                  <Field title={mapping.merimee.REFO.label} content={notice.REFO} join={' ; '} />
                   <Field title={mapping.merimee.SITE.label} content={notice.SITE} />
-                  <Field title={mapping.merimee.INTE.label} content={notice.INTE} />
+                  <Field title={mapping.merimee.INTE.label} content={notice.INTE} join={' ; '} />
                   <Field title={mapping.merimee.PINT.label} content={notice.PINT} />
                   <Field title={mapping.merimee.REMA.label} content={notice.REMA} />
                   <Field title={mapping.merimee.DLAB.label} content={notice.DLAB} />
@@ -417,7 +420,7 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.PSTA.label} content={notice.PSTA} />
                   <Field title={mapping.merimee.AFFE.label} content={notice.AFFE} />
                   <Field title={mapping.merimee.PAFF.label} content={notice.PAFF} />
-                  <Field title={mapping.merimee.VISI.label} content={notice.VISI} />
+                  <Field title={mapping.merimee.VISI.label} content={notice.VISI} join={' ; '}  />
                   <Title
                     content="Références documentaires"
                     notice={notice}
@@ -435,13 +438,14 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.merimee.DENQ.label} content={notice.DENQ} />
-                  <Field title={mapping.merimee.COPY.label} content={notice.COPY} />
+                  <Field title={mapping.merimee.COPY.label} content={notice.COPY} join={' ; '} />
                   <Field title={mapping.merimee.DBOR.label} content={notice.DBOR} />
                   <Field
                     title="Noms des rédacteurs de la notice et du dossier"
                     content={notice.NOMS}
+                    join={' ; '}
                   />
-                  <Field title={mapping.merimee.ETUD.label} content={notice.ETUD} />
+                  <Field title={mapping.merimee.ETUD.label} content={notice.ETUD} join={' ; '}/>
                   <Field title={mapping.merimee.DOSS.label} content={notice.DOSS} />
                   <Field title={mapping.merimee.REFIM.label} content={notice.REFIM} />
                   <Field title={mapping.merimee.WEB.label} content={notice.WEB} />
@@ -487,7 +491,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.merimee.DOSURL.label}
-        content={<a href={notice.DOSURL}>Voir le dossier complet sur le site de la région</a>}
+        content={<a href={notice.DOSURL} target="_blank">Voir le dossier complet sur le site de la région</a>}
         key="notice.DOSURL"
       />
     );
@@ -497,7 +501,7 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.merimee.DOSURLPDF.label}
-        content={<a href={postFixedLink(notice.DOSURLPDF)}>Voir le dossier d'origine numérisé</a>}
+        content={<a href={postFixedLink(notice.DOSURLPDF)} target="_blank">Voir le dossier d'origine numérisé</a>}
         key="notice.DOSURLPDF"
       />
     );
@@ -508,7 +512,7 @@ const SeeMore = ({ notice }) => {
       <Field
         title={mapping.palissy.POP_DOSSIER_VERT.label}
         content={
-          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>Voir le dossier d'origine numérisé</a>
+          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`} target="_blank">Voir le dossier d'origine numérisé</a>
         }
         key="notice.POP_DOSSIER_VERT"
       />
@@ -520,7 +524,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
       const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -539,7 +543,7 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
       const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`} target="_blank">
           {filename}
         </a>
       );
@@ -558,7 +562,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LIENS.label}
-          content={<a href={notice.LIENS[i]}>{notice.LIENS[i]}</a>}
+          content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
           key={`notice.LIENS${i}`}
         />
       );
@@ -570,7 +574,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LINHA.label}
-          content={<a href={notice.LINHA[0]}>{notice.LINHA[0]}</a>}
+          content={<a href={notice.LINHA[0]} target="_blank">{notice.LINHA[0]}</a>}
           key="notice.LINHA_0"
         />
       );
@@ -578,7 +582,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LINHA.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LINHA[i]}>{notice.LINHA[i]}</a>}
+            content={<a href={notice.LINHA[i]} target="_blank">{notice.LINHA[i]}</a>}
             key={"notice.LINHA_" + i}
           />
         );
@@ -591,7 +595,7 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LREG.label}
-          content={<a href={notice.LREG[0]}>{notice.LREG[0]}</a>}
+          content={<a href={notice.LREG[0]} target="_blank">{notice.LREG[0]}</a>}
           key="notice.LREG_0"
         />
       );
@@ -599,7 +603,7 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LREG.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LREG[i]}>{notice.LREG[i]}</a>}
+            content={<a href={notice.LREG[i]} target="_blank">{notice.LREG[i]}</a>}
             key={"notice.LREG_" + i}
           />
         );

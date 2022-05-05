@@ -35,7 +35,7 @@ export function MemoireAbregeePdf(notice) {
             <View style={styles.noticeAbregeeContainer}>
                 <View style={styles.imageAbregee}>
                     {notice.IMG ?
-                        <Image src={bucket_url + notice.IMG} />
+                        <Image src={bucket_url + notice.IMG + "?" + (new Date()).getTime()} />
                         : <Image src={"/static/noimage.png"} />}
                 </View>
                 <View style={styles.noticeAbregeeDetails}>

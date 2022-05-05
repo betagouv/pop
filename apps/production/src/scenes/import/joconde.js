@@ -5,7 +5,7 @@ import Mapping from "../../services/mapping";
 import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 import utils from "./utils";
-import { api_url, bucket_url } from "../../config";
+import { pop_url, bucket_url } from "../../config";
 
 class Import extends React.Component {
   constructor(props) {
@@ -192,9 +192,9 @@ function report(notices, collection, email, institution, importId) {
 
   const dateStr = utils.formatDate();
 
-  const diffUrl = `${api_url}/search/list?import=["${importId}"]`;
+  const diffUrl = `${pop_url}/search/list?import=["${importId}"]`;
 
-  const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
+  const fileUrl = `${bucket_url}import/${importId}/import.csv`;
 
   const created = notices.filter(e => e._status === "created");
   const updated = notices.filter(e => e._status === "updated");
@@ -235,7 +235,7 @@ function report(notices, collection, email, institution, importId) {
   let obj = {};
   let count = 0;
 
-  const URL = `${api_url}/notice/joconde/`;
+  const URL = `${pop_url}/notice/joconde/`;
 
   for (let i = 0; i < notices.length; i++) {
     for (let j = 0; j < notices[i]._warnings.length; j++) {

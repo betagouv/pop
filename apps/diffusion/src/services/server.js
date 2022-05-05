@@ -7,7 +7,11 @@ const Sentry = require("@sentry/node");
 // Load environment variables from ".env" file.
 require('dotenv').config();
 
-Sentry.init({ dsn: "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21" });
+Sentry.init({ 
+  dsn: process.env.SENTRY_DSN,
+  release: "pop-consultation@" + require("../../package.json").version,
+  environment: process.env.NODE_ENV
+});
 const dev = process.env.NODE_ENV === "development";
 
 const app = next({ dev });

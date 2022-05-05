@@ -34,7 +34,7 @@ export function JocondeAbregeePdf(notice) {
       <View style={styles.noticeAbregeeContainer}>
         <View style={styles.imageAbregee}>
           {notice.IMG.length > 0 ?
-            <Image src={bucket_url + notice.IMG[0]} />
+            <Image src={bucket_url + notice.IMG[0] + "?" + (new Date()).getTime()} />
             : <Image src={"/static/noimage.png"} />}
         </View>
         <View style={styles.noticeAbregeeDetails}>

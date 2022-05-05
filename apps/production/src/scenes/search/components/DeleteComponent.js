@@ -58,38 +58,32 @@ function DeleteButton({ onConfirm, ctx, group, collection }) {
     return null;
   }
   // Confirmation handler.
-  function confirmDeletion() {
+  async function confirmDeletion() {
     // Can not delete if there is no authorization restriction on any of these notices.
     const notices = widgetResult.result.data;
     for (let i in notices) {
       const notice = notices[i];
       const producteur = notice._source.PRODUCTEUR;
       // The longest "if" clause of history
-      if (
-        // Merimee + palissy
-        (["merimee", "palissy"].includes(collection) &&
-          group === "mh" &&
-          !["Monuments Historiques", "Etat", "Autre"].includes(producteur)) ||
-        // Memoire (groupe mh)
-        (collection === "memoire" &&
-          group === "mh" &&
-          !["CRMH", "CAOA", "UDAP", "ETAT", "AUTRE", "MAP"].includes(producteur)) ||
-        // Memoire (group memoire)
-        (collection === "memoire" &&
-          group === "memoire" &&
-          !["MAP", "AUTRE"].includes(producteur)) ||
-        // Memoire (group admin)
-        (collection === "memoire" &&
-          group === "admin" &&
-          !["CRMH", "CAOA", "UDAP", "INV", "ETAT", "AUTRE", "MAP", "SDAP", ""].includes(producteur))
-      ) {
-        const alertText =
-          `En tant qu'administrateur du groupe "${group}", vous ne pouvez pas supprimer ` +
-          `des notices de "${collection}" dont le producteur est "${producteur}".`;
-        toastr.error(alertText);
-        return;
+
+      //M42397 dynamisation du contrôle du producteur en fonction du group
+      if(group != "admin"){
+        const respProducteurs = await API.getGroupByLabel(group).then((resp) => {
+          return resp.group.PRODUCTEURS;
+        }).catch((e) => { console.log('error group', e)});
+        
+        if(respProducteurs){
+          if(!respProducteurs.includes(producteur)){
+            const alertText =
+              `En tant qu'administrateur du groupe "${group}", vous ne pouvez pas supprimer ` +
+              `des notices de "${collection}" dont le producteur est "${producteur}".`;
+            toastr.error(alertText);
+            return;
+          }
+        }
       }
     }
+
     // Can not delete if there is more than 100 items.
     if (widgetResult.result.total > 1000) {
       const alertText =

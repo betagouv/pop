@@ -200,7 +200,7 @@ class Notice extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="REF" disabled={true} />
-                <CustomField name="DOMN" disabled={true} />
+                <CustomField name="DOMN" disabled={!this.state.editable} />
                 <CustomField
                   title="N° de renvoi au domaine MH ou au domaine INVENTAIRE (RENV ) :"
                   name="RENV"

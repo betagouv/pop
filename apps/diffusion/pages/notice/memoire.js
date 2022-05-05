@@ -66,21 +66,40 @@ export default class extends React.Component {
     return ((autp && autp.length > 0) && <div style={{ display: "flex", flexDirection: "row" }}>
       {autp.map((photographer, index) => {
         const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
-        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`}>{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
+        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`} target="_blank">{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
       })}
     </div>)
   }
 
   serie() {
     const serie = this.props.notice.SERIE;
-    const qs = queryString.stringify({ serie: JSON.stringify([serie]) });
-    return serie && <a href={`/search/list?${qs}`}>{serie}</a>;
+    const links = serie.map((element) => {
+      const qs = queryString.stringify({ serie: JSON.stringify([element]) });
+      return <a href={`/search/list?${qs}`} target="_blank">{element}</a>
+    });
+    return serie && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
 
   expo() {
     const expo = this.props.notice.EXPO;
     const qs = queryString.stringify({ expo: JSON.stringify([expo]) });
-    return expo && <a href={`/search/list?${qs}`}>{expo}</a>;
+    return expo && <a href={`/search/list?${qs}`} target="_blank">{expo}</a>;
+  }
+
+  addLinkFieldMultiValue(fieldValues, name){
+    const links = fieldValues.map((element) => {
+      const qs = queryString.stringify({ name: JSON.stringify([element]) });
+      return <a href={`/search/list?${qs}`} target="_blank">{element}</a>
+    });
+    return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
+  }
+
+  addLinkFieldMultiValue(fieldValues, name){
+    const links = fieldValues.map((element) => {
+      const qs = queryString.stringify({ name: JSON.stringify([element]) });
+      return <a href={`/search/list?${qs}`} target="_blank">{element}</a>
+    });
+    return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
 
   async componentDidMount() {
@@ -230,7 +249,7 @@ export default class extends React.Component {
               <Col md="8">
                 <div className="notice-details">
                   <Title
-                    content="1. Sujet de la photographie"
+                    content="Sujet de la photographie"
                     notice={notice}
                     fields={[
                       "LOCA",
@@ -267,7 +286,7 @@ export default class extends React.Component {
                     fields={["LOCA", "INSEE", "ADRESSE", "LIEU", "MCGEO"]}
                   />
                   <Field title={mapping.memoire.LOCA.label} content={notice.LOCA} />
-                  <Field title={mapping.memoire.INSEE.label} content={notice.INSEE} />
+                  <Field title={mapping.memoire.INSEE.label} content={notice.INSEE} join={' ; '}/>
                   <Field title={notice.ADRESSE != "" ? mapping.memoire.ADRESSE.label : mapping.memoire.LIEU.label} content={notice.ADRESSE != "" ? notice.ADRESSE : notice.LIEU} />
                   <Field title={mapping.memoire.MCGEO.label} content={notice.MCGEO} />
                   <Title
@@ -300,33 +319,38 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.TITRE.label} content={notice.TITRE} />
                   <Field title={mapping.memoire.THEATRE.label} content={notice.THEATRE} />
                   <Field title={mapping.memoire.ROLE.label} content={notice.ROLE} />
-                  <Field title={mapping.memoire.AUTOEU.label} content={notice.AUTOEU} />
-                  <Field title={mapping.memoire.SCLE.label} content={notice.SCLE} />
+                  <Field title={mapping.memoire.AUTOEU.label} content={notice.AUTOEU} join={' ; '}/>
+                  <Field title={mapping.memoire.SCLE.label} content={notice.SCLE} join={' ; '}/>
                   <Field title={mapping.memoire.DATOEU.label} content={notice.DATOEU} />
                   <Field title={mapping.memoire.LIEUORIG.label} content={notice.LIEUORIG} />
                   { notice.SERIE.length > 0 ? <Field title={mapping.memoire.SERIE.label} content={this.serie()} /> : null }
-                  <Field title={"Mots-clés"} content={notice.MCL + " " + notice.SUJET} />
-                  <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} />
+                  <Field title={"Mots-clés"} content={[...notice.MCL, notice.SUJET].filter(el => el !== "")} join={' ; '}/>
+                  <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} join={' ; '}/>
                   <Title
                     content="Références des documents reproduits"
-                    small={true}
+                    small={true}d
                     notice={notice}
                     fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
                   />
-                  <Field title={mapping.memoire.AUTOR.label} content={notice.AUTOR} />
+                  <Field title={mapping.memoire.AUTOR.label} content={notice.AUTOR} join={' ; '}/>
                   <Field title={mapping.memoire.TIREDE.label} content={notice.TIREDE} />
                   <Field title={mapping.memoire.LIEUCOR.label} content={notice.LIEUCOR} />
-                  <Field title={mapping.memoire.COTECOR.label} content={notice.COTECOR} />
-                  <Field title={mapping.memoire.AUTG.label} content={notice.AUTG} />
+                  <Field title={mapping.memoire.COTECOR.label} content={notice.COTECOR} join={' ; '}/>
+                  <Field title={mapping.memoire.AUTG.label} content={notice.AUTG} join={' ; '}/>
                 </div>
-                <div className="notice-details">
-                  <Title content="2. Auteur" notice={notice} fields={["AUTP", "AUTTI"]} />
-                  <Field title={"Photographe ou dessinateur"} content={this.photographer()} />
-                  <Field title={mapping.memoire.AUTTI.label} content={notice.AUTTI} />
-                </div>
+                { 
+                  (this.photographer() || notice.AUTTI.length > 0) 
+                  ? <div className="notice-details">
+                      <Title content="Auteur" notice={notice} fields={["AUTP", "AUTTI"]} />
+                      <Field title={"Photographe ou dessinateur"} content={this.photographer()} />
+                      <Field title={mapping.memoire.AUTTI.label} content={notice.AUTTI} />
+                    </div> 
+                  : ""
+                }
+                
                 <div className="notice-details">
                   <Title
-                    content="3. Description de la photographie"
+                    content="Description de la photographie"
                     notice={notice}
                     fields={[
                       "TYPDOC",
@@ -498,7 +522,7 @@ function link(listUrl) {
         listUrl.map(url => {
           return (
             <React.Fragment key={url.ref}>
-              <a href={url.url || "#"}>{url.ref}</a>
+              <a href={url.url || "#"} target="_blank">{url.ref}</a>
               <br />
             </React.Fragment>
           );

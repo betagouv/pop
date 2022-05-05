@@ -41,7 +41,7 @@ export default function generate(
       contact = "anne.cook@culture.gouv.fr";
       break;
     case "inventaire":
-      contact = "geraud.buffa@culture.gouv.fr et jean.davoigneau@culture.gouv.fr";
+      contact = "geraud.buffa@culture.gouv.fr ; jean.davoigneau@culture.gouv.fr et ines.graillat@culture.gouv.fr";
       break;
     case "joconde":
       contact = "sophie.daenens@culture.gouv.fr et angelina.meslem@culture.gouv.fr";

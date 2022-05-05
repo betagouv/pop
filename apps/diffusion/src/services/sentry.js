@@ -1,9 +1,11 @@
 import * as Sentry from "@sentry/browser";
 
-const SENTRY_PUBLIC_DSN = "https://9cca185065d74dbd9e05987036f2d16d@sentry.data.gouv.fr/21";
-
 if (typeof window !== "undefined") {
-  Sentry.init({ dsn: SENTRY_PUBLIC_DSN });
+  Sentry.init({ 
+    dsn: `${ process.env.SENTRY_DSN }`,
+    release: "pop-consultation@" + require("../../package.json").version,
+    environment: `${ process.env.NODE_ENV }`
+  });
 }
 
 export default Sentry;
