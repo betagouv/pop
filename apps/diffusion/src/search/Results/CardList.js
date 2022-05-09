@@ -500,7 +500,7 @@ const withStyle = component => {
 
         .leftContent{
           display: flex;
-          width: 80%;
+          width: 76%;
         }
 
         .cardTextContent{
