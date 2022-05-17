@@ -71,8 +71,8 @@ module.exports = env => {
         },
         {
           test: /\.js$/,
-          include: path.resolve("node_modules/react-elasticsearch-pop"),
-          exclude: path.resolve("node_modules/react-elasticsearch-pop/node_modules"),
+          include: path.resolve("node_modules/@popproject/pop-react-elasticsearch"),
+          exclude: path.resolve("node_modules/@popproject/pop-react-elasticsearch/node_modules"),
           enforce: "pre",
           use: ["source-map-loader"],
         },

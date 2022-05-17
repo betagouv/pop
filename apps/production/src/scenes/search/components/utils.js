@@ -1,5 +1,5 @@
 import React from "react";
-import { Pagination } from "react-elasticsearch-pop";
+import { Pagination } from "@popproject/pop-react-elasticsearch";
 import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
