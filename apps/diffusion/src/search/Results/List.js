@@ -1,5 +1,5 @@
 import React from "react";
-import { Results } from "react-elasticsearch-pop";
+import { Results } from "@popproject/pop-react-elasticsearch";
 import { pagination } from "../utils";
 
 import CardList from "./CardList";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pagination, Facet } from "react-elasticsearch-pop";
+import { Pagination, Facet } from "@popproject/pop-react-elasticsearch";
 import { Alert } from "reactstrap";
 
 export function pagination(total, itemsPerPage, page, setPage) {

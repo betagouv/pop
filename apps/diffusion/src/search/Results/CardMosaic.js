@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Col } from "reactstrap";
 import { getNoticeInfo, saveListRef } from "../../utils";
-import {toUrlQueryString} from "react-elasticsearch-pop";
+import {toUrlQueryString} from "@popproject/pop-react-elasticsearch";
 
 
 export default ({ index, data, searchParams, listRefs, idQuery }) => {
