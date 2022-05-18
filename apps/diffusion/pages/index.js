@@ -129,8 +129,8 @@ export default class extends React.Component {
                   img="/static/topics/mnr.jpg"
                   txt={
                     <div>
-                      Récupération artistique
-                      <p>Base MNR Rose-Valland</p>
+                      Rose Valland
+                      <p>Base MNR-Jeu de Paume</p>
                     </div>
                   }
                   params={{
