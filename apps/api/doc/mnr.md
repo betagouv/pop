@@ -73,7 +73,7 @@ Producteur de la donnée : Valeur MNR
 |String|non|oui|non|non|||
 
 ### BASE
-Valeur Récupération artistique (MNR Rose-Valland)
+Valeur Rose Valland (MNR-Jeu de Paume)
 
 
 

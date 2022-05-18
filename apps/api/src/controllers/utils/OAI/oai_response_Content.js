@@ -61,7 +61,7 @@ const responseContentListSets = {
             set:
             [
                 {setSpec: "mnr"},
-                {setName: "Récupération artistique (MNR Rose-Valland)"}
+                {setName: "Rose Valland (MNR-Jeu de Paume)"}
             ]      
         },
         {

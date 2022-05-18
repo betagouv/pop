@@ -15,9 +15,9 @@ const Schema = new mongoose.Schema(
     },
     BASE: {
       type: String,
-      default: "Récupération artistique (MNR Rose-Valland)",
+      default: "Rose Valland (MNR-Jeu de Paume)",
       documentation: {
-        description: "Valeur Récupération artistique (MNR Rose-Valland)",
+        description: "Valeur Rose Valland (MNR-Jeu de Paume)",
         generated: true,
         label: "Nom de la base"
       }

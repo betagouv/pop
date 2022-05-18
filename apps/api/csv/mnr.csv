@@ -1,6 +1,6 @@
 path,type,required,label,opendata,generated,description,thesaurus
 "PRODUCTEUR","String","non","","","true","Producteur de la donnée : Valeur MNR",""
-"BASE","String","non","Nom de la base","","true","Valeur Récupération artistique (MNR Rose-Valland)",""
+"BASE","String","non","Nom de la base","","true","Valeur Rose Valland (MNR-Jeu de Paume)",""
 "CONTIENT_IMAGE","String","non","","","true","Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",""
 "POP_FLAGS","Array","non","Alertes POP","","true","Informations et avertissements techniques",""
 "REF","String","oui","Référence","","","Référence unique de la notice",""
