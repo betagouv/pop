@@ -49,6 +49,7 @@ export default class Layout extends React.Component {
                   </a>
                 </Link>
               </div>
+              {/*
               <div>
                 <a
                   href="https://fier2.typeform.com/to/Qyz3xv"
@@ -59,6 +60,7 @@ export default class Layout extends React.Component {
                   Votre avis est utile
                 </a>
               </div>
+               */}
             </div>
           </Container>
           <Alert
