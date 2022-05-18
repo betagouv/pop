@@ -134,7 +134,7 @@ export default class extends React.Component {
                     </div>
                   }
                   params={{
-                    base: ["Récupération artistique (MNR Rose-Valland)"]
+                    base: ["Rose Valland (MNR-Jeu de Paume)"]
                   }}
                 />
                 <TopicCard
