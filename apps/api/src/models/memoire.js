@@ -611,8 +611,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lieu de dépôt",
-        label: "Lieu de dépôt"
+        description: "Lieu d'origine",
+        label: "Lieu d'origine"
       }
     },
     MCGEO: {
