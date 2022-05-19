@@ -215,7 +215,7 @@ class SearchAdvanced extends React.Component {
             {value: ["LIEU.keyword"], text:"Lieu-dit", fields: "LIEU"},
             {value: ["LIEUCOR.keyword"], text:"Lieu de conservation du document reproduit ou de l'objet", fields: "LIEUCOR"},
             {value: ["LIEUCTI.keyword"], text:"Lieu de conservation du tirage", fields: "LIEUCTI"},
-            {value: ["LIEUORIG.keyword"], text:"Lieu de dépôt", fields: "LIEUORIG"},
+            {value: ["LIEUORIG.keyword"], text:"Lieu d'origine", fields: "LIEUORIG"},
             {value: ["LOCA.keyword"], text:"Localisation", fields: "LOCA"},
             {value: ["MCGEO.keyword"], text:"Mots-clefs géographiques", fields: "MCGEO"},
             {value: ["MCL.keyword"], text:"Mots-clés", fields: "MCL"},

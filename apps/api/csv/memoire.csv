@@ -86,7 +86,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "WEB","String","non","Accès Mémoire","","","",""
 "LIB","String","non","Mots candidats","","","",""
 "LOCA","String","non","Localisation","","","Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.",""
-"LIEUORIG","String","non","Lieu de dépôt","","","Lieu de dépôt",""
+"LIEUORIG","String","non","Lieu d'origine","","","Lieu d'origine",""
 "MCGEO","String","non","Mots-clés géographiques","","","Régions non administratives, parcs naturels, fleuves, massifs montagneux, îles…",""
 "MCL","Array","non","Mots-clés","","","",""
 "MENTIONS","String","non","Annotations présentes sur le négatif","","","",""
