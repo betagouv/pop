@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { Row, Container } from "reactstrap";
-import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "react-elasticsearch-pop";
+import { Elasticsearch, toUrlQueryString, fromUrlQueryString } from "@popproject/pop-react-elasticsearch";
 import Switch from "react-switch";
 import Router from "next/router";
 import Layout from "../src/components/Layout";
