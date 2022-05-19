@@ -54,7 +54,7 @@ module.exports = {
     PHOT: "© Réunion des musées nationaux Grand Palais.\n© Besançon, musée des beaux-arts et d'archéologie Dorit Barzel.",
     REF: "AEG00001",
     AFFE: "Paris ; musée du Louvre ; département des Antiquités égyptiennes",
-    BASE: "Récupération artistique (MNR Rose-Valland)",
+    BASE: "Rose Valland (MNR-Jeu de Paume)",
     DMIS: "",
     POP_IMPORT: [],
     POP_COMMENTAIRES: [],

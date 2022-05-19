@@ -97,7 +97,7 @@ export function getNoticeInfo(notice) {
 
       return { title, subtitle, metaDescription, images, image_preview };
     }
-    case "Récupération artistique (MNR Rose-Valland)": {
+    case "Rose Valland (MNR-Jeu de Paume)": {
       let title = notice.TICO || notice.TITR;
       title = capitalizeFirstLetter(title);
 

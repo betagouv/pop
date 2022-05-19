@@ -79,7 +79,7 @@ function getBaseCompletName(baseName){
                 return "Memoire"
             case "Patrimoine architectural (Mérimée)":
                 return "Merimee"
-            case "Récupération artistique (MNR Rose-Valland)":
+            case "Rose Valland (MNR-Jeu de Paume)":
                 return "Mnr"
             case "Répertoire des Musées de France (Muséofile)":
                 return "Museo"

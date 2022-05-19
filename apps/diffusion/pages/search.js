@@ -116,7 +116,7 @@ export default class extends React.Component {
 
     const bases = [
       { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
-      { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)", img: "/static/topics/mnr.jpg" },
+      { key: "mnr", base: "Rose Valland (MNR-Jeu de Paume)", img: "/static/topics/mnr.jpg" },
       { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
       { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
       { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
