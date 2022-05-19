@@ -213,7 +213,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
           </Link>
           <div className="rightContent">
             <span>
-              <small className="base">Mnr</small>
+              <small className="base">{ data.PRODUCTEUR }</small>
               <br />
               {data.INV}
             </span>
