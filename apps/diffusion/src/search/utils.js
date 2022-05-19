@@ -3,8 +3,14 @@ import { Pagination, Facet } from "@popproject/pop-react-elasticsearch";
 import { Alert } from "reactstrap";
 
 export function pagination(total, itemsPerPage, page, setPage) {
+  const titles = { 
+    previousPage: "Page précédente",
+    nextPage: "Page suivante",
+    firstPage: "Première page",
+    lastPage: "Dernière page"
+  }
   const pagination = (
-    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
+    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} toolTipsBtn={titles}/>
   );
   if (page === 400) {
     return (
