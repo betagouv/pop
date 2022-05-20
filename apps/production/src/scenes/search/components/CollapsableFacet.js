@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Facet } from "react-elasticsearch-pop";
+import { Facet } from "@popproject/pop-react-elasticsearch";
 import utils from "../components/utils";
 
 export default function CollapsableFacet({ initialCollapsed, title, ...rest }) {

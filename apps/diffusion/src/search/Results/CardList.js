@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getNoticeInfo, saveListRef } from "../../utils";
 import Mapping from "../../services/mapping";
 import BucketButton from "../../components/BucketButton";
-import {toUrlQueryString} from "react-elasticsearch-pop";
+import {toUrlQueryString} from "@popproject/pop-react-elasticsearch";
 import router from "next/dist/client/router";
 
 // These 3 helpers functions helps to build strings with data
@@ -213,7 +213,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
           </Link>
           <div className="rightContent">
             <span>
-              <small className="base">Mnr</small>
+              <small className="base">{ data.PRODUCTEUR }</small>
               <br />
               {data.INV}
             </span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ActiveFilters, Facet } from "react-elasticsearch-pop";
+import { ActiveFilters, Facet } from "@popproject/pop-react-elasticsearch";
 import { CollapsableFacet } from "./utils";
 
 const Menu = ({ closeMenu, initialValues }) => (

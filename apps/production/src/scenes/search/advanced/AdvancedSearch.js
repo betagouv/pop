@@ -5,7 +5,7 @@ import {
   toUrlQueryString,
   fromUrlQueryString,
   QueryBuilder
-} from "react-elasticsearch-pop";
+} from "@popproject/pop-react-elasticsearch";
 import Mapping from "../../../services/mapping";
 import { Container } from "reactstrap";
 import { es_url } from "../../../config.js";

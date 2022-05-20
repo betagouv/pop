@@ -1,5 +1,5 @@
  import API from "../../src/services/api";
- import {fromUrlQueryString } from "react-elasticsearch-pop";
+ import {fromUrlQueryString } from "@popproject/pop-react-elasticsearch";
  import queryString from "query-string";
 
 

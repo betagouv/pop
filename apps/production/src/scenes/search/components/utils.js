@@ -1,5 +1,5 @@
 import React from "react";
-import { Pagination } from "react-elasticsearch-pop";
+import { Pagination } from "@popproject/pop-react-elasticsearch";
 import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
@@ -219,8 +219,14 @@ function toFrenchRegex(text) {
 }
 
 function pagination(total, itemsPerPage, page, setPage) {
+  const titles = { 
+    previousPage: "Page précédente",
+    nextPage: "Page suivante",
+    firstPage: "Première page",
+    lastPage: "Dernière page"
+  }
   const pagination = (
-    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} />
+    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} toolTipsBtn={titles}/>
   );
   if (page === 1000) {
     return (

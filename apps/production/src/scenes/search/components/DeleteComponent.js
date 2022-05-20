@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CustomWidget } from "react-elasticsearch-pop";
+import { CustomWidget } from "@popproject/pop-react-elasticsearch";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { es_url } from "../../../config";
