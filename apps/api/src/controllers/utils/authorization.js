@@ -189,6 +189,26 @@ async function canDeleteMuseo(user, notice) {
   return await canManageMuseo(user, notice);
 }
 
+async function canManageEnluminures(user, notice) {
+  //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
+  let validate = await canManage(user, notice, "joconde");
+
+  //On retourne si oui ou non il a le droit
+  return validate;
+}
+
+async function canCreateEnluminures(user, notice) {
+  return await canManageEnluminures(user, notice);
+}
+
+async function canUpdateEnluminures(user, prevNotice, newNotice) {
+  return await canManageEnluminures(user, prevNotice) && await canManageJoconde(user, newNotice);
+}
+
+async function canDeleteEnluminures(user, notice) {
+  return await canManageEnluminures(user, notice);
+}
+
 //Retourne le groupe de l'utilisateur
 async function getUserGroup(userGroup){
   let group;
@@ -228,5 +248,8 @@ module.exports = {
   canUpdateAutor,
   canCreateAutor,
   canDeleteAutor,
+  canUpdateEnluminures,
+  canCreateEnluminures,
+  canDeleteEnluminures,
   canManage
 };

@@ -1,9 +1,19 @@
 const mongoose = require("mongoose");
 var mongoosastic = require("mongoosastic");
+var mongoosePaginate = require("mongoose-paginate");
 var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
   {
+    PRODUCTEUR: {
+      type: String,
+      default: "Enluminures",
+      documentation: {
+        description: "Producteur de la donnée : Enluminures",
+        generated: true,
+        label: "Producteur"
+      }
+    },
     REF: {
       type: String,
       unique: true,
@@ -79,6 +89,47 @@ const Schema = new mongoose.Schema(
     VIDEO: { type: [String], default: [], documentation: { label: "" } },
     TOUT: { type: String, default: "", documentation: { label: "" } },
     IMG: { type: String, default: "" },
+    POP_FLAGS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "Informations et avertissements techniques",
+        label: "Alertes POP",
+        generated: true
+      }
+    },
+    RENV: { 
+      type: [String], 
+      default: [], 
+      documentation: { 
+        description: "Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Enluminures.",
+        label: "Numéro de renvoi vers un autre domaine" 
+      } 
+    },
+    REFC: { 
+      type: [String], 
+      default: [], 
+      documentation: { 
+        description: "Numéro de renvoi vers une référence du contenu matériel. Doit être une référence valide vers une notice Enluminures.",
+        label: "Numéro de renvoi vers une référence du contenu matériel" 
+      } 
+    },
+    REFDE: { 
+      type: [String], 
+      default: [], 
+      documentation: { 
+        description: "Numéro de renvoi vers une référence du décor. Doit être une référence valide vers une notice Enluminures.",
+        label: "Numéro de renvoi vers une référence du décor" 
+      } 
+    },
+    LIENS: {
+      type: [String],
+      default: [],
+      documentation: {
+        description: "",
+        label: "Liens externes éventuels"
+      }
+    },
     DMAJ: {
       type: String,
       default: "",
@@ -110,6 +161,7 @@ const Schema = new mongoose.Schema(
   { collection: "enluminures" }
 );
 
+Schema.plugin(mongoosePaginate);
 Schema.plugin(mongoosastic, {
   esClient: getElasticInstance(),
   index: "enluminures",

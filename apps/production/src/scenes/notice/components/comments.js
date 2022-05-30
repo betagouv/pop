@@ -64,8 +64,8 @@ export default ({ POP_FLAGS }) => {
   if (!(POP_FLAGS && POP_FLAGS.length)) {
     return <div />;
   }
-  const comments = POP_FLAGS.map(e => (
-    <li key={e}>
+  const comments = POP_FLAGS.map((e, i) => (
+    <li key={`${i}_${e}`}>
       <b>{e}</b> - {flagAsText(e)}
     </li>
   ));

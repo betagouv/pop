@@ -6,13 +6,14 @@ import Mapping from "../../services/mapping";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
 import FieldImages from "./components/fieldImages";
+import EnluminuresEntity from "../../entities/Enluminures";
 import API from "../../services/api";
-import AccordionHistorique from "./components/AccordionHistorique"
-
+import AccordionHistorique from "./components/AccordionHistorique";
 import { bucket_url } from "../../config";
-
+import { toastr } from "react-redux-toastr";
 import "./index.css";
 
 class Enluminures extends React.Component {
@@ -47,7 +48,32 @@ class Enluminures extends React.Component {
     this.setState({ loading: false, notice, editable });
   }
 
-  async onSubmit() {}
+  async onSubmit(values) {
+    this.setState({ saving: true });
+    const notice = new EnluminuresEntity(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "enluminures", values, this.state.imagesFiles, "manuel");
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
+    }
+    this.setState({ saving: false });
+  }
 
   render() {
     if (this.state.loading) {
@@ -58,7 +84,6 @@ class Enluminures extends React.Component {
       return <div className="error">{this.state.error}</div>;
     }
 
-    console.log(this.state.notice);
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
@@ -74,6 +99,7 @@ class Enluminures extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
           <FieldImages
             name="VIDEO"
             createUrlFromName={e => `enluminures/${this.state.notice.REF}/${e}`}
@@ -106,6 +132,10 @@ class Enluminures extends React.Component {
                 <CustomField name="NOMENC" disabled={!this.state.editable} />
                 <CustomField name="NOTES" disabled={!this.state.editable} />
                 <CustomField name="NOTDEC" disabled={!this.state.editable} />
+                <CustomField name="RENV" disabled={!this.state.editable} />
+                <CustomField name="REFC" disabled={!this.state.editable} />
+                <CustomField name="REFDE" disabled={!this.state.editable} />
+                <CustomField name="LIENS" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="OPHOT" disabled={!this.state.editable} />
