@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CustomWidget, msearch } from "react-elasticsearch-pop";
+import { CustomWidget, msearch } from "@popproject/pop-react-elasticsearch";
 import Map from "./Map";
 import { es_url } from "../../../config";
 

@@ -2,12 +2,12 @@ import React from "react";
 import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 import Mapping from "../../services/mapping";
-import { QueryBuilder } from "react-elasticsearch-pop";
+import { QueryBuilder } from "@popproject/pop-react-elasticsearch";
 import { operators } from "../utils";
 
 export const bases = [
   { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
-  { key: "mnr", base: "Récupération artistique (MNR Rose-Valland)", img: "/static/topics/mnr.jpg" },
+  { key: "mnr", base: "Rose Valland (MNR-Jeu de Paume)", img: "/static/topics/mnr.jpg" },
   { key: "merimee", base: "Patrimoine architectural (Mérimée)", img: "/static/topics/mhr.jpg" },
   { key: "memoire", base: "Photographies (Mémoire)", img: "/static/topics/memoire.jpg" },
   { key: "palissy", base: "Patrimoine mobilier (Palissy)", img: "/static/topics/mobilier.jpg" },
@@ -215,7 +215,7 @@ class SearchAdvanced extends React.Component {
             {value: ["LIEU.keyword"], text:"Lieu-dit", fields: "LIEU"},
             {value: ["LIEUCOR.keyword"], text:"Lieu de conservation du document reproduit ou de l'objet", fields: "LIEUCOR"},
             {value: ["LIEUCTI.keyword"], text:"Lieu de conservation du tirage", fields: "LIEUCTI"},
-            {value: ["LIEUORIG.keyword"], text:"Lieu de dépôt", fields: "LIEUORIG"},
+            {value: ["LIEUORIG.keyword"], text:"Lieu d'origine", fields: "LIEUORIG"},
             {value: ["LOCA.keyword"], text:"Localisation", fields: "LOCA"},
             {value: ["MCGEO.keyword"], text:"Mots-clefs géographiques", fields: "MCGEO"},
             {value: ["MCL.keyword"], text:"Mots-clés", fields: "MCL"},

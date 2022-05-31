@@ -869,14 +869,14 @@ Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vi
 |String|non|non|non|non||Localisation|
 
 ### LIEUORIG
-Lieu de dépôt
+Lieu d'origine
 
 
 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lieu de dépôt|
+|String|non|non|non|non||Lieu d'origine|
 
 ### MCGEO
 Régions non administratives, parcs naturels, fleuves, massifs montagneux, îles…
