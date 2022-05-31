@@ -103,6 +103,15 @@ export function getNoticeInfo(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
+      let logo = "";
+      let classProducteur = "";
+      if (notice.PRODUCTEUR === "Jeu de Paume sous l'Occupation") {
+        logo = "/static/jdpso.jpg";
+        classProducteur = "jdpso";
+      } else if (notice.PRODUCTEUR === "MNR"){
+        logo = "/static/mnr.png";
+      }
+
       let metaDescription = "";
 
       const image_preview = notice.VIDEO.length
@@ -114,7 +123,7 @@ export function getNoticeInfo(notice) {
         alt: e
       }));
 
-      return { title, subtitle, image_preview, metaDescription, images };
+      return { title, subtitle, image_preview, metaDescription, images, logo, classProducteur};
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
