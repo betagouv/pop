@@ -140,6 +140,58 @@ router.get("/:ref", async (req, res) => {
   return res.status(404).send({ success: false, msg: "Document introuvable" });
 });
 
+// Create a new notice.
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(),
+  async (req, res) => {
+     /* 	
+      #swagger.tags = ['Enluminures']
+      #swagger.path = '/enluminures'
+      #swagger.description = 'Création de la notice Enluminures' 
+  */
+    try {
+      const notice = JSON.parse(req.body.notice);
+      await determineProducteur(notice);
+      if (!(await canCreateEnluminures(req.user, notice))) {
+        return res
+          .status(401)
+          .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
+      }
+      const promises = [];
+
+      // Upload all files (should this be done after creating notice?)
+      for (let i = 0; i < req.files.length; i++) {
+        const path = `enluminures/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
+        promises.push(uploadFile(path, req.files[i]));
+      }
+      // Transform and create.
+      transformBeforeCreate(notice);
+      await transformBeforeCreateAndUpdate(notice);
+      //Modification des liens entre bases
+   //   await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
+  //    await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
+  //    await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+      let oaiObj = {
+        REF: notice.REF,
+        BASE: "enluminures",
+        DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
+      }
+      const obj = new Enluminures(notice);
+      const obj2 = new NoticesOAI(oaiObj)
+      checkESIndex(obj);
+      promises.push(obj.save());
+      promises.push(obj2.save());
+      await Promise.all(promises);
+      res.send({ success: true, msg: "OK" });
+    } catch (e) {
+      capture(e);
+      res.status(500).send({ success: false, error: e });
+    }
+  }
+);
+
 
 // Update a notice by ref
 router.put(

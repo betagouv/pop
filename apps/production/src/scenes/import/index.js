@@ -12,6 +12,7 @@ import Inv from "./inv";
 import Memoire from "./memoire";
 import List from "./list";
 import Museo from "./museo";
+import Enluminures from "./enluminures";
 
 class Import extends React.Component {
   state = {
@@ -102,6 +103,11 @@ class Import extends React.Component {
       if (group.toUpperCase() === "MUSEO" || group === "admin") {
         authorizedImports.push("museo");
         routeMuseo = <Route path={`/import/museo`} component={Museo} key={'/import/museo'} />;
+        routes.push(routeMuseo);
+      }
+      if (group.toUpperCase() === "ENLUMINURES" || group === "admin") {
+        authorizedImports.push("enluminures");
+        routeMuseo = <Route path={`/import/enluminures`} component={Enluminures} key={'/import/enluminures'} />;
         routes.push(routeMuseo);
       }
       if (role === "administrateur" || role === "producteur") {
