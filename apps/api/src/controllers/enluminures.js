@@ -170,9 +170,10 @@ router.post(
       transformBeforeCreate(notice);
       await transformBeforeCreateAndUpdate(notice);
       //Modification des liens entre bases
-   //   await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
-  //    await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
-  //    await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+      await populateLinksEnlunminures(notice, notice.RENV, "RENV");
+      await populateLinksEnlunminures(notice, notice.REFDE, "REFC");
+      await populateLinksEnlunminures(notice, notice.REFC, "REFDE");
+
       let oaiObj = {
         REF: notice.REF,
         BASE: "enluminures",
@@ -266,9 +267,10 @@ router.put(
       promises.push(updateNotice(Enluminures, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
       //Modification des liens entre bases
-  //    await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
-  //    await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
-  //    await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+      await populateLinksEnlunminures(notice, notice.RENV, "RENV");
+      await populateLinksEnlunminures(notice, notice.REFDE, "REFC");
+      await populateLinksEnlunminures(notice, notice.REFC, "REFDE");
+      
       // Consume promises and send sucessful result.
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
@@ -294,6 +296,60 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(refList)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const criteres = {};
+      criteres[fieldEnluminures] = notice.REF
+      // Récupération des notices Enluminures qui sont liées à la notice en cours
+      const noticesToPopulate = await Enluminures.find(criteres);
+
+      let list = [];
+      switch(fieldEnluminures){
+        case "RENV" : 
+          list = notice.RENV;
+          break;
+        case "REFC" : 
+          list = notice.REFDE;
+          break;
+        case "REFDE" : 
+          list = notice.REFC;
+          break;
+      }
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // Si la notice la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+        if(!list.includes(noticesToPopulate[i].REF)){
+          noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][fieldEnluminures].filter(e => e !== notice.REF);
+          promises.push(noticesToPopulate[i].save());
+        }
+      }
+
+      for (let i = 0; i < list.length; i++) {
+        if (!noticesToPopulate.find(e => e.REF === list[i])) {
+          // Si la notice n'est pas encore liée
+          const obj = await Enluminures.findOne({ REF: list[i] });
+          if (obj && Array.isArray(obj[fieldEnluminures]) && !obj[fieldEnluminures].includes(notice.REF)) {
+            obj[fieldEnluminures].push(notice.REF);
+            promises.push(obj.save());
+          }
+        }
+      }
+      
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
     }
   });
 }
