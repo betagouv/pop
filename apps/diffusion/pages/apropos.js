@@ -96,17 +96,6 @@ export default class extends React.Component {
                 <li>des objets protégés au titre des Monuments historiques, « classés » ou « inscrits ».</li>
                 <li>des objets étudiés par les services régionaux de l’Inventaire.</li>
             </ul>
-            {/*
-            <p>
-            <b >MNR-Rose Valland</b> est le catalogue en ligne des biens MNR (« Musées nationaux
-            Récupération ») qui ont été récupérés en Allemagne à la fin de la dernière guerre, et
-            confiés à la garde des musées nationaux en attente de l’identification de leur légitimes
-            propriétaires. Dans une proportion difficile à déterminer, ils sont susceptibles d’avoir fait
-            l’objet de spoliations avérées ou présumées. Les données sur ces biens sont
-            exclusivement publiées sur la base nationale MNR-Rose Valland, alimentée par la
-            Mission de recherche et de restitution des biens culturels spoliés entre 1933 et 1945.
-            </p>
-            */}
             <p>
             La base <b>Rose-Valland (MNR-Jeu de Paume) </b> est le catalogue en ligne des biens MNR (« Musées nationaux Récupération ») 
             qui ont été récupérés en Allemagne à la fin de la dernière guerre, et confiés à la garde des musées nationaux en attente de l’identification de leurs légitimes propriétaires. 
