@@ -38,7 +38,7 @@ router.post("/signin", async (req, res) => {
       const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: "1d" });
       user.set({ lastConnectedAt: Date.now() });
       await user.save();
-      res.status(200).send({ success: true, token: "JWT " + token, user });
+      res.status(200).send({ success: true, token: "JWT " + token, user, id_app: config.ID_PROD_APP });
     } else {
       res.status(401).send({ success: false, msg: `Email ou mot de passe incorrect.` });
     }
