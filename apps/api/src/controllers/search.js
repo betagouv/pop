@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl, esPort } = require("../config.js");
+const { esUrl, esPort, ID_PROD_APP } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 
@@ -47,7 +47,7 @@ router.use("/*/_msearch", (req, res) => {
   }
 
   // Si la requête ne provient pas de l'application productiion
-  if(!req.headers.application || req.headers.application !== "bo-pop-prod"){
+  if(!req.headers.application || req.headers.application !== ID_PROD_APP){
     opts = addFilterFields(opts);
   }
   

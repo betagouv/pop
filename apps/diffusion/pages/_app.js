@@ -18,17 +18,6 @@ export default class MyApp extends App {
     });
     Router.events.on("routeChangeComplete", () => NProgress.done());
     Router.events.on("routeChangeError", () => NProgress.done());
-
-     /**
-     * Ajout de l'application dans la requête E-S pour filtrer les champs
-     */
-    (function() {
-      const origSend = XMLHttpRequest.prototype.send;
-       XMLHttpRequest.prototype.send = function(data) {
-         this.setRequestHeader('Application', 'diffusion');
-         origSend.apply(this, arguments);
-       };
-     })();
   }
 
   render() {

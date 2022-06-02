@@ -6,7 +6,7 @@ import api from "../../services/api";
 
 export function* signin({ email, password }) {
   try {
-    const { user, token, success, msg } = yield api.signin(email, password);
+    const { user, token, success, msg, id_app } = yield api.signin(email, password);
     if (!success) {
       yield put({ type: actions.SIGNIN_ERROR, error: msg });
       return;
@@ -15,6 +15,7 @@ export function* signin({ email, password }) {
     yield put({ type: actions.SIGNIN_SUCCESS, user, token });
     localStorage.setItem("token", token);
     localStorage.setItem("cgu", true);
+    localStorage.setItem("application", id_app);
 
     if (process.env.SENTRY_DSN) {
       Raven.setUserContext({ email });
