@@ -14,7 +14,7 @@ const toReactiveSearchParams = params => {
 function getUriJeuDePaume(){
   const params={
     base: ["Rose Valland (MNR-Jeu de Paume)"],
-    producteur: ["Jeu de Paume"]
+    producteur: ["Jeu de Paume sous l'Occupation"]
   }
 
   return `${pop_url}search/mosaic?${queryString.stringify(toReactiveSearchParams(params))}`;
