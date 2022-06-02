@@ -179,8 +179,10 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
   );
 };
 
-export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
-  const { title, subtitle, image_preview } = getNoticeInfo(data);
+export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
+  const { title, subtitle, image_preview, logo, classProducteur } = getNoticeInfo(data);
+  const classP = `producteur ${classProducteur}`;
+  const LogoComponent = logo ? <img src={logo} className={classP} /> : <div />;
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
@@ -202,8 +204,8 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   </h2>
                   <div>
                     <p>{domn}</p>
-                    <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p>
-                    <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p>
+                    { (data.LOCA && data.LOCA !== "") ? <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p> : null }
+                    { (data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null }
                     <p>{data.CATE}</p>
                     <p>{data.PHOT}</p>
                   </div>
@@ -218,7 +220,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs}) => {
               {data.INV}
             </span>
             <BucketButton base="mnr" reference={data.REF} removeFromBucket={removeFromBucket} />
-            <img src="/static/mnr.png" className="producteur" />
+            {LogoComponent}
           </div>
         </div>
       </a>
@@ -496,6 +498,10 @@ const withStyle = component => {
         }
         .list-card img.producteur.mh {
           width: 100px;
+        }
+
+        .list-card img.producteur.jdpso{
+          width: 80px;
         }
 
         .leftContent{
