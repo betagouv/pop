@@ -24,7 +24,7 @@ class App extends React.Component {
     (function() {
       const origSend = XMLHttpRequest.prototype.send;
        XMLHttpRequest.prototype.send = function(data) {
-         this.setRequestHeader('Application', 'bo-pop-prod');
+         this.setRequestHeader('Application', localStorage.getItem("application"));
          origSend.apply(this, arguments)
        };
      })();
