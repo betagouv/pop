@@ -191,7 +191,7 @@ async function canDeleteMuseo(user, notice) {
 
 async function canManageEnluminures(user, notice) {
   //On détermine si l'utilisateur a le droit d'apporter des modifications à la notice joconde
-  let validate = await canManage(user, notice, "joconde");
+  let validate = await canManage(user, notice, "enluminures");
 
   //On retourne si oui ou non il a le droit
   return validate;
@@ -202,7 +202,7 @@ async function canCreateEnluminures(user, notice) {
 }
 
 async function canUpdateEnluminures(user, prevNotice, newNotice) {
-  return await canManageEnluminures(user, prevNotice) && await canManageJoconde(user, newNotice);
+  return await canManageEnluminures(user, prevNotice) && await canManageEnluminures(user, newNotice);
 }
 
 async function canDeleteEnluminures(user, notice) {
