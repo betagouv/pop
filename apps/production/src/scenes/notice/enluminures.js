@@ -132,9 +132,15 @@ class Enluminures extends React.Component {
                 <CustomField name="NOMENC" disabled={!this.state.editable} />
                 <CustomField name="NOTES" disabled={!this.state.editable} />
                 <CustomField name="NOTDEC" disabled={!this.state.editable} />
-                <CustomField name="RENV" disabled={!this.state.editable} />
-                <CustomField name="REFC" disabled={!this.state.editable} />
-                <CustomField name="REFDE" disabled={!this.state.editable} />
+                <CustomField name="RENV" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
+                <CustomField name="REFC" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
+                <CustomField name="REFDE" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
                 <CustomField name="LIENS" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
