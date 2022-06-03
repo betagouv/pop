@@ -22,13 +22,13 @@ function transformBeforeCreate(notice) {
 async function withFlags(notice) {
   notice.POP_FLAGS = [];
   // Required properties.
-  /*["REF", "DOMN"]
+  ["REF"]
     .filter(prop => !notice[prop])
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_EMPTY`));
   // REF must be 11 chars.
   if (notice.REF && notice.REF.length !== 11) {
     notice.POP_FLAGS.push("REF_LENGTH_11");
-  }*/
+  }
 
   // LIENS must be valid URLs.
   const arr = notice.LIENS;
