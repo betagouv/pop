@@ -10,19 +10,16 @@ import { pop_url, bucket_url } from "../../config";
 class Import extends React.Component {
   constructor(props) {
     super(props);
-    /*this.state = {
-      museofile: this.props.museofile && this.props.museofile.length ? this.props.museofile[0] : ""
-    };*/
   }
   parseFiles(files, encoding) {
     return new Promise(async (resolve, reject) => {
 
       // Test Excel format
       let rootFile = files.find(file => ("" + file.name.split(".").pop()).toLowerCase() === "csv");
-      if (rootFile) { console.log(rootFile);
+      if (rootFile) {
         try {
           const res = await utils.readCSV(rootFile, ";", encoding, '"');
-          const importedNotices = await importCSV(res, files);
+          const importedNotices = await importCSV(res, files, this.state.museofile);
           resolve({ importedNotices, fileNames: [rootFile.name] });
           return;
         } catch (e) {
@@ -36,24 +33,7 @@ class Import extends React.Component {
       return;
     });
   }
-/*
-  renderMuseoFiles() {
-    const options = (this.props.museofile || []).map(o => <option key={o}>{o}</option>);
-    if (!options.length) {
-      return null;
-    }
-    return (
-      <div style={{ alignSelf: "flex-start", display: "flex", padding: "15px 0px 15px 0px" }}>
-        <div style={{ paddingRight: "10px" }}>Code MUSEO : </div>
-        <select
-          onChange={e => this.setState({ museofile: e.target.value })}
-          value={this.state.museofile}
-        >
-          {options}
-        </select>
-      </div>
-    );
-  }*/
+
   render() {
     return (
       <Container className="import">
@@ -72,6 +52,7 @@ class Import extends React.Component {
               zone
             </span>
           }
+          defaultEncoding="UTF-8"
         />
       </Container>
     );
@@ -94,14 +75,6 @@ export default connect(
 function importCSV(res, files) {
   return new Promise(async (resolve, reject) => {
     const importedNotices = res
-      /*.map(value => {
-        value.MUSEO = value.MUSEO || museofile || "";
-        // Add 0 in front of REF when we import csv file
-        if (value.REF.length < 11) {
-          value.REF = addZeros(value.REF, 11);
-        }
-        return value;
-      })*/
       .map(value => new Enluminures(value));
 
     const filesMap = {};
@@ -407,11 +380,4 @@ function readme() {
       </div>
     </div>
   );
-}
-
-function addZeros(v, zeros) {
-  return new Array(zeros)
-    .concat([v])
-    .join("0")
-    .slice(-zeros);
 }

@@ -78,7 +78,7 @@ export default class ImportDropComponent extends Component {
       paddingRight: "50px",
       paddingLeft: "50px"
     };
-    const encodings = ["UTF-8", "ISO-8859-1", "WINDOWS-1252"].map(o => (
+    const encodings = getListEncoding(this.props.collection).map(o => (
       <option key={o}>{o}</option>
     ));
 
@@ -149,4 +149,17 @@ function convertToFile(obj) {
     }
     resolve(f);
   });
+}
+
+function getListEncoding(collection){
+  let list = [];
+  switch(collection){
+    case 'enluminures':
+      list = ["UTF-8"];
+      break;
+    default:
+      list = ["UTF-8", "ISO-8859-1", "WINDOWS-1252"];
+      break;
+  }
+  return list;
 }
