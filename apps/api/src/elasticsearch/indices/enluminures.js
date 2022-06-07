@@ -256,15 +256,6 @@ module.exports = {
             }
           }
         },
-        IMG: {
-          type: "text",
-          fields: {
-            keyword: {
-              type: "keyword",
-              ignore_above: 256
-            }
-          }
-        },
         RENV: {
           type: "text",
           fields: {

@@ -88,7 +88,6 @@ const Schema = new mongoose.Schema(
     VISITE: { type: String, default: "", documentation: { label: "" } },
     VIDEO: { type: [String], default: [], documentation: { label: "" } },
     TOUT: { type: String, default: "", documentation: { label: "" } },
-    IMG: { type: String, default: "" },
     POP_IMPORT: [{ type: mongoose.Schema.ObjectId, ref: "import" }],
     POP_FLAGS: {
       type: [String],

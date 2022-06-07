@@ -16,7 +16,7 @@ const { checkValidRef } = require("./utils/notice");
 
 function transformBeforeCreate(notice) {
   notice.DMIS = formattedNow();
-  notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+  notice.CONTIENT_IMAGE = notice.VIDEO ? "oui" : "non";
 }
 
 // Control properties document, flag each error.
@@ -73,11 +73,11 @@ async function withFlags(notice) {
 function transformBeforeCreateAndUpdate(notice) {
   return new Promise(async (resolve, reject) => {
     try {
-      if (notice.IMG !== undefined) {
-        if (Array.isArray(notice.IMG)) {
-          notice.CONTIENT_IMAGE = notice.IMG.length ? "oui" : "non";
+      if (notice.VIDEO !== undefined) {
+        if (Array.isArray(notice.VIDEO)) {
+          notice.CONTIENT_IMAGE = notice.VIDEO.length ? "oui" : "non";
         } else {
-          notice.CONTIENT_IMAGE = notice.IMG ? "oui" : "non";
+          notice.CONTIENT_IMAGE = notice.VIDEO ? "oui" : "non";
         }
       }
 
@@ -221,7 +221,7 @@ router.put(
       }
       const promises = [];
 
-      // Delete previous images if not present anymore (only if the actually is an IMG field).
+      // Delete previous images if not present anymore (only if the actually is an VIDEO field).
       if (notice.VIDEO !== undefined) {
         for (let i = 0; i < prevNotice.VIDEO.length; i++) {
           if (!(notice.VIDEO || []).includes(prevNotice.VIDEO[i])) {

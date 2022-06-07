@@ -167,7 +167,6 @@ class Enluminures extends React.Component {
                 <CustomField name="VISITE" disabled={!this.state.editable} />
                 <CustomField name="VIDEO" disabled={!this.state.editable} />
                 <CustomField name="TOUT" disabled={!this.state.editable} />
-                <CustomField name="IMG" disabled={!this.state.editable} />
               </Col>
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>

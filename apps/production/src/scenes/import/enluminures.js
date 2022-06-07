@@ -132,7 +132,7 @@ function report(notices, collection, email, institution, importId) {
     return acc;
   }, 0);
 
-  let contact = "sophie.daenens@culture.gouv.fr et angelina.meslem@culture.gouv.fr";
+  let contact = "A MODIFIER";
 
   arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
   arr.push(`<h2>Établissement : ${institution}</h2>`);
@@ -272,7 +272,7 @@ function readme() {
         1) Si présence du champ Adresse d'images (REFIM) alors l'image (.jpg) est obligatoire.
         <br />
         2) Sur une notice déjà existante, je peux cliquer sur "Ajouter une image" et télécharger une
-        image depuis mon ordinateur. Le champ IMG contiendra le lien de l'image ainsi téléchargée.
+        image depuis mon ordinateur. Le champ VIDEO contiendra le lien de l'image ainsi téléchargée.
         <br />
         <br />
         NB : à la création d'une notice, POP génère automatiquement certains champs utiles au
