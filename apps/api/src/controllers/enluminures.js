@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const passport = require("passport");
 const multer = require("multer");
 const filenamify = require("filenamify");
@@ -221,12 +222,12 @@ router.put(
       const promises = [];
 
       // Delete previous images if not present anymore (only if the actually is an IMG field).
-      if (notice.IMG !== undefined) {
-        for (let i = 0; i < prevNotice.IMG.length; i++) {
-          if (!(notice.IMG || []).includes(prevNotice.IMG[i])) {
+      if (notice.VIDEO !== undefined) {
+        for (let i = 0; i < prevNotice.VIDEO.length; i++) {
+          if (!(notice.VIDEO || []).includes(prevNotice.VIDEO[i])) {
             // Security: no need to escape filename, it comes from database.
-            if (prevNotice.IMG[i]) {
-              promises.push(deleteFile(prevNotice.IMG[i], "joconde"));
+            if (prevNotice.VIDEO[i]) {
+              promises.push(deleteFile(prevNotice.VIDEO[i], "enluminures"));
             }
           }
         }

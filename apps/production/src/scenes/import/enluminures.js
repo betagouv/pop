@@ -86,11 +86,12 @@ function importCSV(res, files) {
 
     // ADD IMAGES
     for (var i = 0; i < importedNotices.length; i++) {
-      const names = importedNotices[i].IMG;
+      const names = importedNotices[i].VIDEO;
 
       if (!names) {
         continue;
       }
+      const arrayImg = [];
       for (var j = 0; j < names.length; j++) {
         let img = filesMap[Enluminures.convertLongNameToShort(names[j])];
         if (!img) {
@@ -101,8 +102,10 @@ function importCSV(res, files) {
           const shortname = Enluminures.convertLongNameToShort(img.name);
           let newImage = utils.renameFile(img, shortname);
           importedNotices[i]._files.push(newImage);
+          arrayImg.push(`enluminures/${importedNotices[i].REF}/${shortname}`);
         }
       }
+      importedNotices[i].VIDEO = arrayImg;
     }
 
     resolve(importedNotices);
