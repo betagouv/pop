@@ -128,7 +128,8 @@ async function run() {
                   let notices = await noticeClass
                     .find(lastId ? { _id: { $gt: lastId } } : {})
                     .sort({ _id: 1 })
-                    .limit(opts.chunks);
+                    .limit(opts.chunks)
+                    .select("-ADRS2 -COM2 -EDIF2 -EMPL2 -INSEE2 -LBASE2");
                   if (!notices.length) {
                     ctx.error = false;
                     observer.complete();
