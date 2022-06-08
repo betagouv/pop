@@ -83,23 +83,6 @@ function transformBeforeCreateAndUpdate(notice) {
 
       notice.DMAJ = formattedNow();
 
-     /* if (notice.MUSEO) {
-        const museo = await Museo.findOne({ REF: notice.MUSEO });
-        if (museo) {
-          notice.REGION = museo.REGION || "";
-          notice.DPT = museo.DPT || "";
-          notice.VILLE_M = museo.VILLE_M || "";
-          notice.NOMOFF = museo.NOMOFF || "";
-          notice.CONTACT = museo.CONTACT_GENERIQUE || "";
-
-          if (museo.POP_COORDONNEES && museo.POP_COORDONNEES.lat) {
-            notice.POP_COORDONNEES = museo.POP_COORDONNEES;
-            notice.POP_CONTIENT_GEOLOCALISATION = "oui";
-          } else {
-            notice.POP_CONTIENT_GEOLOCALISATION = "non";
-          }
-        }
-      }*/
       notice = await withFlags(notice);
       resolve();
     } catch (e) {
@@ -239,12 +222,12 @@ router.put(
         promises.push(uploadFile(path, f));
       }
 
-      // Mis en place pour corriger les notices qui ont été importées manuellement
+      // Mise en place pour corriger les notices qui ont été importées manuellement
       if(!notice.POP_IMPORT){
         notice.POP_IMPORT = [];
       }
 
-      // Update IMPORT ID (this code is unclear…)
+      // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];
         delete notice.POP_IMPORT;
@@ -282,6 +265,55 @@ router.put(
   }
 );
 
+// Delete one notice.
+router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  /* 	
+     #swagger.tags = ['Enluminures']
+     #swagger.path = '/enluminures/{ref}'
+     #swagger.description = 'Suppression de la notice Enluminures' 
+ */
+ try {
+   const ref = req.params.ref;
+   const doc = await Enluminures.findOne({ REF: ref });
+   const docOai = await NoticesOAI.findOne({ REF: ref });
+   if (!doc) {
+     return res.status(404).send({
+       success: false,
+       msg: `Impossible de trouver la notice enluminures ${ref} à supprimer.`
+     });
+   }
+   if (!await canDeleteEnluminures(req.user, doc)) {
+     return res
+       .status(401)
+       .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+   }
+
+   if(doc.RENV !== []){
+    doc.RENV = [];
+    await removeLinksEnluminures(doc.REF, "RENV");
+   }
+
+   if(doc.REFC !== []){
+    doc.REFC = [];
+    await removeLinksEnluminures(doc.REF,"REFC");
+   }
+
+   if(doc.REFDE !== []){
+    doc.REFDE = [];
+    await removeLinksEnluminures(doc.REF,"REFDE");
+   }
+
+
+   // remove all images and the document itself.
+   await Promise.all([doc.VIDEO.filter(i => i).map(f => deleteFile(f, "enluminures")), doc.remove()]);
+   await Promise.all([docOai.remove()]);
+   return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
+ } catch (error) {
+   capture(error);
+   return res.status(500).send({ success: false, error });
+ }
+});
+
 function determineProducteur(notice) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -297,6 +329,28 @@ function determineProducteur(notice) {
     } catch (e) {
       capture(e);
       reject(e);
+    }
+  });
+}
+
+function removeLinksEnluminures(ref, fieldEnluminures){
+  return new Promise(async (resolve, reject) => {
+    try{
+      const promises = [];
+      const criteres = {};
+      criteres[fieldEnluminures] = ref
+      // Récupération des notices Enluminures qui sont liées à la notice en cours
+      const noticesToPopulate = await Enluminures.find(criteres);
+
+      for (let i = 0; i < noticesToPopulate.length; i++) {
+        // Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+        noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][fieldEnluminures].filter(e => e !== ref);
+        promises.push(noticesToPopulate[i].save());
+      }
+      await Promise.all(promises);
+      resolve();
+    } catch(error){
+      reject(error)
     }
   });
 }
@@ -328,7 +382,7 @@ function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
       }
 
       for (let i = 0; i < noticesToPopulate.length; i++) {
-        // Si la notice la référence de la notice est absente de la liste mise à jour, la référence est supprimée
+        // Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
         if(!list.includes(noticesToPopulate[i].REF)){
           noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][fieldEnluminures].filter(e => e !== notice.REF);
           promises.push(noticesToPopulate[i].save());

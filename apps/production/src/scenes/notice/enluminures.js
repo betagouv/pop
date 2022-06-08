@@ -3,6 +3,7 @@ import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
+import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
@@ -36,16 +37,25 @@ class Enluminures extends React.Component {
 
   async load(ref) {
     this.setState({ loading: true });
-    const notice = await API.getNotice("enluminures", ref);
-    this.props.initialize(notice);
-    //const editable = false;
-    let editable = false;
-    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(result => {
-      editable = result.validate;
-      this.setState({editable: editable});
-    });
+    API.getNotice("enluminures", ref).then(notice => {
+      if (!notice) {
+        this.setState({
+          loading: false,
+          error: `Impossible de charger la notice ${ref}`
+        });
+        return;
+      }
+    
+        this.props.initialize(notice);
+      //const editable = false;
+      let editable = false;
+      API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(result => {
+        editable = result.validate;
+        this.setState({editable: editable});
+      });
 
-    this.setState({ loading: false, notice, editable });
+      this.setState({ loading: false, notice, editable });
+    });
   }
 
   async onSubmit(values) {
@@ -173,6 +183,11 @@ class Enluminures extends React.Component {
           </Section>
           <div className="buttons">
             <BackButton history={this.props.history} />
+            {this.props.canDelete ? (
+              <DeleteButton noticeType="enluminures" noticeRef={this.state.notice.REF} />
+            ) : (
+              <div />
+            )}
             <Button disabled={!this.state.editable} color="primary" type="submit">
               Sauvegarder
             </Button>
@@ -201,7 +216,21 @@ const CustomField = ({ name, disabled, ...rest }) => {
   );
 };
 
-const mapStateToProps = ({ Auth }) => {};
+const mapStateToProps = ({ Auth }) => {
+  const { role, group, museofile } = Auth.user;
+  // An "administrateur" (from "enluminures" or "admin" group) can delete.
+  const canDelete =
+    Auth.user && role === "administrateur" && (group === "Enluminures" || group === "admin");
+  // If you can delete, you can update (see above).
+  // Also, you can update if you are a "producteur" from "joconde"
+  // (assuming user.museofile === notice.museofile, see "editable" state)
+  const canUpdate = canDelete || (Auth.user && role === "producteur" && group === "Enluminures");
+  return {
+    canDelete,
+    canUpdate,
+    user: { museofile, role, group }
+  };
+};
 
 export default connect(
   mapStateToProps,
