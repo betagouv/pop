@@ -209,26 +209,12 @@ function readme() {
     <div>
       <h5>Enluminures</h5>
       <div>
-        Cet onglet permet d’alimenter la base Enluminures. Avant tout import dans la base, veuillez
-        prendre connaissance de la{" "}
-        <a
-          href="https://s3.eu-west-3.amazonaws.com/pop-general/POP_Enluminures_engagements_VD.pdf"
-          target="_blank"
-          rel="noopener"
-        >
-          Charte d'engagement
-        </a>{" "}
-        relative au versement des données dans la base Enluminures <br /> <br />
-        <h6>Exemple de fichier d'import csv</h6>
-        <a href="https://pop-general.s3.eu-west-3.amazonaws.com/import_examples/enluminures.zip">
-            enluminures csv
-        </a>
+        Cet onglet permet d’alimenter la base Enluminures.
         <br /> <br />
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
-          <li>CSV (UTF8, séparateur ';') </li>
-          <li>Illustration : jpg, png.</li>
+          <li>texte : csv (séparateur : point-virgule, encodage : UTF8) </li>
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
         million de notices sans images). <br /> <br />
@@ -241,15 +227,8 @@ function readme() {
           ))}
         </ul>
         <br />
-        <ul>
-          {controlsFields.map(e => (
-            <li key={e}>
-              {e} : {Mapping.enluminures[e].validation}
-            </li>
-          ))}
-        </ul>
-        <br />
         <h5>Que voulez-vous faire ?</h5>
+        <br />
         <h6>Je veux créer une notice :</h6>
         J’importe la notice.
         <br />
@@ -269,9 +248,7 @@ function readme() {
         <br />
         <br />
         <h6>Je veux ajouter une image :</h6>
-        1) Si présence du champ Adresse d'images (REFIM) alors l'image (.jpg) est obligatoire.
-        <br />
-        2) Sur une notice déjà existante, je peux cliquer sur "Ajouter une image" et télécharger une
+        1) Sur une notice déjà existante, je peux cliquer sur "Ajouter une image" et télécharger une
         image depuis mon ordinateur. Le champ VIDEO contiendra le lien de l'image ainsi téléchargée.
         <br />
         <br />
