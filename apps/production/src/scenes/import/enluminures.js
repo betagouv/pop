@@ -132,7 +132,7 @@ function report(notices, collection, email, institution, importId) {
     return acc;
   }, 0);
 
-  let contact = "A MODIFIER";
+  let contact = "wilfried.muller@culture.gouv.fr";
 
   arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
   arr.push(`<h2>Établissement : ${institution}</h2>`);
