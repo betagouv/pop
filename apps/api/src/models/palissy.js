@@ -488,7 +488,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Emplacement de l'image sur le serveur",
+        label: "Nombre d'objets",
         deprecated: true
       }
     },

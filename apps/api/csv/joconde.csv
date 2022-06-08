@@ -66,7 +66,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "MOSA","String","non","","","","Champ déprécié",""
 "MSGCOM","String","non","Lien commande photo","","","Lien commande de reproduction et/ou de conditions d’utilisation ",""
 "MUSEO","String","oui","Lien MUSEOFILE","true","","Lien MUSEOFILE",""
-"NSDA","String","non","Numéro de site","","","Numéro de site",""
+"NSDA","String","non","Genre","","","Genre",""
 "ONOM","Array","non","Onomastique","true","","Onomastique",""
 "PAUT","String","non","Précision auteur","true","","Précision auteur",""
 "PDAT","String","non","Précision datation","","","[Peut être déprécié : Pas affiché en production ni en diffusion]",""

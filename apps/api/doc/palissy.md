@@ -753,7 +753,7 @@ Référence(s) d'exposition(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Emplacement de l'image sur le serveur|
+|String|non|non|oui|non||Nombre d'objets|
 
 ### IMG
 [PAS AFFICHE]
