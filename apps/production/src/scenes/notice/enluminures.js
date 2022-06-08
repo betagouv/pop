@@ -8,6 +8,7 @@ import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
+import Map from "./components/map.js";
 import Loader from "../../components/Loader";
 import FieldImages from "./components/fieldImages";
 import EnluminuresEntity from "../../entities/Enluminures";
@@ -159,6 +160,8 @@ class Enluminures extends React.Component {
                 <CustomField name="ORIGH" disabled={!this.state.editable} />
                 <CustomField name="ORIGP" disabled={!this.state.editable} />
                 <CustomField name="DOMN" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lat" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lon" disabled={!this.state.editable} />
                 <CustomField name="TYPE" disabled={!this.state.editable} />
                 <CustomField name="POSS" disabled={!this.state.editable} />
                 <CustomField name="REFD" disabled={!this.state.editable} />
@@ -181,6 +184,7 @@ class Enluminures extends React.Component {
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
+          <Map notice={this.state.notice} />
           <div className="buttons">
             <BackButton history={this.props.history} />
             {this.props.canDelete ? (

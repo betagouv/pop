@@ -81,6 +81,45 @@ function transformBeforeCreateAndUpdate(notice) {
         }
       }
 
+      //Si la notice contient des coordonnées, contient geolocalisation devient oui
+      let lat = "";
+      let lon = "";
+      let coordonnees = {lat: 0, lon: 0}
+
+      if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
+        lat = String(notice["POP_COORDONNEES.lat"]);
+        lon = String(notice["POP_COORDONNEES.lon"]);
+      }
+      else if(notice.POP_COORDONNEES && (notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)){
+        lat = String(notice.POP_COORDONNEES.lat);
+        lon = String(notice.POP_COORDONNEES.lon);
+      }
+      if (lat || lon) {
+        if(lat){
+          coordonnees.lat = parseFloat(lat.replace(",","."));
+        }
+        if(lon){
+          coordonnees.lon = parseFloat(lon.replace(",","."));
+        }
+        //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
+        if(coordonnees.lat !==0  && !isNaN(coordonnees.lat) && 
+          coordonnees.lon !==0  && !isNaN(coordonnees.lon)){
+          notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+        }
+        else {
+          notice.POP_CONTIENT_GEOLOCALISATION = "non";
+        }
+      } else {
+        notice.POP_CONTIENT_GEOLOCALISATION = "non";
+      }
+      if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
+        notice["POP_COORDONNEES.lat"] = coordonnees.lat;
+        notice["POP_COORDONNEES.lon"] = coordonnees.lon;
+      }
+      else{
+        notice.POP_COORDONNEES = coordonnees;
+      }
+
       notice.DMAJ = formattedNow();
 
       notice = await withFlags(notice);

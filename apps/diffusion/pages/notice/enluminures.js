@@ -294,6 +294,7 @@ export default class extends React.Component {
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="enluminures" />
                 </div>
                 <SeeMore notice={notice} />
+                <Map notice={notice} />
               </Col>
             </Row>
           </Container>
