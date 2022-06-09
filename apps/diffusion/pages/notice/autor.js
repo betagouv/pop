@@ -224,7 +224,7 @@ export default class extends React.Component {
                   <Field title={mapping.autor.DATES.label} content={notice.DATES} separator="#" />
                   <Field title={mapping.autor.LRELA.label} content={notice.LRELA} separator="#" />
                   <Field title={mapping.autor.FORM.label} content={notice.FORM} separator="#" />
-                  <Field title={mapping.autor.OEUVR.label} content={notice.OEUVR} separator="#" />
+                  <Field title={mapping.autor.OEUVR.label} content={notice.OEUVR} separator="#" addLink={true}/>
                   <Field title={mapping.autor.SYMB.label} content={notice.SYMB} separator="#" />
                   <Field title={mapping.autor.INS.label} content={notice.INS} separator="#" />
                   <Field title={mapping.autor.GAR.label} content={notice.GAR} separator="#" />
@@ -248,10 +248,10 @@ export default class extends React.Component {
                       "SOURCES", "BIBLIO", "PUBLI", "EXPO", "ISNI_VERIFIEE", "ARK"
                     ]}
                   />
-                  <Field title={mapping.autor.SOURCES.label} content={notice.SOURCES} separator="#" />
-                  <Field title={mapping.autor.BIBLIO.label} content={notice.BIBLIO} separator="#" />
-                  <Field title={mapping.autor.PUBLI.label} content={notice.PUBLI} separator="#" />
-                  <Field title={mapping.autor.EXPO.label} content={notice.EXPO} separator="#" />
+                  <Field title={mapping.autor.SOURCES.label} content={notice.SOURCES} separator="#" addLink={true}/>
+                  <Field title={mapping.autor.BIBLIO.label} content={notice.BIBLIO} separator="#" addLink={true} />
+                  <Field title={mapping.autor.PUBLI.label} content={notice.PUBLI} separator="#" addLink={true}/>
+                  <Field title={mapping.autor.EXPO.label} content={notice.EXPO} separator="#" addLink={true}/>
                   <Field title={mapping.autor.ISNI_VERIFIEE.label} content={referenceArk} separator="#" />
 
                 </div>
