@@ -48,7 +48,7 @@ router.use("/*/_msearch", (req, res) => {
 
   // Si la requête ne provient pas de l'application productiion
   if(!req.headers.application || req.headers.application !== ID_PROD_APP){
-    opts = addFilterFields(opts);
+    opts = addFilterFields(req, opts);
   }
   
   aws4.sign(opts);
@@ -61,14 +61,15 @@ router.use("/*/_msearch", (req, res) => {
     .end(opts.body || "");
 });
 
-function addFilterFields(opts){
+function addFilterFields(req, opts){
   let transformData = false;
   let reqFilter = opts.body.split('\n').filter( val => val !== "").map((val) => {
     let obj = JSON.parse(val);
 
     if(Object.keys(obj).includes('query')){
+      const listeNonDiffusable = [...listeNonDiffusablePalissy(), ...listeNonDiffusableMNR()];
       obj._source = {
-        "excludes": listeNonDiffusable()
+        "excludes": listeNonDiffusable
       }
       transformData = true;
     }
@@ -86,8 +87,16 @@ function addFilterFields(opts){
  * Retourne les champs non diffusable pour Palissy
  * @returns array
  */
- function listeNonDiffusable(){
+ function listeNonDiffusablePalissy(){
   return ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
+}
+
+/**
+ * Retourne les champs non diffusable pour MNR
+ * @returns array
+ */
+ function listeNonDiffusableMNR(){
+  return ['SALLES','RCL', 'NET', 'CARTELS'];
 }
 
 
