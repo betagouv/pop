@@ -12,6 +12,7 @@ import CollapsableFacet from "../search/components/CollapsableFacet";
 import utils from "./utils.js";
 import "./list.css";
 import { es_url, bucket_url, pop_url } from "../../config.js";
+import p_utils from "../search/components/utils";
 
 export default function List() {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
@@ -83,6 +84,7 @@ export default function List() {
                   </select>
                 </div>
               )}
+              pagination={p_utils.pagination}
             />
           </Col>
         </Row>
