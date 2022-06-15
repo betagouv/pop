@@ -28,7 +28,7 @@
     "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@popproject/pop-react-elasticsearch": "^2.1.8",
+    "@popproject/pop-react-elasticsearch": "^2.1.9",
     "react-slick": "^0.28.1",
     "react-switch": "^6.0.0",
     "react-viewer": "^3.2.2",
