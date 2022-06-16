@@ -1,10 +1,10 @@
 const path = require("path");
 
 const webpack = require("webpack");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const Dotenv = require("dotenv-webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = env => {
   console.log("MODE :", process.env.NODE_ENV);
@@ -31,10 +31,9 @@ module.exports = env => {
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser',
     }),
-    new UglifyJsPlugin({
+    new TerserPlugin({
       test: /\.js($|\?)/i,
       exclude: /node_modules/,
-      cache: false,
       parallel: 4
     })
   ];
