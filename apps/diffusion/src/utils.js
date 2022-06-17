@@ -37,6 +37,9 @@ export function getNoticeInfo(notice) {
         logo = "/static/mh.png";
       } else if (notice.PRODUCTEUR === "MAP") {
         logo = "/static/map.png";
+      }
+      else if (notice.PRODUCTEUR === "MPP") {
+          logo = "/static/mpp.png";
       } else if (notice.PRODUCTEUR === "INV") {
         logo = "/static/inventaire.jpg";
       }

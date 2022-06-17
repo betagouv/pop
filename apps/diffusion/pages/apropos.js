@@ -110,7 +110,7 @@ export default class extends React.Component {
             </p>
             <p>
             <b >Mémoire</b> regroupe les collections de photographies conservées par des services centraux
-            (Médiathèque de l’architecture et du patrimoine), déconcentrés (Conservations régionales 
+            (Médiathèque du patrimoine et de la photographie), déconcentrés (Conservations régionales 
             des Monuments historiques) ou décentralisés (Services régionaux de l’Inventaire) du
             ministère de la Culture. Dans la mesure du possible, ces images illustrent les notices des
             bases <em>Mérimée</em> et <em>Palissy</em>.

@@ -616,7 +616,7 @@ const SeeMore = ({ notice }) => {
       <Field
         content={
           <a href={getUrlArchive(notice.REF)} target="_blank">
-            Les archives conservées à la Médiathèque de l'architecture et du patrimoine
+            Les archives conservées à la Médiathèque du patrimoine et de la photographie
           </a>
         }
         key="mediathek_cible"
