@@ -1,4 +1,3 @@
-const withOffline = require("next-offline");
 const withPwa = require("next-pwa");
 const Dotenv = require('dotenv-webpack');
 
