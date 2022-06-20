@@ -1,7 +1,11 @@
 const withOffline = require("next-offline");
+const withPwa = require("next-pwa");
 const Dotenv = require('dotenv-webpack');
 
-module.exports = withOffline({
+module.exports = withPwa({
+   pwa: {
+    dest: 'public'
+  },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
