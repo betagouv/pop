@@ -33,7 +33,7 @@ class SmallNotice extends React.Component {
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>
             : ""}
             <div>
-              <p>{this.props.notice.DOMN}</p>
+              <p>{this.props.notice.DOMN.join(", ")}</p>
               <p>{this.props.notice.AUTR}</p>
             </div>
           </div>
