@@ -36,6 +36,9 @@ async function recipients(to) {
     case "museo":
       return "laurent.manoeuvre@culture.gouv.fr";
     // Dynamic recipient (email): user must exist in database.
+    case "enluminures":
+      return "wilfried.muller@culture.gouv.fr"  
+      break;
     default:
       try {
         const user = await User.findOne({ email: to });

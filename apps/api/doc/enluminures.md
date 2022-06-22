@@ -46,9 +46,12 @@
 - [VISITE](/apps/api/doc/enluminures.md#VISITE)
 - [VIDEO](/apps/api/doc/enluminures.md#VIDEO)
 - [TOUT](/apps/api/doc/enluminures.md#TOUT)
-- [IMG](/apps/api/doc/enluminures.md#IMG)
 - [DMAJ](/apps/api/doc/enluminures.md#DMAJ)
 - [DMIS](/apps/api/doc/enluminures.md#DMIS)
+- [RENV](/apps/api/doc/enluminures.md#RENV)
+- [REFC](/apps/api/doc/enluminures.md#REFC)
+- [REFDE](/apps/api/doc/enluminures.md#REFDE)
+- [LIENS](/apps/api/doc/enluminures.md#LIENS)
 - [_id](/apps/api/doc/enluminures.md#_id)
 - [__v](/apps/api/doc/enluminures.md#__v)
 ### REF
@@ -493,29 +496,21 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 ### VIDEO
 
-
-
-
-
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |Array|non|non|non|non|||
 
+
+
 ### TOUT
-
-
-
-
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|non|non|non|||
 
+
+
 ### IMG
-
-
-
-
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
@@ -524,38 +519,74 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 ### DMAJ
 Date de mise à jour (format AAAA-MM-JJ)
 
-
-
-
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Date de mise à jour|
 
+
+
 ### DMIS
 Date de la création (format AAAA-MM-JJ)
-
-
-
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |String|non|oui|non|non||Date de création|
 
+
+
+### RENV
+Numéro de renvoi vers un autre domaine
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|
+
+
+
+### RENV
+Numéro de renvoi vers un autre domaine
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|
+
+
+
+### REFC
+Numéro de renvoi vers une référence du contenu matériel
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers une référence du contenu matériel|
+
+
+
+### REFDE
+Numéro de renvoi vers une référence du décor
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers une référence du décor|
+
+
+
+### LIENS
+Liens externes éventuels
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Liens externes éventuels|
+
+
+
 ### _id
-
-
-
-
-
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
 |ObjectID|non|non|non|non|||
 
+
+
 ### __v
-
-
-
-
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
