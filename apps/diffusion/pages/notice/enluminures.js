@@ -10,6 +10,7 @@ import Field from "../../src/notices/Field";
 import Title from "../../src/notices/Title";
 import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
+import Map from "../../src/notices/Map";
 import { schema, getParamsFromUrl, findCollection, highlighting, lastSearch } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
 import { getNoticeInfo } from "../../src/utils";
@@ -17,8 +18,51 @@ import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { EnluminuresPdf } from "../../src/pdf/pdfNotice/enluminuresPdf";
+import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
 
+const pushLinkedNotices = (a, d, base) => {
+  for (let i = 0; Array.isArray(d) && i < d.length; i++) {
+    a.push(API.getNotice(base, d[i]));
+    if (a.length > 50) break;
+  }
+};
+
+const SeeMore = ({ notice }) => {
+  const arr = [];
+
+  if (notice.LIENS) {
+    if (notice.LIENS.length > 0) {
+      arr.push(
+        <Field
+          title={mapping.enluminures.LIENS.label}
+          content={<a href={notice.LIENS[0]} target="_blank">{notice.LIENS[0]}</a>}
+          key="notice.LIENS"
+        />
+      );
+
+      for (let i = 1; i < notice.LIENS.length; i++) {
+        arr.push(
+          <Field
+            content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
+            key="notice.LIENS"
+          />
+        );
+      }
+    }
+  }
+
+  if (!arr.length) {
+    return null;
+  }
+
+  return (
+    <div className="sidebar-section info">
+      <h2>Voir aussi</h2>
+      <div>{arr}</div>
+    </div>
+  );
+}
 
 export default class extends React.Component {
 
@@ -29,7 +73,17 @@ export default class extends React.Component {
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
-    return { notice, searchParamsUrl, searchParams };
+    const arr = [];
+    if (notice) { 
+      const { RENV, REFC, REFDE } = notice;
+      pushLinkedNotices(arr, RENV, "enluminures");
+      pushLinkedNotices(arr, REFC, "enluminures");
+      pushLinkedNotices(arr, REFDE, "enluminures");
+    }
+
+    const links = (await Promise.all(arr)).filter(l => l);
+
+    return { notice, searchParamsUrl, searchParams, links };
   }
 
   async componentDidMount() {
@@ -223,6 +277,7 @@ export default class extends React.Component {
               </Col>
               <Col md="4">
                 <FieldImages images={images} />
+                <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
@@ -238,6 +293,8 @@ export default class extends React.Component {
                   </div>
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="enluminures" />
                 </div>
+                <SeeMore notice={notice} />
+                <Map notice={notice} />
               </Col>
             </Row>
           </Container>
