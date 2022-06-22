@@ -35,8 +35,8 @@ export function getNoticeInfo(notice) {
       let logo = "";
       if (notice.PRODUCTEUR === "CRMH") {
         logo = "/static/mh.png";
-      } else if (notice.PRODUCTEUR === "MAP") {
-        logo = "/static/map.png";
+      } else if (notice.PRODUCTEUR === "MAP" || notice.PRODUCTEUR === "MPP") {
+        logo = "/static/mpp.png";
       } else if (notice.PRODUCTEUR === "INV") {
         logo = "/static/inventaire.jpg";
       }
@@ -103,6 +103,15 @@ export function getNoticeInfo(notice) {
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
 
+      let logo = "";
+      let classProducteur = "";
+      if (notice.PRODUCTEUR === "Jeu de Paume sous l'Occupation") {
+        logo = "/static/jdpso.jpg";
+        classProducteur = "jdpso";
+      } else if (notice.PRODUCTEUR === "MNR"){
+        logo = "/static/mnr.png";
+      }
+
       let metaDescription = "";
 
       const image_preview = notice.VIDEO.length
@@ -114,7 +123,7 @@ export function getNoticeInfo(notice) {
         alt: e
       }));
 
-      return { title, subtitle, image_preview, metaDescription, images };
+      return { title, subtitle, image_preview, metaDescription, images, logo, classProducteur};
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
@@ -407,45 +416,4 @@ export function saveListRef (listRefs, searchParams, removeFromBucket){
 
     cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
   }
-}
-
-/**
- * Ajout de l'exclusion des champs dans la requête E-S
- */
-export function addFilterFields(){
-  (function(send) {
-
-    XMLHttpRequest.prototype.send = function(data) {
-      let transformData = false;
-
-      if(data){
-        let newReq = data.split('\n').filter( val => val !== "").map((val) => {
-          let obj = JSON.parse(val);
-     
-          if(Object.keys(obj).includes('query')){
-            obj._source = {
-              "excludes": listeNonDiffusable()
-            }
-            transformData = true;
-          }
-          return JSON.stringify(obj);
-        }).join('\n');
-  
-        if(transformData){
-          data = newReq + '\n';
-        }
-      }
-      
-      send.call(this, data);
-    };
-
-  })(XMLHttpRequest.prototype.send);
-}
-
-/**
- * Retourne les champs non diffusable pour Palissy
- * @returns array
- */
-export function listeNonDiffusable(){
-  return ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
 }

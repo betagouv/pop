@@ -17,6 +17,17 @@ class App extends React.Component {
   componentWillMount() {
     this.props.signinByToken();
     this.isMaintenanceSite();
+
+    /**
+     * Ajout de l'application dans la requête E-S pour ne pas filtrer les champs
+     */
+    (function() {
+      const origSend = XMLHttpRequest.prototype.send;
+       XMLHttpRequest.prototype.send = function(data) {
+         this.setRequestHeader('Application', localStorage.getItem("application"));
+         origSend.apply(this, arguments)
+       };
+     })();
   }
 
   async isMaintenanceSite(){

@@ -4,6 +4,21 @@ import Link from "next/link";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
 import { tag } from "./../src/services/tags";
+import queryString from "query-string";
+import { pop_url } from '../src/config';
+
+const toReactiveSearchParams = params => {
+  return Object.assign(...Object.entries(params).map(([k, v]) => ({ [k]: JSON.stringify(v) })));
+};
+
+function getUriJeuDePaume(){
+  const params={
+    base: ["Rose Valland (MNR-Jeu de Paume)"],
+    producteur: ["Jeu de Paume sous l'Occupation"]
+  }
+
+  return `${pop_url}search/mosaic?${queryString.stringify(toReactiveSearchParams(params))}`;
+}
 
 export default class extends React.Component {
 
@@ -11,6 +26,8 @@ export default class extends React.Component {
     tag.sendPage({
       name: 'Page À propos'
     });
+
+   
   }
 
   render() {
@@ -79,20 +96,21 @@ export default class extends React.Component {
                 <li>des objets protégés au titre des Monuments historiques, « classés » ou « inscrits ».</li>
                 <li>des objets étudiés par les services régionaux de l’Inventaire.</li>
             </ul>
-
             <p>
-            <b >MNR-Rose Valland</b> est le catalogue en ligne des biens MNR (« Musées nationaux
-            Récupération ») qui ont été récupérés en Allemagne à la fin de la dernière guerre, et
-            confiés à la garde des musées nationaux en attente de l’identification de leur légitimes
-            propriétaires. Dans une proportion difficile à déterminer, ils sont susceptibles d’avoir fait
-            l’objet de spoliations avérées ou présumées. Les données sur ces biens sont
-            exclusivement publiées sur la base nationale MNR-Rose Valland, alimentée par la
-            Mission de recherche et de restitution des biens culturels spoliés entre 1933 et 1945.
+            La base <b>Rose-Valland (MNR-Jeu de Paume) </b> est le catalogue en ligne des biens MNR (« Musées nationaux Récupération ») 
+            qui ont été récupérés en Allemagne à la fin de la dernière guerre, et confiés à la garde des musées nationaux en attente de l’identification de leurs légitimes propriétaires. 
+            Dans une proportion difficile à déterminer, ils sont susceptibles d’avoir fait l’objet de spoliations avérées ou présumées. 
+            Les données sur ces biens sont exclusivement publiées sur la base nationale Rose Valland (MNR-Jeu de Paume), 
+            alimentée par la <a href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Biens-culturels-MNR-et-Base-Rose-Valland-MNR-Jeu-de-Paume" target="_blank">
+            Mission de recherche et de restitution des biens culturels spoliés entre 1933 et 1945</a>.<br/>
+            Cette base contient également les données concernant les œuvres exposées sous l’Occupation par l'Einsatzstab Reichsleiter Rosenberg (ERR) au <a href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Recherche-de-provenance-outils-et-methode/Photographies-prises-au-Jeu-de-Paume-pendant-l-Occupation" target="_blank">musée du Jeu de Paume</a>, 
+            lieu de stockage et d’exposition des œuvres spoliées avant leur départ pour l’Allemagne. Les vues générales présentées dans les notices <a target="_blank" href={getUriJeuDePaume()}>Jeu de Paume sous l’Occupation</a> correspondent à quatorze négatifs conservés aux Archives du ministère des Affaires étrangères (FR-MAE Centre des archives diplomatiques de La Courneuve, 20160007AC/7). 
+            Les clichés ont été optimisés grâce à une numérisation spécifique des détails. Ils ont été ensuite mis en relation avec le plan des deux niveaux du <a href="https://www.culture.gouv.fr/Nous-connaitre/Organisation/Le-secretariat-general/Mission-de-recherche-et-de-restitution-des-biens-culturels-spolies-entre-1933-et-1945/Recherche-de-provenance-outils-et-methode/Photographies-prises-au-Jeu-de-Paume-pendant-l-Occupation" target="_blank">Jeu de Paume</a>. 
+            232 œuvres sont visibles sur ces 14 clichés.
             </p>
-
             <p>
             <b >Mémoire</b> regroupe les collections de photographies conservées par des services centraux
-            (Médiathèque de l’architecture et du patrimoine), déconcentrés (Conservations régionales 
+            (Médiathèque du patrimoine et de la photographie), déconcentrés (Conservations régionales 
             des Monuments historiques) ou décentralisés (Services régionaux de l’Inventaire) du
             ministère de la Culture. Dans la mesure du possible, ces images illustrent les notices des
             bases <em>Mérimée</em> et <em>Palissy</em>.

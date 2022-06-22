@@ -22,18 +22,20 @@ class LinkedNotice extends React.Component {
 class SmallNotice extends React.Component {
   render() {
     const { title, image_preview } = getNoticeInfo(this.props.notice);
+    // Mantis 42763 - Affichage du nom du producteur pour la base MNR
+    const categorie = (this.props.notice.collection === "mnr") ? this.props.notice.PRODUCTEUR : this.props.notice.collection;
     return (
       <Link href={`/notice/${this.props.notice.collection}/${this.props.notice.REF}`}>
         <a style={{ textDecoration: "none" }} className="card">
           <img src={image_preview} alt={title} />
           <div className="content">
-            <p className="categories">{this.props.notice.collection}</p>
+            <p className="categories">{categorie}</p>
             <h3>{title}</h3>
             {this.props.notice.DENO ? 
             <p className="categories">{this.props.notice.DENO.join(", ")}</p>
             : ""}
             <div>
-              <p>{this.props.notice.DOMN}</p>
+              <p>{this.props.notice.DOMN.join(", ")}</p>
               <p>{this.props.notice.AUTR}</p>
             </div>
           </div>

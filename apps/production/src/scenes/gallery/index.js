@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import CollapsableFacet from "../search/components/CollapsableFacet";
 import { es_url, bucket_url } from "../../config.js";
+import utils from "../search/components/utils";
 import "./index.css";
 
 function Gallery({ role, group }) {
@@ -80,6 +81,7 @@ function Gallery({ role, group }) {
                   </select>
                 </div>
               )}
+              pagination={utils.pagination}
             />
           </Col>
         </Row>

@@ -33,8 +33,8 @@ export default ({ data }) => {
         </div>
         <div>
           <p>{data.DOMN}</p>
-          <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p>
-          <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p>
+          { (data.LOCA && data.LOCA !== "") ? <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p> : null }
+          { (data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null }
           <p>{data.CATE}</p>
           <p>{data.PHOT}</p>
         </div>

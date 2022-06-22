@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl, esPort } = require("../config.js");
+const { esUrl, esPort, ID_PROD_APP } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
 
@@ -32,6 +32,7 @@ router.post("/scroll", (req, res) => {
 });
 
 router.use("/*/_msearch", (req, res) => {
+
   let opts = {
     host: esUrl,
     path: req.originalUrl.replace("/search", ""),
@@ -39,11 +40,19 @@ router.use("/*/_msearch", (req, res) => {
     method: "POST",
     headers: { "Content-Type": "Application/x-ndjson" }
   };
+
   // Ajout du port sur l'environnement de dev
   if(esPort !== "80"){
     opts.port = esPort;
   }
+
+  // Si la requête ne provient pas de l'application productiion
+  if(!req.headers.application || req.headers.application !== ID_PROD_APP){
+    opts = addFilterFields(req, opts);
+  }
+  
   aws4.sign(opts);
+
   http
     .request(opts, res1 => {
       const routedResponse = res1.pipe(res);
@@ -51,5 +60,44 @@ router.use("/*/_msearch", (req, res) => {
     })
     .end(opts.body || "");
 });
+
+function addFilterFields(req, opts){
+  let transformData = false;
+  let reqFilter = opts.body.split('\n').filter( val => val !== "").map((val) => {
+    let obj = JSON.parse(val);
+
+    if(Object.keys(obj).includes('query')){
+      const listeNonDiffusable = [...listeNonDiffusablePalissy(), ...listeNonDiffusableMNR()];
+      obj._source = {
+        "excludes": listeNonDiffusable
+      }
+      transformData = true;
+    }
+    return JSON.stringify(obj);
+  }).join('\n');
+
+  if(transformData){
+    opts.body = reqFilter + '\n';
+  }
+
+  return opts;
+}
+
+/**
+ * Retourne les champs non diffusable pour Palissy
+ * @returns array
+ */
+ function listeNonDiffusablePalissy(){
+  return ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
+}
+
+/**
+ * Retourne les champs non diffusable pour MNR
+ * @returns array
+ */
+ function listeNonDiffusableMNR(){
+  return ['SALLES','RCL', 'NET', 'CARTELS'];
+}
+
 
 module.exports = router;

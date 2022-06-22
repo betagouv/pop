@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
 import mh from "../../../assets/mh.png";
-import map from "../../../assets/map.jpg";
+import mpp from "../../../assets/mpp.png";
 import inv from "../../../assets/inventaire.jpg";
 
 export default ({ data }) => {
@@ -20,7 +20,8 @@ export default ({ data }) => {
       case "CRMH":
         return <img src={mh} className="producteur mh" />;
       case "MAP":
-        return <img src={map} className="producteur mh" />;
+      case "MPP":
+        return <img src={mpp} className="producteur mh" />;
       case "INV":
         return <img src={inv} className="producteur mh" />;
       default:

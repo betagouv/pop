@@ -71,6 +71,9 @@ function readme() {
           ))}
         </ul>
         <br />
+        Les champs REFIM et VIDEO ne doivent pas être réimporter après leur export de POP
+        <br />
+        <br />
         <h6>Test de validation des champs : </h6>
         Les tests suivants sont effectués lors des imports
         <br />

@@ -4,7 +4,6 @@ import Head from "next/head";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Cookies from 'universal-cookie';
-import { addFilterFields } from '../src/utils';
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -19,9 +18,6 @@ export default class MyApp extends App {
     });
     Router.events.on("routeChangeComplete", () => NProgress.done());
     Router.events.on("routeChangeError", () => NProgress.done());
-
-    // Suppression des champs non diffusable
-    addFilterFields();
   }
 
   render() {

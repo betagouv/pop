@@ -113,7 +113,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
       return "UDAP";
     }
     else if ((IDPROD != null && String(IDPROD).startsWith("SAP")) || (EMET != null && String(EMET).startsWith("SAP"))) {
-      return "MAP";
+      return "MPP";
     }
   }
 
