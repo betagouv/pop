@@ -17,6 +17,7 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
+const { EXCEPTION_CODES } = require("./utils/OAI/oai_Exceptions");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -218,6 +219,18 @@ router.post(
         BASE: "joconde",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
+      if(notice.REF == "M0227011263"){
+        throw new Error('erreur pendant la création');
+      /*  throw new Error(JSON.stringify({
+          MongoError: 'erreur pendant la création',
+          driver: true,
+          index: 0,
+          code: 11000,
+          keyPattern: { REF: 1 },
+          keyValue: { REF: 'M0227011263' }
+        }));*/
+      }
+     
       const obj = new Joconde(notice);
       const obj2 = new NoticesOAI(oaiObj)
       checkESIndex(obj);
@@ -225,9 +238,9 @@ router.post(
       promises.push(obj2.save());
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
-    } catch (e) {
+    } catch (e) { console.log("erreur, back",typeof e, e.message)
       capture(e);
-      res.status(500).send({ success: false, error: e });
+      res.status(403).send({ success: false, error: e.message });
     }
   }
 );
@@ -260,6 +273,7 @@ router.get("/:ref", async (req, res) => {
   const ref = req.params.ref;
   const notice = await Joconde.findOne({ REF: ref });
   if (notice) {
+    return res.status(404).send({ success: false, msg: "Notice introuvable." });
     return res.status(200).send(notice);
   }
   return res.status(404).send({ success: false, msg: "Notice introuvable." });

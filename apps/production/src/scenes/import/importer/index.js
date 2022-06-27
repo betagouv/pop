@@ -220,9 +220,17 @@ class Importer extends Component {
         loadingMessage: "Mises à jour et création des notices"
       });
 
-      await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
+      const resultNotices = await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
         this.setState({ progress, loadingMessage });
       });
+
+      // Vérification de la mise à jour
+      if(resultNotices.length > 0){
+        // Regroupement des références de notices rejetées à l'import
+        const listRefError = resultNotices.map((n) => Object.keys(n)[0]);
+        // Suppression des notices en erreur de la liste des imports
+        this.setState({importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)) });
+      }
 
       const generateReport = this.props.report || generate;
 
