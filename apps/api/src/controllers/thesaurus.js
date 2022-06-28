@@ -26,11 +26,34 @@ router.get("/search", passport.authenticate("jwt", { session: false }), (req, re
   });
 });
 
-router.get("/validate", /*passport.authenticate("jwt", { session: false }),*/ (req, res) => {
+router.get("/autocompleteThesaurus", passport.authenticate("jwt", { session: false }), (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/autocompleteThesaurus'
+      #swagger.description = 'Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur (autocompletion)' 
+  */
+  let id = req.query.id;
+  let value = escapeRegExp(req.query.value);
+  let q = Thesaurus.find({ idThesaurus: id, value: { $regex: new RegExp("^" + value) } });
+  q.exec((e, values) => {
+    values = values.map( element => {
+      return {
+        _id: element._id,
+        idThesaurus: element.idThesaurus,
+        arc: element.arc,
+        label: element.value,
+        isAltLabel: element.altLabel,
+      }
+    })
+    res.send({ statusCode: 202, body: JSON.stringify(values) });
+  });
+});
+
+router.get("/validate", passport.authenticate("jwt", { session: false }), (req, res) => {
   /* 	
       #swagger.tags = ['Thesaurus']
       #swagger.path = '/thesaurus/validate'
-      #swagger.description = 'Retourne les informations de la notice Thesaurus en fonction des paramètres' 
+      #swagger.description = 'Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur' 
   */
   let id = req.query.id;
   let value = escapeRegExp(req.query.value);
@@ -38,12 +61,6 @@ router.get("/validate", /*passport.authenticate("jwt", { session: false }),*/ (r
     idThesaurus: id,
     $text: { $search: `"${value}"`, $caseSensitive: false, $diacriticSensitive: false }
   };
-  /*
-  let q = Thesaurus.find(query).limit(1);
-  q.exec((e, values) => {
-    const exist = !!values.length;
-    res.send(exist);
-  });*/
 
   Thesaurus.find(query, (e, values) => {
     values = values.map( element => {
@@ -259,6 +276,25 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
   const thesaurusId = req.query.id;
   const value = req.query.value;
 
+  /*return new Promise((resolve, reject) => {
+    request.get({
+      url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
+    },
+    (error, response) => {
+      if (!error && response.statusCode === 202) {
+        resolve(response);
+      } else {
+        capture(error);
+        reject(error);
+      }
+    }
+  );
+  })
+  .then(resp => { 
+    res.status(200).send(resp);
+  })
+  .catch(error => res.status(400).send({ success: false, msg: error}));
+  */
   return new Promise((resolve, reject) => {
     request.get({
       url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
