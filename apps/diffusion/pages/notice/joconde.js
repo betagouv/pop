@@ -233,6 +233,13 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
+    let title_component = title;
+
+    // M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
+    if(typeof title == "string" && title.indexOf('#') > -1){ 
+      title_component = title.split('#').map((element) => <p>{element}</p>);
+    }
+
     //construction du pdf au format joconde
     //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
     const pdf = JocondePdf(notice, title, this.props.links, this.props.museo);
@@ -275,7 +282,7 @@ export default class extends React.Component {
             <div>
               <div className="heading heading-center">
                 {this.renderPrevButton()}
-                <h1 className="heading-title">{title}</h1>
+                <h1 className="heading-title">{title_component}</h1>
                 {this.renderNextButton()}
               </div>
 
