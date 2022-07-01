@@ -287,6 +287,12 @@ router.put(
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
+
+      // M43272 - Récupération de la valeur du champ DPT si celle-ci n'est pas renseignée à l'import
+      // -> écrasement de la valeur de DPT_LETTRE si non repris
+      if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
+        notice.DPT = prevNotice.DPT;
+      }
       notice.REFO = await populateREFO(notice);
 
       // Update IMPORT ID (this code is unclear…)

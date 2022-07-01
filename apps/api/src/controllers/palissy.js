@@ -320,7 +320,6 @@ router.put(
         notice.HIST = removeChar(notice.HIST);
       }
 
-      
       if(typeof notice.MEMOIRE === "undefined"){
         // Maintient des notices MEMOIRE précédemment rattachées.
         notice.MEMOIRE = prevNotice.MEMOIRE;
@@ -329,6 +328,13 @@ router.put(
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
+
+      // M43272 - Récupération de la valeur du champ DPT si celle-ci n'est pas renseignée à l'import
+      // -> écrasement de la valeur de DPT_LETTRE si non repris
+      if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
+        notice.DPT = prevNotice.DPT;
+      }
+
       // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];

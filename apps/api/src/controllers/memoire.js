@@ -69,13 +69,6 @@ async function withFlags(notice) {
     notice.POP_FLAGS.push("CONTACT_INVALID_EMAIL");
   }
 
-  if (notice.DPT) {
-    const DPT_LETTRE = getDepartement(notice.DPT);
-    if (DPT_LETTRE) {
-      notice.DPT_LETTRE = DPT_LETTRE;
-    }
-  }
-
   // NUMTI and NUMP must be valid Alphanumeric.
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
@@ -273,17 +266,22 @@ router.put(
     const notice = JSON.parse(req.body.notice);
     //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
     let REF = notice.REF;
-    let noticeMemoire = await Memoire.findOne({ REF: REF });
-                if(noticeMemoire!= null && noticeMemoire.IDPROD != null && notice.IDPROD==null){
-                               notice.IDPROD = noticeMemoire.IDPROD;
-                }
-                if(noticeMemoire!= null && noticeMemoire.EMET != null && notice.EMET==null){
-                               notice.EMET = noticeMemoire.EMET;
-                }
+    // let noticeMemoire = await Memoire.findOne({ REF: REF });
+    const prevNotice = await Memoire.findOne({ REF: ref });
+    if(notice.IDPROD==null && prevNotice!= null && prevNotice.IDPROD != null){
+      notice.IDPROD = prevNotice.IDPROD;
+    }
+    if(notice.EMET==null && prevNotice!= null && prevNotice.EMET != null){
+      notice.EMET = prevNotice.EMET;
+    }
+    // M43272 - Récupération de la valeur du champ DPT si celle-ci n'est pas renseignée à l'import
+    // -> écrasement de la valeur de DPT_LETTRE si non repris
+    if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
+       notice.DPT = prevNotice.DPT;
+    }
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
-    const prevNotice = await Memoire.findOne({ REF: ref });
     if (!await canUpdateMemoire(req.user, prevNotice, notice)) {
       return res.status(401).send({
         success: false,
