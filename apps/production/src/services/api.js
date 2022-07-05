@@ -135,8 +135,8 @@ class api {
   // Update and create N notices (via import).
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
-      const MAX_ATTEMPTS = 5;
-      const TIME_BEFORE_RETRY = 30000;
+      const MAX_ATTEMPTS = 2;
+      const TIME_BEFORE_RETRY = 3000;
       let attempts = 0;
       const total = arr.length;
       const progress =  (100 * (total - arr.length)) / total;
