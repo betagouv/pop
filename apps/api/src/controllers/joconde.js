@@ -17,6 +17,7 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
+const { EXCEPTION_CODES } = require("./utils/OAI/oai_Exceptions");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -213,21 +214,24 @@ router.post(
       await populateBaseFromJoconde(notice, notice.REFMEM, Memoire);
       await populateBaseFromJoconde(notice, notice.REFPAL, Palissy);
       await populateBaseFromJoconde(notice, notice.REFMER, Merimee);
+
       let oaiObj = {
         REF: notice.REF,
         BASE: "joconde",
         DMAJ: notice.DMIS || moment(new Date()).format("YYYY-MM-DD")
       }
+
       const obj = new Joconde(notice);
       const obj2 = new NoticesOAI(oaiObj)
       checkESIndex(obj);
       promises.push(obj.save());
       promises.push(obj2.save());
+
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
-    } catch (e) {
+    } catch (e) { console.log("erreur, back",typeof e, e.message)
       capture(e);
-      res.status(500).send({ success: false, error: e });
+      res.status(403).send({ success: false, error: e.message });
     }
   }
 );

@@ -38,7 +38,8 @@ class Importer extends Component {
       countControleNotice: 0,
       localStorage: null,
       saveDisabled: false,
-      collection: props.collection
+      collection: props.collection,
+      avertissement: []
     };
   }
 
@@ -167,7 +168,8 @@ class Importer extends Component {
     this.setState({
       saveDisabled: true,
       loading: true,
-      loadingMessage: "Sauvegarde de l'import..."
+      loadingMessage: "Sauvegarde de l'import...",
+      avertissement: []
     });
 
 
@@ -195,7 +197,11 @@ class Importer extends Component {
         unChanged: total - created.length - updated.length - rejected.length
       },
       file
-    );
+    ).catch((e) => {
+      const avert = this.state.avertissement;
+      avert.push("Erreur pendant l'enregistrement des informations de l'import");
+      this.setState({ avertissement: avert, loading: false});
+    });
 
     const importId = doc.doc._id;
 
@@ -220,9 +226,24 @@ class Importer extends Component {
         loadingMessage: "Mises à jour et création des notices"
       });
 
-      await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
+      const resultNotices = await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
         this.setState({ progress, loadingMessage });
       });
+
+      // Vérification de la mise à jour
+      if(resultNotices.length > 0){
+        // Regroupement des références de notices rejetées à l'import
+        const listRefError = resultNotices.map((n) => Object.keys(n)[0]);
+        // Suppression des notices en erreur de la liste des imports
+        let avert = this.state.avertissement;
+        avert.push(`${listRefError.length} notice(s) ont généré des erreurs pendant l'import [${listRefError.join(', ')}]`);
+        this.setState(
+          {
+            importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)), 
+            avertissement: avert
+          });
+        // Prévoir la mise à jour des informations de l'import (suppression des REF en erreur).
+      }
 
       const generateReport = this.props.report || generate;
 
@@ -235,7 +256,12 @@ class Importer extends Component {
         this.state.fileNames
       );
 
-      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body);
+      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body)
+            .catch((e) => {
+              const avert = this.state.avertissement;
+              avert.push("Erreur pendant l'envoi du mail pour le rapport d'import");
+              this.setState({ avertissement: avert});
+            });
 
       this.setState({
         loading: false,
@@ -421,7 +447,7 @@ class Importer extends Component {
                     .sendReport(`Rapport import ${this.props.collection}`, this.state.email, body)
                     .then(() => {
                       this.setState({ emailSent: true });
-                    });
+                    }).catch((err) => console.log("erreur ", err) );
                 }}
               >
                 Envoyer
@@ -450,6 +476,20 @@ class Importer extends Component {
         </div>
       </div>
     );
+  }
+
+  renderAvertissement(){
+    return this.state.avertissement.length > 0 ? (
+      <div>
+        <p className="text-center" style={{fontSize: "20px", color: "red"}}>Avertissements sur l'import</p>
+        <ul>
+          { this.state.avertissement.map((element) => {
+              return (<li>{element}</li>);
+            })
+          }
+        </ul>
+      </div>
+    ) : <div />
   }
 
   render() {
@@ -505,6 +545,7 @@ class Importer extends Component {
               <Step title="Contrôle et validation de l'import" />
               <Step title="Confirmation de l'import" />
             </Steps>
+            {this.renderAvertissement()}
             {currentStep}
             {this.props.children}
           </Col>

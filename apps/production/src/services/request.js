@@ -42,7 +42,7 @@ class request {
         resolve(jsonData);
       } catch (err) {
         Raven.captureException(err);
-        reject({ success: false, msg: "L'api est inaccessible." });
+        reject({ success: false, msg: "L'api est inaccessible.", erreur: err });
       }
     });
   }
