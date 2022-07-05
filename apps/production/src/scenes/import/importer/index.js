@@ -62,6 +62,23 @@ class Importer extends Component {
         return;
       }
 
+      let existingNotices = [];
+      const doublonNotice = [];
+      // Vérification de notice en doublon dans l'import
+      for (var i = 0; i < importedNotices.length; i++) {
+
+        if(!existingNotices.includes(importedNotices[i].REF)){
+          existingNotices.push(importedNotices[i].REF);
+        } else {
+          doublonNotice.push(importedNotices[i].REF);
+        }
+      }
+
+      if(doublonNotice.length > 0){
+        this.setState({ errors: `Les notices ${doublonNotice.join(', ')} sont présentes plusieurs fois dans le fichier.`, loading: false });
+        return;
+      }
+
       const encodingIssueErrors = utils.checkEncodingIssue(importedNotices);
       if (encodingIssueErrors) {
         this.setState({ errors: encodingIssueErrors, loading: false });
@@ -69,7 +86,7 @@ class Importer extends Component {
       }
 
       // Get existing notices.
-      const existingNotices = {};
+      existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({ countRecupNotice: this.state.countRecupNotice + 1})
         this.setState({
