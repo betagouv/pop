@@ -99,7 +99,8 @@ const Schema = new mongoose.Schema(
       }
     },
     RENV: { 
-      type: [String], 
+      type: [String],
+      index: true,
       default: [], 
       documentation: { 
         description: "Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Enluminures.",
@@ -107,7 +108,8 @@ const Schema = new mongoose.Schema(
       } 
     },
     REFC: { 
-      type: [String], 
+      type: [String],
+      index: true,
       default: [], 
       documentation: { 
         description: "Numéro de renvoi vers une référence du contenu matériel. Doit être une référence valide vers une notice Enluminures.",
@@ -115,7 +117,8 @@ const Schema = new mongoose.Schema(
       } 
     },
     REFDE: { 
-      type: [String], 
+      type: [String],
+      index: true,
       default: [], 
       documentation: { 
         description: "Numéro de renvoi vers une référence du décor. Doit être une référence valide vers une notice Enluminures.",
