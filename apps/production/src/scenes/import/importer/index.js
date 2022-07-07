@@ -243,6 +243,22 @@ class Importer extends Component {
             avertissement: avert
           });
         // Prévoir la mise à jour des informations de l'import (suppression des REF en erreur).
+        let updateObjImport = {
+          created:  this.state.importedNotices.filter(e => e._status === "created").length,
+          updated:  this.state.importedNotices.filter(e => e._status === "updated").length,
+          rejected: this.state.importedNotices.filter(e => e._status === "rejected").length,
+        }
+
+        // Recalcul des notices inchangées.
+        updateObjImport.unChanged = total - updateObjImport.created - updateObjImport.updated - updateObjImport.rejected;
+
+        // Mise à jour des élements de l'import
+        await api.updateImport(importId, updateObjImport, file)
+        .catch((e) => {
+          const avert = this.state.avertissement;
+          avert.push("Erreur pendant la mise à jour des informations de l'import");
+          this.setState({ avertissement: avert, loading: false});
+        });;
       }
 
       const generateReport = this.props.report || generate;
