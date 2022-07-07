@@ -132,6 +132,14 @@ class api {
     return request.fetchFormData("POST", `/import`, formData);
   }
 
+  // Update an import.
+  updateImport(id, data, file) {
+    let formData = new FormData();
+    formData.append("import", JSON.stringify(data));
+    formData.append("file", file, "import.csv");
+    return request.fetchFormData("PUT", `/import/${id}`, formData);
+  }
+
   // Update and create N notices (via import).
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
