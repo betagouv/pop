@@ -78,7 +78,7 @@ router.post("/forgetPassword", async (req, res) => {
     return res.status(404).send({ success: false, msg });
   }
 
-  var password = generator.generate({ length: 10, numbers: true });
+  var password = generator.generate({ length: 12, numbers: true, symbols: true });
   user.set({ password });
   await user.save();
   res.status(200).json({ success: true, msg: "Mot de passe mis à jour" });
@@ -106,6 +106,14 @@ router.post(
     #swagger.description = 'Modification mot de passe' 
   */
     const { email, pwd, pwd1, pwd2 } = req.body;
+
+    // Vérification de la sécurité du mot de passe
+    if(!user.validatePassword(user.email, pwd1)){
+      return res.status(401).send({
+        success: false,
+        msg: `La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login.`
+      }); 
+    }
 
     if (!pwd1) {
       return res
