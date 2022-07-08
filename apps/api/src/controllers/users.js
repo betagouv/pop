@@ -156,7 +156,8 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
         Votre mot de passe provisoire est ${password}<br />
         Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
         L'équipe POP<br />
-        Et en cas de problème, vous pouvez contacter pop@culture.gouv.fr<br />`
+        Et en cas de problème, vous pouvez contacter pop@culture.gouv.fr<br />`,
+        true
   );
 });
 
