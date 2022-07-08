@@ -195,7 +195,7 @@ class Importer extends Component {
     const updated = this.state.importedNotices.filter(e => e._status === "updated");
     const rejected = this.state.importedNotices.filter(e => e._status === "rejected");
 
-    const file = generateCSVFile(
+    let file = generateCSVFile(
       this.state.importedNotices,
       this.props.collection,
       this.props.fieldsToExport
@@ -259,15 +259,24 @@ class Importer extends Component {
             importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)), 
             avertissement: avert
           });
-        // Prévoir la mise à jour des informations de l'import (suppression des REF en erreur).
+
+        // Recacul des modifications sur les notices suite aux erreurs rencontrées
         let updateObjImport = {
           created:  this.state.importedNotices.filter(e => e._status === "created").length,
           updated:  this.state.importedNotices.filter(e => e._status === "updated").length,
           rejected: this.state.importedNotices.filter(e => e._status === "rejected").length,
+          notices: this.state.importedNotices.map(({ REF }) => REF)
         }
 
         // Recalcul des notices inchangées.
         updateObjImport.unChanged = total - updateObjImport.created - updateObjImport.updated - updateObjImport.rejected;
+
+        // Mise à jour du fichier sans les notices rejetées
+        file = generateCSVFile(
+          this.state.importedNotices,
+          this.props.collection,
+          this.props.fieldsToExport
+        );
 
         // Mise à jour des élements de l'import
         await api.updateImport(importId, updateObjImport, file)
