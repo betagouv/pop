@@ -75,7 +75,7 @@ class Importer extends Component {
       }
 
       if(doublonNotice.length > 0){
-        this.setState({ errors: `Les notices ${doublonNotice.join(', ')} sont présentes plusieurs fois dans le fichier.`, loading: false });
+        this.setState({ errors: `Détection de notices en double dans le fichier : voir ${doublonNotice.join(', ')}`, loading: false });
         return;
       }
 
@@ -216,7 +216,7 @@ class Importer extends Component {
       file
     ).catch((e) => {
       const avert = this.state.avertissement;
-      avert.push("Erreur pendant l'enregistrement des informations de l'import");
+      avert.push("POP n'a pas pu enregistrer cet import dans l'historique des imports. L'import a échoué.");
       this.setState({ avertissement: avert, loading: false});
     });
 
@@ -253,7 +253,7 @@ class Importer extends Component {
         const listRefError = resultNotices.map((n) => Object.keys(n)[0]);
         // Suppression des notices en erreur de la liste des imports
         let avert = this.state.avertissement;
-        avert.push(`${listRefError.length} notice(s) ont généré des erreurs pendant l'import [${listRefError.join(', ')}]`);
+        avert.push(`Notices ayant des erreurs non importées : [${listRefError.join(', ')}]`);
         this.setState(
           {
             importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)), 
@@ -273,7 +273,7 @@ class Importer extends Component {
         await api.updateImport(importId, updateObjImport, file)
         .catch((e) => {
           const avert = this.state.avertissement;
-          avert.push("Erreur pendant la mise à jour des informations de l'import");
+          avert.push("POP n'a pas pu enregistrer les modifications dans l'historique des imports.");
           this.setState({ avertissement: avert, loading: false});
         });;
       }
@@ -292,7 +292,7 @@ class Importer extends Component {
       await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body)
             .catch((e) => {
               const avert = this.state.avertissement;
-              avert.push("Erreur pendant l'envoi du mail pour le rapport d'import");
+              avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
               this.setState({ avertissement: avert});
             });
 
