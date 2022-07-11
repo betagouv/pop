@@ -76,6 +76,13 @@ async function withFlags(notice) {
           notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
         }
       });
+    } else if(notice.INSEE2 && notice.INSEE2.length > 0){
+      notice.INSEE2.forEach((val) => {
+        // INSEE & DPT must start with the same first 2 letters or 3 letters.
+        if ( val && !notice.DPT.includes(val.substring(0, 2)) && !notice.DPT.includes(val.substring(0, 3)) ){
+          notice.POP_FLAGS.push("INSEE2_DPT_MATCH_FAIL");
+        }
+      });
     } else {
       notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
     }
