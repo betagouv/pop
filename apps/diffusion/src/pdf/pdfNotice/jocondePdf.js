@@ -15,7 +15,8 @@ export function JocondePdf(notice, title, links, museo) {
         <Text style={styles.header} fixed>
           {" "}
         </Text>
-        <Text style={styles.title}>{title}</Text>
+        {/* M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice */}
+        <Text style={styles.title}>{title.replace(new RegExp("#", "g"), "\n")}</Text>
 
         <View style={styles.content}>
           <View style={styles.body}>
