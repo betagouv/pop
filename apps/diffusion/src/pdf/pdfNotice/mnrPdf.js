@@ -12,7 +12,8 @@ export function MnrPdf(notice, title) {
         <Text style={styles.header} fixed>
           {" "}
         </Text>
-        <Text style={styles.title}>{notice.TICO || notice.TITR}</Text>
+        {/* M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice */}
+        <Text style={styles.title}>{(notice.TICO || notice.TITR).replace(new RegExp("#", "g"), "\n")}</Text>
 
         <View style={styles.content}>
           <View style={styles.body}>
