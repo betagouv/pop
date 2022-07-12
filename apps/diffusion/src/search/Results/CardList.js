@@ -23,8 +23,8 @@ function pickFirst(data) {
   return first;
 }
 
-function addLineBreak(value){ console.log(value)
-  return value.split("#").map( (element) => <p>{element}</p>);
+function addLineBreak(value){
+  return (value) ? value.split("#").map( (element) => <p>{element}</p>): null;
 }
 
 export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
