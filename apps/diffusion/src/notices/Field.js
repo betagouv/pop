@@ -11,24 +11,6 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   let str;
- 
-  if(addLink != 'undefined' && addLink){
-    if(typeof str == 'string'){
-      str = addLinkToText(str);
-    } else if(Array.isArray(str)){
-      str = str.map((element => {
-        if(typeof element == "string"){
-          element = addLinkToText(element);
-        } else {
-          element = <p>{element}</p>
-        }
-        return element;
-      }));
-    }
-  } else {
-    str = <p>{str}</p>;
-  }
-
   if (!link) {
     // Transform array to string, by joining with a character.
     str = Array.isArray(content) ? content.join(join) : content;
@@ -47,6 +29,23 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
         str = str.replace(new RegExp(separator, "g"), "\n");
       }
     }
+  }
+
+  if(addLink != 'undefined' && addLink){
+    if(typeof str == 'string'){
+      str = addLinkToText(str);
+    } else if(Array.isArray(str)){
+      str = str.map((element => {
+        if(typeof element == "string"){
+          element = addLinkToText(element);
+        } else {
+          element = <p>{element}</p>
+        }
+        return element;
+      }));
+    }
+  } else {
+    str = <p>{str}</p>;
   }
 
   if(!isPdf){
