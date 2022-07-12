@@ -23,6 +23,10 @@ function pickFirst(data) {
   return first;
 }
 
+function addLineBreak(value){ console.log(value)
+  return value.split("#").map( (element) => <p>{element}</p>);
+}
+
 export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
@@ -186,7 +190,6 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const ImageComponent = <img src={image_preview} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
-  const author = String(data.AUTR).replace("#", " ");
 
   return (
       <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
@@ -196,18 +199,18 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
               <div className="thumbnail">{ImageComponent}</div>
               <div className="content">
                 <div className="cardTextContent">
-                  <p>{author}</p>
+                  <p>{data.AUTR.length > 0 ? <p>{ addLineBreak(data.AUTR.join(', '))}</p> : ""}</p>
                   <h2>
-                    {title}
+                    {addLineBreak(title)}
                     <br />
-                    <small>{subtitle}</small>
+                    <small>{addLineBreak(subtitle)}</small>
                   </h2>
                   <div>
-                    <p>{domn}</p>
-                    { (data.LOCA && data.LOCA !== "") ? <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p> : null }
-                    { (data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null }
-                    <p>{data.CATE}</p>
-                    <p>{data.PHOT}</p>
+                    <p>{addLineBreak(domn)}</p>
+                    { (data.LOCA && data.LOCA !== "") ? <><p>{Mapping.mnr["LOCA"].label + " : "}</p><>{addLineBreak(data.LOCA)}</></>: null }
+                    { (data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></>: null }
+                    <p>{addLineBreak(data.CATE)}</p>
+                    <p>{addLineBreak(data.PHOT)}</p>
                   </div>
                 </div>
               </div>
@@ -251,14 +254,14 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
               <div className="content">
                 <div className="cardTextContent" style={{ display: "flex" }}>
                   <h2>
-                    {title}
+                    {addLineBreak(title)}
                     <br />
-                    <small>{subtitle}</small>
+                    <small>{addLineBreak(subtitle)}</small>
                   </h2>
                   <div>
-                    <p>{author}</p>
-                    <p>{peri}</p>
-                    <p>{loca}</p>
+                    <p>{addLineBreak(author)}</p>
+                    <p>{addLineBreak(peri)}</p>
+                    <p>{addLineBreak(loca)}</p>
                   </div>
                 </div>                
               </div>
