@@ -27,20 +27,24 @@ class TagsInput extends React.Component {
   }
 
   handleInputChange(str) {
-    if (str && this.props.thesaurus) {
+
+    if (str && this.props.idthesaurus) {
       api
-        .getThesaurus(this.props.thesaurus, str)
-        .then(values => {
-          if (values) {
+        .autocompleteThesaurus(this.props.idthesaurus, str)
+        .then(response => {
+          if (response) {
+            const values = JSON.parse(response.body);
             const suggestions = values.map(e => ({
-              id: e.value,
-              text: e.value
-            }));
+              id: e.label,
+              text: e.label,
+              isAltLabel: e.isAltLabel
+            }))
+            .filter( val => !val.isAltLabel);
             this.setState({ suggestions });
           }
         })
         .catch(e => {
-          console.log("ERROR", error);
+          console.log("ERROR", e);
         });
     }
     else if (str && this.props.input.name === "TYPID") {
@@ -121,7 +125,7 @@ class TextInput extends React.Component {
       return;
     }
     if (str) {
-      const values = await api.getThesaurus(this.props.thesaurus, str);
+      const values = await api.getThesaurus(this.props.idthesaurus, str);
       if (values) {
         const suggestions = values.map(e => ({ id: e.value, text: e.value }));
         this.setState({ suggestions });
@@ -142,7 +146,7 @@ class TextInput extends React.Component {
         {r.text}
       </li>
     ));
-    return <ul>{options}</ul>;
+    return <ul style={{ position: "absolute", zIndex: 1000 }}>{options}</ul>;
   }
 
   render() {

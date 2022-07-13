@@ -49,25 +49,11 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   if(!isPdf){
-
-    // modification du retour à la ligne \n non interprété dans la page web
-    if (typeof str == 'string') {
-      let arraySplit = str.split("\n");
-      let arrayContent = [];
-      arraySplit.forEach((element, index) => {
-        if(index > 0){
-          arrayContent.push(<br />);
-        }
-        arrayContent.push(element);
-      });
-      str = arrayContent.reduce((a,b) => [a, ' ', b]);
-    }
-
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
 
-        {str}
+        <p>{str}</p>
 
         <style jsx>{`
           .field {

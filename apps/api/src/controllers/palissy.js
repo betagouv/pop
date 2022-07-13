@@ -67,10 +67,27 @@ async function withFlags(notice) {
       }
     });
   }
-  // INSEE & DPT must start with the same first 2 letters.
-  if (notice.INSEE && notice.DPT && notice.INSEE[0].substring(0, 2) !== notice.DPT[0].substring(0, 2)) {
-    notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+
+  if(notice.DPT && notice.DPT.length > 0){
+    if(notice.INSEE && notice.INSEE.length > 0){
+      notice.INSEE.forEach((val) => {
+        // INSEE & DPT must start with the same first 2 letters or 3 letters.
+        if ( val && !notice.DPT.includes(val.substring(0, 2)) && !notice.DPT.includes(val.substring(0, 3)) ){
+          notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+        }
+      });
+    } else if(notice.INSEE2 && notice.INSEE2.length > 0){
+      notice.INSEE2.forEach((val) => {
+        // INSEE & DPT must start with the same first 2 letters or 3 letters.
+        if ( val && !notice.DPT.includes(val.substring(0, 2)) && !notice.DPT.includes(val.substring(0, 3)) ){
+          notice.POP_FLAGS.push("INSEE2_DPT_MATCH_FAIL");
+        }
+      });
+    } else {
+      notice.POP_FLAGS.push("INSEE_DPT_MATCH_FAIL");
+    }
   }
+
   // REF must be an Alphanumeric.
   if (!validator.isAlphanumeric(notice.REF)) {
     notice.POP_FLAGS.push("REF_INVALID_ALNUM");
@@ -320,7 +337,6 @@ router.put(
         notice.HIST = removeChar(notice.HIST);
       }
 
-      
       if(typeof notice.MEMOIRE === "undefined"){
         // Maintient des notices MEMOIRE précédemment rattachées.
         notice.MEMOIRE = prevNotice.MEMOIRE;
@@ -329,6 +345,13 @@ router.put(
       if (notice.MEMOIRE) {
         notice.MEMOIRE = await checkIfMemoireImageExist(notice);
       }
+
+      // M43272 - Récupération de la valeur du champ DPT si celle-ci n'est pas renseignée à l'import
+      // -> écrasement de la valeur de DPT_LETTRE si non repris
+      if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
+        notice.DPT = prevNotice.DPT;
+      }
+
       // Update IMPORT ID
       if (notice.POP_IMPORT.length) {
         const id = notice.POP_IMPORT[0];

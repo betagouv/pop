@@ -103,6 +103,24 @@ export default class extends React.Component {
     this.state.display == false && this.setState({ display: true });
   }
 
+  buildUrl(name, chaine){
+    let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([chaine]) })}`;
+    return <a href={url} key={chaine} target="_blank">{chaine}</a>
+  }
+
+  generateLink(name, value){
+    // Regex pour le champ REPR
+    const regex = new RegExp('[():,;#]');
+
+    let content = this.buildUrl(name, value);
+    
+    // Traitement pour repr
+    if (name == 'repr' && regex.test(value)) {
+        content = this.prepareLinkRepr(value, name);
+    }
+    return content
+  }
+
   prepareLinkRepr(value, name){
     // Caractères possible dans la valeur renseignée
     const arrayPattern = ['(',')',':',',',' ',';','#']; 
@@ -112,8 +130,7 @@ export default class extends React.Component {
       if (arrayPattern.includes(value[i])) {
         // Si un string a déjà été construit, on crée le lien
         if (prevString !== '') {
-          let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([prevString]) })}`;
-          arrayContent.push(<a href={url} key={prevString}>{prevString}</a>);
+          arrayContent.push(this.buildUrl(name, prevString));
           prevString = '';
         }
         // le caractère # doit être interprété comme un retour à la ligne
@@ -127,36 +144,26 @@ export default class extends React.Component {
         prevString += value[i];
       }
     }
+
+    // Si la valeur n'a pas de caractère spécifique en fin de chaine
+    if (prevString !== '') {
+      arrayContent.push(this.buildUrl(name, prevString));
+      prevString = '';
+    }
     return arrayContent.reduce((a, b) => [a, "", b])
   }
 
   links(value, name) {
-    // Regex pour le champ REPR
-    const regex = new RegExp('[():,;]');
 
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value) == "") {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
-        let content = <a href={url} target="_blank">{value}</a>;
-        // Traitement pour repr
-        if (name == 'repr' && regex.test(value)) {
-          content = this.prepareLinkRepr(value, name);
-        }
-        return content
+        return ( this.generateLink(name, value) );
       }
       return null;
     }
     const links = value
       .map(d => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([d]) })}`;
-        let content = <a href={url} target="_blank">{d}</a>;
-        // Traitement pour repr
-        if (name == 'repr' && regex.test(d)) {
-          content = this.prepareLinkRepr(d, name);
-        }
-        return (
-          content
-        );
+        return ( this.generateLink(name, d));
       })
       .reduce((p, c) => [p, ", ", c]);
     return <React.Fragment>{links}</React.Fragment>;
@@ -233,6 +240,13 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
+    let title_component = title;
+
+    // M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
+    if(typeof title == "string" && title.indexOf('#') > -1){ 
+      title_component = title.split('#').map((element) => <p>{element}</p>);
+    }
+
     //construction du pdf au format joconde
     //Affichage du bouton de téléchargement du fichier pdf une fois que la page a chargé et que le pdf est construit
     const pdf = JocondePdf(notice, title, this.props.links, this.props.museo);
@@ -275,7 +289,7 @@ export default class extends React.Component {
             <div>
               <div className="heading heading-center">
                 {this.renderPrevButton()}
-                <h1 className="heading-title">{title}</h1>
+                <h1 className="heading-title">{title_component}</h1>
                 {this.renderNextButton()}
               </div>
 

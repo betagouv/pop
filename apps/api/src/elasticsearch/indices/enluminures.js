@@ -76,6 +76,14 @@ module.exports = {
             }
           }
         },
+        PRODUCTEUR: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         ATTRIB: {
           type: "text",
           fields: {
@@ -248,7 +256,34 @@ module.exports = {
             }
           }
         },
-        IMG: {
+        RENV: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        REFC: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        REFDE: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        LIENS: {
           type: "text",
           fields: {
             keyword: {

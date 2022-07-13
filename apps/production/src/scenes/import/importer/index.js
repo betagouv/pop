@@ -37,7 +37,8 @@ class Importer extends Component {
       countRecupNotice: 0,
       countControleNotice: 0,
       localStorage: null,
-      saveDisabled: false
+      saveDisabled: false,
+      collection: props.collection
     };
   }
 
@@ -361,6 +362,7 @@ class Importer extends Component {
           visible={true}
           text={this.props.dropzoneText}
           defaultEncoding={this.props.defaultEncoding}
+          collection={this.state.collection}
         />
       </div>
     );

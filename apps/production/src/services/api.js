@@ -339,6 +339,10 @@ class api {
   getPrefLabelByIdArk(IdArk){
     return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
   }
+  // Récupération des thésaurus correspondant l'identifiant et à la saisie (autcomplétion - commence par)
+  autocompleteThesaurus(thesaurusId, str){
+    return request.getJSON(`/thesaurus/autocompleteThesaurus?id=${thesaurusId}&value=${str}`);
+  }
 
   getThesaurusById(idThesaurus){
     return request.getJSON(`/thesaurus/getAllThesaurusById?id=${idThesaurus}`)

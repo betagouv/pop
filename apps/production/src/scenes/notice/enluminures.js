@@ -3,16 +3,19 @@ import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
+import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
 import Field from "./components/field.js";
 import Section from "./components/section.js";
+import Comments from "./components/comments.js";
+import Map from "./components/map.js";
 import Loader from "../../components/Loader";
 import FieldImages from "./components/fieldImages";
+import EnluminuresEntity from "../../entities/Enluminures";
 import API from "../../services/api";
-import AccordionHistorique from "./components/AccordionHistorique"
-
+import AccordionHistorique from "./components/AccordionHistorique";
 import { bucket_url } from "../../config";
-
+import { toastr } from "react-redux-toastr";
 import "./index.css";
 
 class Enluminures extends React.Component {
@@ -35,22 +38,53 @@ class Enluminures extends React.Component {
 
   async load(ref) {
     this.setState({ loading: true });
-    const notice = await API.getNotice("enluminures", ref);
-    this.props.initialize(notice);
-    const editable = false;
-    /*
-    let editable = false;
+    API.getNotice("enluminures", ref).then(notice => {
+      if (!notice) {
+        this.setState({
+          loading: false,
+          error: `Impossible de charger la notice ${ref}`
+        });
+        return;
+      }
     
-    Désactivation de l'édition du formulaire, en attente d'un nouveau ticket pour l'évolution mise à jour notice Enluminures 
-    API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(result => {
-      editable = result.validate;
-      this.setState({editable: editable});
+        this.props.initialize(notice);
+      //const editable = false;
+      let editable = false;
+      API.canEdit(notice.REF, "", notice.PRODUCTEUR, "enluminures").then(result => {
+        editable = result.validate;
+        this.setState({editable: editable});
+      });
+
+      this.setState({ loading: false, notice, editable });
     });
-    */
-    this.setState({ loading: false, notice, editable });
   }
 
-  async onSubmit() {}
+  async onSubmit(values) {
+    this.setState({ saving: true });
+    const notice = new EnluminuresEntity(values);
+    if (notice._errors.length) {
+      toastr.error("La modification n'a pas été enregistrée", "", {
+        component: () => (
+          <div>
+            {notice._errors.map(e => (
+              <p>{e}</p>
+            ))}
+          </div>
+        )
+      });
+    } else {
+      try {
+        await API.updateNotice(this.state.notice.REF, "enluminures", values, this.state.imagesFiles, "manuel");
+        toastr.success(
+          "Modification enregistrée",
+          "La modification sera visible dans 1 à 5 min en diffusion."
+        );
+      } catch (e) {
+        toastr.error("La modification n'a pas été enregistrée", e.msg || "");
+      }
+    }
+    this.setState({ saving: false });
+  }
 
   render() {
     if (this.state.loading) {
@@ -61,7 +95,6 @@ class Enluminures extends React.Component {
       return <div className="error">{this.state.error}</div>;
     }
 
-    console.log(this.state.notice);
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
@@ -77,6 +110,7 @@ class Enluminures extends React.Component {
           </a>
         </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
+          <Comments POP_FLAGS={this.state.notice.POP_FLAGS} />
           <FieldImages
             name="VIDEO"
             createUrlFromName={e => `enluminures/${this.state.notice.REF}/${e}`}
@@ -109,6 +143,16 @@ class Enluminures extends React.Component {
                 <CustomField name="NOMENC" disabled={!this.state.editable} />
                 <CustomField name="NOTES" disabled={!this.state.editable} />
                 <CustomField name="NOTDEC" disabled={!this.state.editable} />
+                <CustomField name="RENV" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
+                <CustomField name="REFC" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
+                <CustomField name="REFDE" 
+                  createUrl={e => `/notice/enluminures/${e}`}
+                  disabled={!this.state.editable} />
+                <CustomField name="LIENS" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="OPHOT" disabled={!this.state.editable} />
@@ -116,6 +160,8 @@ class Enluminures extends React.Component {
                 <CustomField name="ORIGH" disabled={!this.state.editable} />
                 <CustomField name="ORIGP" disabled={!this.state.editable} />
                 <CustomField name="DOMN" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lat" disabled={!this.state.editable} />
+                <CustomField name="POP_COORDONNEES.lon" disabled={!this.state.editable} />
                 <CustomField name="TYPE" disabled={!this.state.editable} />
                 <CustomField name="POSS" disabled={!this.state.editable} />
                 <CustomField name="REFD" disabled={!this.state.editable} />
@@ -134,13 +180,18 @@ class Enluminures extends React.Component {
                 <CustomField name="VISITE" disabled={!this.state.editable} />
                 <CustomField name="VIDEO" disabled={!this.state.editable} />
                 <CustomField name="TOUT" disabled={!this.state.editable} />
-                <CustomField name="IMG" disabled={!this.state.editable} />
               </Col>
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
           </Section>
+          <Map notice={this.state.notice} />
           <div className="buttons">
             <BackButton history={this.props.history} />
+            {this.props.canDelete ? (
+              <DeleteButton noticeType="enluminures" noticeRef={this.state.notice.REF} />
+            ) : (
+              <div />
+            )}
             <Button disabled={!this.state.editable} color="primary" type="submit">
               Sauvegarder
             </Button>
@@ -169,7 +220,21 @@ const CustomField = ({ name, disabled, ...rest }) => {
   );
 };
 
-const mapStateToProps = ({ Auth }) => {};
+const mapStateToProps = ({ Auth }) => {
+  const { role, group, museofile } = Auth.user;
+  // An "administrateur" (from "enluminures" or "admin" group) can delete.
+  const canDelete =
+    Auth.user && role === "administrateur" && (group === "Enluminures" || group === "admin");
+  // If you can delete, you can update (see above).
+  // Also, you can update if you are a "producteur" from "joconde"
+  // (assuming user.museofile === notice.museofile, see "editable" state)
+  const canUpdate = canDelete || (Auth.user && role === "producteur" && group === "Enluminures");
+  return {
+    canDelete,
+    canUpdate,
+    user: { museofile, role, group }
+  };
+};
 
 export default connect(
   mapStateToProps,

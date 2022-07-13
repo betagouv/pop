@@ -60,7 +60,8 @@ class Import extends React.Component {
       { url: "/import/inv", name: "Inventaire", image },
       { url: "/import/mh", name: "Monuments historiques", image },
       { url: "/import/memoire", name: "MPP (Service Archives Photos)", image },
-      { url: "/import/museo", name: "Museo", image }];
+      { url: "/import/museo", name: "Museo", image },
+      { url: "/import/enluminures", name: "Enluminures", image }];
     }
     else {
       if (this.props.authorizedImports) {
@@ -82,6 +83,9 @@ class Import extends React.Component {
         }
         if (authorizedImports.includes("museo")) {
           listRoutes.push({ url: "/import/museo", name: "Museo", image });
+        }
+        if (authorizedImports.includes("enluminures")) {
+          listRoutes.push({ url: "/import/enluminures", name: "Enluminures", image });
         }
       }
     }

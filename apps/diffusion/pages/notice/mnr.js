@@ -133,6 +133,10 @@ export default class extends React.Component {
     const links = domain
       .map(d => {
         const url = `/search/list?${queryString.stringify({ domn: JSON.stringify([d]) })}`;
+        // M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
+        if(d.indexOf("#") > -1){ 
+          d = d.replace(new RegExp("#", "g"), "\n");
+        }
         return (
           <a href={url} key={d} target="_blank">
             {d}
@@ -154,7 +158,6 @@ export default class extends React.Component {
       return throw404();
     }
     const notice = this.props.notice;
-
     const { title, images, metaDescription, image_preview } = getNoticeInfo(notice);
 
     const obj = {
@@ -195,6 +198,12 @@ export default class extends React.Component {
 
     const lastRecherche = lastSearch(this.props.searchParams, this.props.searchParamsUrl, pop_url);
 
+    let title_component = title;
+     // M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
+    if(typeof title == "string" && title.indexOf('#') > -1){ 
+      title_component = title.split('#').map((element) => <p>{element}</p>);
+    }
+
     return (
       <Layout>
         <div className="notice">
@@ -209,7 +218,7 @@ export default class extends React.Component {
             <div>
               <div className="heading heading-center">
                 {this.renderPrevButton()}
-                <h1 className="heading-title">{notice.TICO || notice.TITR}</h1>
+                <h1 className="heading-title">{title_component}</h1>
                 {this.renderNextButton()}
               </div>
             </div>
@@ -237,7 +246,7 @@ export default class extends React.Component {
             <Row>
               <Col className="image" md="8">
                 <div className="notice-details">
-                  <Field title={mapping.mnr.INV.label} content={notice.INV} join=" ; " />
+                  <Field title={mapping.mnr.INV.label} content={notice.INV} join=" ; " separator='#'/>
                   <Field
                     title={mapping.mnr.DOMN.label}
                     separator="#"
