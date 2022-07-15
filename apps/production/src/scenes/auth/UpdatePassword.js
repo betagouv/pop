@@ -32,7 +32,7 @@ class UpdatePassword extends Component {
         }, 5000);
       })
       .catch(e => {
-        this.setState({ error: e, loading: false, done: false });
+        this.setState({ error: e.msg, loading: false, done: false });
       });
   }
 
@@ -89,7 +89,7 @@ class UpdatePassword extends Component {
         <div className="block">
           <h1>Changer mon mot de passe</h1>
           {this.resetPasswordMessage()}
-          <div>{this.state.error}</div>
+          <div className="error">{this.state.error}</div>
           <input
             className="input-field"
             placeholder="Mot de passe actuel"
