@@ -871,7 +871,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T57
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Nom du rédacteur|
+|Array|non|non|non|non||Auteurs de la notice|
 
 ### OBS
 
