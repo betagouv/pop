@@ -68,7 +68,7 @@ router.post("/email", passport.authenticate("jwt", { session: false }), async (r
     return res.status(200).send({ success: true, msg: "OK" });
   } catch (e) {
     capture(e);
-    return res.status(500).send({ success: false, msg: "Impossible d'envoyer le mail" });
+    return res.status(403).send({ success: false, msg: "Impossible d'envoyer le mail" });
   }
 });
 
