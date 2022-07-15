@@ -38,7 +38,8 @@ class Importer extends Component {
       countControleNotice: 0,
       localStorage: null,
       saveDisabled: false,
-      collection: props.collection
+      collection: props.collection,
+      avertissement: []
     };
   }
 
@@ -61,6 +62,23 @@ class Importer extends Component {
         return;
       }
 
+      let existingNotices = [];
+      const doublonNotice = [];
+      // Vérification de notice en doublon dans l'import
+      for (var i = 0; i < importedNotices.length; i++) {
+
+        if(!existingNotices.includes(importedNotices[i].REF)){
+          existingNotices.push(importedNotices[i].REF);
+        } else {
+          doublonNotice.push(importedNotices[i].REF);
+        }
+      }
+
+      if(doublonNotice.length > 0){
+        this.setState({ errors: `Détection de notices en double dans le fichier : voir ${doublonNotice.join(', ')}`, loading: false });
+        return;
+      }
+
       const encodingIssueErrors = utils.checkEncodingIssue(importedNotices);
       if (encodingIssueErrors) {
         this.setState({ errors: encodingIssueErrors, loading: false });
@@ -68,7 +86,7 @@ class Importer extends Component {
       }
 
       // Get existing notices.
-      const existingNotices = {};
+      existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
         this.setState({ countRecupNotice: this.state.countRecupNotice + 1})
         this.setState({
@@ -167,7 +185,8 @@ class Importer extends Component {
     this.setState({
       saveDisabled: true,
       loading: true,
-      loadingMessage: "Sauvegarde de l'import..."
+      loadingMessage: "Sauvegarde de l'import...",
+      avertissement: []
     });
 
 
@@ -176,7 +195,7 @@ class Importer extends Component {
     const updated = this.state.importedNotices.filter(e => e._status === "updated");
     const rejected = this.state.importedNotices.filter(e => e._status === "rejected");
 
-    const file = generateCSVFile(
+    let file = generateCSVFile(
       this.state.importedNotices,
       this.props.collection,
       this.props.fieldsToExport
@@ -195,7 +214,11 @@ class Importer extends Component {
         unChanged: total - created.length - updated.length - rejected.length
       },
       file
-    );
+    ).catch((e) => {
+      const avert = this.state.avertissement;
+      avert.push("POP n'a pas pu enregistrer cet import dans l'historique des imports. L'import a échoué.");
+      this.setState({ avertissement: avert, loading: false});
+    });
 
     const importId = doc.doc._id;
 
@@ -220,9 +243,49 @@ class Importer extends Component {
         loadingMessage: "Mises à jour et création des notices"
       });
 
-      await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
+      const resultNotices = await api.bulkUpdateAndCreate(arr, (progress, loadingMessage) => {
         this.setState({ progress, loadingMessage });
       });
+
+      // Vérification de la mise à jour
+      if(resultNotices.length > 0){
+        // Regroupement des références de notices rejetées à l'import
+        const listRefError = resultNotices.map((n) => Object.keys(n)[0]);
+        // Suppression des notices en erreur de la liste des imports
+        let avert = this.state.avertissement;
+        avert.push(`Notices ayant des erreurs non importées : [${listRefError.join(', ')}]`);
+        this.setState(
+          {
+            importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)), 
+            avertissement: avert
+          });
+
+        // Recacul des modifications sur les notices suite aux erreurs rencontrées
+        let updateObjImport = {
+          created:  this.state.importedNotices.filter(e => e._status === "created").length,
+          updated:  this.state.importedNotices.filter(e => e._status === "updated").length,
+          rejected: this.state.importedNotices.filter(e => e._status === "rejected").length,
+          notices: this.state.importedNotices.map(({ REF }) => REF)
+        }
+
+        // Recalcul des notices inchangées.
+        updateObjImport.unChanged = total - updateObjImport.created - updateObjImport.updated - updateObjImport.rejected;
+
+        // Mise à jour du fichier sans les notices rejetées
+        file = generateCSVFile(
+          this.state.importedNotices,
+          this.props.collection,
+          this.props.fieldsToExport
+        );
+
+        // Mise à jour des élements de l'import
+        await api.updateImport(importId, updateObjImport, file)
+        .catch((e) => {
+          const avert = this.state.avertissement;
+          avert.push("POP n'a pas pu enregistrer les modifications dans l'historique des imports.");
+          this.setState({ avertissement: avert, loading: false});
+        });;
+      }
 
       const generateReport = this.props.report || generate;
 
@@ -235,7 +298,12 @@ class Importer extends Component {
         this.state.fileNames
       );
 
-      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body);
+      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body)
+            .catch((e) => {
+              const avert = this.state.avertissement;
+              avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
+              this.setState({ avertissement: avert});
+            });
 
       this.setState({
         loading: false,
@@ -421,7 +489,7 @@ class Importer extends Component {
                     .sendReport(`Rapport import ${this.props.collection}`, this.state.email, body)
                     .then(() => {
                       this.setState({ emailSent: true });
-                    });
+                    }).catch((err) => console.log("erreur ", err) );
                 }}
               >
                 Envoyer
@@ -450,6 +518,20 @@ class Importer extends Component {
         </div>
       </div>
     );
+  }
+
+  renderAvertissement(){
+    return this.state.avertissement.length > 0 ? (
+      <div>
+        <p className="text-center" style={{fontSize: "20px", color: "red"}}>Avertissements sur l'import</p>
+        <ul>
+          { this.state.avertissement.map((element) => {
+              return (<li>{element}</li>);
+            })
+          }
+        </ul>
+      </div>
+    ) : <div />
   }
 
   render() {
@@ -505,6 +587,7 @@ class Importer extends Component {
               <Step title="Contrôle et validation de l'import" />
               <Step title="Confirmation de l'import" />
             </Steps>
+            {this.renderAvertissement()}
             {currentStep}
             {this.props.children}
           </Col>

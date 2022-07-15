@@ -47,4 +47,16 @@ UserSchema.methods.comparePassword = function(passw, cb) {
   });
 };
 
+UserSchema.methods.validatePassword = function(email, newPassword){
+  let validMdp = true;
+
+  for(let i=0; i < newPassword.length - 1; i++){
+    let verif = newPassword.substring(i, i + 3 );
+    if(verif.length > 2 && email.indexOf(verif) > -1){
+      validMdp = false;
+    }
+  }
+  return validMdp;
+}
+
 module.exports = mongoose.model("User", UserSchema);
