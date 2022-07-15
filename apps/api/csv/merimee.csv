@@ -76,7 +76,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "MICR","String","non","Numéro de microfiche","","","",""
 "MURS","Array","non","Matériaux du gros-œuvre","","","","http://data.culture.fr/thesaurus/resource/ark:/67717/T57"
 "NBOR","String","non","","","","",""
-"NOMS","Array","non","Nom du rédacteur","","","",""
+"NOMS","Array","non","Auteurs de la notice","","","",""
 "OBS","String","non","Observations concernant la protection de l'édifice","","","",""
 "PAFF","String","non","Précisions concernant l'affectataire de l'édifice","","","",""
 "PART","Array","non","Partie constituante","","","",""

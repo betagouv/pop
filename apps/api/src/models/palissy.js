@@ -681,7 +681,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Nom du rédacteur"
+        label: "Auteurs de la notice"
       }
     },
     NUMA: {

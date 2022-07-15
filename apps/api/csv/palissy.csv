@@ -88,7 +88,7 @@ path,type,required,label,opendata,generated,description,thesaurus
 "MOSA","String","non","Edition d'une mosaïque d'image","","","",""
 "NART","String","non","Numéro artificiel de différenciation de l'objet","","","",""
 "NINV","String","non","Numéro d'inventaire affecté à l'objet","","","",""
-"NOMS","Array","non","Nom du rédacteur","","","",""
+"NOMS","Array","non","Auteurs de la notice","","","",""
 "NUMA","String","non","Numéro de l'arrêté de protection","","","",""
 "NUMP","String","non","Cote de la photographie (Mémoire)","","","",""
 "OBS","String","non","Observations","","","",""
