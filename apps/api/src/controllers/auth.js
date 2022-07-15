@@ -108,14 +108,6 @@ router.post(
   */
     const { email, pwd, pwd1, pwd2 } = req.body;
 
-    // Vérification de la sécurité du mot de passe
-    if(!user.validatePassword(user.email, pwd1)){
-      return res.status(401).send({
-        success: false,
-        msg: `La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login.`
-      }); 
-    }
-
     if (!pwd1) {
       return res
         .status(400)
@@ -134,6 +126,14 @@ router.post(
         success: false,
         msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
+    }
+
+    // Vérification de la sécurité du mot de passe
+    if(!user.validatePassword(user.email, pwd1)){
+      return res.status(401).send({
+        success: false,
+        msg: `La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login.`
+      }); 
     }
 
     user.comparePassword(pwd, async function(err, isMatch) {
