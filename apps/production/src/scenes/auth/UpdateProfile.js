@@ -62,6 +62,18 @@ class UpdateProfile extends Component {
     );
   }
 
+  passwordSecurity(){
+    if (this.props.hasResetPassword) {
+      return <div />;
+    }
+    return (
+      <p>
+        Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.
+        Il ne doit pas comporter plus de 3 caractères issus de votre identifiant de connexion (email).
+      </p>
+    );
+  }
+
   updateProfile = async () => {
     const { email, logout, user } = this.props;
     const { nom, prenom, institution, group, role, museofile } = user;
@@ -168,6 +180,7 @@ class UpdateProfile extends Component {
         <div className="block">
           <h1>Modifier mes informations</h1>
           {this.resetPasswordMessage()}
+          {this.passwordSecurity()}
           <div className="error-message">{error}</div>
           <div className="sub-block">
             <h4>Mon descriptif</h4>
