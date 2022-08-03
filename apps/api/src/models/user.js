@@ -47,16 +47,33 @@ UserSchema.methods.comparePassword = function(passw, cb) {
   });
 };
 
-UserSchema.methods.validatePassword = function(email, newPassword){
+UserSchema.methods.validatePassword = function(email, newPassword, cb){
   let validMdp = true;
+  let message = "";
+  /**
+   * Le mot de passe doit contenir au moins :
+   * - 1 caractère alphanumérique minuscule
+   * - 1 majuscule
+   * - 1 chiffre
+   * - 1 caractère spécial
+   * - 12 caractères
+   */
+  const patern = new RegExp(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+_\-=}{[\]|:;"/?.><,`~]).{12,}$/);
+  validMdp = patern.test(newPassword);
 
-  for(let i=0; i < newPassword.length - 1; i++){
-    let verif = newPassword.substring(i, i + 3 );
-    if(verif.length > 2 && email.indexOf(verif) > -1){
-      validMdp = false;
+  if(validMdp){
+    // le mot de passe ne doit pas contenir plus de 3 caractères consécutifs issu du login
+    for(let i=0; i < newPassword.length - 1; i++){
+      let verif = newPassword.substring(i, i + 3 );
+      if(verif.length > 2 && email.indexOf(verif) > -1){
+        validMdp = false;
+        message = "La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login."
+      }
     }
+  } else {
+    message = "La mise à jour du mot de passe à échoué. Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial."
   }
-  return validMdp;
+  return { success: validMdp, msg: message};
 }
 
 module.exports = mongoose.model("User", UserSchema);

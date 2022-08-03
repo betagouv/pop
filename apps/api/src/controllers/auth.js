@@ -129,11 +129,10 @@ router.post(
     }
 
     // Vérification de la sécurité du mot de passe
-    if(!user.validatePassword(user.email, pwd1)){
-      return res.status(401).send({
-        success: false,
-        msg: `La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login.`
-      }); 
+    const checkPassword = user.validatePassword(user.email, pwd1);
+
+    if(!checkPassword.success){
+      return res.status(401).send(checkPassword); 
     }
 
     user.comparePassword(pwd, async function(err, isMatch) {

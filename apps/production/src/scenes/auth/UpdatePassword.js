@@ -48,6 +48,18 @@ class UpdatePassword extends Component {
     );
   }
 
+  passwordSecurity(){
+    if (this.props.hasResetPassword) {
+      return <div />;
+    }
+    return (
+      <p>
+        Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.
+        Il ne doit pas comporter plus de 3 caractères issus de votre identifiant de connexion (email).
+      </p>
+    );
+  }
+
   lastConnectedAt() {
     if (!this.props.lastConnectedAt) {
       return <div />;
@@ -89,6 +101,7 @@ class UpdatePassword extends Component {
         <div className="block">
           <h1>Changer mon mot de passe</h1>
           {this.resetPasswordMessage()}
+          {this.passwordSecurity()}
           <div className="error">{this.state.error}</div>
           <input
             className="input-field"
