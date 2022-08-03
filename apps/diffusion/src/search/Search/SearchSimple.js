@@ -1,5 +1,6 @@
 import React from "react";
 import { SearchBox } from "@popproject/pop-react-elasticsearch";
+import { useEventListener } from "../utils";
 
 function customQuery(query, fields) {
   // No value, return all documents.
@@ -44,12 +45,27 @@ function customQuery(query, fields) {
   return { bool: { should: [strict, strictCross, fuzzy] } };
 }
 
+let onKeyDownCall = () => {};
+
+const customSearchBtn = ({onClickCall}) => {
+  onKeyDownCall = onClickCall;
+  useEventListener('keydown', handler);
+  return (<button type="button" title="Rechercher" onClick={() => onClickCall() }></button>);
+}
+
+function handler({ key }) {
+  if (String(key) == "Enter") {
+    onKeyDownCall();
+  }
+}
+
 export default function SearchSimple({ initialValues }) {
   return (
     <SearchBox
       id="mainSearch"
       placeholder="Saisissez un titre, une dénomination ou une localisation"
       initialValue={initialValues.get("mainSearch")}
+      BtnComponent={customSearchBtn}
       customQuery={value =>
         customQuery(value, [
           "TICO^10",

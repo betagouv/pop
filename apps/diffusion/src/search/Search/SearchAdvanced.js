@@ -3,7 +3,7 @@ import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 import Mapping from "../../services/mapping";
 import { QueryBuilder } from "@popproject/pop-react-elasticsearch";
-import { operators } from "../utils";
+import { operators, useEventListener } from "../utils";
 
 export const bases = [
   { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
@@ -21,6 +21,23 @@ class SearchAdvanced extends React.Component {
     const value = e.target.value;
     this.props.router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
   };
+
+  // Méthode 
+  onKeyDownCall = () => {};
+
+  // Lancement de la recherche via la touche entrée
+  handler = ({ key }) => {
+    if (String(key) == "Enter") {
+      this.onKeyDownCall();
+    }
+  }
+
+  componentDidMount = () => {
+    // Lancement de la recherche lors du rafraichissement de la page
+    if(this.props.initialValues.get('qb') !== undefined){
+      this.onKeyDownCall()
+    }
+  }
 
   render() {
     const hasBase = Boolean(this.props.base);
@@ -1004,6 +1021,12 @@ class SearchAdvanced extends React.Component {
       }
     }
 
+    const customSearchBtn = ({onClickCall}) => {
+      this.onKeyDownCall = onClickCall;
+      useEventListener('keydown', this.handler);
+      return (<button type="button" title="Rechercher" className="btn btn-primary" onClick={(e) => { onClickCall(); } }>Rechercher</button>);
+    }
+
     return (
       <div className="advanced-search">
         {(this.props.base == "" || this.props.base == null) &&
@@ -1035,6 +1058,7 @@ class SearchAdvanced extends React.Component {
             {hasBase ? <div>je recherche</div> : null}
           </Row>*/}
         </div>
+        { console.log(this.props.initialValues.get('qb')) }
         {hasBase ? (
           <QueryBuilder
             initialValue={this.props.initialValues.get("qb")}
@@ -1043,6 +1067,7 @@ class SearchAdvanced extends React.Component {
             operators={operators}
             autoComplete={true}
             combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
+            BtnComponent={customSearchBtn}
           />
         ) : null}
         <style jsx global>{`
