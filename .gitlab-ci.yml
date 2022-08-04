@@ -170,7 +170,7 @@ test-diffusion:
   script:
     - cd apps/${APP}
     - npm i npm-audit-html -g
-    - npm audit --json | npm-audit-html --output apps/${APP}/vulnerabilite.html
+    - npm audit --json | npm-audit-html --output "apps/${APP}/vulnerabilite.html"
   artifacts:
     name: ${APP}-audit-report
     paths:
