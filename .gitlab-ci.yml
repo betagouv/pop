@@ -171,11 +171,6 @@ test-diffusion:
     - cd apps/${APP}
     - npm i npm-audit-html -g
     - npm audit --json | npm-audit-html --output vulnerabilite.html
-  artifacts:
-    name: rapport-audit-${APP}
-    paths:
-      - vulnerabilite.html
-    expire_in: 1 day
 
 audit-api:
   needs:
@@ -183,6 +178,11 @@ audit-api:
   <<: *audit
   variables:
     APP: api
+  artifacts:
+    name: api-audit-report
+    paths:
+      - vulnerabilite.html
+    expire_in: 1 day
 
 audit-production:
   needs:
@@ -190,6 +190,11 @@ audit-production:
   <<: *audit
   variables:
     APP: production
+  artifacts:
+    name: production-audit-report
+    paths:
+      - vulnerabilite.html
+    expire_in: 1 day
 
 audit-diffusion:
   needs:
@@ -197,6 +202,11 @@ audit-diffusion:
   <<: *audit
   variables:
     APP: diffusion
+  artifacts:
+    name: diffusion-audit-report
+    paths:
+      - vulnerabilite.html
+    expire_in: 1 day
 
 ##############################################################
 # BUILD
