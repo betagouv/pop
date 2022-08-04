@@ -175,7 +175,7 @@ test-diffusion:
     name: rapport-audit-${APP}
     paths:
       - vulnerabilite.html
-    expire_in: 1 da
+    expire_in: 1 day
 
 audit-api:
   needs:
