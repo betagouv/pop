@@ -11,6 +11,7 @@ default:
 stages:
   - node-modules
   - test
+  - sast
   - build
   - deploy
   - staging
@@ -151,6 +152,38 @@ test-diffusion:
   <<: *test
   variables:
     APP: diffusion
+
+##############################################################
+# SAST
+#
+.audit: &audit
+  stage: sast
+  script:
+    - npm i npm-audit-html -g
+    - cd apps/${APP}
+    - npm audit --json | npm-audit-html --output vulnerabilite.html || true
+  artifacts:
+    name: ${APP}-audit-report
+    paths:
+      - apps/${APP}/vulnerabilite.html
+    expire_in: 1 day
+
+audit-api:
+  <<: *audit
+  variables:
+    APP: api
+
+audit-diffusion:
+  <<: *audit
+  variables:
+    APP: diffusion
+
+audit-production:
+  <<: *audit
+  variables:
+    APP: production
+ 
+
 
 ##############################################################
 # BUILD
@@ -308,6 +341,31 @@ deploy-diffusion-devic1:
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
   <<: *devic1-rules
+
+##############################################################
+# DEVELOP - TEST - MC
+#
+build-production-test:
+  <<: *build-production
+  variables:
+    APP: production
+    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
+    NODE_ENV: test
+  rules:
+    - when: manual
+
+build-diffusion-test:
+  <<: *build-diffusion
+  variables:
+    APP: diffusion
+    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-test.culture.gouv.fr/
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
+    NODE_ENV: test
+  rules:
+    - when: manual
 
 ##############################################################
 # STAGING - MC
