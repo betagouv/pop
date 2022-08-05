@@ -158,19 +158,11 @@ test-diffusion:
 #
 .audit: &audit
   stage: sast
-  # Récupération des node_modules en cache pour cette APP
-  cache:
-    key:
-      files:
-        - apps/${APP}/package-lock.json
-      prefix: node-modules-${APP}
-    paths:
-      - apps/${APP}/node_modules
-    policy: pull
   script:
     - cd apps/${APP}
     - npm i npm-audit-html -g
-    - npm audit --json | npm-audit-html --output "apps/${APP}/vulnerabilite.html"
+    - cd apps/${APP}
+    - npm audit --json | npm-audit-html --output vulnerabilite.html || true
   artifacts:
     name: ${APP}-audit-report
     paths:
@@ -178,25 +170,21 @@ test-diffusion:
     expire_in: 1 day
 
 audit-api:
-  needs:
-    - node-modules-api
   <<: *audit
   variables:
     APP: api
 
-audit-production:
-  needs:
-    - node-modules-production
-  <<: *audit
-  variables:
-    APP: production
-
 audit-diffusion:
-  needs:
-    - node-modules-diffusion
   <<: *audit
   variables:
     APP: diffusion
+
+audit-production:
+  <<: *audit
+  variables:
+    APP: production
+ 
+
 
 ##############################################################
 # BUILD
