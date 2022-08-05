@@ -159,7 +159,6 @@ test-diffusion:
 .audit: &audit
   stage: sast
   script:
-    - cd apps/${APP}
     - npm i npm-audit-html -g
     - cd apps/${APP}
     - npm audit --json | npm-audit-html --output vulnerabilite.html || true
