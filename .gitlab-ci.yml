@@ -310,6 +310,31 @@ deploy-diffusion-devic1:
   <<: *devic1-rules
 
 ##############################################################
+# DEVELOP - TEST - MC
+#
+build-production-test:
+  <<: *build-production
+  variables:
+    APP: production
+    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
+    NODE_ENV: test
+  rules:
+    - when: manual
+
+build-diffusion-test:
+  <<: *build-diffusion
+  variables:
+    APP: diffusion
+    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-test.culture.gouv.fr/
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
+    NODE_ENV: test
+  rules:
+    - when: manual
+
+##############################################################
 # STAGING - MC
 #
 
