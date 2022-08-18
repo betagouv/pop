@@ -8,6 +8,7 @@ import api from "../../services/api";
 import Loader from "../../components/Loader";
 import authAction from "./../../redux/auth/actions";
 const { logout, signinByToken } = authAction;
+import { message_info_password } from "../../config";
 
 class UpdateProfile extends Component {
   state = {
@@ -63,13 +64,9 @@ class UpdateProfile extends Component {
   }
 
   passwordSecurity(){
-    if (this.props.hasResetPassword) {
-      return <div />;
-    }
     return (
       <p>
-        Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.
-        Il ne doit pas comporter plus de 3 caractères issus de votre identifiant de connexion (email).
+        { message_info_password }
       </p>
     );
   }
@@ -180,7 +177,6 @@ class UpdateProfile extends Component {
         <div className="block">
           <h1>Modifier mes informations</h1>
           {this.resetPasswordMessage()}
-          {this.passwordSecurity()}
           <div className="error-message">{error}</div>
           <div className="sub-block">
             <h4>Mon descriptif</h4>
@@ -232,6 +228,7 @@ class UpdateProfile extends Component {
               onChange={e => this.setState({ pwd2: e.target.value })}
             />
           </div>
+          {this.passwordSecurity()}
           <hr />
           <Button className="submit-button" onClick={this.updateProfile}>
             Mettre &agrave; jour mes informations

@@ -7,6 +7,8 @@ import api from "../../services/api";
 import Loader from "../../components/Loader";
 
 import authAction from "../../redux/auth/actions";
+import { message_info_password } from "../../config";
+
 const { logout } = authAction;
 
 class UpdatePassword extends Component {
@@ -54,8 +56,7 @@ class UpdatePassword extends Component {
     }
     return (
       <p>
-        Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.
-        Il ne doit pas comporter plus de 3 caractères issus de votre identifiant de connexion (email).
+        { message_info_password }
       </p>
     );
   }
