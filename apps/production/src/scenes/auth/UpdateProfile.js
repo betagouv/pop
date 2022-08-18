@@ -154,6 +154,15 @@ class UpdateProfile extends Component {
     }
     return <div />;
   }
+
+  renderError() {
+    const error = this.state.error !== ""  ? this.state.error.split("\n").map( el  => { return (<p>{ el }</p>) }) : this.state.error;
+
+    return (
+      <div className="renderError">{ error }</div>
+    );
+  }
+
   render() {
     const { email, location } = this.props;
     const { loading, done, error, nom, prenom, institution } = this.state;
@@ -177,7 +186,7 @@ class UpdateProfile extends Component {
         <div className="block">
           <h1>Modifier mes informations</h1>
           {this.resetPasswordMessage()}
-          <div className="error-message">{error}</div>
+          <div className="error-message">{this.renderError()}</div>
           <div className="sub-block">
             <h4>Mon descriptif</h4>
             <input

@@ -75,6 +75,14 @@ class UpdatePassword extends Component {
     );
   }
 
+  renderError() {
+    const error = this.state.error !== ""  ? this.state.error.split("\n").map( el  => { return (<p>{ el }</p>) }) : this.state.error;
+
+    return (
+      <div className="renderError">{ error }</div>
+    );
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -103,7 +111,7 @@ class UpdatePassword extends Component {
           <h1>Changer mon mot de passe</h1>
           {this.resetPasswordMessage()}
           {this.passwordSecurity()}
-          <div className="error">{this.state.error}</div>
+          <div className="error">{this.renderError()}</div>
           <input
             className="input-field"
             placeholder="Mot de passe actuel"
