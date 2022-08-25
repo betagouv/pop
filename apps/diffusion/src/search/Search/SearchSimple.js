@@ -87,7 +87,8 @@ export default function SearchSimple({ initialValues }) {
           "DATE^1",
           "EPOQ^1",
           "SCLE^1",
-          "SCLD^1"
+          "SCLD^1",
+          "ETUD^1"
         ])
       }
     />

@@ -215,6 +215,7 @@ function toFrenchRegex(text) {
     .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
     .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
     .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
+    .replace(/[yÿýŷYŸÝŶ]/g, "[yÿýŷYŸÝŶ]")
     .replace(/([bdfghjklmnpqrstvwxz])/gi, (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`);
 }
 
