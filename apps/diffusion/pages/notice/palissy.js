@@ -2,8 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
-import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, generateLinks } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -159,23 +158,13 @@ export default class extends React.Component {
   }
 
   // Display a list of links to authors
-  authors() {
-    const authors = this.props.notice.AUTR;
-    if (!authors || !Array.isArray(authors) || !authors.length) {
-      return null;
-    }
-    const links = authors
-      .map(a => a.trim())
-      .map(a => {
-        const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
-        return (
-          <a href={url} key={a} target="_blank">
-            {a}
-          </a>
-        );
-      })
-      .reduce((p, c) => [p, " ; ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
+  authorsField() {
+    return <React.Fragment>{ generateLinks(this.props.notice.AUTR, "auteur") }</React.Fragment>;
+  }
+
+  // Display a list of links to etud
+  etudeField() {
+    return <React.Fragment>{ generateLinks(this.props.notice.ETUD.split(';'), "etud") }</React.Fragment>;
   }
 
   render() {
@@ -356,7 +345,7 @@ export default class extends React.Component {
                       "HIST"
                     ]}
                   />
-                  <Field title={mapping.palissy.AUTR.label} content={this.authors()} />
+                  <Field title={mapping.palissy.AUTR.label} content={this.authorsField()} />
                   <Field title={mapping.palissy.AFIG.label} content={notice.AFIG} join={' ; '}/>
                   <Field title={mapping.palissy.ATEL.label} content={notice.ATEL} join={' ; '}/>
                   <Field title={mapping.palissy.REFM.label} content={notice.REFM} />
@@ -424,7 +413,7 @@ export default class extends React.Component {
                       "WEB"
                     ]}
                   />
-                  <Field title={mapping.palissy.ETUD.label} content={notice.ETUD} />
+                  <Field title={mapping.palissy.ETUD.label} content={this.etudeField()} />
                   <Field title={mapping.palissy.DOSS.label} content={notice.DOSS} join={' ; '}/>
                   <Field title={mapping.palissy.PART.label} content={notice.PART} join={' ; '}/>
                   <Field title={mapping.palissy.REFP.label} content={notice.REFP} join={' ; '}/>

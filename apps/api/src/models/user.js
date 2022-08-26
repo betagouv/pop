@@ -67,11 +67,11 @@ UserSchema.methods.validatePassword = function(email, newPassword, cb){
       let verif = newPassword.substring(i, i + 3 );
       if(verif.length > 2 && email.indexOf(verif) > -1){
         validMdp = false;
-        message = "La mise à jour du mot de passe à échoué. Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login."
+        message = "La mise à jour du mot de passe à échoué.\n Le mot de passe modifié ne doit pas comporter plus de 2 caractères consécutifs issus du login."
       }
     }
   } else {
-    message = "La mise à jour du mot de passe à échoué. Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial."
+    message = "La mise à jour du mot de passe à échoué.\nVotre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.\nIl ne doit pas non plus comporter plus de 2 caractères issus de votre identifiant de connexion (email) "
   }
   return { success: validMdp, msg: message};
 }

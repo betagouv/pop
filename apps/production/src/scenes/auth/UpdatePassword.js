@@ -7,6 +7,8 @@ import api from "../../services/api";
 import Loader from "../../components/Loader";
 
 import authAction from "../../redux/auth/actions";
+import { message_info_password } from "../../config";
+
 const { logout } = authAction;
 
 class UpdatePassword extends Component {
@@ -54,8 +56,7 @@ class UpdatePassword extends Component {
     }
     return (
       <p>
-        Votre mot de passe doit comporter au moins 12 caractères ainsi qu'une minuscule, une majuscule, un chiffre et un caractère spécial.
-        Il ne doit pas comporter plus de 3 caractères issus de votre identifiant de connexion (email).
+        { message_info_password }
       </p>
     );
   }
@@ -71,6 +72,14 @@ class UpdatePassword extends Component {
           {new Date(this.props.lastConnectedAt).toLocaleString("fr-FR")}
         </em>
       </p>
+    );
+  }
+
+  renderError() {
+    const error = this.state.error !== ""  ? this.state.error.split("\n").map( el  => { return (<p>{ el }</p>) }) : this.state.error;
+
+    return (
+      <div className="renderError">{ error }</div>
     );
   }
 
@@ -102,7 +111,7 @@ class UpdatePassword extends Component {
           <h1>Changer mon mot de passe</h1>
           {this.resetPasswordMessage()}
           {this.passwordSecurity()}
-          <div className="error">{this.state.error}</div>
+          <div className="error">{this.renderError()}</div>
           <input
             className="input-field"
             placeholder="Mot de passe actuel"

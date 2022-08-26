@@ -145,3 +145,7 @@
   color: #aaa;
   text-align: center;
 }
+
+.renderError p {
+  margin: 0;
+}
