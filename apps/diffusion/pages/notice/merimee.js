@@ -2,8 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
-import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, generateLinks } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -155,23 +154,13 @@ export default class extends React.Component {
   }
 
   // Display a list of links to authors
-  authors() {
-    const authors = this.props.notice.AUTR;
-    if (!authors || !Array.isArray(authors) || !authors.length) {
-      return null;
-    }
-    const links = authors
-      .map(a => a.trim())
-      .map(a => {
-        const url = `/search/list?${queryString.stringify({ auteur: JSON.stringify([a]) })}`;
-        return (
-          <a href={url} key={a} target="_blank">
-            {a}
-          </a>
-        );
-      })
-      .reduce((p, c) => [p, " ; ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
+  authorsField() {
+    return <React.Fragment>{ generateLinks(this.props.notice.AUTR, "auteur") }</React.Fragment>;
+  }
+
+  // Display a list of links to etud
+  etudeField() {
+    return <React.Fragment>{ generateLinks(this.props.notice.ETUD, "etud") }</React.Fragment>;
   }
 
   render() {
@@ -326,7 +315,7 @@ export default class extends React.Component {
                   <Field title={mapping.merimee.SCLD.label} content={notice.SCLD} join={' ; '} />
                   <Field title={mapping.merimee.DATE.label} content={notice.DATE} join={' ; '}/>
                   <Field title={mapping.merimee.JDAT.label} content={notice.JDAT} join={' ; '}/>
-                  <Field title={mapping.merimee.AUTR.label} content={this.authors()} />
+                  <Field title={mapping.merimee.AUTR.label} content={this.authorsField()} />
                   <Field title={mapping.merimee.REFM.label} content={notice.REFM} />
                   <Field title={mapping.merimee.JATT.label} content={notice.JATT} join={' ; '}/>
                   <Field title={mapping.merimee.PERS.label} content={notice.PERS} separator="£" join={' ; '} />
@@ -445,7 +434,7 @@ export default class extends React.Component {
                     content={notice.NOMS}
                     join={' ; '}
                   />
-                  <Field title={mapping.merimee.ETUD.label} content={notice.ETUD} join={' ; '}/>
+                  <Field title={mapping.merimee.ETUD.label} content={this.etudeField()} join={' ; '}/>
                   <Field title={mapping.merimee.DOSS.label} content={notice.DOSS} />
                   <Field title={mapping.merimee.REFIM.label} content={notice.REFIM} />
                   <Field title={mapping.merimee.WEB.label} content={notice.WEB} />

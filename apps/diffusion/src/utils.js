@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import { bucket_url } from "./config";
+import queryString from "query-string";
 
 export function getNoticeInfo(notice) {
   const base = notice.BASE;
@@ -416,4 +417,28 @@ export function saveListRef (listRefs, searchParams, removeFromBucket){
 
     cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
   }
+}
+
+/**
+ * Génère les liens
+ * @param Array values 
+ * @param string name 
+ * @returns 
+ */
+export function generateLinks(values, name){
+  if (!values || !Array.isArray(values) || !values.length) {
+    return null;
+  }
+  const links = values
+    .map(a => a.trim())
+    .map(a => {
+      const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
+      return (
+        <a href={url} key={a} target="_blank">
+          {a}
+        </a>
+      );
+    })
+    .reduce((p, c) => [p, " ; ", c]);
+  return links;
 }
