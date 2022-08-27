@@ -146,6 +146,6 @@
   text-align: center;
 }
 
-.renderError p {
+.renderError p, .informations-mdp p{
   margin: 0;
 }
