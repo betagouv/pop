@@ -64,10 +64,12 @@ class UpdateProfile extends Component {
   }
 
   passwordSecurity(){
+    // Si le message contient des retours à la ligne
+    const message = message_info_password.indexOf("\n") > -1 ? message_info_password.split("\n").map( el  => { return (<p>{ el }</p>) }) : message_info_password;
     return (
-      <p>
-        { message_info_password }
-      </p>
+      <div class="informations-mdp">
+        { message }
+      </div>
     );
   }
 

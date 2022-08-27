@@ -124,99 +124,7 @@ export default class extends React.Component {
     }
   }
 
-  buildUrl(name, chaine){
-    let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([chaine]) })}`;
-    return <a href={url} key={chaine} target="_blank">{chaine}</a>
-  }
-
-  generateLink(name, value){
-    // Regex pour le champ REPR
-    const regex = new RegExp(';');
-
-    let content = this.buildUrl(name, value);
-    
-    // Traitement pour repr
-    if (name == 'repr' && regex.test(value)) {
-        content = this.prepareLinkRepr(value, name);
-    }
-    return content
-  }
-
-  prepareLinkRepr(value, name){
-    // Caractères possible dans la valeur renseignée
-    const arrayPattern = ['(',')',':',',',' ']; 
-    let prevString = '';
-    const arrayContent = [];
-    for (let i = 0; i < value.length; i++) {
-      if (arrayPattern.includes(value[i])) {
-        // Si un string a déjà été construit, on crée le lien
-        if (prevString !== '') {
-          arrayContent.push(this.buildUrl(name, prevString));
-          prevString = '';
-        }
-        // le caractère # doit être interprété comme un retour à la ligne
-        if(value[i] == '#'){
-          arrayContent.push(<br />);
-        } else {
-          arrayContent.push(value[i]);
-        }
-        
-      } else {
-        prevString += value[i];
-      }
-    }
-
-    // Si la valeur n'a pas de caractère spécifique en fin de chaine
-    if (prevString !== '') {
-      arrayContent.push(this.buildUrl(name, prevString));
-      prevString = '';
-    }
-    return arrayContent.reduce((a, b) => [a, "", b])
-  }
-
-  links(value, name) {
-
-    if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value) == "") {
-        return ( this.generateLink(name, value) );
-      }
-      return null;
-    }
-    const links = value
-      .map(d => {
-        return ( this.generateLink(name, d));
-      })
-      .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
-  }
-
-  // Display a list of links to authors
-  author(value, name) {
-    //const author = this.props.notice.AUTR;
-    if (!value) {
-      return null;
-    }
-    if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value) == "") {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`;
-        return <a href={url} target="_blank">{value}</a>;
-      }
-      return null;
-    }
-    const links = value
-      .map(a => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
-        return (
-          <a href={url} key={a} target="_blank">
-            {a}
-          </a>
-        );
-      })
-      .reduce((p, c) => [p, " , ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
-  }
-
-  /*domain() {
+  domain() {
     const domain = this.props.notice.DOMN;
     if (!domain || !Array.isArray(domain)) {
       return null;
@@ -243,7 +151,7 @@ export default class extends React.Component {
       }, "");
 
     return <React.Fragment>{links}</React.Fragment>;
-  }*/
+  }
 
   render() {
     if (!this.props.notice) {
@@ -342,7 +250,7 @@ export default class extends React.Component {
                   <Field
                     title={mapping.mnr.DOMN.label}
                     separator="#"
-                    content={this.links(this.props.notice.DOMN, "domn")}
+                    content={this.domain()}
                     join=" ; "
                   />
                   <Field
@@ -501,8 +409,9 @@ export default class extends React.Component {
                   <Field
                     title={mapping.mnr.LOCA.label}
                     separator="#"
-                    content={this.links(this.props.notice.LOCA, "loca")}
+                    content={notice.LOCA}
                     join=" ; "
+                    addLink={true}
                   />
                   <Field
                     title={mapping.mnr.AFFE.label}
