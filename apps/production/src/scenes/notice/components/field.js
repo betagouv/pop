@@ -46,8 +46,22 @@ class TagsInput extends React.Component {
         .catch(e => {
           console.log("ERROR", e);
         });
-    }
-    else if (str && this.props.input.name === "TYPID") {
+    } else if (str && this.props.thesaurus) {
+      api
+        .getThesaurus(this.props.thesaurus, str)
+        .then(values => {
+          if (values) {
+            const suggestions = values.map(e => ({
+              id: e.value,
+              text: e.value
+            }));
+            this.setState({ suggestions });
+          }
+        })
+        .catch(e => {
+          console.log("ERROR", error);
+        });
+    } else if (str && this.props.input.name === "TYPID") {
       //Ticket 35635
       const values = ["collectivité", "organisation", "personne", "famille", "autre"]
       const suggestions = values.map(e => ({
@@ -124,8 +138,10 @@ class TextInput extends React.Component {
     if (!this.props.thesaurus) {
       return;
     }
+    console.log(this.props, str);
+
     if (str) {
-      const values = await api.getThesaurus(this.props.idthesaurus, str);
+      const values = await api.getThesaurus(this.props.thesaurus, str);
       if (values) {
         const suggestions = values.map(e => ({ id: e.value, text: e.value }));
         this.setState({ suggestions });
@@ -161,7 +177,7 @@ class TextInput extends React.Component {
           value={this.props.input.value}
           onChange={e => {
             const str = String(e.target.value).replace("(c)", "©");
-            this.handleInputChange();
+            this.handleInputChange(str);
             this.props.input.onChange(str);
           }}
         />

@@ -36,6 +36,21 @@
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+div.input ul {
+  list-style-type: none;
+  box-shadow: 0.05em 0.01em 0.5em rgba(0, 0, 0, 0.2);
+  background: white;
+  width: 400px;
+  z-index: 1000;
+  background-color: #FFFFFF;
+}
+div.input li {
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px;
+  margin: 0;
+}
+
 .field .title {
   padding-right: "15px";
   min-width: "100px";
@@ -93,6 +108,7 @@ div.ReactTags__selected a.ReactTags__remove {
 div.ReactTags__suggestions {
   position: absolute;
   z-index: 1000;
+  background-color: #FFFFFF;
 }
 div.ReactTags__suggestions ul {
   list-style-type: none;
@@ -100,6 +116,7 @@ div.ReactTags__suggestions ul {
   background: white;
   width: 400px;
   z-index: 1000;
+  background-color: #FFFFFF;
 }
 div.ReactTags__suggestions li {
   border-bottom: 1px solid #ddd;
