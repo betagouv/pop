@@ -451,11 +451,29 @@ function useEventListener(eventName, handler, element) {
   );
 }
 
+/**
+ * Gestion du bouton pour les recherches
+ */
+let onKeyDownCall = () => {};
+
+const customSearchBtn = ({onClickCall}) => {
+  onKeyDownCall = onClickCall;
+  useEventListener('keydown', handler);
+  return (<button type="button" title="Rechercher" onClick={() => onClickCall() }></button>);
+}
+
+function handler({ key }) {
+  if (String(key) == "Enter") {
+    onKeyDownCall();
+  }
+}
+
 export default {
   pagination,
   generateLoca,
   customQuery,
   toFrenchRegex,
   operators,
-  useEventListener
+  useEventListener,
+  customSearchBtn
 };
