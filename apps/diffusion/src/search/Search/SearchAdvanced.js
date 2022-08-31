@@ -1058,7 +1058,6 @@ class SearchAdvanced extends React.Component {
             {hasBase ? <div>je recherche</div> : null}
           </Row>*/}
         </div>
-        { console.log(this.props.initialValues.get('qb')) }
         {hasBase ? (
           <QueryBuilder
             initialValue={this.props.initialValues.get("qb")}
