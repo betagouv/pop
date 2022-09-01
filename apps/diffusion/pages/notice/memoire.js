@@ -32,6 +32,16 @@ export default class extends React.Component {
 
   state = { display: false, prevLink: undefined, nextLink: undefined }
 
+  contentLocalisation = () => {
+    const notice = this.props.notice;
+    const dptlettre = notice.DPT_LETTRE ? notice.DPT_LETTRE : notice.DPT;
+    const wcom = notice.WCOM ? notice.WCOM : notice.COM;
+    const wadrs = notice.WADRS ? notice.WADRS : notice.ADRESSE;
+    const array = [notice.PAYS.join(','), notice.REG.join(','), dptlettre.join(','), wcom.join(','), wadrs.join(','), notice.LIEU];
+    let content = array.filter((val)=> val.trim() != "").join(", ");
+    return content != "" ? content : notice.LOCA;
+  }
+
   static async getInitialProps({ query: { id }, asPath }) {
     const notice = await API.getNotice("memoire", id);
     const collection = notice && await findCollection(notice.LBASE);
@@ -285,7 +295,7 @@ export default class extends React.Component {
                     notice={notice}
                     fields={["LOCA", "INSEE", "ADRESSE", "LIEU", "MCGEO"]}
                   />
-                  <Field title={mapping.memoire.LOCA.label} content={notice.LOCA} />
+                  <Field title={mapping.memoire.LOCA.label} content={this.contentLocalisation()} />
                   <Field title={mapping.memoire.INSEE.label} content={notice.INSEE} join={' ; '}/>
                   <Field title={notice.ADRESSE != "" ? mapping.memoire.ADRESSE.label : mapping.memoire.LIEU.label} content={notice.ADRESSE != "" ? notice.ADRESSE : notice.LIEU} />
                   <Field title={mapping.memoire.MCGEO.label} content={notice.MCGEO} />
