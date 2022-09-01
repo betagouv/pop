@@ -25,7 +25,7 @@ import { pop_url } from "../../src/config";
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
     a.push(API.getNotice(base, d[i]));
-    if (a.length > 50) break;
+    if (a.length > 65) break;
   }
 };
 
