@@ -70,6 +70,13 @@ class SearchAdvanced extends React.Component {
           fields = [
             //Catalogue
             {
+              value: [
+                  "REF.keyword"
+                ], 
+                text: "Référence de la notice", 
+                fields: "REF"
+                },
+              {
               value: ["MCPER.keyword",
                       "ROLE.keyword",
                       "THEATRE.keyword",
@@ -253,7 +260,6 @@ class SearchAdvanced extends React.Component {
             {value: ["PAYS.keyword"], text:"Pays", fields: "PAYS"},
             {value: ["PRECOR.keyword"], text:"Précisions sur la conservation de l'original", fields: "PRECOR"},
             {value: ["PUBLI.keyword"], text:"Référence de publication de l'image", fields: "PUBLI"},
-            {value: ["REF.keyword"], text:"Référence", fields: "REF"},
             {value: ["REG.keyword"], text:"Région", fields: "REG"},
             {value: ["RENV.keyword"], text:"Phototypes en relation", fields: "RENV"},
             {value: ["REPRO.keyword"], text:"Numéro de reproduction", fields: "REPRO"},
@@ -389,6 +395,13 @@ class SearchAdvanced extends React.Component {
             //Catalogue
             {
               value: [
+                "REF.keyword"
+              ],
+              text: "Référence de la notice",
+              fields: "REF"
+            },
+            {
+              value: [
                 "COM.keyword",
                 "WCOM.keyword",
                 "REG.keyword",
@@ -431,7 +444,6 @@ class SearchAdvanced extends React.Component {
               fields: "AUTR, AFIG"
             },
             //Tous les champs
-            {value: ["REF.keyword"], text: "Référence de la notice", fields: "REF"},
             {value: ["ACQU.keyword"], text: "Contexte d'acquisition", fields: "ACQU"},
             {value: ["ADRS.keyword"], text: "Adresse de l'édifice", fields: "ADRS"},
             {value: ["AFIG.keyword"], text: "Auteur du projet", fields: "AFIG"},
@@ -532,6 +544,13 @@ class SearchAdvanced extends React.Component {
         case "merimee":
           fields = [
             {
+              value: [
+                "REF.keyword"
+              ], 
+              text: "Référence de la notice", 
+              fields: "REF"
+              },
+              {
               value: [
                 "COM.keyword",
                 "WCOM.keyword",
