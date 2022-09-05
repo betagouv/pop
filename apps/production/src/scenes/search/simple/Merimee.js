@@ -32,7 +32,7 @@ export default function render() {
         <div>
           <SearchBox
             id="main"
-            placeholder="Référence, titre de l'édifice, commune, région, adresse, date de protection, description"
+            placeholder="Référence, titre de l'édifice, commune, région, adresse, date de protection, description, pour lancer la recherche cliquez la loupe"
             initialValue={initialValues.get("main")}
             customQuery={value =>
               utils.customQuery(value, [
@@ -46,6 +46,7 @@ export default function render() {
                 "EDIF"
               ])
             }
+            BtnComponent={utils.customSearchBtn}
           />
         </div>
         <Row>

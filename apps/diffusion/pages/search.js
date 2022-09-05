@@ -533,14 +533,28 @@ export default class extends React.Component {
             width: 100%;
             padding: 7px;
             color: #19414c;
-            background-image: url(/static/search.png);
-            background-repeat: no-repeat;
-            background-position: 1% center;
             padding-left: 40px;
             background-color: #fafafa;
             color: #19414c;
           }
+          .react-es-searchbox button {
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            border: 0;
+            background-size: 23px;
+            width: 34px;
+            height: 34px;
+            padding: 7px;
+            color: #19414c;
+            background-image: url(/static/search.png);
+            background-repeat: no-repeat;
+            background-position: 38% center;
+            background-color: #fafafa;
+            cursor: pointer;
+          }
           .react-es-searchbox {
+            position: relative;
             width: 100%;
             margin-right: 20px;
           }

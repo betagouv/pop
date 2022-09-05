@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Card from "../components/JocondeCard";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
+
 import {
   Elasticsearch,
   SearchBox,
@@ -32,11 +33,12 @@ export default function render() {
         <div>
           <SearchBox
             id="main"
-            placeholder="Titre, n° d'inventaire, dénomination, référence, localisation ou auteur"
+            placeholder="Titre, n° d'inventaire, dénomination, référence, localisation ou auteur, pour lancer la recherche cliquez la loupe"
             initialValue={initialValues.get("main")}
             customQuery={value =>
               utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA", "MUSEO", "DMIS"], ["AUTR"])
             }
+            BtnComponent={utils.customSearchBtn}
           />
         </div>
         <Row>
