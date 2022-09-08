@@ -10,6 +10,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
     return null;
   }
 
+  console.log(title, content);
   let str;
   if (!link) {
     // Transform array to string, by joining with a character.

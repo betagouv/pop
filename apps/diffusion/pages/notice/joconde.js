@@ -115,7 +115,7 @@ export default class extends React.Component {
     let content = this.buildUrl(name, value);
     
     // Traitement pour repr
-    if (name == 'repr' && regex.test(value)) {
+    if ((name == 'repr')&& regex.test(value)) {
         content = this.prepareLinkRepr(value, name);
     }
     return content
@@ -153,7 +153,7 @@ export default class extends React.Component {
     return arrayContent.reduce((a, b) => [a, "", b])
   }
 
-  links(value, name) {
+  /*links(value, name) {
 
     if (!value || !Array.isArray(value) || !value.length) {
       if (String(value) === value && !String(value) == "") {
@@ -167,10 +167,10 @@ export default class extends React.Component {
       })
       .reduce((p, c) => [p, ", ", c]);
     return <React.Fragment>{links}</React.Fragment>;
-  }
+  }*/
 
   // Display a list of links to authors
-  author(value, name) {
+  links (value, name) {
     //const author = this.props.notice.AUTR;
     if (!value) {
       return null;
@@ -182,7 +182,23 @@ export default class extends React.Component {
       }
       return null;
     }
-    const links = value
+    const links = [];
+    value.forEach((val) => {
+      val.split('#').forEach((el) => {
+        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
+
+        links.push(
+          (
+            <div>
+            <a href={url} key={el} target="_blank">
+              {el}
+            </a>
+            </div>
+          )
+          );
+        });
+      });
+    /*const links = value
       .map(a => {
         const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
         return (
@@ -191,7 +207,7 @@ export default class extends React.Component {
           </a>
         );
       })
-      .reduce((p, c) => [p, " , ", c]);
+      .reduce((p, c) => [p, " , ", c]);*/
     return <React.Fragment>{links}</React.Fragment>;
   }
 
@@ -361,7 +377,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" />
                   <Field
                     title={mapping.joconde.AUTR.label}
-                    content={this.author(this.props.notice.AUTR, "auteur")}
+                    content={this.links(this.props.notice.AUTR, "auteur")}
                     separator="#" />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" />
