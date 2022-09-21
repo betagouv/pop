@@ -12,6 +12,12 @@ cd pop/apps/api
 npm install
 ```
 
+## Configuration locale
+
+- Créer un compte sur [mapbox](https://www.mapbox.com) et un access token
+- Créer un fichier `apps/api/.env`
+- Ajouter dans ce fichier `MAPBOX_API_SECRET_TOKEN=pkXXXXX`
+
 ## Utilisation
 
 ### Développement local

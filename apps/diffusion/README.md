@@ -12,6 +12,11 @@ cd pop/apps/diffusion
 npm install
 ```
 
+## Configuration locale
+
+- créer un fichier `apps/diffusion/.env`
+- y ajouter `NODE_ENV=development`
+
 ## Utilisation (locale)
 
 Lancer la commande `npm run dev` pour accéder à l'application via l'URL `http://localhost:8081`. Voir le fichier `package.json` pour le détail des commandes.
