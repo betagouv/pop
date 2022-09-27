@@ -2,6 +2,7 @@ import React from "react";
 
 export default class ContactUs extends React.Component {
   render() {
+    const titleBtn = this.props.titleBtn ? this.props.titleBtn : "Contactez-nous"
     const subject = `subject=Demande à propos de la notice n°${this.props.REF}`;
     let mailTo;
     if (this.props.contact) {
@@ -12,7 +13,7 @@ export default class ContactUs extends React.Component {
     return (
       <div>
         <a href={mailTo} className="notice-btn onPrintHide">
-          Contactez-nous
+          {titleBtn}
         </a>
         <div className="onPrintShow" style={{display: "none"}}>
           {"Contact : "}
