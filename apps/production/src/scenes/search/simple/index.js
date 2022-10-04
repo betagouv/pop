@@ -14,19 +14,21 @@ import Home from "./Home";
 import "./index.css";
 import "../search.css";
 
+const search_message = "Cliquez sur la loupe pour lancer la recherche";
+
 export default () => {
   return (
     <div>
       <Switch>
         <Route path={`/recherche/`} exact component={Home} />
-        <Route path={`/recherche/merimee`} component={() => <Merimee />} />
-        <Route path={`/recherche/palissy`} component={() => <Palissy />} />
-        <Route path={`/recherche/mnr`} component={() => <Mnr />} />
-        <Route path={`/recherche/joconde`} component={() => <Joconde />} />
-        <Route path={`/recherche/memoire`} component={() => <Memoire />} />
-        <Route path={`/recherche/museo`} component={() => <Museo />} />
-        <Route path={`/recherche/autor`} component={() => <Autor />} />
-        <Route path={`/recherche/enluminures`} component={() => <Enluminures />} />
+        <Route path={`/recherche/merimee`} component={() => <Merimee message={search_message}/>} />
+        <Route path={`/recherche/palissy`} component={() => <Palissy  message={search_message}/>} />
+        <Route path={`/recherche/mnr`} component={() => <Mnr message={search_message}/>} />
+        <Route path={`/recherche/joconde`} component={() => <Joconde message={search_message}/>} />
+        <Route path={`/recherche/memoire`} component={() => <Memoire message={search_message}/>} />
+        <Route path={`/recherche/museo`} component={() => <Museo message={search_message}/>} />
+        <Route path={`/recherche/autor`} component={() => <Autor message={search_message}/>} />
+        <Route path={`/recherche/enluminures`} component={() => <Enluminures message={search_message}/>} />
       </Switch>
     </div>
   );

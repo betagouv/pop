@@ -16,7 +16,7 @@ import {
   ActiveFilters
 } from "@popproject/pop-react-elasticsearch";
 
-export default function render() {
+export default function render(props) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
     <Container className="search">
@@ -40,6 +40,7 @@ export default function render() {
             }
             BtnComponent={utils.customSearchBtn}
           />
+          <p>{props.message}</p>
         </div>
         <Row>
           <Col xs="3">

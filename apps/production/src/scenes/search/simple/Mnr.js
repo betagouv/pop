@@ -15,7 +15,7 @@ import Header from "../components/Header";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
 
-export default function render() {
+export default function render(props) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
     <Container className="search">
@@ -39,6 +39,7 @@ export default function render() {
             }
             BtnComponent={utils.customSearchBtn}
           />
+          <p>{props.message}</p>
         </div>
         <Row>
           <Col xs="3">
