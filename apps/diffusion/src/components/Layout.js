@@ -52,7 +52,7 @@ export default class Layout extends React.Component {
               {
               <div>
                 <a
-                  href="https://fier2.typeform.com/to/Qyz3xv"
+                  href="https://framaforms.org/ameliorez-pop-1663925372"
                   className="btn btn-outline-danger onPrintHide"
                   target="_blank"
                   rel="noopener"
