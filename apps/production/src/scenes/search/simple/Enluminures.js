@@ -32,7 +32,7 @@ export default function render(props) {
         <div>
           <SearchBox
             id="main"
-            placeholder="Saisissez un nom ou une référence, pour lancer la recherche cliquez la loupe"
+            placeholder="Saisissez un nom ou une référence"
             initialValue={initialValues.get("main")}
             customQuery={value => utils.customQuery(value, ["TITR", "REF", "SUJET"])}
             BtnComponent={utils.customSearchBtn}
