@@ -15,7 +15,7 @@ import Header from "../components/Header";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
 
-export default function render() {
+export default function render(props) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
     <Container className="search">
@@ -32,13 +32,14 @@ export default function render() {
         <div>
           <SearchBox
             id="main"
-            placeholder="Référence, titre, n° d'inventaire, auteur, affectataire, ancienne attribution ou localisation, pour lancer la recherche cliquez la loupe"
+            placeholder="Référence, titre, n° d'inventaire, auteur, affectataire, ancienne attribution ou localisation"
             initialValue={initialValues.get("main")}
             customQuery={value =>
               utils.customQuery(value, ["REF", "INV", "AUTR", "ATTR", "TITR", "AFFE", "LOCA"])
             }
             BtnComponent={utils.customSearchBtn}
           />
+          <p>{props.message}</p>
         </div>
         <Row>
           <Col xs="3">

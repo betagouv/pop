@@ -15,7 +15,7 @@ import Card from "../components/AutorCard";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
 
-export default function render() {
+export default function render(props) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
     <Container className="search">
@@ -32,11 +32,12 @@ export default function render() {
         <div>
           <SearchBox
             id="main"
-            placeholder="Saisissez un nom ou une référence, pour lancer la recherche cliquez la loupe"
+            placeholder="Saisissez un nom ou une référence"
             initialValue={initialValues.get("main")}
             customQuery={value => utils.customQuery(value, ["NAME", "REF"])}
             BtnComponent={utils.customSearchBtn}
           />
+          <p>{props.message}</p>
         </div>
         <Row>
           <Col xs="3">

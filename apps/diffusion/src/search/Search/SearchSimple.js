@@ -63,7 +63,7 @@ export default function SearchSimple({ initialValues }) {
   return (
     <SearchBox
       id="mainSearch"
-      placeholder="Saisissez un titre, une dénomination ou une localisation"
+      placeholder="Saisissez un titre, une dénomination ou une localisation, cliquez sur la loupe pour lancer la recherche"
       initialValue={initialValues.get("mainSearch")}
       BtnComponent={customSearchBtn}
       customQuery={value =>
