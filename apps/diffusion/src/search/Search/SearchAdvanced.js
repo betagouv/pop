@@ -1024,7 +1024,7 @@ class SearchAdvanced extends React.Component {
     const customSearchBtn = ({onClickCall}) => {
       this.onKeyDownCall = onClickCall;
       useEventListener('keydown', this.handler);
-      return (<button type="button" title="Rechercher" className="btn btn-primary" onClick={(e) => { onClickCall(); } }>Rechercher</button>);
+      return (<div class="container-btn"><button type="button" title="Rechercher" id="search-btn" className="btn btn-primary search-btn" onClick={(e) => { onClickCall(); } }>Rechercher</button></div>);
     }
 
     return (
@@ -1263,6 +1263,9 @@ class SearchAdvanced extends React.Component {
             font-weight: 600;
             font-size: 15px;
             margin-left: 5px;
+          }
+          .search-btn{
+            margin-left: 30px;
           }
         `}</style>
       </div>

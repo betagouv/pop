@@ -22,7 +22,7 @@ const customSearchBtn = ({onClickCall}) => {
   onKeyDownCall = onClickCall;
   utils.useEventListener('keydown', handler);
   return (
-    <div className="container-btn-search">
+    <div className="offset-md-6 container-btn-search">
       <SearchButton 
         icon={false}
         title="Rechercher"
@@ -552,6 +552,10 @@ export default function AdvancedSearch({ collection, card }) {
         }
         .container-btn-search{
           text-align: center;
+        }
+
+        .container-btn-search button{
+          margin-left: -10px;
         }
       `  
       }</style>
