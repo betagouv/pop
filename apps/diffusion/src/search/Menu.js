@@ -151,6 +151,7 @@ const Menu = ({ closeMenu, initialValues }) => (
         ["repr", "REPR.keyword"],
         ["util", "UTIL.keyword"],
         ["loca", "LOCA.keyword"],
+        ["etud", "ETUD.keyword"],
       ].map(([value, field]) => {
         return (
           <CollapsableFacet

@@ -8,6 +8,7 @@ import api from "../../services/api";
 import Loader from "../../components/Loader";
 import authAction from "./../../redux/auth/actions";
 const { logout, signinByToken } = authAction;
+import { message_info_password } from "../../config";
 
 class UpdateProfile extends Component {
   state = {
@@ -59,6 +60,16 @@ class UpdateProfile extends Component {
         Vous n&apos;avez pas encore chang&eacute; votre mot de passe. Pour votre
         s&eacute;curit&eacute;, vous devez le changer avant de continuer.
       </p>
+    );
+  }
+
+  passwordSecurity(){
+    // Si le message contient des retours à la ligne
+    const message = message_info_password.indexOf("\n") > -1 ? message_info_password.split("\n").map( el  => { return (<p>{ el }</p>) }) : message_info_password;
+    return (
+      <div class="informations-mdp">
+        { message }
+      </div>
     );
   }
 
@@ -145,6 +156,15 @@ class UpdateProfile extends Component {
     }
     return <div />;
   }
+
+  renderError() {
+    const error = this.state.error !== ""  ? this.state.error.split("\n").map( el  => { return (<p>{ el }</p>) }) : this.state.error;
+
+    return (
+      <div className="renderError">{ error }</div>
+    );
+  }
+
   render() {
     const { email, location } = this.props;
     const { loading, done, error, nom, prenom, institution } = this.state;
@@ -168,7 +188,7 @@ class UpdateProfile extends Component {
         <div className="block">
           <h1>Modifier mes informations</h1>
           {this.resetPasswordMessage()}
-          <div className="error-message">{error}</div>
+          <div className="error-message">{this.renderError()}</div>
           <div className="sub-block">
             <h4>Mon descriptif</h4>
             <input
@@ -219,6 +239,7 @@ class UpdateProfile extends Component {
               onChange={e => this.setState({ pwd2: e.target.value })}
             />
           </div>
+          {this.passwordSecurity()}
           <hr />
           <Button className="submit-button" onClick={this.updateProfile}>
             Mettre &agrave; jour mes informations

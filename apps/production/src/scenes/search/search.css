@@ -98,6 +98,10 @@ ul.react-es-pagination > li {
   font-size:14px;
 }
 
+.react-es-searchbox {
+  position: relative;
+}
+
 .react-es-searchbox input {
   border: 0;
   border-radius: 5px;
@@ -109,6 +113,24 @@ ul.react-es-pagination > li {
   padding-left: 15px;
   color: #19414c;
 }
+
+.react-es-searchbox button {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  border: 0;
+  background-size: 23px;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  color: #19414c;
+  background-image: url(../../assets/search.png);
+  background-repeat: no-repeat;
+  background-position: 38% center;
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
 .export-collection,
 .delete-collection {
   width: 120px;

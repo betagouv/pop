@@ -78,7 +78,7 @@ router.post("/forgetPassword", async (req, res) => {
     return res.status(404).send({ success: false, msg });
   }
 
-  var password = generator.generate({ length: 10, numbers: true });
+  var password = generator.generate({ length: 12, numbers: true, symbols: true });
   user.set({ password });
   await user.save();
   res.status(200).json({ success: true, msg: "Mot de passe mis à jour" });
@@ -91,7 +91,8 @@ router.post("/forgetPassword", async (req, res) => {
     Nous vous recommandons de modifier votre mot de passe le plus rapidement 
     possible en cliquant en haut à droite lors de votre connexion<br /><br />
     L'équipe POP<br />
-    Et en cas de problème, vous pouvez toujours nous contacter à pop@culture.gouv.fr<br />`
+    Et en cas de problème, vous pouvez toujours nous contacter à pop@culture.gouv.fr<br />`,
+    false
   );
 });
 
@@ -125,6 +126,13 @@ router.post(
         success: false,
         msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
+    }
+
+    // Vérification de la sécurité du mot de passe
+    const checkPassword = user.validatePassword(user.email, pwd1);
+
+    if(!checkPassword.success){
+      return res.status(401).send(checkPassword); 
     }
 
     user.comparePassword(pwd, async function(err, isMatch) {

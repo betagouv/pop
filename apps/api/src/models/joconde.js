@@ -573,8 +573,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Numéro de site",
-        label: "Numéro de site",
+        description: "Genre",
+        label: "Genre",
         deprecated: true
       }
     },

@@ -90,7 +90,7 @@ describe("POST /joconde", () => {
     const user = await createUser();
     let res = await createNotice(user, 200);
     expect(res.success).toBe(true);
-    res = await createNotice(user, 500);
+    res = await createNotice(user, 403);
     expect(res.success).toBe(false);
   });
   test(`It should raise flags on errors`, async () => {

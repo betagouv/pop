@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const passport = require("passport");
 const multer = require("multer");
@@ -7,6 +8,49 @@ const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
 const Import = require("../models/import");
 const { uploadFile } = require("./utils");
+
+
+// Get one notice by ref.
+router.put("/:id",
+  passport.authenticate("jwt", { session: false }),
+  upload.any(), 
+  async (req, res) => {
+  /* 	
+     #swagger.tags = ['Import']
+     #swagger.path = '/import/{id}'
+     #swagger.description = 'Retourne les informations sur un import' 
+     #swagger.parameters['id'] = { 
+       in: 'path', 
+       description: 'Référence de l'import',
+       type: 'string' 
+     }
+     #swagger.responses[200] = { 
+       description: 'Mise à jour des informations avec succés' 
+     }
+     #swagger.responses[403] = { 
+       description: 'Erreur pendant la mise à jour',
+       schema: {
+         success: false,
+         msg: "erreur"
+       } 
+     }
+  */
+
+  try { 
+    const id = String(req.params.id);
+    const body = JSON.parse(req.body.import);
+    await Import.updateOne({ _id: mongoose.Types.ObjectId(`${id}`) }, { $set: body });
+
+    for (let i = 0; i < req.files.length; i++) {
+      const path = `import/${filenamify(id)}/${filenamify(req.files[i].originalname)}`;
+      await uploadFile(path, req.files[i]);
+    }
+    return res.send({ success: true, msg: "OK" });
+  } catch (e) {
+    capture(JSON.stringify(e));
+    return res.status(403).send({ success: false, msg: JSON.stringify(e) });
+  }
+});
 
 // Store import data (list of created, updated notices)
 router.post(
@@ -32,7 +76,7 @@ router.post(
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {
       capture(JSON.stringify(e));
-      return res.status(500).send({ success: false, msg: JSON.stringify(e) });
+      return res.status(403).send({ success: false, msg: JSON.stringify(e) });
     }
   }
 );

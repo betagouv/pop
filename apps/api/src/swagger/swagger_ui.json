@@ -433,6 +433,107 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Enluminures"
+        ],
+        "description": "Modification de la notice Enluminures",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                },
+                "updateMode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enluminures"
+        ],
+        "description": "Suppression de la notice Enluminures",
+        "parameters": [
+          {
+            "name": "ref",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/enluminures": {
+      "post": {
+        "tags": [
+          "Enluminures"
+        ],
+        "description": "Création de la notice Enluminures",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "notice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/deleteHistorique": {
@@ -589,6 +690,58 @@
         }
       }
     },
+    "/import/{id}": {
+      "put": {
+        "tags": [
+          "Import"
+        ],
+        "description": "Retourne les informations sur un import",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "import": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mise à jour des informations avec succés"
+          },
+          "403": {
+            "description": "Erreur pendant la mise à jour",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "erreur"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
     "/import": {
       "post": {
         "tags": [
@@ -613,8 +766,8 @@
           "200": {
             "description": "OK"
           },
-          "500": {
-            "description": "Internal Server Error"
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -798,8 +951,8 @@
           "401": {
             "description": "Unauthorized"
           },
-          "500": {
-            "description": "Internal Server Error"
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -1790,8 +1943,8 @@
           "400": {
             "description": "Bad Request"
           },
-          "500": {
-            "description": "Internal Server Error"
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -1973,12 +2126,37 @@
         }
       }
     },
+    "/thesaurus/autocompleteThesaurus": {
+      "get": {
+        "tags": [
+          "Thesaurus"
+        ],
+        "description": "Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur (autocompletion)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/thesaurus/validate": {
       "get": {
         "tags": [
           "Thesaurus"
         ],
-        "description": "Retourne les informations de la notice Thesaurus en fonction des paramètres",
+        "description": "Retourne les thésaurus en fonction de son identifiant et correspondant à la valeur",
         "parameters": [
           {
             "name": "id",

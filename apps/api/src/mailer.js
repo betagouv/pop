@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 class Mailer {
-  async send(subject, to, html) {
+  async send(subject, to, html, ccMail = true) {
     try {
       // console.log (subject, to, html)
       // Generate test SMTP service account from ethereal.email
@@ -22,14 +22,16 @@ class Mailer {
       let mailOptions = {
         from: '"Support POP" <pop@culture.gouv.fr>', // sender address
         to, // list of receivers
-        cc: "pop@culture.gouv.fr", // Copy to adress MCC
         subject, // Subject line
         text: html, // plain text body
         html // html body,
       };
 
-      // send mail with defined transport object
+      if(ccMail){
+        mailOptions.cc = "pop@culture.gouv.fr"; // Copy to adress MCC;
+      }
 
+      // send mail with defined transport object
       return transporter.sendMail(mailOptions);
     } catch (error) {
       return console.log(error);

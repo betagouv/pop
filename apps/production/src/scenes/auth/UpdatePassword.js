@@ -7,6 +7,8 @@ import api from "../../services/api";
 import Loader from "../../components/Loader";
 
 import authAction from "../../redux/auth/actions";
+import { message_info_password } from "../../config";
+
 const { logout } = authAction;
 
 class UpdatePassword extends Component {
@@ -32,7 +34,7 @@ class UpdatePassword extends Component {
         }, 5000);
       })
       .catch(e => {
-        this.setState({ error: e, loading: false, done: false });
+        this.setState({ error: e.msg, loading: false, done: false });
       });
   }
 
@@ -48,6 +50,19 @@ class UpdatePassword extends Component {
     );
   }
 
+  passwordSecurity(){
+    if (this.props.hasResetPassword) {
+      return <div />;
+    }
+    // Si le message contient des retours à la ligne
+    const message = message_info_password.indexOf("\n") > -1 ? message_info_password.split("\n").map( el  => { return (<p>{ el }</p>) }) : message_info_password;
+    return (
+      <div class="informations-mdp">
+        { message }
+      </div>
+    );
+  }
+
   lastConnectedAt() {
     if (!this.props.lastConnectedAt) {
       return <div />;
@@ -59,6 +74,14 @@ class UpdatePassword extends Component {
           {new Date(this.props.lastConnectedAt).toLocaleString("fr-FR")}
         </em>
       </p>
+    );
+  }
+
+  renderError() {
+    const error = this.state.error !== ""  ? this.state.error.split("\n").map( el  => { return (<p>{ el }</p>) }) : this.state.error;
+
+    return (
+      <div className="renderError">{ error }</div>
     );
   }
 
@@ -89,7 +112,8 @@ class UpdatePassword extends Component {
         <div className="block">
           <h1>Changer mon mot de passe</h1>
           {this.resetPasswordMessage()}
-          <div>{this.state.error}</div>
+          {this.passwordSecurity()}
+          <div className="error">{this.renderError()}</div>
           <input
             className="input-field"
             placeholder="Mot de passe actuel"

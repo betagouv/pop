@@ -154,63 +154,65 @@ class Notice extends React.Component {
             <div className="subtitle">1.1. Localisation</div>
             <Row>
               <Col sm={6}>
-                <CustomField name="LOCA" disabled={!this.state.editable} />
                 <CustomField name="REF" disabled={true} />
                 <CustomField name="PAYS" disabled={!this.state.editable} />
                 <CustomField name="REG" disabled={!this.state.editable} />
                 <CustomField name="DPT" disabled={!this.state.editable} />
+                <CustomField name="DPT_LETTRE" disabled={!this.state.editable} />
                 <CustomField name="COM" disabled={!this.state.editable} />
+                <CustomField name="WCOM" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="INSEE" disabled={!this.state.editable} />
                 <CustomField name="ADRESSE" disabled={!this.state.editable} />
+                <CustomField name="WADRS" disabled={!this.state.editable} />
                 <CustomField name="LIEU" disabled={!this.state.editable} />
+                <CustomField name="PLOC" disabled={!this.state.editable} />
+                <CustomField name="LOCA" disabled={!this.state.editable} />
                 <CustomField name="MCGEO" disabled={!this.state.editable} />
               </Col>
             </Row>
-            <div className="subtitle">1.2. Identification</div>
+            <div className="subtitle">1.2. Provence de l'objet ou du document</div>
             <Row>
               <Col sm={6}>
                 <CustomField name="EDIF" disabled={!this.state.editable} />
+                <CustomField name="LEG" disabled={!this.state.editable} />
                 <CustomField name="OBJT" disabled={!this.state.editable} />
                 <CustomField name="DENO" disabled={!this.state.editable} />
                 <CustomField name="TICO" disabled={!this.state.editable} />
                 <CustomField name="SUJET" disabled={!this.state.editable} />
-                <CustomField name="LEG" disabled={!this.state.editable} />
-                <CustomField name="TITRE" disabled={!this.state.editable} />
                 <CustomField name="THEATRE" disabled={!this.state.editable} />
+                <CustomField name="CINEPROD" disabled={!this.state.editable} />
                 <CustomField name="ROLE" disabled={!this.state.editable} />
                 <CustomField name="AUTOEU" disabled={!this.state.editable} />
                 <CustomField name="AUTR" disabled={!this.state.editable} />
+                
+              </Col>
+              <Col sm={6}>
                 <CustomField name="SCLE" disabled={!this.state.editable} />
                 <CustomField name="DATOEU" disabled={!this.state.editable} />
                 <CustomField name="LIEUORIG" disabled={!this.state.editable} />
-              </Col>
-              <Col sm={6}>
                 <CustomField name="LBASE" disabled={!this.state.editable} />
                 <CustomField name="LBASE2" disabled={!this.state.editable} />
-                <CustomField name="MARQ" disabled={!this.state.editable} />
                 <CustomField name="SERIE" disabled={!this.state.editable} />
                 <CustomField name="MCL" disabled={!this.state.editable} />
-                <CustomField name="DPT_LETTRE" disabled={!this.state.editable} />
-                <CustomField name="PLOC" disabled={!this.state.editable} />
-                <CustomField name="CINEPROD" disabled={!this.state.editable} />
                 <CustomField name="MCPER" disabled={!this.state.editable} />
-                <CustomField name="ADPHOT" disabled={!this.state.editable} />
                 <CustomField name="DOM" disabled={!this.state.editable} />
               </Col>
             </Row>
-            <div className="subtitle">1.3. Références des documents reproduits</div>
+            <div className="subtitle">1.3. Références des documents reproduits et des objets photographiés</div>
             <Row>
               <Col sm={6}>
                 <CustomField name="AUTG" disabled={!this.state.editable} />
                 <CustomField name="AUTOR" disabled={!this.state.editable} />
                 <CustomField name="COTECOR" disabled={!this.state.editable} />
+                <CustomField name="NUMOR" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
+                <CustomField name="ANUMOR" disabled={!this.state.editable} />
                 <CustomField name="DOC" disabled={!this.state.editable} />
-                <CustomField name="LIEUCOR" disabled={!this.state.editable} />
                 <CustomField name="TIREDE" disabled={!this.state.editable} />
+                <CustomField name="LIEUCOR" disabled={!this.state.editable} />
               </Col>
             </Row>
           </Section>
@@ -235,20 +237,16 @@ class Notice extends React.Component {
             <Row>
               <Col sm={6}>
                 <CustomField name="TYPDOC" disabled={!this.state.editable} />
+                <CustomField name="NEGPOS" disabled={!this.state.editable} />
                 <CustomField name="NUMI" disabled={!this.state.editable} />
                 <CustomField name="NUMP" disabled={!this.state.editable} />
-                <CustomField name="ANUMP" disabled={!this.state.editable} />
-                <CustomField name="NUMAUTP" disabled={!this.state.editable} />
                 <CustomField name="NUMTI" disabled={!this.state.editable} />
                 <CustomField name="ANUMTI" disabled={!this.state.editable} />
-                <CustomField name="REPRO" disabled={!this.state.editable} />
-                <CustomField name="NEGPOS" disabled={!this.state.editable} />
-                <CustomField name="NUMOR" disabled={!this.state.editable} />
-                <CustomField name="ANUMOR" disabled={!this.state.editable} />
+                <CustomField name="NUMAUTP" disabled={!this.state.editable} />
+                <CustomField name="NUMVERS" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
-                <CustomField name="NUMVERS" disabled={!this.state.editable} />
-                <CustomField name="RENV" disabled={!this.state.editable} />
+              <CustomField name="RENV" disabled={!this.state.editable} />
                 <CustomField name="LIEUCTI" disabled={!this.state.editable} />
                 <CustomField name="COTECTI" disabled={!this.state.editable} />
                 <CustomField name="PRECOR" disabled={!this.state.editable} />
@@ -274,7 +272,6 @@ class Notice extends React.Component {
                 <CustomField name="MENTIONS" disabled={!this.state.editable} />
                 <CustomField name="MENTTI" disabled={!this.state.editable} />
                 <CustomField name="MENTOR" disabled={!this.state.editable} />
-                <CustomField name="SENS" disabled={!this.state.editable} />
                 <CustomField name="COULEUR" disabled={!this.state.editable} />
                 <CustomField name="TRL" disabled={!this.state.editable} />
                 <CustomField name="ECH" disabled={!this.state.editable} />
@@ -308,15 +305,18 @@ class Notice extends React.Component {
                 <CustomField name="DMIS" disabled={!this.state.editable} />
                 <CustomField name="DMAJ" disabled={!this.state.editable} />
                 <CustomField name="CONTACT" disabled={!this.state.editable} />
+                <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
                 <CustomField name="IDPROD" disabled={!this.state.editable} />
                 <CustomField name="EMET" disabled={!this.state.editable} />
                 <CustomField name="REFIMG" disabled={!this.state.editable} />
+                <CustomField name="MARQ" disabled={!this.state.editable} />
                 <CustomField name="TYPSUPP" disabled={!this.state.editable} />
                 <CustomField
                   name="REFMUS"
                   createUrl={e => `/notice/museo/${e}`}
                   disabled={!this.state.editable}
                 />
+                <CustomField name="LIENS" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
                 <CustomField name="TYPEIMG" disabled={!this.state.editable} />
@@ -325,8 +325,9 @@ class Notice extends React.Component {
                 <CustomField name="NVD" disabled={!this.state.editable} />
                 <CustomField name="VUECD" disabled={!this.state.editable} />
                 <CustomField name="IMG" disabled={!this.state.editable} />
-                <CustomField name="WCOM" disabled={!this.state.editable} />
                 <CustomField name="WEB" disabled={!this.state.editable} />
+                <CustomField name="SENS" disabled={!this.state.editable} />
+                <CustomField name="ADPHOT" disabled={!this.state.editable} />
                 <CustomField
                   name="REFJOC"
                   createUrl={e => `/notice/joconde/${e}`}

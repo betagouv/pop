@@ -3,7 +3,7 @@ import { Row } from "reactstrap";
 import { withRouter } from "next/router";
 import Mapping from "../../services/mapping";
 import { QueryBuilder } from "@popproject/pop-react-elasticsearch";
-import { operators } from "../utils";
+import { operators, useEventListener } from "../utils";
 
 export const bases = [
   { key: "joconde", base: "Collections des musées de France (Joconde)", img: "/static/topics/mdf.jpg" },
@@ -21,6 +21,23 @@ class SearchAdvanced extends React.Component {
     const value = e.target.value;
     this.props.router.push(value ? `/advanced-search/list/${value}` : "/advanced-search/list");
   };
+
+  // Méthode 
+  onKeyDownCall = () => {};
+
+  // Lancement de la recherche via la touche entrée
+  handler = ({ key }) => {
+    if (String(key) == "Enter") {
+      this.onKeyDownCall();
+    }
+  }
+
+  componentDidMount = () => {
+    // Lancement de la recherche lors du rafraichissement de la page
+    if(this.props.initialValues.get('qb') !== undefined){
+      this.onKeyDownCall()
+    }
+  }
 
   render() {
     const hasBase = Boolean(this.props.base);
@@ -470,7 +487,7 @@ class SearchAdvanced extends React.Component {
             {value: ["MEMOIRE.keyword"], text: "", fields: "MEMOIRE"},
             {value: ["NART.keyword"], text: "Numéro artificiel de différenciation de l'objet", fields: "NART"},
             {value: ["NINV.keyword"], text: "Numéro d'inventaire affecté à l'objet", fields: "NINV"},
-            {value: ["NOMS.keyword"], text: "Nom du rédacteur", fields: "NOMS"},
+            {value: ["NOMS.keyword"], text: "Auteurs de la notice", fields: "NOMS"},
             {value: ["NUMP.keyword"], text: "Cote de la photographie (Mémoire)", fields: "NUMP"},
             {value: ["OBS.keyword"], text: "Observations", fields: "OBS"},
             {value: ["ORIG.keyword"], text: "Lieu de provenance", fields: "ORIG"},
@@ -602,7 +619,7 @@ class SearchAdvanced extends React.Component {
             {value: ["MEMOIRE.keyword"], text: "Mémoire", fields: "MEMOIRE"},
             {value: ["MHPP.keyword"], text: "Précisions sur les éléments protégés", fields: "MHPP"},
             {value: ["MURS.keyword"], text: "Matériaux du gros-œuvre", fields: "MURS"},
-            {value: ["NOMS.keyword"], text: "Nom du rédacteur", fields: "NOMS"},
+            {value: ["NOMS.keyword"], text: "Auteurs de la notice", fields: "NOMS"},
             {value: ["OBS.keyword"], text: "Observations concernant la protection de l'édifice", fields: "OBS"},
             {value: ["PAFF.keyword"], text: "Précisions concernant l'affectataire de l'édifice", fields: "PAFF"},
             {value: ["PARN.keyword"], text: "Partie constituante non étudiée", fields: "PARN"},
@@ -1004,6 +1021,12 @@ class SearchAdvanced extends React.Component {
       }
     }
 
+    const customSearchBtn = ({onClickCall}) => {
+      this.onKeyDownCall = onClickCall;
+      useEventListener('keydown', this.handler);
+      return (<div class="container-btn"><button type="button" title="Rechercher" id="search-btn" className="btn btn-primary search-btn" onClick={(e) => { onClickCall(); } }>Rechercher</button></div>);
+    }
+
     return (
       <div className="advanced-search">
         {(this.props.base == "" || this.props.base == null) &&
@@ -1043,6 +1066,7 @@ class SearchAdvanced extends React.Component {
             operators={operators}
             autoComplete={true}
             combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
+            BtnComponent={customSearchBtn}
           />
         ) : null}
         <style jsx global>{`
@@ -1239,6 +1263,9 @@ class SearchAdvanced extends React.Component {
             font-weight: 600;
             font-size: 15px;
             margin-left: 5px;
+          }
+          .search-btn{
+            margin-left: 30px;
           }
         `}</style>
       </div>

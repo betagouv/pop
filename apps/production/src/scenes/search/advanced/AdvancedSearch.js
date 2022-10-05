@@ -14,6 +14,30 @@ import ExportComponent from "../components/ExportComponent";
 import DeleteComponent from "../components/DeleteComponent";
 import utils from "../components/utils";
 import Tooltip from "./Tooltip";
+import SearchButton from '../components/SearchButton';
+
+let onKeyDownCall = () => {};
+
+const customSearchBtn = ({onClickCall}) => {
+  onKeyDownCall = onClickCall;
+  utils.useEventListener('keydown', handler);
+  return (
+    <div className="offset-md-6 container-btn-search">
+      <SearchButton 
+        icon={false}
+        title="Rechercher"
+        className="btn btn-primary"
+        onClick={() => onClickCall() }
+      ></SearchButton>
+     
+    </div>);
+}
+
+function handler({ key }) {
+  if (String(key) == "Enter") {
+    onKeyDownCall();
+  }
+}
 
 export default function AdvancedSearch({ collection, card }) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
@@ -452,6 +476,13 @@ export default function AdvancedSearch({ collection, card }) {
     setSortQuery([{ [sortKey]: { order: sortOrder } }]);
   }, [sortKey, sortOrder]);
 
+  useEffect(() => {
+    // Lancement de la recherche lors du rafraichissement de la page
+    if(initialValues.get('qb') !== undefined){
+      onKeyDownCall();
+    }
+  }, []);
+
   return (
     <Container className="search">
       <Header base={collection} normalMode={false} />
@@ -476,6 +507,7 @@ export default function AdvancedSearch({ collection, card }) {
             operators={utils.operators}
             autoComplete={true}
             combinators={[{ value: "AND", text: "ET" }, { value: "OR", text: "OU" }]}
+            BtnComponent={customSearchBtn}
           />
           <Tooltip />
         </div>
@@ -517,6 +549,13 @@ export default function AdvancedSearch({ collection, card }) {
         .option_disabled,
         .option_invisible{
           display: none;
+        }
+        .container-btn-search{
+          text-align: center;
+        }
+
+        .container-btn-search button{
+          margin-left: -10px;
         }
       `  
       }</style>

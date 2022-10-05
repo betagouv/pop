@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Pagination, Facet } from "@popproject/pop-react-elasticsearch";
 import { Alert } from "reactstrap";
 
@@ -45,6 +45,7 @@ function toFrenchRegex(text) {
     .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
     .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
     .replace(/[uùûüUÙÛÜ]/g, "[uùûüUÙÛÜ]")
+    .replace(/[yÿýŷYŸÝŶ]/g, "[yÿýŷYŸÝŶ]")
     .replace(/([bdfghjklmnpqrstvwxz])/gi, (w, x) => `[${x.toUpperCase()}${x.toLowerCase()}]`)
 }
 
@@ -257,5 +258,37 @@ export function CollapsableFacet({ initialCollapsed, title, ...rest }) {
       </div>
       {FacetWrapper()}
     </div>
+  );
+}
+
+export function useEventListener(eventName, handler, element) {
+  // Create a ref that stores handler
+  const savedHandler = useRef();
+  // Update ref.current value if handler changes.
+  // This allows our effect below to always get latest handler ...
+  // ... without us needing to pass it in effect deps array ...
+  // ... and potentially cause effect to re-run every render.
+  useEffect(() => {
+    if(!element){
+      element = window;
+    }
+    savedHandler.current = handler;
+  }, [handler]);
+  useEffect(
+    () => {
+      // Make sure element supports addEventListener
+      // On
+      const isSupported = element && element.addEventListener;
+      if (!isSupported) return;
+      // Create event listener that calls handler function stored in ref
+      const eventListener = (event) => savedHandler.current(event);
+      // Add event listener
+      element.addEventListener(eventName, eventListener);
+      // Remove event listener on cleanup
+      return () => {
+        element.removeEventListener(eventName, eventListener);
+      };
+    },
+    [eventName, element] // Re-run if eventName or element changes
   );
 }

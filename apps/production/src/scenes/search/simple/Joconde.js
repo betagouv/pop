@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Card from "../components/JocondeCard";
 import CollapsableFacet from "../components/CollapsableFacet";
 import utils from "../components/utils";
+
 import {
   Elasticsearch,
   SearchBox,
@@ -15,7 +16,7 @@ import {
   ActiveFilters
 } from "@popproject/pop-react-elasticsearch";
 
-export default function render() {
+export default function render(props) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   return (
     <Container className="search">
@@ -37,7 +38,9 @@ export default function render() {
             customQuery={value =>
               utils.customQuery(value, ["TICO", "INV", "DENO", "REF", "LOCA", "MUSEO", "DMIS"], ["AUTR"])
             }
+            BtnComponent={utils.customSearchBtn}
           />
+          <p>{props.message}</p>
         </div>
         <Row>
           <Col xs="3">

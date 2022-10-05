@@ -101,8 +101,6 @@ class api {
   // Create delete historique.
   async createDeleteHistorique( ref, base ) {
     const props = { ref, base };
-    console.log("create delete historique ref = " + JSON.stringify(props));
-
     return request.fetchJSON("POST", "/deleteHistorique", props);
   }
 
@@ -134,11 +132,19 @@ class api {
     return request.fetchFormData("POST", `/import`, formData);
   }
 
+  // Update an import.
+  updateImport(id, data, file) {
+    let formData = new FormData();
+    formData.append("import", JSON.stringify(data));
+    formData.append("file", file, "import.csv");
+    return request.fetchFormData("PUT", `/import/${id}`, formData);
+  }
+
   // Update and create N notices (via import).
   bulkUpdateAndCreate(arr, cb) {
     return new Promise(async (resolve, reject) => {
-      const MAX_ATTEMPTS = 5;
-      const TIME_BEFORE_RETRY = 30000;
+      const MAX_ATTEMPTS = 2;
+      const TIME_BEFORE_RETRY = 3000;
       let attempts = 0;
       const total = arr.length;
       const progress =  (100 * (total - arr.length)) / total;
@@ -150,6 +156,7 @@ class api {
       let autorCurrentNoticesUpdate = []
       let currentNoticesCreate = []
       let currentNoticesUpdate = []
+      let listNoticesError = [];
 
       // Get All "autor" notices for CREATE if it exists
       autorCurrentNoticesCreate = arr.reduce((accumulatorNotices, currentNotice) => {
@@ -205,16 +212,19 @@ class api {
       
       while (arr.length) {
         const currentNotices = arr.splice(0, BULK_SIZE);
+        let element = "";
+        let index = 0;
        try{
           // add other bases
           if(currentNotices.length > 0) {
             for(let i=0; i<currentNotices.length; i++){
-              let e = currentNotices[i];
-              if (e.action === "updated") {
-                await this.updateNotice(e.notice.REF, e.collection, e.notice, e.files, "import");
+              element = currentNotices[i];
+              if (element.action === "updated") {
+                await this.updateNotice(element.notice.REF, element.collection, element.notice, element.files, "import");
               } else {
-                await this.createNotice(e.collection, e.notice, e.files);
+                await this.createNotice(element.collection, element.notice, element.files);
               }
+              index = i;
             }
           }
           cb(progress, `Notices restantes  ${total - arr.length}/${total}`);
@@ -224,18 +234,25 @@ class api {
           // I dont want to wait the end to know (but maybe I should)
           arr.splice(0, 0, ...currentNotices);
           if (++attempts >= MAX_ATTEMPTS) {
-            reject("Import échoué. Trop d'erreurs ont été détectées");
-            return;
+            // reject("Import échoué. Trop d'erreurs ont été détectées");
+            // Création ligne d'erreur pour le fichier de log
+            let error = {};
+            error[element.notice.REF] = { notice: element.notice, message: e };
+            listNoticesError.push(error);
+            // Suppression de la ligne dans les imports
+            arr = arr.filter((el) => el.notice.REF !== element.notice.REF)
+            // return;
+          } else {
+            cb(
+              progress,
+              `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
+                `Tentative : ${attempts}/${MAX_ATTEMPTS}`
+            );
+            await timeout(TIME_BEFORE_RETRY);
           }
-          cb(
-            progress,
-            `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
-              `Tentative : ${attempts}/${MAX_ATTEMPTS}`
-          );
-          await timeout(TIME_BEFORE_RETRY);
         }
       }
-      resolve();
+      resolve(listNoticesError);
     });
   }
 

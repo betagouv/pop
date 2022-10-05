@@ -488,7 +488,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Emplacement de l'image sur le serveur",
+        label: "Nombre d'objets",
         deprecated: true
       }
     },
@@ -681,7 +681,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Nom du rédacteur"
+        label: "Auteurs de la notice"
       }
     },
     NUMA: {
