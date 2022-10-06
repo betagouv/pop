@@ -180,6 +180,20 @@ export function MemoirePdf(notice, title, links) {
                     key="notice.LAUTP">{notice.LAUTP}</Link>
                   : <></>
               }
+              {
+                (notice.LBASE) ?
+                  <Text style={styles.fieldTitle}>{mapping.memoire.LBASE.label}</Text>
+                  : <></>
+              }
+              {
+                (notice.LBASE && (notice.LBASE.length)) ?
+                <Link 
+                style={styles.listLinked}
+                title = {mapping.memoire.LBASE.label}
+                content = {pdfLinks(notice.LBASE)} 
+                key="notice.LBASE">{notice.LBASE}</Link>
+                :<></>
+              }
             </View>
           </View>
         </View>

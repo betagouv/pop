@@ -70,6 +70,13 @@ class SearchAdvanced extends React.Component {
           fields = [
             //Catalogue
             {
+              value: [
+                  "REF.keyword"
+                ], 
+                text: "Référence de la notice", 
+                fields: "REF"
+                },
+              {
               value: ["MCPER.keyword",
                       "ROLE.keyword",
                       "THEATRE.keyword",
@@ -253,7 +260,6 @@ class SearchAdvanced extends React.Component {
             {value: ["PAYS.keyword"], text:"Pays", fields: "PAYS"},
             {value: ["PRECOR.keyword"], text:"Précisions sur la conservation de l'original", fields: "PRECOR"},
             {value: ["PUBLI.keyword"], text:"Référence de publication de l'image", fields: "PUBLI"},
-            {value: ["REF.keyword"], text:"Référence", fields: "REF"},
             {value: ["REG.keyword"], text:"Région", fields: "REG"},
             {value: ["RENV.keyword"], text:"Phototypes en relation", fields: "RENV"},
             {value: ["REPRO.keyword"], text:"Numéro de reproduction", fields: "REPRO"},
@@ -389,6 +395,13 @@ class SearchAdvanced extends React.Component {
             //Catalogue
             {
               value: [
+                "REF.keyword"
+              ],
+              text: "Référence de la notice",
+              fields: "REF"
+            },
+            {
+              value: [
                 "COM.keyword",
                 "WCOM.keyword",
                 "REG.keyword",
@@ -431,7 +444,6 @@ class SearchAdvanced extends React.Component {
               fields: "AUTR, AFIG"
             },
             //Tous les champs
-            {value: ["REF.keyword"], text: "Référence de la notice", fields: "REF"},
             {value: ["ACQU.keyword"], text: "Contexte d'acquisition", fields: "ACQU"},
             {value: ["ADRS.keyword"], text: "Adresse de l'édifice", fields: "ADRS"},
             {value: ["AFIG.keyword"], text: "Auteur du projet", fields: "AFIG"},
@@ -532,6 +544,13 @@ class SearchAdvanced extends React.Component {
         case "merimee":
           fields = [
             {
+              value: [
+                "REF.keyword"
+              ], 
+              text: "Référence de la notice", 
+              fields: "REF"
+              },
+              {
               value: [
                 "COM.keyword",
                 "WCOM.keyword",
@@ -666,34 +685,9 @@ class SearchAdvanced extends React.Component {
           fields = [
             //Catalogue
             {
-              value: ["INV.keyword"], 
-              text: "Numéro d’inventaire",
-              fields: "INV"
-            },
-            {
               value: ["AUTR.keyword", "ATTR.keyword", "AATT.keyword", "ECOL.keyword", "STYL.keyword"],
               text: "Auteur",
               fields: "AUTR, ATTR, AATT, ECOL, STYL"
-            },
-            {
-              value: ["TITR.keyword", "ATIT.keyword", "AUTI.keyword"],
-              text: "Titre",
-              fields: "TITR, ATIT, AUTI"
-            },
-            {
-              value: ["SCLE.keyword", "MILL.keyword"],
-              text: "Époque",
-              fields: "SCLE, MILL"
-            },
-            {
-              value: ["GENE.keyword", "HIST.keyword", "NOTE.keyword"],
-              text: "Historique",
-              fields: "GENE, HIST, NOTE"
-            },
-            {
-              value: ["INSC.keyword", "MARQ.keyword"],
-              text: "Inscription portée sur l’œuvre",
-              fields: "INSC, MARQ"
             },
             {
               value: ["EXPO.keyword", "BIBL.keyword"],
@@ -702,11 +696,11 @@ class SearchAdvanced extends React.Component {
             },
             //Tous les champs
             {value: "AATT.keyword",  text: "Ancienne attribution", fields: "AATT"},
-            {value: "AFFE.keyword",  text: "Établissement affectataire", fields: "AFFE"},
             {value: "ATIT.keyword",  text: "Ancien titre", fields: "ATIT"},
             {value: "ATTR.keyword",  text: "Autre attribution", fields: "ATTR"},
             {value: "AUTI.keyword",  text: "Autre titre", fields: "AUTI"},
             {value: "AUTR.keyword",  text: "Auteur", fields: "AUTR"},
+            {value: "NUMS.keyword",  text: "Autres numéros", fields: "NUMS"},
             {value: "BIBL.keyword",  text: "Bibliographie", fields: "BIBL"},
             {value: "CATE.keyword",  text: "Catégorie", fields: "CATE"},
             {value: "COMM.keyword",  text: "Commentaire", fields: "COMM"},
@@ -714,30 +708,38 @@ class SearchAdvanced extends React.Component {
             {value: "DESC.keyword",  text: "Description", fields: "DESC"},
             {value: "DIMS.keyword",  text: "Dimensions", fields: "DIMS"},
             {value: "DMAJ.keyword",  text: "Date de mise à jour", fields: "DMAJ"},
-            {value: "DOMN.keyword",  text: "Domaine", fields: "DOMN"},
             {value: "DREP.keyword",  text: "Date représentation", fields: "DREP"},
-            {value: "ECOL.keyword",  text: "École", fields: "ECOL"},
+            {value: "DOMN.keyword",  text: "Domaine", fields: "DOMN"},
+            {value: "PHOT.keyword",  text: "Droits de photographie", fields: "PHOT"},
             {value: "EXPO.keyword",  text: "Exposition", fields: "EXPO"},
+            {value: "ECOL.keyword",  text: "École", fields: "ECOL"},
+            {value: "AFFE.keyword",  text: "Établissement affectataire", fields: "AFFE"},
+            {value: ["SCLE.keyword", "MILL.keyword"],  text: "Époque",  fields: "SCLE, MILL" },
             {value: "GENE.keyword",  text: "Genèse", fields: "GENE"},
             {value: "HIST.keyword",  text: "Historique", fields: "HIST"},
+            { value: ["GENE.keyword", "HIST.keyword", "NOTE.keyword"], text: "Historique", fields: "GENE, HIST, NOTE" },
             {value: "INSC.keyword",  text: "Inscriptions", fields: "INSC"},
+            {value: ["INSC.keyword", "MARQ.keyword"],text: "Inscription portée sur l’œuvre",fields: "INSC, MARQ"},
             {value: "LOCA.keyword",  text: "Localisation", fields: "LOCA"},
             {value: "MARQ.keyword",  text: "Marques", fields: "MARQ"},
             {value: "MILL.keyword",  text: "Millénaire", fields: "MILL"},
             {value: "NOTE.keyword",  text: "Notes", fields: "NOTE"},
-            {value: "NUMS.keyword",  text: "Autres numéros", fields: "NUMS"},
+            {value: ["INV.keyword"], text: "Numéro d’inventaire", fields: "INV"},
+            {value: ["RENV.keyword"], text: "Numéro de renvoi vers un autre domaine", fields: "RENV"},
             {value: "OBSE.keyword",  text: "Observations", fields: "OBSE"},
+            {value: "SUITE.keyword", text: "OEuvres liées ensemble", fields: "SUITE"},
             {value: "PAUTR.keyword", text: "Précisions sur l’auteur", fields: "PAUTR"},
-            {value: "PHOT.keyword",  text: "Droits de photographie", fields: "PHOT"},
             {value: "PREP.keyword",  text: "Précision sur représentation", fields: "PREP"},
+            {value: ["PRODUCTEUR.keyword"], text: "Producteur", fields: "PRODUCTEUR"},
             {value: "PROV.keyword",  text: "Provenance", fields: "PROV"},
             {value: "PTIT.keyword",  text: "Précisions sur le titre", fields: "PTIT"},
+            {value: ["REF.keyword"], text: "Référence de la notice", fields: "REF"},
             {value: "RESUME.keyword",text: "Résumé", fields: "RESUME"},
             {value: "SCLE.keyword",  text: "Siècle", fields: "SCLE"},
             {value: "STYL.keyword",  text: "Style", fields: "STYL"},
-            {value: "SUITE.keyword", text: "OEuvres liées ensemble", fields: "SUITE"},
             {value: "TECH.keyword",  text: "Technique", fields: "TECH"},
-            {value: "TITR.keyword",  text: "Titre", fields: "TITR"}    
+            {value: "TITR.keyword",  text: "Titre", fields: "TITR"},
+            {value: ["TITR.keyword", "ATIT.keyword", "AUTI.keyword"], text: "Titre", fields: "TITR, ATIT, AUTI"},    
           ];
           break;
         case "autor":

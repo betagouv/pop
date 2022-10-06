@@ -172,7 +172,7 @@ export default class extends React.Component {
       contentLocation: notice.LOCA
     };
 
-    const pdf = MnrPdf(notice, title);
+    const pdf = MnrPdf(notice, title, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink

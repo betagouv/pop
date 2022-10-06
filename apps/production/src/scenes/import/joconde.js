@@ -107,6 +107,7 @@ function importCSV(res, files, museofile) {
     const importedNotices = res
       .map(value => {
         value.MUSEO = value.MUSEO || museofile || "";
+        value.REF = String(value.REF).trim();
         // Add 0 in front of REF when we import csv file
         if (value.REF.length < 11) {
           value.REF = addZeros(value.REF, 11);
