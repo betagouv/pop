@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, Image, View, Link } from '@react-pdf/renderer';
 import { styles } from "../pdf/pdfNotice/styles";
 
-export default ({ content, title, separator, join = ", ", isPdf, link, addLink, upper = true }) => {
+export default ({ content, title, separator, join = ", ", isPdf, link, addLink, upper = true, isLineBreakLink = false }) => {
   // Don't render empty elements.
   const isEmptyArray = c => Array.isArray(c) && c.length === 0;
   const isEmptyString = s => typeof s === "string" && !s.trim();
@@ -10,7 +10,6 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
     return null;
   }
 
-  console.log(title, content);
   let str;
   if (!link) {
     // Transform array to string, by joining with a character.
@@ -90,21 +89,15 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       return (
         <View>
           <Text style={styles.fieldTitle} >{title + " : "}</Text>
-          <View style={styles.listLinked}>
-            {Array.isArray(content) ? content.map((item, index) => {
-              return (
-                item ?
-                  <View style={styles.listItem}>
-                    <Link style={styles.textLinked}
-                      key={item.val ? item.val : item}
-                      src={item.url ? item.url : item}>
-                      {item.val ? item.val : item}
-                    </Link>
-                    {(index < content.length - 1) ? <Text>, </Text> : null}
-                  </View> : null)
-            }) :
-              <Link style={styles.textLinked} src={content.url ? content.url : content} >{content.val ? content.val : content}</Link>}
-          </View>
+          { 
+            !isLineBreakLink ?
+            <View style={styles.listLinked}>
+              { renderLinksPdf(content, isLineBreakLink) }
+            </View>
+            : 
+            <p style={styles.listItemLinked}>{renderLinksPdf(content, isLineBreakLink)}</p>
+          }
+         
         </View>
       )
     }
@@ -119,6 +112,43 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
     }
   }
 };
+
+/**
+ * M43417 - Prise en compte du retour à la ligne dans le PDF (#)
+ * @param {*} content 
+ * @param {boolean} isLineBreakLink 
+ * @returns 
+ */
+function renderLinksPdf(content, isLineBreakLink){
+  return(
+    Array.isArray(content) ? content.map((item, index) => {
+      return (
+        item ?
+          !isLineBreakLink ?
+          <View style={styles.listItem}>
+            <Link style={styles.textLinked}
+              key={item.val ? item.val : item}
+              src={item.url ? item.url : item}>
+              {item.val ? item.val : item}
+            </Link>
+            {(index < content.length - 1) ? <Text>, </Text> : null}
+          </View> :  renderBreakLineLinkPdf(item) : null)
+    }) :
+      <Link style={styles.textLinked} src={content.url ? content.url : content} >{content.val ? content.val : content}</Link>
+  )
+}
+
+function renderBreakLineLinkPdf(item){
+  return (
+      <View>
+        <Link style={styles.textLineBreakLinked}
+          key={item.val ? item.val : item}
+          src={item.url ? item.url : item}>
+          {item.val ? item.val : item}
+        </Link>
+      </View>
+    )
+}
 
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, "g"), replace);
