@@ -446,7 +446,11 @@ export default class extends React.Component {
                     <Field title={mapping.palissy.NOMS.label} content={notice.NOMS} join={' ; '}/>
                     <Field title={mapping.palissy.COPY.label} content={notice.COPY} />
                   </div>
-                  <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" titleBtn="Signalez une erreur"/>
+                  {
+                    notice.PRODUCTEUR == "Monuments Historiques"
+                    ? <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" titleBtn="Signalez une erreur"/>
+                    : <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" titleBtn="Contactez-nous"/>
+                  }
                 </div>
                 <SeeMore notice={notice} />
                 <Map notice={notice} />
