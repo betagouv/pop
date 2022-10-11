@@ -94,6 +94,12 @@ export const styles = StyleSheet.create({
         fontWeight: 300,
         marginBottom: "10px"
     },
+    textLineBreakLinked:{
+        fontSize: 10,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        marginBottom: "0"
+    },
     listLinked: {
         fontSize: 10,
         fontFamily: 'Open Sans',
@@ -106,6 +112,9 @@ export const styles = StyleSheet.create({
     listItem: {
         display: "flex",
         flexDirection: "row"
+    },
+    listItemLinked: {
+        marginBottom: "10px"
     },
     linkedNoticesContainer: {
         display: "flex",
