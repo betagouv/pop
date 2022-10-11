@@ -20,17 +20,8 @@ export async function findCollection(ref = "") {
   }
   producteurs.map( producteur => {
     producteur.BASE.map( BASE => {
-      if(BASE.prefixes.length > 0){
-        BASE.prefixes.map( prefix => {
-          if(String(ref).startsWith(String(prefix))){
-            collection = BASE.base;
-          }
-        })
-      }
-      else {
-        possibleBases.push(BASE.base)
-      }
-    });
+      possibleBases.push(BASE.base)
+      });
   });
   //Pour chaque base n'ayant pas de préfixe, on test si la notice provient d'une de ces bases
   if(collection == "" && possibleBases.length > 0){
