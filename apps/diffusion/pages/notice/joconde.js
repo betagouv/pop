@@ -344,6 +344,7 @@ export default class extends React.Component {
                       "TITR",
                       "AUTR",
                       "PAUT",
+                      "NSDA",
                       "ECOL",
                       "ATTR",
                       "PERI",
@@ -380,6 +381,7 @@ export default class extends React.Component {
                     content={this.links(this.props.notice.AUTR, "auteur")}
                     separator="#" />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
+                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" />
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" />
                   <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" />
                   <Field
