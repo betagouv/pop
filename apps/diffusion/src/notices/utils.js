@@ -20,17 +20,8 @@ export async function findCollection(ref = "") {
   }
   producteurs.map( producteur => {
     producteur.BASE.map( BASE => {
-      if(BASE.prefixes.length > 0){
-        BASE.prefixes.map( prefix => {
-          if(String(ref).startsWith(String(prefix))){
-            collection = BASE.base;
-          }
-        })
-      }
-      else {
-        possibleBases.push(BASE.base)
-      }
-    });
+      possibleBases.push(BASE.base)
+      });
   });
   //Pour chaque base n'ayant pas de préfixe, on test si la notice provient d'une de ces bases
   if(collection == "" && possibleBases.length > 0){
@@ -133,6 +124,28 @@ export function schema({
 }
 
 export function pdfLinks(value, name){
+  if (!value) {
+    return null;
+  }
+  if (!value || !Array.isArray(value) || !value.length) {
+    if (String(value) === value && !String(value) == "") {
+      return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
+    }
+    return null;
+  }
+  const links = [];
+  value.forEach((val) => {
+    val.split('#').forEach((el) => {
+      links.push(
+        {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
+        );
+      });
+    });
+    console.log(links)
+    return links;
+
+};
+/*export function pdfLinks(value, name){
   if(value && value!==""){
     if(Array.isArray(value)){
       let links = value.map( val => {
@@ -148,7 +161,7 @@ export function pdfLinks(value, name){
     }
   }
   return null;
-};
+};*/
 
 export function highlighting(wholeWord){
   //highlighting

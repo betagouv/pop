@@ -251,19 +251,19 @@ function checkReference(notice) {
   if (notice._type === "memoire") {
     var regex1 = /^IV(N00|R[0-9]{2}|D[0-9]{2}|C[0-9]{5}|[0-9]{5})_[0-9]{4}([0-9][0-9]|2A|2B|97[0-9]{1})([0-9]{5})[NUCXVLPNGMFBKHTZAD012345]{0,4}[ABYESGFHOMIRTPDUWQCI]{0,3}$/g;
     if (!notice.REF.match(regex1)) {
-      notice._errors.push("La référence n'est pas correctement formatée");
+      notice._errors.push("La référence n'est pas conforme à la base de l'import");
     }
   }
   if (notice._type === "merimee") {
     var regex2 = /^IA/;
     if (!notice.REF.match(regex2)) {
-      notice._errors.push("La référence n'est pas correctement formatée");
+      notice._errors.push("La référence n'est pas conforme à la base de l'import");
     }
   }
   if (notice._type === "palissy") {
     var regex3 = /^IM/;
     if (!notice.REF.match(regex3)) {
-      notice._errors.push("La référence n'est pas correctement formatée");
+      notice._errors.push("La référence n'est pas conforme à la base de l'import");
     }
   }
 }

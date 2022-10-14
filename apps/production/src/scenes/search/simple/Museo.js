@@ -70,7 +70,7 @@ export default function render(props) {
               id="cate"
               initialValue={initialValues.get("cate")}
               fields={["CATEG.keyword"]}
-              title="Catégorie de musée "
+              title="Musées liées à la base Joconde"
             />
           </Col>
           <Col xs="9">
