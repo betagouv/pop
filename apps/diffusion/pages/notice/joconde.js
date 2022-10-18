@@ -381,7 +381,7 @@ export default class extends React.Component {
                     content={this.links(this.props.notice.AUTR, "auteur")}
                     separator="#" />
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" />
-                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" />
+                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" />
                   <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" />
                   <Field
@@ -446,7 +446,6 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.MILU.label} content={notice.MILU} separator="#" />
                   <Field title={mapping.joconde.DECV.label} content={notice.DECV} separator="#" />
                   <Field title={mapping.joconde.PDEC.label} content={notice.PDEC} separator="#" />
-                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" />
                   <Title
                     content="Informations juridiques"
                     notice={notice}
@@ -457,7 +456,6 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.APTN.label} content={notice.APTN} separator="#" />
                   <Field title={mapping.joconde.DEPO.label} content={notice.DEPO} separator="#" />
                   <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} separator="#" />
-
                   <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} separator="#" />
                   <Field
                     title={mapping.joconde.LOCA.label}
