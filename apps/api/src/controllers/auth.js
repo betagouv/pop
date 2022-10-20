@@ -78,11 +78,10 @@ router.post("/forgetPassword", async (req, res) => {
     return res.status(404).send({ success: false, msg });
   }
 
-  var password = generator.generate({ length: 12, numbers: true, symbols: true });
+  var password = generator.generate({ length: 12, numbers: true, symbols: true, exclude:"<>" });
   user.set({ password });
   await user.save();
   res.status(200).json({ success: true, msg: "Mot de passe mis à jour" });
-
   mailer.send(
     "Réinitialisation du mot de passe",
     email,
