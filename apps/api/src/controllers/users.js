@@ -128,7 +128,7 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
     return res.status(403).send({ success: false, msg: "Autorisation requise." });
   }
 
-  const password = generator.generate({ length: 12, numbers: true, symbols: true });
+  const password = generator.generate({ length: 12, numbers: true, symbols: true, exclude:"<>" });
   const data = { nom, prenom, email, group, role, institution, password, hasResetPassword: false };
   if (needMuseofile({ role, group })) {
     data.museofile = museofile;
