@@ -459,7 +459,11 @@ export default class extends React.Component {
                     <Field title={mapping.merimee.NOMS.label} content={notice.NOMS} />
                     <Field title={mapping.merimee.COPY.label} content={notice.COPY} />
                   </div>
-                  <ContactUs contact={notice.CONTACT} REF={notice.REF} base="merimee" />
+                  {
+                    notice.PRODUCTEUR == "Monuments Historiques"
+                    ? <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" titleBtn="Signalez une erreur"/>
+                    : <ContactUs contact={notice.CONTACT} REF={notice.REF} base="palissy" titleBtn="Contactez-nous"/>
+                  }
                 </div>
                 <SeeMore notice={notice} />
                 <Map notice={notice} />

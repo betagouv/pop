@@ -82,7 +82,7 @@ const Schema = new mongoose.Schema(
     },
     ADRESSE: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description:
           "Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
@@ -298,7 +298,7 @@ const Schema = new mongoose.Schema(
     },
     SERIE: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description: "",
         label: "Titre de la série"
@@ -448,7 +448,7 @@ const Schema = new mongoose.Schema(
     },
     DPT_LETTRE: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description: "",
         label: "Département en lettre",
@@ -465,7 +465,7 @@ const Schema = new mongoose.Schema(
     },
     DATOEU: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description:
           "Date de l'œuvre représentée (édifice, objet, pièce de théâtre, film), en année",
@@ -983,7 +983,7 @@ const Schema = new mongoose.Schema(
     },
     WADRS: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description: "Adresse éditoriale",
         label: "Adresse éditoriale"
@@ -1023,7 +1023,7 @@ const Schema = new mongoose.Schema(
     },
     WCOM: {
       type: [String],
-      default: [""],
+      default: [],
       documentation: {
         description: "Ville [Quelle difference avec COM ?]",
         label: "Ville"

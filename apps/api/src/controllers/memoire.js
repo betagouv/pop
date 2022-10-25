@@ -217,7 +217,7 @@ async function updateLinks(notice) {
     linkedNotices.push(...(await Palissy.find({ "MEMOIRE.ref": REF })));
     linkedNotices.push(...(await Merimee.find({ "MEMOIRE.ref": REF })));
     linkedNotices.push(...(await Autor.find({ "MEMOIRE.ref": REF })));
-
+    
     const toAdd = [...notice.LBASE];
 
     // Check for deletion, addition and update.
@@ -279,6 +279,10 @@ router.put(
     if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
        notice.DPT = prevNotice.DPT;
     }
+    //LBASE pour le ticket 43611 Mantis
+    if(notice.LBASE==null && prevNotice!= null && prevNotice.LBASE != null){
+      notice.LBASE = prevNotice.LBASE;
+   }
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);

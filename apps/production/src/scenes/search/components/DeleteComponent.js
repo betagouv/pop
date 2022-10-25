@@ -16,7 +16,7 @@ function DeleteComponent({ role, group, collection }) {
       switch (collection) {
         case "palissy":
         case "merimee":
-          return ["mh", "admin"];
+          return ["mh", "admin", "inv"];
         case "memoire":
           return ["mh", "memoire", "admin"];
         default:

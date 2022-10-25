@@ -1,11 +1,12 @@
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
 import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../notices/utils";
 import { bucket_url, emailContactMnr } from "../../config";
 
-export function MnrPdf(notice, title) {
+export function MnrPdf(notice, title, links) {
   return (
     <Document>
       <Page style={styles.page}>
@@ -69,6 +70,19 @@ export function MnrPdf(notice, title) {
                 />
               </View> : null}
 
+              {links.length > 0 ?
+              <View style={styles.linkedNoticesContainer}>
+                <Text style={styles.subtitle}>Notices liées</Text>
+                <View>
+                  {links.length > 0 ?
+                    links.map(link => {
+                      return LinkedNoticesPdf(link);
+                    }) : null}
+                </View>
+              </View>
+              : null}
+
+              
             <View style={styles.aPropos}>
               <Text style={styles.subtitle} >À propos de la notice</Text>
               <Field title={mapping.mnr.REF.label} content={notice.REF} separator="#" isPdf={true} />
