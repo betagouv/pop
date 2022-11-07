@@ -4,26 +4,26 @@
 # - AWS_ACCESS_KEY_ID_MC        : Identifiant AWS pour les environnements du Ministère de la Culture
 # - AWS_SECRET_ACCESS_KEY_MC    : Clé AWS pour les environnements du Ministère de la Culture
 #
-
 default:
   image: node:14.17
 
 stages:
   - node-modules
-  - test
-  - sast
-  - build
-  - deploy
-  - staging
-  - production
+#  - test
+#  - sast
+#  - build
+#  - deploy
+#  - staging
+#  - production
 
-# workflow:
-#   rules:
-#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-#       when: always
-#     - if: '$CI_COMMIT_BRANCH == "develop"'
-#       when: always
-#     - when: never
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
+    - if: '$CI_COMMIT_TAG'
+
 
 ##############################################################
 # TEMPLATES
@@ -84,14 +84,11 @@ stages:
   script:
     - cd apps/${APP}
     - npm ci
-  cache:
-    key:
-      files:
-        - apps/${APP}/package-lock.json
-      prefix: node-modules-${APP}
-    paths:
+  artifacts:
+    paths: 
       - apps/${APP}/node_modules
-    policy: push
+    name: ${APP}-modules
+    expire_in: 1 hour
 
 node-modules-api:
   <<: *node-modules
