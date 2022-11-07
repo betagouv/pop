@@ -165,7 +165,7 @@ sonar-api:
     SONAR_AUTHENT: "-Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
     SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
-    SONAR_OPTIONS: "-Dsonar.working.directory=apps/api"
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
     SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}"
   rules:
     - if: '$QUALITY_DISABLE == "true"'
