@@ -157,20 +157,20 @@ test-diffusion:
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 sonar-api:
-extends: [".sonar"]
-  variables:
-    SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
-    SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}.api"
-  rules:
-    - if: '$QUALITY_DISABLE == "true"'
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      variables:
-        BRANCH_NAME: $CI_COMMIT_REF_NAME
-        BRANCH_TARGET: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
-        REF_NAME: $CI_MERGE_REQUEST_REF_PATH
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      variables:
-        BRANCH_NAME: $CI_COMMIT_REF_NAME
-        BRANCH_TARGET: $CI_DEFAULT_BRANCH
-        REF_NAME: $CI_COMMIT_REF_NAME
+  extends: [".sonar"]
+    variables:
+      SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
+      SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}.api"
+    rules:
+      - if: '$QUALITY_DISABLE == "true"'
+        when: never
+      - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        variables:
+          BRANCH_NAME: $CI_COMMIT_REF_NAME
+          BRANCH_TARGET: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+          REF_NAME: $CI_MERGE_REQUEST_REF_PATH
+      - if: '$CI_PIPELINE_SOURCE == "push"'
+        variables:
+          BRANCH_NAME: $CI_COMMIT_REF_NAME
+          BRANCH_TARGET: $CI_DEFAULT_BRANCH
+          REF_NAME: $CI_COMMIT_REF_NAME
