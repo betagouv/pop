@@ -83,6 +83,7 @@ workflow:
   script:
     - cd apps/${APP}
     - npm ci
+    - npm i jest
   artifacts:
     paths: 
       - apps/${APP}/node_modules
@@ -113,7 +114,7 @@ node-modules-diffusion:
   stage: test
   script:
     - cd apps/${APP}
-    - npm test
+    - jest --coverage=true --reporters="apps/${APP}/coverage/jest-junit"
   artifacts:
     name: coverage-rapport
     expire_in: 1 hrs
