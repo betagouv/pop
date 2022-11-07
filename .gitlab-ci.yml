@@ -9,7 +9,7 @@ default:
 
 stages:
   - node-modules
-#  - test
+  - test
 #  - sast
 #  - build
 #  - deploy
