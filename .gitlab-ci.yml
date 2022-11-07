@@ -103,3 +103,44 @@ node-modules-diffusion:
   <<: *node-modules
   variables:
     APP: diffusion
+
+##############################################################
+# TEST
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+.test: &test
+  stage: test
+  script:
+    - cd apps/${APP}
+    - npm test
+  artifacts:
+    name: coverage-rapport
+    expire_in: 1 hrs
+    when: always
+    paths:
+      - apps/${APP}/coverage
+
+test-api:
+  needs:
+    - node-modules-api
+  <<: *test
+  services:
+    - mongo:4.4
+  variables:
+    APP: api
+    DB_ENDPOINT: mongodb://mongo:27017/pop
+
+test-production:
+  needs:
+    - node-modules-production
+  <<: *test
+  variables:
+    APP: production
+
+test-diffusion:
+  needs:
+    - node-modules-diffusion
+  <<: *test
+  variables:
+    APP: diffusion
