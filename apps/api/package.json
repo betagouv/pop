@@ -34,7 +34,10 @@
     "testPathIgnorePatterns": [
       "./src/__tests__/setup/",
       "./src/__tests__/__notices__/"
-    ]
+    ],
+    "collectCoverage": true,
+    "coverageReporters": ["html", "lcov", "json"],
+    "coverageDirectory": "coverage"
   },
   "prettier": {
     "printWidth": 100

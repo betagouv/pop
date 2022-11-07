@@ -7,9 +7,15 @@
 default:
   image: node:14.17
 
+include:
+  - project: "boost/template-ci/pipelines/common"
+    file: 
+      - "sonar/sonar-scanner.yml"
+
 stages:
   - node-modules
   - test
+  - quality
 #  - sast
 #  - build
 #  - deploy
@@ -112,9 +118,8 @@ node-modules-diffusion:
 .test: &test
   stage: test
   script:
-    - npm i jest -g
     - cd apps/${APP}
-    - jest --coverage=true --reporters="apps/${APP}/coverage/jest-junit"
+    - npm test
   artifacts:
     name: coverage-rapport
     expire_in: 1 hrs
