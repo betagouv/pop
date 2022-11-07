@@ -76,7 +76,6 @@ workflow:
 ##############################################################
 # NODE-MODULES
 #
-
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 .node-modules: &node-modules
