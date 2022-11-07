@@ -156,14 +156,16 @@ test-diffusion:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+# SONAR_KEY=mc.pop.
 sonar-api:
   extends: [".sonar"]
   variables:
     SONAR_IMAGE: "glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest"
     SONAR_COMMAND: "sonar-scanner"
     SONAR_AUTHENT: "-Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
     SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
-    SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}.api"
+    SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}"
   rules:
     - if: '$QUALITY_DISABLE == "true"'
       when: never
