@@ -121,11 +121,12 @@ node-modules-diffusion:
     - cd apps/${APP}
     - npm test
   artifacts:
-    name: coverage-rapport
+    name: test-rapport
     expire_in: 1 hrs
     when: always
     paths:
       - apps/${APP}/coverage
+      - apps/${APP}/reports
 
 test-api:
   needs:
