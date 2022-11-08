@@ -26,19 +26,6 @@
   "bugs": {
     "url": "https://github.com/betagouv/pop/issues"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./src/__tests__/setup/setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "./src/__tests__/setup/",
-      "./src/__tests__/__notices__/"
-    ],
-    "collectCoverage": true,
-    "coverageReporters": ["html", "lcov", "json"],
-    "coverageDirectory": "coverage"
-  },
   "prettier": {
     "printWidth": 100
   },
@@ -62,6 +49,7 @@
     "generate-password": "^1.6.1",
     "helmet": "^4.6.0",
     "http-aws-es": "^6.0.0",
+    "jest-junit": "^14.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.33",
