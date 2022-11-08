@@ -15,6 +15,7 @@ include:
 stages:
   - node-modules
   - test
+  - sast
   - quality
 #  - sast
 #  - build
@@ -151,6 +152,36 @@ test-diffusion:
   <<: *test
   variables:
     APP: diffusion
+
+##############################################################
+# SAST
+#
+.audit: &audit
+  stage: sast
+  script:
+    - npm i npm-audit-html -g
+    - cd apps/${APP}
+    - npm audit --json | npm-audit-html --output vulnerabilite.html || true
+  artifacts:
+    name: ${APP}-audit-report
+    paths:
+      - apps/${APP}/vulnerabilite.html
+    expire_in: 1 day
+
+audit-api:
+  <<: *audit
+  variables:
+    APP: api
+
+audit-diffusion:
+  <<: *audit
+  variables:
+    APP: diffusion
+
+audit-production:
+  <<: *audit
+  variables:
+    APP: production
 
 ##############################################################
 # SONAR
