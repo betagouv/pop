@@ -161,12 +161,15 @@ test-diffusion:
   script:
     - npm i npm-audit-html -g
     - cd apps/${APP}
-    - npm audit --json | npm-audit-html --output vulnerabilite.html || true
+    - npm audit --json > dependency-check-report.json
+    - npm audit --json | npm-audit-html --output dependency-check-report.html
   artifacts:
     name: ${APP}-audit-report
     paths:
       - apps/${APP}/vulnerabilite.html
     expire_in: 1 day
+  allow_failure: true
+
 
 audit-api:
   <<: *audit
