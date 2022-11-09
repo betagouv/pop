@@ -13,9 +13,10 @@ include:
       - "sonar/sonar.yml"
 
 stages:
+  - sast
 #  - node-modules
 #  - test
-   - sast
+   
 #  - quality
 #  - sast
 #  - build
