@@ -15,7 +15,7 @@ include:
 stages:
 #  - node-modules
 #  - test
-  - sast
+   - sast
 #  - quality
 #  - sast
 #  - build
