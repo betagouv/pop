@@ -13,10 +13,10 @@ include:
       - "sonar/sonar.yml"
 
 stages:
-  - node-modules
-  - test
+#  - node-modules
+#  - test
   - sast
-  - quality
+#  - quality
 #  - sast
 #  - build
 #  - deploy
@@ -168,7 +168,6 @@ test-diffusion:
     paths:
       - apps/${APP}/vulnerabilite.html
     expire_in: 1 day
-  allow_failure: true
 
 
 audit-api:
