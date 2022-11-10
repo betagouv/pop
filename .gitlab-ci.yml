@@ -18,7 +18,6 @@ stages:
   - test
   - sast
   - quality
-#  - sast
 #  - build
 #  - deploy
 #  - staging
@@ -162,3 +161,25 @@ sonar-api:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
     SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
 
+sonar-diffusion:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
+
+sonar-production:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
+
+##############################################################
+# BUILD
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+# SONAR_KEY=mc.pop.
