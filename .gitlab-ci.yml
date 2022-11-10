@@ -8,7 +8,7 @@ default:
   image: node:14.17
 
 include:
-  - "./.gitlab-ci-template.yml"
+  - ".gitlab-ci-template.yml"
   - project: "boost/template-ci/pipelines/common"
     file: 
       - "sonar/sonar.yml"
