@@ -8,10 +8,10 @@ default:
   image: node:14.17
 
 include:
+  - "./gitlab-ci-template.yml"
   - project: "boost/template-ci/pipelines/common"
     file: 
       - "sonar/sonar.yml"
-  - local: "./gitlab-ci-template.yml"
 
 stages:
   - node-modules
@@ -87,17 +87,17 @@ workflow:
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 node-modules-api:
-  <<: *node-modules
+  extends: [".node-modules"]
   variables:
     APP: api
 
 node-modules-production:
-  <<: *node-modules
+  extends: [".node-modules"]
   variables:
     APP: production
 
 node-modules-diffusion:
-  <<: *node-modules
+  extends: [".node-modules"]
   variables:
     APP: diffusion
 
@@ -109,7 +109,7 @@ node-modules-diffusion:
 test-api:
   needs:
     - node-modules-api
-  <<: *test
+  extends: [".pop-test"]
   services:
     - mongo:4.4
   variables:
@@ -119,14 +119,14 @@ test-api:
 test-production:
   needs:
     - node-modules-production
-  <<: *test
+  extends: [".pop-test"]
   variables:
     APP: production
 
 test-diffusion:
   needs:
     - node-modules-diffusion
-  <<: *test
+  extends: [".pop-test"]
   variables:
     APP: diffusion
 
@@ -134,17 +134,17 @@ test-diffusion:
 # SAST
 #
 audit-api:
-  <<: *audit
+  extends: [".pop-audit"]
   variables:
     APP: api
 
 audit-diffusion:
-  <<: *audit
+  extends: [".pop-audit"]
   variables:
     APP: diffusion
 
 audit-production:
-  <<: *audit
+  extends: [".pop-audit"]
   variables:
     APP: production
 
@@ -155,7 +155,9 @@ audit-production:
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 # SONAR_KEY=mc.pop.
 sonar-api:
-  extends: [".sonar-pop"]
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
   variables:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
     SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
