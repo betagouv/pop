@@ -14,7 +14,7 @@ import FieldImages from "./components/fieldImages";
 import EnluminuresEntity from "../../entities/Enluminures";
 import API from "../../services/api";
 import AccordionHistorique from "./components/AccordionHistorique";
-import { bucket_url } from "../../config";
+import { bucket_url, pop_url } from "../../config";
 import { toastr } from "react-redux-toastr";
 import "./index.css";
 
@@ -104,7 +104,7 @@ class Enluminures extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/enluminures/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/enluminures/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>

@@ -13,7 +13,7 @@ import Comments from "./components/comments.js";
 import Memoire from "../../entities/Memoire";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
-import { bucket_url } from "../../config";
+import { bucket_url, pop_url } from "../../config";
 import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
@@ -130,7 +130,7 @@ class Notice extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/memoire/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/memoire/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>
