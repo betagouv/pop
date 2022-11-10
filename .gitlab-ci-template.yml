@@ -1,0 +1,77 @@
+##############################################################
+# NODE-MODULES
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+.node-modules: &node-modules
+  stage: node-modules
+  script:
+    - cd apps/${APP}
+    - npm ci
+  artifacts:
+    paths: 
+      - apps/${APP}/node_modules
+    name: ${APP}-modules
+    expire_in: 1 hour
+
+##############################################################
+# TEST
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+.test: &test
+  stage: test
+  script:
+    - cd apps/${APP}
+    - npm test
+  artifacts:
+    name: test-rapport
+    expire_in: 1 hrs
+    when: always
+    paths:
+      - apps/${APP}/coverage
+      - apps/${APP}/reports
+
+##############################################################
+# SAST
+#
+.audit: &audit
+  stage: sast
+  script:
+    - npm i npm-audit-html -g
+    - cd apps/${APP}
+    - npm audit --json > dependency_check_report.json || true
+    - npm audit --json | npm-audit-html --output dependency_check_report.html || true
+  artifacts:
+    name: ${APP}-audit-report
+    paths:
+      - apps/${APP}/dependency_check_report.html
+      - apps/${APP}/dependency_check_report.json
+    expire_in: 1 day
+
+
+##############################################################
+# SONAR
+#
+# SONAR_KEY=mc.pop.
+.sonar-pop:
+  extends: [".sonar"]
+  variables:
+    SONAR_IMAGE: "glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest"
+    SONAR_COMMAND: "sonar-scanner"
+    SONAR_AUTHENT: "-Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
+    SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
+    SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}"
+  rules:
+    - if: '$QUALITY_DISABLE == "true"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+        REF_NAME: $CI_MERGE_REQUEST_REF_PATH
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_DEFAULT_BRANCH
+        REF_NAME: $CI_COMMIT_REF_NAME
