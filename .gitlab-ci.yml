@@ -161,11 +161,13 @@ test-diffusion:
   script:
     - npm i npm-audit-html -g
     - cd apps/${APP}
-    - npm audit --json | npm-audit-html --output dependency_check_report.html | true
+    - npm audit --json > dependency_check_report.json || true
+    - npm audit --json | npm-audit-html --output dependency_check_report.html || true
   artifacts:
     name: ${APP}-audit-report
     paths:
-      - apps/${APP}/vulnerabilite.html
+      - apps/${APP}/dependency_check_report.html
+      - apps/${APP}/dependency_check_report.json
     expire_in: 1 day
 
 
