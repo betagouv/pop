@@ -115,12 +115,12 @@ test-api:
     APP: api
     DB_ENDPOINT: mongodb://mongo:27017/pop
 
-test-production:
-  needs:
-    - node-modules-production
-  extends: [".pop-test"]
-  variables:
-    APP: production
+#test-production:
+#  needs:
+#    - node-modules-production
+#  extends: [".pop-test"]
+#  variables:
+#    APP: production
 
 test-diffusion:
   needs:
@@ -169,13 +169,13 @@ sonar-diffusion:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
     SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
 
-sonar-production:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
+#sonar-production:
+#  extends: 
+#    - ".sonar"
+#    - ".sonar-pop"
+#  variables:
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
 
 ##############################################################
 # BUILD
