@@ -3,7 +3,7 @@
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-.node-modules: &node-modules
+.node-modules:
   stage: node-modules
   script:
     - cd apps/${APP}
@@ -19,7 +19,7 @@
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-.test: &test
+.pop-test:
   stage: test
   script:
     - cd apps/${APP}
@@ -35,7 +35,7 @@
 ##############################################################
 # SAST
 #
-.audit: &audit
+.pop-audit:
   stage: sast
   script:
     - npm i npm-audit-html -g
@@ -55,7 +55,6 @@
 #
 # SONAR_KEY=mc.pop.
 .sonar-pop:
-  extends: [".sonar"]
   variables:
     SONAR_IMAGE: "glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest"
     SONAR_COMMAND: "sonar-scanner"
