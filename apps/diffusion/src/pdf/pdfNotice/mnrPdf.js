@@ -1,6 +1,6 @@
 import Field from "../../notices/Field";
 import mapping from "../../services/mapping";
-import { Document, Page, View, Text, Image } from '@react-pdf/renderer';
+import { Document, Page, View, Text, Image, Link } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
 import { styles } from "../pdfNotice/styles";
 import { pdfLinks } from "../../notices/utils";
@@ -90,6 +90,14 @@ export function MnrPdf(notice, title, links) {
               <Field title={mapping.mnr.DMAJ.label} content={notice.DMAJ} separator="#" isPdf={true} />
               <Field title={"Contactez-nous"} content={notice.CONTACT || emailContactMnr} separator="#" isPdf={true} />
             </View>
+            <View style={styles.voirAussi}>
+        <Text  style={styles.subtitle} >Voir aussi</Text>
+        <Link
+          style={styles.listLinked}
+          src = "https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
+          target="_blank">
+          www.culture.gouv.fr/spoliations-restitutions-1933-1945</Link>
+        </View>
           </View>
         </View>
         <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
