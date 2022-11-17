@@ -471,7 +471,7 @@ export default class extends React.Component {
                   />
                   <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" />
                   <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} separator="#" />
-                  <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" />
+                  <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" addLink="true" />
                 </div>
               </Col>
               <Col md="4">
