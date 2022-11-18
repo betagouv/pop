@@ -611,8 +611,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Lieu d'origine",
-        label: "Lieu d'origine"
+        description: "Provenance de l'objet ou du document",
+        label: "Provenance de l'objet ou du document"
       }
     },
     MCGEO: {
