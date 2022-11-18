@@ -94,8 +94,7 @@ export function MnrPdf(notice, title, links) {
         <Text  style={styles.subtitle} >Voir aussi</Text>
         <Link
           style={styles.listLinked}
-          src = "https://www.culture.gouv.fr/spoliations-restitutions-1933-1945"
-          target="_blank">
+          src = "https://www.culture.gouv.fr/spoliations-restitutions-1933-1945">
           www.culture.gouv.fr/spoliations-restitutions-1933-1945</Link>
         </View>
           </View>

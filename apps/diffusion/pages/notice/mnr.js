@@ -508,7 +508,7 @@ export default class extends React.Component {
                     base="mnr"
                   />
                 </div>
-                <SeeMore notice={notice} />
+                <SeeMore />
               </Col>
             </Row>
           </Container>
@@ -519,7 +519,7 @@ export default class extends React.Component {
   }
 }
 
-const SeeMore = ({ notice}) => {
+const SeeMore = () => {
   
   return (
     <div className="sidebar-section info">
