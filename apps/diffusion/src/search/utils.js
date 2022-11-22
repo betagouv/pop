@@ -40,7 +40,7 @@ function toFrenchRegex(text) {
   return text
     .replace(/&/g, "\\&")
     .replace(/[éèêëeÉÈÊËE]/g, "[éèêëeÉÈÊËE]")
-    .replace(/[àâäaÀÂÄA]/g, "[àâäaÀÂÄA]")
+    .replace(/[àâäaáÀÂÄAÁ]/g, "[àâäaáÀÂÄAÁ]")
     .replace(/[cçÇC]/g, "[cçÇC]")
     .replace(/[iïîIÏÎ]/g, "[iïîIÏÎ]")
     .replace(/[oôöOÔÖ]/g, "[oôöOÔÖ]")
