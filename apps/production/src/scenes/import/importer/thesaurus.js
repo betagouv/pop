@@ -156,11 +156,10 @@ export function checkOpenTheso(notice) {
         values = values.map(e => e.trim()).filter((element) => element !== '');;
 
         for (var k = 0; k < values.length; k++) {
-          await checkJocondeThesaurus(notice._mapping[field], values[k]).then( message => {
-            if(message !== ""){
-              notice._warnings.push(message);
-            }
-          });
+          let message = await checkJocondeThesaurus(notice._mapping[field], values[k])
+          if(message !== ""){ 
+            notice._warnings.push(message);
+          }
         }
         continue;
       }
@@ -254,14 +253,14 @@ async function checkJocondeThesaurus(mappingField, value){
     let arrayFilterWithValue = [];
 
     // Recherhe de la valeur exacte dans le tableau de valeur du WS
-    arrayLabel.forEach(element => {
+    /*arrayLabel.forEach(element => {
 
-      if(element.label == value && !element.isAltLabel){
+      if(element.label == value && !element.isAltLabel){ console.log('found', message)
         foundValue = true;
-      } else if(element.label == value || element.label.toLowerCase() === value.toLowerCase()){
+      } else if(element.label == value || element.label.toLowerCase() === value.toLowerCase()){  console.log('match')
         arrayFilterWithValue.push(element);
       } else {
-
+        console.log('else', value)
         // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
         if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
           if(!element.isAltLabel){
@@ -269,15 +268,37 @@ async function checkJocondeThesaurus(mappingField, value){
           }
         }
       }
-    });
+    });*/
 
-    if(foundValue){
+    for(let i = 0; i < arrayLabel.length; i++) {
+      
+      
+    //arrayLabel.forEach(element => {
+      let element = arrayLabel[i];
+    
+      if(element.label == value && !element.isAltLabel){
+        foundValue = true;
+      } else if(element.label == value || element.label.toLowerCase() === value.toLowerCase()){ 
+        arrayFilterWithValue.push(element);
+      } else {
+        
+        // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
+        if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
+          if(!element.isAltLabel){
+            arrayPrefLabel.push(element.label);
+          }
+        }
+      }
+    };
+
+    if(foundValue){ 
       return message;
     }
 
+    
     // si la liste est récupérée et la valeur est présente dans la liste
     if(arrayFilterWithValue.length > 0){
-
+    
       if(arrayPrefLabel.length > 0){
         message = `la valeur [${value}] est considérée comme rejetée par le thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
  
@@ -310,11 +331,18 @@ async function checkJocondeThesaurus(mappingField, value){
         }
       } 
 
-    } else {
+    } else { 
       // Sinon 
       message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
+
+      if(arrayPrefLabel.length > 0){
+        let strVal = arrayPrefLabel.length > 1 ? `les valeurs [${arrayPrefLabel.join(" ou ")}] peuvent correspondre` : `la valeur [${arrayPrefLabel[0]}] peut correspondre`;
+        if(strVal !== null){
+          message += ", " + strVal;
+        }
+      }
     }
-  } catch(err){
+  } catch(err){ 
     // Erreur du à l'absence de la valeur dans le référentiel opentheso
     message = `la valeur [${value}] ne fait pas partie du thésaurus [${mappingField.listeAutorite} (${mappingField.idthesaurus})]`;
   }
