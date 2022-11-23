@@ -363,7 +363,7 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" />
+                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" upper={false}/>
                   <Field
                     title={mapping.joconde.DOMN.label}
                     content={this.links(this.props.notice.DOMN, "domn")}
@@ -379,7 +379,7 @@ export default class extends React.Component {
                   <Field
                     title={mapping.joconde.AUTR.label}
                     content={this.links(this.props.notice.AUTR, "auteur")}
-                    separator="#" />
+                    separator="#" upper={false}/>
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" upper={false}/>
                   <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" upper={false}/>
@@ -402,7 +402,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" upper={false}/>
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" />
+                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" upper={false}/>
                   <Field
                     title={mapping.joconde.REPR.label}
                     content={this.links(this.props.notice.REPR, "repr")}
@@ -431,7 +431,7 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.joconde.GENE.label} content={notice.GENE} separator="#" upper={false} />
-                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" />
+                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" upper={false}/>
                   <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} separator="#" upper={false}/>
                   <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} separator="#" upper={false}/>
                   <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} separator="#" upper={false}/>
@@ -460,7 +460,7 @@ export default class extends React.Component {
                   <Field
                     title={mapping.joconde.LOCA.label}
                     content={this.links(this.props.notice.LOCA, "loca")}
-                    separator="#"
+                    separator="#" upper={false}
                   />
                   <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} separator="#" upper={false}/>
                   <Field title="" content={notice.MANQUANT_COM} separator="#" upper={false}/>
