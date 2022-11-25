@@ -12,7 +12,7 @@ import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Map from "./components/map.js";
-import { bucket_url } from "../../config.js";
+import { bucket_url, pop_url } from "../../config.js";
 import Loader from "../../components/Loader";
 import InputFiles from "./components/InputFiles";
 import API from "../../services/api";
@@ -147,7 +147,7 @@ class Notice extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/palissy/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/palissy/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>

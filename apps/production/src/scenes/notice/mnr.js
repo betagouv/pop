@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import Mapping from "../../services/mapping";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
-import { bucket_url } from "../../config";
+import { bucket_url, pop_url } from "../../config";
 import Field from "./components/field.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";
@@ -111,7 +111,7 @@ class Notice extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/mnr/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/mnr/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>
