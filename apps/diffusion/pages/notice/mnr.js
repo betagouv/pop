@@ -508,6 +508,7 @@ export default class extends React.Component {
                     base="mnr"
                   />
                 </div>
+                <SeeMore />
               </Col>
             </Row>
           </Container>
@@ -516,4 +517,20 @@ export default class extends React.Component {
       </Layout>
     );
   }
+}
+
+const SeeMore = () => {
+  
+  return (
+    <div className="sidebar-section info">
+      <h2>Voir aussi</h2>
+      <Field 
+        content={
+          <a href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945" target="_blank">
+            www.culture.gouv.fr/spoliations-restitutions-1933-1945
+          </a>
+        }
+      />
+    </div>
+  );
 }

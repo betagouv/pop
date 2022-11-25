@@ -96,7 +96,7 @@ export function JocondePdf(notice, title, links, museo) {
                 <Text style={styles.subtitle} >Informations complémentaires</Text>
                 <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" isPdf={true} />
+                <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" isPdf={true} link={true}/>
               </View> : null}
           </View>
           <View style={styles.seeMore}>
