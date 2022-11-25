@@ -13,7 +13,7 @@ import Comments from "./components/comments.js";
 import Memoire from "../../entities/Memoire";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
-import { bucket_url } from "../../config";
+import { bucket_url, pop_url } from "../../config";
 import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
@@ -130,7 +130,7 @@ class Notice extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/memoire/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/memoire/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>
@@ -172,7 +172,7 @@ class Notice extends React.Component {
                 <CustomField name="MCGEO" disabled={!this.state.editable} />
               </Col>
             </Row>
-            <div className="subtitle">1.2. Provence de l'objet ou du document</div>
+            <div className="subtitle">1.2. Description</div>
             <Row>
               <Col sm={6}>
                 <CustomField name="EDIF" disabled={!this.state.editable} />
@@ -181,6 +181,7 @@ class Notice extends React.Component {
                 <CustomField name="DENO" disabled={!this.state.editable} />
                 <CustomField name="TICO" disabled={!this.state.editable} />
                 <CustomField name="SUJET" disabled={!this.state.editable} />
+                <CustomField name="TITRE" disabled={!this.state.editable} />
                 <CustomField name="THEATRE" disabled={!this.state.editable} />
                 <CustomField name="CINEPROD" disabled={!this.state.editable} />
                 <CustomField name="ROLE" disabled={!this.state.editable} />
@@ -210,6 +211,7 @@ class Notice extends React.Component {
               </Col>
               <Col sm={6}>
                 <CustomField name="ANUMOR" disabled={!this.state.editable} />
+                <CustomField name="ANUMP" disabled={!this.state.editable} />
                 <CustomField name="DOC" disabled={!this.state.editable} />
                 <CustomField name="TIREDE" disabled={!this.state.editable} />
                 <CustomField name="LIEUCOR" disabled={!this.state.editable} />
@@ -244,6 +246,7 @@ class Notice extends React.Component {
                 <CustomField name="ANUMTI" disabled={!this.state.editable} />
                 <CustomField name="NUMAUTP" disabled={!this.state.editable} />
                 <CustomField name="NUMVERS" disabled={!this.state.editable} />
+                <CustomField name="REPRO" disabled={!this.state.editable} />
               </Col>
               <Col sm={6}>
               <CustomField name="RENV" disabled={!this.state.editable} />

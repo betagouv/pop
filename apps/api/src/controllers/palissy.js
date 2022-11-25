@@ -201,13 +201,14 @@ async function transformBeforeCreateOrUpdate(notice) {
       notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
     }
   }
-
+  
+  notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
+  
   // To prevent crash on ES
   if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
 
-  notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   if(notice.PRODUCTEUR){
     notice.DISCIPLINE = notice.PRODUCTEUR
   }

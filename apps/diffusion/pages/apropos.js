@@ -117,9 +117,10 @@ export default class extends React.Component {
             </p>
 
             <p>
-            <b >Enluminures</b> propose des reproductions numériques d’enluminures et d’éléments de
-            décor de manuscrits médiévaux conservés dans une centaine de bibliothèques
-            municipales françaises.
+            <b >Enluminures</b>  propose la consultation gratuite de plus de 100 000 reproductions numériques 
+            d’enluminures et d’éléments de décor provenant de plus de 8 000 manuscrits médiévaux ou incunables peints 
+            conservés dans une centaine de bibliothèques municipales françaises, dans des musées, des services d’archives, etc. 
+            La base Enluminures est produite par le service du Livre et de la lecture (ministère de la Culture) en lien avec l'Institut de recherche et d'histoire des textes (CNRS).
             </p>
 
             <p>

@@ -8,6 +8,10 @@ import { bucket_url } from "../../config";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 
+function splitLinks(values){
+
+}
+
 export function JocondePdf(notice, title, links, museo) {
   return (
     <Document>
@@ -27,26 +31,26 @@ export function JocondePdf(notice, title, links, museo) {
               <View>
                 <Text style={styles.subtitle} >Identification du bien culturel</Text>
                 <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.DOMN.label} content={pdfLinks(notice.DOMN, "domn")} separator="#" isPdf={true} link={true} />
-                <Field title={mapping.joconde.DENO.label} content={pdfLinks(notice.DENO, "deno")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.DOMN.label} content={pdfLinks(notice.DOMN, "domn")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
+                <Field title={mapping.joconde.DENO.label} content={pdfLinks(notice.DENO, "deno")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
                 <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.AUTR.label} content={pdfLinks(notice.AUTR, "auteur")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.AUTR.label} content={pdfLinks(notice.AUTR, "auteur")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
                 <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.PERI.label} content={pdfLinks(notice.PERI, "periode")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.PERI.label} content={pdfLinks(notice.PERI, "periode")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
                 <Field title={mapping.joconde.MILL.label} content={notice.MILL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.TECH.label} content={pdfLinks(notice.TECH, "tech")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.TECH.label} content={pdfLinks(notice.TECH, "tech")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
                 <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
                 <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" isPdf={true} />
@@ -62,7 +66,7 @@ export function JocondePdf(notice, title, links, museo) {
                 <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.UTIL.label} content={pdfLinks(notice.UTIL, "util")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.UTIL.label} content={pdfLinks(notice.UTIL, "util")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
                 <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PERU.label} content={notice.PERU} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.MILU.label} content={notice.MILU} separator="#" isPdf={true} />
@@ -92,7 +96,7 @@ export function JocondePdf(notice, title, links, museo) {
                 <Text style={styles.subtitle} >Informations complémentaires</Text>
                 <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" isPdf={true} />
+                <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" isPdf={true} link={true}/>
               </View> : null}
           </View>
           <View style={styles.seeMore}>
