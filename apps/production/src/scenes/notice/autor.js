@@ -1,5 +1,5 @@
 import React from "react";
-import { bucket_url} from "../../config.js"
+import { bucket_url, pop_url} from "../../config.js"
 import { Col, Container, Button, Form, Row } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
@@ -97,7 +97,17 @@ class Notice extends React.Component {
     return (
       <Container className="notice">
         <BackButton left history={this.props.history} />
-        <h2 className="main-title">Notice {this.state.notice.REF}</h2>
+        <h2 className="main-title">
+          Notice {this.state.notice.REF}
+          <a
+            style={{ fontSize: "small" }}
+            target="_blank"
+            rel="noopener"
+            href={`${pop_url}/notice/autor/${this.state.notice.REF}`}
+          >
+            voir en diffusion
+          </a>
+        </h2>
         <Form onSubmit={this.props.handleSubmit(this.onSubmit.bind(this))} className="main-body">
         <FieldImages
             name="MEMOIRE"
