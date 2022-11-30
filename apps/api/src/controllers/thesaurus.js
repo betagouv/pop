@@ -59,7 +59,7 @@ router.get("/validate", passport.authenticate("jwt", { session: false }), (req, 
   let value = escapeRegExp(req.query.value);
   const query = {
     idThesaurus: id,
-    $text: { $search: `"${value}"`, $caseSensitive: false, $diacriticSensitive: false }
+    $text: { $search: `"${req.query.value}"`, $caseSensitive: false, $diacriticSensitive: false }
   };
 
   Thesaurus.find(query, (e, values) => {
@@ -176,7 +176,6 @@ router.post("/createThesaurus", passport.authenticate("jwt", { session: false })
     const arr = terms.map(e => new Thesaurus({ arc: thesaurusId, value: e }));
     Thesaurus.insertMany(arr, (err, docs) => {
       if (err) {
-        console.log("ERROR", err);
         capture(err);
       }
       res.status(200).send({ success: true, msg: "OK" });

@@ -184,6 +184,7 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
+
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -191,12 +192,17 @@ async function transformBeforeCreateOrUpdate(notice) {
       notice.POP_COORDONNEES = { lat: centroid[0], lon: centroid[1] };
     }
   }
+
+  notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
+
   // To prevent crash on ES
   if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-  notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
+  //notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
   notice = await withFlags(notice);
+  console.log(notice.POP_CONTIENT_GEOLOCALISATION)
+  console.log('Test', hasCorrectCoordinates(notice))
 }
 
 async function transformBeforeUpdate(notice) {
