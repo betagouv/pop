@@ -102,7 +102,7 @@ module.exports = env => {
           test: /\.(woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           use: [
-            "url-loader",
+            "file-loader",
           ]
         },
         {
