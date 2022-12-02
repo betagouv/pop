@@ -102,12 +102,12 @@ module.exports = env => {
           test: /\.(woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           use: [
-            "new-url-loader",
+            "file-loader",
           ]
         },
         {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
-          loader: require.resolve('url-loader'),
+          loader: require.resolve('new-url-loader'),
           options: {
             limit: 10000,
             name: '[name].[hash:8].[ext]',
