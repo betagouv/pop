@@ -190,7 +190,7 @@ export function MemoirePdf(notice, title, links) {
                 <Link 
                 style={styles.listLinked}
                 title = {mapping.memoire.LBASE.label}
-                content = {pdfLinks(notice.LBASE)} 
+                content = {pdfLinks(notice.LBASE, "ref")} 
                 key="notice.LBASE">{notice.LBASE}</Link>
                 :<></>
               }
