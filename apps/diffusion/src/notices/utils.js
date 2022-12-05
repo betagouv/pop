@@ -135,33 +135,18 @@ export function pdfLinks(value, name){
   }
   const links = [];
   value.forEach((val) => {
+    // M43417 - Retour à la ligne pour Joconde
     val.split('#').forEach((el) => {
-      links.push(
-        {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
+      // M44201 - Erreur sur le pdf Mémoire, valeur vide
+      if(el){
+        links.push(
+          {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
         );
-      });
-    });
-    console.log(links)
-    return links;
-
+      }
+    })
+  });
+  return links;
 };
-/*export function pdfLinks(value, name){
-  if(value && value!==""){
-    if(Array.isArray(value)){
-      let links = value.map( val => {
-        if(val){
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        }
-        else {return null}
-      });
-      return links;
-    }
-    else{
-      return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-    }
-  }
-  return null;
-};*/
 
 export function highlighting(wholeWord){
   //highlighting
