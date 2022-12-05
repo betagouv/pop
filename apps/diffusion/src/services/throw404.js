@@ -1,10 +1,5 @@
-import Error from "../../pages/_error";
+import Error from "../../pages/404";
 
-export default () => {
-  if (process.browser) {
-    return <Error statusCode={404} />;
-  }
-  const e = new Error();
-  e.code = "ENOENT";
-  throw e;
+export default () => { 
+  return <Error statusCode={404} />;
 };
