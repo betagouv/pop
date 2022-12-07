@@ -106,7 +106,7 @@ class SearchAdvanced extends React.Component {
                       "WADRS.keyword"
                     ],
               text: "Localisation",
-              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS"
+              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS, DPT_LETTRE, LOCA"
             },
             {
               value: [ "ADRESSE.keyword",
