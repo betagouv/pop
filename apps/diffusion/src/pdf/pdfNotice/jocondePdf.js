@@ -36,6 +36,7 @@ export function JocondePdf(notice, title, links, museo) {
                 <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.AUTR.label} content={pdfLinks(notice.AUTR, "auteur")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
+                <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" isPdf={true} />
