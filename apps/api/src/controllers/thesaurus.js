@@ -204,7 +204,7 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
       url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
     },
     (error, response) => {
-      if (!error && response.statusCode === 202) {
+      if (!error && response.statusCode === 200) {
         updateThesaurus(thesaurusId, response.body);
         resolve(response);
       } else {
