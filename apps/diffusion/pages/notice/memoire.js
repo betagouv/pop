@@ -124,7 +124,7 @@ export default class extends React.Component {
     });
     return fieldValues && <React.Fragment>{links.reduce((a, b) => [a, " ; ", b])}</React.Fragment>;
   }
-/*
+
   async componentDidMount() {
     //this.setState({display : true});
 
@@ -156,7 +156,7 @@ export default class extends React.Component {
       this.state.display == false && this.setState({ display: true });
     }
   }
-*/
+
   componentDidUpdate() {
     this.state.display == false && this.setState({ display: true });
   }
@@ -188,13 +188,10 @@ export default class extends React.Component {
   }
 
   render() {
-    
-    
     if (!this.props.notice) {
       return throw404();
     }
 
-//    return (<div>Hello</div>);
     const { notice } = this.props;
 
     const { title, images, image_preview, metaDescription } = getNoticeInfo(notice);
