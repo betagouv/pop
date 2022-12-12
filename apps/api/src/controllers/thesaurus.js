@@ -59,7 +59,7 @@ router.get("/validate", passport.authenticate("jwt", { session: false }), (req, 
   let value = escapeRegExp(req.query.value);
   const query = {
     idThesaurus: id,
-    $text: { $search: `"${req.query.value}"`, $caseSensitive: false, $diacriticSensitive: false }
+    $text: { $search: `${req.query.value}`, $caseSensitive: false, $diacriticSensitive: false }
   };
 
   Thesaurus.find(query, (e, values) => {

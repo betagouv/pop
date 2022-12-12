@@ -240,7 +240,6 @@ async function checkJocondeThesaurus(mappingField, value){
       }else {
         res = await callThesaurus(mappingField.idthesaurus, value);
       }
-
       if(res.statusCode == "202"){
         arrayLabel = JSON.parse(res.body);
       }
@@ -270,24 +269,34 @@ async function checkJocondeThesaurus(mappingField, value){
       }
     });*/
 
-    for(let i = 0; i < arrayLabel.length; i++) {
-      
+    for(let i = 0; i < arrayLabel.length; i++) {    
       
     //arrayLabel.forEach(element => {
       let element = arrayLabel[i];
-    
       if(element.label == value && !element.isAltLabel){
         foundValue = true;
       } else if(element.label == value || element.label.toLowerCase() === value.toLowerCase()){ 
         arrayFilterWithValue.push(element);
       } else {
-        
-        // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
+       
+        if (mappingField["label"] == 'Auteur'){
+          let newValue = value.split('(')[0].trim();
+          if(element.label.indexOf(newValue) === 0 || element.label.toLowerCase().indexOf(newValue.toLowerCase()) === 0){ 
+           if(!element.isAltLabel){
+            arrayPrefLabel.push(element.label);
+
+            }
+          }
+        }
+      
+       // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
         if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
           if(!element.isAltLabel){
+            
             arrayPrefLabel.push(element.label);
           }
         }
+      
       }
     };
 
