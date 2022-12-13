@@ -1,3 +1,4 @@
+import { element } from "prop-types";
 import api from "../../../services/api";
 
 // Joconde : Liste des champs à prendre en compte pour le contrôle Thésaurus
@@ -251,27 +252,17 @@ async function checkJocondeThesaurus(mappingField, value){
     let arrayPrefLabel = [];
     let arrayFilterWithValue = [];
 
-    // Recherhe de la valeur exacte dans le tableau de valeur du WS
-    /*arrayLabel.forEach(element => {
-
-      if(element.label == value && !element.isAltLabel){ console.log('found', message)
-        foundValue = true;
-      } else if(element.label == value || element.label.toLowerCase() === value.toLowerCase()){  console.log('match')
-        arrayFilterWithValue.push(element);
-      } else {
-        console.log('else', value)
-        // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
-        if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
-          if(!element.isAltLabel){
-            arrayPrefLabel.push(element.label);
-          }
+    const addMatchValue = (value, element) => {
+      console.log('la valeur',value, element.label);
+      if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
+        if(!element.isAltLabel){ 
+          arrayPrefLabel.push(element.label);
         }
       }
-    });*/
+    };
 
-    for(let i = 0; i < arrayLabel.length; i++) {    
-      
-    //arrayLabel.forEach(element => {
+    // Recherhe de la valeur exacte dans le tableau de valeur du WS
+    for(let i = 0; i < arrayLabel.length; i++) {   
       let element = arrayLabel[i];
       if(element.label == value && !element.isAltLabel){
         foundValue = true;
@@ -281,22 +272,11 @@ async function checkJocondeThesaurus(mappingField, value){
        
         if (mappingField["label"] == 'Auteur'){
           let newValue = value.split('(')[0].trim();
-          if(element.label.indexOf(newValue) === 0 || element.label.toLowerCase().indexOf(newValue.toLowerCase()) === 0){ 
-           if(!element.isAltLabel){
-            arrayPrefLabel.push(element.label);
-
-            }
-          }
+          addMatchValue(newValue, element);
         }
-      
+        
        // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
-        if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
-          if(!element.isAltLabel){
-            
-            arrayPrefLabel.push(element.label);
-          }
-        }
-      
+       addMatchValue(value, element);
       }
     };
 
