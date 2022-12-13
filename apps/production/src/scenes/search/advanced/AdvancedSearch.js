@@ -75,9 +75,11 @@ export default function AdvancedSearch({ collection, card }) {
             "WCOM.keyword",
             "INSEE.keyword",
             "MCGEO.keyword",
-            "LIEUORIG.keyword"
+            "LIEUORIG.keyword",
+            "WADRS.keyword",
+            "DPT_LETTRE.keyword"
           ],
-          text: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG - Localisation"
+          text: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS, DPT_LETTRE - Localisation"
         },
         {
           value: ["ADRESSE.keyword", "LIEU.keyword"],
