@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import Mapping from "../../services/mapping";
 import Importer from "./importer";
-
+import common_mh_inv from "./common_mh_inv";
 import Merimee from "../../entities/Merimee";
 import Palissy from "../../entities/Palissy";
 import Memoire from "../../entities/Memoire";
@@ -97,8 +97,19 @@ function parseFiles(files, encoding) {
       return;
     }
 
+    // Import CSV type (MH)
+    await common_mh_inv.parseFilesCsv(files, encoding)
+      .then((resp) => {
+        resolve(resp)
+      })
+      .catch((err) => {
+        if(err !== "Pas de fichiers"){
+          reject(err);
+        } 
+      });
+
     // ERROR
-    reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl ou Gertrude détecté");
+    reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl, Csv ou Gertrude détecté");
   });
 }
 
