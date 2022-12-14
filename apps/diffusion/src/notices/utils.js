@@ -135,33 +135,23 @@ export function pdfLinks(value, name){
   }
   const links = [];
   value.forEach((val) => {
-    val.split('#').forEach((el) => {
-      links.push(
-        {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
+    if (val.indexOf('#') > -1){
+      val.split('#').forEach((el) => {
+        links.push(
+          {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
+          );
+        });
+    } else {
+        links.push(
+          {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val}
         );
-      });
+        
+    }
+    
     });
-    console.log(links)
     return links;
 
 };
-/*export function pdfLinks(value, name){
-  if(value && value!==""){
-    if(Array.isArray(value)){
-      let links = value.map( val => {
-        if(val){
-          return {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val};
-        }
-        else {return null}
-      });
-      return links;
-    }
-    else{
-      return {url: `https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([value]) })}`, val: value};
-    }
-  }
-  return null;
-};*/
 
 export function highlighting(wholeWord){
   //highlighting

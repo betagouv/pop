@@ -14,6 +14,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   if (!link) {
     // Transform array to string, by joining with a character.
     str = Array.isArray(content) ? content.join(join) : content;
+    console.log('testSTR', str);
 
     // Don't apply transformations on React components
     if (!React.isValidElement(str)) {
