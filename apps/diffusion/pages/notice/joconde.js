@@ -153,22 +153,6 @@ export default class extends React.Component {
     return arrayContent.reduce((a, b) => [a, "", b])
   }
 
-  /*links(value, name) {
-
-    if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value) == "") {
-        return ( this.generateLink(name, value) );
-      }
-      return null;
-    }
-    const links = value
-      .map(d => {
-        return ( this.generateLink(name, d));
-      })
-      .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
-  }*/
-
   // Display a list of links to authors
   links (value, name) {
     //const author = this.props.notice.AUTR;
@@ -183,31 +167,35 @@ export default class extends React.Component {
       return null;
     }
     const links = [];
-    value.forEach((val) => {
-      val.split('#').forEach((el) => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
-
-        links.push(
-          (
-            <div>
-            <a href={url} key={el} target="_blank">
-              {el}
-            </a>
-            </div>
-          )
-          );
+    value.forEach((val) => { 
+      if (val.indexOf('#') > -1) {
+        val.split('#').forEach((el) => {
+          const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
+  
+          links.push(
+            (
+              <div>
+              <a href={url} key={el} target="_blank">
+                {el}
+              </a>
+              </div>
+            )
+            );
         });
-      });
-    /*const links = value
-      .map(a => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
-        return (
-          <a href={url} key={a} target="_blank">
-            {a}
+      } else {
+        let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`;
+        if (links.length > 0) {
+          links.push(', ')
+        } 
+        links.push(
+          <a href={url} key={val} target="_blank">
+            {val}
           </a>
         );
-      })
-      .reduce((p, c) => [p, " , ", c]);*/
+        
+      }
+      
+    });
     return <React.Fragment>{links}</React.Fragment>;
   }
 
