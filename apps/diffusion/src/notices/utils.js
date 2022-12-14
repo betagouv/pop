@@ -135,22 +135,23 @@ export function pdfLinks(value, name){
   }
   const links = [];
   value.forEach((val) => {
+    // M43417 - Retour à la ligne pour Joconde
     if (val.indexOf('#') > -1){
       val.split('#').forEach((el) => {
         // M44201 - Erreur sur le pdf Mémoire, valeur vide
         if(el){
           links.push(
             {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`, val: el}
-          );
+            );
         }
-      });
+      });  
     } else {
-        // M44201 - Erreur sur le pdf Mémoire, valeur vide
-        if(el){
-          links.push(
-            {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val}
-          );
-        }
+      // M44201 - Erreur sur le pdf Mémoire, valeur vide
+      if(val){
+        links.push(
+          {url:`https://www.pop.culture.gouv.fr/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`, val: val}
+        );
+      } 
     }
   });
   return links;
