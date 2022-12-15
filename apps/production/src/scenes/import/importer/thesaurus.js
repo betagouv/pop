@@ -253,7 +253,6 @@ async function checkJocondeThesaurus(mappingField, value){
     let arrayFilterWithValue = [];
 
     const addMatchValue = (value, element) => {
-      console.log('la valeur',value, element.label);
       if(element.label.indexOf(value) === 0 || element.label.toLowerCase().indexOf(value.toLowerCase()) === 0){ 
         if(!element.isAltLabel){ 
           arrayPrefLabel.push(element.label);
@@ -273,18 +272,17 @@ async function checkJocondeThesaurus(mappingField, value){
         if (mappingField["label"] == 'Auteur'){
           let newValue = value.split('(')[0].trim();
           addMatchValue(newValue, element);
-        }
-        
-       // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
-       addMatchValue(value, element);
+        } else {
+          // Recherche si la saisie est contenu en début de chaine dans la liste de valeur
+          addMatchValue(value, element);
+        }       
       }
     };
 
     if(foundValue){ 
       return message;
     }
-
-    
+       
     // si la liste est récupérée et la valeur est présente dans la liste
     if(arrayFilterWithValue.length > 0){
     
