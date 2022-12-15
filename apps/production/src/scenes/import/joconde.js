@@ -290,7 +290,6 @@ function report(notices, collection, email, institution, importId) {
       
       if(key !== undefined){
         const libRefus = "ne fait pas partie du thésaurus";
-        const valueFounded = key.indexOf(libRefus) == -1;
 
         const arrayKey = key.split(/[\[\]]/g);
 
@@ -309,9 +308,9 @@ function report(notices, collection, email, institution, importId) {
         key = key.replace(`[${autoriteThesaurus}]`, `<a href="${urlOpenTheso}?idt=${idthesaurus}">${autoriteThesaurus}</a>`);
 
         // Si des propositions ont été trouvé, alors on met les propositions en caractères gras
-        if(valueFounded && arrayKey[5]){
+        if(arrayKey[5]){
           const listProposition = arrayKey[5].split(' ou ').filter(element => element !== "").map(element => `<strong>${element}</strong>`).join(' ou ');
-          key = key.replace(`[${arrayKey[5]}]`, listProposition);
+          key = key.replace(`[${arrayKey[5]}]`, `[${listProposition}]`);
         }
       }
 
