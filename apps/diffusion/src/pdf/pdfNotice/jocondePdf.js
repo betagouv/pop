@@ -31,26 +31,27 @@ export function JocondePdf(notice, title, links, museo) {
               <View>
                 <Text style={styles.subtitle} >Identification du bien culturel</Text>
                 <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.DOMN.label} content={pdfLinks(notice.DOMN, "domn")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
-                <Field title={mapping.joconde.DENO.label} content={pdfLinks(notice.DENO, "deno")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
+                <Field title={mapping.joconde.DOMN.label} content={pdfLinks(notice.DOMN, "domn")} separator="#" isPdf={true} link={true} isLineBreakLink={false} />
+                <Field title={mapping.joconde.DENO.label} content={pdfLinks(notice.DENO, "deno")} separator="#" isPdf={true} link={true} isLineBreakLink={false} />
                 <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.AUTR.label} content={pdfLinks(notice.AUTR, "auteur")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
+                <Field title={mapping.joconde.AUTR.label} content={pdfLinks(notice.AUTR, "auteur")} separator="#" isPdf={true} link={true} isLineBreakLink={false}/>
+                <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.PERI.label} content={pdfLinks(notice.PERI, "periode")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
+                <Field title={mapping.joconde.PERI.label} content={pdfLinks(notice.PERI, "periode")} separator="#" isPdf={true} link={true} isLineBreakLink={false}/>
                 <Field title={mapping.joconde.MILL.label} content={notice.MILL} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.TECH.label} content={pdfLinks(notice.TECH, "tech")} separator="#" isPdf={true} link={true} isLineBreakLink={true}/>
+                <Field title={mapping.joconde.TECH.label} content={pdfLinks(notice.TECH, "tech")} separator="#" isPdf={true} link={true} isLineBreakLink={false}/>
                 <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} isLineBreakLink={true} />
+                <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} isLineBreakLink={false} />
                 <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" isPdf={true} />

@@ -14,7 +14,7 @@ import Section from "./components/section.js";
 import Comments from "./components/comments.js";
 import Loader from "../../components/Loader";
 import API from "../../services/api";
-import { bucket_url } from "../../config";
+import { bucket_url, pop_url } from "../../config";
 import AccordionHistorique from "./components/AccordionHistorique";
 
 import "./index.css";
@@ -114,7 +114,7 @@ class Museo extends React.Component {
             style={{ fontSize: "small" }}
             target="_blank"
             rel="noopener"
-            href={`https://www.pop.culture.gouv.fr/notice/museo/${this.state.notice.REF}`}
+            href={`${pop_url}/notice/museo/${this.state.notice.REF}`}
           >
             voir en diffusion
           </a>

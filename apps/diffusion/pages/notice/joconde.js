@@ -153,22 +153,6 @@ export default class extends React.Component {
     return arrayContent.reduce((a, b) => [a, "", b])
   }
 
-  /*links(value, name) {
-
-    if (!value || !Array.isArray(value) || !value.length) {
-      if (String(value) === value && !String(value) == "") {
-        return ( this.generateLink(name, value) );
-      }
-      return null;
-    }
-    const links = value
-      .map(d => {
-        return ( this.generateLink(name, d));
-      })
-      .reduce((p, c) => [p, ", ", c]);
-    return <React.Fragment>{links}</React.Fragment>;
-  }*/
-
   // Display a list of links to authors
   links (value, name) {
     //const author = this.props.notice.AUTR;
@@ -183,31 +167,35 @@ export default class extends React.Component {
       return null;
     }
     const links = [];
-    value.forEach((val) => {
-      val.split('#').forEach((el) => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
-
-        links.push(
-          (
-            <div>
-            <a href={url} key={el} target="_blank">
-              {el}
-            </a>
-            </div>
-          )
-          );
+    value.forEach((val) => { 
+      if (val.indexOf('#') > -1) {
+        val.split('#').forEach((el) => {
+          const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
+  
+          links.push(
+            (
+              <div>
+              <a href={url} key={el} target="_blank">
+                {el}
+              </a>
+              </div>
+            )
+            );
         });
-      });
-    /*const links = value
-      .map(a => {
-        const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([a]) })}`;
-        return (
-          <a href={url} key={a} target="_blank">
-            {a}
+      } else {
+        let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`;
+        if (links.length > 0) {
+          links.push(', ')
+        } 
+        links.push(
+          <a href={url} key={val} target="_blank">
+            {val}
           </a>
         );
-      })
-      .reduce((p, c) => [p, " , ", c]);*/
+        
+      }
+      
+    });
     return <React.Fragment>{links}</React.Fragment>;
   }
 
@@ -363,7 +351,7 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" />
+                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" upper={false}/>
                   <Field
                     title={mapping.joconde.DOMN.label}
                     content={this.links(this.props.notice.DOMN, "domn")}
@@ -379,7 +367,7 @@ export default class extends React.Component {
                   <Field
                     title={mapping.joconde.AUTR.label}
                     content={this.links(this.props.notice.AUTR, "auteur")}
-                    separator="#" />
+                    separator="#" upper={false}/>
                   <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" upper={false}/>
                   <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" upper={false}/>
@@ -402,7 +390,7 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" upper={false}/>
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" />
+                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" upper={false}/>
                   <Field
                     title={mapping.joconde.REPR.label}
                     content={this.links(this.props.notice.REPR, "repr")}
@@ -431,7 +419,7 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.joconde.GENE.label} content={notice.GENE} separator="#" upper={false} />
-                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" />
+                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" upper={false}/>
                   <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} separator="#" upper={false}/>
                   <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} separator="#" upper={false}/>
                   <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} separator="#" upper={false}/>
@@ -460,7 +448,7 @@ export default class extends React.Component {
                   <Field
                     title={mapping.joconde.LOCA.label}
                     content={this.links(this.props.notice.LOCA, "loca")}
-                    separator="#"
+                    separator="#" upper={false}
                   />
                   <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} separator="#" upper={false}/>
                   <Field title="" content={notice.MANQUANT_COM} separator="#" upper={false}/>

@@ -59,7 +59,7 @@ router.get("/validate", passport.authenticate("jwt", { session: false }), (req, 
   let value = escapeRegExp(req.query.value);
   const query = {
     idThesaurus: id,
-    $text: { $search: `"${req.query.value}"`, $caseSensitive: false, $diacriticSensitive: false }
+    $text: { $search: `${req.query.value}`, $caseSensitive: false, $diacriticSensitive: false }
   };
 
   Thesaurus.find(query, (e, values) => {
@@ -204,7 +204,7 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
       url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
     },
     (error, response) => {
-      if (!error && response.statusCode === 202) {
+      if (!error && response.statusCode === 200) {
         updateThesaurus(thesaurusId, response.body);
         resolve(response);
       } else {
