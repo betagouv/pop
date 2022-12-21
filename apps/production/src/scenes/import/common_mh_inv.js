@@ -6,11 +6,11 @@ import Memoire from "../../entities/Memoire";
 import Palissy from "../../entities/Palissy";
 import Autor from "../../entities/Autor";
 
-function parseFilesCsv(files, encoding) {
+function parseFilesCsv(files, encoding, typeImport) {
     return new Promise(async (resolve, reject) => { 
       var objectFile = files.find(file => file.name.includes(".csv"));
       if (!objectFile) {
-        reject("Pas de fichiers");
+        reject("Pas de fichiers .csv detecté");
         return;
       }
       const objs = await utils.readCSV(objectFile, "|", encoding);
@@ -48,10 +48,7 @@ function parseFilesCsv(files, encoding) {
           obj.REF = ref.id;
         }
   
-        let newNotice;
-  
-        
-        //On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
+        // On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
         let collection = "";
         let producteurs = [];
         const response = await api.getProducteurs();
@@ -69,32 +66,38 @@ function parseFilesCsv(files, encoding) {
             });
           });
         }
+
+        // Définition des messages d'erreur pour chaque type d'import MH et INV
+        const messages = {
+          "MH": `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`,
+          "INV": `La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire`
+        };
   
+        let newNotice;
   
-        if (collection === "palissy") {
+        if ("palissy" === collection) {
           newNotice = new Palissy(obj);
           addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
           addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
           addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
-        } else if (collection === "merimee") {
+        } else if ("merimee" === collection) {
           newNotice = new Merimee(obj);
           addFile("POP_DOSSIER_PROTECTION", "POP_DOSSIER_PROTECTION", obj, newNotice, filesMap);
           addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
           addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
-        } else if (collection === "memoire") {
+        } else if ("memoire" === collection) {
           newNotice = new Memoire(obj);
           addFile("REFIMG", "IMG", obj, newNotice, filesMap);
-        } else if (collection === "autor") {
+        } else if ("INV" !== typeImport && "autor" === collection) {
           newNotice = new Autor(obj);
         } else {
-          reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée, ni memoire, ni autor`);
+          reject(messages[typeImport]);
           return;
         }
   
         importedNotices.push(newNotice);
         controlREFIMG(importedNotices);
       }
-      console.log({ importedNotices, fileNames: [objectFile.name] })
       resolve({ importedNotices, fileNames: [objectFile.name] });
     });
   }
@@ -137,8 +140,6 @@ function parseFilesCsv(files, encoding) {
           fileName = convertLongNameToShort(fileName);
   
           const file = filesMap[fileName];
-  
-          
   
           if (file) {
             if (type === "Array") {
