@@ -60,6 +60,11 @@
   "prettier": {
     "printWidth": 100
   },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  },
   "author": "",
   "license": "MIT"
 }
