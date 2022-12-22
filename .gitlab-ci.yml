@@ -85,15 +85,15 @@ workflow:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-node-modules-api:
-  extends: [".node-modules"]
-  variables:
-    APP: api
+#node-modules-api:
+#  extends: [".node-modules"]
+#  variables:
+#    APP: api
 
-node-modules-production:
-  extends: [".node-modules"]
-  variables:
-    APP: production
+#node-modules-production:
+#  extends: [".node-modules"]
+#  variables:
+#    APP: production
 
 node-modules-diffusion:
   extends: [".node-modules"]
@@ -105,15 +105,15 @@ node-modules-diffusion:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-test-api:
-  needs:
-    - node-modules-api
-  extends: [".pop-test"]
-  services:
-    - mongo:4.4
-  variables:
-    APP: api
-    DB_ENDPOINT: mongodb://mongo:27017/pop
+#test-api:
+#  needs:
+#    - node-modules-api
+#  extends: [".pop-test"]
+#  services:
+#    - mongo:4.4
+#  variables:
+#    APP: api
+#    DB_ENDPOINT: mongodb://mongo:27017/pop
 
 #test-production:
 #  needs:
@@ -132,20 +132,20 @@ test-diffusion:
 ##############################################################
 # SAST
 #
-audit-api:
-  extends: [".pop-audit"]
-  variables:
-    APP: api
+#audit-api:
+#  extends: [".pop-audit"]
+#  variables:
+#    APP: api
 
 audit-diffusion:
   extends: [".pop-audit"]
   variables:
     APP: diffusion
 
-audit-production:
-  extends: [".pop-audit"]
-  variables:
-    APP: production
+#audit-production:
+#  extends: [".pop-audit"]
+#  variables:
+#    APP: production
 
 ##############################################################
 # SONAR
@@ -153,21 +153,21 @@ audit-production:
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 # SONAR_KEY=mc.pop.
-sonar-api:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
-
-#sonar-diffusion:
+#sonar-api:
 #  extends: 
 #    - ".sonar"
 #    - ".sonar-pop"
 #  variables:
-#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
-#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
+
+sonar-diffusion:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
 
 #sonar-production:
 #  extends: 
