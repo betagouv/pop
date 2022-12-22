@@ -797,6 +797,14 @@ module.exports = {
             }
           }
         },
+        PRODUCTEUR: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword"
+            }
+          }
+        },
         REFMEM: {
           type: "text",
           fields: {
