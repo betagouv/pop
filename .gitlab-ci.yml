@@ -161,13 +161,13 @@ sonar-api:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
     SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
 
-sonar-diffusion:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
+#sonar-diffusion:
+#  extends: 
+#    - ".sonar"
+#    - ".sonar-pop"
+#  variables:
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
 
 #sonar-production:
 #  extends: 
