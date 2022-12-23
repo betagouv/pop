@@ -8,9 +8,12 @@ const config = {
         "<rootDir>/__tests__/__notices__/"
     ],
     moduleNameMapper: {
-        "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js"
-      },
-    testResultsProcessor: "jest-sonar-reporter",
+      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js"
+    },
+    reporters: [
+      'default',
+      ['jest-sonar', {outputDirectory: 'reports', outputName: 'report.xml'}],
+    ],
     verbose: true,
     collectCoverage: true,
     coverageReporters: ["html", "lcov", "json"],

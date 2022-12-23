@@ -46,7 +46,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "jest": "^27.1.1",
-    "jest-sonar-reporter": "^2.0.0"
+    "jest-sonar": "^0.2.15"
   },
   "engines": {
     "node": "^14.17.5"
