@@ -42,13 +42,14 @@
     - cd apps/${APP}
     - npm audit --json > dependency_check_report.json || true
     - npm audit --json | npm-audit-html --output dependency_check_report.html || true
-    - npm audit --audit-level=$AUDIT_LEVEL
+    - npm audit --audit-level=${AUDIT_LEVEL}
   allow_failure: true
   artifacts:
     name: ${APP}-audit-report
     paths:
       - apps/${APP}/dependency_check_report.html
       - apps/${APP}/dependency_check_report.json
+    when: always
     expire_in: 1 day
 
 
