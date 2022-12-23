@@ -88,10 +88,10 @@ workflow:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-#node-modules-api:
-#  extends: [".node-modules"]
-#  variables:
-#    APP: api
+node-modules-api:
+  extends: [".node-modules"]
+  variables:
+    APP: api
 
 #node-modules-production:
 #  extends: [".node-modules"]
@@ -135,10 +135,10 @@ test-diffusion:
 ##############################################################
 # SAST
 #
-#audit-api:
-#  extends: [".pop-audit"]
-#  variables:
-#    APP: api
+audit-api:
+  extends: [".pop-audit"]
+  variables:
+    APP: api
 
 audit-diffusion:
   extends: [".pop-audit"]
