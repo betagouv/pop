@@ -6,11 +6,10 @@ const config = {
         "<rootDir>/src/__tests__/setup/",
         "<rootDir>/src/__tests__/__notices__/"
     ],
-    testResultsProcessor: "jest-sonar-reporter",
-    /*reporters: [
+    reporters: [
       'default',
-      ['jest-sonar-reporter', {outputDirectory: 'reports', outputName: 'report.xml'}],
-    ],*/
+      ['jest-sonar', {outputDirectory: 'reports', outputName: 'report.xml'}],
+    ],
     verbose: true,
     collectCoverage: true,
     coverageReporters: ["html", "lcov", "json"],
