@@ -42,6 +42,8 @@
     - cd apps/${APP}
     - npm audit --json > dependency_check_report.json || true
     - npm audit --json | npm-audit-html --output dependency_check_report.html || true
+    - npm audit --audit-level=$AUDIT_LEVEL
+  allow_failure: true
   artifacts:
     name: ${APP}-audit-report
     paths:
