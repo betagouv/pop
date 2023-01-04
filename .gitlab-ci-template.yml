@@ -77,3 +77,32 @@
         BRANCH_NAME: $CI_COMMIT_REF_NAME
         BRANCH_TARGET: $CI_DEFAULT_BRANCH
         REF_NAME: $CI_COMMIT_REF_NAME
+
+##############################################################
+# BUILD
+#
+.build-app:
+  stage: build
+  needs:
+    - test-${APP}
+  script:
+    - cd apps/${APP}
+    - echo "API_URL=${API_URL}" > .env
+    - echo "POP_URL=${POP_URL}" >> .env
+    - echo "BUCKET_URL=${BUCKET_URL}" >> .env
+    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
+    - echo "NODE_ENV=${NODE_ENV}" >> .env
+    - npm run build
+  artifacts:
+    paths:
+      - apps/${APP}/*
+    name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
+    expire_in: 7 days
+
+
+# TODO 
+# => Sonar règle Sonar pour bug détecté
+# => Template build avec build auto sur la branche develop-boost
+# => Template build package pour MCC Test + Staging + Prod
+# => Template deploy pour develop-boost -> devic1
+# Trivi ???

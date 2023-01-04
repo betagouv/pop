@@ -12,7 +12,10 @@ include:
   - project: "boost/template-ci/pipelines/common"
     file: 
       - "sonar/sonar.yml"
-
+      
+# la variable AUDIT_LEVEL définit le niveau de criticité minimum pour la réussite de l'audit
+# Exemple pour le niveau "critical", le job sera en succés si aucune vulnérabilité critique n'a été détectée
+# Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
 variables:
   AUDIT_LEVEL: "critical"
 
@@ -185,4 +188,24 @@ sonar-production:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-# SONAR_KEY=mc.pop.
+build-production-devic1:
+  extends:
+    - ".build-app"
+  variables:
+    APP: production
+    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
+    NODE_ENV: devic1
+    SENTRY_DSN: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
+
+build-diffusion-devic1:
+  extends:
+    - ".build-app"
+  variables:
+    APP: diffusion
+    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
+    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
+    NODE_ENV: devic1
+    SENTRY_DSN: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
