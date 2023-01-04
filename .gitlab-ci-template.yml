@@ -101,6 +101,28 @@
     expire_in: 7 days
 
 
+##############################################################
+# DEPLOY DEVIC1
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+#   - ENV : Nom de l'environnement AWS cible.
+#   - NAME: Nom de l'application (présent dans le fichier .elasticbeanstalk/config.yml)
+#   - REPLACE: Nom de l'application cible AWS
+#
+.deploy-open:
+  stage: deploy
+  image: python:3.9
+  script:
+    - pip install awsebcli
+    - mkdir ~/.aws
+    - echo "[eb-cli]" > ~/.aws/credentials
+    - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_OPEN}" >> ~/.aws/credentials
+    - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
+    - cd apps/${APP}
+    - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
+    - eb deploy ${ENV}
+
 # TODO 
 # => Sonar règle Sonar pour bug détecté
 # => Template build avec build auto sur la branche develop-boost
