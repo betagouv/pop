@@ -193,6 +193,8 @@ sonar-production:
 build-production-devic1:
   extends:
     - ".build-app"
+  needs:
+    - test-production
   variables:
     APP: production
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
@@ -204,6 +206,8 @@ build-production-devic1:
 build-diffusion-devic1:
   extends:
     - ".build-app"
+  needs:
+    - test-diffusion
   variables:
     APP: diffusion
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com

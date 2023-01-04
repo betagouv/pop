@@ -86,8 +86,6 @@
 #
 .build-app:
   stage: build
-  needs:
-    - test-${APP}
   script:
     - cd apps/${APP}
     - echo "API_URL=${API_URL}" > .env
