@@ -97,8 +97,7 @@ test-diffusion:
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #
 audit-api:
-  extends: 
-    - ".pop-audit"
+  extends: [".pop-audit"]
   variables:
     APP: api
 
