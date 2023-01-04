@@ -4,135 +4,72 @@
 # - AWS_ACCESS_KEY_ID_MC        : Identifiant AWS pour les environnements du Ministère de la Culture
 # - AWS_SECRET_ACCESS_KEY_MC    : Clé AWS pour les environnements du Ministère de la Culture
 #
-
 default:
   image: node:14.17
+
+include:
+  - ".gitlab-ci-template.yml"
+  - project: "boost/template-ci/pipelines/common"
+    file: 
+      - "sonar/sonar.yml"
+      
+# la variable AUDIT_LEVEL définit le niveau de criticité minimum pour la réussite de l'audit
+# Exemple pour le niveau "critical", le job sera en succés si aucune vulnérabilité critique n'a été détectée
+# Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
+variables:
+  AUDIT_LEVEL: "critical"
+  SAST_DISABLE: "false"
+  QUALITY_DISABLE: "false"
 
 stages:
   - node-modules
   - test
   - sast
+  - quality
   - build
   - deploy
-  - staging
-  - production
 
-# workflow:
-#   rules:
-#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-#       when: always
-#     - if: '$CI_COMMIT_BRANCH == "develop"'
-#       when: always
-#     - when: never
-
-##############################################################
-# TEMPLATES
-#
-
-.install-awsebcli: &install-awsebcli
-  - pip install awsebcli
-
-.aws-open-credentials: &aws-open-credentials
-  - mkdir ~/.aws
-  - echo "[eb-cli]" > ~/.aws/credentials
-  - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_OPEN}" >> ~/.aws/credentials
-  - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
-
-.aws-mc-credentials: &aws-mc-credentials
-  - mkdir ~/.aws
-  - echo "[default]" > ~/.aws/credentials
-  - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_MC}" >> ~/.aws/credentials
-  - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_MC}" >> ~/.aws/credentials
-
-# Variables à utiliser avec ce template :
-#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-#   - ENV : Nom de l'environnement AWS cible.
-#   - NAME: Nom de l'application (présent dans le fichier .elasticbeanstalk/config.yml)
-#   - REPLACE: Nom de l'application cible AWS
-#
-.deploy-open: &deploy-open
-  stage: deploy
-  image: python:3.9
-  script:
-    - *install-awsebcli
-    - *aws-open-credentials
-    - cd apps/${APP}
-    - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
-    - eb deploy ${ENV}
-
-# Variables à utiliser avec ce template :
-#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-#   - ENV : Nom de l'environnement AWS cible.
-#
-.deploy-mc: &deploy-mc
-  stage: deploy
-  image: python:3.9
-  script:
-    - *install-awsebcli
-    - *aws-mc-credentials
-    - cd apps/${APP}
-    - eb deploy ${ENV}
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
+    - if: '$CI_COMMIT_TAG'
 
 ##############################################################
 # NODE-MODULES
 #
-
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-.node-modules: &node-modules
-  stage: node-modules
-  script:
-    - cd apps/${APP}
-    - npm ci
-  cache:
-    key:
-      files:
-        - apps/${APP}/package-lock.json
-      prefix: node-modules-${APP}
-    paths:
-      - apps/${APP}/node_modules
-    policy: push
-
 node-modules-api:
-  <<: *node-modules
+  extends: 
+    - ".node-modules"
   variables:
     APP: api
 
 node-modules-production:
-  <<: *node-modules
+  extends: 
+    - ".node-modules"
   variables:
     APP: production
 
 node-modules-diffusion:
-  <<: *node-modules
+  extends: 
+    - ".node-modules"
   variables:
     APP: diffusion
 
 ##############################################################
 # TEST
 #
-
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-.test: &test
-  stage: test
-  # Récupération des node_modules en cache pour cette APP
-  cache:
-    key:
-      files:
-        - apps/${APP}/package-lock.json
-      prefix: node-modules-${APP}
-    paths:
-      - apps/${APP}/node_modules
-    policy: pull
-  script:
-    - cd apps/${APP}
-    - npm test
-
 test-api:
-  needs:
+  dependencies:
     - node-modules-api
-  <<: *test
+  extends: 
+    - ".pop-test"
   services:
     - mongo:4.4
   variables:
@@ -140,143 +77,84 @@ test-api:
     DB_ENDPOINT: mongodb://mongo:27017/pop
 
 test-production:
-  needs:
+  dependencies:
     - node-modules-production
-  <<: *test
+  extends: 
+    - ".pop-test"
   variables:
     APP: production
 
 test-diffusion:
-  needs:
+  dependencies:
     - node-modules-diffusion
-  <<: *test
+  extends: 
+    - ".pop-test"
   variables:
     APP: diffusion
 
 ##############################################################
 # SAST
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #
-.audit: &audit
-  stage: sast
-  script:
-    - npm i npm-audit-html -g
-    - cd apps/${APP}
-    - npm audit --json | npm-audit-html --output vulnerabilite.html || true
-  artifacts:
-    name: ${APP}-audit-report
-    paths:
-      - apps/${APP}/vulnerabilite.html
-    expire_in: 1 day
-
 audit-api:
-  <<: *audit
+  extends: 
+    - ".pop-audit"
   variables:
     APP: api
 
 audit-diffusion:
-  <<: *audit
+  extends: 
+    - ".pop-audit"
   variables:
     APP: diffusion
 
 audit-production:
-  <<: *audit
+  extends: 
+    - ".pop-audit"
   variables:
     APP: production
- 
 
+##############################################################
+# SONAR
+#
+# Variables à utiliser avec ce template :
+#   - CI_PROJECT_NAME : Key du projet Sonar
+#   - SONAR_OPTIONS : Set du répertoire de l'application
+# SONAR_KEY=mc.pop.
+sonar-api:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api -Dsonar.quality.wait=true"
+
+sonar-diffusion:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
+
+sonar-production:
+  extends: 
+    - ".sonar"
+    - ".sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
 
 ##############################################################
 # BUILD
 #
-
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-#
-.pull-cache: &pull-cache # Récupération des node_modules en cache pour cette APP
-  cache:
-    key:
-      files:
-        - apps/${APP}/package-lock.json
-      prefix: node-modules-${APP}
-    paths:
-      - apps/${APP}/node_modules
-    policy: pull
-
-#
-# BUILD PRODUCTION
-#
-
-# Variables à utiliser avec ce template :
-#   - APP        : Nom du module applicatif à compiler (api, diffusion, consultation).
-#   - API_URL    : URL de l'API backend. Ne doit PAS finir par '/'.
-#   - BUCKET_URL : URL du bucket S3. DOIT finir par '/'.
-#   - NODE_ENV   : Nom de l'environnement cible.
-#
-.build-production: &build-production
-  stage: build
-  needs:
-    - test-production
-  <<: *pull-cache
-  script:
-    - cd apps/production
-    - echo "API_URL=${API_URL}" > .env
-    - echo "POP_URL=${POP_URL}" >> .env
-    - echo "BUCKET_URL=${BUCKET_URL}" >> .env
-    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
-    - echo "NODE_ENV=${NODE_ENV}" >> .env
-    - npm run build
-  artifacts:
-    paths:
-      - apps/production/*
-    exclude: 
-      - apps/production/node_modules/
-    name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
-    expire_in: 7 days
-
-#
-# BUILD DIFFUSION
-#
-
-# Variables à utiliser avec ce template :
-#   - APP        : Nom du module applicatif à compiler (api, diffusion, consultation).
-#   - API_URL    : URL de l'API backend. Ne doit PAS finir par /.
-#   - POP_URL    : URL de l'interface frontend POP. DOIT finir par /.
-#   - BUCKET_URL : URL du bucket S3. DOIT finir par /.
-#   - NODE_ENV   : Nom de l'environnement cible.
-#
-.build-diffusion: &build-diffusion
-  stage: build
-  needs:
-    - test-diffusion
-  <<: *pull-cache
-  script:
-    - cd apps/diffusion
-    - echo "API_URL=${API_URL}" > .env
-    - echo "POP_URL=${POP_URL}" >> .env
-    - echo "BUCKET_URL=${BUCKET_URL}" >> .env
-    - echo "NODE_ENV=${NODE_ENV}" >> .env
-    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
-    - npm run build
-  artifacts:
-    paths:
-      - apps/diffusion/*
-    exclude: 
-      - apps/diffusion/node_modules
-    name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
-    expire_in: 7 days
-
-##############################################################
-# DEVIC1 - OPEN
-#
-
-.devic1-rules: &devic1-rules
-  rules:
-    # - if: '$CI_COMMIT_BRANCH == "develop"'
-    #   when: on_success
-    - when: manual
-
 build-production-devic1:
-  <<: *build-production
+  extends:
+    - ".build-app"
+  dependencies:
+    - node-modules-production
   variables:
     APP: production
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
@@ -284,10 +162,12 @@ build-production-devic1:
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: devic1
     SENTRY_DSN: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
-  <<: *devic1-rules
 
 build-diffusion-devic1:
-  <<: *build-diffusion
+  extends:
+    - ".build-app"
+  dependencies:
+    - node-modules-diffusion
   variables:
     APP: diffusion
     API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
@@ -295,12 +175,16 @@ build-diffusion-devic1:
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: devic1
     SENTRY_DSN: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
-  <<: *devic1-rules
 
+
+##############################################################
+# DEPLOY DEVIC1 (OPEN)
+#
 deploy-api-devic1:
-  <<: *deploy-open
-  needs:
-    - test-api
+  extends:
+    - ".deploy-open"
+  dependencies:
+    - node-modules-api
   variables:
     APP: api
     ENV: pop-api-devic1
@@ -310,11 +194,13 @@ deploy-api-devic1:
     name: pop-api-devic1
     url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
-  <<: *devic1-rules
+  rules:
+    - when: manual
 
 deploy-production-devic1:
-  <<: *deploy-open
-  needs:
+  extends:
+    - ".deploy-open"
+  dependencies:
     - build-production-devic1
   variables:
     APP: production
@@ -325,11 +211,13 @@ deploy-production-devic1:
     name: pop-production-devic1
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
-  <<: *devic1-rules
+  rules:
+    - when: manual
 
 deploy-diffusion-devic1:
-  <<: *deploy-open
-  needs:
+  extends:
+    - ".deploy-open"
+  dependencies:
     - build-diffusion-devic1
   variables:
     APP: diffusion
@@ -340,169 +228,5 @@ deploy-diffusion-devic1:
     name: pop-consultation-devic1
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
-  <<: *devic1-rules
-
-##############################################################
-# DEVELOP - TEST - MC
-#
-build-production-test:
-  <<: *build-production
-  variables:
-    APP: production
-    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
-    NODE_ENV: test
   rules:
     - when: manual
-
-build-diffusion-test:
-  <<: *build-diffusion
-  variables:
-    APP: diffusion
-    API_URL: http://pop-api-test.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
-    NODE_ENV: test
-  rules:
-    - when: manual
-
-##############################################################
-# STAGING - MC
-#
-
-build-production-staging:
-  <<: *build-production
-  variables:
-    APP: production
-    API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
-    NODE_ENV: staging
-  rules:
-    - when: manual
-
-build-diffusion-staging:
-  <<: *build-diffusion
-  variables:
-    APP: diffusion
-    API_URL: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-staging.culture.gouv.fr/
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
-    NODE_ENV: staging
-  rules:
-    - when: manual
-
-deploy-api-staging:
-  <<: *deploy-mc
-  needs:
-    - test-api
-  variables:
-    APP: api
-    ENV: pop-api-staging
-  stage: staging
-  environment:
-    name: pop-api-staging
-    url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-    deployment_tier: staging
-  when: manual
-
-deploy-production-staging:
-  <<: *deploy-mc
-  needs:
-    - test-production
-    - build-production-staging
-  variables:
-    APP: production
-    ENV: pop-production-staging
-  stage: staging
-  environment:
-    name: pop-production-staging
-    url: http://pop-production-staging.eu-west-3.elasticbeanstalk.com/
-    deployment_tier: staging
-  when: manual
-
-deploy-diffusion-staging:
-  <<: *deploy-mc
-  needs:
-    - test-diffusion
-    - build-diffusion-staging
-  variables:
-    APP: diffusion
-    ENV: pop-consultation-staging
-  stage: staging
-  environment:
-    name: pop-consultation-staging
-    url: http://pop-staging.culture.gouv.fr/
-    deployment_tier: staging
-  when: manual
-
-##############################################################
-# PRODUCTION - MC
-#
-
-build-production-production:
-  <<: *build-production
-  variables:
-    APP: production
-    API_URL: https://api.pop.culture.gouv.fr
-    POP_URL: https://pop.culture.gouv.fr
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
-    NODE_ENV: production
-  rules:
-    - when: manual
-
-build-diffusion-production:
-  <<: *build-diffusion
-  variables:
-    APP: diffusion
-    API_URL: https://api.pop.culture.gouv.fr
-    POP_URL: https://pop.culture.gouv.fr/
-    BUCKET_URL: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
-    NODE_ENV: production
-  rules:
-    - when: manual
-
-deploy-api-production:
-  <<: *deploy-mc
-  needs:
-    - test-api
-  variables:
-    APP: api
-    ENV: pop-api
-  stage: production
-  environment:
-    name: pop-api-production
-    url: https://api.pop.culture.gouv.fr/
-    deployment_tier: production
-  when: manual
-
-deploy-production-production:
-  <<: *deploy-mc
-  needs:
-    - test-production
-    - build-production-production
-  variables:
-    APP: production
-    ENV: pop-production
-  stage: production
-  environment:
-    name: pop-production-production
-    url: https://production.pop.culture.gouv.fr/
-    deployment_tier: production
-  when: manual
-
-deploy-diffusion-production:
-  <<: *deploy-mc
-  needs:
-    - test-diffusion
-    - build-diffusion-production
-  variables:
-    APP: diffusion
-    ENV: pop-consultation
-  stage: production
-  environment:
-    name: pop-consultation-production
-    url: https://www.pop.culture.gouv.fr/
-    deployment_tier: production
-  when: manual

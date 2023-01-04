@@ -39,27 +39,14 @@
     "validator": "^13.6.0",
     "webpack": "^5.52.0"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "./__tests__/setup/setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "./__tests__/setup/",
-      "./__tests__/__mocks__/",
-      "./__tests__/__notices__/"
-    ],
-    "moduleNameMapper": {
-      "^.+\\.(css|scss|png|jpg|scvg|jpeg)$": "<rootDir>/__tests__/__mocks__/fileMock.js"
-    },
-    "testEnvironment": "jsdom"
-  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
-    "jest": "^27.1.1"
+    "jest": "^27.1.1",
+    "jest-sonar": "^0.2.15"
   },
   "engines": {
     "node": "^14.17.5"
@@ -72,6 +59,11 @@
   },
   "prettier": {
     "printWidth": 100
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-report.xml",
+    "indent": 4
   },
   "author": "",
   "license": "MIT"
