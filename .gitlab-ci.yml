@@ -196,7 +196,7 @@ build-diffusion-devic1:
 # DEPLOY DEVIC1
 #
 deploy-api-devic1:
-   extends:
+  extends:
     - ".deploy-open"
   dependencies:
     - node-modules-api
