@@ -27,7 +27,7 @@ stages:
   - sast
   - quality
   - build
-#  - deploy
+  - deploy
 #  - staging
 #  - production
 
