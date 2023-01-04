@@ -168,7 +168,7 @@ sonar-production:
 build-production-devic1:
   extends:
     - ".build-app"
-  dependancies:
+  dependencies:
     - node-modules-production
   variables:
     APP: production
@@ -181,7 +181,7 @@ build-production-devic1:
 build-diffusion-devic1:
   extends:
     - ".build-app"
-  dependancies:
+  dependencies:
     - node-modules-diffusion
   variables:
     APP: diffusion
@@ -196,7 +196,7 @@ build-diffusion-devic1:
 # DEPLOY DEVIC1
 #
 deploy-api-devic1:
-  needs:
+  dependencies:
     - node-modules-api
   variables:
     APP: api
@@ -211,7 +211,7 @@ deploy-api-devic1:
     when: manual
 
 deploy-production-devic1:
-  needs:
+  dependencies:
     - build-production-devic1
   variables:
     APP: production
@@ -226,7 +226,7 @@ deploy-production-devic1:
     when: manual
 
 deploy-diffusion-devic1:
-  needs:
+  dependencies:
     - build-diffusion-devic1
   variables:
     APP: diffusion
