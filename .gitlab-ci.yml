@@ -22,9 +22,9 @@ variables:
 stages:
   - node-modules
   - test
-  - sast
-  - quality
-#  - build
+#  - sast
+#  - quality
+  - build
 #  - deploy
 #  - staging
 #  - production
