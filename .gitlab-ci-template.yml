@@ -47,6 +47,7 @@
   rules:
     - if: '$SAST_DISABLE == "true"'
       when: never
+    - when: always
   artifacts:
     name: ${APP}-audit-report
     paths:

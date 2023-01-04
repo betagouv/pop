@@ -66,7 +66,7 @@ node-modules-diffusion:
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 test-api:
-  needs:
+  dependencies:
     - node-modules-api
   extends: 
     - ".pop-test"
@@ -77,7 +77,7 @@ test-api:
     DB_ENDPOINT: mongodb://mongo:27017/pop
 
 test-production:
-  needs:
+  dependencies:
     - node-modules-production
   extends: 
     - ".pop-test"
@@ -85,7 +85,7 @@ test-production:
     APP: production
 
 test-diffusion:
-  needs:
+  dependencies:
     - node-modules-diffusion
   extends: 
     - ".pop-test"
@@ -97,7 +97,8 @@ test-diffusion:
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #
 audit-api:
-  extends: [".pop-audit"]
+  extends: 
+    - ".pop-audit"
   variables:
     APP: api
 
@@ -152,7 +153,7 @@ sonar-production:
 build-production-devic1:
   extends:
     - ".build-app"
-  needs:
+  dependencies:
     - node-modules-production
   variables:
     APP: production
@@ -165,7 +166,7 @@ build-production-devic1:
 build-diffusion-devic1:
   extends:
     - ".build-app"
-  needs:
+  dependencies:
     - node-modules-diffusion
   variables:
     APP: diffusion
@@ -177,12 +178,12 @@ build-diffusion-devic1:
 
 
 ##############################################################
-# DEPLOY DEVIC1
+# DEPLOY DEVIC1 (OPEN)
 #
 deploy-api-devic1:
   extends:
     - ".deploy-open"
-  needs:
+  dependencies:
     - node-modules-api
   variables:
     APP: api
@@ -199,7 +200,7 @@ deploy-api-devic1:
 deploy-production-devic1:
   extends:
     - ".deploy-open"
-  needs:
+  dependencies:
     - build-production-devic1
   variables:
     APP: production
@@ -216,7 +217,7 @@ deploy-production-devic1:
 deploy-diffusion-devic1:
   extends:
     - ".deploy-open"
-  needs:
+  dependencies:
     - build-diffusion-devic1
   variables:
     APP: diffusion
