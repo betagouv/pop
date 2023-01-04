@@ -126,6 +126,4 @@
 # TODO 
 # => Sonar règle Sonar pour bug détecté
 # => Template build avec build auto sur la branche develop-boost
-# => Template build package pour MCC Test + Staging + Prod
-# => Template deploy pour develop-boost -> devic1
-# Trivi ???
+# => Template build package pour MCC Test + Staging + Prod ??

@@ -18,8 +18,8 @@ include:
 # Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
 variables:
   AUDIT_LEVEL: "critical"
-  SAST_DISABLE: "true"
-  QUALITY_DISABLE: "true"
+  SAST_DISABLE: "false"
+  QUALITY_DISABLE: "false"
 
 stages:
   - node-modules
@@ -28,8 +28,6 @@ stages:
   - quality
   - build
   - deploy
-#  - staging
-#  - production
 
 workflow:
   rules:
@@ -39,47 +37,26 @@ workflow:
     - if: '$CI_COMMIT_BRANCH'
     - if: '$CI_COMMIT_TAG'
 
-
-##############################################################
-# TEMPLATES
-#
-
-.aws-mc-credentials: &aws-mc-credentials
-  - mkdir ~/.aws
-  - echo "[default]" > ~/.aws/credentials
-  - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_MC}" >> ~/.aws/credentials
-  - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_MC}" >> ~/.aws/credentials
-
-# Variables à utiliser avec ce template :
-#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-#   - ENV : Nom de l'environnement AWS cible.
-#
-#.deploy-mc: &deploy-mc
-#  stage: deploy
-#  image: python:3.9
-#  script:
-#    - *install-awsebcli
-#    - *aws-mc-credentials
-#    - cd apps/${APP}
-#    - eb deploy ${ENV}
-
 ##############################################################
 # NODE-MODULES
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 node-modules-api:
-  extends: [".node-modules"]
+  extends: 
+    - ".node-modules"
   variables:
     APP: api
 
 node-modules-production:
-  extends: [".node-modules"]
+  extends: 
+    - ".node-modules"
   variables:
     APP: production
 
 node-modules-diffusion:
-  extends: [".node-modules"]
+  extends: 
+    - ".node-modules"
   variables:
     APP: diffusion
 
@@ -91,7 +68,8 @@ node-modules-diffusion:
 test-api:
   needs:
     - node-modules-api
-  extends: [".pop-test"]
+  extends: 
+    - ".pop-test"
   services:
     - mongo:4.4
   variables:
@@ -101,32 +79,38 @@ test-api:
 test-production:
   needs:
     - node-modules-production
-  extends: [".pop-test"]
+  extends: 
+    - ".pop-test"
   variables:
     APP: production
 
 test-diffusion:
   needs:
     - node-modules-diffusion
-  extends: [".pop-test"]
+  extends: 
+    - ".pop-test"
   variables:
     APP: diffusion
 
 ##############################################################
 # SAST
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #
 audit-api:
-  extends: [".pop-audit"]
+  extends: 
+    - ".pop-audit"
   variables:
     APP: api
 
 audit-diffusion:
-  extends: [".pop-audit"]
+  extends: 
+    - ".pop-audit"
   variables:
     APP: diffusion
 
 audit-production:
-  extends: [".pop-audit"]
+  extends: 
+    - ".pop-audit"
   variables:
     APP: production
 
@@ -134,7 +118,8 @@ audit-production:
 # SONAR
 #
 # Variables à utiliser avec ce template :
-#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+#   - CI_PROJECT_NAME : Key du projet Sonar
+#   - SONAR_OPTIONS : Set du répertoire de l'application
 # SONAR_KEY=mc.pop.
 sonar-api:
   extends: 
@@ -142,7 +127,7 @@ sonar-api:
     - ".sonar-pop"
   variables:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api"
+    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api -Dsonar.quality.wait=true"
 
 sonar-diffusion:
   extends: 
@@ -168,7 +153,7 @@ sonar-production:
 build-production-devic1:
   extends:
     - ".build-app"
-  dependencies:
+  needs:
     - node-modules-production
   variables:
     APP: production
@@ -181,7 +166,7 @@ build-production-devic1:
 build-diffusion-devic1:
   extends:
     - ".build-app"
-  dependencies:
+  needs:
     - node-modules-diffusion
   variables:
     APP: diffusion
@@ -198,7 +183,7 @@ build-diffusion-devic1:
 deploy-api-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
+  needs:
     - node-modules-api
   variables:
     APP: api
@@ -215,7 +200,7 @@ deploy-api-devic1:
 deploy-production-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
+  needs:
     - build-production-devic1
   variables:
     APP: production
@@ -232,7 +217,7 @@ deploy-production-devic1:
 deploy-diffusion-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
+  needs:
     - build-diffusion-devic1
   variables:
     APP: diffusion
