@@ -210,7 +210,7 @@ deploy-api-devic1:
     url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
   rules:
-    when: manual
+    - when: manual
 
 deploy-production-devic1:
   extends:
@@ -227,7 +227,7 @@ deploy-production-devic1:
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
   rules:
-    when: manual
+    - when: manual
 
 deploy-diffusion-devic1:
   extends:
@@ -244,4 +244,4 @@ deploy-diffusion-devic1:
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
   rules:
-    when: manual
+    - when: manual
