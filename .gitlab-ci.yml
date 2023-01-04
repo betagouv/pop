@@ -196,6 +196,8 @@ build-diffusion-devic1:
 # DEPLOY DEVIC1
 #
 deploy-api-devic1:
+   extends:
+    - ".deploy-open"
   dependencies:
     - node-modules-api
   variables:
@@ -211,6 +213,8 @@ deploy-api-devic1:
     when: manual
 
 deploy-production-devic1:
+  extends:
+    - ".deploy-open"
   dependencies:
     - build-production-devic1
   variables:
@@ -226,6 +230,8 @@ deploy-production-devic1:
     when: manual
 
 deploy-diffusion-devic1:
+  extends:
+    - ".deploy-open"
   dependencies:
     - build-diffusion-devic1
   variables:
