@@ -18,8 +18,8 @@ include:
 # Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
 variables:
   AUDIT_LEVEL: "critical"
-  SAST_DISABLE: true
-  QUALITY_DISABLE: true
+  SAST_DISABLE: "true"
+  QUALITY_DISABLE: "true"
 
 stages:
   - node-modules
