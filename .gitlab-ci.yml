@@ -54,14 +54,14 @@ workflow:
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
 #   - ENV : Nom de l'environnement AWS cible.
 #
-.deploy-mc: &deploy-mc
-  stage: deploy
-  image: python:3.9
-  script:
-    - *install-awsebcli
-    - *aws-mc-credentials
-    - cd apps/${APP}
-    - eb deploy ${ENV}
+#.deploy-mc: &deploy-mc
+#  stage: deploy
+#  image: python:3.9
+#  script:
+#    - *install-awsebcli
+#    - *aws-mc-credentials
+#    - cd apps/${APP}
+#    - eb deploy ${ENV}
 
 ##############################################################
 # NODE-MODULES
