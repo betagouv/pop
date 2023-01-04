@@ -44,6 +44,9 @@
     - npm audit --json | npm-audit-html --output dependency_check_report.html || true
     - npm audit --audit-level=${AUDIT_LEVEL}
   allow_failure: true
+  rules:
+    - if: '$SAST_DISABLE == "true"'
+      when: never
   artifacts:
     name: ${APP}-audit-report
     paths:
