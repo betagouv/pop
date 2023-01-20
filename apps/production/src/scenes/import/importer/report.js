@@ -32,7 +32,7 @@ export default function generate(
   let contact = "";
   switch (collection) {
     case "monuments-historiques":
-      contact = "gaelle.pichon-meunier@culture.gouv.fr";
+      contact = " antonella.rotolo@culture.gouv.fr";
       break;
     case "mnr":
       contact = "isabelle.rouge-ducos@culture.gouv.fr";
