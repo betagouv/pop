@@ -22,12 +22,10 @@ async function recipients(to) {
       return [
         "anne.cook@culture.gouv.fr",
         "matthieu.rivallin@culture.gouv.fr",
-        "gaelle.pichon-meunier@culture.gouv.fr",
         "antonella.rotolo@culture.gouv.fr"
       ].join(",");
     case "mh":
       return [
-        "gaelle.pichon-meunier@culture.gouv.fr",
         "antonella.rotolo@culture.gouv.fr",
         "franck.fusibet@culture.gouv.fr",
         "franck.genestoux@culture.gouv.fr",
