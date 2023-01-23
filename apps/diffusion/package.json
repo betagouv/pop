@@ -43,9 +43,10 @@
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.1.0",
-    "jest": "^27.1.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "jest-environment-jsdom": "28.1.0",
+    "jest": "^28.1.0",
     "jest-sonar": "^0.2.15"
   },
   "engines": {
