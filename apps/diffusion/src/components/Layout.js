@@ -11,16 +11,24 @@ const message_maintenance = "Une opération de maintenance est en cours. Elle pe
 export default class Layout extends React.Component {
   state = { maintenance: "FALSE" };
 
-  getNbNoticesInBucket() {
+  async getNbNoticesInBucket() {
     //Récupération du panier actuel dans les cookies
     const cookies = new Cookies()
     let currentBucket = cookies.get("currentBucket") || []
+    this.setState({countBucket: currentBucket.length});
     return currentBucket.length
   }
 
   constructor(props) {
     super(props);
+    this.state = {
+      countBucket: 0
+    };
     this.isMaintenanceSite();
+  }
+
+  componentDidMount(){
+    this.getNbNoticesInBucket();
   }
 
   async isMaintenanceSite(){
@@ -45,7 +53,8 @@ export default class Layout extends React.Component {
                 <Link href="/bucket">
                   <a className="btn btn-outline-danger onPrintHide">
                     <div className="btn-bucket">
-                      <div id="nbBucket">{this.getNbNoticesInBucket() != 0 ? "Consulter mon panier ( " + this.getNbNoticesInBucket() + " )" : "Panier vide"} </div>                    </div>
+                      <div id="nbBucket">{this.state.countBucket != 0 ? "Consulter mon panier ( " + this.state.countBucket + " )" : "Panier vide"} </div>
+                    </div>
                   </a>
                 </Link>
               </div>
