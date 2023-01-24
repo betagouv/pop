@@ -19,6 +19,9 @@ function parseFilesCsv(files, encoding, typeImport) {
       for (var i = 0; i < files.length; i++) {
         filesMap[files[i].name] = files[i];
       }
+
+      // Réupération des producteurs
+      const response = await api.getProducteurs();
   
       for (var i = 0; i < objs.length; i++) {
         const obj = objs[i];
@@ -51,7 +54,6 @@ function parseFilesCsv(files, encoding, typeImport) {
         // On parcourt les producteurs pour savoir si le préfixe de la notice correspond à un des préfixes des producteurs mérimée, palissy ou mémoire
         let collection = "";
         let producteurs = [];
-        const response = await api.getProducteurs();
   
         if(response){
           producteurs = response.producteurs;
