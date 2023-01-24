@@ -1,0 +1,130 @@
+##############################################################
+# NODE-MODULES
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+.node-modules:
+  stage: node-modules
+  script:
+    - cd apps/${APP}
+    - npm ci
+  artifacts:
+    paths: 
+      - apps/${APP}/node_modules
+    name: ${APP}-modules
+    expire_in: 1 hour
+
+##############################################################
+# TEST
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+.pop-test:
+  stage: test
+  script:
+    - cd apps/${APP}
+    - npm test
+  artifacts:
+    name: test-rapport
+    expire_in: 1 hour
+    when: always
+    paths:
+      - apps/${APP}/coverage
+      - apps/${APP}/reports
+
+##############################################################
+# SAST
+#
+.pop-audit:
+  stage: sast
+  script:
+    - npm i npm-audit-html -g
+    - cd apps/${APP}
+    - npm audit --json > dependency_check_report.json || true
+    - npm audit --json | npm-audit-html --output dependency_check_report.html || true
+    - npm audit --audit-level=${AUDIT_LEVEL}
+  allow_failure: true
+  rules:
+    - if: '$SAST_DISABLE == "true"'
+      when: never
+    - when: always
+  artifacts:
+    name: ${APP}-audit-report
+    paths:
+      - apps/${APP}/dependency_check_report.html
+      - apps/${APP}/dependency_check_report.json
+    when: always
+    expire_in: 1 day
+
+
+##############################################################
+# SONAR
+#
+# SONAR_KEY=mc.pop.
+.sonar-pop:
+  variables:
+    SONAR_IMAGE: "glregistry.boost.open.global/boost/docker/gitlab-ant-sonar:latest"
+    SONAR_COMMAND: "sonar-scanner"
+    SONAR_AUTHENT: "-Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
+    SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
+    SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}"
+  rules:
+    - if: '$QUALITY_DISABLE == "true"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+        REF_NAME: $CI_MERGE_REQUEST_REF_PATH
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_DEFAULT_BRANCH
+        REF_NAME: $CI_COMMIT_REF_NAME
+
+##############################################################
+# BUILD
+#
+.build-app:
+  stage: build
+  script:
+    - cd apps/${APP}
+    - echo "API_URL=${API_URL}" > .env
+    - echo "POP_URL=${POP_URL}" >> .env
+    - echo "BUCKET_URL=${BUCKET_URL}" >> .env
+    - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
+    - echo "NODE_ENV=${NODE_ENV}" >> .env
+    - npm run build
+  artifacts:
+    paths:
+      - apps/${APP}/*
+    name: ${CI_JOB_NAME}-${CI_COMMIT_SHORT_SHA}
+    expire_in: 7 days
+
+
+##############################################################
+# DEPLOY DEVIC1
+#
+# Variables à utiliser avec ce template :
+#   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
+#   - ENV : Nom de l'environnement AWS cible.
+#   - NAME: Nom de l'application (présent dans le fichier .elasticbeanstalk/config.yml)
+#   - REPLACE: Nom de l'application cible AWS
+#
+.deploy-open:
+  stage: deploy
+  image: python:3.9
+  script:
+    - pip install awsebcli
+    - mkdir ~/.aws
+    - echo "[eb-cli]" > ~/.aws/credentials
+    - echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID_OPEN}" >> ~/.aws/credentials
+    - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
+    - cd apps/${APP}
+    - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
+    - eb deploy ${ENV}
+
+# TODO 
+# => Sonar règle Sonar pour bug détecté
+# => Template build avec build auto sur la branche develop-boost
+# => Template build package pour MCC Test + Staging + Prod ??
