@@ -2,7 +2,7 @@ const Dotenv = require('dotenv-webpack');
 
 const withPWA = require('next-pwa')({
   dest: "public",
-  disable: "development" !== process.env.NODE_ENV,
+  disable: "development" === process.env.NODE_ENV,
   swSrc: 'service-worker.js'
 });
 
