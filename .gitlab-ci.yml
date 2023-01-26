@@ -183,8 +183,6 @@ build-diffusion-devic1:
 deploy-api-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
-    - node-modules-api
   variables:
     APP: api
     ENV: pop-api-devic1
@@ -200,8 +198,6 @@ deploy-api-devic1:
 deploy-production-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
-    - build-production-devic1
   variables:
     APP: production
     ENV: pop-production-devic1
@@ -217,8 +213,6 @@ deploy-production-devic1:
 deploy-diffusion-devic1:
   extends:
     - ".deploy-open"
-  dependencies:
-    - build-diffusion-devic1
   variables:
     APP: diffusion
     ENV: pop-consultation-devic1

@@ -123,8 +123,3 @@
     - cd apps/${APP}
     - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
     - eb deploy ${ENV}
-
-# TODO 
-# => Sonar règle Sonar pour bug détecté
-# => Template build avec build auto sur la branche develop-boost
-# => Template build package pour MCC Test + Staging + Prod ??
