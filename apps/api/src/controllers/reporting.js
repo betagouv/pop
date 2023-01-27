@@ -22,12 +22,10 @@ async function recipients(to) {
       return [
         "anne.cook@culture.gouv.fr",
         "matthieu.rivallin@culture.gouv.fr",
-        "gaelle.pichon-meunier@culture.gouv.fr",
         "antonella.rotolo@culture.gouv.fr"
       ].join(",");
     case "mh":
       return [
-        "gaelle.pichon-meunier@culture.gouv.fr",
         "antonella.rotolo@culture.gouv.fr",
         "franck.fusibet@culture.gouv.fr",
         "franck.genestoux@culture.gouv.fr",
@@ -67,6 +65,7 @@ router.post("/email", passport.authenticate("jwt", { session: false }), async (r
     await Mailer.send(subject, to, body, true);
     return res.status(200).send({ success: true, msg: "OK" });
   } catch (e) {
+    console.log(e);
     capture(e);
     return res.status(403).send({ success: false, msg: "Impossible d'envoyer le mail" });
   }

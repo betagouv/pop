@@ -2,3 +2,7 @@ node_modules/
 .next/
 .env
 public/
+
+# Jest
+coverage
+reports
