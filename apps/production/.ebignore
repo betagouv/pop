@@ -29,4 +29,4 @@ package-lock\.json
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-.bin/
+#.bin/
