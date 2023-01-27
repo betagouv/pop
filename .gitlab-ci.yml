@@ -199,7 +199,6 @@ deploy-production-devic1:
   extends:
     - ".deploy-open"
   dependencies:
-    - node-modules-production
     - build-production-devic1
   variables:
     APP: production
