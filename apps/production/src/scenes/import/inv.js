@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import Mapping from "../../services/mapping";
 import Importer from "./importer";
-
+import common_mh_inv from "./common_mh_inv";
 import Merimee from "../../entities/Merimee";
 import Palissy from "../../entities/Palissy";
 import Memoire from "../../entities/Memoire";
@@ -20,8 +20,8 @@ export default class Import extends React.Component {
           recipient="inv"
           dropzoneText={
             <span>
-              Glissez & déposez vos fichiers au format <b>Renabl</b> (<code>.xml</code>) ou{" "}
-              <b>Gertrude</b> (<code>.txt</code> à partir de la version 1.6) et les images associées
+              Glissez & déposez vos fichiers au format <b>Renabl</b> (<code>.xml</code>) , {" "}
+              <b>Gertrude</b> (<code>.txt</code> à partir de la version 1.6)  ou{" "} <b>Csv</b> (séparateur : | ) et les images associées
               (au format <code>.jpg</code>) dans cette zone
             </span>
           }
@@ -97,8 +97,23 @@ function parseFiles(files, encoding) {
       return;
     }
 
+    // Import CSV type (MH)
+    await common_mh_inv.parseFilesCsv(files, encoding, "INV")
+      .then((resp) => {
+        // Vérification des références
+        for (let i = 0; i < resp.importedNotices.length; i++) {
+          checkReference(resp.importedNotices[i]);
+        }
+        resolve(resp);
+      })
+      .catch((err) => {
+        if(err !== "Pas de fichiers .csv detecté"){
+          reject(err);
+        } 
+    });
+
     // ERROR
-    reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl ou Gertrude détecté");
+    reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl, Csv ou Gertrude détecté");
   });
 }
 
@@ -322,7 +337,7 @@ function readme() {
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
-          <li>texte : format Renabl (.xml) ou Gertrude (.txt à partir de la version 1.6) </li>
+          <li>texte : format Renabl (.xml) , Gertrude (.txt à partir de la version 1.6) ou csv (séparateur : | ) </li>
           <li>illustration : jpg, png.</li>
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1

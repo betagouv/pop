@@ -26,16 +26,6 @@
   "bugs": {
     "url": "https://github.com/betagouv/pop/issues"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./src/__tests__/setup/setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "./src/__tests__/setup/",
-      "./src/__tests__/__notices__/"
-    ]
-  },
   "prettier": {
     "printWidth": 100
   },
@@ -89,6 +79,7 @@
     "csv-parse": "^4.16.0",
     "inquirer": "^8.2.0",
     "jest": "^27.5.1",
+    "jest-sonar": "^0.2.15",
     "listr": "^0.14.2",
     "nodemon": "^2.0.15",
     "rxjs": "^6.6.7",

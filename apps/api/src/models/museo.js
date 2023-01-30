@@ -16,6 +16,15 @@ const Schema = new mongoose.Schema(
         description: "N° de référence dans la base Muséofile"
       }
     },
+    PRODUCTEUR: {
+      type: String,
+      default: "MUSEE",
+      documentation: {
+        description: "Producteur de la donnée : MUSEE",
+        generated: true,
+        label: "Producteur"
+      }
+    },
     POP_FLAGS: {
       type: [String],
       default: [],
