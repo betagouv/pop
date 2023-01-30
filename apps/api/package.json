@@ -65,7 +65,7 @@
     "swagger-autogen": "^2.10.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2",
-    "validator": "^13.6.0",
+    "validator": "^13.7.0",
     "x2js": "^3.4.1",
     "xml": "^1.0.1",
     "xml2js": "^0.4.23"
