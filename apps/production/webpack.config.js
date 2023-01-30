@@ -105,13 +105,26 @@ module.exports = env => {
             "file-loader",
           ]
         },
-        {
+    /*    {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
             name: '[name].[hash:8].[ext]',
           },
+        },*/
+        {
+          test: /\.(bmp|gif|png|jpe?g|svg)$/i,
+          use: [
+            "file-loader",
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                limit: 10000,
+                name: '[name].[hash:8].[ext]',
+              }
+            }
+          ]
         },
       ]
     },
