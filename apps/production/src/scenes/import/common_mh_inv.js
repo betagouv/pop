@@ -90,7 +90,7 @@ function parseFilesCsv(files, encoding, typeImport) {
         } else if ("memoire" === collection) {
           newNotice = new Memoire(obj);
           addFile("REFIMG", "IMG", obj, newNotice, filesMap);
-        } else if ("INV" !== typeImport && "autor" === collection) {
+        } else if ("autor" === collection) {
           newNotice = new Autor(obj);
         } else {
           reject(messages[typeImport]);

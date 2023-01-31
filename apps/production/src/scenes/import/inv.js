@@ -100,7 +100,11 @@ function parseFiles(files, encoding) {
     // Import CSV type (MH)
     await common_mh_inv.parseFilesCsv(files, encoding, "INV")
       .then((resp) => {
-        resolve(resp)
+        // Vérification des références
+        for (let i = 0; i < resp.importedNotices.length; i++) {
+          checkReference(resp.importedNotices[i]);
+        }
+        resolve(resp);
       })
       .catch((err) => {
         if(err !== "Pas de fichiers .csv detecté"){
