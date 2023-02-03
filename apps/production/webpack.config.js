@@ -112,7 +112,7 @@ module.exports = env => {
             limit: 10000,
             name: '[name].[hash:8].[ext]',
           },
-        },
+        }
       ]
     },
     plugins: plugins
