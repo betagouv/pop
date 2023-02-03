@@ -39,13 +39,14 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
         if(typeof element == "string"){
           element = addLinkToText(element);
         } else {
-          element = <p>{element}</p>
+          // element = <p>{element}</p>
+          element = <div>{element}</div>
         }
         return element;
       }));
     }
   } else {
-    str = <p>{str}</p>;
+    str = <div>{str}</div>;
   }
 
   if(!isPdf){
@@ -53,7 +54,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       <div id={title} className="field">
         <h3>{title}</h3>
 
-        <p>{str}</p>
+        <div>{str}</div>
 
         <style jsx>{`
           .field {
@@ -95,7 +96,8 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
               { renderLinksPdf(content, isLineBreakLink) }
             </View>
             : 
-            <p style={styles.listItemLinked}>{renderLinksPdf(content, isLineBreakLink)}</p>
+            <Text style={styles.listItemLinked}>{renderLinksPdf(content, isLineBreakLink)}</Text>
+            
           }
          
         </View>
@@ -106,7 +108,8 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       return (
         <View>
           <Text style={styles.fieldTitle} >{title + " : "}</Text>
-          <Text style={styles.text} >{str}</Text>
+          { /* <Text style={styles.text} >{str}</Text> */ }
+          <Text style={styles.text} >{str.props.children}</Text>
         </View>
       )
     }
@@ -125,16 +128,19 @@ function renderLinksPdf(content, isLineBreakLink){
       return (
         item ?
           !isLineBreakLink ?
-          <View style={styles.listItem}>
-            <Link style={styles.textLinked}
-              key={item.val ? item.val : item}
-              src={item.url ? item.url : item}>
-              {item.val ? item.val : item}
-            </Link>
-            {(index < content.length - 1) ? <Text>, </Text> : null}
-          </View> :  renderBreakLineLinkPdf(item) : null)
+            <View style={styles.listItem}>
+              <Link style={styles.textLinked}
+                key={item.val ? item.val : item}
+                src={item.url ? item.url : item}>
+                <Text>{item.val ? item.val : item}</Text>
+              </Link>
+              {(index < content.length - 1) ? <Text>, </Text> : null}
+            </View> :  
+            renderBreakLineLinkPdf(item) : 
+          null
+          )
     }) :
-      <Link style={styles.textLinked} src={content.url ? content.url : content} >{content.val ? content.val : content}</Link>
+      <Link style={styles.textLinked} src={content.url ? content.url : content} ><Text>{content.val ? content.val : content}</Text></Link>
   )
 }
 
@@ -144,7 +150,7 @@ function renderBreakLineLinkPdf(item){
         <Link style={styles.textLineBreakLinked}
           key={item.val ? item.val : item}
           src={item.url ? item.url : item}>
-          {item.val ? item.val : item}
+          <Text>{item.val ? item.val : item}</Text>
         </Link>
       </View>
     )
@@ -192,7 +198,7 @@ function addLinkToText(str) {
     }
   }
 
-  return <p>{content}</p>;
+  return <div>{content}</div>;
 }
 
 function splitString(str) {

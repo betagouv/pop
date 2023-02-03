@@ -8,10 +8,6 @@ import { bucket_url } from "../../config";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 
-function splitLinks(values){
-
-}
-
 export function JocondePdf(notice, title, links, museo) {
   return (
     <Document>
@@ -87,7 +83,7 @@ export function JocondePdf(notice, title, links, museo) {
                 <Field title={mapping.joconde.DEPO.label} content={notice.DEPO} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} isPdf={true} />
-                <Field title={mapping.joconde.LOCA.label} content={pdfLinks(notice.LOCA, "loca")} separator="#" isPdf={true} link={true} />
+                <Field title={mapping.joconde.LOCA.label} content={pdfLinks(notice.LOCA, "loca")} separator="#" isPdf={true} link={true} isLineBreakLink={false}/>
                 <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} separator="#" isPdf={true} />
                 <Field title="" content={notice.MANQUANT_COM} separator="#" isPdf={true} />
               </View> : null}
@@ -144,7 +140,9 @@ export function JocondePdf(notice, title, links, museo) {
                     style={styles.listLinked}
                     title={mapping.joconde.LVID.label}
                     src={notice.LVID}
-                    key="notice.LVID">{notice.LVID}</Link>
+                    key="notice.LVID">
+                      <Text>{notice.LVID}</Text>
+                  </Link>
                   : <></>
               }
 
@@ -157,10 +155,12 @@ export function JocondePdf(notice, title, links, museo) {
                 (notice.WWW && notice.WWW.length) ?
                   notice.WWW.map((value, index) => {
                     return <Link
-                      style={styles.listLinked}
-                      src={notice.WWW[index]}
-                      target="_blank"
-                      key={notice.WWW[index]}>{notice.WWW[index]}</Link>
+                        style={styles.listLinked}
+                        src={notice.WWW[index]}
+                        target="_blank"
+                        key={notice.WWW[index]}>
+                          <Text>{notice.WWW[index]}</Text>
+                      </Link>
                   }) : <></>
               }
 
@@ -175,13 +175,16 @@ export function JocondePdf(notice, title, links, museo) {
                     style={styles.listLinked}
                     title={mapping.joconde.MUSEO.label}
                     src={`/notice/museo/${notice.MUSEO}`}
-                    key={notice.MUSEO}>{museo
+                    key={notice.MUSEO}>
+                      <Text>{museo
                       ? [
                         museo.NOMOFF || museo.NOMUSAGE || museo.ANC,
                         museo.VILLE_M || museo.VILLE_AD,
                         museo.REF
                       ].join(" - ")
-                      : null}</Link>
+                      : null}
+                      </Text>
+                      </Link>
                   : <></>
               }
 
@@ -196,7 +199,9 @@ export function JocondePdf(notice, title, links, museo) {
                     style={styles.listLinked}
                     title={mapping.joconde.RETIF.label}
                     src={notice.RETIF}
-                    key="notice.RETIF">{notice.RETIF}</Link>
+                    key="notice.RETIF">
+                      <Text>{notice.RETIF}</Text>
+                  </Link>
                   : <></>
               }
 
@@ -211,7 +216,7 @@ export function JocondePdf(notice, title, links, museo) {
                     style={styles.listLinked}
                     title={mapping.joconde.MSGCOM.label}
                     src={`mailto:${notice.MSGCOM}`}
-                    key="notice.MSGCOM">{`mailto:${notice.MSGCOM}`}</Link>
+                    key="notice.MSGCOM"><Text>{`mailto:${notice.MSGCOM}`}</Text></Link>
                   : <></>
               }
             </View>
