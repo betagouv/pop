@@ -24,7 +24,7 @@ export default class Error extends React.Component {
     }
   }
 
-  render() { console.log(this.props.statusCode)
+  render() {
     if (this.props.statusCode && this.props.statusCode === 404) {
       return (
         <Layout>
