@@ -43,32 +43,45 @@ export default class extends React.Component {
   }
 
   static async getInitialProps({ query: { id }, asPath }) {
-    const notice = await API.getNotice("memoire", id);
-    const collection = notice && await findCollection(notice.LBASE);
     const searchParamsUrl = asPath.substring(asPath.indexOf("?") + 1);
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
 
-    let links = [];
-    if (collection) {
-      const values = await API.getNotice(collection, notice.LBASE);
-      links = values.filter(v => v);
-    }
+    try{
+      // Récupération de la notice
+      const notice = await API.getNotice("memoire", id);
+      // Si la notice n'existe pas, return pour la page 404
+      if(!notice){
+        return {searchParamsUrl, searchParams};
+      }
 
-    const arr = [];
-    if (notice) {
+      const collection = await findCollection(notice.LBASE);
+
+      let links = [];
+      if (collection) {
+        // Récupération des notices liées Mérimée et Palissy
+        const values = await API.getNotice(collection, notice.LBASE);
+        links = values.filter(v => v);
+      }
+
+      const arr = [];
       const { REFJOC, REFMUS } = notice;
+      // Récupération des notices Museo et Joconde
       pushLinkedNotices(arr, REFMUS, "museo");
       pushLinkedNotices(arr, REFJOC, "joconde");
+
+      const linkedNotices = (await Promise.all(arr)).filter(l => l);
+      links.push(...linkedNotices);
+
+      // Préparation des liens vers les notices Mérimée et Palissy
+      let listUrl = await Promise.all(notice.LBASE.map(async ref => {
+        const collection = await findCollection(ref);
+        return { key: ref, ref: ref, url: url(collection, ref) };
+      }));
+
+      return { notice, links, listUrl, searchParamsUrl, searchParams };
+    }catch(exception){
+      return {searchParamsUrl, searchParams};
     }
-    const linkedNotices = (await Promise.all(arr)).filter(l => l);
-    links.push(...linkedNotices);
-
-    let listUrl = await Promise.all(notice.LBASE.map(async ref => {
-      const collection = await findCollection(ref);
-      return { key: ref, ref: ref, url: url(collection, ref) };
-    }));
-
-    return { notice, links, listUrl, searchParamsUrl, searchParams };
   }
 
   photographer() {
@@ -178,6 +191,7 @@ export default class extends React.Component {
     if (!this.props.notice) {
       return throw404();
     }
+
     const { notice } = this.props;
 
     const { title, images, image_preview, metaDescription } = getNoticeInfo(notice);
