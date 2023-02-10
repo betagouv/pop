@@ -38,6 +38,10 @@ export default class extends React.Component {
     const searchParams = Object.fromEntries(getParamsFromUrl(asPath));
     const arr = [];
 
+    if(!notice){
+      return {searchParamsUrl, searchParams};
+    }
+
     let hideButton = false;
     const noticesLiees = await API.getMuseoCollection(notice.REF);
 
