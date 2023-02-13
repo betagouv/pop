@@ -15,7 +15,7 @@ const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
 let moment = require('moment-timezone')
 
-const { formattedNow, deleteFile, uploadFile, updateOaiNotice, getBaseCompletName } = require("./utils");
+const { formattedNow, deleteFile, uploadFile, updateOaiNotice, hasCorrectCoordinates } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 
@@ -23,8 +23,6 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 async function withFlags(notice) {
-  notice.POP_FLAGS = [];
-
   //check refs
   notice.POP_FLAGS = await checkValidRef(notice.REFMEM, Memoire, notice.POP_FLAGS, "REFMEM");
   notice.POP_FLAGS = await checkValidRef(notice.REFPAL, Palissy, notice.POP_FLAGS, "REFPAL");
@@ -35,6 +33,8 @@ async function withFlags(notice) {
 
 async function transformBeforeCreateOrUpdate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
+  notice.POP_FLAGS = [];
+
   if (notice.PHOTO !== undefined) {
     notice.CONTIENT_IMAGE = notice.PHOTO ? "oui" : "non";
   }
@@ -52,6 +52,7 @@ async function transformBeforeCreateOrUpdate(notice) {
     lat = String(notice.POP_COORDONNEES.lat);
     lon = String(notice.POP_COORDONNEES.lon);
   }
+
   if (lat || lon) {
     if(lat){
       coordonnees.lat = parseFloat(lat.replace(",","."));
@@ -62,7 +63,17 @@ async function transformBeforeCreateOrUpdate(notice) {
     //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
     if(coordonnees.lat !==0  && !isNaN(coordonnees.lat) && 
        coordonnees.lon !==0  && !isNaN(coordonnees.lon)){
-      notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+
+      // Vérification de la cohérence des coordonnées
+      if(!hasCorrectCoordinates({ POP_COORDONNEES: { lat: coordonnees.lat, lon: coordonnees.lon } })){
+        notice.POP_FLAGS.push("POP_COORDONNEES_NOT_RIGHT");
+        coordonnees.lat = 0;
+        coordonnees.lon = 0;
+        notice.POP_CONTIENT_GEOLOCALISATION = "non";
+      } else {
+        notice.POP_CONTIENT_GEOLOCALISATION = "oui";
+      }
+      
     }
     else {
       notice.POP_CONTIENT_GEOLOCALISATION = "non";
@@ -70,6 +81,7 @@ async function transformBeforeCreateOrUpdate(notice) {
   } else {
     notice.POP_CONTIENT_GEOLOCALISATION = "non";
   }
+
   if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
     notice["POP_COORDONNEES.lat"] = coordonnees.lat;
     notice["POP_COORDONNEES.lon"] = coordonnees.lon;
@@ -268,7 +280,7 @@ router.put(
     //Ajout de l'historique de la notice
     var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
     
-    let HISTORIQUE = notice.HISTORIQUE || [];
+    let HISTORIQUE = prevNotice.HISTORIQUE || [];
     const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
     HISTORIQUE.push(newHistorique);
@@ -286,6 +298,7 @@ router.put(
     }
     promises.push(Museo.findOneAndUpdate({ REF: notice.REF }, notice, { new: true }));
     promises.push(updateOaiNotice(NoticesOAI, notice.REF, oaiObj))
+
     try {
       await Promise.all(promises);
       //Maj index elasticsearch
