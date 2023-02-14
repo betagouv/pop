@@ -431,7 +431,7 @@ router.post(
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
-      notice.REFO = await populatePalissyREFA(notice);
+      await populatePalissyREFA(notice);
       await transformBeforeCreate(notice);
       //Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);

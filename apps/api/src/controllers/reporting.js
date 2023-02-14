@@ -62,7 +62,7 @@ router.post("/email", passport.authenticate("jwt", { session: false }), async (r
     return res.status(400).send("Destinataires invalides.");
   }
   try {
-    //await Mailer.send(subject, to, body, true);
+    await Mailer.send(subject, to, body, true);
     return res.status(200).send({ success: true, msg: "OK" });
   } catch (e) {
     console.log(e);
