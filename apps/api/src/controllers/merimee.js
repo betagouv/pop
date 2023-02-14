@@ -154,6 +154,10 @@ async function withFlags(notice) {
     if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
       notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
     }
+
+    if(!hasCorrectCoordinates(notice.POP_COORDONNEES)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_RIGHT");
+    }
   }
 
   //Check link refs
@@ -195,14 +199,12 @@ async function transformBeforeCreateOrUpdate(notice) {
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
 
+  notice = await withFlags(notice);
+
   // To prevent crash on ES
-  if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
+  if (!notice.POP_COORDONNEES || !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-  //notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice = await withFlags(notice);
-  console.log(notice.POP_CONTIENT_GEOLOCALISATION)
-  console.log('Test', hasCorrectCoordinates(notice))
 }
 
 async function transformBeforeUpdate(notice) {
@@ -354,7 +356,6 @@ router.put(
 
       // Suppression des valeurs vident pour les champs multivalues
       cleanArrayValue(notice);
-
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
