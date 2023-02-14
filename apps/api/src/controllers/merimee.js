@@ -133,6 +133,14 @@ async function withFlags(notice) {
       }
     }
   }
+  // Reference not found REFO
+  if (notice.REFO) {
+    for (let i = 0; i < notice.REFO.length; i++) {
+      if (!(await Palissy.exists({ REF: notice.REFO[i] }))) {
+        notice.POP_FLAGS.push("REFO_REF_NOT_FOUND");
+      }
+    }
+  }
   //Coorm not in France
   if(notice.COORM && notice.ZONE){
     const convert = convertCOORM(notice.COORM, notice.ZONE);
@@ -248,6 +256,41 @@ function populateREFO(notice) {
     resolve(REFO);
   });
 }
+function populatePalissyREFA(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(notice.REFO)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const palissys = await Palissy.find({ REFA: notice.REF });
+
+      for (let i = 0; i < palissys.length; i++) {
+        // If the object is removed from notice, then remove it from merimee
+        if (!notice.REFO.includes(palissys[i].REF)) {
+          palissys[i].REFA = palissys[i].REFA.filter(e => e !== notice.REF);
+          promises.push(palissys[i].save());
+        }
+      }
+
+      for (let i = 0; i < notice.REFO.length; i++) {
+        if (!palissys.find(e => e.REF === notice.REFO[i])) {
+          const obj = await Palissy.findOne({ REF: notice.REFO[i] });
+          if (obj && Array.isArray(obj.REFA) && !obj.REFA.includes(notice.REF)) {
+            obj.REFA.push(notice.REF);
+            promises.push(obj.save());  
+          }
+        }
+      }
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
+  });
+}
 
 // Generate new ID from notice information (department + prefix)
 router.get("/newId", passport.authenticate("jwt", { session: false }), async (req, res) => {
@@ -318,7 +361,7 @@ router.put(
       if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
         notice.DPT = prevNotice.DPT;
       }
-      notice.REFO = await populateREFO(notice);
+       await populatePalissyREFA(notice);
 
       // Update IMPORT ID (this code is unclear…)
       if (notice.POP_IMPORT.length) {
@@ -389,7 +432,7 @@ router.post(
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
-      notice.REFO = await populateREFO(notice);
+      await populatePalissyREFA(notice);
       await transformBeforeCreate(notice);
       //Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
