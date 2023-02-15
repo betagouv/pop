@@ -36,6 +36,12 @@ app.prepare().then(() => {
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
     const isNotSecure =
       req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http";
+    const splitUrl = req.url.split('/');
+    // Vérifie si un élément est vide dans l'url
+    if(splitUrl.indexOf("", 1) > -1){
+      res.statusCode = 404;
+      handle(req, res, parsedUrl);
+    }
     if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` });
       res.end();
