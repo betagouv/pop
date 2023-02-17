@@ -57,6 +57,8 @@ function flagAsText(flag) {
     return `Les coordonnées du champ COORM ne sont pas géolocalisées en France.`;
   } else if (flag === "COOR_NOT_IN_FRANCE") {
     return `Les coordonnées du champ COOR ne sont pas géolocalisées en France.`;
+  } else if (flag === "POP_COORDONNEES_NOT_RIGHT") {
+    return `Les coordonnées du champ POP_COORDONNEES ne sont pas correctes.`;
   }
 }
 

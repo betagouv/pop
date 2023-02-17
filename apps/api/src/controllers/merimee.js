@@ -133,6 +133,14 @@ async function withFlags(notice) {
       }
     }
   }
+  // Reference not found REFO
+  if (notice.REFO) {
+    for (let i = 0; i < notice.REFO.length; i++) {
+      if (!(await Palissy.exists({ REF: notice.REFO[i] }))) {
+        notice.POP_FLAGS.push("REFO_REF_NOT_FOUND");
+      }
+    }
+  }
   //Coorm not in France
   if(notice.COORM && notice.ZONE){
     const convert = convertCOORM(notice.COORM, notice.ZONE);
@@ -153,6 +161,10 @@ async function withFlags(notice) {
   if(notice.POP_COORDONNEES && notice.POP_COORDONNEES.lat && notice.POP_COORDONNEES.lon){
     if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
       notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
+    }
+
+    if(!hasCorrectCoordinates(notice.POP_COORDONNEES)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_RIGHT");
     }
   }
 
@@ -195,14 +207,12 @@ async function transformBeforeCreateOrUpdate(notice) {
 
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
 
+  notice = await withFlags(notice);
+
   // To prevent crash on ES
-  if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
+  if (!notice.POP_COORDONNEES || !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = { lat: 0, lon: 0 };
   }
-  //notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  notice = await withFlags(notice);
-  console.log(notice.POP_CONTIENT_GEOLOCALISATION)
-  console.log('Test', hasCorrectCoordinates(notice))
 }
 
 async function transformBeforeUpdate(notice) {
@@ -244,6 +254,41 @@ function populateREFO(notice) {
     const objs = await Palissy.find({ REFA: notice.REF });
     const REFO = objs.map(e => e.REF);
     resolve(REFO);
+  });
+}
+function populatePalissyREFA(notice) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(notice.REFO)) {
+        resolve();
+        return;
+      }
+      const promises = [];
+      const palissys = await Palissy.find({ REFA: notice.REF });
+
+      for (let i = 0; i < palissys.length; i++) {
+        // If the object is removed from notice, then remove it from merimee
+        if (!notice.REFO.includes(palissys[i].REF)) {
+          palissys[i].REFA = palissys[i].REFA.filter(e => e !== notice.REF);
+          promises.push(palissys[i].save());
+        }
+      }
+
+      for (let i = 0; i < notice.REFO.length; i++) {
+        if (!palissys.find(e => e.REF === notice.REFO[i])) {
+          const obj = await Palissy.findOne({ REF: notice.REFO[i] });
+          if (obj && Array.isArray(obj.REFA) && !obj.REFA.includes(notice.REF)) {
+            obj.REFA.push(notice.REF);
+            promises.push(obj.save());  
+          }
+        }
+      }
+      await Promise.all(promises);
+      resolve();
+    } catch (error) {
+      capture(error);
+      resolve();
+    }
   });
 }
 
@@ -316,7 +361,7 @@ router.put(
       if(notice.DPT==null && prevNotice!= null && prevNotice.DPT != null){
         notice.DPT = prevNotice.DPT;
       }
-      notice.REFO = await populateREFO(notice);
+       await populatePalissyREFA(notice);
 
       // Update IMPORT ID (this code is unclear…)
       if (notice.POP_IMPORT.length) {
@@ -354,7 +399,6 @@ router.put(
 
       // Suppression des valeurs vident pour les champs multivalues
       cleanArrayValue(notice);
-
       checkESIndex(doc);
       promises.push(updateNotice(Merimee, ref, notice));
       promises.push(updateOaiNotice(NoticesOAI, ref, oaiObj));
@@ -388,7 +432,7 @@ router.post(
           .send({ success: false, msg: "Autorisation nécessaire pour créer cette ressource." });
       }
       notice.MEMOIRE = await checkIfMemoireImageExist(notice);
-      notice.REFO = await populateREFO(notice);
+      await populatePalissyREFA(notice);
       await transformBeforeCreate(notice);
       //Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
