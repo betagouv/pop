@@ -130,6 +130,7 @@
     - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
     - cd apps/${APP}
     - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
+    - mkdir -p .platform/confighooks/prebuild
     - echo "${MORE_HEADER}" | base64 --decode > .platform/confighooks/prebuild/01_install_more_header.sh
     - echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
     - eb deploy ${ENV}
