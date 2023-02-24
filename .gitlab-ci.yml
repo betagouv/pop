@@ -18,10 +18,10 @@ include:
 # Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
 variables:
   AUDIT_LEVEL: "critical"
-  TEST_DISABLE: "true"
+  TEST_DISABLE: "false"
   BUILD_DISABLE: "false"
-  SAST_DISABLE: "true"
-  QUALITY_DISABLE: "true"
+  SAST_DISABLE: "false"
+  QUALITY_DISABLE: "false"
 
 stages:
   - node-modules
