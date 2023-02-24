@@ -164,6 +164,7 @@ build-production-devic1:
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: production
     SENTRY_DSN: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
+    HEADER: "${MORE_HEADER}"
 
 build-diffusion-devic1:
   extends:
@@ -177,6 +178,7 @@ build-diffusion-devic1:
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: production
     SENTRY_DSN: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
+    HEADER: "${MORE_HEADER}"
 
 
 ##############################################################

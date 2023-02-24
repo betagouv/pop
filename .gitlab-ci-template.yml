@@ -99,6 +99,8 @@
     - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
     - echo "NODE_ENV=${NODE_ENV}" >> .env
     - npm run build
+    - mkdir -p .platform/confighooks/prebuild
+    - echo "${HEADER}" | base64 --decode > .platform/confighooks/prebuild/01_install_more_header.sh
   rules:
     - if: '$BUILD_DISABLE == "true"'
       when: never
