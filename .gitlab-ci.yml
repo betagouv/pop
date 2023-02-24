@@ -208,6 +208,7 @@ deploy-production-devic1:
     ENV: pop-production-devic1
     NAME: pop_production
     REPLACE: pop-production
+    PROXY_APP: "${PROXY_PRODUCTION}"
   environment:
     name: pop-production-devic1
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
@@ -223,6 +224,7 @@ deploy-diffusion-devic1:
     ENV: pop-consultation-devic1
     NAME: pop_consultation
     REPLACE: pop-consultation
+    PROXY_APP: "${PROXY_DIFFUSION}"
   environment:
     name: pop-consultation-devic1
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
