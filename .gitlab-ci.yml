@@ -190,6 +190,7 @@ deploy-api-devic1:
     ENV: pop-api-devic1
     NAME: pop_api
     REPLACE: pop-api
+    HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_API}"
   environment:
     name: pop-api-devic1
@@ -208,6 +209,7 @@ deploy-production-devic1:
     ENV: pop-production-devic1
     NAME: pop_production
     REPLACE: pop-production
+    HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_PRODUCTION}"
   environment:
     name: pop-production-devic1
@@ -224,6 +226,7 @@ deploy-diffusion-devic1:
     ENV: pop-consultation-devic1
     NAME: pop_consultation
     REPLACE: pop-consultation
+    HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_DIFFUSION}"
   environment:
     name: pop-consultation-devic1
