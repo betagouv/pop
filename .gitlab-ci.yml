@@ -19,7 +19,7 @@ include:
 variables:
   AUDIT_LEVEL: "critical"
   TEST_DISABLE: "true"
-  BUILD_DISABLE: "true"
+  BUILD_DISABLE: "false"
   SAST_DISABLE: "true"
   QUALITY_DISABLE: "true"
 
