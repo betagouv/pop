@@ -99,8 +99,8 @@
     - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
     - echo "NODE_ENV=${NODE_ENV}" >> .env
     - npm run build
-    - mkdir -p .platform/hooks/prebuild
-    - echo "${HEADER}" | base64 --decode > .platform/hooks/prebuild/01_install_more_header.sh
+    - mkdir -p .platform/hooks/predeploy
+    - echo "${HEADER}" | base64 --decode > .platform/hooks/predeploy/01_install_more_header.sh
     - echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
   rules:
     - if: '$BUILD_DISABLE == "true"'
