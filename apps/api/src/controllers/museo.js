@@ -13,7 +13,8 @@ const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
-let moment = require('moment-timezone')
+let moment = require('moment-timezone');
+const { capture } = require("./../sentry.js");
 
 const { formattedNow, deleteFile, uploadFile, updateOaiNotice, hasCorrectCoordinates } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -272,6 +273,23 @@ router.put(
       const id = notice.POP_IMPORT[0];
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
+    // Contrôle présence des coordonnées
+    if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lon'] == 'undefined'){
+      notice.POP_COORDONNEES = {
+        lat: prevNotice.POP_COORDONNEES.lat,
+        lon: prevNotice.POP_COORDONNEES.lon
+      }
+      delete notice['POP_COORDONNEES.lat'];
+      delete notice['POP_COORDONNEES.lon'];
+    } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lon'] == ''){
+      notice.POP_COORDONNEES = {
+        lat: 0,
+        lon: 0
+      }
+      delete notice['POP_COORDONNEES.lat'];
+      delete notice['POP_COORDONNEES.lon'];
     }
 
     await transformBeforeCreateOrUpdate(notice);
