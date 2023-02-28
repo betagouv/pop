@@ -196,7 +196,6 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -379,6 +378,12 @@ router.put(
       // Prepare and update notice.
       await transformBeforeUpdate(notice);
 
+      // vérification des coordonnées
+      if(!notice.COOR && !notice.COORM && !notice.ZONE && hasCorrectCoordinates(prevNotice)){
+        notice.POP_COORDONNEES = prevNotice.POP_COORDONNEES;
+        notice.POP_CONTIENT_GEOLOCALISATION = prevNotice.POP_CONTIENT_GEOLOCALISATION;
+      }
+
       const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
       var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
@@ -389,8 +394,7 @@ router.put(
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
 
-      //Modification liens entre bases
-     
+      // Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
