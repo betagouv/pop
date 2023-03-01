@@ -163,7 +163,7 @@ async function withFlags(notice) {
       notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
     }
 
-    if(!hasCorrectCoordinates(notice.POP_COORDONNEES)){
+    if(!hasCorrectCoordinates(notice)){
       notice.POP_FLAGS.push("POP_COORDONNEES_NOT_RIGHT");
     }
   }
