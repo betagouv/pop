@@ -59,7 +59,7 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
     user = await User.findOne({ email });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ success: false, error });
+    return res.status(401).send({ success: false, error });
   }
 
   // User not found.
@@ -74,13 +74,13 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
   if (email !== authenticatedUser.email) {
     // The authenticated user must be "administrateur"
     // AND she must be in the same group OR from admin group.
-    if (
-      authenticatedUser.role !== "administrateur" &&
-      authenticatedUser.group !== "admin" &&
-      authenticatedUser.group !== user.group
-    ) {
-      return res.status(403).send({ success: false, msg: "Autorisation requise." });
+    if("admin" !== authenticatedUser.group) {
+      if ("administrateur" !== authenticatedUser.role  || authenticatedUser.group !== user.group) {
+        return res.status(403).send({ success: false, msg: "Autorisation requise." });
+      }
     }
+  } else {
+    return res.status(403).send({ success: false, msg: "Action non autorisée." });
   }
 
   // Add new params to user.
