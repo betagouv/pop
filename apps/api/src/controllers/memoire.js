@@ -26,7 +26,8 @@ const {
   updateOaiNotice,
   deleteFile,
   findMemoireProducteur,
-  identifyProducteur
+  identifyProducteur,
+  fileAuthorized
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
@@ -296,8 +297,12 @@ router.put(
 
     // Upload files.
     for (let i = 0; i < req.files.length; i++) {
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      promises.push(uploadFile(path, req.files[i]));
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      promises.push(uploadFile(path, f));
     }
     // Update IMPORT ID.
     if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
@@ -368,8 +373,12 @@ router.post(
 
     // Upload images.
     for (let i = 0; i < req.files.length; i++) {
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      promises.push(uploadFile(path, req.files[i]));
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      promises.push(uploadFile(path, f));
     }
     // Update and save.
     promises.push(updateLinks(notice));
