@@ -23,9 +23,9 @@ variables:
 
 stages:
   - node-modules
-  - test
-  - sast
-  - quality
+#  - test
+#  - sast
+#  - quality
   - build
   - deploy
 

@@ -28,6 +28,8 @@ const EAnalytics = {
      */
     track: (data) => {
         const eaTrackFn = window.EA_collector;
+        console.log(window, data)
+        window.EA_push(data);
         if (eaTrackFn && data) {
             eaTrackFn(data);
         }
