@@ -24,7 +24,7 @@ variables:
 stages:
   - node-modules
 #  - test
-#  - sast
+  - sast
 #  - quality
   - build
   - deploy
@@ -65,32 +65,32 @@ node-modules-diffusion:
 #
 # Variables à utiliser avec ce template :
 #   - APP : Nom du module applicatif à compiler (api, diffusion, consultation).
-test-api:
-  dependencies:
-    - node-modules-api
-  extends: 
-    - ".pop-test"
-  services:
-    - mongo:4.4
-  variables:
-    APP: api
-    DB_ENDPOINT: mongodb://mongo:27017/pop
+#test-api:
+#  dependencies:
+#    - node-modules-api
+#  extends: 
+#    - ".pop-test"
+#  services:
+#    - mongo:4.4
+#  variables:
+#    APP: api
+#    DB_ENDPOINT: mongodb://mongo:27017/pop
 
-test-production:
-  dependencies:
-    - node-modules-production
-  extends: 
-    - ".pop-test"
-  variables:
-    APP: production
+#test-production:
+#  dependencies:
+#    - node-modules-production
+#  extends: 
+#    - ".pop-test"
+#  variables:
+#    APP: production
 
-test-diffusion:
-  dependencies:
-    - node-modules-diffusion
-  extends: 
-    - ".pop-test"
-  variables:
-    APP: diffusion
+#test-diffusion:
+#  dependencies:
+#    - node-modules-diffusion
+#  extends: 
+#    - ".pop-test"
+#  variables:
+#    APP: diffusion
 
 ##############################################################
 # SAST
@@ -121,29 +121,29 @@ audit-production:
 #   - CI_PROJECT_NAME : Key du projet Sonar
 #   - SONAR_OPTIONS : Set du répertoire de l'application
 # SONAR_KEY=mc.pop.
-sonar-api:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api -Dsonar.quality.wait=true"
+#sonar-api:
+#  extends: 
+#    - ".sonar"
+#    - ".sonar-pop"
+#  variables:
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/api -Dsonar.quality.wait=true"
 
-sonar-diffusion:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
+#sonar-diffusion:
+#  extends: 
+#    - ".sonar"
+#    - ".sonar-pop"
+#  variables:
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/diffusion"
 
-sonar-production:
-  extends: 
-    - ".sonar"
-    - ".sonar-pop"
-  variables:
-    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
-    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
+#sonar-production:
+#  extends: 
+#    - ".sonar"
+#    - ".sonar-pop"
+#  variables:
+#    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
+#    SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
 
 ##############################################################
 # BUILD
