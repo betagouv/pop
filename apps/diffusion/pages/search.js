@@ -23,7 +23,8 @@ import throw404 from "../src/services/throw404";
 
 export default class extends React.Component {
   state = {
-    mobile_menu: false
+    mobile_menu: false,
+    nbResult: 0
   };
 
   static async getInitialProps({ asPath, query }) {
@@ -60,7 +61,11 @@ export default class extends React.Component {
   componentDidMount() {
     tag.sendPage({
       name: 'Page Recherche'
-    });
+    }); 
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.nbResult)
   }
 
   render = () => {
@@ -110,6 +115,7 @@ export default class extends React.Component {
         });
       // Create a Map with "qb" property (which is the current system).
       initialValues = new Map([["qb", qb]]);
+      
     } else {
       initialValues = fromUrlQueryString(this.props.queryString);
     }
@@ -188,6 +194,7 @@ export default class extends React.Component {
                         view={this.props.view}
                         base={this.props.base}
                         initialValues={initialValues}
+                        nbResult={(total) => { console.log('ici---------------------');  this.setState( { nbResult: total }) }}
                       />
                     ) : null}
                   </div> :
@@ -227,6 +234,7 @@ export default class extends React.Component {
                           view={this.props.view}
                           base={this.props.base}
                           initialValues={initialValues}
+                          nbResult={(total) => { console.log('ici---------------------'); this.state.nbResult = total }}
                         />
                       ) : null}
                     </div>

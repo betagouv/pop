@@ -3,7 +3,7 @@ import { Results } from "@popproject/pop-react-elasticsearch";
 import { pagination } from "../utils";
 import CardMosaique from "./CardMosaic";
 
-export default function({ initialValues }) {
+export default function({ initialValues, setNbreResult }) {
   return (
     <div className="mosaic-view">
       <Results
@@ -18,6 +18,7 @@ export default function({ initialValues }) {
         pagination={pagination}
         stats={total => {
           const info = "La mosaïque n'affiche par défaut que les notices avec image.";
+          setNbreResult(total);
           return (
             <div className="result-count">
               {total} résultat{total === 1 ? "" : "s"} <i className="text-muted">{info}</i>
