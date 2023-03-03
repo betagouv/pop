@@ -54,7 +54,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
     contentWadrsOrAdresse,
   ]);
 
-  const author = data.AUTP ? data.AUTP.join(', ') : "";
+  const author = data.AUTP ? data.AUTP.join(' ; ') : "";
 
   const date = data.DATPV ? data.DATPV : data.DATOR;
   const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;

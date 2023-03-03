@@ -89,7 +89,7 @@ export default class extends React.Component {
     return ((autp && autp.length > 0) && <div style={{ display: "flex", flexDirection: "row" }}>
       {autp.map((photographer, index) => {
         const qs = queryString.stringify({ auteur: JSON.stringify([photographer]) });
-        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`} target="_blank">{photographer}</a>{index !== (autp.length - 1) ? <div>,&nbsp;</div> : ""}</div>);
+        return (<div style={{ display: "flex", flexDirection: "row" }}><a href={`/search/list?${qs}`} target="_blank">{photographer}</a>{index !== (autp.length - 1) ? <div>&nbsp;;&nbsp;</div> : ""}</div>);
       })}
     </div>)
   }
@@ -352,7 +352,7 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.MCPER.label} content={notice.MCPER} join={' ; '}/>
                   <Title
                     content="Références des documents reproduits"
-                    small={true}d
+                    small={true}
                     notice={notice}
                     fields={["AUTOR", "TIREDE", "LIEUCOR", "COTECOR", "AUTG"]}
                   />
