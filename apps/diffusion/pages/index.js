@@ -14,7 +14,10 @@ export default class extends React.Component {
 
   componentDidMount() {
     EAnalytics.initialize();
-    EAnalytics.track(["path", "Accueil"]);
+    EAnalytics.track([
+      "path", "Accueil",
+      'pagegroup', 'accueil'
+    ]);
     //
     /*
     tag.sendPage({
@@ -37,9 +40,6 @@ export default class extends React.Component {
   }
 
   render() {
-    console.log(EAnalytics);
-
-
     const settings = {
       speed: 500,
       slidesToShow: 4,
