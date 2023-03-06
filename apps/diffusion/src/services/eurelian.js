@@ -1,3 +1,5 @@
+import { eurelian } from '../config';
+
 const _EATag = (host) => {
     const script = () => {
       const script = document.createElement("script");
@@ -16,8 +18,7 @@ const EAnalytics = {
      * @param host The host provided by Eulerian.
      */
     initialize: () => {
-        const host = 'io1.eulerian.net';
-        console.log(process.env.POP_URL)
+        const host = eurelian;
         const script = _EATag(host).script();
         document.head.insertBefore(script, document.head.firstElementChild);
     },
@@ -27,17 +28,11 @@ const EAnalytics = {
      * @param data The data to collect. Example ["path", "NOM_DE_LA_PAGE", "uid", "IDENTIFIANT_DE_L_INTERNAUTE"].
      */
     track: (data) => {
-        const eaTrackFn = window.EA_collector;
-        console.log(window, data)
-        window.EA_push(data);
-        if (eaTrackFn && data) {
-            eaTrackFn(data);
-        }
+        const dataLayer = [
+            'domaine', eurelian,
+        ];
+        window.EA_push([...dataLayer, ...data]);
     }
 };
-
-const test = {
-    fisrt: "1"
-}
 
 export default EAnalytics;
