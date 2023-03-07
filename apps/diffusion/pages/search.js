@@ -33,8 +33,7 @@ export default class extends React.Component {
     const qs = queryString.stringify(rest);
     const dataLayer = [
       "path", `Recherche ${mode}`,
-      'pagegroup', 'Page de recherche',
-      'isearchengine', 'ElasticSearch'
+      'pagegroup', 'Page de recherche'
     ];
     return { asPath, queryString: qs, view, mode, base: query.base, query, dataLayer: dataLayer };
   }
@@ -66,6 +65,7 @@ export default class extends React.Component {
 
   componentDidMount() {
     EAnalytics.initialize();
+    EAnalytics.track(this.props.dataLayer);
     this.state.ready = true;
     /*
     tag.sendPage({
@@ -81,6 +81,7 @@ export default class extends React.Component {
    */
   sendParams(total, values){
     const data = [
+      'isearchengine', 'moteur_recherche',
       'type_tri', this.props.view,
       'isearchresults', total
     ];
@@ -120,8 +121,9 @@ export default class extends React.Component {
         data.push(JSON.stringify(arrayKey['qb']))
       }
     }
-    EAnalytics.track([...this.props.dataLayer, ...data])
-    
+    EAnalytics.pushEvent('globalarg', data);
+    EAnalytics.pushEvent('event', ['recherche']);
+    EAnalytics.pushEvent('globalarg', []);
   }
 
   render = () => {
