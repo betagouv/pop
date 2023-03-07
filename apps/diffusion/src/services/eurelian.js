@@ -32,6 +32,10 @@ const EAnalytics = {
             'domaine', eurelian,
         ];
         window.EA_push([...dataLayer, ...data]);
+    },
+
+    pushEvent: (key, data) => {
+        window.EA_push(key, data);
     }
 };
 
