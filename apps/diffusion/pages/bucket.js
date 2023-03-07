@@ -8,6 +8,7 @@ import API from "../src/services/api";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
 // import { tag } from "./../src/services/tags";
+import { trackDownload } from "../src/utils";
 import EAnalytics from "./../src/services/eurelian";
 
 export default class Bucket extends React.Component {
@@ -53,24 +54,6 @@ export default class Bucket extends React.Component {
     */
     EAnalytics.initialize();
     EAnalytics.track(this.state.dataLayer);
-  }
-
-  trackDownload(){
-    EAnalytics.pushEvent(
-      'globalarg',
-      [
-        'file_name', this.PdfFileName(),
-        'file_type', 'pdf'
-      ]
-    );
-    EAnalytics.pushEvent(
-      'download',
-      ['téléchargement']
-    );
-    EAnalytics.pushEvent(
-      'globalarg',
-      []
-    );
   }
 
   fillBucket = async () => {
@@ -120,7 +103,6 @@ export default class Bucket extends React.Component {
     var today = new Date();
     var month = (today.getMonth() + 1) == 13 ? 1 : (today.getMonth() + 1);
     var data = today.getFullYear() + '-' + ((month < 10) ? "0" : "") + month.toString() + '-' + ((today.getDate() < 10) ? "0" : "") + today.getDate();
-console.log('name file pdf')
     return "panier_de_notices_" + data + ".pdf";
   }
 
@@ -184,7 +166,7 @@ console.log('name file pdf')
             textAlign: "center",
             borderRadius: "5px"
           }}
-          onClick={() => this.trackDownload() }>
+          onClick={() => trackDownload(this.PdfFileName()) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Télécharger le panier')}
         </PDFDownloadLink>
       </div>

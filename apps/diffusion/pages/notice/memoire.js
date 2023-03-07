@@ -3,7 +3,7 @@ import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
 import queryString from "query-string";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, trackDownload } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -20,6 +20,7 @@ import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MemoirePdf } from "../../src/pdf/pdfNotice/memoirePdf";
 import { pop_url } from "../../src/config";
+import EAnalytics from "../../src/services/eurelian";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -127,6 +128,12 @@ export default class extends React.Component {
 
   async componentDidMount() {
     //this.setState({display : true});
+    // Tracking Eurelian
+    EAnalytics.initialize();
+    EAnalytics.track([
+      'path', `Notice Mémoire ${this.props.notice?.REF}`,
+      'pagegroup', 'Photographies (Mémoire)'
+    ]);
 
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
@@ -223,7 +230,8 @@ export default class extends React.Component {
             paddingBottom: "8px",
             textAlign: "center",
             borderRadius: "5px"
-          }}>
+          }}
+          onClick={ () => trackDownload(`memoire_${notice.REF}.pdf`) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
