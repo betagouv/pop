@@ -58,15 +58,13 @@ class Results extends React.Component {
     // Ajout de la sélection présentation (list, mosaic) dans la sauvegarde de recherche
     this.props.initialValues.set('last_view', this.props.view);
 
-    console.log('Result', this.props)
-
     const view = this.props.view || "list";
     if (view === "mosaic") {
       return <Mosaic key="mosaique" initialValues={this.props.initialValues} setNbreResult={this.props.nbResult}/>;
     } else if (view === "map") {
-      return <Map key="carte" />;
+      return <Map key="carte" initialValues={this.props.initialValues} setNbreResult={this.props.nbResult}/>;
     } else {
-      return <List key="list" initialValues={this.props.initialValues} />;
+      return <List key="list" initialValues={this.props.initialValues} setNbreResult={this.props.nbResult}/>;
     }
   }
 
