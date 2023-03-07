@@ -4,7 +4,7 @@ import { pagination } from "../utils";
 
 import CardList from "./CardList";
 
-export default ({ initialValues }) => (
+export default ({ initialValues, setNbreResult }) => (
   <div className="list-view">
     <Results
       itemsPerPage={25}
@@ -12,11 +12,15 @@ export default ({ initialValues }) => (
       id="res"
       items={(data, listRefs, idQuery) => data.map(({ _id, ...rest }) => <CardList key={_id} data={rest} searchParams={initialValues} listRefs={listRefs} idQuery={idQuery}/>)}
       pagination={pagination}
-      stats={total => (
-        <div>
-          {total} résultat{total === 1 ? "" : "s"}
-        </div>
-      )}
+      stats={total => {
+          setNbreResult(total);
+          return (
+            <div>
+              {total} résultat{total === 1 ? "" : "s"}
+            </div>
+          )
+        }
+      }
     />
     <style jsx global>{`
       .list-view {
