@@ -46,7 +46,7 @@ function MyComponent({ ctx }) {
   }, [JSON.stringify(actualQuery)]);
   useEffect(() => {
     async function fetchData() {
-      const res = await msearch(`${es_url}merimee,palissy,memoire,joconde,mnr,enluminures,museo`, [
+      const res = await msearch(`${es_url}merimee,palissy,joconde,enluminures,museo`, [
         { id: "map", query }
       ]);
       if (res.responses && res.responses.length > 0) {
