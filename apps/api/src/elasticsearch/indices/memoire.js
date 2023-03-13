@@ -1299,18 +1299,6 @@ module.exports = {
             }
           }
         },
-        POP_COORDONNEES: {
-          type: "geo_point"
-        },
-        POP_CONTIENT_GEOLOCALISATION: {
-          type: "text",
-          fields: {
-            keyword: {
-              type: "keyword",
-              ignore_above: 256
-            }
-          }
-        },
         HISTORIQUE: {
           properties: {
             _id: {
