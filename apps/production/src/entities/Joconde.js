@@ -16,7 +16,7 @@ export default class Joconde extends Notice {
       this.MANQUANT = body.MANQUANT = MANQUANT;
       this.MANQUANT_COM = body.MANQUANT_COM = MANQUANT_COM;
     }
-
+    
     // ADD Boring stuff in order to split text to check for the thesaurus
     const obj = {};
     obj["AUTR"] = /[,;]/g; 
@@ -62,39 +62,40 @@ export default class Joconde extends Notice {
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
 
-  extractManquant = function(loca, manquant, manquantcom) {
-    if (["; manquantes", "; manquants",  "; manquante", "; manquant"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; manquantes", "; manquants", "; manquante", "; manquant"].find(e => loca.indexOf(e) !== -1);
+  extractManquant = function(loca, manquant, manquantcom) { 
+
+    if (["; manquantes", "; manquants",  "; manquante", "; manquant"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = ["; manquantes", "; manquants", "; manquante", "; manquant"].find(e => loca.toLowerCase().indexOf(e) !== -1);
       let array = loca.split(element);
       return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
     }
 
-    if (["; volées", "; volés", "; volée", "; volé"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; volées", "; volés", "; volée", "; volé"].find(e => loca.indexOf(e) !== -1);
+    if (["; volées", "; volés", "; volée", "; volé"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = ["; volées", "; volés", "; volée", "; volé"].find(e => loca.toLowerCase().indexOf(e) !== -1);
       let array = loca.split(element);
       return { LOCA:array[0] + array[1], MANQUANT:['volé'], MANQUANT_COM: manquantcom };
     }
 
-    if (["; disparues", "; disparus", "; disparue", "; disparu"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; disparues", "; disparus", "; disparue", "; disparu"].find(e => loca.indexOf(e) !== -1);
+    if (["; disparues", "; disparus", "; disparue", "; disparu"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = ["; disparues", "; disparus", "; disparue", "; disparu"].find(e => loca.toLowerCase().indexOf(e) !== -1);
       return this.addManquantCom(loca, manquantcom, element, "disparu");
     }
 
-    if(loca.indexOf("; localisation inconnue") !== -1){
+    if(loca.toLowerCase().indexOf("; localisation inconnue") !== -1){
       return this.addManquantCom(loca, manquantcom, "; localisation inconnue", "localisation inconnue");
     }
 
-    if (["; pillées", "; pillés", "; pillée", "; pillé"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; pillées", "; pillés", "; pillée", "; pillé"].find(e => loca.indexOf(e) !== -1);
+    if (["; pillées", "; pillés", "; pillée", "; pillé"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = ["; pillées", "; pillés", "; pillée", "; pillé"].find(e => loca.toLowerCase().indexOf(e) !== -1);
       return this.addManquantCom(loca, manquantcom, element, "pillé");
     }
 
-    if (["; présumé détruit"].some(e => loca.indexOf(e) !== -1)) {
-      let element = ["; présumé détruit"].find(e => loca.indexOf(e) !== -1);
+    if (["; présumé détruit"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = ["; présumé détruit"].find(e => loca.toLowerCase().indexOf(e) !== -1);
       let array = loca.split(element);
       return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: "présumé détruit" };
     }
-    
+
     if(manquant == ""){
       manquant = [];
     }
