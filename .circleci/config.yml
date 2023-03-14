@@ -227,7 +227,7 @@ jobs:
           env: test
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
-          eurelian: null
+          eurelian: "null"
   build_production_staging:
     executor: docker_node
     steps:
@@ -239,7 +239,7 @@ jobs:
           env: staging
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
-          eurelian: null
+          eurelian: "null"
   build_production_prod:
     executor: docker_node
     steps:
@@ -251,7 +251,7 @@ jobs:
           env: production
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
-          eurelian: null
+          eurelian: "null"
   ###############
   # DEPLOY JOBS #
   ###############
