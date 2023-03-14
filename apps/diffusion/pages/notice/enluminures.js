@@ -13,13 +13,14 @@ import ContactUs from "../../src/notices/ContactUs";
 import Map from "../../src/notices/Map";
 import { schema, getParamsFromUrl, findCollection, highlighting, lastSearch } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, trackDownload } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { EnluminuresPdf } from "../../src/pdf/pdfNotice/enluminuresPdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
+import EAnalytics from "../../src/services/eurelian";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -88,6 +89,12 @@ export default class extends React.Component {
 
   async componentDidMount() {
     //this.setState({display : true});
+    // Tracking Eurelian
+    EAnalytics.initialize();
+    EAnalytics.track([
+      'path', `Notice Enluminures ${this.props.notice?.REF}`,
+      'pagegroup', 'Enluminures (Enluminures)'
+    ])
 
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
@@ -187,7 +194,8 @@ export default class extends React.Component {
             paddingBottom: "8px",
             textAlign: "center",
             borderRadius: "5px"
-          }}>
+          }}
+          onClick={ () => trackDownload(`enluminures_${notice.REF}.pdf`) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>

@@ -94,6 +94,7 @@
     - echo "BUCKET_URL=${BUCKET_URL}" >> .env
     - echo "SENTRY_DSN=${SENTRY_DSN}" >> .env
     - echo "NODE_ENV=${NODE_ENV}" >> .env
+    - echo "EURELIAN=${EURELIAN}" >> .env
     - npm run build
   artifacts:
     paths:

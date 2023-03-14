@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
-import { getNoticeInfo, generateLinks } from "../../src/utils";
+import { getNoticeInfo, generateLinks, trackDownload } from "../../src/utils";
 import API from "../../src/services/api";
 import throw404 from "../../src/services/throw404";
 import mapping from "../../src/services/mapping";
@@ -21,6 +21,7 @@ import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { MerimeePdf } from "../../src/pdf/pdfNotice/merimeePdf";
 import { pop_url } from "../../src/config";
+import EAnalytics from "../../src/services/eurelian";
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -93,6 +94,12 @@ export default class extends React.Component {
 
   async componentDidMount() {
     //this.setState({display : true});
+    // Tracking Eurelian
+    EAnalytics.initialize();
+    EAnalytics.track([
+      'path', `Notice Mérimée ${this.props.notice?.REF}`,
+      'pagegroup', 'Patrimoine architectural (Mérimée)'
+    ]);
 
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
@@ -199,7 +206,8 @@ export default class extends React.Component {
             paddingBottom: "8px",
             textAlign: "center",
             borderRadius: "5px"
-          }}>
+          }}
+          onClick={ () => trackDownload(`merimee_${notice.REF}.pdf`) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>

@@ -11,11 +11,12 @@ import Permalink from "../src/search/Permalink";
 import MobileFilters from "../src/search/MobileFilters";
 import Results from "../src/search/Results";
 import Search from "../src/search/Search";
-import { es_url } from "../src/config";
+import { es_url, eurelian } from "../src/config";
 import queryString from "query-string";
 import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
-import { tag } from "./../src/services/tags";
+// import { tag } from "./../src/services/tags";
+import EAnalytics from "./../src/services/eurelian";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
 
@@ -23,13 +24,18 @@ import throw404 from "../src/services/throw404";
 
 export default class extends React.Component {
   state = {
-    mobile_menu: false
+    mobile_menu: false,
+    ready: false
   };
 
   static async getInitialProps({ asPath, query }) {
     const { view, mode, ...rest } = query;
     const qs = queryString.stringify(rest);
-    return { asPath, queryString: qs, view, mode, base: query.base, query };
+    const dataLayer = [
+      "path", `Recherche ${mode}`,
+      'pagegroup', 'Page de recherche'
+    ];
+    return { asPath, queryString: qs, view, mode, base: query.base, query, dataLayer: dataLayer };
   }
 
   handleSwitchChange = checked => {
@@ -58,9 +64,66 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
+    EAnalytics.initialize();
+    EAnalytics.track(this.props.dataLayer);
+    this.state.ready = true;
+    /*
     tag.sendPage({
       name: 'Page Recherche'
-    });
+    }); 
+    */
+
+  }
+
+  /**
+   * Envoi des informations au tracking
+   * @param {Number} total 
+   */
+  sendParams(total, values){
+    const data = [
+      'isearchengine', 'moteur_recherche',
+      'type_tri', this.props.view,
+      'isearchresults', total
+    ];
+
+    // List key not search filter
+    const keyNotFilter = ['mainSearch', 'qb', 'last_view', 'idQuery']
+
+    let arrayKey = {};
+    let objFilter = {}; // Objet affiner votre recherche
+    values.forEach((value, key) => { 
+      arrayKey[key] = value;
+
+      if(!keyNotFilter.includes(key)){
+        objFilter[key] = value;
+      }
+    })
+
+    // Affiner votre recherche
+    if(Object.keys(objFilter).length > 0){
+      data.push('filtre');
+      data.push(JSON.stringify(objFilter));
+    }
+
+    if(this.props.mode === "simple"){
+      if(arrayKey['mainSearch']){
+        data.push('isearchkey')
+        data.push('mainSearch')
+        data.push('isearchdata')
+        data.push(arrayKey['mainSearch'])
+      }
+    } else {
+
+      if(arrayKey['qb']){
+        data.push('isearchkey')
+        data.push('qb')
+        data.push('isearchdata')
+        data.push(JSON.stringify(arrayKey['qb']))
+      }
+    }
+    EAnalytics.pushEvent('globalarg', data);
+    EAnalytics.pushEvent('event', ['recherche']);
+    EAnalytics.pushEvent('globalarg', []);
   }
 
   render = () => {
@@ -110,6 +173,7 @@ export default class extends React.Component {
         });
       // Create a Map with "qb" property (which is the current system).
       initialValues = new Map([["qb", qb]]);
+      
     } else {
       initialValues = fromUrlQueryString(this.props.queryString);
     }
@@ -188,6 +252,11 @@ export default class extends React.Component {
                         view={this.props.view}
                         base={this.props.base}
                         initialValues={initialValues}
+                        nbResult={(total) => { 
+                          if(this.state.ready == true){
+                            this.sendParams(total, initialValues);
+                          }
+                        }}
                       />
                     ) : null}
                   </div> :
@@ -227,6 +296,11 @@ export default class extends React.Component {
                           view={this.props.view}
                           base={this.props.base}
                           initialValues={initialValues}
+                          nbResult={(total) => { 
+                            if(this.state.ready == true){
+                              this.sendParams(total, initialValues);
+                            }
+                          }}
                         />
                       ) : null}
                     </div>

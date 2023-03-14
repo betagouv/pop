@@ -7,10 +7,20 @@ import { Joconde, Memoire, Palissy, Merimee, Museo, Mnr, Enluminures, Autor } fr
 import API from "../src/services/api";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { BucketPdf } from "../src/pdf/pdfNoticeAbregees/BucketPdf";
-import { tag } from "./../src/services/tags";
+// import { tag } from "./../src/services/tags";
+import { trackDownload } from "../src/utils";
+import EAnalytics from "./../src/services/eurelian";
 
 export default class Bucket extends React.Component {
-  state = { bucket: [], loading: true, display: false };
+  state = { 
+    bucket: [], 
+    loading: true, 
+    display: false,
+    dataLayer: [
+      "path", "Consulter le panier",
+      'pagegroup', 'Panier'
+    ]
+  };
 
 
   //Méthode permettant de supprimer du panier
@@ -37,9 +47,13 @@ export default class Bucket extends React.Component {
     this.fillBucket();
     this.setState({ display: true });
 
+    /*
     tag.sendPage({
       name: 'Page Panier'
     });
+    */
+    EAnalytics.initialize();
+    EAnalytics.track(this.state.dataLayer);
   }
 
   fillBucket = async () => {
@@ -151,7 +165,8 @@ export default class Bucket extends React.Component {
             paddingBottom: "5px",
             textAlign: "center",
             borderRadius: "5px"
-          }}>
+          }}
+          onClick={() => trackDownload(this.PdfFileName()) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Télécharger le panier')}
         </PDFDownloadLink>
       </div>
