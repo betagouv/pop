@@ -1,6 +1,7 @@
 import Cookies from 'universal-cookie';
 import { bucket_url } from "./config";
 import queryString from "query-string";
+import EAnalytics from './services/eurelian';
 
 export function getNoticeInfo(notice) {
   const base = notice.BASE;
@@ -443,4 +444,22 @@ export function generateLinks(values, name){
     })
     .reduce((p, c) => [p, " ; ", c]);
   return links;
+}
+
+export function trackDownload(filename){
+  EAnalytics.pushEvent(
+    'globalarg',
+    [
+      'file_name', filename,
+      'file_type', 'pdf'
+    ]
+  );
+  EAnalytics.pushEvent(
+    'download',
+    ['téléchargement']
+  );
+  EAnalytics.pushEvent(
+    'globalarg',
+    []
+  );
 }

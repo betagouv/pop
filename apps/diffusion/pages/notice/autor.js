@@ -12,12 +12,13 @@ import FieldImages from "../../src/notices/FieldImages";
 import ContactUs from "../../src/notices/ContactUs";
 import { schema, getParamsFromUrl, findCollection, highlighting, lastSearch } from "../../src/notices/utils";
 import noticeStyle from "../../src/notices/NoticeStyle";
-import { getNoticeInfo } from "../../src/utils";
+import { getNoticeInfo, trackDownload } from "../../src/utils";
 import BucketButton from "../../src/components/BucketButton";
 import Cookies from 'universal-cookie';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { AutorPdf } from "../../src/pdf/pdfNotice/autorPdf";
 import { pop_url } from "../../src/config";
+import EAnalytics from "../../src/services/eurelian";
 
 export default class extends React.Component {
 
@@ -33,6 +34,12 @@ export default class extends React.Component {
 
   async componentDidMount() {
     //this.setState({display : true});
+    // Tracking Eurelian
+    EAnalytics.initialize();
+    EAnalytics.track([
+      'path', `Notice Autor ${this.props.notice?.REF}`,
+      'pagegroup', 'Ressources biographiques (Autor)'
+    ]);
 
     //highlighting
     highlighting(this.props.searchParams.mainSearch);
@@ -148,7 +155,8 @@ export default class extends React.Component {
             paddingBottom: "8px",
             textAlign: "center",
             borderRadius: "5px"
-          }}>
+          }}
+          onClick={ () => trackDownload(`autor_${notice.REF}.pdf`) }>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
