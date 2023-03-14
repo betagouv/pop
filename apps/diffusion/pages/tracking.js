@@ -2,17 +2,11 @@ import React from "react";
 import Head from "next/head";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
-// import { tag } from "./../src/services/tags";
 import EAnalytics from "../src/services/eurelian";
 
 export default class extends React.Component {
 
   componentDidMount() {
-    /*
-    tag.sendPage({
-      name: `Page Suivi d'audience et vie privée`
-    });
-    */
     // Tracking Eurelian
     EAnalytics.initialize();
     EAnalytics.track([

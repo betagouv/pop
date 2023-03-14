@@ -7,23 +7,17 @@ import Router from "next/router";
 import Layout from "../src/components/Layout";
 import { pushSearchRoute } from "../src/services/url";
 import TopicCard from "../src/topics/TopicCard";
-// import { tag } from "./../src/services/tags";
 import EAnalytics from "./../src/services/eurelian";
 
 export default class extends React.Component {
 
   componentDidMount() {
+    // Tracking Eurelian
     EAnalytics.initialize();
     EAnalytics.track([
       "path", "Accueil",
       'pagegroup', 'accueil'
     ]);
-    //
-    /*
-    tag.sendPage({
-      name: 'Page Accueil'
-    });
-    */
     Router.prefetch("/search");
   }
 

@@ -15,7 +15,6 @@ import { es_url, eurelian } from "../src/config";
 import queryString from "query-string";
 import { bases } from "../src/search/Search/SearchAdvanced";
 import { replaceSearchRouteWithUrl } from "../src/services/url";
-// import { tag } from "./../src/services/tags";
 import EAnalytics from "./../src/services/eurelian";
 
 const BASES = ["merimee", "palissy", "memoire", "joconde", "mnr", "museo", "enluminures", "autor"].join(",");
@@ -64,15 +63,10 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
+    // Tracking Eurelian
     EAnalytics.initialize();
     EAnalytics.track(this.props.dataLayer);
     this.state.ready = true;
-    /*
-    tag.sendPage({
-      name: 'Page Recherche'
-    }); 
-    */
-
   }
 
   /**

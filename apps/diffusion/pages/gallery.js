@@ -3,17 +3,11 @@ import API from "../src/services/api";
 import queryString from "query-string";
 import { pushSearchRoute, paramsToUrlAlias } from "../src/services/url";
 import throw404 from "../src/services/throw404";
-// import { tag } from "./../src/services/tags";
 import EAnalytics from "../src/services/eurelian";
 
 export default class extends React.Component {
 
   componentDidMount() {
-    /*
-    tag.sendPage({
-      name: 'Page Galerie'
-    });
-    */
     // Tracking Eurelian
     EAnalytics.initialize();
     EAnalytics.track([
