@@ -36,6 +36,7 @@ export default class MapComponent extends React.Component {
   renderGeometry() {
     if (
       !this.props.notice.POP_COORDINATES_POLYGON ||
+      !this.props.notice.POP_COORDINATES_POLYGON.coordinates || 
       !this.props.notice.POP_COORDINATES_POLYGON.coordinates.length
     ) {
       return <div />;
@@ -44,6 +45,14 @@ export default class MapComponent extends React.Component {
     return (
       <Polygon color="purple" positions={this.props.notice.POP_COORDINATES_POLYGON.coordinates} />
     );
+  }
+
+  isLatitude(lat) {
+    return isFinite(lat) && lat !== 0 && Math.abs(lat) <= 90;
+  }
+
+  isLongitude(lng) {
+    return isFinite(lng) && lng !== 0 && Math.abs(lng) <= 180;
   }
 
   render() {
@@ -55,7 +64,7 @@ export default class MapComponent extends React.Component {
 
     const { POP_COORDONNEES, POP_COORDINATES_POLYGON } = this.props.notice;
 
-    if (POP_COORDONNEES && POP_COORDONNEES.lat !== 0) {
+    if (POP_COORDONNEES && this.isLatitude(POP_COORDONNEES.lat) && this.isLongitude(POP_COORDONNEES.lon)) {
       center = [this.props.notice.POP_COORDONNEES.lat, this.props.notice.POP_COORDONNEES.lon];
     }
 

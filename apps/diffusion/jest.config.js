@@ -1,7 +1,16 @@
-/** @type {import('jest').Config} */
-const config = {
+const nextJest = require('next/jest');
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: './',
+})
+
+const customJestConfig = {
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: [ "<rootDir>/__tests__/setup/setup.js"],
+    setupFiles: [
+      '<rootDir>/__tests__/__mocks__/text-encoder.mock.js'
+    ],
     testPathIgnorePatterns: [
         "<rootDir>/__tests__/setup/",
         "<rootDir>/__tests__/__mocks__/",
@@ -20,4 +29,4 @@ const config = {
     coverageDirectory: "coverage"
   };
   
-  module.exports = config;
+  module.exports = createJestConfig(customJestConfig);

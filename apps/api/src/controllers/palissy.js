@@ -162,6 +162,10 @@ async function withFlags(notice) {
     if(!isInFrance(notice.POP_COORDONNEES.lat, notice.POP_COORDONNEES.lon)){
       notice.POP_FLAGS.push("POP_COORDONNEES_NOT_IN_FRANCE");
     }
+
+    if(!hasCorrectCoordinates(notice)){
+      notice.POP_FLAGS.push("POP_COORDONNEES_NOT_RIGHT");
+    }
   }
 
   //Check refs
@@ -203,17 +207,17 @@ async function transformBeforeCreateOrUpdate(notice) {
   }
   
   notice.POP_CONTIENT_GEOLOCALISATION = hasCorrectCoordinates(notice) ? "oui" : "non";
-  
-  // To prevent crash on ES
-  if (!notice.POP_COORDONNEES && !hasCorrectCoordinates(notice)) {
-    notice.POP_COORDONNEES = { lat: 0, lon: 0 };
-  }
 
   if(notice.PRODUCTEUR){
     notice.DISCIPLINE = notice.PRODUCTEUR
   }
 
   notice = await withFlags(notice);
+  
+  // To prevent crash on ES
+  if (!notice.POP_COORDONNEES || !hasCorrectCoordinates(notice)) {
+    notice.POP_COORDONNEES = { lat: 0, lon: 0 };
+  }
 }
 
 async function transformBeforeUpdate(notice) {

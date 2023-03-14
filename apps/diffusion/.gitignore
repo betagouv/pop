@@ -1,7 +1,11 @@
 node_modules/
 .next/
 .env
-public/
+public/*
+!public/favicon.ico
+!public/googleb0e4bedffce14a4a.html
+!public/manifest.json
+!public/robots.txt
 
 # Jest
 coverage

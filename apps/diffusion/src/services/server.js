@@ -36,7 +36,12 @@ app.prepare().then(() => {
     const isProdDomain = req.headers.host.match(/pop\.culture\.gouv\.fr/);
     const isNotSecure =
       req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http";
-
+    const splitUrl = req.url.split('/');
+    // Vérifie si un élément est vide dans l'url
+    if(splitUrl.indexOf("", 1) > -1){
+      res.statusCode = 404;
+      handle(req, res, parsedUrl);
+    }
     if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` });
       res.end();
@@ -44,10 +49,10 @@ app.prepare().then(() => {
       const url = req.url.replace("/sitemap/", "");
       res.writeHead(301, { Location: `https://s3.eu-west-3.amazonaws.com/pop-sitemap/${url}` });
       res.end();
-    } else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
+    }/* else if (rootStaticFiles.indexOf(parsedUrl.pathname) > -1) {
       const path = join(__dirname, "../../static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
-    } else if (pathname === "/service-worker.js") {
+    }*/ else if (pathname === "/service-worker.js") {
       const path = join(__dirname, "../../.next/static", parsedUrl.pathname);
       app.serveStatic(req, res, path);
     } else if (pathname.match(searchRegex)) {

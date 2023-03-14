@@ -324,7 +324,8 @@ export function MerimeePdf(notice, title, localisation, links) {
                     style={styles.listLinked}
                     title={mapping.merimee.DOSURL.label}
                     src={notice.DOSURL}
-                    key="notice.DOSURL">{notice.DOSURL}</Link>
+                    key="notice.DOSURL">
+                      <Text>{notice.DOSURL}</Text></Link>
                   : <></>
               }
 
@@ -339,7 +340,8 @@ export function MerimeePdf(notice, title, localisation, links) {
                     style={styles.listLinked}
                     title={mapping.merimee.DOSURLPDF.label}
                     src={postFixedLink(notice.DOSURLPDF)}
-                    key="notice.DOSURLPDF">{postFixedLink(notice.DOSURLPDF)}</Link>
+                    key="notice.DOSURLPDF">
+                      <Text>{postFixedLink(notice.DOSURLPDF)}</Text></Link>
                   : <></>
               }
 
@@ -354,7 +356,8 @@ export function MerimeePdf(notice, title, localisation, links) {
                     style={styles.listLinked}
                     title={mapping.palissy.POP_DOSSIER_VERT.label}
                     src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-                    key="notice.POP_DOSSIER_VERT">{`${bucket_url}${notice.POP_DOSSIER_VERT}`}</Link>
+                    key="notice.POP_DOSSIER_VERT">
+                      <Text>{`${bucket_url}${notice.POP_DOSSIER_VERT}`}</Text></Link>
                   : <></>
               }
 
@@ -370,7 +373,8 @@ export function MerimeePdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
                       target="_blank"
-                      key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                      key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>
+                        <Text>{notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}</Text></Link>
                   }) : <></>
               }
 
@@ -386,7 +390,7 @@ export function MerimeePdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
                       target="_blank"
-                      key="notice.POP_DOSSIER_PROTECTION">{notice.POP_DOSSIER_PROTECTION[index].split(/(\\|\/)/g).pop()}</Link>
+                      key="notice.POP_DOSSIER_PROTECTION"><Text>{notice.POP_DOSSIER_PROTECTION[index].split(/(\\|\/)/g).pop()}</Text></Link>
                   }) : <></>
               }
 
@@ -402,7 +406,7 @@ export function MerimeePdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={notice.LIENS[index]}
                       target="_blank"
-                      key={`notice.LIENS${index}`}>{notice.LIENS[index]}</Link>
+                      key={`notice.LIENS${index}`}><Text>{notice.LIENS[index]}</Text></Link>
                   }) : <></>
               }
 
@@ -418,7 +422,7 @@ export function MerimeePdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={notice.LINHA[index]}
                       target="_blank"
-                      key={"notice.LINHA_" + index}>{notice.LINHA[index]}</Link>
+                      key={"notice.LINHA_" + index}><Text>{notice.LINHA[index]}</Text></Link>
                   }) : <></>
               }
 
@@ -434,7 +438,7 @@ export function MerimeePdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={notice.LREG[index]}
                       target="_blank"
-                      key={"notice.LREG_" + index}>{notice.LREG[index]}</Link>
+                      key={"notice.LREG_" + index}><Text>{notice.LREG[index]}</Text></Link>
                   }) : <></>
               }
 
@@ -444,7 +448,7 @@ export function MerimeePdf(notice, title, localisation, links) {
                     style={styles.listLinked}
                     src={getUrlArchive(notice.REF)}
                     target="_blank"
-                    key="mediathek_cible">{getUrlArchive(notice.REF)}</Link>
+                    key="mediathek_cible"><Text>{getUrlArchive(notice.REF)}</Text></Link>
                   : <></>
               }
             </View>
