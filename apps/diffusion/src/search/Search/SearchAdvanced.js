@@ -43,7 +43,7 @@ class SearchAdvanced extends React.Component {
     const hasBase = Boolean(this.props.base);
     let key, fields;
     if (hasBase) {
-      key = bases.find(e => e.key === this.props.base).key;
+      key = bases.find(e => e.key === this.props.base)?.key;
       fields = Object.entries(Mapping[key])
         .filter(e => e[1].deprecated !== true)
         .filter(([k]) => !["_id", "__v"].includes(k))

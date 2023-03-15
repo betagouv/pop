@@ -3,9 +3,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { Container } from "reactstrap";
 import Layout from "../src/components/Layout";
-import { tag } from "./../src/services/tags";
 import queryString from "query-string";
 import { pop_url } from '../src/config';
+import EAnalytics from "../src/services/eurelian";
 
 const toReactiveSearchParams = params => {
   return Object.assign(...Object.entries(params).map(([k, v]) => ({ [k]: JSON.stringify(v) })));
@@ -23,11 +23,12 @@ function getUriJeuDePaume(){
 export default class extends React.Component {
 
   componentDidMount() {
-    tag.sendPage({
-      name: 'Page À propos'
-    });
-
-   
+    // Tracking Eurelian
+    EAnalytics.initialize();
+    EAnalytics.track([
+      'path', `Page à propos`,
+      'pagegroup', 'Page à propos'
+    ]);
   }
 
   render() {

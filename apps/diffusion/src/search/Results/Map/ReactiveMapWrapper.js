@@ -35,7 +35,7 @@ function esQuery(
   };
 }
 
-function MyComponent({ ctx }) {
+function MyComponent({ ctx, values, setNbreResult }) {
   const actualQuery = esQuery(
     [...ctx.widgets].filter(([_k, v]) => v.query).map(([_k, v]) => v.query)
   );
@@ -50,6 +50,8 @@ function MyComponent({ ctx }) {
         { id: "map", query }
       ]);
       if (res.responses && res.responses.length > 0) {
+        const total = res.responses[0].hits.total;
+        setNbreResult(total, values);
         setAggregations(res.responses[0].aggregations);
       }
     }
@@ -74,10 +76,10 @@ function MyComponent({ ctx }) {
   );
 }
 
-export default function ReactiveMapWrapper() {
+export default function ReactiveMapWrapper({ initialValues, setNbreResult }) {
   return (
     <CustomWidget>
-      <MyComponent />
+      <MyComponent values={initialValues} setNbreResult={setNbreResult}/>
     </CustomWidget>
   );
 }
