@@ -367,6 +367,12 @@ router.put(
       // Add generate fields
       await transformBeforeUpdate(notice);
 
+      // vérification des coordonnées
+      if(!notice.COOR && !notice.COORM && !notice.ZONE && hasCorrectCoordinates(prevNotice)){
+        notice.POP_COORDONNEES = prevNotice.POP_COORDONNEES;
+        notice.POP_CONTIENT_GEOLOCALISATION = prevNotice.POP_CONTIENT_GEOLOCALISATION;
+      }
+
       //Modification des liens entre bases
       await populateBaseFromPalissy(notice, notice.REFJOC, Joconde);
       await populateBaseFromPalissy(notice, notice.REFMUS, Museo);
