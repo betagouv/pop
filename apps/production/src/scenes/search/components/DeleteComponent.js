@@ -168,7 +168,7 @@ function DeleteProcessor({ ctx, onFinish, collection }) {
     const query = { bool: { must: queries.length === 0 ? { match_all: {} } : queries } };
     deleteData(query);
   }, []);
-  return <>Supression de {total} notices en cours…</>;
+  return <>Suppression de {total} notices en cours…</>;
 }
 
 function mapStateToProps({ Auth }) {
