@@ -14,7 +14,7 @@ const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 const { capture } = require("./../sentry.js");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur, fileAuthorized } = require("./utils");
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
 const { EXCEPTION_CODES } = require("./utils/OAI/oai_Exceptions");
@@ -139,8 +139,11 @@ router.put(
         }
       }
       // Upload all files.
-      for (let i = 0; i < req.files.length; i++) {
+      for (let i = 0; i < req.files.length; i++) { 
         const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
@@ -204,8 +207,12 @@ router.post(
 
       // Upload all files (should this be done after creating notice?)
       for (let i = 0; i < req.files.length; i++) {
-        const path = `joconde/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
       // Transform and create.
       transformBeforeCreate(notice);

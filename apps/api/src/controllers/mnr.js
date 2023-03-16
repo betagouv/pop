@@ -9,7 +9,7 @@ const Mnr = require("../models/mnr");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur, fileAuthorized } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
 
 const router = express.Router();
@@ -107,6 +107,9 @@ router.put(
 
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
         promises.push(uploadFile(`mnr/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
       }
 
