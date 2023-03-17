@@ -19,7 +19,7 @@ const {
 } = require("./notice");
 const { formattedNow } = require("./date");
 const { getBaseCompletName } = require("./OAI/oai_utils");
-const fileAuthorized = ["text/csv", "application/pdf", "image/jpeg", "image/png"]
+const fileAuthorized = ["text/csv", "application/pdf", "image/jpeg", "image/png", "application/octet-stream"]
 module.exports = {
   uploadFile,
   deleteFile,
