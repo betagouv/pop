@@ -266,8 +266,6 @@ router.put(
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
-    let REF = notice.REF;
-    // let noticeMemoire = await Memoire.findOne({ REF: REF });
     const prevNotice = await Memoire.findOne({ REF: ref });
     if(notice.IDPROD==null && prevNotice!= null && prevNotice.IDPROD != null){
       notice.IDPROD = prevNotice.IDPROD;
@@ -283,7 +281,13 @@ router.put(
     //LBASE pour le ticket 43611 Mantis
     if(notice.LBASE==null && prevNotice!= null && prevNotice.LBASE != null){
       notice.LBASE = prevNotice.LBASE;
-   }
+    }
+
+    // M44947 - Problème de récupération IMG lors d'un import
+    if(undefined === typeof notice.IMG  && prevNotice.IMG){
+      notice.IMG = prevNotice.IMG;
+    }
+
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
@@ -294,7 +298,7 @@ router.put(
       });
     }
     const promises = [];
-
+    
     // Upload files.
     for (let i = 0; i < req.files.length; i++) {
       const f = req.files[i];
