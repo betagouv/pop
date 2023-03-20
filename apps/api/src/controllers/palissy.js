@@ -29,7 +29,8 @@ const {
   hasCorrectCoordinates,
   hasCorrectPolygon,
   findPalissyProducteur,
-  identifyProducteur
+  identifyProducteur,
+  fileAuthorized
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -397,10 +398,13 @@ router.put(
       const promises = [];
 
       for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
         promises.push(
           uploadFile(
-            `palissy/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`,
-            req.files[i]
+            `palissy/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f
           )
         );
       }
@@ -461,8 +465,12 @@ router.post(
       promises.push(obj.save());
       promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
         promises.push(
-          uploadFile(`palissy/${notice.REF}/${req.files[i].originalname}`, req.files[i])
+          uploadFile(`palissy/${notice.REF}/${f.originalname}`, f)
         );
       }
       await Promise.all(promises);

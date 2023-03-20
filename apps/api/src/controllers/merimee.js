@@ -30,7 +30,8 @@ const {
   hasCorrectCoordinates,
   hasCorrectPolygon,
   findMerimeeProducteur,
-  identifyProducteur
+  identifyProducteur,
+  fileAuthorized
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -371,8 +372,12 @@ router.put(
 
       const promises = [];
       for (let i = 0; i < req.files.length; i++) {
-        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
 
       // Prepare and update notice.
@@ -457,8 +462,12 @@ router.post(
       promises.push(doc.save());
       promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
-        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });

@@ -24,6 +24,10 @@
   script:
     - cd apps/${APP}
     - npm test
+  rules:
+    - if: '$TEST_DISABLE == "true"'
+      when: never
+    - when: always
   artifacts:
     name: test-rapport
     expire_in: 1 hour
@@ -96,6 +100,10 @@
     - echo "NODE_ENV=${NODE_ENV}" >> .env
     - echo "EURELIAN=${EURELIAN}" >> .env
     - npm run build
+  rules:
+    - if: '$BUILD_DISABLE == "true"'
+      when: never
+    - when: always
   artifacts:
     paths:
       - apps/${APP}/*
@@ -123,4 +131,7 @@
     - echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY_OPEN}" >> ~/.aws/credentials
     - cd apps/${APP}
     - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
+    - mkdir -p .platform/hooks/predeploy
+    - echo "${HEADER}" | base64 --decode > .platform/hooks/predeploy/01_install_more_header.sh
+    - echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
     - eb deploy ${ENV}

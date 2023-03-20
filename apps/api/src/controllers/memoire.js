@@ -26,7 +26,8 @@ const {
   updateOaiNotice,
   deleteFile,
   findMemoireProducteur,
-  identifyProducteur
+  identifyProducteur,
+  fileAuthorized
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
@@ -265,8 +266,6 @@ router.put(
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
-    let REF = notice.REF;
-    // let noticeMemoire = await Memoire.findOne({ REF: REF });
     const prevNotice = await Memoire.findOne({ REF: ref });
     if(notice.IDPROD==null && prevNotice!= null && prevNotice.IDPROD != null){
       notice.IDPROD = prevNotice.IDPROD;
@@ -282,7 +281,13 @@ router.put(
     //LBASE pour le ticket 43611 Mantis
     if(notice.LBASE==null && prevNotice!= null && prevNotice.LBASE != null){
       notice.LBASE = prevNotice.LBASE;
-   }
+    }
+
+    // M44947 - Problème de récupération IMG lors d'un import
+    if(undefined === typeof notice.IMG  && prevNotice.IMG){
+      notice.IMG = prevNotice.IMG;
+    }
+
     const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
@@ -293,11 +298,15 @@ router.put(
       });
     }
     const promises = [];
-
+    
     // Upload files.
     for (let i = 0; i < req.files.length; i++) {
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      promises.push(uploadFile(path, req.files[i]));
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      promises.push(uploadFile(path, f));
     }
     // Update IMPORT ID.
     if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
@@ -368,8 +377,12 @@ router.post(
 
     // Upload images.
     for (let i = 0; i < req.files.length; i++) {
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      promises.push(uploadFile(path, req.files[i]));
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      promises.push(uploadFile(path, f));
     }
     // Update and save.
     promises.push(updateLinks(notice));

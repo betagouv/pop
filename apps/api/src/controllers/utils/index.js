@@ -18,7 +18,8 @@ const {
   identifyProducteur
 } = require("./notice");
 const { formattedNow } = require("./date");
-const { getBaseCompletName } = require("./OAI/oai_utils")
+const { getBaseCompletName } = require("./OAI/oai_utils");
+const fileAuthorized = ["text/csv", "application/pdf", "image/jpeg", "image/png", "application/octet-stream"]
 module.exports = {
   uploadFile,
   deleteFile,
@@ -37,5 +38,6 @@ module.exports = {
   findMerimeeProducteur,
   findPalissyProducteur,
   identifyProducteur,
-  getBaseCompletName
+  getBaseCompletName,
+  fileAuthorized
 };
