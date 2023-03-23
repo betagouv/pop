@@ -72,7 +72,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   <br />
                 </h2>
               </div>
-              <p> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+              <p> {data.AUTOEU && data.AUTOEU.length > 0 ? "Auteur de l’œuvre représentée : " + data.AUTOEU.join(' ; ') : "" }</p>
               <p>{loc}</p>
               <p>{data.TYPDOC}</p>
               <p>{author}</p>
