@@ -284,7 +284,7 @@ router.put(
     }
 
     // M44947 - Problème de récupération IMG lors d'un import
-    if(undefined === typeof notice.IMG  && prevNotice.IMG){
+    if(undefined === notice.IMG  && prevNotice.IMG){
       notice.IMG = prevNotice.IMG;
     }
 
