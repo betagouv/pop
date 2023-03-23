@@ -231,7 +231,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
           env: test
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
-          path: build
+#          path: build
           eurelian: "null"
   build_production_staging:
     executor: docker_node
@@ -243,7 +243,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
-          path: build
+#          path: build
           eurelian: "null"
   build_production_prod:
     executor: docker_node
@@ -255,7 +255,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
           env: production
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
-          path: build
+#          path: build
           eurelian: "null"
   ###############
   # DEPLOY JOBS #
