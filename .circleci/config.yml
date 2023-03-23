@@ -89,8 +89,6 @@ commands:
             npm run build
       - persist_to_workspace:
           root: ~/repo/apps/<< parameters.app >>
-#          paths:
-#            - << parameters.path >>
   deploy:
     parameters:
       eb_deploy:
