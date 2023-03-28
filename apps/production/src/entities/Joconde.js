@@ -62,22 +62,47 @@ export default class Joconde extends Notice {
       .forEach(prop => this._warnings.push(`Le champ ${prop} doit être une URL valide`));
   }
 
+  removeElemenLoca = (loca, element) => {
+    return loca.replace(new RegExp(element, 'i'), "");
+  }
+
+  /**
+   * Liste des valeurs possibles pour le champ LOCA
+   */
+  LIST_MANQUANT = ["; manquantes", "; manquants",  "; manquante", "; manquant"];
+  LIST_VOLE = ["; volées", "; volés", "; volée", "; volé", "; vole", "; volee"];
+  LIST_DISPARU = ["; disparues", "; disparus", "; disparue", "; disparu"];
+  LIST_PILLE = ["; pillées", "; pillés", "; pillée", "; pillé", "; pille", "; pillee"];
+  LIST_PRESUME = ["; présumé détruit", "; presume detruit"];
+
+  /**
+   * 
+   * @param { String } loca 
+   * @param { String } manquant 
+   * @param { String } manquantcom 
+   * @returns 
+   * 
+   * Règles de détermination
+   * Mantis 38684 - 44867
+   * - si LOCA contient "manquant", valeur "manquant" va dans MANQUANT, champ MANQUANT_COM non impacté
+   * - si LOCA contient "volé", valeur "volé" va dans MANQUANT, champ MANQUANT_COM non impacté
+   * - si LOCA contient "disparu", ou "localisation inconnue", ou "pillé " ou "présumé détruit", champ MANQUANT prend la valeur "manquant" ET "disparu"ou "localisation inconnue", ou "pillé " ou "présumée détruit" va dans MANQUANT_COM
+   * --> dans les 4 cas, LOCA est "vidé" de la valeur "manquant", "disparu", "volé","localisation inconnue", "pillé ", "présumé détruit".
+   */
   extractManquant = function(loca, manquant, manquantcom) { 
 
-    if (["; manquantes", "; manquants",  "; manquante", "; manquant"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
-      let element = ["; manquantes", "; manquants", "; manquante", "; manquant"].find(e => loca.toLowerCase().indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
+    if (this.LIST_MANQUANT.some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = this.LIST_MANQUANT.find(e => loca.toLowerCase().indexOf(e) !== -1);
+      return { LOCA: this.removeElemenLoca(loca, element), MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
     }
 
-    if (["; volées", "; volés", "; volée", "; volé"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
-      let element = ["; volées", "; volés", "; volée", "; volé"].find(e => loca.toLowerCase().indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT:['volé'], MANQUANT_COM: manquantcom };
+    if (this.LIST_VOLE.some(e => loca.toLowerCase().indexOf(e) !== -1 )) {
+      let element = this.LIST_VOLE.find(e => loca.toLowerCase().indexOf(e) !== -1);
+      return { LOCA: this.removeElemenLoca(loca, element), MANQUANT:['volé'], MANQUANT_COM: manquantcom };
     }
 
-    if (["; disparues", "; disparus", "; disparue", "; disparu"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
-      let element = ["; disparues", "; disparus", "; disparue", "; disparu"].find(e => loca.toLowerCase().indexOf(e) !== -1);
+    if (this.LIST_DISPARU.some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = this.LIST_DISPARU.find(e => loca.toLowerCase().indexOf(e) !== -1);
       return this.addManquantCom(loca, manquantcom, element, "disparu");
     }
 
@@ -85,32 +110,30 @@ export default class Joconde extends Notice {
       return this.addManquantCom(loca, manquantcom, "; localisation inconnue", "localisation inconnue");
     }
 
-    if (["; pillées", "; pillés", "; pillée", "; pillé"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
-      let element = ["; pillées", "; pillés", "; pillée", "; pillé"].find(e => loca.toLowerCase().indexOf(e) !== -1);
+    if (this.LIST_PILLE.some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = this.LIST_PILLE.find(e => loca.toLowerCase().indexOf(e) !== -1);
       return this.addManquantCom(loca, manquantcom, element, "pillé");
     }
 
-    if (["; présumé détruit"].some(e => loca.toLowerCase().indexOf(e) !== -1)) {
-      let element = ["; présumé détruit"].find(e => loca.toLowerCase().indexOf(e) !== -1);
-      let array = loca.split(element);
-      return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: "présumé détruit" };
+    if (this.LIST_PRESUME.some(e => loca.toLowerCase().indexOf(e) !== -1)) {
+      let element = this.LIST_PRESUME.find(e => loca.toLowerCase().indexOf(e) !== -1);
+      return { LOCA: this.removeElemenLoca(loca, element), MANQUANT:["manquant"], MANQUANT_COM: "présumé détruit" };
     }
 
-    if(manquant == ""){
+    if(manquant == ""){  
       manquant = [];
-    }
+    } 
     
     return { LOCA: loca, MANQUANT: manquant, MANQUANT_COM: manquantcom };
   };
 
   addManquantCom = function(loca, manquantcom, element, addon){
-    let array = loca.split(element);
     if(typeof manquantcom !== "undefined" && manquantcom !== "" && manquantcom !== " "){
       manquantcom = manquantcom + " ; " + addon;
     }else{
       manquantcom = addon ;
     }
-    return { LOCA:array[0] + array[1], MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
+    return { LOCA:this.removeElemenLoca(loca, element), MANQUANT:["manquant"], MANQUANT_COM: manquantcom };
   }
 
   extractIMGNames = function(str) {
