@@ -139,9 +139,11 @@ router.put(
         }
       }
       // Upload all files.
+      const fileAuthorizedJoconde = [...fileAuthorized, "image/png"];
+      
       for (let i = 0; i < req.files.length; i++) { 
         const f = req.files[i];
-        if(!fileAuthorized.includes(f.mimetype)){
+        if(!fileAuthorizedJoconde.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
@@ -206,9 +208,10 @@ router.post(
       const promises = [];
 
       // Upload all files (should this be done after creating notice?)
+      const fileAuthorizedJoconde = [...fileAuthorized, "image/png"];
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        if(!fileAuthorized.includes(f.mimetype)){
+        if(!fileAuthorizedJoconde.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
