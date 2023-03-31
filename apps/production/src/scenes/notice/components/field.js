@@ -27,40 +27,12 @@ class TagsInput extends React.Component {
   }
 
   handleInputChange(str) {
-
+    // Récupération via Open Theso
     if (str && this.props.idthesaurus) {
-      api
-        .autocompleteThesaurus(this.props.idthesaurus, str)
-        .then(response => {
-          if (response) {
-            const values = JSON.parse(response.body);
-            const suggestions = values.map(e => ({
-              id: e.label,
-              text: e.label,
-              isAltLabel: e.isAltLabel
-            }))
-            .filter( val => !val.isAltLabel);
-            this.setState({ suggestions });
-          }
-        })
-        .catch(e => {
-          console.log("ERROR", e);
-        });
+      getSuggestionsOpenTheso(this, str);
     } else if (str && this.props.thesaurus) {
-      api
-        .getThesaurus(this.props.thesaurus, str)
-        .then(values => {
-          if (values) {
-            const suggestions = values.map(e => ({
-              id: e.value,
-              text: e.value
-            }));
-            this.setState({ suggestions });
-          }
-        })
-        .catch(e => {
-          console.log("ERROR", error);
-        });
+      // Méthode maintenue dans l'attente de la connexion de l'ensemble de bases sur OpenTheso
+      getSuggestionsThesaurus(this, str)
     } else if (str && this.props.input.name === "TYPID") {
       //Ticket 35635
       const values = ["collectivité", "organisation", "personne", "famille", "autre"]
@@ -138,13 +110,14 @@ class TextInput extends React.Component {
     if (!this.props.thesaurus) {
       return;
     }
-    console.log(this.props, str);
 
     if (str) {
-      const values = await api.getThesaurus(this.props.thesaurus, str);
-      if (values) {
-        const suggestions = values.map(e => ({ id: e.value, text: e.value }));
-        this.setState({ suggestions });
+      // Open Theso
+      if (this.props.idthesaurus) {
+        getSuggestionsOpenTheso(this, str);
+      } else {
+        // Méthode maintenue dans l'attente de la connexion de l'ensemble de bases sur OpenTheso
+        getSuggestionsThesaurus(this, str)
       }
     } else {
       if (this.state.suggestions.length) {
@@ -208,6 +181,47 @@ const TooltipComp = ({ deprecated, generated, description, name, hidedescription
     </UncontrolledTooltip>
   );
 };
+
+const getSuggestionsThesaurus = async (component, str) => {
+  api.getThesaurus(component.props.thesaurus, str)
+     .then(values => {
+        if (values) {
+            const suggestions = values.map(e => ({
+              id: e.value,
+              text: e.value
+            }));
+            component.setState({ suggestions });
+          }
+        })
+     .catch(e => {
+        console.log("ERROR", error);
+     });
+}
+
+/**
+ * Méthode qui permet d'afficher une liste de proposition en fonction de la valeur saisie
+ * Référentiel OPEN THESO
+ * @param { React.Component } component 
+ * @param { String } str 
+ */
+const getSuggestionsOpenTheso = (component, str) => {
+  api.autocompleteThesaurus(component.props.idthesaurus, str)
+     .then(response => {
+        if (response) {
+          const values = JSON.parse(response.body);
+          const suggestions = values.map(e => ({
+            id: e.label,
+            text: e.label,
+            isAltLabel: e.isAltLabel
+          }))
+          .filter( val => !val.isAltLabel);
+          component.setState({ suggestions });
+        }
+    })
+    .catch(e => {
+        console.log("ERROR", e);
+    });
+}
 
 export default class AbstractField extends React.Component {
   render() {

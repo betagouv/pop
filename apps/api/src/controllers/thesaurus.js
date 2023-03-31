@@ -72,7 +72,7 @@ router.get("/validate", passport.authenticate("jwt", { session: false }), (req, 
         isAltLabel: element.altLabel,
       }
     })
-    res.send({ statusCode: 202, body: JSON.stringify(values) });
+    res.send({ statusCode: 200, body: JSON.stringify(values) });
   });
 });
 
@@ -247,16 +247,18 @@ async function createThesaurus(idThesaurus, data){
         promises.push(theso.save());
       });
     }
-   
-    parseData[i][propPrefLabel].forEach( (element) => {
-      let theso = new Thesaurus({
-        idThesaurus: idThesaurus,
-        arc: parseData[i][propId],
-        value: element["@value"],
-        altLabel: false
+
+    if(parseData[i][propPrefLabel]) {
+      parseData[i][propPrefLabel].forEach( (element) => {
+        let theso = new Thesaurus({
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: false
+        });
+        promises.push(theso.save());
       });
-      promises.push(theso.save());
-    });
+    }
   });
 
   await Promise.all(promises);
@@ -275,31 +277,12 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
   const thesaurusId = req.query.id;
   const value = req.query.value;
 
-  /*return new Promise((resolve, reject) => {
-    request.get({
-      url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
-    },
-    (error, response) => {
-      if (!error && response.statusCode === 202) {
-        resolve(response);
-      } else {
-        capture(error);
-        reject(error);
-      }
-    }
-  );
-  })
-  .then(resp => { 
-    res.status(200).send(resp);
-  })
-  .catch(error => res.status(400).send({ success: false, msg: error}));
-  */
   return new Promise((resolve, reject) => {
     request.get({
       url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
     },
     (error, response) => {
-      if (!error && response.statusCode === 202) {
+      if (!error && response.statusCode === 200) {
         resolve(response);
       } else {
         capture(error);
@@ -348,7 +331,7 @@ router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false
     request.get(
       `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`,
       (error, response) => {
-        if (!error && response.statusCode === 202) {
+        if (!error && response.statusCode === 200) {
           resolve(response);
         } else {
           capture(error);
