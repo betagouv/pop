@@ -338,7 +338,7 @@ function readme() {
         Les formats de données pris en charge sont les suivants&nbsp;: <br />
         <ul>
           <li>texte : format Renabl (.xml) , Gertrude (.txt à partir de la version 1.6) ou csv (séparateur : | ) </li>
-          <li>illustration : jpg, png.</li>
+          <li>illustration : jpg.</li>
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices avec image, ou 1
         million de notices sans images). <br /> <br />
