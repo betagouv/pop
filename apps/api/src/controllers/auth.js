@@ -8,6 +8,7 @@ const mailer = require("../mailer");
 require("../passport")(passport);
 const User = require("../models/user");
 const config = require("../config.js");
+const moment = require("moment-timezone")
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -21,6 +22,10 @@ router.post("/signin", async (req, res) => {
   */
   const email = req.body.email.toLowerCase();
   const password = req.body.password;
+  const MSG_FAIL_AUTH = `Email ou mot de passe incorrect.`;
+  const MSG_WARNING_AUTH = `Email ou mot de passe incorrect. En cas de nouvelle saisie erronée, votre compte sera temporairement bloqué.`;
+  const MSG_ACCOUNT_LOCKED = `Compte temporairement bloqué. Veuillez réessayer dans quelques minutes ou contacter l'administrateur POP.`;
+
   if (!email || !password) {
     return res.status(400).send({ success: false, msg: `Mot de passe et email requis.` });
   }
@@ -28,19 +33,48 @@ router.post("/signin", async (req, res) => {
   try {
     user = await User.findOne({ email });
   } catch (e) {
-    return res.status(500).send({ success: false, msg: `L'authentification a échoué.` });
+    return res.status(400).send({ success: false, msg: `L'authentification a échoué.` });
   }
   if (!user) {
-    return res.status(401).send({ success: false, msg: `Email ou mot de passe incorrect.` });
+    return res.status(401).send({ success: false, msg: MSG_FAIL_AUTH });
   }
+
+  // Date now
+  const dateNow = moment();
+
+  // Date dernier échec d'authentification + le délai de déblocage du compte paramétré (variable environnement: exemple 5 min)
+  const dateResetAccount = ( user.lastFailure && process.env.BLOCKED_USER_DELAY ) ? moment(user.lastFailure).add(process.env.BLOCKED_USER_DELAY, 'm') : null;
+
+  // Si le compte est bloqué et le délai de déblocage du compte n'est pas dépassé 
+  if(user.isBloqued && dateResetAccount && dateNow < dateResetAccount){
+    return res.status(401).send({ success: false, msg: MSG_ACCOUNT_LOCKED });
+  }
+
   user.comparePassword(req.body.password, async function(err, isMatch) {
     if (isMatch && !err) {
       const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: "1d" });
-      user.set({ lastConnectedAt: Date.now() });
+      /*
+      * Mise à jour de l'utilisateur, remise à zéro du nombre de tentative, compte bloqué == false 
+      */
+      user.set({ 
+        lastConnectedAt: Date.now(),
+        isBloqued: false,
+        attemptCount: 0
+      });
       await user.save();
       res.status(200).send({ success: true, token: "JWT " + token, user, id_app: config.ID_PROD_APP });
     } else {
-      res.status(401).send({ success: false, msg: `Email ou mot de passe incorrect.` });
+
+      user.set({
+        lastFailure: dateNow.format(),
+        attemptCount: user.attemptCount + 1,
+        isBloqued : user.attemptCount + 1 > 4
+      });
+      await user.save();
+      // Si le message est également à 4 => l'utilisateur est informé, à la prochaine erreur d'authentification, le compte est bloqué
+      // Si le nombre de tentative est supérieur à 4 => message compte bloqué
+      const message = ( user.attemptCount < 4 ) ? MSG_FAIL_AUTH : ( user.attemptCount > 4 ) ? MSG_ACCOUNT_LOCKED : MSG_WARNING_AUTH
+      res.status(401).send({ success: false, msg: message });
     }
   });
 });
