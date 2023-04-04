@@ -298,16 +298,23 @@ router.put(
       });
     }
     const promises = [];
-    
-    // Upload files.
-    for (let i = 0; i < req.files.length; i++) {
-      const f = req.files[i];
-      if(!fileAuthorized.includes(f.mimetype)){
-        throw new Error("le type fichier n'est pas accepté")      
+
+    try {
+       // Upload files.
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
-      promises.push(uploadFile(path, f));
+    } catch (e) {
+      capture(e);
+      res.status(403).send({ success: false, error: e });
     }
+
+   
     // Update IMPORT ID.
     if (notice.POP_IMPORT && notice.POP_IMPORT.length) {
       const id = notice.POP_IMPORT[0];
@@ -375,15 +382,21 @@ router.post(
     }
     const promises = [];
 
-    // Upload images.
-    for (let i = 0; i < req.files.length; i++) {
-      const f = req.files[i];
-      if(!fileAuthorized.includes(f.mimetype)){
-        throw new Error("le type fichier n'est pas accepté")      
+    try {
+      // Upload images.
+      for (let i = 0; i < req.files.length; i++) {
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
-      const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
-      promises.push(uploadFile(path, f));
-    }
+   } catch (e) {
+     capture(e);
+     res.status(403).send({ success: false, error: e });
+   }
+
     // Update and save.
     promises.push(updateLinks(notice));
     await transformBeforeCreate(notice);
