@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import mdf from "../../../assets/musee-de-france.jpg";
 
 export default ({ data }) => {
   const image = data.PHOTO ? `${bucket_url}${data.PHOTO}` : require("../../../assets/noimage.jpg");
+  const LogoComponent = "MUSEE" === data.PRODUCTEUR ? <img src={mdf} className="producteur" /> : <div />;
+
   return (
     <Link style={{ textDecoration: "none" }} className="card" to={`/notice/museo/${data.REF}`}>
       <img src={image} alt="Lien cassé" />
@@ -18,6 +21,7 @@ export default ({ data }) => {
           </p>
           <p>{data.CATEG}</p>
           <p>{Array.isArray(data.DOMPAL) ? data.DOMPAL.join(" ; ") : data.DOMPAL}</p>
+          {LogoComponent}
         </div>
       </div>
     </Link>
