@@ -21,6 +21,14 @@ class Signin extends Component {
     this.props.signin(this.state.email, this.state.password);
   }
 
+  renderError(error){
+    if(error.indexOf("#") > -1){
+      return <React.Fragment>{error.split("#").map( el => <p className="sign-text-error">{el}</p>)}</React.Fragment>
+    } else {
+      return <React.Fragment><p className="sign-text-error">{error}</p></React.Fragment>
+    }
+  }
+
   render() {
     return (
       <form>
@@ -35,7 +43,7 @@ class Signin extends Component {
             <br />- Nom <br />- Prénom <br />
             <br />
           </div>
-          <span className="error">{this.props.error}</span>
+          <div className="error">{this.renderError(this.props.error)}</div>
           <div className="block">
             <input
               className="input-field"
@@ -88,6 +96,13 @@ class Signin extends Component {
               Se connecter
             </Button>
           </div>
+          <style jsx global>{`
+            .sign-text-error{
+              margin-bottom: 0;
+              text-align: center;
+            }
+          `  
+          }</style>
         </Container>
       </form>
     );

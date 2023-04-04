@@ -23,8 +23,8 @@ router.post("/signin", async (req, res) => {
   const email = req.body.email.toLowerCase();
   const password = req.body.password;
   const MSG_FAIL_AUTH = `Email ou mot de passe incorrect.`;
-  const MSG_WARNING_AUTH = `Email ou mot de passe incorrect. En cas de nouvelle saisie erronée, votre compte sera temporairement bloqué.`;
-  const MSG_ACCOUNT_LOCKED = `Compte temporairement bloqué. Veuillez réessayer dans quelques minutes ou contacter l'administrateur POP.`;
+  const MSG_WARNING_AUTH = `Email ou mot de passe incorrect.# En cas de nouvelle saisie erronée, votre compte sera temporairement bloqué.`;
+  const MSG_ACCOUNT_LOCKED = `Compte temporairement bloqué.# Veuillez réessayer dans quelques minutes ou contacter l'administrateur POP.`;
 
   if (!email || !password) {
     return res.status(400).send({ success: false, msg: `Mot de passe et email requis.` });
