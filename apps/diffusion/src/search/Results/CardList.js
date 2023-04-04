@@ -285,8 +285,11 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
 };
 
 export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
-  const { title, subtitle, image_preview, localisation } = getNoticeInfo(data);
+  const { title, subtitle, image_preview, localisation, producteur } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
+
+  // M45078 - Affichage du logo muse-de-france uniquement si le producteur est Musée
+  const LogoComponent = "MUSEE" === producteur ? <img src="/static/musee-de-france.png" className="producteur" /> : <div />;
 
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
@@ -316,7 +319,7 @@ export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
               {data.REF}
             </span>
             <BucketButton base="museo" reference={data.REF} removeFromBucket={removeFromBucket} />
-            <img src="/static/musee-de-france.png" className="producteur" />
+            {LogoComponent}
           </div>
         </div>
       </a>
