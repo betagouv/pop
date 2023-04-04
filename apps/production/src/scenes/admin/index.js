@@ -42,6 +42,7 @@ class Admin extends React.Component {
             <th>Institution</th>
             <th>Role</th>
             <th>Dernière connexion</th>
+            <th>Compte bloqué</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -55,12 +56,14 @@ class Admin extends React.Component {
               lastConnectedAt,
               institution,
               group,
-              museofile
+              museofile,
+              isBloqued
             } = user;
             const date = new Date(lastConnectedAt);
             const lastCo = lastConnectedAt
               ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
               : "jamais";
+            const locked = isBloqued ? 'Oui' : 'Non';
             return (
               <tr key={email}>
                 <td>{nom}</td>
@@ -72,6 +75,7 @@ class Admin extends React.Component {
                 <td>{institution}</td>
                 <td>{role}</td>
                 <td>{lastCo}</td>
+                <td><strong>{locked}</strong></td>
                 <td>
                   <UpdateUser user={user} baseGroups={this.state.baseGroups} callback={this.fetchUsers} />
                 </td>

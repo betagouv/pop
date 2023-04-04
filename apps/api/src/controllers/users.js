@@ -43,7 +43,7 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
       #swagger.path = '/users'
       #swagger.description = 'Mise à jour d\'un utilisateur' 
   */
-  const { nom, prenom, institution, group, role, museofile } = req.body;
+  const { nom, prenom, institution, group, role, museofile, isBloqued } = req.body;
   const email = req.params.email && req.params.email.toLowerCase();
   const authenticatedUser = req.user;
 
@@ -87,7 +87,11 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
   }
 
   if(fullUpdate){
-    user.set({ institution, nom, prenom, group, role });
+    user.set({ institution, nom, prenom, group, role, isBloqued });
+    // Si le compte est débloqué, le compteur tentative est réinitialisé
+    if(!isBloqued){
+      user.set({ attemptCount: 0 })
+    }
     if (museofile) {
       user.set({ museofile });
     }
