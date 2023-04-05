@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
-import mdf from "../../../assets/musee-de-france.jpg";
+import mdf from "../../../assets/musee-de-france.png";
 
 export default ({ data }) => {
   const image = data.PHOTO ? `${bucket_url}${data.PHOTO}` : require("../../../assets/noimage.jpg");
