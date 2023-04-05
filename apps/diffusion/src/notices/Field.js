@@ -50,13 +50,15 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   if(!isPdf){
+    // M45080 - interprétation du retour à la ligne manuel
+    str = <p>{str.props.children}</p>
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
 
         <div>{str}</div>
 
-        <style jsx>{`
+        <style jsx global>{`
           .field {
             padding-bottom: 10px;
           }
