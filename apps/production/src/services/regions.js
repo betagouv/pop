@@ -16,22 +16,5 @@ export default [
   "Nouvelle-Aquitaine",
   "Occitanie",
   "Pays de la Loire",
-  "Provence-Alpes-Côte d'Azur",
-  "Rhône-Alpes",
-  "Alsace",
-  "Aquitaine",
-  "Auvergne",
-  "Basse-Normandie",
-  "Bourgogne",
-  "Centre",
-  "Champagne-Ardenne",
-  "Franche-Comté",
-  "Haute-Normandie",
-  "Languedoc-Roussillon",
-  "Limousin",
-  "Lorraine",
-  "Midi-Pyrénées",
-  "Nord-Pas-de-Calais",
-  "Picardie",
-  "Poitou-Charente"
+  "Provence-Alpes-Côte d'Azur"
 ];
