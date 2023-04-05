@@ -50,13 +50,16 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   if(!isPdf){
+    if(typeof str.props.children == "string" && str.props.children.indexOf("\n") > -1){
+      str = str.props.children.split("\n").map(el => <p>{el}</p>)
+    }
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
 
         <div>{str}</div>
 
-        <style jsx>{`
+        <style jsx global>{`
           .field {
             padding-bottom: 10px;
           }
