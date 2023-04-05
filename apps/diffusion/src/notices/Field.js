@@ -50,9 +50,8 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   }
 
   if(!isPdf){
-    if(typeof str.props.children == "string" && str.props.children.indexOf("\n") > -1){
-      str = str.props.children.split("\n").map(el => <p>{el}</p>)
-    }
+    // M45080 - interprétation du retour à la ligne manuel
+    str = <p>{str.props.children}</p>
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
