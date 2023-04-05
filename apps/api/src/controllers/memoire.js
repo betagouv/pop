@@ -31,6 +31,7 @@ const {
 } = require("./utils");
 const { canUpdateMemoire, canCreateMemoire, canDeleteMemoire } = require("./utils/authorization");
 const { capture } = require("./../sentry.js");
+const regions = require("./utils/regions");
 const { getDepartement } = require("./utils/departments");
 
 // Control properties document, flag each error.
@@ -74,6 +75,15 @@ async function withFlags(notice) {
   ["NUMTI", "NUMP"]
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
+
+  // M45079 - Ajout vérification sur le champ REG
+  if (Array.isArray(notice.REG) && notice.REG.length > 0 ) {
+    for(let i=0; i<notice.REG.length; i++){
+      if(!regions.includes(notice.REG[i])){
+        notice.POP_FLAGS.push("REG_INVALID");
+      } 
+    }
+  }
 
   //Check refs
   notice.POP_FLAGS = await checkValidRef(notice.REFJOC, Joconde, notice.POP_FLAGS, "REFJOC");
