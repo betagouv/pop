@@ -30,7 +30,8 @@ const {
   hasCorrectCoordinates,
   hasCorrectPolygon,
   findMerimeeProducteur,
-  identifyProducteur
+  identifyProducteur,
+  fileAuthorized
 } = require("./utils");
 const { capture } = require("./../sentry.js");
 const passport = require("passport");
@@ -196,7 +197,6 @@ async function transformBeforeCreateOrUpdate(notice) {
   if (notice.COOR && notice.ZONE && !hasCorrectCoordinates(notice)) {
     notice.POP_COORDONNEES = lambertToWGS84(notice.COOR, notice.ZONE);
   }
-
   //If no correct coordinates, get polygon centroid.
   if (hasCorrectPolygon(notice) && !hasCorrectCoordinates(notice)) {
     const centroid = getPolygonCentroid(coordinates);
@@ -372,12 +372,22 @@ router.put(
 
       const promises = [];
       for (let i = 0; i < req.files.length; i++) {
-        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
 
       // Prepare and update notice.
       await transformBeforeUpdate(notice);
+
+      // vérification des coordonnées
+      if(!notice.COOR && !notice.COORM && !notice.ZONE && hasCorrectCoordinates(prevNotice)){
+        notice.POP_COORDONNEES = prevNotice.POP_COORDONNEES;
+        notice.POP_CONTIENT_GEOLOCALISATION = prevNotice.POP_CONTIENT_GEOLOCALISATION;
+      }
 
       const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
@@ -389,8 +399,7 @@ router.put(
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
 
-      //Modification liens entre bases
-     
+      // Modification liens entre bases
       await populateBaseFromMerimee(notice, notice.REFJOC, Joconde);
       await populateBaseFromMerimee(notice, notice.REFMUS, Museo);
 
@@ -453,8 +462,12 @@ router.post(
       promises.push(doc.save());
       promises.push(obj2.save());
       for (let i = 0; i < req.files.length; i++) {
-        const path = `merimee/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "OK" });

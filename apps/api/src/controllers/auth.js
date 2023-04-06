@@ -71,7 +71,7 @@ router.post("/forgetPassword", async (req, res) => {
   try {
     user = await User.findOne({ email });
   } catch (e) {
-    return res.status(500).send({ success: false, msg: `L'opération a échouée.` });
+    return res.status(500).send({ success: false, msg: `L'opération a échoué.` });
   }
   if (!user) {
     const msg = `Utilisateur ${email.toLowerCase()} introuvable`;
@@ -123,7 +123,7 @@ router.post(
     if (!user) {
       res.status(404).send({
         success: false,
-        msg: `La mise à jour du mot de passe à échoué. Utilisateur ${email.toLowerCase()} introuvable.`
+        msg: `La mise à jour du mot de passe a échoué. Utilisateur ${email.toLowerCase()} introuvable.`
       });
     }
 
@@ -143,7 +143,7 @@ router.post(
         } catch (e) {
           return res.status(500).send({
             success: false,
-            msg: `La mise à jour du mot de passe à échoué.`
+            msg: `La mise à jour du mot de passe a échoué.`
           });
         }
         return res.status(200).send({
@@ -153,7 +153,7 @@ router.post(
       } else {
         return res.status(401).send({
           success: false,
-          msg: `La mise à jour du mot de passe à échoué. Le mot de passe original n'est pas bon.`
+          msg: `La mise à jour du mot de passe a échoué. Le mot de passe original n'est pas bon.`
         });
       }
     });

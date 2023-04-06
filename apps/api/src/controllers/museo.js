@@ -13,9 +13,10 @@ const Merimee = require("../models/merimee");
 const Palissy = require("../models/palissy");
 const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
-let moment = require('moment-timezone')
+let moment = require('moment-timezone');
+const { capture } = require("./../sentry.js");
 
-const { formattedNow, deleteFile, uploadFile, updateOaiNotice, hasCorrectCoordinates } = require("./utils");
+const { formattedNow, deleteFile, uploadFile, updateOaiNotice, hasCorrectCoordinates, fileAuthorized } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
 const { checkESIndex, identifyProducteur } = require("../controllers/utils")
 
@@ -219,8 +220,12 @@ router.post(
 
       // Upload images.
       for (let i = 0; i < req.files.length; i++) {
-        const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `museo/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
 
       await Promise.all(promises);
@@ -263,8 +268,12 @@ router.put(
 
     // Upload images.
     for (let i = 0; i < req.files.length; i++) {
-      const path = `museo/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-      promises.push(uploadFile(path, req.files[i]));
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `museo/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      promises.push(uploadFile(path, f));
     }
 
     // Update IMPORT ID (this code is unclear…)
@@ -272,6 +281,23 @@ router.put(
       const id = notice.POP_IMPORT[0];
       delete notice.POP_IMPORT;
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
+    }
+
+    // Contrôle présence des coordonnées
+    if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lon'] == 'undefined'){
+      notice.POP_COORDONNEES = {
+        lat: prevNotice.POP_COORDONNEES.lat,
+        lon: prevNotice.POP_COORDONNEES.lon
+      }
+      delete notice['POP_COORDONNEES.lat'];
+      delete notice['POP_COORDONNEES.lon'];
+    } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lon'] == ''){
+      notice.POP_COORDONNEES = {
+        lat: 0,
+        lon: 0
+      }
+      delete notice['POP_COORDONNEES.lat'];
+      delete notice['POP_COORDONNEES.lon'];
     }
 
     await transformBeforeCreateOrUpdate(notice);

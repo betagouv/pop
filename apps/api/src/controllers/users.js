@@ -59,7 +59,7 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
     user = await User.findOne({ email });
   } catch (error) {
     capture(error);
-    return res.status(500).send({ success: false, error });
+    return res.status(401).send({ success: false, error });
   }
 
   // User not found.
@@ -70,23 +70,30 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
     });
   }
 
-  // A user can modify her own account, otherwise...
+  let fullUpdate = false;
+
   if (email !== authenticatedUser.email) {
     // The authenticated user must be "administrateur"
     // AND she must be in the same group OR from admin group.
-    if (
-      authenticatedUser.role !== "administrateur" &&
-      authenticatedUser.group !== "admin" &&
-      authenticatedUser.group !== user.group
-    ) {
-      return res.status(403).send({ success: false, msg: "Autorisation requise." });
+    if("admin" !== authenticatedUser.group) {
+      if ("administrateur" !== authenticatedUser.role  || authenticatedUser.group !== user.group) {
+        return res.status(403).send({ success: false, msg: "Autorisation requise." });
+      }
     }
+    fullUpdate = true;
+  } else {
+    // si le user est admin -> droit pour modifier tous  champs
+    fullUpdate = "administrateur" === authenticatedUser.role;
   }
 
-  // Add new params to user.
-  user.set({ institution, nom, prenom, group, role });
-  if (museofile) {
-    user.set({ museofile });
+  if(fullUpdate){
+    user.set({ institution, nom, prenom, group, role });
+    if (museofile) {
+      user.set({ museofile });
+    }
+  } else {
+      // sinon uniquement Nom, Prénom, institution
+      user.set({ institution, nom, prenom });
   }
 
   // Actually save the user.

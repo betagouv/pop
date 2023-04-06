@@ -7,7 +7,7 @@ const filenamify = require("filenamify");
 const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
 const Import = require("../models/import");
-const { uploadFile } = require("./utils");
+const { uploadFile, fileAuthorized } = require("./utils");
 
 
 // Get one notice by ref.
@@ -42,8 +42,12 @@ router.put("/:id",
     await Import.updateOne({ _id: mongoose.Types.ObjectId(`${id}`) }, { $set: body });
 
     for (let i = 0; i < req.files.length; i++) {
-      const path = `import/${filenamify(id)}/${filenamify(req.files[i].originalname)}`;
-      await uploadFile(path, req.files[i]);
+      const f = req.files[i];
+      if(!fileAuthorized.includes(f.mimetype)){
+        throw new Error("le type fichier n'est pas accepté")      
+      }
+      const path = `import/${filenamify(id)}/${filenamify(f.originalname)}`;
+      await uploadFile(path, f);
     }
     return res.send({ success: true, msg: "OK" });
   } catch (e) {
@@ -70,8 +74,12 @@ router.post(
 
       for (let i = 0; i < req.files.length; i++) {
         const id = String(doc._id);
-        const path = `import/${filenamify(id)}/${filenamify(req.files[i].originalname)}`;
-        await uploadFile(path, req.files[i]);
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `import/${filenamify(id)}/${filenamify(f.originalname)}`;
+        await uploadFile(path, f);
       }
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {

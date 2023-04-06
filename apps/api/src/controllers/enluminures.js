@@ -10,7 +10,7 @@ const Enluminures = require("../models/enluminures");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 const { capture } = require("./../sentry.js");
-const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur } = require("./utils");
+const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur, fileAuthorized } = require("./utils");
 const { canUpdateEnluminures, canCreateEnluminures, canDeleteEnluminures } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
 
@@ -186,8 +186,12 @@ router.post(
 
       // Upload all files (should this be done after creating notice?)
       for (let i = 0; i < req.files.length; i++) {
-        const path = `enluminures/${filenamify(notice.REF)}/${filenamify(req.files[i].originalname)}`;
-        promises.push(uploadFile(path, req.files[i]));
+        const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
+        const path = `enluminures/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        promises.push(uploadFile(path, f));
       }
       // Transform and create.
       transformBeforeCreate(notice);
@@ -257,6 +261,9 @@ router.put(
       // Upload all files.
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
+        }
         const path = `enluminures/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }

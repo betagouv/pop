@@ -41,7 +41,7 @@ export default class Memoire extends Notice {
       body.INSEE.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
-          this._errors.push("Le champ ${prop} doit avoir une longueur de ${length} caractères minimum");
+          this._errors.push(`Le champ ${prop} doit avoir une longueur de ${length} caractères minimum`);
         }
       });
     }

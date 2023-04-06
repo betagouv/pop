@@ -111,6 +111,9 @@ commands:
           command: |
             cd apps/<< parameters.app >>
             sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_PRODUCTION" | base64 -di > .platform/nginx/nginx.conf
             eb deploy << parameters.eb_deploy >>
   deploy_api:
     parameters:
@@ -128,6 +131,9 @@ commands:
           command: |
             cd apps/api
             sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_API" | base64 -di > .platform/nginx/nginx.conf
             eb deploy << parameters.eb_deploy >>
   configure_aws_ebcli:
     steps:
@@ -190,7 +196,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
           env: test
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
-          path: .next
+          path: ./
           eurelian: uvvw.pop.culture.gouv.fr
   build_diffusion_staging:
     executor: docker_node
@@ -202,7 +208,7 @@ jobs:
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
-          path: .next
+          path: ./
           eurelian: uvvw.pop.culture.gouv.fr
   build_diffusion_prod:
     executor: docker_node
@@ -214,7 +220,7 @@ jobs:
            bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque/
            env: production
            sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
-           path: .next
+           path: ./
            eurelian: uvvw.pop.culture.gouv.fr
   build_production_test:
     executor: docker_node
@@ -269,6 +275,9 @@ jobs:
           command: |
             cd apps/diffusion
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
             eb deploy pop-consultation-test
   deploy_production_test:
     executor: docker_python
@@ -297,6 +306,9 @@ jobs:
           command: |
             cd apps/diffusion
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
             eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
@@ -338,6 +350,9 @@ jobs:
           command: |
             cd apps/diffusion
             sed -i "s/pop_consultation/pop-consultation/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
             eb deploy pop-consultation
 #############
 # WORKFLOWS #
