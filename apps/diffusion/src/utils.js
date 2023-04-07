@@ -78,7 +78,7 @@ export function getNoticeInfo(notice) {
       const image_preview = notice.PHOTO ? `${bucket_url}${notice.PHOTO}` : "/static/noimage.png";
       const images = notice.PHOTO ? [{ src: `${bucket_url}${notice.PHOTO}`, alt: title }] : [];
 
-      return { title, subtitle, metaDescription, image_preview, images, localisation };
+      return { title, subtitle, metaDescription, image_preview, images, localisation, producteur: notice.PRODUCTEUR };
     }
     case "Enluminures (Enluminures)": {
       let title = `${notice.TITR} - ${notice.SUJET}`;
