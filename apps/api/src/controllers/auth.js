@@ -9,6 +9,7 @@ require("../passport")(passport);
 const User = require("../models/user");
 const config = require("../config.js");
 const moment = require("moment-timezone")
+const { templateForgetPassword } = require("../mails/tpl_users_notification");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -119,12 +120,7 @@ router.post("/forgetPassword", async (req, res) => {
   mailer.send(
     "Réinitialisation du mot de passe",
     email,
-    `Bonjour!<br /><br />
-    Votre nouveau mot de passe provisoire est ${password}<br />
-    Nous vous recommandons de modifier votre mot de passe le plus rapidement 
-    possible en cliquant en haut à droite lors de votre connexion<br /><br />
-    L'équipe POP<br />
-    Et en cas de problème, vous pouvez toujours nous contacter à pop@culture.gouv.fr<br />`,
+    templateForgetPassword(password),
     false
   );
 });
