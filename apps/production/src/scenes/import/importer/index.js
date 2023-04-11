@@ -178,6 +178,25 @@ class Importer extends Component {
     }
   }
 
+  generateBody() {
+    const keyList = ["_status","_warnings","_files","REF","INV"];
+    const body = {
+      importedNotices: this.state.importedNotices.map((notice) => {
+        let obj = {};
+        keyList.forEach((key) => {
+          obj[key] = notice[key]
+        })
+        return obj;
+      }),
+      collection: this.props.collection,
+      email: this.props.email,
+      institution: this.props.institution,
+      importId: this.state.importId,
+      fileNames: this.state.fileNames
+    };
+    return body
+  }
+
   async onSave() {
 
     this.setState({
@@ -285,6 +304,10 @@ class Importer extends Component {
         });;
       }
 
+      /*
+      A Supprimer
+
+
       const generateReport = this.props.report || generate;
 
       let body = generateReport(
@@ -296,7 +319,9 @@ class Importer extends Component {
         this.state.fileNames
       );
 
-      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, body)
+      */
+
+      await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, this.generateBody())
             .catch((e) => {
               const avert = this.state.avertissement;
               avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
@@ -474,6 +499,8 @@ class Importer extends Component {
                 className="button"
                 color="primary"
                 onClick={() => {
+                  /*
+                  TODO
                   const generateReport = this.props.report || generate;
                   const body = generateReport(
                     this.state.importedNotices,
@@ -482,9 +509,9 @@ class Importer extends Component {
                     this.props.institution,
                     this.state.importId,
                     this.state.fileNames
-                  );
+                  );*/
                   api
-                    .sendReport(`Rapport import ${this.props.collection}`, this.state.email, body)
+                    .sendReport(`Rapport import ${this.props.collection}`, this.state.email, this.generateBody())
                     .then(() => {
                       this.setState({ emailSent: true });
                     }).catch((err) => console.log("erreur ", err) );

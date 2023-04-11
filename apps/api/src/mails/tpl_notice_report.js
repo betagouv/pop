@@ -17,8 +17,8 @@ function generateTemplateReport(params){
     const {importedNotices, collection, email, institution, importId} = params;
     console.log("ENTRY generateTemplateReport : ", params)
 
-    if(params.collection === "enluminures"){
-        content = enluminuresReport(importedNotices, collection, email, institution, importId)
+    if(params.collection === "enluminures" || params.collection === "joconde"){
+        content = customReport(importedNotices, collection, email, institution, importId)
     } else {
         content = generate(importedNotices, collection, email, institution, importId)
     }
@@ -27,7 +27,7 @@ function generateTemplateReport(params){
 }
 
 
-function enluminuresReport(notices, collection, email, institution, importId){
+function customReport(notices, collection, email, institution, importId){
 
     console.log(notices)
     let arr = [];
@@ -101,7 +101,7 @@ function enluminuresReport(notices, collection, email, institution, importId){
         }
     }
 
-    arr = [arr, ...addFooter(importId)];
+    arr = [...arr, ...addFooter(importId)];
 
  /*   arr.push(`<h1>Liens</h1>`);
     arr.push(`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`);
@@ -142,7 +142,7 @@ function generate(notices, collection, email, institution, importId, fileNames =
     const fieldToExport = [{ name: "Identifiant", key: "REF" }];
     let arr = [];
   
-    const dateStr = formatDate();
+  //  const dateStr = formatDate();
   
     const created = notices.filter(e => e._status === "created");
     const updated = notices.filter(e => e._status === "updated");
@@ -158,7 +158,7 @@ function generate(notices, collection, email, institution, importId, fileNames =
       }
       return acc;
     }, 0);
-  
+/*  
     let contact = "";
     switch (collection) {
       case "monuments-historiques":
@@ -179,8 +179,10 @@ function generate(notices, collection, email, institution, importId, fileNames =
       default:
         break;
     }
+*/
+    // Ajout du Header
+    arr = addHeader(collection, institution, email);
 
-    arr = [arr, ...addHeader(collection, institution, email)];
   /*
     arr.push(`<h1>Rapport de chargement ${collection} du ${dateStr}</h1>`);
     arr.push(`<h2>Établissement : ${institution}</h2>`);
@@ -261,14 +263,16 @@ function generate(notices, collection, email, institution, importId, fileNames =
       const table = createHTMLTable(columns, lines);
       arr.push(...table);
 
-      arr = [arr, ...addFooter(importId)];
-      /*
+      // Ajout du footer
+      arr = [...arr, ...addFooter(importId)];
+     /* 
       {
         arr.push(`<h1>Liens</h1>`);
         arr.push(`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`);
         arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
       }
       */
+      
     }
     return arr.join("");
   }
