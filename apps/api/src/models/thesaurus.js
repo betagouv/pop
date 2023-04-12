@@ -6,7 +6,8 @@ const Schema = new mongoose.Schema(
     idThesaurus: String,
     arc: String,
     value: String,
-    altLabel: Boolean
+    altLabel: Boolean,
+    updatedAt: String
   },
   { collection: "thesaurus" }
 );
