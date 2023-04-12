@@ -69,8 +69,6 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
-    "chai-http": "^4.3.0",
     "commander": "^8.1.0",
     "cross-env": "^7.0.3",
     "csv": "^5.5.3",
