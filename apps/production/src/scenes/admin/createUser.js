@@ -2,11 +2,9 @@ import React from "react";
 import { Button, Modal, Input, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { toastr } from "react-redux-toastr";
-import ReactTags from "react-tag-input";
+import { WithContext as Tags } from "react-tag-input";
 import api from "../../services/api";
 import "./createUser.css";
-
-const Tags = ReactTags.WithContext;
 
 class CreateUser extends React.Component {
   state = {
