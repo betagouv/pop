@@ -400,7 +400,7 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 1000
             }
           }
         },
@@ -668,8 +668,7 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword",
-              ignore_above: 256
+              type: "keyword"
             }
           }
         },
@@ -756,8 +755,7 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword",
-              ignore_above: 8000
+              type: "keyword"
             }
           }
         },
