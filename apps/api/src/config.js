@@ -1,4 +1,9 @@
 require('dotenv').config();
+
+// TODO: Delete this, log env vars
+console.log(process.env);
+
+
 let PORT = process.env.PORT || 3000;
 let mongoUrl = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
 let esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";

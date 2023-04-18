@@ -5,7 +5,7 @@
     "title": "POP Api",
     "description": "Documentation sur les webservices de l'application Api"
   },
-  "host": "api.pop.culture.gouv.fr",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {

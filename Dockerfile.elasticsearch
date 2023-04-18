@@ -1,0 +1,8 @@
+FROM elasticsearch:6.8.3
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+
+# Expose the Elasticsearch port
+EXPOSE 9200
+
+# Start Elasticsearch
+CMD ["/usr/share/elasticsearch/bin/elasticsearch"]
