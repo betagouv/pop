@@ -32,6 +32,12 @@ module.exports = {
           mappings: [
             "& => and"
           ]
+        },
+        space:{
+          type: "mapping",
+          mappings:[
+            "\" \" => \"\""
+          ]
         }
       },
       analyzer: {
@@ -43,6 +49,11 @@ module.exports = {
         french_strict: {
           tokenizer: "icu_tokenizer",
           filter: ["french_elision", "icu_folding"]
+        }
+      },
+      normalizer:{
+        sort_normalizer:{
+          filter: ["lowercase", "asciifolding"]
         }
       }
     }
@@ -645,7 +656,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
