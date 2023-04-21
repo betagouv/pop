@@ -46,12 +46,12 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       }));
     }
   } else {
-    str = <div>{str}</div>;
+    // str = <div>{str}</div>;
   }
 
   if(!isPdf){
     // M45080 - interprétation du retour à la ligne manuel
-    str = <p>{str.props.children}</p>
+    str = React.isValidElement(str) ? <p>{str.props.children}</p> : <p>{str}</p>
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
@@ -110,8 +110,10 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       return (
         <View>
           <Text style={styles.fieldTitle} >{title + " : "}</Text>
-          { /* <Text style={styles.text} >{str}</Text> */ }
-          <Text style={styles.text} >{str.props.children}</Text>
+          { /* <Text style={styles.text} >{str}</Text> */ 
+            str = React.isValidElement(str) ? str.props.children  : str   
+          }
+          <Text style={styles.text} >{str}</Text>
         </View>
       )
     }
