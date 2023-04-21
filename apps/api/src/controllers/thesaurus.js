@@ -204,7 +204,7 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
       url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
     },
     (error, response) => {
-      if (!error && response.statusCode === 200) {
+      if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
         updateThesaurus(thesaurusId, response.body);
         resolve(response);
       } else {
@@ -282,7 +282,7 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
       url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
     },
     (error, response) => {
-      if (!error && response.statusCode === 200) {
+      if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
         resolve(response);
       } else {
         capture(error);
@@ -331,7 +331,7 @@ router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false
     request.get(
       `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`,
       (error, response) => {
-        if (!error && response.statusCode === 200) {
+        if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
           resolve(response);
         } else {
           capture(error);
