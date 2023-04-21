@@ -32,8 +32,18 @@ async function withFlags(notice) {
   return notice;
 }
 
-async function transformBeforeCreateOrUpdate(notice) {
+async function transformBeforeUpdate(notice) {
+  notice.DMAJ = formattedNow();
+  await transformBeforeCreateOrUpdate(notice);
+}
+
+async function transformBeforeCreate(notice) {
   notice.DMAJ = notice.DMIS = formattedNow();
+  await transformBeforeCreateOrUpdate(notice);
+}
+
+
+async function transformBeforeCreateOrUpdate(notice) {
   notice.POP_FLAGS = [];
 
   if (notice.PHOTO !== undefined) {
@@ -197,7 +207,7 @@ router.post(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    await transformBeforeCreateOrUpdate(notice);
+    await transformBeforeCreate(notice);
 
     const promises = [];
     try {
@@ -283,24 +293,28 @@ router.put(
       notice.$push = { POP_IMPORT: mongoose.Types.ObjectId(id) };
     }
 
-    // Contrôle présence des coordonnées
-    if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lon'] == 'undefined'){
-      notice.POP_COORDONNEES = {
-        lat: prevNotice.POP_COORDONNEES.lat,
-        lon: prevNotice.POP_COORDONNEES.lon
+    // Contrôle présence des coordonnées si la mise à jour concerne un import
+    if("import" === updateMode) {
+      // Les coordonnées ne sont pas fournies, alors il faut reprendre les coordonnées déjà enregistrées
+      if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lon'] == 'undefined'){
+        notice.POP_COORDONNEES = {
+          lat: prevNotice.POP_COORDONNEES.lat,
+          lon: prevNotice.POP_COORDONNEES.lon
+        }
+        delete notice['POP_COORDONNEES.lat'];
+        delete notice['POP_COORDONNEES.lon'];
+      } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lon'] == '') {
+        // Les coordonnées sont vidées
+        notice.POP_COORDONNEES = {
+          lat: 0,
+          lon: 0
+        }
+        delete notice['POP_COORDONNEES.lat'];
+        delete notice['POP_COORDONNEES.lon'];
       }
-      delete notice['POP_COORDONNEES.lat'];
-      delete notice['POP_COORDONNEES.lon'];
-    } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lon'] == ''){
-      notice.POP_COORDONNEES = {
-        lat: 0,
-        lon: 0
-      }
-      delete notice['POP_COORDONNEES.lat'];
-      delete notice['POP_COORDONNEES.lon'];
     }
 
-    await transformBeforeCreateOrUpdate(notice);
+    await transformBeforeUpdate(notice);
 
     const timeZone = 'Europe/Paris';
     //Ajout de l'historique de la notice
