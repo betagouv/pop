@@ -1,6 +1,7 @@
 import Notice from "./Notice";
 import validator from "validator";
 import API from "../services/api";
+import regions from "../services/regions";
 
 export default class Memoire extends Notice {
   constructor(body) {
@@ -58,5 +59,15 @@ export default class Memoire extends Notice {
     ["NUMTI", "NUMP"]
       .filter(prop => body[prop] && !validator.isAlphanumeric(body[prop]))
       .forEach(prop => this._warnings.push(`${prop}_INVALID_ALNUM`));
+
+    // Region should exist.
+    if (body.REG && body.REG.length > 0) {
+      let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";"); 
+      arrayReg.forEach((val) => {
+        if(!regions.includes(val)){
+          this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
+        }
+      });
+    }
   }
 }

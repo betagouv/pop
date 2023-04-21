@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import DropZone from "./dropZone";
 import api from "../../../services/api";
 import generate from "./report";
-import { checkThesaurus, checkOpenTheso } from "./thesaurus";
+import { checkOpenTheso } from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
 import utils from "../utils";
@@ -151,8 +151,6 @@ class Importer extends Component {
 
       this.setState({ loadOpenTheso : false });
       this.setState({ countControleNotice: 0});
-
-  //    await checkThesaurus(importedNotices);
 
       for (var i = 0; i < importedNotices.length; i++) {
         if (importedNotices[i]._errors.length) {

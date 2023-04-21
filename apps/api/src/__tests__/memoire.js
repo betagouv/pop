@@ -127,7 +127,7 @@ describe("POST /memoire", () => {
       .get(`/memoire/${flagNotice.REF}`)
       .set("Accept", "application/json")
       .expect(200);
-    expect(res.body.POP_FLAGS).toHaveLength(8);
+    expect(res.body.POP_FLAGS).toHaveLength(9);
   });
 });
 
