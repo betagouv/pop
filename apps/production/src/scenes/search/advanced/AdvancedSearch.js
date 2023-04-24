@@ -519,7 +519,7 @@ export default function AdvancedSearch({ collection, card }) {
           Trier par:{" "}
           <select className="ml-2" onChange={e => setSortKey(e.target.value)} value={sortKey}>
             {Object.keys(Mapping[collection])
-              .filter(e => !["TICO", "TITR", "__v", "__id"].includes(e))
+              .filter(e => !["TICO", "TITR", "__v", "_id", "MEMOIRE", "POP_COORDONNEES.lat", "POP_COORDONNEES.lon"].includes(e))
               .map(e => (
                 <option key={e} value={`${e}.keyword`}>
                   {e}
