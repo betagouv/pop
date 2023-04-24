@@ -32,12 +32,6 @@ module.exports = {
           mappings: [
             "& => and"
           ]
-        },
-        space:{
-          type: "mapping",
-          mappings:[
-            "\" \" => \"\""
-          ]
         }
       },
       analyzer: {
@@ -53,7 +47,8 @@ module.exports = {
       },
       normalizer:{
         sort_normalizer:{
-          filter: ["lowercase", "asciifolding"]
+          type: "custom",
+          filter: ["trim", "lowercase", "asciifolding"],
         }
       }
     }
@@ -306,7 +301,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -333,7 +329,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -666,7 +663,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -831,7 +829,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1028,7 +1027,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
