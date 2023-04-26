@@ -29,6 +29,9 @@ class FieldImages extends React.Component {
 
     if (!Array.isArray(this.props.input.value)) {
       this.props.input.onChange(urls[0]);
+      // Récupération du nom de fichier pour le champ REFIMG
+      const arrayPath = urls[0].split('/');
+      this.props.setREFIMG(arrayPath[arrayPath.length - 1])
     } else {
       this.props.input.onChange([...this.props.input.value.concat(...urls)]);
     }
@@ -95,6 +98,7 @@ class FieldImages extends React.Component {
         // If only One Image.
         if (!Array.isArray(this.props.input.value)) {
           this.props.input.onChange("");
+          this.props.setREFIMG("")
           this.props.filesToUpload([]);
           this.setState({ imageFiles: [] });
           return;
