@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 import DropZone from "./dropZone";
 import api from "../../../services/api";
-import generate from "./report";
 import { checkOpenTheso } from "./thesaurus";
 import { downloadDetails, generateCSVFile } from "./export";
 import AsideIcon from "../../../assets/outbox.png";
@@ -304,29 +303,12 @@ class Importer extends Component {
         });;
       }
 
-      /*
-      A Supprimer
-
-
-      const generateReport = this.props.report || generate;
-
-      let body = generateReport(
-        this.state.importedNotices,
-        this.props.collection,
-        this.props.email,
-        this.props.institution,
-        importId,
-        this.state.fileNames
-      );
-
-      */
-
       await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, this.generateBody())
-            .catch((e) => {
-              const avert = this.state.avertissement;
-              avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
-              this.setState({ avertissement: avert});
-            });
+        .catch((e) => {
+          const avert = this.state.avertissement;
+          avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
+          this.setState({ avertissement: avert});
+        });
 
       this.setState({
         loading: false,
@@ -499,17 +481,6 @@ class Importer extends Component {
                 className="button"
                 color="primary"
                 onClick={() => {
-                  /*
-                  TODO
-                  const generateReport = this.props.report || generate;
-                  const body = generateReport(
-                    this.state.importedNotices,
-                    this.props.collection,
-                    this.props.email,
-                    this.props.institution,
-                    this.state.importId,
-                    this.state.fileNames
-                  );*/
                   api
                     .sendReport(`Rapport import ${this.props.collection}`, this.state.email, this.generateBody())
                     .then(() => {
