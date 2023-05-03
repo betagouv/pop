@@ -20,7 +20,7 @@ function DeleteComponent({ role, group, collection }) {
         case "memoire":
           return ["mh", "memoire", "admin"];
         case "enluminures":
-          return ["Enluminures"]
+          return ["Enluminures","admin"]
         default:
           return [collection, "admin"];
       }
