@@ -182,4 +182,9 @@ src/scripts/permaliens.csv
 
 # Fichiers pour le traitement de réimmatriculation
 src/scripts/reimmatriculation-notices-memoire/csv/*.csv
+src/scripts/reimmatriculation-notices-memoire/csv/*.xlsx
 src/scripts/reimmatriculation-notices-memoire/logs/*.log
+
+# Fichiers pour le traitement des images Enluminuires
+src/scripts/M40163-images-enluminures/csv/*.csv
+src/scripts/M40163-images-enluminures/logs/*.log
