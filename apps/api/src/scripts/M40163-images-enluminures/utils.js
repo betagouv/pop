@@ -1,8 +1,7 @@
 const path = require('path');
 
-const nameFile = 'test';
 //const nameFile = 'enluminures-cas-simple';
-// const nameFile = 'enluminures-cas-multiple';
+const nameFile = 'enluminures-cas-multiple';
 const pathFileCsv = path.resolve(__dirname,`csv/${nameFile}.csv`);
 const nameFileLog = path.resolve(__dirname,`logs/${nameFile}.log`);
 const nameFileS3Log = path.resolve(__dirname,`logs/${nameFile}_s3.log`);

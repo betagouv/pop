@@ -26,48 +26,57 @@ async function readCsv(){
 
     let stream = fs.createReadStream(pathFileCsv).pipe(csv.parse({delimiter: ';'}));
 
+    let arrayObj = [];
+
     stream.on('readable', function() {
         while ((chunk=stream.read()) != null) {
             if(i > 0){
                 let REF = chunk[1].split('/')[1];
-                noticesEnluminures.push({ REF: REF, IMG: chunk[1] })
+                if(arrayObj[REF]) {
+                    if(!arrayObj[REF].includes(chunk[1])) {
+                        arrayObj[REF] = [...arrayObj[REF], chunk[1]];
+                    }
+                } else {
+                    arrayObj[REF] = [chunk[1]];
+                }
             }
             i++;
         }
     });
 
     stream.on('end', function() {
- 
+
+        noticesEnluminures = Object.keys(arrayObj);
         console.log('lecture terminée', 'nombre element : ' + noticesEnluminures.length);
 
         let arrayUpdate = [];
         let i = 0;
-        noticesEnluminures.forEach( async (n) => {
+        noticesEnluminures.forEach( async (ref) => {
             // Préparation du tableau pour le bulk
             // Récupération de la notice
-            const notice = await Enluminures.findOne({ REF: n.REF }, 'VIDEO')
+           const notice = await Enluminures.findOne({ REF: ref }, { REF: 1, VIDEO: 1 });
 
-            console.log("Notice :", notice, n.REF)
+           let clearNoticeVideo = [];
+           notice.VIDEO.forEach(element => {
+            if(!clearNoticeVideo.includes(element)) {
+                    clearNoticeVideo.push(element) 
+                }
+           });
 
-            if(!notice.VIDEO.includes(n.IMG)){
-                notice.VIDEO.push(n.IMG);
 
-                console.log("image", n.IMG)
+           if(notice) {
+            let noticeVIDEO = [...clearNoticeVideo, ...arrayObj[ref].filter(el => !notice.VIDEO.includes(el))];
+            let contientImage = noticeVIDEO.length > 0 ? "oui" : "non";
 
-                arrayUpdate.push({
-                    updateOne: {
-                        filter: { REF: n.REF },
-                        // La mise à jour ajoute un élément dans le tableau VIDEO, pour réexécuter le script, il faut vider de champ avant VIDEO: []
-                        update: { VIDEO: notice.VIDEO }
-                        /*update: {
-                            $push: { 
-                                VIDEO: row[1]
-                            }
-                        }*/
-                    }
-                })
-            }
-
+            arrayUpdate.push({
+                updateOne: {
+                    filter: { REF: ref },
+                    // La mise à jour ajoute un élément dans le tableau VIDEO, pour réexécuter le script, il faut vider de champ avant VIDEO: []
+                    update: { VIDEO: noticeVIDEO, CONTIENT_IMAGE: contientImage }
+                }
+            })
+           }
+        
             // Traitement par lot suivant le limite définit
             if(i % limit === 0 || i == noticesEnluminures.length){
                 updateNotices(arrayUpdate).then((res) => {
@@ -85,8 +94,6 @@ async function readCsv(){
             }
         });
     });
-
-    
     return false;
 }
 
@@ -94,9 +101,6 @@ function updateNotices(noticesEnluminures){
 
     return new Promise((resolve) => {
         let errorFind = false;
-
-        console.log('Notices update')
-        console.log(noticesEnluminures)
 
         do{
             if(noticesEnluminures.length > 0){
