@@ -825,7 +825,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -833,7 +834,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -881,7 +883,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -889,7 +892,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -897,7 +901,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1065,7 +1070,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
