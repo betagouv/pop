@@ -61,7 +61,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -70,7 +71,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -79,7 +81,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -88,7 +91,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -97,7 +101,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -106,7 +111,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -115,7 +121,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -124,7 +131,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -133,7 +141,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -142,7 +151,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -151,7 +161,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -160,7 +171,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -168,7 +180,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -176,7 +189,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -185,7 +199,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -194,7 +209,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -203,7 +219,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -212,7 +229,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -221,7 +239,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -230,7 +249,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -239,7 +259,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -248,7 +269,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -257,7 +279,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -266,7 +289,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -275,7 +299,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -284,7 +309,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -293,7 +319,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -311,7 +338,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -320,7 +348,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -339,7 +368,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -348,7 +378,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -357,7 +388,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -366,7 +398,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -375,7 +408,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -384,7 +418,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -393,7 +428,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -402,7 +438,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -411,7 +448,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -420,7 +458,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -429,7 +468,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -438,7 +478,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -447,7 +488,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -456,7 +498,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -465,7 +508,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -474,7 +518,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -483,7 +528,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -492,7 +538,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -500,7 +547,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -509,7 +557,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -518,7 +567,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -527,7 +577,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -536,7 +587,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -545,7 +597,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -554,7 +607,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -563,7 +617,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -572,7 +627,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -581,7 +637,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -590,7 +647,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -599,7 +657,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -608,7 +667,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -617,7 +677,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -626,7 +687,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -635,7 +697,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -644,7 +707,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -673,7 +737,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -682,7 +747,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -691,7 +757,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -700,7 +767,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -709,7 +777,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -718,7 +787,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -726,7 +796,8 @@ module.exports = {
           type: "text",
           fields: {
             keyword: {
-              type: "keyword"
+              type: "keyword",
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -735,7 +806,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -744,7 +816,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -769,7 +842,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -778,7 +852,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -787,7 +862,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -796,7 +872,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -839,7 +916,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -848,7 +926,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -857,7 +936,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -866,7 +946,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -875,7 +956,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -884,7 +966,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -893,7 +976,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -902,7 +986,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -911,7 +996,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -920,7 +1006,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -929,7 +1016,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -938,7 +1026,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -947,7 +1036,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -956,7 +1046,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -965,7 +1056,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -982,7 +1074,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -991,7 +1084,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1000,7 +1094,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1009,7 +1104,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1018,7 +1114,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1040,7 +1137,8 @@ module.exports = {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
+              ignore_above: 256,
+              normalizer: "sort_normalizer"
             }
           }
         },
@@ -1051,7 +1149,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             },
@@ -1060,7 +1159,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             },
@@ -1069,7 +1169,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             },
@@ -1078,7 +1179,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             },
@@ -1087,7 +1189,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             },
@@ -1096,7 +1199,8 @@ module.exports = {
               fields: {
                 keyword: {
                   type: "keyword",
-                  ignore_above: 256
+                  ignore_above: 256,
+                  normalizer: "sort_normalizer"
                 }
               }
             }
