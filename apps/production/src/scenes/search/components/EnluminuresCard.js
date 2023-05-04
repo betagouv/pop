@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { bucket_url } from "../../../config.js";
 
 export default ({ data }) => {
   let img = null;
   if (data.VIDEO && Array.isArray(data.VIDEO) && data.VIDEO.length) {
-    img = <img src={data.VIDEO[0]} />;
+    img = <img src={bucket_url + data.VIDEO[0]} />;
   }
   return (
     <Link

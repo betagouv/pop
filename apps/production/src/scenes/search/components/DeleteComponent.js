@@ -19,13 +19,15 @@ function DeleteComponent({ role, group, collection }) {
           return ["mh", "admin", "inv"];
         case "memoire":
           return ["mh", "memoire", "admin"];
+        case "enluminures":
+          return ["Enluminures","admin"]
         default:
           return [collection, "admin"];
       }
     }
     return (
       role === "administrateur" &&
-      ["joconde", "merimee", "palissy", "mnr", "memoire", "autor"].includes(collection) &&
+      ["joconde", "merimee", "palissy", "mnr", "memoire", "autor","enluminures"].includes(collection) &&
       allowedGroups(collection).includes(group)
     );
   }

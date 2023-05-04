@@ -352,7 +352,9 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
 
    // remove all images and the document itself.
    await Promise.all([doc.VIDEO.filter(i => i).map(f => deleteFile(f, "enluminures")), doc.remove()]);
-   await Promise.all([docOai.remove()]);
+   if(docOai) {
+    await Promise.all([docOai.remove()]);
+   }
    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
  } catch (error) {
    capture(error);
