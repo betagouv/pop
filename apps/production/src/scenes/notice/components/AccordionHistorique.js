@@ -73,9 +73,9 @@ export default class AccordionHistorique extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody className="historiqueBody">
-                                    {this.state.historique.map( item => {
+                                    {this.state.historique.map( (item, i) => {
                                         return(
-                                            <tr className="historiqueRow">
+                                            <tr key={`historique-${i}`} className="historiqueRow">
                                                 <td>{item.nom}</td>
                                                 <td>{item.prenom}</td>
                                                 <td>{item.email}</td>
