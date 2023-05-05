@@ -1,8 +1,8 @@
-import React from "react";
+import React, { createRef, forwardRef } from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import { reduxForm } from "redux-form";
+import { reduxForm, change } from "redux-form";
 import Mapping from "../../services/mapping";
 import DeleteButton from "./components/DeleteButton";
 import BackButton from "./components/BackButton";
@@ -105,6 +105,35 @@ class Notice extends React.Component {
     this.setState({ saving: false });
   }
 
+  // Référence sur le champ REFIMG pour la synchronisation avec IMG
+  inputREFIMG = createRef();
+
+  // Mise à jour du champ REFIMG en fonction de IMG
+  setInputREFIMG(v) {
+    this.props.dispatch(change('notice', this.inputREFIMG.current.name, v))
+  }
+
+  // Champ personnalisé REFIMG pour ajout de la référence
+  renderRefIMG(){
+    const RenderREFIMG = forwardRef((props, ref) => {
+      const name = "REFIMG";
+      return (
+        <Field
+        {...Mapping.memoire[name]}
+        disabled={
+          Mapping.memoire[name].generated == true ||
+          Mapping.memoire[name].deprecated == true ||
+          !this.state.editable
+        }
+        addRef={ref}
+        name={name}
+        {...props}
+      />
+      )
+    });
+    return <RenderREFIMG ref={this.inputREFIMG} />
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -145,6 +174,7 @@ class Notice extends React.Component {
             createUrlFromName={e => `memoire/${this.state.notice.REF}/${e}`}
             getAbsoluteUrl={e => (e.indexOf("www") === -1 ? `${bucket_url}${e}` : e)}
             filesToUpload={imagesFiles => this.setState({ imagesFiles })}
+            setREFIMG={(v) => this.setInputREFIMG(v) }
           />
           <Section
             title="1. Sujet de la photographie ou du document graphique"
@@ -311,7 +341,7 @@ class Notice extends React.Component {
                 <CustomField name="PRODUCTEUR" disabled={!this.state.editable} />
                 <CustomField name="IDPROD" disabled={!this.state.editable} />
                 <CustomField name="EMET" disabled={!this.state.editable} />
-                <CustomField name="REFIMG" disabled={!this.state.editable} />
+                { this.renderRefIMG() }
                 <CustomField name="MARQ" disabled={!this.state.editable} />
                 <CustomField name="TYPSUPP" disabled={!this.state.editable} />
                 <CustomField
@@ -385,6 +415,5 @@ const mapStateToProps = ({ Auth }) => {
 };
 
 export default connect(
-  mapStateToProps,
-  {}
+  mapStateToProps
 )(reduxForm({ form: "notice" })(Notice));
