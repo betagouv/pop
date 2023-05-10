@@ -7,7 +7,7 @@
     "node": "^14.17.5"
   },
   "scripts": {
-    "dev": "nodemon ./src/index.js",
+    "dev": "NODE_ENV=dev nodemon ./src/index.js",
     "start": "node ./src/swagger/swagger.js && node ./src/index.js  ",
     "deploy:prod": "npm install && eb deploy pop-api --profil POP",
     "deploy:staging": "npm install && eb deploy pop-api-staging --profil POP",
