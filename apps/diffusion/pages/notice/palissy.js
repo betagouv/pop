@@ -149,7 +149,6 @@ export default class extends React.Component {
         </div>
       )
     })).sort((a,b) => { 
-      console.log(a,b);
       let aMarq = typeof a.marq != "undefined" ? a.marq : "";
       let bMarq = typeof b.marq != "undefined" ? b.marq : "";
 
