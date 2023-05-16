@@ -441,6 +441,10 @@ export default class extends React.Component {
             display: flex;
             justify-content: center;
           }
+
+          {/* ====================
+            MOBILE BREAKPOINT
+           ==================== */}
           @media screen and (max-width: 767px) {
             .search .search-sidebar {
               position: fixed;
@@ -455,6 +459,15 @@ export default class extends React.Component {
               transition: all 0.4s;
               flex: 0 0 100%;
               max-width: 100%;
+            }
+
+            .search .search-container.search-container-simple {
+              margin-bottom: 16px;
+            }
+
+
+            .search .result-view {
+              align-items: center;
             }
             .search .filter_mobile_menu {
               display: flex;

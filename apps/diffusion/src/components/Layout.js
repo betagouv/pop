@@ -40,7 +40,7 @@ export default class Layout extends React.Component {
     const { children } = this.props;
     return (
       <React.Fragment>
-        <div className="header">
+        <div className="header desktop-only">
           <Container className="NavContainer">
             <Link href="/">
               <a className="logo">
@@ -79,6 +79,38 @@ export default class Layout extends React.Component {
               >
               { message_maintenance }
             </Alert>
+        </div>
+        <div className="header mobile-only">
+          <div className="header-mobile-up">
+            <Link href="/">
+              <a className="logo">
+                <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
+              </a>
+            </Link>
+            
+            <div className="header-buttons-wrapper">
+               <div className="button-list">
+                <a
+                    href="https://framaforms.org/ameliorez-pop-1663925372"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                  <img src="/static/questionnaire.svg" />
+                </a>
+                <Link href="/bucket">
+                  <img src="/static/shopping-cart-2.svg" />
+                </Link>
+               </div>
+            </div>
+            <div className="mobile-separator"></div>
+          </div>
+          <div className="header-mobile-down">
+            <h2>
+              POP
+            </h2>
+            <h3>Plateforme ouverte du patrimoine</h3>
+          </div>
+          <div className="header-mobile-down"></div>
         </div>
         {children}
         <div className="footer">
@@ -148,6 +180,11 @@ export default class Layout extends React.Component {
             overflow: hidden;
           }
 
+          {/* BYpass bad heading in notice page */}
+          .heading.heading-center {
+            width: 100% !important;
+          }
+
           #beta > div {
             position: absolute;
             right: -31.75%;
@@ -192,14 +229,15 @@ export default class Layout extends React.Component {
             margin: 0;
           }
 
-          @media screen and (max-width: 767px) {
-            .logo img {
-              height: 110px;
-              width: 120px;
-            }
-            .logo h1 {
-              font-size: 20px;
-            }
+
+          {/* ==================================
+          Utilities  
+          ================================== */}
+          :global(.mobile-only){
+            display: none !important;
+          }
+          :global(.desktop-only) {
+            display: flex !important;
           }
 
           .btn-bucket{
@@ -220,16 +258,6 @@ export default class Layout extends React.Component {
           }
           .company-title span:first-letter {
             font-weight: 700;
-          }
-
-          @media screen and (max-width: 767px) {
-            .company-title span {
-              font-size: 16px;
-            }
-            .company-title {
-              margin-right: 15px;
-              min-width: 82px;
-            }
           }
 
           .footer {
@@ -265,6 +293,81 @@ export default class Layout extends React.Component {
             background-color: white;
             height: 32px;
             border-radius: 5px;
+          }
+
+          {/* ==================================
+          Mobile breakpoint 
+          ================================== */}
+          @media screen and (max-width: 767px) {
+            .header {
+              background-color: white;
+              display: box;
+              padding: 6px 12px;
+
+              .header-mobile-up {
+                position: relative;
+                height: 77px;
+              }
+              .mobile-separator {
+                display: block;
+                position: absolute;
+                bottom: 8px;
+                height: 1px;
+                width: 100%;
+                background-color:#E5E5E5;
+              }
+
+
+              .header-buttons-wrapper {
+                  position: absolute;
+                  right: 0px;
+                  top: 0px;
+                  padding: 26px 12px;
+
+                  height: 100%;
+              }
+
+              .header-mobile-down h2 {
+                font-size: 1rem;
+                font-weight: 600;
+              }
+              .header-mobile-down h3 {
+                font-size: 0.75rem;
+              }
+
+
+              .button-list img:first-child {
+                margin-right: 15px;
+              }
+
+              .logo img {
+                height: 69px;
+                width: 120px;
+              }
+              .logo h1 {
+                font-size: 20px;
+              }
+            }
+
+
+            {/* ==================================
+            Mobile utilities
+            ================================== */}
+            :global(.mobile-only){
+              display: block !important;
+            }
+            :global(.desktop-only) {
+              display: none !important;
+            }
+          }
+          @media screen and (max-width: 767px) {
+            .company-title span {
+              font-size: 16px;
+            }
+            .company-title {
+              margin-right: 15px;
+              min-width: 82px;
+            }
           }
 
           @media screen and (max-width: 590px) {
