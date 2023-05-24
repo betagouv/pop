@@ -471,7 +471,7 @@ export default function AdvancedSearch({ collection, card }) {
           break;
   }
 
-  const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.keyword");
+  const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.sort");
   const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
   const [sortQuery, setSortQuery] = useState([{ [sortKey]: { order: sortOrder } }]);
 
@@ -521,7 +521,7 @@ export default function AdvancedSearch({ collection, card }) {
             {Object.keys(Mapping[collection])
               .filter(e => !["TICO", "TITR", "__v", "_id", "MEMOIRE", "POP_COORDONNEES.lat", "POP_COORDONNEES.lon"].includes(e))
               .map(e => (
-                <option key={e} value={`${e}.keyword`}>
+                <option key={e} value={`${e}.sort`}>
                   {e}
                 </option>
               ))}

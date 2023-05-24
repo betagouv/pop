@@ -47,508 +47,704 @@ module.exports = {
     "mappings": {
         "autor": {
             "properties": {
-                "ADRS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "ALAMAP": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "ARK": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "BASE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "BIBLIO": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "BIF": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "BIO": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "CONTACT": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "COPY": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "DMAJ": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "DMIS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "DMORT": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "DNAISS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "EXPO": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "FONC": {
-                    "type": "text",
-                    "analyzer": "french_fuzzy",
-                    "fields": {
-                            "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                ADRS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
                         },
-                            "strict": {
-                            "type": "text",
-                            "analyzer": "french_strict"
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "FORM": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "GAR": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "INI": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "INS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "ISNI": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "ISNI_VERIFIEE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LIENS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LMDP": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LMORT": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LNAISS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "AUTORLOCA": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LOCACT": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "LRELA": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "NATIO": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "NOM": {
-                    "type": "text",
-                    "analyzer": "french_fuzzy",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                ALAMAP: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
                         },
-                        "strict": {
-                            "type": "text",
-                            "analyzer": "french_strict"
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                ARK: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                BASE: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                BIBLIO: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                BIF: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                BIO: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                CONTACT: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                COPY: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                DMAJ: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword"
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                DMIS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword"
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                DMORT: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                DNAISS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                EXPO: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                FONC: {
+                    type: "text",
+                    analyzer: "french_fuzzy",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        },
+                        strict: {
+                            type: "text",
+                            analyzer: "french_strict"
+                        }
+                    }
+                },
+                FORM: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                GAR: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                INI: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                INS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                ISNI: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                ISNI_VERIFIEE: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LIENS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LMDP: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LMORT: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LNAISS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                AUTORLOCA: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LOCACT: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                LRELA: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                NATIO: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                NOM: {
+                    type: "text",
+                    analyzer: "french_fuzzy",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        },
+                        strict: {
+                            type: "text",
+                            analyzer: "french_strict"
                         } 
                     }
                 },
-                "OBS": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "OEUVR": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "PNOM": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "PREF": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
-                        }
-                    }
-                },
-                "PREN": {
-                    "type": "text",
-                    "analyzer": "french_fuzzy",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                OBS: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
                         },
-                        "strict": {
-                            "type": "text",
-                            "analyzer": "french_strict"
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                OEUVR: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                PNOM: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                PREF: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        }
+                    }
+                },
+                PREN: {
+                    type: "text",
+                    analyzer: "french_fuzzy",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
+                        },
+                        strict: {
+                            type: "text",
+                            analyzer: "french_strict"
                         } 
                     }
                 },
-                "PRODUCTEUR": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                PRODUCTEUR: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "PUBLI": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                PUBLI: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "REDAC": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                REDAC: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "REF": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                REF: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "REJET": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                REJET: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "SOURCES": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                SOURCES: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "SYMB": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                SYMB: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "TITR": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                TITR: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "TYPAPE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                TYPAPE: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "TYPID": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                TYPID: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "NOMPRENOM": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                NOMPRENOM: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "CONTIENT_IMAGE": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                CONTIENT_IMAGE: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "VIDEO": {
-                    "type": "text",
-                    "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256,
-                            normalizer: "sort_normalizer"
+                VIDEO: {
+                    type: "text",
+                    fields: {
+                        keyword: {
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                     }
                 },
-                "HISTORIQUE": {
+                HISTORIQUE: {
                   properties: {
                     _id: {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     },
@@ -556,9 +752,13 @@ module.exports = {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     },
@@ -566,9 +766,13 @@ module.exports = {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     },
@@ -576,9 +780,13 @@ module.exports = {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     },
@@ -586,9 +794,13 @@ module.exports = {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     },
@@ -596,9 +808,13 @@ module.exports = {
                       type: "text",
                       fields: {
                         keyword: {
-                          type: "keyword",
-                          ignore_above: 256,
-                          normalizer: "sort_normalizer"
+                            type: "keyword",
+                            ignore_above: 256
+                        },
+                        sort: {
+                            type: "keyword",
+                            normalizer: "sort_normalizer",
+                            ignore_above: 256
                         }
                       }
                     }
