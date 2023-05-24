@@ -479,7 +479,11 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURL.label}
-        content={<a href={notice.DOSURL} target="_blank">Voir le dossier complet sur le site de la région</a>}
+        content={
+          <Link href={notice.DOSURL}>
+            <a href={notice.DOSURL} target="_blank">Voir le dossier complet sur le site de la région</a>
+          </Link>
+        }
         key="notice.DOSURL"
       />
     );
@@ -489,7 +493,11 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         title={mapping.palissy.DOSURLPDF.label}
-        content={<a href={postFixedLink(notice.DOSURLPDF)} target="_blank">Voir le dossier d'origine numérisé</a>}
+        content={
+          <Link href={postFixedLink(notice.DOSURLPDF)}>
+            <a href={postFixedLink(notice.DOSURLPDF)} target="_blank">Voir le dossier d'origine numérisé</a>
+          </Link>
+        }
         key="notice.DOSURLPDF"
       />
     );
@@ -500,7 +508,9 @@ const SeeMore = ({ notice }) => {
       <Field
         title={mapping.palissy.POP_DOSSIER_VERT.label}
         content={
-          <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`} target="_blank">Voir le dossier d'origine numérisé</a>
+          <Link href={`${bucket_url}${notice.POP_DOSSIER_VERT}`}>
+            <a href={`${bucket_url}${notice.POP_DOSSIER_VERT}`} target="_blank">Voir le dossier d'origine numérisé</a>
+          </Link>
         }
         key="notice.POP_DOSSIER_VERT"
       />
@@ -512,9 +522,9 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_ARRETE_PROTECTION.length; i++) {
       const filename = notice.POP_ARRETE_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`} target="_blank">
-          {filename}
-        </a>
+        <Link key={filename} href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`}>
+          <a  href={`${bucket_url}${notice.POP_ARRETE_PROTECTION[i]}`} target="_blank">{filename}</a>
+        </Link>
       );
     }
     arr.push(
@@ -531,9 +541,9 @@ const SeeMore = ({ notice }) => {
     for (let i = 0; i < notice.POP_DOSSIER_PROTECTION.length; i++) {
       const filename = notice.POP_DOSSIER_PROTECTION[i].split(/(\\|\/)/g).pop();
       urls.push(
-        <a key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`} target="_blank">
-          {filename}
-        </a>
+        <Link key={filename} href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`}>
+          <a href={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[i]}`} target="_blank">{filename}</a>
+        </Link>
       );
     }
     arr.push(
@@ -550,7 +560,11 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.palissy.LIENS.label}
-          content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
+          content={
+            <Link href={notice.LIENS[i]}>
+              <a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>
+            </Link>
+          }
           key={`notice.LIENS${i}`}
         />
       );
@@ -562,7 +576,11 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LINHA.label}
-          content={<a href={notice.LINHA[0]} target="_blank">{notice.LINHA[0]}</a>}
+          content={
+            <Link href={notice.LINHA[0]}>
+              <a href={notice.LINHA[0]} target="_blank">{notice.LINHA[0]}</a>
+            </Link>
+          }
           key="notice.LINHA_0"
         />
       );
@@ -570,7 +588,11 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LINHA.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LINHA[i]} target="_blank">{notice.LINHA[i]}</a>}
+            content={
+              <Link href={notice.LINHA[i]}>
+                <a href={notice.LINHA[i]} target="_blank">{notice.LINHA[i]}</a>
+              </Link>
+            }
             key={"notice.LINHA_" + i}
           />
         );
@@ -583,7 +605,11 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.merimee.LREG.label}
-          content={<a href={notice.LREG[0]} target="_blank">{notice.LREG[0]}</a>}
+          content={
+            <Link href={notice.LREG[0]}>
+              <a href={notice.LREG[0]} target="_blank">{notice.LREG[0]}</a>
+            </Link>
+          }
           key="notice.LREG_0"
         />
       );
@@ -591,7 +617,11 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LREG.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LREG[i]} target="_blank">{notice.LREG[i]}</a>}
+            content={
+              <Link href={notice.LREG[i]}>
+                <a href={notice.LREG[i]} target="_blank">{notice.LREG[i]}</a>
+              </Link>
+            }
             key={"notice.LREG_" + i}
           />
         );
@@ -603,9 +633,11 @@ const SeeMore = ({ notice }) => {
     arr.push(
       <Field
         content={
-          <a href={getUrlArchive(notice.REF)} target="_blank">
-            Les archives conservées à la Médiathèque du patrimoine et de la photographie
-          </a>
+          <Link href={getUrlArchive(notice.REF)}>
+            <a href={getUrlArchive(notice.REF)} target="_blank">
+              Les archives conservées à la Médiathèque du patrimoine et de la photographie
+            </a>
+          </Link>
         }
         key="mediathek_cible"
       />
