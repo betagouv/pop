@@ -149,7 +149,6 @@ export default class extends React.Component {
         </div>
       )
     })).sort((a,b) => { 
-      console.log(a,b);
       let aMarq = typeof a.marq != "undefined" ? a.marq : "";
       let bMarq = typeof b.marq != "undefined" ? b.marq : "";
 
@@ -172,6 +171,15 @@ export default class extends React.Component {
   // Display a list of links to etud
   etudeField() {
     return <React.Fragment>{ generateLinks(this.props.notice.ETUD.split(';'), "etud") }</React.Fragment>;
+  }
+
+  // Display label by producteur
+  getLabel(field) {
+    let label = mapping.palissy[field].label;
+    if("monuments historiques" === String(this.props.notice.PRODUCTEUR).toLocaleLowerCase()) {
+      label = mapping.palissy[field].label_mh;
+    }
+    return label;
   }
 
   render() {
@@ -292,7 +300,7 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title="Localisation" content={localisation} />
-                  <Field title={mapping.palissy.INSEE.label} content={notice.INSEE} join={' ; '}/>
+                  <Field title={this.getLabel("INSEE")} content={notice.INSEE} join={' ; '}/>
                   <Field title={mapping.palissy.PLOC.label} content={notice.PLOC} />
                   <Field title={mapping.palissy.AIRE.label} content={notice.AIRE} />
                   <Field title={mapping.palissy.CANT.label} content={notice.CANT} />
@@ -428,7 +436,7 @@ export default class extends React.Component {
                   <Field title={mapping.palissy.PARN.label} content={notice.PARN} join={' ; '}/>
                   <Field title={mapping.palissy.PAPP.label} content={notice.PAPP} />
                   <Field title={mapping.palissy.REFE.label} content={notice.REFE} join={' ; '}/>
-                  <Field title={mapping.palissy.DENQ.label} content={notice.DENQ} join={' ; '}/>
+                  <Field title={this.getLabel("DENQ")} content={notice.DENQ} join={' ; '}/>
                   <Field title={mapping.palissy.DBOR.label} content={notice.DBOR} join={' ; '}/>
                   <Field title={mapping.palissy.RENP.label} content={notice.RENP} join={' ; '}/>
 
@@ -438,7 +446,7 @@ export default class extends React.Component {
                     separator="£"
                   />
                   <Field title={mapping.palissy.IMAGE.label} content={notice.IMAGE} />
-                  <Field title={mapping.palissy.WEB.label} content={notice.WEB} />
+                  <Field title={this.getLabel("WEB")} content={notice.WEB} />
                 </div>
               </Col>
               <Col md="4">

@@ -38,6 +38,16 @@ class Notice extends React.Component {
     }
   }
 
+  
+  // Display label by producteur
+  getLabel(field) {
+    let label = Mapping.palissy[field].label;
+    if("monuments historiques" === String(this.state.notice.PRODUCTEUR).toLocaleLowerCase()) {
+      label = Mapping.palissy[field].label_mh;
+    }
+    return label;
+  }
+
   async load(ref) {
     this.setState({ loading: true });
     const notice = await API.getNotice("palissy", ref);
@@ -45,8 +55,6 @@ class Notice extends React.Component {
       this.setState({ loading: false, error: "Cette notice n'existe pas" });
       return;
     }
-
-    console.log("NOTICE", notice);
     this.props.initialize(notice);
     //const editable = this.canEdit(notice);
     let editable = false;
@@ -206,7 +214,7 @@ class Notice extends React.Component {
                   createUrl={e => `/notice/palissy/${e}`}
                   disabled={!this.state.editable}
                 />
-                <CustomField name="DENQ" disabled={!this.state.editable} />
+                <CustomField name="DENQ" disabled={!this.state.editable} customLabel={this.getLabel("DENQ")}/>
                 <CustomField name="DBOR" disabled={!this.state.editable} />
                 <CustomField name="NOMS" disabled={!this.state.editable} />
                 <CustomField name="DMIS" disabled={!this.state.editable} />
@@ -267,7 +275,7 @@ class Notice extends React.Component {
                 <CustomField name="DPT_LETTRE" disabled={!this.state.editable} />
                 <CustomField name="COM" disabled={!this.state.editable} />
                 <CustomField name="WCOM" disabled={!this.state.editable} />
-                <CustomField name="INSEE" disabled={!this.state.editable} />
+                <CustomField name="INSEE" disabled={!this.state.editable} customLabel={this.getLabel("INSEE")}/>
                 <CustomField name="PLOC" disabled={!this.state.editable} />
                 <CustomField name="AIRE" disabled={!this.state.editable} />
                 <CustomField name="CANT" disabled={!this.state.editable} />
@@ -424,7 +432,7 @@ class Notice extends React.Component {
               </Col>
               <Col sm={6}>
                 <CustomField name="LBASE2" disabled={!this.state.editable} />
-                <CustomField name="WEB" disabled={!this.state.editable} />
+                <CustomField name="WEB" disabled={!this.state.editable} customLabel={this.getLabel("WEB")}/>
                 <CustomField name="DOSADRS" disabled={!this.state.editable} />
                 <CustomField name="DOSURL" disabled={!this.state.editable} />
                 <CustomField name="DOSURLPDF" disabled={true} />
@@ -469,10 +477,13 @@ class Notice extends React.Component {
   }
 }
 
-const CustomField = ({ name, disabled, ...rest }) => {
+const CustomField = ({ name, disabled,...rest }) => {
   if (!Mapping.palissy[name]) {
     console.log(name, " n'existe pas");
     return <div />;
+  }
+  if(rest["customLabel"]) {
+    Mapping.palissy[name].label = rest["customLabel"];
   }
   return (
     <Field

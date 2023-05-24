@@ -39,6 +39,48 @@ function handler({ key }) {
   }
 }
 
+/**
+ * Détermine si le libellé du champ (palissy) doit être modifié
+ * M45264
+ * @param {Array} initialValues 
+ * @returns 
+ */
+const isMhProducteur = (initialValues) => { 
+  if(initialValues.get('qb') !== undefined) {
+    const filterKey = initialValues.get('qb').filter(element => {
+       return element.field == "REF.keyword" && element.value.startsWith("PM") 
+    });
+    return filterKey.length > 0;
+  } else {
+    return false
+  }
+}
+
+/**
+ * Adapte les libellés des champs Palissy pour le producteur MH
+ * M45264
+ * @param {Array} fields 
+ * @param {Object} mappingCollection 
+ * @param {Array} values 
+ * @returns 
+ */
+const changeValueProducteurMh = (fields, mappingCollection, values) => {
+  return fields.map( (element) => {
+
+    if(element && !Array.isArray(element.value)) {
+      const k = String(element.value).replace(".keyword", "");
+      const mappingField = mappingCollection[k];
+
+      if(isMhProducteur(values) &&  ["INSEE","WEB","DENQ"].includes(k)) { 
+        element.text = `${k} - ${mappingField.label_mh}`
+      } else {
+        element.text = `${k} - ${mappingField.label}`
+      }
+      return element;
+      }
+  })
+};
+
 export default function AdvancedSearch({ collection, card }) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   let fields = Object.entries(Mapping[collection])
@@ -499,6 +541,9 @@ export default function AdvancedSearch({ collection, card }) {
           const q = toUrlQueryString(values);
           if (q) {
             window.history.replaceState("x", "y", `?${q}`);
+          }
+          if("palissy" === collection) {
+            fields = changeValueProducteurMh(fields, Mapping[collection], values);
           }
         }}
       >
