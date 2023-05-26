@@ -39,6 +39,48 @@ function handler({ key }) {
   }
 }
 
+/**
+ * Détermine si le libellé du champ (palissy) doit être modifié
+ * M45264
+ * @param {Array} initialValues 
+ * @returns 
+ */
+const isMhProducteur = (initialValues) => { 
+  if(initialValues.get('qb') !== undefined) {
+    const filterKey = initialValues.get('qb').filter(element => {
+       return element.field == "REF.keyword" && element.value.startsWith("PM") 
+    });
+    return filterKey.length > 0;
+  } else {
+    return false
+  }
+}
+
+/**
+ * Adapte les libellés des champs Palissy pour le producteur MH
+ * M45264
+ * @param {Array} fields 
+ * @param {Object} mappingCollection 
+ * @param {Array} values 
+ * @returns 
+ */
+const changeValueProducteurMh = (fields, mappingCollection, values) => {
+  return fields.map( (element) => {
+
+    if(element && !Array.isArray(element.value)) {
+      const k = String(element.value).replace(".keyword", "");
+      const mappingField = mappingCollection[k];
+
+      if(isMhProducteur(values) &&  ["INSEE","WEB","DENQ"].includes(k)) { 
+        element.text = `${k} - ${mappingField.label_mh}`
+      } else {
+        element.text = `${k} - ${mappingField.label}`
+      }
+      return element;
+      }
+  })
+};
+
 export default function AdvancedSearch({ collection, card }) {
   const initialValues = fromUrlQueryString(window.location.search.replace(/^\?/, ""));
   let fields = Object.entries(Mapping[collection])
@@ -471,7 +513,7 @@ export default function AdvancedSearch({ collection, card }) {
           break;
   }
 
-  const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.keyword");
+  const [sortKey, setSortKey] = useState(initialValues.get("sortKey") || "REF.sort");
   const [sortOrder, setSortOrder] = useState(initialValues.get("sortOrder") || "desc");
   const [sortQuery, setSortQuery] = useState([{ [sortKey]: { order: sortOrder } }]);
 
@@ -500,6 +542,9 @@ export default function AdvancedSearch({ collection, card }) {
           if (q) {
             window.history.replaceState("x", "y", `?${q}`);
           }
+          if("palissy" === collection) {
+            fields = changeValueProducteurMh(fields, Mapping[collection], values);
+          }
         }}
       >
         <div style={{ position: "relative" }}>
@@ -521,7 +566,7 @@ export default function AdvancedSearch({ collection, card }) {
             {Object.keys(Mapping[collection])
               .filter(e => !["TICO", "TITR", "__v", "_id", "MEMOIRE", "POP_COORDONNEES.lat", "POP_COORDONNEES.lon"].includes(e))
               .map(e => (
-                <option key={e} value={`${e}.keyword`}>
+                <option key={e} value={`${e}.sort`}>
                   {e}
                 </option>
               ))}

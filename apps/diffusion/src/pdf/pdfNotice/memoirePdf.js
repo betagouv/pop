@@ -7,6 +7,7 @@ import { pdfLinks } from "../../notices/utils";
 import { bucket_url } from "../../config";
 
 export function MemoirePdf(notice, title, links) {
+  
   return (
     <Document>
       <Page style={styles.page}>
@@ -177,11 +178,11 @@ export function MemoirePdf(notice, title, links) {
                     title={mapping.memoire.LAUTP.label}
                     src={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
                     target="_blank"
-                    key="notice.LAUTP">{notice.LAUTP}</Link>
+                    key="notice.LAUTP"><Text>{notice.LAUTP}</Text></Link>
                   : <></>
               }
               {
-                (notice.LBASE) ?
+                (notice.LBASE && (notice.LBASE.length)) ?
                   <Text style={styles.fieldTitle}>{mapping.memoire.LBASE.label}</Text>
                   : <></>
               }
@@ -191,7 +192,7 @@ export function MemoirePdf(notice, title, links) {
                 style={styles.listLinked}
                 title = {mapping.memoire.LBASE.label}
                 content = {pdfLinks(notice.LBASE, "ref")} 
-                key="notice.LBASE">{notice.LBASE}</Link>
+                key="notice.LBASE"><Text>{notice.LBASE}</Text></Link>
                 :<></>
               }
             </View>
