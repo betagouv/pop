@@ -37,7 +37,11 @@ const SeeMore = ({ notice }) => {
       arr.push(
         <Field
           title={mapping.enluminures.LIENS.label}
-          content={<a href={notice.LIENS[0]} target="_blank">{notice.LIENS[0]}</a>}
+          content={
+            <Link href={notice.LIENS[0]}>
+              <a href={notice.LIENS[0]} target="_blank">{notice.LIENS[0]}</a>
+            </Link>
+          }
           key="notice.LIENS"
         />
       );
@@ -45,7 +49,11 @@ const SeeMore = ({ notice }) => {
       for (let i = 1; i < notice.LIENS.length; i++) {
         arr.push(
           <Field
-            content={<a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>}
+            content={
+              <Link href={notice.LIENS[i]}>
+                <a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>
+              </Link>
+            }
             key="notice.LIENS"
           />
         );
