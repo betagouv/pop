@@ -174,7 +174,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   title={mapping.merimee.DOSURL.label}
                   src={notice.DOSURL}
-                  key="notice.DOSURL">{notice.DOSURL}</Link>
+                  key="notice.DOSURL"><Text>Voir le dossier complet sur le site de la région</Text></Link>
                   : <></>
                   }
 
@@ -189,7 +189,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   title={mapping.merimee.DOSURLPDF.label}
                   src={postFixedLink(notice.DOSURLPDF)}
-                  key="notice.DOSURLPDF">{postFixedLink(notice.DOSURLPDF)}</Link>
+                  key="notice.DOSURLPDF"><Text>Voir le dossier d'origine numérisé</Text></Link>
                   : <></>
                   }
 
@@ -204,7 +204,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   title={mapping.palissy.POP_DOSSIER_VERT.label}
                   src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-                  key="notice.POP_DOSSIER_VERT">{`${bucket_url}${notice.POP_DOSSIER_VERT}`}</Link>
+                  key="notice.POP_DOSSIER_VERT"><Text>Voir le dossier d'origine numérisé</Text></Link>
                   : <></>
                   }
 
@@ -220,7 +220,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
                   target="_blank"
-                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}</Link>
+                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}><Text>{`${notice.POP_ARRETE_PROTECTION[index]}`}</Text></Link>
                   }) : <></>
                   }
 
@@ -236,7 +236,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                     style={styles.listLinked}
                     src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
                     target="_blank"
-                    key="notice.POP_DOSSIER_PROTECTION">{`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}</Link>
+                    key="notice.POP_DOSSIER_PROTECTION"><Text>{`${notice.POP_DOSSIER_PROTECTION[index]}`}</Text></Link>
                   }) : <></>
                   }
                   
@@ -252,7 +252,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                       style={styles.listLinked}
                       src={notice.LIENS[index]}
                       target="_blank"
-                      key={`notice.LIENS${index}`}>{notice.LIENS[index]}</Link>
+                      key={`notice.LIENS${index}`}><Text>{notice.LIENS[index]}</Text></Link>
                     }) : <></>
                     }
 
@@ -268,7 +268,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   src={notice.LINHA[index]}
                   target="_blank"
-                  key={"notice.LINHA_"+index}>{notice.LINHA[index]}</Link>
+                  key={"notice.LINHA_"+index}><Text>{notice.LINHA[index]}</Text></Link>
                   }) : <></>
                   }
 
@@ -284,7 +284,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   src={notice.LREG[index]}
                   target="_blank"
-                  key={"notice.LREG_"+index}>{notice.LREG[index]}</Link>
+                  key={"notice.LREG_"+index}><Text>{notice.LREG[index]}</Text></Link>
                   }) : <></>
                   }
 
@@ -294,151 +294,7 @@ export function PalissyPdf(notice, title, localisation, links) {
                   style={styles.listLinked}
                   src={getUrlArchive(notice.REF)}
                   target="_blank"
-                  key="mediathek_cible">{getUrlArchive(notice.REF)}</Link>
-                  : <></>
-                }
-            </View>
-            <View style={styles.voirAussi}>
-                  {
-                  (notice.DOSURL || notice.DOSURLPDF || notice.POP_DOSSIER_VERT || (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length) 
-                  || (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length) || (notice.LIENS && notice.LIENS.length) 
-                  || (notice.LINHA && notice.LINHA.length) || (notice.LREG && notice.LREG.length) || (notice.LMDP)) ?
-                  <Text  style={styles.subtitle} >Voir aussi</Text>
-                  : <></>
-                  }
-
-                  {
-                  (notice.DOSURL) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURL.label}</Text>
-                  : <></>
-                  }
-                  {
-                  (notice.DOSURL) ? 
-                  <Link
-                  style={styles.listLinked}
-                  title={mapping.merimee.DOSURL.label}
-                  src={notice.DOSURL}
-                  key="notice.DOSURL">{notice.DOSURL}</Link>
-                  : <></>
-                  }
-
-                  {
-                  (notice.DOSURLPDF) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.DOSURLPDF.label}</Text>
-                  : <></>
-                  }
-                  {
-                  (notice.DOSURLPDF) ? 
-                  <Link
-                  style={styles.listLinked}
-                  title={mapping.merimee.DOSURLPDF.label}
-                  src={postFixedLink(notice.DOSURLPDF)}
-                  key="notice.DOSURLPDF">{postFixedLink(notice.DOSURLPDF)}</Link>
-                  : <></>
-                  }
-
-                  {
-                  (notice.POP_DOSSIER_VERT) ? 
-                  <Text style={styles.fieldTitle}>{mapping.palissy.POP_DOSSIER_VERT.label}</Text>
-                  : <></>
-                  }     
-                  {
-                  (notice.POP_DOSSIER_VERT) ? 
-                  <Link
-                  style={styles.listLinked}
-                  title={mapping.palissy.POP_DOSSIER_VERT.label}
-                  src={`${bucket_url}${notice.POP_DOSSIER_VERT}`}
-                  key="notice.POP_DOSSIER_VERT">{`${bucket_url}${notice.POP_DOSSIER_VERT}`}</Link>
-                  : <></>
-                  }
-
-                  {
-                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length > 0) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_ARRETE_PROTECTION.label}</Text>
-                  : <></>
-                  }     
-                  {
-                  (notice.POP_ARRETE_PROTECTION && notice.POP_ARRETE_PROTECTION.length > 0)?
-                  notice.POP_ARRETE_PROTECTION.map((value, index) =>{
-                  return <Link
-                  style={styles.listLinked}
-                  src={`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}
-                  target="_blank"
-                  key={notice.POP_ARRETE_PROTECTION[index].split(/(\\|\/)/g).pop()}>{`${bucket_url}${notice.POP_ARRETE_PROTECTION[index]}`}</Link>
-                  }) : <></>
-                  }
-
-                  {
-                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length > 0) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.POP_DOSSIER_PROTECTION.label}</Text>
-                  : <></>
-                  }
-                  {
-                  (notice.POP_DOSSIER_PROTECTION && notice.POP_DOSSIER_PROTECTION.length > 0)? 
-                    notice.POP_DOSSIER_PROTECTION.map((value, index) =>{
-                    return <Link
-                    style={styles.listLinked}
-                    src={`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}
-                    target="_blank"
-                    key="notice.POP_DOSSIER_PROTECTION">{`${bucket_url}${notice.POP_DOSSIER_PROTECTION[index]}`}</Link>
-                  }) : <></>
-                  }
-                  
-                  {
-                  (notice.LIENS && notice.LIENS.length > 0) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.LIENS.label}</Text>
-                  : <></>
-                  }
-                  {
-                    (notice.LIENS && notice.LIENS.length > 0)? 
-                      notice.LIENS.map((value, index) =>{
-                      return <Link
-                      style={styles.listLinked}
-                      src={notice.LIENS[index]}
-                      target="_blank"
-                      key={`notice.LIENS${index}`}>{notice.LIENS[index]}</Link>
-                    }) : <></>
-                    }
-
-                  {
-                  (notice.LINHA && notice.LINHA.length > 0) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.LINHA.label}</Text>
-                  : <></>
-                  }
-                  {
-                  (notice.LINHA && notice.LINHA.length)?
-                  notice.LINHA.map((value, index) =>{
-                  return <Link
-                  style={styles.listLinked}
-                  src={notice.LINHA[index]}
-                  target="_blank"
-                  key={"notice.LINHA_"+index}>{notice.LINHA[index]}</Link>
-                  }) : <></>
-                  }
-
-                  {
-                  (notice.LREG && notice.LREG.length > 0 ) ? 
-                  <Text style={styles.fieldTitle}>{mapping.merimee.LREG.label}</Text>
-                  : <></>
-                  }
-                  {
-                  (notice.LREG && notice.LREG.length > 0)? 
-                  notice.LREG.map((value, index) =>{
-                  return <Link
-                  style={styles.listLinked}
-                  src={notice.LREG[index]}
-                  target="_blank"
-                  key={"notice.LREG_"+index}>{notice.LREG[index]}</Link>
-                  }) : <></>
-                  }
-
-                {
-                  (notice.LMDP) ? 
-                  <Link
-                  style={styles.listLinked}
-                  src={getUrlArchive(notice.REF)}
-                  target="_blank"
-                  key="mediathek_cible">{getUrlArchive(notice.REF)}</Link>
+                  key="mediathek_cible"><Text>{getUrlArchive(notice.REF)}</Text></Link>
                   : <></>
                 }
             </View>
