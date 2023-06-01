@@ -39,6 +39,14 @@ function handler({ key }) {
   }
 }
 
+const conditionRef = (element) => {
+  return element.field == "REF.keyword" && element.value.startsWith("PM")
+}
+
+const conditionProducteur = (element) => {
+  return element.field == "PRODUCTEUR.keyword" && String(element.value).toLowerCase() === "monuments historiques";
+}
+
 /**
  * Détermine si le libellé du champ (palissy) doit être modifié
  * M45264
@@ -48,7 +56,7 @@ function handler({ key }) {
 const isMhProducteur = (initialValues) => { 
   if(initialValues.get('qb') !== undefined) {
     const filterKey = initialValues.get('qb').filter(element => {
-       return element.field == "REF.keyword" && element.value.startsWith("PM") 
+       return conditionRef(element) || conditionProducteur(element)
     });
     return filterKey.length > 0;
   } else {
