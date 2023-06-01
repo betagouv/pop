@@ -39,6 +39,14 @@ class SearchAdvanced extends React.Component {
     }
   }
 
+  conditionRef = (element) => {
+    return Object.values(element.field).includes("REF.keyword") && element.value.startsWith("PM");
+  }
+
+  conditionProducteur = (element) => {
+    return Object.values(element.field).includes("PRODUCTEUR.keyword") && String(element.value).toLowerCase() === "monuments historiques";
+  }
+
   /**
    * Détermine si le libellé doit être personnalisé pour le producteur MH
    * M44264
@@ -46,7 +54,7 @@ class SearchAdvanced extends React.Component {
    */
   isMhProducteur() {
     if(this.props.initialValues.get('qb') !== undefined) {
-      const filterKey = this.props.initialValues.get('qb').filter(element => Object.values(element.field).includes("REF.keyword") && element.value.startsWith("PM") );
+      let filterKey = this.props.initialValues.get('qb').filter(element => this.conditionRef(element) || this.conditionProducteur(element) );
       return filterKey.length > 0;
     } else {
       return false
