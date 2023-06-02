@@ -534,9 +534,11 @@ const SeeMore = () => {
       <h2>Voir aussi</h2>
       <Field 
         content={
-          <a href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945" target="_blank">
-            www.culture.gouv.fr/spoliations-restitutions-1933-1945
-          </a>
+          <Link href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945">
+            <a href="https://www.culture.gouv.fr/spoliations-restitutions-1933-1945" target="_blank">
+              www.culture.gouv.fr/spoliations-restitutions-1933-1945
+            </a>
+          </Link>
         }
       />
     </div>

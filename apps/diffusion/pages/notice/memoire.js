@@ -576,14 +576,15 @@ const SeeMore = ({ notice, listUrl }) => {
       <Field
         title={mapping.memoire.LAUTP.label}
         content={
-          <a
-            target="_blank"
-            rel="noopener"
-            href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP
-              }`}
-          >
-            {notice.LAUTP}
-          </a>
+          <Link href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}>
+            <a
+              target="_blank"
+              rel="noopener"
+              href={`http://www2.culture.gouv.fr/public/mistral/autor_fr?ACTION=CHERCHER&FIELD_98=REF&VALUE_98=${notice.LAUTP}`}
+            >
+              {notice.LAUTP}
+            </a>
+          </Link>
         }
         key="notice.LAUTP"
       />

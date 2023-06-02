@@ -145,7 +145,7 @@ class TextInput extends React.Component {
     return (
       <div className="input">
         <textarea
-          ref={c => (this.textarea = c)}
+          ref={ c => (this.textarea = c) }
           {...this.props}
           value={this.props.input.value}
           onChange={e => {
@@ -163,20 +163,20 @@ class TextInput extends React.Component {
 const TooltipComp = ({ deprecated, generated, description, name, hidedescriptionifempty }) => {
   const content = [];
   if (description) {
-    content.push(<div>{description}</div>);
+    content.push(<div key={`description-${name}`}>{description}</div>);
   } else if (!hidedescriptionifempty) {
-    content.push(<div>En attente de description</div>);
+    content.push(<div key={`description-${name}`}>En attente de description</div>);
   }
 
   if (generated) {
-    content.push(<div>Ce champ est généré et n'est pas modifiable.</div>);
+    content.push(<div key={`generated-${name}`}>Ce champ est généré et n'est pas modifiable.</div>);
   }
   if (deprecated) {
-    content.push(<div>Ce champ est déprécié.</div>);
+    content.push(<div key={`deprecated-${name}`}>Ce champ est déprécié.</div>);
   }
 
   return (
-    <UncontrolledTooltip placement="top" target={`Tooltip_${name.replace(".", "")}`}>
+    <UncontrolledTooltip key={`UnControlledTooltip-${name}`} placement="top" target={`Tooltip_${name.replace(".", "")}`}>
       {content}
     </UncontrolledTooltip>
   );
@@ -225,13 +225,17 @@ const getSuggestionsOpenTheso = (component, str) => {
 
 export default class AbstractField extends React.Component {
   render() {
-    const { label, type, name, description, generated, deprecated, hidedescriptionifempty, ...rest } = this.props;
+    const { label, type, name, description, generated, deprecated, hidedescriptionifempty, addRef = null,...rest } = this.props;
 
     let Child = <div />;
     if (type === "String" || type === "Number") {
-      Child = <Field component={TextInput} name={name} {...rest} />;
+      if(name === "REFIMG"){
+        Child = <Field key={`field-${name}`} component={TextInput} ref={addRef} name={name} {...rest} />;
+      } else {
+        Child = <Field key={`field-${name}`} component={TextInput} name={name} {...rest} />;
+      }
     } else if (type === "Array") {
-      Child = <Field component={TagsInput} name={name} {...rest} />;
+      Child = <Field key={`field-${name}`} component={TagsInput} name={name} {...rest} />;
     } else {
       Child = <div />;
     }
@@ -249,9 +253,10 @@ export default class AbstractField extends React.Component {
     }
     else {
       return (
-        <div className="field">
+        <div  key={`div-field-${name}`} className="field">
           {title && <div id={`Tooltip_${name.replace(".", "")}`}>{title}</div>}
           <TooltipComp
+            key={`tooltip-${name}`}
             deprecated={deprecated}
             description={description}
             generated={generated}

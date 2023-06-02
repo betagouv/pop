@@ -41,8 +41,7 @@ app.prepare().then(() => {
     if(splitUrl.indexOf("", 1) > -1){
       res.statusCode = 404;
       handle(req, res, parsedUrl);
-    }
-    if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
+    } else if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
       res.writeHead(301, { Location: `https://www.pop.culture.gouv.fr${req.url}` });
       res.end();
     } else if (pathname.match(sitemapRegex)) {
