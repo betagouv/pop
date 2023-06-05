@@ -296,14 +296,14 @@ router.put(
     // Contrôle présence des coordonnées si la mise à jour concerne un import
     if("import" === updateMode) {
       // Les coordonnées ne sont pas fournies, alors il faut reprendre les coordonnées déjà enregistrées
-      if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lon'] == 'undefined'){
+      if(typeof notice['POP_COORDONNEES.lon'] == 'undefined' && typeof notice['POP_COORDONNEES.lat'] == 'undefined'){
         notice.POP_COORDONNEES = {
           lat: prevNotice.POP_COORDONNEES.lat,
           lon: prevNotice.POP_COORDONNEES.lon
         }
         delete notice['POP_COORDONNEES.lat'];
         delete notice['POP_COORDONNEES.lon'];
-      } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lon'] == '') {
+      } else if(notice['POP_COORDONNEES.lon'] == '' && notice['POP_COORDONNEES.lat'] == '') {
         // Les coordonnées sont vidées
         notice.POP_COORDONNEES = {
           lat: 0,
