@@ -272,7 +272,7 @@ router.put(
       #swagger.tags = ['Mémoire']
       #swagger.path = '/memoire/{ref}'
       #swagger.description = 'Modification de la notice Mémoire' 
-  */
+    */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     //On récupère la notice existante pour alimenter les champs IDPROD et EMET s'ils ne sont pas précisés dans le fichier d'import
@@ -296,9 +296,12 @@ router.put(
     // M44947 - Problème de récupération IMG lors d'un import
     if(undefined === notice.IMG  && prevNotice.IMG){
       notice.IMG = prevNotice.IMG;
+
+      if(undefined === notice.REFIMG && prevNotice.REFIMG) {
+        notice.REFIMG = prevNotice.REFIMG;
+      }
     }
 
-    const updateMode = req.body.updateMode;
     const user = req.user;
     await determineProducteur(notice);
     if (!await canUpdateMemoire(req.user, prevNotice, notice)) {
@@ -307,7 +310,17 @@ router.put(
         msg: "Autorisation nécessaire pour mettre à jour cette ressource."
       });
     }
+
     const promises = [];
+    const updateMode = req.body.updateMode;
+
+    // M45229 - Suppression de l'image via l'application production
+    if("manuel" === updateMode)  {
+      if('' === notice.IMG) {
+        // Suppression de l'image sur le bucket S3
+        promises.push(deleteFile(prevNotice.IMG, "memoire"));
+      }
+    }
 
     try {
        // Upload files.

@@ -6,6 +6,7 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
   // Don't render empty elements.
   const isEmptyArray = c => Array.isArray(c) && c.length === 0;
   const isEmptyString = s => typeof s === "string" && !s.trim();
+
   if (!content || isEmptyArray(content) || isEmptyString(content)) {
     return null;
   }
@@ -46,17 +47,17 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
       }));
     }
   } else {
-    // str = <div>{str}</div>;
+     str = <div>{str}</div>;
   }
 
   if(!isPdf){
     // M45080 - interprétation du retour à la ligne manuel
-    str = React.isValidElement(str) ? <p>{str.props.children}</p> : <p>{str}</p>
+    str = React.isValidElement(str) ? (React.isValidElement(str.props.children)) ? str : <p>{str.props.children}</p> : <p>{str}</p>
     return (
       <div id={title} className="field">
         <h3>{title}</h3>
 
-        <div>{str}</div>
+        {str}
 
         <style jsx global>{`
           .field {
@@ -108,12 +109,12 @@ export default ({ content, title, separator, join = ", ", isPdf, link, addLink, 
     //S'il s'agit de texte statique
     else {
       return (
+        
         <View>
           <Text style={styles.fieldTitle} >{title + " : "}</Text>
-          { /* <Text style={styles.text} >{str}</Text> */ 
-            str = React.isValidElement(str) ? str.props.children  : str   
+          { 
+            React.isValidElement(str) ? <Text style={styles.text} >{str.props.children}</Text>  : <Text style={styles.text} >{str}</Text>   
           }
-          <Text style={styles.text} >{str}</Text>
         </View>
       )
     }
@@ -136,7 +137,7 @@ function renderLinksPdf(content, isLineBreakLink){
               <Link style={styles.textLinked}
                 key={item.val ? item.val : item}
                 src={item.url ? item.url : item}>
-                <Text>{item.val ? item.val : item}</Text>
+                {item.val ? <Text>{item.val}</Text> : <Text>{item}</Text>}
               </Link>
               {(index < content.length - 1) ? <Text>, </Text> : null}
             </View> :  
@@ -144,7 +145,7 @@ function renderLinksPdf(content, isLineBreakLink){
           null
           )
     }) :
-      <Link style={styles.textLinked} src={content.url ? content.url : content} ><Text>{content.val ? content.val : content}</Text></Link>
+      <Link style={styles.textLinked} src={content.url ? content.url : content} >{content.val ? <Text>{content.val}</Text> : <Text>{content}</Text>}</Link>
   )
 }
 

@@ -39,6 +39,28 @@ class SearchAdvanced extends React.Component {
     }
   }
 
+  conditionRef = (element) => {
+    return Object.values(element.field).includes("REF.keyword") && element.value.startsWith("PM");
+  }
+
+  conditionProducteur = (element) => {
+    return Object.values(element.field).includes("PRODUCTEUR.keyword") && String(element.value).toLowerCase() === "monuments historiques";
+  }
+
+  /**
+   * Détermine si le libellé doit être personnalisé pour le producteur MH
+   * M44264
+   * @returns boolean
+   */
+  isMhProducteur() {
+    if(this.props.initialValues.get('qb') !== undefined) {
+      let filterKey = this.props.initialValues.get('qb').filter(element => this.conditionRef(element) || this.conditionProducteur(element) );
+      return filterKey.length > 0;
+    } else {
+      return false
+    }
+  }
+
   render() {
     const hasBase = Boolean(this.props.base);
     let key, fields;
@@ -466,7 +488,7 @@ class SearchAdvanced extends React.Component {
             {value: ["DATE.keyword"], text: "Année de création", fields: "DATE"},
             {value: ["DBOR.keyword"], text: "Date de rédaction de la notice", fields: "DBOR"},
             {value: ["DENO.keyword"], text: "Dénomination de l'objet", fields: "DENO"},
-            {value: ["DENQ.keyword"], text: "Date de l'enquête ou du dernier récolement", fields: "DENQ"},
+            {value: ["DENQ.keyword"], text: !this.isMhProducteur() ? Mapping.palissy["DENQ"].label : Mapping.palissy["DENQ"].label_mh, fields: "DENQ"},
             {value: ["DEPL.keyword"], text: "Lieu de déplacement de l'objet", fields: "DEPL"},
             {value: ["DESC.keyword"], text: "Description matérielle", fields: "DESC"},
             {value: ["DIMS.keyword"], text: "Dimensions normalisées", fields: "DIMS"},
@@ -489,7 +511,7 @@ class SearchAdvanced extends React.Component {
             {value: ["IDAGR.keyword"], text: "Référence informatique SIMH", fields: "IDAGR"},
             {value: ["IMPL.keyword"], text: "Milieu d'implantation pour le domaine Inventaire", fields: "IMPL"},
             {value: ["INSC.keyword"], text: "Inscription", fields: "INSC"},
-            {value: ["INSEE.keyword"], text: "Numéro INSEE de la commune", fields: "INSEE"},
+            {value: ["INSEE.keyword"], text: !this.isMhProducteur() ? Mapping.palissy["INSEE"].label : Mapping.palissy["INSEE"].label_mh, fields: "INSEE"},
             {value: ["INTE.keyword"], text: "Intérêt de l'objet", fields: "INTE"},
             {value: ["JDAT.keyword"], text: "Justification de la datation", fields: "JDAT"},
             {value: ["LIENS.keyword"], text: "Liens externes éventuels", fields: "LIENS"},
@@ -538,7 +560,7 @@ class SearchAdvanced extends React.Component {
             {value: ["VOLS.keyword"], text: "Informations relatives aux vols", fields: "VOLS"},
             {value: ["WADRS.keyword"], text: "Adresse pour l'affichage", fields: "WADRS"},
             {value: ["WCOM.keyword"], text: "Commune pour l'affichage", fields: "WCOM"},
-            {value: ["WEB.keyword"], text: "Accès Mémoire", fields: "WEB"},
+            {value: ["WEB.keyword"], text: !this.isMhProducteur() ? Mapping.palissy["WEB"].label : Mapping.palissy["WEB"].label_mh, fields: "WEB"},
             {value: ["ZONE.keyword"], text: "Typologie de la coordonnée géographique de l'édifice", fields: "ZONE"}
           ];
           break;
