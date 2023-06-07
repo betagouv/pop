@@ -23,8 +23,8 @@ export default function generate(
   const fileUrl = `${bucket_url}/import/${importId}/import.csv`;
 
   const imagesNumber = notices.reduce((acc, val) => {
-    if (val.status === "created" || val.status === "updated") {
-      return acc + val.images.length;
+    if (val._status === "created" || val._status === "updated") {
+      return acc + val._files.length;
     }
     return acc;
   }, 0);
