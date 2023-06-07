@@ -17,7 +17,10 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   hasResetPassword: { type: Boolean, default: true },
   lastConnectedAt: { type: Date },
-  museofile: [{ type: String }]
+  museofile: [{ type: String }],
+  isBloqued: { type: Boolean, default: false },
+  attemptCount: { type: Number, default: 0 },
+  lastFailure: { type: String }
 });
 
 UserSchema.pre("save", function(next) {
