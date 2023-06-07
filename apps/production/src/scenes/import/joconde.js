@@ -202,8 +202,8 @@ function report(notices, collection, email, institution, importId) {
   const rejected = notices.filter(e => e._status === "rejected");
 
   const imagesNumber = notices.reduce((acc, val) => {
-    if (val.status === "created" || val.status === "updated") {
-      return acc + val.images.length;
+    if (val._status === "created" || val._status === "updated") {
+      return acc + val._files.length;
     }
     return acc;
   }, 0);
