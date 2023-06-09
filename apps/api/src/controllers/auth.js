@@ -43,7 +43,10 @@ router.post("/signin", async (req, res) => {
   // Date now
   const dateNow = moment();
 
-  // Date dernier échec d'authentification + le délai de déblocage du compte paramétré (variable environnement: exemple 5 min)
+  // Nombre de tentative maximum (variable environnement: ATTEMPT_LIMIT: 5 / pour 5 tentatives par exemple)
+  const ATTEMPT_LIMIT = process.env.ATTEMPT_LIMIT || 5;
+
+  // Date dernier échec d'authentification + le délai de déblocage du compte paramétré (variable environnement: BLOCKED_USER_DELAY: 5 / pour 5 min par exemple)
   const delay = process.env.BLOCKED_USER_DELAY || 5;
   const dateResetAccount = ( user.lastFailure && delay ) ? moment(user.lastFailure).add(process.env.BLOCKED_USER_DELAY, 'm') : null;
 
@@ -70,12 +73,12 @@ router.post("/signin", async (req, res) => {
       user.set({
         lastFailure: dateNow.format(),
         attemptCount: user.attemptCount + 1,
-        isBloqued : user.attemptCount + 1 > 4
+        isBloqued : user.attemptCount + 1 > ATTEMPT_LIMIT - 1
       });
       await user.save();
       // Si le message est également à 4 => l'utilisateur est informé, à la prochaine erreur d'authentification, le compte est bloqué
       // Si le nombre de tentative est supérieur à 4 => message compte bloqué
-      const message = ( user.attemptCount < 4 ) ? MSG_FAIL_AUTH : ( user.attemptCount > 4 ) ? MSG_ACCOUNT_LOCKED : MSG_WARNING_AUTH
+      const message = ( user.attemptCount < ATTEMPT_LIMIT - 1 ) ? MSG_FAIL_AUTH : ( user.attemptCount > ATTEMPT_LIMIT - 1 ) ? MSG_ACCOUNT_LOCKED : MSG_WARNING_AUTH
       res.status(401).send({ success: false, msg: message });
     }
   });
