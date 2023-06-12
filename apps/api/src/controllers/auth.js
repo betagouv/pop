@@ -43,12 +43,12 @@ router.post("/signin", async (req, res) => {
   // Date now
   const dateNow = moment();
 
-  // Nombre de tentative maximum (variable environnement: ATTEMPT_LIMIT: 5 / pour 5 tentatives par exemple)
-  const ATTEMPT_LIMIT = process.env.ATTEMPT_LIMIT || 5;
+  // Nombre de tentative maximum (variable environnement: USER_CONNEXION_ATTEMPT_LIMIT: 5 / pour 5 tentatives par exemple)
+  const ATTEMPT_LIMIT = process.env.USER_CONNEXION_ATTEMPT_LIMIT || 5;
 
-  // Date dernier échec d'authentification + le délai de déblocage du compte paramétré (variable environnement: BLOCKED_USER_DELAY: 5 / pour 5 min par exemple)
-  const delay = process.env.BLOCKED_USER_DELAY || 5;
-  const dateResetAccount = ( user.lastFailure && delay ) ? moment(user.lastFailure).add(process.env.BLOCKED_USER_DELAY, 'm') : null;
+  // Date dernier échec d'authentification + le délai de déblocage du compte paramétré (variable environnement: BLOCKED_USER_DELAY_MINUTES: 5 / pour 5 min par exemple)
+  const delay = process.env.BLOCKED_USER_DELAY_MINUTES || 5;
+  const dateResetAccount = ( user.lastFailure && delay ) ? moment(user.lastFailure).add(delay, 'm') : null;
 
   // Si le compte est bloqué et le délai de déblocage du compte n'est pas dépassé 
   if(user.isBloqued && dateResetAccount && dateNow < dateResetAccount){
