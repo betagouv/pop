@@ -72,6 +72,40 @@
     SONAR_AUTHENT: "-Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
     SONAR_BRANCH: "-Dsonar.branch.name=${BRANCH_NAME} -Dsonar.branch.target=${BRANCH_TARGET}"
     SONAR_PUBLISHER_OPTIONS: "-Dsonar.gitlab.commit_sha=${CI_COMMIT_SHA} -Dsonar.gitlab.ref_name=${REF_NAME} -Dsonar.gitlab.project_id=${CI_PROJECT_ID}"
+  allow_failure: true
+  rules:
+    - if: '$QUALITY_DISABLE == "true"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+        REF_NAME: $CI_MERGE_REQUEST_REF_PATH
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      variables:
+        BRANCH_NAME: $CI_COMMIT_REF_NAME
+        BRANCH_TARGET: $CI_DEFAULT_BRANCH
+        REF_NAME: $CI_COMMIT_REF_NAME
+
+##############################################################
+# CHECK SONAR
+#
+# SONAR_KEY=mc.pop.
+.post-sonar-pop:
+  stage: post_quality
+  script:
+    - |
+       curl=$(curl --silent -u ${SONAR_TOKEN}: "${SONAR_URL}/api/qualitygates/project_status?projectKey=${SONAR_KEY}${CI_PROJECT_NAME}&branch=${BRANCH_NAME}")
+       status=$(echo "$curl" | awk -F'"' '{for(i=1;i<=NF;i++) if($i=="status") print $(i+2)}')
+       error=$(echo $status | awk '{ print index($status, "ERROR")}')
+       echo "${SONAR_URL}/dashboard?id=${SONAR_KEY}${CI_PROJECT_NAME}&branch=${BRANCH_NAME}"
+       if [ $error -gt 0 ] ; then 
+          echo $curl
+          exit 1
+       else
+          echo "quality ok"
+       fi
+  allow_failure: true
   rules:
     - if: '$QUALITY_DISABLE == "true"'
       when: never
