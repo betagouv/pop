@@ -7,6 +7,7 @@ const mailer = require("../mailer");
 const { capture } = require("./../sentry.js");
 require("../passport")(passport);
 const User = require("../models/user");
+const { templateCreateAccount } = require("../mails/tpl_users_notification");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -43,7 +44,7 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
       #swagger.path = '/users'
       #swagger.description = 'Mise à jour d\'un utilisateur' 
   */
-  const { nom, prenom, institution, group, role, museofile } = req.body;
+  const { nom, prenom, institution, group, role, museofile, isBloqued } = req.body;
   const email = req.params.email && req.params.email.toLowerCase();
   const authenticatedUser = req.user;
 
@@ -87,7 +88,11 @@ router.put("/:email", passport.authenticate("jwt", { session: false }), async (r
   }
 
   if(fullUpdate){
-    user.set({ institution, nom, prenom, group, role });
+    user.set({ institution, nom, prenom, group, role, isBloqued });
+    // Si le compte est débloqué, le compteur tentative est réinitialisé
+    if(!isBloqued){
+      user.set({ attemptCount: 0 })
+    }
     if (museofile) {
       user.set({ museofile });
     }
@@ -155,16 +160,8 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
   mailer.send(
     "Compte POP créé avec succès",
     req.body.email,
-    `Félicitations!<br /><br />
-        Votre compte ${req.body.role} POP a été créé avec succès.<br /><br />
-        Le lien vers la plateforme de production est le suivant : <a href="http://production.pop.culture.gouv.fr">http://production.pop.culture.gouv.fr</a><br />
-        Le lien vers la plateforme de diffusion est le suivant : <a href="https://www.pop.culture.gouv.fr/">https://www.pop.culture.gouv.fr/</a><br /><br />
-        Votre identifiant de connexion est ${req.body.email}<br />
-        Votre mot de passe provisoire est ${password}<br />
-        Nous vous recommandons de modifier votre mot de passe le plus rapidement possible en cliquant en haut à droite lors de votre connexion<br /><br />
-        L'équipe POP<br />
-        Et en cas de problème, vous pouvez contacter pop@culture.gouv.fr<br />`,
-        true
+    templateCreateAccount(req.body.role, req.body.email, password),
+    true
   );
 });
 

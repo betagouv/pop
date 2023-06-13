@@ -17,6 +17,8 @@ class UpdateUser extends React.Component {
     group: this.props.user.group,
     role: this.props.user.role,
     museofile: this.props.user.museofile,
+    isBloqued: this.props.user.isBloqued,
+    isFormChanged: false,
     loading: false,
     error: ""
   };
@@ -29,9 +31,9 @@ class UpdateUser extends React.Component {
   async updateUser() {
     try {
       this.setState({ loading: true });
-      const { group, email, role, institution, prenom, nom, museofile } = this.state;
-      await api.updateUser({ email, nom, prenom, institution, group, role, museofile });
-      this.setState({ modal: false, error: "" });
+      const { group, email, role, institution, prenom, nom, museofile, isBloqued } = this.state;
+      await api.updateUser({ email, nom, prenom, institution, group, role, museofile, isBloqued });
+      this.setState({ modal: false, error: "", isFormChanged: false });
       toastr.success("Les informations ont été enregistrées.");
       this.props.callback();
     } catch (error) {
@@ -47,7 +49,7 @@ class UpdateUser extends React.Component {
       const toastrConfirmOptions = {
         onOk: async () => {
           await api.deleteUser(this.state.email);
-          this.setState({ modal: false, error: "" });
+          this.setState({ modal: false, error: "", isFormChanged: false });
           toastr.success("L'utilisateur a été supprimé");
           this.props.callback();
         }
@@ -97,7 +99,7 @@ class UpdateUser extends React.Component {
 
     roles = roles.map(e => <option key={e}>{e}</option>);
 
-    const { prenom, nom, institution, group, role, email } = this.state;
+    const { prenom, nom, institution, group, role, email, isBloqued } = this.state;
 
     return (
       <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
@@ -159,6 +161,22 @@ class UpdateUser extends React.Component {
           </Col>
         </Row>
         {this.museofile()}
+        <div className="input-container">
+          <span>Compte bloqué</span>
+          <Input
+            type="checkbox"
+            checked={isBloqued}
+            onClick={e => this.setState({isBloqued: !isBloqued, isFormChanged: true})}
+            disabled={!isBloqued && !this.state.isFormChanged}
+            style={{
+              marginTop: "0.10rem",
+              marginLeft: "0.75rem",
+              width: "1.25rem",
+              height: "1.25rem"
+            }}
+          >
+          </Input>
+        </div>
         <div className="button-container">
           <Button color="primary" onClick={this.updateUser.bind(this)}>
             Enregistrer les modifications
