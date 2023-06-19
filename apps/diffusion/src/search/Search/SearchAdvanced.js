@@ -388,6 +388,7 @@ class SearchAdvanced extends React.Component {
             { value:["MILL.keyword"], text:"Millésime de création", fields: "MILL"},
             { value:["MILU.keyword"], text:"Millésime d'utilisation", fields: "MILU"},
             { value:["MUSEO.keyword"], text:"Lien MUSEOFILE", fields: "MUSEO"},
+            { value:["NSDA.keyword"], text:"Genre", fields: "NSDA"},
             { value:["NOMOFF.keyword"], text:"Nom du musée", fields: "NOMOFF"},
             { value:["PAUT.keyword"], text:"Précision sur l'auteur", fields: "PAUT"},
             { value:["PDEC.keyword"], text:"Précisions découverte", fields: "PDEC"},
