@@ -80,6 +80,7 @@ export function MemoirePdf(notice, title, links) {
                 <Field title={mapping.memoire.NUMP.label} content={notice.NUMP} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.ANUMP.label} content={notice.ANUMP} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.NUMAUTP.label} content={notice.NUMAUTP} separator="#" isPdf={true} />
+                <Field title={mapping.memoire.NUMVERS.label} content={notice.NUMVERS} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.NUMTI.label} content={notice.NUMTI} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.ANUMTI.label} content={notice.ANUMTI} separator="#" isPdf={true} />
                 <Field title={mapping.memoire.REPRO.label} content={notice.REPRO} separator="#" isPdf={true} />

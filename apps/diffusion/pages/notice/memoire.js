@@ -452,6 +452,7 @@ export default class extends React.Component {
                   <Field title={mapping.memoire.NUMP.label} content={notice.NUMP} />
                   <Field title={mapping.memoire.ANUMP.label} content={notice.ANUMP} />
                   <Field title={mapping.memoire.NUMAUTP.label} content={notice.NUMAUTP} />
+                  <Field title={mapping.memoire.NUMVERS.label} content={notice.NUMVERS} />
                   <Field title={mapping.memoire.NUMTI.label} content={notice.NUMTI} />
                   <Field title={mapping.memoire.ANUMTI.label} content={notice.ANUMTI} />
                   <Field title={mapping.memoire.REPRO.label} content={notice.REPRO} />
