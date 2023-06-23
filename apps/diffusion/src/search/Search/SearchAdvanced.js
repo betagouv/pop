@@ -204,12 +204,9 @@ class SearchAdvanced extends React.Component {
               fields: "OBS, OBSOR, OBSTI"
             },
             {
-              value: ["PRODUCTEUR.keyword",
-                      "IDPROD.keyword",
-                      "COPY.keyword",
-                      "EMET.keyword"],
+              value: ["PRODUCTEUR.keyword"],
               text: "Producteur de la notice",
-              fields: "PRODUCTEUR, IDPROD, COPY, EMET"
+              fields: "PRODUCTEUR"
             },
             {
               value: ["WADRS.keyword"],
