@@ -192,27 +192,13 @@ class SearchAdvanced extends React.Component {
               fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
             },
             {
-              value: ["NUMVERS.keyword"],
-              text: "Numéro de versement",
-              fields: "NUMVERS"
-            },
-            {
               value: ["OBS.keyword",
                       "OBSOR.keyword",
                       "OBSTI.keyword"],
               text: "Observations",
               fields: "OBS, OBSOR, OBSTI"
             },
-            {
-              value: ["PRODUCTEUR.keyword"],
-              text: "Producteur de la notice",
-              fields: "PRODUCTEUR"
-            },
-            {
-              value: ["WADRS.keyword"],
-              text: "Adresse éditoriale",
-              fields: "WADRS"
-            },
+          
             //Tous les champs
             {value: ["PLOC.keyword"], text:"Précision sur la localisation", fields: "PLOC"},
             {value: ["ACQU.keyword"], text:"Modalité d'entrée", fields: "ACQU"},
@@ -272,6 +258,7 @@ class SearchAdvanced extends React.Component {
             {value: ["NUMOR.keyword"], text:"Numéro de l'original", fields: "NUMOR"},
             {value: ["NUMP.keyword"], text:"Numéro du négatif", fields: "NUMP"},
             {value: ["NUMTI.keyword"], text:"Numéro du tirage", fields: "NUMTI"},
+            {value: ["NUMVERS.keyword"], text: "Numéro de versement",fields: "NUMVERS"},
             {value: ["NVD.keyword"], text:"Référence sur le vidéodisque", fields: "NVD"},
             {value: ["OBJT.keyword"], text:"Objet", fields: "OBJT"},
             {value: ["OBS.keyword"], text:"Observations", fields: "OBS"},
@@ -279,6 +266,7 @@ class SearchAdvanced extends React.Component {
             {value: ["OBSTI.keyword"], text:"Observations sur le tirage", fields: "OBSTI"},
             {value: ["PAYS.keyword"], text:"Pays", fields: "PAYS"},
             {value: ["PRECOR.keyword"], text:"Précisions sur la conservation de l'original", fields: "PRECOR"},
+            {value: ["PRODUCTEUR.keyword"], text: "Producteur de la notice", fields: "PRODUCTEUR"},
             {value: ["PUBLI.keyword"], text:"Référence de publication de l'image", fields: "PUBLI"},
             {value: ["REG.keyword"], text:"Région", fields: "REG"},
             {value: ["RENV.keyword"], text:"Phototypes en relation", fields: "RENV"},
@@ -297,6 +285,7 @@ class SearchAdvanced extends React.Component {
             {value: ["TITRE.keyword"], text:"Titre de la pièce de théâtre ou du film", fields: "TITRE"},
             {value: ["CINEPROD.keyword"], text:"Producteur du film", fields: "CINEPROD"},
             {value: ["TYPDOC.keyword"], text:"Catégorie de phototype", fields: "TYPDOC"},
+            {value: ["WADRS.keyword"], text: "Adresse éditoriale", fields: "WADRS"},
             {value: ["WCOM.keyword"], text:"Ville", fields: "WCOM"}
           ];
           break;
