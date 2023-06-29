@@ -83,6 +83,7 @@ router.post(
       }
       return res.send({ success: true, msg: "OK", doc });
     } catch (e) {
+      console.log("ERREUR IMPORT", JSON.stringify(e))
       capture(JSON.stringify(e));
       return res.status(403).send({ success: false, msg: JSON.stringify(e) });
     }

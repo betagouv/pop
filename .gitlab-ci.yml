@@ -28,6 +28,7 @@ stages:
   - test
   - sast
   - quality
+  - post_quality
   - build
   - deploy
 
@@ -146,6 +147,31 @@ sonar-production:
   variables:
     CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
     SONAR_OPTIONS: "-Dsonar.projectBaseDir=apps/production"
+
+##############################################################
+# CHECK ANALYSE SONAR
+#
+# Variables à utiliser avec ce template :
+#   - CI_PROJECT_NAME : Key du projet Sonar
+#   - SONAR_OPTIONS : Set du répertoire de l'application
+# SONAR_KEY=mc.pop.
+post-sonar-api:
+  extends: 
+    - ".post-sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.api
+
+post-sonar-diffusion:
+  extends: 
+    - ".post-sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.diffusion
+
+post-sonar-production:
+  extends: 
+    - ".post-sonar-pop"
+  variables:
+    CI_PROJECT_NAME: ${CI_PROJECT_NAME}.production
 
 ##############################################################
 # BUILD

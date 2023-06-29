@@ -6,6 +6,7 @@ const router = express.Router();
 const Mailer = require("../mailer");
 const { capture } = require("./../sentry.js");
 require("../passport")(passport);
+const { generateTemplateReport } = require("../mails/tpl_notice_report")
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -35,8 +36,7 @@ async function recipients(to) {
       return "laurent.manoeuvre@culture.gouv.fr";
     // Dynamic recipient (email): user must exist in database.
     case "enluminures":
-      return "wilfried.muller@culture.gouv.fr"  
-      break;
+      return "wilfried.muller@culture.gouv.fr";
     default:
       try {
         const user = await User.findOne({ email: to });
@@ -62,7 +62,8 @@ router.post("/email", passport.authenticate("jwt", { session: false }), async (r
     return res.status(400).send("Destinataires invalides.");
   }
   try {
-    await Mailer.send(subject, to, body, true);
+    let content = generateTemplateReport(body);
+    await Mailer.send(subject, to, content, true);
     return res.status(200).send({ success: true, msg: "OK" });
   } catch (e) {
     console.log(e);

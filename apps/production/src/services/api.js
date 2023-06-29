@@ -30,8 +30,8 @@ class api {
   }
 
   // Update a user.
-  async updateUser({ email, group, role, institution, prenom, nom, museofile }) {
-    const props = { email, group, role, institution, prenom, nom, museofile };
+  async updateUser({ email, group, role, institution, prenom, nom, museofile, isBloqued }) {
+    const props = { email, group, role, institution, prenom, nom, museofile, isBloqued };
     return request.fetchJSON("PUT", `/users/${email}`, props);
   }
 
