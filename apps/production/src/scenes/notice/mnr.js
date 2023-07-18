@@ -159,7 +159,6 @@ class Notice extends React.Component {
                 <CustomField name="DESC" disabled={!this.state.editable}/>
                 <CustomField name="INSC" disabled={!this.state.editable}/>
                 <CustomField name="HIST" disabled={!this.state.editable}/>
-                <CustomField name="HIST4" disabled={!this.state.editable}/>
                 <CustomField name="PROV" disabled={!this.state.editable}/>
                 <CustomField name="EXPO" disabled={!this.state.editable}/>
                 <CustomField name="LOCA" disabled={!this.state.editable}/>
@@ -184,6 +183,7 @@ class Notice extends React.Component {
                 <CustomField name="MARQ" disabled={!this.state.editable}/>
                 <CustomField name="DREP" disabled={!this.state.editable}/>
                 <CustomField name="CATE" disabled={!this.state.editable}/>
+                <CustomField name="HIST4" disabled={!this.state.editable}/>
                 <CustomField name="COMM" disabled={!this.state.editable}/>
                 <CustomField name="AFFE" disabled={!this.state.editable}/>
                 <CustomField name="SALLES" disabled={!this.state.editable}/>
