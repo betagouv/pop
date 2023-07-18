@@ -397,6 +397,13 @@ export default class extends React.Component {
                     join=" ; "
                   />
                   <Field
+                    title={mapping.mnr.HIST4.label}
+                    content={notice.HIST4}
+                    separator="#"
+                    join=" ; "
+                    addLink="true"
+                  />
+                  <Field
                     title={mapping.mnr.OBSE.label}
                     content={notice.OBSE}
                     separator="#"

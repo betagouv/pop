@@ -726,6 +726,7 @@ class SearchAdvanced extends React.Component {
             {value: ["SCLE.keyword", "MILL.keyword"],  text: "Époque",  fields: "SCLE, MILL" },
             {value: "GENE.keyword",  text: "Genèse", fields: "GENE"},
             {value: "HIST.keyword",  text: "Historique", fields: "HIST"},
+            {value: "HIST4.keyword",  text: "Restitution", fields: "HIST4"},
             { value: ["GENE.keyword", "HIST.keyword", "NOTE.keyword"], text: "Historique", fields: "GENE, HIST, NOTE" },
             {value: "INSC.keyword",  text: "Inscriptions", fields: "INSC"},
             {value: ["INSC.keyword", "MARQ.keyword"],text: "Inscription portée sur l’œuvre",fields: "INSC, MARQ"},
