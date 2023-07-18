@@ -159,6 +159,7 @@ class Notice extends React.Component {
                 <CustomField name="DESC" disabled={!this.state.editable}/>
                 <CustomField name="INSC" disabled={!this.state.editable}/>
                 <CustomField name="HIST" disabled={!this.state.editable}/>
+                <CustomField name="HIST4" disabled={!this.state.editable}/>
                 <CustomField name="PROV" disabled={!this.state.editable}/>
                 <CustomField name="EXPO" disabled={!this.state.editable}/>
                 <CustomField name="LOCA" disabled={!this.state.editable}/>

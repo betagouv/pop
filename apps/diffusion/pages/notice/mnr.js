@@ -378,6 +378,13 @@ export default class extends React.Component {
                     addLink="true"
                   />
                   <Field
+                    title={mapping.mnr.HIST4.label}
+                    content={notice.HIST4}
+                    separator="#"
+                    join=" ; "
+                    addLink="true"
+                  />
+                  <Field
                     title={mapping.mnr.PROV.label}
                     separator="#"
                     content={notice.PROV}
