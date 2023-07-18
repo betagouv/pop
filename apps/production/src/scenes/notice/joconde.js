@@ -266,6 +266,9 @@ class Notice extends React.Component {
                   disabled={!this.state.editable}
                 />
                 <CustomField name="RETIF" disabled={!this.state.editable} />
+                <CustomField name="DATA" disabled={!this.state.editable} />
+                <CustomField name="LOCA3" disabled={!this.state.editable} />
+                
               </Col>
             </Row>
             <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
