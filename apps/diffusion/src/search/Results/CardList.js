@@ -470,7 +470,6 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
 export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const { title, subtitle, image_preview, localisation, producteur } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
-  const LogoComponent = <img src="/static/musee-de-france.png" className="producteur" />
 
   const link = `/notice/museo/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
 
