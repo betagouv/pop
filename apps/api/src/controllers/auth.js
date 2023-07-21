@@ -69,7 +69,7 @@ router.post("/signin", async (req, res) => {
       await user.save();
 
       const twelveHours = 12 * 60 * 60 * 1000; // 12 heures
-      res.cookie('token', token , { maxAge: twelveHours, httpOnly: true, secure: true });
+      res.cookie('token', token , { maxAge: twelveHours, httpOnly: true, secure: true, sameSite: 'none'  });
       
       res.status(200).send({ success: true, user, id_app: config.ID_PROD_APP });
     } else {
