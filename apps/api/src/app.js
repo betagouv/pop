@@ -22,7 +22,7 @@ app.use(bodyParser.text({ type: "application/x-ndjson" }));
 app.use(helmet());
 
 // Enable CORS - Cross Origin Resource Sharing
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 app.use(passport.initialize());
 
