@@ -18,7 +18,7 @@ async function updatePassword(user, expectedStatus = 200, body) {
     .post(`/auth/updatePassword`)
     .set("Accept", "*/*")
     .set("Content-Type", "application/json")
-    .set("Authorization", await getJwtToken(app, user))
+    .set("Cookie", "token="+await getJwtToken(app, user))
     .send(JSON.stringify(body))
     .expect(expectedStatus);
   return response.body;
