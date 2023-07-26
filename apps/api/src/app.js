@@ -26,6 +26,18 @@ app.use(cors());
 
 app.use(passport.initialize());
 
+
+function setSecurityHeaders(req, res, next) {
+  res.header('X-Frame-Options', 'SAMEORIGIN');
+  res.header('X-XSS-Protection', '1; mode=block');
+  res.header('X-Content-Type-Options', 'nosniff');
+  res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+  res.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  next();
+}
+
+app.use(setSecurityHeaders);
+
 app.get("/", (_req, res) => {
   res.send("POP API listening.");
 });

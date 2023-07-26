@@ -12,12 +12,25 @@ function forceHttps(res, req, next) {
   next();
 }
 
+function setSecurityHeaders(req, res, next) {
+  res.header('X-Frame-Options', 'SAMEORIGIN');
+  res.header('X-XSS-Protection', '1; mode=block');
+  res.header('X-Content-Type-Options', 'nosniff');
+  res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+  res.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  next();
+}
+
 console.log("START", new Date());
 
 const app = express();
 app.set('trust proxy', true);
 const port = 8081;
 app.use(forceHttps);
+
+app.use(setSecurityHeaders);
+app.disable('x-powered-by');
+
 app.use(hsts({ maxAge: 31536000, includeSubDomains: true, preload: true }));
 app.use(express.static(path.join(__dirname, "/../../build")));
 app.route("*").all((req, res) => {
