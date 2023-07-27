@@ -238,10 +238,14 @@ deploy-production-devic1:
     REPLACE: pop-production
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_PRODUCTION}"
+    DOMAIN_NAME: "pop-production-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-production-devic1
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" .platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
 
