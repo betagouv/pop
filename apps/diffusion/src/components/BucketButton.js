@@ -70,7 +70,7 @@ export default class BucketButton extends React.Component {
                     </div> : 
                     (this.checkInBucket(this.props.base, this.props.reference) ? 
                     <div></div> :
-                    <div className={`btn btn-outline-success d-none d-sm-block`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
+                    <div className={`btn btn-outline-success d-sm-block`} onClick={() => this.addToBucket(this.props.base, this.props.reference)}>
                         <div className="btn-bucket">
                             <div>Ajouter au panier</div>
                         </div>
@@ -102,6 +102,21 @@ export default class BucketButton extends React.Component {
                         background-color: #fff;
                         color: #28a745;
                         border-color: #28a745;
+                    }
+
+
+                    {/* ==================================
+                    Mobile breakpoint 
+                    ================================== */}
+                    @media screen and (max-width: 767px) {
+                        .btn-outline-success{
+                            border-color: #377c87;
+                        }
+
+                        .btn-bucket {
+                            color: #377c87;
+                        }
+
                     }
 
 
