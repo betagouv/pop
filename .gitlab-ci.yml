@@ -244,8 +244,8 @@ deploy-production-devic1:
     url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
   before_script:
-    - sed -i "s/EMAIL/${EMAIL_SSL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
-    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" .platform/hooks/postdeploy/00_get_certificate.sh
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
 
