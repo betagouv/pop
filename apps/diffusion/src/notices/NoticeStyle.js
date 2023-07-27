@@ -170,4 +170,27 @@ export default css`
     background-color: #377d87;
     color: white;
   }
+
+  {/* ==================================
+  Mobile breakpoint 
+  ================================== */}
+  @media screen and (max-width: 767px) {
+    .notice .heading {
+      width:100%;
+    }
+    .heading-title {
+      font-family: Open Sans;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+
+    }
+
+    .top-container *  {
+      font-size: 0.8rem;
+      line-height: 20px;
+    }
+  }
 `;
