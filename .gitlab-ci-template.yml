@@ -167,5 +167,5 @@
     - sed -i "s/${NAME}/${REPLACE}/" .elasticbeanstalk/config.yml
     - mkdir -p .platform/hooks/predeploy
     - echo "${HEADER}" | base64 --decode > .platform/hooks/predeploy/01_install_more_header.sh
-    #- echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
+    - echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
     - eb deploy ${ENV}
