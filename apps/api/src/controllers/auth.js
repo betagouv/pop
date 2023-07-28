@@ -68,10 +68,10 @@ router.post("/signin", async (req, res) => {
       });
       await user.save();
 
-      const isSecure =req.protocol  === "https";
+      const isSecure = req.protocol  === "https";
  
       const twelveHours = 12 * 60 * 60 * 1000; // 12 heures
-      res.cookie('token', token , { maxAge: twelveHours, sameSite: 'lax'  });
+      res.cookie('token', token , { maxAge: twelveHours, httpOnly: true, secure: true });
       
       res.status(200).send({ success: true, user, token, id_app: config.ID_PROD_APP });
     } else {
