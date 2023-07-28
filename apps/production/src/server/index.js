@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const hsts = require("hsts");
-
+require("dotenv").config();
 function forceHttps(res, req, next) {
   console.log(req.get("Host"));
   console.log(req.hostname);
@@ -18,6 +18,7 @@ function setSecurityHeaders(req, res, next) {
   res.header('X-Content-Type-Options', 'nosniff');
   res.header('Referrer-Policy', 'no-referrer-when-downgrade');
   res.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  res.header('Content-Security-Policy', `default-src 'self'; script-src 'self' https://cdn.ravenjs.com https://cdn.amplitude.com 'unsafe-inline' ; style-src 'self' http://cdnjs.cloudflare.com 'unsafe-inline';font-src 'self' http://at.alicdn.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"}`);
   next();
 }
 
