@@ -219,10 +219,14 @@ deploy-api-devic1:
     REPLACE: pop-api
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_API}"
+    DOMAIN_NAME: "pop-api-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-api-devic1
     url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
 
