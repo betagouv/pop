@@ -263,9 +263,13 @@ deploy-diffusion-devic1:
     REPLACE: pop-consultation
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_DIFFUSION}"
+    DOMAIN_NAME: "pop-consultation-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-consultation-devic1
     url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
