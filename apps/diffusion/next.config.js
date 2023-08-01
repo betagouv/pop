@@ -37,21 +37,7 @@ module.exports = withPWA({
     });
 
     return config;
-  },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value:
-              `default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"}; img-src 'self' *.amazonaws.com; object-src 'self' data:;`,
-          },
-        ],
-      },
-    ];
-  },
+  }
 });
 
 /*
