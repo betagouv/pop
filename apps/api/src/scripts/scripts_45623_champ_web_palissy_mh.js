@@ -4188,25 +4188,30 @@ let codes = {
   "01395": "69293",
 };
 
-const anciensCodes = Object.keys(codes);
+try {
+  const anciensCodes = Object.keys(codes);
 
-notices = db.palissy
-  .find({
-    PRODUCTEUR: "Monuments Historiques",
-    INSEE: { $in: anciensCodes },
-  })
-  .noCursorTimeout();
+  notices = db.palissy
+    .find({
+      PRODUCTEUR: "Monuments Historiques",
+      INSEE: { $in: anciensCodes },
+    })
+    .noCursorTimeout();
 
-notices.forEach((notice) => {
-  let anciensInseeArray = notice.INSEE;
-  let nouveauxInsee = [];
-  anciensInseeArray.forEach((insee) => {
-    nouveauxInsee.push(codes[insee]);
+  notices.forEach((notice) => {
+    let anciensInseeArray = notice.INSEE;
+    let nouveauxInsee = [];
+    anciensInseeArray.forEach((insee) => {
+      if (codes[insee]) 
+      nouveauxInsee.push(codes[insee]);
+    });
+
+    db.palissy.updateOne(
+      { _id: notice._id },
+      { $set: { WEB: nouveauxInsee.join(";") } },
+      { returnOriginal: false }
+    );
   });
-
-  let updatedNotice = db.palissy.updateOne(
-    { _id: notice._id },
-    { $set: { WEB: nouveauxInsee.join(";") } },
-    { returnOriginal: false }
-  );
-});
+} catch (error) {
+  console.error(error);
+}
