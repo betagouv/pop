@@ -77,7 +77,7 @@ class Results extends React.Component {
           .search .nav-pills {
             display: flex;
             flex-direction: row;
-            width: 40%;
+            width: 100%;
             flex-wrap: nowrap;
             box-shadow: 0 2px 2px 0 rgba(215, 215, 215, 0.5);
           }
@@ -112,6 +112,12 @@ class Results extends React.Component {
           }
           .search .nav-pills .nav-link.active:hover {
             color: #fff;
+          }
+          @media screen and (max-width: 767px) {
+            .search .nav-pills {
+              margin-bottom: 16px;
+              width: 90%;
+            }
           }
         `}</style>
       </div>
