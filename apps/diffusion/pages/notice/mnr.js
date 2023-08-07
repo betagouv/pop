@@ -516,6 +516,7 @@ export default class extends React.Component {
                     <Field title={mapping.mnr.REF.label} content={notice.REF} />
                     <Field title={mapping.mnr.BASE.label} content={notice.BASE} />
                     <Field title={mapping.mnr.DMAJ.label} content={notice.DMAJ} />
+                    <Field title={mapping.mnr.NOTE2.label} content={notice.NOTE2} />
                   </div>
                   <ContactUs
                     contact={notice.CONTACT || emailContactMnr}
