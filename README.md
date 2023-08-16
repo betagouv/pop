@@ -12,7 +12,38 @@ Il est conseillé de lire le fichier `README.md` de chacun de ces services.
 
 ## Installation et utilisation
 
-Voir le `README.md` de chacun des services.
+0) Un fichier docker-compose est présent pour provisionner un elastic search et une base mongo-db en local. Pour lancer la stack:
+```bash
+docker-compose up -d
+``` 
+
+1) Créer les fichiers .env à partir des fichiers .env-default présent dans chaque apps (api, diffusion, production)
+
+==> Il faut maintenant installer un dump de mongodb depuis staging. 
+Pour se faire, il faut demander à une personne de l'équipe de dumper la base pour importer ce dump dans la base locale.
+==> Il faut executer le script de création d'index elastic search
+(depuis le dossier apps/api)
+```bash
+nvm use && node ./srcelasticsearch/sync
+```
+
+2) lancer l'api puis les projet diffusion & production
+
+api:
+```bash
+nvm use && npm run dev
+```
+diffusion (next.js):
+```bash
+nvm use && npx next dev
+```
+production:
+```bash
+nvm use && npm run dev
+```
+
+
+Voir le `README.md` de chacun des services pour plus de détails.
 
 ## Tests et déploiement
 

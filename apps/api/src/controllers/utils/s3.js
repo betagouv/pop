@@ -1,10 +1,25 @@
 const fs = require("fs");
 const AWS = require("aws-sdk");
-const { s3Bucket } = require("../../config.js");
+const { s3Bucket, LOCALSTACK } = require("../../config.js");
+
+/**
+ * Return proper aws S3 client
+ * @returns {S3}
+ */
+function getS3Client() {
+  return process.env.NODE_ENV === "dev" && LOCALSTACK === "true" ? new AWS.S3({
+    endpoint: 'http://127.0.0.1:4566',
+    accessKeyId: 'test',
+    secretAccessKey: 'test',
+    region: 'us-east-1',
+    s3ForcePathStyle: true
+  }) : new AWS.S3();
+}
 
 // Upload a file to S3. Maybe we should not write to disk.
 function uploadFile(path, file, Bucket = s3Bucket) {
-  const s3 = new AWS.S3();
+  const s3 = getS3Client();
+
   return new Promise((resolve, reject) => {
     const data = fs.readFileSync(file.path);
     const params = {

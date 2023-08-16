@@ -3,7 +3,7 @@ const { esUrl, esPort } = require("./config.js");
 
 const getElasticInstance = () => {
   let options;
-  if (esUrl !== "127.0.0.1") {
+  if (!esUrl.includes("127.0.0.1")) {
     options = {
       hosts: [`${esUrl}:${esPort}`],
       connectionClass: require("http-aws-es"),
@@ -16,9 +16,7 @@ const getElasticInstance = () => {
       })
     };
   } else {
-    options = {
-      host: "http://127.0.0.1:9200"
-    };
+    options = { host: esUrl };
   }
 
   let elasticClient = require("elasticsearch").Client(options);

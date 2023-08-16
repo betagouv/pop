@@ -53,7 +53,7 @@
     "node": "^14.17.5"
   },
   "scripts": {
-    "dev": "node src/services/server.js",
+    "dev": "NODE_ENV=development node src/services/server.js",
     "build": "next build",
     "start": "node src/services/server.js",
     "test": "jest"

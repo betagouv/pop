@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 let PORT = process.env.PORT || 3000;
 let mongoUrl = process.env.DB_ENDPOINT || `mongodb://127.0.0.1/pop`;
 let esUrl = process.env.ES_ENDPOINT || "http://127.0.0.1:9200";
@@ -7,7 +8,8 @@ let s3Bucket = process.env.BUCKET || "pop-phototeque-dev";
 const secret = process.env.SECRET || "not-so-secret";
 const MAPBOX_API_SECRET_TOKEN = process.env.MAPBOX_API_SECRET_TOKEN;
 const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
-const ID_PROD_APP = process.env.ID_PROD_APP
+const LOCALSTACK = process.env.LOCALSTACK;
+const ID_PROD_APP = process.env.ID_PROD_APP;
 
 module.exports = {
   mongoUrl,
@@ -18,5 +20,6 @@ module.exports = {
   secret,
   MAPBOX_API_SECRET_TOKEN,
   MAPBOX_EXPIRATION_DELAY,
+  LOCALSTACK,
   ID_PROD_APP
 };
