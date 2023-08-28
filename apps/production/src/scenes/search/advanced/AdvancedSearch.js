@@ -126,14 +126,13 @@ export default function AdvancedSearch({ collection, card }) {
             "INSEE.keyword",
             "MCGEO.keyword",
             "LIEUORIG.keyword",
-            "WADRS.keyword",
             "DPT_LETTRE.keyword",
             "LOCA.keyword"
           ],
           text: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS, DPT_LETTRE, LOCA - Localisation"
         },
         {
-          value: ["ADRESSE.keyword", "LIEU.keyword"],
+          value: ["ADRESSE.keyword", "LIEU.keyword", "WADRS.keyword"],
           text: "ADRESSE, LIEU - Adresse ou lieu-dit"
         },
         {
@@ -199,7 +198,7 @@ export default function AdvancedSearch({ collection, card }) {
             "NUMVERS.keyword"
           ],
           text:
-            "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote, NUMVERS"
+            "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENV, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF - Numéro ou cote, NUMVERS"
         },
         {
           value: ["NUMVERS.keyword"],

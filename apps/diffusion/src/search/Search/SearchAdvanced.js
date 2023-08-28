@@ -129,7 +129,7 @@ class SearchAdvanced extends React.Component {
                       "DPT_LETTRE.keyword"
                     ],
               text: "Localisation",
-              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS, DPT_LETTRE, LOCA"
+              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, DPT_LETTRE, LOCA"
             },
             {
               value: [ "ADRESSE.keyword",
@@ -189,7 +189,7 @@ class SearchAdvanced extends React.Component {
                       "REF.keyword",
                       "NUMVERS.keyword"],
               text: "Numéro ou cote",
-              fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
+              fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENV, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
             },
             {
               value: ["OBS.keyword",
