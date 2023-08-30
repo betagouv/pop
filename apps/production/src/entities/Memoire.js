@@ -61,7 +61,10 @@ export default class Memoire extends Notice {
       .forEach(prop => this._warnings.push(`${prop}_INVALID_ALNUM`));
 
     // Region should exist.
-    if (body.REG && body.REG.length > 0) {
+    // M45079 - Ajout vérification sur le champ REG
+    // M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
+    if (Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france" 
+        && body.REG && body.REG.length > 0) {
       let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";"); 
       arrayReg.forEach((val) => {
         if(!regions.includes(val)){

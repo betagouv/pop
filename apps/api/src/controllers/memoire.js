@@ -77,7 +77,9 @@ async function withFlags(notice) {
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
 
   // M45079 - Ajout vérification sur le champ REG
-  if (Array.isArray(notice.REG) && notice.REG.length > 0 ) {
+  // M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
+  if (Array.isArray(notice.PAYS) && notice.PAYS.length < 2 && String(notice.PAYS[0]).toLowerCase() === "france" 
+       && Array.isArray(notice.REG) && notice.REG.length > 0 ) {
     for(let i=0; i<notice.REG.length; i++){
       if(!regions.includes(notice.REG[i])){
         notice.POP_FLAGS.push("REG_INVALID");
