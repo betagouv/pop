@@ -734,6 +734,7 @@ class SearchAdvanced extends React.Component {
             {value: "MARQ.keyword",  text: "Marques", fields: "MARQ"},
             {value: "MILL.keyword",  text: "Millénaire", fields: "MILL"},
             {value: "NOTE.keyword",  text: "Notes", fields: "NOTE"},
+            {value: "NOTE2.keyword",  text: "Avertissement", fields: "NOTE2"},
             {value: ["INV.keyword"], text: "Numéro d’inventaire", fields: "INV"},
             {value: ["RENV.keyword"], text: "Numéro de renvoi vers un autre domaine", fields: "RENV"},
             {value: "OBSE.keyword",  text: "Observations", fields: "OBSE"},

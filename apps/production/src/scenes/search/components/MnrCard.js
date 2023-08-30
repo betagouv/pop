@@ -37,6 +37,7 @@ export default ({ data }) => {
           { (data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null }
           <p>{data.CATE}</p>
           <p>{data.PHOT}</p>
+          { (data.HIST4 && data.HIST4 !== "") ? <p>{Mapping.mnr["HIST4"].label + " : " + data.HIST4}</p> : null }
         </div>
       </div>
     </Link>
