@@ -25,6 +25,15 @@ const models = fs
         description: documentation ? documentation.description || "" : "",
         thesaurus: documentation ? documentation.thesaurus || "" : ""
       };
+      if(documentation && documentation.label_mh) {
+        obj.label_mh = documentation.label_mh;
+      }
+      if(documentation && documentation.listeAutorite) {
+        obj.listeAutorite = documentation.listeAutorite;
+      }
+      if(documentation && documentation.idthesaurus) {
+        obj.idthesaurus = documentation.idthesaurus;
+      }
       return obj;
     })
   }));

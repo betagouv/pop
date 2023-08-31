@@ -15,9 +15,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Mixed|non|non|non|non|||
+|Mixed|non|non|non|non|||||||
 
 ### createdBy
 
@@ -25,9 +25,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### institution
 
@@ -35,9 +35,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### name
 
@@ -45,9 +45,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### description
 
@@ -55,9 +55,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### image
 
@@ -65,9 +65,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### createdAt
 
@@ -75,9 +75,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Date|non|non|non|non|||
+|Date|non|non|non|non|||||||
 
 ### _id
 
@@ -85,9 +85,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||
+|ObjectID|non|non|non|non|||||||
 
 ### __v
 
@@ -95,6 +95,6 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||
+|Number|non|non|non|non|||||||

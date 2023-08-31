@@ -2,12 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
 const csvPath = "../csv";
+const excludeModels = ["DeleteHistorique", "Groups", "noticesOAI", "Producteur", "resumptionTokenOAI"];
 
 // 1. Load models
 const models = fs
   .readdirSync(path.join(__dirname, modelsPath))
   // Require all files
   .map(file => require(`${modelsPath}/${file}`))
+  .filter( model => !excludeModels.includes(model.modelName))
   // Build an object from object's schema properties
   .map(model => ({
     name: model.modelName,
@@ -21,7 +23,10 @@ const models = fs
         opendata: documentation ? documentation.opendata || "" : "",
         generated: documentation ? documentation.generated || "" : "",
         description: documentation ? documentation.description || "" : "",
-        thesaurus: documentation ? documentation.thesaurus || "" : ""
+        thesaurus: documentation ? documentation.thesaurus || "" : "",
+        label_mh: documentation ? documentation.label_mh || "" : "",
+        listeAutorite: documentation ? documentation.listeAutorite || "" : "",
+        idthesaurus: documentation ? documentation.idthesaurus || "" : ""
       };
       return obj;
     })

@@ -135,7 +135,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Appelation d'usage"
+        label: "Appellation d'usage"
       }
     },
     ATEL: {
@@ -261,7 +261,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T69",
-        label: "Dénomination de l'objet"
+        label: "Dénomination de l'objet",
+        listeAutorite: "Thésaurus de la désignation des objets mobiliers",
+        idthesaurus: "th361"
       }
     },
     DENQ: {
@@ -269,7 +271,8 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Date de l'enquête ou du dernier récolement"
+        label: "Date de l'enquête ou du dernier récolement",
+        label_mh: "Date de l'enquête ou du récolement"
       }
     },
     DEPL: {
@@ -522,9 +525,9 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description:
-          "Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.",
-        label: "Numéro INSEE de la commune"
+        description: "Numéro INSEE de la commune. Doit contenir 5 caractères ou plus et commencer comme DPT.",
+        label: "Numéro INSEE de la commune",
+        label_mh: "N° INSEE de la commune au moment de la protection"
       }
     },
     INSEE2: {
@@ -572,8 +575,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Lien notice Regards",
-        label: "Lien notice Regards"
+        description: "Lien Regards",
+        label: "Lien Regards"
       }
     },
     LBASE2: {
@@ -820,7 +823,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Description littéraire de l'iconographie"
+        label: "Description de l'iconographie"
       }
     },
     PROT: {
@@ -829,7 +832,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Typologie de la protection. Ne peut pas être vide si DPRO est renseigné.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
-        label: "Typologie de la protection"
+        label: "Typologie de la protection",
+        listeAutorite: "Type de protection MH - Inventaire/MH",
+        idthesaurus: "th369"
       }
     },
     REFA: {
@@ -848,7 +853,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description:
           "Références de l'ensemble. Doit être une référence valide vers une notice Mérimée.",
-        label: "Référence des l'ensemble"
+        label: "Référence de l'ensemble"
       }
     },
     REFM: {
@@ -874,8 +879,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Joconde liées ",
-        label: "Notices Joconde liées"
+        description: "Références des notices Joconde liées à la notice Palissy",
+        label: "Références Joconde liées"
       }
     },
     REFMUS: {
@@ -883,8 +888,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Muséo liées ",
-        label: "Notices Muséo liées"
+        description: "Références des notices Muséo liées à la notice Palissy",
+        label: "Références Muséo liées"
       }
     },
     REG: {
@@ -1048,7 +1053,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Accès Mémoire"
+        label: "Accès Mémoire",
+        label_mh: "N° INSEE de la commune actuelle"
       }
     },
     WRENV: {

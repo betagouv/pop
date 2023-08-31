@@ -1,5 +1,6 @@
 # POP SCHEMAS enluminures
 
+- [PRODUCTEUR](/apps/api/doc/enluminures.md#PRODUCTEUR)
 - [REF](/apps/api/doc/enluminures.md#REF)
 - [BASE](/apps/api/doc/enluminures.md#BASE)
 - [CONTIENT_IMAGE](/apps/api/doc/enluminures.md#CONTIENT_IMAGE)
@@ -46,23 +47,39 @@
 - [VISITE](/apps/api/doc/enluminures.md#VISITE)
 - [VIDEO](/apps/api/doc/enluminures.md#VIDEO)
 - [TOUT](/apps/api/doc/enluminures.md#TOUT)
-- [DMAJ](/apps/api/doc/enluminures.md#DMAJ)
-- [DMIS](/apps/api/doc/enluminures.md#DMIS)
+- [POP_IMPORT](/apps/api/doc/enluminures.md#POP_IMPORT)
+- [POP_FLAGS](/apps/api/doc/enluminures.md#POP_FLAGS)
 - [RENV](/apps/api/doc/enluminures.md#RENV)
 - [REFC](/apps/api/doc/enluminures.md#REFC)
 - [REFDE](/apps/api/doc/enluminures.md#REFDE)
 - [LIENS](/apps/api/doc/enluminures.md#LIENS)
+- [POP_COORDONNEES.lat](/apps/api/doc/enluminures.md#POP_COORDONNEES.lat)
+- [POP_COORDONNEES.lon](/apps/api/doc/enluminures.md#POP_COORDONNEES.lon)
+- [POP_CONTIENT_GEOLOCALISATION](/apps/api/doc/enluminures.md#POP_CONTIENT_GEOLOCALISATION)
+- [DMAJ](/apps/api/doc/enluminures.md#DMAJ)
+- [DMIS](/apps/api/doc/enluminures.md#DMIS)
+- [HISTORIQUE](/apps/api/doc/enluminures.md#HISTORIQUE)
 - [_id](/apps/api/doc/enluminures.md#_id)
 - [__v](/apps/api/doc/enluminures.md#__v)
+### PRODUCTEUR
+Producteur de la donnée : Enluminures
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Producteur|||||
+
 ### REF
 
 
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non||Référence|
+|String|oui|non|non|non||Référence|||||
 
 ### BASE
 Nom de la base : Enluminures (Enluminures)
@@ -70,9 +87,9 @@ Nom de la base : Enluminures (Enluminures)
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Nom de la base|
+|String|non|oui|non|non||Nom de la base|||||
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera 'oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -80,9 +97,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Contient une image|
+|String|non|oui|non|non||Contient une image|||||
 
 ### ATTRIB
 
@@ -90,9 +107,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Auteur de l'oeuvre ou de l'original|
+|String|non|non|non|non||Artiste|||||
 
 ### APPL
 
@@ -100,9 +117,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### AUTR
 
@@ -110,9 +127,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Auteur de l'oeuvre|||||
 
 ### AUTS
 
@@ -120,9 +137,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Éditeur de l'oeuvre|||||
 
 ### CONSERV
 
@@ -130,9 +147,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### CONTXT
 
@@ -140,9 +157,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Contexte|
+|String|non|non|non|non||Contexte|||||
 
 ### COTE
 
@@ -150,9 +167,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### DATE
 
@@ -160,9 +177,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Datation|
+|String|non|non|non|non||Datation|||||
 
 ### DATDEB
 
@@ -170,9 +187,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### DATFIN
 
@@ -180,9 +197,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### DIMS
 
@@ -190,9 +207,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Dimensions du codex|||||
 
 ### ETAB
 
@@ -200,9 +217,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Établissement de conservation|||||
 
 ### FOPG
 
@@ -210,9 +227,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### FOLIOS
 
@@ -220,9 +237,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### LANGOUV
 
@@ -230,9 +247,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### NFICH
 
@@ -240,9 +257,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### NVUE
 
@@ -250,9 +267,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### NOMENC
 
@@ -260,9 +277,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Domaine|
+|Array|non|non|non|non||Domaine|||||
 
 ### NOTES
 
@@ -270,9 +287,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Notes manuscrit|
+|String|non|non|non|non||Notes manuscrit|||||
 
 ### NOTDEC
 
@@ -280,9 +297,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Remarques sur le décors|
+|String|non|non|non|non||Remarques sur le décors|||||
 
 ### OPHOT
 
@@ -290,9 +307,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### ORIGG
 
@@ -300,9 +317,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Origine géographique|
+|String|non|non|non|non||Origine géographique|||||
 
 ### ORIGH
 
@@ -310,9 +327,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Origine historique|
+|String|non|non|non|non||Origine historique|||||
 
 ### ORIGP
 
@@ -320,9 +337,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### DOMN
 
@@ -330,9 +347,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### TYPE
 
@@ -340,9 +357,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### POSS
 
@@ -350,9 +367,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Possesseur|
+|Array|non|non|non|non||Possesseur|||||
 
 ### REFD
 
@@ -360,9 +377,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Cote|
+|String|non|non|non|non||Cote|||||
 
 ### REFIM
 
@@ -370,9 +387,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### ENRGFP
 
@@ -380,9 +397,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### ENRGMS
 
@@ -390,9 +407,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### DROIT
 
@@ -400,9 +417,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Crédits photographiques|
+|String|non|non|non|non||Crédits photographiques|||||
 
 ### COPY
 
@@ -410,9 +427,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Copyright notice|
+|String|non|non|non|non||Copyright notice|||||
 
 ### SUJET
 
@@ -420,9 +437,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre de l'enluminure / Sujet|
+|String|non|non|non|non||Titre de l'enluminure / Sujet|||||
 
 ### SUPP
 
@@ -430,9 +447,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### TITR
 
@@ -440,9 +457,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Titre de l'ouvrage|
+|String|non|non|non|non||Titre de l'ouvrage|||||
 
 ### TYPDEC
 
@@ -450,9 +467,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Typologie du décors|
+|String|non|non|non|non||Typologie du décors|||||
 
 ### TYPCOD
 
@@ -460,9 +477,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Type codicologique|||||
 
 ### LOCA
 
@@ -470,9 +487,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non||Ville|||||
 
 ### LOCA2
 
@@ -480,9 +497,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### VISITE
 
@@ -490,104 +507,166 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
 
 ### VIDEO
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|||
-
-
+|Array|non|non|non|non|||||||
 
 ### TOUT
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|String|non|non|non|non|||||||
+
+### POP_IMPORT
 
 
 
-### IMG
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||
+|Array|non|non|non|non|||||||
+
+### POP_FLAGS
+Informations et avertissements techniques
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|oui|non|non||Alertes POP|||||
+
+### RENV
+Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Enluminures.
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|||||
+
+### REFC
+Numéro de renvoi vers une référence du contenu matériel. Doit être une référence valide vers une notice Enluminures.
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers une référence du contenu matériel|||||
+
+### REFDE
+Numéro de renvoi vers une référence du décor. Doit être une référence valide vers une notice Enluminures.
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Numéro de renvoi vers une référence du décor|||||
+
+### LIENS
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Liens externes éventuels|||||
+
+### POP_COORDONNEES.lat
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||||||
+
+### POP_COORDONNEES.lon
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Number|non|non|non|non|||||||
+
+### POP_CONTIENT_GEOLOCALISATION
+Champ qui permet de savoir si la geolocalisation est disponible ou non
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|String|non|oui|non|non||Contient une position|||||
 
 ### DMAJ
 Date de mise à jour (format AAAA-MM-JJ)
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de mise à jour|
-
-
+|String|non|oui|non|non||Date de mise à jour|||||
 
 ### DMIS
 Date de la création (format AAAA-MM-JJ)
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de création|
+|String|non|oui|non|non||Date de création|||||
+
+### HISTORIQUE
 
 
 
-### RENV
-Numéro de renvoi vers un autre domaine
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|
-
-
-
-### RENV
-Numéro de renvoi vers un autre domaine
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Numéro de renvoi vers un autre domaine|
-
-
-
-### REFC
-Numéro de renvoi vers une référence du contenu matériel
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Numéro de renvoi vers une référence du contenu matériel|
-
-
-
-### REFDE
-Numéro de renvoi vers une référence du décor
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Numéro de renvoi vers une référence du décor|
-
-
-
-### LIENS
-Liens externes éventuels
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Liens externes éventuels|
-
-
+|Array|non|non|non|non|||||||
 
 ### _id
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||
-
-
+|ObjectID|non|non|non|non|||||||
 
 ### __v
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||
+|Number|non|non|non|non|||||||

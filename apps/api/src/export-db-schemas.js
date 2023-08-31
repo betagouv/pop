@@ -2,12 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const modelsPath = "./models";
 const markdownPath = "../doc";
+const excludeModels = ["DeleteHistorique", "Groups", "noticesOAI", "Producteur", "resumptionTokenOAI"];
 
 // 1. Load models
 const models = fs
   .readdirSync(path.join(__dirname, modelsPath))
   // Require all files
   .map(file => require(`${modelsPath}/${file}`))
+  .filter( model => !excludeModels.includes(model.modelName))
   // Build an object from object's schema properties
   .map(model => ({
     name: model.modelName,
@@ -26,7 +28,10 @@ const models = fs
         v.options.documentation && v.options.documentation.label
           ? v.options.documentation.label
           : "",
-      thesaurus: v.options.documentation ? v.options.documentation.thesaurus : ""
+      thesaurus: v.options.documentation ? v.options.documentation.thesaurus : "",
+      label_mh: v.options.documentation ? v.options.documentation.label_mh || "" : "",
+      listeAutorite: v.options.documentation ? v.options.documentation.listeAutorite || "" : "",
+      idthesaurus: v.options.documentation ? v.options.documentation.idthesaurus || "" : "",
     }))
   }));
 
@@ -63,14 +68,18 @@ for (let i = 0; i < models.length; i++) {
         path.deprecated ? "oui" : "non",
         path.opendata ? "oui" : "non",
         path.validation,
-        path.label
+        path.label,
+        path.thesaurus,
+        path.label_mh,
+        path.listeAutorite,
+        path.idthesaurus,
       ];
       return [
         `### ${path.name}`,
         path.description + "\n\n",
         path.thesaurus ? `Thésaurus : ${path.thesaurus} \n\n` : "",
         "",
-        `|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|`,
+        `|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|`,
         `|----|------|------|------|--------|----------|-----|`,
         `|${elements.join("|")}|`,
         ""

@@ -1,5 +1,7 @@
-path,type,required,label,opendata,generated,description,thesaurus
-"arc","String","non","","","","",""
-"value","String","non","","","","",""
-"_id","ObjectID","non","","","","",""
-"__v","Number","non","","","","",""
+path,type,required,label,opendata,generated,description,thesaurus,label_mh,listeAutorite,idthesaurus
+"idThesaurus","String","non","","","","","","","",""
+"arc","String","non","","","","","","","",""
+"value","String","non","","","","","","","",""
+"altLabel","Boolean","non","","","","","","","",""
+"_id","ObjectID","non","","","","","","","",""
+"__v","Number","non","","","","","","","",""

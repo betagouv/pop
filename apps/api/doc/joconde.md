@@ -80,6 +80,9 @@
 - [RANG](/apps/api/doc/joconde.md#RANG)
 - [REDA](/apps/api/doc/joconde.md#REDA)
 - [REFIM](/apps/api/doc/joconde.md#REFIM)
+- [REFMEM](/apps/api/doc/joconde.md#REFMEM)
+- [REFMER](/apps/api/doc/joconde.md#REFMER)
+- [REFPAL](/apps/api/doc/joconde.md#REFPAL)
 - [REPR](/apps/api/doc/joconde.md#REPR)
 - [RETIF](/apps/api/doc/joconde.md#RETIF)
 - [SREP](/apps/api/doc/joconde.md#SREP)
@@ -92,6 +95,7 @@
 - [VIDEO](/apps/api/doc/joconde.md#VIDEO)
 - [WWW](/apps/api/doc/joconde.md#WWW)
 - [LVID](/apps/api/doc/joconde.md#LVID)
+- [HISTORIQUE](/apps/api/doc/joconde.md#HISTORIQUE)
 - [_id](/apps/api/doc/joconde.md#_id)
 - [__v](/apps/api/doc/joconde.md#__v)
 ### PRODUCTEUR
@@ -100,9 +104,9 @@ Producteur de la donnée : MUSEE
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Producteur|
+|String|non|oui|non|non||Producteur|||||
 
 ### BASE
 Nom de la base : Collections des musées de France (Joconde)
@@ -110,9 +114,9 @@ Nom de la base : Collections des musées de France (Joconde)
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Nom de la base|
+|String|non|oui|non|non||Nom de la base|||||
 
 ### CONTIENT_IMAGE
 Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champ sera oui', sinon 'non'. Ce champ est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES
@@ -120,9 +124,9 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Contient une image|
+|String|non|oui|non|non||Contient une image|||||
 
 ### POP_COORDONNEES.lat
 Latitude de la notice en WGS84
@@ -130,9 +134,9 @@ Latitude de la notice en WGS84
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|oui|non|non|||||||
 
 ### POP_COORDONNEES.lon
 Longitude de la notice en WGS84
@@ -140,9 +144,9 @@ Longitude de la notice en WGS84
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Number|non|oui|non|non|||
+|Number|non|oui|non|non|||||||
 
 ### POP_CONTIENT_GEOLOCALISATION
 Champ qui permet de savoir si la geolocalisation est disponible ou non
@@ -150,9 +154,9 @@ Champ qui permet de savoir si la geolocalisation est disponible ou non
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Contient une position|
+|String|non|oui|non|non||Contient une position|||||
 
 ### POP_FLAGS
 Informations et avertissements techniques
@@ -160,19 +164,19 @@ Informations et avertissements techniques
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|oui|non|non||Alertes POP|
+|Array|non|oui|non|non||Alertes POP|||||
 
 ### REF
-Référence (numéro système de la notice). Doit contenir exactement 11 caractères.
+Référence (numéro système de la notice) doit être supérieure ou égale à 11 caractères.
 
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|oui||Référence|
+|String|oui|non|non|oui||Référence|||||
 
 ### POP_IMPORT
 
@@ -180,9 +184,9 @@ Référence (numéro système de la notice). Doit contenir exactement 11 caract�
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|||
+|Array|non|non|non|non|||||||
 
 ### REFMIS
 Référence de mise à jour
@@ -190,9 +194,9 @@ Référence de mise à jour
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence MAJ|
+|String|non|non|non|non||Référence MAJ|||||
 
 ### MANQUANT
 Un bien manquant est un bien inscrit à l’inventaire d’un musée de France qui, à l’issue du récolement décennal et de recherches répétées et infructueuses, n’a pas pu être retrouvé. Depuis 2016, le signalement des biens constatés manquants et volés est une obligation pour permettre d’élargir les recherches.
@@ -200,9 +204,9 @@ Un bien manquant est un bien inscrit à l’inventaire d’un musée de France q
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Situation particulière|
+|Array|non|non|non|non||Situation particulière|||||
 
 ### MANQUANT_COM
 
@@ -210,9 +214,9 @@ Un bien manquant est un bien inscrit à l’inventaire d’un musée de France q
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Situation particulière|
+|String|non|non|non|non||Situation particulière|||||
 
 ### ADPT
 Ancien dépôt / changement d’affectation
@@ -220,9 +224,9 @@ Ancien dépôt / changement d’affectation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Ancien dépôt|
+|String|non|non|non|oui||Ancien dépôt|||||
 
 ### APPL
 Appellation
@@ -230,9 +234,9 @@ Appellation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Appellation|
+|String|non|non|non|oui||Appellation|||||
 
 ### APTN
 Ancienne appartenance 
@@ -240,9 +244,9 @@ Ancienne appartenance
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Ancienne appartenance|
+|String|non|non|non|non||Ancienne appartenance|||||
 
 ### ATTR
 Anciennes attributions
@@ -250,9 +254,9 @@ Anciennes attributions
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Anciennes attributions|
+|String|non|non|non|non||Anciennes attributions|||||
 
 ### AUTR
 Auteur
@@ -262,9 +266,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T513
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Auteur|
+|Array|non|non|non|oui||Auteur|http://data.culture.fr/thesaurus/resource/ark:/67717/T513||Entités auteurs|th305|
 
 ### BIBL
 Bibliographie
@@ -272,9 +276,9 @@ Bibliographie
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Bibliographie|
+|String|non|non|non|non||Bibliographie|||||
 
 ### COMM
 Commentaires
@@ -282,9 +286,9 @@ Commentaires
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Commentaires|
+|String|non|non|non|non||Commentaires|||||
 
 ### CONTACT
 Lien contact musée. Cette information vient de la notice MUSEO et doit être un email valide.
@@ -292,9 +296,9 @@ Lien contact musée. Cette information vient de la notice MUSEO et doit être un
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Contact musée|
+|String|non|oui|non|non||Contact musée|||||
 
 ### COOR
 Coordinateur
@@ -302,9 +306,9 @@ Coordinateur
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Coordinateur|
+|String|non|non|non|non||Coordinateur|||||
 
 ### COPY
 Copyright notice
@@ -312,9 +316,9 @@ Copyright notice
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Copyright notice|
+|String|non|non|non|non||Copyright notice|||||
 
 ### DACQ
 Date d’acquisition
@@ -322,9 +326,9 @@ Date d’acquisition
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Date acquisition|
+|String|non|non|non|oui||Date acquisition|||||
 
 ### DATA
 [Peut être déprécié : Pas affiché en production ni en diffusion]  
@@ -332,9 +336,9 @@ Date d’acquisition
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|non|non||Artiste sous droits|||||
 
 ### DATION
 [Peut être déprécié : Pas affiché en production ni en diffusion]  
@@ -342,9 +346,9 @@ Date d’acquisition
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### DDPT
 Date de dépôt / changement d’affectation
@@ -352,9 +356,9 @@ Date de dépôt / changement d’affectation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Date de dépôt|
+|String|non|non|non|oui||Date de dépôt|||||
 
 ### DECV
 Découverte / collecte
@@ -362,9 +366,9 @@ Découverte / collecte
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Découverte / collecte|
+|String|non|non|non|oui||Découverte / collecte|||||
 
 ### DENO
 Dénomination
@@ -374,9 +378,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T505
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Dénomination|
+|Array|non|non|non|oui||Dénomination|http://data.culture.fr/thesaurus/resource/ark:/67717/T505||Liste d'autorités Dénomination - Joconde|th290|
 
 ### DEPO
 Dépôt / établissement dépositaire
@@ -386,9 +390,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Lieu de dépot|
+|Array|non|non|non|oui||Lieu de dépot|http://data.culture.fr/thesaurus/resource/ark:/67717/T515||Liste d'autorités Localisation Joconde|th306|
 
 ### DESC
 Description 
@@ -396,9 +400,9 @@ Description
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Description|
+|String|non|non|non|non||Description|||||
 
 ### DESY
 Date création avant 1995 
@@ -406,9 +410,9 @@ Date création avant 1995
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date création avant 1995 |
+|String|non|non|non|non||Date création avant 1995 |||||
 
 ### DIFFU
 Champ déprécié
@@ -416,9 +420,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### DIMS
 Mesures / Dimensions
@@ -426,9 +430,9 @@ Mesures / Dimensions
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Mesures|
+|String|non|non|non|oui||Mesures|||||
 
 ### DMAJ
 Date de mise à jour (format AAAA-MM-JJ)
@@ -436,9 +440,9 @@ Date de mise à jour (format AAAA-MM-JJ)
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|oui||Date de mise à jour|
+|String|non|oui|non|oui||Date de mise à jour|||||
 
 ### DMIS
 Date de la création (format AAAA-MM-JJ)
@@ -446,9 +450,9 @@ Date de la création (format AAAA-MM-JJ)
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|oui||Date de création|
+|String|non|oui|non|oui||Date de création|||||
 
 ### DOMN
 Domaine
@@ -458,9 +462,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T51
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|oui|non|non|oui||Domaine|
+|Array|oui|non|non|oui||Domaine|http://data.culture.fr/thesaurus/resource/ark:/67717/T51||Liste d'autorités Domaines - Joconde|th294|
 
 ### DREP
 Date de la représentation
@@ -468,9 +472,9 @@ Date de la représentation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date sujet représenté|
+|String|non|non|non|non||Date sujet représenté|||||
 
 ### ECOL
 Ecole 
@@ -480,9 +484,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T517
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Ecole-pays|
+|Array|non|non|non|oui||Ecole-pays|http://data.culture.fr/thesaurus/resource/ark:/67717/T517||Liste d'autorités Écoles - Joconde|th295|
 
 ### EPOQ
 Epoque /style / mouvement 
@@ -492,9 +496,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T93
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Epoque|
+|Array|non|non|non|oui||Epoque|http://data.culture.fr/thesaurus/resource/ark:/67717/T93||Liste d'autorités Époques - Joconde|th289|
 
 ### ETAT
 Etat du bien
@@ -502,9 +506,9 @@ Etat du bien
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Etat du bien|
+|String|non|non|non|non||Etat du bien|||||
 
 ### EXPO
 Exposition 
@@ -512,9 +516,9 @@ Exposition
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Exposition|
+|String|non|non|non|non||Exposition|||||
 
 ### GENE
 Genèse 
@@ -524,9 +528,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T506
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Genèse|
+|Array|non|non|non|non||Genèse|http://data.culture.fr/thesaurus/resource/ark:/67717/T506||Liste d'autorités Genèse|th298|
 
 ### GEOHI
 Géographie historique
@@ -534,9 +538,9 @@ Géographie historique
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Lieu historique|
+|Array|non|non|non|oui||Lieu historique|||||
 
 ### HIST
 Historique
@@ -544,9 +548,9 @@ Historique
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Historique|
+|String|non|non|non|non||Historique|||||
 
 ### IMAGE
 Champ déprécié  
@@ -554,9 +558,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### IMG
 IMAGE
@@ -564,9 +568,9 @@ IMAGE
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Adresse image|
+|Array|non|non|non|non||Adresse image|||||
 
 ### INSC
 Inscriptions 
@@ -574,9 +578,9 @@ Inscriptions
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Inscriptions|
+|Array|non|non|non|non||Inscriptions|||||
 
 ### INV
 N°Inventaire, autres numéros
@@ -584,9 +588,9 @@ N°Inventaire, autres numéros
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|oui||N°Inventaire|
+|String|oui|non|non|oui||N°Inventaire|||||
 
 ### LABEL
 Appellation musée de France
@@ -594,9 +598,9 @@ Appellation musée de France
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|oui||Appellation musée de France|
+|String|non|oui|non|oui||Appellation musée de France|||||
 
 ### LABO
 Champ déprécié
@@ -604,9 +608,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### LARC
 Lien base Arcade
@@ -614,9 +618,9 @@ Lien base Arcade
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien base Arcade|
+|String|non|non|non|non||Lien base Arcade|||||
 
 ### LIEUX
 Lieu de création / d’exécution / d’utilisation
@@ -626,9 +630,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T84
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Lieu de création/utilisation|
+|Array|non|non|non|oui||Lieu de création/utilisation|http://data.culture.fr/thesaurus/resource/ark:/67717/T84||Liste autorités Lieux|th284|
 
 ### REGION
 Région syncronisée sur la valeur de REGION de la fiche MUSEO
@@ -636,9 +640,9 @@ Région syncronisée sur la valeur de REGION de la fiche MUSEO
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Région|
+|String|non|oui|non|non||Région|||||
 
 ### DPT
 Département syncronisée sur la valeur de DPT de la fiche MUSEO
@@ -646,9 +650,9 @@ Département syncronisée sur la valeur de DPT de la fiche MUSEO
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Département|
+|String|non|oui|non|non||Département|||||
 
 ### VILLE_M
 VILLE syncronisée sur la valeur de VILLE_M de la fiche MUSEO
@@ -656,9 +660,9 @@ VILLE syncronisée sur la valeur de VILLE_M de la fiche MUSEO
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Ville|
+|String|non|oui|non|non||Ville|||||
 
 ### NOMOFF
 NOMOFF syncronisée sur la valeur de NOMOFF de la fiche MUSEO
@@ -666,9 +670,9 @@ NOMOFF syncronisée sur la valeur de NOMOFF de la fiche MUSEO
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Nom du musée|
+|String|non|oui|non|non||Nom du musée|||||
 
 ### LOCA
 Localisation
@@ -678,9 +682,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Localisation|
+|String|non|non|non|oui||Localisation|http://data.culture.fr/thesaurus/resource/ark:/67717/T515||Liste d'autorités Localisation - Joconde|th306|
 
 ### LOCA2
 Pays-region-ville
@@ -688,9 +692,9 @@ Pays-region-ville
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Pays-region-ville|
+|String|non|non|oui|non||Pays-region-ville|||||
 
 ### LOCA3
 Champ déprécié
@@ -698,9 +702,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|non|non||Date d'entrée dans le domaine public|||||
 
 ### MILL
 Millésime de création / exécution 
@@ -708,9 +712,9 @@ Millésime de création / exécution
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Millésime de création|
+|Array|non|non|non|oui||Millésime de création|||||
 
 ### MILU
 Millésime d’utilisation / destination
@@ -718,9 +722,9 @@ Millésime d’utilisation / destination
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Millésime d’utilisation|
+|String|non|non|non|oui||Millésime d’utilisation|||||
 
 ### MOSA
 Champ déprécié
@@ -728,9 +732,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### MSGCOM
 Lien commande de reproduction et/ou de conditions d’utilisation 
@@ -738,9 +742,9 @@ Lien commande de reproduction et/ou de conditions d’utilisation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien commande photo|
+|String|non|non|non|non||Lien commande photo|||||
 
 ### MUSEO
 Lien MUSEOFILE
@@ -748,9 +752,9 @@ Lien MUSEOFILE
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|oui|non|non|oui||Lien MUSEOFILE|
+|String|oui|non|non|oui||Lien MUSEOFILE|||||
 
 ### NSDA
 Genre
@@ -758,9 +762,9 @@ Genre
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Numéro de site|
+|String|non|non|oui|non||Genre|||||
 
 ### ONOM
 Onomastique
@@ -768,9 +772,9 @@ Onomastique
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Onomastique|
+|Array|non|non|non|oui||Onomastique|||||
 
 ### PAUT
 Précision auteur
@@ -778,9 +782,9 @@ Précision auteur
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Précision auteur|
+|String|non|non|non|oui||Précision auteur|||||
 
 ### PDAT
 [Peut être déprécié : Pas affiché en production ni en diffusion]
@@ -788,9 +792,9 @@ Précision auteur
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Précision datation|
+|String|non|non|oui|non||Précision datation|||||
 
 ### PDEC
 Précisions sur la découverte / collecte
@@ -798,9 +802,9 @@ Précisions sur la découverte / collecte
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions découverte|
+|String|non|non|non|non||Précisions découverte|||||
 
 ### PEOC
 Période de l’original copié
@@ -810,9 +814,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Période de l’original copié|
+|Array|non|non|non|oui||Période de l’original copié|http://data.culture.fr/thesaurus/resource/ark:/67717/T521||Liste d'autorités Périodes - Joconde|th287|
 
 ### PERI
 Période de création / exécution 
@@ -822,9 +826,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Période de création|
+|Array|non|non|non|oui||Période de création|http://data.culture.fr/thesaurus/resource/ark:/67717/T521||Liste d'autorités Périodes - Joconde|th287|
 
 ### PERU
 Période d’utilisation / destination
@@ -834,9 +838,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T521
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Période d’utilisation|
+|Array|non|non|non|oui||Période d’utilisation|http://data.culture.fr/thesaurus/resource/ark:/67717/T521||Liste d'autorités Périodes - Joconde|th287|
 
 ### PHOT
 Crédits photographiques
@@ -844,9 +848,9 @@ Crédits photographiques
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Crédits photos|
+|String|non|non|non|non||Crédits photos|||||
 
 ### PINS
 Précisions sur les inscriptions
@@ -854,9 +858,9 @@ Précisions sur les inscriptions
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions inscriptions|
+|String|non|non|non|non||Précisions inscriptions|||||
 
 ### PLIEUX
 Précisions sur le lieu de création/ d’exécution / d’utilisation
@@ -864,9 +868,9 @@ Précisions sur le lieu de création/ d’exécution / d’utilisation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions lieu création|
+|String|non|non|non|non||Précisions lieu création|||||
 
 ### PREP
 Précisions sur le sujet représenté 
@@ -874,9 +878,9 @@ Précisions sur le sujet représenté
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions sujet représenté|
+|String|non|non|non|non||Précisions sujet représenté|||||
 
 ### PUTI
 Précisions sur l’utilisation 
@@ -884,9 +888,9 @@ Précisions sur l’utilisation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Précisions utilisation|
+|String|non|non|non|non||Précisions utilisation|||||
 
 ### RANG
 Champ déprécié 
@@ -894,9 +898,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### REDA
 Rédacteur 
@@ -904,9 +908,9 @@ Rédacteur
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Rédacteur|
+|Array|non|non|non|non||Rédacteur|||||
 
 ### REFIM
 Référence image
@@ -914,9 +918,39 @@ Référence image
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence image|
+|String|non|non|non|non||Référence image|||||
+
+### REFMEM
+Références des notices Mémoire liées à la notice Joconde
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Références Mémoire liées|||||
+
+### REFMER
+Références des notices Mérimée liées à la notice Joconde
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Références Mérimée liées|||||
+
+### REFPAL
+Références des notices Palissy liées à la notice Joconde
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non||Références Palissy liées|||||
 
 ### REPR
 Sujet représenté 
@@ -924,9 +958,9 @@ Sujet représenté
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Sujet représenté|
+|Array|non|non|non|oui||Sujet représenté|||||
 
 ### RETIF
 Lien INHA
@@ -934,9 +968,9 @@ Lien INHA
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien INHA|
+|String|non|non|non|non||Lien INHA|||||
 
 ### SREP
 Source de la représentation
@@ -944,9 +978,9 @@ Source de la représentation
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Source représentation|
+|Array|non|non|non|oui||Source représentation|||||
 
 ### STAT
 Statut juridique
@@ -956,9 +990,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T515
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|oui|non|non|oui||Statut juridique|
+|Array|oui|non|non|oui||Statut juridique|http://data.culture.fr/thesaurus/resource/ark:/67717/T515||Liste d'autorités Localisation Joconde|th306|
 
 ### TECH
 Matériaux et techniques
@@ -968,9 +1002,9 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T516
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Matériaux - techniques|
+|Array|non|non|non|oui||Matériaux - techniques|http://data.culture.fr/thesaurus/resource/ark:/67717/T516||Liste d'autorités Technique|th291|
 
 ### TICO
 Champ déprécié 
@@ -978,9 +1012,9 @@ Champ déprécié
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non|||
+|String|non|non|oui|non|||||||
 
 ### TITR
 Titre
@@ -988,9 +1022,9 @@ Titre
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|oui||Titre|
+|String|non|non|non|oui||Titre|||||
 
 ### TOUT
 [Peut être déprécié : A vérifier. Non présent en production] 
@@ -998,9 +1032,9 @@ Titre
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|oui|non||Recherche sur tout|
+|String|non|non|oui|non||Recherche sur tout|||||
 
 ### UTIL
 Utilisation / Destination
@@ -1008,9 +1042,9 @@ Utilisation / Destination
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|oui||Utilisation / Destination|
+|Array|non|non|non|oui||Utilisation / Destination|||Liste d'autorités Utilisation - Joconde|th304|
 
 ### VIDEO
 Affichage image
@@ -1018,9 +1052,9 @@ Affichage image
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|oui|non||Affichage image|
+|Array|non|non|oui|non||Affichage image|||||
 
 ### WWW
 Lien site associé. Doit être une URL valide.
@@ -1028,9 +1062,9 @@ Lien site associé. Doit être une URL valide.
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Lien site associé|
+|Array|non|non|non|non||Lien site associé|||||
 
 ### LVID
 Lien vidéo. Doit être une URL valide.
@@ -1038,9 +1072,19 @@ Lien vidéo. Doit être une URL valide.
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Lien Vidéo|
+|String|non|non|non|non||Lien Vidéo|||||
+
+### HISTORIQUE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
+|----|------|------|------|--------|----------|-----|
+|Array|non|non|non|non|||||||
 
 ### _id
 
@@ -1048,9 +1092,9 @@ Lien vidéo. Doit être une URL valide.
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||
+|ObjectID|non|non|non|non|||||||
 
 ### __v
 
@@ -1058,6 +1102,6 @@ Lien vidéo. Doit être une URL valide.
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
 |----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||
+|Number|non|non|non|non|||||||

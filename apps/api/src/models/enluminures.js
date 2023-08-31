@@ -136,8 +136,14 @@ const Schema = new mongoose.Schema(
       }
     },
     POP_COORDONNEES: {
-      lat: { type: Number, default: 0 },
-      lon: { type: Number, default: 0 }
+      lat: { 
+        type: Number, 
+        default: 0,
+      },
+      lon: { 
+        type: Number, 
+        default: 0
+      }
     },
     POP_CONTIENT_GEOLOCALISATION: {
       type: String,
