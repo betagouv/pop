@@ -88,6 +88,11 @@ function parseFilesCsv(files, encoding, typeImport) {
           addFile("POP_ARRETE_PROTECTION", "POP_ARRETE_PROTECTION", obj, newNotice, filesMap);
           addFile("POP_DOSSIER_VERT", "POP_DOSSIER_VERT", obj, newNotice, filesMap);
         } else if ("memoire" === collection) {
+          // M45867 - Ajout de la condition sur la vérification de région pour le producteur MPP
+          if("MH" == typeImport){
+            const producteurMPP = (obj.PRODUCTEUR && "MPP" == obj.PRODUCTEUR) || (null !== obj.IDPROD && String(obj.IDPROD).startsWith("SAP")) || (null !== obj.EMET && String(obj.EMET).startsWith("SAP"));
+            obj._foreign_region = producteurMPP;
+          }
           newNotice = new Memoire(obj);
           addFile("REFIMG", "IMG", obj, newNotice, filesMap);
         } else if ("autor" === collection) {
