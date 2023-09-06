@@ -444,13 +444,13 @@ router.post(
     // Suppression des valeurs vident pour les champs multivalues
     cleanArrayValue(notice);
 
-   // const obj = new Memoire(notice);
-  //  const obj2 = new NoticesOAI(oaiObj)
-  //  checkESIndex(obj);
- //   promises.push(obj.save());
- //   promises.push(obj2.save());
+    const obj = new Memoire(notice);
+    const obj2 = new NoticesOAI(oaiObj)
+    checkESIndex(obj);
+    promises.push(obj.save());
+    promises.push(obj2.save());
     try {
-  //    await Promise.all(promises);
+      await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
     } catch (e) {
       capture(e);
