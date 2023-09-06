@@ -3,11 +3,15 @@ import validator from "validator";
 import API from "../services/api";
 import regions from "../services/regions";
 
+let foreignRegion = false;
+
 export default class Memoire extends Notice {
   constructor(body) {
     if (body.REF) {
       body.REF = String(body.REF).toUpperCase();
     }
+    // Condition pour le contrôle de la région pour l'import MAP
+    foreignRegion = body._foreign_region || false;
     super(body, "memoire");
   }
   async validate(body) {
@@ -60,11 +64,18 @@ export default class Memoire extends Notice {
       .filter(prop => body[prop] && !validator.isAlphanumeric(body[prop]))
       .forEach(prop => this._warnings.push(`${prop}_INVALID_ALNUM`));
 
+    // M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
+    // Le controle est présent pour les producteurs MPP
+    let checkRegion = true;
+    // Si le producteur existe et égale MPP (cas d'une notice existante)
+    // OU les champs PAYS et REG sont renseignés pour une nouvelle notice
+    if(body.PRODUCTEUR && "MPP" == body.PRODUCTEUR || foreignRegion){
+      checkRegion = Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france";
+    }
+
     // Region should exist.
     // M45079 - Ajout vérification sur le champ REG
-    // M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
-    if (Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france" 
-        && body.REG && body.REG.length > 0) {
+    if (checkRegion && body.REG && body.REG.length > 0) {
       let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";"); 
       arrayReg.forEach((val) => {
         if(!regions.includes(val)){
