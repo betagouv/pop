@@ -76,8 +76,16 @@ async function withFlags(notice) {
     .filter(prop => notice[prop] && !validator.isAlphanumeric(notice[prop]))
     .forEach(prop => notice.POP_FLAGS.push(`${prop}_INVALID_ALNUM`));
 
+
+    // M45867 - Ajout condition sur le contrôle des régions, si le champ PAYS contient uniquement france la vérification est effectué sinon pas de vérification
+    // Le controle est présent pour les producteurs MPP
+    let checkRegion = true;
+    if("MPP" == notice.PRODUCTEUR){
+      checkRegion = Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france";
+    }
+
   // M45079 - Ajout vérification sur le champ REG
-  if (Array.isArray(notice.REG) && notice.REG.length > 0 ) {
+  if (checkRegion && Array.isArray(notice.REG) && notice.REG.length > 0 ) {
     for(let i=0; i<notice.REG.length; i++){
       if(!regions.includes(notice.REG[i])){
         notice.POP_FLAGS.push("REG_INVALID");
@@ -423,6 +431,7 @@ router.post(
     // Update and save.
     promises.push(updateLinks(notice));
     await transformBeforeCreate(notice);
+    
     //Modification des liens entre bases
     await populateBaseFromMemoire(notice, notice.REFJOC, Joconde);
     await populateBaseFromMemoire(notice, notice.REFMUS, Museo);
