@@ -319,6 +319,7 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
                     { (data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></>: null }
                     <p>{addLineBreak(data.CATE)}</p>
                     <p>{addLineBreak(data.PHOT)}</p>
+                    { (data.HIST4) ? <><p>{Mapping.mnr["HIST4"].label + " : "}</p><>{addLineBreak(data.HIST4)}</></>: null }
                   </div>
                 </div>
               </div>
