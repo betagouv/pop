@@ -155,7 +155,7 @@ jobs:
     steps:
       - checkout
       # Sorry.
-      - run: sudo npm install npm@latest -g
+      #- run: sudo npm install npm@7.5.6 -g
       - prepare:
           app: api
       - prepare:
