@@ -81,7 +81,7 @@ async function withFlags(notice) {
     // Le controle est présent pour les producteurs MPP
     let checkRegion = true;
     if("MPP" == notice.PRODUCTEUR){
-      checkRegion = Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france";
+      checkRegion = Array.isArray(notice.PAYS) && notice.PAYS.length < 2 && String(notice.PAYS[0]).toLowerCase() === "france";
     }
 
   // M45079 - Ajout vérification sur le champ REG
