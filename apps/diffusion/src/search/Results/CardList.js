@@ -54,6 +54,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
     data.DPT_LETTRE,
     contentWcomOrCom,
     contentWadrsOrAdresse,
+    data.LIEU,
   ]);
 
   const author = data.AUTP ? data.AUTP.join(' ; ') : "";
