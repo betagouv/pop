@@ -219,7 +219,8 @@ export default class extends React.Component {
                   <Field title={mapping.autor.REJET.label} content={notice.REJET} separator="#" />
                   <Field title={mapping.autor.NATIO.label} content={notice.NATIO} separator="#" />
                   <Field title="Dates (lieus) d’existence" content={datesLieus} separator="#" />
-
+                  <Field title={mapping.autor.ADRS.label} content={notice.ADRS} separator="#" />
+                  
                   <Title
                     content="Fonctions et activités"
                     notice={notice}
