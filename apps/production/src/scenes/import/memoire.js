@@ -51,7 +51,8 @@ function parseFiles(files, encoding) {
           reject(`La notice ligne ${i + 1} n'a pas de reference valide`);
           return;
         }
-
+        // Ajout de la propriété pour le contrôle de la région
+        obj._foreign_region = true;
         const notice = new Memoire(obj);
 
         // If NOMSN does not exists, don't update IMG.
