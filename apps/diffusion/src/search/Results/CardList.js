@@ -628,7 +628,7 @@ export const Enluminures = ({ data, removeFromBucket, searchParams, listRefs}) =
 
 export const Autor = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const REF = data.REF;
-  const { logo, nom, description, fonction, image_preview, symbole } = getNoticeInfo(data);
+  const { logo, nom, description, fonction, image_preview, symbole, adresse } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} />;
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
@@ -650,6 +650,7 @@ export const Autor = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   <div>
                     <p>{fonction}</p>
                     <p>{symbole}</p>
+                    <p>{adresse}</p>
                   </div>
                 </div>
               </div>
