@@ -50,6 +50,7 @@ export default ({ data }) => {
     data.DPT_LETTRE,
     contentWcomOrCom,
     contentWadrsOrAdresse,
+    data.LIEU,
   ]);
 
   const contentSerieTitre = joinData([

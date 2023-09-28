@@ -28,6 +28,7 @@ export default ({ data }) => {
         <div>
           <p>{data.FONC}</p>
           <p>{data.BIO}</p>
+          <p>{data.ADRS}</p>
         </div>
       </div>
     </Link>

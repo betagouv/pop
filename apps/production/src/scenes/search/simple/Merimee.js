@@ -79,7 +79,7 @@ export default function render(props) {
             <CollapsableFacet
               id="departement"
               initialValue={initialValues.get("departement")}
-              fields={["DPT.keyword"]}
+              fields={["DPT.keyword","DPT_LETTRE.keyword"]}
               title="Départements"
             />
             <CollapsableFacet
