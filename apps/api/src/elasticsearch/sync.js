@@ -3,7 +3,7 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const inquirer = require("inquirer");
 const program = require("commander");
-const Listr = require("listr");
+const { Listr } = require("listr2");
 const Observable = require("rxjs").Observable;
 const { mongoUrl, esUrl } = require("../config.js");
 const Merimee = require("../models/merimee");
@@ -72,6 +72,7 @@ async function run() {
     }
   ]);
 
+  
   opts.indices.map(async db => {
     const noticeClass = {
       joconde: Joconde,

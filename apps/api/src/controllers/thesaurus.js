@@ -1,5 +1,5 @@
 const express = require("express");
-const request = require("request");
+const axios = require("axios");
 const passport = require("passport");
 const X2JS = require("x2js");
 require("../passport")(passport);
@@ -7,6 +7,8 @@ const Thesaurus = require("../models/thesaurus");
 const { capture } = require("../sentry.js");
 const x2js = new X2JS();
 const router = express.Router();
+const moment = require('moment-timezone');
+const timeZone = 'Europe/Paris';
 
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
@@ -199,26 +201,22 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
     return res.status(400).send({ success: false, msg: `L'identifiant "${thesaurusId}" est invalide`});
   }
 
-  return new Promise((resolve, reject) => {
-    request.get({
-      url: `https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`
-    },
-    (error, response) => {
-      if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
-        updateThesaurus(thesaurusId, response.body);
-        resolve(response);
-      } else {
+  return axios.get(`https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`)
+      .then((response)  => {
+        if (response && ( response.status === 200 || response.status === 202 ) && response.data.length > 0) {
+          updateThesaurus(thesaurusId, response.data);
+          res.status(200).send(response.data);
+        } else {
+          res.status(401).send(`Aucun thésaurus trouvé pour l'identifiant ${thesaurusId}`);
+        }
+      })
+      .catch(error => {
         capture(error);
-        reject(error);
-      }
-    }
-  );
-  })
-  .then(resp => { 
-    res.status(200).send(resp);
-  })
-  .catch(error => res.status(400).send({ success: false, msg: error}));
+        res.status(400).send({ success: false, msg: error})
+      });
 });
+
+  
 
 async function updateThesaurus(idThesaurus, respData){
   const data = respData;
@@ -228,12 +226,13 @@ async function updateThesaurus(idThesaurus, respData){
   });
 }
 
-async function createThesaurus(idThesaurus, data){
+async function createThesaurus(idThesaurus, parseData){
   const promises = [];
-  const parseData = JSON.parse(data);
+//  const parseData = JSON.parse(data);
   const propId = "@id";
   const propAltLabel = "http://www.w3.org/2004/02/skos/core#altLabel";
   const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
+  const today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD');
 
   parseData.forEach( ( el, i ) => {
     if(parseData[i][propAltLabel]) {
@@ -242,7 +241,8 @@ async function createThesaurus(idThesaurus, data){
           idThesaurus: idThesaurus,
           arc: parseData[i][propId],
           value: element["@value"],
-          altLabel: true
+          altLabel: true,
+          updatedAt: today
         });
         promises.push(theso.save());
       });
@@ -254,7 +254,8 @@ async function createThesaurus(idThesaurus, data){
           idThesaurus: idThesaurus,
           arc: parseData[i][propId],
           value: element["@value"],
-          altLabel: false
+          altLabel: false,
+          updatedAt: today
         });
         promises.push(theso.save());
       });
@@ -262,10 +263,6 @@ async function createThesaurus(idThesaurus, data){
   });
 
   await Promise.all(promises);
-}
-
-async function deleteThesaurusById(id){
-  await Thesaurus.deleteMany({ idThesaurus: id});
 }
 
 router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { session: false }), (req, res) => { 
@@ -277,24 +274,19 @@ router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { 
   const thesaurusId = req.query.id;
   const value = req.query.value;
 
-  return new Promise((resolve, reject) => {
-    request.get({
-      url: `https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`
-    },
-    (error, response) => {
-      if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
-        resolve(response);
-      } else {
+
+  return axios.get(`https://opentheso.huma-num.fr/opentheso/api/autocomplete?theso=${thesaurusId}&value=${value}&format=full`)
+      .then((response)  => {
+        if (response && ( response.status === 200 || response.status === 202 ) && response.data.length > 0) {
+          res.status(200).send(response.data);
+        } else {
+          res.status(404).send(`Aucun résultat`);
+        }
+      })
+      .catch(error => {
         capture(error);
-        reject(error);
-      }
-    }
-  );
-  })
-  .then(resp => { 
-    res.status(200).send(resp);
-  })
-  .catch(error => res.status(400).send({ success: false, msg: error}));
+        res.status(400).send({ success: false, msg: error})
+      });
 });
 
 router.get("/getAllThesaurusById", (req, res) => { 
@@ -319,7 +311,7 @@ router.get("/getAllThesaurusById", (req, res) => {
   });
 });
 
-router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false }), (req, res) => { 
+router.get("/getPrefLabelByIdArk", /* passport.authenticate("jwt", { session: false }),*/ (req, res) => { 
   /* 	
       #swagger.tags = ['Thesaurus']
       #swagger.path = '/thesaurus/getPrefLabelByIdArk'
@@ -327,23 +319,18 @@ router.get("/getPrefLabelByIdArk", passport.authenticate("jwt", { session: false
   */
   const arkId = req.query.id;
 
-  return new Promise((resolve, reject) => {
-    request.get(
-      `https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`,
-      (error, response) => {
-        if (!error && ( response.statusCode === 200 || response.statusCode === 202 )) {
-          resolve(response);
+  return axios.get(`https://opentheso.huma-num.fr/opentheso/api/preflabel.fr/${arkId}.json`)
+      .then((response)  => {
+        if (response && ( response.status === 200 || response.status === 202 ) && response.data) {
+          res.status(200).send(response.data);
         } else {
-          capture(error);
-          reject(error);
+          res.status(404).send(`Aucun résultat`);
         }
-      }
-    );
-  })
-  .then(resp => { 
-    res.status(200).send(resp);
-  })
-  .catch(error => { res.status(400).send({ success: false, msg: error}) });
+      })
+      .catch(error => {
+        capture(error);
+        res.status(400).send({ success: false, msg: error})
+      });
 });
 
 function getAllChildrenConcept(conceptId, arr) {
@@ -393,6 +380,30 @@ function post(req, service) {
     <soapenv:Body>${req}</soapenv:Body> 
     </soapenv:Envelope>`;
 
+    axios.post(
+      `https://ginco.culture.fr/ginco-webservices/services/${service}`,
+      { body: envelopedBody },
+      { headers: { "Content-Type": "text/xml;charset=UTF-8" } }
+    ).then( response => {
+      if (response.status === 200) {
+        try {
+          const bodyjson = x2js.xml2js(body);
+          const key = Object.keys(bodyjson.Envelope.Body)[0];
+          const resp = bodyjson.Envelope.Body[key].return;
+          return resp && !Array.isArray(resp) ? [resp] : resp;
+        } catch (e) {
+          return new Error("Response malformed");
+        }
+      } else {
+        capture(resp);
+        return resp;
+      }
+    }).catch(error => {
+      capture(error);
+      return error;
+    });
+
+    /*
   return new Promise((resolve, reject) => {
     request.post(
       {
@@ -420,7 +431,7 @@ function post(req, service) {
         }
       }
     );
-  });
+  });*/
 }
 
 module.exports = router;

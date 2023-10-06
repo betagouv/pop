@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import ReactTags from "react-tag-input";
-const Tags = ReactTags.WithContext;
+import { WithContext as Tags } from "react-tag-input";
 
 class index extends Component {
   constructor(props) {
