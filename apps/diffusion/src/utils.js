@@ -348,7 +348,10 @@ export function getNoticeInfo(notice) {
       referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
       referenceArk += ((notice.ISNI_VERIFIEE? " / " : "") + ( notice.ARK ? ( "Lien ARK : " + notice.ARK) : "")); 
 
-      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, referenceArk };
+      //Adresse
+      let adresse = notice?.ADRS 
+
+      return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, referenceArk, adresse };
     }
     default:
       return {};

@@ -112,7 +112,13 @@ module.exports = env => {
             limit: 10000,
             name: '[name].[hash:8].[ext]',
           },
-        }
+        },
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false
+          },
+        },
       ]
     },
     plugins: plugins

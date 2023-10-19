@@ -109,6 +109,12 @@ module.exports = env => {
             filename: '[name].[hash:8].[ext]',
           },
         },
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false
+          },
+        }
       ]
     },
     plugins: plugins

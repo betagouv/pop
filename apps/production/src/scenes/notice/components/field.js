@@ -1,12 +1,10 @@
 import React from "react";
 import { Field } from "redux-form";
-import ReactTags from "react-tag-input";
+import { WithContext as Tags } from "react-tag-input";
 import { UncontrolledTooltip } from "reactstrap";
 import autosize from "autosize";
 import api from "../../../services/api";
 import "./field.css";
-
-const Tags = ReactTags.WithContext;
 
 class TagsInput extends React.Component {
   constructor(props) {
