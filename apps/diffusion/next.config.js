@@ -46,7 +46,7 @@ module.exports = withPWA({
           {
             key: 'Content-Security-Policy',
             value:
-              `default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"}; img-src 'self' *.amazonaws.com; object-src 'self' data:;`,
+              `default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://* http://stats.data.gouv.fr http://io1.eulerian.net 'unsafe-eval' 'unsafe-inline' ''; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"} https://* http://stats.data.gouv.fr; img-src 'self' *.amazonaws.com http://stats.data.gouv.fr; object-src 'self' data:;`,
           },
         ],
       },
