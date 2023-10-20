@@ -8,12 +8,9 @@ class request {
   _init(verb, data, headers) {
     headers = headers || {};
     headers["user-agent"] = "POP application";
-    if (localStorage.getItem("token")) {
-      headers["authorization"] = localStorage.getItem("token");
-    }
     const initData = {
       cache: "no-cache",
-      credentials: "same-origin",
+      credentials: "include",
       headers,
       method: verb,
       mode: "cors",

@@ -183,11 +183,11 @@ build-production-devic1:
     - node-modules-production
   variables:
     APP: production
-    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
+    API_URL: https://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: https://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: production
-    SENTRY_DSN: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
+    SENTRY_DSN: # https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
 
 build-diffusion-devic1:
   extends:
@@ -196,11 +196,11 @@ build-diffusion-devic1:
     - node-modules-diffusion
   variables:
     APP: diffusion
-    API_URL: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com
-    POP_URL: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
+    API_URL: https://pop-api-devic1.eu-west-3.elasticbeanstalk.com
+    POP_URL: https://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     BUCKET_URL: https://s3.eu-west-3.amazonaws.com/global-open-mc-pop-devic1-phototheque/
     NODE_ENV: production
-    SENTRY_DSN: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
+    SENTRY_DSN: # https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
     EURELIAN: io1.eulerian.net
 
 
@@ -217,10 +217,14 @@ deploy-api-devic1:
     REPLACE: pop-api
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_API}"
+    DOMAIN_NAME: "pop-api-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-api-devic1
-    url: http://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
+    url: https://pop-api-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
 
@@ -236,10 +240,14 @@ deploy-production-devic1:
     REPLACE: pop-production
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_PRODUCTION}"
+    DOMAIN_NAME: "pop-production-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-production-devic1
-    url: http://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
+    url: https://pop-production-devic1.eu-west-3.elasticbeanstalk.com/auth/signin
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual
 
@@ -253,9 +261,13 @@ deploy-diffusion-devic1:
     REPLACE: pop-consultation
     HEADER: "${MORE_HEADER}"
     PROXY_APP: "${PROXY_DIFFUSION}"
+    DOMAIN_NAME: "pop-consultation-devic1.eu-west-3.elasticbeanstalk.com"
   environment:
     name: pop-consultation-devic1
-    url: http://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
+    url: https://pop-consultation-devic1.eu-west-3.elasticbeanstalk.com/
     deployment_tier: development
+  before_script:
+    - sed -i "s/EMAIL/${EMAIL_SSL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+    - sed -i "s/DOMAIN/${DOMAIN_NAME}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
   rules:
     - when: manual

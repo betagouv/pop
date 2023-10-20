@@ -39,7 +39,7 @@ async function createNotice(user, expectedStatus = 200, notice = sampleNotice) {
     .field("notice", JSON.stringify(notice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
-    .set("Authorization", await getJwtToken(app, user))
+    .set("Cookie", "token="+await getJwtToken(app, user))
     .expect(expectedStatus);
   return response.body;
 }
@@ -50,7 +50,7 @@ async function updateNotice(user, expectedStatus = 200, notice = sampleNotice) {
     .field("notice", JSON.stringify(notice))
     .set("Accept", "application/json")
     .set("Content-Type", "multipart/form-data")
-    .set("Authorization", await getJwtToken(app, user))
+    .set("Cookie", "token="+await getJwtToken(app, user))
     .expect(expectedStatus);
   return response.body;
 }
@@ -59,7 +59,7 @@ async function deleteNotice(user, expectedStatus = 200, notice = sampleNotice) {
   const response = await request(app)
     .delete(`/memoire/${notice.REF}`)
     .set("Accept", "application/json")
-    .set("Authorization", await getJwtToken(app, user))
+    .set("Cookie", "token="+await getJwtToken(app, user))
     .expect(expectedStatus);
   return response.body;
 }
