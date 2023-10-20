@@ -57,7 +57,7 @@ router.post("/signin", async (req, res) => {
 
   user.comparePassword(req.body.password, async function(err, isMatch) {
     if (isMatch && !err) {
-      const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: "1d" });
+      const token = jwt.sign({ _id: user._id }, config.secret, { expiresIn: "12h" });
       /*
       * Mise à jour de l'utilisateur, remise à zéro du nombre de tentative, compte bloqué == false 
       */

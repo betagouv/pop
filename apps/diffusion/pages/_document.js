@@ -37,6 +37,7 @@ class MyDocument extends Document {
           <script src="/static/jquery.min.js"></script>
           <script src="/static/jquery.highlight-5.js" />
           <script src="/static/smarttag.js" />
+          <script src="/static/hotjar.js" />
         </Head>
         <body>
           <Main />

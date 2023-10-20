@@ -113,6 +113,7 @@ describe("POST /memoire", () => {
     // Create notice with errors.
     const flagNotice = {
       ...sampleNotice,
+      PAYS: ["France"], // Ajout du pays pour la vérification de la région
       IDPROD: "", // 1
       LEG: "", // 2
       LBASE: ["123456789"], // 3, 4 (two errors in a row)

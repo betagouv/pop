@@ -129,7 +129,7 @@ class SearchAdvanced extends React.Component {
                       "DPT_LETTRE.keyword"
                     ],
               text: "Localisation",
-              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, WADRS, DPT_LETTRE, LOCA"
+              fields: "AIRE, PAYS, REG, DPT, COM, WCOM, INSEE, MCGEO, LIEUORIG, DPT_LETTRE, LOCA"
             },
             {
               value: [ "ADRESSE.keyword",
@@ -189,7 +189,7 @@ class SearchAdvanced extends React.Component {
                       "REF.keyword",
                       "NUMVERS.keyword"],
               text: "Numéro ou cote",
-              fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENVOI, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
+              fields: "NUMP, ANUMP, NEGPOS, NUMAUTP, NUMOR, ANUMOR, RENV, NUMTI, ANUMTI, REPRO, COTECOR, COTECTI, PRECOR, REF, NUMVERS"
             },
             {
               value: ["OBS.keyword",
@@ -346,6 +346,7 @@ class SearchAdvanced extends React.Component {
             { value:["COMM.keyword"], text: "Commentaires", fields: "COMM"},
             { value:["CONTIENT_IMAGE.keyword"], text: "Contient une image", fields: "CONTIENT_IMAGE"},
             { value:["DACQ.keyword"], text:"Date d'acquisition", fields: "DACQ"},
+            { value:["DATA.keyword"], text:"Artiste sous droits", fields: "DATA"},
             { value:["DDPT.keyword"], text:"Date de dépôt", fields: "DDPT"},
             { value:["DECV.keyword"], text:"Découverte / Collecte", fields: "DECV"},
             { value:["DENO.keyword"], text:"Dénomination", fields: "DENO"},
@@ -367,6 +368,7 @@ class SearchAdvanced extends React.Component {
             { value:["INV.keyword"], text:"N° d’nventaire", fields: "INV"},
             { value:["LIEUX.keyword"], text:"Lieux de création", fields: "LIEUX"},
             { value:["LOCA.keyword"], text:"Localisation", fields: "LOCA"},
+            { value:["LOCA3.keyword"], text:"Date d'entrée dans le domaine public", fields: "LOCA3"},
             { value:["LVID.keyword"], text:"Lien video", fields: "LVID"},
             { value:["MANQUANT.keyword"], text:"MANQUANT", fields: "MANQUANT"},
             { value:["MANQUANT_COM.keyword"], text:"Situation particulière", fields: "MANQUANT_COM"},
@@ -734,6 +736,7 @@ class SearchAdvanced extends React.Component {
             {value: "MARQ.keyword",  text: "Marques", fields: "MARQ"},
             {value: "MILL.keyword",  text: "Millénaire", fields: "MILL"},
             {value: "NOTE.keyword",  text: "Notes", fields: "NOTE"},
+            {value: "NOTE2.keyword",  text: "Avertissement", fields: "NOTE2"},
             {value: ["INV.keyword"], text: "Numéro d’inventaire", fields: "INV"},
             {value: ["RENV.keyword"], text: "Numéro de renvoi vers un autre domaine", fields: "RENV"},
             {value: "OBSE.keyword",  text: "Observations", fields: "OBSE"},

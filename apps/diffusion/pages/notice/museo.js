@@ -202,7 +202,7 @@ export default class extends React.Component {
                   </div>}
               </div>
               <div className="rightContainer-buttons">
-                <div className="addBucket onPrintHide">
+                <div className="addBucket onPrintHide desktop-only">
                   {this.state.display &&
                     <BucketButton base="museo" reference={notice.REF} />}
                 </div>

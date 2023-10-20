@@ -48,7 +48,7 @@ module.exports = env => {
         os: require.resolve("os-browserify/browser"),
         path: require.resolve("path-browserify"),
         process: require.resolve("process/browser"),
-        stream: require.resolve("stream-browserify"),
+        stream: require.resolve("stream-browserify")
       }
     },
     module: {
@@ -80,6 +80,12 @@ module.exports = env => {
           test: /\.(gif|png|jpe?g|svg|woff|woff2)$/i,
           exclude: /(node_modules|__tests__)/,
           type: 'asset/resource'
+        },
+        {
+          test: /\.m?js$/,
+          resolve: {
+            fullySpecified: false
+          },
         }
       ]
     },

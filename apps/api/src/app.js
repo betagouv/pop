@@ -26,6 +26,8 @@ app.use(cors({ origin: true, credentials: true }));
 
 app.use(passport.initialize());
 
+app.disable('x-powered-by');
+
 app.get("/", (_req, res) => {
   res.send("POP API listening.");
 });

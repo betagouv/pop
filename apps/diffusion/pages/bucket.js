@@ -21,7 +21,6 @@ export default class Bucket extends React.Component {
     ]
   };
 
-
   //Méthode permettant de supprimer du panier
   removeFromBucket = (ref) => {
 
@@ -146,6 +145,7 @@ export default class Bucket extends React.Component {
     const PDFLink = () => (
       <div>
         <PDFDownloadLink
+        className="btn btn-secondary"
           document={pdf}
           fileName={this.PdfFileName()}
           style={{
@@ -154,6 +154,7 @@ export default class Bucket extends React.Component {
             color: "#fff",
             maxWidth: "250px",
             width: "100%",
+            height: "31px",
             paddingLeft: "10px",
             paddingRight: "10px",
             paddingTop: "5px",
@@ -169,15 +170,13 @@ export default class Bucket extends React.Component {
 
     const EmptyBucketButton = () => (
       <div><Button style={{
-        backgroundColor: "#377d87",
-        border: 0,
-        color: "#fff",
+        backgroundColor: "transparent",
+        border: "1px solid #377d87",
+        color: "#377d87",
         maxWidth: "250px",
+        height: "31px",
         width: "100%",
-        paddingLeft: "10px",
-        paddingRight: "10px",
-        paddingTop: "5px",
-        paddingBottom: "5px",
+        lineHeight: "0px",
         textAlign: "center",
         borderRadius: "5px"
       }}
@@ -190,52 +189,52 @@ export default class Bucket extends React.Component {
         <Layout>
           <div className="home">
             <Head>
-              <title>Panier de notices</title>
+              <title >Panier de notices</title>
             </Head>
           </div>
-        </Layout>
-        <div className="bucketContainer">
-          <h1 className="bucketTitle">Panier de notices</h1>
-          <div className="notices">
-            <div className="download-container">
-              <div className="notice-number">
-                {this.state.bucket.length === 0 ?
-                  "Aucune notice dans le panier" :
-                  (this.state.bucket.length + " résultat" + (this.state.bucket.length > 1 ? "s" : ""))
+          <div className="bucketContainer">
+            <h1 className="bucketTitle">Panier de notices</h1>
+            <div className="notices">
+              <div className="download-container">
+                {
+                  (this.state.bucket.length > 0 && this.state.display == true) ?
+                    EmptyBucketButton() : ""
                 }
+
+                {
+                  (this.state.bucket.length > 0 && this.state.display == true) ?
+                    PDFLink() : ""
+                }
+
+              </div>
+              <div className="notice-number">
+                    {this.state.bucket.length === 0 ?
+                      "Aucune notice dans le panier" :
+                      (this.state.bucket.length + " résultat" + (this.state.bucket.length > 1 ? "s" : ""))
+                    }
               </div>
 
-              {
-                (this.state.bucket.length > 0 && this.state.display == true) ?
-                  EmptyBucketButton() : ""
-              }
-
-              {
-                (this.state.bucket.length > 0 && this.state.display == true) ?
-                  PDFLink() : ""
-              }
-
-            </div>
-
-            {/* {this.state.bucket.map( notice, index =>
-              <div>
-                {this.displayCard(notice)}
-              </div>
-            )} */}
-
-            {
-              blocList.map(item =>
-                <div id={`bloc_${item.bloc}`} style={{ paddingRight: "20px", paddingLeft: "20px" }}>
-                  {item.list.map(notice =>
-                    <div>
-                      {this.displayCard(notice)}
-                    </div>
-                  )}
+              {/* {this.state.bucket.map( notice, index =>
+                <div>
+                  {this.displayCard(notice)}
                 </div>
-              )
-            }
+              )} */}
+
+              {
+                blocList.map(item =>
+                  <div id={`bloc_${item.bloc}`} className="notices-wrapper">
+                    {item.list.map(notice =>
+
+                        this.displayCard(notice)
+
+                    )}
+                  </div>
+                )
+              }
+            </div>
           </div>
-        </div>
+        </Layout>
+
         <style jsx global>{`
             .home {
               height: 100%;
@@ -385,6 +384,97 @@ export default class Bucket extends React.Component {
               align-items: flex-end;
               justify-content: space-around;
             }
+            .notice-number {
+                padding-left: 22px;
+                margin-bottom: 2px;
+            }
+            {/* ==================================
+            Mobile breakpoint 
+            ================================== */}
+            @media screen and (max-width: 767px) {
+              .bucketTitle {
+                color: #19414C;
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom:24px;
+              }
+
+              .notices {
+                width: 100%;
+                padding: 0 15px;
+              }
+
+              .notices-wrapper {
+                display: flex;
+                flex-direction: column;
+              }
+
+              .download-container {
+                align-items: center;
+                margin-bottom: 24px;
+              }
+
+              .list-card {
+                width: 100%;
+              }
+
+              .list-card .thumbnail {
+                width: 150px;
+                margin-right: 10px;
+              }
+
+              .list-card img.no-img {
+                width: 80px;
+                height: 80px;
+              }
+              .list-card h2 {
+                font-size: 15px;
+              }
+              .list-card p,
+              .list-card span {
+                font-size: 11px;
+              }
+              .notices .btn {
+                font-size: 0.8em;
+              }
+              .notices .list-card-container-mobile {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 16px;
+                gap: 16px;
+                background: #FFFFFF;
+                border-radius: 8px;
+                width: 100%;
+
+                margin-bottom: 12px;
+                
+                .list-card-title {
+                  margin-bottom:16px;
+                }
+
+                .list-card-header {
+                  position:relative;
+                  display:flex;
+                  justify-content: space-between;
+                  width: 100%;
+                  margin-bottom:16px;
+
+                  .list-card-thumbnail {
+                    height: 80px;
+                    width: 80px;
+                    display: flex;
+                    overflow: hidden;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                  .list-card-thumbnail img {
+                      object-fit: fill;
+                      height: auto;
+                  }
+                }
+              }
+            }            
           `}</style>
       </div>
 

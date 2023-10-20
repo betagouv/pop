@@ -318,7 +318,7 @@ export default class extends React.Component {
                   </div>}
               </div>
               <div className="rightContainer-buttons">
-                <div className="addBucket onPrintHide">
+                <div className="addBucket onPrintHide  desktop-only">
                   {this.state.display &&
                     <BucketButton base="joconde" reference={notice.REF} />}
                 </div>
@@ -482,6 +482,8 @@ export default class extends React.Component {
                     <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} separator="#" upper={false}/>
                     <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" upper={false}/>
                     <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" upper={false}/>
+                    <Field title={mapping.joconde.DATA.label} content={notice.DATA} separator="#" upper={false}/>
+                    <Field title={mapping.joconde.LOCA3.label} content={notice.LOCA3} separator="#" upper={false}/>
                   </div>
 
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="joconde" />
