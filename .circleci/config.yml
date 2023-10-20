@@ -112,8 +112,8 @@ commands:
           name: deploy
           command: |
             cd apps/<< parameters.app >>
-            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
-            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/<< parameters.app >>/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/<< parameters.app >>/.platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -136,8 +136,8 @@ commands:
           name: deploy
           command: |
             cd apps/api
-            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
-            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/api/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/api/.platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -326,8 +326,8 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
-            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
-            sed -i "s/DOMAIN/pop-consultation-test.eu-west-3.elasticbeanstalk.com/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/diffusion/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/pop-consultation-test.eu-west-3.elasticbeanstalk.com/" apps/diffusion/.platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
