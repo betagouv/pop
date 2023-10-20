@@ -91,6 +91,58 @@ commands:
           root: ~/repo/apps/<< parameters.app >>
           paths:
             - << parameters.path >>
+  deploy_https:
+    parameters:
+      eb_deploy:
+        type: string
+      app:
+        type: string
+      app_name:
+        type: string
+      domain:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/<< parameters.app >>
+      - restore_node_modules:
+          app: << parameters.app >>
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/<< parameters.app >>
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_PRODUCTION" | base64 -di > .platform/nginx/nginx.conf
+            eb deploy << parameters.eb_deploy >>
+  deploy_api_https:
+    parameters:
+      eb_deploy:
+        type: string
+      app_name:
+        type: string
+      domain:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: api
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/api
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_API" | base64 -di > .platform/nginx/nginx.conf
+            eb deploy << parameters.eb_deploy >>
   deploy:
     parameters:
       eb_deploy:
@@ -120,6 +172,8 @@ commands:
       eb_deploy:
         type: string
       app_name:
+        type: string
+      domain:
         type: string
     steps:
       - checkout
@@ -274,6 +328,8 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/pop-consultation-test.eu-west-3.elasticbeanstalk.com/" apps/${APP}/.platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -282,16 +338,18 @@ jobs:
   deploy_production_test:
     executor: docker_python
     steps:
-      - deploy:
+      - deploy_https:
           app: production
           eb_deploy: pop-production-test
           app_name: pop-production-staging
+          dommain: pop-production-test.eu-west-3.elasticbeanstalk.com
   deploy_api_test:
     executor: docker_python
     steps:
-      - deploy_api:
+      - deploy_api_https:
           eb_deploy: pop-api-test
           app_name: pop-api-staging
+          dommain: pop-api-test.eu-west-3.elasticbeanstalk.com
   deploy_diffusion_staging:
     executor: docker_python
     steps:
