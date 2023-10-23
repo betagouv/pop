@@ -13,7 +13,7 @@ function forceHttps(res, req, next) {
 }
 
 function setSecurityHeaders(req, res, next) {
-  res.header('Content-Security-Policy', `default-src 'self'; script-src 'self' https://cdn.ravenjs.com https://cdn.amplitude.com 'unsafe-inline' ; style-src 'self' http://cdnjs.cloudflare.com 'unsafe-inline';font-src 'self' http://at.alicdn.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"}; img-src 'self' *.amazonaws.com;`);
+  res.header('Content-Security-Policy', `default-src 'self'; script-src 'self' https://cdn.ravenjs.com https://cdn.amplitude.com https://* 'unsafe-inline' ; style-src 'self' http://cdnjs.cloudflare.com 'unsafe-inline';font-src 'self' http://at.alicdn.com data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"} https://*; img-src 'self' *.amazonaws.com;`);
   next();
 }
 
