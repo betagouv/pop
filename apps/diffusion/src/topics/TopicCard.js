@@ -12,7 +12,10 @@ class TopicCard extends React.Component {
     const { img, txt } = this.props;
     let params;
     if(String(this.props.base) != "autor"){
-      params = { ...this.props.params, image: ["oui"] };
+      //Ici on peux configurer les filtres par defaut:
+      //Example filtre image
+      // params = { ...this.props.params, image: ["oui"] };
+      params = { ...this.props.params};
     }
     else{
       params = { ...this.props.params };
