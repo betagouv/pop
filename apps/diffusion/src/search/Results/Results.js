@@ -28,7 +28,8 @@ class Results extends React.Component {
       <ul className="nav nav-pills">
         <li className="nav-item">
           <a
-            onClick={() => this.toggle("list", { geolocalisation: [], image: ["oui"] })}
+            // pour ajouter le parametre image:  {image: ["oui"]} 
+            onClick={() => this.toggle("list", { geolocalisation: [], image: [] })}
             className={`${view === "list" ? "active " : ""} nav-link`}
           >
             LISTE
@@ -44,7 +45,7 @@ class Results extends React.Component {
         </li>
         <li className="nav-item">
           <a
-            onClick={() => this.toggle("mosaic", { image: ["oui"], geolocalisation: [] })}
+            onClick={() => this.toggle("mosaic", { geolocalisation: [], image: [] })}
             className={`${view === "mosaic" ? "active " : ""} nav-link`}
           >
             MOSAIQUE
