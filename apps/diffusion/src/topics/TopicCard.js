@@ -15,7 +15,7 @@ class TopicCard extends React.Component {
       //Ici on peux configurer les filtres par defaut:
       //Example filtre image
       // params = { ...this.props.params, image: ["oui"] };
-      params = { ...this.props.params};
+      params = { ...this.props.params, image: [] };
     }
     else{
       params = { ...this.props.params };
