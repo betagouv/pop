@@ -17,7 +17,7 @@ include:
 # Exemple pour le niveau "critical", le job sera en succés si aucune vulnérabilité critique n'a été détectée
 # Valeur possible: null, "info", "low", "moderate", "high", "critical", or "none"
 variables:
-  AUDIT_LEVEL: "critical"
+  AUDIT_LEVEL: "high"
   TEST_DISABLE: "false"
   BUILD_DISABLE: "false"
   SAST_DISABLE: "false"
@@ -35,10 +35,8 @@ stages:
 workflow:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
       when: never
-    - if: '$CI_COMMIT_BRANCH'
-    - if: '$CI_COMMIT_TAG'
+    - when: always
 
 ##############################################################
 # NODE-MODULES

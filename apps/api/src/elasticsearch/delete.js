@@ -1,7 +1,7 @@
 require("dotenv").config();
 const inquirer = require("inquirer");
 const program = require("commander");
-const Listr = require("listr");
+const { Listr } = require("listr2");
 const es = require("../elasticsearch")();
 const { pingElasticsearchTask } = require("./utils");
 const chalk = require("chalk");
