@@ -1,7 +1,5 @@
 import React from "react";
-import ReactTags from "react-tag-input";
-
-const Tags = ReactTags.WithContext;
+import { WithContext as Tags } from "react-tag-input";
 
 export default class PrefixInput extends React.Component {
     constructor(props) {
