@@ -2,7 +2,7 @@ import React from "react";
 import { SearchBox } from "@popproject/pop-react-elasticsearch";
 import { useEventListener } from "../utils";
 
-function customQuery(query, fields) { console.log("customQuery query : ", query)
+function customQuery(query, fields) {
   // No value, return all documents.
   if (!query) {
     return { match_all: {} };
@@ -40,8 +40,6 @@ function customQuery(query, fields) { console.log("customQuery query : ", query)
   const fuzzy = {
     multi_match: { query, operator: "and", fields, type: "cross_fields" }
   };
-
-  console.log("SEARCH : ", { bool: { should: [strict, strictCross, fuzzy] } })
 
   // Return the whole query with all rules
   return { bool: { should: [strict, strictCross, fuzzy] } };
