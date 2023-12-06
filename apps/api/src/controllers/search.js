@@ -46,7 +46,7 @@ router.use("/*/_msearch", (req, res) => {
     opts.port = esPort;
   }
 
-  // Si la requête ne provient pas de l'application productiion
+  // Si la requête ne provient pas de l'application production
   if(!req.headers.application || req.headers.application !== ID_PROD_APP){
     opts = addFilterFields(req, opts);
   }
@@ -73,6 +73,12 @@ function addFilterFields(req, opts){
       }
       transformData = true;
     }
+
+    // Mantis 46413 - Les notices ayant le CONTIENT_IMAGE égales à "oui" doivent être affichées en premier
+    obj.sort = [{
+      "CONTIENT_IMAGE.keyword": { "order": "desc" }
+    }]
+
     return JSON.stringify(obj);
   }).join('\n');
 
