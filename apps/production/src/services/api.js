@@ -7,6 +7,10 @@ class api {
   signin(email, password) {
     return request.fetchJSON("POST", "/auth/signin", { email, password });
   }
+  // Logout
+  logout() {
+    return request.fetchJSON("GET", "/auth/logout");
+  }
 
   // Get auth user by her token.
   getAuthUser() {

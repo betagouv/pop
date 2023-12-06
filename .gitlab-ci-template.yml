@@ -168,4 +168,5 @@
     - mkdir -p .platform/hooks/predeploy
     - echo "${HEADER}" | base64 --decode > .platform/hooks/predeploy/01_install_more_header.sh
     - echo "${PROXY_APP}" | base64 --decode > .platform/nginx/nginx.conf
+    - sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
     - eb deploy ${ENV}

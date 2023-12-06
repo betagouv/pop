@@ -67,7 +67,13 @@ router.post("/signin", async (req, res) => {
         attemptCount: 0
       });
       await user.save();
-      res.status(200).send({ success: true, token: "JWT " + token, user, id_app: config.ID_PROD_APP });
+
+      const isSecure = req.protocol  === "https";
+ 
+      const twelveHours = 12 * 60 * 60 * 1000; // 12 heures
+      res.cookie('token', token , { maxAge: twelveHours, httpOnly: true, secure: true, sameSite: "none" });
+      
+      res.status(200).send({ success: true, user, token, id_app: config.ID_PROD_APP });
     } else {
 
       user.set({
@@ -193,5 +199,10 @@ router.post(
     });
   }
 );
+
+router.get("/logout", function(req,res){
+  res.clearCookie("token");
+  return res.json({success: true , msg:"Successfully logout" })
+})
 
 module.exports = router;

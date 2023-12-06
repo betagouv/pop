@@ -6,14 +6,13 @@ import api from "../../services/api";
 
 export function* signin({ email, password }) {
   try {
-    const { user, token, success, msg, id_app } = yield api.signin(email, password);
+    const { user, success, msg, id_app } = yield api.signin(email, password);
     if (!success) {
       yield put({ type: actions.SIGNIN_ERROR, error: msg });
       return;
     }
 
-    yield put({ type: actions.SIGNIN_SUCCESS, user, token });
-    localStorage.setItem("token", token);
+    yield put({ type: actions.SIGNIN_SUCCESS, user });
     localStorage.setItem("cgu", true);
     localStorage.setItem("application", id_app);
 
@@ -30,8 +29,6 @@ export function* signin({ email, password }) {
 }
 
 export function* signinByToken() {
-  const token = localStorage.getItem("token");
-  if (token) {
     let response = null;
     try {
       response = yield api.getAuthUser();
@@ -41,17 +38,21 @@ export function* signinByToken() {
         Raven.setUserContext({ email: response.user.email });
       }
 
-      yield put({ type: actions.SIGNIN_SUCCESS, user: response.user, token });
+      yield put({ type: actions.SIGNIN_SUCCESS, user: response.user });
       return;
     }
-    localStorage.removeItem("token");
-  }
+
   yield put({ type: actions.SIGNIN_FAILED });
 }
 
 export function* logOut() {
-  localStorage.removeItem("token");
-  yield put(push("/"));
+  try{
+      yield api.logout();
+  }
+  catch(error){
+    console.error("L'api est inaccessible.")
+  }
+
 }
 
 export default function* rootSaga() {
