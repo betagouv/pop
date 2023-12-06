@@ -97,6 +97,7 @@ export default function SearchSimple({ initialValues }) {
           "PAYS^3",
           "REG^3",
           "COM^3",
+          "PLOC^3",
           "SUJET^3",
           "HIST^2",
           "TYPE^1",
