@@ -30,7 +30,7 @@ async function recipients(to) {
         "antonella.rotolo@culture.gouv.fr",
         "franck.fusibet@culture.gouv.fr",
         "franck.genestoux@culture.gouv.fr",
-        "anne-violaine.bouilloud@culture.gouv.fr"
+        "nathalie.pielok@culture.gouv.fr"
       ].join(",");
     case "museo":
       return "laurent.manoeuvre@culture.gouv.fr";
