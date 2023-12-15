@@ -163,6 +163,182 @@ export default class extends React.Component {
     }
   }
 
+  /**
+   * Affichage de base pour les notices Enluminures, uniquement si la référence ne contient pas INI-D ou INI-CM 
+   */
+  renderFieldsOthersNotices(notice) {
+    return (
+      <>
+        <Title
+          content="Identification du bien culturel"
+          notice={notice}
+          fields={[
+            "ATTRIB",
+            "CONTXT",
+            "DATE",
+            "NOMENC",
+            "NOTES",
+            "NOTDEC",
+            "ORIGG",
+            "ORIGH",
+            "POSS",
+            "REFD",
+            "SUJET",
+            "TITR",
+            "TYPDEC"
+          ]}
+        />
+        <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
+        <Field title={mapping.enluminures.CONTXT.label} content={notice.CONTXT} />
+        <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
+        <Field title={mapping.enluminures.NOMENC.label} content={notice.NOMENC} />
+        <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
+        <Field title={mapping.enluminures.NOTDEC.label} content={notice.NOTDEC} />
+        <Field title={mapping.enluminures.ORIGG.label} content={notice.ORIGG} />
+        <Field title={mapping.enluminures.ORIGH.label} content={notice.ORIGH} />
+        <Field title={mapping.enluminures.POSS.label} content={notice.POSS} />
+        <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
+        <Field title={mapping.enluminures.SUJET.label} content={notice.SUJET} />
+        <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
+        <Field
+          title={mapping.enluminures.TYPDEC.label}
+          content={notice.TYPDEC}
+          separator="/"
+        />
+      </>
+    )
+  }
+
+  renderNoticesINID(notice) {
+    return (
+      <>
+        <Title
+          content="Enluminure"
+          notice={notice}
+          fields={[
+            "SUJET",
+            "ATTRIB",
+            "CONTXT",
+            "DATE",
+            "NOTEDEC",
+            "TYPE",
+            "DIMS",
+            "NOTES"
+          ]}
+        />
+        <Field title={mapping.enluminures.SUJET.label} content={notice.SUJET} />
+        <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
+        <Field title={mapping.enluminures.CONTXT.label} content={notice.CONTXT} />
+        <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
+        <Field title={mapping.enluminures.NOTDEC.label} content={notice.NOTDEC} />
+        <Field title={mapping.enluminures.TYPE.label} content={notice.TYPE} />
+        <Field title={mapping.enluminures.DIMS.label} content={notice.DIMS} />
+        <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
+        <Title
+          content="Manuscrit ou incunable"
+          notice={notice}
+          fields={[
+            "TITR",
+            "ETAB",
+            "REFD",
+            "FOLIOS"
+          ]}
+        />
+        <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
+        <Field title={mapping.enluminures.ETAB.label} content={notice.ETAB} />
+        <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
+        <Field title={mapping.enluminures.FOLIOS.label} content={notice.FOLIOS} />
+      </>
+    )
+  }
+
+  renderNoticesINICM(notice) {
+    return (
+      <>
+        <Title
+          content="Identification du manuscrit ou de l’incunable"
+          notice={notice}
+          fields={[
+            "TITR",
+            "AUTR",
+            "AUTS",
+            "LANGOUV",
+            "DATE",
+            "ORIGG",
+            "TYPCOD",
+            "DIMS",
+            "NOTES",
+            "POSS",
+            "NOMENC"
+          ]}
+        />
+        <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
+        <Field title={mapping.enluminures.AUTR.label} content={notice.AUTR} />
+        <Field title={mapping.enluminures.AUTS.label} content={notice.AUTS} />
+        <Field title={mapping.enluminures.LANGOUV.label} content={notice.LANGOUV} />
+        <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
+        <Field title={mapping.enluminures.ORIGG.label} content={notice.ORIGG} />
+        <Field title={mapping.enluminures.TYPCOD.label} content={notice.TYPCOD} />
+        <Field title={mapping.enluminures.DIMS.label} content={notice.DIMS} />
+        <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
+        <Field title={mapping.enluminures.POSS.label} content={notice.POSS} />
+        <Field title={mapping.enluminures.NOMENC.label} content={notice.NOMENC} />
+        <Title
+          content="Décors"
+          notice={notice}
+          fields={[
+            "TYPDEC"
+          ]}
+        />
+        <Field title={mapping.enluminures.TYPDEC.label} content={notice.TYPDEC} />
+        <Title
+          content="Localisation du manuscrit"
+          notice={notice}
+          fields={[
+            "ETAB",
+            "REFD",
+            "FOLIOS"
+          ]}
+        />
+        <Field title={mapping.enluminures.ETAB.label} content={notice.ETAB} />
+        <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
+        <Field title={mapping.enluminures.FOLIOS.label} content={notice.FOLIOS} />
+      </>
+    )
+  }
+
+  renderSideBarNotices(notice) {
+    return(
+      <div>
+        <Field title={mapping.enluminures.REF.label} content={notice.REF} />
+        <Field title={mapping.enluminures.BASE.label} content={notice.BASE} />
+        <Field title="Crédits photographiques" content="Cliché IRHT ; droits collectivité, CNRS et MCC" />
+        <Field title="Copyright notice" content="© Institut de recherche et d'histoire des textes - CNRS" />
+        <Field
+          title={mapping.enluminures.COPY.label}
+          content={notice.COPY}
+          separator=";"
+        />
+      </div>
+    )
+  }
+
+  renderSideBarOthersNotices(notice) {
+    return(
+      <div>
+        <Field title={mapping.enluminures.REF.label} content={notice.REF} />
+        <Field title={mapping.enluminures.BASE.label} content={notice.BASE} />
+        <Field title={mapping.enluminures.DROIT.label} content={notice.DROIT} />
+        <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
+        <Field
+          title={mapping.enluminures.COPY.label}
+          content={notice.COPY}
+          separator=";"
+        />
+      </div>
+    )
+  }
+
   render() {
     const notice = this.props.notice;
 
@@ -183,6 +359,12 @@ export default class extends React.Component {
       comment: notice.NOTEDEC,
       contentLocation: notice.ORIGG
     };
+
+    const regExpInid = new RegExp(/^INI-D/);
+    const regExpInicm = new RegExp(/^INI-CM/);
+
+    console.log(regExpInid.test(notice.REF))
+    console.log(regExpInicm.test(notice.REF))
 
     const pdf = EnluminuresPdf(notice, title);
     const App = () => (
@@ -249,46 +431,16 @@ export default class extends React.Component {
                 {this.state.display && App()}
               </div>
             </div>
-
             <Row>
               <Col md="8">
                 <div className="notice-details">
-                  <Title
-                    content="Identification du bien culturel"
-                    notice={notice}
-                    fields={[
-                      "ATTRIB",
-                      "CONTXT",
-                      "DATE",
-                      "NOMENC",
-                      "NOTES",
-                      "NOTDEC",
-                      "ORIGG",
-                      "ORIGH",
-                      "POSS",
-                      "REFD",
-                      "SUJET",
-                      "TITR",
-                      "TYPDEC"
-                    ]}
-                  />
-                  <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
-                  <Field title={mapping.enluminures.CONTXT.label} content={notice.CONTXT} />
-                  <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
-                  <Field title={mapping.enluminures.NOMENC.label} content={notice.NOMENC} />
-                  <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
-                  <Field title={mapping.enluminures.NOTDEC.label} content={notice.NOTDEC} />
-                  <Field title={mapping.enluminures.ORIGG.label} content={notice.ORIGG} />
-                  <Field title={mapping.enluminures.ORIGH.label} content={notice.ORIGH} />
-                  <Field title={mapping.enluminures.POSS.label} content={notice.POSS} />
-                  <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
-                  <Field title={mapping.enluminures.SUJET.label} content={notice.SUJET} />
-                  <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
-                  <Field
-                    title={mapping.enluminures.TYPDEC.label}
-                    content={notice.TYPDEC}
-                    separator="/"
-                  />
+                  {
+                    (regExpInid.test(notice.REF)) 
+                    ? this.renderNoticesINID(notice)
+                    : (regExpInicm.test(notice.REF)) 
+                        ? this.renderNoticesINICM(notice) 
+                        : this.renderFieldsOthersNotices(notice) 
+                  }
                 </div>
               </Col>
               <Col md="4">
@@ -296,21 +448,17 @@ export default class extends React.Component {
                 <LinkedNotices links={this.props.links} />
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
-                  <div>
-                    <Field title={mapping.enluminures.REF.label} content={notice.REF} />
-                    <Field title={mapping.enluminures.BASE.label} content={notice.BASE} />
-                    <Field title={mapping.enluminures.DROIT.label} content={notice.DROIT} />
-                    <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
-                    <Field
-                      title={mapping.enluminures.COPY.label}
-                      content={notice.COPY}
-                      separator=";"
-                    />
-                  </div>
+                  { 
+                    (regExpInid.test(notice.REF) || regExpInicm.test(notice.REF)) 
+                    ? this.renderSideBarNotices(notice) 
+                    : this.renderSideBarOthersNotices(notice) 
+                  }
+                  
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="enluminures" />
                 </div>
                 <SeeMore notice={notice} />
                 <Map notice={notice} />
+                  
               </Col>
             </Row>
           </Container>
