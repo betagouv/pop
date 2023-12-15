@@ -422,8 +422,7 @@ export default class extends React.Component {
                       "PERU",
                       "MILU",
                       "DECV",
-                      "PDEC",
-                      "NSDA"
+                      "PDEC"
                     ]}
                   />
                   <Field title={mapping.joconde.GENE.label} content={notice.GENE} separator="#" upper={false} />
@@ -445,7 +444,7 @@ export default class extends React.Component {
                   <Title
                     content="Informations juridiques"
                     notice={notice}
-                    fields={["STAT", "DACQ", "APTN", "DEPO", "DDPT", "ADPT", "LOCA"]}
+                    fields={["STAT", "DACQ", "APTN", "DEPO", "DDPT", "ADPT", "LOCA","MANQUANT","MANQUANT_COM"]}
                   />
                   <Field title={mapping.joconde.STAT.label} content={notice.STAT} separator="#" upper={false} />
                   <Field title={mapping.joconde.DACQ.label} content={notice.DACQ} separator="#" upper={false}/>
