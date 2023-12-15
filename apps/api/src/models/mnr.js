@@ -58,6 +58,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Présence sur site internet du musée ; date"
       }
     },
@@ -217,6 +218,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Restitution"
       }
     },
@@ -225,6 +227,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Exposé en salles, à telle date"
       }
     },
@@ -233,6 +236,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Formulation des cartels (fautive ou non, à telle date)"
       }
     },
@@ -332,6 +336,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Récolé, date"
       }
     },
@@ -443,6 +448,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
+        deprecated: true,
         label: "Avertissement"
       }
     },

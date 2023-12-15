@@ -737,6 +737,7 @@ const Schema = new mongoose.Schema(
       index: true,
       documentation: {
         description: "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
+        generated: true,
         label: "Référence aux objets conservés"
       }
     },

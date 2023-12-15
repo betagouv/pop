@@ -373,6 +373,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Référence sur le vidéodisque"
       }
     },
@@ -390,6 +391,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Précision sur la localisation"
       }
     },
@@ -406,6 +408,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Adresse de la personne photographiée"
       }
     },
@@ -489,6 +492,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA",
+        deprecated: true,
         label: "Date du tirage "
       }
     },
@@ -605,8 +609,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Provenance de l'objet ou du document",
-        label: "Provenance de l'objet ou du document"
+        description: "Lieu d'origine",
+        label: "Lieu d'origine"
       }
     },
     MCGEO: {
@@ -663,6 +667,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No vue CD",
+        deprecated: true,
         label: "No vue CD"
       }
     },
@@ -679,6 +684,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Numéro de versement"
       }
     },
@@ -785,6 +791,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Producteur du film",
       }
     },
@@ -810,6 +817,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Forme : oui ou non selon qu'on charge ou non une image",
+        deprecated: true,
         label: "Type d'image numérique"
       }
     },
@@ -833,8 +841,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",
+        description: "Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",
+        deprecated: true,
         label: "Liens base"
       }
     },
@@ -852,6 +860,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
+        deprecated: true,
         label: "Référence de l'image"
       }
     },
@@ -859,8 +868,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",
+        description: "Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",
+        deprecated: true,
         label: "Nom Image"
       }
     },
