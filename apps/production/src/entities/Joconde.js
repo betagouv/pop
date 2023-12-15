@@ -32,7 +32,7 @@ export default class Joconde extends Notice {
     obj["PEOC"] = /[(),;]/g;
     obj["PERI"] = /[(),;]/g;
     obj["PERU"] = /[(),;]/g;
-    obj["REPR"] = /[(),;]/g;
+    obj["REPR"] = /[(),;:]/g;
     obj["SREP"] = /[(),;]/g;
     obj["TECH"] = /[(),;]/g;
     obj["UTIL"] = /[(),;]/g;
@@ -42,6 +42,26 @@ export default class Joconde extends Notice {
 
     for (let key in obj) {
       this._mapping[key].thesaurus_separator = obj[key];
+    }
+
+    // M46507 - Mise en forme des valeurs du champ REPR
+    if(body.REPR && Array.isArray(body.REPR)) {
+      const arrayRepr = [];
+      const regExp = new RegExp(obj["REPR"]);
+
+      body.REPR.forEach( v => {
+        if(regExp.test(v)) {
+          v.split(obj["REPR"]).forEach( vs => {
+            if('' !== vs.trim()) {
+              arrayRepr.push(vs.trim())
+            }
+          })
+        } else {
+          arrayRepr.push(v.trim())
+        }
+      })
+      
+      this.REPR = arrayRepr.length > 0 ? arrayRepr : body.REPR;
     }
   }
 

@@ -109,6 +109,12 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap-reverse"
     },
+    listReprLinked: {
+        fontSize: 10,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        marginBottom: "0"
+    },
     listItem: {
         display: "flex",
         flexDirection: "row"
