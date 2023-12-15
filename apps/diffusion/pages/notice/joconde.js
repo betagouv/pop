@@ -24,6 +24,7 @@ import { JocondePdf } from "../../src/pdf/pdfNotice/jocondePdf";
 import LinkedNotices from "../../src/notices/LinkedNotices";
 import { pop_url } from "../../src/config";
 import EAnalytics from "../../src/services/eurelian";
+import { renderFieldRepr } from '../../src/notices/CustomField';
 
 const pushLinkedNotices = (a, d, base) => {
   for (let i = 0; Array.isArray(d) && i < d.length; i++) {
@@ -115,49 +116,31 @@ export default class extends React.Component {
     return <a href={url} key={chaine} target="_blank">{chaine}</a>
   }
 
-  generateLink(name, value){
-    // Regex pour le champ REPR
-    const regex = new RegExp('[():,;#]');
-
-    let content = this.buildUrl(name, value);
-    
-    // Traitement pour repr
-    if ((name == 'repr')&& regex.test(value)) {
-        content = this.prepareLinkRepr(value, name);
+  // Crée le lien pour le chap REPR avec la prise en compte du retour à la ligne
+  buildLinkRepr(v) {
+    const name = "repr";
+    let link = this.buildUrl(name, v.replace('#', ''));
+    if(v.indexOf('#') > -1) {
+      link = <React.Fragment><br /> {link} </React.Fragment>;
     }
-    return content
+    return link;
   }
 
-  prepareLinkRepr(value, name){
+  linkRepr(value) {
     // Caractères possible dans la valeur renseignée
-    const arrayPattern = ['(',')',':',',',' ',';','#']; 
-    let prevString = '';
+    const regexPattern = new RegExp(/[(),;:]/g); 
     const arrayContent = [];
+
     for (let i = 0; i < value.length; i++) {
-      if (arrayPattern.includes(value[i])) {
-        // Si un string a déjà été construit, on crée le lien
-        if (prevString !== '') {
-          arrayContent.push(this.buildUrl(name, prevString));
-          prevString = '';
-        }
-        // le caractère # doit être interprété comme un retour à la ligne
-        if(value[i] == '#'){
-          arrayContent.push(<br />);
-        } else {
-          arrayContent.push(value[i]);
-        }
+      if (regexPattern.test(value[i])) {
+        const arraySplit = value[i].split(/[(),:;]/).filter(e => e != "");
+        arraySplit.forEach( v => arrayContent.push(this.buildLinkRepr(v)))
         
       } else {
-        prevString += value[i];
+        arrayContent.push(this.buildLinkRepr(value[i]));
       }
     }
-
-    // Si la valeur n'a pas de caractère spécifique en fin de chaine
-    if (prevString !== '') {
-      arrayContent.push(this.buildUrl(name, prevString));
-      prevString = '';
-    }
-    return arrayContent.reduce((a, b) => [a, "", b])
+    return arrayContent.reduce((a, b) => [a, " ; ", b])
   }
 
   // Display a list of links to authors
@@ -176,18 +159,25 @@ export default class extends React.Component {
     const links = [];
     value.forEach((val) => { 
       if (val.indexOf('#') > -1) {
+        if (links.length > 0) {
+          links.push(', ')
+        } 
         val.split('#').forEach((el) => {
-          const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
+
+          if('' !== el.trim()) {
+            const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
   
-          links.push(
-            (
-              <div>
-              <a href={url} key={el} target="_blank">
-                {el}
-              </a>
-              </div>
-            )
+            links.push(
+              (
+                <div className="div-links">
+                  <a href={url} key={el} target="_blank">
+                    {el}
+                  </a>
+                </div>
+              )
             );
+          }
+      
         });
       } else {
         let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`;
@@ -399,12 +389,13 @@ export default class extends React.Component {
                   <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" upper={false}/>
                   <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" upper={false}/>
                   <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" upper={false}/>
-                  <Field
+                  { renderFieldRepr(mapping.joconde.REPR.label, this.linkRepr(this.props.notice.REPR)) }
+                  {/* <Field
                     title={mapping.joconde.REPR.label}
-                    content={this.links(this.props.notice.REPR, "repr")}
+                    content={this.linkRepr(this.props.notice.REPR)}
                     separator="#"
                     upper={false}
-                  />
+                  /> */}
                   <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" upper={false}/>
                   <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" upper={false}/>
                   <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" upper={false} />

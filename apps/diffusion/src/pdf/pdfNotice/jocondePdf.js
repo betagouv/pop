@@ -1,4 +1,5 @@
 import Field from "../../notices/Field";
+import { TextFieldReprPdf } from "../../notices/CustomField";
 import mapping from "../../services/mapping";
 import { Document, Page, View, Text, Image, Link } from '@react-pdf/renderer';
 import { LinkedNoticesPdf } from "../pdfNotice/components/LinkedNoticesPdf";
@@ -47,7 +48,8 @@ export function JocondePdf(notice, title, links, museo) {
                 <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.ETAT.label} content={notice.ETAT} separator="#" isPdf={true} />
-                <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} isLineBreakLink={false} />
+                <TextFieldReprPdf title={mapping.joconde.REPR.label} content={notice.REPR} />
+                {/* <Field title={mapping.joconde.REPR.label} content={pdfLinks(notice.REPR, "repr")} separator="#" isPdf={true} link={true} isLineBreakLink={false} /> */}
                 <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" isPdf={true} />
                 <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" isPdf={true} />
