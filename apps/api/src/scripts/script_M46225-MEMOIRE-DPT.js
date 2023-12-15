@@ -118,6 +118,7 @@ notices.forEach(notice => {
     let update = false;
 
     let arrayDpt = notice.DPT.map((element) => {
+        element = String(element).replace('’',"'")
         if(regexDPT.test(element)) {
             for(const [key, value] of Object.entries(objDpt)) {
                 if(value === element) {
@@ -130,16 +131,21 @@ notices.forEach(notice => {
     });
 
     if(update) {
-        bulk.find({ REF : notice.REF}).update([
+        let objSet = {
+          DPT: arrayDpt
+        }
+        // Vérification de DPT_LETTRE, si vide, création des valeurs à partir de DPT
+        if(Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length == 0) {
+          objSet.DPT_LETTRE = arrayDpt.map((dpt) => getDepartement(dpt))
+        }
+       bulk.find({ REF : notice.REF}).update([
           {
-            $set : {
-                DPT: arrayDpt
-            }
+            $set : objSet
           }
         ]);
     }
 
-    noticeCount--;
+  noticeCount--;
 	print(noticeCount + " notices restantes");
 });
 
