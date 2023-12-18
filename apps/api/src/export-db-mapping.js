@@ -59,12 +59,12 @@ const models = fs
 //   export default Mapping;
 //   `;
 
-const generateMapping = (models) => {
+function generateMapping(models) {
   return `${models
     .map(model => {
       const obj = {};
       for (let i = 0; i < model.paths.length; i++) {
-        obj[model.paths[i].path] = model.paths[i];
+        obj[model.paths[i].path] = JSON.parse(JSON.stringify(model.paths[i]));
         delete obj[model.paths[i].path].path;
       }
       return `const ${model.name} = ${JSON.stringify(obj)}`;
@@ -78,8 +78,8 @@ const generateMapping = (models) => {
 
 const arrayExclude = ["resumptionTokenOAI","Producteur","DeleteHistorique", "noticesOAI","Groups"];
 
-const mappingDiffusion = generateMapping(models.filter( model => !arrayExclude.includes(model.name)))
-const mappingProduction = generateMapping(models)
+const mappingProduction = generateMapping(models);
+const mappingDiffusion = generateMapping(models.filter( model => !arrayExclude.includes(model.name)));
 
 //Write
 fs.writeFileSync(path.join(__dirname, mappingProductionPath), mappingProduction);
