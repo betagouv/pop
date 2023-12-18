@@ -207,7 +207,7 @@ export default class extends React.Component {
                     content="Identification"
                     notice={notice}
                     fields={[
-                      "NOM", "PREN", "PNOM", "TYPID", "ALIAS", "INI", "REJET", "NAT", "DNAISS", "DMORT"
+                      "NOM", "PREN", "PNOM", "TYPID", "ALIAS", "INI", "REJET", "NATIO", "DNAISS", "DMORT", "ADRS"
                     ]}
                   />
                   <Field title={mapping.autor.NOM.label} content={notice.NOM} separator="#" />
@@ -225,7 +225,7 @@ export default class extends React.Component {
                     content="Fonctions et activités"
                     notice={notice}
                     fields={[
-                      "FONC", "SCLE", "DATES", "AUTORLOCA", "LOCACT", "ADRS", "LRELA", "FORM", "OEUVR", "SYMB", "INS", "GAR", "PREF", "BIF"
+                      "FONC", "LOCACT", "DATES", "LRELA", "FORM", "OEUVR", "SYMB", "INS", "GAR", "PREF", "BIF"
                     ]}
                   />
                   <Field title={mapping.autor.FONC.label} content={notice.FONC} separator="#" />

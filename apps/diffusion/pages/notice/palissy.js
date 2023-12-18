@@ -165,12 +165,12 @@ export default class extends React.Component {
 
   // Display a list of links to authors
   authorsField() {
-    return <React.Fragment>{ generateLinks(this.props.notice.AUTR, "auteur") }</React.Fragment>;
+    return this.props.notice.AUTR && this.props.notice.AUTR.length > 0? <React.Fragment>{ generateLinks(this.props.notice.AUTR, "auteur") }</React.Fragment> : null;
   }
 
   // Display a list of links to etud
   etudeField() {
-    return <React.Fragment>{ generateLinks(this.props.notice.ETUD.split(';'), "etud") }</React.Fragment>;
+    return this.props.notice.ETUD && this.props.notice.ETUD.length > 0 ? <React.Fragment>{ generateLinks(this.props.notice.ETUD.split(';'), "etud") }</React.Fragment> : null;
   }
 
   // Display label by producteur

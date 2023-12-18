@@ -109,6 +109,12 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap-reverse"
     },
+    listReprLinked: {
+        fontSize: 10,
+        fontFamily: 'Open Sans',
+        fontWeight: 300,
+        marginBottom: "0"
+    },
     listItem: {
         display: "flex",
         flexDirection: "row"
@@ -278,5 +284,14 @@ export const styles = StyleSheet.create({
         right: 15,
         textAlign: 'right',
         color: 'grey'
+    },
+    categoryEnluminures: {
+        fontSize: "10px",
+        color: "#808d9e",
+        fontWeight: "300",
+        marginBottom: "5px",
+    },
+    linkEnluminures: {
+        textDecoration: "none"
     }
 });
