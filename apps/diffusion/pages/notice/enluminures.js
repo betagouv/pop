@@ -226,14 +226,14 @@ export default class extends React.Component {
             "NOTES"
           ]}
         />
-        <Field title={mapping.enluminures.SUJET.label} content={notice.SUJET} />
-        <Field title={mapping.enluminures.ATTRIB.label} content={notice.ATTRIB} />
-        <Field title={mapping.enluminures.CONTXT.label} content={notice.CONTXT} />
-        <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
-        <Field title={mapping.enluminures.NOTDEC.label} content={notice.NOTDEC} />
-        <Field title={mapping.enluminures.TYPE.label} content={notice.TYPE} />
-        <Field title={mapping.enluminures.DIMS.label} content={notice.DIMS} />
-        <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
+        <Field title={mapping.enluminures.SUJET.label_inid} content={notice.SUJET} />
+        <Field title={mapping.enluminures.ATTRIB.label_inid} content={notice.ATTRIB} />
+        <Field title={mapping.enluminures.CONTXT.label_inid} content={notice.CONTXT} />
+        <Field title={mapping.enluminures.DATE.label_inid} content={notice.DATE} />
+        <Field title={mapping.enluminures.NOTDEC.label_inid} content={notice.NOTDEC} />
+        <Field title={mapping.enluminures.TYPE.label_inid} content={notice.TYPE} />
+        <Field title={mapping.enluminures.DIMS.label_inid} content={notice.DIMS} />
+        <Field title={mapping.enluminures.NOTES.label_inid} content={notice.NOTES} />
         <Title
           content="Manuscrit ou incunable"
           notice={notice}
@@ -244,10 +244,10 @@ export default class extends React.Component {
             "FOLIOS"
           ]}
         />
-        <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
-        <Field title={mapping.enluminures.ETAB.label} content={notice.ETAB} />
-        <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
-        <Field title={mapping.enluminures.FOLIOS.label} content={notice.FOLIOS} />
+        <Field title={mapping.enluminures.TITR.label_inid} content={notice.TITR} />
+        <Field title={mapping.enluminures.ETAB.label_inid} content={notice.ETAB} />
+        <Field title={mapping.enluminures.REFD.label_inid} content={notice.REFD} />
+        <Field title={mapping.enluminures.FOLIOS.label_inid} content={notice.FOLIOS} />
       </>
     )
   }
@@ -272,17 +272,17 @@ export default class extends React.Component {
             "NOMENC"
           ]}
         />
-        <Field title={mapping.enluminures.TITR.label} content={notice.TITR} />
-        <Field title={mapping.enluminures.AUTR.label} content={notice.AUTR} />
-        <Field title={mapping.enluminures.AUTS.label} content={notice.AUTS} />
-        <Field title={mapping.enluminures.LANGOUV.label} content={notice.LANGOUV} />
-        <Field title={mapping.enluminures.DATE.label} content={notice.DATE} />
-        <Field title={mapping.enluminures.ORIGG.label} content={notice.ORIGG} />
-        <Field title={mapping.enluminures.TYPCOD.label} content={notice.TYPCOD} />
-        <Field title={mapping.enluminures.DIMS.label} content={notice.DIMS} />
-        <Field title={mapping.enluminures.NOTES.label} content={notice.NOTES} />
-        <Field title={mapping.enluminures.POSS.label} content={notice.POSS} />
-        <Field title={mapping.enluminures.NOMENC.label} content={notice.NOMENC} />
+        <Field title={mapping.enluminures.TITR.label_inicm} content={notice.TITR} />
+        <Field title={mapping.enluminures.AUTR.label_inicm} content={notice.AUTR} />
+        <Field title={mapping.enluminures.AUTS.label_inicm} content={notice.AUTS} />
+        <Field title={mapping.enluminures.LANGOUV.label_inicm} content={notice.LANGOUV} />
+        <Field title={mapping.enluminures.DATE.label_inicm} content={notice.DATE} />
+        <Field title={mapping.enluminures.ORIGG.label_inicm} content={notice.ORIGG} />
+        <Field title={mapping.enluminures.TYPCOD.label_inicm} content={notice.TYPCOD} />
+        <Field title={mapping.enluminures.DIMS.label_inicm} content={notice.DIMS} />
+        <Field title={mapping.enluminures.NOTES.label_inicm} content={notice.NOTES} />
+        <Field title={mapping.enluminures.POSS.label_inicm} content={notice.POSS} />
+        <Field title={mapping.enluminures.NOMENC.label_inicm} content={notice.NOMENC} />
         <Title
           content="Décors"
           notice={notice}
@@ -290,7 +290,7 @@ export default class extends React.Component {
             "TYPDEC"
           ]}
         />
-        <Field title={mapping.enluminures.TYPDEC.label} content={notice.TYPDEC} />
+        <Field title={mapping.enluminures.TYPDEC.label_inicm} content={notice.TYPDEC} />
         <Title
           content="Localisation du manuscrit"
           notice={notice}
@@ -300,9 +300,9 @@ export default class extends React.Component {
             "FOLIOS"
           ]}
         />
-        <Field title={mapping.enluminures.ETAB.label} content={notice.ETAB} />
-        <Field title={mapping.enluminures.REFD.label} content={notice.REFD} />
-        <Field title={mapping.enluminures.FOLIOS.label} content={notice.FOLIOS} />
+        <Field title={mapping.enluminures.ETAB.label_inicm} content={notice.ETAB} />
+        <Field title={mapping.enluminures.REFD.label_inicm} content={notice.REFD} />
+        <Field title={mapping.enluminures.FOLIOS.label_inicm} content={notice.FOLIOS} />
       </>
     )
   }
