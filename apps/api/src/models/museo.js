@@ -228,8 +228,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Mémoire liées ",
-        label: "Notices Mémoire liées"
+        description: "Références des notices Mémoire liées à la notice Muséofile",
+        label: "Références Mémoire liées"
       }
     },
     REFMER: {
@@ -237,8 +237,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Mérimée liées ",
-        label: "Notices Mérimée liées"
+        description: "Références des notices Mérimée liées à la notice Muséofile",
+        label: "Références Mérimée liées"
       }
     },
     REFPAL: {
@@ -246,8 +246,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Palissy liées ",
-        label: "Notices Palissy liées"
+        description: "Références des notices Palissy liées à la notice Muséofile",
+        label: "Références Palissy liées"
       }
     },
     REGION: {

@@ -84,9 +84,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description:
-          "Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
-        label: ""
+        description:"Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##",
+        label: "Adresse"
       }
     },
     AUTOEU: {
@@ -374,8 +373,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Référence sur le vidéodisque",
-        deprecated: true
+        deprecated: true,
+        label: "Référence sur le vidéodisque"
       }
     },
     MARQ: {
@@ -392,8 +391,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Précision sur la localisation",
-        deprecated: true
+        deprecated: true,
+        label: "Précision sur la localisation"
       }
     },
     ACQU: {
@@ -409,8 +408,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Adresse de la personne photographiée",
-        deprecated: true
+        deprecated: true,
+        label: "Adresse de la personne photographiée"
       }
     },
     AIRE: {
@@ -493,8 +492,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA",
-        label: "Date du tirage ",
-        deprecated: true
+        deprecated: true,
+        label: "Date du tirage "
       }
     },
     DATG: {
@@ -602,8 +601,7 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.",
+        description: "Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.",
         label: "Localisation"
       }
     },
@@ -611,8 +609,8 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Provenance de l'objet ou du document",
-        label: "Provenance de l'objet ou du document"
+        description: "Lieu d'origine",
+        label: "Lieu d'origine"
       }
     },
     MCGEO: {
@@ -669,8 +667,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "No vue CD",
-        label: "No vue CD",
-        deprecated: true
+        deprecated: true,
+        label: "No vue CD"
       }
     },
     NUMAUTP: {
@@ -686,8 +684,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numéro de versement",
-        deprecated: true
+        deprecated: true,
+        label: "Numéro de versement"
       }
     },
     ANUMOR: {
@@ -793,8 +791,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Traducteur du film",
-        deprecated: true
+        deprecated: true,
+        label: "Producteur du film",
       }
     },
     TYP: {
@@ -819,8 +817,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Forme : oui ou non selon qu'on charge ou non une image",
-        label: "Type d'image numérique",
-        deprecated: true
+        deprecated: true,
+        label: "Type d'image numérique"
       }
     },
     TYPSUPP: {
@@ -843,10 +841,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description:
-          "Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",
-        label: "Liens base",
-        deprecated: true
+        description: "Liens base [Quelle différence avec LBASE?] requête système permettant d'activer le lien",
+        deprecated: true,
+        label: "Liens base"
       }
     },
     LEG2: {
@@ -863,18 +860,17 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Référence de l'image",
-        deprecated: true
+        deprecated: true,
+        label: "Référence de l'image"
       }
     },
     REFIMG: {
       type: String,
       default: "",
       documentation: {
-        description:
-          "Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",
-        label: "Nom Image",
-        deprecated: true
+        description: "Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )",
+        deprecated: true,
+        label: "Nom Image"
       }
     },
     REFJOC: {
@@ -882,8 +878,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Joconde liées ",
-        label: "Notices Joconde liées"
+        description: "Références des notices Joconde liées à la notice Mémoire",
+        label: "Références Joconde liées"
       }
     },
     REFMUS: {
@@ -891,8 +887,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Muséofile liées ",
-        label: "Notices Muséofile liées"
+        description: "Références des notices Museofile liées à la notice Mémoire",
+        label: "Références Museofile liées"
       }
     },
     MOSA: {
@@ -978,14 +974,14 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: ""
+        label: "Lieu-dit"
       }
     },
     WADRS: {
       type: [String],
       default: [],
       documentation: {
-        description: "Adresse éditoriale",
+        description: "Adresse saisie",
         label: "Adresse éditoriale"
       }
     },
@@ -1044,7 +1040,7 @@ const Schema = new mongoose.Schema(
         description: "",
         label: "Notice biographique"
       }
-    }, /////////////////////
+    },
     TRL: {
       type: String,
       default: "",
@@ -1090,7 +1086,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Numéro de la gravure"
+        label: "Précision"
       }
     },
     NOMSN: {

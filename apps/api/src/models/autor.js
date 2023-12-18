@@ -55,7 +55,7 @@ const Schema = new mongoose.Schema(
     INI: { type: String, default: "", documentation: { label: "Initiales" } },
     ADRS: { type: String, default: "", documentation: { label: "Adresse" } },
     SCLE: { type: [String],  default: [], documentation: { thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T17", label: "Siècle d'activité" } },
-    DATES: { type: [String], default: [], documentation: { label: "Période d'activité" } },
+    DATES: { type: [String], default: [], documentation: { label: "Période d'activités" } },
     FORM: { type: String, default: "", documentation: { label: "Formateur" } },
     SYMB: { type: String, default: "", documentation: { label: "Symbole (pour les orfèvres)" } },
     INS: { type: String, default: "", documentation: { label: "Date d'insculpation (pour les orfèvres)" } },
