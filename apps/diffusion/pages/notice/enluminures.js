@@ -314,11 +314,6 @@ export default class extends React.Component {
         <Field title={mapping.enluminures.BASE.label} content={notice.BASE} />
         <Field title="Crédits photographiques" content="Cliché IRHT ; droits collectivité, CNRS et MCC" />
         <Field title="Copyright notice" content="© Institut de recherche et d'histoire des textes - CNRS" />
-        <Field
-          title={mapping.enluminures.COPY.label}
-          content={notice.COPY}
-          separator=";"
-        />
       </div>
     )
   }
@@ -363,10 +358,9 @@ export default class extends React.Component {
     const regExpInid = new RegExp(/^INI-D/);
     const regExpInicm = new RegExp(/^INI-CM/);
 
-    console.log(regExpInid.test(notice.REF))
-    console.log(regExpInicm.test(notice.REF))
+    const typeNotice = regExpInid.test(notice.REF) ? "INI-D" : regExpInicm.test(notice.REF) ? "INI-CM" : "";
 
-    const pdf = EnluminuresPdf(notice, title);
+    const pdf = EnluminuresPdf(notice, title, typeNotice, this.props.links);
     const App = () => (
       <div>
         <PDFDownloadLink
