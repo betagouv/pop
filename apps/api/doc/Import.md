@@ -17,9 +17,9 @@ Identifiant de l'utilisateur à l'origine de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|ObjectID|non|non|non|non|||||||||
 
 ### importedAt
 Date de l'import 
@@ -27,9 +27,9 @@ Date de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Date|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Date|non|non|non|non|||||||||
 
 ### email
 Email de la personne qui a importé
@@ -37,9 +37,9 @@ Email de la personne qui a importé
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non|||||||||
 
 ### institution
 Institution à l'origine de l'import
@@ -47,9 +47,9 @@ Institution à l'origine de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non|||||||||
 
 ### created
 Nombre de notices créées lors de l'import
@@ -57,9 +57,9 @@ Nombre de notices créées lors de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||
 
 ### updated
 Nombre de notices mises à jour lors de l'import
@@ -67,9 +67,9 @@ Nombre de notices mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||
 
 ### rejected
 Nombre de notices rejetées lors de l'import
@@ -77,9 +77,9 @@ Nombre de notices rejetées lors de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||
 
 ### unChanged
 Nombre de notices non mises à jour lors de l'import
@@ -87,9 +87,9 @@ Nombre de notices non mises à jour lors de l'import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||
 
 ### notices
 Liste des notices concernées par cet import
@@ -97,9 +97,9 @@ Liste des notices concernées par cet import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non|||||||||
 
 ### _id
 
@@ -107,9 +107,9 @@ Liste des notices concernées par cet import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|ObjectID|non|non|non|non|||||||||
 
 ### __v
 
@@ -117,6 +117,6 @@ Liste des notices concernées par cet import
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||||||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||
