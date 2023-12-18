@@ -91,7 +91,7 @@ path,type,required,label,opendata,generated,description,thesaurus,label_mh,liste
 "PSTA","String","non","Précisions sur le statut juridique du propriétaire","","","","","","",""
 "REFE","Array","non","Références de l'édifice de conservation","","","Références de l'édifice de conservation. Doit être une référence valide vers une notice Mérimée.","","","",""
 "REFP","Array","non","Références des parties constituantes étudiées","","","Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.","","","",""
-"REFO","Array","non","Référence aux objets conservés","","","REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée","","","",""
+"REFO","Array","non","Référence aux objets conservés","","true","REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée","","","",""
 "REFJOC","Array","non","Références Joconde liées","","","Références des notices Joconde liées à la notice Mérimée","","","",""
 "REFMUS","Array","non","Références Museofile liées","","","Références des notices Museofile liées à la notice Mérimée","","","",""
 "REG","Array","non","Région","","","Région. Doit être une des valeurs suivantes : Auvergne-Rhône-Alpes, Bourgogne-Franche-Comté, Bretagne, Centre-Val de Loire, Corse, Grand Est, Guadeloupe, Guyane, Hauts-de-France, Île-de-France, La Réunion, Martinique, Mayotte, Normandie, Nouvelle-Aquitaine, Occitanie, Pays de la Loire, Provence-Alpes-Côte d'Azur","","","",""

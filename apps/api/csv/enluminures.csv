@@ -16,7 +16,7 @@ path,type,required,label,opendata,generated,description,thesaurus,label_mh,liste
 "DIMS","String","non","Dimensions du codex","","","","","","",""
 "ETAB","String","non","Établissement de conservation","","","","","","",""
 "FOPG","String","non","","","","","","","",""
-"FOLIOS","String","non","","","","","","","",""
+"FOLIOS","String","non","Folios","","","","","","",""
 "LANGOUV","String","non","","","","","","","",""
 "NFICH","String","non","","","","","","","",""
 "NVUE","String","non","","","","","","","",""
