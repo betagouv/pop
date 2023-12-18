@@ -224,7 +224,7 @@ export default class extends React.Component {
                   <Title
                     content="Adresse"
                     notice={notice}
-                    fields={["ADRL1_M", "LIEU_M", "CP_M", "VILLE_M", "VILLE_M", "DPT", "REGION"]}
+                    fields={["ADRL1_M", "LIEU_M", "CP_M", "VILLE_M", "DPT", "REGION"]}
                   />
                   <Field title={mapping.museo.ADRL1_M.label} content={notice.ADRL1_M} />
                   <Field title={mapping.museo.LIEU_M.label} content={notice.LIEU_M} />
@@ -265,7 +265,9 @@ export default class extends React.Component {
                       "ARTISTE",
                       "PHARE",
                       "AN_CREAT",
-                      "INTERET"
+                      "INTERET",
+                      "PROT-BAT",
+                      "PROT-ESP"
                     ]}
                   />
                   <Field title={mapping.museo.CATEG.label} content={notice.CATEG} />

@@ -77,7 +77,7 @@ const Schema = new mongoose.Schema(
       trim: true,
       required: true,
       documentation: {
-        description: "Référence (numéro système de la notice). Doit contenir exactement 11 caractères.",
+        description: "Référence (numéro système de la notice) doit être supérieure ou égale à 11 caractères.",
         label: "Référence",
         opendata: true
       }
@@ -149,6 +149,8 @@ const Schema = new mongoose.Schema(
         description: "Auteur",
         label: "Auteur",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T513",
+        listeAutorite: "Entités auteurs",
+        idthesaurus: "th305",
         opendata: true
       }
     },
@@ -182,8 +184,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordinateur",
-        label: "Coordinateur",
-        deprecated: true
+        deprecated: true,
+        label: "Coordinateur"
       }
     },
     COPY: {
@@ -207,8 +209,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  ",
-        deprecated: true
+        label: "Artiste sous droits",
+        deprecated: true,
+        description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  "
       }
     },
     DATION: {
@@ -244,6 +247,8 @@ const Schema = new mongoose.Schema(
         description: "Dénomination",
         label: "Dénomination",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T505",
+        listeAutorite: "Liste d'autorités Dénomination - Joconde",
+        idthesaurus: "th290",
         opendata: true
       }
     },
@@ -254,6 +259,8 @@ const Schema = new mongoose.Schema(
         description: "Dépôt / établissement dépositaire",
         label: "Lieu de dépot",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        listeAutorite: "Liste d'autorités Localisation Joconde",
+        idthesaurus: "th306",
         opendata: true
       }
     },
@@ -318,6 +325,8 @@ const Schema = new mongoose.Schema(
         description: "Domaine",
         label: "Domaine",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T51",
+        listeAutorite: "Liste d'autorités Domaines - Joconde",
+        idthesaurus: "th294",
         opendata: true
       }
     },
@@ -336,6 +345,8 @@ const Schema = new mongoose.Schema(
         description: "Ecole ",
         label: "Ecole-pays",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T517",
+        listeAutorite: "Liste d'autorités Écoles - Joconde",
+        idthesaurus: "th295",
         opendata: true
       }
     },
@@ -346,6 +357,8 @@ const Schema = new mongoose.Schema(
         description: "Epoque /style / mouvement ",
         label: "Epoque",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T93",
+        listeAutorite: "Liste d'autorités Époques - Joconde",
+        idthesaurus: "th289",
         opendata: true
       }
     },
@@ -371,7 +384,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Genèse ",
         label: "Genèse",
-        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506"
+        thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T506",
+        listeAutorite: "Liste d'autorités Genèse",
+        idthesaurus: "th298"
       }
     },
     GEOHI: {
@@ -458,6 +473,8 @@ const Schema = new mongoose.Schema(
         description: "Lieu de création / d’exécution / d’utilisation",
         label: "Lieu de création/utilisation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T84",
+        listeAutorite: "Liste autorités Lieux",
+        idthesaurus: "th284",
         opendata: true
       }
     },
@@ -504,6 +521,8 @@ const Schema = new mongoose.Schema(
         description: "Localisation",
         label: "Localisation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        listeAutorite: "Liste d'autorités Localisation - Joconde",
+        idthesaurus: "th306",
         opendata: true
       }
     },
@@ -520,8 +539,9 @@ const Schema = new mongoose.Schema(
       type: String,
       default: "",
       documentation: {
-        description: "Champ déprécié",
-        deprecated: true
+        label: "Date d'entrée dans le domaine public",
+        deprecated: true,
+        description: "Champ déprécié"
       }
     },
     MILL: {
@@ -620,6 +640,8 @@ const Schema = new mongoose.Schema(
         description: "Période de l’original copié",
         label: "Période de l’original copié",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        listeAutorite: "Liste d'autorités Périodes - Joconde",
+        idthesaurus: "th287",
         opendata: true
       }
     },
@@ -630,6 +652,8 @@ const Schema = new mongoose.Schema(
         description: "Période de création / exécution ",
         label: "Période de création",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        listeAutorite: "Liste d'autorités Périodes - Joconde",
+        idthesaurus: "th287",
         opendata: true
       }
     },
@@ -640,6 +664,8 @@ const Schema = new mongoose.Schema(
         description: "Période d’utilisation / destination",
         label: "Période d’utilisation",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T521",
+        listeAutorite: "Liste d'autorités Périodes - Joconde",
+        idthesaurus: "th287",
         opendata: true
       }
     },
@@ -712,8 +738,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Mémoire liées ",
-        label: "Notices Mémoire liées"
+        description: "Références des notices Mémoire liées à la notice Joconde",
+        label: "Références Mémoire liées"
       }
     },
     REFMER: {
@@ -721,8 +747,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Mérimée liées ",
-        label: "Notices Mérimée liées"
+        description: "Références des notices Mérimée liées à la notice Joconde",
+        label: "Références Mérimée liées"
       }
     },
     REFPAL: {
@@ -730,8 +756,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Palissy liées ",
-        label: "Notices Palissy liées"
+        description: "Références des notices Palissy liées à la notice Joconde",
+        label: "Références Palissy liées"
       }
     },
     REPR: {
@@ -768,6 +794,8 @@ const Schema = new mongoose.Schema(
         description: "Statut juridique",
         label: "Statut juridique",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T515",
+        listeAutorite: "Liste d'autorités Localisation Joconde",
+        idthesaurus: "th306",
         opendata: true
       }
     },
@@ -778,6 +806,8 @@ const Schema = new mongoose.Schema(
         description: "Matériaux et techniques",
         label: "Matériaux - techniques",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T516",
+        listeAutorite: "Liste d'autorités Technique",
+        idthesaurus: "th291",
         opendata: true
       }
     },
@@ -813,6 +843,8 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Utilisation / Destination",
         label: "Utilisation / Destination",
+        listeAutorite: "Liste d'autorités Utilisation - Joconde",
+        idthesaurus: "th304",
         opendata: true
       }
     },

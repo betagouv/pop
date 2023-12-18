@@ -130,7 +130,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T97",
-        label: "Affectataire de l'édifice"
+        label: "Affectataire de l'édifice",
+        listeAutorite: "Type et nature du couvrement - Inventaire/MH",
+        idthesaurus: "th368"
       }
     },
     AIRE: {
@@ -146,17 +148,9 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Appelation d'usage"
+        label: "Appellation d'usage"
       }
     },
-    // MANQUANT: {
-    //   type: String,
-    //   default: "",
-    //   documentation: {
-    //     description: "",
-    //     label: ""
-    //   }
-    // },
     APRO: {
       type: [String],
       default: [],
@@ -251,7 +245,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T26",
-        label: "Typologie de couverture"
+        label: "Typologie de couverture",
+        listeAutorite: "Type de la couverture - Inventaire/MH",
+        idthesaurus: "th371"
       }
     },
     DATE: {
@@ -285,7 +281,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T96",
-        label: "Dénomination de l'édifice"
+        label: "Dénomination de l'édifice",
+        listeAutorite: "Thésaurus de la désignation des œuvres architecturales et des espaces aménagés",
+        idthesaurus: "th366"
       }
     },
     DENQ: {
@@ -396,7 +394,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T27",
-        label: "Source de l'énergie utilisée par l'édifice"
+        label: "Source de l'énergie utilisée par l'édifice",
+        listeAutorite: "Source de l'énergie - Inventaire/MH",
+        idthesaurus: "th375"
       }
     },
     ESCA: {
@@ -405,7 +405,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T29",
-        label: "Emplacement, forme et structure de l'escalier"
+        label: "Emplacement, forme et structure de l'escalier",
+        listeAutorite: "Lexique de l'escalier et des autres organes de circulation : emplacement, forme et structure - Inventaire/MH",
+        idthesaurus: "th380"
       }
     },
     ETAG: {
@@ -423,7 +425,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T30",
-        label: "État de conservation (normalisé)"
+        label: "État de conservation (normalisé)",
+        listeAutorite: "Etat de conservation du patrimoine mobilier - Inventaire/MH",
+        idthesaurus: "th384"
       }
     },
     ETUD: {
@@ -441,7 +445,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T197",
-        label: "Genre du destinataire"
+        label: "Genre du destinataire",
+        listeAutorite: "Genre du destinataire de l'édifice - Inventaire/MH",
+        idthesaurus: "th383"
       }
     },
     HIST: {
@@ -515,8 +521,8 @@ const Schema = new mongoose.Schema(
       type: [String],
       default: [],
       documentation: {
-        description: "Lien notice Regards",
-        label: "Lien notice Regards"
+        description: "Lien Regards",
+        label: "Lien Regards"
       }
     },
     LBASE2: {
@@ -585,7 +591,9 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T57",
-        label: "Matériaux du gros-œuvre"
+        label: "Matériaux du gros-œuvre",
+        listeAutorite: "Matériau du gros-oeuvre et mise en oeuvre - Inventaire/MH",
+        idthesaurus: "th378"
       }
     },
     NBOR: {
@@ -683,17 +691,18 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Description littéraire de l'iconographie"
+        label: "Description de l'iconographie"
       }
     },
     PROT: {
       type: [String],
       default: [],
       documentation: {
-        description:
-          "Nature de la protection de l'édifice. Ne peut pas être vide si DPRO est renseigné.",
+        description: "Nature de la protection de l'édifice. Ne peut pas être vide si DPRO est renseigné.",
         thesaurus: "http://data.culture.fr/thesaurus/resource/ark:/67717/T10",
-        label: "Nature de la protection de l'édifice"
+        label: "Nature de la protection de l'édifice",
+        listeAutorite: "Type de protection MH - Inventaire/MH",
+        idthesaurus: "th369"
       }
     },
     PSTA: {
@@ -727,10 +736,9 @@ const Schema = new mongoose.Schema(
       default: [],
       index: true,
       documentation: {
-        description:
-          "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
-        label: "Référence aux objets conservés",
-        generated: true
+        description: "REFO contient une ou plusieurs références de notice Palissy. C'est une référence d'objet contenu dans le monument historique, dans la notice mérimée associée",
+        generated: true,
+        label: "Référence aux objets conservés"
       }
     },
     REFJOC: {
@@ -738,8 +746,8 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Joconde liées ",
-        label: "Notices Joconde liées"
+        description: "Références des notices Joconde liées à la notice Mérimée",
+        label: "Références Joconde liées"
       }
     },
     REFMUS: {
@@ -747,17 +755,15 @@ const Schema = new mongoose.Schema(
       index: true,
       default: [],
       documentation: {
-        description: "Références des notices Muséofile liées ",
-        label: "Notices Muséofile liées"
+        description: "Références des notices Museofile liées à la notice Mérimée",
+        label: "Références Museofile liées"
       }
     },
     REG: {
       type: [String],
       default: [],
       documentation: {
-        description:
-          "Région. Doit être une des valeurs suivantes : " +
-          require("../controllers/utils/regions").join(", "),
+        description: "Région. Doit être une des valeurs suivantes : " + require("../controllers/utils/regions").join(", "),
         label: "Région"
       }
     },
@@ -929,7 +935,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Dossier de protection MH"
+        label: "Décision Label"
       }
     },
     DOSURL: {
