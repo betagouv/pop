@@ -68,7 +68,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
                       style={styles.listLinked}
                       src={notice.LIENS[0]}>
                     <a href={notice.LIENS[0]} target="_blank">
-                      <Text>{notice.LIENS[0]}</Text>
+                      <Text>Voir la notice de la base Initiale</Text>
                     </a>
                   </Link>
                   { 
@@ -80,7 +80,7 @@ export function EnluminuresPdf(notice, title, typeNotice, links) {
                             src={lien}
                           >
                             <a href={lien} target="_blank">
-                              <Text>{lien}</Text>
+                              <Text>Voir la notice de la base Initiale</Text>
                             </a>
                           </Link>
                         )
