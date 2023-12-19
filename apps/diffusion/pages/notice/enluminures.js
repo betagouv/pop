@@ -31,6 +31,7 @@ const pushLinkedNotices = (a, d, base) => {
 
 const SeeMore = ({ notice }) => {
   const arr = [];
+  const linkLabel = "Voir la notice de la base Initiale";
 
   if (notice.LIENS) {
     if (notice.LIENS.length > 0) {
@@ -39,7 +40,7 @@ const SeeMore = ({ notice }) => {
           title={mapping.enluminures.LIENS.label}
           content={
             <Link href={notice.LIENS[0]}>
-              <a href={notice.LIENS[0]} target="_blank">{notice.LIENS[0]}</a>
+              <a href={notice.LIENS[0]} target="_blank">{linkLabel}</a>
             </Link>
           }
           key="notice.LIENS"
@@ -51,7 +52,7 @@ const SeeMore = ({ notice }) => {
           <Field
             content={
               <Link href={notice.LIENS[i]}>
-                <a href={notice.LIENS[i]} target="_blank">{notice.LIENS[i]}</a>
+                <a href={notice.LIENS[i]} target="_blank">{linkLabel}</a>
               </Link>
             }
             key="notice.LIENS"
