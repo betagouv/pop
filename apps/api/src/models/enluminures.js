@@ -132,7 +132,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "",
-        label: "Liens externes éventuels"
+        label: "Base Initiale"
       }
     },
     POP_COORDONNEES: {
