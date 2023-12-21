@@ -46,7 +46,8 @@ module.exports = withPWA({
           {
             key: 'Content-Security-Policy',
             value:
-              `default-src 'self' https://www.pop.culture.gouv.fr; script-src 'self' https://cdnjs.cloudflare.com https://www.pop.culture.gouv.fr http://stats.data.gouv.fr http://io1.eulerian.net 'unsafe-eval' 'unsafe-inline' http://uvvw.pop.culture.gouv.fr; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline' https://www.pop.culture.gouv.fr; font-src 'self' https://cdnjs.cloudflare.com https://www.pop.culture.gouv.fr data:; connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"} https://www.pop.culture.gouv.fr http://stats.data.gouv.fr; img-src 'self' *.amazonaws.com http://stats.data.gouv.fr https://www.pop.culture.gouv.fr; object-src 'self' data:;`,
+              `default-src 'self' https://www.pop.culture.gouv.fr; script-src 'self' https://cdnjs.cloudflare.com https://www.pop.culture.gouv.fr http://stats.data.gouv.fr http://io1.eulerian.net 'unsafe-eval' 'unsafe-inline' http://uvvw.pop.culture.gouv.fr https://static.hotjar.com; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline' https://www.pop.culture.gouv.fr https://static.hotjar.com; font-src 'self' https://cdnjs.cloudflare.com https://www.pop.culture.gouv.fr data:; 
+              connect-src 'self' ${process.env.API_URL ? process.env.API_URL : "http://localhost:3000"} https://www.pop.culture.gouv.fr http://stats.data.gouv.fr https://static.hotjar.com https://o1104995.ingest.sentry.io; img-src 'self' *.amazonaws.com http://stats.data.gouv.fr https://www.pop.culture.gouv.fr; object-src 'self' data:;`,
           },
         ],
       },
