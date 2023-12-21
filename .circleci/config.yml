@@ -91,6 +91,60 @@ commands:
           root: ~/repo/apps/<< parameters.app >>
           paths:
             - << parameters.path >>
+  deploy_https:
+    parameters:
+      eb_deploy:
+        type: string
+      app:
+        type: string
+      app_name:
+        type: string
+      domain:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo/apps/<< parameters.app >>
+      - restore_node_modules:
+          app: << parameters.app >>
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/<< parameters.app >>
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" .platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_PRODUCTION" | base64 -di > .platform/nginx/nginx.conf
+            sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
+            eb deploy << parameters.eb_deploy >>
+  deploy_api_https:
+    parameters:
+      eb_deploy:
+        type: string
+      app_name:
+        type: string
+      domain:
+        type: string
+    steps:
+      - checkout
+      - restore_node_modules:
+          app: api
+      - configure_aws_ebcli
+      - run:
+          name: deploy
+          command: |
+            cd apps/api
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/<< parameters.domain >>/" .platform/hooks/postdeploy/00_get_certificate.sh
+            sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
+            mkdir -p .platform/hooks/predeploy
+            echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
+            echo "$PROXY_API" | base64 -di > .platform/nginx/nginx.conf
+            sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
+            eb deploy << parameters.eb_deploy >>
   deploy:
     parameters:
       eb_deploy:
@@ -110,6 +164,8 @@ commands:
           name: deploy
           command: |
             cd apps/<< parameters.app >>
+            rm -rf .ebextensions
+            rm -rf .elasticbeanstalk/postdeploy
             sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -130,6 +186,8 @@ commands:
           name: deploy
           command: |
             cd apps/api
+            rm -rf .ebextensions
+            rm -rf .elasticbeanstalk/postdeploy
             sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -191,8 +249,8 @@ jobs:
     steps:
       - build:
           app: diffusion
-          api_url: http://pop-api-test.eu-west-3.elasticbeanstalk.com
-          pop_url: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com/
+          api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
+          pop_url: https://pop-consultation-test.eu-west-3.elasticbeanstalk.com/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
           env: test
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
@@ -203,8 +261,8 @@ jobs:
     steps:
       - build:
           app: diffusion
-          api_url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-          pop_url: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
+          api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
+          pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com/
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://16d9797f91fc4db89b69afd1da2a2c74@o1104995.ingest.sentry.io/6312721
@@ -227,8 +285,8 @@ jobs:
     steps:
       - build:
           app: production
-          api_url: http://pop-api-test.eu-west-3.elasticbeanstalk.com
-          pop_url: http://pop-consultation-test.eu-west-3.elasticbeanstalk.com
+          api_url: https://pop-api-test.eu-west-3.elasticbeanstalk.com
+          pop_url: https://pop-consultation-test.eu-west-3.elasticbeanstalk.com
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-test/
           env: test
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
@@ -239,8 +297,8 @@ jobs:
     steps:
       - build:
           app: production
-          api_url: http://pop-api-staging.eu-west-3.elasticbeanstalk.com
-          pop_url: http://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
+          api_url: https://pop-api-staging.eu-west-3.elasticbeanstalk.com
+          pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
           env: staging
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
@@ -274,24 +332,29 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/pop-consultation-test.eu-west-3.elasticbeanstalk.com/" .platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
+            sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy pop-consultation-test
   deploy_production_test:
     executor: docker_python
     steps:
-      - deploy:
+      - deploy_https:
           app: production
           eb_deploy: pop-production-test
           app_name: pop-production-staging
+          domain: pop-production-test.eu-west-3.elasticbeanstalk.com
   deploy_api_test:
     executor: docker_python
     steps:
-      - deploy_api:
+      - deploy_api_https:
           eb_deploy: pop-api-test
           app_name: pop-api-staging
+          domain: pop-api-test.eu-west-3.elasticbeanstalk.com
   deploy_diffusion_staging:
     executor: docker_python
     steps:
@@ -305,24 +368,29 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            sed -i "s/EMAIL/${LETS_ENCRYPT_EMAIL}/" .platform/hooks/postdeploy/00_get_certificate.sh 
+            sed -i "s/DOMAIN/pop-consultation-staging.eu-west-3.elasticbeanstalk.com/" .platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_consultation/pop-consultation-staging/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_DIFFUSION" | base64 -di > .platform/nginx/nginx.conf
+            sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy pop-consultation-staging
   deploy_production_staging:
     executor: docker_python
     steps:
-      - deploy:
+      - deploy_https:
           app: production
           eb_deploy: pop-production-staging
           app_name: pop-production-staging
+          domain: pop-production-staging.eu-west-3.elasticbeanstalk.com
   deploy_api_staging:
     executor: docker_python
     steps:
-      - deploy_api:
+      - deploy_api_https:
           eb_deploy: pop-api-staging
           app_name: pop-api-staging
+          domain: pop-api-staging.eu-west-3.elasticbeanstalk.com
   deploy_production_prod:
     executor: docker_python
     steps:
@@ -349,6 +417,8 @@ jobs:
           name: deploy
           command: |
             cd apps/diffusion
+            rm -rf .ebextensions
+            rm -rf .elasticbeanstalk/postdeploy
             sed -i "s/pop_consultation/pop-consultation/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh

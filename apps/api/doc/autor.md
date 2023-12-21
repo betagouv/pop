@@ -14,34 +14,47 @@
 - [FONC](/apps/api/doc/autor.md#FONC)
 - [VIDEO](/apps/api/doc/autor.md#VIDEO)
 - [LIENS](/apps/api/doc/autor.md#LIENS)
-- [LWEB](/apps/api/doc/autor.md#LWEB)
 - [LMDP](/apps/api/doc/autor.md#LMDP)
-- [LMEM](/apps/api/doc/autor.md#LMEM)
 - [LMORT](/apps/api/doc/autor.md#LMORT)
 - [LNAISS](/apps/api/doc/autor.md#LNAISS)
-- [RESID](/apps/api/doc/autor.md#RESID)
+- [AUTORLOCA](/apps/api/doc/autor.md#AUTORLOCA)
 - [NATIO](/apps/api/doc/autor.md#NATIO)
 - [NOM](/apps/api/doc/autor.md#NOM)
+- [PREN](/apps/api/doc/autor.md#PREN)
 - [PNOM](/apps/api/doc/autor.md#PNOM)
 - [TYPAPE](/apps/api/doc/autor.md#TYPAPE)
 - [REJET](/apps/api/doc/autor.md#REJET)
 - [OEUVR](/apps/api/doc/autor.md#OEUVR)
 - [PUBLI](/apps/api/doc/autor.md#PUBLI)
 - [ALAMAP](/apps/api/doc/autor.md#ALAMAP)
-- [EMET](/apps/api/doc/autor.md#EMET)
+- [PRODUCTEUR](/apps/api/doc/autor.md#PRODUCTEUR)
 - [REDAC](/apps/api/doc/autor.md#REDAC)
 - [LRELA](/apps/api/doc/autor.md#LRELA)
-- [SEXE](/apps/api/doc/autor.md#SEXE)
-- [SOCSAV](/apps/api/doc/autor.md#SOCSAV)
 - [SOURCES](/apps/api/doc/autor.md#SOURCES)
-- [STAT](/apps/api/doc/autor.md#STAT)
 - [TITR](/apps/api/doc/autor.md#TITR)
 - [TYPID](/apps/api/doc/autor.md#TYPID)
-- [IDENT](/apps/api/doc/autor.md#IDENT)
 - [ARK](/apps/api/doc/autor.md#ARK)
-- [OBSMAP](/apps/api/doc/autor.md#OBSMAP)
+- [OBS](/apps/api/doc/autor.md#OBS)
+- [BASE](/apps/api/doc/autor.md#BASE)
+- [INI](/apps/api/doc/autor.md#INI)
+- [ADRS](/apps/api/doc/autor.md#ADRS)
+- [SCLE](/apps/api/doc/autor.md#SCLE)
+- [DATES](/apps/api/doc/autor.md#DATES)
+- [FORM](/apps/api/doc/autor.md#FORM)
+- [SYMB](/apps/api/doc/autor.md#SYMB)
+- [INS](/apps/api/doc/autor.md#INS)
+- [GAR](/apps/api/doc/autor.md#GAR)
+- [PREF](/apps/api/doc/autor.md#PREF)
+- [BIF](/apps/api/doc/autor.md#BIF)
+- [LOCACT](/apps/api/doc/autor.md#LOCACT)
+- [LBASE](/apps/api/doc/autor.md#LBASE)
+- [MEMOIRE](/apps/api/doc/autor.md#MEMOIRE)
+- [NOMPRENOM](/apps/api/doc/autor.md#NOMPRENOM)
+- [CONTIENT_IMAGE](/apps/api/doc/autor.md#CONTIENT_IMAGE)
 - [DMAJ](/apps/api/doc/autor.md#DMAJ)
+- [POP_FLAGS](/apps/api/doc/autor.md#POP_FLAGS)
 - [DMIS](/apps/api/doc/autor.md#DMIS)
+- [HISTORIQUE](/apps/api/doc/autor.md#HISTORIQUE)
 - [_id](/apps/api/doc/autor.md#_id)
 - [__v](/apps/api/doc/autor.md#__v)
 ### REF
@@ -50,9 +63,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|oui|non|non|non||Référence|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|oui|non|non|non||Référence de la notice|||||||
 
 ### ISNI
 
@@ -60,9 +73,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence ISNI (ajouté)|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Référence ISNI à consulter|||||||
 
 ### ISNI_VERIFIEE
 
@@ -70,9 +83,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Référence ISNI a-t-elle été vérifiée|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Référence ISNI confirmée|||||||
 
 ### ALIAS
 
@@ -80,9 +93,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Alias (ajouté)|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Autre forme du nom|||||||
 
 ### BIBLIO
 
@@ -90,9 +103,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Bibliographie|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Bibliographie|||||||
 
 ### BIO
 
@@ -100,9 +113,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Biographie|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Biographie|||||||
 
 ### CONTACT
 
@@ -110,9 +123,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Contact|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Contact|||||||
 
 ### COPY
 
@@ -120,9 +133,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Copyright|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Copyright de la notice|||||||
 
 ### DMORT
 
@@ -130,9 +143,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date mort|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Date de décès|||||||
 
 ### DNAISS
 
@@ -140,9 +153,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Date naissance|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Date de naissance|||||||
 
 ### EXPO
 
@@ -150,9 +163,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Expositions sur l'auteur|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Expositions|||||||
 
 ### FONC
 
@@ -160,9 +173,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Fonctions|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Profession|||||||
 
 ### VIDEO
 
@@ -170,9 +183,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||VIDEO|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||VIDEO|||||||
 
 ### LIENS
 
@@ -180,19 +193,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Liens|
-
-### LWEB
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||LWEB|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Liens externes|||||||
 
 ### LMDP
 
@@ -200,19 +203,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||LMDP|
-
-### LMEM
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||LMEM|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Liens vers Médiathek|||||||
 
 ### LMORT
 
@@ -220,9 +213,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||LMORT|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Lieux de décès|||||||
 
 ### LNAISS
 
@@ -230,19 +223,19 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||LNAISS|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Lieu de naissance|||||||
 
-### RESID
-
-
+### AUTORLOCA
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Résidences|
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Localisation|||||||
 
 ### NATIO
 
@@ -250,9 +243,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Nationnalitées|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Nationnalités|||||||
 
 ### NOM
 
@@ -260,9 +253,19 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Nom|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Nom|||||||
+
+### PREN
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Prénom|||||||
 
 ### PNOM
 
@@ -270,9 +273,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Prénom|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Précision sur le nom|||||||
 
 ### TYPAPE
 
@@ -280,9 +283,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||TYPAPE|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Type d'appellation|||||||
 
 ### REJET
 
@@ -290,9 +293,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Rejet|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Forme rejetée du nom|||||||
 
 ### OEUVR
 
@@ -300,9 +303,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Oeuvres|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Oeuvre réalisée|||||||
 
 ### PUBLI
 
@@ -310,9 +313,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Publications|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Publications|||||||
 
 ### ALAMAP
 
@@ -320,19 +323,19 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||ALAMAP|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Fonds en référence à la MAP|||||||
 
-### EMET
-
-
+### PRODUCTEUR
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||EMET|
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|oui|non|non||Producteur|||||||
 
 ### REDAC
 
@@ -340,9 +343,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Rédactions|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Nom du rédacteur|||||||
 
 ### LRELA
 
@@ -350,29 +353,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Relations|
-
-### SEXE
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||Sexe|
-
-### SOCSAV
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||SOCSAV ?|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Personnes associées|||||||
 
 ### SOURCES
 
@@ -380,19 +363,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||SOURCES|
-
-### STAT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||STAT|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Sources|||||||
 
 ### TITR
 
@@ -400,9 +373,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Array|non|non|non|non||Titres|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Titres|||||||
 
 ### TYPID
 
@@ -410,19 +383,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||TYPID|
-
-### IDENT
-
-
-
-
-
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||IDENT|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Personne physique ou morale|||||||
 
 ### ARK
 
@@ -430,19 +393,181 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||ARK|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Liens ARK|||||||
 
-### OBSMAP
-
-
+### OBS
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|non|non|non||OBSMAP|
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Observations|||||||
+
+### BASE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Nom de la base|||||||
+
+### INI
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Initiales|||||||
+
+### ADRS
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Adresse|||||||
+
+### SCLE
+
+
+
+Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17 
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Siècle d'activité|http://data.culture.fr/thesaurus/resource/ark:/67717/T17||||||
+
+### DATES
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Période d'activités|||||||
+
+### FORM
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Formateur|||||||
+
+### SYMB
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Symbole (pour les orfèvres)|||||||
+
+### INS
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Date d'insculpation (pour les orfèvres)|||||||
+
+### GAR
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Numéro du registre de la garantie (pour les orfèvres)|||||||
+
+### PREF
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Numéro du registre de la préfecture (pour les orfèvres)|||||||
+
+### BIF
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Date de biffage (pour les orfèvres)|||||||
+
+### LOCACT
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Lieu d'activités|||||||
+
+### LBASE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non||Liens autres bases|||||||
+
+### MEMOIRE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non|||||||||
+
+### NOMPRENOM
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Nom complet|||||||
+
+### CONTIENT_IMAGE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|non|non|non||Contient une image ou non|||||||
 
 ### DMAJ
 
@@ -450,9 +575,19 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de la dernière mise à jour|
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|oui|non|non||Date de dernière modification|||||||
+
+### POP_FLAGS
+Informations et avertissements techniques
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|oui|non|non||Alertes POP|||||||
 
 ### DMIS
 
@@ -460,9 +595,19 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|String|non|oui|non|non||Date de chargement dans la base |
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|String|non|oui|non|non||Date de création de la notice|||||||
+
+### HISTORIQUE
+
+
+
+
+
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Array|non|non|non|non|||||||||
 
 ### _id
 
@@ -470,9 +615,9 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|ObjectID|non|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|ObjectID|non|non|non|non|||||||||
 
 ### __v
 
@@ -480,6 +625,6 @@
 
 
 
-|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|
-|----|------|------|------|--------|----------|-----|
-|Number|non|non|non|non|||
+|Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
+|----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
+|Number|non|non|non|non|||||||||

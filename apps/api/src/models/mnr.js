@@ -58,8 +58,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "Présence sur site internet du musée ; date",
-        deprecated: true
+        deprecated: true,
+        label: "Présence sur site internet du musée ; date"
       }
     },
     AUTR: {
@@ -134,7 +134,7 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Domaine (catégorie du bien)",
-        label: "Domaine (catégorie du bien)"
+        label: "Domaine"
       }
     },
     LOCA: {
@@ -218,8 +218,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        deprecated: true,
+        label: "Restitution"
       }
     },
     SALLES: {
@@ -227,8 +227,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "Exposé en salles, à telle date",
-        deprecated: true
+        deprecated: true,
+        label: "Exposé en salles, à telle date"
       }
     },
     CARTELS: {
@@ -236,8 +236,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "Formulation des cartels (fautive ou non, à telle date)",
-        deprecated: true
+        deprecated: true,
+        label: "Formulation des cartels (fautive ou non, à telle date)"
       }
     },
     SCLE: {
@@ -288,7 +288,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt",
-        label: "N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt"
+        label: "N°Inventaire"
       }
     },
     EXPO: {
@@ -336,8 +336,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "Récolé, date",
-        deprecated: true
+        deprecated: true,
+        label: "Récolé, date"
       }
     },
     NOTE: {
@@ -416,7 +416,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Etablissement affectataire qui existe dans d’autres bases",
-        label: "Etablissement affectataire qui existe dans d’autres bases"
+        label: "Etablissement affectataire"
       }
     },
     NUMS: {
@@ -448,8 +448,8 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        label: "",
-        deprecated: true
+        deprecated: true,
+        label: "Avertissement"
       }
     },
     RESUME: {

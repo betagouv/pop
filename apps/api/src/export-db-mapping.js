@@ -25,25 +25,62 @@ const models = fs
         description: documentation ? documentation.description || "" : "",
         thesaurus: documentation ? documentation.thesaurus || "" : ""
       };
+      if(documentation && documentation.label_mh) {
+        obj.label_mh = documentation.label_mh;
+      }
+      if(documentation && documentation.listeAutorite) {
+        obj.listeAutorite = documentation.listeAutorite;
+      }
+      if(documentation && documentation.idthesaurus) {
+        obj.idthesaurus = documentation.idthesaurus;
+      }
+      if(documentation && documentation.label_inid) {
+        obj.label_inid = documentation.label_inid;
+      }
+      if(documentation && documentation.label_inicm) {
+        obj.label_inicm = documentation.label_inicm;
+      }
       return obj;
     })
   }));
 
 // 2. Convert
-const content = `${models
-  .map(model => {
-    const obj = {};
-    for (let i = 0; i < model.paths.length; i++) {
-      obj[model.paths[i].path] = model.paths[i];
-      delete obj[model.paths[i].path].path;
-    }
-    return `const ${model.name} = ${JSON.stringify(obj)}`;
-  })
-  .join("\n")}
-  const Mapping = {${models.map(e => e.name).join(",")}}
-  export default Mapping;
-  `;
+// const content = `${models
+//   .map(model => {
+//     const obj = {};
+//     for (let i = 0; i < model.paths.length; i++) {
+//       obj[model.paths[i].path] = model.paths[i];
+//       delete obj[model.paths[i].path].path;
+//     }
+//     return `const ${model.name} = ${JSON.stringify(obj)}`;
+//   })
+//   .join("\n")}
+//   const Mapping = {${models.map(e => e.name).join(",")}}
+//   export default Mapping;
+//   `;
+
+function generateMapping(models) {
+  return `${models
+    .map(model => {
+      const obj = {};
+      for (let i = 0; i < model.paths.length; i++) {
+        obj[model.paths[i].path] = JSON.parse(JSON.stringify(model.paths[i]));
+        delete obj[model.paths[i].path].path;
+      }
+      return `const ${model.name} = ${JSON.stringify(obj)}`;
+    })
+    .join("\n")}
+    const Mapping = {${models.map(e => e.name).join(",")}}
+    export default Mapping;
+    `;
+};
+
+
+const arrayExclude = ["resumptionTokenOAI","Producteur","DeleteHistorique", "noticesOAI","Groups"];
+
+const mappingProduction = generateMapping(models);
+const mappingDiffusion = generateMapping(models.filter( model => !arrayExclude.includes(model.name)));
 
 //Write
-fs.writeFileSync(path.join(__dirname, mappingProductionPath), content);
-fs.writeFileSync(path.join(__dirname, mappingDiffusionPath), content);
+fs.writeFileSync(path.join(__dirname, mappingProductionPath), mappingProduction);
+fs.writeFileSync(path.join(__dirname, mappingDiffusionPath), mappingDiffusion);
