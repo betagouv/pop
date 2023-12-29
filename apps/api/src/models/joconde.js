@@ -591,8 +591,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Genre",
-        label: "Genre",
-        deprecated: true
+        label: "Genre"
       }
     },
     ONOM: {
