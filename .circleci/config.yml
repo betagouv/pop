@@ -166,6 +166,7 @@ commands:
             cd apps/<< parameters.app >>
             rm -rf .ebextensions
             rm -rf .elasticbeanstalk/postdeploy
+            rm -rf .platform/hooks/postdeploy
             sed -i "s/pop_production/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -188,6 +189,7 @@ commands:
             cd apps/api
             rm -rf .ebextensions
             rm -rf .elasticbeanstalk/postdeploy
+            rm -rf .platform/hooks/postdeploy
             sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
@@ -419,6 +421,7 @@ jobs:
             cd apps/diffusion
             rm -rf .ebextensions
             rm -rf .elasticbeanstalk/postdeploy
+            rm -rf .platform/hooks/postdeploy
             sed -i "s/pop_consultation/pop-consultation/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
