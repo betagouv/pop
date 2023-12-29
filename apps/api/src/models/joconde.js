@@ -184,7 +184,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Coordinateur",
-        deprecated: true,
         label: "Coordinateur"
       }
     },
@@ -210,7 +209,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         label: "Artiste sous droits",
-        deprecated: true,
         description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  "
       }
     },
@@ -540,7 +538,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         label: "Date d'entrée dans le domaine public",
-        deprecated: true,
         description: "Champ déprécié"
       }
     },
