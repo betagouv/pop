@@ -354,7 +354,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T98
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Référence dans la base Patriarche|||||||
+|String|non|non|non|non||Référence dans la base Patriarche|||||||
 
 ### AUTP
 
@@ -488,7 +488,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T26
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Domaine|||||||
+|Array|non|non|non|non||Domaine|||||||
 
 ### DENO
 
@@ -804,7 +804,7 @@ Lien Regards
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Référence de la notice cible Mérimée pour Mémoire|||||||
+|String|non|non|non|non||Référence de la notice cible Mérimée pour Mémoire|||||||
 
 ### LIEU
 
@@ -834,7 +834,7 @@ Lien Regards
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Accès microfiche|||||||
+|String|non|non|non|non||Accès microfiche|||||||
 
 ### MOSA
 
@@ -844,7 +844,7 @@ Lien Regards
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Edition d'une mosaïque d'image|||||||
+|String|non|non|non|non||Edition d'une mosaïque d'image|||||||
 
 ### MHPP
 
@@ -864,7 +864,7 @@ Lien Regards
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numéro de microfiche|||||||
+|String|non|non|non|non||Numéro de microfiche|||||||
 
 ### MURS
 
@@ -886,7 +886,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T57
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### NOMS
 
@@ -1162,7 +1162,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non|||||||||
+|Array|non|non|non|non|||||||||
 
 ### SITE
 
@@ -1242,7 +1242,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### IMG
 
@@ -1252,7 +1252,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Autre forme de l'emplacement de l'image sur le serveur|||||||
+|Array|non|non|non|non||Autre forme de l'emplacement de l'image sur le serveur|||||||
 
 ### VIDEO
 
@@ -1262,7 +1262,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Url de liaison avec Mémoire|||||||
+|String|non|non|non|non||Url de liaison avec Mémoire|||||||
 
 ### POP_DOSSIER_VERT
 
@@ -1342,7 +1342,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Emplacement de l'image sur le serveur|||||||
+|String|non|non|non|non||Emplacement de l'image sur le serveur|||||||
 
 ### VISI
 
@@ -1402,7 +1402,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Thème de l'étude|||||||
+|String|non|non|non|non||Thème de l'étude|||||||
 
 ### ACMH
 
@@ -1412,7 +1412,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### ACURL
 
@@ -1422,7 +1422,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### WADRS
 
@@ -1452,7 +1452,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Autre forme du renvoi (éditorial)|||||||
+|String|non|non|non|non||Autre forme du renvoi (éditorial)|||||||
 
 ### REFM
 
@@ -1462,7 +1462,7 @@ Lien vers le dossier PDF. Doit être une URL valide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### CONTACT
 Doit contenir une adresse email valide. Affiche un avertissement si vide.
@@ -1492,7 +1492,7 @@ Doit contenir une adresse email valide. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Référence vers la base Médiathèque|||||||
+|String|non|non|non|non||Référence vers la base Médiathèque|||||||
 
 ### PINT
 Intérêt oeuvre

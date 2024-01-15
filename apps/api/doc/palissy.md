@@ -549,7 +549,7 @@ Domaine
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Domaine|||||||
+|String|non|non|non|non||Domaine|||||||
 
 ### DOSADRS
 Adresse du dossier Inventaire
@@ -759,7 +759,7 @@ Référence(s) d'exposition(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Nombre d'objets|||||||
+|String|non|non|non|non||Nombre d'objets|||||||
 
 ### IMG
 [PAS AFFICHE]
@@ -769,7 +769,7 @@ Référence(s) d'exposition(s)
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non|||||||||
+|Array|non|non|non|non|||||||||
 
 ### IMPL
 
@@ -903,7 +903,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### LOCA
 
@@ -943,7 +943,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Accès microfiche |||||||
+|Array|non|non|non|non||Accès microfiche |||||||
 
 ### MICR
 
@@ -953,7 +953,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numéro de microfiche|||||||
+|String|non|non|non|non||Numéro de microfiche|||||||
 
 ### MOSA
 
@@ -963,7 +963,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Edition d'une mosaïque d'image|||||||
+|String|non|non|non|non||Edition d'une mosaïque d'image|||||||
 
 ### NART
 
@@ -1003,7 +1003,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numéro de l'arrêté de protection|||||||
+|String|non|non|non|non||Numéro de l'arrêté de protection|||||||
 
 ### NUMP
 
@@ -1083,7 +1083,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Précisions sur les dimensions|||||||
+|String|non|non|non|non||Précisions sur les dimensions|||||||
 
 ### PERS
 
@@ -1207,7 +1207,7 @@ Références de l'ensemble. Doit être une référence valide vers une notice M�
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### REFP
 Références des parties constituantes étudiées. Doit être une référence valide vers une notice Mérimée.
@@ -1287,7 +1287,7 @@ Numéro de renvoi vers un autre domaine. Doit être une référence valide vers 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non|||||||||
+|Array|non|non|non|non|||||||||
 
 ### SCLE
 
@@ -1309,7 +1309,7 @@ Thésaurus : http://data.culture.fr/thesaurus/resource/ark:/67717/T17
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non|||||||||
+|Array|non|non|non|non|||||||||
 
 ### SOUR
 
@@ -1389,7 +1389,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### VIDEO
 
@@ -1449,7 +1449,7 @@ Titre courant. Affiche un avertissement si vide.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### ZONE
 

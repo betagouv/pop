@@ -166,7 +166,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Référence dans la base Patriarche",
-        deprecated: true
+        
       }
     },
     AUTP: {
@@ -272,7 +272,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Domaine",
-        deprecated: true
+        
       }
     },
     DENO: {
@@ -531,7 +531,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Référence de la notice cible Mérimée pour Mémoire",
-        deprecated: true
+        
       }
     },
     LIEU: {
@@ -556,7 +556,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Accès microfiche",
-        deprecated: true
+        
       }
     },
     MOSA: {
@@ -565,7 +565,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Edition d'une mosaïque d'image",
-        deprecated: true
+        
       }
     },
     MHPP: {
@@ -582,7 +582,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Numéro de microfiche",
-        deprecated: true
+        
       }
     },
     MURS: {
@@ -602,7 +602,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     NOMS: {
@@ -828,7 +828,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     SITE: {
@@ -893,7 +893,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     IMG: {
@@ -902,7 +902,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Autre forme de l'emplacement de l'image sur le serveur",
-        deprecated: true
+        
       }
     },
     VIDEO: {
@@ -911,7 +911,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Url de liaison avec Mémoire",
-        deprecated: true
+        
       }
     },
     POP_DOSSIER_VERT: {
@@ -976,7 +976,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Emplacement de l'image sur le serveur",
-        deprecated: true
+        
       }
     },
     VISI: {
@@ -1022,7 +1022,7 @@ const Schema = new mongoose.Schema(
     THEM: {
       type: String,
       default: "",
-      documentation: { description: " ", label: "Thème de l'étude", deprecated: true }
+      documentation: { description: " ", label: "Thème de l'étude",  }
     },
     ACMH: {
       type: String,
@@ -1030,7 +1030,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     ACURL: {
@@ -1039,7 +1039,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     WADRS: {
@@ -1064,7 +1064,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Autre forme du renvoi (éditorial)",
-        deprecated: true
+        
       }
     },
     REFM: {
@@ -1073,7 +1073,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
+        
       }
     },
     CONTACT: {
@@ -1098,7 +1098,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Référence vers la base Médiathèque",
-        deprecated: true
+        
       }
     },
     PINT: {

@@ -506,7 +506,7 @@ Nom de la commune, agglomération…
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Index global|||||||
+|String|non|non|non|non||Index global|||||||
 
 ### ACTIV
 
@@ -516,7 +516,7 @@ Nom de la commune, agglomération…
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Activités culturelles|||||||
+|String|non|non|non|non||Activités culturelles|||||||
 
 ### ADRESSE
 
@@ -526,7 +526,7 @@ Nom de la commune, agglomération…
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Adresse complète|||||||
+|String|non|non|non|non||Adresse complète|||||||
 
 ### AMIS
 
@@ -536,7 +536,7 @@ Nom de la commune, agglomération…
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Amis du musée|||||||
+|String|non|non|non|non||Amis du musée|||||||
 
 ### AN_CREAT
 Format AAAA
@@ -556,7 +556,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Musée fermé|||||||
+|String|non|non|non|non||Musée fermé|||||||
 
 ### ANNEXE
 
@@ -566,7 +566,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Annexe|||||||
+|String|non|non|non|non||Annexe|||||||
 
 ### ANTARIF
 
@@ -576,7 +576,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Année tarifs|||||||
+|String|non|non|non|non||Année tarifs|||||||
 
 ### CEDEX_AD
 
@@ -586,7 +586,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||ADM-Cédex|||||||
+|String|non|non|non|non||ADM-Cédex|||||||
 
 ### CTRLTECH
 
@@ -596,7 +596,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Ctrl tech.|||||||
+|String|non|non|non|non||Ctrl tech.|||||||
 
 ### DT_CREAT
 
@@ -606,7 +606,7 @@ Format AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Date de création|||||||
+|String|non|non|non|non||Date de création|||||||
 
 ### DT_SAISI
 Date de création de la notice
@@ -626,7 +626,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Gestion musée|||||||
+|String|non|non|non|non||Gestion musée|||||||
 
 ### ITI2_M
 
@@ -636,7 +636,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Plan Mappy|||||||
+|String|non|non|non|non||Plan Mappy|||||||
 
 ### ITI_M
 
@@ -646,7 +646,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Itinéraire Mappy|||||||
+|String|non|non|non|non||Itinéraire Mappy|||||||
 
 ### JOCONDE
 
@@ -656,7 +656,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Base Joconde|||||||
+|String|non|non|non|non||Base Joconde|||||||
 
 ### LEGS
 
@@ -666,7 +666,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Legs|||||||
+|String|non|non|non|non||Legs|||||||
 
 ### MONOPLUR
 
@@ -676,7 +676,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Disciplines|||||||
+|String|non|non|non|non||Disciplines|||||||
 
 ### NB_AMI
 
@@ -686,7 +686,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Nombre amis|||||||
+|String|non|non|non|non||Nombre amis|||||||
 
 ### NOM_AMI
 
@@ -696,7 +696,7 @@ Date de création de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Association|||||||
+|String|non|non|non|non||Association|||||||
 
 ### DMAJ
 Date de la dernière mise à jour
@@ -726,7 +726,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Ass. Amis Obs.|||||||
+|String|non|non|non|non||Ass. Amis Obs.|||||||
 
 ### OBS_TOUR
 
@@ -736,7 +736,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Itinéraire touristique|||||||
+|String|non|non|non|non||Itinéraire touristique|||||||
 
 ### PROPBAT
 
@@ -746,7 +746,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Propr. bat.|||||||
+|String|non|non|non|non||Propr. bat.|||||||
 
 ### PROPCOLL
 
@@ -756,7 +756,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Propr. coll.|||||||
+|String|non|non|non|non||Propr. coll.|||||||
 
 ### PUBLI
 
@@ -766,7 +766,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Publications|||||||
+|String|non|non|non|non||Publications|||||||
 
 ### REPCOLL
 
@@ -776,7 +776,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Distr. coll|||||||
+|String|non|non|non|non||Distr. coll|||||||
 
 ### SERVICES
 
@@ -786,7 +786,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Services|||||||
+|String|non|non|non|non||Services|||||||
 
 ### SIGLE_M
 
@@ -796,7 +796,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Sigle musée|||||||
+|String|non|non|non|non||Sigle musée|||||||
 
 ### STATUT
 
@@ -806,7 +806,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Statut musée|||||||
+|String|non|non|non|non||Statut musée|||||||
 
 ### SURFACES
 
@@ -816,7 +816,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Surfaces|||||||
+|String|non|non|non|non||Surfaces|||||||
 
 ### URL_M2
 
@@ -826,7 +826,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Site web 2|||||||
+|String|non|non|non|non||Site web 2|||||||
 
 ### VIDEO
 
@@ -836,7 +836,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Image|||||||
+|String|non|non|non|non||Image|||||||
 
 ### RESP
 
@@ -846,7 +846,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Resp. scient.|||||||
+|String|non|non|non|non||Resp. scient.|||||||
 
 ### GRESP
 
@@ -856,7 +856,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Resp. scient. HF|||||||
+|String|non|non|non|non||Resp. scient. HF|||||||
 
 ### PSC
 
@@ -866,7 +866,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Projet SC|||||||
+|String|non|non|non|non||Projet SC|||||||
 
 ### DPSC-D
 
@@ -876,7 +876,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||date PSC DRAC|||||||
+|String|non|non|non|non||date PSC DRAC|||||||
 
 ### DPSC-S
 
@@ -886,7 +886,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||date PSC SMF|||||||
+|String|non|non|non|non||date PSC SMF|||||||
 
 ### DMDF
 
@@ -896,7 +896,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||an appel. MDF|||||||
+|String|non|non|non|non||an appel. MDF|||||||
 
 ### SPUB
 
@@ -906,7 +906,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Service publics|||||||
+|String|non|non|non|non||Service publics|||||||
 
 ### SPUB-P
 
@@ -916,7 +916,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||S. publics préc.|||||||
+|String|non|non|non|non||S. publics préc.|||||||
 
 ### INVR
 
@@ -926,7 +926,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Inventaire regl.|||||||
+|String|non|non|non|non||Inventaire regl.|||||||
 
 ### NUMER
 
@@ -936,7 +936,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numérisation|||||||
+|String|non|non|non|non||Numérisation|||||||
 
 ### LGN
 
@@ -946,7 +946,7 @@ Date de la création POP/Mistral
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Coll. en ligne|||||||
+|String|non|non|non|non||Coll. en ligne|||||||
 
 ### REST
 

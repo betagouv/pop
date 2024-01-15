@@ -323,7 +323,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Domaine",
         label: "Domaine",
-        deprecated: true
       }
     },
     DOSADRS: {
@@ -492,7 +491,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Nombre d'objets",
-        deprecated: true
       }
     },
     IMG: {
@@ -501,7 +499,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     IMPL: {
@@ -609,7 +606,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     LOCA: {
@@ -642,7 +638,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Accès microfiche ",
-        deprecated: true
       }
     },
     MICR: {
@@ -651,7 +646,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Numéro de microfiche",
-        deprecated: true
       }
     },
     MOSA: {
@@ -660,7 +654,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Edition d'une mosaïque d'image",
-        deprecated: true
       }
     },
     NART: {
@@ -693,7 +686,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Numéro de l'arrêté de protection",
-        deprecated: true
       }
     },
     NUMP: {
@@ -758,7 +750,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "Précisions sur les dimensions",
-        deprecated: true
       }
     },
     PERS: {
@@ -862,7 +853,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     REFP: {
@@ -933,7 +923,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     SCLE: {
@@ -951,7 +940,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "",
         label: "",
-        deprecated: true
       }
     },
     SOUR: {
@@ -1013,7 +1001,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     VIDEO: {
@@ -1063,7 +1050,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     ZONE: {
@@ -1075,7 +1061,7 @@ const Schema = new mongoose.Schema(
       }
     },
     HISTORIQUE: [
-      { 
+      {
         nom: String,
         prenom: String,
         email: String,

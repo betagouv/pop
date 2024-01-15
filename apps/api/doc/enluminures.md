@@ -589,7 +589,7 @@ Numéro de renvoi vers une référence du décor. Doit être une référence val
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|non|non||Liens externes éventuels|||||||
+|Array|non|non|non|non||Base Initiale|||||||
 
 ### POP_COORDONNEES.lat
 

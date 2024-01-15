@@ -308,7 +308,7 @@ Coordinateur
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Coordinateur|||||||
+|String|non|non|non|non||Coordinateur|||||||
 
 ### COPY
 Copyright notice
@@ -338,7 +338,7 @@ Date d’acquisition
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Artiste sous droits|||||||
+|String|non|non|non|non||Artiste sous droits|||||||
 
 ### DATION
 [Peut être déprécié : Pas affiché en production ni en diffusion]  
@@ -348,7 +348,7 @@ Date d’acquisition
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### DDPT
 Date de dépôt / changement d’affectation
@@ -422,7 +422,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### DIMS
 Mesures / Dimensions
@@ -560,7 +560,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### IMG
 IMAGE
@@ -610,7 +610,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### LARC
 Lien base Arcade
@@ -694,7 +694,7 @@ Pays-region-ville
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Pays-region-ville|||||||
+|String|non|non|non|non||Pays-region-ville|||||||
 
 ### LOCA3
 Champ déprécié
@@ -704,7 +704,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Date d'entrée dans le domaine public|||||||
+|String|non|non|non|non||Date d'entrée dans le domaine public|||||||
 
 ### MILL
 Millésime de création / exécution 
@@ -734,7 +734,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### MSGCOM
 Lien commande de reproduction et/ou de conditions d’utilisation 
@@ -764,7 +764,7 @@ Genre
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Genre|||||||
+|String|non|non|non|non||Genre|||||||
 
 ### ONOM
 Onomastique
@@ -794,7 +794,7 @@ Précision auteur
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Précision datation|||||||
+|String|non|non|non|non||Précision datation|||||||
 
 ### PDEC
 Précisions sur la découverte / collecte
@@ -900,7 +900,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### REDA
 Rédacteur 
@@ -1014,7 +1014,7 @@ Champ déprécié
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### TITR
 Titre
@@ -1034,7 +1034,7 @@ Titre
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Recherche sur tout|||||||
+|String|non|non|non|non||Recherche sur tout|||||||
 
 ### UTIL
 Utilisation / Destination
@@ -1054,7 +1054,7 @@ Affichage image
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Affichage image|||||||
+|Array|non|non|non|non||Affichage image|||||||
 
 ### WWW
 Lien site associé. Doit être une URL valide.

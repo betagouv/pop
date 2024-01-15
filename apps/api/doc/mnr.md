@@ -91,7 +91,7 @@ Champ généré à chaque sauvegarde de la notice. Si notice contient des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|oui|oui|non|||||||||
+|String|non|oui|non|non|||||||||
 
 ### POP_FLAGS
 Informations et avertissements techniques
@@ -131,7 +131,7 @@ Référence unique de la notice
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Présence sur site internet du musée ; date|||||||
+|String|non|non|non|non||Présence sur site internet du musée ; date|||||||
 
 ### AUTR
 Auteur / exécutant / collecteur
@@ -323,7 +323,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### HIST3
 [PAS AFFICHE]
@@ -333,7 +333,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non|||||||||
+|String|non|non|non|non|||||||||
 
 ### HIST4
 [PAS AFFICHE]
@@ -343,7 +343,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Restitution|||||||
+|String|non|non|non|non||Restitution|||||||
 
 ### SALLES
 [PAS AFFICHE]
@@ -353,7 +353,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Exposé en salles, à telle date|||||||
+|String|non|non|non|non||Exposé en salles, à telle date|||||||
 
 ### CARTELS
 [PAS AFFICHE]
@@ -363,7 +363,7 @@ Historique
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Formulation des cartels (fautive ou non, à telle date)|||||||
+|String|non|non|non|non||Formulation des cartels (fautive ou non, à telle date)|||||||
 
 ### SCLE
 Siècle 
@@ -423,7 +423,7 @@ Champ qui contient les images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Champ qui contient les images|||||||
+|Array|non|non|non|non||Champ qui contient les images|||||||
 
 ### INV
 N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt
@@ -493,7 +493,7 @@ Catégorie
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Récolé, date|||||||
+|String|non|non|non|non||Récolé, date|||||||
 
 ### NOTE
 Notes 
@@ -633,7 +633,7 @@ Commentaire
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Avertissement|||||||
+|String|non|non|non|non||Avertissement|||||||
 
 ### RESUME
 Résumé 

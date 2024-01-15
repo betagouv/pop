@@ -229,7 +229,7 @@ Index global [Peut etre déprécié]
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Index global|||||||
+|String|non|non|non|non||Index global|||||||
 
 ### ADRESSE
 Hameau, lieu-dit, quartier, cote, bois, etc. ; adresse sous la forme Nom (voie) ##
@@ -569,7 +569,7 @@ Référence du CD ayant servi au chargement des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numéro de CD|||||||
+|String|non|non|non|non||Numéro de CD|||||||
 
 ### NUMF
 
@@ -579,7 +579,7 @@ Référence du CD ayant servi au chargement des images
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numero de fond|||||||
+|String|non|non|non|non||Numero de fond|||||||
 
 ### INSEE
 Code INSEE de la commune. Doit faire 5 caractères ou plus.
@@ -599,7 +599,7 @@ Code INSEE de la commune. Doit faire 5 caractères ou plus.
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Référence sur le vidéodisque|||||||
+|String|non|non|non|non||Référence sur le vidéodisque|||||||
 
 ### MARQ
 Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Palisssy correspondante
@@ -619,7 +619,7 @@ Saisir 1 pour sélectionner l'image qui illustrera la notice Mérimée ou Paliss
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Précision sur la localisation|||||||
+|String|non|non|non|non||Précision sur la localisation|||||||
 
 ### ACQU
 Don, legs, dation, achat, dépôt
@@ -639,7 +639,7 @@ Don, legs, dation, achat, dépôt
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Adresse de la personne photographiée|||||||
+|String|non|non|non|non||Adresse de la personne photographiée|||||||
 
 ### AIRE
 Aire d'étude
@@ -689,7 +689,7 @@ Couleur [Devrait contenir oui ou non mais contient bcp plus . donnée à nettoye
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|Array|non|non|oui|non||Département en lettre|||||||
+|Array|non|non|non|non||Département en lettre|||||||
 
 ### DATIMM
 Date d'entrée dans les collections ou date de traitement intellectuel
@@ -739,7 +739,7 @@ AAAA.MM.JJ ; AAAA (vers) ; AAAA-AAAA
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Date du tirage |||||||
+|String|non|non|non|non||Date du tirage |||||||
 
 ### DATG
 Date gravure
@@ -749,7 +749,7 @@ Date gravure
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Date gravure|||||||
+|String|non|non|non|non||Date gravure|||||||
 
 ### DATD
 Date dessin
@@ -859,7 +859,7 @@ Lien vers la notice Palissy ou Mérimée contenant le dossier de l'édifice ou d
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Mots candidats|||||||
+|String|non|non|non|non||Mots candidats|||||||
 
 ### LOCA
 Concaténation des champs PAYS ; REG ; DPT ; COM. Affiche un avertissement si vide.
@@ -949,7 +949,7 @@ No vue CD
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||No vue CD|||||||
+|String|non|non|non|non||No vue CD|||||||
 
 ### NUMAUTP
 
@@ -969,7 +969,7 @@ No vue CD
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Numéro de versement|||||||
+|String|non|non|non|non||Numéro de versement|||||||
 
 ### ANUMOR
 
@@ -1109,7 +1109,7 @@ V, H, C, O
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Producteur du film|||||||
+|String|non|non|non|non||Producteur du film|||||||
 
 ### TYP
 Type  [Qu'est ce que c'est ?]
@@ -1139,7 +1139,7 @@ Forme : oui ou non selon qu'on charge ou non une image
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Type d'image numérique|||||||
+|String|non|non|non|non||Type d'image numérique|||||||
 
 ### TYPSUPP
 Doublon de TYPSN utilisé dans les versements plus récents ; valeur : DS1
@@ -1169,7 +1169,7 @@ Liens base [Quelle différence avec LBASE?] requête système permettant d'activ
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Liens base|||||||
+|String|non|non|non|non||Liens base|||||||
 
 ### LEG2
 
@@ -1179,7 +1179,7 @@ Liens base [Quelle différence avec LBASE?] requête système permettant d'activ
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Légende thes.|||||||
+|String|non|non|non|non||Légende thes.|||||||
 
 ### REFIM
 
@@ -1189,7 +1189,7 @@ Liens base [Quelle différence avec LBASE?] requête système permettant d'activ
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Référence de l'image|||||||
+|String|non|non|non|non||Référence de l'image|||||||
 
 ### REFIMG
 Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH dans Mémoire pour les REF : IV,OA,MH,AR,AP )
@@ -1199,7 +1199,7 @@ Nom Image. Déprécié dans POP mais utilisé dans certains imports ( import MH 
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||Nom Image|||||||
+|String|non|non|non|non||Nom Image|||||||
 
 ### REFJOC
 Références des notices Joconde liées à la notice Mémoire
@@ -1259,7 +1259,7 @@ N° d'opération
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|oui|non||N° d'opération|||||||
+|String|non|non|non|non||N° d'opération|||||||
 
 ### CHRONO
 

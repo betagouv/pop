@@ -314,23 +314,23 @@ const Schema = new mongoose.Schema(
     TOUT: {
       type: String,
       default: "",
-      documentation: { label: "Index global", deprecated: true }
+      documentation: { label: "Index global" }
     },
 
     ACTIV: {
       type: String,
       default: "",
-      documentation: { label: "Activités culturelles", deprecated: true }
+      documentation: { label: "Activités culturelles" }
     },
     ADRESSE: {
       type: String,
       default: "",
-      documentation: { label: "Adresse complète", deprecated: true }
+      documentation: { label: "Adresse complète" }
     },
     AMIS: {
       type: String,
       default: "",
-      documentation: { label: "Amis du musée", deprecated: true }
+      documentation: { label: "Amis du musée", }
     },
     AN_CREAT: {
       type: String,
@@ -340,31 +340,31 @@ const Schema = new mongoose.Schema(
     ANNEE_FE: {
       type: String,
       default: "",
-      documentation: { label: "Musée fermé", deprecated: true }
+      documentation: { label: "Musée fermé", }
     },
-    ANNEXE: { type: String, default: "", documentation: { label: "Annexe", deprecated: true } },
+    ANNEXE: { type: String, default: "", documentation: { label: "Annexe", } },
     ANTARIF: {
       type: String,
       default: "",
-      documentation: { label: "Année tarifs", deprecated: true }
+      documentation: { label: "Année tarifs", }
     },
 
     CEDEX_AD: {
       type: String,
       default: "",
-      documentation: { label: "ADM-Cédex", deprecated: true }
+      documentation: { label: "ADM-Cédex", }
     },
 
     CTRLTECH: {
       type: String,
       default: "",
-      documentation: { label: "Ctrl tech.", deprecated: true }
+      documentation: { label: "Ctrl tech.", }
     },
 
     DT_CREAT: {
       type: String,
       default: "",
-      documentation: { label: "Date de création", deprecated: true }
+      documentation: { label: "Date de création", }
     },
 
     DT_SAISI: {
@@ -375,41 +375,41 @@ const Schema = new mongoose.Schema(
     GESTION: {
       type: String,
       default: "",
-      documentation: { label: "Gestion musée", deprecated: true }
+      documentation: { label: "Gestion musée", }
     },
 
     ITI2_M: {
       type: String,
       default: "",
-      documentation: { label: "Plan Mappy", deprecated: true }
+      documentation: { label: "Plan Mappy", }
     },
     ITI_M: {
       type: String,
       default: "",
-      documentation: { label: "Itinéraire Mappy", deprecated: true }
+      documentation: { label: "Itinéraire Mappy", }
     },
     JOCONDE: {
       type: String,
       default: "",
-      documentation: { label: "Base Joconde", deprecated: true }
+      documentation: { label: "Base Joconde", }
     },
 
-    LEGS: { type: String, default: "", documentation: { label: "Legs", deprecated: true } },
+    LEGS: { type: String, default: "", documentation: { label: "Legs", } },
 
     MONOPLUR: {
       type: String,
       default: "",
-      documentation: { label: "Disciplines", deprecated: true }
+      documentation: { label: "Disciplines", }
     },
     NB_AMI: {
       type: String,
       default: "",
-      documentation: { label: "Nombre amis", deprecated: true }
+      documentation: { label: "Nombre amis", }
     },
     NOM_AMI: {
       type: String,
       default: "",
-      documentation: { label: "Association", deprecated: true }
+      documentation: { label: "Association", }
     },
     DMAJ: {
       type: String,
@@ -432,113 +432,113 @@ const Schema = new mongoose.Schema(
     OBS_AMI: {
       type: String,
       default: "",
-      documentation: { label: "Ass. Amis Obs.", deprecated: true }
+      documentation: { label: "Ass. Amis Obs.", }
     },
     OBS_TOUR: {
       type: String,
       default: "",
-      documentation: { label: "Itinéraire touristique", deprecated: true }
+      documentation: { label: "Itinéraire touristique", }
     },
 
     PROPBAT: {
       type: String,
       default: "",
-      documentation: { label: "Propr. bat.", deprecated: true }
+      documentation: { label: "Propr. bat.", }
     },
     PROPCOLL: {
       type: String,
       default: "",
-      documentation: { label: "Propr. coll.", deprecated: true }
+      documentation: { label: "Propr. coll.", }
     },
 
     PUBLI: {
       type: String,
       default: "",
-      documentation: { label: "Publications", deprecated: true }
+      documentation: { label: "Publications", }
     },
 
     REPCOLL: {
       type: String,
       default: "",
-      documentation: { label: "Distr. coll", deprecated: true }
+      documentation: { label: "Distr. coll", }
     },
     SERVICES: {
       type: String,
       default: "",
-      documentation: { label: "Services", deprecated: true }
+      documentation: { label: "Services", }
     },
     SIGLE_M: {
       type: String,
       default: "",
-      documentation: { label: "Sigle musée", deprecated: true }
+      documentation: { label: "Sigle musée", }
     },
     STATUT: {
       type: String,
       default: "",
-      documentation: { label: "Statut musée", deprecated: true }
+      documentation: { label: "Statut musée", }
     },
     SURFACES: {
       type: String,
       default: "",
-      documentation: { label: "Surfaces", deprecated: true }
+      documentation: { label: "Surfaces", }
     },
 
-    URL_M2: { type: String, default: "", documentation: { label: "Site web 2", deprecated: true } },
-    VIDEO: { type: String, default: "", documentation: { label: "Image", deprecated: true } },
+    URL_M2: { type: String, default: "", documentation: { label: "Site web 2", } },
+    VIDEO: { type: String, default: "", documentation: { label: "Image", } },
     RESP: {
       type: String,
       default: "",
-      documentation: { label: "Resp. scient.", deprecated: true }
+      documentation: { label: "Resp. scient.", }
     },
     GRESP: {
       type: String,
       default: "",
-      documentation: { label: "Resp. scient. HF", deprecated: true }
+      documentation: { label: "Resp. scient. HF", }
     },
-    PSC: { type: String, default: "", documentation: { label: "Projet SC", deprecated: true } },
+    PSC: { type: String, default: "", documentation: { label: "Projet SC", } },
     "DPSC-D": {
       type: String,
       default: "",
-      documentation: { label: "date PSC DRAC", deprecated: true }
+      documentation: { label: "date PSC DRAC", }
     },
     "DPSC-S": {
       type: String,
       default: "",
-      documentation: { label: "date PSC SMF", deprecated: true }
+      documentation: { label: "date PSC SMF", }
     },
     DMDF: {
       type: String,
       default: "",
-      documentation: { label: "an appel. MDF", deprecated: true }
+      documentation: { label: "an appel. MDF", }
     },
     SPUB: {
       type: String,
       default: "",
-      documentation: { label: "Service publics", deprecated: true }
+      documentation: { label: "Service publics", }
     },
     "SPUB-P": {
       type: String,
       default: "",
-      documentation: { label: "S. publics préc.", deprecated: true }
+      documentation: { label: "S. publics préc.", }
     },
     INVR: {
       type: String,
       default: "",
-      documentation: { label: "Inventaire regl.", deprecated: true }
+      documentation: { label: "Inventaire regl.", }
     },
     NUMER: {
       type: String,
       default: "",
-      documentation: { label: "Numérisation", deprecated: true }
+      documentation: { label: "Numérisation", }
     },
     LGN: {
       type: String,
       default: "",
-      documentation: { label: "Coll. en ligne", deprecated: true }
+      documentation: { label: "Coll. en ligne", }
     },
-    REST: { type: String, default: "", deprecated: true },
-    ACQU: { type: String, default: "", deprecated: true },
-    RECOL: { type: String, default: "", deprecated: true },
+    REST: { type: String, default: "", },
+    ACQU: { type: String, default: "", },
+    RECOL: { type: String, default: "", },
     POP_COORDONNEES: {
       lat: { type: Number, default: 0 },
       lon: { type: Number, default: 0 }
@@ -554,7 +554,7 @@ const Schema = new mongoose.Schema(
       }
     },
     HISTORIQUE: [
-      { 
+      {
         nom: String,
         prenom: String,
         email: String,

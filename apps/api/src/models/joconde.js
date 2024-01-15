@@ -217,7 +217,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[Peut être déprécié : Pas affiché en production ni en diffusion]  ",
-        deprecated: true
       }
     },
     DDPT: {
@@ -283,7 +282,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié",
-        deprecated: true
       }
     },
     DIMS: {
@@ -409,7 +407,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié  ",
-        deprecated: true
       }
     },
     IMG: {
@@ -453,7 +450,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié",
-        deprecated: true
       }
     },
     LARC: {
@@ -529,7 +525,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Pays-region-ville",
-        deprecated: true,
         label: "Pays-region-ville"
       }
     },
@@ -564,7 +559,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié",
-        deprecated: true
       }
     },
     MSGCOM: {
@@ -617,7 +611,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[Peut être déprécié : Pas affiché en production ni en diffusion]",
-        deprecated: true,
         label: "Précision datation"
       }
     },
@@ -710,7 +703,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié ",
-        deprecated: true
       }
     },
     REDA: {
@@ -812,7 +804,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "Champ déprécié ",
-        deprecated: true
       }
     },
     TITR: {
@@ -829,7 +820,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[Peut être déprécié : A vérifier. Non présent en production] ",
-        deprecated: true,
         label: "Recherche sur tout"
       }
     },
@@ -850,7 +840,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "Affichage image",
         label: "Affichage image",
-        deprecated: true
+
       }
     },
     WWW: {
@@ -870,7 +860,7 @@ const Schema = new mongoose.Schema(
       }
     },
     HISTORIQUE: [
-      { 
+      {
         nom: String,
         prenom: String,
         email: String,

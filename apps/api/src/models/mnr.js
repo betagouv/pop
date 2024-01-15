@@ -29,7 +29,7 @@ const Schema = new mongoose.Schema(
         description:
           "Champ généré à chaque sauvegarde de la notice. Si notice contient des images, la valeur du champs sera oui', sinon 'non'. Ce champs est utilisé pour l'affichage de la phototèque mais pourrait être supprimé et remplacer par une fonction exist dans ES",
         generated: true,
-        deprecated: true
+
       }
     },
     POP_FLAGS: {
@@ -58,7 +58,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Présence sur site internet du musée ; date"
       }
     },
@@ -201,7 +200,7 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
+
       }
     },
     HIST3: {
@@ -210,7 +209,6 @@ const Schema = new mongoose.Schema(
       documentation: {
         description: "[PAS AFFICHE]",
         label: "",
-        deprecated: true
       }
     },
     HIST4: {
@@ -218,7 +216,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Restitution"
       }
     },
@@ -227,7 +224,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Exposé en salles, à telle date"
       }
     },
@@ -236,7 +232,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Formulation des cartels (fautive ou non, à telle date)"
       }
     },
@@ -279,7 +274,6 @@ const Schema = new mongoose.Schema(
       default: [],
       documentation: {
         description: "Champ qui contient les images",
-        deprecated: true,
         label: "Champ qui contient les images"
       }
     },
@@ -336,7 +330,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Récolé, date"
       }
     },
@@ -448,7 +441,6 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "[PAS AFFICHE]",
-        deprecated: true,
         label: "Avertissement"
       }
     },
@@ -466,7 +458,7 @@ const Schema = new mongoose.Schema(
       }
     },
     HISTORIQUE: [
-      { 
+      {
         nom: String,
         prenom: String,
         email: String,

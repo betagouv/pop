@@ -51,7 +51,7 @@ path,type,required,label,opendata,generated,description,thesaurus,label_mh,liste
 "RENV","Array","non","Numéro de renvoi vers un autre domaine","","","Numéro de renvoi vers un autre domaine. Doit être une référence valide vers une notice Enluminures.","","","",""
 "REFC","Array","non","Numéro de renvoi vers une référence du contenu matériel","","","Numéro de renvoi vers une référence du contenu matériel. Doit être une référence valide vers une notice Enluminures.","","","",""
 "REFDE","Array","non","Numéro de renvoi vers une référence du décor","","","Numéro de renvoi vers une référence du décor. Doit être une référence valide vers une notice Enluminures.","","","",""
-"LIENS","Array","non","Liens externes éventuels","","","","","","",""
+"LIENS","Array","non","Base Initiale","","","","","","",""
 "POP_COORDONNEES.lat","Number","non","","","","","","","",""
 "POP_COORDONNEES.lon","Number","non","","","","","","","",""
 "POP_CONTIENT_GEOLOCALISATION","String","non","Contient une position","","true","Champ qui permet de savoir si la geolocalisation est disponible ou non","","","",""
