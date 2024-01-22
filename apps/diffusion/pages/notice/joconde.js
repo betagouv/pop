@@ -140,7 +140,7 @@ export default class extends React.Component {
         arrayContent.push(this.buildLinkRepr(value[i]));
       }
     }
-    return arrayContent.reduce((a, b) => [a, " ; ", b])
+    return arrayContent.reduce((a, b) => [a, " ; ", b], [])
   }
 
   // Display a list of links to authors
