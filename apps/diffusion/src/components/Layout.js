@@ -135,6 +135,12 @@ export default class Layout extends React.Component {
                 <a>Suivi d'audience et vie privée</a>
               </Link>
             </li>
+            <li className="list-inline-item">
+              <span className="footer-item">Accessibilité : non conforme</span>
+              <Link href="/accessibilite">
+                <a>Déclaration d’accessibilité</a>
+              </Link>
+            </li>
           </ul>
           <div className="version">
             Pop version {Version.version}
@@ -272,7 +278,7 @@ export default class Layout extends React.Component {
           .footer a:hover {
             text-decoration: underline;
           }
-          .footer a {
+          .footer a, .footer .footer-item {
             text-decoration: none;
             padding-left: 20px;
             color: #003f48;
