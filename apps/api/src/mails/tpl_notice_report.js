@@ -8,7 +8,7 @@ const CONTACT_LIST = {
   "memoire": "anne.cook@culture.gouv.fr",
   "monuments-historiques": "antonella.rotolo@culture.gouv.fr",
   "mnr": "isabelle.rouge-ducos@culture.gouv.fr",
-  "inventaire": "geraud.buffa@culture.gouv.fr ; jean.davoigneau@culture.gouv.fr et ines.graillat@culture.gouv.fr",
+  "inventaire": "jean.davoigneau@culture.gouv.fr et ines.graillat@culture.gouv.fr",
   'joconde': "sophie.daenens@culture.gouv.fr et angelina.meslem@culture.gouv.fr"
 }
 
