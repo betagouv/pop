@@ -72,7 +72,7 @@ async function run() {
     }
   ]);
 
-
+  
   opts.indices.map(async db => {
     const noticeClass = {
       joconde: Joconde,
@@ -123,48 +123,40 @@ async function run() {
               return new Observable(async observer => {
                 ctx.error = true;
                 let counter = 0;
-                const estimatedDocumentCount = await noticeClass.estimatedDocumentCount()
-                observer.next(estimatedDocumentCount + " notices to go.");
+                observer.next((await noticeClass.estimatedDocumentCount()) + " notices to go.");
                 let lastId;
                 while (true) {
-                  try {
-                    let notices = await noticeClass
-                      .find(lastId ? { _id: { $gt: lastId } } : {})
-                      .sort({ _id: 1 })
-                      .limit(opts.chunks);
-
-                    if (!notices.length) {
-                      ctx.error = false;
-                      observer.complete();
+                  let notices = await noticeClass
+                    .find(lastId ? { _id: { $gt: lastId } } : {})
+                    .sort({ _id: 1 })
+                    .limit(opts.chunks);
+                  if (!notices.length) {
+                    ctx.error = false;
+                    observer.complete();
+                    break;
+                  }
+                  const bulk = [];
+                  for (let i in notices) {
+                    const notice = JSON.parse(JSON.stringify(notices[i]));
+                    bulk.push({
+                      update: { _index: dbname, _type: db, _id: notice._id }
+                    });
+                    delete notice._id;
+                    bulk.push({ doc: notice, doc_as_upsert: true });
+                  }
+                  if (bulk.length) {
+                    res = await es.bulk({ body: bulk });
+                    if (res.errors) {
+                      observer.error({
+                        message: "Error in bulk",
+                        sampleError: JSON.stringify(res.items),
+                        errors: JSON.stringify(res.errors)
+                      });
                       break;
                     }
-
-                    const bulk = [];
-                    for (let i in notices) {
-                      const notice = JSON.parse(JSON.stringify(notices[i]));
-                      bulk.push({
-                        update: { _index: dbname, _type: db, _id: notice._id }
-                      });
-                      delete notice._id;
-                      bulk.push({ doc: notice, doc_as_upsert: true });
-                    }
-
-                    if (bulk.length) {
-                      const res = await es.bulk({ body: bulk });
-                      if (res.errors) {
-                        observer.error({
-                          message: "Error in bulk",
-                          sampleError: res.items,
-                        });
-                        break;
-                      }
-                      counter++;
-                      lastId = notices[notices.length - 1];
-                      observer.next(`${counter * opts.chunks} / ${estimatedDocumentCount} notices done.`);
-                    }
-                  } catch (err) {
-                    observer.error(err)
-                    break
+                    counter++;
+                    lastId = notices[notices.length - 1];
+                    observer.next(counter * opts.chunks + " notices done.");
                   }
                 }
               });
@@ -178,21 +170,18 @@ async function run() {
               const aliases = await es.indices.getAlias({ index: "*" });
               const previousDbname =
                 Object.keys(aliases).find(key => aliases[key].aliases[rootDbname]) || rootDbname;
-
-              if (previousDbname) {
-                // Create alias to the rootname and remove previous db.
-                const response = await es.indices.updateAliases({
-                  body: {
-                    actions: [
-                      { add: { index: dbname, alias: rootDbname } },
-                      { remove_index: { index: previousDbname } }
-                    ]
-                  }
-                });
-                if (!response.acknowledged) {
-                  console.error(response);
-                  throw new Error("Fatal error!");
+              // Create alias to the rootname and remove previous db.
+              const response = await es.indices.updateAliases({
+                body: {
+                  actions: [
+                    { add: { index: dbname, alias: rootDbname } },
+                    { remove_index: { index: previousDbname } }
+                  ]
                 }
+              });
+              if (!response.acknowledged) {
+                console.error(response);
+                throw new Error("Fatal error!");
               }
             }
           },
