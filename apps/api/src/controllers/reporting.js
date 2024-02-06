@@ -16,7 +16,7 @@ async function recipients(to) {
     case "mnr":
       return "isabelle.rouge-ducos@culture.gouv.fr";
     case "inv":
-      return ["geraud.buffa@culture.gouv.fr", "jean.davoigneau@culture.gouv.fr", "ines.graillat@culture.gouv.fr"].join(",");
+      return ["jean.davoigneau@culture.gouv.fr", "ines.graillat@culture.gouv.fr"].join(",");
     case "joconde":
       return ["sophie.daenens@culture.gouv.fr", "angelina.meslem@culture.gouv.fr"].join(",");
     case "memoire":
@@ -43,16 +43,16 @@ async function recipients(to) {
         if (user && user.email) {
           return user.email;
         }
-      } catch (e) {}
+      } catch (e) { }
   }
 }
 
 router.post("/email", passport.authenticate("jwt", { session: false }), async (req, res) => {
-   /* 	
-      #swagger.tags = ['Reporting']
-      #swagger.path = '/reporting/email'
-      #swagger.description = 'Envoie du rapport par mail' 
-    */
+  /* 	
+     #swagger.tags = ['Reporting']
+     #swagger.path = '/reporting/email'
+     #swagger.description = 'Envoie du rapport par mail' 
+   */
   let { subject, to, body } = req.body;
   if (!subject || !to || !body) {
     return res.status(400).send("Information incomplete.");
