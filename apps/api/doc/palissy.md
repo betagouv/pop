@@ -963,7 +963,7 @@ Lieu-dit
 
 |Type|Requis|Généré|Déprécié|Opendata|Validation|Label|Thesaurus|Label MH|Liste Autorité|Id Thésaurus|Label INI-CM| Label INI-D|
 |----|------|------|------|--------|----------|-----|---|---|---|----|---|---|
-|String|non|non|non|non||Edition d'une mosaïque d'image|||||||
+|String|non|non|non|non||Edifice actuel de conservation|||||||
 
 ### NART
 

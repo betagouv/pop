@@ -85,7 +85,7 @@ path,type,required,label,opendata,generated,description,thesaurus,label_mh,liste
 "MATR","Array","non","Matériaux et techniques d'interventions","","","","","","",""
 "MFICH","Array","non","Accès microfiche ","","","","","","",""
 "MICR","String","non","Numéro de microfiche","","","","","","",""
-"MOSA","String","non","Edition d'une mosaïque d'image","","","","","","",""
+"MOSA","String","non","Edifice actuel de conservation","","","","","","",""
 "NART","String","non","Numéro artificiel de différenciation de l'objet","","","","","","",""
 "NINV","String","non","Numéro d'inventaire affecté à l'objet","","","","","","",""
 "NOMS","Array","non","Auteurs de la notice","","","","","","",""
