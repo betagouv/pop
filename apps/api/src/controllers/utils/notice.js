@@ -49,7 +49,7 @@ function updateNotice(collection, REF, notice) {
 // Update a OAI Notice.
 function updateOaiNotice(collection, REF, dmaj) {
   return new Promise((resolve, reject) => {
-    collection.findOneAndUpdate({ REF }, dmaj, { upsert: true, new: true, useFindAndModify: false}, (err, doc) => {
+    collection.findOneAndUpdate({ REF }, dmaj, { upsert: true, new: true, useFindAndModify: false }, (err, doc) => {
       if (err) {
         reject(err);
         return;
@@ -72,8 +72,8 @@ function addZeros(v, zeros) {
 // Sinon retourne null
 async function identifyProducteur(collection, REF, IDPROD, EMET) {
   let producteurs = [];
-  await Producteur.find({ "BASE.base": collection}).then(listProducteurs => producteurs = listProducteurs);
-  
+  await Producteur.find({ "BASE.base": collection }).then(listProducteurs => producteurs = listProducteurs);
+
   //Liste des producteurs donc le préfixe correspond au début de la REF de la notice
   let possibleProducteurs = [];
   let finalProd = "";
@@ -84,23 +84,23 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
     producteur.BASE.map((baseItem) => {
 
       //Si la base correspond à la collection
-      if(baseItem.base === collection){
+      if (baseItem.base === collection) {
         //Pour chaque préfixe
-        if(baseItem.prefixes.length<1){
+        if (baseItem.prefixes.length < 1) {
           defaultProducteur = producteur.LABEL;
         }
-        baseItem.prefixes.map( prefix => {
-          if(REF.startsWith(prefix.toString())){
+        baseItem.prefixes.map(prefix => {
+          if (REF.startsWith(prefix.toString())) {
             //Retourne le label du producteur
             let label = producteur.LABEL;
             //Cas particulier pour memoire : le prefixe AP n'est pas suffisant pour déterminer le producteur
             //Dans ce cas, le producteur "AUTRE" est ajouté et le cas particulier est géré plus bas pour déterminer
             //si le producteur reste "AUTRE", ou s'il devient UDAP ou MAP
-            if(prefix=="AP" && collection == "memoire"){
-              possibleProducteurs.push({prefix : prefix,label: "AUTRE"});
+            if (prefix == "AP" && collection == "memoire") {
+              possibleProducteurs.push({ prefix: prefix, label: "AUTRE" });
             }
-            else{
-              possibleProducteurs.push({prefix : prefix,label: label});
+            else {
+              possibleProducteurs.push({ prefix: prefix, label: label });
             }
           }
         })
@@ -108,7 +108,7 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
     })
   });
 
-  if(collection == "memoire") {
+  if (collection == "memoire") {
     if (IDPROD != null && String(REF).startsWith("AP") && String(IDPROD).startsWith("Service départemental")) {
       return "UDAP";
     }
@@ -118,21 +118,21 @@ async function identifyProducteur(collection, REF, IDPROD, EMET) {
   }
 
   //Si la liste des producteurs est non vide, on parcourt la liste pour déterminer le préfixe le plus précis
-  if(possibleProducteurs.length>0){
+  if (possibleProducteurs.length > 0) {
     let PrefSize = possibleProducteurs[0].prefix.length
     finalProd = possibleProducteurs[0].label;
-    possibleProducteurs.map( prod => {
-      if(PrefSize < prod.prefix.length){
+    possibleProducteurs.map(prod => {
+      if (PrefSize < prod.prefix.length) {
         PrefSize = prod.prefix.length
         finalProd = prod.label
       }
     })
     return finalProd;
   }
-  else if(defaultProducteur!=""){
+  else if (defaultProducteur != "") {
     return defaultProducteur;
   }
-  else{
+  else {
     return null;
   }
 }
@@ -188,12 +188,12 @@ function findPalissyProducteur(notice) {
   }
 }
 
-async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
-  if(refList){
-    for(let i=0; i<refList.length; i++){
+async function checkValidRef(refList, collection, POP_FLAGS, fieldName) {
+  if (refList) {
+    for (let i = 0; i < refList.length; i++) {
       const ref = refList[i];
-      const notice = await collection.findOne({REF: ref});
-      if(!notice){
+      const notice = await collection.findOne({ REF: ref });
+      if (!notice) {
         POP_FLAGS.push(fieldName + "_MATCH_FAIL");
       }
     }
@@ -204,17 +204,17 @@ async function checkValidRef(refList, collection, POP_FLAGS, fieldName){
 
 /**
  * Supprime le caractère search en début et fin de chaine de caractères
- * @param { stringt } chaine 
+ * @param { string } chaine 
  */
-function removeChar(chaine){
+function removeChar(chaine) {
   const search = '""';
   const replaceChar = '"';
 
   let keep = chaine[0] === search && chaine[chaine.length - 1] === search;
   chaine = chaine.replace(search, replaceChar);
-  
+
   // Analyse des caractères à supprimer
-  if(!keep && chaine[0] === replaceChar && chaine[chaine.length - 1] === replaceChar){
+  if (!keep && chaine[0] === replaceChar && chaine[chaine.length - 1] === replaceChar) {
     chaine = chaine.substring(1, chaine.length - 1)
   }
 
