@@ -3,7 +3,10 @@ var mongoosePaginate = require("mongoose-paginate");
 
 const Schema = new mongoose.Schema(
   {
-    idThesaurus: String,
+    idThesaurus: {
+      type: String,
+      index: true,
+    },
     arc: String,
     value: String,
     altLabel: Boolean,

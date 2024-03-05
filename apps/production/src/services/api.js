@@ -72,9 +72,9 @@ class api {
   }
 
   // Get prefix list from producteur list
-  async getPrefixesFromProducteurs(producteurs){
-    const producteurList = producteurs.reduce((result, list) => result = result == null ? list : result + "," + list )
-    return request.fetchJSON("GET", "/producteur/prefixesFromProducteurs?producteurs="+producteurList);
+  async getPrefixesFromProducteurs(producteurs) {
+    const producteurList = producteurs.reduce((result, list) => result = result == null ? list : result + "," + list)
+    return request.fetchJSON("GET", "/producteur/prefixesFromProducteurs?producteurs=" + producteurList);
   }
 
   // Get all groups.
@@ -96,20 +96,20 @@ class api {
   // Get all delete historiques.
   getDeleteHistoriques(limit = null) {
     let route = "/deleteHistorique";
-    if(limit){
+    if (limit) {
       route += `?limit=${limit}`;
     }
     return request.fetchJSON("GET", route);
   }
 
   // Create delete historique.
-  async createDeleteHistorique( ref, base ) {
+  async createDeleteHistorique(ref, base) {
     const props = { ref, base };
     return request.fetchJSON("POST", "/deleteHistorique", props);
   }
 
   // can edit notice depending on producteurs, groups, user
-  canEdit( REF, MUSEO, PRODUCTEUR, COLLECTION ) {
+  canEdit(REF, MUSEO, PRODUCTEUR, COLLECTION) {
     return request.fetchJSON("GET", `/groups/canEdit?ref=${REF}&museo=${MUSEO}&producteur=${PRODUCTEUR}&collection=${COLLECTION}`);
   }
 
@@ -151,7 +151,7 @@ class api {
       const TIME_BEFORE_RETRY = 3000;
       let attempts = 0;
       const total = arr.length;
-      const progress =  (100 * (total - arr.length)) / total;
+      const progress = (100 * (total - arr.length)) / total;
       const BULK_SIZE = 5;
       const BULK_SIZE_AUTOR = 200;
 
@@ -164,37 +164,37 @@ class api {
 
       // Get All "autor" notices for CREATE if it exists
       autorCurrentNoticesCreate = arr.reduce((accumulatorNotices, currentNotice) => {
-      if(currentNotice.collection === "autor" && currentNotice.action === "created"){
-        accumulatorNotices.push(currentNotice)
-      }
-      return accumulatorNotices
+        if (currentNotice.collection === "autor" && currentNotice.action === "created") {
+          accumulatorNotices.push(currentNotice)
+        }
+        return accumulatorNotices
       }, [])
-      
+
       // Get All "autor" notices for UPDATE if it exists
       autorCurrentNoticesUpdate = arr.reduce((accumulatorNotices, currentNotice) => {
-      if(currentNotice.collection === "autor" && currentNotice.action === "updated"){
-        accumulatorNotices.push(currentNotice)
-      }
-      return accumulatorNotices
+        if (currentNotice.collection === "autor" && currentNotice.action === "updated") {
+          accumulatorNotices.push(currentNotice)
+        }
+        return accumulatorNotices
       }, [])
-      
+
       // DELETE those "autor" notices from currentNotices
       arr = arr.filter(notice => !autorCurrentNoticesCreate.includes(notice) && !autorCurrentNoticesUpdate.includes(notice))
 
-      while(autorCurrentNoticesCreate.length || autorCurrentNoticesUpdate.length){
-        try{
-        // CREATE "autor" notices
-        if(autorCurrentNoticesCreate.length > 0){
-          currentNoticesCreate = autorCurrentNoticesCreate.splice(0, BULK_SIZE_AUTOR);
-          await this.createNoticeAutor(currentNoticesCreate);
-        }
-        // UPDATE "autor" notices
-        if(autorCurrentNoticesUpdate.length > 0){
-          currentNoticesUpdate = autorCurrentNoticesUpdate.splice(0, BULK_SIZE_AUTOR);
-          await this.updateNoticeAutor(currentNoticesUpdate);
-        }
-        cb(progress, `Notices restantes  ${total - (autorCurrentNoticesUpdate.length + autorCurrentNoticesCreate.length)}/${total}`);
-      } catch (e) {
+      while (autorCurrentNoticesCreate.length || autorCurrentNoticesUpdate.length) {
+        try {
+          // CREATE "autor" notices
+          if (autorCurrentNoticesCreate.length > 0) {
+            currentNoticesCreate = autorCurrentNoticesCreate.splice(0, BULK_SIZE_AUTOR);
+            await this.createNoticeAutor(currentNoticesCreate);
+          }
+          // UPDATE "autor" notices
+          if (autorCurrentNoticesUpdate.length > 0) {
+            currentNoticesUpdate = autorCurrentNoticesUpdate.splice(0, BULK_SIZE_AUTOR);
+            await this.updateNoticeAutor(currentNoticesUpdate);
+          }
+          cb(progress, `Notices restantes  ${total - (autorCurrentNoticesUpdate.length + autorCurrentNoticesCreate.length)}/${total}`);
+        } catch (e) {
           // I add the currents one back to the list.
           // I put it at the beginning because if there is a server error on this one,
           // I dont want to wait the end to know (but maybe I should)
@@ -208,20 +208,20 @@ class api {
           cb(
             progress,
             `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
-              `Tentative : ${attempts}/${MAX_ATTEMPTS}`
+            `Tentative : ${attempts}/${MAX_ATTEMPTS}`
           );
           await timeout(TIME_BEFORE_RETRY);
         }
       }
-      
+
       while (arr.length) {
         const currentNotices = arr.splice(0, BULK_SIZE);
         let element = "";
         let index = 0;
-       try{
+        try {
           // add other bases
-          if(currentNotices.length > 0) {
-            for(let i=0; i<currentNotices.length; i++){
+          if (currentNotices.length > 0) {
+            for (let i = 0; i < currentNotices.length; i++) {
               element = currentNotices[i];
               if (element.action === "updated") {
                 await this.updateNotice(element.notice.REF, element.collection, element.notice, element.files, "import");
@@ -250,7 +250,7 @@ class api {
             cb(
               progress,
               `Un problème a été détecté : ${e.msg || "Erreur de connexion à l'API."} ` +
-                `Tentative : ${attempts}/${MAX_ATTEMPTS}`
+              `Tentative : ${attempts}/${MAX_ATTEMPTS}`
             );
             await timeout(TIME_BEFORE_RETRY);
           }
@@ -310,7 +310,7 @@ class api {
     formData.append("autorNotices", JSON.stringify(autorNotices));
     return request.fetchFormData("PUT", "/autor", formData);
   }
-  
+
   // Get one notice.
   getNotice(collection, ref) {
     return request.getJSON(`/${collection}/${ref}`);
@@ -353,20 +353,20 @@ class api {
     return request.getJSON(`/thesaurus/validate?id=${thesaurusId}&value=${str}`);
   }
   // Validation OpenTheso par autocomplétion
-  validateOpenTheso(thesaurusId, str){
+  validateOpenTheso(thesaurusId, str) {
     return request.getJSON(`/thesaurus/autocompleteByIdthesaurusAndValue?id=${thesaurusId}&value=${str}`);
   }
   // Récupération du prefLabel par l'identifiant Ark
-  getPrefLabelByIdArk(IdArk){
-    return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`); 
+  getPrefLabelByIdArk(IdArk) {
+    return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`);
   }
   // Récupération des thésaurus correspondant l'identifiant et à la saisie (autcomplétion - commence par)
-  autocompleteThesaurus(thesaurusId, str){
+  autocompleteThesaurus(thesaurusId, str) {
     return request.getJSON(`/thesaurus/autocompleteThesaurus?id=${thesaurusId}&value=${str}`);
   }
 
-  getThesaurusById(idThesaurus){
-    return request.getJSON(`/thesaurus/getAllThesaurusById?id=${idThesaurus}`)
+  getThesaurusById(idThesaurus) {
+    return request.fetchJSON("GET", `/thesaurus/getAllThesaurusById?id=${idThesaurus}`)
   }
 
   getMaintenance() {

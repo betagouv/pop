@@ -33,10 +33,11 @@ class request {
           this._init(verb, data && JSON.stringify(data), { "Content-Type": "application/json" })
         );
         const jsonData = await response.json();
-        if (response.status !== 200 || jsonData.success !== true) {
-          return reject(jsonData);
+        if (response.status < 300 || jsonData.success === true) {
+          resolve(jsonData);
+          return;
         }
-        resolve(jsonData);
+        reject(jsonData);
       } catch (err) {
         Raven.captureException(err);
         reject({ success: false, msg: "L'api est inaccessible.", erreur: err });

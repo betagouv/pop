@@ -653,7 +653,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Edition d'une mosaïque d'image",
+        label: "Edifice actuel de conservation",
       }
     },
     NART: {
