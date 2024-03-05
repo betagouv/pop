@@ -216,7 +216,80 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
     });
 });
 
+router.post("/refreshThesaurus", async (req, res) => {
+  /* 	
+      #swagger.tags = ['Thesaurus']
+      #swagger.path = '/thesaurus/refreshThesaurus'
+      #swagger.description = "Rafraichissement des thesaurus"
+  */
+  const thesauruses = [
+    // Joconde
+    "th305",
+    "th291",
+    "th294",
+    "th306",
+    "th284",
+    "th290",
+    "th304",
+    "th287",
+    "th295",
+    "th298",
 
+    //Merimée & Palissy
+    "th369",
+
+    // Mérimée
+    "th368",
+    "th371",
+    "th366",
+    "th375",
+    "th380",
+    "th384",
+    "th383",
+    "th378",
+
+    // Palissy
+    "th361"
+  ]
+
+  res.status(200).send({ success: true, msg: "Thesaurus refreshing" })
+
+  const operations = []
+
+  for (let i = 0; i < thesauruses.length; i++) {
+    const thesoId = thesauruses[i];
+    console.log(`Fetching thesaurus ${thesoId}`)
+    try {
+      const thesoRes = await axios.get("https://opentheso.huma-num.fr/opentheso/api/all/theso", {
+        params: {
+          id: thesoId,
+          format: "jsonld"
+        }
+      })
+
+      operations.push({
+        deleteMany: {
+          filter: { idThesaurus: thesoId },
+        }
+      });
+
+      if (thesoRes.data != null && thesoRes.data.length > 0) {
+        const operationsToAdd = createThesaurusOperation(thesoId, thesoRes.data)
+        operations = operations.concat(operationsToAdd)
+        console.log(`Thesaurus ${thesoId} fetched. ${operationsToAdd.length} operations added`);
+      }
+    } catch (err) {
+      console.error(`Error fetching thesaurus ${thesoId}: ${err}`)
+    }
+  }
+
+  try {
+    await Thesaurus.bulkWrite(operations)
+    console.log("Thesaurus refreshed")
+  } catch (err) {
+    console.error(`Error bulk writing thesaurus: ${err}`)
+  }
+})
 
 async function updateThesaurus(idThesaurus, respData) {
   const data = respData;
@@ -224,6 +297,59 @@ async function updateThesaurus(idThesaurus, respData) {
   Thesaurus.deleteMany({ idThesaurus: idThesaurus }, function() {
     createThesaurus(idThesaurus, data)
   });
+}
+
+function createThesaurusOperation(idThesaurus, parseData) {
+  const operations = [];
+  //  const parseData = JSON.parse(data);
+  const propId = "@id";
+  const propAltLabel = "http://www.w3.org/2004/02/skos/core#altLabel";
+  const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
+  const today = moment.tz(new Date(), timeZone).format('YYYY-MM-DD');
+
+  parseData.forEach((el, i) => {
+    if (parseData[i][propAltLabel]) {
+      parseData[i][propAltLabel].forEach(element => {
+        const theso = {
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: true,
+          updatedAt: today
+        };
+
+        operations.push({
+          updateOne: {
+            filter: { idThesaurus },
+            update: { $set: theso },
+            upsert: true,
+          }
+        });
+      });
+    }
+
+    if (parseData[i][propPrefLabel]) {
+      parseData[i][propPrefLabel].forEach((element) => {
+        const theso = {
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: false,
+          updatedAt: today
+        };
+
+        operations.push({
+          updateOne: {
+            filter: { idThesaurus },
+            update: { $set: theso },
+            upsert: true,
+          }
+        });
+      });
+    }
+  });
+
+  return operations;
 }
 
 async function createThesaurus(idThesaurus, parseData) {
