@@ -433,7 +433,7 @@ router.get("/getAllThesaurusById", (req, res) => {
         isAltLabel: element.altLabel,
       }
     })
-    res.send({ statusCode: 202, body: JSON.stringify(values) });
+    res.status(202).send(values);
   });
 });
 
