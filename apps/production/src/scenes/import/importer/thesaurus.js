@@ -118,10 +118,8 @@ export function checkOpenTheso(notice) {
 const storageExceptionThesaurus = [];
 
 async function checkVocabulaireThesaurus(mappingField, value, base) {
-  console.log("checkVocabulaireThesaurus", mappingField, value, base);
   let arrayLabel = [];
   let message = "";
-
   const arrayIdThesaurus = THESAURUS_CONTROLE[base].id_list_theso;
 
   try {
@@ -199,8 +197,9 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
 
     if (foundValue) {
       // la saisie est présente dans le référentiel, retour du message ""
-      return message;
+      return "";
     }
+
 
     // si la liste est récupérée et la valeur est présente dans la liste
     if (arrayFilterWithValue.length > 0) {
@@ -219,13 +218,10 @@ async function checkVocabulaireThesaurus(mappingField, value, base) {
         if (arrayFilterWithValue[0].isAltLabel) {
           // On recherche le prefLabel par rapport à son identifiant ark
           const uri = arrayFilterWithValue[0].arc;
-          let idArk = uri.substr(uri.indexOf('ark:') + 4);
+          const idArk = uri.substr(uri.indexOf('ark:') + 4);
           try {
-            let resp = await callPrefLabel(idArk);
-            if (resp.statusCode == "200") {
-              let prefLabel = JSON.parse(resp.body).prefLabel;
-              message += `, la valeur [${prefLabel}] est la forme à préférer`;
-            }
+            const resp = await callPrefLabel(idArk);
+            message += `, la valeur [${resp.prefLabel}] est la forme à préférer`;
           } catch (exception) {
             // PrefLabel non trouvé, pas d'ajout de message
           }
