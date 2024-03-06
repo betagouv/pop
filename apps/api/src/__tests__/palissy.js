@@ -25,7 +25,7 @@ const { checkESIndex } = require("../controllers/utils");
 checkESIndex.mockImplementation(() => ({}));
 
 jest.mock("mongoosastic");
-const mongoosastic = require("mongoosastic");
+const mongoosastic = require("../mongoosastic.js");
 mongoosastic.mockImplementation(() => ({}));
 
 afterAll(() => mongoose.disconnect());

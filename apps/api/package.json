@@ -53,6 +53,7 @@
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.43",
     "mongoosastic": "~4.5.1",
+    "mongoosastic5": "npm:mongoosastic@^5.0.0",
     "mongoose": "^5.13.20",
     "mongoose-paginate": "^5.0.3",
     "multer": "^1.4.5-lts.1",

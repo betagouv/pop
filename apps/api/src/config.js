@@ -8,6 +8,7 @@ const secret = process.env.SECRET || "not-so-secret";
 const MAPBOX_API_SECRET_TOKEN = process.env.MAPBOX_API_SECRET_TOKEN;
 const MAPBOX_EXPIRATION_DELAY = process.env.MAPBOX_EXPIRATION_DELAY;
 const ID_PROD_APP = process.env.ID_PROD_APP
+const ovh = process.env.OVH === "true"
 
 module.exports = {
   mongoUrl,
@@ -18,5 +19,6 @@ module.exports = {
   secret,
   MAPBOX_API_SECRET_TOKEN,
   MAPBOX_EXPIRATION_DELAY,
-  ID_PROD_APP
+  ID_PROD_APP,
+  ovh,
 };
