@@ -301,7 +301,6 @@ async function updateThesaurus(idThesaurus, respData) {
 
 function createThesaurusOperation(idThesaurus, parseData) {
   const operations = [];
-  //  const parseData = JSON.parse(data);
   const propId = "@id";
   const propAltLabel = "http://www.w3.org/2004/02/skos/core#altLabel";
   const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";

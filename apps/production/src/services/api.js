@@ -358,7 +358,7 @@ class api {
   }
   // Récupération du prefLabel par l'identifiant Ark
   getPrefLabelByIdArk(IdArk) {
-    return request.getJSON(`/thesaurus/getPrefLabelByIdArk?id=${IdArk}`);
+    return request.fetchJSON("GET", `/thesaurus/getPrefLabelByIdArk?id=${IdArk}`);
   }
   // Récupération des thésaurus correspondant l'identifiant et à la saisie (autcomplétion - commence par)
   autocompleteThesaurus(thesaurusId, str) {
