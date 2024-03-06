@@ -250,7 +250,7 @@ export default class extends React.Component {
     const notice = this.props.notice;
     const obj = {
       name: title,
-      created_at: notice.PERI.length ? notice.PERI[0] : "",
+      created_at: notice.PERI != null && notice.PERI.length > 0 ? notice.PERI[0] : "",
       artform: notice.DOMN.length ? notice.DOMN[0] : "",
       image: image_preview,
       description: metaDescription,
