@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children, isValidElement, cloneElement } from "react";
 import { Row, Col, Container, Button } from "reactstrap";
 import Head from "next/head";
 import Link from "next/link";
@@ -111,7 +111,7 @@ export default class extends React.Component {
     this.state.display == false && this.setState({ display: true });
   }
 
-  buildUrl(name, chaine){
+  buildUrl(name, chaine) {
     let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([chaine]) })}`;
     return <a href={url} key={chaine} target="_blank">{chaine}</a>
   }
@@ -120,31 +120,50 @@ export default class extends React.Component {
   buildLinkRepr(v) {
     const name = "repr";
     let link = this.buildUrl(name, v.replace('#', ''));
-    if(v.indexOf('#') > -1) {
+    if (v.indexOf('#') > -1) {
       link = <React.Fragment><br /> {link} </React.Fragment>;
     }
     return link;
   }
 
+  intersperseReact(arr, separator) {
+    const result = []
+
+    Children.forEach(arr, (child, index) => {
+      if (isValidElement(child)) {
+        result.push(child)
+      } else {
+        result.push(createElement('text', { key: `item-${index}` }, child))
+      }
+
+      if (index < arr.length - 1) {
+        result.push(cloneElement(separator, { key: `separator-${index}` }))
+      }
+    })
+
+    return result
+  }
+
   linkRepr(value) {
     // Caractères possible dans la valeur renseignée
-    const regexPattern = new RegExp(/[(),;:]/g); 
+    const regexPattern = new RegExp(/[(),;:]/g);
     const arrayContent = [];
 
     for (let i = 0; i < value.length; i++) {
       if (regexPattern.test(value[i])) {
         const arraySplit = value[i].split(/[(),:;]/).filter(e => e != "");
-        arraySplit.forEach( v => arrayContent.push(this.buildLinkRepr(v)))
-        
+        arraySplit.forEach(v => arrayContent.push(this.buildLinkRepr(v)))
+
       } else {
         arrayContent.push(this.buildLinkRepr(value[i]));
       }
     }
-    return arrayContent.reduce((a, b) => [a, " ; ", b], [])
+    const res = this.intersperseReact(arrayContent, <React.Fragment> ; </React.Fragment>)
+    return res
   }
 
   // Display a list of links to authors
-  links (value, name) {
+  links(value, name) {
     //const author = this.props.notice.AUTR;
     if (!value) {
       return null;
@@ -157,16 +176,16 @@ export default class extends React.Component {
       return null;
     }
     const links = [];
-    value.forEach((val) => { 
+    value.forEach((val) => {
       if (val.indexOf('#') > -1) {
         if (links.length > 0) {
           links.push(', ')
-        } 
+        }
         val.split('#').forEach((el) => {
 
-          if('' !== el.trim()) {
+          if ('' !== el.trim()) {
             const url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([el]) })}`;
-  
+
             links.push(
               (
                 <div className="div-links">
@@ -177,21 +196,21 @@ export default class extends React.Component {
               )
             );
           }
-      
+
         });
       } else {
         let url = `/search/list?${queryString.stringify({ [name]: JSON.stringify([val]) })}`;
         if (links.length > 0) {
           links.push(', ')
-        } 
+        }
         links.push(
           <a href={url} key={val} target="_blank">
             {val}
           </a>
         );
-        
+
       }
-      
+
     });
     return <React.Fragment>{links}</React.Fragment>;
   }
@@ -244,7 +263,7 @@ export default class extends React.Component {
     let title_component = title;
 
     // M43260 - Prise en cmpte du # pour le retour à la ligne sur le titre de la notice
-    if(typeof title == "string" && title.indexOf('#') > -1){ 
+    if (typeof title == "string" && title.indexOf('#') > -1) {
       title_component = title.split('#').map((element) => <p>{element}</p>);
     }
 
@@ -269,7 +288,7 @@ export default class extends React.Component {
             textAlign: "center",
             borderRadius: "5px"
           }}
-          onClick={ () => trackDownload(`joconde_${notice.REF}.pdf`) }>
+          onClick={() => trackDownload(`joconde_${notice.REF}.pdf`)}>
           {({ blob, url, loading, error }) => (loading ? 'Construction du pdf...' : 'Téléchargement pdf')}
         </PDFDownloadLink>
       </div>
@@ -349,7 +368,7 @@ export default class extends React.Component {
                       "SREP"
                     ]}
                   />
-                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.INV.label} content={notice.INV} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.DOMN.label}
                     content={this.links(this.props.notice.DOMN, "domn")}
@@ -360,44 +379,44 @@ export default class extends React.Component {
                     content={this.links(this.props.notice.DENO, "deno")}
                     separator="#" upper={false}
                   />
-                  <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.APPL.label} content={notice.APPL} separator="#" upper={false} />
+                  <Field title={mapping.joconde.TITR.label} content={notice.TITR} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.AUTR.label}
                     content={this.links(this.props.notice.AUTR, "auteur")}
-                    separator="#" upper={false}/>
-                  <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" upper={false}/>
+                    separator="#" upper={false} />
+                  <Field title={mapping.joconde.PAUT.label} content={notice.PAUT} separator="#" upper={false} />
+                  <Field title={mapping.joconde.NSDA.label} content={notice.NSDA} separator="#" upper={false} />
+                  <Field title={mapping.joconde.ECOL.label} content={notice.ECOL} separator="#" upper={false} />
+                  <Field title={mapping.joconde.ATTR.label} content={notice.ATTR} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.PERI.label}
                     content={this.links(this.props.notice.PERI, "periode")}
                     separator="#" upper={false}
                   />
-                  <Field title={mapping.joconde.MILL.label} content={notice.MILL} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.MILL.label} content={notice.MILL} separator="#" upper={false} />
 
                   <Field title={mapping.joconde.EPOQ.label} content={notice.EPOQ} separator="#" upper={false} />
-                  <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.PEOC.label} content={notice.PEOC} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.TECH.label}
                     content={this.links(this.props.notice.TECH, "tech")}
                     separator="#" upper={false}
                   />
-                  <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" upper={false}/>
-                  { renderFieldRepr(mapping.joconde.REPR.label, this.linkRepr(this.props.notice.REPR)) }
+                  <Field title={mapping.joconde.DIMS.label} content={notice.DIMS} separator="#" upper={false} />
+                  <Field title={mapping.joconde.INSC.label} content={notice.INSC} separator="#" upper={false} />
+                  <Field title={mapping.joconde.PINS.label} content={notice.PINS} separator="#" upper={false} />
+                  <Field title={mapping.joconde.ONOM.label} content={notice.ONOM} separator="#" upper={false} />
+                  <Field title={mapping.joconde.DESC.label} content={notice.DESC} separator="#" addLink="true" upper={false} />
+                  {renderFieldRepr(mapping.joconde.REPR.label, this.linkRepr(this.props.notice.REPR))}
                   {/* <Field
                     title={mapping.joconde.REPR.label}
                     content={this.linkRepr(this.props.notice.REPR)}
                     separator="#"
                     upper={false}
                   /> */}
-                  <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.PREP.label} content={notice.PREP} separator="#" upper={false} />
+                  <Field title={mapping.joconde.DREP.label} content={notice.DREP} separator="#" upper={false} />
                   <Field title={mapping.joconde.SREP.label} content={notice.SREP} separator="#" upper={false} />
                   <Title
                     content="Contexte historique"
@@ -417,47 +436,47 @@ export default class extends React.Component {
                     ]}
                   />
                   <Field title={mapping.joconde.GENE.label} content={notice.GENE} separator="#" upper={false} />
-                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" upper={false}/>
-                  <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.HIST.label} content={notice.HIST} separator="#" addLink="true" upper={false} />
+                  <Field title={mapping.joconde.LIEUX.label} content={notice.LIEUX} separator="#" upper={false} />
+                  <Field title={mapping.joconde.PLIEUX.label} content={notice.PLIEUX} separator="#" upper={false} />
+                  <Field title={mapping.joconde.GEOHI.label} content={notice.GEOHI} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.UTIL.label}
                     content={this.links(this.props.notice.UTIL, "util")}
                     separator="#"
                     upper={false}
                   />
-                  <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.PERU.label} content={notice.PERU} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.MILU.label} content={notice.MILU} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DECV.label} content={notice.DECV} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.PDEC.label} content={notice.PDEC} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.PUTI.label} content={notice.PUTI} separator="#" upper={false} />
+                  <Field title={mapping.joconde.PERU.label} content={notice.PERU} separator="#" upper={false} />
+                  <Field title={mapping.joconde.MILU.label} content={notice.MILU} separator="#" upper={false} />
+                  <Field title={mapping.joconde.DECV.label} content={notice.DECV} separator="#" upper={false} />
+                  <Field title={mapping.joconde.PDEC.label} content={notice.PDEC} separator="#" upper={false} />
                   <Title
                     content="Informations juridiques"
                     notice={notice}
-                    fields={["STAT", "DACQ", "APTN", "DEPO", "DDPT", "ADPT", "LOCA","MANQUANT","MANQUANT_COM"]}
+                    fields={["STAT", "DACQ", "APTN", "DEPO", "DDPT", "ADPT", "LOCA", "MANQUANT", "MANQUANT_COM"]}
                   />
                   <Field title={mapping.joconde.STAT.label} content={notice.STAT} separator="#" upper={false} />
-                  <Field title={mapping.joconde.DACQ.label} content={notice.DACQ} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.APTN.label} content={notice.APTN} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DEPO.label} content={notice.DEPO} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.DACQ.label} content={notice.DACQ} separator="#" upper={false} />
+                  <Field title={mapping.joconde.APTN.label} content={notice.APTN} separator="#" upper={false} />
+                  <Field title={mapping.joconde.DEPO.label} content={notice.DEPO} separator="#" upper={false} />
+                  <Field title={mapping.joconde.DDPT.label} content={notice.DDPT} separator="#" upper={false} />
+                  <Field title={mapping.joconde.ADPT.label} content={notice.ADPT} separator="#" upper={false} />
                   <Field
                     title={mapping.joconde.LOCA.label}
                     content={this.links(this.props.notice.LOCA, "loca")}
                     separator="#" upper={false}
                   />
-                  <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} separator="#" upper={false}/>
-                  <Field title="" content={notice.MANQUANT_COM} separator="#" upper={false}/>
+                  <Field title={mapping.joconde.MANQUANT.label} content={notice.MANQUANT} separator="#" upper={false} />
+                  <Field title="" content={notice.MANQUANT_COM} separator="#" upper={false} />
                   <Title
                     content="Informations complémentaires"
                     notice={notice}
                     fields={["COMM", "EXPO", "BIBL"]}
                   />
-                  <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} separator="#" upper={false}/>
-                  <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" upper={false} addLink="true"/>
+                  <Field title={mapping.joconde.COMM.label} content={notice.COMM} separator="#" upper={false} />
+                  <Field title={mapping.joconde.EXPO.label} content={notice.EXPO} separator="#" upper={false} />
+                  <Field title={mapping.joconde.BIBL.label} content={notice.BIBL} separator="#" upper={false} addLink="true" />
                 </div>
               </Col>
               <Col md="4">
@@ -466,14 +485,14 @@ export default class extends React.Component {
                 <div className="sidebar-section info">
                   <h2>À propos de la notice</h2>
                   <div>
-                    <Field title={mapping.joconde.REF.label} content={notice.REF} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.BASE.label} content={notice.BASE} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.DMIS.label} content={notice.DMIS} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.DATA.label} content={notice.DATA} separator="#" upper={false}/>
-                    <Field title={mapping.joconde.LOCA3.label} content={notice.LOCA3} separator="#" upper={false}/>
+                    <Field title={mapping.joconde.REF.label} content={notice.REF} separator="#" upper={false} />
+                    <Field title={mapping.joconde.BASE.label} content={notice.BASE} separator="#" upper={false} />
+                    <Field title={mapping.joconde.DMIS.label} content={notice.DMIS} separator="#" upper={false} />
+                    <Field title={mapping.joconde.DMAJ.label} content={notice.DMAJ} separator="#" upper={false} />
+                    <Field title={mapping.joconde.REDA.label} content={notice.REDA} separator="#" upper={false} />
+                    <Field title={mapping.joconde.PHOT.label} content={notice.PHOT} separator="#" upper={false} />
+                    <Field title={mapping.joconde.DATA.label} content={notice.DATA} separator="#" upper={false} />
+                    <Field title={mapping.joconde.LOCA3.label} content={notice.LOCA3} separator="#" upper={false} />
                   </div>
 
                   <ContactUs contact={notice.CONTACT} REF={notice.REF} base="joconde" />
@@ -491,9 +510,9 @@ export default class extends React.Component {
   }
 }
 
-function handleClick(e) {    
-  e.preventDefault();   
-  window.open(e.target.href, '_blank');  
+function handleClick(e) {
+  e.preventDefault();
+  window.open(e.target.href, '_blank');
 }
 
 const SeeMore = ({ notice, museo }) => {
