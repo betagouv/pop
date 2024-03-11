@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import utils from "./utils"
 import mdf from "../../../assets/musee-de-france.png";
+const castToArray = utils.castToArray;
 
 export default ({ data }) => {
-  const image = data.IMG.length
+  const image = data.IMG != null && data.IMG.length > 0
     ? `${bucket_url}${data.IMG[0]}`
     : require("../../../assets/noimage.jpg");
 
@@ -23,10 +25,10 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.DOMN.join(", ")}</p>
-          <p>{data.DENO.join(", ")}</p>
-          <p>{data.AUTR.join(" ; ")}</p>
-          <p>{data.PERI.join(", ")}</p>
+          <p>{castToArray(data.DOMN).join(", ")}</p>
+          <p>{castToArray(data.DENO).join(", ")}</p>
+          <p>{castToArray(data.AUTR).join(" ; ")}</p>
+          <p>{castToArray(data.PERI).join(", ")}</p>
           <p>{loca}</p>
           <p>{data.INV}</p>
           <img src={mdf} className="producteur" />

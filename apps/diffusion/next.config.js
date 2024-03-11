@@ -6,7 +6,26 @@ const withPWA = require('next-pwa')({
   swSrc: 'service-worker.js'
 });
 
+function deleteLastSlash(url) {
+  if (url == null) return
+
+  if (url.slice(-1) === "/") {
+    return url.slice(0, -1);
+  }
+
+  return url;
+}
+
 module.exports = withPWA({
+  publicRuntimeConfig: {
+    apiUrl: deleteLastSlash(process.env.API_URL),
+    bucketUrl: process.env.BUCKET_URL,
+    popUrl: process.env.POP_URL,
+    eurelian: process.env.EURELIAN,
+  },
+  serverRuntimeConfig: {
+    apiUrl: deleteLastSlash(process.env.API_URL),
+  },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026

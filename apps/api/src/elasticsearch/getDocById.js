@@ -11,22 +11,25 @@ async function run() {
     .option("-i, --id [id]", "ID of the item")
     .parse(process.argv);
 
-  if (!program.id || !program.db) {
+  const opts = program.opts();
+
+  if (opts.id == null || opts.db == null) {
     console.error(chalk.red("You need to add doc id AND db (i.e. --db and --id)"));
     return;
   }
 
-  const available = await es.ping({ requestTimeout: 10000 });
-  if (!available) {
-    console.error(chalk.red("Elasticsearch not available."));
-    return;
+  try {
+    await es.ping();
+  } catch (err) {
+    console.error(err)
+    return
   }
 
   try {
     const res = await es.get({
-      index: program.db,
-      type: "_" + program.db,
-      id: program.id
+      index: opts.db,
+      // type: "_" + opts.db,
+      id: opts.id
     });
     console.log(res);
   } catch (e) {
