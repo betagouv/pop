@@ -7,6 +7,8 @@ const withPWA = require('next-pwa')({
 });
 
 function deleteLastSlash(url) {
+  if (url == null) return
+
   if (url.slice(-1) === "/") {
     return url.slice(0, -1);
   }
