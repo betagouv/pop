@@ -19,7 +19,7 @@ function deleteLastSlash(url) {
 module.exports = withPWA({
   publicRuntimeConfig: {
     apiUrl: deleteLastSlash(process.env.API_URL),
-    bucketUrl: process.env.BUCKET_URL,
+    bucketUrl: process.env.BUCKET_URL + "/",
     popUrl: process.env.POP_URL,
     eurelian: process.env.EURELIAN,
   },
