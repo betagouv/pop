@@ -7,6 +7,15 @@ const withPWA = require('next-pwa')({
 });
 
 module.exports = withPWA({
+  publicRuntimeConfig: {
+    apiUrl: process.env.NEXT_PUBLIC_API_URL,
+    bucketUrl: process.env.BUCKET_URL,
+    popUrl: process.env.POP_URL,
+    eurelian: process.env.EURELIAN,
+  },
+  serverRuntimeConfig: {
+    apiUrl: process.env.API_URL,
+  },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
