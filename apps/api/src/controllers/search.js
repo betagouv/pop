@@ -76,7 +76,6 @@ router.use("/:indices/_msearch", async (req, res) => {
     const jsonQueryBody = JSON.parse(jsonText);
 
     try {
-      // const results = await es.msearch({ body: jsonQueryBody, index: ['joconde', 'palissy', 'merimee', 'memoire', 'mnr', 'museo', 'enluminures', 'autor'] })
       const results = await es.msearch({ body: jsonQueryBody, index: req.params.indices.split(',') })
       return res.json(getResultInElasticSearch6CompatibilityMode(results.body));
     } catch (e) {
