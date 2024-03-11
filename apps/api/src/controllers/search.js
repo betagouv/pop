@@ -38,7 +38,7 @@ router.post("/scroll", (req, res) => {
   }
   const headers = { "Content-Type": "Application/json" };
   const opts = { host: esUrl, path, body, method: "POST", headers };
-  if(esPort !== "80"){
+  if (esPort !== "80") {
     opts.port = esPort;
   }
   aws4.sign(opts);
@@ -49,7 +49,7 @@ router.post("/scroll", (req, res) => {
     .end(opts.body || "");
 });
 
-router.use("/*/_msearch", async (req, res) => {
+router.use("/:indices/_msearch", async (req, res) => {
   if (ovh) {
     let opts = {
       host: esUrl,
@@ -63,6 +63,7 @@ router.use("/*/_msearch", async (req, res) => {
     }
 
     console.log("opts", opts);
+    console.log("paths", req.params.indices)
 
     // Si la requête ne provient pas de l'application production
     if (!req.headers.application || req.headers.application !== ID_PROD_APP) {
@@ -74,10 +75,9 @@ router.use("/*/_msearch", async (req, res) => {
     const jsonText = ndjsonToJsonText(opts.body)
     const jsonQueryBody = JSON.parse(jsonText);
 
-    console.log("jsonQueryBody", JSON.stringify(jsonQueryBody, undefined, 2));
-
     try {
-      const results = await es.msearch({ body: jsonQueryBody, index: ['joconde', 'palissy', 'merimee', 'memoire', 'mnr', 'museo', 'enluminures', 'autor'] })
+      // const results = await es.msearch({ body: jsonQueryBody, index: ['joconde', 'palissy', 'merimee', 'memoire', 'mnr', 'museo', 'enluminures', 'autor'] })
+      const results = await es.msearch({ body: jsonQueryBody, index: req.params.indices.split(',') })
       return res.json(getResultInElasticSearch6CompatibilityMode(results.body));
     } catch (e) {
       console.error(e);
@@ -94,15 +94,15 @@ router.use("/*/_msearch", async (req, res) => {
     };
 
     // Ajout du port sur l'environnement de dev
-    if(esPort !== "80"){
+    if (esPort !== "80") {
       opts.port = esPort;
     }
 
     // Si la requête ne provient pas de l'application production
-    if(!req.headers.application || req.headers.application !== ID_PROD_APP){
+    if (!req.headers.application || req.headers.application !== ID_PROD_APP) {
       opts = addFilterFields(req, opts);
     }
-    
+
     aws4.sign(opts);
 
     http
@@ -114,12 +114,12 @@ router.use("/*/_msearch", async (req, res) => {
   }
 });
 
-function addFilterFields(req, opts){
+function addFilterFields(req, opts) {
   let transformData = false;
-  let reqFilter = opts.body.split('\n').filter( val => val !== "").map((val) => {
+  let reqFilter = opts.body.split('\n').filter(val => val !== "").map((val) => {
     let obj = JSON.parse(val);
 
-    if(Object.keys(obj).includes('query')){
+    if (Object.keys(obj).includes('query')) {
       const listeNonDiffusable = [...listeNonDiffusablePalissy(), ...listeNonDiffusableMNR()];
       obj._source = {
         "excludes": listeNonDiffusable
@@ -137,7 +137,7 @@ function addFilterFields(req, opts){
     return JSON.stringify(obj);
   }).join('\n');
 
-  if(transformData){
+  if (transformData) {
     opts.body = reqFilter + '\n';
   }
 
@@ -148,16 +148,16 @@ function addFilterFields(req, opts){
  * Retourne les champs non diffusable pour Palissy
  * @returns array
  */
- function listeNonDiffusablePalissy(){
-  return ['ADRS2','COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
+function listeNonDiffusablePalissy() {
+  return ['ADRS2', 'COM2', 'EDIF2', 'EMPL2', 'INSEE2', 'LBASE2'];
 }
 
 /**
  * Retourne les champs non diffusable pour MNR
  * @returns array
  */
- function listeNonDiffusableMNR(){
-  return ['SALLES','RCL', 'NET', 'CARTELS'];
+function listeNonDiffusableMNR() {
+  return ['SALLES', 'RCL', 'NET', 'CARTELS'];
 }
 
 
