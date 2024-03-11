@@ -1,6 +1,13 @@
 import fetch from "isomorphic-unfetch";
-const { api_url } = require("../config");
+let { api_url: apiUrl, serverApiUrl } = require("../config");
 import Sentry from "./sentry";
+
+let api_url = apiUrl;
+if (typeof window === "undefined") {
+  console.log("Server side rendering", serverApiUrl);
+  api_url = serverApiUrl;
+}
+
 
 class api {
   getNotice(collection, ref) {
@@ -93,7 +100,7 @@ class api {
   getMuseoCollection(ref) {
     // Attenttion ! La requete dans "query" est sensible aux retours chariots et aux espaces, y compris ceux de l'indentation
     const query = `{"preference":"res"}
-    {"query":{"bool":{"must":[{"bool":{"should":[{"term":{"MUSEO.keyword":"`+ref+`"}}]}},{"match_all":{}}]}},"size":25,"from":0}
+    {"query":{"bool":{"must":[{"bool":{"should":[{"term":{"MUSEO.keyword":"`+ ref + `"}}]}},{"match_all":{}}]}},"size":25,"from":0}
 `;
 
     return new Promise((resolve, reject) => {
@@ -116,7 +123,7 @@ class api {
             reject("Probleme lors de la récupération de la donnée", e);
           });
       })
-      .catch(e => reject(e));;
+        .catch(e => reject(e));;
     });
   }
 
