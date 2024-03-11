@@ -8,7 +8,7 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA({
   publicRuntimeConfig: {
-    apiUrl: process.env.NEXT_PUBLIC_API_URL,
+    apiUrl: process.env.API_URL,
     bucketUrl: process.env.BUCKET_URL,
     popUrl: process.env.POP_URL,
     eurelian: process.env.EURELIAN,
