@@ -1,8 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const { esUrl, esPort, ID_PROD_APP } = require("../config.js");
+const { esUrl, esPort, ID_PROD_APP, ovh } = require("../config.js");
 const http = require("http");
 const aws4 = require("aws4");
+const { ndjsonToJsonText } = require("ndjson-to-json-text")
+const es = require("../elasticsearch.js")()
+
+/**
+ * 
+ * @param {*} results 
+ * @returns 
+ */
+function getResultInElasticSearch6CompatibilityMode(results) {
+  const responsesWithTotalModified = results.responses.map(resultItem => {
+    resultItem.hits.total = resultItem.hits.total.value;
+    return resultItem;
+  });
+  return {
+    responses: responsesWithTotalModified,
+  }
+}
+
 
 // Scroll API (required for full exports)
 // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html#search-request-scroll
@@ -31,34 +49,69 @@ router.post("/scroll", (req, res) => {
     .end(opts.body || "");
 });
 
-router.use("/*/_msearch", (req, res) => {
+router.use("/*/_msearch", async (req, res) => {
+  if (ovh) {
+    let opts = {
+      host: esUrl,
+      path: req.originalUrl.replace("/search", ""),
+      body: req.body
+    };
 
-  let opts = {
-    host: esUrl,
-    path: req.originalUrl.replace("/search", ""),
-    body: req.body,
-    method: "POST",
-    headers: { "Content-Type": "Application/x-ndjson" }
-  };
+    // Ajout du port sur l'environnement de dev
+    if (esPort !== "80") {
+      opts.port = esPort;
+    }
 
-  // Ajout du port sur l'environnement de dev
-  if(esPort !== "80"){
-    opts.port = esPort;
+    console.log("opts", opts);
+
+    // Si la requête ne provient pas de l'application production
+    if (!req.headers.application || req.headers.application !== ID_PROD_APP) {
+      opts = addFilterFields(req, opts);
+    }
+
+
+    // Convert NdJson to json object
+    const jsonText = ndjsonToJsonText(opts.body)
+    const jsonQueryBody = JSON.parse(jsonText);
+
+    console.log("jsonQueryBody", JSON.stringify(jsonQueryBody, undefined, 2));
+
+    try {
+      const results = await es.msearch({ body: jsonQueryBody, index: ['joconde', 'palissy', 'merimee', 'memoire', 'mnr', 'museo', 'enluminures', 'autor'] })
+      return res.json(getResultInElasticSearch6CompatibilityMode(results.body));
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({ success: false, msg: "Erreur lors de la requête." });
+    }
+
+  } else {
+    let opts = {
+      host: esUrl,
+      path: req.originalUrl.replace("/search", ""),
+      body: req.body,
+      method: "POST",
+      headers: { "Content-Type": "Application/x-ndjson" }
+    };
+
+    // Ajout du port sur l'environnement de dev
+    if(esPort !== "80"){
+      opts.port = esPort;
+    }
+
+    // Si la requête ne provient pas de l'application production
+    if(!req.headers.application || req.headers.application !== ID_PROD_APP){
+      opts = addFilterFields(req, opts);
+    }
+    
+    aws4.sign(opts);
+
+    http
+      .request(opts, res1 => {
+        const routedResponse = res1.pipe(res);
+        routedResponse.setHeader("Content-Type", "application/json");
+      })
+      .end(opts.body || "");
   }
-
-  // Si la requête ne provient pas de l'application production
-  if(!req.headers.application || req.headers.application !== ID_PROD_APP){
-    opts = addFilterFields(req, opts);
-  }
-  
-  aws4.sign(opts);
-
-  http
-    .request(opts, res1 => {
-      const routedResponse = res1.pipe(res);
-      routedResponse.setHeader("Content-Type", "application/json");
-    })
-    .end(opts.body || "");
 });
 
 function addFilterFields(req, opts){
@@ -74,10 +127,12 @@ function addFilterFields(req, opts){
       transformData = true;
     }
 
-    // Mantis 46413 - Les notices ayant le CONTIENT_IMAGE égales à "oui" doivent être affichées en premier
-    obj.sort = [{
-      "CONTIENT_IMAGE.keyword": { "order": "desc" }
-    }]
+    if (!ovh) { // semble ne pas être supporté par opensearch
+      // Mantis 46413 - Les notices ayant le CONTIENT_IMAGE égales à "oui" doivent être affichées en premier
+      obj.sort = [{
+        "CONTIENT_IMAGE.keyword": { "order": "desc" }
+      }]
+    }
 
     return JSON.stringify(obj);
   }).join('\n');

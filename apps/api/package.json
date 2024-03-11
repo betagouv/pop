@@ -32,6 +32,7 @@
   "homepage": "https://github.com/betagouv/pop",
   "dependencies": {
     "@mapbox/mapbox-sdk": "^0.15.3",
+    "@opensearch-project/opensearch": "^2.5.0",
     "@sentry/node": "^6.11.0",
     "aws-sdk": "^2.1354.0",
     "aws4": "1.11.0",
@@ -57,6 +58,7 @@
     "mongoose": "^5.13.20",
     "mongoose-paginate": "^5.0.3",
     "multer": "^1.4.5-lts.1",
+    "ndjson-to-json-text": "^1.0.2",
     "nodemailer": "^6.6.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

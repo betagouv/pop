@@ -4,7 +4,7 @@ import { bucket_url } from "../../../config.js";
 import mdf from "../../../assets/musee-de-france.png";
 
 export default ({ data }) => {
-  const image = data.IMG.length
+  const image = data.IMG != null && data.IMG.length > 0
     ? `${bucket_url}${data.IMG[0]}`
     : require("../../../assets/noimage.jpg");
 
@@ -23,10 +23,10 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div>
-          <p>{data.DOMN.join(", ")}</p>
-          <p>{data.DENO.join(", ")}</p>
-          <p>{data.AUTR.join(" ; ")}</p>
-          <p>{data.PERI.join(", ")}</p>
+          <p>{(data.DOMN ?? []).join(", ")}</p>
+          <p>{(data.DENO ?? []).join(", ")}</p>
+          <p>{(data.AUTR ?? []).join(" ; ")}</p>
+          <p>{(data.PERI ?? []).join(", ")}</p>
           <p>{loca}</p>
           <p>{data.INV}</p>
           <img src={mdf} className="producteur" />

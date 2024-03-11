@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const { mongoUrl } = require("./config.js");
+const { mongoUrl, dbName } = require("./config.js");
 
 mongoose.set('useUnifiedTopology', true); // Use the new ServerDiscover and Monitoring engine and prevent warning for use of the older.
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true }); // Get Mongoose to use the global promise library
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, dbName }); // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise; // Get the default connection
 let db = mongoose.connection;
 
