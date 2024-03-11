@@ -26,7 +26,7 @@ module.exports = env => {
         removeEmptyAttributes: true
       }
     }),
-    new Dotenv(),
+    new Dotenv({ systemvars: true, silent: true, defaults: true }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser',

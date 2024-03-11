@@ -56,7 +56,9 @@
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
     "deploy:prod": "npm install && npm run build:prod && eb deploy pop-production --profil POP",
     "deploy:staging": "npm install && npm run build:staging && eb deploy pop-production-staging --profil POP",
-    "test": "jest"
+    "test": "jest",
+    "fill-env": "node ./scripts/replace_process_env.js",
+    "ovh:start": "npm run fill-env && npm run start"
   },
   "prettier": {
     "printWidth": 100
