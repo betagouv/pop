@@ -13,7 +13,7 @@ let bucket_url = process.env.NEXT_PUBLIC_BUCKET_URL + '/';
 let pop_url = process.env.NEXT_PUBLIC_POP_URL;
 let eurelian = process.env.EURELIAN;
 let es_url = `${api_url}/search/`;
-const sentryDsn = process.env.SENTRY_DSN;
+const sentryDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 

@@ -8,7 +8,7 @@ const Sentry = require("@sentry/node");
 require('dotenv').config();
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   release: "pop-consultation@" + require("../../package.json").version,
   environment: process.env.NODE_ENV
 });
