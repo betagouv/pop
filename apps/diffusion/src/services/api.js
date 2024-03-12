@@ -1,12 +1,6 @@
 import fetch from "isomorphic-unfetch";
-let { api_url: apiUrl, serverApiUrl } = require("../config");
+let { api_url } = require("../config");
 import Sentry from "./sentry";
-
-let api_url = apiUrl;
-if (typeof window === "undefined") {
-  console.log("Server side rendering", serverApiUrl);
-  api_url = serverApiUrl;
-}
 
 
 class api {

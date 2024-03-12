@@ -1,13 +1,19 @@
-import getConfig from "next/config"
-const { publicRuntimeConfig, serverRuntimeConfig } = getConfig()
+function deleteLastSlash(url) {
+  if (url == null) return
 
-let api_url = publicRuntimeConfig.apiUrl;
-let serverApiUrl = serverRuntimeConfig.apiUrl;
-let bucket_url = publicRuntimeConfig.bucketUrl;
-let pop_url = publicRuntimeConfig.popUrl;
-let eurelian = publicRuntimeConfig.eurelian;
+  if (url.slice(-1) === "/") {
+    return url.slice(0, -1);
+  }
+
+  return url;
+}
+
+let api_url = deleteLastSlash(process.env.NEXT_PUBLIC_API_URL);
+let bucket_url = process.env.NEXT_PUBLIC_BUCKET_URL + '/';
+let pop_url = process.env.NEXT_PUBLIC_POP_URL;
+let eurelian = process.env.EURELIAN;
 let es_url = `${api_url}/search/`;
-const sentryDsn = publicRuntimeConfig.sentryDsn;
+const sentryDsn = process.env.SENTRY_DSN;
 
 let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 
