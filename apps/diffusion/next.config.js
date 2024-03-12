@@ -67,18 +67,18 @@ module.exports = withPWA({
 
     return config;
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: cspHeaders.replace(/\n/g, "")
-          },
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'Content-Security-Policy',
+  //           value: cspHeaders.replace(/\n/g, "")
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 });
 
