@@ -32,6 +32,7 @@ module.exports = withPWA({
     bucketUrl: process.env.BUCKET_URL + "/",
     popUrl: process.env.POP_URL,
     eurelian: process.env.EURELIAN,
+    sentryDsn: process.env.SENTRY_DSN,
   },
   serverRuntimeConfig: {
     apiUrl: deleteLastSlash(process.env.API_URL),
