@@ -10,14 +10,14 @@ FROM base as build
 COPY . .
 
 # Install project dependencies
-RUN npm ci && npm run build && npm ci --omit=dev
+RUN npm ci && npm run build
 
 FROM base 
 
 COPY --from=build /app /app
 
 # Set the command to start server
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 # Expose port
 EXPOSE 8081
