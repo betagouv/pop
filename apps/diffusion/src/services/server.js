@@ -7,7 +7,7 @@ const Sentry = require("@sentry/node");
 // Load environment variables from ".env" file.
 require('dotenv').config();
 
-Sentry.init({ 
+Sentry.init({
   dsn: process.env.SENTRY_DSN,
   release: "pop-consultation@" + require("../../package.json").version,
   environment: process.env.NODE_ENV
@@ -38,7 +38,7 @@ app.prepare().then(() => {
       req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http";
     const splitUrl = req.url.split('/');
     // Vérifie si un élément est vide dans l'url
-    if(splitUrl.indexOf("", 1) > -1){
+    if (splitUrl.indexOf("", 1) > -1) {
       res.statusCode = 404;
       handle(req, res, parsedUrl);
     } else if (isProdDomain && (isNotSecure || !req.headers.host.match(/^www/))) {
