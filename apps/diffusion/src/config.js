@@ -19,7 +19,6 @@ let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture
 
 module.exports = {
   api_url,
-  serverApiUrl,
   es_url,
   bucket_url,
   pop_url,
