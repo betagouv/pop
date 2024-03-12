@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Container, Alert } from "reactstrap";
-import Version from "../../../version.json";
+import Package from "../../package.json";
 import Cookies from 'universal-cookie';
 import API from '../../src/services/api';
 
@@ -15,7 +15,7 @@ export default class Layout extends React.Component {
     //Récupération du panier actuel dans les cookies
     const cookies = new Cookies()
     let currentBucket = cookies.get("currentBucket") || []
-    this.setState({countBucket: currentBucket.length});
+    this.setState({ countBucket: currentBucket.length });
     return currentBucket.length
   }
 
@@ -27,11 +27,11 @@ export default class Layout extends React.Component {
     this.isMaintenanceSite();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getNbNoticesInBucket();
   }
 
-  async isMaintenanceSite(){
+  async isMaintenanceSite() {
     const response = await API.getMaintenance();
     this.setState({ maintenance: response.maintenance });
   }
@@ -59,26 +59,26 @@ export default class Layout extends React.Component {
                 </Link>
               </div>
               {
-              <div>
-                <a
-                  href="https://framaforms.org/ameliorez-pop-1663925372"
-                  className="btn btn-outline-danger onPrintHide"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  Améliorez POP !
-                </a>
-              </div>
-               }
+                <div>
+                  <a
+                    href="https://framaforms.org/ameliorez-pop-1663925372"
+                    className="btn btn-outline-danger onPrintHide"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Améliorez POP !
+                  </a>
+                </div>
+              }
             </div>
           </Container>
           <Alert
-              style={{ marginBottom: "0px", textAlign: "center" }}
-              color="warning"
-              isOpen={this.state.maintenance == "TRUE"}
-              >
-              { message_maintenance }
-            </Alert>
+            style={{ marginBottom: "0px", textAlign: "center" }}
+            color="warning"
+            isOpen={this.state.maintenance == "TRUE"}
+          >
+            {message_maintenance}
+          </Alert>
         </div>
         <div className="header mobile-only">
           <div className="header-mobile-up">
@@ -87,20 +87,20 @@ export default class Layout extends React.Component {
                 <img src="/static/logo_MC.jpg" alt="Logo" className="md" />
               </a>
             </Link>
-            
+
             <div className="header-buttons-wrapper">
-               <div className="button-list">
+              <div className="button-list">
                 <a
-                    href="https://framaforms.org/ameliorez-pop-1663925372"
-                    target="_blank"
-                    rel="noopener"
-                  >
+                  href="https://framaforms.org/ameliorez-pop-1663925372"
+                  target="_blank"
+                  rel="noopener"
+                >
                   <img src="/static/questionnaire.svg" />
                 </a>
                 <Link href="/bucket">
                   <img src="/static/shopping-cart-2.svg" />
                 </Link>
-               </div>
+              </div>
             </div>
             <div className="mobile-separator"></div>
           </div>
@@ -143,7 +143,7 @@ export default class Layout extends React.Component {
             </li>
           </ul>
           <div className="version">
-            Pop version {Version.version}
+            Pop version {Package.version}
           </div>
         </div>
         <style jsx>{`
