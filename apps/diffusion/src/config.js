@@ -16,6 +16,7 @@ let bucket_url = publicRuntimeConfig.bucketUrl;
 let pop_url = publicRuntimeConfig.popUrl;
 let eurelian = publicRuntimeConfig.eurelian;
 let es_url = `${api_url}/search/`;
+let sentryDsn = publicRuntimeConfig.sentryDsn;
 
 
 let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
