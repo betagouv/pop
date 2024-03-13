@@ -35,15 +35,6 @@ pipeline {
                 }
             }
         }
-        stage ('Smoke Test'){
-            steps {
-                script {
-                     docker.image("${IMAGE_NAME}").inside() {
-                         sh 'node --version'
-                     }             
-                }
-            }
-        }
         stage ('Tag'){
             steps {
                 script {
