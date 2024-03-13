@@ -1,5 +1,5 @@
-// const Dotenv = require('dotenv-webpack');
-require("dotenv").config();
+const Dotenv = require('dotenv-webpack');
+// require("dotenv").config();
 
 // const withPWA = require('next-pwa')({
 //   dest: "public",
@@ -19,16 +19,16 @@ const cspHeaders = `
 `;
 
 module.exports = {
-  publicRuntimeConfig: {
-    apiUrl: process.env.API_URL,
-    bucketUrl: process.env.BUCKET_URL,
-    popUrl: process.env.POP_URL,
-    eurelian: process.env.EURELIAN,
-    sentryDsn: process.env.SENTRY_DSN,
-  },
-  serverRuntimeConfig: {
-    apiUrl: process.env.API_URL,
-  },
+  // publicRuntimeConfig: {
+  //   apiUrl: process.env.API_URL,
+  //   bucketUrl: process.env.BUCKET_URL,
+  //   popUrl: process.env.POP_URL,
+  //   eurelian: process.env.EURELIAN,
+  //   sentryDsn: process.env.SENTRY_DSN,
+  // },
+  // serverRuntimeConfig: {
+  //   apiUrl: process.env.API_URL,
+  // },
 
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
@@ -43,7 +43,7 @@ module.exports = {
     };
 
     // Load environment variables from ".env" file.
-    // config.plugins.push(new Dotenv());
+    config.plugins.push(new Dotenv());
 
     // Source: https://github.com/zeit/styled-jsx#nextjs
     config.module.rules.push({
