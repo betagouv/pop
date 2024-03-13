@@ -1,4 +1,5 @@
-const Dotenv = require('dotenv-webpack');
+// const Dotenv = require('dotenv-webpack');
+require("dotenv").config();
 
 // const withPWA = require('next-pwa')({
 //   dest: "public",
