@@ -41,8 +41,8 @@ export default class Memoire extends Notice {
         );
       }
     }
-    
-    if(body.INSEE && body.INSEE.length > 0){
+
+    if (body.INSEE && body.INSEE.length > 0) {
       body.INSEE.forEach((val) => {
         // INSEE must be 5 char or more.
         if (val && val.length < 5) {
@@ -69,16 +69,16 @@ export default class Memoire extends Notice {
     let checkRegion = true;
     // Si le producteur existe et égale MPP (cas d'une notice existante)
     // OU les champs PAYS et REG sont renseignés pour une nouvelle notice
-    if(body.PRODUCTEUR && "MPP" == body.PRODUCTEUR || foreignRegion){
+    if (body.PRODUCTEUR && "MPP" == body.PRODUCTEUR || foreignRegion) {
       checkRegion = Array.isArray(body.PAYS) && body.PAYS.length < 2 && String(body.PAYS[0]).toLowerCase() === "france";
     }
 
     // Region should exist.
     // M45079 - Ajout vérification sur le champ REG
     if (checkRegion && body.REG && body.REG.length > 0) {
-      let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";"); 
+      let arrayReg = Array.isArray(body.REG) ? body.REG : body.REG.split(";");
       arrayReg.forEach((val) => {
-        if(!regions.includes(val)){
+        if (!regions.includes(val)) {
           this._warnings.push(`Le champ REG doit être une région valide : ${regions.join(", ")}`);
         }
       });
