@@ -18,6 +18,16 @@ const cspHeaders = `
 `;
 
 module.exports = {
+  publicRuntimeConfig: {
+    apiUrl: process.env.API_URL,
+    bucketUrl: process.env.BUCKET_URL,
+    popUrl: process.env.POP_URL,
+    eurelian: process.env.EURELIAN,
+  },
+  serverRuntimeConfig: {
+    apiUrl: process.env.API_URL,
+  },
+
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
@@ -31,7 +41,7 @@ module.exports = {
     };
 
     // Load environment variables from ".env" file.
-    config.plugins.push(new Dotenv());
+    // config.plugins.push(new Dotenv());
 
     // Source: https://github.com/zeit/styled-jsx#nextjs
     config.module.rules.push({
