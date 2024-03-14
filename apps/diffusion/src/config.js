@@ -1,3 +1,6 @@
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
 function deleteLastSlash(url) {
   if (url == null) return
 
@@ -8,12 +11,12 @@ function deleteLastSlash(url) {
   return url;
 }
 
-let api_url = deleteLastSlash(process.env.API_URL);
-let bucket_url = process.env.BUCKET_URL;
-let pop_url = process.env.POP_URL;
-let eurelian = process.env.EURELIAN;
+let api_url = publicRuntimeConfig.api_url;
+let bucket_url = publicRuntimeConfig.bucket_url;
+let pop_url = publicRuntimeConfig.pop_url;
+let eurelian = publicRuntimeConfig.eurelian;
 let es_url = `${api_url}/search/`;
-const sentryDsn = process.env.SENTRY_DSN;
+const sentryDsn = publicRuntimeConfig.sentryDsn;
 
 let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 

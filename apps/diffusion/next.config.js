@@ -18,7 +18,25 @@ const cspHeaders = `
   object-src 'self' data:;
 `;
 
+function deleteLastSlash(url) {
+  if (url == null) return
+
+  if (url.slice(-1) === "/") {
+    return url.slice(0, -1);
+  }
+
+  return url;
+}
+
 module.exports = {
+  publicRuntimeConfig: {
+    api_url: process.env.API_URL,
+    es_url: process.env.ES_URL,
+    bucket_url: process.env.BUCKET_URL,
+    pop_url: process.env.POP_URL,
+    eurelian: process.env.EURELIAN,
+    sentryDsn: process.env.SENTRY_DSN,
+  },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
