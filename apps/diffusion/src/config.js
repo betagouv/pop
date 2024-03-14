@@ -9,7 +9,7 @@ function deleteLastSlash(url) {
 }
 
 let api_url = deleteLastSlash(process.env.API_URL);
-let bucket_url = deleteLastSlash(process.env.BUCKET_URL);
+let bucket_url = process.env.BUCKET_URL + "/";
 let pop_url = process.env.POP_URL;
 let eurelian = process.env.EURELIAN;
 let es_url = `${api_url}/search/`;
