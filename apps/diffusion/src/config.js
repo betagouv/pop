@@ -11,8 +11,8 @@ function deleteLastSlash(url) {
   return url;
 }
 
-let api_url = publicRuntimeConfig.api_url;
-let bucket_url = publicRuntimeConfig.bucket_url;
+let api_url = deleteLastSlash(publicRuntimeConfig.api_url);
+let bucket_url = publicRuntimeConfig.bucket_url + '/';
 let pop_url = publicRuntimeConfig.pop_url;
 let eurelian = publicRuntimeConfig.eurelian;
 let es_url = `${api_url}/search/`;
