@@ -10,6 +10,7 @@ FROM base as build
 COPY . .
 
 # Install project dependencies
+ENV OVH=true
 RUN npm ci && npm run build && npm ci --omit=dev
 
 FROM base 
