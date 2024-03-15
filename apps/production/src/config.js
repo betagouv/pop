@@ -1,4 +1,3 @@
-
 let api_url = process.env.API_URL;
 let es_url = `${api_url}/search`;
 let pop_url = process.env.POP_URL;
