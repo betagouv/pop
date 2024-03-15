@@ -1,10 +1,10 @@
 const express = require("express");
 const path = require("path");
 const hsts = require("hsts");
+
 require("dotenv").config();
+
 function forceHttps(res, req, next) {
-  console.log(req.get("Host"));
-  console.log(req.hostname);
   const isProdDomain = (req.get("Host") || "").match(/production\.pop\.culture\.gouv\.fr/);
   if (!req.secure && req.get("x-forwarded-proto") !== "https" && isProdDomain) {
     return res.redirect(302, "https://production.pop.culture.gouv.fr" + req.url);
@@ -22,7 +22,10 @@ console.log("START", new Date());
 const app = express();
 app.set('trust proxy', true);
 const port = 8081;
-app.use(forceHttps);
+
+if (process.env.OVH !== "true") {
+  app.use(forceHttps);
+}
 
 // app.use(setSecurityHeaders);
 app.disable('x-powered-by');
