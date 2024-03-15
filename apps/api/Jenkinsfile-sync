@@ -1,7 +1,7 @@
 pipeline {
     parameters {
         choice(name: 'AGENT', choices: ['dev', 'stg', 'prd'], description: 'Jenkins agent to use')
-        choice(name: 'ENVIRONNEMENT', choices: ['dev', 'stg', 'prd'], description: 'Environnement cible')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'stg', 'prd'], description: 'Environnement cible')
         string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
         string(name: 'CHUNKS', defaultValue: '200', description: 'Chunks')
         string(name: 'COLLECTIONS', defaultValue: 'joconde,memoire,merimee,mnr,palissy,import,museo,autor,enluminures', description: 'Collections MongoDB à synchroniser')
