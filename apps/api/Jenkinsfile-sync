@@ -19,10 +19,10 @@ pipeline {
         REGISTRY_DOMAIN = "${params.ENVIRONMENT == "dev" ? "atnum" : "atnum-release-publisher"}"
         APPLICATION = "pop-api"
         IMAGE = "${env.MAIN_DOCKER_REGISTRY_HOST}/${env.DOMAIN}/${env.APPLICATION}:${env.TAG}"
-        DB_CREDS = credentials("pop-${params.ENVIRONNEMENT}-db-app-creds")
+        DB_CREDS = credentials("pop-${params.ENVIRONMENT}-db-app-creds")
         DB_HOST = "${params.DB_HOST}"
         DB_NAME = "pop"
-        ES_CREDS = credentials("pop-${params.ENVIRONNEMENT}-search-app-creds")
+        ES_CREDS = credentials("pop-${params.ENVIRONMENT}-search-app-creds")
         ES_HOST = "${params.ES_HOST}"
         COLLECTIONS = "${params.COLLECTIONS}"
         CHUNKS = "${params.CHUNKS}"
