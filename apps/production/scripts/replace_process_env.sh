@@ -4,7 +4,7 @@ replace_string() {
 
 	echo "Replacing $input by $replace_by"
 
-	grep -Rl "${input}" ./build | xargs -i@ sed -i "s|$input|$replace_by|g" @
+	grep -rl "${input}" ./build | xargs -i@ sed -i "s|$input|$replace_by|g" @
 }
 
 replace_string "OVERRIDE_API_URL" "$API_URL"
