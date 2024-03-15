@@ -53,6 +53,7 @@ function main() {
   findAndReplaceInDir("OVERRIDE_API_URL", process.env.API_URL, dir)
   findAndReplaceInDir("OVERRIDE_POP_URL", process.env.POP_URL, dir)
   findAndReplaceInDir("OVERRIDE_BUCKET_URL", process.env.BUCKET_URL, dir)
+  findAndReplaceInDir("OVERRIDE_PUBLIC_URL", process.env.PUBLIC_URL, dir)
 }
 
 main()
