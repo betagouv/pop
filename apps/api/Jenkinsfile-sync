@@ -45,7 +45,7 @@ pipeline {
                                 ES_USERNAME="${ES_CREDS_USR}" \
                                 ES_PASSWORD="${ES_CREDS_PSW}" \
                                 DB_NAME="${DB_NAME}" \
-                                node /app/src/elasticsearch/sync-v7.js --force -c ${CHUNKS} -i ${COLLECTIONS} -q'
+                                node /app/src/elasticsearch/sync.js --force -c ${CHUNKS} -i ${COLLECTIONS} -q'
                         }
                     }
                 }
