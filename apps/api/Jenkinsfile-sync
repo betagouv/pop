@@ -26,7 +26,7 @@ pipeline {
         ES_HOST = "${params.ES_HOST}"
         COLLECTIONS = "${params.COLLECTIONS}"
         CHUNKS = "${params.CHUNKS}"
-        AGENT = "${AGENT}"
+        AGENT = "${params.AGENT}"
     }
 
     agent {
