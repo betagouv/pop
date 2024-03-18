@@ -71,7 +71,7 @@ async function run() {
         try {
           await es.ping();
         } catch (e) {
-          console.error(e.meta.meta);
+          console.error(e);
           throw new Error(`Failed to locate ping elasticsearch`, e);
         }
       }
