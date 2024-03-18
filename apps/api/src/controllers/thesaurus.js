@@ -307,12 +307,12 @@ function createThesaurusOperation(idThesaurus, parseData) {
   const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
   const today = moment.tz(new Date(), timeZone).format('YYYY-MM-DD');
 
-  parseData.forEach((el, i) => {
-    if (parseData[i][propAltLabel]) {
-      parseData[i][propAltLabel].forEach(element => {
+  parseData.forEach((el) => {
+    if (el[propAltLabel]) {
+      el[propAltLabel].forEach(element => {
         const theso = {
           idThesaurus: idThesaurus,
-          arc: parseData[i][propId],
+          arc: el[propId],
           value: element["@value"],
           altLabel: true,
           updatedAt: today
@@ -320,7 +320,7 @@ function createThesaurusOperation(idThesaurus, parseData) {
 
         operations.push({
           updateOne: {
-            filter: { idThesaurus, value: element["@value"] },
+            filter: { idThesaurus, arc: el[propId] },
             update: { $set: theso },
             upsert: true,
           }
@@ -328,11 +328,11 @@ function createThesaurusOperation(idThesaurus, parseData) {
       });
     }
 
-    if (parseData[i][propPrefLabel]) {
-      parseData[i][propPrefLabel].forEach((element) => {
+    if (el[propPrefLabel]) {
+      el[propPrefLabel].forEach((element) => {
         const theso = {
           idThesaurus: idThesaurus,
-          arc: parseData[i][propId],
+          arc: el[propId],
           value: element["@value"],
           altLabel: false,
           updatedAt: today
@@ -340,7 +340,7 @@ function createThesaurusOperation(idThesaurus, parseData) {
 
         operations.push({
           updateOne: {
-            filter: { idThesaurus, value: element["@value"] },
+            filter: { idThesaurus, arc: el[propId] },
             update: { $set: theso },
             upsert: true,
           }

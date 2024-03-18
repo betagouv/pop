@@ -7,7 +7,10 @@ const Schema = new mongoose.Schema(
       type: String,
       index: true,
     },
-    arc: String,
+    arc: {
+      type: String,
+      index: true,
+    },
     value: String,
     altLabel: Boolean,
     updatedAt: String
