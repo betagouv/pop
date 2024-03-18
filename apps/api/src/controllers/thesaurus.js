@@ -254,12 +254,6 @@ router.post("/refreshThesaurus", async (req, res) => {
 
   res.status(200).send({ success: true, msg: "Thesaurus refreshing" })
 
-  await Thesaurus.bulkWrite(thesauruses.map((thesoId) => ({
-    deleteMany: {
-      filter: { idThesaurus: thesoId }
-    }
-  })))
-
   const operations = []
 
   for (let i = 0; i < thesauruses.length; i++) {
@@ -282,6 +276,12 @@ router.post("/refreshThesaurus", async (req, res) => {
       console.error(`Error fetching thesaurus ${thesoId}: ${err}`)
     }
   }
+
+  await Thesaurus.bulkWrite(thesauruses.map((thesoId) => ({
+    deleteMany: {
+      filter: { idThesaurus: thesoId }
+    }
+  })))
 
   try {
     console.log(`Bulk writing ${operations.length} to thesaurus`)
@@ -320,7 +320,7 @@ function createThesaurusOperation(idThesaurus, parseData) {
 
         operations.push({
           updateOne: {
-            filter: { idThesaurus, arc: el[propId] },
+            filter: { idThesaurus, value: element["@value"] },
             update: { $set: theso },
             upsert: true,
           }
@@ -340,7 +340,7 @@ function createThesaurusOperation(idThesaurus, parseData) {
 
         operations.push({
           updateOne: {
-            filter: { idThesaurus, arc: el[propId] },
+            filter: { idThesaurus, value: element["@value"] },
             update: { $set: theso },
             upsert: true,
           }

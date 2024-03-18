@@ -11,7 +11,10 @@ const Schema = new mongoose.Schema(
       type: String,
       index: true,
     },
-    value: String,
+    value: {
+      type: String,
+      index: true,
+    },
     altLabel: Boolean,
     updatedAt: String
   },
