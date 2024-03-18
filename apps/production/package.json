@@ -53,7 +53,7 @@
   "scripts": {
     "start": "node src/server/index.js",
     "build": "NODE_ENV=production webpack --config webpack.build.config.js --env NODE_OPTIONS=--max_old_space_size=2048",
-    "dev": "webpack-dev-server --config webpack.dev.config.js --open",
+    "dev": "webpack-dev-server --config webpack.dev.config.js",
     "deploy:prod": "npm install && npm run build:prod && eb deploy pop-production --profil POP",
     "deploy:staging": "npm install && npm run build:staging && eb deploy pop-production-staging --profil POP",
     "test": "jest",
