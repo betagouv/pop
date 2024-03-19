@@ -13,6 +13,13 @@ const swaggerDocument = require('./swagger/swagger_ui.json');
 
 app.enable("trust proxy");
 
+app.use(function(req, res, next) {
+  req.setTimeout(600000, function() {
+    next(new Error('Request Timeout'));
+  });
+  next();
+})
+
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Parse the ndjson as text for ES proxy
