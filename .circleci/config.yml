@@ -406,6 +406,7 @@ jobs:
       - deploy_api:
           eb_deploy: pop-api
           app_name: pop-api
+          domain: pop-api.eu-west-3.elasticbeanstalk.com
   deploy_diffusion_prod:
     executor: docker_python
     steps:
