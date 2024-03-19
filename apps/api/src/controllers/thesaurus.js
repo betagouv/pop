@@ -204,6 +204,7 @@ router.get("/getThesaurusById", /*passport.authenticate("jwt", { session: false 
   return axios.get(`https://opentheso.huma-num.fr/opentheso/api/all/theso?id=${thesaurusId}&format=jsonld`)
     .then((response) => {
       if (response && (response.status === 200 || response.status === 202) && response.data.length > 0) {
+        updateThesaurus(thesaurusId, response.data);
         res.status(200).send(response.data);
       } else {
         res.status(401).send(`Aucun thésaurus trouvé pour l'identifiant ${thesaurusId}`);
@@ -291,6 +292,14 @@ router.post("/refreshThesaurus", async (req, res) => {
   }
 })
 
+async function updateThesaurus(idThesaurus, respData) {
+  const data = respData;
+
+  Thesaurus.deleteMany({ idThesaurus: idThesaurus }, function() {
+    createThesaurus(idThesaurus, data)
+  });
+}
+
 function createThesaurusOperation(idThesaurus, parseData) {
   const operations = [];
   const propId = "@id";
@@ -341,6 +350,45 @@ function createThesaurusOperation(idThesaurus, parseData) {
   });
 
   return operations;
+}
+
+async function createThesaurus(idThesaurus, parseData) {
+  const promises = [];
+  //  const parseData = JSON.parse(data);
+  const propId = "@id";
+  const propAltLabel = "http://www.w3.org/2004/02/skos/core#altLabel";
+  const propPrefLabel = "http://www.w3.org/2004/02/skos/core#prefLabel";
+  const today = moment.tz(new Date(), timeZone).format('YYYY-MM-DD');
+
+  parseData.forEach((el, i) => {
+    if (parseData[i][propAltLabel]) {
+      parseData[i][propAltLabel].forEach(element => {
+        let theso = new Thesaurus({
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: true,
+          updatedAt: today
+        });
+        promises.push(theso.save());
+      });
+    }
+
+    if (parseData[i][propPrefLabel]) {
+      parseData[i][propPrefLabel].forEach((element) => {
+        let theso = new Thesaurus({
+          idThesaurus: idThesaurus,
+          arc: parseData[i][propId],
+          value: element["@value"],
+          altLabel: false,
+          updatedAt: today
+        });
+        promises.push(theso.save());
+      });
+    }
+  });
+
+  await Promise.all(promises);
 }
 
 router.get("/autocompleteByIdthesaurusAndValue", passport.authenticate("jwt", { session: false }), (req, res) => {
