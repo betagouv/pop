@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const compression = require('compression');
 require("./passport")(passport);
 require("./mongo");
 
@@ -20,6 +21,7 @@ app.use(function(req, res, next) {
   next();
 })
 
+app.use(compression())
 app.use(bodyParser.json({ limit: "50mb" }));
 
 // Parse the ndjson as text for ES proxy
