@@ -5,7 +5,7 @@
     "title": "POP Api",
     "description": "Documentation sur les webservices de l'application Api"
   },
-  "host": "api.pop.culture.gouv.fr",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -131,9 +131,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -232,6 +229,17 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -993,6 +1001,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1095,6 +1106,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -2320,6 +2334,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -2363,6 +2380,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -2415,6 +2435,9 @@
                 },
                 "museofile": {
                   "example": "any"
+                },
+                "isBloqued": {
+                  "example": "any"
                 }
               }
             }
@@ -2426,6 +2449,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "403": {
             "description": "Forbidden"
@@ -2453,6 +2479,9 @@
                 "email": {
                   "example": "any"
                 },
+                "role": {
+                  "example": "any"
+                },
                 "nom": {
                   "example": "any"
                 },
@@ -2463,9 +2492,6 @@
                   "example": "any"
                 },
                 "group": {
-                  "example": "any"
-                },
-                "role": {
                   "example": "any"
                 },
                 "museofile": {

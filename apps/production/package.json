@@ -52,11 +52,13 @@
   },
   "scripts": {
     "start": "node src/server/index.js",
-    "build": "NODE_ENV=production webpack --config webpack.build.config.js --env NODE_OPTIONS=--max_old_space_size=2048 ",
-    "dev": "webpack-dev-server --config webpack.dev.config.js --open",
+    "build": "NODE_ENV=production webpack --config webpack.build.config.js --env NODE_OPTIONS=--max_old_space_size=2048",
+    "dev": "webpack-dev-server --config webpack.dev.config.js",
     "deploy:prod": "npm install && npm run build:prod && eb deploy pop-production --profil POP",
     "deploy:staging": "npm install && npm run build:staging && eb deploy pop-production-staging --profil POP",
-    "test": "jest"
+    "test": "jest",
+    "fill-env": "sh ./scripts/replace_process_env.sh",
+    "ovh:start": "npm run fill-env && npm run start"
   },
   "prettier": {
     "printWidth": 100

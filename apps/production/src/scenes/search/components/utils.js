@@ -4,26 +4,26 @@ import { Alert } from "reactstrap";
 
 function generateLoca(notice) {
   const arr = [];
-  if (Array.isArray(notice.REG) && notice.REG.length > 0){ 
-    for(let i=0; i<notice.REG.length; i++){
+  if (Array.isArray(notice.REG) && notice.REG.length > 0) {
+    for (let i = 0; i < notice.REG.length; i++) {
       arr.push(notice.REG[i]);
     }
   }
-  if (Array.isArray(notice.DPT) && notice.DPT.length > 0){
-    for(let i=0; i<notice.DPT.length; i++){
+  if (Array.isArray(notice.DPT) && notice.DPT.length > 0) {
+    for (let i = 0; i < notice.DPT.length; i++) {
       arr.push(departmentText(notice.DPT[i]));
     }
   }
 
   //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
   if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
-    if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
-      for(let i=0; i<notice.WCOM.length; i++){
+    if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0) {
+      for (let i = 0; i < notice.WCOM.length; i++) {
         arr.push(notice.WCOM[i]);
       }
     }
     else {
-      for(let i=0; i<notice.COM.length; i++){
+      for (let i = 0; i < notice.COM.length; i++) {
         arr.push(notice.COM[i]);
       }
     }
@@ -220,14 +220,14 @@ function toFrenchRegex(text) {
 }
 
 function pagination(total, itemsPerPage, page, setPage) {
-  const titles = { 
+  const titles = {
     previousPage: "Page précédente",
     nextPage: "Page suivante",
     firstPage: "Première page",
     lastPage: "Dernière page"
   }
   const pagination = (
-    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} toolTipsBtn={titles}/>
+    <Pagination onChange={p => setPage(p)} total={total} itemsPerPage={itemsPerPage} page={page} toolTipsBtn={titles} />
   );
   if (page === 1000) {
     return (
@@ -427,7 +427,7 @@ function useEventListener(eventName, handler, element) {
   // ... without us needing to pass it in effect deps array ...
   // ... and potentially cause effect to re-run every render.
   useEffect(() => {
-    if(!element){
+    if (!element) {
       element = window;
     }
     savedHandler.current = handler;
@@ -454,12 +454,12 @@ function useEventListener(eventName, handler, element) {
 /**
  * Gestion du bouton pour les recherches
  */
-let onKeyDownCall = () => {};
+let onKeyDownCall = () => { };
 
-const customSearchBtn = ({onClickCall}) => {
+const customSearchBtn = ({ onClickCall }) => {
   onKeyDownCall = onClickCall;
   useEventListener('keydown', handler);
-  return (<button type="button" title="Rechercher" onClick={() => onClickCall() }></button>);
+  return (<button type="button" title="Rechercher" onClick={() => onClickCall()}></button>);
 }
 
 function handler({ key }) {
@@ -468,6 +468,19 @@ function handler({ key }) {
   }
 }
 
+function castToArray(data) {
+  if (data == null) {
+    return []
+  }
+
+  if (typeof data === "string") {
+    return data === "" ? [] : [data];
+  }
+
+  return data;
+}
+
+
 export default {
   pagination,
   generateLoca,
@@ -475,5 +488,6 @@ export default {
   toFrenchRegex,
   operators,
   useEventListener,
-  customSearchBtn
+  customSearchBtn,
+  castToArray,
 };

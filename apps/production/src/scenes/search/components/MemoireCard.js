@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { bucket_url } from "../../../config.js";
+import utils from "./utils";
 import mh from "../../../assets/mh.png";
 import mpp from "../../../assets/mpp.png";
 import inv from "../../../assets/inventaire.jpg";
+const castToArray = utils.castToArray;
 
 export default ({ data }) => {
   let image = "";
@@ -42,7 +44,7 @@ export default ({ data }) => {
   ]);
 
   const contentWcomOrCom = data.WCOM && data.WCOM.length > 0 ? data.WCOM : data.COM;
-  const contentWadrsOrAdresse = data.WADRS && data.WADRS.length > 0 ? data.WADRS  : data.ADRESSE;
+  const contentWadrsOrAdresse = data.WADRS && data.WADRS.length > 0 ? data.WADRS : data.ADRESSE;
 
   const contentLoca = joinData([
     data.PAYS,
@@ -74,13 +76,13 @@ export default ({ data }) => {
           <span>{data.REF}</span>
         </div>
         <div style={{ maxWidth: "80%" }}>
-          <p style={{ whiteSpace: "initial" }}> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : "+data.AUTOEU : ""}</p>
+          <p style={{ whiteSpace: "initial" }}> {data.AUTOEU && data.AUTOEU != "" ? "Auteur de l’œuvre représentée : " + data.AUTOEU : ""}</p>
           <p style={{ whiteSpace: "initial" }}>{loc}</p>
           <p style={{ whiteSpace: "initial" }}>{data.TYPDOC}</p>
-          <p style={{ whiteSpace: "initial" }}>{data.AUTP.join(', ')}</p>
+          <p style={{ whiteSpace: "initial" }}>{castToArray(data.AUTP).join(', ')}</p>
           <p style={{ whiteSpace: "initial" }}>{data.DATPV}</p>
           <p style={{ whiteSpace: "initial" }}>{contentSerieTitre}</p>
-          <p style={{ whiteSpace: "initial" }}>{data.COPY}</p>    
+          <p style={{ whiteSpace: "initial" }}>{data.COPY}</p>
         </div>
         <span>{productorImage(data.PRODUCTEUR)}</span>
       </div>

@@ -1,0 +1,57 @@
+pipeline {
+
+    parameters {
+        choice(name: 'AGENT', choices: ['dev'], description: 'Jenkins agent to use')
+        string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+    }
+        
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    environment {
+        TAG = "${params.TAG}"
+        DOMAIN = "atnum"
+        APPLICATION = "pop-api"
+        APP_VERSION = "0.1.0"
+        IMAGE_NAME = "${env.MAIN_DOCKER_REGISTRY_HOST}/${DOMAIN}/${APPLICATION}:${TAG}"
+        BASE_IMAGE_TAG = "latest"
+    }
+
+    agent { label "${params.AGENT}" }
+
+    stages {
+        stage ('Build'){
+            steps {
+                script {
+                    dir("apps/api/") {
+                        def now = new Date()
+                        def now_str = now.format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", TimeZone.getTimeZone('UTC'))
+                        def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                        docker.withRegistry("https://${env.MAIN_DOCKER_REGISTRY_HOST}", "main-registry-robot-${DOMAIN}") {
+                            def image = docker.build("${IMAGE_NAME}", "--build-arg APP_VERSION=${APP_VERSION} --build-arg CREATED_AT=${now_str} --build-arg SRC_REF=${shortCommit} .")
+                        }
+                    }
+                }
+            }
+        }
+        stage ('Tag'){
+            steps {
+                script {
+                    def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    def gitBranch =  env.GIT_BRANCH.replaceAll("origin/", "")
+                    def branch = gitBranch.replaceAll("[^a-zA-Z0-9]+","-")
+                    def image = docker.image("${IMAGE_NAME}")
+                    docker.withRegistry("https://${env.MAIN_DOCKER_REGISTRY_HOST}", "main-registry-robot-${DOMAIN}") {
+                        //image.push()
+                        image.push("latest")
+                        image.push(shortCommit)
+                        image.push(branch)
+                        image.push("${TAG}")
+                    }                    
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,56 @@
+pipeline {
+    parameters {
+        choice(name: 'AGENT', choices: ['dev', 'stg', 'prd'], description: 'Jenkins agent to use')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'stg', 'prd'], description: 'Environnement cible')
+        string(name: 'TAG', defaultValue: 'snapshot', description: 'Image tag')
+        string(name: 'CHUNKS', defaultValue: '200', description: 'Chunks')
+        string(name: 'COLLECTIONS', defaultValue: 'joconde,memoire,merimee,mnr,palissy,import,museo,autor,enluminures', description: 'Collections MongoDB à synchroniser')
+        string(name: "DB_HOST", defaultValue: "mongodb-ce36dae4-o9fc946a2.database.cloud.ovh.net", description: "url de la database")
+        string(name: "ES_HOST", defaultValue: "https://opensearch-ce60a47d-o9fc946a2.database.cloud.ovh.net", description: "url du open search")
+    }
+        
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    environment {
+        TAG = "${params.TAG}"
+        DOMAIN = "${params.ENVIRONMENT == "dev" ? "atnum" : "atnum-release"}"
+        REGISTRY_DOMAIN = "${params.ENVIRONMENT == "dev" ? "atnum" : "atnum-release-publisher"}"
+        APPLICATION = "pop-api"
+        IMAGE = "${env.MAIN_DOCKER_REGISTRY_HOST}/${env.DOMAIN}/${env.APPLICATION}:${env.TAG}"
+        DB_CREDS = credentials("pop-${params.ENVIRONMENT}-db-app-creds")
+        DB_HOST = "${params.DB_HOST}"
+        DB_NAME = "pop"
+        ES_CREDS = credentials("pop-${params.ENVIRONMENT}-search-app-creds")
+        ES_HOST = "${params.ES_HOST}"
+        COLLECTIONS = "${params.COLLECTIONS}"
+        CHUNKS = "${params.CHUNKS}"
+        AGENT = "${params.AGENT}"
+    }
+
+    agent {
+        label "${AGENT}"
+    }
+
+    stages {
+        stage('Run sync') {
+            steps {
+                script {
+                    docker.withRegistry("https://${env.MAIN_DOCKER_REGISTRY_HOST}", "main-registry-robot-${REGISTRY_DOMAIN}") {
+                        docker.image("${IMAGE}").inside() {
+                            sh 'DB_ENDPOINT="mongodb+srv://${DB_CREDS_USR}:${DB_CREDS_PSW}@${DB_HOST}?replicaSet=replicaset&tls=true" \
+                                ES_ENDPOINT="${ES_HOST}" \
+                                ES_PORT=20184 \
+                                ES_USERNAME="${ES_CREDS_USR}" \
+                                ES_PASSWORD="${ES_CREDS_PSW}" \
+                                DB_NAME="${DB_NAME}" \
+                                OVH="true" \
+                                node /app/src/elasticsearch/sync.js --force -c ${CHUNKS} -i ${COLLECTIONS} -q'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

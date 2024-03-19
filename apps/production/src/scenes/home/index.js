@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "reactstrap";
-import Version from "../../../../version.json";
+import Package from "../../../package.json";
 import "./index.css";
 
 export default class Home extends React.Component {
@@ -28,7 +28,7 @@ export default class Home extends React.Component {
             </ul>
           </div>
           <div className="version">
-            Pop version {Version.version}            
+            Pop version {Package.version}
           </div>
         </Container>
       </div>

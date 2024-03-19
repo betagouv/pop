@@ -3,9 +3,18 @@ var mongoosePaginate = require("mongoose-paginate");
 
 const Schema = new mongoose.Schema(
   {
-    idThesaurus: String,
-    arc: String,
-    value: String,
+    idThesaurus: {
+      type: String,
+      index: true,
+    },
+    arc: {
+      type: String,
+      index: true,
+    },
+    value: {
+      type: String,
+      index: true,
+    },
     altLabel: Boolean,
     updatedAt: String
   },

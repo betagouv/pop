@@ -26,7 +26,7 @@ module.exports = env => {
         removeEmptyAttributes: true
       }
     }),
-    new Dotenv(),
+    process.env.OVH === "true" ? new Dotenv({ path: "./.env.defaults" }) : new Dotenv(),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
       process: 'process/browser',
@@ -106,7 +106,7 @@ module.exports = env => {
           test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
           type: 'asset/resource',
           generator: {
-            filename: '[name].[hash:8].[ext]',
+            filename: '[name].[hash:8][ext]',
           },
         },
         {

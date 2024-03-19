@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var mongoosePaginate = require("mongoose-paginate");
-var mongoosastic = require("mongoosastic");
+var mongoosastic = require("../mongoosastic.js");
 var getElasticInstance = require("../elasticsearch");
 
 const Schema = new mongoose.Schema(
@@ -653,7 +653,7 @@ const Schema = new mongoose.Schema(
       default: "",
       documentation: {
         description: "",
-        label: "Edition d'une mosaïque d'image",
+        label: "Edifice actuel de conservation",
       }
     },
     NART: {

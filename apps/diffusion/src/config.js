@@ -1,9 +1,22 @@
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 
-let api_url = process.env.API_URL;
+function deleteLastSlash(url) {
+  if (url == null) return
+
+  if (url.slice(-1) === "/") {
+    return url.slice(0, -1);
+  }
+
+  return url;
+}
+
+let api_url = deleteLastSlash(publicRuntimeConfig.api_url);
+let bucket_url = publicRuntimeConfig.bucket_url + '/';
+let pop_url = publicRuntimeConfig.pop_url;
+let eurelian = publicRuntimeConfig.eurelian;
 let es_url = `${api_url}/search/`;
-let bucket_url = process.env.BUCKET_URL;
-let pop_url = process.env.POP_URL;
-let eurelian = process.env.EURELIAN;
+const sentryDsn = publicRuntimeConfig.sentryDsn;
 
 let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture.gouv.fr";
 
@@ -13,5 +26,7 @@ module.exports = {
   bucket_url,
   pop_url,
   emailContactMnr,
-  eurelian
+  eurelian,
+  sentryDsn,
 };
+

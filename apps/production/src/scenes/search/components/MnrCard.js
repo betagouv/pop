@@ -10,7 +10,7 @@ export default ({ data }) => {
   const image = data.VIDEO.length
     ? `${bucket_url}${data.VIDEO[0]}`
     : require("../../../assets/noimage.jpg");
-  const subtitle = !data.TITR && data.DENO ? "" : data.DENO.join(", ");
+  const subtitle = !data.TITR && data.DENO ? "" : (data.DENO ?? []).join(", ");
   const author = String(data.AUTR).replace("#", " ");
   return (
     <Link
@@ -33,11 +33,11 @@ export default ({ data }) => {
         </div>
         <div>
           <p>{data.DOMN}</p>
-          { (data.LOCA && data.LOCA !== "") ? <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p> : null }
-          { (data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null }
+          {(data.LOCA && data.LOCA !== "") ? <p>{Mapping.mnr["LOCA"].label + " : " + data.LOCA}</p> : null}
+          {(data.AFFE && data.AFFE !== "") ? <p>{Mapping.mnr["AFFE"].label + " : " + data.AFFE}</p> : null}
           <p>{data.CATE}</p>
           <p>{data.PHOT}</p>
-          { (data.HIST4 && data.HIST4 !== "") ? <p>{Mapping.mnr["HIST4"].label + " : " + data.HIST4}</p> : null }
+          {(data.HIST4 && data.HIST4 !== "") ? <p>{Mapping.mnr["HIST4"].label + " : " + data.HIST4}</p> : null}
         </div>
       </div>
     </Link>
