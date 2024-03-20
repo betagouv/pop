@@ -1,11 +1,11 @@
 const Dotenv = require('dotenv-webpack');
 // require("dotenv").config();
 
-// const withPWA = require('next-pwa')({
-//   dest: "public",
-//   disable: "development" === process.env.NODE_ENV,
-//   swSrc: 'service-worker.js'
-// });
+const withPWA = require('next-pwa')({
+  dest: "public",
+  disable: "development" === process.env.NODE_ENV,
+  swSrc: 'service-worker.js'
+});
 
 
 const cspHeaders = `
@@ -28,7 +28,7 @@ function deleteLastSlash(url) {
   return url;
 }
 
-module.exports = {
+module.exports = withPWA({
   publicRuntimeConfig: {
     api_url: process.env.API_URL,
     es_url: process.env.ES_URL,
@@ -84,5 +84,5 @@ module.exports = {
   //     },
   //   ];
   // },
-};
+});
 
