@@ -4,7 +4,8 @@ if (process.env.SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
     release: "pop-api@" + require("../package.json").version,
-    environment: process.env.NODE_ENV
+    environment: process.env.NODE_ENV,
+    attachStacktrace: true
   });
 }
 

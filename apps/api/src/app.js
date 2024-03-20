@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require('compression');
+const Sentry = require("@sentry/node");
 require("./passport")(passport);
 require("./mongo");
 
@@ -13,6 +14,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger/swagger_ui.json');
 
 app.enable("trust proxy");
+
+app.use(Sentry.Handlers.requestHandler());
 
 app.use(function(req, res, next) {
   req.setTimeout(600000, function() {
@@ -92,5 +95,7 @@ app.use('/mapbox', require("./controllers/mapbox"));
 
 // Maintenance
 app.use('/maintenance', require("./controllers/maintenance"));
+
+app.use(Sentry.Handlers.errorHandler());
 
 module.exports = app;
