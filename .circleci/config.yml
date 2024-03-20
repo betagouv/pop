@@ -141,10 +141,10 @@ commands:
             sed -i "s/DOMAIN/<< parameters.domain >>/" .platform/hooks/postdeploy/00_get_certificate.sh
             sed -i "s/pop_api/<< parameters.app_name >>/" .elasticbeanstalk/config.yml
             mkdir -p .platform/hooks/predeploy
-            echo $MORE_HEADER
-            echo $PROXY_PRODUCTION
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_API" | base64 -di > .platform/nginx/nginx.conf
+            cat .platform/hooks/predeploy/01_install_more_header.sh
+            cat .platform/ngnix/nginx.conf
             sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
             eb deploy << parameters.eb_deploy >>
   deploy:
