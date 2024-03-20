@@ -144,7 +144,7 @@ commands:
             echo "$MORE_HEADER" | base64 -di > .platform/hooks/predeploy/01_install_more_header.sh
             echo "$PROXY_API" | base64 -di > .platform/nginx/nginx.conf
             sed -i "s/mime.types;/mime.types;\n    server_names_hash_bucket_size  128;/" .platform/nginx/nginx.conf
-            echo NGINX config ----"
+            echo "NGINX config ----"
             cat .platform/nginx/nginx.conf
             eb deploy << parameters.eb_deploy >>
   deploy:
