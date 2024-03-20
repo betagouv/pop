@@ -310,7 +310,7 @@ jobs:
           server_api_url: "null"
           pop_url: https://pop-consultation-staging.eu-west-3.elasticbeanstalk.com
           bucket_url: https://s3.eu-west-3.amazonaws.com/pop-phototeque-staging/
-          env: staging
+          env: production
           sentry: https://6fa9dc5ef69b4e5782696405634b1f98@o1104995.ingest.sentry.io/6313039
           path: build
           eurelian: "null"
