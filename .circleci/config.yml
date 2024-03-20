@@ -83,7 +83,7 @@ commands:
           command: |
             cd apps/<< parameters.app >>
             echo "API_URL=<< parameters.api_url >>" > .env
-            echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env
+            if [ "<< parameters.app >>" = "diffusion" ]; then echo "SERVER_API_URL=<< parameters.server_api_url >>" > .env; fi
             echo "POP_URL=<< parameters.pop_url >>" >> .env
             echo "BUCKET_URL=<< parameters.bucket_url >>" >> .env
             echo "NODE_ENV=<< parameters.env >>" >> .env
