@@ -17,13 +17,6 @@ app.enable("trust proxy");
 
 app.use(Sentry.Handlers.requestHandler());
 
-app.use(function(req, res, next) {
-  req.setTimeout(600000, function() {
-    next(new Error('Request Timeout'));
-  });
-  next();
-})
-
 app.use(compression())
 app.use(bodyParser.json({ limit: "50mb" }));
 

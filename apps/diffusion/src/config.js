@@ -1,5 +1,5 @@
 import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 function deleteLastSlash(url) {
   if (url == null) return
@@ -12,6 +12,7 @@ function deleteLastSlash(url) {
 }
 
 let api_url = deleteLastSlash(publicRuntimeConfig.api_url);
+const server_api_url = deleteLastSlash(serverRuntimeConfig.api_url);
 let bucket_url = publicRuntimeConfig.bucket_url + '/';
 let pop_url = publicRuntimeConfig.pop_url;
 let eurelian = publicRuntimeConfig.eurelian;
@@ -22,6 +23,7 @@ let emailContactMnr = "isabelle.rouge-ducos@culture.gouv.fr;contact.m2rs@culture
 
 module.exports = {
   api_url,
+  server_api_url,
   es_url,
   bucket_url,
   pop_url,

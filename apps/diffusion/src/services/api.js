@@ -1,7 +1,11 @@
 import fetch from "isomorphic-unfetch";
-let { api_url } = require("../config");
+let { api_url: apiUrl, server_api_url } = require("../config");
 import Sentry from "./sentry";
 
+let api_url = apiUrl;
+if (window == null) {
+  api_url = server_api_url;
+}
 
 class api {
   getNotice(collection, ref) {

@@ -499,7 +499,6 @@ export default class extends React.Component {
                 </div>
 
                 <SeeMore notice={notice} museo={this.props.museo} />
-                <Map notice={notice} />
               </Col>
             </Row>
           </Container>

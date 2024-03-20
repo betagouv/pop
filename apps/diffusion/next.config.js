@@ -37,6 +37,9 @@ module.exports = {
     eurelian: process.env.EURELIAN,
     sentryDsn: process.env.SENTRY_DSN,
   },
+  serverRuntimeConfig: {
+    api_url: process.env.SERVER_API_URL,
+  },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
     // Source: https://github.com/zeit/next.js/issues/2060#issuecomment-385199026
