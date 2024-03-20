@@ -3,7 +3,7 @@ let { api_url: apiUrl, server_api_url } = require("../config");
 import Sentry from "./sentry";
 
 let api_url = apiUrl;
-if (window == null) {
+if (typeof window === "undefined") {
   api_url = server_api_url;
 }
 
