@@ -42,7 +42,7 @@ class Importer extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({ localStorage: window.localStorage });
   }
 
@@ -66,14 +66,14 @@ class Importer extends Component {
       // Vérification de notice en doublon dans l'import
       for (var i = 0; i < importedNotices.length; i++) {
 
-        if(!existingNotices.includes(importedNotices[i].REF)){
+        if (!existingNotices.includes(importedNotices[i].REF)) {
           existingNotices.push(importedNotices[i].REF);
         } else {
           doublonNotice.push(importedNotices[i].REF);
         }
       }
 
-      if(doublonNotice.length > 0){
+      if (doublonNotice.length > 0) {
         this.setState({ errors: `Détection de notices en double dans le fichier : voir ${doublonNotice.join(', ')}`, loading: false });
         return;
       }
@@ -87,7 +87,7 @@ class Importer extends Component {
       // Get existing notices.
       existingNotices = {};
       for (var i = 0; i < importedNotices.length; i++) {
-        this.setState({ countRecupNotice: this.state.countRecupNotice + 1})
+        this.setState({ countRecupNotice: this.state.countRecupNotice + 1 })
         this.setState({
           loading: true,
           loadingMessage: `Récupération des notices existantes ... ${this.state.countRecupNotice} / ${importedNotices.length} notices`,
@@ -97,27 +97,27 @@ class Importer extends Component {
         const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
           existingNotices[importedNotices[i].REF] = notice;
-        } 
+        }
       }
 
       // Compute diff.
-      this.setState({ 
+      this.setState({
         loadingMessage: "Calcul des différences....",
-        countRecupNotice: 0 
+        countRecupNotice: 0
       });
 
       // START DIFF
       for (let i = 0; i < importedNotices.length; i++) {
         const existingNotice = existingNotices[importedNotices[i].REF];
         if (existingNotice) {
-          let from ="";
+          let from = "";
           let differences = compare(importedNotices[i], existingNotice);
           importedNotices[i]._messages = differences.map(e => {
-            if(e === 'POP_COORDONNEES.lat'){
-            from = JSON.stringify(existingNotice.POP_COORDONNEES.lat);
-            } else if(e === 'POP_COORDONNEES.lon'){
-            from = JSON.stringify(existingNotice.POP_COORDONNEES.lon);
-            } else{
+            if (e === 'POP_COORDONNEES.lat') {
+              from = JSON.stringify(existingNotice.POP_COORDONNEES.lat);
+            } else if (e === 'POP_COORDONNEES.lon') {
+              from = JSON.stringify(existingNotice.POP_COORDONNEES.lon);
+            } else {
               from = JSON.stringify(existingNotice[e]);
             }
             const to = JSON.stringify(importedNotices[i][e]);
@@ -134,10 +134,10 @@ class Importer extends Component {
         await importedNotices[i].validate({ ...existingNotice, ...importedNotices[i] });
       }
 
-      this.setState({ loadOpenTheso : true });
+      this.setState({ loadOpenTheso: true });
 
       Object.keys(localStorage).forEach((key) => {
-        if(key.indexOf('opentheso-') === 0){
+        if (key.indexOf('opentheso-') === 0) {
           localStorage.removeItem(key);
         }
 
@@ -145,11 +145,11 @@ class Importer extends Component {
 
       for (var i = 0; i < importedNotices.length; i++) {
         await checkOpenTheso(importedNotices[i]);
-        this.setState({ countControleNotice: this.state.countControleNotice + 1})
+        this.setState({ countControleNotice: this.state.countControleNotice + 1 })
       }
 
-      this.setState({ loadOpenTheso : false });
-      this.setState({ countControleNotice: 0});
+      this.setState({ loadOpenTheso: false });
+      this.setState({ countControleNotice: 0 });
 
       for (var i = 0; i < importedNotices.length; i++) {
         if (importedNotices[i]._errors.length) {
@@ -158,7 +158,7 @@ class Importer extends Component {
       }
 
       this.setState({ step: 1, importedNotices, fileNames, loading: false, loadingMessage: "" });
-      
+
 
       amplitude
         .getInstance()
@@ -178,7 +178,7 @@ class Importer extends Component {
   }
 
   generateBody() {
-    const keyList = ["_status","_warnings","_files","REF","INV"];
+    const keyList = ["_status", "_warnings", "_files", "REF", "INV"];
     const body = {
       importedNotices: this.state.importedNotices.map((notice) => {
         let obj = {};
@@ -216,7 +216,7 @@ class Importer extends Component {
       this.props.collection,
       this.props.fieldsToExport
     );
-    
+
     const doc = await api.createImport(
       {
         institution: this.props.institution,
@@ -233,7 +233,7 @@ class Importer extends Component {
     ).catch((e) => {
       const avert = this.state.avertissement;
       avert.push("POP n'a pas pu enregistrer cet import dans l'historique des imports. L'import a échoué.");
-      this.setState({ avertissement: avert, loading: false});
+      this.setState({ avertissement: avert, loading: false });
     });
 
     const importId = doc.doc._id;
@@ -264,7 +264,7 @@ class Importer extends Component {
       });
 
       // Vérification de la mise à jour
-      if(resultNotices.length > 0){
+      if (resultNotices.length > 0) {
         // Regroupement des références de notices rejetées à l'import
         const listRefError = resultNotices.map((n) => Object.keys(n)[0]);
         // Suppression des notices en erreur de la liste des imports
@@ -272,14 +272,14 @@ class Importer extends Component {
         avert.push(`Notices ayant des erreurs non importées : [${listRefError.join(', ')}]`);
         this.setState(
           {
-            importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)), 
+            importedNotices: this.state.importedNotices.filter((el) => !listRefError.includes(el.REF)),
             avertissement: avert
           });
 
         // Recacul des modifications sur les notices suite aux erreurs rencontrées
         let updateObjImport = {
-          created:  this.state.importedNotices.filter(e => e._status === "created").length,
-          updated:  this.state.importedNotices.filter(e => e._status === "updated").length,
+          created: this.state.importedNotices.filter(e => e._status === "created").length,
+          updated: this.state.importedNotices.filter(e => e._status === "updated").length,
           rejected: this.state.importedNotices.filter(e => e._status === "rejected").length,
           notices: this.state.importedNotices.map(({ REF }) => REF)
         }
@@ -296,18 +296,18 @@ class Importer extends Component {
 
         // Mise à jour des élements de l'import
         await api.updateImport(importId, updateObjImport, file)
-        .catch((e) => {
-          const avert = this.state.avertissement;
-          avert.push("POP n'a pas pu enregistrer les modifications dans l'historique des imports.");
-          this.setState({ avertissement: avert, loading: false});
-        });;
+          .catch((e) => {
+            const avert = this.state.avertissement;
+            avert.push("POP n'a pas pu enregistrer les modifications dans l'historique des imports.");
+            this.setState({ avertissement: avert, loading: false });
+          });;
       }
 
       await api.sendReport(`Rapport import ${this.props.collection}`, this.props.recipient, this.generateBody())
         .catch((e) => {
           const avert = this.state.avertissement;
           avert.push("Erreur pendant l'envoi du rapport d'import par mail, vous trouverez les informations relatives à cet import directement dans l'historique des imports");
-          this.setState({ avertissement: avert});
+          this.setState({ avertissement: avert });
         });
 
       this.setState({
@@ -354,9 +354,8 @@ class Importer extends Component {
       <div className="working-area">
         <h4 className="subtitle">Contrôle et validation de l'import</h4>
         <div className="summary">
-          <div>{`Vous vous appretez à verser dans la base ${
-            this.props.collection
-          } les fichiers suivants: `}</div>
+          <div>{`Vous vous appretez à verser dans la base ${this.props.collection
+            } les fichiers suivants: `}</div>
           <div className="filename">{filesnames}</div>
           <div>
             Ces fichiers{" "}
@@ -377,12 +376,10 @@ class Importer extends Component {
             <div className="line">
               <div className="round" style={{ backgroundColor: "#F9B234" }} />
               {noticesModifiees === 1
-                ? `${noticesModifiees} est une notice modifiée par rapport aux précedents imports dans ${
-                    this.props.collection
-                  })`
-                : `${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${
-                    this.props.collection
-                  })`}
+                ? `${noticesModifiees} est une notice modifiée par rapport aux précedents imports dans ${this.props.collection
+                })`
+                : `${noticesModifiees} sont des notices modifiées (par rapport aux précedents imports dans ${this.props.collection
+                })`}
             </div>
             <div className="line">
               <div className="round" style={{ backgroundColor: "#E32634" }} />
@@ -418,7 +415,7 @@ class Importer extends Component {
           >
             Annuler l'import
           </Button>
-          <Button className="button" color="primary" onClick={() => this.onSave()} disabled={ this.props.saveDisabled }>
+          <Button className="button" color="primary" onClick={() => this.onSave()} disabled={this.props.saveDisabled}>
             Confirmer l'import
           </Button>
         </div>
@@ -485,7 +482,7 @@ class Importer extends Component {
                     .sendReport(`Rapport import ${this.props.collection}`, this.state.email, this.generateBody())
                     .then(() => {
                       this.setState({ emailSent: true });
-                    }).catch((err) => console.log("erreur ", err) );
+                    }).catch((err) => console.log("erreur ", err));
                 }}
               >
                 Envoyer
@@ -516,14 +513,14 @@ class Importer extends Component {
     );
   }
 
-  renderAvertissement(){
+  renderAvertissement() {
     return this.state.avertissement.length > 0 ? (
       <div>
-        <p className="text-center" style={{fontSize: "20px", color: "red"}}>Avertissements sur l'import</p>
+        <p className="text-center" style={{ fontSize: "20px", color: "red" }}>Avertissements sur l'import</p>
         <ul>
-          { this.state.avertissement.map((element) => {
-              return (<li>{element}</li>);
-            })
+          {this.state.avertissement.map((element) => {
+            return (<li>{element}</li>);
+          })
           }
         </ul>
       </div>
@@ -538,14 +535,14 @@ class Importer extends Component {
         <div className="working-area">
           <Progress value={this.state.progress.toString()} />
           <div>{this.state.loadingMessage}</div>
-          { this.state.loadOpenTheso ?
-          <div>
-            <div>Contrôle des notices</div> 
-            <div>{this.state.countControleNotice} notices contrôlées</div>
-          </div>
-          : "" 
+          {this.state.loadOpenTheso ?
+            <div>
+              <div>Contrôle des notices</div>
+              <div>{this.state.countControleNotice} notices contrôlées</div>
+            </div>
+            : ""
           }
-          
+
         </div>
       );
     } else if (this.state.errors) {
@@ -575,9 +572,8 @@ class Importer extends Component {
             {this.props.readme()}
           </Col>
           <Col md={7} className="right-col">
-            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${
-              this.props.collection
-            }, selon les trois étapes suivantes`}</p>
+            <p className="title">{`Cette section vous permet de verser du contenu numérique (notices, images) dans la base ${this.props.collection
+              }, selon les trois étapes suivantes`}</p>
             <Steps labelPlacement="vertical" current={this.state.step} size="big">
               <Step title="Sélection et dépot des contenus à importer" />
               <Step title="Contrôle et validation de l'import" />
