@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const compression = require('compression');
 const Sentry = require("@sentry/node");
+const config = require("./config");
 require("./passport")(passport);
 require("./mongo");
 
@@ -27,7 +28,7 @@ app.use(bodyParser.text({ type: "application/x-ndjson" }));
 app.use(helmet());
 
 // Enable CORS - Cross Origin Resource Sharing
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: config.ovh ? /(cloud\.culture\.fr)|(gouv\.fr)$/ : true, credentials: true }));
 
 app.use(passport.initialize());
 
