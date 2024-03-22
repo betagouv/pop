@@ -3,7 +3,7 @@ const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const router = express.Router();
 const multer = require("multer");
-const filenamify = require("filenamify");
+const slugify = require("@sindresorhus/slugify");
 const upload = multer({ dest: "uploads/" });
 const { capture } = require("../sentry.js");
 const { uploadFile } = require("./utils");
@@ -67,7 +67,7 @@ router.post("/", limiter, upload.any(), async (req, res) => {
 
     // Save the associated image if present.
     if (req.files && req.files.length && req.files[0].originalname) {
-      const imagePath = `gallery/${filenamify(doc._id)}/${filenamify(req.files[0].originalname)}`;
+      const imagePath = `gallery/${slugify(doc._id)}/${slugify(req.files[0].originalname)}`;
       await uploadFile(imagePath, req.files[0]);
       doc.image = imagePath;
       await doc.save();

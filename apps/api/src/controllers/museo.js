@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const multer = require("multer");
 const mongoose = require("mongoose");
-const filenamify = require("filenamify");
+const slugify = require("@sindresorhus/slugify");
 const upload = multer({ dest: "uploads/" });
 const Museo = require("../models/museo");
 const Joconde = require("../models/joconde");
@@ -15,6 +15,7 @@ const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef } = require("./utils/notice");
 let moment = require('moment-timezone');
 const { capture } = require("./../sentry.js");
+const { slugifyFilename } = require("../utils/filename");
 
 const { formattedNow, deleteFile, uploadFile, updateOaiNotice, hasCorrectCoordinates, fileAuthorized } = require("./utils");
 const { canUpdateMuseo, canDeleteMuseo } = require("./utils/authorization");
@@ -234,7 +235,7 @@ router.post(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `museo/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+        const path = `museo/${notice.REF}/${slugifyFilename(f.originalName)}`;
         promises.push(uploadFile(path, f));
       }
 
@@ -282,7 +283,7 @@ router.put(
       if(!fileAuthorized.includes(f.mimetype)){
         throw new Error("le type fichier n'est pas accepté")      
       }
-      const path = `museo/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
+      const path = `museo/${notice.REF}/${slugifyFilename(f.originalName)}`;
       promises.push(uploadFile(path, f));
     }
 

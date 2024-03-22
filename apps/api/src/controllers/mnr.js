@@ -1,13 +1,14 @@
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
-const filenamify = require("filenamify");
+const slugify = require("@sindresorhus/slugify");
 const upload = multer({ dest: "uploads/" });
 const passport = require("passport");
 const { capture } = require("./../sentry.js");
 const Mnr = require("../models/mnr");
 const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
+const { slugifyFilename } = require("../utils/filename");
 
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur, fileAuthorized } = require("./utils");
 const { canUpdateMnr, canCreateMnr, canDeleteMnr } = require("./utils/authorization");
@@ -110,7 +111,7 @@ router.put(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        promises.push(uploadFile(`mnr/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f));
+        promises.push(uploadFile(`mnr/${notice.REF}/${slugifyFilename(f.originalName)}`, f));
       }
 
       // Update IMPORT ID

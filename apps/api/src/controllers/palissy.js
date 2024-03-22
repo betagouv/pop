@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
-const filenamify = require("filenamify");
+const slugify = require("@sindresorhus/slugify");
 const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Memoire = require("../models/memoire");
@@ -14,6 +14,7 @@ const NoticesOAI = require("../models/noticesOAI");
 const { checkValidRef, removeChar } = require("./utils/notice");
 let moment = require('moment-timezone');
 const { cleanArrayValue } = require("./utils/dataFilter");
+const { slugifyFilename } = require("../utils/filename");
 
 const {
   formattedNow,
@@ -404,7 +405,7 @@ router.put(
         }
         promises.push(
           uploadFile(
-            `palissy/${filenamify(notice.REF)}/${filenamify(f.originalname)}`, f
+            `palissy/${notice.REF}/${slugifyFilename(f.originalName)}`, f
           )
         );
       }
