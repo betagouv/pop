@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const slugify = require("@sindresorhus/slugify");
+const filenamify = require("filenamify");
 const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Joconde = require("../models/joconde");
@@ -18,7 +18,6 @@ const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, update
 const { canUpdateJoconde, canCreateJoconde, canDeleteJoconde } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
 const { EXCEPTION_CODES } = require("./utils/OAI/oai_Exceptions");
-const { slugifyFilename } = require("../utils/filename");
 
 // Control properties document, flag each error.
 async function withFlags(notice) {
@@ -147,8 +146,7 @@ router.put(
         if(!fileAuthorizedJoconde.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `joconde/${notice.REF}/${slugifyFilename(f.originalname)}`;
-        console.log("path", path)
+        const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
       // Update IMPORT ID (this code is unclear…)
@@ -216,7 +214,7 @@ router.post(
         if(!fileAuthorizedJoconde.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `joconde/${notice.REF}/${slugifyFilename(f.originalname)}`;
+        const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
       // Transform and create.

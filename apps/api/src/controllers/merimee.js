@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
-const slugify = require("@sindresorhus/slugify");
+const filenamify = require("filenamify");
 const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
@@ -14,7 +14,6 @@ const NoticesOAI = require("../models/noticesOAI");
 let moment = require('moment-timezone')
 const { checkValidRef, removeChar } = require("./utils/notice");
 const { cleanArrayValue } = require("./utils/dataFilter");
-const { slugifyFilename } = require("../utils/filename");
 
 const {
   formattedNow,
@@ -377,7 +376,7 @@ router.put(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `merimee/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
 
@@ -467,7 +466,7 @@ router.post(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `merimee/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `merimee/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
       await Promise.all(promises);

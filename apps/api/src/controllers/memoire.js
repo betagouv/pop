@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const mongoose = require("mongoose");
-const slugify = require("@sindresorhus/slugify");
+const filenamify = require("filenamify");
 const passport = require("passport");
 const validator = require("validator");
 const NoticesOAI = require("../models/noticesOAI");
@@ -17,7 +17,6 @@ const Producteur = require("../models/producteur");
 let moment = require('moment-timezone')
 const { checkValidRef } = require("./utils/notice");
 const { cleanArrayValue } = require("./utils/dataFilter");
-const { slugifyFilename } = require("../utils/filename");
 
 const {
   uploadFile,
@@ -338,7 +337,7 @@ router.put(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `memoire/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
     } catch (e) {
@@ -421,7 +420,7 @@ router.post(
         if(!fileAuthorized.includes(f.mimetype)){
           throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `memoire/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `memoire/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
    } catch (e) {

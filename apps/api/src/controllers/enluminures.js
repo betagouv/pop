@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const multer = require("multer");
-const slugify = require("@sindresorhus/slugify");
+const filenamify = require("filenamify");
 const validator = require("validator");
 const upload = multer({ dest: "uploads/" });
 const Enluminures = require("../models/enluminures");
@@ -13,7 +13,6 @@ const { capture } = require("./../sentry.js");
 const { uploadFile, deleteFile, formattedNow, checkESIndex, updateNotice, updateOaiNotice, getBaseCompletName, identifyProducteur, fileAuthorized } = require("./utils");
 const { canUpdateEnluminures, canCreateEnluminures, canDeleteEnluminures } = require("./utils/authorization");
 const { checkValidRef } = require("./utils/notice");
-const { slugifyFilename } = require("../utils/filename");
 
 function transformBeforeCreate(notice) {
   notice.DMIS = formattedNow();
@@ -34,9 +33,9 @@ async function withFlags(notice) {
 
   // LIENS must be valid URLs.
   const arr = notice.LIENS;
-  if (arr) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] && !validator.isURL(arr[i])) {
+  if(arr){
+    for(let i=0; i<arr.length; i++){
+      if(arr[i] && !validator.isURL(arr[i])){
         notice.POP_FLAGS.push(`LIENS_INVALID_URL`);
       }
     }
@@ -85,26 +84,26 @@ function transformBeforeCreateAndUpdate(notice) {
       //Si la notice contient des coordonnées, contient geolocalisation devient oui
       let lat = "";
       let lon = "";
-      let coordonnees = { lat: 0, lon: 0 }
+      let coordonnees = {lat: 0, lon: 0}
 
-      if (notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]) {
+      if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
         lat = String(notice["POP_COORDONNEES.lat"]);
         lon = String(notice["POP_COORDONNEES.lon"]);
       }
-      else if (notice.POP_COORDONNEES && (notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)) {
+      else if(notice.POP_COORDONNEES && (notice.POP_COORDONNEES.lat || notice.POP_COORDONNEES.lon)){
         lat = String(notice.POP_COORDONNEES.lat);
         lon = String(notice.POP_COORDONNEES.lon);
       }
       if (lat || lon) {
-        if (lat) {
-          coordonnees.lat = parseFloat(lat.replace(",", "."));
+        if(lat){
+          coordonnees.lat = parseFloat(lat.replace(",","."));
         }
-        if (lon) {
-          coordonnees.lon = parseFloat(lon.replace(",", "."));
+        if(lon){
+          coordonnees.lon = parseFloat(lon.replace(",","."));
         }
         //Si lat et lon, alors POP_CONTIENT_GEOLOCALISATION est oui
-        if (coordonnees.lat !== 0 && !isNaN(coordonnees.lat) &&
-          coordonnees.lon !== 0 && !isNaN(coordonnees.lon)) {
+        if(coordonnees.lat !==0  && !isNaN(coordonnees.lat) && 
+          coordonnees.lon !==0  && !isNaN(coordonnees.lon)){
           notice.POP_CONTIENT_GEOLOCALISATION = "oui";
         }
         else {
@@ -113,11 +112,11 @@ function transformBeforeCreateAndUpdate(notice) {
       } else {
         notice.POP_CONTIENT_GEOLOCALISATION = "non";
       }
-      if (notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]) {
+      if(notice["POP_COORDONNEES.lat"] || notice["POP_COORDONNEES.lon"]){
         notice["POP_COORDONNEES.lat"] = coordonnees.lat;
         notice["POP_COORDONNEES.lon"] = coordonnees.lon;
       }
-      else {
+      else{
         notice.POP_COORDONNEES = coordonnees;
       }
 
@@ -170,11 +169,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-    /* 	
-     #swagger.tags = ['Enluminures']
-     #swagger.path = '/enluminures'
-     #swagger.description = 'Création de la notice Enluminures' 
- */
+     /* 	
+      #swagger.tags = ['Enluminures']
+      #swagger.path = '/enluminures'
+      #swagger.description = 'Création de la notice Enluminures' 
+  */
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
@@ -188,10 +187,10 @@ router.post(
       // Upload all files (should this be done after creating notice?)
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        if (!fileAuthorized.includes(f.mimetype)) {
-          throw new Error("le type fichier n'est pas accepté")
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `enluminures/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `enluminures/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
       // Transform and create.
@@ -228,11 +227,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-    /* 	
-     #swagger.tags = ['Enluminures']
-     #swagger.path = '/enluminures/{ref}'
-     #swagger.description = 'Modification de la notice Enluminures' 
-   */
+     /* 	
+      #swagger.tags = ['Enluminures']
+      #swagger.path = '/enluminures/{ref}'
+      #swagger.description = 'Modification de la notice Enluminures' 
+    */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     try {
@@ -262,15 +261,15 @@ router.put(
       // Upload all files.
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        if (!fileAuthorized.includes(f.mimetype)) {
-          throw new Error("le type fichier n'est pas accepté")
+        if(!fileAuthorized.includes(f.mimetype)){
+          throw new Error("le type fichier n'est pas accepté")      
         }
-        const path = `enluminures/${notice.REF}/${slugifyFilename(f.originalName)}`;
+        const path = `enluminures/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
       }
 
       // Mise en place pour corriger les notices qui ont été importées manuellement
-      if (!notice.POP_IMPORT) {
+      if(!notice.POP_IMPORT){
         notice.POP_IMPORT = [];
       }
 
@@ -283,10 +282,10 @@ router.put(
 
       const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = moment.tz(new Date(), timeZone).format('YYYY-MM-DD HH:mm');
-
+      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
+      
       let HISTORIQUE = prevNotice.HISTORIQUE || [];
-      const newHistorique = { nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode };
+      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
@@ -301,7 +300,7 @@ router.put(
       await populateLinksEnlunminures(notice, notice.RENV, "RENV");
       await populateLinksEnlunminures(notice, notice.REFDE, "REFC");
       await populateLinksEnlunminures(notice, notice.REFC, "REFDE");
-
+      
       // Consume promises and send sucessful result.
       await Promise.all(promises);
       res.status(200).send({ success: true, msg: "Notice mise à jour." });
@@ -319,48 +318,48 @@ router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (
      #swagger.path = '/enluminures/{ref}'
      #swagger.description = 'Suppression de la notice Enluminures' 
  */
-  try {
-    const ref = req.params.ref;
-    const doc = await Enluminures.findOne({ REF: ref });
-    const docOai = await NoticesOAI.findOne({ REF: ref });
-    if (!doc) {
-      return res.status(404).send({
-        success: false,
-        msg: `Impossible de trouver la notice enluminures ${ref} à supprimer.`
-      });
-    }
-    if (!await canDeleteEnluminures(req.user, doc)) {
-      return res
-        .status(401)
-        .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
-    }
+ try {
+   const ref = req.params.ref;
+   const doc = await Enluminures.findOne({ REF: ref });
+   const docOai = await NoticesOAI.findOne({ REF: ref });
+   if (!doc) {
+     return res.status(404).send({
+       success: false,
+       msg: `Impossible de trouver la notice enluminures ${ref} à supprimer.`
+     });
+   }
+   if (!await canDeleteEnluminures(req.user, doc)) {
+     return res
+       .status(401)
+       .send({ success: false, msg: "Autorisation nécessaire pour supprimer cette ressource." });
+   }
 
-    if (Array.isArray(doc.RENV) && doc.RENV.length > 0) {
-      doc.RENV = [];
-      await removeLinksEnluminures(doc.REF, "RENV");
-    }
+   if(doc.RENV !== []){
+    doc.RENV = [];
+    await removeLinksEnluminures(doc.REF, "RENV");
+   }
 
-    if (Array.isArray(doc.REFC) && doc.REFC.length > 0) {
-      doc.REFC = [];
-      await removeLinksEnluminures(doc.REF, "REFC");
-    }
+   if(doc.REFC !== []){
+    doc.REFC = [];
+    await removeLinksEnluminures(doc.REF,"REFC");
+   }
 
-    if (Array.isArray(doc.REFDE) && doc.REFDE.length > 0) {
-      doc.REFDE = [];
-      await removeLinksEnluminures(doc.REF, "REFDE");
-    }
+   if(doc.REFDE !== []){
+    doc.REFDE = [];
+    await removeLinksEnluminures(doc.REF,"REFDE");
+   }
 
 
-    // remove all images and the document itself.
-    await Promise.all([doc.VIDEO.filter(i => i).map(f => deleteFile(f, "enluminures")), doc.remove()]);
-    if (docOai) {
-      await Promise.all([docOai.remove()]);
-    }
-    return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
-  } catch (error) {
-    capture(error);
-    return res.status(500).send({ success: false, error });
-  }
+   // remove all images and the document itself.
+   await Promise.all([doc.VIDEO.filter(i => i).map(f => deleteFile(f, "enluminures")), doc.remove()]);
+   if(docOai) {
+    await Promise.all([docOai.remove()]);
+   }
+   return res.status(200).send({ success: true, msg: "La notice à été supprimée." });
+ } catch (error) {
+   capture(error);
+   return res.status(500).send({ success: false, error });
+ }
 });
 
 function determineProducteur(notice) {
@@ -368,7 +367,7 @@ function determineProducteur(notice) {
     try {
       let noticeProducteur
       noticeProducteur = await identifyProducteur("enluminures", notice.REF, "", "");
-      if (noticeProducteur) {
+      if(noticeProducteur){
         notice.PRODUCTEUR = noticeProducteur;
       }
       else {
@@ -382,9 +381,9 @@ function determineProducteur(notice) {
   });
 }
 
-function removeLinksEnluminures(ref, fieldEnluminures) {
+function removeLinksEnluminures(ref, fieldEnluminures){
   return new Promise(async (resolve, reject) => {
-    try {
+    try{
       const promises = [];
       const criteres = {};
       criteres[fieldEnluminures] = ref
@@ -398,7 +397,7 @@ function removeLinksEnluminures(ref, fieldEnluminures) {
       }
       await Promise.all(promises);
       resolve();
-    } catch (error) {
+    } catch(error){
       reject(error)
     }
   });
@@ -418,21 +417,21 @@ function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
       const noticesToPopulate = await Enluminures.find(criteres);
 
       let list = [];
-      switch (fieldEnluminures) {
-        case "RENV":
+      switch(fieldEnluminures){
+        case "RENV" : 
           list = notice.RENV;
           break;
-        case "REFC":
+        case "REFC" : 
           list = notice.REFDE;
           break;
-        case "REFDE":
+        case "REFDE" : 
           list = notice.REFC;
           break;
       }
 
       for (let i = 0; i < noticesToPopulate.length; i++) {
         // Si la référence de la notice est absente de la liste mise à jour, la référence est supprimée
-        if (!list.includes(noticesToPopulate[i].REF)) {
+        if(!list.includes(noticesToPopulate[i].REF)){
           noticesToPopulate[i][fieldEnluminures] = noticesToPopulate[i][fieldEnluminures].filter(e => e !== notice.REF);
           promises.push(noticesToPopulate[i].save());
         }
@@ -448,7 +447,7 @@ function populateLinksEnlunminures(notice, refList, fieldEnluminures) {
           }
         }
       }
-
+      
       await Promise.all(promises);
       resolve();
     } catch (error) {
