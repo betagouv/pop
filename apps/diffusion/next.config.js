@@ -38,7 +38,7 @@ module.exports = withPWA({
     sentryDsn: process.env.SENTRY_DSN,
   },
   serverRuntimeConfig: {
-    api_url: process.env.SERVER_API_URL,
+    api_url: process.env.SERVER_API_URL ?? process.env.API_URL,
   },
   webpack: (config, options) => {
     // Unshift polyfills in main entrypoint.
