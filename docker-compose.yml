@@ -1,0 +1,114 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: pop
+
+  elasticsearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - cluster.routing.allocation.disk.threshold_enabled=false  
+    ports:
+      - 9200:9200
+    volumes:
+      - ./opensearch:/usr/share/elasticsearch/data
+      
+
+  # kibana:
+  #   container_name: kb-container
+  #   image: docker.elastic.co/kibana/kibana:7.11.0
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #   networks:
+  #     - mongo_elasticsearch_network
+  #   depends_on:
+  #     - elasticsearch
+  #   ports:
+  #     - 5601:5601
+
+  localstack:
+    image: localstack/localstack:latest
+    user: localstack
+    environment:
+      - DEBUG=1
+      - SERVICES=s3
+      - LOCALSTACK_HOSTNAME=localstack
+      - DEFAULT_REGION=us-east-1
+      - USE_SINGLE_REGION=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 4566:4566
+
+  aws-cli:
+    image: amazon/aws-cli:latest
+    depends_on:
+      - localstack
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        aws --endpoint-url=http://localstack:4566 s3api create-bucket --bucket pop --region us-east-1
+      "
+
+  api:
+    image: node:14
+    command: bash -c "npm run dev"
+    depends_on:
+      - mongodb
+      - elasticsearch
+      - localstack
+    working_dir: /app
+    ports:
+      - 3000:3000
+    env_file: ./apps/api/.env
+    volumes:
+      - ./apps/api:/app:rw
+
+  diffusion:
+    image: node:14
+    command: bash -c "npm run dev"
+    depends_on:
+      - mongodb
+      - elasticsearch
+      - localstack
+      - api
+    working_dir: /app
+    ports:
+      - 3001:8081
+    env_file: ./apps/diffusion/.env
+    volumes:
+      - ./apps/diffusion:/app:rw
+
+  edition:
+    image: node:15
+    command: bash -c "npm run dev"
+    depends_on:
+      - mongodb
+      - elasticsearch
+      - localstack
+      - api
+    working_dir: /app
+    ports:
+      - 3002:3000
+    environment:
+      - POP_URL=http://localhost:3001
+      - API_URL=http://localhost:3000
+      - BUCKET_URL=http://localhost:4566
+    volumes:
+      - ./apps/production:/app:rw
+
+networks:
+  default:
+    external: true
+    name: docker

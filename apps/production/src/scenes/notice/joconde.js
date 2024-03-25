@@ -50,19 +50,19 @@ class Notice extends React.Component {
       }
       this.props.initialize(notice);
       // As a "producteur", I can edit if "museofile" matches with notice.
-       /* const editable =
-        this.props.canUpdate &&
-        (this.props.user.role === "administrateur" ||
-          this.props.user.museofile.includes(notice.MUSEO)); */
+      /* const editable =
+       this.props.canUpdate &&
+       (this.props.user.role === "administrateur" ||
+         this.props.user.museofile.includes(notice.MUSEO)); */
 
 
-        let editable = false;
-        API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "joconde").then(result => {
-          editable = result.validate;
-          this.setState({editable: editable});
-        });
+      let editable = false;
+      API.canEdit(notice.REF, notice.MUSEO, notice.PRODUCTEUR, "joconde").then(result => {
+        editable = result.validate;
+        this.setState({ editable: editable });
+      });
 
-        this.setState({ loading: false, notice, editable });
+      this.setState({ loading: false, notice, editable });
     });
   }
 
@@ -81,6 +81,7 @@ class Notice extends React.Component {
       });
     } else {
       try {
+        console.log(this.state.imagesFiles)
         await API.updateNotice(this.state.notice.REF, "joconde", values, this.state.imagesFiles, "manuel");
         toastr.success(
           "Modification enregistrée",
@@ -268,10 +269,10 @@ class Notice extends React.Component {
                 <CustomField name="RETIF" disabled={!this.state.editable} />
                 <CustomField name="DATA" disabled={!this.state.editable} />
                 <CustomField name="LOCA3" disabled={!this.state.editable} />
-                
+
               </Col>
             </Row>
-            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []}/>
+            <AccordionHistorique historique={this.state.notice.HISTORIQUE || []} />
           </Section>
           <Map notice={this.state.notice} />
           <div className="buttons">

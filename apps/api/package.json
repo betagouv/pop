@@ -34,6 +34,7 @@
     "@mapbox/mapbox-sdk": "^0.15.3",
     "@opensearch-project/opensearch": "^2.5.0",
     "@sentry/node": "^6.11.0",
+    "@sindresorhus/slugify": "^1.1.0",
     "aws-sdk": "^2.1354.0",
     "aws4": "1.11.0",
     "axios": "^0.24.0",

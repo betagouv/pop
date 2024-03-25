@@ -11,8 +11,23 @@ import {
 } from "reactstrap";
 import Viewer from "react-viewer";
 import { toastr } from "react-redux-toastr";
+import { slugifyFilename } from '../components/utils'
 
 import "./fieldImages.css";
+
+// Using blob to make it compatible with IE11
+const createFile = (bits, name) => {
+  try {
+    // If this call fails, we go for Blob
+    return new File(bits, name);
+  } catch (e) {
+    // If we reach this point a new File could not be constructed
+    var myBlob = new Blob(bits);
+    myBlob.lastModified = new Date();
+    myBlob.name = name;
+    return myBlob;
+  }
+};
 
 class FieldImages extends React.Component {
   state = {
@@ -21,11 +36,15 @@ class FieldImages extends React.Component {
   };
 
   onDrop(files) {
-    const imageFiles = [...this.state.imageFiles.concat(...files)];
+    const renamedFiles = files.map((file) => {
+      return createFile([file], slugifyFilename(file.name))
+    })
+
+    const imageFiles = [...this.state.imageFiles.concat(...renamedFiles)];
     this.props.filesToUpload(imageFiles);
     this.setState({ imageFiles });
 
-    const urls = files.map(e => this.props.createUrlFromName(e.name));
+    const urls = renamedFiles.map(e => this.props.createUrlFromName(e.name));
 
     if (!Array.isArray(this.props.input.value)) {
       this.props.input.onChange(urls[0]);
@@ -66,15 +85,15 @@ class FieldImages extends React.Component {
     }
 
     // Convert FILE to local url
-    return this.props.input.value.sort((a,b) => {
+    return this.props.input.value.sort((a, b) => {
       // Si la notice est de type Mérimée ou Palissy, l'ordre est géré avec le champ marq
-      if(typeof a == "object" && typeof b == "object"){
+      if (typeof a == "object" && typeof b == "object") {
         let aMarq = typeof a.marq != "undefined" ? a.marq : "";
         let bMarq = typeof b.marq != "undefined" ? b.marq : "";
-  
-        if(aMarq != "" && bMarq == "") { return -1  }
-        if(aMarq == "" && bMarq != "") { return 1  }
-        if(aMarq == "" && bMarq == "") { return 0  }
+
+        if (aMarq != "" && bMarq == "") { return -1 }
+        if (aMarq == "" && bMarq != "") { return 1 }
+        if (aMarq == "" && bMarq == "") { return 0 }
         return Number.parseInt(a.marq) - Number.parseInt(b.marq);
       }
       // M42546 - MNR les mages sont présentes dans le champ VIDEO qui est un tableau d'url, 
@@ -269,8 +288,8 @@ function arrayMove(arr, old_index, new_index) {
   var i = 0;
   //mise a jour du champs marq
   while (arr[i]) {
-    if(typeof arr[i].marq != "undefined"){
-      arr[i].marq = i+1;
+    if (typeof arr[i].marq != "undefined") {
+      arr[i].marq = i + 1;
     }
     i++;
   }

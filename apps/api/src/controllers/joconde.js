@@ -36,16 +36,16 @@ async function withFlags(notice) {
   }
   // WWW must be valid URLs.
   const arr = notice.WWW;
-  if(arr){
-    for(let i=0; i<arr.length; i++){
-      if(arr[i] && !validator.isURL(arr[i])){
+  if (arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] && !validator.isURL(arr[i])) {
         notice.POP_FLAGS.push(`WWW_INVALID_URL`);
       }
     }
   }
 
   // LVID must be an url.
-  if (notice.LVID && !validator.isURL(notice.LVID)) { 
+  if (notice.LVID && !validator.isURL(notice.LVID)) {
     notice.POP_FLAGS.push("LVID_INVALID_URL");
   }
 
@@ -107,11 +107,11 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-     /* 	
-      #swagger.tags = ['Joconde']
-      #swagger.path = '/joconde/{ref}'
-      #swagger.description = 'Modification de la notice Joconde' 
-  */
+    /* 	
+     #swagger.tags = ['Joconde']
+     #swagger.path = '/joconde/{ref}'
+     #swagger.description = 'Modification de la notice Joconde' 
+ */
     const ref = req.params.ref;
     const notice = JSON.parse(req.body.notice);
     try {
@@ -140,11 +140,13 @@ router.put(
       }
       // Upload all files.
       const fileAuthorizedJoconde = [...fileAuthorized, "image/png"];
-      
-      for (let i = 0; i < req.files.length; i++) { 
+
+      console.log("Notices IMG", notice.IMG)
+
+      for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        if(!fileAuthorizedJoconde.includes(f.mimetype)){
-          throw new Error("le type fichier n'est pas accepté")      
+        if (!fileAuthorizedJoconde.includes(f.mimetype)) {
+          throw new Error("le type fichier n'est pas accepté")
         }
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
@@ -158,10 +160,10 @@ router.put(
 
       const timeZone = 'Europe/Paris';
       //Ajout de l'historique de la notice
-      var today = moment.tz(new Date(),timeZone).format('YYYY-MM-DD HH:mm');
-      
+      var today = moment.tz(new Date(), timeZone).format('YYYY-MM-DD HH:mm');
+
       let HISTORIQUE = prevNotice.HISTORIQUE || [];
-      const newHistorique = {nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode};
+      const newHistorique = { nom: user.nom, prenom: user.prenom, email: user.email, date: today, updateMode: updateMode };
 
       HISTORIQUE.push(newHistorique);
       notice.HISTORIQUE = HISTORIQUE;
@@ -192,11 +194,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.any(),
   async (req, res) => {
-     /* 	
-      #swagger.tags = ['Joconde']
-      #swagger.path = '/joconde'
-      #swagger.description = 'Création de la notice Joconde' 
-  */
+    /* 	
+     #swagger.tags = ['Joconde']
+     #swagger.path = '/joconde'
+     #swagger.description = 'Création de la notice Joconde' 
+ */
     try {
       const notice = JSON.parse(req.body.notice);
       await determineProducteur(notice);
@@ -211,8 +213,8 @@ router.post(
       const fileAuthorizedJoconde = [...fileAuthorized, "image/png"];
       for (let i = 0; i < req.files.length; i++) {
         const f = req.files[i];
-        if(!fileAuthorizedJoconde.includes(f.mimetype)){
-          throw new Error("le type fichier n'est pas accepté")      
+        if (!fileAuthorizedJoconde.includes(f.mimetype)) {
+          throw new Error("le type fichier n'est pas accepté")
         }
         const path = `joconde/${filenamify(notice.REF)}/${filenamify(f.originalname)}`;
         promises.push(uploadFile(path, f));
@@ -239,7 +241,8 @@ router.post(
 
       await Promise.all(promises);
       res.send({ success: true, msg: "OK" });
-    } catch (e) { console.log("erreur, back",typeof e, e.message)
+    } catch (e) {
+      console.log("erreur, back", typeof e, e.message)
       capture(e);
       res.status(403).send({ success: false, error: e.message });
     }
@@ -248,29 +251,29 @@ router.post(
 
 // Get one notice by ref.
 router.get("/:ref", async (req, res) => {
-   /* 	
-      #swagger.tags = ['Joconde']
-      #swagger.path = '/joconde/{ref}'
-      #swagger.description = 'Retourne les informations de la notice Joconde' 
-      #swagger.parameters['ref'] = { 
-        in: 'path', 
-        description: 'Référence de la notice Joconde',
-        type: 'string' 
-      }
-      #swagger.responses[200] = { 
-        schema: { 
-          "$ref": '#/definitions/GetJoconde'
-        },
-        description: 'Récupération des informations avec succés' 
-      }
-      #swagger.responses[404] = { 
-        description: 'Document non trouvé',
-        schema: {
-          success: false,
-          msg: "Document introuvable"
-        } 
-      }
-  */
+  /* 	
+     #swagger.tags = ['Joconde']
+     #swagger.path = '/joconde/{ref}'
+     #swagger.description = 'Retourne les informations de la notice Joconde' 
+     #swagger.parameters['ref'] = { 
+       in: 'path', 
+       description: 'Référence de la notice Joconde',
+       type: 'string' 
+     }
+     #swagger.responses[200] = { 
+       schema: { 
+         "$ref": '#/definitions/GetJoconde'
+       },
+       description: 'Récupération des informations avec succés' 
+     }
+     #swagger.responses[404] = { 
+       description: 'Document non trouvé',
+       schema: {
+         success: false,
+         msg: "Document introuvable"
+       } 
+     }
+ */
   const ref = req.params.ref;
   const notice = await Joconde.findOne({ REF: ref });
   if (notice) {
@@ -281,11 +284,11 @@ router.get("/:ref", async (req, res) => {
 
 // Delete one notice.
 router.delete("/:ref", passport.authenticate("jwt", { session: false }), async (req, res) => {
-   /* 	
-      #swagger.tags = ['Joconde']
-      #swagger.path = '/joconde/{ref}'
-      #swagger.description = 'Suppression de la notice Joconde' 
-  */
+  /* 	
+     #swagger.tags = ['Joconde']
+     #swagger.path = '/joconde/{ref}'
+     #swagger.description = 'Suppression de la notice Joconde' 
+ */
   try {
     const ref = req.params.ref;
     const doc = await Joconde.findOne({ REF: ref });
@@ -316,7 +319,7 @@ function determineProducteur(notice) {
     try {
       let noticeProducteur
       noticeProducteur = await identifyProducteur("joconde", notice.REF, "", "");
-      if(noticeProducteur){
+      if (noticeProducteur) {
         notice.PRODUCTEUR = noticeProducteur;
       }
       else {
@@ -342,21 +345,21 @@ function populateBaseFromJoconde(notice, refList, baseToPopulate) {
 
       for (let i = 0; i < noticesToPopulate.length; i++) {
         // If the object is removed from notice, then remove it from palissy
-        if(!refList.includes(noticesToPopulate[i].REF)){
+        if (!refList.includes(noticesToPopulate[i].REF)) {
           noticesToPopulate[i].REFJOC = noticesToPopulate[i].REFJOC.filter(e => e !== notice.REF);
           promises.push(noticesToPopulate[i].save());
         }
       }
 
       let list = [];
-      switch(baseToPopulate){
-        case Memoire : 
+      switch (baseToPopulate) {
+        case Memoire:
           list = notice.REFMEM;
           break;
-        case Merimee : 
+        case Merimee:
           list = notice.REFMER;
           break;
-        case Palissy : 
+        case Palissy:
           list = notice.REFPAL;
           break;
       }
@@ -370,7 +373,7 @@ function populateBaseFromJoconde(notice, refList, baseToPopulate) {
           }
         }
       }
-      
+
       await Promise.all(promises);
       resolve();
     } catch (error) {

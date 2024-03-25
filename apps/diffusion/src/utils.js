@@ -57,7 +57,7 @@ export function getNoticeInfo(notice) {
       title = capitalizeFirstLetter(title);
 
       let subtitle = "";
-      if(notice.DOMPAL){
+      if (notice.DOMPAL) {
         subtitle = notice.DOMPAL.join(", ");
       }
 
@@ -110,7 +110,7 @@ export function getNoticeInfo(notice) {
       if (notice.PRODUCTEUR === "Jeu de Paume sous l'Occupation") {
         logo = "/static/jdpso.jpg";
         classProducteur = "jdpso";
-      } else if (notice.PRODUCTEUR === "MNR"){
+      } else if (notice.PRODUCTEUR === "MNR") {
         logo = "/static/mnr.png";
       }
 
@@ -125,7 +125,7 @@ export function getNoticeInfo(notice) {
         alt: e
       }));
 
-      return { title, subtitle, image_preview, metaDescription, images, logo, classProducteur};
+      return { title, subtitle, image_preview, metaDescription, images, logo, classProducteur };
     }
     case "Patrimoine mobilier (Palissy)": {
       let title = notice.TICO || notice.TITR;
@@ -146,17 +146,17 @@ export function getNoticeInfo(notice) {
 
       let localisation = [];
       if (Array.isArray(notice.REG) && notice.REG.length > 0) {
-        for(let i=0; i<notice.REG.length; i++){
+        for (let i = 0; i < notice.REG.length; i++) {
           localisation.push(notice.REG[i]);
         }
       }
       if (Array.isArray(notice.DPT) && notice.DPT.length > 0) {
         if (Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length > 0) {
-          for(let i=0; i<notice.DPT_LETTRE.length; i++){
+          for (let i = 0; i < notice.DPT_LETTRE.length; i++) {
             localisation.push(`${notice.DPT_LETTRE[i]} (${notice.DPT[i]})`);
           }
         } else {
-          for(let i=0; i<notice.DPT.length; i++){
+          for (let i = 0; i < notice.DPT.length; i++) {
             localisation.push(notice.DPT[i]);
           }
         }
@@ -164,21 +164,21 @@ export function getNoticeInfo(notice) {
 
       //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
       if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
-        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
-          for(let i=0; i<notice.WCOM.length; i++){
+        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0) {
+          for (let i = 0; i < notice.WCOM.length; i++) {
             localisation.push(notice.WCOM[i]);
           }
         }
         else {
-          for(let i=0; i<notice.COM.length; i++){
-           localisation.push(notice.COM[i]);
+          for (let i = 0; i < notice.COM.length; i++) {
+            localisation.push(notice.COM[i]);
           }
         }
       }
 
       //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
       if (notice.WADRS || notice.ADRS) {
-        if (notice.WADRS){
+        if (notice.WADRS) {
           localisation.push(notice.WADRS);
         }
         else {
@@ -221,20 +221,20 @@ export function getNoticeInfo(notice) {
       }
 
       const subtitle = notice.DENO ? notice.DENO.join(", ") : "";
-      
+
       let localisation = [];
       if (Array.isArray(notice.REG) && notice.REG.length > 0) {
-        for(let i=0; i<notice.REG.length; i++){
+        for (let i = 0; i < notice.REG.length; i++) {
           localisation.push(notice.REG[i]);
         }
       }
       if (Array.isArray(notice.DPT) && notice.DPT.length > 0) {
         if (Array.isArray(notice.DPT_LETTRE) && notice.DPT_LETTRE.length > 0) {
-          for(let i=0; i<notice.DPT_LETTRE.length; i++){
+          for (let i = 0; i < notice.DPT_LETTRE.length; i++) {
             localisation.push(`${notice.DPT_LETTRE[i]} (${notice.DPT[i]})`);
           }
         } else {
-          for(let i=0; i<notice.DPT.length; i++){
+          for (let i = 0; i < notice.DPT.length; i++) {
             localisation.push(notice.DPT[i]);
           }
         }
@@ -242,13 +242,13 @@ export function getNoticeInfo(notice) {
 
       //Si WCOM existe, on affiche WCOM, sinon on affiche COM s'il existe
       if ((Array.isArray(notice.WCOM) && notice.WCOM.length > 0) || (Array.isArray(notice.COM) && notice.COM.length > 0)) {
-        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0){
-          for(let i=0; i<notice.WCOM.length; i++){
+        if (Array.isArray(notice.WCOM) && notice.WCOM.length > 0) {
+          for (let i = 0; i < notice.WCOM.length; i++) {
             localisation.push(notice.WCOM[i]);
           }
         }
         else {
-          for(let i=0; i<notice.COM.length; i++){
+          for (let i = 0; i < notice.COM.length; i++) {
             localisation.push(notice.COM[i]);
           }
         }
@@ -256,7 +256,7 @@ export function getNoticeInfo(notice) {
 
       //Si WADRS existe, on affiche WADRS, sinon on affiche ADRS s'il existe
       if (notice.WADRS || notice.ADRS) {
-        if (notice.WADRS){
+        if (notice.WADRS) {
           localisation.push(notice.WADRS);
         }
         else {
@@ -279,12 +279,12 @@ export function getNoticeInfo(notice) {
       return { title, subtitle, metaDescription, logo, image_preview, images, localisation };
     }
     case "Ressources biographiques (Autor)": {
-      let title = 
-      (notice.NOMPRENOM ? notice.NOMPRENOM : 
-        ( (notice.PREN ? notice.PREN : " ") 
-          +(notice.NOM ? notice.NOM : "")
-        )
-      );
+      let title =
+        (notice.NOMPRENOM ? notice.NOMPRENOM :
+          ((notice.PREN ? notice.PREN : " ")
+            + (notice.NOM ? notice.NOM : "")
+          )
+        );
       let logo = "";
       if (notice.PRODUCTEUR === "Inventaire") {
         logo = "/static/inventaire.jpg";
@@ -293,7 +293,7 @@ export function getNoticeInfo(notice) {
       } else if (notice.PRODUCTEUR === "Label Maison des Illustres") {
         logo = "/static/logoMDI.png";
       }
-      else{
+      else {
         logo = notice.PRODUCTEUR;
       }
 
@@ -306,50 +306,50 @@ export function getNoticeInfo(notice) {
         ? `${bucket_url}${notice.MEMOIRE.filter(e => e.url)[0].url}`
         : "/static/noimage.png";
 
-      const nom =  (notice.NOMPRENOM? notice.NOMPRENOM : (notice.PREN + " " + notice.NOM)) + (notice.ALIAS!="" ? (" - " + notice.ALIAS) : "");
+      const nom = (notice.NOMPRENOM ? notice.NOMPRENOM : (notice.PREN + " " + notice.NOM)) + (notice.ALIAS != "" ? (" - " + notice.ALIAS) : "");
 
       //Description
       let life = "";
-      if(notice.DNAISS && notice.DMORT){
+      if (notice.DNAISS && notice.DMORT) {
         life = " (" + notice.DNAISS + " - " + notice.DMORT + ")";
       }
-      else if(notice.DNAISS && !notice.DMORT){
+      else if (notice.DNAISS && !notice.DMORT) {
         life = " (" + notice.DNAISS + ")";
       }
       const description = notice.INI + life;
 
       //Date d'activité
       let activite = "";
-      if(notice.DATES || LOCACT){
-        activite = " - (dates d'activité : " + notice.DATES + ((notice.DATES && notice.LOCACT)? (" - " + notice.LOCACT) : "");
+      if (notice.DATES || LOCACT) {
+        activite = " - (dates d'activité : " + notice.DATES + ((notice.DATES && notice.LOCACT) ? (" - " + notice.LOCACT) : "");
       }
 
       //Fonction
       let isOrfevre = false;
       let fonction = "";
-      notice.FONC.map( (fonc, index) => {
-        if(fonc == "Orfèvre"){
+      notice.FONC.map((fonc, index) => {
+        if (fonc == "Orfèvre") {
           isOrfevre = true;
         }
-        fonction += ( index==0? fonc : (", " + fonc) )
+        fonction += (index == 0 ? fonc : (", " + fonc))
       });
 
       //Symbole
-      let symbole = isOrfevre? notice.SYMB : "";
+      let symbole = isOrfevre ? notice.SYMB : "";
 
       //Dates et lieus d'existence
       let datesLieus = "";
-      datesLieus += ( notice.DNAISS ? (notice.DNAISS + (notice.LNAISS? (" ("+notice.LNAISS+") ") : "") ) : "" );
+      datesLieus += (notice.DNAISS ? (notice.DNAISS + (notice.LNAISS ? (" (" + notice.LNAISS + ") ") : "")) : "");
       datesLieus += (notice.DNAISS && notice.DMORT ? " - " : "");
-      datesLieus += ( notice.DMORT ? (notice.DMORT + (notice.LMORT? (" ("+notice.LMORT+") ") : "") ) : "");
+      datesLieus += (notice.DMORT ? (notice.DMORT + (notice.LMORT ? (" (" + notice.LMORT + ") ") : "")) : "");
 
       //Référence ISNI : ISNI_VERIFIEE / Lien ark : ARK
       let referenceArk = "";
       referenceArk += notice.ISNI_VERIFIEE ? notice.ISNI_VERIFIEE : "";
-      referenceArk += ((notice.ISNI_VERIFIEE? " / " : "") + ( notice.ARK ? ( "Lien ARK : " + notice.ARK) : "")); 
+      referenceArk += ((notice.ISNI_VERIFIEE ? " / " : "") + (notice.ARK ? ("Lien ARK : " + notice.ARK) : ""));
 
       //Adresse
-      let adresse = notice?.ADRS 
+      let adresse = notice?.ADRS
 
       return { title, images, image_preview, logo, nom, description, fonction, symbole, datesLieus, referenceArk, adresse };
     }
@@ -410,18 +410,18 @@ const capitalizeFirstLetter = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-export function saveListRef (listRefs, searchParams, removeFromBucket){
+export function saveListRef(listRefs, searchParams, removeFromBucket) {
   //Si la props removeFromBucket existe, c'est qu'on est dans le panier et qu'on n'enregistre pas de recherche
-  if(!removeFromBucket){
+  if (!removeFromBucket) {
     const cookies = new Cookies();
     const encodedListRefs = JSON.stringify(listRefs);
 
     // Suppression du cookie de la recherche précédente
     Object.keys(cookies.getAll())
-    .filter(key => key.startsWith("listRefs-"))
-    .forEach(name => {cookies.remove(name, {path: '/'})});
+      .filter(key => key.startsWith("listRefs-"))
+      .forEach(name => { cookies.remove(name, { path: '/' }) });
 
-    cookies.set("listRefs-"+searchParams.get("idQuery"), encodedListRefs, {path: '/', overwrite: true});
+    cookies.set("listRefs-" + searchParams.get("idQuery"), encodedListRefs, { path: '/', overwrite: true });
   }
 }
 
@@ -431,7 +431,7 @@ export function saveListRef (listRefs, searchParams, removeFromBucket){
  * @param string name 
  * @returns 
  */
-export function generateLinks(values, name){
+export function generateLinks(values, name) {
   if (!values || !Array.isArray(values) || !values.length) {
     return null;
   }
@@ -449,7 +449,7 @@ export function generateLinks(values, name){
   return links;
 }
 
-export function trackDownload(filename){
+export function trackDownload(filename) {
   EAnalytics.pushEvent(
     'globalarg',
     [

@@ -3,10 +3,11 @@ import Link from "next/link";
 import { getNoticeInfo, saveListRef } from "../../utils";
 import Mapping from "../../services/mapping";
 import BucketButton from "../../components/BucketButton";
-import {toUrlQueryString} from "@popproject/pop-react-elasticsearch";
+import { toUrlQueryString } from "@popproject/pop-react-elasticsearch";
 import router from "next/dist/client/router";
 import { Button } from "reactstrap";
 import MobileBucketButton from "../../components/MobileBucketButton";
+import { bucket_url } from "../../config"
 
 // These 3 helpers functions helps to build strings with data
 // (witch can be strings, array, array in arrays, etc.)
@@ -25,15 +26,30 @@ function pickFirst(data) {
   return first;
 }
 
-function addLineBreak(value){
-  return (value) ? value.split("#").map( (element) => <p>{element}</p>): null;
+function addLineBreak(value) {
+  return (value) ? value.split("#").map((element) => <p>{element}</p>) : null;
 }
 
-export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
+function transformS3URI(path) {
+  return path
+    .replace(/â/g, "Ã¢")
+    .replace(/è/g, "Ã¨")
+}
+
+function ImageComponent({ src, title }) {
+  const onError = (target) => {
+    console.log("on image loading error");
+    target.onerror = null;
+    target.src = "/static/noimage.png";
+  }
+
+  return <img src={src} alt={title} onError={onError} />;
+}
+
+export const Memoire = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const { title, subtitle, logo, image_preview } = getNoticeInfo(data);
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const content = joinData([
     data.EDIF,
@@ -46,7 +62,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   ]);
 
   const contentWcomOrCom = data.WCOM && data.WCOM.length > 0 ? data.WCOM : data.COM;
-  const contentWadrsOrAdresse = data.WADRS && data.WADRS.length > 0 ? data.WADRS  : data.ADRESSE;
+  const contentWadrsOrAdresse = data.WADRS && data.WADRS.length > 0 ? data.WADRS : data.ADRESSE;
 
   const contentLoca = joinData([
     data.PAYS,
@@ -62,15 +78,15 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const date = data.DATPV ? data.DATPV : data.DATOR;
   const loc = contentLoca && contentLoca != "" ? contentLoca : data.LOCA;
 
-  const link = `/notice/memoire/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }  `;
-  
+  const link = `/notice/memoire/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}  `;
+
   return (
     <a className="list-card " onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
       {/* Desktop CARD */}
       <div className="list-card-container desktop-only">
-        <Link href={`/notice/memoire/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }  `} key={data.REF}>
+        <Link href={`/notice/memoire/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}  `} key={data.REF}>
           <div className="leftContent">
-            <div className="thumbnail">{ImageComponent}</div>
+            <div className="thumbnail"><ImageComponent src={image_preview} title={title} /></div>
             <div className="content">
               <div className="cardTextContent" style={{ display: "flex" }}>
                 <h2>
@@ -78,7 +94,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
                   <br />
                 </h2>
               </div>
-              <p> {data.AUTOEU && data.AUTOEU.length > 0 ? "Auteur de l’œuvre représentée : " + data.AUTOEU.join(' ; ') : "" }</p>
+              <p> {data.AUTOEU && data.AUTOEU.length > 0 ? "Auteur de l’œuvre représentée : " + data.AUTOEU.join(' ; ') : ""}</p>
               <p>{loc}</p>
               <p>{data.TYPDOC}</p>
               <p>{author}</p>
@@ -102,7 +118,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
       {/* MOBILE CARD */}
       <div className="list-card-container-mobile mobile-only">
         <div className="list-card-header">
-          <div className="list-card-thumbnail">{ImageComponent}</div>
+          <div className="list-card-thumbnail"><ImageComponent src={image_preview} title={title} /></div>
           <div className="list-card-basic-infos">
             <p>Mémoire</p>
             <p>{data.REF}</p>
@@ -118,7 +134,7 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
               <br />
             </h2>
           </div>
-          <p> {data.AUTOEU && data.AUTOEU.length > 0 ? "Auteur de l’œuvre représentée : " + data.AUTOEU.join(' ; ') : "" }</p>
+          <p> {data.AUTOEU && data.AUTOEU.length > 0 ? "Auteur de l’œuvre représentée : " + data.AUTOEU.join(' ; ') : ""}</p>
           <p>{loc}</p>
           <p>{data.TYPDOC}</p>
           <p>{author}</p>
@@ -127,16 +143,15 @@ export const Memoire = ({ data, removeFromBucket, searchParams, listRefs}) => {
           <p>{data.COPY}</p>
         </div>
         <div className="list-card-buttons">
-        <MobileBucketButton base="memoire" reference={data.REF} removeFromBucket={undefined} link={link} />
+          <MobileBucketButton base="memoire" reference={data.REF} removeFromBucket={undefined} link={link} />
         </div>
       </div>
     </a>
   );
 };
 
-export const Palissy = ({ data, removeFromBucket, searchParams, listRefs}) => {
+export const Palissy = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const { title, subtitle, logo, image_preview, localisation } = getNoticeInfo(data);
-  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
@@ -144,95 +159,94 @@ export const Palissy = ({ data, removeFromBucket, searchParams, listRefs}) => {
   const line4 = joinData([data.AUTR, data.SCLE]);
   const line5 = joinData([data.STAT, data.DPRO]);
 
-  const link = `/notice/palissy/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
-
-  return (
-      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
-        {/* Desktop Card */}
-        <div className="list-card-container desktop-only">
-          <Link href={`/notice/palissy/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
-            <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
-              <div className="content">
-                <div className="cardTextContent" style={{ display: "flex" }}>
-                  <h2>
-                    {title}
-                    <br />
-                    <small>{subtitle}</small>
-                  </h2>
-                  <div>
-                    <p>{localisation}</p>
-                    <p>{line3}</p>
-                    <p>{line4}</p>
-                    <p>{line5}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <div className="rightContent">
-            <span>
-              <small className="base">Palissy</small>
-              <br />
-              {data.REF}
-            </span>
-            <BucketButton base="palissy" reference={data.REF} removeFromBucket={removeFromBucket} />
-            {LogoComponent}
-          </div>
-        </div>
-        {/* MOBILE CARD */}
-        <div className="list-card-container-mobile mobile-only">
-          <div className="list-card-header">
-            <div className="list-card-thumbnail">{ImageComponent}</div>
-            <div className="list-card-basic-infos">
-              <p>Palissy</p>
-              <p>{data.REF}</p>
-              <div className="list-card-logo">
-                {LogoComponent}
-              </div>
-            </div>
-          </div>
-          <div className="list-card-content">
-            <div className="cardTextContent" style={{ display: "flex" }}>
-              <h2 className="list-card-title">
-                {title}
-                <br />
-                <small>{subtitle}</small>
-                <br />
-              </h2>
-              <div>
-                <p>{localisation}</p>
-                <p>{line3}</p>
-                <p>{line4}</p>
-                <p>{line5}</p>
-              </div>
-            </div>
-          </div>
-          <div className="list-card-buttons">
-          <MobileBucketButton base="memoire" reference={data.REF} link={link} />
-          </div>
-        </div>
-      </a>
-  );
-};
-
-export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
-  const { title, logo, image_preview, localisation } = getNoticeInfo(data);
-  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
-  const ImageComponent = <img src={image_preview} alt={title} />;
-
-  const line3 = joinData([data.AUTR, data.SCLE]);
-  const line4 = joinData([data.STAT, data.DPRO]);
-
-  const link = `/notice/merimee/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/palissy/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
       {/* Desktop Card */}
       <div className="list-card-container desktop-only">
-        <Link href={`/notice/merimee/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
+        <Link href={`/notice/palissy/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={data.REF}>
           <div className="leftContent">
-            <div className="thumbnail">{ImageComponent}</div>
+            <div className="thumbnail"><ImageComponent src={image_preview} title={title} /></div>
+            <div className="content">
+              <div className="cardTextContent" style={{ display: "flex" }}>
+                <h2>
+                  {title}
+                  <br />
+                  <small>{subtitle}</small>
+                </h2>
+                <div>
+                  <p>{localisation}</p>
+                  <p>{line3}</p>
+                  <p>{line4}</p>
+                  <p>{line5}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Palissy</small>
+            <br />
+            {data.REF}
+          </span>
+          <BucketButton base="palissy" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
+        </div>
+      </div>
+      {/* MOBILE CARD */}
+      <div className="list-card-container-mobile mobile-only">
+        <div className="list-card-header">
+          <div className="list-card-thumbnail"><ImageComponent src={image_preview} title={title} /></div>
+          <div className="list-card-basic-infos">
+            <p>Palissy</p>
+            <p>{data.REF}</p>
+            <div className="list-card-logo">
+              {LogoComponent}
+            </div>
+          </div>
+        </div>
+        <div className="list-card-content">
+          <div className="cardTextContent" style={{ display: "flex" }}>
+            <h2 className="list-card-title">
+              {title}
+              <br />
+              <small>{subtitle}</small>
+              <br />
+            </h2>
+            <div>
+              <p>{localisation}</p>
+              <p>{line3}</p>
+              <p>{line4}</p>
+              <p>{line5}</p>
+            </div>
+          </div>
+        </div>
+        <div className="list-card-buttons">
+          <MobileBucketButton base="memoire" reference={data.REF} link={link} />
+        </div>
+      </div>
+    </a>
+  );
+};
+
+export const Merimee = ({ data, removeFromBucket, searchParams, listRefs }) => {
+  const { title, logo, image_preview, localisation } = getNoticeInfo(data);
+  const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
+
+  const line3 = joinData([data.AUTR, data.SCLE]);
+  const line4 = joinData([data.STAT, data.DPRO]);
+
+  const link = `/notice/merimee/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
+
+  return (
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
+      {/* Desktop Card */}
+      <div className="list-card-container desktop-only">
+        <Link href={`/notice/merimee/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={data.REF}>
+          <div className="leftContent">
+            <div className="thumbnail"><ImageComponent src={image_preview} title={title} /></div>
             <div className="content">
               <div className="cardTextContent">
                 <h2>{title}</h2>
@@ -259,7 +273,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
       {/* MOBILE CARD */}
       <div className="list-card-container-mobile mobile-only">
         <div className="list-card-header">
-          <div className="list-card-thumbnail">{ImageComponent}</div>
+          <div className="list-card-thumbnail"><ImageComponent src={image_preview} title={title} /></div>
           <div className="list-card-basic-infos">
             <p>Mérimée</p>
             <p>{data.REF}</p>
@@ -282,7 +296,7 @@ export const Merimee = ({ data, removeFromBucket, searchParams, listRefs}) => {
           </div>
         </div>
         <div className="list-card-buttons">
-        <MobileBucketButton base="merimee" reference={data.REF} removeFromBucket={undefined} link={link} />
+          <MobileBucketButton base="merimee" reference={data.REF} removeFromBucket={undefined} link={link} />
         </div>
       </div>
     </a>
@@ -293,96 +307,94 @@ export const Mnr = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const { title, subtitle, image_preview, logo, classProducteur } = getNoticeInfo(data);
   const classP = `producteur ${classProducteur}`;
   const LogoComponent = logo ? <img src={logo} className={classP} /> : <div />;
-  const ImageComponent = <img src={image_preview} alt={title} />;
 
   const domn = data.DOMN ? data.DOMN.join(", ") : "";
 
-  const link = `/notice/mnr/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/mnr/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   return (
-      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
-        {/* Desktop Card */}
-        <div className="list-card-container desktop-only">
-          <Link href={`/notice/mnr/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
-            <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
-              <div className="content">
-                <div className="cardTextContent">
-                  <p>{data.AUTR.length > 0 ? <p>{ addLineBreak(data.AUTR.join(', '))}</p> : ""}</p>
-                  <h2>
-                    {addLineBreak(title)}
-                    <br />
-                    <small>{addLineBreak(subtitle)}</small>
-                  </h2>
-                  <div>
-                    <p>{addLineBreak(domn)}</p>
-                    { (data.LOCA && data.LOCA !== "") ? <><p>{Mapping.mnr["LOCA"].label + " : "}</p><>{addLineBreak(data.LOCA)}</></>: null }
-                    { (data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></>: null }
-                    <p>{addLineBreak(data.CATE)}</p>
-                    <p>{addLineBreak(data.PHOT)}</p>
-                    { (data.HIST4) ? <><p>{Mapping.mnr["HIST4"].label + " : "}</p><>{addLineBreak(data.HIST4)}</></>: null }
-                  </div>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
+      {/* Desktop Card */}
+      <div className="list-card-container desktop-only">
+        <Link href={`/notice/mnr/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={data.REF}>
+          <div className="leftContent">
+            <div className="thumbnail"><ImageComponent src={image_preview} title={title} /></div>
+            <div className="content">
+              <div className="cardTextContent">
+                <p>{data.AUTR.length > 0 ? <p>{addLineBreak(data.AUTR.join(', '))}</p> : ""}</p>
+                <h2>
+                  {addLineBreak(title)}
+                  <br />
+                  <small>{addLineBreak(subtitle)}</small>
+                </h2>
+                <div>
+                  <p>{addLineBreak(domn)}</p>
+                  {(data.LOCA && data.LOCA !== "") ? <><p>{Mapping.mnr["LOCA"].label + " : "}</p><>{addLineBreak(data.LOCA)}</></> : null}
+                  {(data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></> : null}
+                  <p>{addLineBreak(data.CATE)}</p>
+                  <p>{addLineBreak(data.PHOT)}</p>
+                  {(data.HIST4) ? <><p>{Mapping.mnr["HIST4"].label + " : "}</p><>{addLineBreak(data.HIST4)}</></> : null}
                 </div>
               </div>
             </div>
-          </Link>
-          <div className="rightContent">
-            <span>
-              <small className="base">{ data.PRODUCTEUR }</small>
+          </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">{data.PRODUCTEUR}</small>
+            <br />
+            {data.INV}
+          </span>
+          <BucketButton base="mnr" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
+        </div>
+      </div>
+      {/* MOBILE CARD */}
+      <div className="list-card-container-mobile mobile-only">
+        <div className="list-card-header">
+          <div className="list-card-thumbnail"><ImageComponent src={image_preview} title={title} /></div>
+          <div className="list-card-basic-infos">
+            <p>
+              <small className="base">{data.PRODUCTEUR}</small>
               <br />
               {data.INV}
-            </span>
-            <BucketButton base="mnr" reference={data.REF} removeFromBucket={removeFromBucket} />
-            {LogoComponent}
-          </div>
-        </div>
-        {/* MOBILE CARD */}
-        <div className="list-card-container-mobile mobile-only">
-          <div className="list-card-header">
-            <div className="list-card-thumbnail">{ImageComponent}</div>
-            <div className="list-card-basic-infos">
-              <p>
-                <small className="base">{ data.PRODUCTEUR }</small>
-                <br />
-                {data.INV}
-              </p>
-              <div className="list-card-logo">
-                {LogoComponent}
-              </div>
+            </p>
+            <div className="list-card-logo">
+              {LogoComponent}
             </div>
           </div>
-          <div className="list-card-content">
-            <div className="cardTextContent" style={{ display: "flex" }}>
-              {/* TODO: make a special version of addLineBreak for mobile (to keep font size) */}
-              <p>{data.AUTR.length > 0 ? <p>{ addLineBreak(data.AUTR.join(', '))}</p> : ""}</p>
-              <h2 className="list-card-title">
-                {addLineBreak(title)}
-                <br />
-                <small>{addLineBreak(subtitle)}</small>
-                <br />
-              </h2>
-              <div>
-                <p>{addLineBreak(domn)}</p>
-                { (data.LOCA && data.LOCA !== "") ? <><p>{Mapping.mnr["LOCA"].label + " : "}</p><>{addLineBreak(data.LOCA)}</></>: null }
-                { (data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></>: null }
-                <p>{addLineBreak(data.CATE)}</p>
-                <p>{addLineBreak(data.PHOT)}</p>
-              </div>
+        </div>
+        <div className="list-card-content">
+          <div className="cardTextContent" style={{ display: "flex" }}>
+            {/* TODO: make a special version of addLineBreak for mobile (to keep font size) */}
+            <p>{data.AUTR.length > 0 ? <p>{addLineBreak(data.AUTR.join(', '))}</p> : ""}</p>
+            <h2 className="list-card-title">
+              {addLineBreak(title)}
+              <br />
+              <small>{addLineBreak(subtitle)}</small>
+              <br />
+            </h2>
+            <div>
+              <p>{addLineBreak(domn)}</p>
+              {(data.LOCA && data.LOCA !== "") ? <><p>{Mapping.mnr["LOCA"].label + " : "}</p><>{addLineBreak(data.LOCA)}</></> : null}
+              {(data.AFFE && data.AFFE !== "") ? <><p>{Mapping.mnr["AFFE"].label + " : "}</p><>{addLineBreak(data.AFFE)}</></> : null}
+              <p>{addLineBreak(data.CATE)}</p>
+              <p>{addLineBreak(data.PHOT)}</p>
+            </div>
 
-            </div>
-          </div>
-          <div className="list-card-buttons">
-            <MobileBucketButton base="mnr" reference={data.REF} removeFromBucket={undefined} link={link} />
           </div>
         </div>
-      </a>
+        <div className="list-card-buttons">
+          <MobileBucketButton base="mnr" reference={data.REF} removeFromBucket={undefined} link={link} />
+        </div>
+      </div>
+    </a>
   );
 };
 
 
-export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
+export const Joconde = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const { title, subtitle, image_preview } = getNoticeInfo(data);
-  const ImageComponent = <img src={image_preview} alt={title} />;
   const LogoComponent = <img src="/static/musee-de-france.png" className="producteur" />;
   const author = joinData([data.AUTR, data.ECOL, data.EPOQ]);
   let peri = pickFirst([data.MILL, data.PERI, data.EPOQ]);
@@ -392,16 +404,16 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
 
   const loca = joinData([data.VILLE_M, data.NOMOFF]);
 
-  const link = `/notice/joconde/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/joconde/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   return (
     <div>
       <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
         {/* Desktop Card */}
         <div className="list-card-container desktop-only">
-          <Link href={`/notice/joconde/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`}  key={data.REF}>
+          <Link href={`/notice/joconde/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={data.REF}>
             <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
+              <div className="thumbnail"><ImageComponent src={image_preview} title={title} /></div>
               <div className="content">
                 <div className="cardTextContent" style={{ display: "flex" }}>
                   <h2>
@@ -414,7 +426,7 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
                     <p>{addLineBreak(peri)}</p>
                     <p>{addLineBreak(loca)}</p>
                   </div>
-                </div>                
+                </div>
               </div>
             </div>
           </Link>
@@ -433,272 +445,272 @@ export const Joconde = ({ data, removeFromBucket, searchParams, listRefs}) => {
 
         {/* Mobile Card */}
         <div className="list-card-container-mobile mobile-only">
-            <div className="list-card-header">
-              <div className="list-card-thumbnail">{ImageComponent}</div>
-              <div className="list-card-basic-infos">
-                <p>
-                  <small className="base">{ data.PRODUCTEUR }</small>
-                  <br />
-                  {data.INV}
-                </p>
-                <div className="list-card-logo">
-                  {LogoComponent}
-                </div>
+          <div className="list-card-header">
+            <div className="list-card-thumbnail"><ImageComponent src={image_preview} title={title} /></div>
+            <div className="list-card-basic-infos">
+              <p>
+                <small className="base">{data.PRODUCTEUR}</small>
+                <br />
+                {data.INV}
+              </p>
+              <div className="list-card-logo">
+                {LogoComponent}
               </div>
             </div>
-            <div className="list-card-content">
-              <div className="cardTextContent" style={{ display: "flex" }}>
-                  <h2>
-                        {addLineBreak(title)}
-                        <br />
-                        <small>{addLineBreak(subtitle)}</small>
-                  </h2>
-                  <div>
-                    <p>{addLineBreak(author)}</p>
-                    <p>{addLineBreak(peri)}</p>
-                    <p>{addLineBreak(loca)}</p>
-                  </div>
+          </div>
+          <div className="list-card-content">
+            <div className="cardTextContent" style={{ display: "flex" }}>
+              <h2>
+                {addLineBreak(title)}
+                <br />
+                <small>{addLineBreak(subtitle)}</small>
+              </h2>
+              <div>
+                <p>{addLineBreak(author)}</p>
+                <p>{addLineBreak(peri)}</p>
+                <p>{addLineBreak(loca)}</p>
               </div>
             </div>
-            <div className="list-card-buttons">
-              <MobileBucketButton base="joconde" reference={data.REF} removeFromBucket={undefined} link={link} />
-            </div>
+          </div>
+          <div className="list-card-buttons">
+            <MobileBucketButton base="joconde" reference={data.REF} removeFromBucket={undefined} link={link} />
+          </div>
         </div>
       </a>
     </div>
   );
 };
 
-export const Museo = ({ data, removeFromBucket, searchParams, listRefs}) => {
+export const Museo = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const { title, subtitle, image_preview, localisation, producteur } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
-  const link = `/notice/museo/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/museo/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   // M45078 - Affichage du logo muse-de-france uniquement si le producteur est Musée
   const LogoComponent = "MUSEE" === producteur ? <img src="/static/musee-de-france.png" className="producteur" /> : <div />;
 
   return (
     <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
-        {/* Desktop Card */}
-        <div className="list-card-container desktop-only">
-          <Link href={`/notice/museo/${data.REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={data.REF}>
-            <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
-              <div className="content">
-                <div className="cardTextContent">
-                  <h2>
-                    {title}
-                    <br />
-                    <small>{subtitle}</small>
-                  </h2>
-                  <div>
-                    <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
-                    <p>{localisation}</p>
-                  </div>
+      {/* Desktop Card */}
+      <div className="list-card-container desktop-only">
+        <Link href={`/notice/museo/${data.REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={data.REF}>
+          <div className="leftContent">
+            <div className="thumbnail">{ImageComponent}</div>
+            <div className="content">
+              <div className="cardTextContent">
+                <h2>
+                  {title}
+                  <br />
+                  <small>{subtitle}</small>
+                </h2>
+                <div>
+                  <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
+                  <p>{localisation}</p>
                 </div>
               </div>
             </div>
-          </Link>
-          <div className="rightContent">
-            <span>
+          </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Museo</small>
+            <br />
+            {data.REF}
+          </span>
+          <BucketButton base="museo" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
+        </div>
+      </div>
+
+      {/* Mobile Card */}
+      <div className="list-card-container-mobile mobile-only">
+        <div className="list-card-header">
+          <div className="list-card-thumbnail">{ImageComponent}</div>
+          <div className="list-card-basic-infos">
+            <p>
               <small className="base">Museo</small>
               <br />
               {data.REF}
-            </span>
-            <BucketButton base="museo" reference={data.REF} removeFromBucket={removeFromBucket} />
-            {LogoComponent}
+            </p>
+            <div className="list-card-logo">
+              {LogoComponent}
+            </div>
           </div>
         </div>
-
-        {/* Mobile Card */}
-        <div className="list-card-container-mobile mobile-only">
-            <div className="list-card-header">
-              <div className="list-card-thumbnail">{ImageComponent}</div>
-              <div className="list-card-basic-infos">
-                <p>
-                  <small className="base">Museo</small>
-                  <br />
-                  {data.REF}
-                </p>
-                <div className="list-card-logo">
-                  {LogoComponent}
-                </div>
+        <div className="list-card-content">
+          <div className="cardTextContent" style={{ display: "flex" }}>
+            <h2>
+              {title}
+              <br />
+              <small>{subtitle}</small>
+            </h2>
+            <div>
+              <div>
+                <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
+                <p>{localisation}</p>
               </div>
             </div>
-            <div className="list-card-content">
-              <div className="cardTextContent" style={{ display: "flex" }}>
-                  <h2>
-                    {title}
-                    <br />
-                    <small>{subtitle}</small>
-                  </h2>
-                  <div>
-                    <div>
-                      <p>{data.NOMOFF ? "" : data.NOMUSAGE}</p>
-                      <p>{localisation}</p>
-                    </div>
-                  </div>
-              </div>
-            </div>
-            <div className="list-card-buttons">
-              <MobileBucketButton base="museo" reference={data.REF} removeFromBucket={undefined} link={link} />
-            </div>
+          </div>
         </div>
-      </a>
+        <div className="list-card-buttons">
+          <MobileBucketButton base="museo" reference={data.REF} removeFromBucket={undefined} link={link} />
+        </div>
+      </div>
+    </a>
   );
 };
 
-export const Enluminures = ({ data, removeFromBucket, searchParams, listRefs}) => {
+export const Enluminures = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const REF = data.REF;
   const { title, subtitle, image_preview } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} alt={title} />;
 
-  const link = `/notice/enluminures/${REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/enluminures/${REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   return (
-      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
-        {/* Desktop Card */}
-        <div className="list-card-container desktop-only">
-          <Link href={`/notice/enluminures/${REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={REF}>
-            <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
-              <div className="content">
-                <div className="cardTextContent">
-                  <h2>
-                    {title}
-                    <br />
-                    <small>{subtitle}</small>
-                  </h2>
-                  <div>
-                    <p>{data.ATTRIB}</p>
-                    <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
-                    <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
-                  </div>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
+      {/* Desktop Card */}
+      <div className="list-card-container desktop-only">
+        <Link href={`/notice/enluminures/${REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={REF}>
+          <div className="leftContent">
+            <div className="thumbnail">{ImageComponent}</div>
+            <div className="content">
+              <div className="cardTextContent">
+                <h2>
+                  {title}
+                  <br />
+                  <small>{subtitle}</small>
+                </h2>
+                <div>
+                  <p>{data.ATTRIB}</p>
+                  <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
+                  <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
                 </div>
               </div>
             </div>
-          </Link>
-          <div className="rightContent">
-            <span>
+          </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Enluminures</small>
+            <br />
+            {REF}
+          </span>
+          <BucketButton base="enluminures" reference={data.REF} removeFromBucket={removeFromBucket} />
+        </div>
+      </div>
+
+      {/* Mobile Card */}
+      <div className="list-card-container-mobile mobile-only">
+        <div className="list-card-header">
+          <div className="list-card-thumbnail">{ImageComponent}</div>
+          <div className="list-card-basic-infos">
+            <p>
               <small className="base">Enluminures</small>
               <br />
-              {REF}
-            </span>
-            <BucketButton base="enluminures" reference={data.REF} removeFromBucket={removeFromBucket} />
+              {data.REF}
+            </p>
+            <div className="list-card-logo">
+              {/* {LogoComponent} */}
+            </div>
           </div>
         </div>
-
-        {/* Mobile Card */}
-        <div className="list-card-container-mobile mobile-only">
-            <div className="list-card-header">
-              <div className="list-card-thumbnail">{ImageComponent}</div>
-              <div className="list-card-basic-infos">
-                <p>
-                  <small className="base">Enluminures</small>
-                  <br />
-                  {data.REF}
-                </p>
-                <div className="list-card-logo">
-                  {/* {LogoComponent} */}
-                </div>
-              </div>
+        <div className="list-card-content">
+          <div className="cardTextContent" style={{ display: "flex" }}>
+            <h2>
+              {title}
+              <br />
+              <small>{subtitle}</small>
+            </h2>
+            <div>
+              <p>{data.ATTRIB}</p>
+              <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
+              <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
             </div>
-            <div className="list-card-content">
-              <div className="cardTextContent" style={{ display: "flex" }}>
-                  <h2>
-                    {title}
-                    <br />
-                    <small>{subtitle}</small>
-                  </h2>
-                  <div>
-                    <p>{data.ATTRIB}</p>
-                    <p>{[data.DATE, data.ORIGG, data.ORIGH].filter(d => d).join(", ")}</p>
-                    <p>{[data.CONTXT, data.NOMENC.join(", "), data.REFD].filter(d => d).join(", ")}</p>
-                  </div>
-              </div>
-            </div>
-            <div className="list-card-buttons">
-              <MobileBucketButton base="enluminures" reference={data.REF} removeFromBucket={undefined} link={link} />
-            </div>
+          </div>
         </div>
-      </a>
+        <div className="list-card-buttons">
+          <MobileBucketButton base="enluminures" reference={data.REF} removeFromBucket={undefined} link={link} />
+        </div>
+      </div>
+    </a>
   );
 };
 
-export const Autor = ({ data, removeFromBucket, searchParams, listRefs}) => {
+export const Autor = ({ data, removeFromBucket, searchParams, listRefs }) => {
   const REF = data.REF;
   const { logo, nom, description, fonction, image_preview, symbole, adresse } = getNoticeInfo(data);
   const ImageComponent = <img src={image_preview} />;
   const LogoComponent = logo ? <img src={logo} className="producteur mh" /> : <div />;
 
-  const link = `/notice/autor/${REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`;
+  const link = `/notice/autor/${REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`;
 
   return (
-      <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
-        {/* Desktop card */}
-        <div className="list-card-container desktop-only">
-          <Link href={`/notice/autor/${REF}${searchParams ? "?"+toUrlQueryString(searchParams) : "" }`} key={REF}>
-            <div className="leftContent">
-              <div className="thumbnail">{ImageComponent}</div>
-              <div className="content">
-                <div className="cardTextContent">
-                  <h2>
-                    {nom}<br />
-                    {description}
-                  </h2>
-                  <div>
-                    <p>{fonction}</p>
-                    <p>{symbole}</p>
-                    <p>{adresse}</p>
-                  </div>
+    <a className="list-card" onClick={() => saveListRef(listRefs, searchParams, removeFromBucket)} style={{ textDecoration: "none" }}>
+      {/* Desktop card */}
+      <div className="list-card-container desktop-only">
+        <Link href={`/notice/autor/${REF}${searchParams ? "?" + toUrlQueryString(searchParams) : ""}`} key={REF}>
+          <div className="leftContent">
+            <div className="thumbnail">{ImageComponent}</div>
+            <div className="content">
+              <div className="cardTextContent">
+                <h2>
+                  {nom}<br />
+                  {description}
+                </h2>
+                <div>
+                  <p>{fonction}</p>
+                  <p>{symbole}</p>
+                  <p>{adresse}</p>
                 </div>
               </div>
             </div>
-          </Link>
-          <div className="rightContent">
-            <span>
+          </div>
+        </Link>
+        <div className="rightContent">
+          <span>
+            <small className="base">Autor</small>
+            <br />
+            {REF}
+          </span>
+          <BucketButton base="autor" reference={data.REF} removeFromBucket={removeFromBucket} />
+          {LogoComponent}
+        </div>
+      </div>
+
+      {/* Mobile Card */}
+      <div className="list-card-container-mobile mobile-only">
+        <div className="list-card-header">
+          <div className="list-card-thumbnail">{ImageComponent}</div>
+          <div className="list-card-basic-infos">
+            <p>
               <small className="base">Autor</small>
               <br />
-              {REF}
-            </span>
-            <BucketButton base="autor" reference={data.REF} removeFromBucket={removeFromBucket} />
-            {LogoComponent}
+              {data.REF}
+            </p>
+            <div className="list-card-logo">
+              {LogoComponent}
+            </div>
           </div>
         </div>
-
-        {/* Mobile Card */}
-        <div className="list-card-container-mobile mobile-only">
-            <div className="list-card-header">
-              <div className="list-card-thumbnail">{ImageComponent}</div>
-              <div className="list-card-basic-infos">
-                <p>
-                  <small className="base">Autor</small>
-                  <br />
-                  {data.REF}
-                </p>
-                <div className="list-card-logo">
-                  {LogoComponent}
-                </div>
-              </div>
+        <div className="list-card-content">
+          <div className="cardTextContent" style={{ display: "flex" }}>
+            <h2>
+              {nom}<br />
+              {description}
+            </h2>
+            <div>
+              <p>{fonction}</p>
+              <p>{symbole}</p>
             </div>
-            <div className="list-card-content">
-              <div className="cardTextContent" style={{ display: "flex" }}>
-                  <h2>
-                    {nom}<br />
-                    {description}
-                  </h2>
-                  <div>
-                    <p>{fonction}</p>
-                    <p>{symbole}</p>
-                  </div>
-              </div>
-            </div>
-            <div className="list-card-buttons">
-              <MobileBucketButton base="autor" reference={data.REF} removeFromBucket={undefined} link={link} />
-            </div>
-        </div>        
-      </a>
+          </div>
+        </div>
+        <div className="list-card-buttons">
+          <MobileBucketButton base="autor" reference={data.REF} removeFromBucket={undefined} link={link} />
+        </div>
+      </div>
+    </a>
   );
 };
 
@@ -907,20 +919,20 @@ export default ({ data, searchParams, listRefs, idQuery }) => {
   searchParams.set("idQuery", idQuery);
   switch (index) {
     case "joconde":
-      return withStyle(<Joconde data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Joconde data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "mnr":
-      return withStyle(<Mnr data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Mnr data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "merimee":
-      return withStyle(<Merimee data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Merimee data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "palissy":
-      return withStyle(<Palissy data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Palissy data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "memoire":
-      return withStyle(<Memoire data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Memoire data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "museo":
-      return withStyle(<Museo data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Museo data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "enluminures":
-      return withStyle(<Enluminures data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Enluminures data={data._source} searchParams={searchParams} listRefs={listRefs} />);
     case "autor":
-      return withStyle(<Autor data={data._source} searchParams={searchParams} listRefs={listRefs}/>);
+      return withStyle(<Autor data={data._source} searchParams={searchParams} listRefs={listRefs} />);
   }
 };
