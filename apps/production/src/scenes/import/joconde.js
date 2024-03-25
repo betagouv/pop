@@ -6,6 +6,7 @@ import Importer from "./importer";
 import Joconde from "../../entities/Joconde";
 import utils from "./utils";
 import { pop_url, bucket_url } from "../../config";
+import { slugifyFilename } from "../notice/components/utils";
 
 class Import extends React.Component {
   constructor(props) {
@@ -138,7 +139,7 @@ function importCSV(res, files, museofile) {
           );
         } else {
           const shortname = Joconde.convertLongNameToShort(img.name);
-          let newImage = utils.renameFile(img, shortname);
+          let newImage = utils.renameFile(img, slugifyFilename(shortname));
           importedNotices[i]._files.push(newImage);
         }
       }
@@ -179,7 +180,7 @@ function importAjoutPiloté(res, files, museofile) {
           );
         } else {
           const shortname = Joconde.convertLongNameToShort(img.name);
-          let newImage = utils.renameFile(img, shortname);
+          let newImage = utils.renameFile(img, slugifyFilename(shortname));
           importedNotices[i]._files.push(newImage);
         }
       }
@@ -223,9 +224,9 @@ function report(notices, collection, email, institution, importId) {
   arr.push(`<li>${updated.length} notice(s) mise(s) à jour</li>`);
   arr.push(
     `<li>${notices.length -
-      rejected.length -
-      created.length -
-      updated.length} notice(s) importée(s) sans mise à jour</li>`
+    rejected.length -
+    created.length -
+    updated.length} notice(s) importée(s) sans mise à jour</li>`
   );
   arr.push(`<li>${imagesNumber} image(s) chargée(s)</li>`);
   arr.push(`</ul>`);
@@ -252,8 +253,8 @@ function report(notices, collection, email, institution, importId) {
           notices: [`<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${notices[i].INV})`]
         };
 
-        let idThesaurus = notices[i]._warnings[j].substr(notices[i]._warnings[j].indexOf(')]') -3, 3);
-        if(!Number.isNaN(parseInt(idThesaurus))){
+        let idThesaurus = notices[i]._warnings[j].substr(notices[i]._warnings[j].indexOf(')]') - 3, 3);
+        if (!Number.isNaN(parseInt(idThesaurus))) {
           obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
         }
       }
@@ -265,7 +266,7 @@ function report(notices, collection, email, institution, importId) {
     if (a[1].idThesaurus < b[1].idThesaurus) return -1;
     if (a[1].idThesaurus > b[1].idThesaurus) return 1;
     return 0;
-  }).reduce( ( a, key) => {
+  }).reduce((a, key) => {
     a[key[0]] = obj[key[0]]
     return a
   }, {});
@@ -282,24 +283,24 @@ function report(notices, collection, email, institution, importId) {
     const { terme, champ, thesaurus } = regexIt(key);
 
     // Mantis 38569 - Ajout condition pour avoir le vrai message si le champ n'est pas un thesaurus (et non plus des champs undefined)
-    if(terme !== undefined){
+    if (terme !== undefined) {
       arr.push(
         `<li>${count} sur le terme <strong>${terme}</strong> du champ <strong>${champ}</strong> est non conforme au thésaurus <strong>${thesaurus}</strong> :</li>`
       );
-    }else{
-      
-      if(key !== undefined){
+    } else {
+
+      if (key !== undefined) {
         const libRefus = "ne fait pas partie du thésaurus";
 
         const arrayKey = key.split(/[\[\]]/g);
 
-        if(arrayKey.length < 2){
+        if (arrayKey.length < 2) {
           continue;
         }
 
         const val = arrayKey[1];
         const autoriteThesaurus = arrayKey[3];
-        
+
         // Mise en gras des valeurs saisies qui posent problème sur le Thésaurus.
         key = key.replace(`[${val}]`, `[<strong>${val}</strong>]`);
 
@@ -308,7 +309,7 @@ function report(notices, collection, email, institution, importId) {
         key = key.replace(`[${autoriteThesaurus}]`, `<a href="${urlOpenTheso}?idt=${idthesaurus}">${autoriteThesaurus}</a>`);
 
         // Si des propositions ont été trouvé, alors on met les propositions en caractères gras
-        if(arrayKey[5]){
+        if (arrayKey[5]) {
           const listProposition = arrayKey[5].split(' ou ').filter(element => element !== "").map(element => `<strong>${element}</strong>`).join(' ou ');
           key = key.replace(`[${arrayKey[5]}]`, `[${listProposition}]`);
         }

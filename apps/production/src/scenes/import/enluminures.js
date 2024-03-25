@@ -6,6 +6,7 @@ import Importer from "./importer";
 import Enluminures from "../../entities/Enluminures";
 import utils from "./utils";
 import { pop_url, bucket_url } from "../../config";
+import { slugifyFilename } from "../notice/components/utils";
 
 class Import extends React.Component {
   constructor(props) {
@@ -100,7 +101,7 @@ function importCSV(res, files) {
           );
         } else {
           const shortname = Enluminures.convertLongNameToShort(img.name);
-          let newImage = utils.renameFile(img, shortname);
+          let newImage = utils.renameFile(img, slugifyFilename(shortname));
           importedNotices[i]._files.push(newImage);
           arrayImg.push(`enluminures/${importedNotices[i].REF}/${shortname}`);
         }
@@ -147,9 +148,9 @@ function report(notices, collection, email, institution, importId) {
   arr.push(`<li>${updated.length} notice(s) mise(s) à jour</li>`);
   arr.push(
     `<li>${notices.length -
-      rejected.length -
-      created.length -
-      updated.length} notice(s) importée(s) sans mise à jour</li>`
+    rejected.length -
+    created.length -
+    updated.length} notice(s) importée(s) sans mise à jour</li>`
   );
   arr.push(`<li>${imagesNumber} image(s) chargée(s)</li>`);
   arr.push(`</ul>`);
@@ -176,8 +177,8 @@ function report(notices, collection, email, institution, importId) {
           notices: [`<a href="${URL}${notices[i].REF}">${notices[i].REF}<a/> (${notices[i].INV})`]
         };
 
-        let idThesaurus = notices[i]._warnings[j].substr(notices[i]._warnings[j].indexOf(')]') -3, 3);
-        if(!Number.isNaN(parseInt(idThesaurus))){
+        let idThesaurus = notices[i]._warnings[j].substr(notices[i]._warnings[j].indexOf(')]') - 3, 3);
+        if (!Number.isNaN(parseInt(idThesaurus))) {
           obj[notices[i]._warnings[j]].idThesaurus = idThesaurus;
         }
       }
@@ -187,7 +188,7 @@ function report(notices, collection, email, institution, importId) {
   arr.push(`<h1>Liens</h1>`);
   arr.push(`<a href='${diffUrl}'>Consulter les notices en diffusion</a><br/>`);
   arr.push(`<a href='${fileUrl}'>Télécharger le détail de l'import</a>`);
-  
+
   return arr.join("");
 }
 

@@ -3,6 +3,7 @@ import { Row, Progress } from "reactstrap";
 import Dropzone from "react-dropzone";
 import JSZip from "jszip";
 import Loader from "../../../components/Loader";
+import { slugifyFilename } from "../../notice/components/utils";
 
 import "./dropZone.css";
 
@@ -151,9 +152,9 @@ function convertToFile(obj) {
   });
 }
 
-function getListEncoding(collection){
+function getListEncoding(collection) {
   let list = [];
-  switch(collection){
+  switch (collection) {
     case 'enluminures':
       list = ["UTF-8"];
       break;

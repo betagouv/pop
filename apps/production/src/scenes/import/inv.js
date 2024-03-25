@@ -6,6 +6,7 @@ import common_mh_inv from "./common_mh_inv";
 import Merimee from "../../entities/Merimee";
 import Palissy from "../../entities/Palissy";
 import Memoire from "../../entities/Memoire";
+import { slugifyFilename } from "../notice/components/utils";
 
 import utils from "./utils";
 
@@ -107,10 +108,10 @@ function parseFiles(files, encoding) {
         resolve(resp);
       })
       .catch((err) => {
-        if(err !== "Pas de fichiers .csv detecté"){
+        if (err !== "Pas de fichiers .csv detecté") {
           reject(err);
-        } 
-    });
+        }
+      });
 
     // ERROR
     reject("Impossible d'importer le(s) fichier(s). Aucun fichier Renabl, Csv ou Gertrude détecté");
@@ -133,7 +134,7 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
       ...values[1].map(e => {
         const merimeeObj = new Merimee(e);
 
-        if(e.POP_DOSSIER_VERT !== undefined){
+        if (e.POP_DOSSIER_VERT !== undefined) {
           const pdfPath = e.POP_DOSSIER_VERT || "";
           const pdfFile = files.find(
             e =>
@@ -143,15 +144,15 @@ function ParseGertrude(PalissyFile, MemoireFile, MerimeeFile, files, encoding) {
           );
           if (pdfFile) {
             const shortname = convertLongNameToShort(pdfFile.name);
-            const newPdf = utils.renameFile(pdfFile, shortname);
+            const newPdf = utils.renameFile(pdfFile, slugifyFilename(shortname));
             merimeeObj._files.push(newPdf);
             merimeeObj.POP_DOSSIER_VERT = `merimee/${e.REF}/${e.POP_DOSSIER_VERT}`;
           } else {
             merimeeObj._errors.push(`Impossible de trouver le pdf ${pdfPath}`);
           }
         }
-      return merimeeObj;
-    }));
+        return merimeeObj;
+      }));
 
     // COORWGS84
 
