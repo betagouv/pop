@@ -69,7 +69,7 @@ export default class extends React.Component {
                 <div class="card mt-4 mb-4">
                   <div class="card-body text-center">
                     <p />
-                    <h3>{">"} 3 millions</h3>
+                    <h3>{">"} 4 millions</h3>
                     <p>notices disponibles</p>
                   </div>
                 </div>

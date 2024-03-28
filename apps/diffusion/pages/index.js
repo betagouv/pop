@@ -51,7 +51,7 @@ export default class extends React.Component {
             <title>POP - Plateforme Ouverte du Patrimoine - Ministère de la Culture</title>
             <meta
               name="description"
-              content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 3 millions de contenus numériques du patrimoine français."
+              content="POP propose de faire des données patrimoniales un bien commun, en rendant accessibles et consultables plus de 4 millions de contenus numériques du patrimoine français."
             />
           </Head>
           <div className="home-search-background">
@@ -62,7 +62,7 @@ export default class extends React.Component {
               </h1>
               <Input
                 id="main-search"
-                placeholder="Recherchez parmi plus de 3 millions de documents"
+                placeholder="Recherchez parmi plus de 4 millions de documents"
                 onKeyPress={event => {
                   if (event.key === "Enter") {
                     this.gotoSearch();
